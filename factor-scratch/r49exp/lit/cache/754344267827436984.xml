@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/xpRfMVicqvii1XjFMN22+ZuAMWs</id>
+  <title>arXiv Query: search_query=abs:"tensor" AND abs:factoring AND abs:sieving&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:11Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22tensor%22+AND+(abs:factoring+AND+abs:sieving)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16355v3</id>
+    <title>Integer Factorization via Tensor Network Schnorr's Sieving</title>
+    <updated>2026-01-26T21:21:04Z</updated>
+    <link href="https://arxiv.org/abs/2410.16355v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16355v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical public-key cryptography standards rely on the Rivest-Shamir-Adleman (RSA) encryption protocol. The security of this protocol is based on the exponential computational complexity of the most efficient classical algorithms for factoring large semiprime numbers into their two prime components. Here, we address RSA factorization building on Schnorr's mathematical framework where factorization translates into a combinatorial optimization problem. We solve the optimization task via tensor network methods, a quantum-inspired classical numerical technique. This tensor network Schnorr's sieving algorithm displays numerical evidence of polynomial scaling of resources with the bit-length of the semiprime. We factorize RSA numbers up to 100 bits and assess how computational resources scale through numerical simulations up to 130 bits, encoding the optimization problem in quantum systems with up to 256 qubits. Only the high-order polynomial scaling of the required resources limits the factorization of larger numbers. Although these results do not currently undermine the security of the present communication infrastructure, they strongly highlight the urgency of implementing post-quantum cryptography or quantum key distribution.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T18:00:00Z</published>
+    <arxiv:comment>Accepted version. Change title, implement review suggestions and comment, and improve statistical analysis of the resource scaling</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Phys. Rev. A 113, 032418 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Marco Tesoro</name>
+    </author>
+    <author>
+      <name>Ilaria Siloi</name>
+    </author>
+    <author>
+      <name>Daniel Jaschke</name>
+    </author>
+    <author>
+      <name>Giuseppe Magnifico</name>
+    </author>
+    <author>
+      <name>Simone Montangero</name>
+    </author>
+    <arxiv:doi>10.1103/d9dl-ctt4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/d9dl-ctt4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.13930v2</id>
+    <title>Promotion and Cyclic Sieving on Rectangular $δ$-Semistandard Tableaux</title>
+    <updated>2021-02-03T05:21:57Z</updated>
+    <link href="https://arxiv.org/abs/2010.13930v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.13930v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $δ=(δ_1,\ldots,δ_n)$ be a string of letters $h$ and $v$. We define a Young tableau to be $δ$-semistandard if the entries are weakly increasing along rows and columns, and the entries $i$ form a horizontal strip if $δ_i=h$ and a vertical strip if $δ_i=v$. We define $δ$-promotion on such tableaux via a modified jeu-de-taquin. The first main result is that $δ$-promotion has period $n$ on rectangular $δ$-semistandard tableaux, generalizing the results of Haiman and Rhoades for standard and semistandard tableaux. The second main result states that the set of rectangular $δ$-semistandard tableaux for fixed $δ$ and content $γ$ exhibits the cyclic sieving phenomenon with the generalized Kostka polynomial. To do so we follow Fontaine-Kamnitzer and associate to $(δ,γ)$ an $SL_m$-invariant space Inv$(V_{λ^1}\otimes\cdots\otimes V_{λ^n})$ where each $V_{λ^i}$ is an alternating or symmetric representation. We show that the Satake basis of the corresponding invariant space is indexed by the set of tableaux corresponding to $(δ,γ)$ and is permuted by rotation of tensor factors. We then diagonalize the rotation action using the fusion product. This cyclic sieving generalizes the result of Rhoades, and of Fontaine-Kamnitzer (in type A), and is closely related to that of Westbury.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-26T22:22:04Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Tair Akhmejanov</name>
+    </author>
+    <author>
+      <name>Balázs Elek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.10612v4</id>
+    <title>Approximation rates for finite mixtures of location-scale models and fast least-squares estimators</title>
+    <updated>2026-04-23T11:54:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.10612v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.10612v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Finite mixture models provide a flexible framework for approximating and estimating multivariate probability densities. We study mixtures formed from translated and rescaled copies of a fixed density kernel and obtain explicit results for both approximation and least-squares estimation. Our main deterministic result is a quantisation theorem showing that, after smoothing the target density at a fixed resolution, the resulting convolution can be compressed into a finite location mixture with controlled error. Combining this with the smoothing bias yields approximation rates in $\mathcal{L}_{p}$ over Sobolev classes. For estimation, we analyse least-squares $\varepsilon$-minimisers over suitably tuned mixture sieves. Under exponential decay of the Fourier transform of the kernel, a matching moment condition, and bounded Sobolev targets, the estimator attains a squared $\mathcal{L}_{2}$ risk bound whose rate matches the Sobolev minimax benchmark up to a logarithmic factor. If, in addition, the kernel is bandlimited, then the same theorem recovers the Sobolev rate $n^{-2s/\left(2s+d\right)}$. We further report a slower convergence rate under weaker VC-type assumptions. At fixed scale, the Fourier-based approach also gives a nearly parametric risk bound for the associated location-mixture class, and the same bandlimited simplification removes the logarithmic correction. In the Gaussian case, this recovers the known Gaussian location-mixture rate. We also prove matching lower bounds on Gaussian convolution submodels, including strict submodels of the Gaussian location-mixture class, and on the tensor-product odd-degree Student-$t$ location-mixture family.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-14T13:07:21Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Hien Duy Nguyen</name>
+    </author>
+    <author>
+      <name>TrungTin Nguyen</name>
+    </author>
+    <author>
+      <name>Jacob Westerhout</name>
+    </author>
+    <author>
+      <name>Xin Guo</name>
+    </author>
+  </entry>
+</feed>

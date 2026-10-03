@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/OJcc4j/bUAMJWcrgPP9QUpCyWoQ</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"pollard" AND abs:"rho"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22pollard%22+AND+abs:%22rho%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>9</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2011.05355v2</id>
+    <title>A quantum version of Pollard's Rho of which Shor's Algorithm is a particular case</title>
+    <updated>2024-01-19T16:31:04Z</updated>
+    <link href="https://arxiv.org/abs/2011.05355v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.05355v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pollard's Rho is a method for solving the integer factorization problem. The strategy searches for a suitable pair of elements belonging to a sequence of natural numbers that given suitable conditions yields a nontrivial factor. In translating the algorithm to a quantum model of computation, we found its running time reduces to polynomial-time using a certain set of functions for generating the sequence. We also arrived at a new result that characterizes the availability of nontrivial factors in the sequence. The result has led us to the realization that Pollard's Rho is a generalization of Shor's algorithm, a fact easily seen in the light of the new result.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-10T19:11:37Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Daniel Chicayban Bastos</name>
+    </author>
+    <author>
+      <name>Luis Antonio Kowada</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.02967v1</id>
+    <title>An Empirical Comparison of the Quadratic Sieve Factoring Algorithm and the Pollard Rho Factoring Algorithm</title>
+    <updated>2021-11-04T16:05:32Z</updated>
+    <link href="https://arxiv.org/abs/2111.02967v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.02967v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One of the most significant challenges on cryptography today is the problem of factoring large integers since there are no algorithms that can factor in polynomial time, and factoring large numbers more than some limits(200 digits) remain difficult. The security of the current cryptosystems depends on the hardness of factoring large public keys. In this work, we want to implement two existing factoring algorithms - pollard-rho and quadratic sieve - and compare their performance. In addition, we want to analyze how close is the theoretical time complexity of both algorithms compared to their actual time complexity and how bit length of numbers can affect quadratic sieve's performance. Finally, we verify whether the quadratic sieve would do better than pollard-rho for factoring numbers smaller than 80 bits.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-04T16:05:32Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Zongxia Li</name>
+    </author>
+    <author>
+      <name>William Gasarch</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.12844v1</id>
+    <title>Choosing iteration maps for the parallel Pollard rho method</title>
+    <updated>2025-06-15T13:36:33Z</updated>
+    <link href="https://arxiv.org/abs/2506.12844v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.12844v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pollard's rho method finds a prime factor $p$ of an integer $N$ by searching for a collision in a map of the form $x \mapsto x^{2k} + c$ modulo $N$. This search can be parallelized to multiple machines, which may use distinct parameters $k$ and $c$. In this paper, we give an asymptotic estimate for the expected running time of the parallel rho method depending on the choice of $k$ for each machine. We also prove that $k = 1$ is the best choice for one machine, if nothing about $p$ is known in advance.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-15T13:36:33Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Finn Rudolph</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.21168v1</id>
+    <title>A Summation-Based Algorithm For Integer Factorization</title>
+    <updated>2025-04-29T20:35:43Z</updated>
+    <link href="https://arxiv.org/abs/2504.21168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.21168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Numerous methods have been considered to create a fast integer factorization algorithm. Despite its apparent simplicity, the difficulty to find such an algorithm plays a crucial role in modern cryptography, notably, in the security of RSA encryption. Some approaches to factoring integers quickly include the Trial Division method, Pollard's Rho and p-1 methods, and various Sieve algorithms.
+  This paper introduces a new method that converts an integer into a sum in base-2. By combining a base-10 and base-2 representation of the integer, an algorithm on the order of $\sqrt{n}$ time complexity can convert that sum to a product of two integers, thus factoring the original number.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-29T20:35:43Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Justin Friedlander</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.4365v1</id>
+    <title>Performance Analysis of Parallel Pollard's Rho Algorithm</title>
+    <updated>2013-05-19T14:44:57Z</updated>
+    <link href="https://arxiv.org/abs/1305.4365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.4365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is one of the vital algorithms discussed as a part of analysis of any black-box cipher suites where the cipher algorithm is based on number theory. The origin of the problem is from Discrete Logarithmic Problem which appears under the analysis of the crypto-graphic algorithms as seen by a crypt-analyst. The integer factorization algorithm poses a potential in computational science too, obtaining the factors of a very large number is challenging with a limited computing infrastructure. This paper analyses the Pollards Rho heuristic with a varying input size to evaluate the performance under a multi-core environment and also to estimate the threshold for each computing infrastructure.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-19T14:44:57Z</published>
+    <arxiv:comment>8 pages, 4 figures, Journal</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Anjan K. Koundinya</name>
+    </author>
+    <author>
+      <name>Harish G.</name>
+    </author>
+    <author>
+      <name>Srinath N. K.</name>
+    </author>
+    <author>
+      <name>Raghavendra G. E.</name>
+    </author>
+    <author>
+      <name>Pramod Y. V.</name>
+    </author>
+    <author>
+      <name>Sandeep R.</name>
+    </author>
+    <author>
+      <name>Punith Kumar G</name>
+    </author>
+    <arxiv:doi>10.5121/ijcsit.2013.5214</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5121/ijcsit.2013.5214" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.03215v2</id>
+    <title>The cycle structure of unicritical polynomials</title>
+    <updated>2018-01-24T21:55:12Z</updated>
+    <link href="https://arxiv.org/abs/1801.03215v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.03215v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A polynomial with integer coefficients yields a family of dynamical systems indexed by primes as follows: for any prime $p$, reduce its coefficients mod $p$ and consider its action on the field $\mathbb{F}_p$. The questions of whether and in what sense these families are random have been studied extensively, spurred in part by Pollard's famous "rho" algorithm for integer factorization (the heuristic justification of which is the randomness of one such family). However, the cycle structure of these families cannot be random, since in any such family, the number of cycles of a fixed length in any dynamical system in the family is bounded. In this paper, we show that the cycle statistics of many of these families are as random as possible. As a corollary, we show that most members of these families have many cycles, addressing a conjecture of Mans et. al.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-10T02:09:50Z</published>
+    <arxiv:comment>19 pages, minor typos corrected</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <arxiv:journal_ref>Int. Math. Res. Not. IMRN (2020), no. 23, 9120-9147</arxiv:journal_ref>
+    <author>
+      <name>Andrew Bridy</name>
+    </author>
+    <author>
+      <name>Derek Garton</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rny232</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rny232" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.16922v1</id>
+    <title>A Conceptual Hybrid Framework for Post-Quantum Security: Integrating BB84 QKD, AES, and Bio-inspired Mechanisms</title>
+    <updated>2026-01-31T19:40:01Z</updated>
+    <link href="https://arxiv.org/abs/2602.16922v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.16922v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing is a significant risk to classical cryptographic, especially RSA, which depends on the difficulty of factoring large numbers. Classical factorization methods, such as Trial Division and Pollard's Rho, are inefficient for large keys, while Shor's quantum algorithm can break RSA efficiently in polynomial time. This research studies RSA's vulnerabilities under both classical and quantum attacks and designs a hybrid security framework to ensure data protection in the post-quantum era. The conceptual framework combines AES encryption for classical security, BB84 Quantum Key Distribution (QKD) for secure key exchange with eavesdropping detection, quantum state comparison for lightweight authentication, and a bio-inspired immune system for adaptive threat detection. RSA is vulnerable to Shor's algorithm, BB84 achieves full key agreement in ideal conditions, and it detects eavesdropping with high accuracy. The conceptual model includes both classical and quantum security methods, providing a scalable and adaptive solution for Post-Quantum encryption data protection. This work primarily proposes a conceptual framework. Detailed implementation, security proofs, and extensive experimental validation are considered future work.</summary>
+    <category term="cs.OH" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-31T19:40:01Z</published>
+    <arxiv:primary_category term="cs.OH"/>
+    <author>
+      <name>Md. Ismiel Hossen Abir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.14011v2</id>
+    <title>Brace for impact: ECDLP challenges for quantum cryptanalysis</title>
+    <updated>2026-03-25T19:59:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.14011v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.14011v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Precise suites of benchmarks are required to assess the progress of early fault-tolerant quantum computers at economically impactful applications such as cryptanalysis. Appropriate challenges exist for factoring but those for elliptic curve cryptography are either too sparse or inadequate for standard applications of Shor's algorithm. We introduce a difficulty-graded suite of elliptic curve discrete logarithm (ECDLP) challenges that use Bitcoin's curve y^2=x^3+7 mod p while incrementally lowering the prime field from 256 down to 6 bits. For each bit-length, we provide the prime, the prime group order, and two deterministic nothing-up-my-sleeve (NUMS) points in compressed SEC1 form. All challenges are generated by a deterministic, reproducible procedure, and no private challenge scalar is chosen in advance. We calibrate classical cost against Pollard's rho records and quantum cost against resource estimation results for Shor's algorithm. We compile Shor's ECDLP circuit to logical counts and map them to physical resources for various parameters of the surface code, the repetition cat code and the LDPC cat codes. Under explicit and testable assumptions on physical error rates, code distances, and non-Clifford supply, our scenarios place the full 256-bit instance within a 2027--2033 window. The challenge ladder thus offers a transparent ruler to track fault-tolerant progress on a cryptanalytic target of immediate relevance, and it motivates proactive migration of digital assets to post-quantum signatures.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-19T17:16:31Z</published>
+    <arxiv:comment>39 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Pierre-Luc Dallaire-Demers</name>
+    </author>
+    <author>
+      <name>William Doyle</name>
+    </author>
+    <author>
+      <name>Timothy Foo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.00894v3</id>
+    <title>Non-Adaptive Cryptanalytic Time-Space Lower Bounds via a Shearer-like Inequality for Permutations</title>
+    <updated>2026-05-20T12:35:50Z</updated>
+    <link href="https://arxiv.org/abs/2505.00894v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.00894v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The power of adaptivity in algorithms has been intensively studied in diverse areas of theoretical computer science. In this paper, we obtain a number of sharp lower bound results which show that adaptivity provides a significant extra power in cryptanalytic time-space tradeoffs with (possibly unlimited) preprocessing time.
+  Most notably, we consider the discrete logarithm (DLOG) problem in a generic group of $N$ elements. The classical `baby-step giant-step' algorithm for the problem has time complexity $T=O(\sqrt{N})$, uses $O(\sqrt{N})$ bits of space (up to logarithmic factors in $N$) and achieves constant success probability.
+  We examine a generalized setting where an algorithm obtains an advice string of $S$ bits and is allowed to make $T$ arbitrary non-adaptive queries that depend on the advice string (but not on the challenge group element).
+  We show that in this setting, the $T=O(\sqrt{N})$ online time complexity of the baby-step giant-step algorithm cannot be improved, unless the advice string is more than $Ω(\sqrt{N})$ bits long. This lies in stark contrast with the classical adaptive Pollard's rho algorithm for DLOG, which can exploit preprocessing to obtain the tradeoff curve $ST^2=O(N)$. We obtain similar sharp lower bounds for several other cryptanalytic problems.
+  To obtain our results, we present a new model that allows analyzing non-adaptive preprocessing algorithms for a wide array of search and decision problems in a unified way. Since previous proof techniques inherently cannot distinguish between adaptive and non-adaptive algorithms for the problems in our model, they cannot be used to obtain our results. Consequently, our proof uses a variant of Shearer's lemma for this setting, due to Barthe, Cordero-Erausquin, Ledoux, and Maurey (2011). This seems to be the first time a variant of Shearer's lemma for permutations is used in an algorithmic context.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-01T22:17:11Z</published>
+    <arxiv:comment>Minor editorial changes. A shorter version was published at STOC 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Itai Dinur</name>
+    </author>
+    <author>
+      <name>Nathan Keller</name>
+    </author>
+    <author>
+      <name>Avichai Marmor</name>
+    </author>
+  </entry>
+</feed>

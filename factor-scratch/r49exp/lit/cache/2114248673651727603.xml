@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Ij6dLLUyb/iHuzb/E7Di2R7c7dw</id>
+  <title>arXiv Query: search_query=abs:"NFS" AND abs:"implementation" AND abs:factor&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22NFS%22+AND+(abs:%22implementation%22+AND+abs:factor)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.33262v1</id>
+    <title>A Majorization-Minimization Framework for Activity Detection in Mixed Near-and-Far-Field Random Access</title>
+    <updated>2026-09-27T06:07:41Z</updated>
+    <link href="https://arxiv.org/abs/2609.33262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.33262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Grant-free random access in massive machine-type communications requires detecting a small active set from length-L uplink pilots received at an M-antenna base station. Classical covariance-based detectors are largely built on the far-field (FF) model, where the M antenna-domain observations are treated as independent snapshots, and inference reduces to an L $\times$ L covariance description. This model becomes inadequate in mixed near-field (NF) and FF access, where NF devices induce device-specific structured spatial covariances and the aggregate observation no longer fits the FF snapshot structure. In this paper, we develop a unified covariance-aware Rician framework for activity detection that treats FF and NF devices by a single likelihood model. Within this framework, we propose a majorization-minimization projected gradient descent (MM-PGD) detector for the resulting relaxed likelihood. For scalable exact likelihood evaluation, we further derive a Kronecker-Woodbury implementation that exploits the mixed NF/FF covariance structure, and avoids factorizing the full LM $\times$ LM covariance matrix. Numerical results show that MM-PGD is on par with the strongest coordinate-wise baseline in the all-FF limit, while its advantage becomes more pronounced as the fraction of NF users increases under the tested regimes.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-27T06:07:41Z</published>
+    <arxiv:comment>16 pages, 13 figures, 3 tables. Published in IEEE Transactions on Wireless Communications</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Xinjue Wang</name>
+    </author>
+    <author>
+      <name>Zhi-Yong Wang</name>
+    </author>
+    <author>
+      <name>Sergiy A. Vorobyov</name>
+    </author>
+    <author>
+      <name>Esa Ollila</name>
+    </author>
+    <author>
+      <name>Gayan Amarasuriya Aruma Baduge</name>
+    </author>
+    <author>
+      <name>Mojtaba Vaezi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.2390v1</id>
+    <title>Wilson fermions at fine lattice spacings: scale setting, pion form factors and (g-2)_mu</title>
+    <updated>2010-10-12T13:46:59Z</updated>
+    <link href="https://arxiv.org/abs/1010.2390v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.2390v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an update on our on-going project to compute hadronic observables for Nf=2 flavours of O(a) improved Wilson fermions at small lattice spacings. The procedure to determine the lattice scale via the mass of the Omega baryon is described. Furthermore we present preliminary results for the pion form factor computed using twisted boundary conditions, and report on the implementation of a novel approach to determine the contribution of the hadronic vacuum polarisation to the anomalous magnetic moment of the muon.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-12T13:46:59Z</published>
+    <arxiv:comment>7 pages, 3 figure, presented at 28 International Symposium on Lattice Field Theory, Lattice2010, June 14-19, 2010, Villasimius, Italy</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <arxiv:journal_ref>PoS Lattice2010:164,2010</arxiv:journal_ref>
+    <author>
+      <name>B. B. Brandt</name>
+    </author>
+    <author>
+      <name>S. Capitani</name>
+    </author>
+    <author>
+      <name>M. Della Morte</name>
+    </author>
+    <author>
+      <name>D. Djukanovic</name>
+    </author>
+    <author>
+      <name>G. von Hippel</name>
+    </author>
+    <author>
+      <name>B. Jäger</name>
+    </author>
+    <author>
+      <name>A. Jüttner</name>
+    </author>
+    <author>
+      <name>B. Knippschild</name>
+    </author>
+    <author>
+      <name>H. Wittig</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0908.0551v1</id>
+    <title>Efficient methodology for implementation of Encrypted File System in User Space</title>
+    <updated>2009-08-04T21:30:18Z</updated>
+    <link href="https://arxiv.org/abs/0908.0551v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0908.0551v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Encrypted File System (EFS) pushes encryption services into the file system itself. EFS supports secure storage at the system level through a standard UNIX file system interface to encrypted files. User can associate a cryptographic key with the directories they wish to protect. Files in these directories (as well as their pathname components) are transparently encrypted and decrypted with the specified key without further user intervention; clear text is never stored on a disk or sent to a remote file server. EFS can use any available file system for its underlying storage without modifications, including remote file servers such as NFS. System management functions, such as file backup, work in a normal manner and without knowledge of the key. Performance is an important factor to users since encryption can be time consuming. This paper describes the design and implementation of EFS in user space using faster cryptographic algorithms on UNIX Operating system. Implementing EFS in user space makes it portable and flexible; Kernel size will also not increase resulting in more reliable &amp; efficient Operating System. Encryption techniques for file system level encryption are described, and general issues of cryptographic system interfaces to support routine secure computing are discussed.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-08-04T21:30:18Z</published>
+    <arxiv:comment>8 Pages IEEE Format, International Journal of Computer Science and Information Security, IJCSIS 2009, ISSN 1947 5500, Impact Factor 0.423</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>International Journal of Computer Science and Information Security, IJCSIS July 2009, Vol. 3, No. 1, USA</arxiv:journal_ref>
+    <author>
+      <name>Dr. Shishir Kumar</name>
+    </author>
+    <author>
+      <name>U. S. Rawat</name>
+    </author>
+    <author>
+      <name>Sameer Kumar Jasra</name>
+    </author>
+    <author>
+      <name>Akshay Kumar Jain</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12498v1</id>
+    <title>Machine Learning Algorithms for Active Monitoring of High Performance Computing as a Service (HPCaaS) Cloud Environments</title>
+    <updated>2020-09-26T01:29:19Z</updated>
+    <link href="https://arxiv.org/abs/2009.12498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cloud computing provides ubiquitous and on-demand access to vast reconfigurable resources that can meet any computational need. Many service models are available, but the Infrastructure as a Service (IaaS) model is particularly suited to operate as a high performance computing (HPC) platform, by networking large numbers of cloud computing nodes. We used the Pacific Northwest National Laboratory (PNNL) cloud computing environment to perform our experiments. A number of cloud computing providers such as Amazon Web Services, Microsoft Azure, or IBM Cloud, offer flexible and scalable computing resources. This paper explores the viability identifying types of engineering applications running on a cloud infrastructure configured as an HPC platform using privacy preserving features as input to statistical models. The engineering applications considered in this work include MCNP6, a radiation transport code developed by Los Alamos National Laboratory, OpenFOAM, an open source computational fluid dynamics code, and CADO-NFS, a numerical implementation of the general number field sieve algorithm used for prime number factorization. Our experiments use the OpenStack cloud management tool to create a cloud HPC environment and the privacy preserving Ceilometer billing meters as classification features to demonstrate identification of these applications.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-26T01:29:19Z</published>
+    <arxiv:comment>9 pages, 13 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Gianluca Longoni</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ryan LaMothe</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jeremy Teuton</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Greaves</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nicole Nichols</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>William Smith</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1907.00971v1</id>
+    <title>Universal audio synthesizer control with normalizing flows</title>
+    <updated>2019-07-01T14:49:07Z</updated>
+    <link href="https://arxiv.org/abs/1907.00971v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.00971v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The ubiquity of sound synthesizers has reshaped music production and even entirely defined new music genres. However, the increasing complexity and number of parameters in modern synthesizers make them harder to master. Hence, the development of methods allowing to easily create and explore with synthesizers is a crucial need. Here, we introduce a novel formulation of audio synthesizer control. We formalize it as finding an organized latent audio space that represents the capabilities of a synthesizer, while constructing an invertible mapping to the space of its parameters. By using this formulation, we show that we can address simultaneously automatic parameter inference, macro-control learning and audio-based preset exploration within a single model. To solve this new formulation, we rely on Variational Auto-Encoders (VAE) and Normalizing Flows (NF) to organize and map the respective auditory and parameter spaces. We introduce the disentangling flows, which allow to perform the invertible mapping between separate latent spaces, while steering the organization of some latent dimensions to match target variation factors by splitting the objective as partial density evaluation. We evaluate our proposal against a large set of baseline models and show its superiority in both parameter inference and audio reconstruction. We also show that the model disentangles the major factors of audio variations as latent dimensions, that can be directly used as macro-parameters. We also show that our model is able to learn semantic controls of a synthesizer by smoothly mapping to its parameters. Finally, we discuss the use of our model in creative applications and its real-time implementation in Ableton Live</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-01T14:49:07Z</published>
+    <arxiv:comment>DaFX 2019</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Philippe Esling</name>
+    </author>
+    <author>
+      <name>Naotake Masuda</name>
+    </author>
+    <author>
+      <name>Adrien Bardet</name>
+    </author>
+    <author>
+      <name>Romeo Despres</name>
+    </author>
+    <author>
+      <name>Axel Chemla--Romeu-Santos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.10839v1</id>
+    <title>Maintenance and Support in Community-Driven Scientific Pipeline Ecosystems: A Cross-Platform Empirical Study of nf-core</title>
+    <updated>2026-07-12T17:05:07Z</updated>
+    <link href="https://arxiv.org/abs/2607.10839v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.10839v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Community-driven scientific pipeline ecosystems are increasingly important for reproducible data-intensive research, but their sustainability depends on more than workflow engines, templates, and testing infrastructure. It also depends on how communities maintain pipelines, integrate contributions, and support users across heterogeneous execution environments. This paper presents a cross-platform empirical study of maintenance and support in nf-core, a large ecosystem of standardized Nextflow pipelines. We analyze 15,760 GitHub issues, 35,411 GitHub pull requests, and 895 Seqera Community Forum discussions to examine what maintenance and support concerns arise, how they differ across artifact types, which factors are associated with resolution outcomes, and how problems and solutions flow between repository-centered and community-centered spaces. We find that issues primarily capture repository-level problem reporting and maintenance coordination; pull requests capture implementation, review, testing, dependency, and template-update work; and forum discussions capture user-facing support around execution failures, containers, cloud and HPC environments, MultiQC reporting, and Nextflow usage. Resolution outcomes are associated with actionability, coordination, and diagnostic evidence. Issue closure is linked to assignees, comments, milestones, bug labels, error mentions, and version information. Pull request integration varies by author role, automation type, draft status, checklists, linked issues, and review routing. Forum accepted answers are more likely when discussions include code blocks, sustained interaction, and concrete technical evidence, while cloud, HPC, and workflow-semantics questions are harder to resolve. Cross-platform analysis reveals strong repository-internal traceability within GitHub, but limited explicit linkage between forum discussions and repository artifacts.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-12T17:05:07Z</published>
+    <arxiv:comment>42 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Khairul Alam</name>
+    </author>
+    <author>
+      <name>Kowsik Roy</name>
+    </author>
+    <author>
+      <name>Md Shamimur Rahman</name>
+    </author>
+    <author>
+      <name>Banani Roy</name>
+    </author>
+  </entry>
+</feed>

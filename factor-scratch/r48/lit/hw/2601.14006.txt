@@ -1,0 +1,1450 @@
+COMPUTING CRYSTALLINE COHOMOLOGY AND p-DIVISIBLE
+GROUPS FOR CURVES OVER FINITE FIELDS
+
+arXiv:2601.14006v1 [math.NT] 20 Jan 2026
+
+JEREMY BOOHER
+
+Abstract. Let X be a smooth projective curve over a finite field of characteristic p. We describe and implement a practical algorithm for computing
+the p-divisible group Jac(X)[p∞ ] via computing its Dieudonné module, or
+equivalently computing the Frobenius and Verschiebung operators on the first
+crystalline cohomology of X. We build on Tuitman’s p-adic point counting
+algorithm, which computes the rigid cohomology of X and requires a “nice”
+lift of X to be provided.
+
+1. Introduction
+Let X be a smooth projective curve of genus g over a finite field Fq with q =
+pr . The p-divisible group Jac(X)[p∞ ] is built out of the finite flat group schemes
+Jac(X)[pn ]. It determines the zeta function, Newton polygon, and Ekedahl-Oort
+type of X, and is a geometric generalization of the p-part of the class group of
+Fq (X). Indeed, the p-primary part of the class group is the Fq -points of the (not
+necessarily étale) Jac(X)[p∞ ].
+Equivalently, one can consider the first crystalline cohomology H1crys (X). Set
+Zq = W (Fq ), the unique unramified extension of Zp with residue field Fq , and let
+Qq be the field of fractions. Then H1crys (X) is a free Zq -module of rank 2g and is
+equipped with Frobenius and Verschiebung endomorphisms F and V . It is naturally
+isomorphic to the Dieudonné module of Jac(X)[p∞ ], so determining H1crys (X) with
+the actions of F and V is equivalent to determining the p-divisible group. (See
+Section 3 for a review of the cohomology theories and p-divisible groups.)
+We introduce an efficient and practical algorithm for computing H1crys (X). More
+precisely, given an integer N we compute the Dieudonné module of Jac(X)[pN ], or
+equivalently matrices for F and V on H1crys (X) with p-adic precision N . We build
+on p-adic point counting algorithms which work by approximating the Frobenius
+morphism on the rigid cohomology of X, in particular work of Tuitman [Tui16,
+Tui17]. Tuitman works with a plane curve model Q(x, y) = 0 for X, and exploits
+the projection maps to the coordinate axes.
+Our main contribution is to realize the crystalline cohomology as the de Rham
+e q of X and determining how this sits as a lattice inside
+cohomology of a lift X/Z
+the rigid cohomology H1rig (X). An idealized version is presented as Algorithm 1.
+e q ) (see Section 4)
+The two key ingredients are an algorithm to compute H1dR (X/Z
+and understanding how much precision is needed internally in Tuitman’s algorithm
+to guarantee the Dieudonné module is correct modulo pN (Section 5). The former is
+non-trivial as Zq is not a field. The latter encounters errors in the implementation
+of Tuitman’s algorithm [Tui19] which we also address.
+1
+
+2
+
+JEREMY BOOHER
+
+Algorithm 1 Idealized Algorithm for Computing Crystalline Cohomology
+e ∼
+1: Compute a Zq -basis Bcrys for HdR (X)
+= Hcrys (X) (see Fact 3.3).
+1
+
+1
+
+1
+
+2: Compute a Qq -basis Brig for Hrig (X) (see Remark 3.1).
+1
+3: Compute the Frobenius on Hrig (X) using Tuitman’s algorithm, and express it
+
+as a matrix relative to Brig .
+1
+
+1
+
+4: Represent Hcrys (X) as a Zq -lattice in the Qq -vector space Hrig (X) (see Fact 3.5),
+
+and hence obtain a matrix for Frobenius on H1crys (X) relative to Bcrys .
+5: Recover V from the relation F V = p.
+We analyze our algorithm in Section 6. We track several necessary assumptions,
+some inherited from Tuitman’s work, which guarantee the algorithm works and the
+running time is polynomial in p, dx , dy , r, and N . Here dx and dy are the degrees
+of the projection maps to the coordinate axes.
+Remark 1.1. A key feature of our situation is that we consider p-power torsion
+in Jac(X) in characteristic p. If ℓ ̸= p, there is considerable work studying the
+ℓ-power torsion in Jac(X) and ℓ-adic cohomology of X, for example in the context
+of point counting [Pil90, Cou09, HI98, Jin20, Lev24]. Previous algorithmic work on
+p-power torsion in characteristic p has only been able to access the isogeny class of
+Jac(X)[p∞ ] (via rigid cohomology, which has Qq -coefficients) as used in p-adic point
+counting algorithms, or the p-torsion (via the de Rham cohomology of X [Wei20],
+which has Fq -coefficients).
+Remark 1.2. We implement our algorithm for curves over Fp [Boo26a]. We use
+Magma [BCP97], and build on Tuitman’s implementation [Tui19] of his algorithm.
+We also incorporate a few tweaks from Balakrishna and Tuitman’s work on Coleman integration [BT20]. As in Tuitman’s implementation, we attempt to compute
+some auxiliary information in an ad hoc way which usually works but is not guaranteed. See Assumption 2.1 and Assumption 4.11. The algorithm is practical: see
+Example 5.7 and Remark 6.3 as well as additional examples in [Boo26a].
+Remark 1.3. We also explain a precision issue in Tuitman’s implementation
+[Tui19] (present in the version incorporated into Magma), a sporadic source of errors computing zeta functions. See Section 5.3, and our github repository [Boo26b]
+for a version of the point counting algorithm which works around it.
+1.1. Acknowledgments. We thank Jen Balakrishna, Bryden Cais, Richard Crew,
+Kiran Kedlaya, and Jan Tuitman for helpful conversations.
+2. The Situation
+2.1. Theoretical Setup. As in the introduction, let p be a prime and q = pr a
+prime power. Let Zq be the unramified extension of Zp with residue field k = Fq ,
+and Qq be the fraction field of Zq .
+Let X be a smooth projective curve over k, with a finite separable map x : X →
+P1k of degree dx . We inherit the setup from [Tui17]. In particular, we represent
+X via a (possibly singular) plane curve Q(x, y) = 0 for some Q ∈ Fq [x, y] and the
+morphism x is projection onto the x-coordinate. Note dx is the degree of Q in x.
+The degree of the projection onto the y-coordinate dy is likewise the degree of Q in
+y. We furthermore assume Q is monic in y.
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+3
+
+e ∈ Zq [x, y] that is monic in y,
+Next we lift to characteristic zero, requiring a Q
+e to
+has the same monomials as Q, and reduces to Q. We use the polynomial Q
+represent a lift of X to characteristic zero, which will be quite nice if we make
+e with
+some additional assumptions. Letting ∆ ∈ Zq [x] denote the discriminant of Q
+′
+respect to y and r = ∆/ gcd(∆, ∆ ), the natural map
+e := Spec Zq [x, y, 1/r]/(Q)
+e → Ve := Spec Zq [x, 1/r]
+x:U
+
+(2.1)
+
+is a finite étale morphism.
+We impose essentially the same assumptions as in Tuitman’s work, taking into
+account the erratum [Tui20].
+Assumption 2.1. We assume that:
+(1) we are given matrices W 0 ∈ GLdx (Zq [x, 1/r]) and W ∞ ∈ GLdx (Zq [x, 1/x, r])
+such that letting
+b0j :=
+
+dX
+x −1
+
+0
+Wi+1,j+1
+yi ,
+
+and
+
+b∞
+j :=
+
+i=0
+
+dX
+x −1
+
+∞
+Wi+1,j+1
+yi
+
+i=0
+
+for 0 ≤ j < dx the elements b00 , . . . , b0dx −1 form an integral basis for the funce ) over Qq [x] and (after reducing modulo p) for the function
+tion field Qq (U
+∞
+field Fq (U ) = Fq (X) over Fq [x]. We assume the same for b∞
+0 , . . . , bdx −1
+over Qq [1/x] and (after reducing modulo p) over Fq [1/x].
+(2) the discriminant of r is in Z×
+q .
+(3) the discriminants of the Zq -algebras (R0 /(r(X)))red and (R∞ /(1/x))red are
+0
+0
+0
+∞
+in Z×
+q , where R is the Zq [x]-module generated by b0 , . . . , bdx −1 and R
+∞
+∞
+is the Zq [1/x]-module generated by b0 , . . . , bdx −1 . (Note for a ring R, the
+reduced ring Rred is the quotient of R by its nilradical.)
+e → Ve admits a good compactiGeometrically, this assumption means that x : U
+fication [Tui17, Proposition 2.3]. More precisely:
+• there is a smooth relative divisor DP1 such that Ve = P1 \DP1 , and
+Zq
+
+Zq
+
+Zq
+
+e over Zq and a smooth relative divisor
+• there is a smooth proper curve X
+e such that U
+e = X\D
+e
+DXe on X
+e.
+X
+e → P1 . Note that this reduces
+Notation 2.2. We again let x denote the map X
+Zq
+to x : X → P1k in the special fiber.
+e (resp. Ve ) to Fq . We write X
+eQ
+Let U (resp. V ) denote the base change of U
+q
+e
+e
+e
+(resp. UQ . . . .) for the generic fiber of X (resp. U . . . ).
+q
+
+Example 2.3 (c.f. [BT20, Example 2.4]). Suppose p is odd. If X is a hyperelliptic
+e y) = y 2 − f (x) = 0 where deg(f ) is odd and has distinct
+curve of genus g, take Q(x,
+roots modulo p. Then r(x) = f (x) and U is the affine curve with the ramified
+points removed. It is easy to check that a choice of the required integral bases is
+b00 = 1,
+
+b01 = y,
+
+b∞
+0 = 1,
+
+g+1
+b∞
+.
+1 = y/x
+
+The discriminant of r(x) is in Z×
+q as the roots of f are distinct modulo p, or
+equivalently the ramification in the generic and special fibers is the same. We
+likewise see that the third condition in Assumption 2.1 holds, and geometrically
+means that the branch points of the hyperelliptic curve are distinct modulo p.
+
+4
+
+JEREMY BOOHER
+
+Remark 2.4. As discussed in [Tui17, §2], if x is tamely ramified then Assumption 2.1 holds. Tuitman remarks that if p ̸= 2 then X is a tame cover of the
+projective line so if we are willing to vary the morphism x (and plane curve model
+Q) the assumption can be satisfied. More recent work also shows a tame map exists
+when p = 2 [KLW23]. However it appears a subtle question to computationally find
+e of a Q representing X satisfying Assumption 2.1. See [CT18, CV20] for
+a lift Q
+some partial results.
+2.2. Practical Setup. We will end up performing certain computations over a
+e to have coefnumber field rather than a p-adic field. In particular, we require Q
+ficients in the ring of integers in a number field with residue field Fq , not simply
+in Zq . This is not a loss of generality as Tuitman’s implementation [Tui19] of his
+algorithm already requires this. There is no theoretical reason we must do so, but
+a variety of practical reasons make this beneficial.
+Remark 2.5. The main reason Tuitman chooses to work over a number field
+relates to the first part of Assumption 2.1, about having integral bases with nice
+properties. There are efficient and implemented algorithms for computing integral
+e has coefficients in a number field, but it is not clear how
+bases [Hes02, Bau16] if Q
+to do so p-adically and in any case no implementation exists: see [CT18, Remark 2].
+We need these bases as input to the main portion of the algorithm, and in practice
+e well the bases as computed by Magma “usually” have nice properties
+if we pick Q
+(see Heuristic H [CV20, Definition 1.2]). Thus we can often lift Q and compute the
+nice integral bases automatically.
+Remark 2.6. There are some practical issues with working over a number field
+instead of simply Q, leading Tuitman to create two versions of his program for point
+counting, one over prime fields and one over general finite fields. For simplicity, we
+restrict our implementation to the first case when k = Fq = Fp . In other words,
+e defining U
+e actually has integer coefficients.
+we require that the polynomial Q
+The only subtle point for extensions of Fp is modifying the linear algebra computations to reflect that the Frobenius and Verschiebung are semilinear.
+Other parts of the computation are approximations of p-adic computations which
+cannot be performed exactly. This entails selecting a positive integer Nint to be
+the internal precision and performing computations modulo pNint . In particular,
+many of the steps leading to computing a matrix for Frobenius are done with fixed
+internal precision. As we will find in Section 5, it is tricky to correctly reason about
+the p-adic precision of the results of these computations.
+3. Cohomology Theories
+In this section we review several p-adic cohomology theories, their relationships,
+and how they are used in the algorithm. We do not aim for maximum generality,
+e q from
+simply for results which apply to the smooth and proper X/Fq or X/Z
+Section 2. A general reference, focused on applications to point counting, is [Ked08].
+3.1. Rigid Cohomology. See [LS07] for general background on rigid cohomology.
+For our purposes, the main space to be used is the first rigid cohomology H1rig (X),
+which is a Qq -vector space of dimension 2g(X). Most of the computations actually
+take place in the larger H1rig (U ): H1rig (X) is the kernel of the sum of the residue
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+5
+
+maps at the points in X − U (see [Tui17, Theorem 3.11]). The space H1rig (U ) may
+eQ ) ⊗ R† , where R† is the ring
+be realized as the cokernel of the map d : R† → Ω1 (U
+q
+e . This alternate description makes it easy to lift
+of overconvergent functions on U
+the Frobenius and determine the Frobenius action on rigid cohomology. Tuitman’s
+algorithm computes (a p-adic approximation to) this map in order to count points
+on X. We will build on this capacity.
+Remark 3.1. Tuitman provides an explicit description [Tui17, Theorem 3.6]:
+(3.1)
+
+H1rig (U ) ∼
+=
+
+E0 ∩ E ∞
+d(B0 ∩ B∞ )
+
+where E0 ∩ E∞ and d(B0 ∩ B∞ ) are finite-dimensional Qq -vector spaces of differentials with explicit forms describing their behavior above ramified points and
+infinity. This representation is used internally in the implementation, but the exact
+details need not concern us. We will later just need the following two ideas:
+(1) using this representation, the implementation of Tuitman’s algorithm computes a basis Brig for H1rig (X). The Zq -span of these basis elements is a
+Zq -lattice Λrig in H1rig (X).
+eQ ) ⊗ R† representing a rigid cohomology class,
+(2) given an element of Ω1 (U
+q
+we can compute an alternate representative from E0 ∩ E∞ .
+The second works by replacing the differential with an equivalent one with better
+behavior at the ramified points, then doing the same to get better behavior at
+infinity so that it lies in E0 ∩ E∞ : see [Tui17, Theorem 3.7, 3.8]. Tuitman also
+computes the residue maps so we can recover H1rig (X).
+The two major remaining steps to count points are to approximate a lift of
+Frobenius to R† and then to use it to approximate the matrix of Frobenius on
+H1rig (U ) and then H1rig (X). Note that applying the Frobenius to a differential in E0 ∩
+E∞ will not produce a differential of this form, so the ability to find representatives
+for rigid cohomology classes using the second point above is essential.
+3.2. Algebraic de Rham Cohomology. Let C be a smooth proper curve over
+a base S. (We will need S to be either the spectrum of a field or a DVR.) The de
+Rham complex is
+d
+
+0 → OC/S → Ω1C/S → 0
+and the de Rham cohomology H•dR (C/S) is the hypercohomology, which may be
+computed using any acyclic resolution. We drop S from the notation when it is
+clear from context.
+The Čech resolution is a standard acyclic resolution, but we will find it more
+convenient to use an alternate resolution expanding on the classical description of
+de Rham cohomology in terms of differentials of the second kind. Some version of
+this idea has been known to experts for a while, often expressed differently: the
+details over a field were recently written down in [BGK25, §2].
+bC,Q denote the completed local
+Definition 3.2. For a closed point Q of C, let O
+ring at Q, and let KQ be its field of fractions. An enhanced differential of the
+second kind on C is a pair (ω, (fQ )Q∈C ) where:
+(1) ω is a (rational) differential on C;
+
+6
+
+JEREMY BOOHER
+
+bC,Q and if f˜Q ∈ KQ represents fQ then
+(2) for each Q ∈ C, fQ ∈ KQ /O
+1
+ω − df˜Q ∈ ΩOb /S .
+C,Q
+
+Over a field of characteristic zero, the (fQ )Q∈C can be recovered from the local
+expansions of ω via taking an antiderivative, provided all the residues of ω vanish.
+This recovers the classic notation of differentials of the second kind.
+We can generalize the classic description of de Rham cohomology as differentials
+of the second kind modulo exact differentials. For a function f on C, we let dC (f ) =
+(df, (f )Q∈C ) and note the image is an enhanced differentials of the second kind. We
+call the image of dC the exact enhanced differentials of the second kind.
+Fact 3.3 (see [BGK25, Theorem 2.6]). Let S be the spectrum of a field or a DVR.
+Then H1dR (C/S) is isomorphic to the space of enhanced differentials of the second
+kind modulo exact ones.
+We will explain the proof in Section 3.2, which also gives a more concrete realization. Pick an effective divisor D on C and a positive integer n with deg(nD) >
+max(2g(C) − 2, 0). Then to compute H1dR (C/S) it suffices to work with enhanced
+differentials of the second kind (ω, (fQ )Q∈C ) where ω ∈ H 0 (Ω1C/S ((n + 1)D)) and
+fQ = 0 if Q ̸∈ D and ordQ (fQ ) ≥ − ordQ (nD) if Q ∈ D. We therefore omit the
+fQ with Q ̸∈ D from the notation. Classes (ω, (fP )P ∈D ) and (ν, (gP )P ∈D ) are
+equivalent if there is h ∈ H 0 (OC/S (nD)) such that
+ω − ν = dh
+
+and
+
+f P − gP ≡ h
+
+bC,P at each P ∈ D.
+mod O
+
+Remark 3.4. The advantages of this description of the de Rham cohomology are:
+(1) it avoids having to rewrite rational differentials (or functions) as differences
+of differentials (or functions) with poles at specific locations, as required by
+the Čech description;
+(2) it is easy to connect with the description of rigid cohomology in terms of
+differentials;
+(3) it is independent of the characteristic and even works over Zq .
+We end by comparing with rigid cohomology. We adopt the notation of Section 2,
+and take D = DX,Q
+e q.
+Fact 3.5. Sending the class of (ω, (fP )P ∈D ) to the class of ω induces an isomoreQ ) ∼
+phism H1dR (X
+= H1rig (X).
+q
+eQ ) ∼
+More generally, there is an isomorphism H1dR (U
+= H1rig (U ): see [Tui17, Theq
+orem 3.2], which follows from the algorithm described in [Tui17, §3] or as a special
+case of a general result of Baldassarri and Chiarellotto [BC94]. Our result follows as
+eQ )) is the kernel of sums of residue maps: see [Tui17, TheH1rig (X) (resp. H1dR (X
+q
+orem 3.11] (resp. the excision sequence for de Rham cohomology [Ked08, §1.6]).
+3.3. Crystalline Cohomology. The crystalline cohomology H1crys (X) of X is a
+free Zq -module of rank 2g(X). The direct definition of crystalline cohomology
+is neither relevant nor useful for us: we instead need the relation of crystalline
+cohomology with other cohomology theories and with p-divisible groups.
+e and
+Fact 3.6. There are natural isomorphisms H1crys (X) ∼
+= H1dR (X)
+e ⊗Z Qq ∼
+eQ ) ∼
+H1crys (X) ⊗Zq Qq ∼
+= H1dR (X)
+= H1dR (X
+= H1rig (X).
+q
+q
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+7
+
+See [Ked08, §2.1] for a review of the relation between crystalline and de Rham
+cohomology: the connection to rigid cohomology is Fact 3.5. The crystalline cohomology of X naturally has a Frobenius map F induced by the functoriality. The
+adjoint map V satisfies F V = V F = p and is known as the Verschiebung. Note
+e without lifting the Frobenius map of
+that we then obtain similar maps on H1dR (X),
+schemes to characteristic zero.
+Remark 3.7. Crystalline cohomology provides a lattice in H1rig (X) which is stable
+under Frobenius and Verschiebung. More concretely, the matrices representing F
+and V with respect to a basis of H1crys (X) have entries in Zq , while the matrices
+with respect to a basis of H1rig (X) will usually have entries with negative valuation.
+This is crucial for understanding the p-adic precision required in various steps of
+our algorithm.
+We now turn to the connection with p-divisible groups. Recall that the Dieudonné
+ring is the ring W (k)[F, V ] and the indeterminates F and V satisfy the relations
+F V = V F = p,
+
+F c = σ(c)F,
+
+and
+
+cV = V σ(c)
+
+where σ : W (k) → W (k) is the unique automorphism reducing to the Frobenius.
+A Dieudonné module is a module over the Dieudonné ring. For a short guide to
+Dieudonné modules and their relation with p-divisible groups, see [CCO14, §1.4.3].
+The key result is a Dieudonné functor D giving an anti-equivalence of categories.
+In our situation, W (k) = Zq and H1crys (X) is naturally a Dieudonné module
+using the Frobenius and Verschiebung.
+Fact 3.8. Let Jac(X)[p∞ ] be the p-divisible group of the Jacobian of X. There is
+an isomorphism of Dieudonné modules D(Jac(X)[p∞ ]) ∼
+= H1crys (X).
+This is essentially Mazur-Messing [MM74], plus the isomorphism between the
+first crystalline cohomology of a curve and of its Jacobian.
+Remark 3.9. Similarly, D(Jac(X)[pn ]) ∼
+= H1crys (X) ⊗Zq Zq /(pn ).
+4. Computing the de Rham Cohomology of the Lift
+4.1. More on Enhanced Differentials of the Second Kind. We now explain
+e using enhanced differentials of the second kind.
+how to compute a basis for H1dR (X)
+We begin by reviewing the proof of Fact 3.3 and realizing it can be made effective.
+Remark 4.1. As previously mentioned, versions of this idea have been known
+to experts for a while. Something similar appears in notes of Edixhoven [Edi06,
+Theorem 5.3.1] for hyperelliptic curves, with details in the thesis of van der Boogart
+[Bog08]. A version also appears when Tuitman is analyzing p-adic precision [Tui17,
+Proposition 4.5].
+We let C/S be our smooth proper curve and D be a (relative) effective divisor
+on C. Pick n such that deg(nD) > max(2g(C) − 2, 0). We assume that S is the
+spectrum of a field or a DVR. The key idea is to compute de Rham cohomology
+using the acyclic “pole-order” resolution in Figure 1.
+By our choice of n, it is standard that the resolution is acyclic using Serre
+duality when working over a field. This continues to hold when S = Spec Zq ,
+and furthermore the global sections of the sheaves involved are free, as explained
+in [Bog08, Ch. 3, 3.1. Lemma]. The same argument works for the spectrum of any
+
+8
+
+JEREMY BOOHER
+
+0
+
+0
+
+Ω1C/S
+
+Ω1C/S ((n + 1)D)
+
+d
+
+d
+
+OC/S
+
+ı2
+
+Ω1C/S ((n + 1)D)|(n+1)D
+
+0
+
+d
+
+OC/S (nD)
+
+ı1
+
+OC/S (nD)|nD
+
+0
+
+Figure 1. The Pole-Order Resolution D(n) of the de Rham Complex.
+discrete valuation ring (and in fact even more generally). Thus we extend [BGK25,
+Theorem 2.6]:
+Theorem 4.2. Let S be the spectrum of a field or a DVR. Then H1dR (C/S) is
+isomorphic to the first homology of the total complex of global sections of the poleorder resolution in Figure 1.
+To make OC/S (nD)|nD more concrete, note that OC/S (nD)|nD ∼
+= OnD (nD) is
+a skyscraper sheaf supported on D. Given a point P in the support of D with
+multiplicity mP , let AP denote the local ring at the special point of P , RP be the
+residue ring, and tP a uniformizer at P (a generator of the ideal sheaf OC/S (−P )
+in a neighborhood of P ). By smoothness, we know that the completion of AP is
+P
+AP /AP ∼
+isomorphic to RP [[tP ]]. Then the stalk of OC/S (nD)|nD at P is t−nm
+=
+P
+−nmP
+tP
+RP [[tP ]]/RP [[tP ]]. Thus the map ı1 : OC/S (nD) → OC/S (nD)|nD records the
+“Laurent series tails” of rational functions at the points in the support of D. These
+are the (fP )P ∈D appearing in the notion of enhanced differentials of the second
+kind. Similarly the map ı2 : Ω1C/S ((n + 1)D) → Ω1C/S ((n + 1)D)|(n+1)D consists of
+taking “Laurent series tails” of expansions at each P ∈ D.
+′
+Notation 4.3. Let SnD (resp. S(n+1)D
+) denote the global sections of OC/S (nD)|nD
+(resp. Ω1C/S ((n + 1)D)|(n+1)D ), so:
+Y
+
+P
+SnD ∼
+RP [[tP ]] /RP [[tP ]]
+t−nm
+=
+P
+P ∈Supp(D)
+′
+∼
+S(n+1)D
+=
+
+Y
+
+
+
+−(n+1)mP
+
+tP
+
+
+RP [[tP ]] /RP [[tP ]] · dtP .
+
+P ∈Supp(D)
+
+4.2. Computing with Enhanced Differentials of the Second Kind. We now
+present Algorithm 2, an idealized algorithm for computing a basis for H1dR (C/S)
+using the total complex
+(4.1)
+
+d⊕ı
+
+d−ı
+
+′
+H 0 (C, OC/S (nD)) →1 H 0 (C, Ω1C/S ((n + 1)D)) ⊕ SnD →2 S(n+1)D
+.
+
+If S is the spectrum of a field, the first three steps of the algorithm (computing Riemann Roch spaces and spaces of differentials, computing uniformizers, and
+computing local expansions) are well studied problems and efficient algorithms have
+been implemented (at least for exact coefficient fields). The fourth and fifth steps
+then can be easily solved using linear algebra. However, there are two complications
+e q ):
+with making this work over Zq in order to compute H1dR (X/Z
+• Zq is not a field and, to the best of our knowledge, algorithms for the
+geometric problems in the first three steps have only been studied over
+fields;
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+9
+
+Algorithm 2 Idealized Algorithm for de Rham Cohomology
+1: Compute bases for H 0 (C, Ω1C/S ((n + 1)D)) and H 0 (C, OC/S (nD)).
+2: Compute the uniformizers tP at each P ∈ Supp(D).
+3: Compute the images of basis elements under ı1 and ı2 by computing local
+
+expansions.
+4: Compute ker(d − ı2 ) and Im(d ⊕ ı1 ).
+5: Compute a basis for the quotient ker(d − ı2 )/ Im(d ⊕ ı1 ), which is isomorphic
+
+to H1dR (C/S).
+• Zq (and Qq ) are not exact, so any implementation would have to correctly
+track p-adic precision.
+When implementing the algorithm, we work over a number field. This is no loss
+e over a number field anyway to use Tuitman’s
+of generality: we need a model of X
+work [Tui19]. This choice allows us to use Magma’s function field machinery over
+the field of fractions which does not work over p-adic fields. The choice also removes
+the need to perform linear algebra over Zq and track p-adic precision. We will
+discuss the implementation in Section 4.3: it gives a practical (but not theoretically
+pleasing) solution to both complications.
+For the rest of this subsection, we focus on analyzing a portion of the idealized
+algorithm treating the first two steps as a black box. The geometric questions for
+curves over a DVR that we ignore are interesting but beyond the scope of this work.
+We temporarily let O ⊂ Zq denote the ring of coefficients we will work with: for
+a theoretical analysis we take O = Zq but the implementation will take O to be
+the ring of integers in a number field. Let K be the field of fractions.
+1
+e
+Notation
+Pt4.4. Viewing X as a cover of P via projecting onto the x-coordinate,
+let D = i=1 ni Pi be the divisor above infinity (over O). Let
+
+e O e (nD))
+s = rankZq H 0 (X,
+X
+
+and
+
+e Ω1 ((n + 1)D)).
+s′ = rankZq H 0 (X,
+e
+X
+
+e is O(dx dy ) [Tui17, Proposition 4.1] so
+Remark 4.5. Recall that the genus of X
+that deg(nD) can also be chosen to be O(dx dy ). We therefore conclude that s and
+s′ are O(dx dy ) by Riemann-Roch. Finally, notice that t is at most dy (the degree
+of the projection map).
+Theorem 4.6. Suppose we are given:
+• differentials ω1 , . . . , ωs′ (resp. functions f1 , . . . , fs ) defined over O forming
+e Ω1 ((n + 1)D)) (resp. H 0 (X,
+e O e (nD)));
+an Zq -basis for H 0 (X,
+e
+X
+X
+e defined over O, one of which is a uniformizer at
+• functions u1 , . . . , ut on X
+each element of Supp(D).
+e where the number of operations in the
+Then we may compute a Zq -basis of H1dR (X)
+coefficient ring O is polynomial in dx and dy .
+Proof. We slightly modify steps 3-5 of Algorithm 2.
+For the third step, we compute local expansions over K, since the functions,
+differentials, and uniformizers are defined over O. The coefficients of the local
+expansions will lie in the residue fields of P1 , . . . , Pt which are extensions of K.
+As one of the u1 , . . . , ut is a uniformizer at each element of Supp(D), we conclude
+that the coefficients of the local expansions are integral over O (i.e. the coefficients
+
+10
+
+JEREMY BOOHER
+
+of the expansion lie in the residue ring of the element of Supp(D), which is a
+finite extension of O). Therefore the denominators of the coefficients are prime to
+p. After rescaling the chosen bases, we therefore may assume the coefficients are
+integral over O without changing the Zq -span.
+Using the rescaled bases of the spaces of functions and differentials, and the
+′
+natural bases for SnD and S(n+1)D
+given by powers of the uniformizers, we may
+therefore write down matrices which represent ı1 and ı2 . It is straightforward to
+write down a similar matrix for d by differentiating.
+Using this information, the computation of bases for ker(d − ı2 ) and Im(d ⊕
+ı1 ) in the fourth step is then a computation using Hermite normal form over O.
+Finally, computing the quotient in step 5 can be done using Smith normal form.
+See Cohen’s textbook for a discussion of Hermite and Smith normal forms over
+Dedekind domains [Coh00, §1.3,1.4,1.5] and their connection with the computations
+of bases for kernels and quotients.
+It remains to analyze the complexity and show the number of operations performed is polynomial in dx and dy . At each of the t elements P ∈ Supp(D), we must
+compute at most (n + 1) ordP (D)-terms in the local expansion at P . As deg(nD)
+′
+is O(dx dy ), so are dim S(n+1)D
+and dim SnD and hence so is the total number of
+terms in the local expansions we must compute. Thus a polynomial number of
+operations in O suffice to compute matrices representing ı1 and ı2 .
+For the computations of the Hermite and Smith normal forms, even the simplest
+versions of the algorithms only require a polynomial number of operations in the
+dimensions of the matrices, which as seen above are O(dx dy ).
+□
+Remark 4.7. As is common in algorithms based on linear algebra, we analyze
+the complexity based on the number of operations in O. This can be somewhat
+misleading when working over an exact coefficient ring as the computation can easily
+introduce “coefficient explosion” in intermediate steps. In that case, the running
+time would not actually be polynomial in the size of the inputs. More sophisticated
+versions of the algorithms for computing the normal forms (also studied in [Coh00])
+take this into account.
+The idealized version of the algorithm works over Zq , so in some sense coefficient explosion is not an issue. However, computations over Zq inherently require
+approximation so this comes at the expense of having to track precision.
+Remark 4.8. If K is a number field of degree r over Q, then a single operation
+in O requires a number of operations with integers which is polynomial in r. If
+K = Qq , then a single operation in O = Zq performed with precision N requires a
+polynomial in log(q)N = log(p)rN operations.
+4.3. Implementation and Assumptions. We conclude by describing a practical
+variant of Algorithm 2.
+Notation 4.9. Let O be the ring of integers of the number field K, the ring
+e is defined. Fix a place p above p such that the complete local ring
+over which X
+of O at p is isomorphic to Zq . Without loss of generality, we may assume that
+[Fq : Fp ] = r = [K : Q], i.e. that p is inert.
+Remark 4.10. The support of the divisor D over infinity may look different when
+working over O versus Zq , as points may split when passing to the completion.
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+11
+
+In practice, we implement the linear algebra in Theorem 4.6 over O with a
+few small modifications. We pick a Z-basis for O (and similarly for the residue
+rings of elements in the support of D) which reduces all of the Hermite and Smith
+normal form computations over the Dedekind domain O to computations over Z. In
+fact, we can do everything using Magma’s functionality for free Z-modules without
+explicitly referencing the normal forms.
+The main challenge is producing the functions, differentials, and uniformizers for
+use in Theorem 4.6. The pragmatic answer is to simply perform computations over
+the number field K: the results will almost always work over Zq in practice.
+Correctness can easily be verified. To check that a set of functions (resp. differentials) defined over K are a basis for the Zq -module, the first requirement is that
+we can reduce them modulo p. If we can, then using Nakayama’s lemma we simply
+verify they form a basis for the corresponding space modulo p. Similarly, we can
+compute a uniformizer over K and check its behavior in the special fiber. But we
+do not have a guarantee this will always work.
+Assumption 4.11. We assume we are given differentials ω1 , . . . , ωs′ and functions
+f1 , . . . , fs , and uniformizers u1 , . . . , ut satisfying the hypotheses of Theorem 4.6, for
+example those usually produced by Magma working over the number field K.
+Remark 4.12. The algorithm for computing Riemann-Roch spaces implemented
+in Magma is based on [Hes02], and requires working over a field. Hess’s algorithm
+involves computing integral closures in function fields. In order to use Tuitman’s
+algorithm, we have already had to assume Assumption 2.1, one piece of which
+concerns having bases over Zq giving integral bases in the generic and special fibers.
+Recalling Remark 2.5, we are “usually” able to find the required bases by working
+over K. Thus Assumption 4.11 is an extension of the preexisting assumption:
+integral bases for the function fields over K and Fq behave similarly so the results
+of Hess’s algorithm over K give a Zq -basis for the Riemann-Roch space.
+Remark 4.13. The functions and differentials needed in Theorem 4.6 can be computed in polynomial time when working over K. The exact complexity exponent
+is not completely clear. To the best of our knowledge it has not been analyzed for
+Hess’s algorithm, which is what we are making use of in Magma.
+We illustrate Assumption 4.11 for Artin-Schreier curves, showing it is reasonable.
+We look at X given by y p − y = f (x), where f (x) ∈ Fq [x] is a polynomial of degree
+d with p ∤ d. We may take Q(x, y) = y p − y − f (x) as the plane curve model.
+e = y p − y − fe(x) and X
+e as in Section 2.
+Suppose we are given Q
+As always, we project onto the x-coordinate. We know the special fiber is (wildly)
+totally ramified only over infinity, and has genus (p − 1)(d − 1)/2. The generic fiber
+also has genus g = (p − 1)(d − 1)/2, and is (tamely) totally ramified over infinity.
+eQ where
+It also has (p − 1)d simple branch points, the geometric points on X
+q
+p−1
+py
+− 1 = 0.
+Notation 4.14. Let P∞ be the unique point at infinity, viewed as a Zq -point. For
+integers i, j with 0 ≤ j ≤ p − 1 we let
+fi,j := xi y j ,
+
+ω
+e :=
+
+dx
+,
+1 − py p−1
+
+and
+
+ωi,j := fi,j ω
+e.
+
+12
+
+JEREMY BOOHER
+
+Lemma 4.15. For integers i, j with 0 ≤ j ≤ p − 1, we have
+ordP∞ (fi,j ) = −pi − dj
+
+and
+
+ordP∞ (ωi,j ) = 2g − 2 − pi − dj.
+
+These have poles at points above 0 if and only if i < 0, and are otherwise regular.
+Proof. We just need a few elementary observations.
+(1) The function x has a pole of order p at P∞ and is otherwise regular.
+(2) The function y has a pole of order d at P∞ , and is otherwise regular.
+(3) The differential ω
+e is regular and only has a zero of order 2g − 2 = (p −
+1)(d − 1) − 2 at P∞ .
+The result is now clear.
+□
+Remark 4.16. Note that the differential dx over Zq is not as well behaved. In the
+generic fiber, it has simple zeros at the (p−1)d geometric branch points and a pole of
+order p+1 at P∞ . In the special fiber, it has a zero of order 2g−2 = (p−1)(d−1)−2
+at P∞ due to the wild ramification in characteristic p.
+We take n = (2g − 1) and D = [P∞ ] and investigate Assumption 4.11.
+e O e (nD)) is
+Proposition 4.17. A Zq -basis for H 0 (X,
+X
+
+B1 = fi,j := xi y j : 0 ≤ i, 0 ≤ j ≤ p − 1, pi + dj ≤ (p − 1)(d − 1) − 1 .
+e Ω1 ((n + 1)D)) is
+A Zq -basis for H 0 (X,
+e
+X
+
+
+dx
+:
+0
+≤
+i,
+0
+≤
+j
+≤
+p
+−
+1,
+pi
++
+dj
+≤
+2(p
+−
+1)(d
+−
+1)
+−
+2
+.
+B2 = ωi,j := xi y j
+1 − py p−1
+Pick integers a, b such that pa + db = −1: then u = xa y b is a uniformizer at P∞ .
+Proof. Both Zq -modules are free of known dimension as explained in [Bog08, Ch.
+3, 3.1. Lemma]. Lemma 4.15 shows the specified elements lie in the appropriate
+spaces. They are linearly independent as each has distinct order of vanishing at the
+point at infinity, and reducing modulo p certainly form a basis for the analogous
+spaces in the special fiber. Thus they form a basis by Nakayama’s lemma.
+Lemma 4.15 also shows that u is a uniformizer at P∞ : such a, b exist since
+gcd(d, p) = 1.
+□
+e y) = y 7 − y − x3 .
+Example 4.18. Consider the case that p = 7, d = 3, and Q(x,
+Thus n = (d − 1)(p − 1) − 1 = 11. Working over Q, the algorithm in Magma
+produces a basis
+y 3 , y 2 , xy, y, x, 1
+eQ , O e (nP )), which is the natural one occurring in Proposition 4.17.
+for H 0 (X
+q
+
+XQq
+
+eQ , Ω1
+The basis for H 0 (X
+q
+e
+X
+
+((n + 1)D) computed by Magma initially looks much
+Qq
+
+more complicated when written as a multiple of dx, but we see they are monomial
+multiples of ω
+e as in Proposition 4.17.
+Remark 4.19. We will briefly comment on how Proposition 4.17 could generalize
+to arbitrary plane curves. There are alternate approaches to computing RiemannRoch spaces which rely on some form of Brill-Noether theory and use the notion
+of an adjoint curve or adjoint divisor. See [ABCL22] for a recent example, and
+Section 1.3 of loc. cit. for references to this strand of inquiry.
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+13
+
+For example, for a smooth projective curve X with plane curve model given by
+Q(x, y) = 0, a natural basis for the space of regular differentials is given by
+dx
+xi y j
+Qy
+where Qy denotes a partial derivative with respect to y. The allowable indices i
+and j depend on the singularities of the plane model in the form of the adjoint
+curve, and can be modified to allow constrained poles above infinity. This is used,
+for example, in [SV87] to compute a matrix representation of the Cartier operator
+on the space of regular differentials. Note that Qy = py p−1 − 1 in the case of
+an Artin-Schreier curve, so this matches the basis B2 in Proposition 4.17. One can
+imagine generalizing that proposition and implementing an algorithm for computing
+Riemann-Roch spaces over Zq by studying the adjoint curve and extending this
+approach to work in the relative setting. But this is beyond the scope of this work.
+We also work out a basis for the crystalline cohomology of Artin-Schreier curves.
+It is of independent interest and used in a test case for our implementation. We
+use enhanced differentials of the second kind supported on P∞ , i.e. coming from
+the total complex of Equation 4.1 with D = [P∞ ] and n = (2g − 1). Thus we
+only indicate the P∞ component in Definition 3.2. This generalizes [SZ03, Lemma
+e Ω1 )) and [Zho21, Proposition 2.3] (a basis for H1dR (X/Fq )).
+3.1] (a basis for H 0 (X,
+e
+X
+
+These use the Ćech resolution, but can be converted using [BGK25, §2.3].
+
+Theorem 4.20. Let hi,j = (p − 1 − j)xfe′ (x) − (i + 1)pfe(x), and h≥i+2
+(x) denote
+i,j
+the terms of hi,j where the degree of x is at least i + 2. We set
+h≥i+2
+(x)y p−2−j
+dx
+i,j
+.
+i+2
+x
+1 − py p−1
+e is
+Then a basis for H1crys (X) ∼
+= H1dR (X)
+
+(ωi,j , 0), (ψi,j , f−(i+1),p−1−j ) : 0 ≤ i, j, pi + dj ≤ 2g − 2 .
+ψi,j := −
+
+Proof. Note that ωi,j is regular so (ωi,j , 0) is a well-defined enhanced differential of the second kind. Moreover ψi,j is regular except at P∞ . Computing
+d(f−(i+1),p−1−j ) and using Lemma 4.15 we see that ψi,j −d(f−(i+1),p−1−j ) is regular
+at P∞ . This computation is very similar to one in the proof of [Zho21, Proposition 2.3], and shows (ψi,j , f−(i+1),p−1−j ) is well-defined. All of these elements are
+defined over Zq , and there are 2g = (p − 1)(d − 1) such elements, so it suffices to
+check their independence in the special fiber.
+It is well known that the regular ωi,j form a basis for H 0 (X, Ω1X ) as they have
+distinct orders of vanishing at P∞ . The natural map
+H1dR (X) → H1 (X, OX ) ≃ (SnD ⊗ Fp )/H 0 (X, OX (nD))
+sends (ω, f ) to f , and it is again standard (implicit in [Zho21, Proposition 2.3] for
+example) that the f−(i+1),p−1−j form a basis.
+□
+5. Analyzing p-adic Precision
+5.1. Some Lattices. The relative positions of several lattices in H1rig (X) are important for understanding the precision of Tuitman’s algorithm. Recall from Remark 3.1 that Brig is the basis for H1rig (X) used internally in Tuitman’s implementation, and Λrig is the Zq -lattice it generates.
+
+14
+
+JEREMY BOOHER
+
+Notation 5.1. Fix a Zq -basis Bcrys for H1crys (X), and let Λcrys be the image of
+H1crys (X) in H1rig (X) under the inclusions and isomorphisms provided by Fact 3.6.
+e ) provides
+Using the description in Remark 3.1, the intersection (E0 ∩E∞ )∩Ω1 (U
+1
+a natural Zq -lattice in Hrig (U ) and, after passing to the kernel of the residue maps,
+′
+in H1rig (X). We denote it by Λ′rig , and pick a basis Brig
+.
+We denote the matrix of F with respect to a basis Bcrys (resp. Brig ) by [F ]crys
+(resp. [F ]rig ), and similarly for V .
+The matrices for F and V relative to (any) basis for H1crys (X) lie in Mat2g,2g (Zq )
+as F and V preserve the rank 2g Zq -module H1crys (X). However, the matrices for
+F (and V ) relative to Brig will usually not be in Mat2g,2g (Zq ) and it is crucial but
+somewhat subtle to understand the valuation of the entries.
+Notation 5.2. Let γ1 and γ2 be the smallest non-negative integers such that
+(5.1)
+
+pγ1 Λrig ⊂ Λcrys ⊂ p−γ2 Λrig .
+
+Let γ3 be the smallest non-negative integer such that
+pγ3 Λ′rig ⊂ Λrig .
+Basic linear algebra then shows that
+(5.2)
+
+[F ]rig ⊂ p−γ1 −γ2 Mat2g,2g (Zq ).
+
+In contrast, Tuitman [Tui17, Definition 4.4, Proposition 4.5] defines explicit δ1 , δ2
+and proves that
+(5.3)
+
+pδ1 Λ′rig ⊂ Λcrys ⊂ p−δ2 Λ′rig .
+
+′
+The matrix for F relative to Brig
+has valuation at least −(δ1 + δ2 ).
+
+Remark 5.3. The lattice Λ′rig defined above is not equal to the lattice Λrig used
+in the implementation of Tuitman’s algorithm, despite that being the intent. This
+leads to a disconnect between the theoretical results from [Tui17] (which are for
+Λ′rig ), that are used to predict the precision of the computation, and the actual
+precision in Tuitman’s implementation [Tui19]. This is a source of occasional errors
+in the computation of the zeta function. We will discuss an example in depth in
+Section 5.3.
+5.2. How Much Precision is Needed? Computationally, all p-adic numbers are
+represented by integer or rational approximations. Tuitman’s algorithm approximates a lift of the Frobenius map on overconvergent functions and then the matrix
+[F ]rig for the Frobenius on the rigid cohomology of X. All of these approximations
+are done modulo a fixed power pNint : here Nint is the internal precision of Tuitman’s
+algorithm. We begin by reviewing a few ideas about p-adic precision.
+As discussed in Remark 3.1, we can rewrite elements of Bcrys as a linear combination of the elements of Brig using the inclusion from Fact 3.6. This also involves
+working modulo pNint , and gives us a matrix C ∈ Mat2g,2g (Qq ) representing the
+change of basis from Bcrys to Brig . Understanding how accurate the computed
+values for [F ]crys and C are based on Nint is essential.
+When approximating a p-adic number, the absolute precision is a if the computed value is correct modulo pa , i.e. if the valuation of the difference between the
+computed and correct values is known to be at least a. Thus we speak of computing
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+15
+
+a p-adic number or p-adic matrix to precision a. The precision (resp. valuation) of
+a p-adic matrix is the minimum precision (resp. valuation) of the entries.
+We will think about p-adic precision for matrices using the approach from [CRV14],
+where Caruso, Roe, and Vaccon represent the uncertainty in an approximation as a
+lattice and understand how it changes via analyzing the derivative of the function
+being computed. In their language, we are mainly interested in flat precision, where
+the lattice is pa Mat2g,2g (Zq ). When applying a matrix with valuation at least −b
+to the lattice, the resulting lattice is contained in pa−b Mat2g,2g (Zq ), so the result
+has (flat) precision at least a − b. To illustrate the method, we repeat the proof
+of [CRV17, Proposition 3.6] as we will need this result.
+Lemma 5.4. Given A ∈ GLn (Qq ) with precision a, suppose vp (A−1 ) = m. Then
+the inverse A−1 has precision at least a + 2m.
+Proof. The derivative of the matrix inversion map at A sends dA to A−1 dAA−1 . If
+vp (dA) ≥ a then vp (A−1 dAA−1 ) ≥ a + 2m as desired.
+□
+Proposition 5.5. Given [F ]rig with precision N ′ := N +γ1 +γ2 +1 and the change
+of basis matrix C from Bcrys to Brig with precision N ′′ := N + γ1 + 2γ2 + 1, we
+obtain [F ]crys with precision N + 1 and [V ]crys with precision N .
+Proof. For ease of notation, let A = [F ]crys and B = [F ]rig so that A = C −1 BC.
+The derivative of the conjugation map (X, Y ) 7→ Y −1 XY at (B, C) is
+(5.4)
+
+C −1 dCC −1 BC + C −1 dBC + C −1 BdC.
+
+Note that vp (C −1 BC) ≥ 0 as A = [F ]crys has integral entries. By (5.2), we know
+vp (B) ≥ −γ1 − γ2 and by definition we know that vp (C) ≥ −γ2 and that vp (C −1 ) ≥
+−γ1 . Thus the valuation of (5.4) is at least
+min(N ′′ − γ1 , N ′ − γ1 − γ2 , N ′′ − γ1 − 2γ2 ) = N + 1.
+Thus A = [F ]crys has precision N + 1.
+−1
+−1
+[V ]crys ) ≥ −1 since [V ]crys has
+Now [V ]crys = p[F ]−1
+crys and vp ([F ]crys ) = vp (p
+integral entries. Thus Lemma 5.4 shows that we obtain [F ]−1
+crys with precision N − 1
+and hence [V ]crys with precision N .
+□
+′
+Remark 5.6. Similarly, it suffices to know a matrix for F with respect to Brig
+′
+with precision N + δ1 + δ2 + 1 and change of basis matrix from Bcrys to Brig with
+precision N + δ1 + 2δ2 + 1.
+
+This allows us to compute [F ]crys and [V ]crys with any desired precision provided
+we correctly understand the precision of the outputs of Tuitman’s algorithm.
+5.3. An Illustrative Example. As mentioned in Remark 5.3, there is a subtle mismatch between the theoretical analysis in [Tui17] and its implementation
+[Tui19]. We will give an example to demonstrate this issue.
+Example 5.7. Consider the Artin-Schreier curve X given by x7 − x = y 6 + 2y 3 +
+y 2 + 3 in characteristic p = 7, with map to P1 given by projecting onto the x-axis.
+We compute [F ]rig and C using Tuitman’s algorithm with varying internal precision
+Nint , and use this to compute [F ]crys and [V ]crys . The precision of the results are
+shown in Table 1. (To see the precision, we also performed the computations with
+a much larger internal precision, in this case Nint = 40, and compared with this
+
+16
+
+JEREMY BOOHER
+
+Nint [F ]crys [V ]crys C C −1 [F ]rig
+19
+1
+0
+19 19
+8
+20
+2
+1
+20 20
+9
+21
+3
+2
+21 21
+10
+22
+4
+3
+22 22
+11
+26
+8
+7
+26 26
+15
+Table 1. Precision of outputs with varying internal precision in
+Tuitman’s algorithm, x7 − x = y 6 + 2y 3 + y 2 + 3 over F7
+
+reference value.) Note that increasing the internal precision increases the precision
+of the outputs as expected.
+The computations also reveal that
+(5.5)
+
+v7 ([F ]rig ) = −9,
+
+v7 (C) = −9,
+
+and
+
+v7 (C −1 ) = 0.
+
+Recalling Notation 5.2, this shows that γ1 = 0 and γ2 = 9. Note that vp ([F ]rig ) ≥
+−γ1 − γ2 = −9 in accordance with (5.2).
+Using Proposition 5.5, to compute the crystalline cohomology of X modulo p (i.e.
+the de Rham cohomology of X or equivalently the Dieudonné module of Jac(X)[p]),
+we take N = 1 so that N ′ = N ′′ = 11. We see that Tuitman’s algorithm gives [F ]rig
+with enough precision when Nint ≥ 22.
+Note the isomorphism class of Jac(X)[p] or equivalently its Dieudonné module
+H1dR (X) is equivalent to the Ekedahl-Oort type of X. Our result agrees with an
+independent computation of the EO type using code of Colin Weir [Wei20] which
+computes F and V on H1dR (X) using the Čech description of de Rham cohomology.
+Remark 5.8. The precision of C and C −1 equals the internal precision. This is
+a consequence of the fact we compute Bcrys and Brig exactly (i.e. working over Q)
+instead of working with p-adic approximations. For Bcrys , this is a feature of how
+we are computing it. We could instead approximate Brig to potentially speed up
+computations (Tuitman’s implementation supports either approach), but this leads
+to errors and in any case finding a basis for H1rig (X) is not the bottleneck.
+Example 5.7 reveals two signs of a problem in the implementation of Tuitman’s
+algorithm:
+(1) The computation that v7 ([F ]rig ) = −9 contradicts [Tui17, Corollary 4.6],
+which asserts a lower bound on the valuation of [F ]rig which in this case
+is −2 (as δ1 = 1 and δ2 = 1). Equivalently, the computed value γ2 = 9
+contradicts the second inclusion in (5.3) as δ2 = 1.
+(2) The proof of [Tui17, Proposition 4.7] makes a prediction about the precision
+of [F ]rig based on Nint which is incorrect. For example, when Nint = 20 it
+asserts the precision of [F ]rig should be at least 17, which is false.
+Both these are caused by the error noted in Remark 5.3, that the lattice Λ′rig
+that is analyzed theoretically is not in fact equal to the lattice Λrig used internally
+in the implementation.
+5.4. Provably Correct Precision. The precision errors cause errors when computing zeta functions. There are incomplete fixes in the implementation but no
+discussion of them in the literature, so we will explain this carefully.
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+17
+
+Running Tuitman’s implementation [Tui19] on the curve in Example 5.7 and
+choosing to approximate Brig p-adically (the default choice), internal error-checking
+catches and reports an error with the numerator of the zeta function.1
+Performing the same computation and choosing to compute Brig exactly gives the
+correct zeta function and point count. The most recent version of [Tui19] provably
+computes the zeta function, while the initial version and the version included in
+Magma use insufficient precision.2
+Let us review how to understand the precision of [F ]rig , which appears in the
+proof of [Tui17, Proposition 4.7]. The starting point is applying Frobenius to a
+differential ωi ∈ Brig , obtaining
+!
+x −1
+X dX
+wi,j,k (x) 0 dx
+bk
+(5.6)
+F (ωi ) =
+rj
+r
+j∈Z
+
+k=0
+
+where the wi,j,k (x) ∈ Zq [x] satisfy deg(wi,j,k (x)) < deg(r) and have precision Nint .
+We next use idea (1) of Remark 3.1 to compute an element of E0 ∩ E∞ representing
+the same rigid cohomology class. This causes a loss of precision as the rewriting process involves p-adic denominators. When applied to terms with j > 0 (resp. j < 0),
+the loss in precision is f1 (Nint ) (resp. f2 ) using the notation from [Tui17, Definition
+4.8]. (The exact formulas for f1 and f2 are irrelevant for this explanation.) Finally,
+this element gives an equivalence class in E0 ∩E∞ /d(B0 ∩B∞ ) ∼
+= H1rig (U ), which up
+to the error in the approximation lies in H1rig (X), the kernel of the residue maps. So
+we express it in terms of the basis Brig and hence obtain information about [F ]rig .
+We can express this via the composed quotient and projection maps, which is a
+linear map
+(5.7)
+
+pr : E0 ∩ E∞ → H1rig (X).
+
+Example 5.9. For the Artin-Schreier curve in Example 5.7, if Nint = 22 then
+f1 (Nint ) = 3 and f2 = 2. Thus we would expect [F ]rig to have p-adic precision at
+least 22 − 3 = 19. However, when rewriting the equivalence class of the element
+of E0 ∩ E∞ in terms of Brig , the coefficients actually have p-adic denominators. In
+particular, the matrix for pr has valuation −9 (using a Zq -basis for (E0 ∩ E∞ ) ∩
+e ) and Brig as the bases). This explains why [F ]rig has precision much lower
+Ω1 (U
+than expected, in this case 11 instead of 19.
+This last step should not cause a loss of precision if we use a basis for H1rig (X)
+that is a Zq -basis for the lattice Λ′rig , as by definition Λ′rig is the lattice induced
+e ) ∩ (E0 ∩ E∞ ). The fact that the matrix for pr has negative valuation
+by Ω1 (U
+illustrates that Λ′rig is not equal to Λrig .
+Lemma 5.10. We have vp (pr) ≥ −γ3 .
+e ). Then image under the
+Proof. Let ω be an arbitrary element of (E0 ∩ E∞ ) ∩ Ω1 (U
+1
+′
+quotient map to Hrig (X) is in Λrig . Recalling Notation 5.2, we conclude the image
+lies in p−γ3 Λrig as desired.
+□
+1An initial approximation produced v (pr) = −42, and then the internal precision was inp
+creased from 14 to 99 due to a partial understanding of the underlying issue.
+2The incorrect versions choose internal precision N
+int = 23 due to a partial understanding
+of the issue. Then [F ]rig only had p-adic precision 12, while precision 14 is needed to provably
+compute the zeta function [Tui17, Proposition 4.9].
+
+18
+
+JEREMY BOOHER
+
+There are two reasonable approaches to addressing the error regarding precision
+caused by Λrig and Λ′rig differing.
+(1) Correctly compute a basis for Λ′rig and use that basis as Brig throughout
+the implementation of the algorithm.
+(2) Use the current basis Brig for Λrig and account for the loss of precision
+caused by denominators in the entries of pr.
+Both are reasonable: we choose to implement the second in order to make
+this work more self-contained, treating Tuitman’s algorithm and implementation
+as black boxes as much as possible.
+Remark 5.11. An additional reason to choose the second approach is that it is
+non-trivial to actually compute a basis for Λ′rig . As explained in [Tui16, §4.1], this
+is a problem in linear algebra over Zq , and can be approached using Smith normal
+form like some of the questions in Section 4. However, especially when working with
+approximations to p-adic numbers this is tricky to do, and an incorrect workaround
+in [Tui19] is what caused the underlying issue that Λrig ̸= Λ′rig .
+The fundamental mathematical problem is that for a matrix A with coefficients
+in a domain R with field of fractions K, computing a K-basis the kernel of A does
+not necessarily give a R-basis for the kernel even if the coefficients of the basis
+elements lie in R.
+As discussed in Section 4, in practice we compute Bcrys over a number field.
+Tuitman’s implementation has the option to either compute Brig over a number
+field or to compute a p-adic approximation: we choose the former option. This
+is important as otherwise Brig and vp (pr) can (and do) depend on the internal
+precision Nint . These precomputations allow us to know γ1 , γ2 , γ3 (Notation 5.2)
+before selecting an internal precision Nint and computing [F ]rig , which is the most
+expensive step.
+Recall that there were quantities f1 (n) and f2 defined in [Tui17, Definition 4.8] to
+measure the loss of precision upon rewriting a general differential to lie in E0 ∩ E∞
+Then the discussion above shows:
+Proposition 5.12. Let N be a positive integer.
+• If Nint ≥ N + max(f1 (Nint ), f2 ) + γ3 then the [F ]rig computed by the implemented version of Tuitman’s algorithm that computed Brig exactly has
+precision at least N .
+• If Nint ≥ N + max(f1 (Nint ), f2 ), then the idealized version of Tuitman’s
+algorithm that computes a basis for Λrig exactly has precision at least N .
+Proof. This follows from the above discussion: note for the first case that applying
+pr has the potential to decrease the precision by vp (pr) ≥ −γ3 .
+□
+Theorem 5.13. Let N be a positive integer. To compute H1crys (X) with p-adic
+precision N (equivalently, the group scheme Jac(X)[pN ]), it suffices to pick an
+internal precision Nint which satisfies:
+• Nint ≥ N + max(f1 (Nint ), f2 ) + γ1 + γ2 + γ3 + 1 if using the implemented
+version of Tuitman’s algorithm.
+• Nint ≥ N + max(f1 (Nint ), f2 ) + δ1 + δ2 + 1 if using the idealized version.
+Proof. Combine Proposition 5.5 and Remark 5.6 with Proposition 5.12.
+
+□
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+19
+
+Remark 5.14. Note that f1 (x) is O(log(x)), so it is easy to find Nint satisfying
+the inequality in Theorem 5.13. More precisely, assuming [Tui17, Assumption 2]
+and recalling [Tui17, Proposition 4.1, Definition 4.8] we see that:
+f1 (x) = O(log(x) + log(dx ) + log(dy ))
+f2 = O(log(dx ) + log(dy ))
+δ1 , δ2 = O(log(dx ) + log(dy )).
+Thus when using the implemented version of Tuitman’s algorithm we may choose
+Nint ∈ O(N log(N ) + log(dx ) + log(dy ) + γ1 + γ2 + γ3 ). For the idealized version,
+we only need Nint ∈ O(N log(N ) + log(dx ) + log(dy )).
+Remark 5.15. To analyze our implementation, we would need a result on the
+growth rate of γ1 , γ2 , γ3 . This has little intrinsic mathematical interest as Λrig has
+little intrinsic mathematical meaning: it is the result of an incorrect attempt at
+computing the more natural Λ′rig .
+6. Analysis of the Algorithm
+We analyze Algorithm 1, tracking the assumptions and auxiliary data. The
+running time is expected to be polynomial in p, dx , dy , r, and N .
+In order to get started, we make Assumption 2.1 about the existence of a nice
+lift and integral bases with nice properties. In practice, we can often find a nice
+lift and automatically compute the required integral bases in polynomial time (Remark 2.5). We also must assume [Tui17, Assumption 2] concerning the orders
+of poles of the functions making up the integral bases to make use of Tuitman’s
+complexity analysis.
+e (n)) if the running time is O(f (n) log(f (n))m ) for
+We say a running time is O(f
+some integer m.
+6.1. Computing a Crystalline Basis. As discussed in Section 4, we first attempt
+to compute functions, differentials, and uniformizers for use in Theorem 4.6. We
+do so by working over a number field where we can make use of existing algorithms
+for computing Riemann-Roch spaces and spaces of differentials, and must assume
+that these give results which work over Zq as well (Assumption 4.11). These run
+in polynomial time (Remark 4.13). As in Theorem 4.6, we then compute a basis
+e in polynomial time.
+Bcrys for H1crys (X) ≃ H1dR (X)
+6.2. Computing a Rigid Basis. The time for computing an approximation to
+5 3
+e
+Brig is in O(log(p)d
+x dy rNint ): see [Tui17, §4.1], and simplifying using a crude approximation on the exponent θ for matrix multiplication.
+Remark 6.1. In practice, we actually compute Brig exactly (over a number field)
+θ
+to correctly analyze the precision. The same reasoning shows we need O(d2θ
+x dy ) ⊂
+O(d5x d3y ) operations in that number field.
+6.3. Computing a Matrix for Frobenius. We use Tuitman’s algorithm to compute [F ]rig . Following [Tui17, §4.2,4.3], we see this may be done in time
+e 4x d2y (Nint + dx )rNint + d5x d3y rNint ).
+O(pd
+The internal precision Nint must satisfy the condition in Theorem 5.13: by Ree ).
+mark 5.14 we may choose Nint ∈ O(N
+
+20
+
+JEREMY BOOHER
+
+Remark 6.2. To analyze the actual implementation (correcting for the disagreement between Λrig and Λ′rig ), we would need to control γ1 , γ2 , γ3 (see Remark 5.15).
+6.4. Change Basis. Expressing Bcrys in terms of Brig to change basis is linear
+algebra over Qq (although the implementation must work over a number field).
+The crystalline basis vector will already lie in E0 ∩ E∞ , so it suffices to apply
+the map pr from (5.7), i.e. multiply by the matrix representing this map. As
+5 3
+e
+analyzed [Tui17, §4.3], this can be done in time O(log(p)d
+x dy rNint ).
+6.5. Miscellaneous Steps. Computing V = pF −1 is another linear algebra computation which can be performed in polynomial time. There are also a few steps
+intentionally left out of Tuitman’s analysis: see [Tui17, Remark 4.12] for a discussion. In practice their running time is insignificant.
+Remark 6.3. In practice, the two most expensive steps are the function field
+algorithms to compute the functions, differentials, and local expansions needed
+in Theorem 4.6 and the piece of Tuitman’s algorithm computing the matrix for
+Frobenius on rigid cohomology. Approximating the crystalline cohomology of the
+Artin-Schreier curve in Example 5.7 with 7-adic precision 10, these two steps take
+10.6 seconds and 48.9 seconds respectively, while the entire computation takes 73.6
+seconds.3
+References
+[ABCL22] Simon Abelard, Elena Berardini, Alain Couvreur, and Grégoire Lecerf, Computing
+Riemann-Roch spaces via Puiseux expansions, J. Complexity 73 (2022), Paper No.
+101666, 45. MR 4474651
+[Bau16]
+Jens-Dietrich Bauch, Computation of integral bases, J. Number Theory 165 (2016),
+382–407. MR 3479230
+[BC94]
+Francesco Baldassarri and Bruno Chiarellotto, Algebraic versus rigid cohomology with
+logarithmic coefficients, Barsotti Symposium in Algebraic Geometry (Abano Terme,
+1991), Perspect. Math., vol. 15, Academic Press, San Diego, CA, 1994, pp. 11–50.
+MR 1307391
+[BCP97] Wieb Bosma, John Cannon, and Catherine Playoust, The Magma algebra system. I.
+The user language, J. Symbolic Comput. 24 (1997), no. 3-4, 235–265, Computational
+algebra and number theory (London, 1993). MR MR1484478
+[BGK25] Jeremy Booher, Steven R. Groen, and Joe Kramer-Miller, Ekedahl-Oort types of Z/2Zcovers in characteristic 2, arXiv e-prints (2025), arXiv:2511.02733.
+[Bog08]
+T. van den. Bogaart, Links between cohomology and arithmetic, Ph.D. thesis, Faculty of
+Science, Leiden University, 2008, retrieved from https://hdl.handle.net/1887/12928.
+[Boo26a] Jeremy Booher, crystallinecohomology, https://github.com/jeremybooher/crystallinecohomology,
+2026, online GitHub repository, accessed January, 2026.
+, pcc, https://github.com/jeremybooher/pcc, 2026, online GitHub repository,
+[Boo26b]
+accessed January, 2026.
+[BT20]
+Jennifer S. Balakrishnan and Jan Tuitman, Explicit Coleman integration for curves,
+Math. Comp. 89 (2020), no. 326, 2965–2984. MR 4136553
+[CCO14] Ching-Li Chai, Brian Conrad, and Frans Oort, Complex multiplication and lifting
+problems, Mathematical Surveys and Monographs, vol. 195, American Mathematical
+Society, Providence, RI, 2014. MR 3137398
+[Coh00]
+Henri Cohen, Advanced topics in computational number theory, Graduate Texts in
+Mathematics, vol. 193, Springer-Verlag, New York, 2000. MR 1728313
+[Cou09]
+J.-M. Couveignes, Linearizing torsion classes in the Picard group of algebraic curves
+over finite fields, J. Algebra 321 (2009), no. 8, 2085–2118. MR 2501511
+3Running on an Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz.
+
+COMPUTING CRYSTALLINE COHOMOLOGY
+
+[CRV14]
+[CRV17]
+
+[CT18]
+[CV20]
+
+[Edi06]
+[Hes02]
+[HI98]
+[Jin20]
+[Ked08]
+
+[KLW23]
+
+[Lev24]
+[LS07]
+[MM74]
+
+[Pil90]
+[SV87]
+[SZ03]
+[Tui16]
+[Tui17]
+[Tui19]
+[Tui20]
+[Wei20]
+[Zho21]
+
+21
+
+Xavier Caruso, David Roe, and Tristan Vaccon, Tracking p-adic precision, LMS J.
+Comput. Math. 17 (2014), 274–294. MR 3240809
+, Characteristic polynomials of p-adic matrices, ISSAC’17—Proceedings of the
+2017 ACM International Symposium on Symbolic and Algebraic Computation, ACM,
+New York, 2017, pp. 389–396. MR 3703711
+Wouter Castryck and Jan Tuitman, Point counting on curves using a gonality preserving lift, Q. J. Math. 69 (2018), no. 1, 33–74. MR 3771385
+Wouter Castryck and Floris Vermeulen, Lifting low-gonal curves for use in Tuitman’s
+algorithm, ANTS XIV—Proceedings of the Fourteenth Algorithmic Number Theory
+Symposium, Open Book Ser., vol. 4, Math. Sci. Publ., Berkeley, CA, 2020, pp. 109–125.
+MR 4235109
+Bas Edixhoven, Point counting after kedlaya, https://websites.math.leidenuniv.
+nl/edixhoven/oww/mathofcrypt/carls_edixhoven/kedlaya.pdf, 2006.
+F. Hess, Computing Riemann-Roch spaces in algebraic function fields and related topics, J. Symbolic Comput. 33 (2002), no. 4, 425–445. MR 1890579
+Ming-Deh Huang and Doug Ierardi, Counting points on curves over finite fields, J.
+Symbolic Comput. 25 (1998), no. 1, 1–21. MR 1600606
+Jinbi Jin, Computation of étale cohomology on curves in single exponential time, J.
+Théor. Nombres Bordeaux 32 (2020), no. 2, 311–354. MR 4174273
+Kiran S. Kedlaya, p-adic cohomology: from theory to practice, p-adic geometry,
+Univ. Lecture Ser., vol. 45, Amer. Math. Soc., Providence, RI, 2008, pp. 175–203.
+MR 2482348
+Kiran S. Kedlaya, Daniel Litt, and Jakub Witaszek, Tamely ramified morphisms of
+curves and Belyi’s theorem in positive characteristic, Int. Math. Res. Not. IMRN
+(2023), no. 4, 2803–2833. MR 4565627
+Christophe Levrat, Computing the cohomology of constructible étale sheaves on curves,
+J. Théor. Nombres Bordeaux 36 (2024), no. 3, 1085–1122. MR 4890322
+Bernard Le Stum, Rigid cohomology, Cambridge Tracts in Mathematics, vol. 172,
+Cambridge University Press, Cambridge, 2007. MR 2358812
+B. Mazur and William Messing, Universal extensions and one dimensional crystalline
+cohomology, Lecture Notes in Mathematics, vol. Vol. 370, Springer-Verlag, Berlin-New
+York, 1974. MR 374150
+J. Pila, Frobenius maps of abelian varieties and finding roots of unity in finite fields,
+Math. Comp. 55 (1990), no. 192, 745–763. MR 1035941
+Karl-Otto Stöhr and José Felipe Voloch, A formula for the Cartier operator on plane
+algebraic curves, J. Reine Angew. Math. 377 (1987), 49–64. MR 887399
+Jasper Scholten and Hui June Zhu, Slope estimates of Artin-Schreier curves, Compositio Math. 137 (2003), no. 3, 275–292. MR 1988500
+Jan Tuitman, Counting points on curves using a map to P1 , Math. Comp. 85 (2016),
+no. 298, 961–981. MR 3434890
+, Counting points on curves using a map to P1 , II, Finite Fields Appl. 45
+(2017), 301–322. MR 3631366
+, Point counting on curves magma library, https://github.com/jtuitman/pcc,
+2019.
+, Erratum: Counting points on curves using a map to P1 , II, https://
+jtuitman.github.io/erratum.pdf, 2020.
+Colin Weir, EOtype Github Repository, https://github.com/cjweir/EOType, 2020.
+Zijian Zhou, On the existence of curves with prescribed a-number, Ark. Mat. 59 (2021),
+no. 1, 229–246. MR 4256013
+
+University of Florida
+Email address: jeremybooher@ufl.edu
+
+

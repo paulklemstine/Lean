@@ -12,11 +12,16 @@ claim does not.**
 ## Abstract
 
 Every number field sieve computation treats `a² − b³ mod N` as a uniformly random integer.
-It is not. We determine the exact local law: for **every odd prime `p` and every `k ≥ 2`**,
+It is not. We determine the exact local law. **⚠️ The first version of this abstract
+claimed the factor holds `independent of k` for every `k >= 2`. That was WITHDRAWN — see
+§4.2/§4.3 and the correction notice below.** The correct statement is:
 
-> **`P( p^k ∣ a² − b³ ) = (2p − 1) / p^k`**
-
-— that is, `2 − 1/p` times the uniform rate `1/p^k`, **independent of `k`**. At `k = 1` the
+> **`P( p^k | a² − b³ ) = (2p − 1) / p^k`**, i.e. `2 − 1/p` times the uniform rate `1/p^k`,
+> **for `2 ≤ k ≤ 5` only.** The factor is **not** independent of `k`: it departs at `k = 6`,
+> where the zero-zero subspace contributes `p^(k−⌈k/2⌉−⌈k/3⌉)`, and the departure does
+> **not** relax at `k = 7`. Corrected law:
+>
+> **`ratio = (2 − 1/p) + [ p^(k − ⌈k/2⌉ − ⌈k/3⌉) − 1 ]`**
 rate is exactly `1/p`, the uniform value. So the excess is not in the prime itself but in
 **every higher power**, where a square minus a cube divides by `p^k` almost twice as often as
 a random integer does.

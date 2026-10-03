@@ -1,0 +1,2783 @@
+ECM and the Elliott–Halberstam conjecture for quadratic fields
+Razvan Barbulescu and Florent Jouve 1
+1
+
+Univ. Bordeaux, CNRS, Bordeaux INP, IMB, UMR 5251, F-33400, Talence, France,
+razvan.barbulescu@u-bordeaux.fr and florent.jouve@u-bordeaux.fr
+
+arXiv:2212.11724v2 [cs.CR] 17 Jan 2023
+
+January 2023
+Abstract
+The complexity of the elliptic curve method of factorization (ECM) is proven under a
+strong conjectural form of existence of friable numbers in short intervals. In the present
+work we use friability to tackle a different version of ECM which is much more studied and
+implemented, especially because it enables the use of ECM-friendly curves. In the case of
+curves with complex multiplication (CM) we replace heuristic arguments by rigorous results
+conditional on the Elliott–Halberstam (EH) conjecture. The proven results mirror recent
+work concerning the count of primes p such that p − 1 is friable. In the case of non CM
+curves, we explore consequences of a hypothetical statement that can be seen as an elliptic
+curve analogue of EH.
+
+1
+
+Introduction
+
+Let E/Q be an elliptic curve that has good reduction precisely at every prime number not
+dividing an integer ∆E . The main object of study of this paper is the prime counting function
+ψE (x, y) which is defined as the cardinality of
+ΨE (x, y) = {p ≤ x : p prime, p ∤ ∆E , |E(Fp )| is y-friable}.
+
+(1)
+
+Here we make the usual slight abuse of notation and write E(Fp ) for the set of Fp -points on
+the reduction of E modulo p and we also recall that an integer is y-friable (or y-smooth) if all
+its prime factors are less than y. For any integer n we shall denote by P − (n) (resp P + (n))
+the smallest (resp. the largest) prime factor of n. By convention P − (1) = ∞. The notation
+ψE (x, y) is reminiscent of ψ(x, y) which denotes the cardinality of
+Ψ(x, y) = {n ≤ x : P + (n) < y}.
+
+(2)
+
+Our main motivation for studying ΨE (x, y) comes from cryptography and more precisely from
+the method of factorization ECM. First recall the principle and purposes of ECM [Len87].
+Let P ∈ E(Q) be a rational point with homogeneous coordinates P = (xP : yP : zP ) ∈
+E(Q), relatively to a fixed projective embedding of E. Without loss of generality we can
+assume xP , yP , zP ∈ Z. Let N be a given positive integer for which one would like to find
+the prime factorization; set two parameters u = u(N ) and v = v(N ) in (0, 1) and define
+B = N 1/u , C = B 1/v . Note that if gcd(xP , yP , zP , N ) = 1 and gcd(N, ∆E ) = 1 then E has
+good reduction modulo any unknown prime factor p of N and P̄ := (xP : yP : zP ) mod p belongs
+to E(Fp ). Running ECM for E and N consists in computing the multiple Q = (xQ : yQ : zQ ) :=
+[M ]P mod N for M = (⌊C⌋!)⌊log N/ log 2⌋ , i.e. one uses the chord-and-tangent formulæ and
+reduces the coordinates modulo N (if two points have distinct coordinates modulo N then one
+uses the formula for adding two distinct points). We summarize this in Algorithm 1 below.
+1
+
+Algorithm 1: One curve subroutine of ECM
+Input: parameters u, v, an integer N , an elliptic curve E/Q and P ∈ E(Q).
+Output: a prime factor p of N such that p < B := ⌊N 1/u ⌋ or FAIL.
+1: C ← ⌊B 1/v ⌋
+2: M ← C!⌊log N/ log 2⌋
+3: Q : (xQ : yQ : zQ ) ← [M ]P mod N
+4: g ← gcd(zQ , N )
+5: if g 6= 1 then
+6:
+print g
+7: end if
+Claim 1. If |E(Fp )| is C-friable for some (unknown) prime factor p of N , then gN := gcd(zQ , N )
+is a multiple of p.
+Let us give the main ideas justifying the claim. If the points involved in the double-and-add
+method were all distinct not only modulo N but also modulo p, then Q would be the neutral
+element, so zQ ≡ 0 (mod p). If one used a wrong formula because two points were distinct
+modulo N but equal modulo p, then xQ ≡ yQ ≡ zQ ≡ 0 (mod p). In both cases ECM finds
+a multiple of p and a careful analysis shows that the probability that the result is exactly p
+is 1 − op→∞ (1) (see [Len87]). If gN is a prime factor of N we are done, otherwise we pick a
+different curve E and start over until a factor is found.
+The ECM algorithm consists in repeating Algorithm 1 either once, or a given number of
+times, or until success, depending on the application. ECM is primarily used to completely
+factorize N , which is done by finding some proper divisor and then iterating. If one takes u = 2
+so that we seek all prime factors less than B = N 1/2 , these prime factors are enough to find a
+possible
+√ the average running time:
+√ cofactor. Next the parameter v is chosen so as to minimize
+v = 2(log N )1/2 /(log log N )1/2 or equivalently C = ⌊LN (1/2, 1/ 2)⌋, where
+
+LN (α, c) = exp c(log N )α (log log N )1−α ,
+(3)
+
+and one runs Algorithm 1 with as many curves as needed in order to factorize N (note that
+there is no guarantee that the procedure terminates after testing finitely many curves). The
+expectation of the number of curves needed in this optimal choice of v is C 1+o(1) (see [Len87]).
+If one decides in advance to stop after B/ψ(B, C) curves, then one finds all primes less
+than B with constant probability (under the heuristics asserting independence relatively to the
+choice of the elliptic curve). This allows a second application of ECM : given an integer, decide
+whether it is B-friable with no false positive and with a constant proportion of false negatives.
+A third application is as follows : given a large number of integers less than a paremeter N
+and given a parameter B = N 1/u , find at least a prescribed proportion f of B-friable integers
+inside the set. This problem is solved by the Number Field Sieve (NFS) algorithm [LLJMP93],
+where ECM is used as a building block in the cofactorization step of the relation collection,
+also called sieving step, (see for example and [MBKL14, §3, page 337]) and in the splitting
+step of the discrete logarithm version of NFS (see for example [CS06, §4.1, point 1, page 181]).
+In the latter, one needs to find a single B-friable integer. To solve the problem, one uses a
+single elliptic curve or a finite number of them on a large number of integers. For example,
+the record factorizations of RSA moduli obtained with the CADO-NFS software [BGK+ ] use
+a dozen elliptic curves to test the friability of billions of integers. Also, in [MBKL14, Table 3,
+page 345] one uses 5 to 10 curves whereas the number of integers exceeds half a million per
+special-q and billions in total. The idea here is to set v so that one has ψ(B, B 1/v ) ≥ f and
+2
+
+then, in order to test B-friability, one is interested in how many primes up to B are found by
+Algorithm 1 with entries v and a particular elliptic curve E. We are hence interested in the
+quantity ψE (x, y) for (x, y) = (B 1/u , B 1/uv ).
+In particular, the heuristics underlying the use of ECM as a friability test states that the
+larger ψE (x, y) gets, the more y-friable integers will be found by ECM inside a given set. In
+other words, E is more ECM-friendly as ψE (x, y) increases. We formalize this idea in the
+following definition.
+Definition 1 (ECM-friendly curves). Let x > y be positive real numbers and let E1 /Q and
+E2 /Q be two elliptic curves. One says that E1 is more ECM-friendly than E2 with respect to
+(x, y) if
+ψE1 (x, y) > ψE2 (x, y) .
+One says that E1 is more ECM friendly than E2 if there exists x0 ≥ 2 and a positive valued
+increasing function ϑ such that the above inequality holds for all pairs (x, y) such that x ≥ x0
+and ϑ(x) ≤ y ≤ x.
+Our main result (Theorem 1.2) roughly states that the probability that the number of Fp points on a given elliptic curve is friable approaches asymptotically the probability for any
+integer to be friable. In the case of CM1 elliptic curves our result is conditional on the Elliott–
+Halberstam conjecture (EH), an important analytic number theoretic statement about uniformity aspects in the distribution of primes in residue classes.
+Conjecture 1.1 (Elliott–Halberstam, e.g. [Wan18, Hyp B] for Q, extended to K quadratic
+in [Pol16, Prop. 2.2]). Let K be either Q or an imaginary quadratic field of class number 1. Let
+k · k denote the field norm relative to K/Q. We define2
+ΠK (x) = {p ∈˙ OK , prime : k p k ≤ x} ,
+
+ΠK (x; c, a) = {p ∈ ΠK (x) : p ≡ a mod c},
+
+of cardinality denoted πK (x) and πK (x; c, a), respectively. Let δ > 0. Then for any fixed a ∈ OK
+and ω > 0 we have
+X
+
+k q k ≤ x1−δ
+(q, a) = 1
+
+πK (x; q, a) −
+
+x
+πK (x)
+≪ω
+,
+ϕ(q)
+(log x)ω
+
+for any x ≥ 2 and where q ∈ OK and ϕ(q) = |(OK /qOK )∗ |.
+The Elliott–Halberstam conjecture is standard in analytic number theory. It is a far reaching
+generalization of the celebrated Bombieri–Vinogradov Theorem where K = Q and the bound
+√
+on q in the index set of the summation cannot exceed x. EH would have countless important
+applications in number theory. Suffice it to mention the EH bounds contained in [May15] on
+gaps between consecutive primes (or more generally on the length of intervals containing ktuples of primes), as well as [Zha14] where, as a crucial step in the proof of the main result,
+√
+Zhang establishes a bound towards EH (i.e. going beyond the x threshold) under some extra
+restrictions on the prime factorization of the moduli involved.
+A quantitatively refined version of EH allows one to let δ depend on x as long as δ(x) → 0
+as x tends to infinity. Indeed, H. Montgomery suggested that one could take δ(x) → 0 in
+Conjecture 1.1. Friedlander and Granville [FG92] showed that the conjecture fails if δ(x) is less
+1
+
+For each number field K, there is a finite number of CM elliptic curves defined over K but there are overall
+infinitely many CM elliptic curves.
+2
+Here “p ∈˙ OK ” means that we count each prime ideal only once i.e. we identify elements that generate the
+same prime ideal of OK .
+
+3
+
+than a certain function of x. However Liu, Wu and Xi [LWX20] used the conjecture for δ(x)
+large enough not to contradict the necessary constraints observed by Friedlander and Granville
+(Conjecture 4.1 states this “parametrized” version of EH).
+In order to state our main result, we first recall some classical facts about the counting
+function of friable integers. With notation as in (2), one has the well known asymptotics due
+to Dickman:
+1
+ψ(x, x u )
+= ̺(u) ,
+lim
+x→∞
+x
+where ̺ is the unique continuous function on R≥0 that is differentiable on (1, ∞) and satisfies
+̺(u) ≡ 1 on [0, 1] and u̺′ (u) = −̺(u − 1) on (1, ∞). Asymptotics due to de Bruijn ([dB51,
+(1.8)], see also [HT93, Cor. 2.3]) describe the behaviour of ̺ as u grows:
+
+log2 (u + 2) 
+log ̺(u) = −u log u + log2 (u + 2) − 1 + O
+(u ≥ 1) .
+(4)
+log(u + 2)
+We now state our main result. From Conjecture 1.1, we draw an asymptotic equivalent for
+ψE (x, y). From a refined version of Conjecture 1.1 (Conjecture 4.1) we handle uniformity issues
+in these asymptotics, and finally, we state a non CM analogue (conjectural on Hypothesis 1) of
+our estimates.
+x
+Theorem 1.2. Let x ≥ 2 and let y satisfy 2 ≤ y ≤ x. Set u := log
+log y .
+
+• Let E/Q be a CM elliptic curve.
+1. (Theorem 3.4) Assume Conjecture 1.1. If u is upper bounded by an absolute constant
+then one has
+x
+(x → ∞) ,
+ψE (x, y) ∼ ̺(u)
+log x
+2. (Corollary 4.3) Assume Conjecture 4.1. If δ(x) is a function satisfying for some
+η > 0 and β > 0:
+log2 x
+1
+≤ δ(x) ≪
+η log x
+(log2 x)1+β
+3x
+and u ≤ log
+log x then we have
+4
+
+ψE (x, y) = ̺(u)
+
+x
+(1 + O(δ(x)u/̺(u))).
+log x
+
+• Let E/Q be a non CM elliptic curve.
+3. (Theorem 6.2) Assume Hypothesis 1. If u is upper bounded by an absolute constant
+then one has
+x
+,
+(x → ∞) .
+ψE (x, y) ∼ ̺(u)
+log x
+Note that the same asymptotics hold for ψE (x, y) disregarding the endomorphism ring of E,
+provided the relevant assumption is made on E (Conjecture 1.1 if E has CM, and Hypothesis 1
+otherwise). This uniform asymptotic behaviour of elliptic curves over Q suggests that ECMfriendliness is determined by the implicit error terms in Theorem 1.2. In Section 4.2, we discuss
+in detail these error terms. In particular, for CM elliptic curves, we show the relevance of
+introducing as in [BS21, Def. 5.1], the quantity
+γK = L′ (1, χ)/L(1, χ),
+where χ is the Kronecker character of the quadratic field K associated to E.
+We conclude by stating a strong form of Theorem 1.2(2) which is directly related to questions
+in cryptography, as we will discuss in Section 2.
+4
+
+x
+Theorem 1.3. Assume Conjecture 4.1. Let (x, y, z) be three positive integers such that u := log
+log y
+y
+and v := log
+log z lie in the domain
+
+n
+log3 y o
+log2 x
+.
+and v ≤
+∆ := (u, v) ∈ R2 : u ≤
+log3 x
+log4 y
+
+With notation as in (2) we set
+
+ΨE,z (x, y) = {n ∈ Ψ(x, y) : ∃p | n, |E(Fp )| is z-friable}
+and we let ψE,z (x, y) denote its cardinality. Then we have, uniformly on ∆,
+ψE,z (x, y)
+= ̺(v)̺(u)(1 + o(1))
+x
+
+(x → ∞, y → ∞) .
+
+The paper is organized as follows. In Section 2 we come back to our cryptographic motivation
+and study the running time of the splitting step of NFS, which is ECM-based, as a consequence
+of Theorem 1.3. In Section 3 we prove Theorem 1.2(1) following work of Wang [Wan18]. In
+Section 4 we state a uniform version of the Elliott–Halberstam conjecture and, assuming it, we
+prove Theorem 1.2(2). The error terms implicit in Theorem 1.2 are then discussed and, in the
+CM case, we prove a computation oriented formula for γK . Section 5 is devoted to the proof of
+Theorem 1.3. Finally in the last section, we investigate the implications, in the non CM case,
+of heuristics developed by Pollack and we prove Theorem 1.2(3).
+Acknowledgements. We thank Jie Wu for suggesting the first author to investigate connections between ECM and the Elliott–Halberstam conjecture, as well as Régis de la Bretèche,
+Ofir Gorodetsky and Alessandro Languasco for comments and corrections on an earlier version
+of the manuscript.
+
+2
+
+Cryptographic motivation
+
+In this section we put Theorem 1.3 in context and we give an example of algorithmic application.
+Precisely Theorem 1.3 enables us to perform a computational task (Problem 1 below), which
+is related to a classical problem in cryptography: the splitting step for discrete logarithms
+(Problem 2 below).
+Problem 1. Consider a prime q, a generator g of (Z/qZ)∗ and an auxiliary element h ∈ (Z/qZ)∗ .
+Let u and v be parameters and let E/Q be an elliptic curve. Find an integer e ∈ [0, q − 1] such
+that n := ge h mod q is q 1/u -friable and such that, for some prime divisor p of n, E has good
+reduction at p and |E(Fp )| is q 1/(uv) -friable.
+Problem 2 (Splitting step of NFS). Consider the same data as in the problem above. For a
+parameter k, consider E1 , E2 , . . . , Ek , elliptic curves over Q. Find an integer e ∈ [0, q − 1] such
+that n := ge h mod q is q 1/u -friable and, for all prime factors p of n, there exists i ≤ k such that
+|Ei (Fp )| is q 1/(uv) -friable.
+To solve Problem 1, one runs ECM on the integers ge h mod q corresponding to values of
+e ∈ [1, q − 1] which are chosen uniformly at random until it is B-friable for B = q 1/u (see
+Algorithm 2 for a precise description). Note that the algorithm uses a single CM elliptic curve
+E/Q that is required to have positive Mordell–Weil rank. To fix ideas, our description of
+Algorithm 2 uses, among the 13 possible j-invariants of CM elliptic curves defined over Q, the
+case j = 8000 for which we have selected one twist of positive rank given by the Weierstrass
+equation: E : y 2 = x3 + x2 − 3x + 1 (the point P = (−1 : 2 : 1) ∈ E(Q) has infinite order).
+The next statement asserts that Theorem 1.3 can be used to solve Problem 1.
+5
+
+Algorithm 2: NFS splitting step
+Input: a prime q and two integers g, h ∈ [1, q − 1] such that g is a generator of F∗q , and two
+parameters u and v
+Output: an integer e such that ge h mod q has a factor less than B = ⌊q 1/u ⌋
+1: E : y 2 = x3 + x2 − 3x + 1, P = (−1 : 2 : 1) ∈ E(Q)
+2: repeat
+3:
+e ← an integer chosen uniformly at random in [1, q − 1]
+4:
+n ← g e h mod q
+5:
+run ECM for n and B on the curve E, with parameters u and v
+6: until ECM finds a proper factor of n
+
+Theorem 2.1.
+1. Under Conjecture 1.1 (resp. Conjecture 4.1), Algorithm 2 solves Problog3 x
+lem 1 in time (q 1/(uv) /̺(u)̺(v))1+o(1) (as q → ∞) for bounded u (resp. for u ≤ log
+x ).
+4
+
+2. Assume further that Theorem 1.3 can be extended to the domain (x, y = x1/u , z = y 1/v )
+below :
+n
+(log x)1/3 o
+(log x)1/3
+and
+v
+≤
+c
+,,
+∆′ := (u, v) ∈ R2 : u ≤ cu
+v
+(log2 x)1/3
+(log2 x)1/3
+for two constants cu , cv ≥ 31/3 . Then, with a constant probability, Algorithm 2 on input
+q terminates in time Lq (1/3, 31/3 )1+o(1) and solves Problem 1 for u = cu (log q/ log2 q)1/3
+and v = cv (log q/ log2 q)1/3 .
+
+Proof. 1. Recall that B = ⌊q 1/u ⌋ and C = ⌊B 1/v ⌋ = ⌊q 1/(uv) ⌋. As input N of Algorithm 1,
+we take the ouput n of Algorithm 2. The cost of ECM (Algorithm 1) is essentially that of
+step 3, which is O(log M ) by double-and-add exponentiation (M = C!⌊log n/ log 2⌋ as defined in
+Algorithm 1). By Stirling’s formula, this is
+time(Alg. 2: line 5) = O(log M ) = O(C log C log n) = C 1+o(1) = q 1/(uv)+o(1) (q → ∞).
+
+(5)
+
+Since e is uniformly chosen at random, the number of executions of the loop in lines 2-6 of
+Algorithm 2 is, with positive probability, less than a constant times the inverse of the probability
+of success. We saw earlier (cf. Claim 1) that the condition in line 6 of Algorithm 2 is satisfied
+if, for a prime factor p of n, the order |E(Fp )| is C-friable. We conclude that the number of
+executions of the loop is q/ψE,q1/(uv) (q, q 1/(u) ).
+Since u and v are in the domain ∆ defined in Theorem 1.3, we have q/ψE,q1/(uv) (q, q 1/(u) ) ≤
+(1/(̺(v)̺(u))(1+o(1)). Combining this with (5), the cost of Algorithm 2 is (q 1/(uv) /̺(u)̺(v))1+o(1) .
+2. We set the value of the constants : cv = cu = 31/3 . We inject in (4) the values of u and v:
+
+
+cu + cv
+1/3
+2/3
+(log q) (log2 q)
+.
+log(̺(v)̺(u)) = (−1 + o(1)) · (u log u + v log v) = (−1 + o(1)) ·
+3
+v 1+o(1)
+Hence the loop is executed at most Lq (1/3, cu +c
+times. Multiplying this by the cost
+3 )
+1 1+o(1)
+1+o(1)
+, we find the running time of Algorithm 2
+computed in (5), C
+= Lq (1/3, cu cv )
+
+time(Algorithm 2) = Lq (1/3, c),
+v
+= 31/3 .
+where c = cu1cv + cu +c
+3
+
+6
+
+Remark 1. One can easily adapt Algorithm 2 to solve Problem 2 (hence the identical names):
+in line 5 apply ECM to all the curves Ei with i = 1, . . . , k. If we set k = 1/̺(v)1+o(1) , and
+if the outcome of ECM is independent of the input curve Ei , then with constant probability
+we completely factorize n whenever it is B-friable. Then we execute the loop in lines 2-6
+q/ψ(q, q 1/u ) = 1/̺(u)1+o(1) times. Hence the total cost is (C/̺(u)̺(v))1+o(1) , which is the same
+as for Problem 1. To the best of our knowledge, no rigorous argument proves the required
+“independence” property for the input curves at the present time even though a heuristic
+complexity to solve Problem 2 is well known ([CS06]).
+
+3
+
+Background and proof of Theorem 1.2(1)
+
+Let K be either Q or an imaginary quadratic field of class number 1. Recall that k · k is the
+norm map relative to K/Q and that P − (n) and P + (n) respectively denote the smallest and
+largest prime factors of n. Let a, c ∈ OK and let κ be a root of unity of K. We set (recall the
+notation of Conjecture 1.1)
+ψK (x, y; c, a, κ) = |{π ∈ ΠK (x; c, a) : P + (k π − κ k) < y}|.
+
+(6)
+
+Deuring’s CM theory describes precisely the number of Fp -points on a CM elliptic curve E/Q
+having good reduction at p. We state an explicit version that can be found in [RS09] or [Coh07],
+that enables us to relate (1) with (6).
+Lemma 3.1 ([RS09, Th 1.1, Th. 5.3, Th 5.6, Th 5.7] , [Coh07, §8.5.2]). For any elliptic curve
+E/Q with CM by an order O of an imaginary quadratic field K, there exists c ∈ OK , a set
+A ⊂ {a ∈ OK : gcd(a, c) = 1} of cardinality ϕ(c)/2 such that for any prime number p not
+dividing the discriminant of O and at which E has good reduction,
+• if p is inert in K then one has |E(Fp )| = p + 1,
+• if p splits in K, there exists a ∈ A and a root of unity µc,a satisfying |E(Fp )| = k π − µc,a k,
+where π ∈ O is uniquely determined by the conditions k π k = p and π ≡ a (mod c).
+In particular
+ψE (x, y) = #{p ∈ ΨE (x, y) : p inert in K} +
+
+X
+
+ψK (x, y; c, a, µc,a )
+
+a∈A
+
+= #{p ≤ x : p ∤ ∆E , p inert in K, (p + 1) is y-friable} +
+
+X
+
+ψK (x, y; c, a, µc,a ) .
+
+a∈A
+
+The lemma is stated in the general case where the elliptic curve E has CM by an unspecified
+order O of an imaginary quadratic field K. However the counting functions we study only
+involve |E(Fp )|, as far as the geometry of E is concerned. Therefore, since there is a canonical
+Q-rational isogeny E → E0 , where E0 /Q is an elliptic curve with CM by the full ring of integers
+OK (see e.g. [CCS13, Prop. 25]) we will assume in the sequel that O = OK whenever this
+simplifies the exposition.
+To prove Theorem 1.2(1), we follow the strategy of Wang [Wan18]. In particular we assume
+Conjecture 1.1 and we appeal to the linear sieve of Rosser–Iwaniec that we now recall.
+Let A ⊂ OK be a finite set, P ⊂ OK a set of primes, z ≥ 2 a real
+T number and d ∈
+O
+a
+squarefree
+integer
+whose
+prime
+factors
+belong
+to
+P.
+Let
+A
+=
+A
+dOK and P (z) =
+d
+QK
+kpk<z,p∈P p. Let X be a real number (that should be seen as an “approximation” of |A|) and
+7
+
+let w be a multiplicative function on OK such that for p ∈ P one has 0 < w(p) < k p k. We set
+r(A, d) = |Ad | − w(d)
+kdk X (which is expected to be small) and also:
+S(A; P, z) = |{a ∈ A : (a, P (z)) = 1}| ,
+
+V (z) =
+
+Y
+
+p∈P, kpk≤z
+
+(1 −
+
+w(p)
+).
+kpk
+
+Lemma 3.2 (Rosser–Iwaniec [Iwa80], see also [Wan18, Lemme 3.1]). Assume that there exists
+α ≥ 2 such that
+
+
+
+Y 
+log v
+α
+w(p) −1
+≤
+1+
+1−
+p
+log u
+log u
+u≤kpk<v
+
+for all v > u ≥ 2. Then for any D ≥ z ≥ 2 one has
+S(A; P, z) ≪ XV (z) +
+
+X
+
+kdk<D, d|P (z)
+
+|r(A, d)|.
+
+Finally we recollect an estimate for the summatory function of µ(n)/knk over integers less
+than x that are not divisible by primes ≤ y. In the application of Wang’s strategy, one of the
+base steps uses Möbius inversion, which explains why such summatory functions come into play.
+Lemma 3.3 ([dlBF20, Lemma 7.2]3 , generalized to imaginary quadratic fields4 ). Let K be Q
+or an imaginary quadratic field of class number 1. Let µ be the Möbius function generalized
+to K. For any ǫ > 0, we have
+X
+
+knk≤x
+P − (n)>y
+
+3
+µ(n)
+= ̺(u) + Oǫ (exp{−(log y) 5 −ǫ })
+n
+
+2
+
+x
+uniformly in x ≥ 2 and exp{(log x) 5 +ǫ } ≤ y ≤ x, where u = log
+log y .
+
+We can now recall the statement and give the proof of Theorem 1.2(1).
+Theorem 3.4. Let E/Q be a CM elliptic curve and let K be the associated imaginary quadratic
+x
+field of class number 1. Let x ≥ 2 and let y be such that 2 ≤ y ≤ x and u := log
+log y is upper
+bounded by an absolute constant. Then we have
+ψE (x, y) ∼ ̺(u)
+
+x
+log x
+
+(x → ∞) .
+
+Proof of Theorem 3.4. By Lemma 3.1 we have
+ψE (x, y) =|{p split in K, p ≤ x : P + (|E(Fp )|) < y}|
+
++ |{p inert in K, p ≤ x : P + (|E(Fp )|) < y}|
+X
+=
+ψK (x, y; c, a, µc,a ) + |{p inert in K, p ≤ x : P + (p + 1) < y}|,
+
+(7)
+
+a∈A
+
+where A, c and µ are as in Lemma 3.1 (see the notation (6)). Note that for the purpose of this
+article one could have added a O(1) term to account for ramified primes in K and for primes of
+The first version of this lemma can be found in [LT15] where one has an additional error term Oǫ ( log(u+1)
+).
+log y
+The version of loc. cit. suffices for most of our computations, however our discussion of error terms in §4.2
+requires the refinement in [dlBF20] .
+4
+The generalization is direct, hence it is not reproduced here.
+3
+
+8
+
+bad reduction of E, but one can be more precise and erase the O(1) term because the ramified
+primes correspond precisely to the primes of bad reduction.
+The second term of the right hand side is the case a = −1 in [Wan18, Lemma 4.1]:
+|{p inert in K, p ≤ x : P + (p + 1) < y}| ∼ ̺(u)
+
+x
+log x
+
+.
+(8)
+2
+We shall prove that ψK (x, y; c, a, µ) ∼ ̺(u)x/(ϕ(c) log x) and, when summing over the |A| =
+ϕ(c)/2 values of a we obtain:
+x
+1
+,
+|{p split in K, p ≤ x : P + (|E(Fp )|) < y}| ∼ ̺(u)
+2
+log x
+
+(9)
+
+which, together with Equation (8) implies the equivalent of ψE (x, y) and will complete the
+proof.
+Hence, it remains to prove an equivalent for ψK (x, y; c, a, κ) for constants c, a ∈ OK and a
+×
+.
+constant κ ∈ OK
+We note that for large enough y, more precisely y > c (which we assume holds in the rest of
+the proof since x → ∞ and u remains bounded), one has gcd(q, c) = 1 as soon as P − (k q k) > y.
+Therefore, by the Chinese Remainder Theorem, we can fix, for each such q an element a′ ∈ OK
+such that a′ ≡ a (mod c) and a′ ≡ κ (mod q). Combining this with Möbius’ inversion we write
+ψK (x, y; c, a, κ) = |{π ∈ ΠK (x; c, a) : P + (k π − κ k) < y}|
+
+Y
+= |{π ∈ ΠK (x; c, a) : gcd π − κ,
+=
+
+X
+
+q∈OK , kqk≤x+1
+P − (kqk)>y
+
+ℓ prime, kℓk≥y
+
+(10)
+
+
+
+ℓ = 1}|
+
+µ(q)|ΠK (x; c, a) ∩ ΠK (x; q, κ)| =
+
+X
+
+µ(q)πK (x; qc, a′ )
+
+q∈OK , kqk≤x+1
+P − (kqk)>y
+
+where we have used the fact that the algebraic norm of a root of unity is 1.
+In order to evaluate ψK (x, y; c, a, κ) we follow closely Wang’s method ([Wan18, Dém. du
+Lemme 4.1]). We highlight the necessary adaptations, omitting the details whenever they are
+straightforward form Wang’s approach. Starting from (10) we fix an arbitrarily small δ > 0 and
+split the counting function ψK (x, y; c, a, κ) = S1 + S2 where
+X
+X
+S1 =
+µ(q)πK (x; qc, a′ ) ,
+S2 =
+µ(q)πK (x; qc, a′ ) .
+(11)
+q∈OK , kqk≤x1−δ
+P − (kqk)>y
+
+q∈OK , x+1≥kqk>x1−δ
+P − (kqk)>y
+
+Next, using the multiplicativity of ϕ and our assumption y > c, we further decompose
+S1 = S1′ + S1′′ where
+X
+X
+µ(q)
+x
+,
+S1′′ =
+µ(q)r(x, qc, a′ )
+(12)
+S1′ =
+ϕ(c) log x
+ϕ(q)
+1−δ
+1−δ
+q∈OK , kqk≤x
+P − (kqk)>y
+
+q∈OK , kqk≤x
+P − (kqk)>y
+
+and where r(x, qc, a′ ) = πK (x; qc, a′ ) − ϕ(cq)xlog x .
+
+Step 1′ . We show that S1′ ∼ ϕ(c)xlog x ̺(u) as x → ∞ and u remains bounded (under these
+restrictions we deduce that S1′ is asymptotically larger than a constant times logx x ). For q
+satisfying P − (q) > y, observe that5
+
+
+ 1 ω(q) 
+1
+1
+1 ω(q)
+1
+.
+− = ×O 1+
+×
+−1 =O
+ϕ(q) q
+q
+y
+q
+y
+5
+
+We use the notation ω(n) for the number of distinct prime factors of an element n in a given PID.
+
+9
+
+Since kqk ≤ x1−δ , we use the upper bound ω(q) ≪ log x which we combine with the fact that
+y ≫ xθ , for some θ > 0 (recall that u remains bounded) to conclude that uniformly for any q
+in the index set of S1′ one has
+1
+1
+= (1 + o(x))
+ϕ(q)
+q
+
+(x → ∞) .
+
+Using Lemma 3.3, Wang’s computation [Wan18, (4.6)] immediately produces
+S1′ =
+
+Li(x)
+x
+̺(u) (1 + O(δ) + o(x)) ∼
+̺(u)
+ϕ(c) log x
+ϕ(c)
+
+(x → ∞, u ≪ 1) .
+
+(13)
+
+Step 1′′ . We use Conjecture 1.1 with a fixed ω > 6 to show that S1′′ = O(x(log x)−1 /(log x)ω−1 ).
+Note that this is negligible compared to S1′ .
+Let 0 < δ̃ < δ be so that k cq k ≤ x1−δ whenever k q k ≤ x1−δ̃ . Using the triangle inequality
+and Conjecture 1.1 we have
+X
+X
+S1′′ =
+µ(q)r(x, qc, a′ ) ≤
+r(x, qc, a′ )
+q∈OK , kqk≤x1−δ
+P − (kqk)>y
+
+≤
+
+X
+
+kq ′ k≤x1−δ
+
+kqk≤x1−δ̃
+
+r(x, q ′ , a′ ) ≪ω
+
+x
+.
+log(x)ω
+
+(14)
+
+We now handle the contribution of S2 defined in (11). We first apply the triangle inequality
+and we observe that the primes p ∈ OK that are counted satisfy p − κ = qcm with m ∈ OK of
+norm bounded by kmk ≤ xδ . Therefore we have
+X
+′ 
+|{p prime, kpk ≤ x : P − p−a
+> y}| .
+|S2 | ≤
+mc
+m∈OK
+kmk≤xδ
+
+To evaluate this upper bound, the main ingredient used by Wang is the linear sieve. We apply
+Lemma 3.2 to
+n p − a′
+o
+A = A(m, c, a′ ) =
+: p ∈ ΠK (x; mc, a′ ) ,
+P = {p prime: p ∤ mca′ } ,
+z ≤ y.
+mc
+Indeed for this choice of parameters, one has
+X
+S(A(m, c, a′ ); P, z) .
+|S2 | ≤
+
+(15)
+
+m∈OK
+kmk≤xδ
+
+and therefore, for all squarefree d ∈ OK having all its prime factors in P, we have gcd(d, m) = 1,
+and Ad is homothetic to the translate ΠK (x; dmc, a′ ) − a′ . In particular |Ad | = πK (x; dmc, a′ ).
+We set X = ϕ(mc)x log x and fix a multiplicative function w on OK satisfying
+w(p) =
+
+(
+
+0,
+kpk
+kpk−1 ,
+
+if p | mca′ ,
+otherwise.
+
+For any squarefree d ∈ OK with all its prime factors in P we have therefore
+Y
+
+x
+w(d)
+x
+1
+x
+w(d)
+X=
+=
+=
+1
+kdk
+kdk ϕ(mc) log x
+ϕ(mcd) log x
+kpk(1 − kpk ) ϕ(mc) log x
+p|d
+
+10
+
+since d is coprime to mc, by definition of P.
+Finally note that the following inequalities hold for all primes p ∈ OK with k p k > 2,
+ 
+ 
+
+
+
+1
+1
+1
+1
+≥ 1−
+≥ 1−
+1+
+,
+(16)
+1−
+kpk
+kpk−1
+kpk
+k p k2
+therefore, combined with Mertens’ formula (see e.g. [Ten15, Chap. I.6, Th. 1.12]), this shows
+that the hypotheses of Lemma 3.2 are satisfied. For any fixed D ≥ z we obtain
+
+X
+Y 
+x
+w(p)
+.
++
+|Ad | −
+S(A; P, z) ≪ X
+1−
+kpk
+ϕ(dmc) log x
+kdk<D, d|P (z)
+
+kpk≤z
+
+From this upper bound, combined with (15), we deduce that |S2 | ≪ S2′ + S2′′ where
+
+X
+Y 
+X X
+x
+1
+′
+S2 =
+1−
+,
+S2′′ =
+|r(A, d)| ,
+ϕ(cm) log x
+kpk−1
+δ
+δ
+kpk<z
+p∤mca′
+
+kmk≤x
+
+(17)
+
+kmk≤x kdk<D
+d|P (z)
+
+x
+and where |r(A, d)| = |πK (x; dmc, a′ ) − ϕ(dmc)
+log x |.
+
+We next set z = D = y 1−2δ and recall ω > 6. Under these conditions we prove upper bounds
+for S2′ and S2′′ .
+Step 2′ . We prove that S2′ = O(Li(x)uδ). Since c and a′ are constants we relax the condition
+p ∤ mca′ into p ∤ m in the index set of the product appearing in S2′ . Then we have
+
+X
+Y 
+x
+1
+S2′ ≪c,a′
+1−
+ϕ(m) log x
+k pk−1
+δ
+kpk<z
+p∤m
+
+kmk≤x
+
+
+
+
+  X
+−1 
+Y 
+1
+1
+1
+x  Y 
+
+
+1
+−
+1−
+≪
+
+
+log x
+k p k−1
+ϕ(m)
+k
+p
+k
+−
+1
+δ
+
+
+kpk<z
+
+kmk≤x
+
+kpk<z
+p|m
+
+The first factor over primes on the right hand side is ≪ (log z)−1 = ((1−2δ) log y)−1 by Mertens’
+Q
+1
+formula combined with (16). For the right-most factor we write ϕ(m)
+p|m (1 − kpk ) and note
+kmk =
+that the function f defined on OK by
+−vp (m) 
+Y
+1 −vp (m)
+1
+1−
+f (m) =
+1−
+k pk−1
+kpk
+p|m
+
+(where vp (m) is the p-adic valuation of m) is completely multiplicative. Since in the product
+defining f , each factor at p is ≥ 1 we obtain:
+−1
+X
+Y 
+X f (m)
+1
+1
+1−
+≤
+.
+ϕ(m)
+kpk−1
+kmk
+δ
+δ
+kmk≤x
+
+kpk<z
+p|m
+
+kmk≤x
+
+Here note that the general term of the product over primes on the left hand side is ≥ 1 and
+therefore the upper bound holds both in the case z ≥ xδ and z < xδ . Using a partial Euler
+product and Mertens’ formula combined with (16) we deduce that
+−1
+−1
+Y 
+X f (m)
+Y 
+X
+1
+1
+1
+1−
+≤
+≪ δ log x ,
+≪
+1−
+ϕ(m)
+k pk−1
+kmk
+kpk−2
+δ
+δ
+δ
+kmk≤x
+
+kpk<z
+p|m
+
+kmk≤x
+
+11
+
+kpk≤x
+
+This concludes step 2′ :
+S2′ = O
+
+ x
+
+ x
+δ 
+=O
+u
+uδ .
+log x 1 − 2δ
+log x
+
+(18)
+
+Step 2′′ . We prove that S2′′ = O(x(log x)−1 / log xω/2−3 ). Note that if k m k ≤ xδ and
+k d k ≤ D = y 1−2δ ≤ x1−2δ then n := md is such that k n k ≤ x1−δ . We denote by τ (n) the
+number of divisors of n. Hence we have, applying Cauchy–Schwarz in the last step,
+X X
+X
+′′
+′′ 21
+S2′′ ≤
+|r(A; cd, a′ )| ≤
+)
+τ (q)|r(A; nc, a′ )| ≤ (S2,⋆
+S2,†
+knk≤x1−δ d|n
+
+where
+′′
+=
+S2,†
+
+X
+
+knk≤x1−δ
+
+knk≤x1−δ
+
+|r(A; nc, a′ )| ,
+
+′′
+S2,⋆
+=
+
+X
+
+knk≤x1−δ
+
+τ (n)2 |r(A; nc, a′ )| .
+
+′′ we recognize the expression of Conjecture 1.1 so, recalling that c is a constant (therefore
+For S2,†
+for big enough x one has k c k ≤ xδ/2 ), we deduce
+′′
+S2,†
+≪ x/(log x)ω .
+′′ :
+As in [Wan18, (4.10)] we first use a trivial upper bound on S2,⋆
+
+|r(A; nc, a)| = πK (x; nc, a) −
+
+πK (x)
+x
+,
+≪
+ϕ(nc)
+knk
+
+to obtain the upper bound:
+′′
+S2,⋆
+≪x
+
+X
+
+knk≤x
+
+τ (n)2
+≪ x(log x)4
+k
+n
+k
+1−δ
+
+where the last step uses summation by parts and knowledge of the average order of τ 2 (see
+e.g. [Wil23, (1.25)]). Note also that, invoking positivity for the general term of the sum, the
+implied constant is absolute (and in particular does not depend on δ). Overall we obtain
+S2′′ ≪
+
+
+
+1 1
+x
+x(log x)−1
+2
+2
+2 (log x) ≪
+x
+.
+ω
+(log x)ω
+(log x) 2 −3
+
+(19)
+
+Putting together (13), (14), (18), and (19), we see that the sums S1′′ and S2′′ are negligible
+compared to x/ log x. Since ̺(u) is lower bounded by a constant, the proof of Theorem 3.4 is
+finished by letting δ → 0.
+
+4
+
+Uniform version of the Elliott–Halberstam conjecture and
+proof of Theorem 1.2(2)
+
+In this section we start by stating a refined version of Conjecture 1.1 and we prove Theorem 1.2(2) under this refined conjecture. We next discuss the error term implicit in Theorem 1.2(1) and (2).
+
+12
+
+4.1
+
+Proof of Theorem 1.2(2)
+
+The argument we provide is a consequence of [LWX20, Th. 1.5]. Let us first state the refined
+version of Conjecture 1.1 required in our analysis.
+Conjecture 4.1 (parametric EH, [LWX20, Conj. 1] in the K = Q, same δ(x) as in the rational
+case, with the same adjustments as in Conjecture 1.1 for the case of quadratic K). Let δ(x) be
+a decreasing function such that
+(log2 x)/(η log x) ≤ δ(x) < η
+
+(x ≥ x0 (η)),
+
+(20)
+
+for any η ∈ (0, 1/2] Let K be either Q or an imaginary quadratic field of class number one. For
+all q ∈ K we set k q k = |OK /q| the algebraic norm and ϕ(q) = |(OK /q)∗ | the Euler function.
+Let us consider
+πK (x) = {p ∈ OK , prime : k p k ≤ x} , πK (x; c, a) = {p ∈ OK , prime : k p k ≤ x, p ≡ a mod c}.
+Then for any fixed a ∈ OK , a 6= 0, and ω > 0 we have
+X
+
+q∈OK , (q,a)=1
+kqk≤x1−δ(x)
+
+πK (x; q, a) −
+
+x
+πK (x)
+≪ω
+,
+ϕ(q)
+(log x)ω
+
+uniformly for x ≥ x0 (η).
+The original EH conjecture is stated for K = Q and constant δ. As already mentioned
+it is a strengthening of the Bombieri–Vinogradov (BV) Theorem. Huxley [Hux71] proved a
+number field variant of the BV Theorem (see also [Joh79, Cor. p. 203] for the particular case of
+imaginary quadratic fields or Pollack [Pol16, Lemma 2.3] for imaginary quadratic fields of class
+number 1), so it seems natural to state a number field EH conjecture extending Huxley’s result
+with the same range on q as in the original EH conjecture. Finally, Liu et al. [LWX20] extended
+EH by replacing δ with a decreasing function. In the present work we use the number field EH.
+If we only want to focus on non uniform results we can restrict to the original EH. However
+in order to prove uniform results, our analysis requires a new variant of EH (Conjecture 4.1)
+which combines the number field EH (extending [Pol16, Lemma 2.3]) with the parametric EH
+(see [LWX20]).
+The proof of Theorem 1.2(2) will follow from a generalized form of [LWX20, Th. 1.5] that
+we now state.
+Theorem 4.2 ([LWX20, Th. 1.5] generalized to imaginary quadratic fields). Let K be an
+imaginary quadratic field of class number 1. Let a ∈ OK \ {0} and let µ denote a root of unity
+of K. Let ω > 0 and let κ be a non-negative arithmetic function on OK . With notation as
+in (6) and assuming Conjecture 4.1 for a given function δ satisfying (20), we have
+qP
+
+
+2
+x
+X
+kqk≤x κ(q) /k q k
+log(x/k q k)
+πK (x)
+̺
+≪a,ω
+ψK (x, y; q, a, µ) −
+ϕ(q)
+log y
+(log x)ω
+q∈OK , kqk≤Q
+(q,a)=1
+
++ πK (x)δ(x)u
+
+X κ(q)
+ϕ(q)
+
+kqk≤Q
+
+For every ǫ > 0 this upper bound is uniform for x ≥ 2, exp((log x)2/5+ǫ ) ≤ y ≤ x and Q ≤
+√
+min(y, x).
+13
+
+Note that the original statement [LWX20, Th. 1.5] is over Q: in loc. cit. the prime counting
+function πK is replaced by the usual prime counting function π and ψK (x, y; q, a, µ) is replaced
+by
+π(x, y; q, a) = #{p ≤ x : q | (p − a), P + ( p−a
+q ) ≤ y} .
+Obtaining Theorem 4.2 from the original [LWX20, Th. 1.5] requires minor modifications only.
+As we will see below, Corollary 4.3 (and in turn Theorem 1.2(2)) will follow from Theorem 4.2.
+If one wants to dispense from generalizing [LWX20, Th. 1.5] to an imaginary quadratic field, one
+can instead consider the version of Corollary 4.3 proved in Appendix A, where the arguments
+used are similar to those of the proof of Theorem 1.2(1).
+log2 x
+In [LWX20, Cor. 1.8 (p. 5)] a result is proven for u ≤ log
+x . We note here that a stronger
+3
+
+3x
+consequence of Theorem 4.2 holds if one restricts to u ≤ log
+log4 x , and implies in turn Theorem 1.2(2).
+
+Corollary 4.3. Let K be Q or an imaginary quadratic field of class number 1. Let a, c ∈ OK
+with a 6= 0 and let µ be a unit of K. Finally let β > 0. Assuming Conjecture 4.1, we have
+πK (x, y; c, a, µ) =
+log x
+
+
+x
+̺(u) 1 + O δu̺(u)−1 ) .
+ϕ(c) log x
+
+(21)
+
+uniformly for 1 ≤ u ≤ log3 x and for δ(x) ≪ (log 1x)1+β . Consequently Theorem 1.2(2) holds.
+4
+
+2
+
+Proof. First note that under the stated assumptions (δ(x)u/̺(u)) = o(1) as x → ∞. Indeed,
+by (4), one has ̺(u) ≫ exp(−(1 + β ′ )u log u) for u ≥ 1 and any fixed β ′ satisfying 0 < β ′ < β.
+Therefore we compute:
+
+log3 x 
+log3 x
+log x
+u
+′
+≪ ue(1+β )u log u ≤
+exp (1 + β ′ ) 3 log
+̺(u)
+log4 x
+log4 x
+log4 x
+!
+
+log5 x 
+log3 x
+exp (1 + β ′ ) log3 x 1 −
+≤
+log4 x
+log4 x
+
+
+log x 
+′ log 3 x
+≤ (log2 x)1+β
+= o (log2 x)1+β .
+exp − (1 + β ′ ) 3
+log4 x
+log4 x
+
+Next the assumption on the size of u implies that log y ≥ log x log4 x/ log3 x and thus for big
+√
+enough x one has c ≤ min(y, x), since c is fixed. Setting κ = 1{c} in Theorem 4.2 we obtain:
+
+
+πK (x)
+πK (x)
+log(x/k c k)
+x
++
+ψK (x, y; c, a, µ) −
+̺
+δ(x)u.
+(22)
+≪a,ω p
+ω
+ϕ(c)
+log y
+ϕ(c)
+k c k(log x)
+
+The second summand on the right hand side of (22) is ≪ logx x δ(x)u. Likewise, since u ≥ 1, and
+since δ is lower bounded by assumption in Conjecture 4.1, we have for the first summand:
+x
+x
+log x
+≪η
+δ(x)u
+(log x)ω
+log x
+(log x)ω−1 log2 x
+
+which is ≪ logx x δ(x)u for any fixed ω ≥ 2.
+Finally, since ̺ is smooth on (1, ∞), c is fixed, and we may assume that y is big enough
+kck
+(recall that the assumptions imply that log y ≥ log x log4 x/ log3 x) there exists ξ ∈ (u− log
+log y , u)
+such that
+̺
+
+log(x/k c k) 
+̺(ξ − 1)
+log k c k ̺(ξ − 1)
+log k c k ′
+≪
+.
+̺ (ξ) ≤
+− ̺(u) =
+log y
+log y
+log y
+ξ
+log x
+14
+
+We deduce
+
+log(x/k c k) 
+1 log x
+1
+̺
+= o(1) .
+− ̺(u) ≪η
+x(log x)−1 δ(x)u
+log y
+x log2 x
+
+This finishes the proof of (21).
+To deduce Theorem 1.2(2), we combine (7) with (21), using again that c depends only on
+E.
+
+4.2
+
+Discussion on the implicit error terms in Theorem 1.2
+
+The error term in the estimates of Theorem 1.2 plays an important role in deciding whether
+an elliptic curve E1 is more ECM-friendly than a second curve E2 . To explain this, let us first
+recall [BS21, Problem 5.1].
+Problem 3. Let E/Q be an elliptic curve without CM. Decide whether there exists a real
+number β(E) such that
+Prob(#E(Fp ) is B-friable : p ∼ n) ∼n Prob(m is B-friable : m ∼ neβ(E) ),
+where ∼n denotes the asymptotic √
+equivalent
+√ as n → ∞, for positive numbers a, b we write
+a ∼ b as a shorthand for a ∈ [b − b, b + b], and “Prob” on the left hand side denotes the
+natural density of a subset of primes, while “Prob” on the right hand side denotes the uniform
+probability on a finite set.
+Next we mention two results that investigate the size of the error terms in approximations
+of the counting function of friable integers.
+Theorem 4.4 ([Sco04, Cor. 1.2, Th. 1.3]). Let K be an imaginary quadratic field. Then for a
+fixed ε > 0, for all x and y such that (log2 x)5/3+ε ≤ log y ≤ log x, one has
+
+
+
+ξ(u)
+log
+u
+log u
+√
+(u → ∞) .
++
+γ
++
+O
+ψK (x, y) = L(1, χ)x̺(u) 1 − log
+K
+y
+log y
+u
+
+Here ψK (x, y) = |{(a) ideal of OK : kak ≤ x, max{N p : p ⊳ OK prime, p | (a)} ≤ y}|, γK =
+(L′ /L)(1, χ) for χ the Kronecker character of K, and ξ(u) is defined for u > 1 by the equality
+exp(ξ(u)) = 1 + uξ(u).
+In particular, since there are L(1, χ)x(1 + o(1)) integral ideals of OK of norm ≤ x, one has
+
+
+log(u + 1)
+ψK (x, y)
+= ̺(u) 1 −
+γK (1 + o(1)) .
+ψK (x, ∞)
+log y
+The result was generalized from ζK to a large class of Dirichlet series of the form Z(s)G(s)
+where Z is a product of zeta functions with positive exponents and G a well behaved function
+(e.g. a holomorphic function). The following particular case is sufficient for our applications.
+Theorem 4.5 ([HTW08, Th. 1.1, Th. 1.2], case Z = ζ, G holomorphic). Let h be an arithmetic
+P
+function with Dirichlet series H(s) = n≥1 h(n)
+ns . We assume that H extends to a meromorphic
+function with a simple pole at s = 1 and we write H(s) = a0 /(s − 1) + a1 + O(s − 1) in a
+neighborhood of 1. Then one has
+
+
+
+X
+(log(u + 1))2
+log(u + 1)
++O
+,
+h(n) = x̺(u) a0 + a1
+log y
+(log y)2
+n≤x
+P + (n)≤y
+
+uniformly on exp((log2 x)5/3+ǫ ) ≤ y ≤ x, for any fixed ǫ > 0.
+15
+
+Let us add that a similar result holds for Z = 1/ζ, the Dirichlet series of µ. The case h = 1,
+a0 = 1, a1 = γ − 1 (the Euler–Mascheroni constant) of Theorem 4.5 was previously established
+by Saias [Sai89, Main corollary] and yields in particular
+
+
+ log(u + 1)
+(γ − 1 + o(1))
+,
+(23)
+ψ(x, y) = x̺(u) 1 +
+log y
+as x → ∞ and under the same restrictions on (x, y) as in Theorem 4.5.
+Note that Theorem 1.2(1) gives a positive answer to Problem 3 in the CM case while
+Theorem 1.2(3) does so in the non CM case. Finally, Theorem 1.2(2) raises the necessity of
+finding asymptotics for log(ψE (x, y)/ψ(x, y)). The numerical statistics in Appendix B suggest
+that the following question is relevant.
+Problem 4. Let E be a CM elliptic curve and let K be the associated imaginary quadratic
+field. Let χ be the Kronecker character of K and let γK = L′ (1, χ)/L(1, χ). Does the following
+formula hold:
+log(u + 1)
+?
+log(ψE (x, y)/ψ(x, y)) ∼ (−γ + 1 − γK )
+log y
+Remark 2. The result [LT15, Th. 1.1], which was used in [Wan18] and is sufficient for Theorem 1.2(1), is not enough here because the error term given is O(log(u + 1)/ log y). We use
+instead the stronger Lemma 3.3 due to de la Bretèche and Fiorilli.
+If Problem 4 receives a positive answer, the constant γK will be used as a criterion to
+compare ECM-friendliness of CM elliptic curves. In the non CMP
+case, Peter Montgomery used
+without proof6 ([Mon92, §6.3, pp. 75–76]) the constant α(E) = ℓ αℓ (E) (see Proposition 4.6
+below) to compare the ECM-friendliness of two given elliptic curves E1 and E2 , where the sum
+is over primes ℓ such that αℓ (E1 ) 6= αℓ (E2 ). The next result recalls [BS21, Th. 5.1] which
+justifies the existence of α(E) in the non CM case, and gives an analogue of α(E) in the CM
+case. Moreover we relate explicitly the quantities γK and α(E) in the CM case.
+Proposition 4.6. Let E/Q be an elliptic curve. For every rational prime ℓ we set
+• if E is a non CM curve,
+αℓ (E) =
+
+
+ 1
+− Ep (valℓ (|E(Fp )|)) log ℓ ,
+ℓ−1
+
+αℓ (E) =
+
+ 3
+
+− 4Ep (valℓ (|E(Fp )|)) log ℓ
+ℓ−1
+
+• If E is a CM curve,
+
+P
+−1
+where Ep is the operator
+p≤x, p∤∆E and valℓ denotes the ℓ-valuation.
+P limx→∞ π(x)
+Then, the series ( ℓ αℓ (E)) converges. Furthermore, denote by α(E) the limit of the converging series: if E/Q has CM by an order of an imaginary quadratic field K, one has the
+formula
+α(E) = γK − ΣK ,
+(24)
+6
+
+Peter Montgomery is famous for having invented algorithms and concepts which are very effective in computer
+science but are not justified rigorously or are not presented as part of a broader theory. For instance the modern
+presentation [KVV10] of the Montgomery reduction is Barrett’s reduction with Q2 replacing R whereas the use
+of Murphy’s α to compare polynomials for NFS, originally used by Montgomery, was justified in [BL17].
+
+16
+
+where γK = L′ (1, χ)/L(1, χ) for χ the Kronecker character of K, and where ΣK is the value of
+the following converging sum depending only on K:
+ΣK =
+
+X 2 log ℓ 
+
+ℓ inert
+
+ℓ2 − 1
+
+−1+
+
+X ℓ log ℓ
+X
+2ℓ2 
+3 + χ(ℓ)
++
++
+.
+log ℓ
+2
+2
+ℓ −1
+(ℓ − 1)
+(ℓ − 1)2
+ℓ ram.
+
+ℓ prime
+
+Proof. As already mentioned, the non CM case is due to Barbulescu–Shinde [BS21, Th. 5.1].
+Consider an elliptic curve E/Q that has CM by an order of an imaginary quadratic field
+K. Fix s ∈ C such that Re(s) > 1. We use the factorization ζK (s) = ζ(s)L(s, χ) of the
+Dedekind Zeta function ζK of K combined with the fact that the logarithmic derivative of ζK
+at s coincides, up to sign, with the Dirichlet series at s of the von Mangoldt function of K. We
+obtain
+′ (s)
+X log(N p)
+ζK
+L′ (s, χ) ζ ′ (s)
+=
++
+=−
+ζK (s)
+L(s, χ)
+ζ(s)
+(N p)ks
+k≥1, p
+
+X (1 + χ(ℓ)) log ℓ
+=−
+−
+ℓs − 1
+ℓ prime
+
+X
+
+ℓ prime
+unram. in K
+
+(1 − χ(ℓ)) log ℓ2
+,
+2(ℓ2s − 1)
+
+where, in the first sum, p runs over the prime ideals of OK and N p = |OK /p|. Using the
+analogous link between the logarithmic derivative of ζ and the classical von Mangoldt function,
+we deduce that
+ 1
+X
+X
+1 + χ(ℓ) 
+1 − χ(ℓ)
+L′ (s, χ)
+−
+=
+− s
+log ℓ 2s
+.
+log ℓ s
+L(s, χ)
+ℓ −1
+ℓ −1
+ℓ −1
+ℓ prime
+unram. in K
+
+ℓ prime
+
+Since both sums on the right hand side converge at s = 1, we let s → 1 and get
+ χ(ℓ)
+X
+|χ(ℓ)|(1 − χ(ℓ)) 
+L′ (1, χ)
+.
+=−
++
+log ℓ
+L(1, χ)
+ℓ−1
+ℓ2 − 1
+
+(25)
+
+ℓ prime
+
+Next we fix any prime number ℓ and compute
+1 X
+valℓ (|E(Fp )|)
+x→∞ π(x)
+
+Ep (valℓ (|E(Fp )|)) = lim
+
+p≤x
+p good
+
+Let c ∈ OK be as in Lemma 3.1. Let R denote either Z or OK . For any prime λ ∈ R and for
+any integer k ≥ 0, the density of primes π ∈ R that7 satisfy π ≡ µ + bλk mod λk+1 , for a fixed
+unit µ of R and some b ∈ (R/(λ))∗ (i.e. primes π for which π − µ has λ-adic valuation equal to
+k) is |(R/(λ))∗ |/|(R/(λk ))∗ | = ϕ(λ)/ϕ(λk+1 ) = kλk−k , where ϕ is Euler’s indicator function for
+R. Moreover, if we require the extra condition π ≡ a mod c, the Chinese Remainder Theorem
+asserts that the density of the primes π considered shrinks to ϕ(λ)/(ϕ(λk+1 )ϕ(c)), which equals
+ϕ(c)−1 kλk−k . Using this density computation (combined with Lemma 3.1) in the case R = Z
+we obtain the contribution of inert primes to Ep (valℓ (|E(Fp )|)):
+1
+π(x)
+7
+
+X
+
+p≤x
+inert in K
+
+valℓ (p + 1) =
+
+1 X #{p ≤ x : valℓ (p + 1) = k}
+ℓ
+1X k
+1
+→
+=
+.
+k
+k
+2
+π(x)
+2
+ℓ
+2 (ℓ − 1)2
+k≥0
+
+k≥0
+
+Again, we identify prime ideals with one given generator.
+
+17
+
+In the case R = OK we handle, using Lemma 3.1 again, the contribution
+Q ei of split primes. To
+do so we use the notation of Lemma 3.1 and factorize π − µc,a = i λi , where λi is a prime
+of OK above a prime number ℓi . If ℓi is inert in K then valℓi (kπ − µc,a k) = 2ei , otherwise
+valℓi (kπ − µc,a k) = ei . Thus, using similar computations as the ones performed in the case of
+inert primes p, we obtain:
+1
+x→∞ π(x)
+lim
+
+X
+
+1 X
+x→∞ π(x)
+
+X
+
+valℓ (|E(Fp )|) = lim
+
+p≤x
+split in K
+
+a∈A π∈OK , kπk=p≤x
+π≡a mod c
+
+valℓ (kπ − µc,ak)
+
+ℓ
+|χ(ℓ)|(1 − χ(ℓ)) 2ℓ2 
+|A|  1 + χ(ℓ) + 1ℓ|discK
++
+ϕ(c)
+2
+(ℓ − 1)2
+2
+(ℓ2 − 1)2
+1 + χ(ℓ) + 1ℓ|discK
+ℓ
+|χ(ℓ)|(1 − χ(ℓ)) 2ℓ2
+=
++
+4
+(ℓ − 1)2
+4
+(ℓ2 − 1)2
+=
+
+Overall
+4Ep (valℓ (|E(Fp )|)) =
+
+1  1ℓ|discK ℓ 41ℓ inert ℓ2
+3 + χ(ℓ) 
+1+
++
++ 2
+ℓ−1
+ℓ−1
+(ℓ − 1)2
+(ℓ − 1)2
+
+(26)
+
+Combining with (25), one deduces as wished,
+X 
+4Ep (valℓ (|E(Fp )|)) −
+
+ℓ prime
+
+X 2 log ℓ 
+3 
+L′ (1, χ)
+2ℓ2 
+log ℓ = −
+−
+1
++
++
+ℓ−1
+L(1, χ)
+ℓ2 − 1
+ℓ2 − 1
+ℓ inert
+
++
+
+X
+
+ℓ ram.
+
+X 3 + χ(ℓ)
+ℓ log ℓ
++
+(ℓ − 1)2
+(ℓ − 1)2
+ℓ prime
+
+Example 1. We have computed the value of γK = L′ /L(1, χ), ΣK and respectively α(E) using
+Equation (25), the summed for ℓ ≤ 106 . The rapidly converging series ΣK is evaluated using
+the formula in the statement of Porposition 4.6 using ℓ ≤ 106 . Finally, for each prime ℓ ≤ 104
+one approximates the average value of valℓ |E(Fp )| using the primes p ≤ 103 ; and we obtained
+α
+e(E). The results illustrate the equality α
+e√
+(E) ≈ α(E) = γK − ΣK for a list of elliptic curves
+having CM by the quadratic fields K = Q( −d), (d > 0) of class number 1.
+d
+α
+e(E)
+α(E)
+ΣK
+γK
+α
+e(E) − (γK − ΣK )
+
+1
+−3.042
+−2.268
+2.509
+0.245
+0.78
+
+2
+−2.990
+−3.058
+3.032
+−0.022
+0.07
+
+3
+−3.038
+−1.878
+2.242
+0.367
+−1.16
+
+7
+−3.073
+−3.924
+3.936
+−0.015
+0.85
+
+11
+−3.019
+−2.908
+2.820
+−0.085
+−0.11
+
+19
+−3.045
+−2.284
+2.194
+−0.085
+−0.76
+
+43
+−3.080
+−1.541
+1.793
+0.246
+−1.54
+
+67
+−3.091
+−1.041
+1.692
+0.659
+−2.05
+
+163
+−3.119
+0.585
+1.594
+2.171
+−2.53
+
+The difference α
+e(E) − (γK − ΣK ) is close to 0, but not negligible, depending on K. Indeed
+the numerical estimation of the average ℓ-valuation of |E(Fp )| is slow and the sample of primes
+p ≤ 103 is not sufficient to produce very small differences α
+e(E) − (γK − ΣK ). Note
+√ also that
+the rate of convergence of the series involved seems to depend on the field K = Q( −d).
+
+Remark 3. The computation of L′ (1, χ)/L(1, χ) is slow if one uses a naive evaluation of each of
+the series L′ (s, χ) and L(s, χ) (see [Lan22] for a recent algorithm). This gives a second purpose
+of the formula (24): quickly computing (L′ /L)(1, χ). Note that [BL17] gives bounds on the
+convergence speed.
+18
+
+Remark 4. In the study of friability of binary forms, Murphy [Mur98] associated a function
+to irreducible polynomials f ∈ Z[x] as follows. For a prime ℓ,
+
+
+αℓ (f ) = (log ℓ) · En (valℓ n) − E(a,b)=1 valℓ bdeg(f ) f (a/b) ,
+X
+α(f ) =
+αℓ (f ),
+ℓ prime
+
+where E(a,b)=1 corresponds to natural density for randomly chosen pairs of integers (a, b) which
+are relatively prime; the convergence of the series is proven in [BL17, §2.2 ]. We note that
+α(E) has an expression similar to α(f ) with f such that K ≃ Q[x]/(f ) (up to the condition
+(a, b) = 1).
+
+5
+
+The set ΨE,z (x, y): proof of Theorem 1.3
+
+This section is devoted to the proof of Theorem 1.3. We first state and prove a lemma, which
+is a variation on the fact that a set of primes which has a natural density also has an analytic
+(or logarithmic) density (see [Ten15, §III.1]).
+Lemma 5.1. Let Q be a set of primes and, for x ≥ 2, let ΠQ (x) = Q ∩ [1, x]. In the case
+where Q is the set of all primes, we will simply write Π(x) for ΠQ (x). Assume that there exists
+a positive non increasing function λ(x) and a constant ω > 0 such that for all x ≥ 2,
+|ΠQ (x)|
+− λ(x) ≪
+|Π(x)|
+Then we have
+
+P
+
+Proof. First note that
+
+1
+.
+log2 x)1+ω
+
+−1
+
+
+1
+p∈ΠQ (x) p
+=
+λ(x)(1
++
+o(1))
++
+O
+.
+−1
+(log2 x)1+ω
+p∈Π(x) p
+
+P
+
+X
+
+p−1 =
+
+⌊x⌋
+X
+|ΠQ (n)| − |ΠQ (n − 1)|
+
+n
+
+n=1
+
+p∈ΠQ (x)
+
+.
+
+An Abel summation then yields
+⌊x⌋
+X
+|ΠQ (n)| − |ΠQ (n − 1)|
+
+n
+
+n=1
+
+=
+
+⌊x⌋
+|ΠQ (x)| X |ΠQ (n)|
++
+.
+⌊x⌋ + 1 n=1 n(n + 1)
+
+Now we use the Prime Number Theorem under the form |Π(x)| = (x/ log x)(1 + o(1)). We
+obtain:
+⌊x⌋
+X
+|ΠQ (n)|
+
+n=1
+
+n(n + 1)
+
+=
+
+X
+
+n≤x
+
+
+λ(n)
+
+
+X
+
+1
+1
++ o(n−2 ) + O
+.
+n log n
+n log n(log2 n)ω+1
+
+(27)
+
+n≤x
+
+To handle the error term we make use of Cauchy’s condensation criterion. Precisely
+X
+
+n≤x
+
+X
+X
+1
+1
+2k
+≪
+≪
+≪ (log2 (x))−ω .
+k
+k
+k
+ω+1
+ω+1
+ω+1
+n log n(log2 n)
+k(log
+k)
+2
+log(2
+)
+log
+(2
+)
+2
+k
+k≤log x
+
+1≤2 ≤x
+
+19
+
+Plugging this into (27) and using the fact that λ(n) ≥ λ(x) for all n ≤ x, one deduces that
+⌊x⌋
+X
+|ΠQ (n)|
+
+n=1
+
+n(n + 1)
+
+X
+= λ(x)
+
+n≤x
+
+
+
+1
++ O(1) + O (log2 x)−ω
+n log n
+
+
+= λ(x) log2 x(1 + o(1)) + O λ(x) + (log2 x)−ω .
+
+λ(x)
+1
+Finally, the term |ΠQ (x)|/⌊x⌋ has size log
+x (1 + o(1)) + O( log x(log2 x)1+ω ), which is negligible
+comparedP
+to the left hand side of (27). The proof of the lemma is finished by using Dirichlet’s
+estimate p∈Π(x) p−1 = log2 x + O(1).
+
+Proof of Theorem 1.3. Let Q = {p prime : |E(Fp )| is z-friable} and recall that z = y 1/v .
+ X
+−1
+ψE,z (x, y)  X
+=
+ψ(x/p, y) ·
+ψ(x/p, y)
+ψ(x, y)
+p≤y
+p∈Q, p≤y
+ X x
+ X x
+−1
+=
+̺(u)(1 + ε(x, y, p)) ·
+̺(u)(1 + ε(x, y, p))
+,
+p
+p
+p≤y
+
+p∈Q, p≤y
+
+where ε(x, y, p) = (ψ(x/p, y) − (x/p)̺(u))/((x/p)̺(u)). We combine (23) with the fact that for
+log(u+1)
+1
+2x
+≪ log
+any u ∈ ∆, one has log(u+1)
+log y
+log x to obtain that ε(x, y, p) = O( log y ) = O( (log x)ω ) for any
+fixed 0 < ω < 1 and for u ∈ ∆. We deduce
+ X
+−1
+ X
+1/p
+·
+ψE,z (x, y) = ψ(x, y) 1 + O( log(u+1)
+1/p
+)
+.
+log y
+p∈Q, p≤y
+
+p≤y
+
+In order to apply Lemma 5.1, we invoke Theorem 1.2(2) which asserts that
+ψE (y, z)
+− ̺(v) ≪ δ(y)v .
+|Π(x)|
+β
+
+Here we fix β > 0 such that δ(y)v ≪ (log2 y)−1−β log3 y(log4 y)−1 . This is ≪ (log2 y)−1− 2 .
+Therefore, by Lemma 5.1 we have that
+
+
+X
+
+p∈Q, p≤y
+
+−1
+ X
+β
+1/p
+1/p ·
+= ̺(v)(1 + o(1)) + O (log2 y)−1− 2 .
+p≤y
+
+Hence we infer
+
+β
+log(u + 1) 
+ψE,z (x, y) = x̺(u) 1 + O(
+) ̺(v)(1 + o(1)) + O (log2 y)−1− 2
+log y
+= x̺(u)̺(v)(1 + o(1)) .
+
+6
+
+The case of non CM elliptic curves
+
+It is interesting to investigate potential analogues of Theorem 3.4 in the non CM case. This
+section suggests such an analogue and highlights its theoretical limitations. Let E/Q be a non
+CM elliptic curve. Deuring’s Theorem (Lemma 3.1) enabled us in the CM case to relate ψE (x, y)
+
+20
+
+to the count of primes in arithmetic progressions. In the non CM case a natural choice for the
+analogous prime counting function is the following:
+πE (x; d) = |{p ≤ x : d | |E(Fp )|}| .
+In celebrated work [Ser72], Serre shows the existence of an integer ME depending only on E, such
+that for n coprime with ME , the Galois group Gn of the n-torsion field extension E[n](Q)/Q is
+isomorphic to the full group GL2 (Z/Z). Moreover one has additional multiplicativity property
+Gmn ≃ Gm × Gn for any m coprime with n. David and Wu [DW12, Proof of Lemma 4.1] give
+an asymptotic development under GRH for the Dedekind zeta function of Q(E[d](Q)) when d
+is coprime to ME and squarefree:
+w(d) x
++ OE (d3/2 x1/2 log(dx)) ,
+d log x
+Y
+Y
+ℓ2 (ℓ2 − 2)
+ℓ(ℓ2 − 2)
+wE (d) =
+=
+.
+|GL2 (Z/ℓZ)|
+(ℓ − 1)(ℓ2 − 1)
+
+πE (x; d) =
+
+ℓ|d
+ℓ prime
+
+(28)
+
+ℓ|d
+ℓ prime
+
+In the spirit of the Bombieri–Vinogradov Theorem and of its expected generalization Conjecture 1.1, it is tempting to expect some strong average version of (28) over d. The following
+results are evidence for the validity of this “Elliott–Halberstam phenomenon” that we next state
+(Hypothesis 1 below).
+Theorem 6.1. Let E/Q be a non CM elliptic curve and assume the GRH for Dedekind Zeta
+functions.
+1. One has ([Kow06, Prop. 3.8]):
+X
+
+1
+
+ϕ(d)|{p ≤ x : E[d](Q) ⊂ E(Fp )}| =
+
+d≤x 4 /(log x)2
+
+X ϕ(d)
+d≥1
+
+|Gd |
+
+!
+
+ x 
+x
++ OE
+log x
+(log x)3
+
+2. One has ([DW12, (4.7)]):
+X
+
+1
+
+d≤x 5 /(log x)4
+p|d⇒ME <p≤x1/10 /(log x)4
+
+2ω(d) µ(d)2 πE (x; d) −
+
+wE (d) x
+x
+.
+≪E
+d log x
+(log x)3
+
+Regarding point 2 of Theorem 6.1, we follow Pollack who studied the elliptic curve analogue
+of the Titchmarsh divisor problem ([Pol16, p.185]):
+“We pretend that this approximation is valid for d up to size ≈ x, at least on average”.
+This gives rise to the following hypothesis inspired by Conjecture 1.1.
+Hypothesis 1. Let E/Q be a non CM elliptic curve. Then one has:
+X
+
+d≤X
+
+πE (x; d) −
+
+wE (d) x
+x
+,
+≪E,ω
+d log x
+(log x)ω
+
+for any X ≤ x1−δ , x ≥ 2, for any constant ω > 0, and where one extends wE to a function on
+N satisfying wE (mn) = wE (m)wE (n) for any coprime integers m, n such that either m or n is
+coprime to ME (see [DW12, §2]).
+21
+
+Note that Hypothesis 1 allows any exponent ω > 0 on the denominator of the upper bound.
+This mimicks the upper bound appearing in the Elliott–Halberstam conjecture 1.1; moreover we
+believe that there was no attempt to optimize the exponent 3 appearing in the upper bounds of
+Theorem 6.1 in the works of Kowalski and David–Wu. Finally, as in the proof of Theorem 3.4,
+we need an exponent ω > 6 to conclude the proof of Theorem 6.2.
+Hypothesis 1 enables us to prove the following analogue of Theorem 3.4.
+x
+Theorem 6.2. For any x ≥ 2 and y ∈ [1, x] we set u = log
+log y . Assume Hypothesis 1 for a non
+CM elliptic curve E/Q. Then, as x → ∞ and y is such that u ≤ u0 , for some fixed constant
+u0 , we have
+x
+̺(u) .
+ψE (x, y) ∼
+log x
+
+Proof. The argument is a verbatim translation of the proof of Theorem 3.4. We fix δ > 0. By
+Möbius inversion we split the studied prime counting function:
+o
+n
+Y 
+ℓ = 1 = S1 + S2 ,
+ψE (x, y) = p ≤ x : gcd |E(Fp )|,
+ℓ prime
+ℓ>y
+
+where
+S1 =
+
+X
+
+µ(q)πE (x; q) ,
+
+S2 =
+
+q≤x1−δ
+P − (q)>y
+
+X
+
+√
+x+2 x≥q>x1−δ
+P − (q)>y
+
+µ(q)πE (x; q) .
+
+Note that the upper bound on q in the index set of S2 comes from the Hasse–Weil bound on
+|E(Fp )|. We next decompose S1 = S1′ + S1′′ where
+S1′ =
+
+x
+log x
+
+X
+
+µ(q)wE (q)
+,
+q
+1−δ
+
+S1′′ =
+
+X
+
+µ(q)r(x, q) ,
+
+q≤x1−δ
+P − (q)>y
+
+q≤x
+P − (q)>y
+
+and where r(x, q) = πE (x; q) − logx x wEq(q) . Since u remains bounded, we may assume that
+ME < y ≤ x, so that wE is multiplicative on all integers q such that P − (q) > y. If in addition
+q is squarefree, the formula (28) for wE (q) is valid and yields wE (q) = 1 + O((P − (q))−1 ). We
+compute
+S1′
+=
+x(log x)−1
+
+X
+
+q≤x1−δ
+P − (q)>y ,gcd(q,ME )=1
+
+∼ ̺(u) + O
+
+µ(q)wE (q)
+=
+q
+
+1 X 1
+y
+q
+1−δ
+q≤x
+
+
+µ(q)
++O
+q
+1−δ
+
+X
+
+q≤x
+P − (q)>y
+
+X
+
+q≤x1−δ
+P − (q)>y
+
+1
+qP − (q)
+
+
+
+(x → ∞, u ≪ 1) ,
+
+where we have used Lemma 3.3. Finally, the fact that u ≪ 1 implies that the error term is
+O((log y)/y) = o(1) as x → ∞. This establishes S1′ ∼ ̺(u) logx x as x → ∞ with u ≪ 1.
+As in the proof of Theorem 3.4 (step 1′′ ), we show that S1′′ = O(x/(log x)ω ) by virtue of
+Hypothesis 1. In particular, for bounded u, one has S1′′ = o( logx x ̺(u)).
+We turn to the evaluation of S2 . As in the proof of Theorem 3.4, we use Lemma 3.2 to
+obtain the following upper bound: |S2 | ≪ S2′ + S2′′ . Here we define
+
+X x wE (m) Y 
+X X
+wE (p)
+′
+S2 =
+1−
+|r(x, md)| ,
+,
+S2′′ =
+log x m
+p
+δ
+δ
+m≤x
+
+p∈P, p<z
+p∤mME
+
+m≤x
+
+22
+
+d<D
+d|P (z)
+
+where z = D = 1 − 2δ, the parameter ca′ has to be replaced by ME to define the set of primes
+P and where, for p ∈ P, we choose w(p) = wE (p) (which satisfies the hypotheses of Lemma 3.2
+as shown in [DW12, Proof of Lemma 4.1]). We denote by P (z) the product of primes in P
+that are less than z. The fact that (1 − wEp(p) )/(1 − p1 ) = 1 + O( p12 ) for p ∈ P implies that the
+method used in the proof of Theorem 3.4 to handle the contribution of S2′ also yields in the
+present case8 that S2′ = O(δ logx x u).
+Finally, to obtain the bound for S2′′ = o( logx x ) we argue as in the proof of Theorem 3.4,
+invoking Hypothesis 1 for a fixed ω > 6. We conclude by letting δ → 0.
+
+A
+
+Alternative proof of Corollary 4.3
+
+We prove the following form of Corollary 4.3, using the same method as for Theorem 3.4 (i.e
+an adaptation of Wang’s approach [Wan18]).
+Proposition A.1. Let K be Q or an imaginary quadratic field of class number 1. Let a, c ∈ OK
+×
+. Let C ∈ (0, 21 ) and β ∈ (2C, 1). Assuming Conjecture 4.1, we have
+be fixed and let µ ∈ OK
+
+
+
+x
+̺(u) 1 + O δ(x)1−β u log u)
+(x → ∞)
+ψK (x, y; c, a, µ) =
+ϕ(c) log x
+−2C/β ).
+2x
+uniformly for 2 ≤ u := log x/ log y ≤ C log2 x/ log3 x and δ(x) ∈ ( ηlog
+log x , (log x)
+
+Proof. Let ε(x, y) = δu log u. Recall that δ(x) satisfies the assumptions of Conjecture 4.1.
+We follow through the steps of the proof of Theorem 3.4. We split ψK (x, y; c, a, µ) = S1 + S2
+with S1 and S2 as in Equation (11) (up to replacing δ by δ(x)). We write S1 = S1′ + S1′′ as in
+Equation (12) and we upper bound |S2 | ≤ S2′ + S2′′ as in Equation (17).
+Step 1′ . We show that S1′ = ϕ(c)xlog x ̺(u)(1 + o(ε(x, y))). By Lemma 3.3 we have
+S1′ =
+
+x
+ϕ(c) log x
+
+X
+
+
+ log(x1−δ(x) ) 
+3
+µ(q)
+x
+̺
+=
++ O(exp(−(log y) 5 −ǫ )) .
+ϕ(q)
+ϕ(c) log x
+log y
+1−δ
+
+q∈OK , kqk≤x
+P − (kqk)>y
+
+(29)
+Note that u ≪ log2 x/ log3 x implies that log y ≫ log x log3 x/ log2 x (so that y lies in the range
+of validity for Lemma 3.3) In particular the error term in (29) is o(δ(x)̺(u)u log u). Indeed one
+has
+3 −ǫ
+
+e−(log y) 5
+̺(u)
+
+3 −ǫ
+
+≪ e−(log y) 5
+
++2u log u
+
+
+log4 x 
+log x  3 −ǫ
+≪ exp − log x 3 5 + O log2 x(1 −
+) ≪1
+log2 x
+log3 x
+
+where we have also used the lower bound ̺(u) ≫ exp(−2u log u) coming from (4).
+Finally, using (4) again, we compute (writing δ instead of δ(x), for simplicity):
+
+8
+
+ log(x1−δ ) 
+− log(̺(u))) = −u(1 − δ)(log u + log(1 − δ)) + u log u + O(u log2 u) .
+log ̺
+log y
+
+Alternatively, one could appeal to [DW12, (4.3), (4.9)] to estimate the inner product over primes in the upper
+bound for S2′ .
+
+23
+
+
+
+
+
+log(x1−δ(x) )
+/̺(u) = 1 + O(δ(x)u log u) which proves the stated estimate for S1′ .
+log y
+Step 1′′ . We show that S1′′ = o( logx x ̺(u)ε(x, y)). To do so we apply Conjecture 4.1 in the
+
+Hence ̺
+
+same way we applied Conjecture 1.1 in the proof of Theorem 3.4. We fix ω > 2C − 2 where C
+is an absolute constant such that we work under the restriction u ≤ C log2 x/ log3 x. The exact
+same argument as the one used to obtain (14) yields S1′′ = O(x(log x)−1 /(log x)ω−1 ). The point
+is that Conjecture 4.1 asserts that the implied constant in this upper bound is uniform in u.
+We now compute, using again the bound ̺(u) ≫ exp(−2u log u) and the fact that u log u grows
+as x → ∞,
+S1′′
+e2u log u
+(log2 x)e2u log u
+≪
+≪
+x(log x)−1 ̺(u)ε(x, y)
+(log x)ω−1 δ(x)u log u
+(log x)ω−2 u log u
+log2 x
+(log2 x) exp(2C log2 x)
+≪
+.
+≪
+ω−2
+(log x)
+(log x)ω−2C−2
+
+δ(x)
+Step 2′ . We prove that S2′ = O logx x 1−2δ(x)
+u in the exact same way as for (18) (where the
+implied constant is absolute). From the bound 1 − 2δ(x) ≥ 1 − 2η ≫ 1 (recall Conjecture (4.1)),
+we conclude that
+δ(x)β S2′
+δ(x)β
+≪
+≪ δ(x)β e2C log2 x ≪ 1 .
+̺(u)x(log x)−1 ε(x, y)
+̺(u)
+Therefore we have S2′ = O( logx x δ(x)1−β ̺(u)u log u).
+Step 2′′ . We prove that S2′′ = o( logx x ̺(u)ε(x, y)). As in the proof of (19), we have
+S2′′ = O
+
+ x(log x)−1 
+ω
+
+(log x) 2 −3
+
+with an implied constant depending only on ω. We then argue as in Step 1′′ above by requiring
+this time that ω > 4C + 4. This concludes step 2′′ and the proof of Proposition A.1.
+
+B
+
+Numerical illustration
+
+2 − 2x − 1 and E : y 2 + y = x3 − x2 − 7x + 10
+We consider the examples E7 : y 2 + xy = x3 − x√
+√ 11
+which have endomorphism rings included in Q( −7) and Q( −11), respectively.
+Our numerical experiment (see Figure 1) can be seen as a type of Chebyshev race 9 between
+E7 and E11 : we compare ψE7 (x, 27 ) and ψE11 (x, 27 ) for various values of x. The data shows
+that E7 is “always ahead”, in other words, E7 is more ECM-friendly than E11 for these values
+of x and y. We repeat this Chebyshev race for y = 225 and obtain the same conclusion. This
+suggests the following conjecture: E7 is more ECM-friendly than E11 uniformly for x and y
+when y grows with x and is not too large compared to x.
+In Figure 2 we search for an accurate expression for the error term in the asymptotic expansion of ψE (x, y)/ψE (x, ∞). First we plot the expression which is given by Scourfield’s
+Theorem 4.4
+
+
+log(u + 1)
+γK (1 + o(1)) .
+ψK (x, y)/ψK (x, ∞) = ̺(u) 1 −
+log y
+9
+
+In an 1853 letter, Chebyshev observes that the count of primes up to x that are 3 modulo 4, almost always
+exceeds that of primes that are 1 modulo 4. Modern instances of what is now called a “prime number race” have
+been extensively studied in the recent years.
+
+24
+
+The data corroborates the accuracy of this theoretical value. We also plot the expression
+γ
+eK :=
+
+ψK (x,y)
+̺(u)−1 −1
+ψK (x,∞)
+
+log(u+1)/ log y
+
+which converges to a constant when u = 1.5. We define similarly
+
+ψE (x,y)
+̺(u)−1 −1
+ψE (x,∞)
+
+γ
+eE := log(u+1)/ log y for which we don’t have a theoretical result. The data suggests that
+log(ψE (x, y)/ψE (x, ∞)) has the same main error term as log(ψ(x, y)/ψ(x, ∞)) and that γ
+eE
+converges as x → ∞. Note that if γ
+eE does converge, it is not expected to be equal to γ
+eK since
+the former quantity involves the contribution of both split and inert primes.
+We emphasize that the collection of data presented in Figure 1 requires the computation of
+|E(Fp )| for a large number of primes p and for E = E7 or E11 . We haven’t used the expensive
+Schoof algorithm because, in the particular case of CM curves, specific methods exist. We
+haven’t used the formulæ in [RS09, Th 5.3, Th 5.5 and Th 5.6] either. Indeed the characters
+involved, although explicit, have a costly evaluation, moreover the formulæ are prone to typos.
+Instead we follow a classical procedure and use Lemma 3.1: let p be a prime for which one
+wishes to compute |E(Fp )|. Fix a Weierstrass model for E and pick a dozen random projective
+points P1 ∈ E(Fp ); for each root of unity µ of K (there are at most 6 of them), compute the
+possible value of N := k π − µ k. Next compute |N ]P1 , [N ]P2 , . . . and rule out N if one of the
+computed points is not (0 : 1 : 0). When all but one of the possible values of |E(Fp )| have been
+ruled out, one successfully outputs the result.
+The data plotted in Figures 1 and 2 is available online at:
+https://razvanbarbulescu.pages.math.cnrs.fr/ElliottHalberstam/ElliottHalberstam.html
+
+25
+
+26
+
+References
+[BGK+ ]
+
+Shi Bai, Pierrick Gaudry, Alexander Kruppa, François Morain, Emmanuel Thomé,
+and Paul Zimmermann. Crible algébrique: Distribution, optimisation—number
+field sieve (cado-nfs).
+
+[BL17]
+
+Razvan Barbulescu and Armand Lachand. Some mathematical remarks on the
+polynomial selection in NFS. Mathematics of Computation, 86(303):397–418, 2017.
+
+[BS21]
+
+Razvan Barbulescu and Sudarshan Shinde. A classification of ECM-friendly families
+using modular curves. Mathematics of Computation, to appear, 2021.
+
+[CCS13]
+
+Pete L. Clark, Brian Cook, and James Stankewicz. Torsion points on elliptic curves
+with complex multiplication (with an appendix by Alex Rice). Int. J. Number
+Theory, 9(2):447–479, 2013.
+
+[Coh07]
+
+Henri Cohen. Number theory. Vol. I. Tools and Diophantine equations, volume 239
+of Graduate Texts in Mathematics. Springer, New York, 2007.
+
+[CS06]
+
+An Commeine and Igor Semaev. An algorithm to solve the discrete logarithm
+problem with the number field sieve. In Public Key Cryptography – PKC 2006,
+volume 3958 of Lecture Notes on Computer Science, pages 174–190. Springer, 2006.
+
+[dB51]
+
+N. G. de Bruijn. The asymptotic behaviour of a function occurring in the theory
+of primes. J. Indian Math. Soc. (N.S.), 15:25–32, 1951.
+
+[dlBF20]
+
+Régis de la Bretèche and Daniel Fiorilli. Entiers friables dans des progressions
+arithmétiques de grand module. In Mathematical Proceedings of the Cambridge
+Philosophical Society, volume 169, pages 75–102. Cambridge University Press, 2020.
+
+[DW12]
+
+C. David and J. Wu. Pseudoprime reductions of elliptic curves. Canadian Journal
+of Mathematics, 64(1):81–101, 2012.
+
+[FG92]
+
+John Friedlander and Andrew Granville. Limitations to the equi-distribution of
+primes iii. Compositio Mathematica, 81(1):19–32, 1992.
+
+[HT93]
+
+Adolf Hildebrand and Gérald Tenenbaum. Integers without large prime factors.
+Journal de théorie des nombres de Bordeaux, 5(2):411–484, 1993.
+
+[HTW08]
+
+Guillaume Hanrot, Gérald Tenenbaum, and Jie Wu. Moyennes de certaines fonctions multiplicatives sur les entiers friables, 2. Proceedings of the London Mathematical Society, 96(1):107–135, 2008.
+
+[Hux71]
+
+MN Huxley. The large sieve inequality for algebraic number fields III. zero-density
+results. Journal of the London Mathematical Society, 2(2):233–233, 1971.
+
+[Iwa80]
+
+Henryk Iwaniec. A new form of the error term in the linear sieve. Acta Arithmetica,
+37(1):307–320, 1980.
+
+[Joh79]
+
+David Johnson. Mean values of Hecke L-functions. J. Reine Angew. Math., 305:195–
+205, 1979.
+
+[Kow06]
+
+E. Kowalski. Analytic problems for elliptic curves. J. Ramanujan Math. Soc.,
+21(1):19–114, 2006.
+
+27
+
+[KVV10]
+
+Miroslav Knezevic, Frederik Vercauteren, and Ingrid Verbauwhede. Faster interleaved modular multiplication based on Barrett and Montgomery reduction methods. IEEE Transactions on Computers, 59(12):1715–1721, 2010.
+
+[Lan22]
+
+Alessandro Languasco. On computing L’/L(1, χ). In Proceedings of the 5th Number
+Theory Meeting, 2022.
+
+[Len87]
+
+Hendrik W Jr Lenstra. Factoring integers with elliptic curves. Annals of mathematics, pages 649–673, 1987.
+
+[LLJMP93] Arjen K Lenstra, Hendrik W Lenstra Jr, Mark S Manasse, and John M Pollard.
+The number field sieve. In The development of the number field sieve, volume 1554
+of Lecture notes in mathematics, pages 11–42. Springer, 1993.
+[LT15]
+
+Armand Lachand and Gerald Tenenbaum. Note sur les valeurs moyennes criblées
+de certaines fonctions arithmétiques. The Quarterly Journal of Mathematics,
+66(1):245–250, 2015.
+
+[LWX20]
+
+Jianya Liu, Jie Wu, and Ping Xi. Primes in arithmetic progressions with friable
+indices. Science China Mathematics, 63(1):23–38, 2020.
+
+[May15]
+
+James Maynard. Small gaps between primes. Ann. of Math. (2), 181(1):383–413,
+2015.
+
+[MBKL14] Andrea Miele, Joppe W. Bos, Thorsten Kleinjung, and Arjen K. Lenstra. Cofactorization on graphics processing units. In Cryptographic Hardware and Embedded
+Systems – CHES 2014, volume 8731 of Lecture Notes in Computer Science, pages
+335–352, 2014.
+[Mon92]
+
+Peter Lawrence Montgomery. An FFT extension of the elliptic curve method of
+factorization. PhD thesis, University of California, Los Angeles, 1992.
+
+[Mur98]
+
+Brian Murphy. Modelling the yield of number field sieve polynomials. In Algorithmic Number Theory–ANTS III, volume 1423 of Lecture Notes in Computer Science,
+pages 137–150, 1998.
+
+[Pol16]
+
+Paul Pollack. A Titchmarsh divisor problem for elliptic curves. In Mathematical
+Proceedings of the Cambridge Philosophical Society, volume 160, pages 167–189.
+Cambridge University Press, 2016.
+
+[RS09]
+
+Karl Rubin and Alice Silverberg. Point counting on reductions of CM elliptic curves.
+Journal of Number Theory, 129(12):2903–2923, 2009.
+
+[Sai89]
+
+Éric Saias. Sur le nombre des entiers sans grand facteur premier. J. Number Theory,
+32(1):78–99, 1989.
+
+[Sco04]
+
+Eira J Scourfield. On ideals free of large prime factors. Journal de théorie des
+nombres de Bordeaux, 16(3):733–772, 2004.
+
+[Ser72]
+
+Jean-Pierre Serre. Propriétés galoisiennes des points d’ordre fini des courbes elliptiques. Invent. Math., 15(4):259–331, 1972.
+
+[Ten15]
+
+Gérald Tenenbaum. Introduction to analytic and probabilistic number theory, volume 163. American Mathematical Soc., 2015.
+28
+
+[Wan18]
+
+Zhiwei Wang. Autour des plus grands facteurs premiers d’entiers consécutifs voisins
+d’un entier criblé. The Quarterly Journal of Mathematics, 69(3):995–1013, 2018.
+
+[Wil23]
+
+B. M. Wilson. Proofs of Some Formulae Enunciated by Ramanujan. Proc. London
+Math. Soc. (2), 21:235–255, 1923.
+
+[Zha14]
+
+Yitang Zhang. Bounded gaps between primes. Ann. of Math. (2), 179(3):1121–
+1174, 2014.
+
+29
+
+

@@ -1,0 +1,532 @@
+                                           Enhanced Algorithms for the Representation of integers
+                                            by Binary Quadratic forms: Reduction to Subset Sum
+                                                                                     MAHER MAMAH
+
+                                                Department of Mathematics, The Pennsylvania State University, University Park, USA
+arXiv:2502.11402v1 [math.NT] 17 Feb 2025
+
+
+
+
+                                               Abstract. Given the quadratic Diophantine equation x2 + dy 2 = m, where d and m are positive
+                                               integers, Cornacchia’s algorithm efficiently finds integer solutions when the factorization of m is
+                                               known. However, when m is highly composite—i.e., has too many distinct prime factors—the
+                                               algorithm’s running time suddenly becomes exponentially large in the input size. In this paper,
+                                               we demonstrate that solving the aforementioned Diophantine equation can be reduced to an
+                                               instance of the subset sum problem, a well known weakly NP-complete problem in complexity
+                                               theory. Leveraging this reduction, we propose multiple algorithms that solve this problem, given
+                                               the factorization of m, based on different cases depending on d and m. Particularly, one of our
+                                               algorithms finds a solution in polynomial time when d = polylog(m), while the other achieves
+                                               a quadratic speedup over Cornacchia’s algorithm in the generic case. Recently, the problem
+                                               of representing m in this form has gained significant attention, particularly in applications to
+                                               elliptic curves and isogeny-based cryptography where this algorithm is central to solving norm
+                                               form equations.
+
+
+                                                                                   1. Introduction
+                                           Problems arising in algebraic number theory have long been an interest of the mathematical
+                                           community due to their rich theoretical structure and their diverse applications in cryptog-
+                                           raphy, coding theory, and beyond. One interesting problem that received much attention
+                                           since the time of Gauss is that of finding solutions to Diophantine equations, and particu-
+                                           larly quadratic forms. The simplest of all is the Pell-type equation x2 + dy 2 = m where d
+                                           and m are positive integers, and finding integral solutions to this equation was believed to
+                                           be at least as hard as factoring m.
+                                               In 1908, Cornacchia [Cor08] gave a deterministic algorithm with O(log2 m) time com-
+                                           plexity that solves this problem when m is a prime. His method, begins by computing
+                                           square roots r2 ≡ −d      √ (mod m) and then performs a gcd-like iterative process until the
+                                           output is less than m satisfying certain conditions. His approach was later adapted to
+                                           handle composite values of m with only minor modifications, given the prime factorization
+                                           of m. However, this generalization to handle composite m introduces a significant challenge
+                                           when m has “too many” prime factors. Since the algorithm computes square roots until
+                                           one yields the correct solution—or, in the worst case, determines that no solution exists—it
+                                           may be necessary to iterate over all 2ω(m) possible square roots. As ω(m) (the number of
+                                           distinct prime factors of m) can be as large as O(log m/ log log m), the number of iterations
+                                           may become exponential in log m before the algorithm terminates. This has proven prob-
+                                           lematic in many applications, particularly in isogeny-based cryptography, where no efficient
+                                           classical or quantum algorithm currently exists to circumvent this issue. For instance, one of
+                                           the important tasks in isogeny-based cryptography to solve the quaternionic analogue of the
+                                           supersingular isogeny path problem of two supersingular elliptic curves E, and E ′ , namely
+                                           given a left End(E)-ideal I of norm N , where End(E) denotes the endomorphism ring of
+                                           E, find another equivalent ideal of some norm d. It turns out that this problem reduces to
+                                           solving qI (x1 , x2 , x3 , x4 ) = d where qI is a quaternary integral positive definite form. The
+
+
+                                                                                               1
+approach to solve this qI (x) = d is generally heuristic by choosing fixed values for x1 and
+x2 and then solve the remaining binary quadratic form using Cornacchi’s algorithm. This
+is the main technique used in [[KLPT14], [ACD+ 23], [BKM+ 23], [EL24]].
+
+   Contributions: In this paper, we propose multiple algorithms that outperform Cor-
+nacchia’s algorithm for all orders of d and m. The approach to that is leveraging a new
+reduction of solving the Diophantine quadratic equation x2 + dy 2 = m to an instance of a
+group subset sum problem. Algorithm 1 is mainly efficient in the case d = polylog(m), and
+generally has lower time complexity, compared to the Cornacchia’s algorithm, for d ≪ 2ω(m) .
+Algorithm 2, and theorem 4.5 work for generic values of d and m and achieve a quadratic
+speed-up over Cornacchia’s algorithm using the meet-in-the-middle approach.
+
+    The paper is divided as follows, 2 provides background information on algebraic number
+theory and binary quadratic forms. Section 3 introduces the subset sum problem and some
+of the best generic algorithm to tackle the problem. Section 4 discusses the the reduction of
+solving our Diophantine equation to a group instance of the Subset-Sum and provides the
+enhanced algorithms.
+
+
+                 2. Background on Algebraic number theory
+A number field K can be defined as a subfield of the complex numbers C that is generated
+over the field of rational numbers Q by an algebraic number α; i.e K = Q(α), where α
+is a root of an irreducible polynomial with rational coefficients. The degree of of K over
+Q, denoted [K : Q], is the dimension of K as a Q-vector space, and disc(K) is called the
+discriminant of K.
+    For a field K, the set of elements that are roots of monic irreducible polynomials with
+integer coefficients forms a ring, called the ring of integers of K, and denoted OK√. The ring
+of integers is essentially a generalization of Z ⊂ Q. For a quadratic field K = Q( d), where
+d is square-free, the corresponding ring of integers is
+                                    ( √
+                                      Z[ d]√     if d ≡ 2, 3 (mod 4)
+                             OK =
+                                      Z[ 1+2 d ] if d ≡ 1 (mod 4).
+                                                                      √           √
+Notice in the both √ cases, the ring of integers contains the order Z[ d] = {x + y d |x, y ∈ Z}
+and for any α ∈ Z[ d] we define the norm N(α) = αᾱ = x2 −dy 2 , which is a positive definite
+quadratic form when d is negative.
+The ring of integers OK need not be a unique factorization domain (UFD), it remains a
+Dedekind domain. Consequently, every OK -ideal factors uniquely as a product of prime
+ideals. Specifically, any nonzero ideal a ⊆ OK can be written uniquely as
+
+                                          a = pe11 pe22 · · · perr ,
+   where the pi are distinct prime ideals in OK .
+For a rational prime p ∈ Z, the principal ideal (p) factors uniquely as (p) = pe11 pe22 · · · perr
+where each ei is called the ramification index of pi . We say
+     - p ramifies if, for at least one pi , ei > 1.
+     - p remains inert, if r = 1 and e1 = 1.
+    - p splits if r > 1 and ei = 1 for all i.
+                     √
+In the case K = Q( d) is quadratic field , we can easily characterize the behavior of primes
+using
+  Legendre symbols. In this     case, p ramifies if and only if p|d, it splits if and only
+ d                                   d
+ p    = 1, and remains inert iff     p   = −1.
+
+
+
+                                                      2
+    Given a quadratic order O ⊂ OK , the index [OK : O] = f is called the conductor and
+disc(O) = f 2 disc(K). We have unique factorization of O-ideal a only if a and f are coprime,
+i.e (N(a), f ) = 1, where we call a an invertible proper ideal.
+
+   To measure the potential failure of element-wise unique factorization, one utilizes the
+concept of ideal class group Cl(O). Two nonzero fractional ideals a and b are considered
+equivalent if a = α · b for some α ∈ K × . By looking at proper invertible integral O-ideals
+modulo principal ideals, the set of equivalence classes forms a finite abelian group under
+ideal multiplication
+
+                          Cl(O) = {[a] : a ⊂ O, a fractional ideal},
+with the identity given by the class of all principal ideals. Using the fundamental theorem
+of finitely generated abelian groups, we have
+                                                n
+                                     Cl(O) ∼
+                                                M
+                                           =          Z/mi Z
+                                                i=1
+
+where mi |mi+1 . The order of Cl(O) is the class number h(O) which is, by analtyic methods,
+at most O(d1/2+ε ) for arbitrary ε > 0.
+
+    Binary Quadratic forms: A binary quadratic form is a function of the form f (x, y) =
+ax2 + bxy + cy 2 , where a, b, c ∈ Z and a and c are nonzero. We will also utilize the handy
+notation (a, b, c) to denoted the aforementioned form. A form is primitive if a, b, and c are
+relatively prime.
+    The discriminant of such a form is given by D = b2 − 4ac. A form is called positive
+definite if the discriminant is negative. Positive definite forms are precisely those such that
+f (x, y) takes only positive values when (x, y) 6= (0, 0).
+    For this paper, all quadratic forms considered will be positive definite, primitive, binary
+quadratic forms.
+    Two forms f and g are properly equivalent if there exist integers p, q, r, s such that
+
+                                f (x, y) = g(px + qy, rx + sy),
+
+and the determinant condition holds, i.e. ps − qr = 1. One can consider g to be obtained
+from an action of a matrix               
+                                     p q
+                                            ∈ SL2 (Z)
+                                     r s
+on f , where the discriminant is fixed. Proper equivalence defines an equivalence relation on
+the set of binary quadratic forms of some fixed discriminant. Every form f within a given
+class is equivalent to a unique reduced form g, which yields a canonical representation.
+    Let Cl(D) be the set of primitive, positive definite, binary quadratic forms of discriminant
+D considered up to proper equivalence. Gauss defined a group law on Cl(D), under which
+Cl(D) is isomorphic to the ideal class group Cl(O), where O is a quadratic imaginary order
+of discriminant D. Specifically, we have the following theorem.
+Theorem 2.1 ([Cox11], Theorem 7.7). Let O be the order of discriminant D. If a = Zα+Zβ
+is an invertible O-ideal, then the map
+
+                                                      N (xα + yβ)
+                                ι : a 7→ f (x, y) =
+                                                         N (a)
+
+induces an isomorphism between Cl(O) and Cl(D). Additionally, the invers emap is given
+by                                                      √
+                                                   −b + D
+                        ax2 + bxy + cy 2 7→ Za + Z
+                                                      2
+
+                                                3
+    Since this will come up in our application, its worthy to note that the group law on the
+set of quadratic forms is defined by Dirichlet composition and it can be computed efficiently,
+along with the unique reduced form (see [Coh93], Algorithms 5.4.2 & 5.4.7).
+
+
+                           3. The Subset-Sum problem
+The subset sum problem is a well-known problem in theoretical computer science which is
+defined, in the general case, as follows
+      Given a set X = {x1 , x2 , · · · , , xn } and a target sum T , decide whether there
+                P of X that sums to T . Equivalently, does there exist δi ∈ {0, 1}
+      exists a subset
+      such that ni=1 δi xi = T .
+This problem is known to be NP-complete and the best generic algorithm due to Schroeppel
+and Shamir [SS81] solves the problem in O(2n/2 n/2)-time and O(2n/4 )-space. Other algo-
+rithms exist, but they are probabilistic and only decide whether the exists a solution and
+can’t be efficient to decide if none exist, see for instance [HJ10] and [BBS+ 20], however the
+problem is weakly NP-complete. This is due to Bellman [Bel57] who introduced a dynamic
+programming approach that solves the problem in O(nt) time and O(t) space, where n is
+the number of elements and t is the target sum. By defining a state (i, s) to represent the
+existence of a subset of X with i elements summing to s, we can transition to the next
+states (i + 1, s) and (i + 1, s + xi+1), corresponding to either excluding or including the next
+element xi+1 in the sum. This forms a state-space tree, which can be explored using the
+Breadth-First Search (BFS) algorithm. If the state (n, T ) is found, we can backtrack to
+reconstruct the subset summing to T ; otherwise, we conclude that no such subset exists.
+
+PnAnother version of the subset-sum problem, asks to find δi ∈ {−1, +1} such that
+   i=1 δi xi = T for some target T . The problem can be essentially reduced to the origi-
+nal one by defining δi = 2εi − 1, where εi ∈ {0, 1}, and proceeding as before.
+Another variant, Qk which we will be interested in, would P be the following: given vectors
+                                                             n
+v1 , · · · , vn ∈ i=1 Z/mi Z, find δi ∈ {−1, +1} such that i=1 δi vi = ~0 ∈ Zk . This is es-
+sentially the same problem but now we’re interested in an element (vector) in this finitely
+generated abelian group rather than integers. We will show how to use this Dynamic
+programming method to this instance to efficiently solve our Diophantine equation when
+d = polylog(m).
+
+
+                 4. Reduction to the Subset-Sum problem
+In this section we give the algorithm to solve the Diophantine equation x2 + dy 2 = m
+where d and m are positive squarefree and coprime integerw. Notice that if we’re given the
+factorization of m = k 2 m′ where m is square-free, it suffices to represent m′ = x2 + dy 2 ,
+as m = (kx)2 + d(ky)2 . Notice that for modular considerations, if d ≡ 2, 3 mod 4, then m
+can’t be even. Hence, m can only be even if d ≡ 1 (mod 4).
+                                                                           2   2
+Lemma 4.1. Given positive square-free integers integers m and d, then  √ x + dy = m is
+solvable over the integers if and only if (m) = (α)(ᾱ) for some α ∈ Z[ −d].
+Proof. We see that x2 + dy 2 = m is solvable over the integers if and only if αα¯=N(α) = m
+if and only if (m) = (α)(ᾱ).
+   Next, we characterize the principal ideal (α), which represents the solution to our prob-
+lem, by the prime ideals pi dividing (m).
+
+
+
+
+                                               4
+Theorem 4.2. Given positive square-free integers integers m = p1√  · · · pr and d, then x2 +
+  2
+dy = m is solvable over Z if and only if each prime pi splits in Q( −d) and
+                                              r
+                                              Y
+                                                  [pi ]δi
+                                              i=1
+                                            √
+is the identity in Cl(O) of the order O = Z[ −d] for some δi ∈ {−1, +1}; where each pi is
+a prime O-ideal lying above pi .
+Proof. Assume that the equation x2 + dy 2 = m is solvable over the integers. This implies
+that −d is a square modulo m, i.e. s2 ≡ −d (mod m) is solvable, and −d must also be
+a quadratic residue√ modulo each prime pi dividing m. Consequently, each pi splits in the
+quadratic field Q( −d).                                              √
+    Depending on the congruence of d modulo 4, the order O = Z[ −d] may not necessarily
+be the full ring of integers of K, but its conductor is at most 2. In general, unique factor-
+ization of ideals does not hold in O, unless the ideals involved are coprime to the conductor.
+This condition applies in our case, since m is even only if d ≡ 1 (mod 4), in which case the
+ring of integers of K is O.
+    Combining this with our previous lemma, we obtain the factorization:
+                                                            r
+                                                            Y
+                                   (α)(ᾱ) = (m) =                pi p̄i ,                  (1)
+                                                            i=1
+
+where pi = Pi ∩ O, and Pi is a prime OK -ideal with N(Pi ) = N(pi ) = pi (see Proposition
+7.20 of [Cox11]). Notice that [p¯i ] = [pi ]−1 since pi O = pi p¯i .QAdditionally, the fact that
+                                                                     r
+N(α) = m and N(pi ) = pi along with (1) implies that (α) = i=1 qi where qi = pi or p¯i .
+This, in return is equivalent to saying
+                                    r
+                                    Y
+                                          [pi ]δi = [1] ∈ Cl(O),
+                                    i=1
+
+where δi ∈ {−1, +1}.                              √
+                                                   −d) and [pi ]δi is the identity in Cl(O),
+                                                          Q
+    On theQrother hand, if each   p i splits in Q(
+then I = i=1 qi is principal of norm m, where qi = pi or p¯i . Hence the generator of I is a
+solution to our equation; this finishes the proof.
+   With this equivalence in hand, we now give the algorithm to find a solution to x2 +dy 2 =
+m or decide that non exist.
+Theorem 4.3. Given positive square-free integers m and d, along with the factorization
+of m, algorithm 1 finds integral solution to x2 + dy 2 = m or decides that no such solution
+exists. The algorithm has deterministic time complexity of
+                                                         
+                                 O d1/2+ε ω(m) + log2 m
+
+and O d1/2+ε -space complexity for arbitrary ε > 0, where ω(m) is the number of distinct
+              
+
+prime factors of m.
+                                                                     √
+Proof. Steps 1-5. These steps check if each prime pi | m splits in Q( −d), equivalently that
+the Legendre symbol is +1, which takes a total time O(log2 m).
+                                                                              √
+    Step 7. This step involves computing the class group of the order O = Z[ −d] using
+Shanks algorithm [Sha69]. The algorithm runs unconditionally in time O(d1/4+ε ) for arbi-
+trary ε > 0. Eventhough there exist subexponential algorithms in log d under GRH, like [?]
+an [?], for our purposes this will suffice.
+
+
+
+                                                    5
+   Step 9. Given the factorization of m we can compute ri2 ≡ −d (mod pi ) for each i using
+Tonelli-Shanks algorithm in time O(log2 (pi )), and hence square roots computation takes an
+overall O(log2 m) time.
+
+   Step 11. This involves writing each class [pi ] in terms of the generators of Cl, this can
+be by solving discrete logs in the group. Each class costs at most O(h(−d)) and hence the
+total time is O (h(−d)ω(m)) = O(d1/2+ε ω(m)) for arbitrary ε > 0.
+
+   Steps 14,15. A state (i, ~s) is a valid state if there exist exists δ1 , · · · , δi such that
+                                       i
+                                       X                    r
+                                                            Y
+                                             δi vi = ~s ∈         Z/mk Z.
+                                       j=1                  k=1
+
+. Each state (i, ~s) has two next states:
+   • (i + 1, ~s + vi+1 ) where we choose δi+1 = 1 and form the sum s + vi
+   • (i + 1~s − vi+1 ) where δi+1 = −1 and we form the sum s − vi+1 ,
+and we initialize the state (0, ~0).
+
+    Steps 16-21. Given this tree, we use the Breadth first Search algorithm (BFS) to search
+the state (r,   ~                                                                           r
+              P0). If the state is found we can back track and find the sequence of (δi )i=1
+such that       δi vi = 0. Otherwise, return that no such sequence exists, which implies that
+  r        δi
+                 [1] for all combinations of δi′ s and hence x2 + dy 2 = m is not solvable over
+Q
+      [p
+  i=1 i  ]    =
+              6
+Z by theorem 4.2. As discussed in section 3, this dynamic programming method using
+(BFS) has time complexity which is at most linear in the number of states. The num-
+ber of states is r = ω(m) times the number sums ~s we obtain, which is bounded above
+by |Cl(−d)| = h(−d) = O(d1/2+ε ). Hence the total time complexity for these steps is
+O(d1/2+ε ω(m)). Since space-optimized dynamic programming does not require storing all
+previous rows, but only maintains an array of distinct sums while keeping track of the cur-
+rent and previous state arrays, the space complexity is reduced to O(h(−d)) = O(d1/2+ε ).
+                                                                                Qr
+    Steps 22,23. After figuring the right combination of (δi )ri=1 we have [I] = i=1 [pi ]δi = [1]
+and this step just involves writing the ideal in terms of two generators which can be done
+iteratively and efficiently.
+    For any β ∈ I, β = xα for x ∈ OK , and N(β) = N(x)N(α) > N(α) unless x = ±1. Hence,
+α is the shorest vector in the complex ideal lattice I, which can be retrieved efficiently in
+dimension 2.
+   Remark. Since the algorithm’s running time is dominated by the complexity of finding
+the correct state in the tree which is O(d1/2+ε ω(m)), algorithm 1 remains more efficient
+than Cornacchia’s algorithm as long as log d ≤ (2 + ε)ω(m).
+
+
+
+
+                                                       6
+Algorithm 1 NORMREPRESENT(m,d)
+    Input: Positive square-free integers m and d along with the prime factorization m =
+    p1 · · · pr .
+    Output: A vector (x, y) ∈ Z2 such that x2 + dy 2 = m or ⊥.
+ 1: for i =   1 to r do
+ 2:      if −d  pi   6= 1 then
+ 3:           return ⊥;
+ 4:      end if
+ 5: end for                                     √
+ 6: θ, O ← generator of OK and O = Z[ −d];
+    Ls                                              ∼ L Z/mk Z [Sha69]
+ 7:     k=1 Z/mk Z ←; group structure Cl(O) =
+ 8: for i = 1 to r do
+ 9:      ri ← ri2 ≡ −d (mod pi ) using Tonelli-Shanks algorithm;
+10:      Pi ← (pi , ri + θ);
+11:      p i ← Pi ∩ O                            Ls
+12:      vi ← the representation of [pi ] in k=1 Z/mk Z;
+13: end for
+14: V ← {v1 , · · · , vr };
+        s) ← {∃ δ1 , · · · δi ∈ {−1, +1} | ij=1 δj vj = ~s};
+                                             P
+15: (i, ~
+16: (0, ~
+        0) ← initialization state;
+17: Search for the state (r, ~   0) in the tree using Breadth first Search algorithm;
+18: if (r, 0) is found then
+19:      Backtrack to find δi for 1 ≤ i ≤ r
+20: else
+21:      return ⊥
+22: end if                        (
+           Qr                        pi , if δi = +1;
+23: I ←       i=1 qi where qi =
+                                     pi , if δi = −1;
+                                                      √
+24: α ← a generator of I, written as α = x + y −d;
+25: return (x, y)
+
+
+   We now describe an algorithm that exploits theorem 4.2 and the meet-in-the-middle
+approach to achieve a quadratic speedup over Cornacchia’s algorithm in the generic case.
+Theorem 4.4. Given positive squarefree and coprime integers m and d along with the
+factorization of m = p1 · · · pr , algorithm 2 finds an integral solution to x2 + dy 2 = m or
+decides that none exist in deterministic worst-case time
+                                                                
+                                           ω(m)
+                          O 2ω(m)/2             + log m + log2 m ,
+                                             2
+
+and O(2ω(m)/2 )-space complexity.
+Proof. Most of the steps are similar to the previous algorithm, we will just comment on the
+procedure and the running time of some steps.
+
+    Steps 16-22 After forming the set S of reduced binary form classes [ι(pi )], we split the
+set into two equally large sets S1 and S2 of cardinalates rj ≈ r/2. In each set we form all
+products
+                                         rj
+                                        Y
+                                            ι([pi ])δi
+                                         i=1
+
+corresponding each combination of δi ∈ {−1, +1}, reducing each one at a time obtain a
+unique representative (a, b, c). The product of forms, i.e. composition, and the reduction
+
+                                               7
+can be done efficiently in O(log d) = O(log m). To sort a set of n elements by lexicographic
+order, this can be in O(n log n) time, i.e. for the of our forms in O(2ω(m)/2 ω(m)/2) time.
+
+     Steps 24-29 For each form class [f ] = [(a, b, c, )], we check if [f ]−1 = [(a, −b, c)] ∈ L1 ,
+which can be done in O(ω(m)/2) time in a sorted list. If we exhaust all classes in L2 and
+[f ]−1 6∈ L1 , then there exists no solution to the Diophantine equation. Otherwise we have
+                                        r1             r2                 r
+                                                                                   !
+                                        Y              Y                  Y
+                    [1] = [f ]−1 [f ] =    ι([pi ])δi1    ι([pi ])δi2 = ι   [pi ]δi ,
+                                     i=1          i=1               i=1
+
+and hence δ = (δ1 , · · · , δr ) is the desired combination.
+
+   The rest of the steps follow exactly as in algorithm 1.
+
+
+Algorithm 2 GENERICNORMRREPRESENT(m, d)
+ 1: Input: Positive square-free integers m and d, with prime factorization m = p1 · · · pr .
+ 2: Output: A vector (x, y) ∈ Z2 such that x2 + dy 2 = m, or ⊥ if no solution exists.
+ 3: for i =
+           1 to r do
+ 4:    if −d pi   6= 1 then
+ 5:        return ⊥
+ 6:    end if
+ 7: end for
+ 8: θ ← the generator of OK
+ 9: ι ← the isomorphism ι : Cl(O) → Cl(−d)
+10: for i = 1 to r do
+11:    ri ← square roots ri2 ≡ −d (mod pi ) using Tonelli-Shanks algorithm;
+12:    Pi ← (pi , ri + θ);
+13:    pi ← Pi ∩ O;
+14:    Reduce the form class [ι(pi )] via Gaussian reduction;
+15: end for
+16: S ← {[ι(p1 )], . . . , [ι(pr )]}
+17: Split S into S1 and S2 , each of cardinality ⌊r/2⌋;
+18: for i = 1, 2 do
+19:    Generate all 2r/2 class products [f ] of Si , each with associated sign vector δ[f ] ;
+20:    (a, b, c) ← the unique reduced form in the class of [f ];
+21:    Sort the forms in increasing lexicographic
+                                                        order (by a, then b, then c);
+22:    Store the pair [(a, b, c)], δ[f ] in the list Li ;
+23: end for
+24: for each [f ] ∈ L2 do
+25:    if [f ]−1 ∈ L1 then
+26:        Extract δ[f ] and δ[f ]−1 and go to step 30;
+27:    end if
+28: end for
+29: return ⊥
+30: δ ← the concatenation δ[f ]−1 || δ[f ] ;
+                                     (
+         Qr                           pi , if δi = +1;
+31: I ←    i=1 qi , where qi =
+                                      pi , if δi = −1;
+                                                       √
+32: α ← a generator of I, written as α = x + y −d;
+33: return (x, y)
+
+
+   We now present a similar algorithm with enhanced space complexity and generally more
+practical.
+
+                                                 8
+Theorem 4.5. Given positive squarefree and coprime integers m and d along with the
+factorization of m = p1 · · · pr , there exists an algorithm that finds an integral solution to
+x2 + dy 2 = m or decides that none exist in deterministic worst-case time
+                                                           
+                                   O 2ω(m)/2 log m + log2 m ,
+
+and O(2ω(m)/4 )-space complexity.
+Proof. The algorithm is exactly like the previous one, however we use Schroeppel and Shamir
+approach [SS81] to reduce the space complexity from O(2ω(m)/2 ) to O(2ω(m)/4 ). Additionally
+instead of sorting the forms in each set of products Li we can use a hash table that takes,
+on average, O(1)-time to insert and look up, which is often more practical.
+
+
+                                         References
+[ACD+ 23] Arpin, S., Clements, J., Dartois, P., Eriksen, J. K., Kutas, P., and Wesolowski, B.
+   ”Finding Orientations of Supersingular Elliptic Curves and Quaternion Orders.” arXiv
+   preprint, arXiv:2308.11539 (2023).
+[BKM+ 23] Benčina, Benjamin, Péter Kutas, Simon-Philipp Merz, Christophe Petit, Miha
+   Stopar, and Charlotte Weitkämper. Improved Algorithms for Finding Fixed-Degree
+   Isogenies Between Supersingular Elliptic Curves.* Cryptology ePrint Archive, Paper
+   2023/1618, 2023.
+[BBS+ 20] Bonnetain, Xavier; Bricout, Rémi; Schrottenloher, André; Shen, Yixin (2020).
+   ”Improved Classical and Quantum Algorithms for Subset-Sum”. In Moriai, Shiho; Wang,
+   Huaxiong (eds.). Advances in Cryptology - ASIACRYPT 2020. Lecture Notes in Com-
+   puter Science. Vol. 12492. Berlin, Heidelberg: Springer. pp. 633–666.
+[Bel57] Richard E. Bellman. Dynamic Programming. Princeton University Press, 1957.
+[Bri17] Karl Bringmann. A near-linear pseudopolynomial time algorithm for subset sum. In
+    Proceedings of the 28th ACM-SIAM Symposium on Discrete Algorithms (SODA), pages
+    1073–1084,2017
+[Coh93] Cohen, Henri. “A course in computational algebraic number theory.” Graduate
+   texts in mathematics (1993).
+[Cor08] Cornacchia,
+             Pn G. (1908).   ”Su di un metodo per la risoluzione in numeri interi dell’
+                       n−h h
+   equazione   h=0 hC x   y  = P , Giornale di Matematiche di Battaglini. 46: 33–90,
+   (1908).
+[Cox11] Cox, David A.. “Primes of the Form x2 + ny2: Fermat, Class Field Theory, and
+   Complex Multiplication.” (1989).
+[EL24] Eriksen, Jonathan Komada, and Leroux, Antonin. ”Computing Orientations from
+   the Endomorphism Ring of Supersingular Curves and Applications.” Preprint.
+[HJ10] Howgrave-Graham, Nick and Antoine Joux. “New Generic Algorithms for Hard
+   Knapsacks.” IACR Cryptol. ePrint Arch. 2010 (2010): 189.
+[JVW20] Jin, Ce, Nikhil Vyas and Ryan Williams. “Fast Low-Space Algorithms for Subset
+   Sum.” ACM-SIAM Symposium on Discrete Algorithms (2020).
+[KLPT14] Kohel, David, Lauter, Kristin, Petit, Christophe, and Tignol, Jean-Pierre. ”On
+   the Quaternion l-Isogeny Path Problem.” LMS Journal of Computation and Mathemat-
+   ics, 17(A): 418–432, 2014.
+
+
+                                              9
+[Sha69] D. Shanks, Class number, a theory of factorization, and genera, in “Proceedings of
+   symposia in pure mathematics,” American Mathematical Society, 20 (1969), 415–440.
+[SS81] Schroeppel, Richard, and Adi Shamir. ”A T = O(2n/2 ), S = O(2n/4 ) Algorithm for
+   Certain NP-Complete Problems.” SIAM Journal on Computing 10, no. 3 (1981)
+
+
+
+
+                                           10
+

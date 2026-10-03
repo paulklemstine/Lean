@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/YppGjZr/Y07dVeQ5Je0Fv3pYxBU</id>
+  <title>arXiv Query: search_query=abs:"conditional on" AND abs:"generalized Riemann" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:14:47Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22conditional+on%22+AND+(abs:%22generalized+Riemann%22+AND+abs:factoring)&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>10</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2109.07463v3</id>
+    <title>Bias in cubic Gauss sums: Patterson's conjecture</title>
+    <updated>2024-05-14T16:56:05Z</updated>
+    <link href="https://arxiv.org/abs/2109.07463v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.07463v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $W$ be a smooth test function with compact support in $(0,\infty)$. Conditional on the Generalized Riemann Hypothesis for Hecke $L$-functions over $\mathbb{Q}(ω)$, we prove that $$\sum_{p \equiv 1 \pmod{3}} \frac{1}{2 \sqrt{p}} \cdot \Big ( \sum_{x \pmod{p}} e^{2πi x^3 / p} \Big ) W \Big ( \frac{p}{X} \Big ) \sim \frac{(2π)^{2/3}}{3 Γ(\tfrac 23)} \int_{0}^{\infty} W(x) x^{-1/6} dx \cdot \frac{X^{5/6}}{\log X},$$ as $X \rightarrow \infty$ and $p$ runs over primes. This explains a well-known numerical bias in the distribution of cubic Gauss sums first observed by Kummer in 1846 and confirms (conditionally on the Generalized Riemann Hypothesis) a conjecture of Patterson from 1978.
+  There are two important byproducts of our proof. The first is an explicit level aspect Voronoi summation formula for cubic Gauss sums, extending computations of Patterson and Yoshimoto. Secondly, we show that Heath-Brown's cubic large sieve is sharp up to factors of $X^{o(1)}$ under the Generalized Riemann Hypothesis. This disproves the popular belief that the cubic large sieve can be improved.
+  An important ingredient in our proof is a dispersion estimate for cubic Gauss sums. It can be interpreted as a cubic large sieve with correction by a non-trivial asymptotic main term. This estimate relies on the Generalized Riemann Hypothesis, and is one of the fundamental reasons why our result is conditional.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-15T17:53:50Z</published>
+    <arxiv:comment>79 pages; minor corrections, accepted Annals of Math</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexander Dunn</name>
+    </author>
+    <author>
+      <name>Maksym Radziwiłł</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1410.5144v2</id>
+    <title>Realization of groups with pairing as Jacobians of finite graphs</title>
+    <updated>2017-09-18T12:55:54Z</updated>
+    <link href="https://arxiv.org/abs/1410.5144v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1410.5144v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study which groups with pairing can occur as the Jacobian of a finite graph. We provide explicit constructions of graphs whose Jacobian realizes a large fraction of odd groups with a given pairing. Conditional on the generalized Riemann hypothesis, these constructions yield all groups with pairing of odd order, and unconditionally, they yield all groups with pairing whose prime factors are sufficiently large. For groups with pairing of even order, we provide a partial answer to this question, for a certain restricted class of pairings. Finally, we explore which finite abelian groups occur as the Jacobian of a simple graph. There exist infinite families of finite abelian groups that do not occur as the Jacobians of simple graphs.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-10-20T03:03:38Z</published>
+    <arxiv:comment>18 pages, 8 TikZ figures. v2: Main results strengthened. Final version to appear in the Annals of Combinatorics</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Annals of Combinatorics, December 2018, Volume 22, Issue 4, pp 781-801</arxiv:journal_ref>
+    <author>
+      <name>Louis Gaudet</name>
+    </author>
+    <author>
+      <name>David Jensen</name>
+    </author>
+    <author>
+      <name>Dhruv Ranganathan</name>
+    </author>
+    <author>
+      <name>Nicholas Wawrykow</name>
+    </author>
+    <author>
+      <name>Theodore Weisman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.08914v1</id>
+    <title>Primes represented by positive definite binary quadratic forms</title>
+    <updated>2017-10-24T17:57:43Z</updated>
+    <link href="https://arxiv.org/abs/1710.08914v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.08914v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $f$ be a primitive positive definite integral binary quadratic form of discriminant $-D$ and let $π_f(x)$ be the number of primes up to $x$ which are represented by $f$. We prove several types of upper bounds for $π_f(x)$ within a constant factor of its asymptotic size: unconditional, conditional on the Generalized Riemann Hypothesis (GRH), and for almost all discriminants. The key feature of these estimates is that they hold whenever $x$ exceeds a small power of $D$ and, in some cases, this range of $x$ is essentially best possible. In particular, if $f$ is reduced then this optimal range of $x$ is achieved for almost all discriminants or by assuming GRH. We also exhibit an upper bound for the number of primes represented by $f$ in a short interval and a lower bound for the number of small integers represented by $f$ which have few prime factors.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-24T17:57:43Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Q. J. Math. 69 (2018), no. 4, 1353-1386</arxiv:journal_ref>
+    <author>
+      <name>Asif Zaman</name>
+    </author>
+    <arxiv:doi>10.1093/qmath/hay028</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/qmath/hay028" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.1974v1</id>
+    <title>Schemes for Deterministic Polynomial Factoring</title>
+    <updated>2008-04-11T23:04:17Z</updated>
+    <link href="https://arxiv.org/abs/0804.1974v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.1974v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work we relate the deterministic complexity of factoring polynomials (over finite fields) to certain combinatorial objects we call m-schemes. We extend the known conditional deterministic subexponential time polynomial factoring algorithm for finite fields to get an underlying m-scheme. We demonstrate how the properties of m-schemes relate to improvements in the deterministic complexity of factoring polynomials over finite fields assuming the generalized Riemann Hypothesis (GRH). In particular, we give the first deterministic polynomial time algorithm (assuming GRH) to find a nontrivial factor of a polynomial of prime degree n where (n-1) is a smooth number.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-11T23:04:17Z</published>
+    <arxiv:comment>14 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.02373v2</id>
+    <title>The reciprocal sum of divisors of Mersenne numbers</title>
+    <updated>2020-08-13T16:31:34Z</updated>
+    <link href="https://arxiv.org/abs/2006.02373v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.02373v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate various questions concerning the reciprocal sum of divisors, or prime divisors, of the Mersenne numbers $2^n-1$. Conditional on the Elliott-Halberstam Conjecture and the Generalized Riemann Hypothesis, we determine $\max_{n\le x} \sum_{p \mid 2^n-1} 1/p$ to within $o(1)$ and $\max_{n\le x} \sum_{d\mid 2^n-1}1/d$ to within a factor of $1+o(1)$, as $x\to\infty$. This refines, conditionally, earlier estimates of Erdős and Erdős-Kiss-Pomerance. Conditionally (only) on GRH, we also determine $\sum 1/d$ to within a factor of $1+o(1)$ where $d$ runs over all numbers dividing $2^n-1$ for some $n\le x$. This conditionally confirms a conjecture of Pomerance and answers a question of Murty-Rosen-Silverman. Finally, we show that both $\sum_{p\mid 2^n-1} 1/p$ and $\sum_{d\mid 2^n-1}1/d$ admit continuous distribution functions in the sense of probabilistic number theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-03T16:39:42Z</published>
+    <arxiv:comment>15 pages. Made several clarifications and corrections. Added new section on generalizations</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Zebediah Engberg</name>
+    </author>
+    <author>
+      <name>Paul Pollack</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.4147v4</id>
+    <title>Smooth solutions to the abc equation: the xyz Conjecture</title>
+    <updated>2011-07-07T21:14:48Z</updated>
+    <link href="https://arxiv.org/abs/0911.4147v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.4147v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies integer solutions to the ABC equation A+B+C=0 in which none of A, B, C has a large prime factor. Set H(A,B, C)= max(|A|,|B|,|C|) and set the smoothness S(A, B, C) to be the largest prime factor of ABC. We consider primitive solutions (gcd(A, B, C)=1) having smoothness no larger than a fixed power p of log H. Assuming the abc Conjecture we show that there are finitely many solutions if p&lt;1. We discuss a conditional result, showing that the Generalized Riemann Hypothesis (GRH) implies there are infinitely many primitive solutions when p&gt;8. We sketch some details of the proof of the latter result.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-21T00:07:59Z</published>
+    <arxiv:comment>21 pages, presented at 26th Journees Arithmetiques, 2009; v2 added new examples 1.2, updated references; v3 changed title, more examples added, notation changes, v4 corrects misprints in Conj. 3.1, Thm. 4.3 statement, 25 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. Theor. Nombres Bordeaux 23 (2011), No. 1, 209--234</arxiv:journal_ref>
+    <author>
+      <name>Jeffrey C. Lagarias</name>
+    </author>
+    <author>
+      <name>K. Soundararajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.04154v1</id>
+    <title>Character sums for elliptic curve densities</title>
+    <updated>2017-03-12T18:10:33Z</updated>
+    <link href="https://arxiv.org/abs/1703.04154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.04154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>If $E$ is an elliptic curve over $\mathbb{Q}$, then it follows from work of Serre and Hooley that, under the assumption of the Generalized Riemann Hypothesis, the density of primes $p$ such that the group of $\mathbb{F}_p$-rational points of the reduced curve $\tilde{E}(\mathbb{F}_p)$ is cyclic can be written as an infinite product $\prod δ_\ell$ of local factors $δ_\ell$ reflecting the degree of the $\ell$-torsion fields, multiplied by a factor that corrects for the entanglements between the various torsion fields. We show that this correction factor can be interpreted as a character sum, and the resulting description allows us to easily determine non-vanishing criteria for it. We apply this method in a variety of other settings. Among these, we consider the aforementioned problem with the additional condition that the primes $p$ lie in a given arithmetic progression. We also study the conjectural constants appearing in Koblitz's conjecture, a conjecture which relates to the density of primes $p$ for which the cardinality of the group of $\mathbb{F}_p$-points of $E$ is prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-12T18:10:33Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Julio Brau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.15973v3</id>
+    <title>Artin's Primitive Root Conjecture in Number Fields and For Matrices</title>
+    <updated>2024-11-21T08:20:35Z</updated>
+    <link href="https://arxiv.org/abs/2306.15973v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.15973v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1927, E. Artin conjectured that all non-square integers $a\neq -1$ are a primitive root of $\mathbb{F}_p$ for infinitely many primes $p$. In 1967, Hooley showed that this conjecture follows from the Generalized Riemann Hypothesis (GRH). In this paper we consider variants of the primitive root conjecture for number fields and for matrices. All results are conditional on GRH.
+  For an algebraic number field $K$ and some element $α\in K$, we examine the order of $α$ modulo various rational primes $p$. We extend previous results of Roskam which only worked for quadratic extensions $K/\mathbb{Q}$ to more general field extensions of higher degree. Specifically, under some constraints on the Galois group of $K/\mathbb{Q}$ and on the element $α\in K$, we show that $α$ is of almost maximal order mod $p$ for almost all rational primes $p$ which factor into primes of degree 2 in $K$.
+  We also consider Artin's primitive root conjecture for matrices. Given a matrix $A\in\text{GL}_n(\mathbb{Q})$, we examine the order of $A\bmod p$ in $\text{GL}_n(\mathbb{F}_p)$ for various primes $p$, which turns out to be equivalent to the number field setting.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-28T07:21:29Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Noam Kimmel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.08807v2</id>
+    <title>Effective Sato-Tate conjecture for abelian varieties and applications</title>
+    <updated>2023-10-13T13:45:36Z</updated>
+    <link href="https://arxiv.org/abs/2002.08807v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.08807v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>From the generalized Riemann hypothesis for motivic L-functions, we derive an effective version of the Sato-Tate conjecture for an abelian variety A defined over a number field k with connected Sato-Tate group. By effective we mean that we give an upper bound on the error term in the count predicted by the Sato-Tate measure that only depends on certain invariants of A. We discuss three applications of this conditional result. First, for an abelian variety defined over k, we consider a variant of Linnik's problem for abelian varieties that asks for an upper bound on the least norm of a prime whose normalized Frobenius trace lies in a given interval. Second, for an elliptic curve defined over k with complex multiplication, we determine (up to multiplication by a nonzero constant) the asymptotic number of primes whose Frobenius trace attain the integral part of the Hasse-Weil bound. Third, for a pair of abelian varieties defined over k with no common factors up to k-isogeny, we find an upper bound on the least norm of a prime at which the respective Frobenius traces have opposite sign.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-20T15:41:19Z</published>
+    <arxiv:comment>25 pages; refereed version. A table of notation has been added at the end. §5 has been removed; its content will be incorporated into a subsequent paper</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alina Bucur</name>
+    </author>
+    <author>
+      <name>Francesc Fité</name>
+    </author>
+    <author>
+      <name>Kiran S. Kedlaya</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.08101v1</id>
+    <title>On analytic solutions of wave equations in regular coordinate systems on Schwarzschild background</title>
+    <updated>2015-03-27T14:56:36Z</updated>
+    <link href="https://arxiv.org/abs/1503.08101v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.08101v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The propagation of (massless) scalar, electromagnetic and gravitational waves on fixed Schwarzschild background spacetime is described by the general time-dependent Regge-Wheeler equation. We transform this wave equation to usual Schwarzschild, Eddington-Finkelstein, Painleve-Gullstrand and Kruskal-Szekeres coordinates. In the first three cases, but not in the last one, it is possible to separate a harmonic time-dependence. Then the resulting radial equations belong to the class of confluent Heun equations, i.e., we can identify one irregular and two regular singularities. Using the generalized Riemann scheme we collect properties of all the singular points and construct analytic (local) solutions in terms of the standard confluent Heun function HeunC, Frobenius and asymptotic Thome series. We study the Eddington-Finkelstein case in detail and obtain a solution that is regular at the black hole horizon. This solution satisfies causal boundary conditions, i.e., it describes purely ingoing radiation at $r=2M$. To construct solutions on the entire open interval $r \, \in \; ]0,\infty[ \,$, we give an analytic continuation of local solutions around the horizon. Black hole scattering and quasi-normal modes are briefly considered as possible applications and we use semi-analytically calculated graybody factors together with the Damour-Ruffini method to reconstruct the power spectrum of Hawking radiation emitted by the black hole.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-27T14:56:36Z</published>
+    <arxiv:comment>17 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Dennis Philipp</name>
+    </author>
+    <author>
+      <name>Volker Perlick</name>
+    </author>
+  </entry>
+</feed>

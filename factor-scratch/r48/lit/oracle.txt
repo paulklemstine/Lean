@@ -1,0 +1,1176 @@
+arXiv:1912.00345v4 [math.NT] 25 Jan 2023
+
+ON ORACLE FACTORING OF INTEGERS
+ANDRZEJ DA˛BROWSKI, JACEK POMYKALA, AND IGOR E. SHPARLINSKI
+Abstract. We present an oracle factorisation algorithm, which in
+polynomial deterministic time, finds a nontrivial factor of almost
+all positive integers n based on the knowledge of the number of
+points on certain elliptic curves in residue rings modulo n.
+
+1. Introduction
+1.1. Motivation and background. It is widely believed that the
+integer factorisation problem, that is, the problem of finding a nontrivial factor of a positive integer n is a difficult computational question see [7, Section 5.5]. The best known rigorously proved deterministic algorithm is due to Harvey [12] with a slight improvement in [13],
+and runs in time n1{5`op1q , which builds on the n2{9`op1q -algorithm of
+Hittmeir [15], which, in turn, improves the previous n1{4`op1q -algorithm
+of Pollard [30]. In fact, prior [12], an n1{5`op1q -algorithm has also been
+known, however only conditional on the Generalised Riemann Hypothesis (GRH), see [7, Section 5.5]. There are also fast probabilistic algorithms, some of which, such as the number field sieve, remain heuristic,
+we refer to [7, Chapter 6] for an outline of these algorithms, see also [20]
+for some recent progress towards a rigorous version of the number field
+sieve.
+It is also known from the work of Miller [28] that under the assumption of the GRH, computing the Euler function ϕpnq is deterministic
+polynomial time equivalent to computing a non-trivial factor of an integer n or prove that it is prime.
+Shoup [33, Section 10.4] has given an unconditional version of this
+reduction, however his algorithm is probabilistic.
+These results of Miller [28] and Shoup [33, Section 10.4] have a natural interpretation of oracle factoring. Namely, given an oracle, which
+for every integer n ě 1 outputs ϕpnq we can factor n in polynomial
+time. We also recall, several other oracle factoring algorithms, such as
+2020 Mathematics Subject Classification. 11G05, 11Y05.
+Key words and phrases. integer factorisation problem, oracle.
+1
+
+2
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+‚ a heuristic algorithm of Maurer [26] requiring certain ε log n
+oracle calls, which is based on the elliptic curve factoring algorithm of Lenstra [21, 22],
+‚ a rigorous algorithm of Coppersmith [5, 6] requiring certain
+about 0.25 log n oracle calls, which is based on an algorithm
+to find small solutions to polynomial congruences,
+‚ a rigorous algorithm of Pomykala and Radziejewski [31], with
+the oracle being the multiple` D of a value
+˘ of the Euler totient
+Op1q
+function ϕpnq with D ď exp plog nq
+,
+see also [23, 24, 27, 29] and references therein.
+Sutherland [35, Chapter 2.3] has designed a probabilistic factoring
+algorithm which uses an oracle that returns a multiple of the multiplicative order of integers modulo N. Bach [2] established a similar
+result for a discrete logarithm oracle.
+Here, we design an elliptic curve version of the results of Miller [28]
+and Shoup [33, Section 10.4]; we refer to [17, 34] for an appropriate
+background on elliptic curves. The probabilistic approach for the oracle answering the order of points of elliptic curves modulo n was investigated in [25] with the related error probability 184{225 (improved to
+53{80 in [9]).
+We remark that the Euler function gives the number of elements
+of the unit group Z˚n of the residue ring Zn modulo n. Our elliptic
+curve analogue of this oracle returns the number of points on certain
+elliptic curves reduced modulo n. Furthermore, as in the case of the
+algorithm of Shoup [33, Section 10.4], we only request a small multiple
+of these numbers rather than their exact values, see Definitions 1.1
+and 1.3 below. Recently a related scenario (for a slightly different
+family of elliptic curves) has also been considered by Dieulefait and
+Urroz [8]. However, here we do not assume that our oracle has an
+access to integers b with
+ˆ ˙
+b
+“ ´1
+n
+for the Jacobi symbol. Instead we estimate the proportion of integers
+n ď N for which this smallest value of b is large.
+1.2. Notation and conventions. Throughout the paper, the notations
+U “ OpV q,
+V “ ΩpUq,
+U ! V,
+V "U
+are all equivalent to the statement that the inequality |U| ď cV holds
+with some constant c ą 0, which may occasionally, where obvious
+depend on the real parameters γ, ε and δ.
+
+ON ORACLE FACTORING OF INTEGERS
+
+3
+
+As we have mentioned, for a positive integer n, we use Zn to denote
+the residue ring modulo n and we use Z˚n to denote the group of units
+of Zn . For a prime p we denote by Fp the finite field of p elements.
+For a square-free n we use Nn to denote the least positive integer b
+with gcdpb, nq “ 1 and such that for the Jacobi symbol we have
+ˆ ˙
+b
+“ ´1.
+n
+The oracles have to treat in fact only the square-free values of b ď B,
+since obviously Nn is a prime number.
+The letters p and q with or without indices, always denote prime
+numbers.
+We measure the time of our algorithms in the number of bit operations. However we also use naive arithmetic algorithms and the recent
+striking progress of D. Harvey and J. van der Hoeven [14] does not
+affect our finally results (as the possible advantage gets absorbed in
+op1q in the powers of log N).
+1.3. Background on elliptic curves in residue rings. For an elliptic curve E over Q given by a minimal Weierstrass equation with
+integer coefficients see [34, Chapter III, Section 1], we denote by EpZn q
+the set of solutions of the corresponding cubic congruence modulo n.
+Let us recall basic facts on elliptic curves defined over Zn (see [21,22])
+which is needed in this paper. Assume that
+s
+ź
+n“
+pi
+i“1
+
+is a square-free integer with primes pi ą 3. The projective plane P2 pZn q
+is defined to be the set of equivalence classes of primitive triples in Z3n
+(that is, triples px1 , x2 , x3 q with gcdpx1 , x2 , x3 , nq “ 1) with respect to
+the equivalence px1 , x2 , x3 q „ py1 , y2 , y3 q if px1 , x2 , x3 q “ upy1, y2 , y3q
+for a unit u P Z˚n . An elliptic curve over Zn is given by the short
+Weierstrass equation E : y 2 z “ x3 ` axz 2 ` bz 3 , where a, b P Zn and
+the discriminant ´16p4a3 ` 27b2 q P Z˚n . Let EpFpi q be the group of
+Fpi -rational points on the reduction of E modulo pi for primes pi | n.
+For the set EpZn q of points in P2 pZn q satisfying the equation of E, by
+the Chinese remainder theorem there exists a bijection
+(1.1)
+
+ψ : EpZn q Ñ EpFp1 q ˆ . . . ˆ EpFps q
+
+induced by the reductions modulo pi , i “ 1, . . . , s.
+The points px : y : zq P EpZn q with z P Z˚n can be written as
+px{z : y{z : 1q and are called finite points. The set EpZn q is a group
+with the addition for which ψ is a group isomorphism, which in general
+
+4
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+can be defined using the so-called complete set of addition laws on E
+(see [21]). To add two finite points P, Q P EpZn q with
+ψpP q “ pP1 , . . . , Ps q, ψpQq “ pQ1 , . . . , Qs q P EpFp1 q ˆ . . . ˆ EpFps q
+
+we can also use the same formulas as for elliptic curves over fields in
+the following two cases:
+‚ either Qi ‰ ˘Pi for each i “ 1, . . . , s;
+‚ or Qi “ Pi and Qi ‰ ´Pi for each i “ 1, . . . , s.
+In these cases,
+#
+xP `Q “ λ2 ´ xP ´ xQ ,
+(1.2)
+yP `Q “ λpxP ´ xP `Q q ´ yP ,
+where
+
+$y ´y
+Q
+P
+’
+&
+xQ ´ xP
+λ “ 3x2 ` a
+’
+% P
+2yP
+
+if Qi ‰ ˘Pi for i “ 1, . . . , s,
+if Qi “ Pi and Qi ‰ ´Pi for i “ 1, . . . , s.
+
+In the remaining cases, these formulae will give not correct answer
+for the sum P+Q, because in these cases denominators in λ will be zero
+divisors in Zn (see [21, Section 3], for further discussion how to remedy
+this situation).
+Given a positive, square-free integer n, an odd prime divisor r | n and
+P “ pa, bq P EpZn q we define its reduction P mod r P EpZr q modulo r
+by P mod r “ pa mod r, b mod rq.
+1.4. Main results. First we describe a MultEllpN, B, Mq-oracle which
+we assume is available to us. Let
+Eb : y 2 “ xpx2 ´ bq
+
+be an elliptic curve over Q.
+By the Chinese remainder theorem we see that for a square-free n,
+the number of solutions Epn, bq to the congruence
+is given by
+(1.3)
+
+y 2 ” xpx2 ´ bq mod n,
+Epn, bq “
+
+ź
+p|n
+
+px, yq P Z2n ,
+
+# pEb pFp qq ,
+
+provided that gcdpb, nq “ 1, see also (1.1).
+We recall that Nn is prime, thus the oracles below need to treat only
+square-free numbers.
+
+ON ORACLE FACTORING OF INTEGERS
+
+5
+
+Definition 1.1 (MultEllpN, B, Mq-oracle). Given the parameters B,
+N and M, for each integer n ď N it returns
+‚ a positive multiple
+kb Epn, bq ď M,
+
+kb P N,
+
+of Epn, bq given by (1.3) for every b ď B with gcdpb, nq “ 1, if
+n is square-free;
+‚ an error message ‹ ‹ ‹, if n is not square-free.
+We are now ready to formulate our main result.
+Theorem 1.2. Let
+
+?
+257 ´ 15
+2ăγ ă2`
+and
+δ ă 1{4
+16
+be fixed. Assume that for a sufficiently large integer N we are given a
+MultEllpN, B, Mq-oracle where
+B “ tplog Nqγ u
+
+and
+
+M “ N Op1q .
+
+Then there is a deterministic algorithm that finds a nontrivial factor of
+all integers n ď N with
+N{plog
+Nqδ exceptions, in polynomial,
+` at most
+˘
+deterministic time O plog Nqρpγq`op1q , where
+"
+*
+9γ ´ 17
+ρpγq “ max γ ` 2,
+8pγ ´ 2q
+
+and O pplog Nqγ q oracle queries.
+
+We note that the proof of Theorem 1.2 is constructive and we actually
+exhibit a relevant algorithm in Section 3.1, see Algorithm 3.1. Clearly
+the limit of the method in term of the number of queries is attained
+for γ Ñ 2. On the other hand, assuming that the queriescost only the
+reading time of the returns, that is, Oplog Nq, one can choose γ from
+the equation
+9γ ´ 17
+γ`2“
+8pγ ´ 2q
+to minimise ρpγq, that is,
+?
+9 ` 561
+“ 2.0428 . . .
+and
+ρpγq “ 4.0428 . . . .
+γ“
+16
+We can reduce the value of γ ą 2 to γ “ 1 at the cost of a somewhat
+weaker estimate for exceptional numbers. In what follows we use a
+Č
+slightly modified MultEllpN,
+B, Mq-oracle.
+
+6
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+Č
+Definition 1.3 (MultEllpN,
+B, Mq-oracle). Given the parameters B,
+N and M, for each n ď N, it returns
+‚ a positive multiple
+of
+
+kF pn, Bq ď M,
+F pn, Bq “
+
+ź
+
+k P N,
+
+Epn, bq,
+
+bďB
+
+if n is square-free;
+‚ an error message ‹ ‹ ‹, if n is not square-free.
+
+Theorem 1.4. There are some positive constants c and C such that
+Č
+if for a sufficiently large integer N we are given a MultEllpN,
+B, Mqoracle, where
+B “ tc log Nu
+
+and
+
+M “ N OpBq ,
+
+then there is a deterministic algorithm that finds a nontrivial factor of
+all integers n ď N with at most N plog Nq´C{ log log log N exceptions, in
+polynomial, deterministic time log3`op1q N, with only one query of the
+Č
+MultEllpN,
+B, Mq-oracle.
+
+Remark 1.5. We note that we assume that our oracles output results only for squarefree integers, which implicitly requires testing for
+squarefreeness (which in general is considered to be as hard as the integer factorisation problem). However, in our scenario we can easily
+supplement our algorithms with a trial division testing for divisibility
+by integer squares d2 with d ď log N and notice that there are only
+OpN{ log Nq non-square-free integers n ď N that pass this preselection, which is smaller than the sizes of exceptional sets in Theorems 1.2
+and 1.4.
+Č
+1.5. Computational complexity of oracles MultEll and MultEll.
+We note that the oracles make sense only for M " N. We also always
+have
+B “ plog NqOp1q
+and
+M ď N OpBq .
+We use these inequalities when we simplify our estimates below.
+Let us fix b ď B. We can find the factorisation of n ď N in N 1{5`op1q
+deterministic time [12]. Next we compute Epp, bq for prime p | n using
+the Schoof algorithm in plog Nq5`op1q deterministic time (see [4]). Let
+ωpnq be the number of distinct prime factors of n. We compute the
+product of Epp, bq over primes p | n in
+ωpnqplog Nq1`op1q ď plog Nq2`op1q
+
+ON ORACLE FACTORING OF INTEGERS
+
+7
+
+deterministic time (see the end of Section 3.3). Similarly, we compute
+a product kb Epn, bq ď M, in deterministic time plog Mq1`op1q . Hence
+the total complexity is
+Bplog Nq2`op1q ` Bplog Mq1`op1q ` N 1{5`op1q “ N 1{5`op1q .
+
+Č oracle we have additionally computation of F pn, Bq
+In case of MultEll
+requiring at most OpBq multiplication of numbers of size O pB log Nq
+giving the deterministic time BpB log Nq1`op1q . So the total complexity
+of this oracle is
+N 1{5`op1q ` BpB log Nq1`op1q “ N 1{5`op1q .
+2. Preliminary results
+2.1. Counting some special integers. We need the following bound
+on the number of positive integers n P rx ´ z, xs which are free of prime
+divisors from some dense set of primes, see [11, Corollary 2.3.1].
+Lemma 2.1. Let x ě z ą 1 and let P be a set of primes such that for
+some positive constants δ and A we have
+ÿ1
+ě δ log log z ´ A.
+păz p
+pPP
+
+Then we have
+#tn : x ´ z ă n ď x, p | n ùñ p R Pu !
+
+z
+.
+plog zqδ
+
+Covering the interval r1, Ns by O pN{zq intervals of the form rx´z, xs
+we see that Lemma 2.1 implies the following.
+Corollary 2.2. Let x ě z ą 1 and let P be a set of primes such that
+for some positive constants δ and A we have
+ÿ1
+ě δ log log z ´ A.
+păz p
+pPP
+
+Then we have
+#tn : 1 ď n ď x, p | n ùñ p R Pu !
+
+x
+.
+plog zqδ
+
+We denote by N the set of all odd, positive, square-free integers and
+by N pNq its restriction to the interval r1, Ns. By N pN, zq we denote
+the subset of N pNq which consist of integers free of prime divisors
+p ď z.
+
+8
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+`
+˘
+Lemma 2.3. Let z P rlog N, exp plog Nqδ s and let δ ă 1{4 be an
+arbitrary positive constant. Then we have
+#tn P N pN, zq : n “ pqm, p ‰ q primes, p, q ” 3 mod 8, m P Zu
+`
+˘
+“ #N pN, zq ` O Nplog Nq´δ log log N .
+
+Proof. Let #N1 pN, zq stand for the number of integers of N pN, zq that
+are divisible by some prime p ” 3 mod 8 and let #N2 pN, zq be the
+number of n P N pN, zq that are divisible by at least two distinct primes
+p, q ” 3 mod 8.
+By the Prime Number Theorem in arithmetic progressions (see also [18]
+and references therein), we have
+ÿ 1
+1
+1
+“
+log log z ` Op1q “ log log z ` Op1q.
+p
+ϕp8q
+4
+păz
+p”3 mod 8
+
+Now we see that Corollary 2.2 implies that
+`
+˘
+#N1 pN, zq “ #N pN, zq ` O pN{plog Nqδ
+
+and therefore
+#N2 pN, zq “ #N1 pN, zq ` O pEq
+`
+˘
+(2.1)
+“ #N pN, zq ` O E ` N{plog Nqδ ,
+
+where E stands for an upper bound for the set of the square-free numbers of type n “ pm ď N, where m is free of prime factors q ” 3 mod 8.
+Thus separating the cases m “ 1 and m ‰ 1 we obtain
+ÿ
+ÿ˚
+E ! N{plog Nq `
+1
+zďpďN {z mďN {p
+
+(2.2)
+
+! N{plog Nq `
+
+ÿ
+
+N{p
+,
+δ
+plogpN{pqq
+zăpďN {z
+
+where Σ˚ means that the summation is over positive integers m ą 1
+free of prime factors q ” 3 mod 8. Therefore it remains to prove that
+the last sum satisfies
+ÿ
+N{p
+N
+(2.3)
+!
+log log N.
+δ
+plogpN{pqq
+plog Nqδ
+zăpďN {z
+We split the range of summation in the sum in (2.3) into the intervals
+of type:
+˙
+„
+N N
+p P Iv “ v`1 , v ,
+e
+e
+
+ON ORACLE FACTORING OF INTEGERS
+
+9
+
+where
+log z ď v ă logpN{zq.
+Now, applying the Mertens formula, see, for example, [16, Equation (2.15)],
+ÿ1
+`
+˘
+“ log log x ` A ` O plog xq´1
+p
+pďx
+for some constant A, we derive
+ÿ
+N{p
+zăpďN {z
+
+plogpN{pqq
+
+!N
+δ
+
+ÿ
+
+v ´δ
+
+ÿ 1
+
+pPIv
+
+log zďvălogpN {zq
+
+p
+
+.
+
+The inner sum can be estimated as
+˙
+ˆ
+ÿ 1
+1
+v
+“ log logpN{e q ` A ` O
+p
+logpN{ev q
+pPIv
+˙˙
+ˆ
+ˆ
+1
+v`1
+´ log logpN{e q ` A ` O
+logpN{ev`1 q
+˙
+ˆ
+˙
+ˆ
+1
+log Np1 ´ v{ log Nq
+`O
+“ log
+log Np1 ´ pv ` 1q{ log Nq
+logpN{ev`1 q
+1
+1
+1
+!
+`
+!
+.
+v`1
+log N ´ pv ` 1q logpN{e q
+log N ´ pv ` 1q
+Therefore we have
+ÿ
+N{p
+zăpďN {z
+
+plogpN{pqq
+
+!N
+δ
+!N
+
+ÿ
+
+v ´δ
+
+log zďvďlogpN {zq
+
+ÿ
+
+ÿ 1
+
+pPIv
+
+p
+
+v ´δ
+.
+log
+N
+´
+v
+log zďvďlogpN {zq
+
+We split the last sum into two sums depending on the size of v and
+obtain
+ÿ
+N{p
+(2.4)
+! NpS1 ` S2 q,
+plogpN{pqqδ
+zăpďN {z
+where
+
+S1 “
+S2 “
+
+ÿ
+
+v ´δ
+,
+log
+N
+´
+v
+log zďvď0.5 log N
+ÿ
+
+v ´δ
+.
+log N ´ v
+0.5 log N ďvďlogpN {zq
+
+We now estimate S1 and S2 separately.
+
+10
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+For S1 we have,
+
+(2.5)
+
+S1 !
+!
+
+ÿ
+ÿ
+1
+1
+v ´δ ď
+v ´δ
+log N log zďvď0.5 log N
+log N 1ďvď0.5 log N
+1
+plog Nq1´δ “ plog Nq´δ .
+log N
+
+Furthermore, for S2 we obtain
+ÿ
+v ´δ
+S2 !
+log N ´ v
+0.5 log N ďvďlogpN {zq
+ÿ
+! plog Nq´δ
+(2.6)
+
+1
+log N ´ v
+0.5 log N ďvďlogpN {zq
+ÿ
+1
+! plog Nq´δ
+! plog Nq´δ log log N.
+u
+log z´1ďuď0.5 log N `1
+
+Substituting (2.5) and (2.6) in (2.4) we obtain (2.3), which after substitution in (2.2) yields
+(2.7)
+
+E ! Nplog Nq´δ log log N.
+
+Substituting the bound (2.7) in (2.1), we complete the proof.
+
+
+
+Remark 2.4. We note that when δ grows and approaching 1{4, the
+range of z in Lemma 2.3 is getting broader while the error term is
+improving. However, the implied constant in the error term depends
+on δ and tends to infinity when 1{4 ´ δ tends to zero.
+We note (although we do not need this for our argument) that for
+z ă N 1{p10 log log N q we have
+`
+˘
+N
+(2.8)
+#N pN, zq “ e´γ
+` O N{plog zq2 ,
+log z
+
+where γ “ 0.57721 . . . is the Euler–Mascheroni constant. Indeed by [36,
+Part I, Theorem 4.3], the set RpN, zq of positive integers n ď N with
+all prime factors p ą z is of cardinality
+˙
+źˆ
+˘˘
+`
+1 `
+1 ` O plog zq´2 ,
+#RpN, zq “ N
+1´
+p
+pďz
+provided z ă N 1{p10 log log N q . The non square-free numbers contribute
+at most
+ÿN
+ÿ
+1!
+Q!
+! N{z
+p2
+2
+pąz
+n“p mďN,
+pąz
+
+ON ORACLE FACTORING OF INTEGERS
+
+11
+
+to R. Recalling the Mertens formula, see [36, Part I, Theorem 1.12]
+˙
+źˆ
+`
+˘
+1
+1
+“ e´γ
+` O 1{plog zq2
+1´
+p
+log z
+pďz
+and using that #N pN, zq “ R ´ Q we derive (2.8).
+
+2.2. Smallest non-residues of characters. We recall the notation
+Nn from Section 1.2. The following results is a special case of [3,
+Theorem 1].
+Lemma 2.5. For arbitrary γ ą 2 and ε ą 0 we have
+Nn ď plog xqγ
+
+`
+˘
+for all but O x1{pγ´1´εq odd, square-free, positive integers n ď x.
+
+We remark that the next result given by [19, Theorem 1.1] applies
+to more general settings of Kronecker symbols. We only need its part
+for square-free integers. Note that compared to Lemma 2.5 it gives a
+stronger bound on Nn but a weaker bound on the exceptional set.
+Lemma 2.6. There exists an absolute constant C ą 0 such that
+1´C{ log log x
+
+for all but Opx
+
+Nn ! log n
+
+q value of n P N pxq.
+
+2.3. Modular reductions of elliptic curves. We recall that an integer a, relatively prime to a prime p, is called a quadratic non-residue
+modulo n if the congruence x2 ” a mod n has no solution in integers.
+The following result is due to Schoof [32, Lemma 4.8].
+Lemma 2.7. Let Eb : y 2 “ xpx2 ´ bq be an elliptic curve over Fp . If
+p “ 3 mod 4, then Eb pFp q has order p ` 1 and is cyclic or is isomorphic
+to Z2 ˆ Zpp`1q{2 according to whether b is a quadratic non-residue or
+residue modulo p, respectively.
+Note that the condition that Eb : y 2 “ xpx2 ´ bq is an elliptic curve
+automatically excludes the value b “ 0.
+The following result is given in [17, Theorem 4.2].
+Lemma 2.8. Let E be an elliptic curve over the field Fq of characteristic ‰ 2, 3, given by the equation
+y 2 “ px ´ aqpx ´ bqpx ´ cq
+
+with a, b, c in Fq . For px2 , y2q in EpFq q, there exists px1 , y1 q in EpFq q
+with 2px1 , y1 q “ px2 , y2 q if and only if x2 ´ a, x2 ´ b and x2 ´ c are
+squares in Fq .
+
+12
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+Let |P | denote the order of a finite point P P EpZn q. We also use
+ν2 pkq to denote the 2-adic order of an integer k ě 1.
+Before we formulate other results, let us make some preparations. If
+e is a known, even exponent of a finite point P P EpZn q such that the
+2-adic orders of Pi and Pj are distinct, that is,
+(2.9)
+
+ν2 p|Pi |q ‰ ν2 p|Pj |q for some i ‰ j,
+
+then we can use the above formulas (1.2) to find a nontrivial divisor
+of n. To see that let us assume that P P EpZn q is finite (otherwise
+gcdpzP , nq is a divisor of n, where P “ pxP : yP : zP q).
+We recall that the classical double-and-add algorithm, that is, iterating the formulas
+#
+2 ppe{2qP q ,
+if e is even,
+eP “
+pe ´ 1qP ` P,
+if e is odd,
+one can compute the multiple eP of a point P P EpZn q in Oplog nq
+arithmetic operations in Zn .
+Similarly as in the Lenstra factorisation method [22], computing eP
+using the above double-and-add algorithm, we find a nontrivial divisor
+by computing the greatest common divisor of n and the denominator
+of λ above, when formulas (1.2) fail for the first time.
+Assume that Q is a finite point and an input to a step which fails
+(denominator of λ is not a unit), then we find a non-trivial factor of
+n. More precisely, if ψpQq “ pQ1 , . . . , Qs q and in the doubling step
+formulas (1.2) fail, then 2Qi “ O for some i, and it follows from (2.9)
+that 2Qj ‰ O for some j, thus gcdpn, yQ q is a non-trivial divisor of n.
+If Q is an input to the addition step, then Q “ 2lP for some integer
+l as an output of doubling. If the addition step Q ` P fails, then 2lPi “
+˘Pi for some i, but again from (2.9) it follows that 2lPj ‰ ˘Pj , since
+otherwise ν2 p|Pj |q “ ν2 p|Pi |q “ 0, which contradicts the assumption.
+Hence for some j we obtain that gcdpn, xQ ´ xP q is a non-trivial divisor
+of n. This shows that if 2-adic local orders of some point P of even
+order are distinct, then we can factor n in plog nq2`op1q bit operations,
+see [10] for a background on complexity of arithmetic operations.
+Lemma 2.9. Let n be a positive, odd, square-free integer, and let p, q ”
+3 mod 8 be prime divisors of n. Assume that b is a quadratic nonresidue
+modulo p and a quadratic residue modulo q. Let y be coprime to n and
+x be a quadratic nonresidue modulo p such that xpx2 ´bq is not divisible
+by p. Then for
+α ” xpx2 ´ bq{y 2 mod n,
+
+ON ORACLE FACTORING OF INTEGERS
+
+13
+
+computing the multiples kb Epn, bqP with kb Epn, bq “ nOp1q of a point
+P “ pαx, α2 yq lying on the curve Ebα2 modulo n, we recover a nontrivial
+divisor of n in at most plog nq2`op1q bit operations.
+Proof. First, note that any point P “ pαx, α2 yq on
+Ebα2 : y 2 “ xpx2 ´ bα2 q
+
+has order 2a k mod pq, where k is odd and a “ 0, 1 or 2, by the congruence conditions for p and q. Using assumptions on b, we see that
+Ebα2 pFp q contains a point of order 4, while Ebα2 pFq q contains no point
+of order 4. Now, by Lemmas 2.7 and 2.8, P has maximal 2-adic order
+equal to 22 on Ebα2 pFp q, while it has 2-adic order at most equal to 21 on
+Ebα2 pFq q. Therefore the preliminary discussion before the formulation
+of Lemma 2.9 implies that n can be split nontrivially in plog nq2`op1q
+bit operations when computing doubling of the point Q above. This
+completes the proof.
+
+3. Proofs of Main Results
+3.1. Algorithm. To prove Theorem 1.2, we now present
+an algorithm
+`
+˘
+which finds a nontrivial factor of all but at most O N{plog Nqδ integers n P N pN, zq , where z “ plog Nqβ with
+γ´1
+(3.1)
+β“
+8pγ ´ 2q
+and δ is arbitrary positive constant with δ ă 1{4, in deterministic polynomial time with a MultEllpN, B, Mq-oracle given by Definition 1.1.
+In the following algorithm we try to compute, using the double-andadd algorithm, the multiples kb Epn, bqP with
+ź
+kb Epn, bq ! kb p2pq ď kb n1`op1q ,
+p|n
+
+obtained from a MultEllpN, B, Mq-oracle, of some points P lying on
+the curve Ebα2 modulo n, see Section 2.3.
+
+Algorithm 3.1 (Factoring with a MultEllpN, B, Mq-oracle).
+Input: Square-free positive integer n, parameters γ ą 0 and B “
+tplog Nqγ u and a MultEllpN, B, Mq-oracle.
+Output: Factorisation of n or answer n is exceptional.
+(1) Set z “ plog Nqβ , where β is given by (3.1).
+(2) Search for prime divisors p | n with p ď z, using trial division.
+If a nontrivial divisor p of n is discovered then stop and return
+p.
+
+14
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+(3) For b “ 1, 2 . . . B, take y “ 1, x “ b, α “ xpx2 ´ bq mod n
+and P “ pαx, α2 yq. Next, if the MultEllpN, B, Mq-oracle from
+Definition 1.1 returns ‹ ‹ ‹ we declare n exceptional and terminate. Otherwise we use the product kb Epn, bq try to compute
+kb Epn, bqP using the double-and-add algorithm. If during the
+computations a nontrivial divisor d | n is discovered then stop
+and return d as output. Otherwise output n as exceptional.
+Below, for each N, we use Algorithm 3.1 with some specific parameters B and M.
+3.2. Concluding of the proof of Theorem 1.2. For the proof we
+choose
+γ´1
+z “ plog Nq 8pγ´2q
+where
+?
+257 ´ 15
+2 ăγ ă 2`
+16
+and fix some sufficiently small ε ą 0.
+Note that the upper bound on γ is chosen to guarantee
+βąγ
+
+(3.2)
+
+where β is given by (3.1).
+Clearly any positive integer n ď N with a prime divisor p ď z is
+factored during Step (2) of Algorithm 3.1.
+Clearly, the number of non-square-free integers for which Step (3)
+applies and returns ‹ ‹ ‹ is at most
+ÿ
+N{p2 ! N{z,
+pěz
+
+which give an admissible contribution to the exceptional set.
+Therefore, from this point on, we always assume n P N pN, zq, where
+N pN, zq is as in Section 2.1.
+In view of Lemma 2.3, applied with say δr “ 1{8 ` δ{2 instead of
+δ, we see that for any δ ă 1{4 (thus δ ă δr ă 1{4) all numbers n P
+N pN, zq except at most the set E1 of cardinality #E1 ! N{plog Nqδ
+can be represented in the form pqm, where p ‰ q are primes such
+that p, q ” 3 mod 8. We prove that among them there are at most
+#E2 ă Nplog Nq´2γp1´ϑq exceptions which are be factored in Steps (2)
+and (3) of Algorithm 3.1, where ϑ “ 1{pγ ´ 1q. In view of Lemma 2.9
+it is sufficient to prove that all numbers n P N pN, zqz pE1 Y E2 q are
+factored in Steps (2) and (3).
+The set of exceptions E2 consists of those numbers n “ pqm such
+that Npq ą B. Namely if b ď B is such that b is a quadratic nonresidue
+
+ON ORACLE FACTORING OF INTEGERS
+
+15
+
+moduli pq then b is a quadratic nonresidue modulo exactly one r P tp, qu
+one and a quadratic residue modulo the complementary factor pq{r.
+Without loosing the generality let us assume that r “ p. Then
+α “ xpx2 ´ bq “ bpb2 ´ bq,
+where x is a quadratic nonresidue modulo p and moreover b2 ´ b is
+not divisible by p since b is not a square modulo p. Therefore, recalling (3.2), we obtain the inequality P ´ pnq ą z ě B, where P ´ pnq is the
+smallest prime divisor of n.
+We see that the assumptions of Lemma 2.9 are satisfied, since the
+discriminant of the curve Epbq, that is ∆Epbq “ ´4b3 , is coprime to
+n. To complete the proof, let Sptq be the counting function of odd,
+square-free positive integers n ď t such that Nn ą Bptq, where
+Bptq “ tplog tqγ u ,
+In particular, by Lemma 2.5 we have
+Sptq ! tϑ
+
+(3.3)
+
+where for any ε ą 0 we can take ϑ “ 1{pγ ´ 1 ´ εq.
+Since pq ě z 2 we estimate E2 as follows:
+żN
+żN
+N
+Sptq
+2
+E2 !
+dSptq “ SpNq ´ Spz q ` N
+dt
+t2
+z2 t
+z2
+żN
+!N
+t´2`ϑ dt ! Npz 2 q´1`ϑ ! N plog Nq´δ ,
+z2
+
+provided ε ą 0 is small enough, since for γ ą 2 we have
+ˆ
+˙
+1
+γ´1
+1´
+“ 1{4 ą δ.
+2
+8pγ ´ 2q
+γ´1
+In view of the preliminary discussion before the formulation of Lemma
+2.9 we see that Step (2) of the above algorithm takes ! z log1`op1q N !
+γ´1
+plog Nqβ`1`op1q “ plog Nq1` 8pγ´2q `op1q bit operations, while Step (3)
+takes Bplog Nq2`op1q “ plog Nqγ`2`op1q . This implies that the complexity of Algorithm 3.1 is plog Nqρ`op1q , where
+"
+*
+9γ ´ 17
+ρ “ max tγ ` 2, β ` 1u “ max γ ` 2,
+8pγ ´ 2q
+`
+˘
+with the related number of exceptions of order O N{plog Nqδ for any
+positive δ ă 1{4.
+
+16
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+3.3. Concluding of the proof of Theorem 1.4. We apply a slight
+modification in Algorithm 3.1 where the parameters z and B are now
+chosen as
+z “ B “ tc log Nu
+
+(3.4)
+
+where c is the constant implied by the symbol ! in Lemma 2.6, and
+also kb is replaced by k, M “ N OpBq , and MultEllpN, B, Mq-oracle is
+Č
+replaced by MultEllpN,
+B, Mq-oracle given by Definition 1.3.
+Hence proceeding as above we estimate E2 by Lemma 2.6, we have
+Sptq ! t1´C{ log log t , instead of (3.3), thus obtaining for
+Bptq “ tc log tu ,
+where c is chosen as in (3.4), the following bound
+ÿ
+ÿ
+1
+E2 !
+1ďmďN {z 2
+
+!
+
+ÿ
+
+1ďmďN {z 2
+
+z 2 ăsăN {m
+Ns ąBpN {mq
+s square-free
+
+ˆ
+
+N
+m
+
+˙1´C0 { log logpN {mq ˆ
+˙´2
+N
+log
+m
+
+for some 0 ă C0 ă C, since uC{ log log u ą plog uq2 for sufficiently large
+u ą u0 . Therefore letting δpuq “ C0 { log log u we obtain, considering
+the case m “ 1 and m P rz, N{z 2 s separately, that
+˙´2
+ż N {z 2 ˆ ˙1´δp Nt q ˆ
+N
+N
+1´C0 { log log N
+E2 ! N
+`
+log
+dt
+t
+t
+z
+ż N {z
+1´C0 { log log N
+!N
+`N
+u´1´δpuq plog uq´2 du
+z2
+
+!N
+
+1´C0 { log log N
+
+! Nplog Nq
+
+`N
+
+max
+v
+2
+
+vPrz ,N {zs
+
+´C0 { log log log N
+
+´C0 { log log v
+
+ż N {z 2
+z
+
+du
+u log2 u
+
+when letting z “ tc log Nu.
+The complexity of algorithm follows by remarking that for the input data of order N OpBq the number of addition and doublings is
+O pB log Nq while their complexity is of order plog Nq1`op1q giving (for
+B “ tc log Nu) altogether the bound plog Nq3`op1q on the algorithm
+complexity bound, as required. The oracle is queried only once for a
+multiple kF pn, Bq ď M, where M “ N OpBq .
+
+ON ORACLE FACTORING OF INTEGERS
+
+17
+
+4. Comments
+We remark that under the GRH, by the classical result of Ankeny [1]
+for any γ ą 2 the exceptional sets of Lemma 2.5, and thus of Theorem 1.2, is finite. We note that Ankeny [1] is interested in the smallest
+quadratic non-residue b modulo n (that is, the smallest b for which
+x2 ” b mod n has no solutions), but [1, Theorem 1] in fact gives a
+bound on the larger quantity Nn . On the other hand, it is not clear
+whether the GRH allows to improve Lemma 2.6 and Theorem 1.4.
+Acknowledgement
+The authors are very grateful to Drew Sutherland for very useful
+comments and to the referees for the very careful reading of the manuscript and helpful suggestions.
+This work started during a very enjoyable visit by I.S. to the Department of Mathematics of the Warsaw University, whose support
+and hospitality are gratefully acknowledged.
+This work was supported by ARC Grant DP170100786.
+References
+[1] N. C. Ankeny, The least quadratic non residue, Annals Math. 55 (1952), 65–72.
+17
+[2] E. Bach,
+Discrete logarithms and factoring,
+Technical Report
+UCB/CSD 84/186, Univ. California–Berkeley, 1984, available at
+https://www2.eecs.berkeley.edu/Pubs/TechRpts/1984/5973.html.
+2
+[3] S. Baier, A remark on the least n with χpnq ‰ 1, Arch. Math. 86 (2006), 67–72.
+11
+[4] I. Blake, G. Seroussi and N. Smart, Elliptic curves in cryptography, Cambridge
+University Press, Cambridge 1999. 6
+[5] D. Coppersmith, Small solutions to polynomial equations, and low exponent
+RSA vulnerabilities, J. Cryptology 10 (1997), 233–260. 2
+[6] D. Coppersmith, Small solutions of small degree polynomials, Lect. Notes in
+Comp. Sci., vol. 2146, Springer-Verlag, Berlin, 2001, 20–31. 2
+[7] R. Crandall and C. Pomerance, Prime numbers: A computational perspective,
+Springer-Verlag, New York, 2005. 1
+[8] L. Dieulefait and J. Urroz, Factorization and malleability of RSA modules, and
+counting points on elliptic curves modulo N , Mathematics 8 (2020), Art. 2126.
+2
+[9] R. Drylo and J. Pomykala, Integer factoring problem and elliptic curves over
+the ring Zn , Colloq. Math. 159 (2020), 259-284. 2
+[10] J. von zur Gathen and J. Gerhard, Modern computer algebra, Cambr. Univ.
+Press, Cambridge, 2003. 12
+[11] H. Halberstam and H. E. Richert, Sieve methods, Academic Press Inc., New
+York, 1974. 7
+
+18
+
+A. DA˛BROWSKI, J. POMYKALA, AND I. E. SHPARLINSKI
+
+[12] D. Harvey, An exponent one-fifth algorithm for deterministic integer factorisation, Math. Comp. 90 (2022), 2937–2950. 1, 6
+[13] D. Harvey and M. Hittmeir, A log-log speedup for exponent one-fifth deterministic integer factorisation, Math. Comp. 91 (2022), 1367–1379. 1
+[14] D. Harvey and J. van der Hoeven, Integer multiplication in time Opnlognq,
+Ann. of Math. 193 (2021), 563–617. 3
+[15] M. Hittmeir, A time-space tradeoff for Lehman’s deterministic integer factorization method, Math. Comp. 90 (2022), 1999–2010. 1
+[16] H. Iwaniec and E. Kowalski, Analytic number theory, Amer. Math. Soc., Providence, RI, 2004. 9
+[17] J. W. Knapp, Elliptic curves, Princeton Univ. Press, Princeton, New Jersey,
+1992. 2, 11
+[18] A. Languasco and A. Zaccagnini, A note on Mertens’ formula for arithmetic
+progressions, J. Number Theory 127 (2007), 37–46. 8
+[19] Y. K. Lau and J. Wu, On the least quadratic nonresidue, Int. J. Number Theory
+4 (2008), 423–435. 11
+[20] J. D. Lee and R. Venkatesan, Rigorous analysis of a randomised number field
+sieve, J. Number Theory 187 (2018) 92–159. 1
+[21] H. W. Lenstra, Elliptic curves and number-theoretic algorithms, Proc. Intern.
+Congress of Math., Berkeley, 1986, Amer. Math. Soc., Providence, 99–120. 2,
+3, 4
+[22] H. W. Lenstra, Factoring integers with elliptic curves, Ann. of Math. 126
+(1987), 649–673. 2, 3, 12
+[23] Y. Lu, L. Peng, R. Zhang, L. Hu and D. Lin, Towards optimal bounds for
+implicit factorization problem, Lect. Notes in Comp. Sci., vol. 9566, SpringerVerlag, Berlin, 2016, 462–476. 2
+[24] Y. Lu, R. Zhang and D. Lin, Improved bounds for the implicit factorization
+problem, Adv. Math. Commun. 7 (2013), 243–251. 2
+[25] S. Martin, P. Morillo and J. L. Villar, Computing the order of points on an
+elliptic curve modulo N is as difficult as factoring N, Applied Mathematics
+Letters 14 (2001), 341–346. 2
+[26] U. M. Maurer, On the oracle complexity of factoring integers, Comput. Compl.
+5 (1996), 237–247. 2
+[27] A. May and M Ritzenhofen, Implicit factoring: On polynomial time factoring
+given only an implicit hint, Lect. Notes in Comp. Sci., vol. 5443, SpringerVerlag, Berlin, 2009, 1–14. 2
+[28] G. L. Miller, Riemann’s hypothesis and tests for primality, J. Comp. and Syst.
+Sci. 13 (1976), 300–317. 1, 2
+[29] A. Nitaj and M. R. K. Ariffin, Implicit factorization of unbalanced RSA moduli,
+J. Appl. Math. Comput. 48 (2015), 349–363. 2
+[30] J. M. Pollard, Theorems on factorization and primality testing, Math. Proc.
+Cambr. Philos. Soc. 76 (1974), 521–528. 1
+[31] J. Pomykala and M. Radziejewski, Integer factoring and compositeness witnesses, J. Math. Cryptol. 14 (2020), 346-358. 2
+[32] R. Schoof, Nonsingular plane cubic curves over finite fields, J. of Combin.
+Theory 46 (1987), 183–211. 11
+[33] V. Shoup, A computational introduction to number theory and algebra, MIT,
+2007. 1, 2
+
+ON ORACLE FACTORING OF INTEGERS
+
+19
+
+[34] J. H. Silverman, The arithmetic of elliptic curves, Springer, Dordrecht, 2009.
+2, 3
+[35] A. V. Sutherland, Order computations in generic groups, PhD Thesis, MIT
+2009., available at https://dspace.mit.edu/handle/1721.1/38881. 2
+[36] G. Tenenbaum, Introduction to analytic and probabilistic number theory, Grad.
+Studies in Math., vol. 163, AMS, 2015. 10, 11
+Institute of Mathematics, University of Szczecin, Wielkopolska 15,
+70-451 Szczecin, Poland
+Email address: andrzej.dabrowski@usz.edu.pl
+Email address: dabrowskiandrzej7@gmail.com
+Institute of Mathematics, Warsaw University, Banacha 2, 02–097
+Warsaw, Poland
+Email address: pomykala@mimuw.edu.pl
+Department of Pure Mathematics, University of New South Wales,
+Sydney, NSW 2052, Australia
+Email address: igor.shparlinski@unsw.edu.au
+
+

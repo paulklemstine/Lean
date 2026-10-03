@@ -1,0 +1,927 @@
+               Square root algorithms for the number field sieve
+                                                Emmanuel Thomé
+
+
+
+      To cite this version:
+     Emmanuel Thomé. Square root algorithms for the number field sieve. Arithmetic of Finite Fields – WAIFI
+     2012, Jul 2012, Bochum, Germany. pp.208-224, ⟨10.1007/978-3-642-31662-3_15⟩. ⟨hal-00756838⟩
+
+
+
+
+                                        HAL Id: hal-00756838
+                          https://inria.hal.science/hal-00756838v1
+                                           Submitted on 23 Nov 2012
+
+
+
+
+    HAL is a multi-disciplinary open access archive             L’archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-        tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.       tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research          des établissements d’enseignement et de recherche
+institutions in France or abroad, or from public or pri-   français ou étrangers, des laboratoires publics ou
+vate research centers.                                     privés.
+
+
+                                              HAL Authorization
+                  Square Root Algorithms for
+                    the Number Field Sieve
+
+                                 Emmanuel Thomé
+
+                       INRIA Nancy, Villers-lès-Nancy, France
+
+
+
+       Abstract. We review several methods for the square root step of the
+       Number Field Sieve, and present an original one, based on the Chinese
+       Remainder Theorem.
+
+
+    We consider in this article the ﬁnal step of the Number Field Sieve (NFS) fac-
+toring algorithm [3], namely the algebraic square root computation. This prob-
+lem is stated as follows. Let K = Q(α) be a number ﬁeld, where α is deﬁned
+as a root of the irreducible polyomial f (x) ∈ Z[x]. We further use the notation
+d = deg f = [K : Q], and denote by OK the ring of integers of K. For brevity,
+we assume throughout this article that f is a monic polynomial, although the
+more general case fd 6= 1 can be treated similarly by     Q considering fd α in lieu
+of α. Let S be a set of pairs (a, b) such that S(α) = (a,b)∈S (a − bα) is known
+to be the square of an algebraic integer. Such a set S is the outcome of the lin-
+ear algebra and character steps of the Number Field Sieve. The purpose of the
+algebraic square root step is the computation of a polynomial T (x) ∈ Z[x] such
+that T (α)2 = f ′ (α)2 S(α). Here, f ′ (α)2 is introduced merely in order to take into
+account the possibility that a square root for S(α), despite being an algebraic
+integer, needs not belong to the order Z[α]. For brevity again, this f ′ (α)2 term
+will be omitted throughout this article.
+    Two further characteristics of the problem, speciﬁcally related to the NFS
+context, are also important. The ideals (a − bα)OK always have a known factor-
+ization into prime ideals (the latter being for example readily available alongside
+with the pairs (a, b), e.g. in a ﬁle). Furthermore, the output deﬁned as T (x)
+above is not interesting per se. In the NFS, one intends to compute T (m) mod N ,
+where m and N are known (N being the integer to factor). In some cases, it is
+possible to achieve this goal without explicitly computing T (x).
+    This article reviews several approaches for the algebraic square root task.
+Most of them are classical, and date back to the early research on the NFS.
+Let us recall that back in 1993, this square root step was regarded as diﬃ-
+cult. Attacking the problem “directly” by computing the algebraic number S(α)
+and later its square root, appeared a daunting task by then, and this justiﬁed
+the development of ad hoc algorithms, such as Montgomery’s [14, 15] or Cou-
+veignes’ [5] algorithms, which exploit the fact that the factorization of the ideals
+(a − bα)OK is known. The practicality of asymptotically fast methods appeared
+later and the direct approach then became realistic. Furthermore, while slower
+than e.g. Montgomery’s algorithm, this method has turned out to be acceptably
+fast, notably when compared with the overall cost of NFS. Because the direct
+approach embarks less algebraic number theory background than Montgomery’s
+method, it is sometimes preferred in NFS implementations [17, 8]. However the
+direct approach, when stated in its simple form, is unable to tackle square root
+problems arising with number ﬁelds having no inert primes (e.g. with Galois
+group Z/2Z × Z/2Z). Such ﬁelds are typically encountered with the Special Num-
+ber Field Sieve, and provide one of the justiﬁcations for the Chinese Remainder
+Theorem (CRT)-based approach presented in this article.
+    The algorithms presented in this article are all relevant, when applicable, for
+modern integer factoring, and various working implementations can be found in
+publicly available software [8, 17, 13]. These diﬀerent algorithms have actually
+been used or at least tested for the rsa768 factoring eﬀort [11]. Furthermore, in
+the context of the oracle-assisted RSA problem addressed in [10], a variant of
+Montgomery’s algorithm is used, and proves particularly well-adapted.
+
+    This article is organized as follows. The direct approach for computing the
+square root is described in Section 1. Couveignes’ CRT-based method for the
+odd-degree case is described in Section 2. Section 3 describes Montgomery’s
+algorithm. The new CRT-based approach we propose is presented in Section 4.
+Some viable approaches for the square root computation are not detailed here
+(e.g. the one proposed in [4, § 3.6.2]), since they oﬀer no obvious advantage over
+the ones presented here.
+    Complexities of the algorithms presented are given as functions of the input
+size. In order to be able to provide comparable estimates, we aﬀord some simpli-
+fying assumptions. We assume that the set of pairs S occupies n bits. This leads
+to coeﬃcients of S(α) each having size roughly n bits as well. The bit size of
+S(α) is thus O(dn) overall. Similarly, coeﬃcients of T (α) have size roughly n/2
+bits. We acknowledge that these estimates are slightly gross, but these do make
+sense for the NFS context, and hold in practice. Furthermore, the number ﬁeld is
+considered constant, so that most dependencies on the number ﬁeld parameters
+are deliberately ignored. The notation M(k) is used throughout the document
+to denote the time for multiplying k-bit integers.
+
+
+1   The direct (lifting) approach
+
+The direct method, which is also referred to as the p-adic, or lifting approach,
+applies when there exists an inert prime in the number ﬁeld K. This is only
+possible when the Galois group of the polynomial f admits an element of order d.
+Generically, the Galois group of a polynomial used in the General Number Field
+Sieve (GNFS) algorithm is the full symmetric group Sd , which implies that
+this property is expected to be satisﬁed with overwhelming probability. This
+is not so, however, with polynomials considered in the context of the Special
+Number Field Sieve (SNFS). There, polynomials typically have some special
+shape, which makes all sorts of Galois groups plausible. For instance, a degree 4
+polynomial with Galois group Z/2Z × Z/2Z can be encountered. This very case is
+
+                                        2
+too frequent to be completely neglected, which makes the direct approach only
+a partial solution to our problem.
+
+
+1.1   Working p-adically
+
+Let thus p be an inert prime (such that pOK is a prime ideal). To ﬁx ideas, p is
+taken of manageable size (say at most 64 bits). The extension Kp = Qp/f (x) is
+thus a degree d unramiﬁed extension of Qp . Let αp be a root of f in Kp . We have
+a natural injective ring morphism from Z[α] to Zp [αp ]. The purpose of the lifting
+approach is to use this injective morphism in order to recognize the square root
+being sought.
+    The ﬁrst step of the algorithm is the computation of a low-precision square
+root for S(αp ). Let Fp (β) = Fpd be the residue ﬁeld of Kp , the projection Kp →
+Fpd being given by αp 7→ β. By low-precision,  Q we understand the computation
+of a square root of S(β) ∈ Fpd . Since S(β) = (a,b)∈S (a − bβ) and all (a, b)’s are
+coprime, we know that S(β) 6= 0. Let T (x) ∈ Z[x] be, as above, a polynomial
+deﬁning a square root T (α) of S(α). We know that T (β)2 = S(β), and our
+computation in Fpd gives us the coeﬃcients of T (x) (or its opposite) modulo p.
+In the ﬁeld Kp , we have
+
+                                  T (αp )2 ∈ S(αp ) + pOK .
+
+We thus have low-precision knowledge on the coeﬃcients of T , together with a
+deﬁning equation. A Newton lifting approach then allows to recover all coeﬃ-
+                                                                      S(αp )−T 2 (αp )
+cients. For example, iterating the modiﬁcation T (αp ) ← T (αp ) +       2T (αp )
+is suﬃcient. In practice, it is desirable to ﬁrst compute the inverse square root
+instead, so that the iteration avoids inverse computations. Details are skipped,
+and can be found in [1, 2].
+    The key concern is the determination of the stopping point of the lifting
+process. Since coeﬃcients of the desired solutions are known to be integers, we
+know that above a certain lifting step, the p-adic coeﬃcients obtained for T (x)
+no longer evolve. (The morphism Z[α] → Z[αp ] being injective, these coeﬃcients
+are then the desired ones.) Therefore the number of lifting steps is controlled by
+a bound on the result coeﬃcients, which can be provided with classical tools as
+we do now.
+
+
+1.2   Bound on the square root coefficients
+
+Given a number ﬁeld K, we denote by σ1 , . . . , σr and σr+1 , . . . , σr+s the real
+and non-conjugate complex embeddings. We further denote by σr+s+k = σr+k
+                             Pd−1
+for k = 1, . . . , s. Let U = i=0 ui αi ∈ K. The coeﬃcients ui of U are related
+to the embedding values, since these are given by a polynomial expression with
+coeﬃcients ui . Namely, we have
+
+           (σ1 (U ), . . . , σd (U )) = (u0 , . . . , ud−1 ) × V (σ1 (α), . . . , σd (α))
+
+                                                 3
+where the matrix above is of Vandermonde type. Exploiting this relation in the
+opposite direction, it is possible to derive a bound on the |ui | from a bound
+on the |σi (U )|. A low precision computation of the inverse of the Vandermonde
+matrix above suﬃces to obtain a reasonable bound at a moderate cost.
+    Such a mechanism is typically used to bound the coeﬃcients of an element U
+given the logarithms of the embeddings, where logarithms provide an additional
+guard against exponent overﬂow. This can precisely be done in the context of
+NFS square root computations. We know S(α), and look for T (α) ∈ Z[α] with
+T (α)2 = S(α). Hence we have log |σi (T (α))| = 21 log |σi (S(α))|. Furthermore,
+S(α) is also known in product form. The computation
+                                          X
+                     log |σi (S(α))| =             log |σi (a − bα)|
+                                         (a,b)∈S
+
+
+therefore appears rather accessible, as its computational cost is essentially that
+of reading the input (set of (a, b) pairs).
+    The computation of the required number of lifting step therefore proceeds as
+follows.
+
+ – Compute the complex roots of f . A computation with limited precision suf-
+   ﬁces. The inverse of the matrix V (σ1 (α), . . . , σd (α)) is then computed (this
+   is a Lagrange interpolation matrix). It is important, in order for the bound
+   to be valid, to use rounding towards +∞ in the computations.
+ – Then, the log |σi (S(α))| values may be computed.
+ – Given this data, deduce a bound on the coeﬃcients |ti |.
+
+Given a bound M obtained by this method, lifting may stop at precision k =
+⌈logp M ⌉. This implies in particular that in computations where S(α) appears,
+coeﬃcients may be reduced modulo pk , which provides noticeable savings in
+computation time.
+    One may notice that this bound computation requires no memory.
+
+
+1.3   Complexity
+
+The computation of a square root by Newton lifting is quasi-linear [1,2]. This also
+holds in our case of interest here. We may write the complexity as O(d2 M(n)),
+where n is the size in bits of the input coeﬃcients, and where d2 is taken for the
+cost of multiplying polynomials of degree d − 1. (One may of course use better
+algorithms than the naive one for this task. This is relevant only to a limited
+extent in our range of interest, since d denotes an NFS degree.) Note that this
+complexity is in fact dominated by the complexity of the preliminary computa-
+tion of S(α) from the set S, which claims O(d2 M(n) log n) using a subproduct
+tree.
+    The space complexity of the direct approach is linear, namely O(dn). In
+comparison to other approaches considered in this article, this approach does
+compute T (x) as a prerequisite before computing T (m) as required by NFS.
+
+                                           4
+2     Couveignes’ algorithm
+In [5], Couveignes proposes an algorithm which allows to avoid the space com-
+plexity of the direct method above, and allows some parallelism. This approach
+is based on the Chinese Remainder Theorem (CRT), and is only applicable un-
+der the simultaneous conditions that the number ﬁeld degree d be odd, and that
+there exist inert primes1 .
+    The approach goes as follows. We intend to compute T (α) with a CRT ap-
+proach. Let {pi } be a collection of inert primes. For each such pi , we denote by
+βi a root of f (x) modulo pi , and consider (often implicitly) the ring morphism
+from K to Fpdi sending α to βi . We begin by computing a square root of S(βi )
+for all i. Such a square root is denoted by Ti′ (βi ), and writes as Ti′ (βi ) = ±T (βi ).
+We then wish to reconstruct the result T (x) as a polynomial with integer coeﬃ-
+cients. For this purpose, we assume that a bound M on the coeﬃcients of T has
+been obtained in a manner similar to the approach described in Subsection 1.2.
+We assume that the product of the chosen primes pi exceeds the bound M . Sup-
+pose then that Ti (x) = T (x) mod pi is known. Let qi be the smallest positive
+integer
+     Q such that qi mod pj = δi,j (one may write qi = s · (s mod pi ), where
+                                                                   −1
+
+s = j6=i pj ). We have then:
+                                         X
+                                 T (x) =    qi Ti (x).
+                                             i
+
+The stumbling block for such an approach is related to the choice of roots. We
+have acquired knowledge of ±T (βi ), but this is only suﬃcient to determine Ti (x)
+up to a sign. In presence of a large
+                                P number of primes pi , ﬁnding the correct sign
+combination in the expression i ±qi Ti′ (x) is intractable.
+    In order to overcome this problem, Couveignes’ algorithm takes advantage
+of the degree of K being odd. Under this assumption, we have
+                           NormK/Q (−ζ) = − NormK/Q (ζ)
+for any ζ ∈ K. In the particular case of the NFS square root, computing the
+absolute value | NormK/Q (T (α))| is rather easy. Indeed, we know the factored
+form of the principal ideal S(α)OK . We may thus write:
+                                          Y
+                              S(α)OK =        p2ep with ei ∈ Z,
+                                                 p∈F
+                                                 Y
+                        | NormK/Q (S(α))| =            Norm(p)2ep ,
+                                                 p∈F
+                                                   Y
+                          NormK/Q (T (α)) = ±            Norm(p)ep .
+                                                  p∈F
+1
+    The existence of one or many inert primes are equivalent conditions, in virtue of
+    Čebotarev’s density theorem. This theorem appears in countless graduate level alge-
+    braic number theory textbooks. For an introduction to Čebotarev’s density theorem,
+    including also historical aspects and applications, the article [12] is an interesting
+    read.
+
+
+                                             5
+We acknowledge the fact that our chosen notation T (x) for the solution being
+sought is ambiguous, given that there are two solutions. This accounts for the ±
+sign in the equation above. From now on, we intend to focus on the computation
+of one of these two solutions only, and we need to make one single consistent
+choice. To this end, we require that the computed T (x) correspond to a positive
+norm above. Such an arbitrary choice is legitimate, provided it is done only once
+(if we were to combine mixed information related to either of the two diﬀer-
+ent solutions for many primes, consistent reconstruction would be impossible).
+Let thus ν be this positive norm, which is accessible to calculation. We have
+NormK/Q (T (α)) = ν and NormK/Q (−T (α)) = −ν. Modulo pi , this property
+transfers conveniently. We have
+                            NormFpd /Fpi (T (βi )) = ν mod pi .
+                                    i
+
+
+This implies that given Ti′ (βi ), it is possible to decide whether Ti′ (βi ) = Ti (βi )
+or Ti′ (βi ) = −Ti (βi ), by comparing NormFpd /Fpi (Ti′ (βi )) with ν mod pi .
+                                                  i
+    OncePthe sign problem has been solved, it is possible to use the expression
+T (x) = i qi Ti (x). Note though that for the NFS application, only the quantity
+T (m) mod N is needed eventually. Therefore, computing T (x) is unnecessary. It
+is suﬃcient (and considerably cheaper) to write
+                                 X
+                 T (m) mod N ≡      (qi mod N )(Ti (m) mod N ).
+                                        i
+
+Complexity Let us assume that primes of ﬁxed size λ are considered2 Since
+the result coeﬃcients occupy O(n) bits, it suﬃces to consider O(n/λ) primes.
+We ﬁrst consider the complexity of such an approach in the perspective of a
+constant space complexity. For each such prime, one has to read the input set
+S, in order to compute the norm ν. This step dominates the complexity, since it
+takes O(n2 ). Furthermore, parallelizing this step is not necessarily obvious, since
+the complexity essentially consists of input-output operations (several threads
+of a single processor may beneﬁt from a single read at the same time, but such
+a beneﬁt does not scale well to a multi-machine setup).
+    This approach
+             √     is amenable√to a time-memory trade-oﬀ. It is possible to read
+the set √
+        S in n blocks of size n. For each such block, an intermediary product
+of size n may be computed, and then reduced modulo each prime pi . In such
+a way, the time complexity drops to O(n3/2 ), for a space complexity in O(n1/2 ).
+Such a modiﬁcation could be considered in a distributed setting, as it oﬀers more
+opportunities for parallelization.
+
+3     Montgomery’s algorithm
+Montgomery’s algorithm [14,15] for the square root step is the one which is most
+specially crafted for the NFS square root situation. This algorithm radically
+2
+    The obvious ﬁniteness of the number of primes satisfying this criterion is an irrelevant
+    concern here.
+
+
+                                              6
+diﬀers from the two algorithms presented above, as well as from the one which
+is described in Section 4. The original description of Montgomery’s algorithm is
+given in [14], although the unpublished draft [15] is also worth reading in that
+it contains additional details. Nguyen also presented Montgomery’s algorithm
+in [16].
+    Montgomery’s algorithm is not dependent on strong assumptions as the al-
+gorithms presented above. In particular, the Galois group of the deﬁning poly-
+nomial is not an obstacle for Montgomery’s algorithm. However, the knowledge
+of the factorization of the ideal S(α)OK as a product involving only ideals of
+small norm is crucially important. Furthermore, as we will see, the “dependency
+on 2” is especially good with this algorithm. More precisely, this algorithm may
+be stated in a more general way as an algorithm for computing a λ-th root,
+where λ is any integer, provided that the factorization of S(α) remains known.
+Of course, in such a case, one expects the coeﬃcients of T (α) to be λ times
+smaller than those of S(α). This generalization matters to the oracle-assisted
+computation of λ-th roots as detailed in [10], and accounts for our choice to
+present Montgomery’s algorithm in the extended setting λ ≥ 2.
+    We are interested in the factored form of the ideal S(α)OK . In the NFS
+context, the computation of the maximal order OK of the number ﬁeld K is
+a hard problem, because the discriminant of polynomials used in the (general)
+NFS is possibly even harder to factor than the number which we intend to factor
+in the ﬁrst place. Yet, given a monic polynomial f (x), factoring its discriminant
+is necessary in order to decide which are the primes p for which the index [OK :
+Z[α]] is divisible by p. For such primes, we say that locally at p, the order Z[α]
+is not maximal, since OK is larger.
+    A very important observation is that for the purpose of factoring ideals over
+a prescribed factor base, which consists of all primes ideals above a prescribed
+set of primes, it is suﬃcient to work with an order O which is maximal at those
+primes only, and needs not be maximal over all primes. For the ideals considered,
+factorization into O-ideals or OK -ideals coincide. Extension of a starting order
+to a p-maximal one for a ﬁnite set of primes p can be done using Zassenhaus’
+Round-2 algorithm, as presented for example in [4]. The computation of such an
+order O is an inexpensive preliminary step for Montgomery’s algorithm, and we
+assume it is done.
+    The following paragraphs use the notation F for the set of prime ideals
+occuring in the factorization of S(α) (considerations related to “large primes”
+aside, this can be thought of as the factor base).
+
+
+3.1   Iterative reduction
+
+The main idea of the algorithm is the following. The computation has an iterative
+structure, and the successive steps are numbered from step number 0 onwards.
+Throughout the course of the computation, an expression such as the following
+one is maintained (we recall that λ denotes the order of the root which we intend
+
+                                        7
+to compute, e.g. classically λ = 2):
+                                                              (k)
+                                       ǫ
+                                                    Y
+                       S(α)(γ0ǫ0 . . . γk−1
+                                         k−1 −λ
+                                            ) O=          pλ·ep
+                                                    p∈F
+
+where the integer k denotes the step of the calculation, starting at k = 0. We
+use γi to denote some algebraic number which is computed at step i. We also
+denote by ǫi a sign, which is used as a notational convenience for a choice between
+                                                     (k)
+numerator and denominator. The exponents ep may become negative in the
+course of the computation.
+    The aim of these reduction steps is to transform the left-hand side above into
+an algebraic number which has small coeﬃcients. Not only do we wish to obtain
+an ideal factorization which is as small as possible (possibly trivial), but we also
+strive to minimize the unit contribution as well, which is important to minimize
+the size of the coeﬃcients.
+                                              ǫk−1 −λ
+    We denote by Sk (α) = S(α)(γ0ǫ0 . . . γk−1     )   (in particular, S0 (α) = S(α)).
+Step k of the algorithm chooses a subset of the ideals appearing in the factor-
+                     (k)
+ization p∈F p·ep . This factorization naturally decomposes into a numerator
+         Q
+(positive exponents) and a denominator (negative exponents). We choose a set
+Ik = p1 . . . pnk , which consists of ideals all appearing in the numerator, or all in
+the denominator (in this notation we do not forbid a given ideal to be selected
+                                                                           (k)
+several times, provided that its multiplicity in Ik does not exceed |ep |). We in-
+tend to reduce the contribution of the the ideals p1 , . . . , pnk to the factorization
+of Sk (α)O.
+    A reduced basis (e.g., an LLL-reduced basis suﬃces) of the ideal Ik is com-
+puted. In this way, we obtain algebraic integers belonging to Ik . Such an algebraic
+integer v satisﬁes NormK/Q (Ik ) | NormK/Q (v), and also the following inequality:
+
+                                def   NormK/Q (v)
+                          m(v) =                    ≤ CK ,
+                                      NormK/Q (Ik )
+
+where the constant CK is eﬀectively computable (it depends only on K). Suppose
+we are given such an element v. Without loss of generality, we consider the case
+that Ik is a factor of the numerator of Sk (α)O. We then have:
+
+             Norm(Sk (α)v −λ ) = Norm(Sk (α)) Norm(Ik )−λ m(v)−λ .
+
+In the factorization of Sk (α)v −λ OK , the norm of the numerator is reduced by a
+factor Norm(Ik )λ in comparison to Sk (α)OK . At the same time, the norm of the
+denominator increases by m(v)λ ≤ Ckλ . Therefore, provided that Ik is chosen to
+have a norm signiﬁcantly larger than the constant CK , we obtain in this way a
+reduction of the size of the expression. This reduction step is the workhorse of
+Montgomery’s algorithm.
+    The iterative reduction step may possibly complete with a trivial ideal fac-
+torization, in other words with some Sk (α) being a unit. For this unit to be
+acceptably small, and accessible to direct λ-th root computation, it is important
+
+                                           8
+to “guide” the reduction step. The guiding principle is that the logarithms of the
+complex embeddings log|σi (Sk (α)v −λ )| should become as balanced as possible:
+among the diﬀerent short vectors v formed by the reduced basis of Ik , some lead
+Sk (α)v −λ OK to reduce the jitter in the logarithmic complex embeddings, while
+some others have the opposite eﬀect. The former are favored. In practice this
+suﬃces to obtain a ﬁnal Sk (α) which is a unit (thus the ideal factorization is
+indeed trivial), and furthermore has trivial logarithmic embeddings, so that it is
+actually a root of unity.
+    More details on Montgomery’s algorithm, together with an example, can
+be found in [15]. An implementation of Montgomery’s algorithm can be found
+in [13]. We also mention a Magma prototype by the author in [8].
+
+
+3.2   Complexity
+
+Complexity of Montgomery’s algorithm, especially in the extended case λ ≥ 2
+which is useful for the context in [10], calls for a more precise consideration of
+the input and output sizes. We assume that the input set S occupies n bits.
+This set S is obtained in a manner similar to the NFS situation: the solution of
+some linear system is computed so as to force exponents in the corresponding
+ideal factorization to cancel modulo λ. Naturally, this linear system is deﬁned
+modulo λ, and so are the coeﬃcients of this combination. Therefore, our set S
+naturally consists of (a, b) pairs together with exponents for each pair, which
+contribute to the size of S(α). For an input size of n bits for S, we thus expect
+O(λn) bits for the coeﬃcients of S(α), and O(n) bits for the coeﬃcients of its
+λ-th root T (α).
+    Observe now that S(α) is never computed by Montgomery’s algorithm. Each
+reduction step has a cost which is linear in the size of Ik , and more importantly
+in the size reduction obtained with respect to the input set. The calculations
+related to the unit contributions are also done incrementally, and have linear
+cost in the size of Ik . Therefore the complexity of the algorithm is linear, and
+the dependency on λ is of logarithmic type. The dependency on the parameters
+of the ﬁeld K is not detailed here.
+
+
+4     A new CRT-based lifting approach
+
+We describe here a new approach which is a mix between the direct approach
+(Section 1) and Couveignes’ CRT algorithm (Section 2). This approach, just as
+Montgomery’s algorithm, is free of limiting assumptions on the number ﬁeld. In
+particular, we do not assume the existence of inert primes.
+    This work may be considered as connected to recent works by Enge and
+Sutherland [6], as well as by Sutherland [18], on the topic of the CRT-based
+computation of class polynomials in the context of the complex multiplication
+method for constructing elliptic curves over ﬁnite ﬁelds. In these works, as well
+as in the method described here, the “explicit” aspect of the CRT is particularly
+important.
+
+                                        9
+    Let d = [K : Q]. We recall that for brevity we have restricted our presentation
+to the case where the polynomial f deﬁning the number ﬁeld K is monic. As
+stated already before, we know a way to obtain a bound on the coeﬃcients of
+the result T (α) which is being sought. We thus assume that such a bound M
+has been computed and is available.
+    Let P = {pi } be a set of ℓ = t × r totally split primes3 . (The form ℓ = t × r
+will allow us later to partition P into t distinct
+                                          l         msubsets of size r, for distribution
+                                            log M/ǫ
+purposes.) Let P = p∈P p and λ =                      , where ǫ ≤ 1 is an arbitrarily
+                       Q
+                                              log P
+chosen value discussed later. We thus have M ≤ ǫP λ . We denote by B = λℓ log2 P
+the bit-size of pλ for primes p ∈ P.
+    Following our assumptions for estimating complexities, the expected bit size
+of the coeﬃcients of T (α) is n/2, where as previously n denotes the size of the
+input set S. We thus expect expect log2 M ≈ ℓB ≈ n/2.
+
+
+4.1    CRT-based reconstruction
+
+The square root is computed from several calculations done modulo pλi , for
+each pi . One of the diﬃculties is naturally linked to resolving the indetermi-
+nation among the two possible choices of square roots in each of the possible
+residue ﬁelds Fpi . In total, the primes pi being totally split, we have ℓd square
+roots to compute, and as many choices to make.
+     For each pi , we denote by (ri,j )j=1...d the roots of f modulo pi . Since pi is
+totally split, the values ri,j are d distinct elements of Fpi . This assumption also
+allows to compute, corresponding to each ri,j , a lift r̃i,j in Z/pλi Z. We thus have
+f (r̃i,j ) ≡ 0 mod pλi .
+     For each pi and each ri,j , we compute a pi -adic lift of S(r̃i,j ), with preci-
+                                                                     p
+
+sion λ. Let Ti,j
+               ′
+                  be this lift. If T (x) denotes as usual the expression of our desired
+square root in K, we have
+                                        ′
+                                      Ti,j = si,j T (r̃i,j ) where si,j = ±1.
+
+   We wish to ﬁnd T (x) from the values T (r̃i,j ). The latter are, for now, known
+only up to the sign si,j , and we postpone this sign problem for later analysis.
+We consider the integers Qi and polynomials Hi,j (x) ∈ Z[x] deﬁned as follows:
+                                                  λ
+                                    def       P             Y
+                               Qi =                     =           pλ ,
+                                              pi            p∈P,
+                                                            p6=pi
+
+                              def     f (x)        Y
+                         Hi,j =                  =   (x − r̃i,j ′ ).
+                                    (x − r̃i,j )   ′    j 6=j
+
+
+These polynomials are chosen so as to verify:
+
+3
+    The density of such primes is 1/# Gal(f ), again by Čebotarev’s density theorem.
+
+
+                                                   10
+Proposition 1 Let Ti,j = T (r̃i,j ) mod pλi . Then:
+                                                           
+                       X                           1         mod P λ .
+             T (x) =       Qi Hi,j (x)Ti,j        ′ (r̃ )
+                        i,j
+                                             Q i f      i,j
+
+
+In the statement above, the inverse is to be understood in the pi -adic ring Zpi , or
+more precisely modulo pλi . The proof is straightforward. Remark that Qi mod pλi′
+cancels for i′ 6= i, and that in the case i = i′ , Hi,j (r̃i′ ,j ′ ) mod pλi′ is exactly equal
+to f ′ (r̃i,j ) for j ′ = j, and cancels otherwise. Then the bound M ≤ P λ on the
+coeﬃcients of T yields the announced result.
+
+
+4.2    Determining signs
+
+Proposition 1 allows to reconstruct T (x) as soon as all Ti,j are known. However,
+from the computation of roots modulo pi , we only know Ti,j     ′
+                                                                   = si,j Ti,j . Still,
+by examining the coeﬃcient of degree d − 1 in T (x), we obtain the following
+                              4
+
+identity, which is derived from the expression in Proposition 1:
+                                  X                    1
+                 [xd−1 ]T (x) =         Qi Ti,j                   mod P λ ,
+                                  i,j
+                                                  Qi f ′ (r̃i,j )
+               1 d−1         X 1              1
+                                                                 
+                                                               λ
+                 [x ]T (x) =         Ti,j                 mod pi mod 1.
+              Pλ             i,j
+                                 pλi      Qi f ′ (r̃i,j )
+
+Let now xi,j and yi,j be the real numbers
+                                                         
+                          1            1                λ
+                  xi,j = λ Ti,j                   mod pi ∈ [0, 1[,
+                         pi       Qi f ′ (r̃i,j )
+                                                         
+                          1     ′      1                λ
+                  yi,j = λ Ti,j                   mod p i   ∈ [0, 1[,
+                         pi       Qi f ′ (r̃i,j )
+                          ≡ ±xi,j       mod 1.
+
+We can show that the sum of the xi,j numbers is exceptionally close to an integer.
+Indeed, the coeﬃcient [xd−1 ]T (x) is at most M . Thus we have:
+
+                               1 d−1
+                                 [x  ]T (x) ≤ M P −λ ≤ ǫ,
+                              Pλ
+
+where ǫ is the arbitrary parameter introduced above. As a consequence, we have:
+                X                        X
+                    xi,j ∈ [−ǫ, ǫ] + Z,     si,j yi,j ∈ [−ǫ, ǫ] + Z.
+                  i,j                                  i,j
+
+4
+    Any coeﬃcient of T (x) may be considered. The only special thing about degree d − 1
+    is that the corresponding expression is shorter to write.
+
+
+                                                  11
+This implies that by solving a knapsack-like problem, we may ﬁnd which is the
+“right” combination of the yi,j coeﬃcients, thereby solving the sign indetermina-
+tion problem. Such problems are hard to solve, and are discussed further down.
+Let us only mention brieﬂy that at least for modest numbers of primes, this
+problem remains practical.
+P Once the si,j have been computed,                 we deduce the integer κd−1 close to
+   i,j xi,j . We also obtain T i,j = s i,j T  ′
+                                             i,j . This gives:
+
+           1 d−1          X 1                   1
+                                                                    
+                                         ′                        λ
+             [x  ]T (x) =         s    T
+                                    i,j i,j                 mod p i   − κd−1 .
+          Pλ              i,j
+                              pλi           Qi f ′ (r̃i,j )
+
+We can generalize this approach to now derive information relative to all coeﬃ-
+cients of T (x). This requires taking into account the interpolating polynomials
+Hi,j (x). We deﬁne
+                                                               
+                                 k    ′   Hi,j (x)            λ
+                      ci,j,k = [x ] Ti,j                 mod pi ,
+                                         Qi f ′ (r̃i,j )
+                      c∗i,j,k = si,j ci,j,k .
+
+The coeﬃcients ci,j,k generalize the notations xi,j and yi,j above, since we have
+
+                               c∗i,j,d−1                     ci,j,d−1
+                      xi,j =               ,    and yi,j =            .
+                                  pλi                           pλi
+
+We may use these notations to write a generalization of the expression above,
+and likewise for the expression of Proposition 1:
+                    1 k            X 1
+                     λ
+                       [x ]T (x) =       λ
+                                           [xk ]si,j ci,j,k − κk ,
+                   P               i,j
+                                       p i
+                                   X
+                                       xk Qi si,j ci,j,k − κk P λ .
+                                                                   
+                           T (x) =
+                                        i,j,k
+
+     Finally, we recall that the aim of the square root computation step is not re-
+ally to compute T (x), but instead its evaluation T (m) mod N , as already stated
+previously. As a consequence of the formula above, we are thus interested in
+ci,j,k mk mod N , which is a priori signiﬁcantly smaller than pλi .
+
+4.3   Strategies for fast computation
+The algorithm sketched so far needs some tuning, because the split into several
+computations, if done incorrectly, may in fact do more harm than good with
+respect to the overall complexity. The ﬁrst important concern is the computation
+of the values S(r̃i,j ). Recall that these are dℓ B-bit integers. In order to compute
+these values eﬃciently, one may proceed as follows. First compute S(α) with a
+subproduct tree (see e.g. [7, § 10.1]). Then proceed by computing reductions of all
+d coeﬃcients modulo the ℓ prime powers pλi . This multimodular reduction step
+
+                                                12
+Algorithm crtalgsqrt(N, m, f, S)
+
+Input:    f monic irreducible, deﬁning K = Q(α),
+          N integer,
+          m a root of f modulo N .
+          S set of pairs (a, b) such that S(α) = (a − bα) ∈ Z[α]2 .
+                                                Q
+Parameters:ℓ = r × t, number of primes to consider.
+Output:   T (m) mod N , where T (α)2 = S(α).
+
+ 1. Choose t sets P1 , . . . , Pt of r primes totally split in K.
+    Partition S into t disjoints subsets S1 , . . . , St .
+ 2. For k = 1, . . . , t, read Sk . Deduce M and λ. Compute Sk (x) = (a,b)∈Sk (a −
+                                                                                  Q
+
+    bx) mod f .
+ 3. For i = 1, . . . , ℓ compute: pλi , Qi , Q1i mod pλi , as well as for j = 1, . . . , d, the root
+                                                                        H   (x)
+    ri,j mod pi of f , the lift r̃i,j with precision λ, as well as f ′i,j
+                                                                      (r̃i,j )
+                                                                               mod pλi .
+ 4. For τ = 1, . . . , t:
+                                     def
+    4.1. Compute (Sσ (x) mod Pτ = {Sσ (x) mod p, p ∈ Pτ })σ=1...t .
+    4.2. For each pi ∈ Pτ , and for j = 1, . . . , d, compute:
+         4.2.1 the evaluations Sσ (r̃i,j ) mod pλi for σ = 1, . . . , t,
+         4.2.2 the products S(r̃i,j ),
+         4.2.3 the square roots Ti,j   = S(r̃i,j ) mod pλi .
+                                   ′
+                                          p
+                                                                          
+                                                      Hi,j (x)
+         4.2.4 the coeﬃcients ci,j,k = [xk ] Ti,j′
+                                                    Qi f ′ (r̃i,j )
+                                                                    mod pλi , as well as ci,j,k /pλi ∈
+              R, and ci,j,k mk mod N .
+ 5. Find the signs si,j and the integer κd−1 such that                                   λ
+                                                                P
+                                                                    i,j si,j (ci,j,d−1 /pi ) − κd−1   ≤
+    ǫ. Deduce the integers κ0 , . . . , κd−2 .
+ 6. return i,j,k Qi si,j ci,j,k mk − κk P λ mod N .
+           P
+
+
+                Algorithm 1: NFS square root using lifting and CRT.
+
+
+may again be achieved with a subproduct tree. Finally, the evaluations modulo
+all r̃i,j is again a multi-evaluation, albeit relatively shallow, since we have only
+d evaluation points.
+    For an n-bit input, recall that we have set ℓB ≈ n/2. Hence the ﬁrst two
+steps above respectively have complexity O(d2 M(n) log n) and O(dM(n) log n).
+The multi-evaluation at all r̃i,j has complexity O(ℓd2 M(B)).
+    This algorithm allows some trivial limited parallelism. We can achieve a t-
+fold reduction of the space complexity for the computation of the values S(r̃i,j ),
+and likewise for the time complexity, using t2 nodes. This is done by splitting
+both S and P into t equally sized parts denoted by S1 , . . . , St and P1 , . . . , Pt ,
+respectively.
+    Corresponding to each set Sσ , we deﬁne the polynomial Sσ (x) as being the
+product
+                                      Y
+                           Sσ (x) =         (a − bx) mod f.
+                                         (a,b)∈Sσ
+
+
+                                                 13
+For each pair of indices (σ, τ ), we deﬁne the r-uple:
+
+                                   def
+                   Sσ (x) mod Pτ = {Sσ (x) mod p, p ∈ Pτ }.
+
+Each of t2 nodes, indexed by (σ, τ ), may compute the quantity above. The time
+and space complexity on each node are thus (1/t)-th of the total amount given
+above.
+    Once the values Sσ (r̃i,j ) have been computed, the values S(r̃i,j ) correspond-
+ing to the complete input set S can be obtained as the product over all σ.
+    The steps we have just detailed form the core of algorithm 1, namely steps 4.1,
+4.2.1, and 4.2.2. Other steps of this algorithm are not detailed at length here. In
+algorithm 1, we have chosen to present the parallel version on up to t2 nodes, but
+instantiating with t = 1 gives the version which is best suited for a sequential
+implementation.
+
+
+4.4   Complexity
+
+Table 1 gives complexity estimates for the diﬀerent steps of the algorithm. Con-
+cerning parallelization, steps 3, 4.2.3, and 4.2.4 clearly scale to up to ℓ nodes
+easily. We have shown in the previous paragraphs how steps 4.1 to 4.2.2 may
+be improved t-fold in a quite simple way when run over t2 nodes, neglecting
+communication costs.
+    The complexity of step 5 of algorithm 1 is related to a knapsack-like problem.
+                                                          1
+It is straightforward to solve such a problem in time 2 2 dℓ , and the best known
+approach is 2  0.313dℓ
+                       [9].
+    In total, the algorithm proposed has a time and space complexity of the order
+of O(d2 M(n) log n), which is similar to the lifting approach of Section 1 (when
+counting the computation of S(α) in the complexity).
+
+
+                       Step         Time           Space
+                       1            O(ℓ)           O(ℓ)
+                       2            O(d2 M(n))     O(dn)
+                       3            O(ℓd2 M(B))    O(dn)
+                       4.1          O(dM(n) log n) O(dn log n)
+                       4.2.1        O(ℓd2 M(B))    O(dn)
+                       4.2.2        O(ℓdM(B))      O(dn)
+                       4.2.3, 4.2.4 O(ℓdM(B))      O(dn)
+                       5            O(2dℓ/2 )      O(2dℓ/2 )
+                       6            O(ℓ)           O(ℓ)
+Table 1. Time and space complexity of the diﬀerent steps of algorithm 1 (we
+have rt = ℓ and rtB ≈ n/2).
+
+
+
+
+                                         14
+4.5   Implementation and experimental data
+
+Algorithm 1 has been implemented in cado-nfs [8]. For a practical application,
+the choice of parameters r and t is chieﬂy limited by the complexity of step 5
+of the algorithm, since above some dimension, the knapsack problem becomes
+intractable. This algorithm has been run for the RSA-768 square root calculation,
+with the following parameters: d = 6, t = 3, r = 2, the total input size being
+21 GB. On 18 nodes equipped with two 4-core Intel Xeon E5520 processors,
+and 32 GB of RAM, the computation claimed 6 hours. In comparison, using
+Montgomery’s algorithm, the same computation on diﬀerent hardware, but with
+the same number of 144 cores, took 4 hours, as it was reported in [11].
+    The diﬀerence in timings illustrates the diﬀerence in complexity. Montgomery’s
+algorithm is linear, while the CRT-based algorithm we propose is quasi-linear.
+Because Montgomery’s algorithm needs to exploit more accurate input data
+(namely, the ideal factorization of each ideal (a − bα)OK ), the time for read-
+ing this extended input set is signiﬁcant. If we were to ignore I/O costs, the
+diﬀerence would be even more visible. Overall, the timings here are thus unsur-
+prising. The CRT algorithm proposed here, compared to Montgomery’s, has the
+advantage of not requiring the knowledge of the complete ideal factorization. In
+the perspective of a complete NFS implementation, this is interesting in that
+it simpliﬁes the data ﬂow, and also removes the need for an implementation of
+accurate computation of ideal valuations at all prime ideals. In the context of
+some NFS implementations which so far have chosen to restrict to the direct
+approach and avoid this step [8, 17], the CRT algorithm presented here oﬀers a
+viable alternative.
+
+
+4.6   A variant using a large number of primes
+
+A variant of the algorithm above may be employed in order to handle a larger
+number of primes (for example up to 10 000). To this end, it is important to avoid
+the knapsack reconstruction step. An idea found in [6] allows to work around
+this issue in the case where inert primes can be found. Let P be the set of primes
+selected for the reconstruction. We assume each is chosen with exponent λ = 1,
+although varying this parameter is possible. As done previously, we denote by
+Tp (x) = T (x) mod p, for some p ∈ P, and also Tp′ (x) the expression of the square
+root which is computed. Let sp be the sign such that Tp′ (x) = sp T (x) mod p.
+    Let us focus on one particular coeﬃcient of T (x), for example that of degree
+d − 1, which we denote by τ . Similarly to Tp and Tp′ , we deﬁne the notations τp =
+τ mod p and τp′ = sp τ mod p. Lacking the knowledge of sp , we cannot distinguish
+between τ mod p and −τ mod p. However, the set {τ mod p, −τ mod p} is well
+determined by the computation of τp′ . We may thus compute unambiguously
+τ 2 mod p = (τp′ )2 mod p. If this computation is done modulo   many primes p, we
+can deduce the integer τ 2 . To this end, we must have p∈P p ≥ M 2 , where M
+                                                           Q
+is the bound on the coeﬃcients of T (x). The integer τ itself is then obtained
+by the square root of an n-bit integer, which is signiﬁcantly cheaper than the
+
+                                        15
+algebraic square root we are computing here. A byproduct of this computation
+is the set of signs {sp }, which allows to complete the calculation.
+    This variant may also apply in a case without inert primes. In such a case, let
+H ⊂ Sd be a representative set for the quotient Gal(L/Q)/ Gal(L/K), where
+L is the normal closure of K. Let σ ∈ H be an element decomposing into a
+minimal number of distinct cycles, and let γ be this minimum. We want to use
+primes whose splitting pattern in K matches the cycle decomposition of σ. From
+Čebotarev’s density theorem, it follows that the density of such primes is the
+density of this cycle decomposition pattern in H, which in particular is positive.
+If, as before, we try to relate τ mod p with the γ distinct coeﬃcients obtained
+                                                                  (1)              (γ)
+modulo each of the prime ideals above p, we have τ = ±τp′             ± . . . ± τp′ .
+There are 2 possible combinations. By evaluating the elementary symmetric
+              γ
+
+functions on the 2γ possible solutions modulo each p, we obtain τ as the root of
+an integer polynomial of degree 2γ . The worst case for this extension is when γ is
+large: γ may reach d/2 in the case of Swinnerton-Dyer polynomials. We recover
+unsurprisingly the hard case of factoring polynomials over number ﬁelds.
+
+
+References
+
+ [1] R.     P.    Brent,    Multiple-precision    zero-finding   methods   and
+     the complexity of elementary function evaluation. In J. F.
+     Traub      (ed.),    Analytic    computational      complexity,   151–176.
+     Academic       Press,    New     York,    NY,       1975.   Available   at
+     http://web.comlab.ox.ac.uk/oucl/work/richard.brent/ftp/rpb028.ps.gz.
+     ↑ 3, 4
+ [2] R. Brent and P. Zimmermann, Modern Computer Arithmetic, Cambridge
+     Monographs on Applied and Computational Mathematics, vol. 18, Cam-
+     bridge University Press, 2010. ↑ 3, 4
+ [3] J. P. Buhler, A. K. Lenstra, and J. M. Pollard, Factoring integers with
+     the number field sieve. In A. K. Lenstra and H. W. Lenstra Jr (eds.), The
+     development of the number ﬁeld sieve, vol. 1554 of Lecture Notes in Math.,
+     50–94. Springer–Verlag, 1993. ↑ 1
+ [4] H. Cohen, A course in algorithmic algebraic number theory, Grad. Texts in
+     Math., vol. 138, Springer–Verlag, 1993. ↑ 2, 7
+ [5] J.-M. Couveignes, Computing a square root for the number field sieve. In
+     A. K. Lenstra and H. W. Lenstra Jr (eds.), The development of the number
+     ﬁeld sieve, vol. 1554 of Lecture Notes in Math., 95–102. Springer–Verlag,
+     1993. ↑ 1, 5
+ [6] A. Enge and A. V. Sutherland, Class invariants by the CRT method. In G.
+     Hanrot, F. Morain, and E. Thomé (eds.), ANTS-IX, vol. 6197 of Lecture
+     Notes in Comput. Sci., 142–156. Springer–Verlag, 2010. Proceedings. ↑ 9,
+     15
+ [7] J. von zur Gathen and J. Gerhard, Modern computer algebra, Cambridge
+     University Press, Cambridge, England, 1999. ↑ 12
+
+                                         16
+ [8] P. Gaudry, A. Kruppa, F. Morain, L. Muller, E. Thomé, and P. Zimmer-
+     mann, cado-nfs, An Implementation of the Number Field Sieve Algorithm,
+     2011. Available at http://cado-nfs.gforge.inria.fr/. Release 1.1. ↑ 2,
+     9, 15
+ [9] N. Howgrave-Graham and A. Joux, New generic algorithms for hard knap-
+     sacks. In Henri Gilbert (ed.), EUROCRYPT, vol. 6110 of Lecture Notes in
+     Comput. Sci., 235–256. Springer–Verlag, 2010. ↑ 14
+[10] A. Joux, D. Naccache, and E. Thomé, When e-th roots become easier than
+     factoring. In K. Kurosawa (ed.), ASIACRYPT 2007, vol. 4833 of Lecture
+     Notes in Comput. Sci., 13–28. Springer–Verlag, 2008. Proceedings. ↑ 2, 7, 9
+[11] T. Kleinjung, K. Aoki, J. Franke, A. K. Lenstra, E. Thomé, J. Bos, P.
+     Gaudry, A. Kruppa, P. L. Montgomery, D. A. Osvik, H. te Riele, A. Tim-
+     ofeev, and P. Zimmermann, Factorization of a 768-bit RSA modulus. In T.
+     Rabin (ed.), CRYPTO 2010, vol. 6223 of Lecture Notes in Comput. Sci.,
+     333–350. Springer–Verlag, 2010. Proceedings. ↑ 2, 15
+[12] H. W. Lenstra Jr and P. Stevenhagen, Chebotarëv and his density theorem,
+     Math. Intelligencer 18(2) (1996), 26–37. ↑ 5
+[13] C. Monico, ggnfs, A Number Field Sieve Implementation, 2004–2005. Avail-
+     able at http://www.math.ttu.edu/~cmonico/software/ggnfs/. Release
+     0.77. ↑ 2, 9
+[14] P. L. Montgomery, Square roots of products of algebraic numbers. In W.
+     Gautschi (ed.), Mathematics of Computation 1943–1993 : a Half-Century
+     of Computational Mathematics, vol. 48 of Proc. Sympos. Appl. Math.,
+     567–571. Amer. Math. Soc., 1994. ↑ 1, 6, 7, 17
+[15] P. L. Montgomery, Square roots of products of algebraic numbers, 1997.
+     Unpublished draft, signiﬁcantly diﬀerent from published version [14]. Dated
+     May 16, 1997. ↑ 1, 6, 7, 9
+[16] P. Q. Nguyen, A Montgomery-like square root for the number field sieve. In
+     J. P. Buhler (ed.), ANTS-III, vol. 1423 of Lecture Notes in Comput. Sci.,
+     151–168. Springer–Verlag, 1998. Proceedings. ↑ 7
+[17] J. Papadopoulos, msieve, A Library for Factoring Large Integers – release
+     1.50, 2004–. Available at http://www.boo.net/~jasonp. Release 1.50. ↑ 2,
+     15
+[18] A. V. Sutherland, Accelerating the CM method, 2012. Available at
+     http://arxiv.org/abs/1009.1082. Preprint. ↑ 9
+
+
+
+
+                                      17
+

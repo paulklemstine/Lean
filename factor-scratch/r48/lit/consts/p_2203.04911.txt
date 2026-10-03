@@ -1,0 +1,364 @@
+                                         DUAL: Discrete Spoken Unit Adaptive Learning for Textless Spoken Question
+                                                                       Answering
+                                          Guan-Ting Lin1 , Yung-Sung Chuang2 , Ho-Lam Chung1 , Shu-wen Yang1 , Hsuan-Jui Chen1 , Shuyan
+                                                  Dong3 , Shang-Wen Li3 , Abdelrahman Mohamed3 , Hung-yi Lee1 , Lin-shan Lee1
+                                                                                     1
+                                                                                     National Taiwan University, Taiwan
+                                                                              2
+                                                                                  Massachusetts Institute of Technology, USA
+                                                                                              3
+                                                                                                Meta AI, USA
+                                                      r10942104@ntu.edu.tw, shangwel@fb.com, abdo@fb.com, hungyilee@ntu.edu.tw
+
+
+                                                                  Abstract
+                                         Spoken Question Answering (SQA) is to find the answer from
+arXiv:2203.04911v3 [cs.CL] 21 Jun 2022
+
+
+
+
+                                         a spoken document given a question, which is crucial for per-
+                                         sonal assistants when replying to the queries from the users.
+                                         Existing SQA methods all rely on Automatic Speech Recogni-
+                                         tion (ASR) transcripts. Not only does ASR need to be trained
+                                         with massive annotated data that are time and cost-prohibitive
+                                         to collect for low-resourced languages, but more importantly,
+                                         very often the answers to the questions include name entities
+                                         or out-of-vocabulary words that cannot be recognized correctly.
+                                         Also, ASR aims to minimize recognition errors equally over all
+                                         words, including many function words irrelevant to the SQA
+                                         task. Therefore, SQA without ASR transcripts (textless) is al-
+                                         ways highly desired, although known to be very difficult.
+                                             This work proposes Discrete Spoken Unit Adaptive Learning
+                                                                                                            Figure 1: The proposed DUAL framework for textless (ASR
+                                         (DUAL), leveraging unlabeled data for pre-training and fine-
+                                                                                                            transcript-free) SQA. All the passages, questions, and answers
+                                         tuned by the SQA downstream task. The time intervals of spoken
+                                                                                                            are in spoken form. The time intervals of the spoken answers can
+                                         answers can be directly predicted from spoken documents. We
+                                                                                                            be extracted from the spoken passage without ASR transcripts.
+                                         also release a new SQA benchmark corpus, NMSQA, for data
+                                         with more realistic scenarios. We empirically showed that DUAL
+                                         yields results comparable to those obtained by cascading ASR       and several works [2, 3, 4, 5] intended to alleviate such problems
+                                         and text QA model and robust to real-world data. Our code and      by knowledge distillation, including adapting the TQA model
+                                         model will be open-sourced1 .                                      to be more robust against recognition errors. Some other ef-
+                                         Index Terms: Spoken Question Answering, Textless NLP, Self-        forts [6, 7] exploited paired speech and transcripts to construct
+                                         Supervised Representation                                          a cross-modal speech and text pre-trained model with aligned
+                                                                                                            semantics fine-tuned end-to-end, in which the speech recogni-
+                                                                                                            tion error problems can be mitigated to some degree, and SQA
+                                                             1. Introduction                                performance improved.
+                                         Spoken Question Answering (SQA) aims to find the answer from            However, ASR errors remain to be a major problem for SQA
+                                         a spoken document given a question in either text or spoken        tasks. The correct answers to the questions often include name
+                                         form. SQA is crucial for personal assistants when replying         entities or out-of-vocabulary (OOV) words that can never be
+                                         to the questions from the user’s spoken queries. Unlike many       recognized. The key information is thus inevitably lost when the
+                                         spoken language understanding tasks such as speech translation     audio signals are transformed into transcripts with errors, and
+                                         or intent classification, in which the required understanding of   there is no way to recover them in the following TQA stage. Also,
+                                         semantics is primarily on utterance level, the SQA task requires   the ASR engine was trained by minimizing the word error rate
+                                         sophisticated comprehension and reasoning over much longer         (WER), which was evaluated equally overall words including
+                                         audio content. In addition to understanding the question and       many function words irrelevant to the SQA task. So the cascade
+                                         comprehending the global information in the audio context, it      of two stages (ASR and TQA) individually optimized with two
+                                         also needs to catch the fine-grained information to precisely      different criteria cannot perform as well as a single-stage global
+                                         locate the answer span out of the long audio context. Thus, SQA    performance goal. So it is highly desired to capture the informa-
+                                         is known to be a very challenging task.                            tion directly, rather than from the ASR transcripts, and obtain
+                                              The conventional SQA system consists of the cascade of        overall performance not constrained by ASR accuracies.
+                                         an Automatic Speech Recognition (ASR) engine followed by                Also, ASR engines have to be trained with vast quanti-
+                                         a text-trained QA (TQA) model. However, speech recognition         ties of human-annotated audio-transcript data, which are time-
+                                         errors naturally cause catastrophic problems to the TQA. [1],      consuming and expensive to collect for the thousands of low-
+                                                                                                            resourced languages over the world, when low and robust enough
+                                           1 https://github.com/DanielLin94144/                             error rates are considered. Furthermore, there exist many lan-
+                                         DUAL-textless-SQA                                                  guages without written form worldwide. All the above imply
+technologies for ASR transcript-free (textless) SQA are highly
+desired although challenging.
+     In this work, we propose the first known textless (i.e., ASR
+transcript-free) SQA framework as in Figure 1. Inspired by the
+concept of Textless NLP [8, 9, 10, 11, 12, 13], which encodes
+speech signals into discrete units for modeling, and the pre-
+trained language models transferability of [14, 15, 16, 17, 18],
+we propose Discrete Unit Adaptive Learning (DUAL) for textless
+SQA. DUAL leverages pre-trained models to obtain quantized,
+length-condensed speech representations from audio signals and
+further adapts the pre-trained language model to achieve compet-
+itive SQA results without any ASR transcripts. The time span
+of the answer can be directly located from the audio context and
+played to the user, so the extracted answers do not suffer from
+speech recognition errors or out-of-vocabulary (OOV) problems
+because NO ASR is performed.
+     Furthermore, despite the increasing efforts to build SQA
+benchmark corpora [1, 19, 20, 21, 22, 23, 24], there is still a lack
+of natural and large-scale SQA datasets featuring real-world sce-
+narios. For this purpose, we release a novel benchmark corpus,
+Natural Multi-speaker Spoken Question Answering (NMSQA).
+In this corpus, the test set was produced by human speakers,
+and the training and validation set were synthesized from Ama-                  Figure 2: The overview of the DUAL framework.
+zon Polly TTS service with industrial-grade quality. We also
+assign two different speakers to read the pairs of passage and          speech pre-trained model HuBERT [25] for feature extraction2 .
+question, examining whether our textless SQA system is speaker-         HuBERT was trained by masked prediction objectives similar
+independent.                                                            to BERT [27]. The prediction target was the K-means clustered
+     The contributions of this paper are summarized below:              index for speech signal processing features, e.g., Mel-frequency
+                                                                        cepstral coefficients (MFCC) initially, and then learned latent
+     • We propose DUAL as the first known framework for text-           representations after clustering in subsequent iterations. We
+       less SQA, not utilizing ASR transcripts and not suffering        utilized the HuBERT-Large model containing 24 transformer
+       from ASR errors.                                                 encoder layers pre-trained on LibriLight 60k hour dataset.
+                                                                        HuBERT encoded the raw waveform into frame-level 1024
+     • We open-source the NMSQA dataset for SQA in real-
+                                                                        dimension features. Each frame was equivalent to 20 ms.
+       world scenarios.
+                                                                        Quantization: The goal of quantization is to discretize the
+     • DUAL achieved performance competitive to those ob-               speech features so they can be fed into the pre-trained language
+       tained by cascading ASR and TQA, and significantly               model. K-means clustering was performed over the layer-wise
+       better when the word error rate exceeded 30 %.                   representations of HuBERT-Large. We used LibriSpeech [28]
+                                                                        100-hour subset to train the K-means clustering model, and the
+     • DUAL is more robust and retains the performance for the
+                                                                        number of clusters K is 64, 128, and 512. After clustering, the
+       real-speaker testing set, which was not easily achievable
+                                                                        discrete units are represented by the clustering indices. The repet-
+       for the cascade approach.
+                                                                        itive discrete units are merged to shorten the sequence length and
+                                                                        remove the duration information, forming the dense discrete unit
+                         2. Method                                      sequence of the question and passage (zq , zp ). We recorded the
+2.1. Problem Formulation                                                duration of duplication number of repetitions as cq and cp for
+                                                                        zq and zp , so we can recover the frame-level indices to convert
+The form of SQA dataset D is {q, p, a}, corresponding to the            the answer span back to time interval at the inference stage.
+question q, passage p, and answer a, all in spoken form in this
+work. Our goal is to extract the starting and ending time (ts , te ),   2.2.2. Pre-trained Language Model (PLM)
+denoted as the answer span a, from the spoken passage p given
+the spoken question q.                                                  The learning model is a BERT-like transformer encoder model.
+                                                                        The input was the discrete unit sequences of the spoken questions
+                                                                        and passages (zq , zp ). Because SQA is a very challenging task
+2.2. DUAL framework
+                                                                        to train from scratch, we leveraged the cross-disciplinary transfer-
+The DUAL framework consists of the Speech Content Encoder               ability of PLM [14, 15, 16, 17, 18] to help the SQA downstream
+(SCE) and Pre-trained Language Model (PLM) as in Figure 2               task. Specifically, we used the weights of text PLM for network
+and introduced below.                                                   initialization, and randomly assigned the text pre-trained input
+                                                                        embeddings for discrete units. The different random embedding
+2.2.1. Speech Content Encoder (SCE)                                     assignments did not significantly affect the final performance.
+                                                                        The input of PLM was the concatenated discrete unit sequences
+The SCE transforms the question-passage audio waveform                  of the question and passage pair (zq , zp ), and the target was the
+(q, p) pair to sequences of discrete units (zq , zp ).                  start and end time (ys , ye ) after the repetitions were reproduced.
+Self-supervised Speech Representation: A self-supervised
+speech pre-trained model can extract informative feature                    2 We used the open-source S3PRL [26] toolkit to extract the represen-
+representations. We adopted the state-of-the-art self-supervised        tations of the HuBERT-Large model.
+Table 1: Word Error Rates on different datasets for the two                      Table 2: The performance of the proposed (DUAL) and base-
+open-sourced ASR models used in the baseline (cascade).                          line (cascade) approaches on the NMSQA dev and test sets.
+                                                                                “Longformer† ” indicates the Longformer model fine-tuned on
+  ASR           LS test-clean        NMSQA               NMSQA test
+                                                                                 clean text SQuAD-v1.1, while the normal “Longformer” was
+                                     dev
+                                                                                 only pre-trained by unlabeled text data. The number after Hu-
+  SB            3.1                  15.6                61.7                    BERT (64, 128, 512) are numbers of clusters. “synth” and “hu-
+  W2v2          1.9                  10.5                11.3                    man” represent the synthesized and human speech respectively.
+                                                                                                                    dev (synth)      test (human)
+                                                                                      Input         Model
+     Because the length of a discrete unit sequence is much longer                                                  FF1 AOS          FF1 AOS
+than the corresponding text, and the duration of a spoken passage
+                                                                                  Baseline - Cascade (with ASR transcripts)
+itself is long, the standard maximal length of PLM (typically
+512) is not enough in our case. As a result, we leveraged Long-                   SB              Longformer† 56.7 49.7 17.3                 15.3
+former [29] to model the long (zq , zp ), which is a BERT-like                    W2v2            Longformer† 65.7 58.3 64.2                 57.4
+model for long documents, pre-trained on the unlabeled long text                  Proposed - DUAL (without ASR transcripts)
+documents and optimized for training efficiency by sparse atten-                  HuBERT-64     Longformer 47.8 42.2 39.0                    33.0
+tion mechanism, such as local and global attention, to support                    HuBERT-128 Longformer 54.2 48.5 55.9                       49.1
+up to 4096 tokens.                                                                HuBERT-512 Longformer 55.0 49.6 17.3                       12.5
+
+2.2.3. Training Objective                                                       the predicted time intervals. Higher FF1 and AOS scores imply
+The training objective is similar to the canonical QA fine-tuning               more overlap between the predicted and ground truth spans.
+in TQA. A randomly initialized linear layer is added on the top to
+predict the start and end time index. As the gradient flow shown                3.3. Baseline - Cascade (ASR plus TQA)
+in Figure 2, θ represents the trainable weights of the model,
+                                                                                The conventional SQA approach cascading an ASR model and
+cp = [cp 1 , cp 2 , ..., cp n ] is the repetition of every discrete units
+                                                                                a TQA model was taken as the baseline to be compared here.
+zp i in zp = [zp 1 , zp 2 , ..., zp n ]. (ts , te ) is the ground truth start
+                                                                                Two open-sourced pre-trained ASR models were used in the
+and end time in second, and (ys , ye ) is the converted the version
+                                                                                first stage, one from Speechbrain [31]4 , referred to as SB, the
+on the index level. The overall training objective was to minimize
+                                                                                other the Wave2vec 2.0-large with self-training fine-tuning [32]5 ,
+the loss L(θ) as the sum of the negative log probabilities of the
+                                                                                referred to as W2v2. The Word Error Rates of them on different
+true start and end indices on all the examples,
+                                                                                speech datasets are listed in Table 1. Both SB and W2v2 utilized
+                                                                                LibriSpeech [28] 960-hour dataset as the supervised training
+          X
+        −     log P (ys |zq , zp ; θ) + log P (ye |zq , zp ; θ).
+                                                                                data; however, we see in Table 1 W2v2 was much more robust
+    At the inference stage, we converted the predicted start and                than SB on the NMSQA test set, obviously because it leveraged
+end indices (ŷs , ŷe ) to the frame level by cp above, and finally            60k hrs of unlabeled data and the self-training procedure.
+transformed them to the time level (t̂s , t̂e ).                                     The TQA model, or the second stage of the baseline, is a
+                                                                                Longformer-based model fine-tuned on SQuAD v1.1, denoted
+                                                                                as Longformer† below. We used the online available model
+                        3. Experiments                                          checkpoint6 for TQA inference. The Longformer† obtained 91.5
+3.1. Corpus Description                                                         F1 score and 85.1 EM (Exact Match) score on the text SQuAD
+                                                                                v1.1 dataset. For the evaluation metrics used here, we adopted
+We developed and released here a new listening comprehension                    force alignment [30] to obtain the time intervals of the spoken
+task named Natural Multi-speaker Spoken Question Answer-                        answers in seconds.
+ing (NMSQA). The train and dev set are the spoken version of
+the SQuAD v1.1 dataset, one of the largest QA datasets from                     3.4. Implementation Details of DUAL
+Wikipedia paragraphs and human-written questions. We ran-
+domly split the SQuAD dev set into disjoint SQuAD-dev-1 and                     We use the official Longformer-base model7 as the PLM. The
+SQuAD-dev-2 for the NMSQA dev set and test set. The Amazon                      learning rate is searched in [3e-5, 5e-5, 7e-5, 1e-4], and we
+Polly Text-to-Speech service3 was used for generating natural                   select models with the best performance on the validation set.
+speech. We randomly assigned 12 TTS speakers and ensured that                   The learning rate warmup step is 500, growing up linearly to
+different speakers were used in producing each spoken document-                 the peak value and then linearly decaying to 0. All the DUAL
+question pair. Overall, there are 297.18 / 37.61 hours of audio                 experiments use 4 Tesla V100s with an overall 128 batch size for
+for the train/dev set. Moreover, in order to have a realistic test              up to 5000 training steps. If the length of discrete units (zq , zp )
+set, 60 human speakers (30 male / 30 female) were requested                     input exceeds 4096, we truncate the passage zp .
+to produce the SQuAD-dev-2 naturally. This test set included
+2.67 hours of audio. The answer intervals were annotated by                                               4. Results
+Montreal Force Aligner [30].
+                                                                                Encouraging results are reported here. Noting that the proposed
+3.2. Evaluation                                                                 (DUAL) approach achieves performance comparable to baselines
+                                                                                (cascade), which require large ASR parallel data.
+Since the output target here is the temporal span of the spoken
+answer, following the evaluation metrics previously proposed by                    4 https://huggingface.co/speechbrain/asr-crdnn-rnnlm-librispeech
+[1, 6], we adopted the Frame-level F1 score (FF1) and Audio                        5 https://huggingface.co/facebook/wav2vec2-large-960h-lv60-self
+
+Overlapping Score (AOS) to evaluate the performance based on                       6 https://huggingface.co/valhalla/longformer-base-4096-finetuned-
+                                                                                squadv1
+   3 https://aws.amazon.com/tw/polly/                                              7 https://huggingface.co/allenai/longformer-base-4096
+4.1. “dev” set for synthesized speech                                 Table 3: Ablation study on embedding assignment. All experi-
+                                                                      ments used the HuBERT-128 setting. Performance was measured
+The experimental results are shown in Table 2. We first consider      on the NMSQA dev set.
+results for synthesized speech on the “dev” set, whose style is
+very similar to the training set, in the first column.                           Embedding Assignment           FF1     AOS
+     The top section of Table 2 is for the baseline (cascade) ap-                Most frequent                  54.2    48.5
+proach with ASR transcripts. We see ASR with W2v2 offered                        Least frequent                 46.9    41.7
+much better performance than that with SB (65.7 vs. 56.7 for                     Random                         51.7    46.2
+FF1), obviously due to its lower recognition error in Table 1.                   Re-init                        8.9     7.2
+On the other hand, for the proposed (DUAL) approach without
+ASR transcripts in the lower section of Table 2, we see DUAL                     Scratch (baseline)             6.1     4.9
+achieved good FF1 scores (55.0, 54.2, 47.8 respectively for 512,
+128, 64 clusters). Here, “HuBERT-K” denotes the input of
+DUAL is the clustering results from HuBERT-Large 22th layer
+representations with K clusters. These numbers are competitive
+to those in the top section for the baseline, verifying DUAL can
+learn semantics in the audio signals and find the answers almost
+as good as the case where ASR transcripts were available, though
+transcripts were not available at all. The relatively weak per-
+formance for 64 clusters suggested that the too small codebook
+size may lose important fine-grained content information. The
+situation can be improved significantly using larger codebook
+sizes (128 or 512 clusters).
+
+4.2. “test” set for human speakers                                    Figure 3: Frame-level F1 (FF1) scores for DUAL and cascade
+                                                                      approach (SB), evaluated on the small groups of full NMSQA
+The experimental results on a more realistic scenario of human
+                                                                      dev set at different levels of ASR (SB) WER.
+speech (“test”) are shown in the right column of Table 2. We
+observe that for the baseline (cascade) approach using SB for         very different performance, although the “Most frequent” initial-
+ASR on the top section, the performance dropped sharply due           ization offered the best results, which are those listed in Table 2.
+to the very high WER (61.7 in Table 2) on the human speech,           Performance for Poor ASR Accuracy: We compared the per-
+while using the W2v2 for ASR model offered more robust results        formance of the baseline cascade approach (SB for ASR which
+similar to the “dev” set. The result indicated that the performance   gave poor accuracy) and the proposed DUAL with HuBERT-128
+of the baseline (cascade) approach relied heavily on the accuracy     for different levels of WER. Specifically, we bucketize the NM-
+and robustness of ASR.                                                SQA dev set into subsets based on the WER (from 0% to 70%)
+     On the other hand, in the lower section of Table 2, we see       obtained with ASR (SB). In Figure 3, we observe that for the
+the proposed (DUAL) approach could retain outstanding per-            baseline (cascade) approach, the FF1 score dropped significantly
+formance when K = 128, showing remarkable robustness of               and continuously as the WER increased. This is the typical
+the approach for realistic human speech (55.9 of FF1 for K =          phenomenon of recognition error propagation. In contrast, the
+128). However, the performance dropped drastically for K =            proposed (DUAL) attained very similar FF1 scores for different
+512 (17.3 of FF1). The observation suggested that the cluster         levels of WER, even when WER went up to 70 %. Because
+number played a crucial role in performance. We surmise that          there is no ASR in DUAL and no ASR transcripts were used,
+128 clusters of quantization provide a smooth transformation          there was actually no correlation between WER and the FF1
+from the machine-synthesized speech used in training to the           score. The cascade approach outperformed DUAL when the
+human-speech test set. In contrast, 512 clusters may retain too       WER was below 30%,; but DUAL became much higher when
+many details that differentiate synthesized and human speech.         WER exceeded 30%. Since the content of SQuAD (and thus
+This finding inspires more research to understand what makes          NMSQA) is based on Wikipedia, it includes many words that are
+textless SQA/NLP work or not.                                         name entities, abbreviations, and OOV, which led to recognition
+                                                                      errors. Many of these words are part of the answers. DUAL
+             5. Analysis and Discussion                               handle such scenario much better than cascade approaches.
+Ablation study for embedding assignment: Table 3 shows the
+ablation study regarding how the discrete units should be as-
+                                                                                            6. Conclusion
+signed to the pre-trained embeddings, as shown in the middle of       We propose DUAL, the first textless (i.e., ASR transcript-free)
+Figure 2. In this table on the top two rows (“Most frequent” and      SQA framework in this work. This framework only utilizes
+“Least frequent”), we randomly assigned the K (128) discrete          unlabeled speech and text data for pre-training and fine-tuning
+units to the pre-trained embedding of the top-K and the least-K       by the spoken questions, passages, and answer time intervals.
+frequent vocabularies, where the vocabulary frequency was de-         DUAL directly predicts the answer time span without text su-
+termined by Byte-Pair Encoding (BPE) on unlabeled text data.          pervision or acoustic word boundaries. Furthermore, we release
+“Random” refers to randomly selecting pre-trained input embed-        NMSQA, a new natural, multi-speaker SQA benchmark corpus,
+ding regardless of the frequency. “Re-init” denotes re-initializing   which contains human speakers for the test set and large-scaled
+the input embedding by a normal distribution. ”Scratch” means         synthesized data for the training and development sets. The
+the Longformer model was not pre-trained on the unlabeled text        experiments showed that DUAL yields competitive results with
+data. The results in Table 3 indicate that randomly assigning the     the conventional cascade approach using ASR transcripts and is
+pre-trained input embeddings for discrete units did not result in     robust to real-world scenarios on NMSQA.
+                         7. References                                        [16] C.-H. Chiang and H.-y. Lee, “On the transferability of pre-trained
+                                                                                   language models: A study from artificial datasets,” arXiv preprint
+ [1] C.-H. Lee, S.-L. Wu, C.-L. Liu, and H. yi Lee, “Spoken squad:                 arXiv:2109.03537, 2021.
+     A study of mitigating the impact of speech recognition errors on
+     listening comprehension,” in INTERSPEECH, 2018.                          [17] K. Lu, A. Grover, P. Abbeel, and I. Mordatch, “Pretrained
+                                                                                   transformers as universal computation engines,” arXiv preprint
+ [2] C.-H. Lee, Y.-N. Chen, and H.-Y. Lee, “Mitigating the impact                  arXiv:2103.05247, 2021.
+     of speech recognition errors on spoken question answering by
+     adversarial domain adaptation,” in ICASSP 2019-2019 IEEE Inter-          [18] R. Ri and Y. Tsuruoka, “Pretraining with artificial language: Study-
+     national Conference on Acoustics, Speech and Signal Processing                ing transferable knowledge in language models,” in Proceedings
+     (ICASSP). IEEE, 2019, pp. 7300–7304.                                          of the 60th Annual Meeting of the Association for Computational
+                                                                                   Linguistics (Volume 1: Long Papers), 2022, pp. 7302–7315.
+ [3] C. You, N. Chen, and Y. Zou, “Knowledge distillation for improved
+     accuracy in spoken question answering,” in ICASSP 2021-2021              [19] B.-H. Tseng, S. syun Shen, H. yi Lee, and L.-S. Lee, “Towards
+     IEEE International Conference on Acoustics, Speech and Signal                 machine comprehension of spoken content: Initial toefl listening
+     Processing (ICASSP). IEEE, 2021, pp. 7793–7797.                               comprehension test by machine,” in INTERSPEECH, 2016.
+
+ [4] Y. Z. Chenyu You, Nuo Chen, “Mrd-net: Multi-modal residual               [20] P. Rajpurkar, J. Zhang, K. Lopyrev, and P. Liang, “SQuAD:
+     knowledge distillation for spoken question answering,” in IJCAI,              100,000+ questions for machine comprehension of text,” in
+     2021.                                                                         Proceedings of the 2016 Conference on Empirical Methods in
+                                                                                   Natural Language Processing. Austin, Texas: Association for
+ [5] D. Su and P. Fung, “Improving spoken question answering us-                   Computational Linguistics, Nov. 2016, pp. 2383–2392. [Online].
+     ing contextualized word representation,” in ICASSP 2020-2020                  Available: https://aclanthology.org/D16-1264
+     IEEE International Conference on Acoustics, Speech and Signal
+                                                                              [21] C. You, N. Chen, F. Liu, D. Yang, and Y. Zou, “Towards data dis-
+     Processing (ICASSP). IEEE, 2020, pp. 8004–8008.
+                                                                                   tillation for end-to-end spoken conversational question answering,”
+ [6] Y.-S. Chuang, C.-L. Liu, H. yi Lee, and L.-S. Lee, “Speechbert:               ArXiv, vol. abs/2010.08923, 2020.
+     An audio-and-text jointly learned language model for end-to-end          [22] C.-H. Lee, S.-M. Wang, H.-C. Chang, and H. yi Lee, “Odsqa:
+     spoken question answering,” in INTERSPEECH, 2020.                             Open-domain spoken question answering dataset,” 2018 IEEE
+ [7] Y.-A. Chung, C. Zhu, and M. Zeng, “SPLAT: Speech-language                     Spoken Language Technology Workshop (SLT), pp. 949–956, 2018.
+     joint pre-training for spoken language understanding,” in                [23] A. Ravichander, S. Dalmia, M. Ryskina, F. Metze, E. Hovy, and
+     Proceedings of the 2021 Conference of the North American                      A. W. Black, “NoiseQA: Challenge Set Evaluation for User-Centric
+     Chapter of the Association for Computational Linguistics: Human               Question Answering,” in Conference of the European Chapter of
+     Language Technologies. Online: Association for Computational                  the Association for Computational Linguistics (EACL), Online,
+     Linguistics, Jun. 2021, pp. 1897–1907. [Online]. Available:                   April 2021. [Online]. Available: https://arxiv.org/abs/2102.08345
+     https://aclanthology.org/2021.naacl-main.152
+                                                                              [24] F. Faisal, S. Keshava, A. Anastasopoulos et al., “Sd-qa: Spoken
+ [8] K. Lakhotia, E. Kharitonov, W.-N. Hsu, Y. Adi, A. Polyak, B. Bolte,           dialectal question answering for the real world,” arXiv preprint
+     T.-A. Nguyen, J. Copet, A. Baevski, A. Mohamed et al., “Gener-                arXiv:2109.12072, 2021.
+     ative spoken language modeling from raw audio,” arXiv preprint
+     arXiv:2102.01192, 2021.                                                  [25] W.-N. Hsu, B. Bolte, Y.-H. H. Tsai, K. Lakhotia, R. Salakhutdinov,
+                                                                                   and A. Mohamed, “Hubert: Self-supervised speech representation
+ [9] A. Polyak, Y. Adi, J. Copet, E. Kharitonov, K. Lakhotia, W.-N.                learning by masked prediction of hidden units,” IEEE/ACM Trans-
+     Hsu, A. Mohamed, and E. Dupoux, “Speech resynthesis from dis-                 actions on Audio, Speech, and Language Processing, vol. 29, pp.
+     crete disentangled self-supervised representations,” arXiv preprint           3451–3460, 2021.
+     arXiv:2104.00355, 2021.
+                                                                              [26] S.-W. Yang, P.-H. Chi, Y.-S. Chuang, C.-I. J. Lai, K. Lakhotia,
+[10] E. Kharitonov, A. Lee, A. Polyak, Y. Adi, J. Copet, K. Lakhotia,              Y. Y. Lin, A. T. Liu, J. Shi, X. Chang, G.-T. Lin, T.-H. Huang,
+     T.-A. Nguyen, M. Rivière, A. Mohamed, E. Dupoux et al., “Text-               W.-C. Tseng, K. tik Lee, D.-R. Liu, Z. Huang, S. Dong, S.-W. Li,
+     free prosody-aware generative spoken language modeling,” arXiv                S. Watanabe, A. Mohamed, and H. yi Lee, “SUPERB: Speech Pro-
+     preprint arXiv:2109.03264, 2021.                                              cessing Universal PERformance Benchmark,” in Proc. Interspeech
+                                                                                   2021, 2021, pp. 1194–1198.
+[11] F. Kreuk, A. Polyak, J. Copet, E. Kharitonov, T.-A. Nguyen,
+     M. Rivière, W.-N. Hsu, A. Mohamed, E. Dupoux, and Y. Adi,               [27] J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, “Bert: Pre-
+     “Textless speech emotion conversion using decomposed and dis-                 training of deep bidirectional transformers for language under-
+     crete representations,” arXiv preprint arXiv:2111.07402, 2021.                standing,” in Proceedings of NAACL-HLT, 2019, pp. 4171–4186.
+[12] A. Lee, P.-J. Chen, C. Wang, J. Gu, X. Ma, A. Polyak, Y. Adi,            [28] V. Panayotov, G. Chen, D. Povey, and S. Khudanpur, “Librispeech:
+     Q. He, Y. Tang, J. Pino et al., “Direct speech-to-speech translation          An asr corpus based on public domain audio books,” in 2015
+     with discrete units,” arXiv preprint arXiv:2107.05604, 2021.                  IEEE International Conference on Acoustics, Speech and Signal
+                                                                                   Processing (ICASSP), 2015, pp. 5206–5210.
+[13] A. Lee, H. Gong, P.-A. Duquenne, H. Schwenk, P.-J. Chen,
+     C. Wang, S. Popuri, J. Pino, J. Gu, and W.-N. Hsu, “Text-                [29] I. Beltagy, M. E. Peters, and A. Cohan, “Longformer: The long-
+     less speech-to-speech translation on real data,” arXiv preprint               document transformer,” arXiv preprint arXiv:2004.05150, 2020.
+     arXiv:2112.08352, 2021.                                                  [30] M. McAuliffe, M. Socolof, S. Mihuc, M. Wagner, and M. Son-
+[14] I. Papadimitriou and D. Jurafsky, “Learning Music Helps                       deregger, “Montreal forced aligner: Trainable text-speech align-
+     You Read: Using transfer to study linguistic structure in                     ment using kaldi,” in INTERSPEECH, 2017.
+     language models,” in Proceedings of the 2020 Conference                  [31] M. Ravanelli, T. Parcollet, P. Plantinga, A. Rouhe, S. Cornell,
+     on Empirical Methods in Natural Language Processing                           L. Lugosch, C. Subakan, N. Dawalatabad, A. Heba, J. Zhong, J.-C.
+     (EMNLP). Online: Association for Computational Linguistics,                   Chou, S.-L. Yeh, S.-W. Fu, C.-F. Liao, E. Rastorgueva, F. Grondin,
+     Nov. 2020, pp. 6829–6839. [Online]. Available: https:                         W. Aris, H. Na, Y. Gao, R. D. Mori, and Y. Bengio, “SpeechBrain:
+     //aclanthology.org/2020.emnlp-main.554                                        A general-purpose speech toolkit,” 2021, arXiv:2106.04624.
+[15] W.-T. Kao and H.-y. Lee, “Is BERT a cross-disciplinary knowledge         [32] A. Baevski, Y. Zhou, A. Mohamed, and M. Auli, “wav2vec 2.0:
+     learner? a surprising finding of pre-trained models’ transferability,”        A framework for self-supervised learning of speech representa-
+     in Findings of the Association for Computational Linguistics:                 tions,” in Advances in Neural Information Processing Systems,
+     EMNLP 2021. Punta Cana, Dominican Republic: Association for                   H. Larochelle, M. Ranzato, R. Hadsell, M. F. Balcan, and H. Lin,
+     Computational Linguistics, Nov. 2021, pp. 2195–2208. [Online].                Eds., vol. 33. Curran Associates, Inc., 2020, pp. 12 449–12 460.
+     Available: https://aclanthology.org/2021.findings-emnlp.189
+

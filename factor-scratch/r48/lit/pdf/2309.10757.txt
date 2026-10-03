@@ -1,0 +1,765 @@
+                                                                      Integer Factorization by Quantum Measurements
+
+                                                                                    G. Mussardo1, 2 and A. Trombettoni3, 2
+                                                                                1
+                                                                                  SISSA, Via Bonomea 265, I-34136 Trieste, Italy.
+                                                                         2
+                                                                          INFN, Sezione di Trieste, Via Valerio 2, I-34127 Trieste, Italy
+                                                             3
+                                                               Dipartimento di Fisica, Universitá di Trieste, Strada Costiera 11, I-34151 Trieste, Italy
+
+
+                                               Quantum algorithms are at the heart of the ongoing efforts to use quantum mechanics to solve
+                                            computational problems unsolvable on ordinary classical computers1–3 . Their common feature is the
+                                            use of genuine quantum properties such as entanglement and superposition of states4 . Among the
+                                            known quantum algorithms, a special role is played by the Shor algorithm5,6 , i.e. a polynomial-time
+                                            quantum algorithm for integer factorization, with far reaching potential applications in several fields,
+arXiv:2309.10757v1 [quant-ph] 19 Sep 2023
+
+
+
+
+                                            such as cryptography7 . For an integer N of the order of 2n , i.e. with n digits, the Shor algorithm permits
+                                            its factorization in (order of ) n steps. This results in an exponential gain in computational efficiency
+                                            with respect to the best known classical algorithms. Here we present a different algorithm for integer
+                                            factorization based on another genuine quantum property: quantum measurement8–10 . In this new
+                                            scheme, the factorization of the integer N is achieved in a number of steps equal to the number of its
+                                            prime factors, referred to as k– e.g., if N is the product of two primes, two quantum measurements are
+                                            enough, regardless of the number of digits n of the number N . Since k is the lower bound to the number
+                                            of operations one can do to factorize a general integer, then one sees that a quantum mechanical setup
+                                            can saturate such a bound. Once established this, we discuss how the algorithm can physically be
+                                            ran. We argue that one needs a single-purpose device where quantum measurements of an observable
+                                            with assigned spectrum can be performed. The preparation from scratch of this device requires the
+                                            solution, once for all and not for each factorization operation, of ∼ 2n differential equations, a task
+                                            that with a quantum computer can be accomplished in n steps.
+
+                                            Introduction. Recent progress in the implementation of quantum devices has led to the experimental demonstration
+                                            of some instances of quantum advantage. This happens when a specific computational problem may be solved faster
+                                            and more efficiently on quantum processors rather than a classical computer13 . To achieve this goal the quantum
+                                            processor must have an architecture made at least of several tens of qubits and long enough decoherence times.
+                                               A notable example, from a historical and conceptual point of view, of a clear quantum advantage is provided by
+                                            the Shor algorithm5,6 . This algorithm indicates how to solve efficiently on a quantum computer the long-standing
+                                            problem of finding the prime factors of an integer number N . Assuming that such a number N is of order 2n , the
+                                            Shor algorithm exploits in an ingenious way the implementation of the discrete Fourier transform on n qubits. To
+                                            date, its validity has been shown with the factorization of a small numbers (the present computational bottleneck
+                                            being the quantum modular exponentiation). The factorization of the number, 15 = 3 × 5, was done using 7 qubits
+                                            with an NMR implementation of a quantum computer14 . Similar demonstrations were performed using photonic15,16
+                                            and solid-state qubits17 , while in 2012, with the n qubits control register replaced by a single qubit recycled n times,
+                                            it was achieved the factorization of the integer 21 = 3 × 718 . Despite their simplicity, these examples nevertheless
+                                            provide a proof of principle realization of the algorithm.
+                                               In this paper we present a different route for integer factorization, based on an algorithm which exploits another
+                                            genuine quantum property: projective quantum measurement8–10 . As it is well known from quantum mechanics axioms,
+                                            if a physical system is in a normalised state |ψ ⟩, a measurement of an observable Ô will yield one eigenvalue α of its
+                                            spectrum with probability | ⟨ψ | α⟩ |2 , where |α ⟩ is the normalised eigenfunction corresponding to the eigenvalue α
+
+                                                                                                  Ô |α ⟩ = α |α ⟩ .                                               (1)
+
+                                            As a result of the measurement, the system state will change from |ψ ⟩ to |α ⟩. For problems related to number
+                                            theory, interesting spectra to consider are: (a) the natural numbers, corresponding to the Hamiltonian of an harmonic
+                                            oscillator9,10 ; (b) the primes11,12 ; and (c) the logarithm of the primes40–45 . Employing such spectra, one may translate
+                                            number theory problems in quantum physical settings. As an example of this general philosophy, in this paper we
+                                            show that with a suitable choice of the operator Ô is possible to determine the prime factors of an integer number N
+                                            by making a finite set of quantum measurements.
+                                               The layout of this article is as follows: after a brief reminder on classical algorithms on primality and factorization
+                                            of integers, we present our quantum algorithm for the factorization problem. This algorithm is discussed in terms of
+                                            the familiar setting of Schrödinger Hamiltonian although, as shown in the Supplementary Materials, it also admits a
+                                            digital implementation. The computational costs of Shor’s and our algorithm are thoroughly discussed in the last part
+                                                                                                                         2
+
+of the paper. In the Supplementary Materials we discuss the digital implementation of our algorithm and a gedanken
+experiment able to achieve, in principle, a projective measurement of quantum system eigenenergies.
+
+Classical primality tests and factorization algorithms. The fundamental theorem of arithmetic states that every
+natural number N greater than 1 is either a prime number pk or can be represented as a product of prime numbers
+
+                                                  N = pα1 α2         αk
+                                                       a1 pa2 . . . pak ,                                              (2)
+
+where pa1 < pa2 · · · < pak are k ordered primes and αi ≥ 1 their multiplicity. Hence, prime numbers may be regarded
+as the atoms of arithmetic but, in contrast with the finitely many chemical elements, the number of primes is instead
+infinite, as shown by a classic argument by Euclid dated more than 2000 years ago. The appearance of prime numbers
+along the integer sequence is completely unpredictable. However, their coarse graining properties, and in particular
+how many prime numbers there are below any real number x, are aspects which can be controlled with remarkable
+precision. In other words, while there is no known simple function f (n) which gives the n-th prime number pn (and
+the actual determination of prime numbers can only be done by means of the familiar Eratosthenes’s sieve19–23 ), we
+have instead perfect knowledge of the inverse function π(x) which counts the number of primes below the real number
+x19–34 . Such a function was exactly determined by Riemann (see, for instance29 ): it has a staircase behaviour (since
+it jumps by 1 each time x crosses a prime), but becomes smoother and smoother for increasing values of x, and its
+asymptotic behaviour is constrained by the “Prime Number Theorem”31–34 stating that limx→∞ π(x)xln x = 1. Notice
+that pn = π −1 (n). Hence, inverting at the lowest order the function π(x), one gets the following scaling law for the
+n-th prime number: pn ≃ n log n.
+   Let’s first discuss the primality test. How can one tell whether an integer N is prime? What if the number has
+hundreds or thousands of digits? This question may seem abstract or irrelevant, but primality tests are performed
+every time to make online transactions secure. Given an integer N , determine whether or not N is a prime number
+constitutes a primality √   test. The naive way to check the primality of an integer N is to divide it by any prime
+number between 2 and N . Assuming we express the number N in binary basis, if N is of order 2d , the number of
+operations D of this naive primality algorithm scales exponentially with the number of digits, i.e. D ∼ 2d/2 . Many
+different algorithms have been proposed, both deterministic or probabilistic nature (see, for instance35 ), to reduce the
+complexity of the primality test. The final answer was given in 200236 in terms of a deterministic protocol (the AKS
+test) whose complexity scales as36 DAKS ∼ (log N )7.5 .
+   Let’s now imagine that the primality test outputs that N is not a prime. Then, looking at (2), how to determine the
+prime factors pa1 . . . pak of the integer N ? This is the question addressed by any factorisation algorithm. Let N be a
+number of n-bit digits: currently there is no classical factorization algorithm whose complexity scales D ∼ O(nα ) for
+some constant α. Although neither the existence nor non-existence of such algorithms has been proved, it is generally
+believed that they do not exist and hence that the problem is not in the class of Polynomial Time Algorithms. If
+so, then the problem is clearly in class NP, although it is not certain whether it is or is not in the class of NP-
+complete problems37–39 . The best classical algorithm known is the so-called general number field sieve (GNFS)38
+whose complexity for a number N scales as exp(ln N )1/3 .
+
+The factorization algorithm by quantum measurements. In the following we discuss how to devise a very efficient
+factorisation algorithm using quantum mechanical measurements in a way that the number of steps is finite and does
+not scale with the n digits of N . In our presentation the operator Ô is the guise of the familiar Hamiltonian Ĥ, but the
+reader is of course free to substitute the operator Ĥ with any other hermitian operator with the appropriate spectra.
+Let assume that the Hamiltonian Ĥ is made up of two Hamiltonians Ĥ1 and Ĥ2 which commute to each other:
+
+                                           Ĥ = Ĥ1 + Ĥ2 ,       [Ĥ1 , Ĥ2 ] = 0 .                                   (3)
+
+We choose Ĥ1 to have M eigenvalues given by the logarithms of the primes, where M = 2d is a fixed cut-off (which
+however can be increased as desired)
+
+                                           En(1) = log pn ; n = 1, 2, 3, · · · 2d .                                    (4)
+
+The corresponding eigenfunctions will be denoted as | log pn ⟩.
+  On the other hand, the second term Ĥ2 in the Hamiltonian Ĥ is chosen to have the eigenvalues given by the
+logarithms of the integers, up to the same cut-off M , i.e.
+                                              (2)
+                                             Em   = log m ; m = 2, 3, . . . 2d .                                       (5)
+                                                                                                                       3
+
+The corresponding eigenvectors will be denoted as | log m⟩. We will discuss below how such Hamiltonians H1 and H2
+can be explicitly realised in a laboratory by means of spatial light laser modulators, as it was recently done for an
+Hamiltonian having the prime numbers as quantum spectrum12 .
+  The generic eigenfunctions of Ĥ are then given by
+
+                                                       | log pn ⟩ | log m⟩ ,                                         (6)
+
+which correspond to the eigenvalues En,m ≡ log pn + log m.
+  The factorization problem of a natural number N consists of finding the primes entering its decomposition (2). In
+order to do so, our protocol consists of the following steps.
+
+   1. Take initially the logarithm of the number N to be factorized, promote it to be an eigenvalue of the Hamiltonian
+      Ĥ and prepare the initial state | log N ⟩.
+
+   2. For an integer N – as the one given in Eq.(2) – made of k distinct primes, the corresponding energy level of Ĥ
+      is k-fold degenerate, i.e. the degeneracy of the level depends only on the number of distinct primes present in
+      N and not on their multiplicities. Indeed, log N can be written in the following k different ways
+                                                                        ak−1 ak 
+                                log N = log p1 + log pa1 1 −1 pa2 2 ...pk−1 pk ≡ log p1 + log Ñ1
+                                                         a1 a2 −1      ak−1 ak 
+                                log N = log p2 + log p1 p2 ..pk−1 pk ≡ log p2 + log Ñ2
+                                   ···                                                                            (7)
+                                                         a1 a2       ak−1 ak −1 
+                                log N = log pk + log p1 p2 ...pk−1 pk             ≡ log pk + log Ñk
+
+     where Ña ≡ N/pa is the integer obtained dividing the original number N by one of its prime factor pa .
+   3. Hence, the generic state of the k-th degenerate manifold with energy log N (here simply denoted as | log N ⟩)
+      admits the expansion
+                                                 k
+                                                 X                                   k
+                                                                                     X
+                                   | log N ⟩ =         ca | log pa ⟩| log Na ⟩   ,         |ca |2 = 1                (8)
+                                                 a=1                                 a=1
+
+     For a generic state, we can assume that all coefficients of this expansion are different from zero. Their values
+     are actually not essential for the running of the algorithm, so one may assume to be randomly distributed, as
+     would occur in the case of a random initial state preparation.
+   4. After the state (8) is prepared, measure Ĥ1 . With all coefficients ca different from zero, the output will be the
+      logarithm of one of the primes present in N , say log pb , with probability |cb |2 .
+   5. Once the result of this measurement is known, divide the original number N by the prime pb identified by the
+      output of the Ĥ1 measurement. In this way one obtains the lower integer Ñb = N/pb . Then, start over, taking
+      Ñb as the integer to be factorized. The procedure will halt after a number of iterations l equal to the total
+      number of primes present in N , i.e.
+                                                                    k
+                                                                    X
+                                                              I =         αl .                                       (9)
+                                                                    l=1
+
+
+Notice that the number of quantum measurements can be made equal to the number of distinct factors substituting
+the previous point 5. with this new one
+  5.’ Once the result of this measurement is known, divide the original number N by the prime pb identified by the
+      output of the Ĥ1 measurement. In this way one obtains the lower integer N/pb . Use a classical computer to
+      continue to divide for pb till the obtained number is not longer divisible for pb . In this way one obtains the
+      multiplicity αb associated to the factor pb . Then, start again the procedure, taking Ñb = N/pα
+                                                                                                     b as the integer
+                                                                                                      b
+
+      to be factorized.
+Four significant remarks are in order:
+   • A primality test can be immediately implemented by performing a single quantum measurement of Ĥ1 on the
+     initial state | log N ⟩. If the system collapses (remains) in itself, N is a prime.
+                                                                                                                           4
+
+                                                                          11
+                                                            7      11              11
+                                                       77
+                                                            11     7               7
+                                                                           7
+
+                                               3
+                                                                          11
+                                                            3      11              11
+
+                                         231           33
+                                                   7
+                                                            11      3              3
+                                                                           3
+
+
+                                                                           7
+                                                            3       7               7
+                                               11      21
+                                                            7       3               3
+                                                                           3
+
+
+                                                       A            B          C
+Figure 1: The graph associated to the various quantum measurements of Ĥ1 which pin down the different prime factors of N .
+In the example shown in the figure, the number to factorize is N = 231 = 3 × 7 × 11. For simplicity, along the links of the
+graph, we indicate the primes (rather than their logarithm) which are the outputs of the three stages A, B, C measurements of
+Ĥ1 . One gets a complete factorisation independently of the path associated to the chain of Ĥ1 measurements.
+
+
+   • A discussion on the preparation of the intial state is in the Supplementary Materials.
+   • If the multiplicity of the last factor, say pk , to be factorized is 1, then the last operation with the measurement
+     of Ĥ1 actually amounts to apply the identity operator. If the multiplicity of different from 1, i.e. αk > 1, then
+     αk subsequent quantum measurements of Ĥ1 will produce each time with probability 1 the same eigenstate
+     | log pk ⟩.
+
+   • The successful implementation of the algorithm is guaranteed independently of the Ĥ1 outputs obtained at the
+     various stages of the algorithm. It is a all roads lead to Rome procedure. As shown in Figure 1, there are possible
+     branches resulting from successive measurements of Ĥ1 . Imagine, for instance, that we want to factorize the
+     number N = 231, whose prime decomposition is given by N = 3 × 7 × 11. As a result of the first measurement,
+     we could have one of three possibie outputs: log 3, log 7 or log 11.
+        1. If the first output is log 3, the next integer to be factorized is Ñ3 = 77 and the next measurement of H1
+           starting from the (log) of this number, can give, as output, either log 7 or log 11. Once this last measurement
+           is made, the next number is uniquely determined, thus arriving to the complete factorization of the number
+           N = 231. It is easy to see that the same conclusion will be reached if there is a different initial output.
+        2. If the first output is log 7, the next integer to be factorized is Ñ7 = 33 and the next measurement of H1
+           starting from the (log) of this number, can give, as output, either log 3 or log 11. Once this last measurement
+           is made, the next number is uniquely determined, thus arriving to the complete factorization of the number
+           N = 231.
+        3. If the first output is log 11, the next integer to be factorized is Ñ11 = 21 and the next measurement of H1
+           starting from the (log) of this number, can give, as output, either log 3 or log 7. Once this last measurement
+           is made, the next number is uniquely determined, thus arriving at the complete factorization of the number
+           N = 231.
+   The key feature of this algorithm is the projective quantum measurements of hermitian operators, such as the
+Hamiltonians we have employed. This leads to an algorithm with the least possible number of operations, equal to k,
+relative to the factorization of an integer made of k primes, see below for a discussion of this point.
+   Given that quantum mechanics is based on linear algebra while the mathematical problem relative to factorization
+involves products, Hamiltonians with logarithm of the primes as spectrum are very natural to study and have been also
+used before42–45 . In more detail, a thermally isolated non-interacting Bose gas loaded in a one-dimensional potential
+                                                                                                                          5
+
+with logarithmic energy eigenvalues was discussed in42 , where asymptotic formulas for factorising products of different
+primes were provided. Time-dependent perturbation in (possibly multiple copies of) a potential having logarithms
+of the primes as eigenvalues was instead proposed in43–45 , where the number N to be factorized is encoded in the
+frequency of a sinusoidally modulated interaction acting on the ground-state of the potential. In this approach, if
+the integer is a product of k primes, one needs to prepare an ensemble of k identical systems each with an energy
+spectrum given by the logarithm of the primes45 . Recently, a paper discussed the possible use of an Hamiltonian
+having as eigenvalues the logarithm of the primes for search algorithm46 .
+   Our approach differs from the one discussed in45 for two key features: first, the presence of Ĥ2 in our Hamiltonian
+and, secondly, the use of quantum measurements. Employing our Hamiltonian, made of a piece relative to the logarithm
+and another one relative to the logarithm of the integers, it is possible to factorize an integer N without knowing
+a-priori the number k of distinct primes (and their multicplicities) this number N is made of.
+   Concerning the quantum measurement of Ĥ1 , one could use the von Neumann scheme47 , which consists of setting
+up a coupling with a test particle of the form p̂ Ô, where p̂ is the momentum operator of the test particle and Ô
+the operator to be measured. In our case, those quantum measurements can be performed in a slightly different way
+following the gedanken experiment discussed in the Supplementary Materials.
+
+Quantum Potentials. Let’s now discuss how to implement in a laboratory the algorithm described in the previous
+section. One possibility is to adopt a digital route: this consists of implementing a discrete quantum register of
+two-level systems, such spin-1/2. This can be done with a quantum ladder, where in the first leg one constructs the
+Hamiltonian Ĥ1 whose eigenvalues are the logarithms of the primes, while in the second leg the Hamiltonian Ĥ2 whose
+eigenvalues are the logarithms of the integers. Both legs should have d spins. The eigenvalues should be respectively
+the logarithms of the first 2d primes and the logarithms of the first 2d integers. Given the current trend of quantum
+computing technology, this seems the simplest thing to do. However, as discussed in more detail in the Supplementary
+Materials, this digital implementation of our algorithm has the following bottleneck: while realising Ĥ2 is an easy
+task (since it consists of fixing a number of couplings which is linear in d), realizing Ĥ1 needs instead to tune an
+exponential number of long-range, many-body couplings between the qubits, and it is fair to say that this obstacle
+seems unlikely to be overcome soon, at least with the present technology. Even more, the tuning of this exponential
+number of long-range, multi-body couplings is not a scalable protocol: if they are known for a certain number d of
+qubits, due to the peculiar behaviour of the primes one cannot expect to use this knowledge to fix the couplings for
+the (d + 1) qubit system.
+   Let’s now look at the implementation of our algorithm adopting the analog route in terms of Schrödinger Hamil-
+tonians. This is similar to what has been done recently12 for a quantum potential of the primes. Hence, we will deal
+with Hamiltonians of a particle of mass m of the form Ĥ = p2 /2m + V (x) with their eigenvalues determined by the
+Schrödinger equation Ĥψn = en ψn .
+   A potential VN (x) entering a Schrödinger Hamiltonian with a finite and assigned number of eigenvalues
+{e0 , e1 , ..., eM } can be constructed using methods of Supersymmetric Quantum Mechanics (SQM)48–50 . The procedure
+consists of solving iteratively the non-linear differential equations for the sequence of superpotentials Wk (x)
+
+                                Wk′ (x) − Wk2 (x) + Vk−1 (x) = Ẽk     ,     k = 1, ..., M ,                           (10)
+
+where Ẽk = eM −k − eM are the negative spacings computed from the highest eigenvalue eM , where the potential
+Vk (x) is obtained iteratively from
+
+                                           Vk (x) = 2Ẽk + 2Wk2 (x) − Vk−1 (x) .                                       (11)
+
+The initial condition is set to be Wk (0) = 0 as well as V0 (x) = 0 so that e0 = 0. Substituting iteratively the Vk (x) of
+(11) in (10), one gets a system of nonlinear differential equations for the Wk . The potentials Vk (x) for k = 1, ..., N − 1
+are just intermediate steps of the computation since the final potential VM (x), to be determined iteratively in M
+steps. which accommodates all energy eigenvalues can be constructed using only Wk (x). This procedure can be easily
+implemented to compute the potential V (x) = VM such that Ĥ = p2 /2m + V (x) has as eigenvalues the set of assigned
+values {e0 , e1 , ..., eM }. For instance, such a set can be of the first M primes12,50 or the logarithm of the first M
+primes41 .
+  To conclude the implementation of our algorithm, let’s then define the potentials V1 (x) and V2 (y) entering the two
+                                                                                                                                         6
+
+Schrödinger Hamiltonians Ĥ1 and Ĥ2 of the previous section1
+
+                                                  p2x                               p2y
+                                      Ĥ1 (x) =       + V1 (x)     ,    Ĥ2 (y) =       + V2 (y) ,                                    (12)
+                                                  2m                                2m
+
+where px and py are the x and y components of its momentum, and such Ĥ1 (Ĥ2 ) has as eigenvalues the logarithm of
+the first 2d primes (respectively, the logarithm of the first 2d integers). The plot of V1 (x) and V2 (y) in a specific case
+is reported in SM 4. Incidentally, if the Goldbach conjecture were true, taking the same Hamiltonian Ĥ1 in both the
+x and y direction, i.e. H = Ĥ1 (x) + Ĥ1 (y), the spectrum of H would be given by the logarithms of all even numbers.
+
+Discussion on computational complexity. Once the potentials described above are experimentally realised, one can
+use the two Hamiltonians Ĥ1 and Ĥ2 to build up the Hamiltonian Ĥ = Ĥ1 + Ĥ2 and proceed to factorize the integers
+N below the cut-off M through a sequence of Ĥ1 measurements. So, for example, if N is a product of 3 primes, only
+three quantum measurements are needed. One can show that k is clearly the lower bound of operations to factorize
+an integer, independently from quantum mechanics. Indeed, suppose that the integer N has the form (2) and that one
+is given the information that p1 , · · · , pk are its factors. To verify it, one divide by one of them, say p1 , and continue
+                                                                           Pk
+by it till it is possible (α1 + 1 divisions), and so on, for a total of i=1 αi + k divisions. If one is also provided the
+information about the multiplicities, then only k divisions are needed. In the latter case, the last division is trivial.
+   The procedure proposed here saturates such lower bound. Indeed, from the first quantum measurement one gets
+one of the factors, and then divide N (e.g. using a classical computer) by the latter till the obtained number is not
+longer divisible. Iterating this way one needs k quantum measurements (the last, k-th, being equal to the identity)
+      Pk
+and i=1 αi divisions on the classical computer. One sees that the factorization based on quantum measurements
+saturates the lower bound, whether the multiplicities are given or they are not.
+   There is however a question to face: if the Shor algorithm has a complexity scaling with O(log N ), i.e. of the number
+of digits, how how reconciled or put in relation with the fact that our scheme has a complexity of order O(k), i.e. of
+the number of factors of N ? As shown in the following, the answer is interesting and related to how the algorithm
+can be run. The difference O(log N ) vs. O(k) is emerging if one has a device in which the quantum measurement of
+an operator with assigned spectrum is physically possible. But, if such device is not at hand, and since one needs
+an operator having as eigenvalues the logarithms of the primes and another with the logarithms of the integers, one
+physically needs a device in which such operators with assigned spectra are implemented. The following discussion
+will show that – if this device is not given and has to be implemented from scratch – one is subjected again to a
+complexity which is essentially O(log N ), with some extra features discussed below.
+   One has to realise that the determination of a final potential such as VM (x) with M energy eigenvalues ek (k =
+1, 2, . . . M ) has an algorithm complexity equal to M , because this is the number of differential equations to solve.
+Hence, in the presence of an exponential number of energy levels, there will be an exponential number of differential
+equations to solve to accommodate these levels. If this would be true, even though at a software level our algorithm
+has a finite degree of complexity, at its hardware level (i.e. to physically build the device) its complexity would
+grow exponentially. However, there is a very interesting way to cure the rapid exponential growth of complexity at the
+hardware level. The remedy comes from a result by Lloyd et al.51 who showed that a system of M , possibly non-linear,
+differential equations of the form
+
+                                                          ⃗
+                                                         dW            ⃗ = ⃗b
+                                                            + f (W ) · W                                                              (13)
+                                                         dx
+
+where f is a M ×M matrix and ⃗b is a constant vector, can be solved on a quantum computer in log M number of steps!
+Namely, there is an exponential speed up which turns our problem to adjust an exponential number 2d of eigenvalues
+in each of the Hamiltonians H1 and H2 in terms of only d computational steps.
+   Remarkably enough, the system of differential equations from supersymmetric quantum mechanics can be recast
+                                 ⃗ = (W1 , ..., WM )T ∈ RM , and the entries of the (triangular) matrix f and the vector
+exactly as in eq. (13) by taking W
+
+
+
+1 It is worth to recall that the both potentials V (x) and V (y) can be also constructed in a semi-classical approximation11 for all primes
+                                                  1         2
+  and integers.
+                                                                                                                     7
+
+⃗b given by
+                               
+                               0          ,      a>b                         k−1
+                                                                              X
+                         fab =   −Wa       ,      a=b       ,    bk = Ẽk +         (−1)i 2Ẽk−i .                (14)
+                                (−1)a 2W ,       a<b
+                                         b                                    i=1
+
+
+Notice that, in the digital implementation of our algorithm, where Ĥ1 is a spin Hamiltonian of d quantum spins, one
+has to solve an exponential number of linear algebraic equations. This ensures that the eigenvalues are the first 2d
+primes, or their logarithms. So, one could use the quantum computer matrix inversion algorithm to solve them in
+order of d steps. The point is that one has to physically implement an exponential number of multi-body, arbitrarily
+long-range couplings among the spins – which must be contrasted with the analog implementation of the potentials
+V1 and V2 , where the only limitation is provided by the resolution we can reach to realize them.
+  We conclude that the exponential growth of complexity at the hardware level for our procedure can be cured in digital
+form by using a (true) quantum computer, when available. This argument shows that the factorization protocol in
+terms of quantum measurements presented here and the Shor algorithm have similar complexity of O(log N ). However,
+comparing in more detail the two algorithms, their pros and cons are the following: the Shor algorithm could run on a
+multi-purpose quantum computer and will take each time O(log N ) steps to factorize a number N . On the contrary,
+our algorithm could run on a dedicated (not multi-purpose) device, which can be set up by solving, once for all, on
+a quantum computer a system of differential equations in O(log N ) steps. Once this dedicated device has been set
+up, it perform factorization an integer N in k steps, k being the number of prime factors, which is the least possible
+number of steps. It would be interesting to see if such devices can be used to solve other cryptographic and number
+theory problems in the future.
+
+Acknowledgments – The authors thank D. Bernard, M. Berry, J. L. Cardy, D. Cassettari, A. Schwimmer and A.
+Smerzi for useful discussions and correspondence. GM acknowledges the grants PNRR MUR Project PE0000023-
+NQSTI and PRO3 Quantum Pathfinder. AT acknowledges MIT for kind hospitality during the writing of the final
+part of the manuscript. He also acknowledges the MIT-FVG Seed Fund Collaboration Grant ”Non-Equilibrium Ther-
+modynamics of Dissipative Quantum Systems”.
+                                                                                                                                                       8
+
+  Supplementary Material 1 - Preparation of the initial state
+  To prepare the state | log N ⟩ one can also employ the quantum measurements’ projective nature. Namely, one can
+start with a state |Ψ⟩ belonging to an ensemble with the expectation value of the energy equal to log N : ⟨Ψ|Ĥ|Ψ⟩ =
+log N and variance ∆. If ∆ is quite narrow, the expansion of this state in eigenstates of H will involve only a few
+terms nearby the eigenvalues log N , i.e.
+                                                      X
+                                          | Ψ⟩ =               γn | log Ñ ⟩ .                                   (15)
+                                                                   Ñ ∈{N −∆,N +∆}
+
+
+If we measure Ĥ on this state, the measurement causes the system collapse on one of the eigenstates of Ĥ entering
+(15). If the measurement output is log N , we can start the procedure described above. If not, we re-prepare the state
+and re-measure Ĥ since, sooner or later the expected value will appear. Clearly, the number of iterations depends on
+the variance of Ĥ on Ψ. Another strategy could be to measure Ĥ1 on Ψ and verify whether the state collapses on a
+factor of the integer N .
+
+   Supplementary Material 2 - Examples of Ĥ1
+   In both digital and analog versions of the algorithm presented in the main text, the requirements are: a) the
+implementation of an operator Ô sum of two operators Ô1 and Ô2 having as eigenvalues, respectively, the logarithms
+of the prime numbers and of the integer numbers; and b) the possibility to perform quantum measurements of Ô1 .
+   Let’s discuss the digital setting, referring to the main text for the analog case. We assume then that we have two
+registers, denoted by 1 and 2, of d qubits each, labeled by the index j = 1, · · · , d. The observable Ô1 acts only
+on register 1, and similarly Ô2 acts only on register 2, where the first operator has, as eigenvalues, the (natural)
+logarithms of the first 2d primes starting from prime 2, while the second operator has, as eigenvalues, the (natural)
+logarithms of the first 2d natural numbers.
+   To fix the notation, let discuss the operators Ô1 and Ô2 having as eigenvalues respectively the first 2d prime number
+and the first 2d integers. Formally one can then implement the desired operators Ô1 and Ô2 , since the former (latter)
+has the same eigenvalues of Ô1 and Ô2 .
+   To build Ô2 is considerably easier – actually, exponentially easier than to construct Ô1 . First of all, let’s consider
+in the second register the operator1
+                                                                                          j
+                                                                                          ↓
+                                                         Ẑj = 1 ⊗ 1 ⊗ · · · ⊗ Z ⊗ · · · 1
+
+where
+                                                                                                   
+                                                                  1 0                             1 0
+                                                      1=                       ,     Z=
+                                                                  0 1                             0 −1
+
+and the symbol ⊗ denotes the tensor product between matrices 2 . It is then clear that the Ẑj are 2d × 2d matrices
+and
+ correspond
+               to the observable z-component of the j-th spin10 . Let’s now define the 2 × 2 matrix N = (1 + Z)/2 =
+ 1 0
+       , having evidently 0 and 1 as eigenvalues, and the corresponding matrices
+ 0 0
+
+                                                                                          j
+                                                                                          ↓
+                                                       Nˆj = 1 ⊗ 1 ⊗ · · · ⊗ N ⊗ · · · 1 .
+
+One can immediately show that the operator
+                                                                                   d
+                                                                                   X
+                                                                 Ô2 = 2 1̂d +           2j−1 Nˆj                                                    (16)
+                                                                                   j=1
+
+
+
+
+2 We remind for convenience that if one has two matrices A
+                                                                      ij and Bi′ j ′ , then the matrix A ⊗ B has as matrix elements (A ⊗ B)ii′ ,jj ′ =
+                                                                                                                                             
+                                                                 1 0                                                                         0 0
+  Aij · Bi′ j ′ , so that, e.g., Z ⊗ 1 is the 4 × 4 matrix                  written as a block matrix, where 0 is the 2 × 2 matrix 0 =           .
+                                                                 0 −1                                                                        0 0
+                                                                                                                                            9
+
+has as eigenvalues the first 2d integers starting from 2, with 1̂d = 1 ⊗ 1 ⊗ · · · ⊗ 1 being the 2d × 2d identity matrix.
+The rationale is that the sum j 2j−1 Nˆj in (16) gives the binary representation of the numbers from 0 to 2d − 1.
+                                 P
+
+For example, for d = 3, the operator 20 N̂1 + 21 N̂2 + 22 N̂3 has the eigenvalues 0, 1, 2, 3, · · · , 7, as one can immediately
+verify. So it remains to sum to (16) only the constant 2.
+   Let now come to Ô1 . A strategy to give Ô1 in terms of the operators Nˆi ’s is to write all possible multi-spin
+operators in which the Nˆi enter 0 times, 1 times, 2 times, 3 times and so on. Borrowing the notation from treatments
+of one-dimensional spin chains with multi-spin interactions, see e.g.52 , one can write
+                                                     X             X
+                                      Ô1 = j∅ 1̂d +    ji1 N̂i1 +     ji1 ,i2 N̂i1 N̂i2 +
+                                                                        i1                i1 ,i2
+
+
+                                       X
+                                 +                ji1 ,i2 ,i3 N̂i1 N̂i2 N̂i3 + · · · + ji1 ,i2 ,i3 ,··· ,im N̂i1 N̂i2 · · · N̂im ,        (17)
+                                     i1 ,i2 ,i3
+
+with all sums run from 1 to d. Now the statement is that one can choose the coefficients {jµ } such that the the
+eigenvalues of Ô1 are exactly the first 2d primes, since the total number of the coefficients {jµ } is exactly 2d : to do
+so, one has to solve a linear system of 2d equations in the unknowns {jµ } using the first 2d primes are the input.
+   For instance, in the case d = 3, with the values of the coefficients given by
+
+                          j∅ = 2 , j1 = 1 , j2 = 3 , j3 = 5 , j12 = 5 , j23 = 3 , j13 = 9 , j123 = −9
+
+one gets the first 23 = 8 primes 2, 3, 5, 7, 11, 13, 17, 19.
+                                                (d)
+  Up to d = 5, the explicit expressions of Ô1 having the first 2d primes starting from p = 2 and defined on d qubits
+are given by
+
+      (2)
+    Ô1     = 21̂ + 1N̂1 + 3N̂2 + 1N̂1 N̂2
+      (3)
+    Ô1     = 213 + 1N̂1 + 3N̂2 + 5N̂3 + 5N̂1 N̂2 + 3N̂2 N̂3 + 9N̂1 N̂3 − 9N̂1 N̂2 N̂3
+      (4)
+    Ô1     = 21̂4 + 1N̂1 + 3N̂2 + 5N̂3 + 9N̂4 + 7N̂1 N̂2 + 9N̂1 N̂3 + 7N̂1 N̂4 + 13N̂2 N̂3 +
+            + 15N̂2 N̂4 + 15N̂3 N̂4 − 3N̂1 N̂2 N̂3 − 3N̂1 N̂2 N̂4 − 5N̂1 N̂3 N̂4 − 15N̂2 N̂3 N̂4 − 7N̂1 N̂2 N̂3 N̂4
+      (5)
+    Ô1     = 215 + 1N̂1 + 3N̂2 + 5N̂3 + 9N̂4 + 11N̂5 + 11N̂1 N̂2 + 11N̂1 N̂3 + 11N̂1 N̂4 + 15N̂1 N̂5 +
+            + 21N̂2 N̂3 + 23N̂2 N̂4 + 25N̂2 N̂5 + 27N̂3 N̂4 + 29N̂3 N̂5 + 31N̂4 N̂5 + 5N̂1 N̂2 N̂3 + N̂1 N̂2 N̂4 − N̂1 N̂2 N̂5 +
+            + 5N̂1 N̂3 N̂4 − N̂1 N̂3 N̂5 − 1N̂1 N̂4 N̂5 − 7N̂2 N̂3 N̂4 − 7N̂2 N̂3 N̂5 − 7N̂2 N̂4 N̂5 − 13N̂3 N̂4 N̂5 +
+            − 25N̂1 N̂2 N̂3 N̂4 − 23N̂1 N̂2 N̂3 N̂5 − 25N̂1 N̂2 N̂4 N̂5 − 29N̂1 N̂3 N̂4 N̂5 − 25N̂2 N̂3 N̂4 N̂5 + 49N̂1 N̂2 N̂3 N̂4 N̂5
+                                                                                (5)
+  E.g., one can directly verify that the eigenvalues of Ô1                           are the first 25 = 32 primes
+
+    p = 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131
+
+   In the course of our analysis we observe the emergence of some regularity: first of all that the coefficients are relative
+integers moreover taht j∅ = 2, ji = pi − 2, where pi is the ith prime and, finally, that increasing the number of qubits
+implies that the jµ pass form positive to negative values. But, at the same time, we notice that there is no simple
+pattern of the remaining coefficients {jµ }: if one has the coefficients {jµ } for a certain value of d, it seems that there
+is no a simple procedure to get the {jµ } relative to d + 1. After all this is not surprising, since we know that even very
+effective ways to plot the primes can display striking regularities (see, for instance, the pattern emerging from Ulam
+spirals53 ), but they cannot predict the d-prime simply by knowing the first d − 1 primes. In other words, to determine
+for each d the coefficients (jµ } one has to solve a system with 2d unknowns assuming that we know the first 2d primes.
+   A way to visualize the coefficients {jµ } is to put in a table like the following, where the coefficients are written in
+the form ji1 ,··· ,ik with i1 < i2 < · · · < ik , ordering them in a way that among two k tuples (i1 , · · · , ik ) and (j1 , · · · , jk ),
+the one with the smallest among i1 and j1 is listed before, and if i1 = j1 then the one with the smallest among i2 and
+j2 is listed before, and so one. Therefore, for k = 3 and m = 5, we report in the table the values of j123 , j124 , j125 ,
+j134 , j135 , j145 , j234 , j235 , j245 , j345 .
+                                                                                                                     10
+
+
+                                                   S
+
+
+
+
+Figure 2: Mass spectrometer which permits to measure the horizontal mass Mx of the system S and therefore to project on
+                                          (1)
+one of the horizontal energy eigenstate |ea ⟩.
+
+
+                       m→ 2         3             4                            5
+                         j∅   2     2             2                            2
+                          ji 1, 3 1,3,5       1,3,5,9                     1,3,5,9,11
+                         jij  1 5, 3, 9 7, 9, 7, 13, 15, 15 11, 11, 11, 15, 21, 23, 25, 27, 29, 31
+                        jijk  0    -9       -3,-3,-5,-15          5,1,-1,5,-1,-1,-7,-7,-7,-13
+                        jijkl 0     0            -7                  -25,-23,-25,- 29,-25
+                       jijklm 0     0             0                           49
+
+Similarly to what we described above, one could determine the couplings j’s in such a way that O has as eigenvalues
+the logartithm of the first 2d primes: in the few attempts we have done, their values appear erratic as well.
+
+   Supplementary Material 3 - Gedankenexperiment
+   In this section we discuss a Gedankenexperiment for implementing the measurement procedure discussed in Section
+2. First of all, let’s imagine that the Hamiltonians H1 and H2 are realised, as in12 , in terms of some laser optical
+device. We put together this optical device inside a metallic box S and transfer an electric charge Q on it so that this
+metallic box acts as a Faraday cage which isolates the quantum system inside the box from external perturbations.
+From an outside, such a metallic box S can simply be characterised in terms of its electric charge Q and its mass M .
+The mass M is made by the mass mb of the metallic box and the quantum energy levels occupied by the particle,
+assuming the equivalence between masses and energies (in the following we take the units such that the speed of light
+is equal to 1, c = 1). Being the Hamiltonian H made of two commuting Hamiltonians H1 (x) and H2 (y) along the
+                                                                                       (1)      (2)
+axes x and y, the system the have two different inertias regarding the two axes: if ei and ej denote the i-th and
+                                                                                                (1)
+the j-th energies along the x and the y axis, there will be an horizontal mass Mx = mb + ei and a vertical mass
+               (2)
+My = mb + mk .
+   We can send our system S to a mass spectrometer, such as the one shown in Figure 2. Such a classical apparatus
+will set up a Stern-Gerlach experiment and we can measure the energy projectively. Indeed, skipping the details of the
+motion, the system S trajectory is determined by the ratio Q/Mx . Hence, if the system S is in a linear superposition
+of k energy eigenstates of H1 (x) (as it is indeed the case for our vector (8))
+                                                          k
+                                                                    (1)
+                                                          X
+                                                 |ψ ⟩ =         ai |ei ⟩ ,                                         (18)
+                                                          i=1
+
+then, when the system S passes through the mass spectrometer, it will end up in one of the k different trajectories
+{T1 , T2 , . . . Tk }, as shown in Figure 2. Imagine that the system ends following the a-th trajectory, then after the
+                                                                                              (1)
+passage through the mass spectrometer, the system is projected on the energy eigenstate |ea ⟩.
+
+   Supplementary Material 4 - Potentials V1 and V2
+   In Figure 3 we show the plots of V1 (x) and V2 (y) with a spectrum given respectively by log pk and log m for the
+first M = 64 = 26 energy levels of each potential.
+                                                                                                                              11
+
+                           6
+
+                                            V1(x)                               4
+                                                                                                 V2(y)
+
+                           5
+
+
+
+                                                                                3
+                           4
+
+
+
+
+                           3                                                    2
+                ���� ��                                             ���� ��
+
+
+
+
+                           2
+                                                                                1
+
+
+
+
+                           1
+
+                                                                                0
+
+
+                           0
+
+
+                               -100   -50           0     50   100                  -100   -50           0     50   100
+
+                                                               x                                                          y
+                                                    (a)                                                  (b)
+
+
+Figure 3: Plots of the potentials V1 (x) (a) and V2 (y) (b) relative to N = 64 = 25 energy levels given respectively by the
+logarithm of the primes, log pk , and the logarithm of the integers, log m.
+
+
+
+
+1
+   M. A. Nielsen and I. L. Chuang, Quantum Computation and Quantum Information, 10th anniversary edition (Cambridge
+   University Press, Cambridge, 2010).
+ 2
+   J. Preskill, Lecture Notes for Physics 229:Quantum Information and Computation.
+ 3
+   A. O. Pittenger, An Introduction to Quantum Computing Algorithms (Birkhäuser, Boston, 2000).
+ 4
+   R. Horodecki, P. Horodecki, M. Horodecki, and K. Horodecki, Rev. Mod. Phys. 81, 865 (2009).
+ 5
+   P. W. Shor, in Proceedings of the 35th Annual Symposium on the Foundations of Computer Science, ed. S.Goldwasser (IEEE
+   Computer Society, Los Alamitos, 1994), p. 124.
+ 6
+   P. W. Shor, Phys. Rev. A 52, R2493 (1995).
+ 7
+   A. Ekert and R. Jozsa, Rev. Mod. Phys. 68, 733 (1996).
+ 8
+   A. Peres, Quantum theory: concepts and methods (Kluwer, Dordrecht, 1993).
+ 9
+   R. Shankar, Principles of quantum mechanics, 2nd edition (Plenum, New York, 1994).
+10
+   J. J. Sakurai, Modern quantum mechanics, 3rd edition revised by J. Napolitano (Cambridge University Press, Cambrdige,
+   2020).
+11
+   G. Mussardo, The Quantum Mechanical Potential for the Prime Numbers, arXiv:cond-mat/9712010.
+12
+   D. Cassettari, G. Mussardo, A. Trombettoni Holographic Realization of the Prime Number Quantum Potential,
+   https://arxiv.org/abs/2202.03446.
+13
+   Y. Wu et al., Phys. Rev. Lett. 127, 180501 (2021).
+14
+   L. M. Vandersypen, M. Steffen, G. Breyta, C. S. Yannoni, M. H. Sherwood, and I. L. Chuang, (2001), Nature 414, 883
+   (2001).
+15
+   C.-Y. Lu, D. E. Browne, T. Yang, and J.-W. Pan, Phys. Rev. Lett. 99, 250504 (2007).
+16
+   B. P. Lanyon, T. J. Weinhold, N. K. Langford, M. Barbieri, D. F. V. James, A. Gilchrist, and A. G. White, Phys. Rev. Lett.
+   99, 250505 (2007).
+17
+   E. Lucero, R. Barends, Y. Chen, J. Kelly, M. Mariantoni, A. Megrant, P. O’Malley, D. Sank, A. Vainsencher, J. Wenner, T.
+   White, Y. Yin, A. N. Cleland, and J. M. Martinis, Nat. Phys. 8, 719 (2012).
+18
+   E. Martı́n-López, A. Laing, T. Lawson, R. Alvarez, X.-Q. Zhou, and J. L. O’Brien, Nat. Photonics 6, 773 (2012).
+19
+   P. Ribenboim, The New Book of Prime Number Records, Springer-Verlag, Berlin-New York (1996).
+20
+   M.R. Schroeder, Number Theory in Science and Communication, Springer–Verlag, Berlin (1990).
+21
+   D. Zagier, Math. Intelligencer 0, 7 (1977).
+22
+   A. Granville and G. Martin, Prime Number Races, American Mathematical Monthly. 113 (1), 1–33 (2006).
+23
+   H.E. Rose, A Course in Number Theory, Oxford Science Publications (1994).
+24
+   G.H. Hardy and E.M. Wright, An Introduction to Theory of Numbers, Oxford University Press (1979).
+25
+   T.M. Apostol, Introduction to Analytic Number Theory, 5th ed., Springer, New York (1998).
+26
+   T. Tao, Structure and Randomness in the Prime Numbers in An Invitation to Mathematics, eds. D. Schleicher and M.
+   Lackmann, Springer (2011).
+27
+   O. Ore, Number Theory and its History, McGraw–Hill, New York (1948).
+28
+   G.F. B. Riemann, Über die Anzahl der Primzahlen unter einer gegebenen Grösse, Monatsber. Königl. Preuss. Akad. Wiss.
+                                                                                                                               12
+
+   Berlin, 671-680 (Nov. 1859).
+29
+   H.M. Edwards, Riemann Zeta Function, Academic Press, New York (1974).
+30
+   P. Borwein, S. Choi, B. Rooney, A. Weirathmueller, The Riemann Hypothesis: A Resource for the Afficionado and Virtuoso
+   Alike, Springer (2007).
+31
+   J. Hadamard, Sur la distribution des zéros de la fonction zeta(s) et ses conséquences arithmétiques, Bull. Soc. Math. France
+   24, 199-220 (1896).
+32
+   C.J. de la Vallée Poussin, Recherches analytiques la théorie des nombres premiers, Ann. Soc. Scient. Bruxelles 29, 183-256
+   (1896).
+33
+   A. Selberg, An Elementary Proof of the Prime Number Theorem, Ann. Math. 50, 305-313 (1949).
+34
+   P. Erdős, Démonstration élémentaire du théorème sur la distribution des nombres premiers, Scriptum 1, Centre
+   Mathématique, Amsterdam (1949).
+35
+   Lasse Rempe-Gillen, Rebecca Waldecker, Primality testing for beginners, American Mathematical Society, 2014
+36
+   M. Agrawal, N. Kayal, and N. Saxena, Primes is in P, Annals of Mathematics, 160 (2004), 781–79;
+37
+   Lenstra, Arjen K. (2011), Integer Factoring, in van Tilborg, Henk C. A.; Jajodia, Sushil (eds.), Encyclopedia of Cryptography
+   and Security, Boston, MA: Springer US, pp. 611–618.
+38
+   Richard Crandall and Carl Pomerance (2001). Prime Numbers. A Computational Perspective. Springer.
+39
+   Samuel S. Wagstaff Jr. (2013). The Joy of Factoring. Providence, RI: American Mathematical Society.
+40
+   G.Mussardo, A. Trombettoni and Z. Zhang, Prime Suspects in a Quantum Ladder, Phys.Rev.Lett. 125 (2020) 240603.
+41
+   R. Mack, J. P. Dahl, H. Moya-Cessa, W. Strunz, R. Walser, and W. P. Schleich, Phys. Rev. A 82, 032119 (2010).
+42
+   C. Weiss, S. Page, and M. Holthaus, Physica A 341, 586 (2004).
+43
+   F. Gleisberg, R. Mack, K. Vogel, and W. P. and Schleich, New J. Phys. 15, 023037 (2013).
+44
+   F. Gleisberg, M. Volpp, and W. P. Schleich, Phys. Lett. A 379, 2556 (2015).
+45
+   F. Gleisberg, F. Di Pumpo, G. Wolff, and W. P. Schleich, J. Phys. B: At. Mol. Opt. Phys. 51, 035009 (2018).
+46
+   A. E. Allahverdyan and D. Petrosyan, Dissipative search of an unstructured database, Phys. Rev. A 105, 032447 (2022).
+47
+   J. von Neumann, Mathematical Foundations of Quantum Mechanics, Princeton Univ. Press, Prince- ton, N.J., 1955.
+48
+   F. Cooper, A. Khare, U. Sukhatme, Supersymmetry and Quantum Mechanics, Phys. Rep. 251, 267-385 (1995).
+49
+   A. Ramani, B. Grammaticos and E. Caurier, Fractal potentials from energy levels, Phys. Rev. E 51, 6323 (1995).
+50
+   B.P. van Zyl and D.A. Hutchinson, Riemann zeros, prime numbers, and fractal potentials, Phys. Rev. E 67, 066211 (2003).
+51
+   S. Lloyd, G. De Palma, C. Gokler, B. Kiani, Z. Liu, M. Marvian, F. Tennie, T. Palmer Quantum algorithm for nonlinear
+   differential equations, https://arxiv.org/abs/2011.06571.
+52
+   G. Gori and A. Trombettoni, J. Stat. Mech. P10021 (2011).
+53
+   M.L. Stein, S.M. Ulam, M.B. Wells, A Visual Display of Some Properties of the Distribution of Primes, American Math-
+   ematical Monthly, Mathematical Association of America, 71 (5): 516–520, (1964); M.L. Stein, S.M. Ulam, An Observation
+   on the Distribution of Primes, American Mathematical Monthly, Mathematical Association of America, 74 (1) (1967).
+

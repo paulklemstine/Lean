@@ -1,0 +1,223 @@
+{{Short description|Algorithm in number theory}}
+In [[number theory]], '''Dixon's factorization method''' (also '''Dixon's random squares method'''<ref name="Kleinjung10">{{cite book |first=Thorsten |last=Kleinjung |chapter=Factorization of a 768-Bit RSA Modulus |title=Advances in Cryptology – CRYPTO 2010 |series=Lecture Notes in Computer Science |year=2010 |volume=6223 |pages=333–350 |doi=10.1007/978-3-642-14623-7_18 |display-authors=etal|isbn=978-3-642-14622-0 |s2cid=11556080 }}</ref> or '''Dixon's algorithm''') is a general-purpose [[integer factorization]] [[algorithm]]; it is the prototypical [[factor base]] method. Unlike for other factor base methods, its run-time bound comes with a rigorous proof that does not rely on conjectures about the smoothness properties of the values taken by a polynomial.
+
+The algorithm was designed by [[John D. Dixon]], a mathematician at [[Carleton University]], and was published in 1981.<ref name="Dixon81">{{cite journal |last=Dixon |first=J. D. |author-link=John D. Dixon |year=1981 |title=Asymptotically fast factorization of integers |url=https://www.ams.org/journals/mcom/1981-36-153/S0025-5718-1981-0595059-1/S0025-5718-1981-0595059-1.pdf |journal=[[Mathematics of Computation|Math. Comp.]] |volume=36 |issue=153 |pages=255–260 |doi=10.1090/S0025-5718-1981-0595059-1 |jstor=2007743 |doi-access=free}}</ref>
+
+==Basic idea==
+Dixon's method is based on finding a [[congruence of squares]] modulo the integer N which is intended to factor. We explain the basic idea here by first describing [[Fermat's factorization method]], then how Dixon's method proceeds differently.
+
+Fermat's factorization method finds such a congruence by selecting random or [[pseudo-random]] ''x'' values and hoping that the integer ''x''<sup>2</sup>&nbsp;mod&nbsp;N is a nontrivial [[square number|perfect square]] (in the integers):
+
+:<math>x^2\equiv y^2\quad(\hbox{mod }N),\qquad x\not\equiv\pm y\quad(\hbox{mod }N).</math>
+
+For example, if {{nowrap|''N'' {{=}} 84923}}, (by starting at 292, the first number greater than {{radic|''N''}} and counting up) the {{nowrap|505<sup>2</sup> mod 84923}} is 256, the square of 16. So {{nowrap|(505 &minus; 16)(505 + 16) {{=}} 0 mod 84923}}.  Computing the [[greatest common divisor]] of {{nowrap|505 &minus; 16}} and ''N'' using [[Euclid's algorithm]] gives 163, which is a factor of ''N''.
+
+In practice, selecting random ''x'' values will take an impractically long time to find a congruence of squares, since there are only {{radic|''N''}} squares less than ''N''.
+
+Dixon's method replaces the condition "is a nontrivial perfect square" with the much weaker one "has only small prime factors"; for example, there are 292 squares smaller than 84923; 662 numbers smaller than 84923 whose prime factors are only 2,3,5 or 7; and 4767 whose prime factors are all less than 30. (Such numbers are called 7-smooth and 30-smooth, respectively, since they are ''[[Smooth number|B-smooth]]'' with respect to some bound ''B''.)
+
+Once enough of these ''B''-smooth values are found, linear algebra can be used to search for nontrivial perfect squares for Fermat's factorization method. If there are many numbers <math>a_1 \ldots a_n</math> whose squares can be factorized as <math>a_i^2 \mod N = \prod_{j=1}^m b_j^{e_{ij}}</math> for a fixed set <math>b_1 \ldots b_m</math> of small primes, linear algebra modulo 2 on the matrix <math>e_{ij}</math> will give a subset of the <math>a_i</math> whose squares combine to a product of small primes to an even power &mdash; that is, a subset of the <math>a_i</math> whose squares multiply to the square of a (hopefully different) number mod ''N''.
+
+==Method==
+Suppose the composite number ''N'' is being factored. Bound ''B'' is chosen, and the ''[[factor base]]'' is identified (which is called ''P''), the set of all primes less than or equal to ''B''. Next, positive integers ''z'' are sought such that ''z''<sup>2</sup>&nbsp;mod&nbsp;''N'' is ''B''-smooth. Therefore we can write, for suitable exponents ''a<sub>i</sub>'',
+
+: <math>z^2 \text{ mod } N = \prod_{p_i\in P} p_i^{a_i}</math>
+
+When enough of these relations have been generated (it is generally sufficient that the number of relations be a few more than the size of ''P''), the methods of [[linear algebra]], such as [[Gaussian elimination]], can be used to multiply together these various relations in such a way that the exponents of the primes on the right-hand side are all even:
+
+: <math>{z_1^2 z_2^2 \cdots z_k^2 \equiv \prod_{p_i\in P} p_i^{a_{i,1}+a_{i,2}+\cdots+a_{i,k}}\ \pmod{N}\quad (\text{where } a_{i,1}+a_{i,2}+\cdots+a_{i,k} \equiv 0\pmod{2}) }</math>
+
+This yields a [[congruence of squares]] of the form {{nowrap|''a''<sup>2</sup> ≡ ''b''<sup>2</sup> (mod ''N''),}} which can be turned into a factorization of ''N'', {{nowrap|''N'' {{=}} [[Greatest common divisor|gcd]](''a'' + ''b'', ''N'') × (''N''/gcd(''a'' + ''b'', ''N'')).}} This factorization might turn out to be trivial (i.e. {{nowrap|''N'' {{=}} ''N'' × 1}}), which can only happen if {{nowrap|''a'' ≡ ±''b'' (mod ''N''),}} in which case another try must be made with a different combination of relations; but if a nontrivial pair of factors of ''N'' is reached, the algorithm terminates.
+
+==Pseudocode==
+This section is taken directly from Dixon (1981).
+
+'''Dixon's algorithm'''
+
+''Initialization.'' Let ''L'' be a list of integers in the range [1, ''n''], and let ''P'' = {''p''<sub>1</sub>, ..., ''p''<sub>h</sub>} be the list of the ''h'' primes ≤ ''v''. Let ''B'' and ''Z'' be initially empty lists (''Z'' will be indexed by ''B'').
+
+'''Step 1.''' If ''L'' is empty, exit (algorithm unsuccessful). Otherwise, take the first term ''z'' from ''L'', remove it from ''L'', and proceed to Step 2.
+
+'''Step 2.''' Compute ''w'' as the least positive remainder of ''z<sup>2</sup> mod n''. Factor ''w'' as:
+
+<math>w = w' \prod_i p_i^{a_i}</math>
+
+where ''{{prime|w}}'' has no factor in ''P''. If ''{{prime|w}}'' = 1, proceed to Step 3; otherwise, return to Step 1.
+
+'''Step 3.''' Let ''a'' ← (''a''<sub>1</sub>, ..., ''a''<sub>h</sub>). Add ''a'' to ''B'' and ''z'' to ''Z''. If ''B'' has at most ''h'' elements, return to Step 1; otherwise, proceed to Step 4.
+
+'''Step 4.''' Find the first vector ''c'' in ''B'' that is linearly dependent (mod 2) on earlier vectors in ''B''. Remove ''c'' from ''B'' and <math>z_c</math> from ''Z''. Compute coefficients <math>f_b</math> such that:
+
+<math>\mathbf{c} \equiv \sum_{b \in B} f_b \mathbf{b} \pmod{2}</math>
+
+Define:
+
+<math>\mathbf{d} = (d_1, \dots, d_n) \gets \frac{1}{2} \left(\mathbf{c} + \sum f_b \mathbf{b} \right)</math>
+
+Proceed to Step 5.
+
+'''Step 5.''' Compute:
+
+<math>x \gets z_c \prod_b z_b^{f_b}, \quad y \gets \prod_i p_i^{d_i}</math>
+
+so that:
+
+<math>x^2 \equiv \prod_i p_i^{2d_i} = y^2 \mod n.</math>
+
+If <math>x \equiv y</math> or <math>x \equiv -y \pmod{n}</math>, return to Step 1. Otherwise, return:
+
+<math>\gcd(n, x + y)</math>
+
+which provides a nontrivial factor of ''n'', and terminate successfully.
+
+== Step-by-step example ==
+
+In this example, we factorize (''n'' = 84923) using Dixon's algorithm. This example is lightly adapted from the LeetArxiv substack.<ref>Kibicho, Murage (2025). [https://leetarxiv.substack.com/p/hand-written-paper-implementation ''Hand-Written Paper Implementation'']: Asymptotically Fast Factorization of Integers.</ref> Credit is given to the original author.
+* '''Initialization''':
+** Define a list of numbers ''L'', ranging from 1 to 84923:  
+::: <math>L = \{1, \dots, 84923\}</math>
+:* Define a value ''v'', which is the smoothness factor:  
+::: <math>v = 7</math>
+:* Define a list ''P'' containing all the prime numbers less than or equal to ''v'':  
+::: <math>P = {2, 3, 5, 7}</math>
+:* Define ''B'' and ''Z'', two empty lists. ''B'' is a list of powers, while ''Z'' is a list of accepted integers:
+::: <math>B = [ ]</math>
+::: <math>Z = [ ]</math>
+ 
+* '''Step 1''': Iterating <math>z</math> values 
+** Start a for loop that indexes the list <math>L</math>. The current element in <math>L</math> is labeled as <math>z</math>. The for loop exits at the end of the list, or when Step 5 breaks the loop.
+::<syntaxhighlight lang="c">
+int n = 84923;
+for (int i = 1; i <= n; i++)
+{
+    int z = i;
+    // Remaining steps go here.
+    // Step 4 can trigger Step 5.
+    // Step 5 can break the loop.
+}
+</syntaxhighlight>
+* '''Step 2''': Computing <math>z^2 \mod n</math> and v-smooth Prime Factorization 
+** To proceed, compute <math>z^2 \mod 84923</math> for each ''z'', then express the result as a prime factorization.
+:: <math>
+1^2 \mod 84923 \equiv 1 \mod 84923 = 2^0 \cdot 3^0 \cdot 5^0 \cdot 7^0 \mod 84923
+</math>
+:: <math>
+\vdots
+</math>
+:: <math>
+513^2 \mod 84923 = 8400 \mod 84923 = 2^4 \cdot 3^1 \cdot 5^2 \cdot 7^1 \mod 84923
+</math>
+::<math>
+\vdots
+</math>
+::<math>
+537^2 \mod 84923 = 33600 \mod 84923 = 2^6 \cdot 3^1 \cdot 5^2 \cdot 7^1 \mod 84923
+</math>
+::<math>
+538^2 \mod 84923 = 34675 \mod 84923 = 5^2 \cdot 19^1 \cdot 73^1 \mod 84923
+</math>
+
+::This step continues for all values of ''z'' in the range.
+
+* '''Step 3''': Appending v-smooth results
+** If <math>z^2 \mod 84923</math> is 7-smooth, then append its powers to list <math>B</math> and append <math>z</math> to list <math>Z</math>.
+** If <math>B</math> has at most <math>h=4</math> elements, return to '''Step 1'''. Otherwise, proceed to '''Step 4.'''
+** For example, after 537 iterations, we have:
+::<math>Z = \{1, \ldots, 513, 537\}</math>
+::<math>B = \{ [0, 0, 0, 0], \ldots, [4, 1, 2, 1], [6, 1, 2, 1] \}</math>
+::and we proceed on to '''Step 4''' since we would have more than <math>h=4</math> vectors in <math>B</math>.
+
+* '''Step 4''': This step is split into two parts.
+** '''Part 1''': Finding <math>B</math> modulo 2
+::<math>
+B =
+\begin{pmatrix}
+0 & 0 & 0 & 0 \\
+4 & 1 & 2 & 1 \\
+6 & 1 & 2 & 1
+\end{pmatrix}
+\mod 2
+\equiv
+B =
+\begin{pmatrix}
+0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 1
+\end{pmatrix}
+</math>
+
+:* '''Part 2''': Finding a row combination of <math>B</math> that sums to even numbers
+
+:::For example, summing Row <math>2</math> and Row <math>3</math> gives us a vector of even numbers.
+
+:::<math>
+R_2 = \{0, 1, 0, 1\}</math> and <math>R_3 = \{0, 1, 0, 1\}</math>
+
+:::then 
+:::<math>R_2 + R_3 = \{0, 1, 0, 1\} + \{0, 1, 0, 1\}</math>  
+:::<math>R_2 + R_3 = \{0, 2, 0, 2\}</math>.
+
+
+* '''Step 5''': This step is split into four parts.
+** '''Part 1''': Computing x
+*** Multiply the corresponding <math>z</math> values for the rows found in '''Step 4''', mod <math>n</math> to get <math>x</math>.
+
+:::: Rows 2 and 3 correspond with 513 and 537, so <math>x = (513 \cdot 537) = 20712 \mod 84923</math>
+
+:* '''Part 2''': Computing <math>y</math>
+::* Add the rows found in '''Step 4'''.
+::* Divide by 2. (Since these represent exponents, this effectively takes a square root.)
+::* Apply as exponents to the primes in <math>P</math> to get <math>y</math>.
+::* Return to '''Step 1''' if <math>x = \pm y</math>.
+:::: Find the half the sum of Rows 2 and 3:
+:::: <math>
+\begin{array}{ccccc}
+  &  4 & 1 & 2 & 1 \\
++ &  6 & 1 & 2 & 1 \\\hline
+  & 10 & 2 & 4 & 2 \\
+\div2 \\\hline
+  &  5 & 1 & 2 & 1
+\end{array}
+</math>
+:::: Apply those as exponents to <math>P=\{2,3,5,7\}</math>:
+:::: <math>y = 2^5 \cdot 3^1 \cdot 5^2 \cdot 7^1 = 16800</math>
+
+::* Since <math>x \ne \pm y</math>, we proceed to '''Part 3'''.
+
+:* '''Part 3''': Computing <math>x + y</math> and <math>x - y</math> where <math>x = 20712</math> and <math>y = 16800</math>
+::: <math>x + y = 20712 + 16800 = 37512</math>
+::: <math>x - y = 20712 - 16800 = 3912</math>
+
+:* '''Part 4''': Computing <math>\gcd(x+y, n)</math> and <math>\gcd(x-y, n)</math> where <math>n = 84923</math>, <math>x+y = 292281</math> and <math>x-y = 258681</math>
+  
+:::<math>
+\begin{array}{ll}
+\gcd(37512, 84923) = 521 \\
+\gcd(3912, 84923) = 163
+\end{array}
+</math>
+
+Quick check shows <math>84923 = 521 \cdot 163</math>.
+
+The [[#Pseudocode|pseudocode]] says to only calculate <math>x+y</math> and return <math>\gcd(x+y, n)</math>. This is because it is the faster GCD to compute, and once you have it, dividing <math>n</math> by the result is faster than computing <math>\gcd(x-y, n)</math>.
+
+==Optimizations==
+The [[quadratic sieve]] is an optimization of Dixon's method. It selects values of ''x'' close to the square root of {{var|N}} such that ''x<sup>2</sup>'' modulo ''N'' is small, thereby largely increasing the chance of obtaining a smooth number.
+
+Other ways to optimize Dixon's method include using a better algorithm to solve the matrix equation, taking advantage of the sparsity of the matrix: a number ''z'' cannot have more than <math>\log_2 z</math> factors, so each row of the matrix is almost all zeros.  In practice, the [[Block Lanczos algorithm for nullspace of a matrix over a finite field|block Lanczos algorithm]] is often used. Also, the size of the factor base must be chosen carefully: if it is too small, it will be difficult to find numbers that factorize completely over it, and if it is too large, more relations will have to be collected.
+
+A more sophisticated analysis, using the approximation that a number has all its prime factors less than <math>N^{1/a}</math> with probability about <math>a^{-a}</math> (an approximation to the [[Dickman–de Bruijn function]]), indicates that choosing too small a factor base is much worse than too large, and that the ideal factor base size is some power of <math>\exp\left(\sqrt{\log N \log \log N}\right)</math>.
+
+The optimal complexity of Dixon's method is 
+:<math>O\left(\exp\left(2 \sqrt 2 \sqrt{\log n \log \log n}\right)\right)</math>
+in [[big-O notation]], or
+:<math>L_n [1/2, 2 \sqrt 2]</math>
+in [[L-notation]].
+
+==References==
+<references/>
+
+{{Number theoretic algorithms}}
+
+[[Category:Integer factorization algorithms]]
+[[Category:Squares in number theory]]

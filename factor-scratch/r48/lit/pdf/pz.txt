@@ -1,0 +1,454 @@
+Most Bell Operators do not Significantly Violate Locality
+Itamar Pitowsky∗
+Department of Philosophy, The Hebrew University, Mount Scopus, Jerusalem,
+
+arXiv:quant-ph/0202053v1 10 Feb 2002
+
+91905, Israel
+(October 26, 2018)
+
+Typeset using REVTEX
+
+∗ Electronic address: itamarp@vms.huji.ac.il
+
+1
+
+Abstract
+n−1
+
+The worst violation of Bell’s inequality for n qbits is of size 2 2
+
+and it
+
+is obtained by a specific operator acting on a specific state. We show, to
+the contrary, that for a vast majority of Bell operators the worst violation
+1
+
+is bounded by O((n log n) 2 ), below experimental detection. With respect to
+the extremal operators, introduced by Werner and Wolf [Phys. Rev. A 64,
+032112 (2001)], we show that a large majority of them have a norm bounded
+1
+
+by O(n 2 ).
+
+It is commonly believed that a quantum system that is composed of a large number of
+particles behaves “nearly classically”. A dramatic example to the contrary is the violation
+of a Bell-type inequality by a system of n qbits. Mermin [1] showed that the violation not
+only persists as n grows, but actually increases exponentially. Mermin’s result has since
+been strengthened in various respects [2–4]. Meanwhile, further sets of Bell inequalities
+have been determined, most notably, the set of all inequalities for n-partite systems with
+two dichotomic observable each. [5–7].
+However, the question still remains how prevalent Mermin’s phenomenon is. In other
+words, how crucially it depends on the use of an exotic quantum state (the generalized
+Greenberger Horne Zeilinger GHZ state) and a specific operator (the Mermin Klyshko MK
+operator, or one of its variants). Here we show that Mermin’s phenomenon is the exception,
+not the rule, and it becomes more isolated as n grows.
+Consider r × n directions in physical space
+a11 , a12 , ..., a1r
+a21 , a22 , ..., a2r
+
+(1)
+
+.
+an1 , an2 , ..., anr
+Let c(k1 , k2 , ..., kn ), 1
+
+≤
+
+kj
+
+≤
+
+r, be real, non-negative numbers such that
+
+P 2
+c (k1 , k2 , ..., kn ) = 1. Consider the operator
+
+2
+
+Q=
+
+X
+
+k1 ,k2 ,...,kn
+
+±c(k1 , k2 , ..., kn )σ(a1k1 ) ⊗ σ(a2k2 )... ⊗ σ(ankn )
+
+(2)
+
+Where σ(a) is the spin operator in the a-direction (with eigenvalues −1 and +1), and the
+± signs of the coefficients c(k1 , k2, ..., kn ) have been chosen randomly. We shall call such Q
+a random Bell operator. Let kQk be the norm of Q, that is, the maximum over the absolute
+values of its eigenvalues. We shall prove the following results:
+Proposition 1 For a vast majority of choices of signs ± in (2) we have max kQk ≤
+1
+
+9(rn log n) 2 .
+
+Where the maximum is taken over directions in (1) such that for each
+
+1 ≤ j ≤ n the directions ajk , k = 1, 2..., r are in the same plane.
+Note that for r = 2, the restriction on the directions to be in the same plane does not
+limit the generality of the Bell operator in (2), since any two directions determine a plane.
+In this case the set of all Bell inequalities has been derived in a particularly convenient form
+by Werner and Wolf [5]. We shall see later (proposition 3) how this allows a more stringent
+estimation of kQk than that given in proposition 1.
+The next result does not involve any restrictions.
+Proposition 2 Let |Φi be a fixed arbitrary n qbits state. Then for a vast majority of choices
+1
+
+of ± signs in (2) we have max |hΦ |Q| Φi| ≤ 36(rn log n) 2 . The maximum is taken over all
+choices of directions ajk .
+n
+
+Let me make precise what I mean by “vast majority”. There are L = 2r possible
+choices of signs ± to the coefficients c(k1 , k2 , ..., kn ). Consider {−1, 1}L as a probability
+n
+
+space with each sequence having identical probability L−1 = 2−r . Denote the probability
+measure in this space by P, and assume that ± are assigned independently and with identical
+distribution. The magnitude max kQk can then be considered as a random variable on the
+probability space (as we vary the ± signs in (2)). We shall prove the following estimation
+on the distribution of kQk:
+
+
+1
+P max kQk ≤ 9(rn log n) 2 > 1 −
+3
+
+1
+n2 ern
+
+(3)
+
+And a similar expression for proposition 2.
+n−1
+
+1
+
+The bound 9(n log n) 2 should be compared with the maximum 2 2 which is achieved by
+the MK operator in the generalized GHZ state [1–4]. The bound should also be compared
+with the predictions of local hidden variable theories. In such theories we replace (2) with
+the expression
+C=
+
+X
+
+k1 ,k2 ,...,kn
+
+±c(k1 , k2 , ..., kn )Xk11 Xk22 ...Xknn
+
+(4)
+
+Where the Xkj are r × n variables, each with two possible values ±1. The quantum
+value kQk is then compared with the classical value kCk∞ = max |C|, where the maximum
+is taken over all 2rn values of the Xkj . We shall see that for a large majority of choices of
+1
+
+±signs in (4) the unmber 9(n log n) 2 is also an upper bound for kCk∞ . This means that
+for most choices of signs, kQk violates the conditions of local realism only slightly, if at
+all. Such violation cannot have an observable significance in the presence of small noise or
+measurement error.
+The two propositions are direct consequences of a theorem in Fourier analysis due to
+Salem, Zygmund and Kahane (chapter 6 in [8]). Consider the multivariable trigonometric
+P
+polynomial P (t1 , t2 , ..., ts ) =
+b(k1 , k2 , ..., ks )ei(k1 t1 +,k2 t2 +...+ksts ) , where the sum is taken
+
+over all negative and nonnegative integers k1 , k2 , ..., ks which satisfy |k1 |+|k2 |+...+|ks | ≤ N.
+
+The integer N is called the degree of the polynomial. Denote kP k∞ = max |P (t1 , t2 , ..., ts )|.
+t1 ,...,ts
+P
+Now, consider the random polynomial R = j∈J ±cj Pj (t1 , t2 , ..., ts ) where the sum is taken
+
+over a finite index set J, the cj ’s are real or complex, the ± signs are chosen at random in
+
+the sense explained above, and each Pj is a trigonometric polynomial of degree ≤ N. Then
+
+! 12 
+X
+1
+(5)
+P kRk∞ ≤ 9 s
+|cj |2 kPj k2∞ log N  ≥ 1 − 2 s
+N
+e
+j∈J
+Consider the random operator Q in (2) with the restriction that the directions in each
+
+raw in (1) are in the same plane. In this case we can calculate explicitly the eigenvalues of Q
+using the technique in [7]. (Scarani and Gisin assume that r = 2, but their argument depends
+4
+
+just on coplanarity). Let zj be the direction orthogonal to the vectors in the j-th row of (1).
+Denote by |−1ij and |1ij the states spin-down and spin-up in the zj direction. Let xj be
+orthogonal to zj and let tjk be the angle between ajk and xj . Then the vectors |ω1 , ω2 , ..., ωn i,
+ω = (ω1 , ω2 , ..., ωn ) ∈ {−1, 1}n form a basis for the n-qbits space. The eigenvectors of Q
+then have the form
+1
+|Ψ(ω)i = √ (eiθ(ω) |ω1 , ω2 , ..., ωn i + |−ω1 , −ω2 , ..., −ωn i)
+2
+
+(6)
+
+with the corresponding eigenvector
+λ(ω) = eiθ(ω)
+
+X
+
+k1 ,k2 ,...,kn
+
+±c(k1 , k2 , ..., kn ) exp i ω1 t1k1 + ω2 t2k2 + ... + ωn tnkn
+
+
+
+(7)
+
+where the angle θ(ω) in the phase factor of (7) makes λ(ω) real. Hence we have
+max kQk ≤ max
+
+X
+
+k1 ,k2 ,...,kn
+
+±c(k1 , k2, ..., kn ) exp i t1k1 + t2k2 + ... + tnkn
+
+
+
+(8)
+
+Where the maximum is taken over all values of tjk , k = 1, 2, .., r, j = 1, 2, ..., n.
+Now, apply (5) to (8). We take the index set J = {1, 2, ..., r}n, the trivial polynomials
+
+P(k1 ,k2 ,...,kn) = exp i t1k1 + t2k2 + ... + tnkn considered as polynomials in (a part of ) the rn
+variables tjk . We have P(k1 ,k2 ,...,kn) ∞ = 1, s = rn, N = n. Proposition 1 follows since
+P 2
+c (k1 , k2 , ..., kn ) = 1.
+Now, consider the classical local hidden variable expression (4). The value of kCk∞
+
+is certainly bounded by the right hand side of (8). Hence, with high probability, kCk∞ ≤
+1
+
+9(rn log n) 2 . Therefore, this bound does not give us any information about the likelihood
+of (a slight) violation of locality by Q. In any case, even if such a violation exists, it is too
+small to be detected by any real experiment.
+Let us relax the assumption of coplanarity of the directions and assume that the ajk ’s are
+arbitrary. In a fixed polar coordinates assume ajk = (θkj , φjk ). Let |Φi be an arbitrary unit
+vector in the n qbits space. We have
+hΦ |Q| Φi =
+
+X
+k
+
+±c(k)Pk (θk11 , ..., θknn , φ1k1 , ..., φnkn )
+5
+
+(9)
+
+where Pk = Φ σ(a1k1 ) ⊗ σ(a2k2 )... ⊗ σ(ankn ) Φ is considered as a trigonometric polynomial
+in (a part of) the 2rn variables θkj , φjk . The degree of Pk is 2n and kPk k∞ ≤ 1 Hence we
+can use (5) with s = 2rn, N = 2n to obtain proposition 2.
+In the case r = 2 we can derive a better bound than indicated by proposition 1. In this
+case the complete set of inequalities has been derived [5,6]. The set is complete in the sense
+that all other valid Bell inequalities for that case are convex combinations of elements of this
+set. Finding such a set for larger r is highly unlikely, as the problem becomes intractable
+[9–11]. I shall use the characterization of Werner and Wolf. For convenience, let the row
+indices in (1) range over 0 and 1 (instead of 1 and 2). Then the classical inequalities are
+−1≤
+
+X
+
+s1 ,...,sn=0,1
+
+βf (s1 , ..., sn )Xs11 Xs22 ...Xsnn ≤ 1
+
+(10)
+
+n
+
+There are 22 such inequalities, each determined by an arbitrary function f : {0, 1}n →
+{−1, 1} by
+βf (s1 , ..., sn ) =
+
+X
+1
+(−1)ε1 s1 +...+εnsn f (ε1 , ..., εn )
+2n ε ,...,ε =0,1
+1
+
+(11)
+
+n
+
+For each choice of function f there corresponds a choice of coefficients βf . Since βf is the
+inverse Fourier transform of f on the group Zn2 we have by Plancherel’s theorem [12]:
+X
+
+|βf (s)|2 =
+
+1 X
+|f (ε)|2 = 1
+2n
+
+(12)
+
+The set of quantum operators corresponding to the functions in (10) are the Werner Wolf
+operators
+Wf =
+
+X
+s
+
+βf (s1 , ..., sn )σ(a1s1 ) ⊗ ... ⊗ σ(ansn )
+
+(13)
+
+and, as above, their eigenvalues have the form
+λf =
+
+X
+
+βf (s1 , ..., sn ) exp i θs11 + θs22 + ... + θsnn
+
+s
+
+
+
+(14)
+
+Substituting in (14) the values of βf from (11) we get after changing the order of summation
+6
+
+λf =
+
+X
+
+1 X
+ε1 s1 +...+εn sn
+1
+2
+n
+exp
+i
+θ
++
+θ
++
+...
++
+θ
+f
+(ε)
+(−1)
+s
+s
+s
+n
+1
+2
+2n ε
+s
+
+(15)
+
+n
+Y
+
+1 X
+= n
+f (ε)
+exp iθ0j + (−1)εj exp iθ1j
+2 ε
+j=1
+
+Assume
+
+that
+Q
+−n
+
+the
+
+θsj
+
+are
+arbitrary
+and
+fixed
+and
+
+P
+2
+j
+j
+εj
+denote c(ε) = 2
+j exp iθ0 + (−1) exp iθ1 , then
+ε |c(ε)| = 1. To see that note that
+ 
+2
+Q
+φ
+|c(ε)|2 = 2−2n j (1 + (−1)εj exp iφj ) , φj = θ1j − θ0j . Now, |1 + exp iφj |2 = 4 cos2 2j
+ 
+ 
+ 
+P
+Q 
+φ
+φ
+φ
+and |1 − exp iφj |2 = 4 sin2 2j and therefore ε |c(ε)|2 = j cos2 2j + sin2 2j
+= 1.
+P
+Consider λf =
+ε f (ε)c(ε), the signs f (ε) = ±1 are completely arbitrary and we can
+n
+
+take them as independent, identically distributed random variables on {−1, 1}2 . Put
+P
+n(ε) = j εj 2j−1 and define the random trigonometric polynomial in a single variable t
+R(t) =
+
+X
+ε
+
+±c(ε) exp(in(ε)t)
+
+(16)
+
+From the previous discussion we know that kWf k = max |λf | ≤ kRk∞ , with f corresponding to the choice of signs in R. The degree of R is 2n and therefore by a straightforward
+application of (5) we get.
+Proposition 3 For each choice of directions in (13) a vast majority of the resulting Werner
+√
+Wolf operators satisfy kWf k ≤ 13 n.
+Conclusion As the number of particles grows the violation of Bell’s inequality increaces
+exponentially. If this is the case why don’t we observe entanglement on the macroscopic
+scale? Initially there are two possible answers. The first, which puts the blame on us,
+states that our thermodynamic observables are so crude that they cancel all interesting
+interference effects (this crudeness is assumed to include decoherence). The second possible
+answer is that the Mermin type violations require very exotic quantum states and very
+specific operators; we are very unlikely to run into them by chance. Here we have shown
+that the second answer is true, so the blame is not entirely on us.
+Acknowledgment This research is supported by the Israel Science Foundation, grant
+number 787/99.
+7
+
+REFERENCES
+[1] N. D. Mermin, Phys. Rev. Lett. 65, 1838 (1990)
+[2] D. Collins, N. Gisin, N. Linden, S. Massar, and S. Popescu, e-print quant-ph/0106024
+[3] D. Collins, N. Gisin, S. Popescu, D. Roberts, and V. Scarani, e-print quant-ph/0201058
+[4] J. Uffink, e-print quant-ph/0201070
+[5] R. F. Werner and M. M. Wolf, Phys. Rev. A 64, 032112 (2001)
+[6] M. Zukowski and C. Brukner, e-print quant-ph/0102039
+[7] V. Scarani and N. Gisin, e-print quant-ph/0103068
+[8] J. P. Kahane, Some Random Series of Functions (Cambridge University Press, Cambridge, second edition 1985)
+[9] I. Pitowsky, Quantum Probability-Quantum Logic (Springer, Berlin, 1989)
+[10] I. Pitowsky, Math. Programming A 50, 395 (1991)
+[11] I. Pitowsky and K. Svozil, Phys. Rev. A 64, 014102 (2001)
+[12] W. Rudin, Fourier Analysis on Groups (Interscience Publishers, New York, 1960)
+
+8
+
+

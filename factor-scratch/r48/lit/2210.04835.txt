@@ -1,0 +1,645 @@
+arXiv:2210.04835v2 [math.NT] 14 Oct 2022
+
+FACTORING NUMBERS WITH ELLIPTIC CURVES
+JORGE JIMÉNEZ URROZ AND JACEK POMYKALA
+Abstract. In the present paper we provide a probabilistic polynomial time
+algorithm that reduces the complete factorization of any squarefree integer n
+to counting points on elliptic curves modulo n, succeeding with probability
+1 − ε, for any ε > 0.
+
+1. introduction
+The importance of factorization is something already we all agree. Since the
+creation of RSA cryptosystem, and its strong consequences in society, not only
+mathematicians, but even the public community follow the updates in the problem
+with great enthusiasm. The security of our systems depend heavily in the difficulty
+of finding the factors of certain known integer n.
+Despite the efforts of the best mathematicians in the area, the fastest algorithms
+for factoring, the general number field sieve, suceeds in finding the factors only in
+subexponential time which, in particular, makes nowadays extremely hard to factor
+numbers of 1024 digits. It would need more than 1 year of continuos working of
+1, 5 million computers with 2.1Ghz of speed. And still, given the delicacy of the
+matter, the NIST recommends keys of 2048 bits at least since 2015.
+One way of dealing with the factorization is to find problems with equivalent
+difficulty, i.e. mathematical problems which solutions would give a polynomial
+time algorithm to factor integer numbers. The first of these instances is due to
+Miller [10], who proved under GRH that factoring an integer n is equivalent to
+compute the Euler function ϕ(n).
+Since then, there have been many attempts to find equivalent problems. Bach,
+et all in [3] relate factorization of an integer n with the problem of counting the sum
+of the divisors of n, in [2] consider the computation of cyclotomic polynomials, and
+in [1] provides a probabilistic polynomial time algorithm to reduce factorization to
+the discrete logarithm problem on composite integers n. It is worth to note that in
+all these problems, isolating certain multiple of (p − 1) is of interest, for some p|n.
+In 1987 the strategy changes with the introduction of elliptic curves into the
+problem with the extraordinary paper by Lenstra [8], in which he produces an algorithm to factor the integer n by using the number of points of an elliptic curve
+modulo n. Since then, many articles relate elliptic curves with factorization. In
+[7] the authors prove that counting points on elliptic curves modulo n is randomly
+computationally equivalent to factoring n, assuming somehow uniform distribution
+Key words and phrases. Integer actorization, Elliptic curves, 11A51, 11G07.
+1
+
+2
+
+JORGE JIMÉNEZ URROZ AND JACEK POMYKALA
+
+of the order of points of random elliptic curves over the Hasse interval. In [9] the
+authors relate the problem of factoring with computing the order of points on elliptic curves modulo n and give a random polynomial time reduction between both
+problems, while [11] provides an algorithm reducing in polynomial time factorization to the computation of the exponent of the group of points E(Z/nZ) for elliptic
+curves modulo n.
+In [4] the authors prove a deterministic algorithm to reduce the factorization
+of any RSA modulus, n, to counting affine points on elliptic curves modulo n.
+For general squarefree the authors of [5], among other things, give an algorithm
+reducing the factorization of n to counting points on elliptic curves modulo n, valid
+for n outside an exceptional set depending on the number of prime factors of n.
+For the particular case of RSA modulus this set is of size o(x log log x/ log x). The
+argument is based on the idea of finding traces of elliptic curves coprime to p + 1
+for some prime factor p|n. However, to exploit the idea, they also need to assume
+uniform distribution of the traces of elliptic curves, in a particular way as p varies.
+The goal of this paper is to give a probabilistic polynomial time algorithm succesfull with probability 1 − ε for any ε > 0, valid for all squarefree integers n with
+no exception. Concretely we prove the following result.
+Theorem 1. Let n be a squarefree integer. Then, assuming GRH, counting the
+number of points on elliptic curves modulo n allows to find the complete factorization of n with probability bigger than 1 − ε for any ε > 0.
+The argument also uses the idea of counting traces coprime to p + 1 where p|n,
+but instead we do not need to assume extra hypothesis on the traces. Instead,
+our argument uses the unconditional bounds of Lenstra for the distribution of the
+number of points as E varies randomly over all elliptic curves over Fp . To do so,
+Lenstra uses the class number formula, and the bounds for the special value L(1, χ)
+where χ is the quadratic character associated to the Frobenius field when varying
+the curve. In this sense one is tempted to assume that no Siegel zero exists, but
+this only would save a logarithm with no effect in the result. On the other hand,
+we do need to assume the general Riemann Hypothesis, GRH, to bound the size of
+the least non square residue modulo p.
+2. Lemmata
+We want
+Q to factorize n = p1 . . . pr an squarefree integer. As usual, for E/Z we
+let En = p|n Ep , where Ep is the reduction of E modulo p. Clearly we can give to
+Q
+En group structure isomorphic to p|n Ep as groups. We denote |En | the number
+of points of the elliptic curve modulo n. Now, for any (d, n) = 1 consider End the
+quadratic twist of En and let |End | its number of points modulo n. Then,
+  
+Y
+Y
+d
+d
+ap ,
+p+1−
+(p + 1 − ap ), |En | =
+|En | =
+p
+p|n
+
+ 
+d
+p
+
+p|n
+
+is the Legendre symbol, and ap is the trace of the Frobenius endomor√
+phism ϕp : Ep → Ep which verifies |ap | ≤ 2 p by Hasse’s Theorem [6]. We will
+where
+
+FACTORING NUMBERS WITH ELLIPTIC CURVES
+
+3
+
+√
+√
+denote Ip = [p + 1 − 2 p, p + 1 + 2 p] the Hasse’s interval. For the proof of the
+theorem we need the following lemmata.
+Lemma 2. Let m be an integer
+and p a prime p ∤ m. Assuming GRH, there exist
+
+
+d
+d
+2
+= 1.
+d ≪ (log mp) such that p = −1 and m
+
+Proof. This is just a consequence of Theorem 1.4 of [13], considering the coset
+aH of the subgroup H ⊂ (Z/pm)∗ of the quadratic residues modulo pm, and a a
+quadratic non-residue modulo p and a quadratic residue modulo m.
+
+
+Lemma 3. Let D ∈ N, p a prime number and Sp,D be the number of isomorphic
+classes over Fp of elliptic curves over Fp with trace a such that the gcd (a, p+1) ≤ D.
+Then
+
+
+√
+p
+p
+p
+p
+,
+Sp,D ≥ C max
+−
+τ (p + 1) − τ (p + 1)2
+,
+log p D log p
+log p (log p)2
+for some explicit constant C.
+Proof. By Proposition 1.9 of [8], we know that given any set S ⊂ Ip with |S| ≥ 3,
+then the number of isomorphism classes over
+Fp of elliptic curves modulo p with
+√
+c p
+number of points in S is bigger than |S| log p , for some explicit constant c. So we
+√
+just have to count the number of integers 1 ≤ a ≤ 2 p such that (a, p + 1) = d for
+some d ≤ D. Let us call ϕp,D to this number. Note that the number of traces with
+(ap , p + 1) ≤ D is exactly 2ϕp,D since (a, p + 1) = d if and only if (−a, p + 1) = d.
+Now,
+X X
+X
+X
+X
+1=
+µ(k)
+ϕp,D =
+√
+d|p+1 a≤2 p
+d≤D (a,p+1)=d
+
+=
+
+√
+d|p+1 a≤2 p/d k|(a,(p+1)/d)
+d≤D
+
+X
+
+µ(k)
+
+√ X 1
+2 p
+d
+
+X
+
+X
+
+d|p+1
+d≤D
+
+=
+
+X
+
+ √ 
+2 p
+µ(k)
+kd
+
+X
+µ(k)
+−
+k
+
+X
+
+ √ 
+2 p
+µ(k)
+kd
+
+1=
+
+√
+2 p
+
+d|p+1 k|(p+1)/d
+d≤D
+
+=
+
+X
+
+X
+
+d|p+1 k|(p+1)/d
+d≤D
+
+a≤ kd
+
+k|(p+1)/d
+
+d|p+1 k|(p+1)/d
+d≤D
+
+√
+X
+2 p X
+ϕ((p + 1)/d) −
+p+1
+d|p+1
+d≤D
+
+X
+
+d|p+1 k|(p+1)/d
+d≤D
+
+ √ 
+2 p
+µ(k)
+,
+kd
+
+and noting that
+X
+
+ϕ((p + 1)/d) =
+
+(1)
+
+ϕ(d) = p + 1.
+
+d|p+1
+
+d|p+1
+
+we get
+
+X
+
+√
+X
+2 p X
+√
+ϕp,D = 2 p −
+ϕ((p + 1)/d) −
+p+1
+d|p+1
+d>D
+
+X
+
+d|p+1 k|(p+1)/d
+d≤D
+
+µ(k)
+
+ √ 
+2 p
+.
+kd
+
+Using the trivial upper bound ϕ(n) < n we get for the first sum in (1)
+√
+√
+2 p X
+2 p
+√ X 1
+ϕ((p + 1)/d) < 2 p
+<
+τ (p + 1).
+p+1
+d
+D
+d|p+1
+d>D
+
+d|p+1
+d>D
+
+4
+
+JORGE JIMÉNEZ URROZ AND JACEK POMYKALA
+
+The last sum in (1) can be bounded in the following way
+
+X
+
+X
+
+µ(k)
+
+d|p+1
+d≤D
+
+d|p+1 k|(p+1)/d
+d≤D
+
+≤
+
+Y X
+
+Y
+
+2ω(d) =
+
+qα ||p+1 d|qα
+
+and hence
+
+ √ 
+X
+2 p
+2ω((p+1)/d) =
+≤
+kd
+
+X
+
+2ω(d)
+
+d|p+1
+d≥(p+1)/D
+
+(1 + 2α) = τ ((p + 1)2 ).
+
+qα ||p+1
+
+√
+2 p
+√
+ϕp,D ≥ 2 p −
+τ (p + 1) − τ ((p + 1)2 ).
+D
+
+(2)
+
+On the other hand, we trivially have
+ϕp,D ≥ ϕp,1
+and
+ϕp,1
+
+=
+
+X
+
+1=
+
+√
+a≤2 p
+(a,p+1)=1
+
+=
+
+X
+
+√
+a≤2 p
+(a,p+1)=1
+2∤a
+
+X
+
+X
+
+µ(k) =
+
+√
+a≤2 p k|(a,p+1)
+2∤a
+
+X
+
+µ(k)
+
+k|p+1
+2∤k
+
+X
+
+1
+
+√
+2 p
+a≤ k
+
+2∤a
+
+√
+
+ √
+
+X
+X
+p 1
+2 p 1
+√ X µ(k) 1 X
+µ(k)
+= p
+µ(k)
+µ(k) +
++
++
++
+k
+2
+k
+2
+d
+2
+k|p+1
+2∤k
+
+k|p+1
+2∤k
+
+=
+
+1=
+
+√ ϕ(P ) X
+µ(k)
++
+p
+P
+k|P
+
+ √
+
+2 p 1
++
+d
+2
+
+k|p+1
+2∤k
+
+k|p+1
+2∤k
+
+where p + 1 = 2k P with 2 ∤ P . As before, for the last sum we have trivially the
+upper bound
+
+ √
+X
+2 p 1
++
+µ(k)
+≤ 2ω(P )
+d
+2
+k|P
+
+since the sum only counts squarefree integers, and hence
+(3)
+
+ϕp,D ≥
+
+√ ϕ(P )
+p
+− 2ω(P ) .
+P
+
+Q
+Now, if ω(P ) = l, then P ≥ p≤pl p. From Corollary 2 of Rosser and Shoenfeld
+Q
+[12] we obtain that pl > el for any pl > 113, so in particular p≤pl p ≥ ll . Indeed
+we just need Maple to check it is true for 13Q≤ l ≤ 31 and for l > 31 we will prove
+it by induction. So, suppose it is true that p≤pl−1 p ≥ (l − 1)(l−1) . Then,
+Y
+Y
+p = pl
+p ≥ pl (l − 1)(l−1) > el(l − 1)(l−1) ,
+p≤pl
+
+p≤pl−1
+
+but since al = (1 + 1l )l is an increasing sequence with limn→∞ al = e, we have
+el(l − 1)(l−1) > l(1 +
+
+1 l−1
+) (l − 1)(l−1) = ll
+l−1
+
+FACTORING NUMBERS WITH ELLIPTIC CURVES
+
+5
+
+Hence, taking l = 16 we see than P ≥ ll > 16l = (2l )4 so, in particular, we have
+P > (2ω(P ) )4 and
+√
+p
+√ ϕ(P )
+1/4
+−p
+≥
+,
+ϕp,1 > p
+P
+8 log p
+n
+for any p ≥ 108 , where we have used the trivial inequality ϕ(n) > 4 log
+
+n.
+3. Proof of Theorem 1
+Let D ≤ (log n)k for some fixed k. We select an elliptic curve En := y 2 =
+x + ax + b modulo n at random. Suppose (ap1 , p1 + 1) = dE ≤ D. Take d
+as in Lemma 2, for p = p1 and m = n/p1 . Then, |Epd1 | = p1 + 1 + ap1 while
+|Epdi | = pi + 1 − api for any i = 2 . . . r and, hence
+3
+
+p1 + 1 − ap1
+|En |
+.
+=
+|End |
+p1 + 1 + ap1
+
+|En |
+a
+Let |E
+d | = b where (a, b) = 1. Then
+n
+
+p1 +1−ap
+
+1
+a
+d
+= p1 +1+a
+,
+p
+1
+b
+
+d
+
+and hence a = (p1 + 1 − ap1 )d, b = (p1 + 1 + ap1 )d. So we just have to mulptiply a
+by all the integers up to D in order to recover p1 + 1 − ap1 and mulptiply b by all
+the integers up to D to recover p1 + 1 + ap1 . Adding both number we get 2(p1 + 1)
+and, hence, we have found a factor of n.
+If the algorithm does not return p1 , in (log n)k steps, then stop, and select a new
+elliptic curve En′ := y 2 = x3 + Ax + B non isomorphic to En . Note that we can
+assume A 6≡ 0 (mod p) neither B 6≡ 0 (mod p) for p|n since otherwise we find a
+factor of n. Then, if we would get an elliptic curve isomorphic to En over Fp for
+a
+and λ6 ≡ Bb
+some p|n then λ4 A ≡ a (mod p) and λ6 B ≡ b (mod p), so λ4 ≡ A
+bA
+2
+2 3
+3 2
+(mod p), or λ ≡ aB (mod p) and then b A − a B ≡ 0 (mod p) and we would
+find a factor.
+Now, repeating the process k(log n)2 times, for non isomorphic classes of elliptic
+curves, the probality that none of them has the trace a so that (a, p + 1) ≤ D is
+bounded above by
+k(log n)2
+k(log p)2
+
+
+c
+c
+k
+c
+< 1−
+< e− c < < ε,
+1−
+(log p)2
+(log p)2
+k
+for k ≫ (1/ε). Finally note that checking
+ that none of them is isomorphic to the
+previous ones would take O k 2 (log n)4 steps.
+References
+[1] E. Bach, Discrete logarithms and factoring, Technical Report No. UCB/CSD- 84-186, EECS
+Dept., Univ. of California,, 1984.
+[2] E. Bach and J. Shallit, Factoring with cyclotomic polynomials, Math. Comp., 185, 52, 201219, 1989.
+[3] E. Bach and G. Miller and J. Shallit, Sums of divisors, perfect numbers and factoring, SIAM
+J. Comput., 15, 4, 1143–1154, 1986.
+
+6
+
+JORGE JIMÉNEZ URROZ AND JACEK POMYKALA
+
+[4] L. Dieulefait and J. Urroz, Factorization and Malleability of RSA Moduli, and Counting
+Points on Elliptic Curves Modulo N , Mathematics, 12, 8, 2020.
+[5] R. Drylo and J. Pomykala, Integer factoring problem and elliptic curves over the ring Zn ,
+Colloq. Math., Volume = 159, 2, 259–284, 2020.
+[6] H. Hasse, Zur Theorie der abstrakten elliptischen Funktionenkörper III. Die Struktur des
+Meromorphismenrings. Die Riemannsche Vermutung, J. Reine Angew. Math., 175, 193–208,
+1936.
+[7] N. Kunihiro and K. Koyama, Equivalence of counting the number of points on elliptic curve
+over the ring Zn and factoring n, Advances in cryptology—EUROCRYPT ’98 (Espoo),
+Lecture Notes in Comput. Sci., 1998.
+[8] H. W. Lenstra, Jr., Factoring integers with elliptic curves, Ann. of Math., 126, 649-673,
+1987.
+[9] S. Martin and P. Morillo and J. L. Villar,Computing the order of points on an elliptic curve
+modulo N is as diﬃcult as factoring N,Appl. Math. Lett.,14,341-346,2001.
+[10] G. L. Miller, Riemann’s hypothesis and tests for primality, J. Comput. System Sci., 13, 3,
+300-317, 1976.
+[11] T. Okamoto and S. Uchiyama, Security of an identity-based cryptosystem and the related
+reductions,Advances in Cryptology—EUROCRYPT ’98 (Espoo),546–560, 1998.
+[12] J. Rosser and L. Schoenfeld, Approximate formulas for some functions of prime numbers,
+Illinois J. Math., 6, 64–94, 1962.
+[13] Y. Lamzouri and X. Li and K. Soundararajan, Conditional bounds for the least quadratic
+non-residue and related problems, Math. Comp., 84, 295, 2391–2412, 2015.
+
+4. Statements and Declarations
+The first author is supported by the Grant PID2019-110224RB-I00 of the Spanish
+Government. The authors have no relevant financial or non-financial interests to
+disclose. All authors contributed to the study, conception and design of the paper.
+All authors read and approved the final manuscript.
+Departamento de Matemáticas, Universidad Politécnica de Madrid, Madrid, Spain
+Email address: jorge.urroz@upc.edu,
+Institute of Mathematics, Faculty of Mathematics, Informatics and Mechanics, University of Warsaw, Poland
+Email address: pomykala@mimuw.edu.pl
+
+

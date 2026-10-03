@@ -1,0 +1,688 @@
+In number theory, the class number formula relates many important invariants of an algebraic number field to a special value of its Dedekind zeta function.
+
+
+== General statement of the class number formula ==
+We start with the following data:
+
+K is a number field.
+[K : Q] = n = r1 + 2r2, where r1 denotes the number of real embeddings of K, and 2r2 is the number of complex embeddings of K.
+ζK(s) is the Dedekind zeta function of K.
+hK is the class number, the number of elements in the ideal class group of K.
+RegK is the regulator of K.
+wK is the number of roots of unity contained in K.
+DK is the discriminant of the extension K/Q.
+Then:
+
+Theorem (Class Number Formula). ζK(s) converges absolutely for Re(s) > 1 and extends to a meromorphic function defined for all complex s with only one simple pole at s = 1, with residue
+
+  
+    
+      
+        
+          lim
+          
+            s
+            →
+            1
+          
+        
+        (
+        s
+        −
+        1
+        )
+        
+          ζ
+          
+            K
+          
+        
+        (
+        s
+        )
+        =
+        
+          
+            
+              
+                2
+                
+                  
+                    r
+                    
+                      1
+                    
+                  
+                
+              
+              (
+              2
+              π
+              
+                )
+                
+                  
+                    r
+                    
+                      2
+                    
+                  
+                
+              
+              
+                Reg
+                
+                  K
+                
+              
+              ⁡
+              
+                h
+                
+                  K
+                
+              
+            
+            
+              
+                w
+                
+                  K
+                
+              
+              
+                
+                  
+                    |
+                  
+                  
+                    D
+                    
+                      K
+                    
+                  
+                  
+                    |
+                  
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle \lim _{s\to 1}(s-1)\zeta _{K}(s)={\frac {2^{r_{1}}(2\pi )^{r_{2}}\operatorname {Reg} _{K}h_{K}}{w_{K}{\sqrt {|D_{K}|}}}}}
+  
+
+This is the most general "class number formula". In particular cases, for example when K is a cyclotomic extension of Q, there are particular and more refined class number formulas.
+
+
+== Proof ==
+The idea of the proof of the class number formula is most easily seen when K = Q(i). In this case, the ring of integers in K is the Gaussian integers.
+An elementary manipulation shows that the residue of the Dedekind zeta function at s = 1 is the average of the coefficients of the Dirichlet series representation of the Dedekind zeta function. The n-th coefficient of the Dirichlet series is essentially the number of representations of n as a sum of two squares of nonnegative integers. So one can compute the residue of the Dedekind zeta function at s = 1 by computing the average number of representations. As in the article on the Gauss circle problem, one can compute this by approximating the number of lattice points inside of a quarter circle centered at the origin, concluding that the residue is one quarter of pi.
+The proof when K is an arbitrary imaginary quadratic number field is very similar.
+In the general case, by Dirichlet's unit theorem, the group of units in the ring of integers of K is infinite. One can nevertheless reduce the computation of the residue to a lattice point counting problem using the classical theory of real and complex embeddings and approximate the number of lattice points in a region by the volume of the region, to complete the proof.
+
+
+== Dirichlet class number formula ==
+Peter Gustav Lejeune Dirichlet published a proof of the class number formula for quadratic fields in 1839, but it was stated in the language of quadratic forms rather than classes of ideals. It appears that Gauss already knew this formula in 1801.
+This exposition follows Davenport.
+Let d be a fundamental discriminant, and write h(d) for the number of equivalence classes of quadratic forms with discriminant d. Let 
+  
+    
+      
+        χ
+        =
+        
+          (
+          
+            
+            
+              
+                d
+                m
+              
+            
+            
+          
+          )
+        
+      
+    
+    {\displaystyle \chi =\left(\!{\frac {d}{m}}\!\right)}
+  
+ be the Kronecker symbol. Then 
+  
+    
+      
+        χ
+      
+    
+    {\displaystyle \chi }
+  
+ is a Dirichlet character. Write 
+  
+    
+      
+        L
+        (
+        s
+        ,
+        χ
+        )
+      
+    
+    {\displaystyle L(s,\chi )}
+  
+ for the Dirichlet L-series based on 
+  
+    
+      
+        χ
+      
+    
+    {\displaystyle \chi }
+  
+. For d > 0, let t > 0, u > 0 be the solution to the Pell equation 
+  
+    
+      
+        
+          t
+          
+            2
+          
+        
+        −
+        d
+        
+          u
+          
+            2
+          
+        
+        =
+        4
+      
+    
+    {\displaystyle t^{2}-du^{2}=4}
+  
+ for which u is smallest, and write
+
+  
+    
+      
+        ε
+        =
+        
+          
+            1
+            2
+          
+        
+        (
+        t
+        +
+        u
+        
+          
+            d
+          
+        
+        )
+        .
+      
+    
+    {\displaystyle \varepsilon ={\frac {1}{2}}(t+u{\sqrt {d}}).}
+  
+
+(Then 
+  
+    
+      
+        ε
+      
+    
+    {\displaystyle \varepsilon }
+  
+ is either a fundamental unit of the real quadratic field 
+  
+    
+      
+        
+          Q
+        
+        (
+        
+          
+            d
+          
+        
+        )
+      
+    
+    {\displaystyle \mathbb {Q} ({\sqrt {d}})}
+  
+ or the square of a fundamental unit.)
+For d < 0, write w for the number of automorphisms of quadratic forms of discriminant d; that is,
+
+  
+    
+      
+        w
+        =
+        
+          
+            {
+            
+              
+                
+                  2
+                  ,
+                
+                
+                  d
+                  <
+                  −
+                  4
+                  ;
+                
+              
+              
+                
+                  4
+                  ,
+                
+                
+                  d
+                  =
+                  −
+                  4
+                  ;
+                
+              
+              
+                
+                  6
+                  ,
+                
+                
+                  d
+                  =
+                  −
+                  3.
+                
+              
+            
+            
+          
+        
+      
+    
+    {\displaystyle w={\begin{cases}2,&d<-4;\\4,&d=-4;\\6,&d=-3.\end{cases}}}
+  
+
+Then Dirichlet showed that
+
+  
+    
+      
+        h
+        (
+        d
+        )
+        =
+        
+          
+            {
+            
+              
+                
+                  
+                    
+                      
+                        
+                          w
+                          
+                            
+                              
+                                |
+                              
+                              d
+                              
+                                |
+                              
+                            
+                          
+                        
+                        
+                          2
+                          π
+                        
+                      
+                    
+                  
+                  L
+                  (
+                  1
+                  ,
+                  χ
+                  )
+                  ,
+                
+                
+                  d
+                  <
+                  0
+                  ;
+                
+              
+              
+                
+                  
+                    
+                      
+                        
+                          d
+                        
+                        
+                          2
+                          ln
+                          ⁡
+                          ε
+                        
+                      
+                    
+                  
+                  L
+                  (
+                  1
+                  ,
+                  χ
+                  )
+                  ,
+                
+                
+                  d
+                  >
+                  0.
+                
+              
+            
+            
+          
+        
+      
+    
+    {\displaystyle h(d)={\begin{cases}{\dfrac {w{\sqrt {|d|}}}{2\pi }}L(1,\chi ),&d<0;\\{\dfrac {\sqrt {d}}{2\ln \varepsilon }}L(1,\chi ),&d>0.\end{cases}}}
+  
+
+This is a special case of Theorem 1 above: for a quadratic field K, the Dedekind zeta function is just 
+  
+    
+      
+        
+          ζ
+          
+            K
+          
+        
+        (
+        s
+        )
+        =
+        ζ
+        (
+        s
+        )
+        L
+        (
+        s
+        ,
+        χ
+        )
+      
+    
+    {\displaystyle \zeta _{K}(s)=\zeta (s)L(s,\chi )}
+  
+, and the residue is 
+  
+    
+      
+        L
+        (
+        1
+        ,
+        χ
+        )
+      
+    
+    {\displaystyle L(1,\chi )}
+  
+. Dirichlet also showed that the L-series can be written in a finite form, which gives a finite form for the class number. Suppose 
+  
+    
+      
+        χ
+      
+    
+    {\displaystyle \chi }
+  
+ is primitive with prime conductor 
+  
+    
+      
+        q
+      
+    
+    {\displaystyle q}
+  
+.  Then
+
+  
+    
+      
+        L
+        (
+        1
+        ,
+        χ
+        )
+        =
+        
+          
+            {
+            
+              
+                
+                  −
+                  
+                    
+                      
+                        π
+                        
+                          q
+                          
+                            3
+                            
+                              /
+                            
+                            2
+                          
+                        
+                      
+                    
+                  
+                  
+                    ∑
+                    
+                      m
+                      =
+                      1
+                    
+                    
+                      q
+                      −
+                      1
+                    
+                  
+                  m
+                  
+                    (
+                    
+                      
+                        
+                          m
+                          q
+                        
+                      
+                    
+                    )
+                  
+                  ,
+                
+                
+                  q
+                  ≡
+                  3
+                  
+                  mod
+                  
+                  
+                  4
+                  ;
+                
+              
+              
+                
+                  −
+                  
+                    
+                      
+                        1
+                        
+                          2
+                          
+                            q
+                            
+                              1
+                              
+                                /
+                              
+                              2
+                            
+                          
+                        
+                      
+                    
+                  
+                  
+                    ∑
+                    
+                      m
+                      =
+                      1
+                    
+                    
+                      q
+                      −
+                      1
+                    
+                  
+                  
+                    (
+                    
+                      
+                        
+                          m
+                          q
+                        
+                      
+                    
+                    )
+                  
+                  ln
+                  ⁡
+                  
+                    (
+                    
+                      sin
+                      ⁡
+                      
+                        
+                          
+                            
+                              m
+                              π
+                            
+                            q
+                          
+                        
+                      
+                    
+                    )
+                  
+                  ,
+                
+                
+                  q
+                  ≡
+                  1
+                  
+                  mod
+                  
+                  
+                  4.
+                
+              
+            
+            
+          
+        
+      
+    
+    {\displaystyle L(1,\chi )={\begin{cases}-{\dfrac {\pi }{q^{3/2}}}\sum _{m=1}^{q-1}m\left({\dfrac {m}{q}}\right),&q\equiv 3\mod 4;\\-{\dfrac {1}{2q^{1/2}}}\sum _{m=1}^{q-1}\left({\dfrac {m}{q}}\right)\ln \left(\sin {\dfrac {m\pi }{q}}\right),&q\equiv 1\mod 4.\end{cases}}}
+  
+
+
+== Galois extensions of the rationals ==
+If K is a Galois extension of Q, the theory of Artin L-functions applies to 
+  
+    
+      
+        
+          ζ
+          
+            K
+          
+        
+        (
+        s
+        )
+      
+    
+    {\displaystyle \zeta _{K}(s)}
+  
+. It has one factor of the Riemann zeta function, which has a pole of residue one, and the quotient is regular at s = 1. This means that the right-hand side of the class number formula can be equated to a left-hand side
+
+Π L(1,ρ)dim ρ
+with ρ running over the classes of irreducible non-trivial complex linear representations of Gal(K/Q) of dimension dim(ρ). That is according to the standard decomposition of the regular representation.
+
+
+== Abelian extensions of the rationals ==
+This is the case of the above, with Gal(K/Q) an abelian group, in which all the ρ can be replaced by Dirichlet characters (via class field theory) for some modulus f called the conductor. Therefore all the L(1) values occur for Dirichlet L-functions, for which there is a classical formula, involving logarithms.
+By the Kronecker–Weber theorem, all the values required for an analytic class number formula occur already when the cyclotomic fields are considered. In that case there is a further formulation possible, as shown by Kummer. The regulator, a calculation of volume in 'logarithmic space' as divided by the logarithms of the units of the cyclotomic field, can be set against the quantities from the L(1) recognisable as logarithms of cyclotomic units. There result formulae stating that the class number is determined by the index of the cyclotomic units in the whole group of units.
+In Iwasawa theory, these ideas are further combined with Stickelberger's theorem.
+
+
+== See also ==
+Brumer–Stark conjecture
+Smith–Minkowski–Siegel mass formula
+
+
+== Notes ==
+
+
+== References ==
+W. Narkiewicz (1990). Elementary and analytic theory of algebraic numbers (2nd ed.). Springer-Verlag/Polish Scientific Publishers PWN. pp. 324–355. ISBN 3-540-51250-0.
+This article incorporates material from Class number formula on PlanetMath, which is licensed under the Creative Commons Attribution/Share-Alike License.

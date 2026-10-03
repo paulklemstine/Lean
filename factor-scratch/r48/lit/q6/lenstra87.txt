@@ -1,0 +1,953 @@
+ Factoring integere with elliptic curves - H W Lenstra, Ji - verewn 19860508
+
+
+ Factoring integere with elliptic curves
+
+ H.W. Lenstra, Jr.
+ Mathemaftich Initituut
+ Untvcrtttctt van Amsterdam
+ Roctenitraat 15
+ 1018 WB Ameterdam
+ The Netherland«
+
+Abstract. This paper 19 devoted to the deacnption and analysis of a new algonthm to factor positive mtegers It
+depends on the use of elliptic curves The new m et b öd α obtained from Pollird's p-1-method (Proc Cambridge Philos
+Soc 76 (187-1), 521-528) by replacing the multiplicative group by tbe group of points on a random elliptic curve 1t u
+conjectured thit the algonthm determmes a non-tnvial divuor of a composite number n m expected time at most
+K(p)(logn)2, where p is the least pnme dmding n and K u a function for which logK(t)=v'(2+o(l))logiloElogz for t—>oo
+In the worst case, when n la the product of two pnmes of the same order of magnitude, this is exp((l+o(l))\/lognloglogn)
+(for n—>oo) There are several other factonng algonthms of which the conjectural expected running time is given by the
+latter formula However, these algonthms have a running time (hat is basically lodependent of the size of the pnme fac-
+tors of n, whereas the new elliptic curve method is subatantially faster for amall p
+Key words: pnme fictonzation, elliptic curves
+1980 Mathematics subject classification (1986): 11A51, 11G20
+Acknowledgements. This paper was wntten at the Mathematical Sciencea Research Institute in Berkeley and at the
+University of Chicago I thank both mstitutions for their hospitality and support
+Research supported in part by NSF Grant 8120790.
+Introduction.
+
+
+ This paper is devoted to the description and analysis of a new method to factor positive
+ integers. It depends on the use of elliptic curves.
+         The method is analogous to Pollard's p-1-method [17, Section 4], which attempts
+ to find a non-trivial divisor of a given integer n>l in the following way. First, one
+ selects an integer a(modn) and a positive integer k that is divisible by many small prime
+ powers; for example, k=lcm{l,2,...,b} for a suitable bound 6. Next one calculates
+ o*(modfi), and one hopes to obtain a non-trivial divisor of n by calculating gcd(a -l,n).
+         Pollard's p-1-method is usually successful if n has a prime factor p<n for which
+ p-1 is built up from small prime numbers. Suppose, to be specific, that p-1 divides k,
+ and that p does not divide a. Then in the multiplicative group (SZ/pZ)* of integers
+ modulo p the number o* becomes equal to the neutral element l, by Fermat's theorem,
+ so that p divides gcd(a*-l,n). In many cases one has p=gcd(a*-l,n), and the method
+ finds a non-trivial divisor of n.
+        On the other band, if for each prime number p dividing n the number p-1 has a
+large prime factor, then Pollard's p-1-method is not likely to be successful within a rea-
+sonable time iimit.
+        The aew method is obtained from Pollard's p-1-method by replacing the multipli-
+cative group by the group of points on a random elliptic curve. To find a non-trivial
+divisor of an integer n>l, one begins by selecting an elliptic curve E over Z/nZZ, a point
+P on E with coordinates in 2Z/n3Z, and an integer k äs above. Using the addition law of
+the curve, one next calculates the multiple k-P of P. One now hopes that there is a
+prime divisor p of n for which k-P and the neutral element O of the curve become the
+same modulo p; if E is given by a homogeneous Weierstrass equation y2z=z3+aa:i2-t-623,
+with 0=(0:1:0), then this is equivalent to the j-coordinate of k·P being divisible by p.
+Hence, one hopes to find a non-trivial factor of n by calculating the greatest common
+divisor of this ί-coordinate wiith n.
+                                           - 2-
+
+
+        If a single curve E is used, then the properties of this algorithm are exactly the
+same äs those of Pollard's p-1-method, with the order p-1 of (2Z/p!Z)* replaced by the
+order of the group E(5Z/p5Z) of points of E with coordinates in 7Z/p7L. By a theorem of
+Hasse (1934), this order is of the form p+l-tp, where tp is an integer depending on E and
+p for which \tp\<2\/p. If, for some prime factor p<n of n, the number p+l-tp is built
+up from small primes, then the above algorithm is likely to lead to a non- trivial divisor
+of n, and otherwise not.
+        However, if the algorithm is unsuccessful, then an Option is available that has no
+analogue in Pollard's p-1-method; namely, to repeat the algorithm with a different ellip-
+tic curve. A different curve will give rise to a new value for tp, so that p-f l-tp has a new
+chance of being built up from small primes. This can be repeated until a non-trivial
+divisor of n is found.
+        The analysis of the elliptic curve factorization method that I present in this paper
+shows that the performance of the algorithm is largely determined by the density of
+numbers built up from small primes in the neighborhood of p+1. If a reasonable conjec-
+ture concerning this density is assumed, then the following can be proved (see (2.9) and
+(2.10)). Let an integer n>0 that is no prime power and that is not divisible by 2 or 3 be
+given. Let also a positive integer g be given. Then, with a suitable choice of parameters,
+the elliptic curve method determines with probability at least l-c~3 a non-trivial divisor
+of n in time
+              gK(p)M(n),
+where the notation is äs follows: p denotes the least prime divisor of n the function
+A':IR>0-*IR>o is such that
+             /φ)= ^(2+ »(0)108*108108. fof χ_^00ι
+
+and M(n) denotes an upper bound for the time needed to perform a single addition on an
+elliptic curve mod n; one can take M(n)=0((logn)2) or 0(logn(log!ogn)2logloglogn),
+depending on which method is employed.
+        The algorithm can be repeated until the complete prime factorization of n is
+obtained. If the same conjecture is true, this takes expected time at most
+
+
+the worst case occurring if the second largest prime factor of n is not much smaller than
+\fn.
+       There exist other factoring methods that one conjectures to be successful within
+the same time limit, such äs the class group method [23] and the quadratic sieve [18l.
+Unlike the elliptic curve method, however, none of these has a running time that
+depends on the size of the prime factors of n. For a further comparison of the elliptic
+curve method with earlier methods, and a discussion of its practical merits I refer to the
+end of section 2.
+       The unproved assumption on which the analysis of the elliptic curve method is
+based only concerns the distribution of integers built up from small prime factors. In
+particular, it does not refer to elliptic curves. This is mainly due to a result of Deuring
+(1941), which gives a formula for the number of elliptic curves Eover a Gnite field F? for
+which E(Fg) has a given order. A statement of this result, in the case that q is prime, is
+given in section 1. In this section one also finds the other results on elliptic curves over
+fioitefieldsthat are needed.
+       Section 2 is devoted to the factoring algorithm and its analysis. The most natural
+way to describe the algorithm would make use of elliptic curves over rings that are no
+fields, äs was done in the outline given above. This theory, which one can find in [13,
+                                              - 3-
+
+
+Chapter 2], is not äs easily accessible äs the theory over fields. For this reason the
+details have been arranged in such a way that no reference to the theory over rings is
+necessary. Accordingly, the description of the algorithm given in section 2 does not fol-
+low the above outline in detail.
+        An earlier application of elliptic curves to algorithmic number theory can be
+found in [24]. For primality testing algorithms that depend on the use of elliptic curves
+I refer to [4, 7, 10].
+        By IF, we denote afinitefieldof cardinality q. The group of units of a ring A
+with l is denoted by A .
+
+
+1. Counting elliptic curves.
+
+
+In this section we assemble all facts about elliptic curves over fields that we need.
+Proofs can be found in the book by Silverman [29], if no other reference is given.
+       We denote by K afield;we shall mainly be interested in the case that K=Wp for
+some prime number p. To simplify the exposition we assume throughout this section
+that the characteristic of K is not equal to 2 or 3.
+
+(1.1) Elliptic curves. An elliptic curve over K is a pair of elements a,b£K for which
+4a +276 7^0. These elements are to be thought of äs the coefficients in the Weierstrass
+equation
+(1.2)          y2=x3+ax+b.
+We denote the elliptic curve (a,6) by £„4, or simply by E. The set of points E(K) of such
+an elliptic curve over K is defined by
+               E(K)={(x:y:z)€lP2(K): y2z=x3+axz2+bz3}.
+Here P2(/i) denotes the projective plane over K. It consists of equivalence classes of tri-
+ples (z,y,2)e/\TX A'XK", (x, y,z)j^ (0,0,0), two triples (x,y,z) and (x',y',zt) being equivalent if
+there exists c6K* such that cx=x', cy=y' and cz~z'; the equivalence class containing
+(x,y,z) is denoted by (x:y:z).
+        Let E be an elliptic curve over K. Then E(K) contains exactly one point (x:y:z)
+for which 2=0, namely the point (0:1:0); this point is called the zero point of the curve
+and denoted by 0. The other points of E(K) are the points (z:y:l), where x,y£K satisfy
+(1.2). The set E(K) has the structure of an abelian group; the group law, which is writ-
+ten additively, is defiaed äs follows. First, O+P=P+O=P for all P&E(K). Next, let
+p=(j1:yj:l)> Q=(z2:yi2:l) be non-zero points. Then P+Q=O if and only if Xi=Xz an<^
+y1==-y2. Otherwise, let \€K be determined by ^=(yi-yz)/(xi~x2} ^ P^Q an^ λ=
+(3xf+a)/(2y1) if P=Q, and let t^^-X^. Then P+Q=R, where Ä=(z3:y3:l) with
+73=X2-Zj-a;2 and y3=-\x3-v. Observe that 0 is the zero element of the group, and that
+
+
+(1.3) liomorphisms and automorphisms. Let E—Eaj and Ε^Ε^/,ι be elliptic curves over
+K. An isomorphism E—>E' (over K) is defined to be an element uEK* for which a— u4 a
+and 6— «66. If an isomorphism E—+E' exists then E and E9 are said to be isomorphic;
+this is clearly an equivalence relation. Any isomorphism u:E—*E' induces an isomorphism
+E(K)-*E'(K) of abelian groups that sende (x:y:z) to (u2x:usy:z); this isomorphism will also
+be denoted by u. We shall only be interested in elliptic curves up to isomorphism.
+       Let E be an elliptic curve over K. An automorphiam of E is an isomorphism
+E—* E. The set of automorphisms of E is a subgroup of K*, which is denoted by AutE or
+                                           - 4-
+
+
+A\itKE, An easy calculation shows that it can be explicitly described äs follows:
+(i)     if o=0 and K* has an element p of order 6, then p generates AutE and
+        #Aut£=6;
+(ii)    if 6=0 and K* has an element i of order 4, then i generates AutE and #Aut£=4;
+(iii)   in all other cases Aut£={l,-l} and #Aut£=2.
+
+
+(1.4) The number of elliptic curves. Let p denote a prime number >3. In the remainder
+of this section we restrict to the case K=Wf.
+        The number of elliptic curves over Wp, äs defined in (1.1), is the number of pairs
+(a,6)€IFpXFp with 4a3+27&Vo. Tne number of all pairs (0,6) equals p2, and
+4a3+2762=0 if and only if o=-3c2, 6=2c3 for some c€Fp; this element c is uniquely
+determined by a, 6 by c=-36/(2a) (if a^O). Hence 4a3+2762=0 for exactly p pairs
+(a, 6). We conclude that the number of elliptic curves over IFp equals p2-p.
+        We use this result to count the set
+              {E: E elliptic curve over Wp}/==F
+
+of isomorphism classes of elliptic curves over IFp. The      number of elliptic curves iso-
+morphic to a given elliptic curve E is easily seen to be #IFp/#Aut£'=(p-l)/#Aut£'.
+Summing this over a set of representatives of the isomorphism classes and dividing by
+p- 1 we obtain
+                             .
+              •^ #Aut£
+We express this by writing
+              #'{£: E elliptic curve over IFp}/£=% = p.
+
+Here, and in similar expressions below, #'denotes the weighted cardinality, the isomor-
+phism class of E being counted with weight (^AutE)"1.
+       Since #Aut£=2 for most E it follows from the above formula that the ordinary
+cardinality of the set of isomorphism classes of elliptic curves over IFp is approximately
+2p. The prerise number can be derived from (1.3). Using that the existence of p 6IF* äs
+in (1.3)(i) is äquivalent to p==lmod6, and        the existence of i€IFp äs in (1.3)(ii) to
+p=l mod4, onefindsthat
+              #{£: E elliptic curve over JFp}/S^ = 2p+6, 2p+2, 2p-f4, 2p
+for p=l, 5, 7, 11 mod 12, respectively. We     shall have no use for this result in the
+sequel.
+
+(1.5) The order of E(Wp). For any elliptic curve E over lFp we have by a theorem of
+Hasse
+              #£(Fp)=p+l-{,      with ί€ΖΖ, |ί|<2ν/ρ.
+Let, conversely, p be a prime >3 and i an integer satisfying |f|<2\/p. Then the
+weighted number of elliptic curves E over IFp with #£(IFp)=p+l-f, up to isomorphism,
+is given by a formula that is basically due to Deuring [9; see also l, 30, 25]:
+              #'{£: £ elliptic curve over lFp) φ £(IFp)=p+l~i}/=iF, = H(t2-4p),
+where //(<2-4p) denotes the Kronecker class number of i2-4p, which we now proceed to
+define.
+                                            - 5-
+
+
+(1.6) Kronecker claae numbere. We begin by recalling the properties of binary quadratic
+forms that we need. See [3] for more details and for proofs.
+        Let Δ be a negative integer, Δ=0 or Imod4. A positive definite integral binary
+quadratic form of discriminant Δ, briefly a form, is a polynomial F=aX2+bXY+cY2
+with a,6,c€2Z, α>0, 62-4ορ=Δ. An isomorphism from a form F=aX^+bXY+ cY2 to a
+form F'=a'X2+b'XY+c'Y* is a matrix (° l ) with a,ß,~i,6e%, a6-ßi=l for which
+aA'2+6JfK+cF2=a'A''2+6'Ar'r+c'r'2, where ΛΓ<=αΛΓ+£Κ and Y^fX+SY. If such an iso-
+morphism exists, the forms F and F1 are said to be equivalent; this is indeed an
+equivalence relation. An automorphism of a form Fis an isomorphism from Fto F. The
+set of automorphisms of a form F is a subgroup of the group SL^TL of 2X2-matrices with
+integral entries and determinant 1; this subgroup is denoted by AutF. We have:
+(i)     AutF is cyclic of order 6 if F is equivalent to aX2+aXY+aY* for some positive
+        integer a; in this case Δ=-3α2;
+(ii)    AutF is cyclic of order 4 if F is equivalent to aX^+aY2 for some positive integer a;
+        in this case Δ=-4α2;
+
+(iii)   in all other cases AutFis of order 2, and equals {(Q , J, ( Q _i)}·
+
+For fixed Δ, the set of equivalence classes of forms of discriminant Δ is finite. The
+Kronecker class number //(Δ) of Δ is defined to be the weighted cardinality of this set,
+the equivalence class containing F being counted with weight (^AutF)"1:
+              H(A)=#'{F: F is a form of discriminant Δ}/~
+with ~ denoting equivalence and the meaning of #' being äs in (1.4). For example,
+//(-3)=1/Ö, //(-4)=l/4, //(-7)=l/2. (Warning: one often finds the Kronecker class
+number defined twice äs large.) The existence of the form X2+bXY-((A-b2)/4)}'2, where
+ΔΞ=62π^4, shows that //(Δ)>0.
+       A form F—aX^+bXY+cY2 is called primitive if gcd(a,6,r)=l. We denote by Λ(Δ)
+the weighted cardinality of the set of equivalence classes of primitive forms of discrim-
+inant Δ, counted with the same weights äs above. It is easy to see that
+(1.7)         //(Δ) = Σ Λ(Δ/</2),
+                         d
+the summation ranging over those positive integers d for which Δ/rf2 is an integer satis-
+fying Δ/</2^0 or l mod4. The largest such d is called the conductor f of Δ, and
+Δ0=Δ//' it> the fundamental discriminant associated to Δ; the <fs in the above summa-
+tion are exactly (he positive divisors of /.
+       The quadratic character χ: Z>0 —* {Ο,Ι,-l} associated to Δ is defined by
+              *(/)==a(M)/2mod/, x(/)e{0,l,-l}         if / is an odd prime,
+              χ(2)=0, l, -l                for Δ==0π^4, ImodS, 5mod8, respectively,
+              X(nm)=x(n)x(m)              for all n,me2Z>0.
+The analytic claes number formula for Α(Δ) is
+
+                                 ),   Where L(Ä)X)=            for « 6<D,
+                       ίπ                             η=ι η
+If χ0 denotes the quadratic character associated to Δ0, one has
+
+
+                              Ί/
+where / ranges over the primes dividing /. Combining the last two formulas with (1.7)
+one finds that
+                                           - 6-
+
+
+
+
+where φ: 2Z>0-*IR is defined by
+                     /-Γ* , / + 1-2Γ*
+                     /-l ' '       /-l
+                         if / is prime, k>l and χ0(/)=0, l, -l, respectively,
+              ^nm)=i/!>(n)^(m)      if n,meZZ>0, gcd(n,m)=l.
+We are interested in obtaining upper and lower bounds for //(Δ). It is easily seen that
+              ^^(/^(//«AC/))2 = 0((loglog/)2)
+(see [11, Theorem 328]), where φ denotes the Euler ^-function. Further we have
+
+
+see [20, Kapitel IV, Lemma 8.1]. To obtain a satisfactory lower bound for L(l,x0) we
+must sacrifice one value for Δ0. Applying [20, Kapitel IV, section 6, Satz 6.6 and the
+argument following section 8, eq. (8.26)] one finds that there exists a positive effectively
+computable constant q such that for all z€2Z>i there exists Δ*<-4 with the property
+that
+
+              L(l,\0)>
+
+(If the generalized Riemann hypothesis is assumed we can replace logz by loglogz, and
+there is no need t o exclude an exceptional value Δ* for Δ0.)
+
+(1.8) Proposition. There ezist effectively computable positive conttants r2, c3 auch that
+for each z€7L>i there exists Δ*=Δ*(ί)<-4 such that
+
+              ^T^- < //(A) < c3-x/=Ä"-log^|-(loglog^|)2
+               logz
+for all Δ€Ζ with -ζ<Δ<0, Δ^Ο or l mod 4, except that the left inequality may be
+    /irf ι/Δ0=Δ*.
+
+Proof. This follows from the inequalities in (l.Ö).
+
+(1.9) Proposition. There ezist effectively computable positive constants c4, cs such that
+for each prime number p>3 the following two assertions are valid; for the notation #',
+eee(lA).
+(a) If S ii a set of integers s with \s-(p+ 1)| <2\/p then
+          #'{E: Eelliptic curve over Wp, #E(Wp)eS}/^f < c
+(b) If S is a set of integers s with |a-(p+l)| <\fp then
+          #'{E: Eelliptic curve over IFp, #E(Wp)eS}/s*Wf > c
+
+
+Proof. In both (a) and (b), the left band side of the inequality equals
+                  Σ      "(ί2-4ρ)
+              i, p+l-ies
+by the formula in (1.5). We apply (1.8) with z=4p. Then (a) follows immediately, with
+a suitable constant c4. For (b), we note that |*2-4p|>3p if p+l-<eS. To prove (b), it
+thus suffices to show that there are at most two integers i, |f| <\/p, for which the funda-
+mental discriminant associated to t2-4p equals Δ*. Let L=(Q(v Δ*), and let t be such an
+                                              - 7-
+
+
+ integer. Then the zeros a, ä of X^-tX+p belong to the ring of integere A of L. Also,
+ «ä=p, and by unique prime ideal factorization in A and the fact that Λ*={1,-1}
+ (because Δ*<-4) this determines a up to conjugation and sign. Hence t=a+ä is deter-
+ mined up to sign, äs required. This proves (1.9).
+
+(1.10) Modular curves. We are interested in estimating the weighted number of elliptic
+curves E over Wp for which #E(Wp) is divisible by a given prime number /. For this pur-
+pose we need some facts about the modular curves X(l) and ΛΊ(/). For proofs we refer to
+[28, 12, 13].
+        Let p be a prime number, p>3, and / a prime number different from p. We con-
+sider pairs (E, P) consisting of an elliptic curve E over Wp and a point P€E(Wp) of order /.
+Two such pairs (E, P) and (Ε',Ρ1) are said to be equivalent over Wp if there exists an iso-
+morphism u: E—+E' over JFp that maps P to P' (see (1.3)). We denote the set of
+equivalence classes by Zj(/)(lFp)· If, in the definition just given, u is allowed to be in the
+algebraic closure Fp of Fp rather than Fp (so that a map E(Wp)-+E'(W£) rather than
+E(Wp)—>-E'(lFp) is induced), we obtain the definition of equivalence over Wp. The set of
+classes of this equivalence relation is denoted by yj(/)(Fp). There is an obvious surjec-
+
+       We can estimate the cardinality of Fj(/)(IFp) by using the following properties of
+the modular curve Χ\(ΐ):
+(i)      -X"i(0 's a complete non-singular irreducible curve defined over IFp;
+(ii)     the genus of X^l) equals 0 for 1=2 or 3, and l +JL (/-l )(/-!!) for />5;
+(iii)    the set Kj(/)(IFp) can in a natural way be considered äs a subset of the set
+         Xi(t}(JFp) of points of X^l) defined over IFp;
+(iv)     the cardinality of the complement of Y1([)(lFp) in Jfi(f)(IFp) is bounded from above
+         by the number of cuaps of X\(l), which equals 2 for 1=2 and l-l for />2.
+If C is a complete non-singular irreducible curve of genus g over Wp then by Weil's ine-
+quality [2] the cardinality of the set C"(Fp) of points of C over IFp satisfies
+                |#C(Fp)-(p+l)| < 2(/ν^.
+Applying this to C=Xl(l) we find, using the above properties:
+(1.11)          #r,(/)(IF,) = p+0(/Vp"),
+the constant implied by the O-symbol being absolute and effectively computable.
+        With p and / äs above, suppose now in addition that p^lmod/, and let a primi-
+tive /-th root of unity <;£lFp be chosen. We consider triples (E,P,Q) consisting of an ellip-
+tic curve E over Fp and two points P, Q€E(TFp) of order / satisfying e/(F, Q)=i, where e\
+denotes the Weil pairing [29, Chapter III, section 8], Equivalence of two such triples
+(E,P,Q] and (E'^P'jQ') over Fp (or over lFp) is defined äs before; the only difference is that
+« should not only map P to P' but Q to Q' äs well. The sets of equivalence classes over
+Fp aiid Fp are denoted by Z(l)(Wp) and y(/)(Fp), respectively. There is an obvious surjec-
+tivemap Z(/)(FpH r(/)(Fp).
+        The modular curve X(l) has the following properties:
+(i)      X(l) is a complete non-singular irreducible curve defined over Fp;
+(ii)     the genus of X(t) equals 0 for 1=2, and l+-L(/2-l)(/-6) for />3;
+(iii)    the set F(/)(Fp) can in a natural way be considered äs a subset of the set X(l)(W )
+         of points of X(() defined over Fp;
+                                            - 8-
+
+(iv)     the cardinality of the complement of Y(l)(Wp) in X(l)(Wp) is bounded from above
+         by the number of cusps of X([), which is 3 for /=2 and (/2-l)/2 for />2.
+Applying Weil's inequality cited above to C=X(l) we find from these properties that
+(1.12)         #Y(t)(W„) = P+0(l3^),
+the O-constant again being absolute and effectively computable.
+
+(1.13) Lemma. Lei p, l be primee, p>3,
+(a) Lei E be an elliptic curve over Wp and P£E(Wp) 6e α point of order l. Denote by AEP
+the subgroup of all u€Autjp E that send P to P. Then the number of element» of ZJWF )
+that map to the class of (E,P) in ^(^(Fp) equaU #AEP.
+(b) Suppose that p==l modl, and let a primitive l-th root of unity ς EFp be choeen. Lei E
+be an elliptic curve over Wp and P,Q€E(Wp) pointe of order l eatiefying e,(P,Q)=f.
+Denote by AEPq the tubgroup AEPT\AEQ of AutjpE. Then the number of elementt of
+Z(l)(Wp) that map to the das» of (E,P,Q) in Y([)(Wp) eqvale
+
+Remark. The numbers ή^ΑΕΡ and $AEP q in the lemma equal 2 for 1=2 and l for />2
+provided that ^Aut^- E=2, which for given p is true in all but 0(1) cases.
+
+Proof of (1.13). (a) Let E be given by a, 6, and let P=(x:y:l). If E', P1 is another such
+pair, given by a', b1, x1, y', then (E,P) and (Ε',Ρ1) give rise to the same element of
+y,(/)(Fp) if and only if (o', b', x1, y>-(«V «'*, «\ «3y) for some «6Fj; and to the same
+element of ZJ/^Fp) if aQd on'v >f « ca° De taken in IF*. It follows that the number of
+elements of ^(^(Fp) mapping to the class of (E, P) equals index[BEp:CEp], where the
+subgroups BEP, CEP of W*p are defined by
+               BEiP— {«eÜy {«4o, u66, «2z, «3y}ClFp},
+               CEP = {«€F*: (u4a, u66, u2z, u3y)=(t/e, v66, v2z, v3y) for some v€W'p}.
+To count BEP, we notice that for «eff^ we have «4o€Fp if and only if (u4a)l>=u*a, so if
+and only if (up~1)4a=a; and similarly with u66, ti2x, «V, hence the map sending u to ιΑ1
+maps BEP onto the group AEP of all u 6 Autp E sending Pto itself. The kernel is F* so
+
+
+From the defmition of CEP it is easy to see that CEP is generated by F* and ÄpP so
+               #CEP
+and
+
+
+äs required.
+       This proves (a). The proof of (b) is entirely similar, and left to the reader. This
+proves (1.13).
+
+(1.14) Proposition. Lei p, l be primea, p>3, Ij^p. Then the number
+               #'{£: £ elliptic curve over Fp,
+equals
+
+               —i— p + 0(l\fp)     if p^
+
+               ~— p + O(l\fp)        if p^
+                                           -9-
+
+
+Here #' i» äs in (1.4), and the O-conttantt are absolute, and effectively computable.
+
+Remark. Comparing (1.14) with the result of (1.4) we see that, for fixed /, the probabil-
+ity that a "rändern" elliptic curve E over Wp satisfies i^E(Wp}^Ouiodl tends to !/(/-!)
+and l/(f-l] if p tends to infinity over the primes with ρφΐιηοάΐ and p=lmodl, respec-
+tively. In particular, #E(Wp) is even with probability approximately 2/3; this can also
+be deduced from the observation that #E(Wp) is even if and only if X3+aX+b has a zero
+in IFp, where E is given by α, ό. Α proposition similar to the above one, but with
+different constants, can be proved for the case in which / is not prime.
+
+Proo/o/(1.14). Write Yv Ζγ for ΪΊίΟΟΡ,), ^(OOFp)· If pslmod/let an element ς €IF* of
+order / be chosen, and write Y, Z for Y([)(Wp), Z(t)(Wp).
+       Lei W be the set of isomorphism classes of elliptic curves E over IF. with
+#E(IFp)==Omod/. For each such E, the group E(Wp)[l\={P€E(Wp): IP=O} has order /or
+/2 (see [29, Chapter III, Corollary 6.4]) and if the order is /2 then ps=lmod/ (ibidem,
+Corollary 8.1.1). We write W=Wi\JW2 (disjoint), with W, consisting of the classes of
+those £for which #E(Wp) [/]=/'; so W2=0 unless p=lmod/.
+       The map Zl-^ W mapping the class of (E, P) to the class of E is clearly surjective.
+Two pairs (E, P), (Ε,Ρ1) with the same E represent the same element of Zl if and only if
+P and P' belong to the same orbit of Autjj· E; also, the size of the orbit is exactly
+index[AulF E : ΑΕΡ\=#Α.\ιΙψ· E/#AEP with AEP denoting the stabilizer of P in AutF E
+(äs in (1.13)(a)). Fixing E with #E(Wp)[l\=l> and summing over the orbits of P we
+obtain
+
+
+
+
+Dividing by ^Autjp E and summing over isomorphism classes of E we obtain
+
+             ΣΙΓΤ— = ('- WWi + (/2- Ww*
+                #Λε,ρ
+with #' äs in (1.4) and the summation ranging over Zv By lemma (1.13)(a) the left band
+sum equals exactly #Ylt and with (1.11) we now find
+             (/- i)-#'Wi + (i2- i)-#'w2
+If ρφ\ mod/, th^n this simply means that
+
+
+and the required result follows upon division by / - 1.
+       Let, for the rest of the proof, the hypotheses be äs in (1.13)(b). Then we study in
+a similar way the map Z—» W2 that sends the class of (E,P,Q) to the class of E. For each
+E with #£'dFp)[/]=/2 there are /(/2-l) pairs of points P, Q€E(Wp)[t\ with e,(
+Hence we have, for such an E:
+
+              Σ     π - - - '(/2-D
+             (P,Q) TTAE,P,Q
+where the sum is over AutF Sorbits of pairs of points P, Q äs above and AEPn is äs in
+(1.13)(b). In the same way äs before this leads to
+
+             ΣΧΓ   — = l(f-ww*
+             Z TTAE,P,Q
+                                            - 10-
+
+
+and (1.13)(b) and (1.12) now imply that
+              /(/M)-#W2 = i
+Hence
+
+
+
+
+which is the required result.
+      This proves(l.H).
+
+(1.15) Proposition. There ezista α positive effectively computable conetant c6 such that
+for all pairs of primes p, l with p>3 we have
+              #'{E: E elliptic curve over Wp, #E(Wp) φ Omod/}/^ > c6p.
+
+
+Proof. By (1.14) and (1.4), the left hand side is (y^y-)p+ 0(l\fp) if ρψΰ, imod/ and
+
+(   Γ ~     )ρ+0(Λ/ρ) if p==l mod/.     The coefficient at p is at least 1/3, so if /<c7\/p for
+a suitable positive constant c7 then the proposition is correct.
+       Applying (1.9)(a) to the set S={«€ZZ: |*-(p+l)|<2\/p", i=0mod/}, which has
+cardinality (^(Ι + χ/ρΓ1), we find that the proposition is also valid if p>c and
+/>c9(logp)(loglogp)2 for suitable positive constants c8, cg.
+        In the remaining cases we have p<c8 or cö(logp)(loglogp)2>c7Vp, i.e. p is
+bounded. But for fixed p the proposition is obvious, since by Deuring's formula (see
+(1.5)) and //(Δ)>0 (see (1.6)) there are elliptic curves EI, £% over Fp with
+
+
+and / is not a divisor of at least one of p, p+1.
+       This proves (1.15).
+
+(1.16) Proposition. There is a positive effectively computable conetant c10 such that for
+every prime number p>3 the follou'ing two assertions are valid.
+(a) If S is a set of integer» s with \s - (p+ 1 ) | < \fp, then the number of triples (a,ar,y)eiF3
+for which
+              4e3+2762 ^ 0,
+
+
+where b=y2-z3-ax, is at least c]0(#5- 2)ps/2/logp.
+(b) /// i» any prime number, then the number of triplee (o,z,y)€IF3 for which
+              4α3+2762      Q>
+
+
+where b=y2~z3-ax, it at least c10p3.
+
+Proof. (a) The number to be estimated equals the number of quadruples (a,b,x,y)€W*
+for which £a6 is an elliptic curve over Fp with (x:y:l)€Eab(Wp) and #Eal>(Wp)F-s'. Each
+elliptic curve E over Fp is isomorphic to Ea6 for exactly (p- l)/#AutE pairs (o,6)eiF2
+(see (1.4)), and each £a6 gives rise to exactly #E„ib(Wp) - l points (z:y:l). Therefore the
+                                            - 11 -
+
+
+number to be estimated equals
+               (p
+
+
+the sum ranging over the elliptic curves E over JFf> u p to isomorphism, for which
+#E(FP)€S. Applying Hasse's theorem (see (1.5)) and (1.9)(b) we find that this is at least
+
+
+äs required.
+       (b) This is proved in the same way, with (1.15) instead of (1.9)(b).
+       This proves(l.lÖ).
+
+
+2. The factoring algorithm.
+
+
+We call a divisor d of a positive integer n non-trivial if l<rf<n. In this section we
+describe and analyze an algorithm to find a non-trivial divisor of a positive integer.
+
+(2.1) Elliptic curves modulo n. Let n be a positive integer. Consider the set of all triples
+(x,y,z)€(2i/n2Z)3 for which z,y,z generate the unit ideal of TL/nTL. The group of units
+(TL/nTL)* acts on this set by u(z,y,z)=(ux,uy,vz). The orbits under this action are the
+points of the projective plane over Ti/nTi. The orbit of (z,y,z) is denoted by (x:y:z), and
+the set of all orbits by P2(Z/nZZ).
+        For α,6€Ζ/ηΖ2 we consider the cubic curve /£=£Jet defined over TLjnTL by the
+equation
+
+
+The »et of points E(TLj nTL) of such a curve over "Z/nTi is defined by
+
+
+If 6(4a3+2762)6E(ZZ/nZ)* then E is called an elliptic curve over Z/nZZ, and in this case
+the set E(7Z/n7i) has a natural abelian group law; it is defined by formulae that are
+more general than those in (1.1), cf. [4].
+       The most convenient way to formulate the factoring algorithm to be presented in
+this section would make use of the group structure just mentioned. We shall avoid this,
+because the literature on elliptic curves over rings is not easily accessible. We shall only
+need the group structure in the case that n is prime (see (1.1)). For general n we shall
+work with a partially defined "pseudo-addition" on a subset of E(7Lf nTL), cf. [10].
+       We denote the point (0:1:0) of ]P2(Z/n7i) by 0, and we let the subset V„ of
+P2(Z/n2Z) consist of the "finite" points together with 0:
+              V„={(x:y:l):x,yE(Z/n7i)}(J{0}.
+For P&Vn and a prime p dividing n we denote by Pp the point of P2(IF_) obtained by
+redudng the coordinates of P modulo p. Observe that Pp=0f if and only if P— O.
+
+(2.2) Addition. We describe an algorithm that given n62>1, o€/Z/nSZ and P,Q€V„,
+either calculates a non-trivial divisor d of n, or determines a point /?6 Vn with the follow-
+ing property: if p is any prime dividing n for which there exists 6€IFp such that
+                                 for ä=(amodp),
+                                  Qp€E,b(Wp),
+                                            - 12 -
+
+
+then Rp=Pp+Qp in the group E^W,).
+       If P=O put R=Q and stop. If P^O, Q=0 put ß=P and stop. In the remain-
+ing case P^4O, Qj^O, let P=(x1:y1:l) and Q=(z->:y2:l). Use the Euclidean algorithm to
+calculate gcd(z1-z2,n). If this gcd is not l or n, call it d and stop. If gcd(zi-z2,n)=l
+then the Euclidean algorithm also gives (zj-a^)"1; in this case put
+
+
+
+
+and stop. Finally assume that gcdizj-a^n^n, so that ^1=22· Calculate gcd(y1+y2,n).
+If it is not l or n, call it d and stop. If it is n (so that y\=-y^}, put R=0 and stop. If
+gcd(y!+y2,n)=l, put
+
+
+
+
+and stop. (Notice that in this last case one actually has y\=y^ and P=Q.\ This finishes
+the description of the algorithm.
+       The correctness of the algorithm is an immediate consequence of the formulae
+given in (1.1).
+       If the algorithm determines a point R with the stated property we shall denote it
+by P+Q, and the partial binary Operation on Vn defined in this way shall be called addi-
+tion. If there exists b£TL/n7L such that
+              6(4a3+2762)e(2Z/n2Z)*,
+
+
+then P+Q, if defined, actually equals the sum of P and Q in the group Ea^7Lln1L\ but
+we shall not need this. The only property of addition that we do need is formulated at
+the beginning of (2.2).
+
+(2.3) Multiplication. By repeated addition one readily derives from (2.2) an algorithm
+that accomplishes the following. Given Α;€2Ζ>0, η€2!>1) α€Ζί/ηΖΖ and P€V it either
+calculates a non-trivial divisor d of n, or determines a point R£V„ with the following
+property: if p is any prime dividing n for which there exists 66F such that
+                                 for ä=(amodp),
+
+
+then Rp=k-Pp in the group EVttl(JFf).
+       If this algorithm determines a point R with the stated property we shall denote it
+by kP. We call the partial Operation defined in this way multiplic ation.
+       The number of additions that one has to perform in this algorithm is at most the
+length of the addition chain that is used, see [14, Section 4.6.3]. One can, for example,
+use an addition chain that is derived from the binary representation of k, which has
+length O(logA). Whether or not kP is defined may depend on the addition chain that is
+used (if n is composite). It can be proved that if kP is defined for each of two addition
+chains, then the two outcomes are the same. Since we do not need this fact we omit the
+proof.
+       If A; is given äs k=klk2 for certain positive integere klt k^, one can calculate kP by
+                                             - 13-
+
+
+        Suppose now that k is given äs a product
+
+
+where r ranges over a certain finite set of positive integere and each e(r) is a positive
+integer. Applying the above repeatedly we see that in order to multiply a point P by k
+it suffices to perform e(r) multiplications by r for each r. We shall assume in the sequel
+that the multiplications by r are performed with r in increaeing order.
+
+(2.4) Factoring with one curve. Let n, v, w^7L>l and β, χ, yGTL/nTZ be given. We
+describe an algorithm that attempts to find a non-trivial divisor rfof n.
+       For each integer r>2, denote by e(r) the largest integer m with rm<t)+2\/tH-l,
+and put
+
+
+                  r=2
+Let P—(x:y:l)€ V„. Attempt to calculate kP by the method just explained. If this
+attempt fails then a non-trivial divisor of n is found, and the algorithm halts, with d
+equal to this divisor. If kP is calculated successfully then the algorithm halts äs well,
+with the message that it has failed to find a non-trivial divisor of n. This finishes the
+description of the algorithm.
+       In (2.6) below we give a sufficient condition for the algorithm to be successful.
+The choice of a, x, y determines the elliptic curve that one uses. The number v may be
+thought of äs an upper bound for the divisor d that one is trying to find, although it is
+by no means guaranteed that indeed rf<v. The parameter w essentially measures the
+time that is spent on the algorithm (see (2.9)); the probability of success increases with
+w.
+
+(2.5) Factoring with »everal curve». Let n, v, w, A€Z>1 be given. We describe a proba-
+bilistic algorithm that attempts to find a non-trivial divisor d of n.
+        (*) Draw three elenients a, x, ytTL/nTL at random, and apply algorithm (2.4) to
+n, v, w, a, x, y. If this results in a non-trivial divisor of n, halt, with d equal to this divi-
+sor. In the other case, go back to (*), except if algorithm (2.4) has already been applied
+h times; in this case, report failure and halt.
+        The number v should again be thought of äs an upper bound for the divisor that
+one is trying to find. The parameter w is basically the time that one is willing to spend
+on a single curve. and h is the number of curves that one tries. For the success probabil-
+ity of the algorithm, äs a function of u; and A, see (2.8). The optimal choice of u; and h
+is discussed in (2.9).
+
+(2.8) Proposition. Let n, v, w^Z>1 and a, x, ytZ/ηΉ, be ae in (2.4), put b=y2-x3-ax
+ €ZZ/n/2 and P=(x:y:l)^V„ (see (2.1)). Suppose that n ha» prime diviaor» p and q satis-
+fying the following conditions.
+(i)     p<v;
+(ii)    6(4ö3+2762)^0 for ä-=(amodp), 6=(6modp);
+(iii)   each prime number r dividing fiEy^Wp) satisfies r<w;
+(iv)    6(4ä3+2762)=^0/{>r a=(amodc/), 6=(6modg);
+(v)     #£äj(IF?) i» not divisible by the largest prime number dividing the order of Pp (see
+        (2.1)).
+                                           - 14 -
+
+
+Then algorithm (2.4) it eucceeeful in finding a non-trivial divieor of n.
+
+Remark. Note that conditions (ii) and (iv) imply that Eyj(Wp) and Eä j(F?) have a group
+structure. Also, PpJ^Of in Ev^Wf), so the largest prime number referred to in (v) does
+exist. Clearly (v) implies that
+
+Proof. From p<v and Hasse's inequality (see (1.5)) it follows that #£ffj{lF_)<t;+2\/tH-l,
+so for each prime number r the exponent of r in ftEyjßFp) is at most the number e(r)
+defined in (2.4). The same is then true for the exponent of r in the order ω of P
+Denote by / the largest prime number dividing ω, and by m the exponent of / in ω· so
+l<m<e(l). Put
+
+
+                  r=2
+then £o^)moda> and &of=0modw, so
+              k0Pp^Op,       k0lP„=Op       in the group    i
+From (iii) we see that /<«0, so k$ and ÄQ/ are divisors of the number k appearing in (2.4).
+Moreover, if kP is successfuliy calculated by the algorithm, then kQP and I^IP are calcu-
+lated along the way. Hence to prove (2.6) it suffices to show that k^P and k^lP cannot
+both be defined. To do this, we use the observation made at the end of (2.1), äs follows
+       If k0lPeV„ exists, then ψ0ΙΡ)ρ=Ι%1·Ρρ=Ορ in the group E^W,,) and therefore
+yP=0 in Vn; but then Ι^Ι·Ρ=*(ί0ΙΡ)9=·Ο9 in the group E^IF,),' so by (v) we have
+£0p?=0? äs well. Therefore, if k0P £V„ is also defined, we must have k0P=0 and hence
+k0Pp—Op, contradicting what we proved above.
+       This proves (2.6).
+
+(2.7) Proposition. There ezistt a positive, effectively computable constant cn with the
+follou'ing property. Let n, v, w£TL>l be euch that n has at leaat two distinct prime divi-
+sors >3, and such that the smallest prime diviaor p of n for which p>3 satisfiee p<v.
+Put                                                                                   ~
+              u = #{ί€Ζζ: \s - (fH-l)|<\/p, and each prime dividing β is <u?}.
+Then the number N of triples (a,x,y)€(2Z/n2L)3 for which algorithm (2.4) eucceeds in
+finding a non-trivial divisor of n satisfies
+              N        cu    u -2
+              n3      iogp 2[\/p]+l '
+
+Remark. The proposition asserts that the probability that a random triple (α χ υ) is suc-
+cessful, which is N/n3, is not much less than the probability that a random integer in
+the interval (p+l-v/p, p+l + Vp) has all its prime divisors <w; the latter probability is
+ti/(2|Vp]+l). From the proof and the remark made just before (1.8) it will be clear that
+under the assumption of the generalized Riemann hypothesis the proposition is also valid
+with the strenger inequality
+              N         cn        u
+              „3      loglogp 2[\/pj+l
+
+Proof. Let g be a prime divisor >3 of n that is different from p. For each positive
+integer «, let T, be the set of triples (α,ζ,η)^ρ with the property that
+                                                  - 15-
+
+
+                  4α3+27/?2 τ^Ο,
+
+
+where β=η2-ζΆ-αξ. For (α,ξ,η)€Τ,, let the largest prime divisor of the order of the
+point (£:»?:1) in the group Eaß(Wp) be denoted by Ιαςη, and let f/ailj be the set of triples
+
+
+                  4a'3+27ßß ^ 0,
+                  #Ea<ß<(Fg) is not divisible by /of,,
+where β'=ηβ-ξβ-α'ζ'. With this notation, Proposition (2.6) implies that
+
+                  ">Σ         Σ         Σ     0
+
+where * ranges over the set of positive integere built up from primes <tr and
+                  vatnaW= {(e,*,y)e(2Z;/n2Z)3: (amodp, zmodp, ymodp)=(a,£,i/),
+                             (amodg, zmodg, j/mod?)=(a',£',t;f)}.
+Clearly each Va(na,(V has cardinality n3/(pg)3, and by (1.16Xb) we have
+Hence we obtain
+                  N
+
+
+the sum ranging over the positive integers s built up from primes <u>. Restricting the
+sum to the integers a that also satisfy \» - (p+l)|<\/p, and applying (1.16)(a), one finds
+that
+
+                  4    ^ Ci2o(« - 2)p-1/2/logP,
+                  n
+and the proposition follows.
+      This proves (2.7).
+
+We now suppose that the random number generator that is used in algorithm (2.5) to
+draw the triple (a,z,y)€(ZZ/n/Z)3 gives each triple with equal probability, and that the
+successive calls to the random number generator are independent.
+
+(2.8) Corollary. There exista an effectively computable constant Cj2>l with the follow-
+ing property. Let n, υ€Ζ2>1 be euch that n hat at least two distinct prime divisore >3,
+and auch that the amallest prime divisor p of n for which p>3 eatiafies p<v. Let further
+tt'CiZ» be tuch that the number u defined by
+              u — =^{«£2: \e - (p+l)\<Vp, and each prime dividing e is <w}
+tatisfiet u>3, and let f(w)=u/(2[\/p]+l) denote the probability that a random integer in
+the interval (p+l-\/p, p+l + vp) has all ita prime factore <w. Then for any A€Z2>i the
+avccea» probability of algorithm (2.5) on input n, v, w, h ie at leaat l - cj*^10^1081'.
+
+Proof. By Proposition (2.7) and the assumptions made just before the corollary, the
+failure probability of the algorithm equals (l - TV/n3)*, where
+
+                          Cu    " ~2
+                  n3     logp 2[Vp]+l ~ Slogt;
+It follows that
+              n      \* <
+              (l - — )  <-
+                                           - 10-
+
+
+This proves (2.8).
+
+(2.9) Efficiency. Let Λ/(η) denote an upper bound for the tinae, measured in bit opera-
+tions, that is needed to perform a single addition äs in algorithm (2.2). One can take
+M(n)=0((iogn)2) if one uses the ordinary Euclidean algorithm [14, Exercise 4.5.2.30], and
+M(n)=(9((logn)(loglogri)2(logloglogn)) if one uses a faster version [26].
+       With this notation, the time required by algorithm (2.4) is O(w(\ogv)M(n))· this
+follows from the fact that the number k appearing in (2.4) satisfies logJt=O(«iogt;).
+       The time spent on the factoring algorithm (2.5) is at most h times äs large so
+O(hw(\ogv)M(n)). (This does not count the time that the random number generator may
+need; it is called at most A times.) Corollary (2.8) shows that in order to have a reason-
+able chance of success, one should choose the number A of the same order of magnitude
+äs (\ogv)/f(w). Hence, to minimize the estimated running time, the number w should be
+chosen such that w/f(w) is minimal.
+       At this point we need an unproved conjecture. For a real number x>e, define
+               L(x) = e^iogiiogiogi
+A theorem of Canfield, Erdös and Pomerance [ö, Corollary to Theorem 3.1] implies the
+following. Let α be a positive real number. Then the probability that a random positive
+integer «<x has all its prime factors <L(xf is L(x)~l^2a^~°(l\ for z-+oo. The conjecture
+that we need is that the same result is valid if t is a random integer in the interval
+(χ-\-\-\ίχ, x+ 1+v/z). Putting z=p we see that the conjecture implies that
+                                            for
+for any fixed positive a, with /äs in (2.8).
+       With w=L(p}a, the conjecture would imply that
+              w/f(w) = ί,(ρ)ΐ/(2ο}+«»-κ»(ι)  for p-+00>
+which suggests that for the optimal choice of w we have
+
+
+A slight practical problem with this choice of w is that p, the least prime factor >3 of n
+is not known beforehand. One can solve tbis problem by replacing p by v in the above
+formula for u;, and performing algorithm (2.5) for a suitable increasing sequence of values
+for v. Notice that the factors logv in the running time estimate are L(v)0^1^
+        These arguments lead to the following conjectural running time estimate for the
+elliptic curve factoring algorithm.
+
+(2.10) Conjecture. There is a function /f:IR>0-*lR>0 with
+
+
+such that the following aseertion is true. Let n€Z>1 be an integer that is not a prime
+power and that is not divisible by 2 or 3, and let g be any positive integer. Then algo-
+rithm (2.5), when applied with euitable values for v, w, h, can be uted to find, with proba-
+bility at least l - e~9, a non-trivial divisor of n within time
+              gK(p)M(n),
+where p denotes the least prime divisor           of n   and   where A/(n)=O((logn)2) or
+0((logn)(loglogn)2(logloglogn)) i» äs m (2.9).
+
+It may be possible to replace the conditions on n in this conjecture by the simpler condi-
+tion that n be composite; but in any case integere that are divisible by 2 or 3, or that are
+perfect powers, are easy to recognize directly.
+                                           - 17-
+
+
+       It is not guaranteed that the divisor found by algorithm (2.5) is the smallest
+prime divisor of n, although in practical circumstances this will often be the case.
+       The algorithm may be repeated on the divisors that are found, untii the complete
+prime factorization of n is obtained. The estimate for the running time will then also
+contain terms gK^Mfa) corresponding to the other prime divisors p' of n, with the
+exception of the largest one. In all cases one may expect the total Factoring time to be
+at most L(n)l+0^ for n—*oo, with L äs in (2.9). The worst case occurs if the second larg-
+est prime divisor of n is not much smaller than Ν/Π, so that n is the product of some
+small primes and two large primes that are of the same order of magnitude.
+
+(2.11) Compariton to other methods. We just mentioned that the elliptic curve factoring
+method may be expected to factor any integer completely in time at most L(n)1+0^l
+Several other factoring methods have been proposed for which, conjecturally, the run-
+ning time in given by the same formula, such äs the class group method [23] and the
+quadratic sieve [18]; see also the discussion in [8]. For these other methods the running
+time is basically independent of the size of the prime factors of n, whereas the elliptic
+curve method is substantially faster if the second largest prime factor of n is much
+smaller than \/n.
+       The storage requirement of the elliptic curve factoring method is only O(logn).
+This is also true for the class group method [23], but all other known factoring algo-
+rithms of conjectured speed L(n)l+0^' have a storage requirement that is a positive power
+of L(n).
+
+(2.12) Number» built up from emall prime factors. The elliptic curve method is particu-
+larly efficient in discovering small prime divisors of a number n. This means that it can
+be used for a purpose different from factoring, namely for recognizing numbers that are
+built up from prime factors below a certain bound. Several factoring methods, such äs
+the continued fraction method, the random squares method of Dixon and the class group
+method of Seysen (see [18, 27]), need an efficient subroutine for performing this task.
+The analysis of these methods such äs given in [18] assumes that the Pollard />-method
+or the Pollard-Strassen method is used for this purpose. Using the elliptic curve method
+instead improves the theoretical performance of these factoring algorithms. It should be
+noted that for a rigorous analysis of the elliptic curve method, when applied in this way,
+much less is needed than the conjecture stated in (2.9); namely, it suffices to have an
+average form of a weaker statement, and this appears to be within reach of the present
+techniques of analytic number theory (Pomerance [19]).
+        Several practical primality tests depend on large completely factored divisors of
+certain integere related to the number being tested, see [21, 31]. The elliptic curve
+method can be used to search for such divisors. It is likely that this will improve the
+performat»ce of these primality testing algorithms.
+
+(2.13) Practical performance. The version of the elliptic curve method described in this
+paper was designed for simplicity of exposition and ease of analysis. In an actual imple-
+mentation one might prefer to make several modifications, such äs using a different
+model for elliptic curves, selecting the parameters in a different way, or adding a routine,
+äs in Pollard's original p-1-method, that enables one to use curves Ea j for which
+#£"Tj(Fp) is allowed to have one prime factor that is somewhat larger (cf. (2.6)(iii)). For
+a discussion of these and other points, see [16, 5, 7].
+       It turns out that, with these modifications, the elliptic curve method is one of the
+fastest integer factorization methods that is currently used in practice. The quadratic
+                                          - 18-
+
+
+sieve algorithm still seems to perform better on integere that are built up from two
+prime numbers of the same order of magnitude; such integere are of interest in cryptog-
+raphy [22].
+
+
+References.
+
+1.   B.J. Birch, How the number of pointe of an elliptic curve over a fixed prime field
+     vartes, J. London Math. Soc. 43 (1968), 57-60.
+2.   E. Bombieri, Counting pointe on curvet over finite field» (d'apret S.A. Stepanov),
+     Sem. Bourbaki 25 (1972/73), exp. 430, pp. 234-241 in Lecture Notes in Math. 383^
+     Springer-Verlag, Berlin 1974.
+3.   Z.I. Borevich, I.R. Shafarevich, Teoriya cAi«e/(Russian), Nauka, Moscow 1964.
+4.   W. Bosma, Primality tetting ueing elliptic curvet, report 85-12, Mathematisch Insti-
+     tuut, Universiteit van Amsterdam 1985.
+5.   R.P. Brent, Some integer factorization algorithm» ueing elliptic curve» research
+     report CMA-R32-85, The Australian National University, Canberra 1985.
+6.   E.R. Canfield, P. ErdBs, C. Pomerance, On a problem of Oppenheim concerning
+     " Factorisatio Numerorum", J. Number Theory 17 (1983), 1-28.
+7.   D.V. Chudnovsky, G.V. Chudnovsky, Sequences of numbers generated by addition
+     in formal groups and new primality and factorization tette, research report RC 11262
+     (#50739), IBM Thomas J. Watson Research Center, Yorktown Heights 1985.
+8.   D. Coppersmith, A.M. Odlyzko, R. Schroeppel, Diecrete logarithme in GF(p)    Algor-
+     ithmica 1(1986), 1-15.
+9.   M. Deuring, Die Typen der Multiplikatorenringe elliptischer Funktionenkörper     Abh.
+     Math. Sem. Hansischen Univ. 14 (1941), 197-272.
+10. S. Goldwasser, J. Kilian, A provably correct and probably fast primality test pre-
+    print, M.I.T. 1985; Proc. 18th Annual ACM Symp. on the Theory of Computing
+    (STOC), Berkeley, May 28-30, 1986.
+11. G.H. Hardy, E.M. Wright, An introduction to the theory of numbers, fourth edition,
+    Oxford University Press, Oxford 1960.
+12. J. Igusa, Kroneckerian model of fields of elliptic modular functions, Amer J Math
+    81 (1959), 561-577.
+13. N.M. Katz, B. Mazur, Arithmetic moduli of elliptic curves, Princeton University
+    Press, Princeton 1985.
+14. D.E. Knuth, The art of Computer programming, vol. 2, Seminumerical algorithm»,
+    second edition, Addison-Wesley, Reading, Mass. 1981.
+15. H.W. Lenstra, Jr., R. Tijdeman (eds), Computational methods in number theory,
+    Math. Centre Tracts 154/155, Mathematisch Centrum, Amsterdam 1982
+16. P.L. Montgomery, Speeding the Pollard methods of factorization, preprint, 1985.
+17. J.M. Pollard, Theorems on factorization and primality testing, Proc. Cambridge Phi-
+    los. Soc. 78 (1974), 521-528.
+18. C. Pomerance, Analyst» and comparison of some integer factoring algorithms pp.
+    89-139 in [15].
+19. C. Pomerance, Recent developments in factoring, in preparation.
+                                         - 19-
+
+
+20. K. Prachar, Primzahlverteilung, Grundlehren Math. Wiss. Öl, Springer-Verlag, Ber-
+    lin 1957.
+21. H. Riesel, Prime number» and Computer method» for factorization, Progr. Math. 57,
+    Birkhäuser, Boston 1985.
+22. R.L. Rivest, A. Shamir, L. Adleman, A method for obtaining digital »ignaturet and
+    public-key cryptosystems, Comm. ACM 21 (1978), 120-126.
+23. C.P. Schnorr, H.W. Lenstra, Jr., A Monte Carlo factoring algorithm with linear
+    storage, Math. Comp. 43 (1984), 289-311.
+24. R.J. Schoof, Elliptic curves over finite fields and the computation of tquare roots
+    mod p, Math. Comp. 44 (1985), 483-494.
+25. R.J. Schoof, Nonsingular plane cubic curvet overfinitefieldi,to appear.
+26. A. Schonhage, Schnelle Berechnung von Kettenbruchentwicklungen, Acta Inform. l
+    (1971), 139-144.
+27. M. Seysen, Math. Comp., to appear.
+28. G. Shimura, Introduction to the arithmetic theory of automorphic functions, Publ.
+    Math. Soc. Japan 11, Iwanami Shoten, Publishers, Tokyo; Princeton University
+    Press, Princeton 1971.
+29. J.H. Silverman, The arithmetic of elliptic curves, Graduate Texts in Math. 106,
+    Springer-Verlag, New York 1986.
+30. W.C. Watcrüouse, Abelian varieties overfinitefields,Ann. Sei. Ecole Norm. Sup. (4)
+    2 (1969), 521-560.
+31. H.C. Williams, Primality testing on a Computer, Ars Combin. 5 (1978), 127-185.
+

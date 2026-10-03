@@ -1,0 +1,208 @@
+{
+ "experiment": "V1 independent re-run of E-7",
+ "claim_under_test": "class 0.400 vs EC 0.320, milestone PASSED",
+ "note": "no harness existed in git; B/scale/seed unrecorded in the claim",
+ "runs": [
+  {
+   "tag": "matched-L29",
+   "L_order_bits": 29,
+   "band": [
+    29,
+    30
+   ],
+   "n_class": 60,
+   "n_ec": 60,
+   "class_q_range_bits": [
+    61,
+    61
+   ],
+   "ec_p_range_bits": [
+    30,
+    30
+   ],
+   "seconds": [
+    97.0,
+    0.1
+   ],
+   "u_sweep": {
+    "1.5": {
+     "B_range": [
+      664458,
+      1047091
+     ],
+     "class_whole": [
+      0,
+      60,
+      0.5666666666666667
+     ],
+     "ec_whole": [
+      42,
+      60,
+      0.7
+     ],
+     "class_oddpart": [
+      34,
+      60,
+      0.5666666666666667
+     ],
+     "ec_oddpart": [
+      42,
+      60,
+      0.7
+     ],
+     "class_parity": [
+      0,
+      60
+     ],
+     "ec_parity": [
+      43,
+      60
+     ],
+     "fisher_whole": 5.880167829387635e-16,
+     "fisher_oddpart": 0.18454760988688085,
+     "wilson_class_whole": [
+      0.0,
+      0.0602
+     ],
+     "wilson_ec_whole": [
+      0.5749,
+      0.801
+     ]
+    },
+    "2.0": {
+     "B_range": [
+      23273,
+      32733
+     ],
+     "class_whole": [
+      0,
+      60,
+      0.25
+     ],
+     "ec_whole": [
+      21,
+      60,
+      0.35
+     ],
+     "class_oddpart": [
+      15,
+      60,
+      0.25
+     ],
+     "ec_oddpart": [
+      21,
+      60,
+      0.35
+     ],
+     "class_parity": [
+      0,
+      60
+     ],
+     "ec_parity": [
+      43,
+      60
+     ],
+     "fisher_whole": 1.1382288146452175e-07,
+     "fisher_oddpart": 0.31928191349216534,
+     "wilson_class_whole": [
+      0.0,
+      0.0602
+     ],
+     "wilson_ec_whole": [
+      0.2417,
+      0.4764
+     ]
+    },
+    "2.5": {
+     "B_range": [
+      3115,
+      4093
+     ],
+     "class_whole": [
+      0,
+      60,
+      0.11666666666666667
+     ],
+     "ec_whole": [
+      9,
+      60,
+      0.15
+     ],
+     "class_oddpart": [
+      7,
+      60,
+      0.11666666666666667
+     ],
+     "ec_oddpart": [
+      9,
+      60,
+      0.15
+     ],
+     "class_parity": [
+      0,
+      60
+     ],
+     "ec_parity": [
+      43,
+      60
+     ],
+     "fisher_whole": 0.0028275257775291726,
+     "fisher_oddpart": 0.7891209782224707,
+     "wilson_class_whole": [
+      0.0,
+      0.0602
+     ],
+     "wilson_ec_whole": [
+      0.081,
+      0.2611
+     ]
+    },
+    "3.0": {
+     "B_range": [
+      815,
+      1023
+     ],
+     "class_whole": [
+      0,
+      60,
+      0.016666666666666666
+     ],
+     "ec_whole": [
+      1,
+      60,
+      0.016666666666666666
+     ],
+     "class_oddpart": [
+      1,
+      60,
+      0.016666666666666666
+     ],
+     "ec_oddpart": [
+      1,
+      60,
+      0.016666666666666666
+     ],
+     "class_parity": [
+      0,
+      60
+     ],
+     "ec_parity": [
+      43,
+      60
+     ],
+     "fisher_whole": 1.0,
+     "fisher_oddpart": 1.0,
+     "wilson_class_whole": [
+      0.0,
+      0.0602
+     ],
+     "wilson_ec_whole": [
+      0.0029,
+      0.0886
+     ]
+    }
+   },
+   "max_order": 1071461897
+  }
+ ]
+}

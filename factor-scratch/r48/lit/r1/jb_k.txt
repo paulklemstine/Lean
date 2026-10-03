@@ -1,0 +1,36 @@
+Title: Brave Search
+
+URL Source: https://search.brave.com/search?q=Kaltofen+%22On+the+deterministic+complexity+of+factoring+polynomials%22+1990+Journal+of+Symbolic+Computation+369
+
+Markdown Content:
+The specific publication **"On the deterministic complexity of factoring polynomials"** in **_Journal of Symbolic Computation_** Volume 31, Pages 19–36 (2001) was authored by **Shuhong Gao**, not Erich Kaltofen.
+
+**Erich Kaltofen** has published several influential surveys on this topic, including:
+
+*   **"Polynomial factorization 1982–1986"** in _Computers in Mathematics_ (1990).
+
+*   **"Polynomial factorization 1987–1991"** in _Proceedings of LATIN '92_ (1992).
+
+The reference to **Volume 369** and **1990** in your query appears to conflate details from different sources. **Victor Shoup** published **"On the deterministic complexity of factoring polynomials over finite fields"** in **_Information Processing Letters_** Volume 33, Pages 261–267 in **1990**.  There is no record in the provided context of a Kaltofen paper with that exact title in JSC in 1990 with page 369.
+
+[![Image 1: 🌐](https://imgs.search.brave.com/_9fJfT7yiJHjwRW_yis-sKXBI-83soJohV8IX_gf83A/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2FlNzAzZTY0/NWEyMTdmNjZhOTAz/YTRlOTM0MDg0MDJi/NWIzODMzM2M2ZDAw/OTVkOTViOTE2MTMz/M2NmMmY1OC9saW5r/LnNwcmluZ2VyLmNv/bS8) Springer link.springer.com › home › latin '92 › conference paper Polynomial factorization 1987–1991 | Springer Nature Link](https://link.springer.com/chapter/10.1007/BFb0023837)
+
+Shoup, V., “On the deterministic complexity of factoring polynomials over finite fields,” Inform. Process. Letters 33, pp. 261–267 (1990b). ... Shoup, V., “Smoothness and factoring polynomials over finite fields,” Inform. Process. Letters 38, pp. 39–42 (1991a). ... Shoup, V., “A fast deterministic algorithm for factoring polynomials over finite fields of small characteristic,” in Proc. 1991 Internat. Symp. Symbolic Algebraic Comput., edited by S.
+
+[![Image 2](https://imgs.search.brave.com/7zOrtzkr7CDQ9Za9FESUlrgk5t74JYHd_dwPmRciU0Q/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zcHJpbmdlcm5h/dHVyZS5jb20vdzE1/My9zcHJpbmdlci1z/dGF0aWMvY292ZXIv/Ym9vay85NzgtMy01/NDAtNDcwMTItMC5q/cGc)](https://link.springer.com/chapter/10.1007/BFb0023837)
+
+[![Image 3](https://imgs.search.brave.com/7zOrtzkr7CDQ9Za9FESUlrgk5t74JYHd_dwPmRciU0Q/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zcHJpbmdlcm5h/dHVyZS5jb20vdzE1/My9zcHJpbmdlci1z/dGF0aWMvY292ZXIv/Ym9vay85NzgtMy01/NDAtNDcwMTItMC5q/cGc)](https://link.springer.com/chapter/10.1007/BFb0023837)
+
+[![Image 4](https://imgs.search.brave.com/p7A5OYkfbadc6oD4k2eO2iekMTbujWrLU8DaiXpE5q0/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9hcnMu/ZWxzLWNkbi5jb20v/Y29udGVudC9pbWFn/ZS8xLXMyLjAtUzAw/MjAwMTkwMjVYMDAw/NDEtY292MTUwaC5n/aWY.jpeg)](https://www.sciencedirect.com/science/article/abs/pii/0020019090901954)
+
+[![Image 5: 🌐](https://imgs.search.brave.com/jdrGp78BWFZBNWS89rBNDkP-QTAckkyoKVu0TdmTlJc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvODkwYjU3NzE4/NDI0OWIyZjUzMTdm/MzhhYTE3NzkxODE3/ZjIwNjgyNzBjYjcy/ZmE5MDFlN2ZmMGUz/MDEyOWRhNS9jci55/cC50by8) DJB cr.yp.to › bib › 1998 › kaltofen.pdf pdf MATHEMATICS OF COMPUTATION Volume 67, Number 223, July 1998, Pages 1179–1197](https://cr.yp.to/bib/1998/kaltofen.pdf)
+
+33. Shoup, V., On the deterministic complexity of factoring polynomials over ﬁnite ﬁelds, Inform. Process. Letters, vol. 33, no. 5, 261–267, 1990.
+
+[![Image 6](https://imgs.search.brave.com/BvgE0ushYKIeG6virAJf9slfP2OWKuwzhzI3QGWFUIA/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuY2FtYnJpZGdl/Lm9yZy9jb3ZlcnMv/SkNNXzBfMF8wL2xt/c19qb3VybmFsIG9m/IGNvbXB1dGF0aW9u/IGFuZCBtYXRoZW1h/dGljcy5qcGc_c2Vu/ZC1mdWxsLXNpemUt/aW1hZ2UmI3gzRDt0/cnVl)](https://www.cambridge.org/core/journals/lms-journal-of-computation-and-mathematics/article/deterministic-polynomial-factoring-and-association-schemes/5B1AB697B65FB18DA9D17989E77AC3F4)
+
+[First, let me echo Felipe Voloch's comment and the answer by (the other) unknown (google). Having done that, here are a few recent papers that might be of interest. · Mullin, Ronald C.; Yucas, Joseph L.; Mullen, Gary L., · A generalized counting and factoring method for polynomials over finite fields. · J. Combin. Math. Combin. Comput. 72 (2010), 121–143. No review yet, so I don't know what's in there. · You don't say how many variables your polynomials have. If it's two, then the review of MR2537701 (2010d:12001) · Belabas, Karim; van Hoeij, Mark; Klüners, Jürgen; Steel, Allan, · Factoring polynomials over global fields. J. Théor. Nombres Bordeaux 21 (2009), no. 1, 15–39 by R. A. Mollin says, "They also provide polynomial time complexity results for bivariate polynomials over a finite field." · I was going to mention MR2582906 (2011c:68221) · Umans, Christopher, · Fast polynomial factorization and modular composition in small characteristic. STOC'08, 481–490, ACM, New York, 2008, but then I noticed the summary says "We obtain randomized algorithms for factoring degree $n$ univariate polynomials over $F_q$ that use $O(n^{1.5+o(1)}+n^{1+o(1)}\log q)$ field operations, when the characteristic is at most $n^{o(1)}$," and you don't want randomized algorithms, right? · MR2284290 (2007m:68318) · Genovese, Giulio, · Improving the algorithms of Berlekamp and Niederreiter for factoring polynomials over finite fields. · J. Symbolic Comput. 42 (2007), no. 1-2, 159–177 claims "to accelerate deterministic algorithms for the factorization of polynomials over finite fields."](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)[A deterministic algorithm of Shoup factors univariate polynomials of degree $n$ over $Z/pZ$ in time (worst case) $$O(p^{1/2}n^{2 + \varepsilon} (\log p)^2)$$ · On the deterministic complexity of factoring polynomials over finite fields, Information Processing Letters 33:261-267, 1990 · Regarding 'best known' I cannot say anything; but since you said you had no explicit result I thought it might still be useful information.](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+[![Image 7](https://imgs.search.brave.com/CW4O4DbAieILsaY4Y1_T34cQ1UHtnQC1NO4zDMe5fdU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9hcnMu/ZWxzLWNkbi5jb20v/Y29udGVudC9pbWFn/ZS8xLXMyLjAtUzAx/OTY2Nzc0MDlYMDAw/NDAtY292MTUwaC5n/aWY.jpeg)](https://www.sciencedirect.com/science/article/abs/pii/019667749190014P)
+
+Find elsewhere

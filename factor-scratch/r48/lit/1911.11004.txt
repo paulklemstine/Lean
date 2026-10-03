@@ -1,0 +1,470 @@
+arXiv:1911.11004v1 [math.NT] 25 Nov 2019
+
+Factorization and malleability of RSA modules,
+and counting points on elliptic curves modulo N
+Luis V. Dieulefait, Jorge Urroz
+Dept. mat. i informàtica, Universitat de Barcelona,
+Dept math. UPC
+Abstract
+In this paper we address two different problems related with the factorization of an RSA module N . First we can show that factoring is equivalent in
+deterministic polynomial time to counting points on a pair of twisted Elliptic
+curves modulo N . Also we settle the malleability of factoring an RSA module,
+as described in [9], using the number of points of a single elliptic curve modulo
+N , and Coppersmith’s algorithm.
+
+1
+
+Introduction
+
+The motivation of this note is twofolded. First we address the problem of malleability of an RSA module N and, from there, the equivalence between factoring and
+counting the number of points on an elliptic curve modulo N.
+Malleability started in the paper by Pailler and Villar [9], while studying the
+existence of a tradeoff between one-wayness and chosen ciphertext security, already
+observed back to the eighties for example in [10, 12, 6]. In some sense, one cannot
+achieve one-way encryption with a level of security equivalent to solve certain difficult
+problem, at the same time as the cryptosystem being IND-CCA secure with respect
+to it.
+Even though this paradox has been observed, it has not been formally proved
+except in the case of factoring-based cryptosystems in which Pailler and Villar [9]
+clarified the question reformulating the paradox in terms of key preserving blackbox reductions and proved that if factoring can be reduced in the standard model
+to breaking one-wayness of the cryptosystem then it is impossible to achieve chosencyphertext security.
+
+1
+
+After this they introduce the notion of malleability of a key generator and, with
+it, they are able to extend the result from key preserving black box reductions to
+the case of arbitrary black box reductions. This notion, which we give explicitly in
+Section 3, captures a very basic fact in arithmetic: intuitively, one tends to believe
+that the problem of factoring a given number n (an RSA modulus) is not made
+easier if we know how to factor other numbers n′ relatively prime to n. If this is
+true we say that factoring is non-malleable.
+As the authors themselves stress in [9], it is very important to study nonmalleability of key generators and, in fact, they conjecture that most instance generators are non-malleable, although no arguments are given to support this belief.
+In [4] we address this question and notice that the freedom of selecting the
+new number n′ breaks the independent behaviour of prime numbers, and hence we
+produce an explicit n′ which makes factorization malleable. In other words, given
+any RSA modulus n we prove the existence of a polynomial time reduction algorithm
+from factoring n to factoring certain explicit numbers n′ , all relatively prime to n.
+The numbers given in [4] are very simple: given the RSA modulus n = pq, the
+factorization of n′ = mn − 1, where m is a primitive root of the smallest prime
+dividing n, allows us to factor n in polynomial time. However, this does not give a
+complete satisfactory answer for several reasons. First one could think of n′ to be of
+exponential size and then out of the scope of the question. However, as we mention
+in [4], one can think of n′ as a collection of exactly n ones when it is written in
+m-ary, and we just need the factors of n′ modulo n, a data that has the same size as
+the given number. In any case, it still persists the restlessness of knowing whether
+or not in an small interval centered in n we can find an explicit n′ which can help
+to factor n.
+
+In this paper we address this question, given an affirmative answer to the malleability of the problem of factoring by showing a number of the same size of N
+whose factorization allows us to factor N with a algorithm that runs in polynomial
+time.
+The notion of malleability rests in measuring the difference between suitable
+Game 0 and Game 1 as defined in [9], more precisely: if we compare the success
+probability of factoring N with an Oracle which can solve any problem that can be
+reduced to factoring (Game 0) with the one when using an Oracle having the extra
+ability of factoring numbers which are relatively prime to N (Game 1) the probability
+of factoring N increases significantly (see [9], Section 4.1, for more details).
+
+2
+
+Concretely we will prove that given a random elliptic curve E defined modulo
+N, where N is an RSA module, and assuming that its number of points EN is
+known, by further knowing the factorization of EN we can produce a deterministic
+polynomial time algorithm that factors N. The key tool in our proof will be the
+result of Coppersmith (see [2]) that allows to factor an integer by knowing only
+certain bits of one of its prime factors. It is worth remarking that it is not known
+how to factor N only with the number EN as input.
+While proving this statement another interesting problem treated widely in the
+literature, (see [8] and [7] for related results) showed up:
+Problem Is factoring N equivalent to counting the number of points of elliptic
+curves modulo N.?
+We were lucky and we could also give a definite answer by proving the following
+theorem:
+Theorem 1 Given the number of points, affine or projective, of any elliptic curve
+and one of its twists modulo N we can factor N in deterministic polynomial time.
+
+Remark 2 As we said this problem has been addressed in [7]. We should stress
+that their results are based in an assumption on the distribution of the number of
+points on elliptic curves over finite fields which is not accurate. But more than that,
+the reduction algorithm from counting the number of the elliptic curve modulo N to
+factoring N in their case is probabilistic while here it is proved to be deterministic.
+Moreover, in terms of malleability, what we do in Section 3 involves taking a single
+elliptic curve, and suceeds with probability 1, while the results in [7] need to consider
+many elliptic curves to have positive probability to factor N. Finally the method used
+in that paper only works for the number of projective points on the elliptic curve,
+not covering the affine case as we do.
+The structure of the paper goes as follows: In Section 2 we prove Theorem 1,
+while Section 3 is dedicated to the problem of malleability of factoring.
+
+2
+
+Factorization
+
+Let N ∈ Z. Given an elliptic curve E := {y 2 = x3 + ax + b} over Z/NZ, we will
+denote by Ed its quadratic twist E := {dy 2 = x3 + ax + b}. E(Z/NZ) will be the
+3
+
+number of points of E (mod N), and E(Z/NZ)∗ the number of affine points of the
+curve (mod N). We know that if N = pq, then E(Z/NZ) = E(Z/pZ) × E(Z/qZ),
+and that for any prime l, E(Z/lZ) = l + 1 − al , where al is the trace of the Frobenius
+endomorphism of E (mod l).
+ 
+ 
+Let N = pq be an RSA modulus, and d an integer such that dp = −1 or dq = −1.
+We will use the abuse of notation E = E(Z/NZ) (or E = E(Z/NZ)∗ ), given by
+E = (P − ap )(Q − aq ) = P Q − P aq − Qap + ap aq ,
+where P = p + 1, Q = q + 1 in the projective case and P = p, Q = q in the affine
+case.
+There are three options for Ed (Z/NZ) (or Ed (Z/NZ)∗ ), which
+ will
+ be
+ denoted
+d
+d
+by Ê, Ẽ, Ē respectively, depending on the Legendre simbols p and q ,
+Ê = (P + ap )(Q + aq ) = P Q + P aq + Qap + ap aq ,
+Ẽ = (P − ap )(Q + aq ) = P Q + P aq − Qap − ap aq ,
+Ē = (P + ap )(Q − aq ) = P Q − P aq + Qap − ap aq .
+Then,
+E + Ê + Ẽ + Ē = 4P Q,
+
+(1)
+
+while
+4P Q =
+
+(E + Ẽ)(E + Ē)
+(Ẽ Ē)
+(Ẽ Ē)
+= E + Ẽ + Ē +
+= 4P Q − Ê +
+,
+E
+E
+E
+
+so
+E Ê = Ẽ Ē.
+
+(2)
+
+Lemma 3 Knowing two among Ẽ, Ê, Ē and E, we know the four of them.
+Proof. We split the proof in 2 cases.
+Case 1. We suppose E and Ê are known. The case in which Ẽ and Ē are known
+is analogous. Then we compute its product, M = E Ê and its sum L = E + Ê, and
+we have
+Ẽ Ē = M
+Ẽ + Ē = 4P Q − L
+so Ẽ and Ē are the solutions of the quadratic polynomial X 2 − (4P Q − L)X + M.
+p
+p
+4P Q − L − (4P Q − L)2 − 4M
+4P Q − L + (4P Q − L)2 − 4M
+,
+Ē =
+Ẽ =
+2
+2
+4
+
+Case 2. Suppose E and Ẽ are known. The cases in which the pairs (E, Ē), (Ê, Ẽ)
+and (Ê, Ē) are known, are analogous. Then, compute the quotient E
+= M and the
+Ẽ
+Ē
+sum E + Ẽ = L. Hence, Ê = M, or Ē = M Ê, and by (1) (M + 1)Ê = 4P Q − L, or
+Ê =
+
+4P Q − L
+,
+(M + 1)
+
+Ē =
+
+M(4P Q − L)
+.
+(M + 1)
+
+∗
+∗
+Theorem
+  4 Knowing either E(Z/NZ) and Ed (Z/NZ) or E(Z/NZ) and Ed (Z/NZ)
+for dp = −1, we can factor N in polynomial time.
+
+In the projective case, we compute the four integers E, Ê, Ẽ, Ē by Lemma 3 and
+then its sum to compute P Q. With P Q and N we factor N.
+In the affine case, we again compute the four integers E, Ê, Ẽ, Ē, and then note
+that E + Ẽ = 2q(p − ap ), has q as a common factor with N, so computing the gcd
+with N, we factor N.
+In both cases observe that, in principle, we do not know which one is Ed (Z/NZ),
+so we will have to make two computations.
+Theorem 5 Under ERH factoring an RSA modulus N = pq is polynomial time
+equivalent to count the number of points, affine or projective, of any elliptic curve
+E modulo N.
+Proof. Let E be an elliptic curve. Then, knowing the factorization of N, we
+can compute EN by Schoof’s algorithm [11].
+Now suppose we know EN . from [1], we know that, under ERH, the smallest
+quadratic nonresidue modulo p, call it d, is of size O((log p)2 ). Hence, apply the
+previous Theorem 4 to the pair E, Ed .
+Recall that, as of today, we can compute the number of points modulo N by
+baby step giant step, since E (mod N) has group structure, in O(N 1/4+ε ) which is
+exponential.
+
+3
+
+Malleability
+
+As in previous sections, let N = pq be an RSA module. We recall that in order to
+prove that factoring is malleable we need to find a number relatively prime to N
+5
+
+and of the same size, which factorization will allow us to factor N in deterministic
+polynomial time. We consider a random elliptic curve E (mod N), and we let EN
+∗
+be the number of affine points, while EN
+will be the number of points including
+the points at infinity. We can assume that we have at our disposal an Oracle that
+computes any of these two numbers. Since this computation can be reduced to the
+factorization of N thanks to Schoof’s algorithm, this corresponds to Game 0 in the
+setup described in the introduction while defining malleability. Note also that, as
+we have already observed, there is no known polynomial time algorithm that can
+factor N using this information.
+Assume now that we have access to an auxiliary Oracle that can factor any
+∗
+number relatively prime to N. Using it, we factor the number EN (or EN
+) and we
+will show in the following theorem that from this we can factor N in polynomial
+time, thus concluding that Game 1 has solved the factorization problem that was not
+achieved by Game 0, which shows that factorization of RSA modules is malleable.
+
+Theorem 6 Given N = pq where p, q are prime numbers, and an elliptic curve E
+(mod N), there exists a polynomial time algorithm in log N such that with input
+∗
+N and the factorization of EN or EN
+, it outputs the factors of N, p and q with
+probability one.
+Proof. As we mentioned in the introduction, we will use a well known result of
+Copersmith, which allows us to find a factor of an integer by just knowing certain
+part of its highest bits. For convenience we include this result now
+Theorem 7 (Coppersmith) If we know an integer N = pq and we know the high
+order (1/4)(log2 N bits of p, then in timee polynomial in logN we ran discover p and
+q.
+Observe that it would be sufficient by knowing (1/4)(log2 N − O(log log N, since
+we could try the unknown bits up to (1/4)(log2 N one by one in polynomial time.
+Now, recall again that, by Hasse’s theorem the factor found q − aq + 1 is at
+√
+distance |aq − 1| ≤ 2 q + 1 ≤ 2N 1/4 + 1 of q which is a factor of N. By bounding
+the distance, we know certain of the highest bits of q from those of q − aq + 1.
+In particular, let us suppose that two integers x < y are at distance y −x = 2t +R
+where R < 2t . We can write x = Mx 2t + Rx , y = My 2t + Ry with Rx < 2t , Ry < 2t
+and −2t < Ry − Rx < 2t . Then, y − x = (My − Mx )2t + Ry − Rx , which gives
+My = Mx + 1 or My = Mx + 2 and, hence, from the highest bits of y up to t of x we
+know those of y and viceversa.
+
+6
+
+In our case, the distance is bounded by 2q 1/2 so we know up to t = [log2 q/2] + 1
+of the
+√ highest bits of q. By division, we also know up to√t of the highest bits of p.
+But N ≤ p = Mp 2t + Rp ≤ (Mp + 1)2t , and so Mp ≥ N/(2t + 1) ≥ N 1/4 and,
+hence, we can apply Coppersmith algorithm to find p, thus factoring N.
+∗
+Let us stress that having factored the number EN
+, from the average of the divisor
+function
+X
+d(n) = x log x + (2γ − 1)x + o(x)
+n≤x
+
+we deduce that, with probability 1, the number of factors of an integer is of the
+order of the logarithm of it. Hence, once the auxiliary Oracle gives the factors of
+EN , we will apply Coppersmith one by one finding q in polynomial time in log N.
+Remark 8 The case in which EN is given, is similar and we leave the details to
+the reader.
+
+3.1
+
+Small difference
+
+Even though malleability is fully proved in the last section, we include this section
+∗
+as a small remark in the negligibale case in which EN and EN
+have an exponential
+number of divisors, but the two prime factors p, q are not too far from each other.
+In order to construct a module RSA we tipically search for a couple of prime
+factors of the same number of bits, i.e. q < p < 2q. However, if the two primes are
+very close to each other, the scheme is easy to break since the module can be factored
+in polynomial time. Indeed, It is well known that if ∆ = |p − q| < N 1/4 Fermat’s
+factorization algorithm enables to find both factors of N in polynomial time and
+there has been an effort of the community to improve the exponent 1/4 in ∆ for the
+factorization of N. It is worth to mention that if the objective is breaking the RSA
+scheme, rather than factoring the modulus, then the exponent can be increased all
+the way up to basically 1 by means of an improved version of the attacks done by
+Wiener or Boneh and Durfee, (see [3]). However, for the factorization of N not too
+much more is known. In [5] the authors claim in an apparently unpublished work
+that are able to factor an RSA module N = pq even when the difference is of order
+|p − q| < N 1/3 .
+We devote this section to recover ∆ < N 1/3 using malleability techniques: in
+particular the factorization of the number of points of a random elliptic curve modulo N, together with a simple application of an argument of elementary geometry
+attributed to Heron of Alexandria which says that in any triangle, the product of
+7
+
+the length of its three sides equals four times the area times the radius of the circumscribed circle. We will assume from now that ∆ = |p − q| < c′ N 1/3 for some
+suitable constant c′ .
+In our case given three points (x0 , y0), (x1 , y1), (x2 , y2 ) of integer coordinates in
+∗
+the hyperbola xy = EN
+, we see that the radius of the circumscribed circle is
+∗ 2
+∗ 2
+∗ 2
+((x0 x1 )2 + (EN
+) )((x0 x2 )2 + (EN
+) )((x2 x1 )2 + (EN
+))
+,
+∗ 2
+4(EN ) (x0 x1 x2 )2
+p ∗
+and taking max{x0 , x1 , x2 } ≤ EN
+, we get
+
+R=
+
+R≥
+
+∗
+EN
+.
+4
+
+On the other hand, by Hasse’s theorem
+√
+√
+∗
+EN
+≥ ( p − 1)2 ( q − 1)2
+and
+
+√
+√
+√
+√
+√
+√
+( p − 1)( q − 1) = N − p − q + 1 ≥ N/4,
+
+for N sufficiently large, and so
+
+N
+.
+64
+∗
+Hence, by Heron of Alexandria’s theorem, in an arc of the hyperbola xy = EN
+of
+1/3
+lenght less than (N/32) we can only have two points of integer coordinates.
+R≥
+
+Now recall that the lenght L of an arc of the hyperbola xy = T with a ≤ x ≤ b
+is given by
+
+
+Z br
+Z b
+T2
+T2 1
+1
+T2
+L =
+1 + 4 dt ≤
+−
+=
+1 + 4 dt = (b − a) +
+t
+t
+3 a3 b3
+a
+a
+
+
+(b − a)T 2
+(b − a)T 2 b2 + ab + a2
+≤
+(b
+−
+a)
++
+.
+= (b − a) +
+3
+(ab)3
+a3 b
+∗
+Consider T = EN
+, b ≥ N 1/2 and b − a ≤ cN 1/3 for suitable c. Hence, by noting that
+√
+√
+√
+√
+√
+∗
+EN
+≤ ( p + 1)2 ( q + 1)2 = ( N + p + q + 1) ≤ N + 7N 3/4 ,
+
+since the primes are very close, we get from a simple computation that the arc on
+the hyperbola has lenght
+L ≤ 3cN 1/3 ,
+
+In particular, we can select c small enought so L ≤ (N/32)1/3 and hence it can only
+have at most two points of integral coordinates. Hence we can ask the auxiliary
+8
+
+∗
+Oracle to factor EN
+and output the at most two factors of it lying in the interval
+[a, b]. This Oracle will give back the factor a ≤ N 1/2 −c′ N 1/3 ≤ q−aq +1 ≤ N 1/2 ≤ b,
+for aq ≥ 0 or a ≤ N 1/2 ≤ q − aq + 1 ≤ N 1/2 + c′ N 1/3 ≤ b if aq ≤ 0 for some c′ ≤ c.
+In practice c = 3(32)1 1/3 and c′ = 6(32)1 1/3 are enough. Using it we can factor N with
+Coppersmith’s algorithm, as we did in the previous subsection.
+
+Remark 9 Again the case in which EN is given, is similar and we leave the details
+to the reader.
+
+References
+[1] N. C. Ankeny. The least quadratic non residue. Ann. of Math. (2), 55:65–72,
+1952.
+[2] Don Coppersmith. Finding a small root of a bivariate integer equation; factoring
+with high bits known. Advances in cryptology, EUROCRYPT ’96, Lecture Notes
+in Comput. Sci., 1070:178–189, 1996.
+[3] B. de Weger. Cryptanalysis of rsa with small prime difference. Appl. Algebra
+Engrg. Comm. Comput., 13(1):17–28, 2002.
+[4] L. Dieulefait and J. Jiménez Urroz. Small primitive roots and malleability of
+RSA moduli. J. Comb. Number Theory, 2(2):171–179, 2010.
+[5] R Erra and C Grenier.
+The fermat factorization method revisited.
+https://eprint.iacr.org/2009/318.pdf, 2009.
+[6] S. Goldwasser, S. Micali, and R. L. Rivest. A digital signature scheme secure
+against adaptive chosen-message attacks. SIAM J. Comput., 17(2):281–308,
+1988. Special issue on cryptography.
+[7] N. Kunihiro and K. Koyama. Equivalence of counting the number of points on
+elliptic curve over the ring zn and factoring n. Lecture Notes in Comput. Sci.,
+1043:47–58, 1998.
+[8] S. Martı́n, P. Morillo, and J. L. Villar. Computing the order of points on
+an elliptic curve modulo n is as difficult as factoring n. Appl. Math. Lett.,
+14(3):341–346, 2001.
+[9] P. Paillier and J. L. Villar. Trading one-wayness against chosen-ciphertext security in factoring-based encryption. In Advances in cryptology—ASIACRYPT
+2006, volume 4284 of Lecture Notes in Comput. Sci., pages 252–266. Springer,
+Berlin, 2006.
+9
+
+[10] M. O. Rabin. Digital signatures and public key functions as intractable as
+factorization. Technical Report MIT/LCS/TR-212, 1979.
+[11] R. Schoof. Elliptic curves over finite fields and the computation of square
+rootsmod p. Mathematics of Computation, 44(170):483–494, 1985.
+[12] H. C. Williams. A modification of the RSA public-key encryption procedure.
+IEEE Trans. Inform. Theory, 26(6):726–729, 1980.
+
+10
+
+

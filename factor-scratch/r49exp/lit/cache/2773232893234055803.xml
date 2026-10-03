@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/K32Q1hbLp+l+NrNr/CbqhOwZgr0</id>
+  <title>arXiv Query: search_query=all:"number field sieve" AND all:"polynomial selection"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:28Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22number+field+sieve%22+AND+all:%22polynomial+selection%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>5</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1109.6398v2</id>
+    <title>On nonlinear polynomial selection for the number field sieve</title>
+    <updated>2013-06-28T05:33:23Z</updated>
+    <link href="https://arxiv.org/abs/1109.6398v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1109.6398v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nonlinear polynomial selection algorithms for the number field sieve address the problem of constructing polynomials with small coefficients by reducing to instances of the well-studied problem of finding short vectors in lattices. The reduction rests upon the construction of modular geometric progressions with small terms. In this paper, the methods used to construct the geometric progressions are extended, resulting in the development of two nonlinear polynomial selection algorithms.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-09-29T04:58:06Z</published>
+    <arxiv:comment>26 pages, substantially revised</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Nicholas Coxon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.6011v1</id>
+    <title>Montgomery's method of polynomial selection for the number field sieve</title>
+    <updated>2014-12-18T19:13:03Z</updated>
+    <link href="https://arxiv.org/abs/1412.6011v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.6011v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The number field sieve is the most efficient known algorithm for factoring large integers that are free of small prime factors. For the polynomial selection stage of the algorithm, Montgomery proposed a method of generating polynomials which relies on the construction of small modular geometric progressions. Montgomery's method is analysed in this paper and the existence of suitable geometric progressions is considered.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-18T19:13:03Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nicholas Coxon</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.1958v1</id>
+    <title>Root optimization of polynomials in the number field sieve</title>
+    <updated>2012-12-10T03:05:08Z</updated>
+    <link href="https://arxiv.org/abs/1212.1958v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.1958v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The general number field sieve (GNFS) is the most efficient algorithm known for factoring large integers. It consists of several stages, the first one being polynomial selection. The quality of the chosen polynomials in polynomial selection can be modelled in terms of size and root properties. In this paper, we describe some algorithms for selecting polynomials with very good root properties.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-10T03:05:08Z</published>
+    <arxiv:comment>16 pages, 18 references</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Mathematics of Computation 84 (2015), 2447-2457</arxiv:journal_ref>
+    <author>
+      <name>Shi Bai</name>
+    </author>
+    <author>
+      <name>Richard P. Brent</name>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-2015-02926-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-2015-02926-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1403.0184v2</id>
+    <title>Some mathematical remarks on the polynomial selection in NFS</title>
+    <updated>2014-03-12T16:34:21Z</updated>
+    <link href="https://arxiv.org/abs/1403.0184v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1403.0184v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we consider the proportion of smooth (free of large prime factors) values of a binary form $F(X_1,X_2)\in\Z[X_1,X_2]$. In a particular case, we give an asymptotic equivalent for this proportion which depends on $F$. This is related to Murphy's $α$ function, which is known in the cryptographic community, but which has not been studied before from a mathematical point of view. Our result proves that, when $α(F)$ is small, $F$ has a high proportion of smooth values. This has consequences on the first step, called polynomial selection, of the Number Field Sieve, the fastest algorithm of integer factorization.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-03-02T10:28:03Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Armand Lachand</name>
+      <arxiv:affiliation>IECL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.07553v3</id>
+    <title>Computing Individual Discrete Logarithms Faster in GF$(p^n)$ with the NFS-DL Algorithm</title>
+    <updated>2016-05-27T08:04:13Z</updated>
+    <link href="https://arxiv.org/abs/1505.07553v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.07553v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Number Field Sieve (NFS) algorithm is the best known method to compute discrete logarithms (DL) in finite fields $\mathbb{F}\_{p^n}$, with $p$ medium to large and $n \geq 1$ small. This algorithm comprises four steps: polynomial selection, relation collection, linear algebra and finally, individual logarithm computation. The first step outputs two polynomials defining two number fields, and a map from the polynomial ring over the integers modulo each of these polynomials to $\mathbb{F}\_{p^n}$. After the relation collection and linear algebra phases, the (virtual) logarithm of a subset of elements in each number field is known. Given the target element in $\mathbb{F}\_{p^n}$, the fourth step computes a preimage in one number field. If one can write the target preimage as a product of elements of known (virtual) logarithm, then one can deduce the discrete logarithm of the target. As recently shown by the Logjam attack, this final step can be critical when it can be computed very quickly. But we realized that computing an individual DL is much slower in medium-and large-characteristic non-prime fields $\mathbb{F}\_{p^n}$ with $n \geq 3$, compared to prime fields and quadratic fields $\mathbb{F}\_{p^2}$. We optimize the first part of individual DL: the \emph{booting step}, by reducing dramatically the size of the preimage norm. Its smoothness probability is higher, hence the running-time of the booting step is much improved. Our method is very efficient for small extension fields with $2 \leq n \leq 6$ and applies to any $n \textgreater{} 1$, in medium and large characteristic.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-28T06:12:59Z</published>
+    <arxiv:comment>Tetsu Iwata; Jung Hee Cheon. Asiacrypt 2015, Nov 2015, Auckland, New Zealand. Springer, Asiacrypt 2015, 21st Annual International Conference on the Theory and Application of Cryptology and Information Security, 9452, pp 149-173, 2015, Lecture Notes in Computer Science</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>GRACE, LIX</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-662-48797-6_7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-662-48797-6_7" title="doi"/>
+  </entry>
+</feed>

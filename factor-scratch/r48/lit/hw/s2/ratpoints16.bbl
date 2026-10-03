@@ -1,0 +1,211 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{DDMM23}
+
+\bibitem[Bru92]{brumer92}
+Armand Brumer, \emph{The average rank of elliptic curves. {I}. ({With} an
+  appendix by {Ois{\'{\i}}n} {McGuinness}: {The} explicit formula for elliptic
+  curves over function fields)}, Invent. Math. \textbf{109} (1992), no.~3,
+  445--472 (English).
+
+\bibitem[BST{\etalchar{+}}20]{bhargava17}
+M.~Bhargava, A.~Shankar, T.~Taniguchi, F.~Thorne, J.~Tsimerman, and Y.~Zhao,
+  \emph{Bounds on 2-torsion in class groups of number fields and integral
+  points on elliptic curves}, J. Am. Math. Soc. \textbf{33} (2020), no.~4,
+  1087--1099 (English).
+
+\bibitem[CLT04]{CLT04}
+W.-C. Chi, K.~F. Lai, and K.-S. Tan, \emph{Integral points on elliptic curves
+  over function fields}, J. Aust. Math. Soc. \textbf{77} (2004), no.~2,
+  197--208 (English).
+
+\bibitem[Con06]{conrad06}
+Brian Conrad, \emph{Chow's {{\(K/k\)}}-image and {{\(K/k\)}}-trace, and the
+  {Lang}-{N{\'e}ron} theorem}, Enseign. Math. (2) \textbf{52} (2006), no.~1-2,
+  37--108 (English).
+
+\bibitem[CX08]{CX2008}
+Pete~L. Clark and Xavier Xarles, \emph{Local bounds for torsion points on
+  abelian varieties}, Can. J. Math. \textbf{60} (2008), no.~3, 532--555
+  (English).
+
+\bibitem[Dav65]{davenport65}
+Harold Davenport, \emph{On {{\(f^3(t)-g^2(t)\)}}}, Norske Vid. Selsk. Forhdl.
+  \textbf{38} (1965), 86--87 (English).
+
+\bibitem[DDMM23]{D2M2}
+Tim Dokchitser, Vladimir Dokchitser, C{\'e}line Maistret, and Adam Morgan,
+  \emph{Arithmetic of hyperelliptic curves over local fields}, Math. Ann.
+  \textbf{385} (2023), no.~3-4, 1213--1322 (English).
+
+\bibitem[EV07]{EV}
+Jordan~S. Ellenberg and Akshay Venkatesh, \emph{Reflection principles and
+  bounds for class group torsion}, Int. Math. Res. Not. IMRN (2007), no.~1,
+  Art. ID rnm002, 18. \MR{2331900}
+
+\bibitem[Ful98]{Fulton98}
+William Fulton, \emph{Intersection theory}, second ed., Ergebnisse der
+  Mathematik und ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in
+  Mathematics [Results in Mathematics and Related Areas. 3rd Series. A Series
+  of Modern Surveys in Mathematics], vol.~2, Springer-Verlag, Berlin, 1998.
+  \MR{1644323}
+
+\bibitem[GHL23]{GHL23}
+Jean Gillibert, Emmanuel Hallouin, and Aaron Levin, \emph{Integral points on
+  elliptic curves with $j$-invariant $0$ over $k(t)$}, Preprint,
+  {arXiv}:2306.11353 [math.{AG}], 2023.
+
+\bibitem[GL22]{gl18a}
+Jean Gillibert and Aaron Levin, \emph{Descent on elliptic surfaces and
+  arithmetic bounds for the {M}ordell-{W}eil rank}, Algebra Number Theory
+  \textbf{16} (2022), no.~2, 311--333. \MR{4412575}
+
+\bibitem[Gra65]{grauert65}
+Hans Grauert, \emph{Mordells {Vermutung} {\"u}ber rationale {Punkte} auf
+  algebraischen {Kurven} und {Funktionenk{\"o}rper}}, Publ. Math., Inst. Hautes
+  {\'E}tud. Sci. \textbf{25} (1965), 363--381 (German).
+
+\bibitem[GRR72]{SGA7-1}
+Alexander Grothendieck, M.~Raynaud, and D.~S. Rim, \emph{S{\'e}minaire de
+  {G{\'e}om{\'e}trie} {Alg{\'e}brique} {Du} {Bois}-{Marie} 1967--1969.
+  {Groupes} de monodromie en g{\'e}om{\'e}trie alg{\'e}brique ({SGA} 7 {I}).
+  {Dirig{\'e}} par {A}. {Grothendieck} avec la collaboration de {M}. {Raynaud}
+  et {D}. {S}. {Rim}. {Expos{\'e}s} {I}, {II}, {VI}, {VII}, {VIII}, {IX}},
+  Lect. Notes Math., vol. 288, Springer, Cham, 1972 (French).
+
+\bibitem[HS88]{HS}
+Marc Hindry and Joseph~H. Silverman, \emph{The canonical height and integral
+  points on elliptic curves}, Invent. Math. \textbf{93} (1988), no.~2,
+  419--450. \MR{948108}
+
+\bibitem[HV06]{HV}
+H.~A. Helfgott and A.~Venkatesh, \emph{Integral points on elliptic curves and
+  3-torsion in class groups}, J. Amer. Math. Soc. \textbf{19} (2006), no.~3,
+  527--550. \MR{2220098}
+
+\bibitem[Kra77]{kramer77}
+Kenneth Kramer, \emph{Two-descent for elliptic curves in characteristic two},
+  Trans. Am. Math. Soc. \textbf{232} (1977), 279--295 (English).
+
+\bibitem[Lan60]{lang1960}
+Serge Lang, \emph{Integral points on curves}, Inst. Hautes \'{E}tudes Sci.
+  Publ. Math. (1960), no.~6, 27--43. \MR{130219}
+
+\bibitem[Lan78]{Lang78}
+\bysame, \emph{Elliptic curves: {D}iophantine analysis}, Grundlehren der
+  Mathematischen Wissenschaften, vol. 231, Springer-Verlag, Berlin-New York,
+  1978. \MR{518817}
+
+\bibitem[Liu02]{liu}
+Qing Liu, \emph{Algebraic geometry and arithmetic curves}, Oxford Graduate
+  Texts in Mathematics, vol.~6, Oxford University Press, Oxford, 2002,
+  Translated from the French by Reinie Ern{\'e}, Oxford Science Publications.
+
+\bibitem[LN10]{LN}
+Herbert Lange and Peter~E. Newstead, \emph{Clifford indices for vector bundles
+  on curves}, Affine flag manifolds and principal bundles, Trends Math.,
+  Birkh\"auser/Springer Basel AG, Basel, 2010, pp.~165--202. \MR{3013031}
+
+\bibitem[Lor11]{Lorenzini2011}
+Dino Lorenzini, \emph{Torsion and {Tamagawa} numbers}, Ann. Inst. Fourier
+  \textbf{61} (2011), no.~5, 1995--2037 (English).
+
+\bibitem[Man63]{manin63}
+Yu.~I. Manin, \emph{Rational points of algebraic curves over function fields},
+  Izv. Akad. Nauk SSSR, Ser. Mat. \textbf{27} (1963), 1395--1440 (Russian).
+
+\bibitem[Mas84]{mason84}
+R.~C. Mason, \emph{Diophantine equations over function fields}, London
+  Mathematical Society Lecture Note Series, vol.~96, Cambridge University
+  Press, Cambridge, 1984. \MR{754559}
+
+\bibitem[MS86]{MS}
+G.~Martens and F.-O. Schreyer, \emph{Line bundles and syzygies of trigonal
+  curves}, Abh. Math. Sem. Univ. Hamburg \textbf{56} (1986), 169--189.
+  \MR{882414}
+
+\bibitem[Pac98]{pacheco98}
+Am{\'{\i}}lcar Pacheco, \emph{Integral points on elliptic curves over function
+  fields of positive characteristic}, Bull. Aust. Math. Soc. \textbf{58}
+  (1998), no.~3, 353--357 (English).
+
+\bibitem[Paz22]{pazuki2022}
+Fabien Pazuki, \emph{The regulator dominates the rank}, Arithmetic, geometry,
+  cryptography, and coding theory, AGC2T. 18th international conference, Centre
+  International de Rencontres Math\'ematiques, Marseille, France, May 31 --
+  June 4, 2021, Providence, RI: American Mathematical Society (AMS), 2022,
+  pp.~159--165 (English).
+
+\bibitem[Pie05]{Pierce05}
+L.~B. Pierce, \emph{The 3-part of class numbers of quadratic fields}, J. London
+  Math. Soc. (2) \textbf{71} (2005), no.~3, 579--598. \MR{2132372}
+
+\bibitem[Pie06]{Pierce06}
+Lillian~B. Pierce, \emph{A bound for the 3-part of class numbers of quadratic
+  fields by means of the square sieve}, Forum Math. \textbf{18} (2006), no.~4,
+  677--698. \MR{2254390}
+
+\bibitem[Ray70]{raynaud70}
+M.~Raynaud, \emph{Sp{\'e}cialisation du foncteur de {Picard}}, Publ. Math.,
+  Inst. Hautes {\'E}tud. Sci. \textbf{38} (1970), 27--76 (French).
+
+\bibitem[Ray95]{raynaud95}
+Michel Raynaud, \emph{Caract\'eristique d'{E}uler-{P}oincar\'e d'un faisceau et
+  cohomologie des vari\'et\'es ab\'eliennes}, S\'eminaire {B}ourbaki, {V}ol.\
+  9, Soc. Math. France, Paris, 1995, pp.~Exp.\ No.\ 286, 129--147. \MR{1608794}
+
+\bibitem[Sam66]{samuel66}
+P.~Samuel, \emph{Compl{\'e}ments {\`a} un article de {Hans} {Grauert} sur la
+  conjecture de {Mordell}}, Publ. Math., Inst. Hautes {\'E}tud. Sci.
+  \textbf{29} (1966), 311--318 (French).
+
+\bibitem[Sch95]{schaefer95}
+Edward~F. Schaefer, \emph{2-descent on the {Jacobians} of hyperelliptic
+  curves}, J. Number Theory \textbf{51} (1995), no.~2, 219--232 (English).
+
+\bibitem[Sil84]{silverman84}
+Joseph~H. Silverman, \emph{The {S}-unit equation over function fields}, Math.
+  Proc. Camb. Philos. Soc. \textbf{95} (1984), 3--4 (English).
+
+\bibitem[Sil90]{Sil90}
+\bysame, \emph{The difference between the {W}eil height and the canonical
+  height on elliptic curves}, Math. Comp. \textbf{55} (1990), no.~192,
+  723--743. \MR{1035944}
+
+\bibitem[Sil94]{silvermanII}
+\bysame, \emph{Advanced topics in the arithmetic of elliptic curves}, Graduate
+  Texts in Mathematics, vol. 151, Springer-Verlag, New York, 1994. \MR{1312368}
+
+\bibitem[Spe24]{spencer2025}
+Harry Spencer, \emph{Wild conductor exponents of trigonal and tetragonal
+  curves}, Preprint, {arXiv}:2409.12688v1 [math.{NT}], 2024.
+
+\bibitem[SS08]{SS}
+Matthias Sch\"utt and Andreas Schweizer, \emph{On {D}avenport-{S}tothers
+  inequalities and elliptic surfaces in positive characteristic}, Q. J. Math.
+  \textbf{59} (2008), no.~4, 499--522. \MR{2461271}
+
+\bibitem[Vol90]{voloch90}
+J.~F. Voloch, \emph{Explicit p-descent for elliptic curves in characteristic
+  p}, Compos. Math. \textbf{74} (1990), no.~3, 247--258 (English).
+
+\bibitem[Wei48]{Weil}
+Andr\'e Weil, \emph{Sur les courbes alg\'ebriques et les vari\'et\'es qui s'en
+  d\'eduisent}, Publications de l'Institut de Math\'ematiques de
+  l'Universit\'e{} de Strasbourg [Publications of the Mathematical Institute of
+  the University of Strasbourg], vol. 7 (1945), Hermann \& Cie, Paris, 1948,
+  Actualit\'es Scientifiques et Industrielles, No. 1041. [Current Scientific
+  and Industrial Topics]. \MR{27151}
+
+\bibitem[Yud08]{Yudovina}
+Elena Yudovina, \emph{Diophantine equations and congruences over function
+  fields}, Proc. Amer. Math. Soc. \textbf{136} (2008), no.~11, 3839--3850.
+  \MR{2425723}
+
+\end{thebibliography}

@@ -1,0 +1,1550 @@
+                                              GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL
+                                                          WITH CROSS DIFFUSION
+
+                                                     ESTHER S. DAUS, JOSIPA-PINA MILIŠIĆ, AND NICOLA ZAMPONI
+arXiv:1901.07296v2 [math.AP] 23 May 2019
+
+
+
+
+                                                   Abstract. In this work we study a degenerate pseudo-parabolic system with
+                                                   cross diffusion describing the evolution of the densities of an unsaturated two-
+                                                   phase flow mixture with dynamic capillary pressure in porous medium with
+                                                   saturation-dependent relaxation parameter and hypocoercive diffusion opera-
+                                                   tor modeling cross diffusion. The equations are derived in a thermodynam-
+                                                   ically correct way from mass conservation laws. Global-in-time existence of
+                                                   weak solutions to the system in a bounded domain with equilibrium boundary
+                                                   conditions is shown. The main tools of the analysis are an entropy inequality
+                                                   and a crucial apriori bound which allows for controlling the degeneracy.
+
+
+
+
+                                                                               1. Introduction
+                                              The problem of describing the transport of chemical mixtures in porous media
+                                           is very important in many industrial applications. For a general overview on the
+                                           modeling of multicomponent multiphase flows in porous media, we refer to [2].
+                                           In this paper we consider a two-phase flow model with wetting and non-wetting
+                                           phase (e.g. water and oil), where the non-wetting phase consists of a mixture
+                                           of n chemical components, including nonequilibrium effects concerning capillary
+                                           pressure and cross-diffusion effects. The main result of this work is to provide an
+                                           existence analysis of the proposed model. From a mathematical viewpoint, the
+                                           transport equations for the mass densities form a degenerate pseudo-parabolic
+                                           system of PDEs with cross-diffusion terms. The presence of the mixed-derivative
+                                           third-order term, coming from the nonequilibrium capillary pressure law, in form
+                                           of a time derivative inside the diffusion operator, as well as the cross-diffusion
+                                           terms, involving the chemical potentials, make the analysis very demanding. Fur-
+                                           thermore, the compactness of an approximate regularized system is obtained by
+                                           applying the nonstandard compactness results of Dreyer et al. [5].
+
+                                              Date: May 27, 2019.
+                                              2000 Mathematics Subject Classification. 35K65, 35K70, 35Q35, 35K55, 76S05.
+                                              Key words and phrases. Cross-diffusion, dynamic capillary pressure, degenerate nonlinear
+                                           parabolic system, entropy method, existence of solutions.
+                                              The first and the third author acknowledge partial support from the Austrian Science Fund
+                                           (FWF), grants P22108, P24304, W1245, P27352 and P30000. All three authors were partially
+                                           supported by the bilaterial project No. HR 04/2018 of the Austrian Exchange Sevice OeAD
+                                           together with the Ministry of Science and Education of the Republic of Croatia MZO.
+                                                                                          1
+2                    E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+   The modeling of nonequilibrium capillary effects in problems of enhancing oil
+and gas recovery from rocks was proposed by Barenblatt, Entov and Ryzhik in the
+classical book [1], and later investigated by many scientists up to nowadays. In
+our work we follow the approach given by Hassanizadeh and Grey [10], where the
+nonequilibrium capillary effects are given by a constitutive relationship between
+the non-wetting phase saturation and the capillary pressure. This relationship is
+characterized by the presence of the relaxation parameter which depends on the
+non-wetting saturation as well.
+   Concerning the mathematical analysis, the global-in-time existence of weak
+solutions for the Richards’ equation with dynamic capillary pressure and constant
+relaxation parameter was shown by Mikelić [14]. The first existence result for the
+two-phase flow model with dynamic capillary pressure and saturation dependent
+relaxation parameter was obtained by Cao and Pop in [7]. We note that the
+existence theorem can be proved under certain relations between the orders of
+the zeros of the relative permeabilities and the relaxation parameter and the
+order of the singularities of the capillary pressure function. In comparison to
+[7], here we follow the approach given in [15], where it was shown that it is
+enough to analyze the case of the countercurrent imbibition flow instead of the
+full two-phase flow system.
+   On the other side, the analysis of a model describing the transport of a single-
+phase fluid mixture in porous media taking into account also certain cross-
+diffusion effects was studied in [13]. The equations are derived in a thermodynam-
+ically consistent way, and global-in-time existence of weak solutions in a bounded
+domain with equilibrium boundary conditions as well as long-time behaviour was
+proved with the help of the boundedness-by-entropy method [3, 11, 12]. The
+mathematical novelties rely on the complex structure of the equations and on the
+observation that the solution of the binary model satisfies an unexpected integral
+inequality leading to a minimum principle for this system.
+   Our goal in this work is to combine the strategies of [15] and [13], leading to a
+global-in-time existence of weak solutions result for a two-phase flow model with
+cross diffusion.
+   Finally, up to our knowledge, the uniqueness and the long-time behaviour of a
+weak solution for a two-phase flow model with saturation-dependent relaxation
+parameter and cross diffusion are still open problems. For a uniqueness result
+of a two-phase flow model with saturation-dependent relaxation parameter but
+without cross diffusion, we mention the result in [6].
+
+                             2. Model equations
+  We consider an incompressible, isothermal fluid mixture with n components in
+a domain Ω ⊂ R3 . We note that the fact that we work in R3 is for convenience
+only, and can be easily adapted to an arbitrary space dimension Ω ⊂ Rd with
+d ≥ 1. The evolution of this fluid mixture is governed by the transport equations
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 3
+
+for the single component mass densities S1 (x, t), . . . , Sn (x, t) in the following way
+                                                            n
+                                                                            !
+                        Si                                 X
+(1)         ∂t Si = div    a(S)∇(pc (S) + ∂t β(S)) +           Dij (S)∇µj
+                        S                                  j=1
+                          i = 1, . . . , n, x ∈ Ω, t > 0.
+Here S = ni=1 Si is the total mass density, S = (S1 , . . . , Sn ) is the vector of
+                  P
+the single component mass densities, a(S) is the diffusion mobility, pc (S) repre-
+sents the stationary capillary pressure, τ (S) ≡ β ′ (S) plays the role of a relax-
+ation parameter, D = (Dij (S))i,j=1,...,n is the diffusion matrix, and the quantities
+µ1 , . . . , µn , called chemical potentials, are defined in terms of S1 , . . . , Sn as follows
+                                   S  Z S τ (σ)
+                                     i
+(2)                      µi = log      +            dσ      i = 1, . . . , n.
+                                    S      1/2 a(σ)
+
+The sum pdyn
+           c (S) ≡ pc (S) + ∂t β(S) is referred to as dynamic capillary pressure
+[10]. The quantities a(S), τ (S), p′c (S) are assumed to be positive for 0 < S < 1,
+while the diffusion matrix D(S) is assumed to be positive semidefinite.
+  Following the approach in [13], we impose equilibrium boundary conditions
+(3)                       Si = SiΓ on ∂Ω, t > 0, i = 1, . . . , n,
+where S1Γ , . . . , SnΓ > 0 are generic constants, as well as general initial conditions
+(4)                         Si (·, 0) = Si0 in Ω, i = 1, . . . , n.
+For consistency of (1), (2) with the physics, we require the single component con-
+centrations S1 , . . . , Sn to be positive and the total concentration S to be smaller
+than 1; that is, we seek for solutions S to (1), (2) which take values in the set
+                    (                                         n
+                                                                       )
+                                                            X
+            D = S ∈ Rn : Si > 0 for i = 1, . . . , n,           Sj < 1. .
+                                                                 j=1
+
+The chemical potentials µ1 , . . . , µn are the partial derivatives with respect to the
+species concentrations S1 , . . . , Sn of a free energy density function F satisfying
+                   ∂F
+               µi =    (S)      i = 1, . . . , n,
+                   ∂Si
+                    n                                    Z S Z S′
+                   X         Si                                   τ (σ)
+(5)        F (S) =     Si log + E(S),             E(S) =                dσdS ′ .
+                   i=1
+                             S                            1/2 1/2 a(σ)
+
+The thermodynamic pressure pth is given by the Gibbs-Duhem equation
+                                        n
+                              th
+                                        X          ∂F
+(6)                          p (S) =          Si       (S) − F (S).
+                                        i=1
+                                                   ∂Si
+4                      E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+The gradient of the thermodynamic pressure pth satisfies the simple relation
+                                                         Z S
+        X
+                         th S∇β(S)     Sτ (S)                 στ (σ)
+(7)         Si ∇µi = ∇p =            =        ∇S = ∇                 dσ.
+          i
+                              a(S)      a(S)              1/2  a(σ)
+As a consequence of (7), by employing µi − µi (S Γ ) as a test function in (1), one
+obtains the following entropy balance equation:
+          Z                       
+        d               1        2
+(8)             F̃(S) + |∇β(S)| dx
+       dt Ω             2
+                  Z                       Z X n
+                      ′    ′         2
+             = − β (S)pc (S)|∇S| dx −            Dij (S)∇µi · ∇µj dx ≤ 0,
+                   Ω                           Ω i,j=1
+
+where the relative entropy density F̃ is defined as
+(9)               F̃(S) = F (S) − F (S Γ ) − µ(S Γ ) · (S − S Γ ).
+Remark 1. Relations (6), (7) easily imply
+                       n                           Z S
+                      X      ∂F                        στ (σ)
+(10)      ∃C ∈ R :        Si     (S) − F (S) = C +            dσ.
+                      i=1
+                             ∂Si                    1/2 a(σ)
+
+ Equation (10) constitutes a necessary condition in order for the entropy balance
+equation (8) to hold; without (10) it is unclear how to handle the contribution of
+the nonstationary term ∂t β(S) in the dynamic capillary pressure pdyn . In other
+words, (10) is a constraint on the possible choices of free energies F which ensure
+that (1) possesses an entropy structure.
+  Since (10) is a linear nonhomogeneous equation, we can write any solution F
+to (10) as F = F0 + F1 , where F1 is a specific solution to (10), while F0 is a
+generic solution to the corresponding linear homogeneous equation:
+                             n
+                            X      ∂F0
+(11)                            Si     (S) − F0 (S) = 0.
+                            i=1
+                                   ∂Si
+
+A simple ansatz F1 (S) = F̃1 (S) yields F (S) = E(S) (up to additive constants).
+On the other hand, Euler’s theorem on homogeneous functions implies that
+(11) is equivalent to the condition that F0 should be homogeneous of degree
+1, i.e. F0 (λS) = λF0 (S) for every S ∈ D, λ > 0. This condition has to be
+put together with the requirement that F has to be convex and the mapping
+S ∈ D 7→ (µ1 , . . . , µn ) ∈ Rn globally invertible.
+                                            Pn        A natural choice of F0 which
+fulfills all these requirements is F0 (S) = i=1 Si log(Si /S).
+  Other quantities that will play a role in the analysis of (1) are the relative
+chemical potentials:
+                                   n
+                      ∗         1X
+                     µi = µi −        µj ,   i = 1, . . . , n.
+                                n j=1
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 5
+
+The concentrations S1 , . . . , Sn can be easily written in terms of the total concen-
+tration and the relative chemical potentials:
+                                            ∗
+                                       eµi
+(12)                      Si = S Pn         µ∗j
+                                                  ,   i = 1, . . . , n.
+                                       j=1 e
+
+The structure of the paper is as follows. In Section 3 the main result of the paper
+is stated and the state of the art for systems of the form (1) is described. In
+Section 4 some auxiliary results are stated and proved. In Section 5 Theorem 4
+is proved. In the Appendix the derivation of the model is shown.
+
+                                    3. Main result
+  Throughout the paper we make the following assumptions:
+ (H1) The diffusion matrix D = (Dij (S))ni,j=1 is symmetric and positive semi-
+      definite (Onsager’s principle of thermodynamics). Moreover, constants
+      D0 , D1 > 0 exist such that
+                      n
+                      X
+                 2
+          D0 |Πv| ≤           Dij (S)vi vj ≤ D1 |Πv|2 for all v ∈ Rn , S ∈ D,
+                      i,j=1
+
+      where Π = I − l ⊗ l is the orthogonal
+                                       √      projection on the subspace of Rn
+      orthogonal to l = (1, . . . , 1)/ n.
+ (H2) The diffusion mobility a(S) is given by
+                                  λo (S)λw (S)      (1 − S)λ S γ
+                      a(S) =                     =                ,
+                                 λo (S) + λw (S)   (1 − S)λ + S γ
+      for some constants λ, γ > 0.
+ (H3) The stationary capillary pressure pc (S) has the form
+                                             1          1
+                                p′c (S) =     β
+                                                  +           ,
+                                            S   1   (1 − S)β2
+      for some constants β1 , β2 > 0.
+ (H4) We assume that the relaxation parameter τ (S) is given by
+
+                         ′            Sγ      h   (1 − S)λ i
+                τ (S) = β (S) = γ              1+           ,
+                                 S + (1 − S)λ        S γ1
+       for some constant γ1 > 0.
+ (H5) The following algebraic relations are satisfied:
+                            1     5        
+         5 < β1 ≤ γ1 < γ < β1 + (γ1 − 2 , 5 < β2 ≤ λ < 3β2 − 10.
+                            2     6
+Remark 2. In order to avoid technical difficulties, we use explicit forms for a,
+pc and τ like in [15].
+6                           E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+Remark 3. We point out that the upper bound
+                   n
+                   X
+                           Dij (S)vi vj ≤ D1 |Πv|2           for v ∈ Rn , S ∈ D,
+                   i,j=1
+
+is consistent with the fact that the diffusion fluxes Ji = − nj=1 Dij (S)∇µj (i =
+                                                             P
+
+1, . . . , n) sum up to zero: N
+                             P
+                               i=1 Ji = 0. On the other hand, the lower bound
+                                  n
+                                  X
+                   D0 |Πv|2 ≤             Dij (S)vi vj       for v ∈ Rn , S ∈ D,
+                                  i,j=1
+
+often referred to as hypocoercivity,
+                              PN is the strongest coercivity property that D can
+satisfy under the constraintP i=1 Ji = 0. As a consequence of this assumption,
+the diffusion fluxes Ji = − nj=1 Dij (S)∇µj only depend on the gradients of the
+relative chemical potentials: Ji = − nj=1 Dij (S)∇µ∗j .
+                                     P
+
+  We now present our definition of weak solution to (1)–(4). In the following,
+the symbol h·, ·i represents the duality product between H −1 (Ω) and H01 (Ω).
+Definition 1 (Weak solution). A function S : Ω × (0, ∞) → D is called a
+global-in-time weak solution to (1)–(4) if and only if the following properties are
+fulfilled:
+                         p              p
+         ∇β(S), ∂t β(S),   a(S)p′c (S),  a(S)∇∂t β(S) ∈ L2loc (0, ∞; L2(Ω)),
+                                   for i = 1, . . . , n :     (Πµ)i ∈ L2loc (0, ∞; H 1(Ω)),
+                                    for i = 1, . . . , n :    ∂t Si ∈ L2loc (0, ∞; H −1(Ω)),
+as well as the weak formulation of (1):
+        n Z T                   Z TZ X n
+      X                                   Si
+(13)          h∂t Si , φi idt +              a(S) (p′c (S)∇S + ∇∂t β(S)) · ∇φi dxdt
+       i=1 0                     0  Ω i=1 S
+                                Z TZ X n
+                              +           Dij (S)∇µj · ∇φi dxdt = 0
+                                    0       Ω i,j=1
+
+                                     ∀φ1 , . . . , φn ∈ L2loc (0, ∞; H01(Ω)),
+relation (2), the boundary conditions (3)1, and the initial condition (4):
+                     Si (·, t) → Si0          strongly in H −1(Ω) as t → 0.
+  The result we present in this paper is concerned with the global existence of
+weak solutions to (1)–(4).
+    1We point out that if β(S) and µ∗ = (Πµ)                   2           1
+                                        i         i belong to Lloc (0, ∞; H (Ω)) for i = 1, . . . , b, then
+they admit trace on ∂Ω, therefore also S1 , . . . , Sn admit trace on ∂Ω thanks to the invertibility
+of S 7→ β(S) and relation (12).
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 7
+
+Theorem 4 (Existence of global weak solutions). Let S10 , . . . , Sn0 : Ω → R+ be
+measurable functions satisfying
+               min inf Si0 > 0,        max S 0 < 1,       β(S 0 ) ∈ H 1 (Ω).
+              i=1,...,n Ω               Ω
+
+Assume that Assumptions (H1)–(H5) hold. Then there exists a global-in-time
+weak solution S : Ω × (0, ∞) → D to (1)–(4).
+Key idea of the proof. The proof of Thr. 4 is based on the entropy method [3,
+11, 12]. The starting point of the argument is the formulation of a time-discretized
+and regularized version of (1). Such approximate equation is stated in terms of
+the variables wi = µi + ∂t β(S), i = 1, . . . , n (or rather a discretized version of it).
+One of the key ingredients of the proof is the entropy balance equation (8), which
+yields crucial gradient estimates. The other key tool employed in the proof is a
+result shown in [5], which allows to prove compactness for the densities S1 , . . . , Sn
+if some bounds for the gradient of the relative chemical potentials ∇µ∗1 , . . . , ∇µ∗n
+are known, together with compactness of the total density S. We point out that in
+the standard entropy method the approximate problem is formulated in terms of
+the “entropy variables” defined as partial derivatives of the mathematical entropy
+(or energy) density, which in the case here considered would be the functions
+µ1 , . . . , µn given by (2). However, this standard approach does not work in this
+setting: in fact, in order to obtain a crucial estimate for the dynamic capillary
+pressure, ∂t β(S) must be used as a test function in the weak formulation of (1),
+which would clash with the regularizing terms in case these latter were written
+in terms of just µ1 , . . . , µn .
+
+                               4. Auxiliary results
+  We present here some results which will be used in the proof of Thr. 4. Define
+the variable w as follows:
+                                            β(S) − β(S k−1) 
+                                       Γ
+(14)               w = µ(S) − µ(S ) +                           1,
+                                                        κ
+where we denoted 1 = (1, . . . , 1) and S = (S1 , . . . , Sn ).
+Lemma 5. (Invertibility of S 7→ µ and S 7→ w)
+The mappings Φ : S ∈ D 7→ µ ∈ Rn , and Φκ : S ∈ D 7→ w ∈ Rn are invertible,
+and their Jacobians Φ′ , Φ′κ are uniformely positive definite in D.
+                        ∂µi         ∂2F
+Proof. We note that             =          . Direct calculation gives that
+                        ∂Sj        ∂Sj ∂Si
+                                               (
+                                       2           1
+                                     ∂   F            ,        i 6= j,
+                       [F ′′ ]ij =           = 1−S1      1
+                                    ∂Sj ∂Si      Si
+                                                     + (1−S) , i = j,
+from where it follows that F ′′ is uniformly positive definite in D, i.e. F : D → R
+is a differentiable, strictly convex mapping. As a consequence, its gradient Φ =
+8                     E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+F ′ : D → Rn is a monotone (and therefore injective) mapping. Its inverse Φ−1 can
+                                        µ
+be explicitly computed: Φ−1 (µ)i = 1+Pen i eµj , i = 1, . . . , n, µ ∈ Rn . Therefore
+                                               j=1
+
+Φ : D → Rn is invertible. Moreover, since β ′ ≥ 0, then ∂w∂S
+                                                             is symmetric and
+positive definite. Furthermore, limS→∂D |w(S)| = ∞. Using the Hadamard global
+inverse theorem, [16, Thm. 2.2], we conclude that Φκ : D → Rn is invertible. 
+Lemma 6. Let f : [0, 1] → R be a continuous function with f ′ (S) > P
+                                                                    0 for S ∈
+                        n                                       n     n
+(0, 1). Given any w ∈ R , we denote by S = S(w) ∈ {S ∈ (0, ∞) :       i=1 Si <
+1} the only solution to
+                                                                           n
+                                                                           X
+           wi = log(Si ) − log(S) + f (S), i = 1, . . . , n,         S≡          Si .
+                                                                           i=1
+
+Then the matrix (Mij (w))i,j=1,...,n = (Si (w) ∂S(w) )
+                                                ∂wj i,j=1,...,n
+                                                                is symmetric and posi-
+                                    n
+tive semidefinite for every w ∈ R .
+Proof. The definition of S implies
+                                  n
+                                  X
+                                         ewi = ef (S(w)) .
+                                   i=1
+
+Differentiating the above identity with respect to wj leads to
+                            ∂S(w)                        d
+           ewj = F (S(w))                                  ef (S) = ef (S) f ′ (S).
+                                                                 
+                                  ,         F (S) ≡
+                             ∂wj                        dS
+Since f is strictly increasing, then F > 0 in (0, 1). It follows
+                                Si (w)ewj   ef (S(w)) Si (w)Sj (w)
+                    Mij (w) =             =                        ,
+                                F (S(w))        S(w)F (S(w))
+which means that M(w) is symmetric and positive semidefinite for every w ∈ Rn .
+This finishes the proof.                                                    
+Lemma 7. The following bound holds
+                                         τ (S)
+(15)                         p′c (S) ≤         ,     S ∈ (0, 1).
+                                         a(S)
+
+Proof. Through simple calculations using Assumptions (H2)–(H5), (15) can be
+written as
+                      1         1         1       1
+                       β
+                         +          β
+                                      ≤      +        .
+                     S 1 (1 − S) 2       S 1 (1 − S)λ
+                                          γ
+
+Since S ∈ (0, 1), the claim follows from the fact that β1 ≤ γ1 , β2 ≤ λ.                
+    The next result has been proved in [13, Lemma 5]:
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 9
+
+Lemma 8. Let α, β ∈ Rn be such that |α| = |β| = 1. Then, for any v ∈ Rn it
+holds that
+                                            1
+                |α · v|2 + |v − (β · v)β|2 ≥ (α · β)2 |v|2 .
+                                            4
+Notation. Let R+ ≡ [0, ∞). For x ∈ R+ × RN −1 , we denote x = (x0 , x).
+Lemma 9. Let R : R+ × RN −1 → RN          + be a continuous and bounded mapping.
+Let K ⊂ L (Ω) be relatively compact. Let {φi ∈ Cc∞ (Ω; RN ) : i ∈ N} be dense in
+             2
+
+L2 (Ω; RN ). Then, for every δ > 0, there are C(δ) > 0, m(δ) ∈ N such that, for
+all w 1 , w2 ∈ K × H 1 (Ω; RN −1 ) it holds
+  kR(w 1 ) − R(w 2 )kL2 (Ω)
+                                                        m(δ)
+                          X                           X Z
+                                      i
+                                                                   R(w 1 ) − R(w 2 ) · φi dx .
+                                                                                    
+(16)        ≤δ 1+                  kw kH 1 (Ω) + C(δ)
+                          i=1,2                         i=1    Ω
+
+Proof. Assume by contradiction that there exists δ0 > 0 such that, for every
+m ∈ N, there exist w1,m , w2,m ∈ K × H 1 (Ω; RN −1 ) such that
+kR(w 1,m ) − R(w 2,m )kL2 (Ω)
+                    X                     n
+                                            X Z
+                              i,m
+                                                                   R(w 1,m ) − R(w 2,m ) · φi dx .
+                                                                                        
+           > δ0 1 +       kw kW 1,1 (Ω) + m
+                           i=1,2                         i=1   Ω
+
+Since R(R+ × RN −1 ) is bounded, then (wi,m )m∈N is bounded in H 1 (Ω; RN −1 ) and
+thus wi,m ⇀ wi weakly in H 1 (Ω; RN −1 ) (as m → ∞), for i = 1, 2. By a compact
+Sobolev embedding it holds that w i,m → w i strongly in L2 (Ω) and a.e. in Ω
+(up to a subsequence), for i = 1, 2. Moreover, the compactness of K implies
+that w i,m
+       0   → w i0 strongly in L2 (Ω) (up to a subsequence), for i = 1, 2. Therefore,
+w i,m → wi strongly in L2 (Ω; RN ) and a.e. in Ω. It follows that R(w i,m ) → R(w i )
+strongly in L2 (Ω; RN ). On the other hand,
+           Xn   Z
+                     R(w 1,m ) − R(w 2,m ) · φi dx
+                                          
+           i=1       Ω
+
+                         1                                 C
+                 ≤         kR(w 1,m ) − R(w 2,m )kL2 (Ω) ≤   → 0 (m → ∞),
+                         m                                 m
+and so
+                          Z
+                               R(w 1 ) − R(w 2 ) · φi dx = 0 ∀i ∈ N.
+                                                
+                           Ω
+
+Being (φi )i∈N dense in L2 (Ω), this implies that R(w 1 ) = R(w 2 ). But
+       kR(w 1 ) − R(w 2 )kL2 (Ω) = lim kR(w 1,m ) − R(w 2,m )kL2 (Ω) ≥ δ0 > 0,
+                                          m→∞
+
+which is a contradiction. This finishes the proof.                                               
+10                        E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+   We recall the following remark, see [5]. For completeness and clarity, we give
+a full proof.
+Lemma 10. If a subset {uε }ε∈(0,1] of C([0, T ]; L2 (Ω)) is relatively compact in
+C([0, T ]; L2 (Ω)), then the set F ≡ ∪ε∈(0,1] ∪t∈[0,T ] {uε (t)} is relatively compact in
+L2 (Ω). In this case, given any f ∈ C 0 (R), the set Ff ≡ ∪ε∈(0,1] ∪t∈[0,T ] {f (uε (t))}
+is relatively compact in L2 (Ω).
+Proof. Let (uεn (tn ))n∈N be an arbitrary sequence of points of F . The sequence
+(uεn )n∈N ⊂ C([0, T ]; L2 (Ω)) is relatively compact in C([0, T ]; L2 (Ω)), therefore
+is convergent up to a subsequence. Moreover, the sequence (tn )n∈N ⊂ [0, T ] is
+convergent up to a subsequence, so w.l.o.g. we can write uεn → u strongly in
+C([0, T ]; L2 (Ω)) and tn → t ∈ [0, T ]. It follows that
+     kuεn (tn ) − u(t)kL2 (Ω) ≤ kuεn (tn ) − u(tn )kL2 (Ω) + ku(tn ) − u(t)kL2 (Ω)
+                             ≤ kuεn − ukC([0,T ];L2(Ω)) + ku(tn ) − u(t)kL2 (Ω)       −→
+                                                                                     n→∞
+                                                                                           0.
+Therefore F is relatively compact in L2 (Ω). In this case, given any f ∈ C 0 (R),
+the relative compactness of Ff in L2 (Ω) is straightforward. This finishes the
+proof of the Lemma.                                                            
+   Our main compactness tool is given in the following lemma (see Corollary 3.7.
+in [5]).
+Lemma 11. For n ∈ N, let w n : [0, T ] → L2 (Ω; R+ × RN −1 ) be continuous.
+Assume that K := {w0n (·, t) ∈ L2 (Ω) : n ∈ N, t ∈ [0, T ]} is relatively compact in
+L2 (Ω), and that wn is bounded in L1 ((0, T ); H 1(Ω)). Furthermore, let R : R+ ×
+RN −1 → RN                                                n
+            + be continuous and bounded. Then, R(w ) is (up to subsequence)
+strongly convergent in L1 (Ω × (0, T )).
+Proof. Apply Lemma 9. For every δ > 0 there exist C(δ) > 0, m(δ) ∈ N such
+that, for every n, n′ ∈ N it holds that
+                                    ′                                        ′
+             kR(w n (t)) − R(w n (t))kL2 (Ω) ≤ δ(1 + kwn (t)kH 1 + kwn (t)kH 1 )
+                          m(δ) Z                          
+                          X
+                                         n           n′
+                 + C(δ)             R(w (t)) − R(w (t)) · φi dx .
+                            i=1     Ω
+
+By integrating the above estimate in time and exploiting the boundedness of wn
+in L1 ((0, T ); H 1(Ω)), we deduce
+            Z T
+                                    ′
+                 kR(w n (t)) − R(w n (t))kL2 (Ω) dt
+                0
+                              m(δ) Z T      Z                           
+                              X                                     ′
+               ≤ δC + C(δ)                        R(w n (t)) − R(w n (t)) · φi dx dt.
+                              i=1       0   Ω
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 11
+
+The boundedness of the mapping R implies that, up to subsequences, R(w n (t))
+is weakly convergent in L2 (Ω) for a.e. t ∈ [0, T ], and so
+ Z                         
+                      n′
+     R(w (t)) − R(w (t)) · φi dx → 0 as n, n′ → ∞, a.e. t ∈ [0, T ], i ∈ N.
+          n
+  Ω
+Moreover,
+    Z                         
+                          ′
+        R(w n (t)) − R(w n (t)) · φi dx ≤ Ckφi kL2 (Ω) , a.e. t ∈ [0, T ], i ∈ N.
+       Ω
+
+The dominated convergence theorem yields
+    Z T Z                         
+                              ′
+            R(w n (t)) − R(w n (t)) · φi dx dt → 0 as n, n′ → ∞, i ∈ N.
+       0     Ω
+
+It follows that ν ∈ N exists such that, for n, n′ ≥ ν,
+      Z T Z 
+                                 ′
+                                                      δ
+               R(w n (t)) − R(w n (t)) · φi dx dt ≤          , 1 ≤ i ≤ m(δ).
+        0   Ω                                       m(δ)C(δ)
+As a consequence, it holds that
+             Z T
+                                    ′
+                 kR(w n (t)) − R(w n (t))kL2 (Ω) dt ≤ δC,              n, n′ ≥ ν.
+                  0
+
+In particular, R(w n ) is Cauchy (and therefore convergent) in L1 (Ω×(0, T )). This
+finishes the proof.                                                              
+
+                                   5. Existence proof
+  The proof is divided into several steps.
+  Step 1: discretization and regularization. Fix T > 0. For N ∈ N we
+define κ = T /N, tk = κk (k = 0, . . . , N), Si0 = Si,0 (i = 1, . . . , n).
+  Consider the implicit Euler discretization:
+           given wk−1 ∈ H01 (Ω; Rn ), find w k ∈ H01 (Ω; Rn ) such that:
+             n Z                                n Z
+           X      Sik − Sik−1                 X       Sik
+                              φi dx = −                 k
+                                                          a(S k )p′c (S k )∇S k · ∇φi dx
+            i=1 Ω
+                       κ                      i=1 Ω
+                                                      S
+                   n
+                          Sik             β(S k ) − β(S k−1)
+                  X   Z
+                                  k
+                −           k
+                              a(S   )∇                          · ∇φi dx
+                  i=1   Ω S                        κ
+                  Z X  n
+                −         Dij (S1k , . . . , Snk )∇wjk · ∇φi dx
+                      Ω i,j=1
+                     n Z
+                    X     Sik
+(17)             −ε         k
+                              ∇wik · ∇φi dx,
+                    i=1 Ω
+                          S
+12                        E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+for all φ1 , . . . , φn ∈ H01 (Ω), where S k : Ω × (0, T ) → Rn is (implicitly) defined by
+
+
+
+                               Sk        β(S k ) − β(S k−1)
+                                i
+                  wik = log            +                      ,     i = 1, . . . , n,
+                               Sk                   κ
+
+
+                           Pn
+and we denoted S k =                k
+                               i=1 Si . Here we assume that S
+                                                              k−1
+                                                                  ∈ H 1 (Ω).
+
+
+
+     Step 2: linearized approximated problem. Using the fact that
+
+
+
+                                              n
+                                              X ∂S
+                                    ∇S =                 (w)∇wℓ ,
+                                               ℓ=1
+                                                   ∂wℓ
+
+
+
+
+equation (17) can be simply rewritten as
+
+
+
+      n Z                                  n Z                        n
+     X     Sik − Sik−1                   X         Sik     k ′    k
+                                                                     X   ∂S k
+                        φi dx = −                    k
+                                                       a(S )pc (S )           (w )∇wℓk · ∇φi dx
+     i=1 Ω
+                κ                        i=1 Ω
+                                                   S                 ℓ=1
+                                                                         ∂w ℓ
+               n                                n
+           1X         Sik                      X ∂S
+                   Z
+                                 k         k
+         −                 a(S     )τ  (S    )            ∇wℓk · ∇φi dx
+           κ i=1 Ω S k                         ℓ=1
+                                                   ∂w   ℓ
+               n         k
+           1X         Si
+                   Z
+         +               k
+                           a(S k )τ (S k−1 )∇S k−1 · φi dx
+           κ i=1 Ω S
+           Z X   n
+         −           Dij (S1k , . . . , Snk )∇wjk · ∇φi dx
+               Ω i,j=1
+
+(18)
+              n Z
+             X     Sik
+          −ε         k
+                       ∇wik · ∇φi dx.
+             i=1 Ω
+                   S
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 13
+
+Now, the linearized problem has the following form:
+          let w ∗ ∈ L2 (Ω) and σ ∈ [0, 1] be given, find w ∈ H01 (Ω) such that:
+              n Z
+            X       Si∗ − Sik−1
+          σ                        φi dx
+             i=1 Ω
+                          κ
+                    n Z                              n
+                  X         Si∗      ∗ ′       ∗
+                                                   X      ∂S ∗
+              =−              ∗
+                                a(S )pc (S )                 (w )∇wℓ · ∇φi dx
+                   i=1 Ω
+                            S                            ∂wℓ
+                                                    ℓ=1
+                       n Z                             n
+                   1X          Si∗      ∗        ∗
+                                                     X     ∂S ∗
+                −                  a(S    )τ  (S   )           (w )∇wℓ · ∇φi dx
+                  κ i=1 Ω S ∗                              ∂wℓ
+                                                      ℓ=1
+                       n Z       ∗
+                  σ  X         Si
+                +                  a(S ∗ )τ (S k−1 )∇S k−1 · ∇φi dx
+                  κ i=1 Ω S ∗
+                  Z X   n
+                −           Dij (S1∗ , . . . , Sn∗ )∇wj · ∇φi dx
+                    Ω i,j=1
+                    n Z
+                   X     Si∗
+(19)            −ε         ∗
+                             ∇wi · ∇φi dx,
+                   i=1 Ω S
+
+for all φi ∈ H01 (Ω), where Si∗ is defined by
+                          S ∗  β(S ∗ ) − β(S k−1)
+               wi = log i∗ +
+                  ∗
+                                                    , i = 1, . . . , n,
+                           S               κ
+and we denoted S ∗ = ni=1 Si∗ . The above problem can be summarized as
+                        P
+
+(20)                     a(w, φ) = σF (φ),          ∀φ ∈ H01 (Ω; Rn ),
+where
+                     n Z
+                  X        Si∗ ∂S ∗                ∗
+                                                       h
+                                                          ′    ∗     τ (S ∗ ) i
+        a(w, φ) =            ∗ ∂w
+                                     (S     )a(S     )  p c (S   ) +           ∇wℓ · ∇φi dx
+                  i,ℓ=1  Ω S       ℓ                                    κ
+                  X n Z
+                +          Dij (S1∗ , . . . , Sn∗ )∇wj · ∇φi dx
+                     i,j=1 Ω
+                        n Z
+                      X         Si∗
+(21)             +ε               ∗
+                                    ∇wi · ∇φi dx
+                      i=1     Ω S
+
+                   n Z
+                        Si∗ − Sik−1
+                                            Z ∗               k−1
+                  X                            Si      ∗ τ (S     )∇S k−1
+(22)    F (φ) = −                   φi dx −      ∗
+                                                   a(S  )                 · ∇φi dx.
+                  i=1 Ω
+                             κ               Ω S                 κ
+It is easy to see that the functional F is continuous, i.e. it holds
+                                  |F (φ)| ≤ CkφkH 1 (Ω,Rn ) .
+14                          E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+The bilinear form (21) can be written as:
+                  n Z                                          n Z
+               X
+                             ∗            ∗
+                                                              X     Si∗
+   a(w, φ) =           αij (S1 , . . . , Sn )∇wj · ∇φi dx + ε           ∇wi · ∇φi dx,
+               i,j=1 Ω                                        i=1 Ω
+                                                                    S∗
+with
+                                                                             ∂S ∗
+                 αij (S1∗ , . . . , Sn∗ ) = Dij (S1∗ , . . . , Sn∗ ) + Si∗       (S )G(S ∗ ),
+                                                                             ∂wj
+where
+                                      a(S ∗ ) h ′ ∗        τ (S ∗ ) i
+                                G(S ∗ ) =       p c (S ) +           .
+                                         S∗                   κ
+     Thanks to Lemma 6 and the nonnegativity of G(S ∗ ):
+                    n Z                                                n Z
+                 X
+                               ∗            ∗
+                                                                     X      Si∗
+       a(w, w) ≥         Dij (S1 , . . . , Sn )∇wi · ∇wj dx + ε               ∗
+                                                                                |∇wi |2 dx.
+                 i,j=1 Ω                                              i=1 Ω
+                                                                            S
+From Assumption (H1) we obtain
+     a(w, w)
+                                                                      
+                       n Z                           n Z
+                                                           r        2
+                                                               ∗
+                                    
+                     X            1                  X       Si
+     ≥ min{D0 , ε}         δij −     ∇wi · ∇wj dx +           ∗
+                                                                 ∇wi dx .
+                    i,j=1 Ω       n                  i=1 Ω   S
+
+     Now we apply Lemma 8 and deduce
+                                         n
+                                            r 
+                         min(D0 , ε)         Si∗ 2
+                                     Z X
+               a(w, w) ≥                       ∗
+                                                   |∇w|2 dx.
+                            4n        Ω i=1
+                                             S
+             P q ∗ 2
+               n    Si
+Next, since    i=1  S∗
+                         ≥ n, we conclude that the bilinear form a(w, w) is
+coercive in H01 (Ω), i.e.
+                     n Z                                          n Z
+                  X
+                                ∗            ∗
+                                                                 X     Si∗
+     a(w, w) ≥            Dij (S1 , . . . , Sn )∇wi · ∇wj dx + ε         ∗
+                                                                           |∇wi |2 dx
+                  i,j=1 Ω                                        i=1 Ω
+                                                                       S
+(23)              ≥ C(ε)k∇wk2L2 (Ω,Rn ) ≥ C(ε)kwk2H 1 (Ω,Rn ) ,
+the last inequality being a consequence of Poincaré’s Lemma. Therefore we can
+deduce by Lax-Milgram lemma the existence of a unique solution w ∈ H01 (Ω; Rn )
+to (19).
+Remark 12. We note that from the coercivity of the bilinear form a(w, w) it
+directly follows that the solution w ∈ H01 (Ω) to the linearized problem satisfies
+k∇wkL2 (Ω,Rn ) ≤ C(ε).
+  Step 3: solution of the nonlinear approximated problem. We refor-
+mulate (17) as a fixed-point problem for a suitable operator and we solve it via
+Leray-Schauder fixed point theorem. The Step 2 allows us to define an operator
+T : L2 (Ω; Rn ) × [0, 1] → L2 (Ω; Rn ) in the following way: for w ∗ ∈ L2 (Ω; Rn ),
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 15
+
+σ ∈ [0, 1], it holds that w = T (w ∗ , σ) ∈ H01 (Ω; Rn ) is the solution to (19).
+In a standard way we can show that the mapping T is continuous. Moreover,
+T : L2 (Ω; Rn )×[0, 1] → L2 (Ω; Rn ) is compact due to the compact Sobolev embed-
+ding H 1 (Ω; Rn ) ֒→ L2 (Ω; Rn ). Furthermore, it holds that T (·, 0) ≡ 0. It remains
+to prove a uniform bound (with respect to σ) for all fixed points of T (·, σ) in
+L2 (Ω, Rn ). Let w ∈ L2 (Ω, Rn ) be such a fixed point. Then w solves (20) with a
+test-function φ replaced by w. We have
+
+                 C(ε)kwk2H 1 (Ω,Rn ) ≤ a(w, w) = σF (w) ≤ CkwkL2 (Ω,Rn ) ,
+
+yielding an H 1 bound for w, uniform in σ. Thanks to Leray-Schauder’s fixed
+point theorem we get the existence of a solution w ∈ H01 (Ω; Rn ) to (20) for
+σ = 1. In this way we proved the solution to (17).
+   Step 4: uniform in κ a-priori estimates. Let us choose
+                                                      β(S k ) − β(S k−1) 
+                               k      k         Γ
+                     φ = w = µ − µ(S ) +                                      1
+                                                                 κ
+in (17). Since µki = ∂i F (S k ) and F (S) is convex, it follows that
+                   n
+                   X
+                         (Sik − Sik−1 )(µki − µi (S Γ )) ≥ F̃(S k ) − F̃ (S k−1 ),
+                   i=1
+
+
+where F̃ is the relative entropy density defined in (9). Moreover, the nonnega-
+tivity and boundedness of β ′ allows us to write
+
+                 (S k − S k−1 )(β(S k ) − β(S k−1)) ≥ C(β(S k ) − β(S k−1))2 ,
+                         1
+where C =                           . In this way we obtain
+             max0≤S≤1 β ′ (S)
+                                                               2
+                                          β(S k ) − β(S k−1)
+                                    Z 
+         1
+             Z
+                         k
+                  F̃(S )dx + C                                      dx
+         κ   Ω                        Ω            κ
+                      n Z
+                    X        Sik
+                  +            k
+                                 a(S k )p′c (S k )∇S k · ∇wik dx
+                     i=1 Ω
+                             S
+                         n Z
+                     1X         Sik
+                                    a(S k ) ∇β(S k ) − ∇β(S k−1) · ∇wik dx
+                                                                  
+                  +               k
+                    κ i=1 Ω S
+                       n Z                                           n Z
+                    X
+                                     k           k    k       k
+                                                                    X     Sik
+                  +          Dij (S1 , . . . , Sn )∇wj · ∇wi dx + ε         k
+                                                                              |∇wik |2 dx
+                    i,j=1 Ω                                         i=1 Ω
+                                                                          S
+                           1
+                             Z
+(24)                    ≤        F̃(S k−1)dx.
+                          κ Ω
+16                                E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+Taking into account (23) and Assumption (H1), one gets
+
+                                                                              2
+                                                         β(S k ) − β(S k−1)
+                                               Z 
+                  1
+                      Z
+                                   k
+                              F̃ (S )dx + C                                        dx
+                  κ       Ω                      Ω                κ
+                                 n Z
+                                X     Sik
+                              +         k
+                                          a(S k )p′c (S k )∇S k · ∇wik dx
+                                i=1 Ω
+                                      S
+                                   n
+                                1X       Sik
+                                     Z
+                                                 k           k           k−1
+                                                                                 · ∇wik dx
+                                                                               
+                              +              a(S   )  ∇β(S     ) − ∇β(S      )
+                                κ i=1 Ω S k
+                              + CkΠ∇w k k2L2 (Ω)
+                                               1
+                                                         Z
+(25)                          + Cεkwk2H 1(Ω) ≤                F̃(S k−1)dx.
+                                                     κ    Ω
+
+
+Using the relation (7), we obtain
+
+               n Z
+                    Sik
+              X                                   Z
+                           k ′    k   k    k
+(26)                  k
+                        a(S )pc (S )∇S · ∇µi dx =    p′c (S k )β ′ (S k )|∇S k |2 dx.
+              i=1 Ω
+                    S                              Ω
+
+
+
+In this way we get:
+
+                                                                  2
+                                           β(S k ) − β(S k−1)
+                                   Z 
+     1
+         Z                                                                    Z
+                  k
+             F̃ (S )dx + C                                             dx +       p′c (S k )β ′ (S k )|∇S k |2 dx
+     κ   Ω                             Ω            κ                         Ω
+                                1
+                                  Z
+                                      a(S k )p′c (S k )∇S k · ∇β(S k ) − ∇β(S k−1) dx
+                                                                                    
+                              +
+                                κ Ω
+                                1
+                                  Z
+                                       ∇β(S k ) − ∇β(S k−1) · ∇β(S k )
+                                                                 
+                              +
+                                κ Ω
+                                1
+                                   Z
+                              + 2      a(S k )|∇β(S k ) − ∇β(S k−1)|2 dx
+                                κ Ω
+                                     n                       n
+                                                                                1
+                                   X                       X                      Z
+(27)                          + Cε          k 2
+                                        kwi kH 1 (Ω + C              k 2
+                                                                kΠ∇µi kL2 (Ω) ≤       F̃(S k−1 )dx.
+                                    i=1                     i=1
+                                                                                κ  Ω
+
+
+
+Next, using the fact that (a − b)a ≥ 21 (a2 − b2 ), we obtain
+
+     Z        β(S k ) − β(S k−1)                       1
+                                                                   Z                           
+                                                     k
+         ∇                                 · ∇β(S )dx ≥               |∇β(S k )|2 − |∇β(S k−1)|2 dx
+     Ω                    κ                             2κ             Ω
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 17
+
+We have:
+                                                                                2
+                                                             β(S k ) − β(S k−1)
+                                                     Z 
+          1                    1
+           Z                               
+                      k                 k 2
+                 F̃ (S ) + |∇β(S )| dx + C                                         dx
+          κ  Ω                 2                        Ω             κ
+            Z
+          + p′c (S k )β ′ (S k )|∇S k |2 dx
+              Ω
+            1
+               Z                                                    
+          +        a(S k )p′c (S k )∇S k · ∇β(S k ) − ∇β(S k−1) dx
+            κ Ω
+             1
+                Z                                     2
+          + 2       a(S k ) ∇β(S k ) − ∇β(S k−1) dx
+            κ Ω
+                X n                     X n
+                         k 2
+          + Cε       kwi kH 1 (Ω + C         kΠ∇µki k2L2 (Ω)
+                 i=1               i=1
+                 1                   1
+                   Z                           
+(28)           ≤      F̃ (S k−1 ) + |∇β(S k−1)|2 dx.
+                 κ Ω                 2
+
+Next, Young inequality gives:
+
+                                                               k
+                                                          ) − β(S k−1)
+                                                         β(S
+                   Z
+                                 k
+                           a(S       )p′c (S k )∇S k · ∇                  dx
+                       Ω                                      κ
+                                        3             β(S k ) − β(S k−1) 2
+                                          Z
+                                      ≤     a(S k ) ∇                           dx
+                                        4 Ω                       κ
+                                            1
+                                              Z
+                                          +      a(S k )(p′c (S k ))2 |∇S k |2 dx
+                                            3 Ω
+
+In this way we get:
+
+                                                                    2
+                                                β(S k ) − β(S k−1)
+                                           Z 
+ 1                 1
+     Z                           
+              k               k 2
+        F̃ (S ) + |∇β(S )| dx + C                                      dx
+ κ    Ω            2                        Ω             κ
+                                             1
+            Z                                   Z                               2
+                ′   k  ′    k       k 2
+         + pc (S )β (S )|∇S | dx + 2                a(S k ) ∇β(S k ) − ∇β(S k−1) dx
+              Ω                             4κ Ω
+                Xn                    X n
+         + Cε      kwik k2H 1 (Ω + C      kΠ∇µki k2L2 (Ω)
+              Zi=1            i=1
+            1               1              1
+                                            Z
+                        k−1        k−1 2
+(29)      ≤        F̃ (S ) + |∇β(S )| dx +     a(S k )(p′c (S k ))2 |∇S k |2 dx.
+            κ Ω             2              3 Ω
+
+Thanks to Lemma 7, we can estimate the second integral on the right-hand side
+of (29) by means of the third integral of the left-hand side of (29). In this way
+18                           E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+we get:
+                                                                        2
+                                                     β(S k ) − β(S k−1)
+                                              Z 
+     1                 1
+         Z                            
+                     k             k 2
+            F̃(S ) + |∇β(S )| dx + C                                       dx
+     κ   Ω             2                        Ω             κ
+              2                                   1
+                Z                                      Z                             2
+                    ′    k   ′     k     k 2
+           +       pc (S )β (S )|∇S | dx + 2             a(S k ) ∇β(S k ) − ∇β(S k−1) dx
+              3 Ω                               4κ Ω
+                 Xn
+           + Cε       kwik k2H 1 (Ω + CkΠ∇µki k2L2 (Ω)
+                   Zi=1
+                 1           k−1 1     k−1 2
+                                             
+(30)           ≤        F̃ (S ) + |∇β(S )| dx.
+                 κ Ω             2
+
+Let us now introduce a new notation. Let us define the piecewise constant-in-time
+functions:
+                                                                 N
+                              (κ)
+                                                   χ{0} (t) +          S j χ(tj−1 ,tj ] (t),
+                                                                 X
+                             Si (t) = Si0
+                                                                 j=1
+                                                                 N
+                             µi (t) = µ0i χ{0} (t) +                   µj χ(tj−1 ,tj ] (t),
+                               (κ)
+                                                                 X
+
+                                                                 j=1
+
+
+                      (κ)
+and let S (κ) = ni=1 Si . We also define the discrete backward time derivative
+               P
+operator Dκ as follows: for every function f : QT → R,
+
+                                     f (x, t) − f (x, t − κ)
+                    Dκ f (x, t) =                                          x ∈ Ω,         t ∈ [κ, T ].
+                                                κ
+
+The discretized-regularized system (17) can be rewritten, in the new notation, as
+
+         n Z T Z h                             (κ)
+         X                     (κ)           Si a(S (κ) ) ′ (κ)
+                          Dκ S i       φi +                   p (S )∇β(S (κ) ) · ∇φi
+         i=1    0    Ω                        S (κ) τ (S (κ) ) c
+                                             (κ)
+                                           Si                                    i
+                                         + (κ) a(S (κ) )∇Dκ β(S (κ) ) · ∇φi dxdt
+                                           S
+                                           Z TZ X   n
+                                                              (κ)                  (κ)
+                                         +              Dij (S1 , . . . , Sn(κ) )∇µj · ∇φi dxdt
+                                               0       Ω i,j=1
+                                                    n
+                                               Z TZ X   (κ)
+                                                      S           i           (κ)
+                                         +ε                     (κ)
+                                                                        ∇wi         · ∇φi dxdt = 0,
+                                                   0    Ω i=1 S
+
+(31)                                    ∀φ1 , . . . , φn ∈ L2 (0, T ; H01(Ω)).
+   GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 19
+
+In the new notation, the entropy inequality (30) reads as
+                                1
+                Z
+         sup       (F̃(S (κ) ) + |∇β(S (κ) )|2 )dx
+        t∈[0,T ] Ω              2
+               Z TZ
+                                                2 T
+                                                  Z Z
+                                (κ) 2
+                                                       τ (S (κ) )p′c (S (κ) )|∇S (κ) |2 dxdt
+                                    
+        +C              Dκ β(S ) dxdt +
+                0    Ω                          3  0 Ω
+              Z TZ                                          n Z T
+            1              (κ)             (κ) 2
+                                                          X                (κ)
+        +              a(S ) ∇Dκ β(S ) dxdt + Cε                       kwi k2H 1 (Ω) dt
+            4 0 Ω                                          i=1 0
+               Z T
+                                                      1
+                                           Z
+(32)    +C          kΠ∇µ(κ) k2L2 (Ω) dt ≤ (F̃(S 0 ) + |∇β(S 0 )|2 )dx.
+                0                           Ω         2
+                                    n
+                                  X           Si
+By using the lower bounded             Si log     ≥ −mnS ≥ −mn, we obtain the fol-
+                                   i=1
+                                               S
+lowing apriori estimates:
+Proposition 13. There is a constant C, independent of κ and ε, such that
+(33)                                       kE(S (κ) )kL∞ (0,T ;L1 (Ω)) ≤ C,
+(34)                                    k∇β(S (κ) )kL∞ (0,T ;L2 (Ω)) ≤ C,
+(35)                                    kDκ β(S (κ) )kL2 (0,T ;L2 (Ω)) ≤ C,
+                         q
+(36)                    k τ (S (κ) )p′c (S (κ) )∇S (κ) kL2 (0,T ;L2 (Ω)) ≤ C,
+                          q
+(37)                     k a(S (κ) )∇Dκ β(S (κ) )kL2 (0,T ;L2 (Ω)) ≤ C,
+                                                √
+(38)                                         k εwiκ kL2 (0,T ;H 1 (Ω)) ≤ C,
+(39)                                      k∇(Πµκ )i kL2 (0,T ;L2 (Ω)) ≤ C,
+for i = 1, . . . , n.
+  By using the bound (33) on the entropy function we obtain the following
+bounds:
+Lemma 14. There is a constant C independent of κ and ε, such that
+(40)          k(S (κ) )2−γ1 kL∞ (0,T ;L1 (Ω)) + k(1 − S (κ) )2−λ kL∞ (0,T ;L1 (Ω)) ≤ C.
+Proof. By using simple calculations, we get
+                   1          1            1             1        1−S   1
+  E(S) =                     γ  −2
+                                   +                        λ−2
+                                                                +     +
+          (γ1 − 1)(γ1 − 2) S  1      (λ − 1)(λ − 2) (1 − S)       λ−1 λ−2
+                                   
+                 1          1
+       ≥C            +                .
+              S γ1 −2 (1 − S)λ−2
+The bound (40) now follows from (33).                                                     
+   By using (36) we get the following bounds.
+20                        E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+Lemma 15. Define the exponents α1 and α2 as follows:
+(41)            α1 = 1 + (γ − γ1 − β1 )/2 < 0,                 α2 = 1 − β2 /2 < 0.
+Then, there is a constant C, independent of κ and ε, such that:
+(42)           k(S (κ) )α1 kL2 (0,T ;L6 (Ω)) + k(1 − S (κ) )α2 kL2 (0,T ;L6 (Ω)) ≤ C.
+Proof. Let us denote, for notational simplicity, S = S (κ) . Then, from (36) and
+Assumptions (H3), (H4) we get
+        Z TZ
+               (S γ + S γ−γ1 (1 − S)λ )(S −β1 + (1 − S)−β2 )|∇S|2dxdt ≤ C,
+           0   Ω
+with the constant C independent of κ and ε. As a consequence
+   Z TZ                                   Z TZ
+             γ−γ1 −β1        λ    2
+           S          (1 − S) |∇S| dxdt +      S γ (1 − S)−β2 |∇S|2dxdt ≤ C.
+       0   Ω                                               0   Ω
+The inequality stated above implies the following bound for the functions Z ≡
+min(S, 1/2), W ≡ max(S, 1/2):
+        Z TZ                          Z TZ
+                 γ−γ1 −β1     2
+               Z          |∇Z| dxdt +      (1 − W )−β2 |∇W |2dxdt ≤ C,
+           0   Ω                                   0       Ω
+which can be written as
+            Z TZ                Z TZ
+                        α1 2
+                   |∇Z | dxdt +      |∇(1 − W )α2 |2 dxdt ≤ C.
+                0     Ω                        0       Ω
+
+The function Z and (1 − W ) are in L (0, T ; L2 (Ω)) due to Assumption (H5)
+                 α1                   α2               2
+
+and Lemma 14. Indeed, Assumption (H5) implies that 2α1 ≥ 2 − γ1 and 2α2 ≥
+2 − λ. We can then use the Sobolev embedding theorem to get the bound:
+                   kZ α1 kL2 (0,T ;L6 (Ω)) + k(1 − W )α2 kL2 (0,T ;L6 (Ω)) ≤ C.
+Due to (41) these bounds hold also for the function S instead of Z and W .              
+Lemma 16. There exists p > 1 such that
+                        Z TZ
+(43)                           a(S (κ) )−p dxdt ≤ C,
+                                  0        Ω
+where the constant C > 0 is independent of κ and ε.
+Proof. For simplifying the notation we will write S = S (κ) . We first notice that
+                                      p                        
+                  −p       1      1               1          1
+             a(S) =          +            ≤C         +              .
+                          S γ (1 − S)λ           S pγ (1 − S)pλ
+So it is sufficient to prove that S −pγ and (1 − S)−pλ are uniformely bounded in
+L1 (Ω × (0, T )) for some p > 1.
+  It is clear that integrability given by Lemma 14 is not sufficient to prove the
+estimate (43). Therefore, we will combine estimates from Lemmas 15 and 14 in
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 21
+
+order to obtain the integrability with requested exponents. Assumptions (H5)
+on the parameters β1 , β2 , γ, γ1 and λ imply
+(44)             2 < β1 ≤ γ1 < γ < β1 + γ1 − 2, 2 < β2 ≤ λ.
+We rewrite the expression Ω S −γp dx using −γp = α1 Θ + (2 − γ1 )Θ1 and Hölder’s
+                          R
+inequality:
+  Z            Z                        Z             p1  Z                   p1
+      −γp           α1 Θ (2−γ1 )Θ1           α1 Θp1
+     S dx =       S     S          dx ≤    S        dx 1       S (2−γ1 )Θ1 p2 dx 2 .
+   Ω             Ω                               Ω                        Ω
+We take p1 = 6/Θ and p2 = 6/(6 − Θ), Θ = 2, Θ1 = 2/3 and we get
+       ZZ               Z T Z         1/3          Z          2/3
+              −γp                 6α1                     2−γ1
+             S dxdt ≤           S dx        dt · max    S      dx
+           QT                  0       Ω                    0≤t≤T         Ω
+                                                             2/3
+                         = kS α1 k2L2 (0,T ;L6 (Ω)) kS 2−γ1 kL∞ (0,T ;L1 (Ω)) .
+Because of (42) and (40), the right hand side is uniformly bounded. Condition
+                              1  10         5         
+                         p=−         + γ − γ1 − β1 > 1
+                              γ 3            3
+is equivalent to
+                                   1       5
+(45)                          γ < β1 + (γ1 − 2).
+                                   2       6
+Now it is easy to see that (45) and the first inequality in (44) are equivalent to
+the first inequality in Assumption (H5).
+   The second inequality in Assumption (H5) in treated in the same way.          R The
+calculations are given here for completeness. We rewrite the expression Ω (1 −
+S)−λp dx using −λp = α2 Θ + (2 − λ)Θ1 and Hölder’s inequality:
+       Z                  Z
+           (1 − S) dx = (1 − S)α2 Θ (1 − S)(2−λ)Θ1 dx
+                  −λp
+         Ω                 Ω
+                          Z                   p1  Z                       p1
+                                     α2 Θp1
+                        ≤    (1 − S)        dx 1        (1 − S)(2−λ)Θ1 p2 dx 2 .
+                               Ω                              Ω
+We take p1 = 6/Θ and p2 = 6/(6 − Θ), Θ = 2, Θ1 = 2/3 and obtain
+ZZ                    Z T Z             1/3          Z            2/3
+            −λp                      6α2                         2−λ
+     (1 − S) dxdt ≤           (1 − S) dx      dt · max    (1 − S) dx
+   QT                      0       Ω                              0≤t≤T       Ω
+                                                                    2/3
+                       = k(1 − S)α2 k2L2 (0,T ;L6 (Ω)) k(1 − S)2−λ kL∞ (0,T ;L1 (Ω)) .
+Because of (42) and (40), the right hand side is uniformly bounded. Condition
+                               1 4 2              
+                         p=−         − λ + 2 − β2 > 1
+                               λ 3 3
+is equivalent to λ < 3β2 − 10. It is now easy to see that this inequality together
+with the second inequality in (44) are equivalent to the second inequality in
+Assumption (H5). This concludes the proof of Lemma 16.                          
+22                                    E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+Proposition 17. There is an exponent 1 < q < 2 such that
+(46)                                       k∇Dκ β(S (κ) )kLq (Ω×(0,T ))) ≤ C,
+where C is a constant independent of κ and ε.
+Proof. Let p > 1 as in Lemma 16. By choosing q = 2p/(1 + p) ∈ (1, 2), we get
+  Z TZ
+         |∇Dκ β(S (κ) )|q dxdt
+   0   Ω
+     Z TZ
+                      −q/2          q/2
+  =         a(S (κ) )      a(S (κ) ) |∇Dκ β(S (κ) )|q dxdt
+          0       Ω
+         Z T Z                                    (2−q)/2 Z T Z                      q/2
+                                (κ) −q/(2−q)                          (κ)       (κ) 2
+     ≤                    a(S     )            dxdt                a(S )|∇Dκ β(S )| dxdt
+              0       Ω                                              0   Ω
+         Z T Z                     (2−q)/2 Z T Z                      q/2
+                             (κ) −p                    (κ)       (κ) 2
+     =                    a(S ) dxdt                a(S )|∇Dκ β(S )| dxdt     .
+              0       Ω                                        0     Ω
+
+By using Lemma 16 and bound (37) we conclude the proof.                                            
+   Finally, from equation (31) together with the the bounds (36)–(39), we get the
+following uniform bound for the discrete time derivative:
+                                                     (κ)
+(47)                                        kDκ Si kL2 (0,T ;H −1 (Ω)) ≤ CT .
+5.1. Passing to the limit when κ → 0. From (38) and Lemma 5 we get that
+                          √ (κ)
+                        k εSi kL2 (0,T ;H 1 (Ω)) ≤ CT .
+From this and the bound from the discrete time derivative (47) we get by using
+the nonlinear version of the Aubin-Lions lemma [4] that
+                                      Siε,κ → Siε     strongly in L2 (0, T ; L2 (Ω)).
+This strong convergence holds also in Lq (0, T ; Lq (Ω)) for any q < ∞.
+  By using the bounds in Proposition 13 and Proposition 17, we obtain that the
+solution of (31) satisfies
+        n Z T                    n Z T Z h (ε)
+       X           (ε)
+                                X         Si a(S (ε) ) ′ (ε)
+              h∂t Si , φi idt +                           p (S )∇β(S (ε) ) · ∇φi
+                                            (ε) τ (S (ε) ) c
+       i=1 0                    i=1 0   Ω S
+                                                    (ε)
+                                              Si     (ε)           (ε)
+                                                                                 i
+                                            + (ε) a(S )∇Dκ β(S ) · ∇φi dxdt
+                                              S
+                                              Z TZ X  n
+                                                               (ε)                  (κ)
+                                            +            Dij (Si , . . . , Sn(ε) )∇µj · ∇φi dxdt
+                                                 0         Ω i,j=1
+                                               Z TZ X n    (ε)
+                                                         Si      (κ)
+(48)                                        +ε             (ε)
+                                                               ∇wi · ∇φi dxdt = 0.
+                                                0  Ω i=1 S
+   GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 23
+
+Thus, after taking the limit κ → 0, (43) holds with S (ε) in place of S (κ) , i.e.
+                            Z TZ
+(49)                              a(S (ε) )−p dxdt ≤ C.
+                                    0    Ω
+
+Also, estimates (33)-(39), (46), (47) hold with S (ε) in place of S (κ) , i.e.
+(50)                                         kE(S (ε) )kL∞ (0,T ;L1 (Ω)) ≤ C,
+(51)                                     k∇β(S (ε) )kL∞ (0,T ;L2 (Ω)) ≤ C,
+(52)                                      k∂t β(S (ε) )kL2 (0,T ;L2 (Ω)) ≤ C,
+                          q
+(53)                     k τ (S (ε) )p′c (S (ε) )∇S (ε) kL2 (0,T ;L2 (Ω)) ≤ C,
+                            q
+(54)                       k a(S (ε) )∇∂t β(S (ε) )kL2 (0,T ;L2 (Ω)) ≤ C,
+                                                 √
+(55)                                          k εwiε kL2 (0,T ;H 1 (Ω)) ≤ C,
+(56)                                      k∇(Πµε )i kL2 (0,T ;L2 (Ω)) ≤ C,
+                                                   (ε)
+(57)                                         k∂t Si kL2 (0,T ;H −1 (Ω)) ≤ C,
+(58)                                     k∇∂t β(S (ε) )kLq (Ω×(0,T )) ≤ C,
+for i = 1, . . . , n.
+5.2. Passing to the limit ε → 0. Now we define the continuous mapping R :
+R+ × Rn → Rn+1 as
+                                ewi
+             Ri (w0 , w) = w0 Pn wj ,               w0 ≥ 0, w ∈ Rn , i = 1, . . . , n.
+                               j=1 e
+                                  (ε)
+It follows from (12) that Si = Ri (S (ε) , (µ∗)(ε) ) for i = 1, . . . , n. Lemma 11 im-
+                (ε)
+plies that Si has a subsequence that is strongly convergent in L1 (Ω × (0, T )), for
+                                          (ε)
+i = 1, . . . , n. From the L∞ bounds for Si we conclude that, up to a subsequence,
+it holds that
+           (ε)
+        Si       → Si   strongly in Lq (Ω × (0, T )) for all q < ∞, i = 1, . . . , n.
+By using this convergence property as well as the bounds (49)–(58), we are able
+to take the limit ε → 0 in (48) and obtain that S = (S1 , . . . , Sn ) is a weak solution
+to (1)–(4). This finishes the proof of the theorem.
+
+                                             Appendix
+Derivation of the model. We consider an isothermal, immiscible and incom-
+pressible two-phase flow of water and oil in a porous media, where oil consists of
+n chemical components. Let us denote by V the representative volume (REV),
+which consists of the solid part Vs and the pore space Vp . The flow occurs in a
+porous domain Vp of volume ∆Vp , where the porosity (the relative volume occu-
+pied by the pores) is denoted by Φ = ∆Vp /∆V . The saturations of the oil and
+24                    E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+water phase are given by Sα = ∆Vα /∆Vp , where ∆Vα is the volume of the phase
+α with α = w, o. Following [2], a generalized Darcy law gives
+(59)               uw = −λw (So )k∇pw ,         uo = −λo (So )k∇po .
+Here the subscripts w and o correspond, respectively, to the water (wetting)
+and the oil (non-wetting) fluids, uα are the fluxes of the phases, pα are their
+pressures, and λα are the phase mobilities. We assume that λα depend on the
+nonwetting-phase saturation So . Furthermore, k is the absolute permeability of
+the porous medium, and the gravity effects are neglected for simplicity. The mass
+conservation laws for both phases have the form:
+              ρo ∂So                    ρw ∂(1 − So )
+(60)        Φ        + div ρo uo = 0, Φ               + div ρw uw = 0,
+                ∂t                           ∂t
+where Φ is the porosity of the medium. The model (59)–(60) has to be completed
+with the capillary pressure law which has the form
+                                   po − pw = pdyn
+                                              c ,
+
+where, due to [10], the capillary pressure saturation relationship is given by
+                                                         ∂So
+(61)                          pdyn
+                               c    = pc (So ) + τ (So )     .
+                                                          ∂t
+Here, pc (So ) is the static capillary pressure function and τ (So ) is the relaxation
+parameter.
+   We assume that the non-wetting phase (oil) is a heterogeneous mixture of
+hydrocarbon compounds and we derive the mass conservation equation for each
+compound. More precisely, in the oil phase there are n components whose mass
+concentrations cio , i.e. the densities of the i-th component in the volume of the
+phase, are given by cio = ∆mio /∆Vo , where ∆mio is the mass of the component i in
+the oil-phase of the REV. The sum of the mass concentrations of all components
+is given by
+                                   n
+                                  X         ∆mo
+(62)                                  cio =         = ρo .
+                                  i=1
+                                             ∆V o
+
+Noting that
+                       ∆mio     ∆Vp ∆Vo ∆mio
+                             =                    = ΦSo cio ,
+                        ∆V      ∆V ∆Vp ∆Vo
+the mass conservation equation for the component i is given by
+                         ∂
+                             ΦSo cio + div cio uo,i = 0.
+                                                     
+(63)
+                         ∂t
+The component velocities uo,i are related to the phase velocity uo by the expres-
+sion
+                                       Xn
+(64)                           ρo uo =     cio uo,i .
+                                          i=1
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 25
+
+  The flux of the oil-phase components consists of the relative movement of the
+constituents i spreading due to random collisions between molecules of different
+types (diffusion) followed by the convection, i.e.
+(65)                              cio uo,i = Jio + cio uo .
+Note that ni=1 Jio = 0. Let us introduce the saturation of the component i in
+             P
+the oil phase as
+                                           ∆Voi
+                                     Soi =      .
+                                           ∆Vp
+It is clear that ni=1 Soi = So . Furthermore, we assume that each component i of
+                P
+the mixture in the oil phase is incompressible, i.e.
+                         ∆mio = ρio ∆Voi , where ρio = const.
+Now we have
+                    i   ∆mio   ρio ∆Voi         i
+                                           i ∆Vo /∆Vp
+                                                            i
+                                                         i So
+                   co =      =          = ρo          = ρo .
+                        ∆Vo      ∆Vo         ∆Vo /∆Vp      So
+Next, we make the assumption that the diffusion fluxes are proportional to the
+spatial gradients of suitable chemical potentials, i.e.
+                           n
+                           X
+                i        i
+(66)           Jo := −ρo      Dij (So1 , . . . , Son )∇µj , i = 1, . . . , n,
+                           j=1
+
+where µj are given by (2) using the notation S ≡ So . In this way, equation (63)
+reads:
+                                            n
+         i ∂
+                   Soi        Si
+                                 i o     i
+                                           X                              
+       ρo       ΦSo       + div ρo uo − ρo     Dij (So1 , . . . , Son )∇µj = 0.
+           ∂t       So            So       j=1
+
+Now, a simple calculation gives
+                          λo λw                    λo
+            −λo k∇po =           k∇(pw − po ) +         (u0 + uw ).
+                         λo + λw                λo + λw
+  Furthermore, we assume that the total flow equals zero, i.e. u0 + uw = 0,
+which gives
+                              λo (So )∇po = a(So )∇pdyn
+                                                    c .
+
+Here the diffusion mobility a(So ) is given by
+                                          λo (So )λw (So )
+                              a(So ) =                       .
+                                         λo (So ) + λw (So )
+  In this way, we obtain the parabolic system of our interest
+                                           n
+                                                                            !
+                         Soi              X
+(67)      ∂t Soi − div                dyn
+                             a(So )k∇pc +     Dij (So1 , . . . , Son )∇µj       = 0,
+                         So               j=1
+26                       E. S. DAUS, J.-P. MILIŠIĆ, AND N. ZAMPONI
+
+where i = 1, . . . , n. Notice that (1) is identical to (67) with k = 1 and So , Soi
+replaced by S, Si , respectively.
+
+
+
+
+                                        References
+[1] G.I. Barenblatt, V.M. Entov, V.M. Ryzhik. Theory of Fluid Flows Through Natural
+ Rocks. Nedra Publishing House Moscow, 1972. Reissued by Springer 1996.
+[2] J. Bear, Y. Bachmat. Introduction to modeling of transport phenomena in porous media.
+ Kluver Academic Publisher, 1990.
+[3] M. Burger, B. Schlake, M.-T. Wolfram. Nonlinear Poisson-Nernst-Planck equations
+ for ion flux through confined geometries. Nonlinearity 4 (2012), 961–990.
+[4] X. Chen, A. Jüngel and J.-G. Liu. A note on Aubin-Lions-Dubinskii lemmas. Acta
+ Appl. Math. 133 (2014), 33–43.
+[5] W. Dreyer, P.-E. Druet, P. Gajewski, C. Guhlke. Analysis of improved Nernst-
+ Planck-Poisson models of compressible isothermal electrolytes. Part III: Compactness and
+ convergence. WIAS Preprint No. 2397, 2017.
+[6] X. Cao, I.S. Pop. Uniqueness of weak solutions for a pseudo-parabolic equation modeling
+ two phase flow in porous media. Appl. Math. Lett. 46 (2015), 25–30.
+[7] X. Cao, S. Pop. Degenerate two-phase flow model in porpus media including dynamic
+ effects in the capillary pressure: existence of a weak solution. J. Diff. Equ. 260 (2016), 2418–
+ 2456.
+[8] W.G. Gray, S. M. Hassanizadeh. Macroscale continuum mechanics for multiphase
+ porous-media flow including phases, interfaces, common lines and commpon points. Adv. Wa-
+ ter Resources 21 (1998), 261–281.
+[9] S. M. Hassanizadeh, W. G. Gray. Mechanics and thermodynamics of multiphase flow
+ in porous media including interphase boundaries. Adv. Water Resources 13 (1990), 169–186.
+[10] S.M. Hassanizadeh, W.G. Gray. Thermodynamic basis of capillary pressure in porous
+ media. Water Resour. Res. 29 (1993), 3389–3405.
+[11] A. Jüngel. The boundedness-by-entropy method for cross-diffusion systems. Nonlinearity
+ 28 (2015), 1963–2001.
+[12] A. Jüngel. Entropy Methods for Diffusive Partial Differential Equations. Springer Briefs
+ in Mathematics, Springer, 2016.
+[13] A. Jüngel, J. Mikyška, N. Zamponi. Existence analysis of a single-phase flow mixture
+ model with van der Waals pressure. To appear in SIAM J. Math. Anal. (2018), no.1.(arXiv:
+ 1612.04161).
+[14] A. Mikelić. A global existence result for the equations describing unsaturated flow in
+ porous media with dynamic capillary pressure. J. Diff. Equ. 248 (2010), 1561–1577.
+[15] J.P. Milišić. The unsaturated flow in porous media with dynamic capillary pressure. J.
+ Diff. Equ. 264 (2018), 5629–5658.
+[16] M. Ruzhansky, M. Sugimoto. On global inversion of homogeneous maps. Bull. Math.
+ Sci. 5 (2015), 13–18.
+[17] E. Zeidler. Nonlinear Functional Analysis and its Applications. Volume II/B. Springer,
+ New York, 1990.
+  GLOBAL EXISTENCE FOR A TWO-PHASE FLOW MODEL WITH CROSS DIFFUSION 27
+
+  Institute for Analysis and Scientific Computing, Vienna University of Tech-
+nology, Wiedner Hauptstraße 8–10, 1040 Wien, Austria
+  E-mail address: esther.daus@tuwien.ac.at
+
+  University of Zagreb, Faculty of Electrical Engineering and Computing, Un-
+ska 3, 10000 Zagreb, Croatia
+  E-mail address: pina.milisic@fer.hr
+
+  Institute for Analysis and Scientific Computing, Vienna University of Tech-
+nology, Wiedner Hauptstraße 8–10, 1040 Wien, Austria
+  E-mail address: nicola.zamponi@tuwien.ac.at
+

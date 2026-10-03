@@ -1,0 +1,1564 @@
+                                            UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS
+                                                FOR FACTORING AND COMPUTING DISCRETE LOGARITHMS
+
+                                                                                           CÉDRIC PILATTE
+
+
+                                                   Abstract. In 1994, Shor introduced his famous quantum algorithm to factor integers and compute
+                                                   discrete logarithms in polynomial time. In 2023, Regev proposed a multi-dimensional version of
+                                                   Shor’s algorithm that requires far fewer quantum gates. His algorithm relies on a number-theoretic
+arXiv:2404.16450v3 [math.NT] 24 Aug 2026
+
+
+
+
+                                                   conjecture on the elements in (Z/N Z)× that can be written as short products of very small prime
+                                                   numbers. We prove a version of this conjecture using tools from analytic number theory such as
+                                                   zero-density estimates. As a result, we obtain an unconditional proof of correctness of this improved
+                                                   quantum algorithm and of subsequent variants.
+
+
+
+
+                                                                                          1. Introduction
+
+                                           1.1. Context and quantum computing results. Public key cryptography has become a crucial
+                                           element of our global digital communication infrastructure. Notable examples include the Diffie-
+                                           Hellman key exchange [6] and the RSA (Rivest-Shamir-Adleman) cryptosystem [19], which rely on
+                                           the difficulty of finding discrete logarithms and factoring large numbers, respectively.
+                                           However, in 1994, Peter Shor [20] developed an algorithm capable of efficiently solving these prob-
+                                           lems using a quantum computer.
+                                           Theorem (Shor1). There is a quantum circuit having O(n2 log n) quantum gates and O(n log n)
+                                           qubits with the following property. There is a classical randomised polynomial-time algorithm that
+                                           solves the factoring problem
+                                                                               Input : a composite integer N ⩽ 2n
+                                                                               Output : a non-trivial divisor of N
+                                           using O(1) calls to this quantum circuit, and succeeds with probability Θ(1).
+
+                                           Shor’s original article [20] also includes a similar algorithm to solve the discrete logarithm problem.
+                                           This advancement prompted the development of post-quantum cryptography, such as lattice-based
+                                           cryptography, to ensure the security of our communications in the face of potential quantum com-
+                                           puting breakthroughs [4].
+                                           Recently, Regev [18] devised a multidimensional variant of Shor’s factoring algorithm that reduces
+                                           the size of the quantum circuit, i.e. the number of quantum gates, to O(n√3/2 log n). A distinctive
+                                           feature of Regev’s algorithm is that the quantum circuit must be called O( n) times, rather than a
+                                           constant number of times for Shor’s algorithm. This is not considered to be a serious drawback as
+                                           the various complexity parameters of the quantum circuit are far more relevant metrics in quantum
+                                           computing.
+                                           However, this remarkable work of Regev initially came with two main limitations.
+                                             1
+                                               The version of Shor’s algorithm stated here incorporates some small improvements from [21] (bounded number of
+                                           calls) and [10] (fast integer multiplication). The number of qubits in Shor’s algorithm can be brought down to O(n),
+                                           though this typically requires a larger number of quantum gates (see e.g. [8, 12]).
+                                                                                                    1
+2                                         CÉDRIC PILATTE
+
+
+First, the original version of Regev’s algorithm requires O(n3/2 ) qubits – many more than Shor’s
+algorithm. The reason for this ultimately lies in the difficulty of performing classical computations
+on quantum computers in a space-efficient manner, due to the need for any quantum computation to
+be reversible. In a subsequent paper, Ragavan and Vaikuntanathan [17] improved Regev’s algorithm
+to use only O(n log n) qubits, while maintaining the circuit size at O(n3/2 log n) quantum gates. This
+work, inspired by ideas of Kaliski [13], essentially matches the space cost of Shor’s algorithm.
+The second issue, which we address in this paper, is that Regev’s algorithm [18] does not have
+theoretical guarantees, unlike Shor’s algorithm. The correctness of Regev’s algorithm is based on
+an ad hoc number-theoretic conjecture which we describe below. This unproven assumption cannot
+be avoided as it lies at the core of Regev’s improvement on the circuit size. The variant of Ragavan
+and Vaikuntanathan [17] also crucially relies on this conjecture.
+In this paper, we prove a version of Regev’s conjecture. This allows us to unconditionally prove
+the correctness of (slightly modified versions of) the algorithms of Regev [18] and Ragavan and
+Vaikuntanathan [17]. More precisely, we obtain the following algorithmic result.
+Theorem 1.1. There is a quantum circuit having O(n3/2 log3 n) quantum gates and O(n log3 n)
+qubits with the following property. There is a classical randomised polynomial-time algorithm that
+solves the factoring problem
+                                Input : a composite integer N ⩽ 2n
+                                Output : a non-trivial divisor of N
+        √
+using O( n) calls to this quantum circuit, and succeeds with probability Θ(1).
+
+This unconditionally establishes the results in [17, 18] up to logarithmic factors.
+Regev’s algorithm was adapted by Ekerå and Gärtner [7] to the discrete logarithm problem. Their
+paper [7] also uses the space-saving arithmetic of Ragavan and Vaikuntanathan [17] to obtain a
+quantum circuit with O(n3/2 log n) gates and O(n log n) qubits for computing discrete logarithms.
+Once more, the correctness of the algorithm by Ekerå and Gärtner [7] relies on an unproven hy-
+pothesis, which can be viewed as a stronger form of Regev’s conjecture. Our methods also apply
+to this stronger statement (again, with minor technical adjustments). Thus, we get an analogue of
+Theorem 1.1 for the discrete logarithm problem, i.e. an unconditional proof of the results in [7] up
+to logarithmic factors.
+Theorem 1.2. There is a quantum circuit having O(n3/2 log3 n) quantum gates and O(n log3 n)
+qubits with the following property. There is a classical randomised polynomial-time algorithm that
+solves the discrete logarithm problem
+            Input : an integer N ⩽ 2n and elements g, y ∈ (Z/N Z)× such that y ∈ ⟨g⟩
+            Output : an integer x such that g x ≡ y   (mod N )
+        √
+using O( n) calls to this quantum circuit, and succeeds with probability Θ(1).
+
+Moreover, the slight technical modifications that we need to introduce to make all these quantum
+algorithms unconditional are compatible with the error-correction results of [7, 17]. Finally, our
+results extend to further variants of Regev’s algorithm, such as computing discrete logarithms or
+multiplicative orders modulo N for several elements simultaneously (see [7]).
+Remark 1.3. By being slightly more careful in the space usage of our quantum algorithms, it is
+possible to reduce the number of qubits to O(n log2 n) for Theorems 1.1 and 1.2. We will not show
+this here in order to keep the quantum computing prerequisites to a minimum.
+                    UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                     3
+
+
+1.2. An overview of Regev’s algorithm. Let us start by recalling the basic idea behind Shor’s
+factoring algorithm [20].
+Let N be the integer to be factored, which can be assumed to be odd and with at least two distinct
+prime factors. Shor proved that there is an efficient quantum algorithm to find the multiplicative
+order of any invertible element modulo N . With this in hand, factoring N is straightforward. The
+first step is to pick an integer 1 < a < N uniformly at random. If gcd(a, N ) > 1, the factoring task
+is trivial. Otherwise, with probability at least 1/2, the order of a modulo N , denoted r, is even and
+satisfies ar/2 ̸≡ ±1 (i.e. ar/2 is a non-trivial square root of 1 modulo N ). Whenever this is the case,
+we get a non-trivial divisor of N , namely gcd(N, ar/2 − 1).
+The reason that Shor’s algorithm uses O(n2 log n) quantum gates, where n := ⌈log2 N ⌉, comes
+from the part of the quantum circuit that performs modular exponentiation. Consider the task
+of computing a power aM (mod N ) on a classical computer, where 1 < a < N − 1 and M ⩽ N .
+This computation can be performed efficiently using the well-known square-and-multiply method,
+which involves O(log M ) multiplications of two integers modulo N . Since two n-bit integers can
+be multiplied in time O(n log n) by [10], the complexity of this modular exponentiation problem is
+thus O(n2 log n).2 For Shor’s algorithm, a similar modular exponentiation needs to be performed
+quantumly, which requires O(n2 log n) quantum gates.
+Regev’s improvement of Shor’s algorithm is made possible by combining two key ideas.
+The first idea in Regev’s algorithm is to work in higher-dimensional space and replace the random
+parameter a by several integers b1 , . . . , bd (chosen in a specific
+                                                              √       way, as we explain below). Eventually,
+the optimal choice of dimension turns out to be d ≍ log N . Similarly to Shor’s algorithm, the
+problem of factoring N easily reduces to the task of finding a vector (e1 , . . . , ed ) ∈ Zd such that
+Qd ei
+  i=1 bi is a non-trivial square root of 1 modulo N .
+Using additional tools such as the LLL lattice reduction algorithm, Regev [18] generalised Shor’s
+quantum algorithm to efficiently find all such vectors (e1 , . . . , ed ) in a ball of radius N O(1/d) centred
+at the origin.
+Regev’s algorithm only succeeds if there indeed exists a vector v = (e1 , . . . , ed ) ∈ Zd such that
+       (i) ∥v∥2 ⩽ N O(1/d) , and
+      (ii) di=1 bei i is a non-trivial square root of 1 modulo N .
+           Q
+
+If the parameters b1 , . . . , bd are “sufficiently multiplicatively independent” modulo N , one might
+heuristically expect the existence of a vector v = (e1 , . . . , ed ) satisfying (i) and (ii). This is, roughly
+speaking, what Regev needs to assume. To state his conjecture properly, it remains to specify how
+the parameters b1 , . . . , bd are chosen. This is a crucial point, as the idea of working in dimension d
+does not, on its own, offer any advantage over Shor’s algorithm.
+The second key insight of Regev is to choose b1 , . . . , bd to be very small compared to N . We
+mentioned that the most costly part of Shor’s quantum circuit lies in the modular exponentiation
+step. Similarly, the number of gates of Regev’s circuit is dominated by the cost of computing an
+expression of the form
+                                               d
+                                               Y
+(1)                                              bM i
+                                                  i (mod N )
+                                               i=1
+
+in the quantum setting, where the exponents M1 , . . . , Md are ⩽ N O(1/d) . Regev observed that
+                                                                                              √ (1) can
+                                     3/2                         O(1)                   √
+be computed classically in time O(n log n) if |bi | ⩽ (log N )        for all i (for d ≍ n ≍ log N ).
+   2Note that, even if a is a small integer, say a = 2, this procedure still takes time O(n2 log n), because most
+multiplications will involve n-bit integers.
+4                                                CÉDRIC PILATTE
+
+
+This can be achieved by cleverly ordering the intermediate multiplications so that most of them
+involve integers with much fewer than n bits. This classical procedure can then be turned into a
+quantum version that uses O(n3/2 log n) gates.
+Shor’s algorithm corresponds to the d = 1 case of Regev’s algorithm where the parameter b1 is
+an element of (Z/N Z)× chosen uniformly at random. In this case, simple considerations from
+elementary number theory immediately imply the existence of an integer e1 satisfying (i) and (ii)
+with probability ≫ 1. This would hold more generally for d ⩾ 1 if b1 , . . . , bd were independent,
+uniformly distributed random elements of (Z/N Z)× . However, for Regev’s algorithm, the bi ’s are
+far from uniformly distributed in (Z/N Z)× as they are constrained to lie in a very small subset of
+(Z/N Z)× .
+
+1.3. The number-theoretic conjecture behind Regev’s algorithm. Regev’s algorithm [18]
+and its space-efficient variant [17] crucially rely on the possibility of choosing very small integers
+b1 , . . . , bd such that di=1 bei i is a non-trivial square root of 1 modulo N for some e1 , . . . , ed with
+                         Q
+                                                                      √
+|ei | ⩽ N O(1/d) . We remind the reader that n ≍ log N and d ≍ n.
+The least restrictive bound3 on the bi ’s that still allows for a quantum circuit with Õ(n3/2 ) gates is
+to have |bi | ⩽ exp(Õ(d)), where the Õ(·) notation possibly hides a factor (log n)O(1) . Moreover, it is
+natural to set the bi ’s to be prime numbers (as in [7, 17, 18]) in order to avoid obvious multiplicative
+relations between them.
+                                                                                                        3
+In this paper, we choose b1 , . . . , bd to be independent random prime numbers less than d10 d . With
+these parameters, we can now state a version of Regev’s conjecture4 that follows from our results.
+                                                         √                  3
+Corollary 1.4. Let N > 2 be an integer. Let d := ⌈ log N ⌉ and X := d10 d .
+Let b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes ⩽ X not
+dividing N .
+Then, with high probability, every x ∈ ⟨b1 , . . . , bd ⟩ can be expressed as
+                                                  d
+                                                  Y
+                                             x≡         bei i   (mod N )
+                                                  i=1
+
+for some integers ei with |ei | ⩽ eO(d) for all 1 ⩽ i ⩽ d.
+
+The analogue of Regev’s algorithm for the discrete logarithm problem, proposed by Ekerå and
+Gärtner [7], relies on a stronger version of Regev’s conjecture. It concerns the geometry of a certain
+lattice L which encodes all multiplicative dependencies between the bi ’s (modulo N ). We prove the
+following version of it.5
+                                                       √                      3
+Corollary 1.5. Let N > 2 be an integer. Let d := ⌈ log N ⌉ and X := d10 d .
+Let b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes ⩽ X not
+dividing N .
+Let L be the random lattice defined by
+                                 n                          d
+                                                            Y                   o
+(2)                          L := (e1 , . . . , ed ) ∈ Zd :   bei i ≡ 1 (mod N ) .
+                                                                i=1
+
+    3The bound stated in Regev’s paper [18] is |b | ⩽ (log N )O(1) , but this condition can be relaxed somewhat, as
+                                                  i
+observed by Ragavan (private communication).
+   4Compare with [18, Theorem 1.1] or [17, Conjecture 1].
+   5Compare with [7, Assumption 1], or Conjecture E.1 in the full version of [17].
+                  UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                            5
+
+
+Then, with high probability, this lattice L has a basis consisting of vectors of Euclidean norm ⩽ eO(d) .
+
+The main technical result of this paper is Theorem 3.18, of which Corollary 1.5 is a special case.
+In turn, Corollary 1.4 is a direct consequence of Corollary 1.5.
+
+1.4. Subgroup obstructions. Let N , d and b1 , . . . , bd be as in Corollary 1.4. This corollary shows
+that, with high probability, every element x in the subgroup generated by b1 , . . . , bd can be written
+as a short product of these bi modulo N . To obtain the full strength of Regev’s assumption [17,
+Conjecture 1], it would be necessary to show that this subgroup ⟨b1 , . . . , bd ⟩ contains a non-trivial
+square root of 1 modulo N .
+Unfortunately, it is not possible to prove this in full generality without considerable advances on
+the well-known least quadratic non-residue problem in number theory. For any prime number p,
+write n(p) for the smallest positive integer a which is a quadratic non-residue (i.e. not a square)
+modulo p. The best known asymptotic upper bound for n(p) is Burgess’s classical result [5] that
+                                                            1
+                                                            √   +ε
+                                               n(p) ≪ε p 4 e         .
+For simplicity, suppose that the integer N to be factored is a product of two equally-sized primes
+p1 , p2 ≡ 3 (mod 4). Recall that, for Regev’s algorithm, the parameters bi are chosen to be less
+than exp(Õ(d)). With current techniques, we cannot rule out the possibility that both n(p1 ) and
+n(p2 ) are larger than this threshold. If this is the case, all bi will be quadratic residues modulo
+both p1 and p2 , which implies that ⟨b1 , . . . , bd ⟩ is contained in the subgroup of squares modulo N .
+In particular, since p1 , p2 ≡ 3 (mod 4), the subgroup ⟨b1 , . . . , bd ⟩ does not contain any non-trivial
+square roots of 1 modulo N .
+This issue can be approached from several perspectives.
+   (1) Assuming the Generalised Riemann Hypothesis, Ankeny proved the much stronger bound
+       n(p) ≪ (log p)2 [2]. This suggests that quadratic residues may no longer be an obstruction
+       in this case, and indeed, under GRH, it is straightforward to show that ⟨b1 , . . . , bd ⟩ contains
+       a non-trivial square root of 1 modulo N with high probability. Assuming GRH would also
+       considerably simplify the proof of Theorem 3.18 and remove a logarithmic factor for the gate
+       and qubit costs in Theorems 1.1 and 1.2. However, in this paper we seek fully unconditional
+       results.
+   (2) It is possible to prove the following partial result unconditionally: for almost all odd N
+       with at least two distinct prime factors, the subgroup ⟨b1 , . . . , bd ⟩ contains a non-trivial
+       square root of 1 modulo N with high probability (with d = d(N ) and bi = bi (N ) as in
+       Corollary 1.4). By Corollary 1.4, this implies that Regev’s original algorithm (with these
+       parameters bi ) finds a non-trivial divisor of N with high probability, for almost all N . More
+       precisely, the set E ⊂ N of exceptional values of N for which the above does not hold can
+       be shown to satisfy
+                                  |E ∩ [1, x]| ⩽ exp (log x)1/2+o(1)
+                                                                     
+
+       for x ⩾ 1. This partial result can be proved using character sums, the Landau-Page theorem
+       [15, Corollary 11.10] and a grand zero-density estimate [11, Theorem 1 (1.8)], by means of
+       a case analysis depending on the prime factorisation of N .
+   (3) In the present work, we follow a different approach to obtain a completely unconditional
+       result that applies to all N , by slightly modifying the algorithm itself. While the key to
+       the efficiency of Regev’s algorithm is that the bi ’s are small, one can tolerate a bounded
+       number of large bi ’s.6 We use this extra flexibility to overcome the subgroup obstructions.
+       The simplest way to proceed is to allow for one of the parameters, say b1 , to be uniformly
+  6In fact, this observation was already needed to adapt Regev’s algorithm to the discrete logarithm problem [7].
+6                                            CÉDRIC PILATTE
+
+
+        distributed in (Z/N Z)× . As with Shor’s algorithm, this ensures that the subgroup ⟨b1 ⟩,
+        and hence also ⟨b1 , . . . , bd ⟩, contains a non-trivial square root of 1 with probability ≫ 1.
+
+Remark 1.6. In his paper [18], Regev proposed to select the parameters b1 , . . . , bd deterministically,
+for example by setting bi to be the i-th smallest prime for 1 ⩽ i ⩽ d. While such a deterministic
+choice of parameters is likely to work for almost all N , this seems to be very difficult to prove.
+
+Remark 1.7. In this paper, the parameters bi are chosen to be random primes (not dividing N )
+under a certain threshold X. Another natural choice would have been to let b1 , . . . , bd be i.i.d. ran-
+dom variables uniformly distributed in the set of all integers ⩽ X coprime to N . The proofs in this
+paper
+P     would carry over to this framework if an analogue of Proposition 3.9 for short character sums
+  n⩽x χ(n)  were available. Assuming the Generalised Riemann Hypothesis, the work of Granville
+and Soundararajan [9, Theorem 2] gives a bound of the required strength. However, this approach
+does not seem sufficient to obtain an unconditional result (the bounds in [9] become too weak when
+L(s, χ) has zeroes close to the line Re s = 1).
+
+1.5. Structure of the paper. We begin in Section 2 with a proof of a simple special case of our
+main theorem. This is intended to illustrate our overall strategy and motivate the need for the more
+technical approach required in the general case. The purpose of this section is to build intuition; it
+is not formally required for the main argument.
+Our main technical result is Theorem 3.18, which shows that lattices L similar to that in Corol-
+lary 1.5 have a basis of short vectors with high probability. Using simple geometry of numbers (see
+Section 3.4), we reduce this problem to estimating the number of lattice points in balls of growing
+radii. Unfortunately, we are unable to obtain a suitable lattice point count for L directly. We
+resolve this by considering a different lattice LM from the start of the argument (using the lemmas
+in Section 3.1). In Section 3.2, we expand the lattice point count for LM in terms of Dirichlet
+characters modulo N . This produces a main term, which can be estimated precisely, and an error
+term. The heart of the proof lies in using a zero-density estimate for Dirichlet characters modulo N
+to bound this error term unconditionally. Finally, we prove our quantum algorithmic applications
+(Theorems 1.1 and 1.2) in Section 4.
+
+
+
+1.6. Notation. We write f ≪ g or f = O(g) if |f | ⩽ Cg for some absolute constant C > 0. If
+instead, C depends on a parameter θ, we write f ≪θ g or f = Oθ (g). The notation f ≍ g or
+f = Θ(g) means that f ≪ g and g ≪ f .
+A character of a finite abelian group G is a homomorphism χ : G → C× . The order of χ, denoted
+by ord(χ), is the least positive integer n such that χn is the trivial character 1. The group of all
+characters of G is denoted by G. b If g1 , . . . , gk ∈ G, we write ⟨g1 , . . . , gk ⟩ for the subgroup of G
+generated by these elements.
+A non-trivial square root of 1 modulo N is an element a ∈ (Z/N Z)× such that a2 ≡ 1 (mod N )
+and a ̸≡ ±1 (mod N ). Euler’s totient function and the prime counting function are denoted by φ
+and π, respectively. We use the notation ∥·∥2 for the Euclidean norm. We write log for the natural
+logarithm and log2 for the logarithm in base 2.
+Random variables are typically written in bold font, such as b1 , . . . , bd . A statement will be said
+to occur with high probability if it holds with probability tending to 1 as N → ∞.
+We refer the reader to [16] for a detailed textbook on quantum computing, and [4, Chapter 2] for a
+brief overview.
+                   UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                           7
+
+
+                                            Acknowledgements
+
+The author is supported by the Oxford Mathematical Institute and a Saven European Scholarship.
+I would like to thank Jane Street for awarding me one of their Graduate Research Fellowships. I am
+indebted to my advisors, Ben Green and James Maynard, for their invaluable advice and support.
+Finally, I wish to thank Seyoon Ragavan for his kind explanations, and in particular for showing
+me that the upper bound for the parameters in Regev’s algorithm could be relaxed considerably.
+
+                                    2. An illustrative special case
+
+In this section, we prove a weak version of our main theorem in a simplified setting. This special
+case can be used to obtain an unconditional factoring algorithm for integers N of a special form:
+RSA moduli that are products of two “safe primes”.7
+Definition 2.1 (RSA moduli with safe primes). Let MRSA be the set of integers N of the form
+N = P · Q, where P, Q ⩾ N 1/4 are distinct primes such that (P − 1)/2 and (Q − 1)/2 are also prime.
+For N ∈ MRSA , the multiplicative group (Z/N Z)× has a very convenient structure, allowing us to
+give a relatively short proof of the following proposition.
+                                                                         √
+Proposition 2.2. Let N ∈ MRSA be a sufficiently large integer. Let d := ⌈ log N ⌉ and X := dd .
+Let b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes less than X.
+Let b0 be a random variable uniformly distributed in (Z/N Z)× , independent of the bi ’s.
+Let x ∈ (Z/N Z)× . Then, with probability ≫ 1, there are integers 0 ⩽ e0 , . . . , ed ⩽ eO(d) such that
+                                            d
+                                            Y
+                                                  bei i ≡ x   (mod N ).
+                                            i=0
+
+Applying Proposition 2.2 (with x being a non-trivial square root of 1 modulo N ) shows that Regev’s
+factoring algorithm, with random parameters b0 , . . . , bd as in that proposition8, admits an uncon-
+ditional proof of correctness for integers N ∈ MRSA .
+It should be noted that Theorem 3.18 not only removes the restriction N ∈ MRSA , it also provides
+a stronger geometric conclusion required for applications to the discrete logarithm problem.
+Notation 2.3. For the rest of this section, we fix N , d, X, b0 , . . . , bd and x as in the statement of
+Proposition 2.2. In particular, N ∈ MRSA is assumed to be sufficiently large. Moreover, there are
+primes P , Q, P ′ and Q′ such that N = P · Q, P = 2P ′ + 1 and Q = 2Q′ + 1. Hence,
+(3)                     G := (Z/N Z)× ∼ = (Z/2Z)2 × Z/P ′ Z × Z/Q′ Z ∼      = G.
+                                                                               b
+
+To prove Proposition 2.2, we require the following lemma from analytic number theory, that ulti-
+mately relies on a zero-density estimate for Dirichlet L-functions.
+Lemma 2.4. For every j ⩾ 0, the number of characters ψ ∈ G     b such that
+
+                                                   E ψ(p) ⩾ e−j
+                                                  p⩽X
+
+is at most eO(d) N O(j/ log X) . Here, Ep⩽X denotes the average over primes p ⩽ X.
+
+We omit the proof of Lemma 2.4, as it is somewhat tangential to the aim of this explanatory section.9
+  7Note that this restrictive assumption is generally not satisfied by RSA moduli used in practice.
+  8Again, the presence of one potentially large parameter b circumvents the subgroup obstructions discussed in the
+                                                              0
+introduction, while not significantly affecting the efficiency of the quantum algorithm.
+   9This lemma is a consequence of Propositions 3.9 and 3.10; see Section 3.3 and Appendix A for further details.
+8                                                      CÉDRIC PILATTE
+
+
+Proof of Proposition 2.2. Let H = ⌊eCd ⌋, where C is a large absolute constant to be chosen later.
+We will show that, with probability ≫ 1, there exist integers 0 ⩽ h1 , . . . , hd < H such that
+                                              x ≡ b0 bh1 1 · · · bhd d    (mod N ),
+which clearly implies the desired conclusion. By orthogonality of characters modulo N , we have
+                                                                                   d
+                    X                                               1 X            Y X
+(4)                            1b bh1 ···bhd ≡x (mod N ) =              χ(b0 x−1 )     χh (bi ).
+                                  0 1        d                    φ(N )
+             0⩽h1 ,...,hd <H                                               χ∈G
+                                                                             b               i=1 0⩽h<H
+
+
+Let χ0 be the trivial character, and χ1 , χ2 , χ3 be the three characters of order 2 in G.
+                                                                                        b Each of these
+                                                                               h
+                                                                   P
+four characters χj satisfies χj (bi ) ∈ {±1} for all i, so the term 0⩽h<H χj (bi ) is either equal to H
+or lies in {0, 1}. Hence, the contribution of these four characters to (4) is
+                                                          3
+                                   Hd     1 X
+(5)                                    +      χj (b0 x−1 ) Cj (b1 , . . . , bd )
+                                  φ(N ) φ(N )
+                                                         j=1
+
+for some quantities Cj (b1 , . . . , bd ) ⩾ 0. Since b0 is uniformly distributed in G, by (3) we have
+                                                                             1
+                            P χ1 (b0 x−1 ) = χ2 (b0 x−1 ) = χ3 (b0 x−1 ) = 1 = ,
+                                                                              4
+as this is the probability that b0 x−1 lies in the subgroup of squares modulo N , which has index 4
+in G. Therefore, with probability ⩾ 1/4, the expression (5) is bounded below by H d /φ(N ).
+As a result, Proposition 2.2 reduces to showing that the contribution of the remaining characters
+χ∈G b \ {χ0 , χ1 , χ2 , χ3 } to (4) is, with high probability, at most H d /(2φ(N )) in absolute value. By
+Chebyshev’s inequality, it suffices to prove that
+                                               E |z|2 = o H 2d ,
+                                                              
+(6)
+where z is the random variable defined by
+                                                      X        d
+                                                               Y X
+                                             z :=                            χh (bi ) .
+                                                      χ∈Gb   i=1 0⩽h<H
+                                                    ord(χ)>2
+
+By the triangle inequality for the L2 -norm and the definition of the random variables bi , we have
+                                                     #!1/2
+                                                                                        2 d/2
+                               " d                                                       !
+       2 1/2      X            Y X               2           X            X
+                                            h                                      h
+     E |z|     ⩽             E             χ (bi )         =            E        χ (p)         .
+                                                                                              p⩽X
+                      χ∈Gb               i=1 0⩽h<H                                 χ∈Gb                 0⩽h<H
+                    ord(χ)>2                                                     ord(χ)>2
+
+Expanding the square and exchanging the order of summation, we obtain
+                        X                2          X                                       X
+                E               χh (p)       ⩽                    E χh1 −h2 (p) ⩽ H                     E χh (p) .
+               p⩽X                                             p⩽X                                  p⩽X
+                     0⩽h<H                       0⩽h1 ,h2 <H                                |h|<H
+
+Therefore,
+                                                                                             !d/2
+                                      1/2                    X          X
+                               E |z|2      ⩽ H d/2                               E χh (p)
+                                
+(7)                                                                                                 .
+                                                                                 p⩽X
+                                                           χ∈Gb          |h|<H
+                                                         ord(χ)>2
+                    UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                         9
+
+
+To estimate the right-hand side of (7), we partition the set of characters as follows. For j ⩾ 0, let
+                    n                                                               o
+             Ej := χ ∈ G  b \ {χ0 , χ1 , χ2 , χ3 } : max   E χh (p) ∈ e−j−1 , e−j .
+                                                        0<|h|<H p⩽X
+
+Notice that, by (3) and Definition 2.1, every character χ of order greater than 2 has order at least
+min(P ′ , Q′ ) ≫ N 1/4 . Hence, provided N is sufficiently large, for any χ of order greater than 2, the
+characters χh for 0 < |h| < H are all distinct. In addition, for any fixed ψ ∈ G     b \ {χ0 , χ1 , χ2 , χ3 }
+                                                                         h
+and 0 < |h| < H, there are at most four characters χ such that χ = ψ. By Lemma 2.4, these
+observations imply that
+
+(8)                             |Ej | ≪ HeO(d) N O(j/ log X) ≪ HeO(d) eO(jd/ log d)
+
+for all j ⩾ 0.10
+Let j ⩾ 0 and let χ ∈ Ej . By Lemma 2.4, there are at most eO(d) integers 0 ⩽ |h| < H such that
+ Ep⩽X χh (p) > d−2 . By definition of Ej , all other integers 0 < |h| < H satisfy
+
+                                           E χh (p) ⩽ min(d−2 , e−j ).
+                                          p⩽X
+
+Hence,
+                         !d/2
+      X                                                        d/2          2
+              E χh (p)          ⩽ eO(d) + 2H min(d−2 , e−j )          ⩽ eO(d ) + eO(d) H d/2 min(d−d , e−jd/2 ).
+              p⩽X
+      |h|<H
+
+Summing this over all χ ∈ Ej and j ⩾ 0, we can bound (7) by
+                      1/2       2
+                                                           X
+               E |z|2      ⩽ eO(d ) φ(N )H d/2 + eO(d) H d   |Ej | min(d−d , e−jd/2 ).
+                 
+
+                                                                  j⩾0
+
+                                 2
+Note that φ(N ) ⩽ N ⩽ ed . Bounding |Ej | using (8) and summing the resulting geometric series
+(using that N is sufficiently large), we obtain
+                                        1/2       2
+                                 E |z|2      ⩽ eO(d ) H −d/2 + eO(d) Hd−d H d .
+                                                                        
+
+Recalling that H = ⌊eCd ⌋ we see that, if C is a sufficiently large absolute constant, the right-hand
+side is o(H d ) as N → ∞. This establishes (6) and concludes the proof of Proposition 2.2.          □
+
+Remark 2.5. For Theorem 3.18, we obtain (with high probability) an asymptotic formula for
+quantities similar to (4), which is then combined with techniques from geometry of numbers to
+prove the existence of a short lattice basis.
+This requires a more careful analysis of the small-order characters, which may be more numerous
+than in the special case treated above. Moreover, the analysis of large-order characters is much more
+delicate, as an exceptional character ψ (in the sense of Lemma 2.4) may have more representations
+of the form ψ = χh (for some χ ∈ G   b and |h| < H) than the previous argument can handle. This
+issue is resolved by performing Fourier analysis on a well-chosen subgroup of (Z/N Z)× , introduced
+in Section 3.1.
+
+  10It is here that we crucially relied on the particular structure of (Z/N Z)× for N ∈ M
+                                                                                      RSA . These arguments can
+
+be extended somewhat, but additional ideas are required to handle the general case (the most difficult case being
+when N has many prime factors).
+10                                                 CÉDRIC PILATTE
+
+
+                        3. Proof of the existence of a short lattice basis
+
+3.1. Restricting to a convenient subgroup of (Z/N        \   Z)× . The goal of this preliminary section
+                                                            ×
+is to define a subgroup of the character group of (Z/N Z) that does not have too many elements of
+small order. This will be crucial for Section 3.3, to reduce the influence of potential counterexamples
+to the Generalised Riemann Hypothesis. For example, we need to avoid having many characters
+χ1 , . . . , χk modulo N such that χ2i = ψ for all i, where ψ is an exceptional character (in the sense
+that L(s, ψ) has a zero very close to the line Re s = 1). The definition of the suitable subgroup
+depends on the precise structure of (Z/N Z)× .
+Notation 3.1. If G is a finite abelian group (written multiplicatively) and M ⩾ 1, we write
+GM := {xM : x ∈ G} for the subgroup of M th powers in G.11
+Lemma 3.2. Let G be a finite abelian group (written multiplicatively) and M ⩾ 1. There is an
+isomorphism
+                                               ∼ bM
+                                             M −
+                                         ι:Gd  →G
+such that, for any χ ∈ G
+                       d            eM where χ
+                         M , ι(χ) = χ        e∈Gb is an arbitrary extension of χ to G.
+
+Proof. Pontryagin duality for finite abelian groups is an equivalence of categories, and therefore an
+exact functor. In simple terms, this implies that injections turn into surjections when switching
+to the dual, and vice versa. Hence, the M th power map G ↠ GM , g 7→ g M , induces an injection
+ι:Gd M ,−
+        →G b defined by
+                                          ι(χ)(g) := χ g M
+                                                           
+
+for every χ ∈ G
+              d M and g ∈ G. Moreover, the restriction map G  b→G  d M is surjective, using exactness
+
+of Pontryagin duality again. Thus, every χ ∈ G d M can be extended to a character χ  e on G, and
+                                         M         M       M
+                                           
+                                     χ g     =χ e(g ) = χe (g).
+                                                 b M . Since G
+This implies that the image of ι is contained in G           d          b M , the lemma
+                                                               M = GM = G
+
+follows.                                                                              □
+Definition 3.3. Let N ⩾ 1. For every h ⩾ 1 we define
+                                                          |(Z/N Z)× |
+                                              K(h) :=                   .
+                                                        |((Z/N Z)× )h |
+In other words, K(h) is the size of the kernel of the hth power map in (Z/N Z)× .
+                                                   √
+Lemma 3.4. Let N > 2 be an integer and d := ⌈ log N ⌉.
+For every prime p, define mp to be the largest non-negative integer such that
+                                                 K(pmp ) ⩾ pdmp /10 .
+                                   mp . Then the following holds.
+                          Q
+Let M∗ = M∗ (N ) :=           pp
+
+      (1) We have M∗ ⩽ e10d .
+      (2) For every h ⩾ 1, we have K(M∗ h)/K(M∗ ) ⩽ hd/10 .
+
+Proof.        (1) For every prime p, since K(pmp ) is a power of p dividing |(Z/N Z)× | = φ(N ), we
+           have                           Y
+                                             K(pmp ) | φ(N ).
+                                                  p
+
+     11In particular, GM is not the M -fold direct product of G.
+                   UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                11
+
+
+        By definition of mp , we know that K(pmp ) ⩾ pdmp /10 for every p, and thus
+                                    Y             Y
+                         M∗ d/10 =     pdmp /10 ⩽   K(pmp ) ⩽ φ(N ) ⩽ N.
+                                         p                p
+                            √
+        Recalling that d = ⌈ log N ⌉, it follows that M∗ ⩽ e10d .
+   (2) In any finite abelian group (written multiplicatively) and for any coprime integers a and b,
+       there is an isomorphism
+                            ker g 7→ g a × ker g 7→ g b ∼= ker g 7→ g ab .
+                                                                      
+
+       Thus, if h = p pep is the prime factorisation of h, we see that K(M∗ ) = p K(pmp ) and
+                     Q                                                             Q
+
+       K(M∗ h) = p K(pmp +ep ), where all products are finite. Whenever ep ⩾ 1, we have
+                   Q
+
+                              K(pmp +ep ) < pd(mp +ep )/10 ,     K(pmp ) ⩾ pdmp /10
+        by definition of mp . Thus K(pmp +ep )/K(pmp ) ⩽ pdep /10 , and this last inequality also holds
+        when ep = 0. We conclude that
+                          K(M∗ h) Y K(pmp +ep ) Y dep /10
+                                   =           mp )
+                                                    ⩽     p         = hd/10 ,
+                          K(M∗ )      p
+                                          K(p           p
+
+        as claimed.                                                                       □
+                                   √
+Lemma 3.5. Let N > 2, d := ⌈ log N ⌉, G := (Z/N Z)× and let M∗ ⩾ 1 be the integer defined in
+the statement of Lemma 3.4.
+Let h ⩾ 1. Let χ , . . . , χ ∈ G
+                               d M∗ be distinct characters such that
+                   1      n
+
+                                              χh1 = χh2 = . . . = χhn .
+Then n ⩽ hd/10 .
+
+Proof. Let fh : GM∗ → GM∗ be the hth power map, fh (χ) := χh . By assumption, the n distinct
+characters χ1 χ−1      −1              −1
+               n , χ2 χn , . . . , χn χn lie in the kernel of fh . Hence,
+
+                                            |GM∗ |      |((Z/N Z)× )M∗ |    K(M∗ h)
+                       n ⩽ ker(fh ) =                =                    =         ,
+                                          |(GM∗ )h |   |((Z/N Z)× )M∗ h |   K(M∗ )
+which is ⩽ hd/10 by Lemma 3.4.                                                                           □
+
+3.2. Lattice point counting via characters. To prove Theorem 3.18, we will need to study the
+following quantities.
+Definition 3.6. Let N ⩾ 1, G = (Z/N Z)× and χ ∈ G.       b For all d ⩾ 1 and b1 , . . . , bd ∈ G, we define
+the quantity
+                                                        d X
+                                                        Y
+                             Fχ,H (b1 , . . . , bd ) :=       χh (bi ).
+                                                              i=1 |h|⩽H
+
+
+The following lemma relates these expressions to a lattice point counting problem.
+Lemma 3.7. Let N, M, d, H ⩾ 1 be integers. Let b1 , . . . , bd ∈ G := (Z/N Z)× . The number of
+vectors (e1 , . . . , ed ) ∈ Zd ∩ [−H, H]d such that
+                                             d
+                                             Y
+                                               bM
+                                                i
+                                                  ei
+                                                     ≡1       (mod N )
+                                             i=1
+12                                                      CÉDRIC PILATTE
+
+
+is equal to
+                                                 1       X
+(9)                                                             Fχ,H (b1 , . . . , bd ).
+                                                bM
+                                                G         bM
+                                                        χ∈G
+
+
+Proof. By orthogonality of characters in the abelian group GM , we have
+                                                  d                     d
+                                                          !
+                                    1    X       Y   M e       1    X Y
+            1Q bM ei ≡1 (mod N ) =           ψ      bi  i
+                                                            =             ψ bM
+                                                                             i
+                                                                               ei 
+                                                                                    .
+               i i
+                                   G
+                                   d M                        G
+                                                              d M
+                                                      ψ∈G
+                                                        dM        i=1                           ψ∈G
+                                                                                                  d M i=1
+
+
+                                                                      ∼ bM
+Observe that ψ bM
+                i
+                  ei 
+                       = ι(ψ)(bei i ), where ι is the isomorphism G
+                                                                  d M −
+                                                                      →G   defined in Lemma 3.2.
+We may thus rewrite this equality as
+                                                                              d
+                                                                    1       X Y
+                                                                                           χ bei i .
+                                                                                                  
+                                       1Q bM ei ≡1 (mod N ) =
+                                          i i                      bM
+                                                                   G         b M i=1
+                                                                           χ∈G
+                                                                                                       Qd    M ei
+Therefore, the number of vectors (e1 , . . . , ed ) ∈ Zd ∩ [−H, H]d such that                           i=1 bi    ≡ 1 (mod N ) is
+                                                                             d
+       X                                         1     X          X          Y                      1       X
+                     1Q    b
+                             M ei
+                                  ≡1 (mod N )
+                                              =                                    χei (bi ) =                     Fχ,H (b1 , . . . , bd )
+  (e1 ,...,ed )∈Zd
+                          i i                   GM
+                                                b
+                                                        b M (e1 ,...,ed )∈Zd i=1
+                                                                                                   GM
+                                                                                                   b
+                                                                                                              bM
+                                                      χ∈G                                                   χ∈G
+   maxi |ei |⩽H                                              maxi |ei |⩽H
+
+as claimed.                                                                                                                              □
+
+It is fairly straightforward to estimate Fχ,H (b1 , . . . , bd ) when χ is a character of small order in G.
+                                                                                                         b
+The contribution of these small-order characters gives the expected main term for (9).
+Lemma 3.8 (Main term). Let N, M, d ⩾ 1 be integers. Let b1 , . . . , bd ∈ G := (Z/N Z)× . Uniformly
+for all integers H ⩾ e31d , we have
+                                       31d                                                 !
+                                                (2H + 1)d
+                                 
+             1   X                     e                                  1    X
+(10)                 Fχ,H (b) = 1 + O            M , . . . , bM
+                                                                +O                  |Fχ,H (b)| ,
+           GbM                          H      b 1            d
+                                                                         bM
+                                                                         G
+                  bM  χ∈G                                                        bM                        χ∈G
+                                                                                                        ord(χ)⩾e10d
+
+where Fχ,H (b) is short for Fχ,H (b1 , . . . , bd ).
+
+Proof. Define
+                                     ⟨b1 , . . . , bd ⟩⊥ := {χ ∈ G
+                                                                 b : ∀i ∈ [d], χ(bi ) = 1}.
+Observe that
+                                                                                                            GM
+                 ⟨b1 , . . . , bd ⟩⊥ ∩ G
+                                       bM =             M : ∀i ∈ [d], χ bM = 1
+                                                                          
+(11)                                                χ∈G
+                                                      d
+                                                                         i                         =
+                                                                                                        bM            M
+                                                                                                         1 , . . . , bd
+where the first equality follows from Lemma 3.2 and the second from the canonical isomorphism
+H1⊥ ∼
+    = G\ 1 /H1 for any subgroup H1 of a finite abelian group G1 .
+
+Clearly, if χ ∈ ⟨b1 , . . . , bd ⟩⊥ ∩ G
+                                      b M , we have Fχ,H (b) = (2H + 1)d . Hence, by (11), those characters
+contribute
+                                    1         X                     (2H + 1)d
+                                                       Fχ,H (b) =
+                                   bM
+                                   G             ⊥   M
+                                                                   bM             M
+                                                                     1 , . . . , bd
+                                           χ∈⟨b1 ,...,bd ⟩ ∩G
+                                                            b
+
+to the sum (10).
+                  UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                      13
+
+                      b M \ ⟨b1 , . . . , bd ⟩⊥ of order ⩽ e10d , and any i ∈ [d] such that χ(bi ) ̸= 1, we
+For any character χ ∈ G
+can bound
+                                        X
+                                              χ(bi )h ⩽ ord(χ) ⩽ e10d
+                                              |h|⩽H
+by the geometric series formula. Thus, defining
+                                               Iχ := {i ∈ [d] : χ(bi ) ̸= 1},
+we have
+                                           |Fχ,H (b)| ⩽ e10d|Iχ | (2H + 1)d−|Iχ | .
+Consequently,
+                            X                             X                                  X
+(12)                                       |Fχ,H (b)| ≪           e10d|I| (2H + 1)d−|I|                 1.
+                                       ⊥
+                      b M \⟨b1 ,...,bd ⟩                  I⊂[d]                                  bM
+                    χ∈G                                                                      χ∈G
+                      ord(χ)⩽e10d                          I̸=∅                           ord(χ)⩽e10d
+                                                                                              Iχ =I
+
+Fix some non-empty set I ⊂ [d] and complex numbers (zi )i∈I . Let CI,(zi ) be the set of all characters
+χ∈G  b M such that
+                                            (
+                                             zi if i ∈ I
+                                   χ(bi ) =
+                                             1 if i ∈ [d] \ I.
+Note that CI,(zi ) is either the empty set, or a coset of ⟨b1 , . . . , bd ⟩⊥ ∩ G b M in G
+                                                                                         b M . Moreover, if χ has
+order at most e , this set CI,(zi ) can only be non-empty if all zi are roots of unity of order ⩽ e10d ,
+                10d
+
+and there are ⩽ e20d such roots of unity. We conclude that
+                                             CI,(zi ) ⩽ e20d|I| ⟨b1 , . . . , bd ⟩⊥ ∩ G
+                           X          X
+                                  1⩽                                                   bM .
+                           χ∈G bM             (zi )i∈I
+                        ord(χ)⩽e10d
+                            Iχ =I
+
+Thus, we can bound the right-hand side of (12) by
+                                                  |I|
+ ≪ (2H + 1)d ⟨b1 , . . . , bd ⟩⊥ ∩ G                   ≪ (2H + 1)d ⟨b1 , . . . , bd ⟩⊥ ∩ G
+                                      X
+                                   bM   e30d H −1                                        b M 2d e30d H −1
+                                              I⊂[d]
+                                               I̸=∅
+
+where we used that H ⩾ e30d in the last step. By (11), this means that
+                     1         X                                 (2H + 1)d
+                                         |Fχ,H (b)| ≪ e31d H −1 M                                  ,
+                    bM
+                    G        M         ⊥
+                                                                b1 , . . . , bM
+                                                                              d
+                                   b \⟨b1 ,...,bd ⟩
+                                 χ∈G
+                                   ord(χ)⩽e10d
+
+which completes the proof.                                                                                    □
+
+3.3. Bounding the contribution of large-order characters. In this section, we bound the
+error term coming from large-order characters, on average over primes b1 , . . . , bd in a short interval.
+We will need the following ingredients from classical analytic number theory.
+Proposition 3.9 (Character sums over primes). Let 1/2 ⩽ α ⩽ 1. Let q, x ⩾ 2. Let χ be a
+non-principal character modulo q whose Dirichlet L-function L(s, χ) has no zero in the rectangle
+                              s ∈ C : α < Re s ⩽ 1, |Im s| ⩽ x1−α .
+                            
+14                                           CÉDRIC PILATTE
+
+
+Then
+                                    1 X
+                                            χ(p) ≪ x−(1−α) log3 (qx).
+                                   π(x) p⩽x
+
+
+Proposition 3.9 is a standard consequence of the explicit formula for L(s, χ) and is proved in Ap-
+pendix A. The logarithmic factors can be somewhat improved, but such refinements are irrelevant
+here.
+The Generalised Riemann Hypothesis is the claim that, for every Dirichlet character χ, L(s, χ)
+has no zero ρ with 21 < Re ρ < 1. Assuming GRH, Proposition 3.9 thus implies almost square-
+root cancellation for character sums over primes. Proposition 3.10 will serve as an unconditional
+substitute for GRH.
+
+Proposition 3.10 (Zero-density estimate for a fixed modulus). Uniformly for 45 ⩽ α ⩽ 1 and
+q, T ⩾ 1, we have
+                             X
+                                   N (α, T, χ) ≪ε (qT )(2+ε)(1−α) ,
+                                 χ (mod q)
+
+where N (α, T, χ) denotes the number of zeros (with multiplicity) of L(s, χ) in the rectangle
+
+                                 {s ∈ C : α < Re s ⩽ 1, |Im s| ⩽ T }.
+
+
+Proof. This is [11, Theorem 1 (1.7)].                                                                    □
+
+
+Our goal is to control the total contribution of all large-order characters in (10). We will do so in
+                                                          b We first prove the following L2 bound
+Proposition 3.14 (restricting to a suitable subgroup of G).
+for a single large-order character.
+                                                                            √                    3
+Lemma 3.11. Let N > 2 be an integer and let G = (Z/N Z)× . Let d = ⌈ log N ⌉ and X = d10 d .
+Let b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes less than X
+not dividing N . Let χ ∈ G      b be a character of order ⩾ e10d . Then, for every H ⩾ e10d ,
+
+                                      E |Fχ,H (b1 , . . . , bd )|2 ≪ d−10d H 2d .
+                                                                 
+
+
+Proof. By Proposition 3.10 (the zero-density estimate), the number of Dirichlet characters modulo N
+whose associated L-function has a zero in the region
+                                                                      
+                                            1
+(13)                         s∈C : 1−           < Re s ⩽ 1, |Im s| ⩽ X
+                                           10d
+
+is bounded by
+
+(14)                                    ≪ (N X)(2+1)/(10d) ≪ ed .
+
+If a non-principal character ψ modulo N has no zero in the region (13), then by Proposition 3.9 we
+have
+
+(15)                    E[ψ(b1 )] ≪ X −1/(10d) (log(N X))3 ≪ d−100 d6 ≪ d−94 .
+                  UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                               15
+
+
+We now expand E |Fχ,H (b1 , . . . , bd )|2 as
+                                         
+                                                              
+                     Yd X                   2   d
+                                                Y    X         2
+                 E                χh (bi )  =   E   χh (bi ) 
+                          i=1 |h|⩽H                i=1       |h|⩽H
+                                                                                           !d
+                                                         X     X         h             i
+                                               =                        E χh1 −h2 (b1 )
+                                                      |h1 |⩽H |h2 |⩽H
+                                                                                           !d
+                                                                     X       h        i
+                                               ⩽ (2H + 1)d                  E χh (b1 )          .
+                                                                  |h|⩽2H
+
+We can use (15) to bound the term E χh (b1 ) , unless χh is principal or L(s, χh ) has a zero in the
+                                                  
+
+region (13). By (14), the number of values of h with |h| ⩽ 2H for which one of these two situations
+occurs is                                       
+                                             H
+                                  ≪ 1+             ed ≪ e−10d ed H ≪ e−d H.
+                                          ord(χ)
+By (15), we deduce that, for all but O(e−d H) values of |h| ⩽ 2H, the bound E χh (b1 ) ≪ d−94
+                                                                                         
+holds. Hence
+                                                                  d
+   E |Fχ,H (b1 , . . . , bd )|2 ⩽ (2H + 1)d O(e−d H) + O(d−94 H) ≪ eO(d) d−94d H 2d ≪ d−10d H 2d ,
+                              
+
+as desired.                                                                                                            □
+
+Lemma 3.11 applies to all characters χ of order at least e10d , but gives a relatively weak upper
+bound. In Lemma 3.13, we will prove that a stronger bound can be obtained if a small set of
+exceptions is allowed. We begin by describing the exceptional characters in the following lemma.
+Lemma 3.12. There is some absolute constant t0 ⩾ 1 such that the following holds.
+Let N, G, d, X and bi be as in Lemma 3.11. Let H ⩾ e10d .
+        b be a character of order ⩾ e10d such that
+Let χ ∈ G
+                                E |Fχ,H (b1 , . . . , bd )|2 > e−2td H 2d
+                                                           
+
+for some t with t0 ⩽ t ⩽ 2d.
+Then there are integers −2H ⩽ h1 , h2 ⩽ 2H with 0 < h2 − h1 ⩽ e3t such that both L(s, χh1 ) and
+L(s, χh2 ) have a zero in the region
+                                                                 
+                                         t
+(16)                          s∈C : 1−      < Re s ⩽ 1, |Im s| ⩽ X .
+                                       100d
+
+Proof. As in the proof of Lemma 3.11, we have
+                                                                                                            !d
+                                          d X
+                                          Y           2                               X          h        i
+        E |Fχ,H (b1 , . . . , bd )|2 = E     χh (bi )  ⩽ (2H + 1)d                            E χh (b1 )
+                                   
+(17)                                                                                                               .
+                                          i=1 |h|⩽H                                  |h|⩽2H
+
+Let I1 be the set of all −2H ⩽ h ⩽ 2H such that χh is principal. Since χ has order ⩾ e10d , we have
+                                      |I1 | ≪ 1 + e−10d H ≪ e−10d H.
+
+Let I2 be the set of all −2H ⩽ h ⩽ 2H such that L(s, χh ) has a zero in the region (16). By
+contradiction, suppose that the conclusion of Lemma 3.12 does not hold. Then any sub-interval of
+16                                           CÉDRIC PILATTE
+
+
+[−2H, 2H] of length e3t contains at most one element of I2 . This implies that
+                                       |I2 | ≪ 1 + e−3t H ≪ e−3t H.
+
+Moreover, for any integer h ∈ [−2H, 2H] \ (I1 ∪ I2 ), the character χh is non-principal and has no
+zero in the region (16), which by Proposition 3.9 implies that
+                        h       i
+                      E χh (b1 ) ≪ X −t/(100d) (log(N X))3 ≪ d−10t d6 ≪ e−3t .
+
+Therefore, we can bound
+               X     h        i
+                    E χh (b1 ) ≪ |I1 | + |I2 | + e−3t H ≪ e−10d H + e−3t H ≪ e−3t H.
+               |h|⩽2H
+
+Hence, by (17) we get
+                            E |Fχ,H (b1 , . . . , bd )|2 ⩽ eO(d) e−3td H 2d ,
+                                                       
+
+which contradicts the assumption in the statement if t0 is chosen to be sufficiently large.            □
+
+We wish to use a zero-density estimate again to show that there are few characters satisfying the
+conclusion of Lemma 3.12. For this step to work, we need to restrict to the subgroup Gb M∗ of the
+full character group G,
+                     b where M∗ is the integer defined in Lemma 3.4.
+
+Lemma 3.13. Let t0 ⩾ 1 be the constant from Lemma 3.12. Let N, G, d, X and bi be as in
+Lemma 3.11. Let H ⩾ e10d and let M∗ ⩾ 1 be the integer defined in Lemma 3.4.
+For every t ⩾ t0 ,
+                   b M∗ : ord(χ) ⩾ e10d , E |Fχ,H (b1 , . . . , bd )|2 > e−2td H 2d   ≪ etd/2 .
+                                                                    
+(18)          χ∈G
+
+Proof. If t ⩾ 2d, the bound (18) is trivially satisfied as the right-hand side is ≫ N . We may thus
+assume that t0 ⩽ t ⩽ 2d, in which case Lemma 3.12 applies.
+Let Et be the set of all characters ψ modulo N such that L(s, ψ) has a zero in the rectangle defined
+in (16). By Proposition 3.10, this set Et has size
+(19)                            |Et | ≪ (N X)(2+1/2)t/(100d) ≪ etd/20 .
+               b of order ⩾ e10d , if E |Fχ,H (b1 , . . . , bd )|2 > e−2td H 2d then by Lemma 3.12 we can
+                                                                 
+For every χ ∈ G
+write
+                                               χh = ψ1 ψ2
+for some integer 0 < h < e3t and some characters ψ1 , ψ2 ∈ Et . Hence, the left-hand side of (18) is
+                                X        X 
+(20)                       ⩽                     χ∈G       b M∗ : χh = ψ1 ψ2 .
+                               ψ1 ,ψ2 ∈Et 0<h<e3t
+
+      b M∗ and G
+Since G        d M∗ are isomorphic, Lemma 3.5 implies that
+
+                                b M∗ : χh = ψ1 ψ2 ⩽ hd/10 ⩽ e3td/10 .
+                           
+(21)                        χ∈G
+
+Inserting (19) and (21) into (20), we conclude that the left-hand side of (18) is
+                                  ⩽ |Et |2 e3t e3td/10 ⩽ e3t e4td/10 ≪ etd/2
+as claimed.                                                                                            □
+
+Combining the previous lemmas, we obtain a suitable bound for the sum of second moments of
+                                                           b M∗ .
+Fχ,H (b1 , . . . , bd ) over all large-order characters in G
+                    UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                               17
+
+
+Proposition 3.14 (Large-order characters). Let N, G, d, X and bi be as in Lemma 3.11. Let
+M∗ ⩾ 1 be the integer defined in Lemma 3.4. For H ⩾ e10d , we have
+                             X                                  1/2
+                                   E |Fχ,H (b1 , . . . , bd )|2      ≪ d−2d H d .
+                                    
+
+                                χ∈Gb M∗
+                              ord(χ)⩾e10d
+
+                                                  1/2
+Proof. By Lemma 3.11, we know that E |Fχ,H (b)|2       ⩽ Cd−5d H d for all characters χ ∈ G
+                                       
+                                                                                                  b of
+         10d
+order ⩾ e , where C > 0 is an absolute constant (as before, b stands for b1 , . . . , bd ). Therefore,
+                                       +∞
+                               2 1/2
+        X                              X            X
+                                                               e−m+1 H d 1 −m
+                               
+                   E |Fχ,H (b)|      ⩽                                                         1/2                 (χ)
+                                                                         e      <E[|Fχ,H (b)|2 ]     H −d ⩽e−m+1
+       χ∈Gb M∗                            m=m0     χ∈Gb M∗
+     ord(χ)⩾e10d                                 ord(χ)⩾e10d
+
+where m0 := ⌊5d log d − log C + 1⌋. We may assume that m0 ⩾ max(t0 d, 4d log d), since otherwise
+                                                               b M∗ | ⩽ N ≪ 1 when d ≪ 1).
+d ≪ 1 and Proposition 3.14 is trivially satisfied (given that |G
+Applying Lemma 3.13 with t := m/d, we obtain that for every m ⩾ t0 d,
+             n                                                        o
+                   b M∗ : ord(χ) ⩾ e10d , E |Fχ,H (b)|2 1/2 > e−m H d ≪ em/2 .
+                                                      
+               χ∈G
+
+Therefore,
+                                                        +∞
+                        X                        1/2   X
+                                   E |Fχ,H (b)|2           em/2 e−m+1 H d ≪ e−m0 /2 H d
+                                    
+                                                      ≪
+                       χ∈Gb M∗                           m=m0
+                     ord(χ)⩾e10d
+
+which is O(d−2d H d ) as m0 ⩾ 4d log d.                                                                                  □
+
+3.4. Geometry of numbers. In this section, we show how to pass from good estimates on the
+number of lattice points in certain regions to the existence of a short basis for the lattice.
+Lemma 3.15. Let L ⩾ 1 be an integer. Cover the cube [−L, L]d by (2L)d cubes of side length 1 in
+the obvious way. Label these unit cubes C1 , . . . , C(2L)d (in any order). Let V ⊂ Rd be a hyperplane
+through the origin. Then the number of unit cubes Ci intersecting V is at most (d + 1)(2L)d−1 .
+
+Proof. Let e1 , . . . , ed be the standard basis for Rd . Let v ∈ Rd be a unit vector
+                                                                                √     orthogonal to V .
+Without loss of generality, since ∥v∥2 = 1, we may assume that ⟨v, e1 ⟩ ⩾ 1/ d.
+Suppose that V intersects two unit cubes Ci and Cj where Ci = Cj + ke1 for some integer k ⩾ 0.
+Then, there is some p ∈ Ci and some w ∈ Rd with ∥w∥∞ ⩽ 1 such that p ∈ V and p + ke1 + w ∈ V .
+Therefore, ke1 + w ∈ V and thus ⟨ke1 + w, v⟩ = 0. Noting that
+                                                                     k  √
+                              ⟨ke1 + w, v⟩ ⩾ k⟨e1 , v⟩ − ∥w∥2 ∥v∥2 ⩾ √ − d,
+                                                                      d
+we deduce that k ⩽ d.
+We have thus proved that, for any cube Ci , there are at most d + 1 cubes of the form Ci + ke1 for
+some k ∈ Z which intersect V . The lemma follows.                                               □
+
+The next lemma allows us to convert information about the number of lattice points in cubes into
+the existence of short linearly independent lattice vectors.
+18                                                   CÉDRIC PILATTE
+
+
+Lemma 3.16. Let d ⩾ 1. Let Λ ⊂ Rd be a full-rank lattice. Let 2 ⩽ H0 < H1 be real numbers such
+that H1 /H0 is an integer. Suppose that, for i ∈ {0, 1},
+
+                                                                    (2Hi + 1)d
+(22)                                       Λ ∩ [−Hi , Hi ]d = θi
+                                                                    vol(Rd /Λ)
+                                            d
+where θ0 , θ1 > 0 satisfy H     θ0   5
+                          H 0 > θ1 d 2
+                            1
+                                                 . Then Λ∩[−H1 , H1 ]d contains d linearly independent vectors.
+
+Proof. By contradiction, suppose that there exists a linear hyperplane V containing all the points
+v ∈ Λ ∩ [−H1 , H1 ]d .
+Let L = H1 /H0 . The large cube [−H1 , H1 ]d can be covered by (2L)d axis-parallel cubes of side
+length H0 in the natural way. By Lemma 3.15, we can bound
+
+                                  Λ ∩ [−H1 , H1 ]d ⩽ (d + 1)(2L)d−1 sup |Λ ∩ C|,
+                                                                            C
+
+where the supremum runs over all (not necessarily centred) axis-parallel cubes C ⊂ Rd of side length
+H0 . If C is such a cube and v ∈ Λ ∩ C, then C ⊂ v + [−H0 , H0 ]d , which implies that
+
+                             |Λ ∩ C| ⩽ Λ ∩ v + [−H0 , H0 ]d            = Λ ∩ [−H0 , H0 ]d .
+                                                                   
+
+
+Thus,
+                               Λ ∩ [−H1 , H1 ]d ⩽ (d + 1)(2L)d−1 Λ ∩ [−H0 , H0 ]d .
+
+Plugging in our lattice point estimate (22), we get
+
+                                   θ1 (2H1 + 1)d ⩽ (d + 1)(2L)d−1 θ0 (2H0 + 1)d .
+                                                                                              d
+Using 2H1 + 1 ⩾ 2LH0 and d + 1 ⩽ 2d, this implies that L ⩽ θθ10 d 2 + H10                          , contradicting the
+inequality in the statement of the lemma.                                                                           □
+
+The linearly independent vectors given by Lemma 3.16 can be upgraded to a genuine basis for Λ
+by standard geometry of numbers, namely Mahler’s theorem. We state this fact in a slightly more
+general situation.
+
+Lemma 3.17. Let d ⩾ 1. Let Λ1 , Λ2 ⊂ Rd be full-rank lattices such that M Λ1 ⊂ Λ2 for some
+integer M ⩾ 1. Suppose that Λ1 contains d linearly independent vectors in [−H, H]d for some
+H > 0. Then, Λ2 admits a basis where each basis vector has Euclidean norm ⩽ d3/2 M H.
+
+Proof. By assumption, there are linearly independent vectors v1 , . . . , vd ∈ Λ1 ∩ [−H,     d
+                                                                                        √ H] . Then
+M v1 , . . . , M vd are linearly independent vectors of Λ2 such that maxi∈[d] ∥M vi ∥2 ⩽ dM H.
+Let B ⊂ Rd be the unit ball for the Euclidean norm. Let 0 < λ1 ⩽ · · · ⩽ λd be the successive
+minima12 of B with respect
+                        √ to Λ2 . Since M v1 , . . . , M vd ∈ Λ2 are linearly independent, we deduce
+from the above that λd ⩽ dM H.
+By Mahler’s theorem (see [22, Theorem 3.34]), we conclude that Λ2 admits a basis of vectors of
+Euclidean norm at most dλd ⩽ d3/2 M H, which is what we needed to show.                     □
+
+     12See [22, Definition 3.29] for the definition of successive minima.
+                   UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                                  19
+
+
+3.5. Short basis vectors. We can now prove our main technical result, which may be of indepen-
+dent interest.
+                                                 √                     3
+Theorem 3.18. Let N > 2 be an integer. Let d := ⌈ log N ⌉ and X := d10 d .
+Let b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes ⩽ X not
+dividing N . Let r ⩾ 0 and let x1 , . . . , xr be arbitrary13 random variables taking values in (Z/N Z)× .
+Then, with probability 1 + O d−d , the lattice
+                                      
+
+                     n                                               d     r                   o
+                                                                             xfi i ≡ 1 (mod N )
+                                                                     Y  ei
+                                                                           Y
+                                                               d+r
+                 L := (e1 , . . . , ed , f1 , . . . , fr ) ∈ Z     :   bi
+                                                                      i=1    i=1
+
+has a basis consisting of vectors of Euclidean norm ≪ e42(d+r) .
+Remark 3.19. The constant 42 in the exponent is by no means the limit of our techniques. For ex-
+ample, using smooth cutoffs in Definition 3.6 would significantly reduce the error term in Lemma 3.8
+and hence lower this constant. We have not performed such optimisations to keep the paper as sim-
+ple as possible.
+
+Proof of Theorem 3.18. Let M := M∗ (N ) be the integer defined in Lemma 3.4. We introduce the
+auxiliary lattice
+                  n                                              d       r                   o
+                                                                           xM fi
+                                                                 Y  M ei
+                                                                         Y
+                                                           d+r
+             LM := (e1 , . . . , ed , f1 , . . . , fr ) ∈ Z    :   bi       i    ≡ 1 (mod N ) .
+                                                                     i=1      i=1
+
+By Lemmas 3.7 and 3.8, we have the lattice point estimate
+                                                                                                                       !
+                           1 + O e31(d+r) H −1 (2H + 1)d+r
+                                                   
+                   d+r                                                                        1      X
+(23) LM ∩ [−H, H]       =                                        +O                                        |Fχ,H (b, x)|
+                               bM            M    M            M
+                                1 , . . . , bd , x1 , . . . , xr                             GM
+                                                                                             b
+                                                                                                     χ∈GbM
+                                                                                                  ord(χ)⩾e10d
+
+for every integer H ⩾ e31(d+r) , where
+                                                                      d X                     r X
+                                                                                         !                       !
+                                                                      Y                       Y
+        Fχ,H (b, x) := Fχ,H (b1 , . . . , bd , x1 , . . . , xr ) =                χh (bi )                χh (xi ) .
+                                                                      i=1 |h|⩽H               i=1 |h|⩽H
+
+Since the xi have unknown distributions, we will use the trivial bound
+                                  |Fχ,H (b, x)| ⩽ (2H + 1)r |Fχ,H (b1 , . . . , bd )|.
+Applying Proposition 3.14, we deduce that, for all H ⩾ e10d ,
+                           X                      1/2
+                                 E |Fχ,H (b, x)|2      ≪ d−2d (2H + 1)d+r .
+                                  
+
+                                χ∈Gb M∗
+                              ord(χ)⩾e10d
+
+By the L2 triangle inequality and Chebyshev’s inequality, this implies that, for fixed H ⩾ e10d ,
+                         X                                       
+                                                   −d
+(24)                   P          |Fχ,H (b, x)| > d (2H + 1)  d+r
+                                                                    ≪ d−2d .
+                                   χ∈GbM
+                                ord(χ)⩾e10d
+
+
+  13In particular, the x are not assumed to be independent or identically distributed.
+                        i
+20                                        CÉDRIC PILATTE
+
+
+Let H0 := d⌈e31(d+r) ⌉ and H1 := ⌈d(d + r)(5/2)d+r ⌉H0 . We apply (23) and (24) twice, once with
+H = H0 and once with H = H1 to obtain the following: with probability 1 + O d−d , the two
+estimates
+                                                               (2H0 + 1)d+r
+                LM ∩ [−H0 , H0 ]d+r = (1 + O(1/d))
+                                                      bM             M    M            M
+                                                        1 , . . . , bd , x1 , . . . , xr
+and
+                                                               (2H1 + 1)d+r
+                LM ∩ [−H1 , H1 ]d+r = (1 + O(1/d))
+                                                      bM             M    M            M
+                                                        1 , . . . , bd , x1 , . . . , xr
+simultaneously hold.
+We now apply Lemma 3.16. By our choice of H0 and H1 , the inequality in the statement is satisfied
+provided that d is sufficiently large. We can assume that d is large enough as, for d ≪ 1, we have
+N ≪ 1 and Theorem 3.18 is trivially true. Thus, Lemma 3.16 implies that LM ∩ [−H1 , H1 ]d+r
+contains d + r linearly independent vectors, with probability 1 + O d−d . By Lemma 3.17, since
+M LM ⊂ L, we conclude that, with probability 1 + O d−d , L admits a basis of vectors of Euclidean
+                                                           
+norm at most
+                    ≪ d3/2 M H1 ≪ d3/2 e10d d2 (d + r)(5/2)d+r e31(d+r) ≪ e42(d+r)
+using the bound M ⩽ e10d given by Lemma 3.4. This completes the proof.                          □
+
+                           4. Applications to quantum computing
+
+In this section, we prove the correctness of efficient quantum algorithms for factoring and for the
+discrete logarithm problem by applying our version of Regev’s number-theoretic conjecture, Theo-
+rem 3.18.
+
+4.1. Preparatory lemmas.
+Lemma 4.1. Let N, d, m ⩾ 2 be integers. There is a classical algorithm that, given integers
+0 ⩽ a1 , . . . , ad ⩽ 2m and exponents t1 , . . . , td ∈ {0, 1}, computes the product
+                                           d
+                                           Y
+                                             atii (mod N )
+                                           i=1
+                             
+in time O md(log d) log(md) .
+
+Proof. This is similar to [18, p5] or [17, Lemma 12] but for general values of m. Without loss of
+generality, assume that d is a power of 2, say d = 2l . We proceed to compute this product in a binary
+tree fashion. Let T (k) be the complexity of multiplying any k of these numbers atii modulo N . Note
+that T (2k) ⩽ 2T (k) + O(M (mk)) where M (x) is the time needed to multiply two integers having at
+most x bits. By the work of Harvey and van der Hoeven [10], it is known that M (x) = O(x log x),
+which leads to the bound
+                      X l                     Xl
+              T (d) ≪     2j M (md/2j+1 ) ≪       md log(md/2j+1 ) ≪ md(log d) log(md),
+                     j=0                    j=0
+
+as claimed.                                                                                         □
+
+We can turn this into a quantum circuit with the following well-known fact.
+Lemma 4.2. Any classical circuit can be “compiled” into a reversible quantum circuit that carries
+out the same computations, with the number of gates and qubits used being proportional to the size
+of the classical circuit.
+                   UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                  21
+
+
+Proof. This well-known fact is explained in Section A.1 of the full version of [17].           □
+                                                             √                       3
+Lemma 4.3. Let N be a sufficiently large integer. Let d := ⌈ log N ⌉ and X = d10 d . Let k = d4 .
+Let n1 , . . . , nk be i.i.d. random variables uniformly distributed in {1, . . . , X}. Then, the probability
+that at least d of these ni are prime numbers not dividing N is 1 + O(1/N ).
+
+Proof. Since N has ≪ log N prime factors, and since the number of primes ⩽ X is ≫ X/ log X, we
+have
+                                                               c
+                               P(n1 is prime and n1 ∤ N ) ⩾
+                                                             log X
+for some absolute constant c > 0. Thus, if Ei is the event that ni is not prime or divides N , then
+by the union bound and independence,
+                [ \  X                          k−l
+                                      k           c                                     2
+             P           Ei ⩽              1−              ⩽ dk d e−c(k−d)/ log X ≪ e−d
+                                      l        log X
+                    I⊂[k] i∈I         l<d
+                  |I|>k−d
+
+as needed.                                                                                                 □
+
+4.2. The discrete logarithm problem. We now prove Theorem 1.2. For convenience, we restate
+it here.
+Theorem 1.2. There is a quantum circuit having O(n3/2 log3 n) quantum gates and O(n log3 n)
+qubits with the following property. There is a classical randomised polynomial-time algorithm that
+solves the discrete logarithm problem
+             Input : an integer N ⩽ 2n and elements g, y ∈ (Z/N Z)× such that y ∈ ⟨g⟩
+             Output : an integer x such that g x ≡ y          (mod N )
+        √
+using O( n) calls to this quantum circuit, and succeeds with probability Θ(1).
+
+Proof of Theorem 1.2. Suppose we are given an integer N > 2 and elements g, y ∈ (Z/N Z)× such
+                                                                        √                    3
+that y lies in the subgroup generated by g in (Z/N Z)× . Let d := ⌈ log N ⌉ and X := d10 d . Let
+b1 , . . . , bd be i.i.d. random variables, each uniformly distributed in the set of primes ⩽ X not
+dividing N .
+Consider the random lattice
+                                                              d
+                                                                            !
+                     n                                        Y                                   o
+            Lb,g,y := (e1 , . . . , ed , f1 , f2 ) ∈ Zd+2 :         bei i   g f1 y f2 ≡ 1 (mod N ) .
+                                                              i=1
+
+By Theorem 3.18, with probability 1 + O(d−d ), this lattice has a basis consisting of vectors of
+Euclidean norm ≪ e42d .
+Computing the discrete logarithm of y with respect to the base g reduces (with a polynomial-time
+classical algorithm) to computing a short basis for Lb,g,y . To see why this is the case, suppose
+that we managed to compute a basis v1 , . . . , vd+2 for Lb,g,y with maxi ∥vi ∥2 ≪ e42d . It is then easy
+to find a vector in Lb,g,y of the form (0, . . . , 0, x, −1) for some integer x (note that such a vector
+exists since we assume that y ∈ ⟨g⟩). Indeed, this amounts to solving a linear system with integer
+coefficients. The complexity of solving an integer linear system is polynomial in the dimensions of
+the matrix and the number of bits of the coefficients, which are both O(d) since maxi ∥vi ∥2 ≪ e42d
+(see [3]). This yields an integer x such that g x ≡ y (mod N ).
+The algorithm for solving the discrete logarithm problem thus proceeds as follows.
+22                                                   CÉDRIC PILATTE
+
+
+      (1) Generate d primes b1 , . . . , bd independently and uniformly at random in the set of primes
+          ⩽ X not dividing N . To do this, it suffices to generate d4 independent random integers
+          ⩽ X. By Lemma 4.3, the required conditions will be satisfied for at least d of those with
+          probability 1 + O(1/N ). This first step takes polynomial time on a classical computer using
+          the AKS primality test [1].
+      (2) Use the procedure described by Ekerå and Gärtner [7] to obtain a basis for the lattice Lb,g,y .
+          This involves making O(d) calls to a quantum circuit, followed by polynomial-time classical
+          post-processing. This step is now guaranteed to succeed with probability Θ(1), using the
+          fact that Lb,g,y has a basis of vectors of Euclidean norm ≪ e42d with probability 1 + O(d−d )
+          (Theorem 3.18).
+      (3) Compute the discrete logarithm of y in classical polynomial time using this basis, as ex-
+          plained above.
+
+It remains to analyse the gate and space costs of the quantum part of this algorithm.
+The only modification needed to the analysis of the quantum circuit in [7] comes from the fact that
+b1 , . . . , bd are not quite as small as in [7]. In [7] (and more generally in [17, 18]), the primes bi are
+                                                                                                         3
+assumed to have O(log d) bits. In the present situation, we instead have the bound bi ⩽ X = d10 d ,
+i.e. each bi has O(d log d) bits.
+The only place in [7] where the assumption on the size of the bi ’s is used is in [7, Lemma 3]. In turn,
+the only point in the proof of [7, Lemma 3] where this assumption is needed is when [17, Lemma 5]
+is invoked (as a black box). The proof of [17, Lemma 5] is given in [17, Section 5], and the size
+assumption on the bi ’s only comes up in [17, Lemma 12].
+The result [17, Lemma 12] essentially14 states that there is a quantum circuit using O(d log3 d)
+gates and O(d log3 d) qubits to perform the computation of di=1 atii where ti ∈ {0, 1} and ai are
+                                                             Q
+integers with O(log d) bits. This is a special case of Lemma 4.1 (used together with Lemma 4.2)
+applied with m = O(log d). In our case, we just apply Lemma 4.1 with m = O(d log d), together
+with Lemma 4.2 to convert the classical circuit into a quantum one. This yields a quantum circuit
+having O(d2 log3 d) gates and O(d2 log3 d) qubits to compute di=1 btii .
+                                                             Q
+
+The number of gates of the quantum circuit [17, Lemma 5] is
+
+                            O d(n log n + d log3 d) = O(n3/2 log n)
+                                                   
+
+(because [17, Lemma 12] is used O(d) times, see [17, Algorithm 5.2] and the surrounding explana-
+tions). Note that this is the same as for Regev’s algorithm (see [18, p5]). In our case, the number
+of gates is
+                             O d(n log n + d2 log3 d) = O(n3/2 log3 n).
+                                                     
+
+
+The space optimisations of Ragavan and Vaikuntanathan keep the total number of qubits for their
+circuit [17, Lemma 5] under
+
+                               O n log n + d log3 d = O(n log n),
+                                                   
+
+due to the way the qubits are used and restored in the main loop of [17, Algorithm 5.2]. In our
+situation, the number of qubits is
+                               O n log n + d2 log3 d = O(n log3 n).
+                                                    
+
+
+     14There are extra details pertaining to the precise use of qubits (e.g. restoring the ancilla qubits to |0⟩), but these
+will be the same in our setup.
+                 UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                              23
+
+
+In summary, our final quantum circuit has O(n3/2 log3 n) gates and O(n log3 n) qubits. As noted
+in [7], the fact that the two elements g and y are not small (g and y can be as large as N , as opposed
+to the bi ’s) does not affect these complexity bounds.                                               □
+Remark 4.4. In the proof of Theorem 1.2, we used the naive Lemma 4.2 to convert a classical
+circuit into a quantum one. As mentioned in Remark 1.3, it is possible to save a factor of log n in
+the space cost for Theorems 1.1 and 1.2 by reusing certain qubits when performing the quantum
+computation corresponding to Lemma 4.1.
+
+4.3. Factoring integers. In this section, we prove Theorem 1.1.
+Lemma 4.5. Let N > 1 be an odd integer with at least two distinct prime factors. Let x be a
+random variable, uniformly distributed in (Z/N Z)× . Then ⟨x⟩ contains a non-trivial square root of
+1 modulo N with probability ⩾ 1/2.
+
+Proof. This elementary number-theoretic fact is well-known – it was already needed for Shor’s
+algorithm [20]. See [16, Appendix A4.3] for a detailed proof.                              □
+Theorem 1.1. There is a quantum circuit having O(n3/2 log3 n) quantum gates and O(n log3 n)
+qubits with the following property. There is a classical randomised polynomial-time algorithm that
+solves the factoring problem
+                                Input : a composite integer N ⩽ 2n
+                                Output : a non-trivial divisor of N
+        √
+using O( n) calls to this quantum circuit, and succeeds with probability Θ(1).
+
+Proof of Theorem 1.1. We can assume that N is odd and not a perfect prime power, as otherwise
+it is easy to factor N in polynomial time with a classical computer (see [16, Exercise 5.17]).
+            √                    3
+Let d := ⌈ log N ⌉ and X := d10 d . The probabilistic algorithm to find a non-trivial divisor of N
+goes as follows.
+   (1) Generate d primes b1 , . . . , bd independently and uniformly at random in the set of primes
+       ⩽ X not dividing N . Sample another integer x uniformly chosen in (Z/N Z)× . As in
+       the proof of Theorem 1.2, this can be done classically in polynomial time with probability
+       1 + O(1/N ).
+   (2) Use the algorithm of Ekerå and Gärtner [7] to obtain a basis for the lattice
+                                                         d
+                                                               !
+                        n                                Y                    o
+                                                   d+1      ei
+                 Lb,x := (e1 , . . . , ed , f ) ∈ Z    :   bi xf ≡ 1 (mod N ) .
+                                                        i=1
+       This involves making O(d) calls to a quantum circuit, followed by polynomial-time classical
+       post-processing. By Theorem 3.18, Lb,x has a basis of vectors of Euclidean norm ≪ e42d
+       with probability 1 + O(d−d ), which means that this step is guaranteed to succeed with
+       probability Θ(1).
+   (3) Using the short basis for Lb,x computed in the previous step, find the vector of the form
+       (0, . . . , 0, r) in Lb,x with r ⩾ 1 as small as possible. This involves solving a linear system
+       with integer coefficients, which can be done efficiently as in the proof of Theorem 1.2. This
+       integer r is the order of x in (Z/N Z)× . By Lemma 4.5, with probability ⩾ 1/2, this order r
+       will be even and the element xr/2 will be a non-trivial square root of 1 modulo N . Hence,
+       N divides the product (xr/2 − 1)(xr/2 + 1) but neither term individually, which implies that
+       gcd(N, xr/2 − 1 mod N ) is a non-trivial divisor of N .
+The analysis of this algorithm is identical to the corresponding part of the proof of Theorem 1.2. □
+24                                         CÉDRIC PILATTE
+
+
+                  Appendix A. Bounds for character sums over primes
+
+In this appendix, we prove Proposition 3.9. We start by stating the truncated explicit formula for
+L(s, χ).
+Lemma A.1. Let q ⩾ 2. Let χ be a non-principal Dirichlet character modulo q. For x ⩾ T ⩾ 2,
+we have
+                                      X xρ − 1            x log2 (xq)
+                   X                                                 
+                       χ(n)Λ(n) = −                +O
+                   n⩽x
+                                               ρ               T
+                                             ρ=β+iγ
+                                              |γ|⩽T
+
+where the sum runs over all non-trivial zeros ρ of L(s, χ) with multiplicity.
+
+Proof. This is [14, Theorem 11.3].                                                                  □
+
+We will also need the following standard bound for the number of zeros of L(s, χ) in the critical
+strip at some height t.
+Lemma A.2. Let q ⩾ 1 and let χ be a Dirichlet character modulo q. Let t ∈ R. The number of
+zeros ρ = β + iγ of L(s, χ) in the rectangle 0 ⩽ β ⩽ 1, t ⩽ γ ⩽ t + 1 is ≪ log(q(|t| + 2)), where
+zeros are counted with multiplicity.
+
+Proof. This is [15, Theorem 10.17].                                                                 □
+
+Proof of Proposition 3.9. By Lemmas A.1 and A.2, choosing T = x1−α − 1, we have
+                 X                       X              xρ − 1
+                     χ(n)Λ(n) ≪ log(qx)           max          + xα log2 (qx),
+                 n⩽x
+                                                 ρ=β+iγ    ρ
+                                               t∈Z     |γ−t|⩽1/2
+                                           |t|⩽x1−α −1
+
+where the maximum is over all zeros of L(s, χ) in the specified region. Since |xρ | ⩽ xα for all zeros
+ρ = β + iγ with imaginary part |γ| ⩽ x1−α by our zero-free rectangle assumption, we can bound
+                                           xρ − 1     xα
+                                                  ≪
+                                              ρ     1 + |γ|
+                           ρ      R x ρ−1
+(using for example that x ρ−1 =    1 t    dt for |γ| < 1). Thus, we obtain
+                X                            X         1
+                      χ(n)Λ(n) ≪ log(qx)xα                   + xα log2 (qx) ≪ xα log2 (qx).
+                n⩽x
+                                                     1 + |t|
+                                             |t|⩽x
+
+Discarding perfect prime powers, which contribute O(x1/2 log x), and using partial summation, we
+get
+                                   X            xα log2 (qx)
+                                       χ(p) ≪                .
+                                   p⩽x
+                                               (1 − α) log x
+
+We may assume that 1 − α ⩾ log1 x , as otherwise Proposition 3.9 is trivial. If this is the case, we
+conclude that
+                       1 X               xα log2 (qx)
+                                χ(p) ≪                ≪ x−(1−α) log3 (qx)
+                      π(x) p⩽x               π(x)
+
+as claimed.                                                                                         □
+                   UNCONDITIONAL CORRECTNESS OF RECENT QUANTUM ALGORITHMS                                         25
+
+
+                                                  References
+ [1] Manindra Agrawal, Neeraj Kayal, and Nitin Saxena, Primes is in P, Annals of Mathematics 160 (2004), 781–793.
+ [2] Nesmith C. Ankeny, The least quadratic non residue, Annals of mathematics (1952), 65–72.
+ [3] Erwin H. Bareiss, Sylvester’s identity and multistep integer-preserving Gaussian elimination, Mathematics of
+     Computation 22 (1968), no. 103, 565–578.
+ [4] Daniel J. Bernstein, Johannes Buchmann, and Erik Dahmen, Post-quantum cryptography, Springer, 2009.
+ [5] David A. Burgess, The distribution of quadratic residues and non-residues, Mathematika 4 (1957), no. 2, 106–112.
+ [6] Whitfield Diffie and Martin E. Hellman, New directions in cryptography, IEEE Transactions on Information
+     Theory 22 (1976), no. 6, 644–654.
+ [7] Martin Ekerå and Joel Gärtner, Extending Regev’s factoring algorithm to compute discrete logarithms, Post-
+     quantum cryptography. Part II, Lecture Notes in Computer Science, vol. 14772, Springer, 2024, pp. 211–242.
+ [8] Craig Gidney, Asymptotically efficient quantum Karatsuba multiplication, preprint arXiv:1904.07356 (2019).
+ [9] Andrew Granville and Kannan Soundararajan, Large character sums, Journal of the American Mathematical
+     Society 14 (2001), no. 2, 365–397.
+[10] David Harvey and Joris van der Hoeven, Integer multiplication in time O(n log n), Annals of Mathematics 193
+     (2021), no. 2, 563–617.
+[11] Matti Jutila, On Linnik’s constant, Mathematica Scandinavica 41 (1977), no. 1, 45–62.
+[12] Gregory D. Kahanamoku-Meyer and Norman Y. Yao, Fast quantum integer multiplication with zero ancillas,
+     preprint arXiv:2403.18006 (2024).
+[13] Burton S. Kaliski Jr, Targeted Fibonacci exponentiation, preprint arXiv:1711.02491 (2017).
+[14] Dimitris Koukoulopoulos, The distribution of prime numbers, vol. 203, American Mathematical Society, 2019.
+[15] Hugh L. Montgomery and Robert C. Vaughan, Multiplicative number theory I: classical theory, Cambridge
+     Studies in Advanced Mathematics, Cambridge University Press, 2006.
+[16] Michael A. Nielsen and Isaac L. Chuang, Quantum computation and quantum information, Cambridge University
+     Press, 2010.
+[17] Seyoon Ragavan and Vinod Vaikuntanathan, Space-efficient and noise-robust quantum factoring, Advances in
+     Cryptology – CRYPTO 2024. Part VI, Lecture Notes in Computer Science, vol. 14925, Springer, 2024, pp. 107–
+     140.
+[18] Oded Regev, An efficient quantum factoring algorithm, Journal of the ACM 72 (2025), no. 1, Art. 10, 1–13.
+[19] Ronald L. Rivest, Adi Shamir, and Leonard Adleman, A method for obtaining digital signatures and public-key
+     cryptosystems, Communications of the ACM 21 (1978), no. 2, 120–126.
+[20] Peter W. Shor, Algorithms for quantum computation: discrete logarithms and factoring, Proceedings 35th Annual
+     Symposium on Foundations of Computer Science, IEEE, 1994, pp. 124–134.
+[21]         , Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer,
+     SIAM Journal on Computing 26 (1997), no. 5, 1484–1509.
+[22] Terence Tao and Van H. Vu, Additive combinatorics, vol. 105, Cambridge University Press, 2006.
+
+Mathematical Institute, University of Oxford.
+Email address: cedric.pilatte@maths.ox.ac.uk
+

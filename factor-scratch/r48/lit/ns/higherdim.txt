@@ -1,0 +1,863 @@
+          Higher dimensional sieving for the number field sieve
+                              algorithms
+                                                  Laurent Grémy
+
+
+
+      To cite this version:
+     Laurent Grémy. Higher dimensional sieving for the number field sieve algorithms. ANTS 2018 - Thirteenth
+     Algorithmic Number Theory Symposium, University of Wisconsin, Jul 2018, Madison, United States. pp.1-16,
+     ⟨10.2140/obs.2019.2.275⟩. ⟨hal-01890731⟩
+
+
+
+
+                                        HAL Id: hal-01890731
+                          https://inria.hal.science/hal-01890731v1
+                                            Submitted on 8 Oct 2018
+
+
+
+
+    HAL is a multi-disciplinary open access archive             L’archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-        tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.       tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research          des établissements d’enseignement et de recherche
+institutions in France or abroad, or from public or pri-   français ou étrangers, des laboratoires publics ou
+vate research centers.                                     privés.
+
+
+           Distributed under a Creative Commons CC BY 4.0 - Attribution - International License
+ HIGHER DIMENSIONAL SIEVING FOR THE NUMBER FIELD
+                SIEVE ALGORITHMS
+
+
+                                      LAURENT GRÉMY
+
+
+        Abstract. Since 2016 and the introduction of the exTNFS (extended Tower
+        Number Field Sieve) algorithm, the security of cryptosystems based on non-
+        prime finite fields, mainly the paring and torus-based one, is being reassessed.
+        The feasibility of the relation collection, a crucial step of the NFS variants, is
+        especially investigated. It usually involves polynomials of degree one, i.e., a
+        search space of dimension two. However, exTNFS uses bivariate polynomials
+        of at least four coefficients. If sieving in dimension two is well described in the
+        literature, sieving in higher dimension received significantly less attention. We
+        describe and analyze three different generic algorithms to sieve in any dimen-
+        sion for the NFS algorithms. Our implementation shows the practicability of
+        dimension four sieving, but the hardness of dimension six sieving.
+
+
+
+
+                                     1. Introduction
+    Nowadays, an important part of the deployed asymmetric cryptosystems bases
+its security on the hardness of two main number theory problems: the factorization
+of large integers and the computation of discrete logarithms in a finite cyclic group.
+In such a group (G, ·) of order ` and generator g, the discrete logarithm problem
+(DLP) is, given a ∈ G, to find x ∈ [0, `) such that g x = a. Usual choices of group
+are groups of points on elliptic curves or multiplicative subgroups of finite fields.
+    In this article, we focus on discrete logarithms in finite fields of the form Fpn ,
+where p is a prime and n is relatively small, namely the medium and large char-
+acteristics situation studied in [22]. Computing discrete logarithms in this type of
+field can affect torus-based [29, 36] or pairing-based [12] cryptography. The best
+known algorithm to achieve computations in such groups is the number field sieve
+(NFS) algorithm. It has a subexponential
+                                                complexity, often expressed
+                                                                               with the
+L(α) notation: Lpn (α, c) = exp (c + o(1)) log(pn )α log log(pn )1−α , where α = 1/3
+for all the variants of NFS. For the general setting in medium characteristic, the
+first L(1/3) algorithm was reached with c = 2.43 [22], improved to 2.21 [4] and now
+to 1.93 with exTNFS [23], the same complexity as NFS in large characteristic. In
+some specific context, exTNFS even reaches a lower complexity. However, theoret-
+ical complexities are not enough to estimate what would cost a real attack, since
+practical improvements can be hidden in the o(1) term [1, 30, 7]. Experimental
+results are then needed to assess the concrete limits of known algorithms.
+    On the practical side, there has been a lot of effort to compute discrete logarithms
+in prime fields, culminating in a 768-bit record [27]. Although the records for
+Fp2 are smaller than the ones in prime fields, the computations turned out to be
+
+   Laurent Grémy was supported by the ERC Starting Grant ERC-2013-StG-335086-LATTAC.
+His work was started in the CARAMBA team of Université de Lorraine, CNRS, Inria, LORIA,
+F-54000 Nancy, France and completed in the AriC team.
+                                                1
+2                                 LAURENT GRÉMY
+
+
+faster than expected [4]. However, when n is a small composite and p fits for Fpn
+to be in the medium characteristic case (typically n = 6 [16] and n = 12 [18]),
+the records are smaller, even with a comparable amount of time spent during the
+computation. A way to fill the gap between medium and large characteristics is to
+implement exTNFS, since the computations in medium characteristic were, until
+now, performed with a predecessor of exTNFS.
+   Since exTNFS is a relatively new algorithm, there remain many theoretical and
+practical challenges to be solved before a practical computation can be reached.
+One of the major challenges concerns the sieve algorithms which efficiently perform
+the relation collection, one of the most costly steps of NFS. However, if there exist
+sieve algorithms in dimension two and three, these sieves are not efficient for higher
+dimension and exTNFS needs to sieve in even dimension larger or equal to four.
+   Our contributions. We describe three new generic sieve algorithms which deal
+with any dimension, especially those addressed by exTNFS. Instantiating these
+algorithms in dimension two or three may allow to recover the existing sieve al-
+gorithms. Since these new sieves do not ensure completeness of the enumeration,
+unlike most of the existing sieve algorithms, we describe workarounds to ensure
+a trade-off between the completeness and the running time efficiency. Finally, we
+analyze some quality criteria of these sieve algorithms and show the feasibility of
+sieving in dimension four, but the hardness of dimension six sieving.
+
+                     2. Overview of the NFS algorithms
+   Let ` be a large prime factor of the order Φn (p) of F∗pn that is coprime to Φk (p)
+for all prime factors k of n: the Pohlig–Hellman algorithm allows to reduce the
+DLP in F∗pn to the DLP in all its subgroups, especially the one of order `. The NFS
+algorithms can be split into four main steps: polynomial selection, relation collec-
+tion, linear algebra and individual logarithm. The first step defines in a convenient
+way the field Fpn . The next two steps find the discrete logarithms of a subset of
+small to medium elements of Fpn , where sizes of the elements will be defined later.
+The last step computes the discrete logarithm of a large element of Fpn . The overall
+complexity of NFS is dominated by the relation collection and the linear algebra.
+2.1. Polynomial selection. Let n = ηκ: the field Fpn can be represented as a
+degree-κ extension of Fpη . Let h be an integer polynomial of degree η irreducible
+over Fp and ι be a root of h. Let Fpη be defined by R/pR, where R is the ring
+Z[y]/h(y). There exist two ring homomorphisms from R[x] = Z[ι][x] to Fpn : one of
+them involves a number field K0 (respectively K1 ) defined by f0 (respectively f1 ).
+The polynomials f0 and f1 are irreducible over R and share a common irreducible
+factor φ of degree κ modulo p. This setting allows to define Fpn = F(pη )κ ≈
+(R/pR)[x]/φ(x). This provides the commutative diagram of Figure 1. The different
+polynomial selections defining f0 and f1 are given in Figure 2.
+2.2. Relation collection. Since the diagram of Figure 1 is the same for all the
+NFS variants, we use in the following the name NFSη to cover all the variants (see
+Table 1 for their names) or NFS when the parameter η does not matter.
+2.2.1. Relation. A relation in NFS is given by a polynomial a(x, y) in R[x] of degree
+µ in x, often set to µ = 1 to reach the best complexity (see Table 1), and η − 1 in
+y. Since there are t = (µ + 1)η coefficients to define a polynomial a, the relation
+collection is done in dimension t. A polynomial a gives a relation when the ideal
+                               HIGHER DIMENSIONAL SIEVING FOR NFS                                3
+
+
+                                                   R[x]
+
+    K0 ⊃ R[x]/f0 (x)                                                       R[x]/f1 (x) ⊂ K1
+
+                       mod(p, φ(x))                                  mod(p, φ(x))
+                                           (R/pR)[x]/φ(x) ≈ Fpn
+
+         Figure 1. The NFS diagram to compute discrete logarithms in Fpn .
+
+     Base-m        d=0
+                         JL [21]      GJL [4]       A [39]    B [40]         C [37]
+  [8, 31, 25, 26, 1]
+                       κ=1
+                       κ>1
+                                             Conj [4]                      gConj [24]   D [38]
+            JLSV1 [22]
+                       W =0
+  JLSV0 [22]                  JLSV2 [22]                                  gJLSV2 [24]
+                       D=0
+
+
+
+            Figure 2. Polynomial selections: a link a → b means that a is a
+            particular case of b (getting a from b is written if this is not explicit
+            in the articles); a dashed link means that the selection strategies in
+            a and b strongly resemble. Polynomial selections in the gray area
+            allow to build polynomial with algebraic coefficients.
+
+
+factorizations of a mapped in both number fields involve prime ideals of norms
+smaller than two L(1/3) smoothness bounds B0 and B1 respectively: such ideals
+are elements of the so-called factor bases F0 and F1 respectively, see [22, 5, 23].
+   Since the factorization of a in prime ideals and the factorization of the norm of
+a are strongly linked, the relation collection looks for polynomials a of norms B0 -
+smooth in K0 and B1 -smooth in K1 . To ensure the best probability of smoothness,
+the t coefficients a of a are taken into a t-search space S containing L(1/3) elements.
+Since an upper bound of the norm of a involves its infinity norm [6], the search
+spaces are usually cuboids of form S = [S0m , S0M ) × [S1m , S1M ) × · · · × [St−1
+                                                                               m      M
+                                                                                   , St−1 ),
+where 0 is in S, all the [Sim , SiM ) are integer intervals and SiM = −Sim , where
+i is in [0, t). Theoretically, all the SiM are equal but practically, the skewness of
+the polynomials f0 and f1 must be taken into account [31, 25, 26, 1], implying a
+                                                                  m
+skew search space. Since −a and a give the same relation, St−1        = 0. By abuse of
+notation, we denote by a both the polynomial and the list a of its t coefficients.
+
+                         κ=1        κ≥1                                 κ=1      κ≥1
+            η=1           NFS      NFS-HD                     η=1                µ≥1
+            η≥1          TNFS      exTNFS                     η≥1       µ=1
+         (a) Name of the NFS variants.                            (b) Optimal degree.
+
+                              Table 1. The different variants of NFS.
+
+
+
+2.2.2. Practical considerations. To ensure the best running time for the relation
+collection, the polynomials f0 and f1 must be chosen carefully. However, the two
+4                                             LAURENT GRÉMY
+
+
+usual quality criteria, especially the α but also the Murphy-E functions [31], are
+only defined for NFS1 and µ ≤ 3 [14]. Finding good polynomials for NFS>1 , even
+by settling for integer coefficients to define f0 and f1 , is yet a challenge.
+   The goal of the relation collection is to produce more relations than the number
+of ideals in both factor bases. A classical algorithm, used to analyze theoretically
+NFS, tests the smoothness of the norms of a in S by using the elliptic curve method
+(ECM) algorithm. However, if this algorithm is almost memory-free, the practical
+running time of such a task is prohibitive.
+   Instead, the common practical way is to perform ECM only on promising polyno-
+mials a, i.e., polynomials whose norms have many small factors. Finding these small
+factors is efficiently performed thanks to arithmetic sieve algorithms. However, sieve
+algorithms need a huge memory-footprint, since they need to store the norms of all
+the elements of S. This problem was tackled in [33], allowing moreover a high-level
+parallelization, by considering many subsets of polynomial: in one number field, say
+K0 , the factorization into prime ideals of these polynomials involved at least an en-
+forced ideal of medium size. Let Q be such an ideal, called special-Q. Polynomials
+a such that Q appears into their ideal factorization in K0 are elements of a lattice,
+called Q-lattice, a basis of which is given by the rows of the matrix MQ . To consider
+only polynomials fitting into S, sieves look for elements c in the intersection of the
+Q-lattice and a t-search space H = [H0m , H0M ) × [H1m , H1M ) × · · · × [0, Ht−1
+                                                                               M
+                                                                                  ): a is
+obtained from cMQ . If theoretically H should depend on Q, it is often the same for
+all the special-Qs. In this intersection, sieve algorithms remove the contribution of
+small ideals. Let R be such an ideal of prime norm r. Except for a tiny number of
+such ideals, a basis of the R-lattice in the Q-lattice can be of the form
+
+(1)   {(r, 0, 0, . . . , 0), (λ0,Q,R , 1, 0, 0, . . . , 0), (λ1,Q,R , 0, 1, 0, 0, . . . , 0), . . . ,
+                                           (λt−2,Q,R , 0, 0, . . . , 0, 1)} = {b0 , b1 , b2 , . . . , bt−1 },
+where the λi,Q,R are integers in [0, r). Briefly, the different steps of the relation
+collection with the special-Q-method and sieving algorithms are as follows:
+      • For all the possible special-Qs
+         (1) For both sides i in [0, 1]
+                (a) Compute the norms Ni [c] of a = cMQ , where c is in H.
+               (b) For all the ideals R to be sieved, enumerate the elements c in
+                    H ∩ ΛQR and remove the contribution of R from Ni [c].
+         (2) If both N0 [c] and N1 [c] are sufficiently small to have a chance to give
+             a relation, factorize the norms of a and report a if a gives a relation.
+   However, if there exist generic sieve algorithms in any dimension (see Section 3),
+they are not very efficient when t ≥ 4 that especially arises with NFS>1 . We
+propose algorithms for these cases in Section 4. Note that we will use the term
+sieve algorithms, but we only focus on the enumeration part of them, which is
+Step 1b without updating the array Ni . Step 1a is briefly addressed in Section 5.
+
+2.3. Linear algebra and individual logarithm. Let θ0 (respectively θ1 ) be a
+root of f0 (respectively  f1 ). Let a be a polynomial that gives a relation, i.e.,
+ha(θk , ι)i = R∈Fk RvalR (a(θk ,ι)) , where k is in [0, 1] and val denotes the valuation:
+             Q
+the factorizations of the norms of a must be translated into such a factorization
+of ideals [9]. A relation can be transformed into a linear relation involving the
+virtual logarithms (vlog) of the ideals [42]. To be valid, this linear relation must
+                         HIGHER DIMENSIONAL SIEVING FOR NFS                                        5
+
+                                              P
+involve the Schirokauer maps k [41], as R∈F0 valR (a(θk , ι)) vlog(R) + 0 (a) =
+P
+   R∈F1 valR (a(θk , ι)) vlog(R) + 1 (a) mod `. In this equation, the virtual loga-
+rithms are unknowns, the valuations are small integers and the Schirokauer maps
+are large integers, close to `. These large elements negatively impact the usual algo-
+rithms to solve sparse systems, but the cost of these heavy parts can be significantly
+decreased thanks to a modification of the block Wiedemann algorithm [10, 20, 13].
+   The last step of the computation is the computation of a large, say L(1), unknown
+logarithm. This computation is achieved by rewriting the (virtual) logarithm of the
+target in terms of logarithms of smaller elements; these smaller elements are again
+rewritten in terms of smaller elements until the logarithm of the target has been
+rewritten using only the precomputed logarithms given by the relation collection
+and the linear algebra. This descent step uses different algorithms depending on
+the size of the rewritten element: the target is rewritten in elements up to L(2/3)
+thanks to the so-called initial splitting (booting step) [34, 21, 2, 17, 45]; for ele-
+ments in [L(1/3), L(2/3)), the special-Q-method is used. The theoretical analysis
+of [13, Appendix A.2] shows that the descent by special-Q may be more efficient
+by considering polynomials of degree not restricted to µ = 1.
+
+            3. A framework to study existing sieve algorithms
+   Let Q be a special-Q and R be an ideal to be sieved such that the lattice ΛQR
+is given by a basis as in Equation (1)1. There exist different sieve algorithms
+proposed for NFS that allow to enumerate the elements in the intersection of ΛQR
+and a search space H. Their efficiency depends on the dimension of ΛQR and the
+density of the lattice in H. This density is formally defined thanks to the level of
+a sieve algorithm in Definition 3.1, a key notion for the rest of the description and
+especially for Section 4. All the existing sieve algorithms used in NFS are reported
+in Table 2. These algorithms can be described by the following two-step algorithm.
+The vectors produced in Step 2 will be called transition-vectors:
+    (1) Compute an adapted set B of spanning vectors of ΛQR with respect to H.
+    (2) Start from 0 and use the vectors of B or a (often small) linear combination
+         of them to enumerate elements in the intersection of ΛQR and H.
+Definition 3.1 (Level). Let Λ be a lattice and H be a search space. The level of a
+sieve algorithm with respect to Λ and H is the minimal integer value ` < t such that
+the intersections of the cuboids [H0m , H0M )×[H1m , H1M )×· · ·×[H`m , H`M )×{c`+1 }×
+                                                                    m      M       m      M
+{c`+2 }×· · ·×{ct−1 }, where (c`+1 , c`+2 , . . . , ct−1 ) are in [H`+1 , H`+1 )×[H`+2 , H`+2 )
+            m      M
+× · · · × [Ht−1 , Ht−1 ), and the lattice Λ contains more than one element on average.
+In case H contains less than one element on average, ` = t − 1.
+3.1. Exhaustive sieve algorithms. The first use of a sieve algorithm in an index
+calculus context is attributed to Schroeppel and was successfully used by Pomer-
+ance [35, 28]. They used the one-dimensional sieve of Eratosthenes as a factoring
+algorithm instead of a prime detecting one. It was extended to any dimension and
+called line sieve, see for example its use in dimension three in [44]. In dimension
+two, the line sieve is known to be inefficient when there is at most one element in a
+line, an intersection of ΛQR and [H0m , H0M ) × {c1 } where c1 is in Z: the 0-level line
+sieve is used as a 1-level sieve algorithm. Pollard designed in this sense the sieve by
+
+   1Sieve algorithms can deal with other basis shapes of lattices, but this one occurs the most.
+6                                     LAURENT GRÉMY
+
+
+vectors [33], now subsumed by the lattice sieve of Franke and Kleinjung [11]. Based
+on this sieve algorithm, the plane sieve [14] and the 3-dimensional lattice sieve [19]
+were proposed for similar densities in three dimensions. The plane sieve was turned
+into a generic sieve algorithm in CADO-NFS [43] (see Section 4.4).
+    The completeness of all these sieve algorithms comes from special procedures
+that compute transition-vectors. They are defined thanks to the t-extended search
+spaces: let k be in [0, t) and H be a t-search space, the t-extended search space Hk
+is the set [H0m , H0M ) × [H1m , H1M ) × · · · × [Hkm , HkM ) × Zt−(k+1) .
+Definition 3.2 (Transition-vector). Let k be in [0, t) and H be a t-search space.
+A k–transition-vector is an element v 6= 0 of a lattice Λ such that there exist c and
+d in the intersection of Λ and the t-extended search space Hk , where d = c + v is
+such that the t − 1 − k last coordinates of c and d are equal and the coordinate
+d[k] is the smallest possible larger than c[k].
+   With such sieve algorithms, the small factors of both norms of all the consid-
+ered polynomials a are known: this allows to be close to the expected number of
+relations at the end of the relation collection. But, the number of relations is not
+the only efficiency criterion of the relation collection. Indeed, in dimension two,
+the lattice sieve is used since it allows to maintain the same number of relations
+but decrease the time per relation. The same occurs in dimension three, switch-
+ing from the line to the plane or the 3D-lattice sieves. However, these sieves have
+some drawbacks, highlighted when there is less than one element on average in each
+plane [H0m , H0M ) × [H1m , H1M ) × {c2 }, where c2 is in [H2m , H2M ). The plane sieve is
+essentially the use of the lattice sieve on each plane: even if there is no element in
+a plane, the lattice sieve is used to report nothing instead of using it only on non
+empty planes. There is no alternative to avoid these useless uses without losing
+completeness. The 3D-lattice sieve does not have this drawback, but the procedure
+to generate the spanning list B and the one to enumerate seem difficult to analyze
+and may be costly for skewed lattices or skewed search spaces.
+
+3.2. Heuristic sieve algorithms. Because of these drawbacks and especially the
+penalty in terms of running time, the designers of the plane sieve proposed a heuris-
+tic sieve algorithm, the space sieve [14]. Its use allows to decrease the running time
+by 45% for the 240 bits example of [14], while at the same time losing less than 6%
+of the relations. This corresponds to decrease the time per relation by 42%.
+
+                     Line     Lattice       3-dimensional        Plane        Space      This
+                     sieve   sieve [11]   lattice sieve [19]   sieve [14]   sieve [14]   work
+         t=2           3         3                 7                7            7        3
+         t=3           3          7                3               3            3         3
+         t>3           3          7                7               3             7        3
+         Level       `=0        `=1        ` = 1 and ` = 2        `=1          `=2       Any
+     Completeness
+                      3          3                3                3            7         7
+    of enumeration
+        Table 2. Characteristics of the sieve algorithms proposed for NFS.
+
+
+   The space sieve focuses on enumerating a large portion of the elements instead
+of all of them, which is helpful for multiple reasons. First, all the sieve algorithms,
+both exhaustive and heuristic, allow to enumerate the t-extended search space Ht−2
+                         HIGHER DIMENSIONAL SIEVING FOR NFS                              7
+
+
+instead of the search space H = Ht−1 . For exhaustive sieves, it implies that the
+spanning set B is qualitatively too accurate because it allows to generate transition-
+vectors that will never be used. If this accuracy implies a costly computation to
+find an adapted set B, the time per relation can be drastically impacted. Secondly,
+completeness is not always useful, since this reports hits on polynomials a that will
+give relations or not: missing some hits may not affect the number of relations
+in some circumstances. Furthermore, if the computation can be completed, the
+expected gain in the time per relation must be considered to compare heuristic and
+exhaustive sieves, even if the relation collection misses some relations. Finally, in
+dimension larger than three, the use of heuristic sieve seems unavoidable: to the
+best of our knowledge, producing all the transition-vectors can only be computed
+by the exhaustive sieve algorithms, all of them being inefficient when there is less
+than one element in [H0m , H0M )×[H1m , H1M )×[H2m , H2M )×{c3 }×{c4 }×· · ·×{ct−1 },
+where ci is in [Him , HiM ). Yielding to produce some transition-vectors can be done
+by computing Graver basis of the lattice: these transition-vectors may lead to build
+a generic exhaustive sieve algorithm from the heuristic one described in Section 4.
+However, computing Graver basis is often too costly in our context [15, 32].
+   In the following, we propose globalntv, localntv and sparsentv, three heuris-
+tic sieves which perform the enumeration in any dimensions and levels.
+
+                    4. Sieve algorithms in higher dimensions
+   Using transition-vectors implies that the sieve enumerations are exhaustive.
+Since completeness is not the main target of globalntv, localntv and sparsentv,
+the vectors used in Step 2 of Section 3, called here nearly-transition-vectors, will be
+weakened by removing from Definition 3.2 the strong condition about d[k].
+Definition 4.1 (Nearly-transition-vector). Let k be in [0, t) and H be a t-search
+space. A k–nearly-transition-vector is an element v 6= 0 of a lattice Λ such that
+there exist c and d in the intersection of Λ and the t-extended search space Hk ,
+where d = c + v is such that the t − 1 − k last coordinates of c and d are equal and
+the coordinate d[k] is larger than c[k].2
+   The three generic sieve algorithms will take place in a general framework, de-
+scribed by allowing the report of duplicated elements for simplicity in Algorithm 1.
+It is purposely vague, to be as general as possible: instantiation examples of Ini-
+tialization, Step 1c and Step 1d will be given in the following.
+   The addition of a possible nearly-transition-vector (Step 1c) is likewise performed
+for all the three sieve algorithms. Like the addition of a 2–nearly-transition-vector in
+the space sieve [14], a loop iterate the list of k–nearly-transition-vectors, beforehand
+sorted by increasing coordinate k (see Section 4.3). We also choose to use the same
+fall-back strategy (Step 1d): this choice is justified in Section 4.2. Therefore, the
+difference between the three sieve algorithms only comes from the initialization
+processes, described in Section 4.1.
+
+4.1. Initializations. To define the three initialization processes, we introduce two
+new notions: the shape of the nearly-transition-vectors and the skew-small-vectors.
+
+  2Note that transition vectors of [14, Definition 5] are 2–nearly-transition-vectors.
+8                                       LAURENT GRÉMY
+
+
+Initialization: Call a procedure that returns nearly-transition-vectors with re-
+        spect to a search space H and a lattice ΛQR described as in Equation (1).
+           Set c to 0 and k to t − 1.
+Enumeration:
+         (1) While c[k] < HkM :
+               (a) Report c.
+               (b) If k > 0, call this enumeration procedure recursively with inputs
+                   c and k − 1.
+               (c) Find a k–nearly-transition-vector v from the one computed dur-
+                   ing Initialization, such that adding v to c lands in the extended
+                   search space Hk−1 and c[k] is the smallest possible.
+               (d) If there does not exist such a k–nearly-transition-vector v, call
+                   a fall-back strategy that tried to produce a new element c in
+                   ΛQR ∩ H, and therefore a new k–nearly-transition-vector.
+         (2) Recover c as it was when the procedure was called.
+         (3) While c[k] ≥ Hkm , perform Step 1a, Step 1b, Step 1c and Step 1d by
+             considering c − v instead of c + v.
+
+       Algorithm 1. Framework for globalntv, localntv and sparsentv.
+
+
+4.1.1. Preliminaries. Even if the three initialization processes are different, the
+shapes of the nearly-transition-vectors are the same. The shape represents the
+expected magnitude of the coefficients of the nearly-transition-vectors with respect
+to a search space H and ΛQR . In this paragraph, the O(j) notation will denote a
+value smaller or almost equal to j. Let us recall the shape of the transition-vectors
+of the `-level sieve algorithms in three dimensions. Let Ii be the length of the
+interval [Him , HiM ). When ` = 0, the shape is equal to (O(r), O(1), O(1)); the one
+for ` = 1 is (O(I0 ), O(r/I0 ), O(1)); the one for ` = 2 is (O(I0 ), O(I1 ), O(r/(I0 I1 ))).
+This shape is generalized, as (I0 , I1 , . . . , I`−1 , r/(I0 × I1 × · · · × I`−1 ), 1, 1, . . . , 1),
+given a level ` of a sieve algorithm and removing the O(·) for clarity.
+   The initialization processes of the three sieve algorithms does not ensure that the
+produced vectors are nearly-transition-vectors. They build skew-small-vectors, that
+are lattice vectors whose coefficients try to follow the shape. Even if Definition 4.2
+will not capture it, skew-small-vectors are build to be almost nearly-transition-
+vectors: a k–skew-small-vector v is a k–nearly-transition-vector if |v[i]| < Ii .
+Definition 4.2 (Skew-small-vector). Let k be in [0, t). A k–skew-small-vector is
+an element v 6= 0 of a lattice Λ such that there exist c and d in Λ, where d = c + v
+is such that the t − 1 − k last coordinates of c and d are equal and the coordinate
+d[k] is larger than c[k].
+4.1.2. Three initialization processes. The three initialization processes try to gen-
+erate a large number of nearly-transition-vectors, given the level ` of the sieve
+algorithms. They begin by building a basis B of ΛQR whose basis vectors are skew-
+small-vectors. Nearly-transition-vectors are afterwards build thanks to small linear
+combination of the basis vectors. The major difference between globalntv on the
+one hand, and localntv and sparsentv on the other is about the coefficients of the
+k–skew-small-vectors, where k > `. In localntv and sparsentv, the coordinate
+k is enforced to 1, and even to 0 for the coordinates ` + 1 to k − 1 in sparsentv.
+                        HIGHER DIMENSIONAL SIEVING FOR NFS                                 9
+
+
+This comes from a crude interpretation of the magnitude of the coefficients given
+by the shape. To build the k–skew-small-vectors, where k ≤ ` for localntv and
+sparsentv or all of them for globalntv, the initialization processes compute a
+skew basis of a (sub)lattice, that is a basis formed by skew-small-vectors. The basis
+B is build thanks to:
+      • a skew basis reduction of {b0 , b1 , . . . , bt−1 } for globalntv;
+      • a skew basis reduction of {b0 , b1 , . . . , b` } followed by, for k in [` + 1, t), a
+        reduction of bk by its closest vector in {b0 , b1 , . . . , bk−1 } for localntv;
+      • a skew basis reduction of {b0 , b1 , . . . , b` } followed by, for k in [` + 1, t), a
+        reduction of bk by its closest vector in {b0 , b1 , . . . , b` } for sparsentv.
+   To build possible nearly-transition-vectors, linear combinations of the skew basis
+vectors are performed, as well as computations of some vectors close to bk in the
+corresponding sublattice instead of one for localntv and sparsentv. The patterns
+of the skew-small-vectors produced by the different initializations follow necessarily
+the ones reported in Table 3. Note that, when ` = t − 2, localntv and sparsentv
+have the same initialization processes. When ` = t − 1, the three initialization
+processes are the same.
+
+              k    globalntv         localntv         sparsentv
+              0 (> 0, 0, 0, 0, 0) (> 0, 0, 0, 0, 0) (> 0, 0, 0, 0, 0)
+              1 (·, > 0, 0, 0, 0) (·, > 0, 0, 0, 0) (·, > 0, 0, 0, 0)
+              2 (·, ·, > 0, 0, 0) (·, ·, > 0, 0, 0) (·, ·, > 0, 0, 0)
+              3 (·, ·, ·, > 0, 0)   (·, ·, ·, 1, 0)   (·, ·, ·, 1, 0)
+              4 (·, ·, ·, ·, > 0)    (·, ·, ·, ·, 1)  (·, ·, ·, 0, 1)
+     Table 3. Patterns of the k–skew-small-vectors, where ` = 2 and t = 5.
+
+
+
+
+4.2. A common fall-back strategy. At this step, all the additions to c in ΛQR ∩
+H of a k–nearly-transition-vector fail to land in Hk−1 . The additions of v, a k–skew-
+small-vector, are necessarily out of Hk−1 . Since no k–skew-small-vector allows to
+stay in Hk−1 , a possible k–nearly-transition-vector must have some smaller coor-
+dinates. Vectors close to c + v in the sublattice formed by {b0 , b1 , . . . , bk−1 } may
+allow from c+v to obtain such a k–nearly-transition-vector. Let e be such a vector:
+subtract e to c + v will shrink the k first coefficients of c + v. If c + v − e fits in the
+search space, v − e is a new k–nearly-transition-vector. If not, set c to c + v − e
+and rerun this procedure, until c + v − e fits in H or its coordinate k is larger than
+HkM . The different steps of this fall-back strategy are, c in ΛQR ∩ H and k in [0, t):
+    (1) While c[k] < HkM
+        (a) For all k–skew-small-vectors v
+               (i) Compute some vectors close to c + v in the sublattice generated
+                   by {b0 , b1 , . . . , bk−1 } and store them in the list E.
+              (ii) For all e in E, return c + v − e if c + v − e is in H.
+        (b) Set c to one of the vector c + v − e computed previously.
+    (2) Return fail.
+  If this procedure does not fail, the new element in H is the output of this proce-
+dure and v − e is the new k–nearly-transition-vector, computed by the difference
+10                                        LAURENT GRÉMY
+
+
+between the output and the input vectors of the fall-back procedure and inserted
+in the lists of k–nearly-transition-vectors and k–skew-small-vectors for further use.
+   This fall-back strategy is costly since it requires to solve a or multiple closest
+vector problem instances in Step 1(a)i, iterate all the k–skew-small-vectors and
+loop while HkM is not reached. The condition to use such a strategy must therefore
+be carefully studied. If k ≤ `, the average number of elements with the same
+(t − k − 1)th last coordinate is equal to one, from the Definition 3.1 of the level.
+If no precomputed k–nearly-transition-vectors allows to find a new element in H,
+then, most likely, there do not exist such elements. However, if k > `, there are
+generically more chances that such an element exists. The fall-back strategy is
+therefore applied only when k > `. This condition must be study a little bit more
+carefully. If ` = t − 1, the t − 1 first coordinates of c + v out of H must be shrunk,
+where v is a `–skew-small-vector. Therefore, when k = t − 1, the close vector e
+is a linear combination of {b0 , b1 , . . . , bt−2 }. Since this strategy allows to modify
+the maximal number of coordinates without changing the last non-zero one, the
+strategy allows to increase the chance to find a new element. Another strategy is
+proposed in Section 4.4, but is specific to sparsentv.
+4.3. Formal algorithms. The pseudo-code of the addition of a nearly-transition-
+vector and the fall-back strategy are given respectively in Function add and in
+Function fbadd. They return an element in the intersection of ΛQR and H or an
+element out of H to stop the enumeration of a subset of H. The lists T and S
+consist of t lists containing respectively nearly-transition-vectors and skew-small-
+vectors (e.g., k–nearly-transition-vectors are stored in T [k]). Each list T [k] and S[k]
+are sorted by increasing coordinate k. Given an element c of ΛQR and an integer i,
+the function CVA (Close Vectors Around a targeted element) returns a list of some
+lattice vectors close to c in the sublattice of ΛQR generated by {b0 , b1 , . . . , bi }.
+
+ Func. add(c, k, H, T , S, ΛQR , `)                Func. fbadd(c, k, H, S, ΛQR )
+     for v ∈ T [k] do                              while c[k] < HkM do
+         if c + v ∈ Hk−1 then return c + v;           L ← ∅;
+     if k > ` or k = t − 1 then                       for v ∈ S[k] do
+          e ← fbadd(c, k, H, S, ΛQR );                     E ← CVA(c + v, k − 1, ΛQR );
+          if e ∈ H then                                    for e ∈ E do
+               T [k] ← T [k] ∪ {e − c};                        if c + v − e ∈ H then
+               S[k] ← S[k] ∪ {e − c};                               return c + v − e;
+
+         c ← e;                                                L ← L ∪ {c + v − e};
+     else                                              set c to an element of L;
+         c ← (H0M , H1M , . . . , Ht−1
+                                   M ); // ∈
+                                           /H
+                                                   return c;                       // ∈
+                                                                                      /H
+     return c;
+
+
+4.4. A specific fall-back strategy. Unlike the previous fall-back strategy, we
+describe here a specific one which allows to recover all the sieve algorithms of
+Section 3. This specific fall-back strategy is designed for sparsentv by exploiting
+the specific patterns of the skew-small-vectors of sparsentv. It can be more costly
+but can report a larger number of elements. To completely recover exhaustive sieve
+algorithms, the k–skew-small-vectors used in the sieve algorithms must have their
+coordinate k equal to 1, when k > `.
+   When the fall-back strategy is called, the coefficient of c + v, where c is in
+ΛQR ∩ H and v is a k–skew-small-vector, are shrunk with vectors close to c + v in
+                         HIGHER DIMENSIONAL SIEVING FOR NFS                                   11
+
+
+the sublattice generated by {b0 , b1 , . . . , b` } instead of {b0 , b1 , . . . , bk−1 }, to keep
+unchanged the coordinates ` + 1 to t − 1 of c + v. Let e be a vector subtracted
+to c + v to shrink its coefficients. If c + v − e fits in H, a new element in the
+intersection of ΛQR and H is found, as well as a new k–nearly-transition-vector.
+   If k > ` + 1, the coordinates ` + 1 to k − 1 of c have not been modified, and
+therefore, some cuboids of dimension ` + 1 were not explored to try to find a new
+starting point: to explore them, this procedure must be called with inputs one of
+the vectors generated previously and k − 1. If all the recursions fail to find a new
+element in the intersection of the lattice and the search space, c is set to c + v − e
+and this procedure is redone with inputs c and k, until a generated element fits in
+the H or its coordinate k is larger than HkM . The different steps of this generation
+are the same as the ones described in Section 4.2, except that after Step 1b, the
+following instruction is added:
+     (1) While ct [k] < HkM
+           ...
+          (c) If k − 1 > ` , use this fall-back procedure (additive or subtractive case)
+               with c and k − 1 as inputs and return the result if it does not fail.
+     (2) Return fail.
+
+                         5. Analyzes of the generic sieves
+   Practical generic sieve algorithms are of two types: exhaustive for the levels ` = 0
+and ` = 1, and heuristic for all levels3. For levels ` = 0 and ` = 1, using heuristic
+algorithms make almost no sense, since generically, the exhaustive algorithms are
+optimal in term of running time. For larger levels, the practical gain obtained by
+using the space sieve lets us expect an improvement since exhaustive sieves are not
+adapted to such levels. However, heuristic sieves do not ensure completeness of the
+enumeration: if substantially many relations are not reported, the time per relation
+can negatively be impacted and can eventually be worse than with exhaustive sieves.
+   To evaluate the practicability of the three new sieve algorithms, we analyze them
+practically thanks to a Sage implementation of the three sieves named ntv.sage
+(provided in CADO-NFS), mainly implemented to test accuracy of the enumeration
+processes, see Section 5.1. Even if the implementation is not optimized to test
+running time, we can extrapolate some tendency about the efficiency of the sieves,
+see Section 5.2. The practical experiments were done on random lattices4 having
+the shape of Equation (1), whose volume is adapted to fit for the tested levels.
+5.1. Accuracy. The quality criteria to test accuracy reported in Table 4 are:
+      • the number of produced skew-small-vectors, adjusted thanks to the number
+         of the small linear combinations and close vectors,
+      • the number of iterations of the while loop in the fall-back strategy and
+      • the relative error between the expected number of elements to be enumer-
+         ated (#H/r) and the number of reported elements.
+   The relative error informs about the accuracy of the algorithm. A large relative
+error likely means that the nearly-transition-vectors have too large coordinates. A
+   3Combining the 3D-lattice sieve [19] and Section 4.4 may lead to obtain an 2-level exhaustive
+generic sieve algorithm, but we did not manage to fully implement the 3D-lattice sieve.
+   4From the point of view of a practical sieving procedure, lattices describing ideals of a same
+or different factor bases, or random lattices, are treated similarly.
+12                                        LAURENT GRÉMY
+
+
+few more linear combinations during the initialization may solve this problem. The
+criterion about the fall-back strategy informs about the global effort on discovering
+new nearly-transition-vectors or stopping regularly the enumeration process, as the
+number of generated skew-small-vectors about the global effort on the initialization.
+The combination of these three criteria is needed since, e.g., generating a huge
+amount of skew-small-vectors will decrease quantitatively the two other criteria by
+putting solely too much effort on the initialization.
+   Since the patterns of the skew-small-vectors of localntv and sparsentv are con-
+strained, their relative errors are expected to be better (i.e., smaller) than the one
+with globalntv. Since the initialization is less under control with globalntv, the
+number of skew-small-vectors may be often (much) larger for globalntv; however,
+the number of calls to the fall-back strategy is expected to be lower.
+
+                   globalntv (` = 2)           localntv (` = 2)           globalntv (` = 3)
+               min   med max mean          min   med max mean         min   med max mean
+ # ssvs                   40                         41                          40
+ # fbs          0     2.0    61     3.1     0    3.0    61      4.3    0    12.0    65    20.0
+ rel. err.     0.0    2.6   95.7   10.1    0.0   1.2   96.7     5.8   0.0    0.0   75.0    2.0
+     (a) Experiments on 214 lattices where H = [−26 , 26 )3 × [0, 26 ) (t = 4, #H = 227 ).
+                   globalntv (` = 2)           localntv (` = 2)           sparsentv (` = 2)
+               min   med max mean          min   med max mean         min   med max mean
+ # ssvs                   364                        69                          37
+ # fbs          0     5.0   712    18.3     0    9.0   591     20.0    0    13.0 332      22.0
+ rel. err.     0.0    1.5   36.1    6.4    0.0   1.6   50.0     5.6   0.0    2.0   49.0    5.9
+     (b) Experiments on 27 lattices where H = [−24 , 24 )5 × [0, 24 ) (t = 6, #H = 229 ).
+                   globalntv (` = 3)           localntv (` = 3)           sparsentv (` = 3)
+               min   med max mean          min   med max mean         min   med max mean
+ # ssvs                   364                         88                         72
+ # fbs          0     8.0   142    13.3     0    12.0 186      16.8    0    14.0 161      18.1
+ rel. err.     0.0    2.7   54.4    7.7    0.0    3.3   47.7    6.9   0.0    3.2   48.8    6.8
+     (c) Experiments on 27 lattices where H = [−24 , 24 )5 × [0, 24 ) (t = 6, #H = 229 ).
+                   globalntv (` = 4)           localntv (` = 4)           globalntv (` = 5)
+               min   med max mean          min   med max mean         min   med max mean
+ # ssvs                   364                        153                         364
+ # fbs          0     1.0    10     1.8     0    3.0    10      3.3    0     8.5    17     8.3
+ rel. err.     0.0    6.4    60    11.3    0.0   5.2   52.9     9.8   0.0    0.0   66.7    2.0
+     (d) Experiments on 27 lattices where H = [−24 , 24 )5 × [0, 24 ) (t = 6, #H = 229 ).
+
+             Table 4. Experiments on the three sieves: “# ssvs” corresponds
+             to Criterion 5.1, “# fbs” to Criterion 5.1 and “rel. err.” to Crite-
+             rion 5.1.
+
+
+
+   The accuracy of the algorithms seems more than sufficient for the majority of
+the lattices, both in four and six dimensions. The maximal values of all the tables
+can be impressive, but occur only for a sufficiently small number of skewed lattices:
+since the enumeration in such lattices may be costly, it can be better to avoid them
+or at least, to be not too accurate.
+   In four dimensions, the accuracy is combined with a reasonable number of pro-
+duced skew-small-vectors. The criteria do not help to determine which of the 2-level
+                       HIGHER DIMENSIONAL SIEVING FOR NFS                            13
+
+
+localntv and globalntv is the most suitable algorithm. The running time esti-
+mations may help to decide. At level ` = 3, the number of calls to the fall-back
+strategy can be an issue but may be under control in a careful implementation.
+   The situation is mitigated in dimension six. Except for the 2-level sparsentv, the
+number of skew-small-vectors is huge, which disqualify with this setting all the sieves
+at any level. In addition, the number of calls to the fall-back strategy at level ` = 2
+and ` = 3 indicates that the produced nearly-transition-vectors are of poor quality.
+If dimension six sieving would be feasible, it will need more investigation; however,
+using cuboid search spaces is probably a too hard constraint that implies a hardness,
+or even an impossibility, for the sieving process. In addition, the initialization of
+the norms in higher dimensions implemented in CADO-NFS [43] is actually too
+slow for dimension larger than six by preserving a relative accuracy. It confirms
+the hardness of the relation collection above dimension four.
+
+5.2. Running time. From the previous section, only four-dimensional sieving
+seems an option. We compare, at levels ` = 2 and ` = 3, the new sieves with
+the state-of-the-art sieve algorithms and also between themselves.
+    Comparison with the plane sieve. The 2-level globalntv and localntv are
+compared with the most efficient existing sieve algorithm, which is the (generalized)
+plane sieve. Our implementation of the plane sieve is however a bit incomplete: we
+implement the fall-back strategy of Section 4.4 without enforcing the coordinate k of
+the k–skew-small-vectors to be equal to 1. This implementation may be a bit faster
+than a complete plane sieve. On 210 lattices, globalntv and localntv are faster
+than our generalized plane sieve, with localntv slightly faster than globalntv.
+Since the accuracy of the two heuristic sieve algorithms is quite good, both sieves
+must be consider as an alternative to the plane sieve.
+    Comparison of the new sieves. The 3-level globalntv is also compared with
+the 2-level globalntv and localntv on 210 lattices. Unlike the previous compar-
+isons, the results can be puzzling. Indeed, for lattices where the 3-level globalntv
+is expected to be efficient, the 2-level localntv is less than 1.5 time faster. Further-
+more, the 2-level localntv is more than 3 time faster than the 2-level globalntv.
+Before explaining these results, we first remark that, in this situation, the three
+studied sieves algorithms share the same condition to use or not the fall-back strat-
+egy. The second remark comes from a detail of our implementation. Since accuracy
+is our main concern, Step 1b of the fall-back strategy in Section 4.2 sets c to one of
+the computed elements with the smallest coordinate k (i.e., the first element, since
+the list of k–nearly-transition-vectors is sorted by increasing coordinate k).
+    The 2-level globalntv and localntv produce more or less the same nearly-
+transition-vectors, despite different produced skew-small-vectors. The 3–skew-small-
+vectors are less numerous and have smaller coordinates with localntv than with
+globalntv. Then, if the for loop on the k–skew-small-vectors (Step 1a) fails to find
+an element in H in both sieves, and if the coordinate k of the first k–skew-small-
+vectors is the same for both sieves (this two situations often occur), localntv is
+faster than globalntv.
+    Between the 3-level globalntv and the 2-level localntv, the situation shares
+some of the observations made previously. However, this time, globalntv produces
+nearly-transition-vectors and skew-small-vectors of better quality than localntv:
+in some cases, globalntv is faster than localntv, but if the situations become the
+same as in the previous analysis, localntv stays faster. We believe that a careful
+14                                     LAURENT GRÉMY
+
+
+study of the different parts (especially how the linear combinations can produce
+useful vectors during the initialization of globalntv specialized in dimension four)
+of the algorithms will lead to an efficient implementation of the 3-level globalntv.
+
+
+                                       6. Conclusion
+   In this article we propose algorithms to sieve in any dimensions in the intersection
+of a lattice and a cuboid, which is one of the challenges we list to have a practical
+implementation of the NFS>1 algorithms. These algorithms allow to report a large
+portion of the elements in the intersection, faster than the previous generic sieve
+algorithms. We provide a reference implementation of these algorithms, allowing
+us to highlight their advantages and drawbacks for the accuracy and efficiency of
+the enumeration, and demonstrate the practicability of these sieves for dimension
+four, and the hardness of sieving in dimension six and above.
+   In a near future, we plan to integrate these algorithms, specialized in dimension
+four, in the existing implementations of NFS1 in CADO-NFS [43] and extend it
+to NFS>1 . It will help key size estimations for pairings [30, 3]. However, since a
+practical computation of the relation collection with NFS>1 will be possible only
+with good polynomials f0 and f1 , we also plan to study quality criteria for such NFS
+algorithms. Further work includes also enumeration in non-cuboid search space.
+   Acknowledgments. The authors are grateful to Pierrick Gaudry and Marion
+Videau for numerous discussions and reviews of preliminary versions of this work,
+as well as Aurore Guillevic and Shashank Singh for numerous discussions about
+NFS. We also thank Damien Stehlé and the referees whose remarks helped us to
+improve the presentation of our results.
+
+
+                                         References
+ 1. S. Bai, C. Bouvier, A. Kruppa, and P. Zimmermann, Better polynomials for GNFS, Math.
+    Comp. 85 (2016), no. 298, 861–873.
+ 2. R. Barbulescu, Algorithmes de logarithmes discrets dans les corps finis, Ph.D. thesis, Univer-
+    sité de Lorraine, 2013.
+ 3. R. Barbulescu and S. Duquesne, Updating key size estimations for pairings, J. Cryptology 31
+    (2018), 1–39.
+ 4. R. Barbulescu, P. Gaudry, A. Guillevic, and F. Morain, Improving NFS for the discrete
+    logarithm problem in non-prime finite fields, EUROCRYPT 2015 (E. Oswald and M. Fischlin,
+    eds.), LNCS, vol. 9056, Springer, 2015, pp. 129–155.
+ 5. R. Barbulescu, P. Gaudry, and T. Kleinjung, The Tower Number Field Sieve, ASIACRYPT
+    2015 (T. Iwata and J. Cheon, eds.), LNCS, vol. 9453, Springer, 2015, pp. 31–55.
+ 6. Y. Bistritz and A. Lifshitz, Bounds for resultants of univariate and bivariate polynomials,
+    Linear Algebra and its Applications 432 (2010), no. 8, 1995–2005.
+ 7. F. Boudot, On Improving Integer Factorization and Discrete Logarithm Computation using
+    Partial Triangulation, Cryptology ePrint Archive, Report 2017/758, 2017.
+ 8. J. Buhler, H. Lenstra, and C. Pomerance, Factoring integers with the number field sieve, The
+    Development of the Number Field Sieve (A. Lenstra and H. Lenstra, eds.), Lecture Notes in
+    Mathematics, vol. 1554, Springer, 1993, pp. 50–94.
+ 9. H. Cohen, A course in algorithmic algebraic number theory, Graduate Texts in Mathematics,
+    vol. 138, Springer, 2000, fourth printing.
+10. D. Coppersmith, Solving homogeneous linear equations over GF (2) via block Wiedemann
+    algorithm, Math. Comp. 62 (1994), no. 205, 333–350.
+11. J. Franke and T. Kleinjung, Continued fractions and lattice sieving, SHARCS 2005, 2005.
+12. D. Freeman, M. Scott, and E. Teske, A Taxonomy of Pairing-Friendly Elliptic Curves, J.
+    Cryptology 23 (2010), 224–280.
+                          HIGHER DIMENSIONAL SIEVING FOR NFS                                    15
+
+
+13. J. Fried, P. Gaudry, N. Heninger, and E. Thomé, A Kilobit Hidden SNFS Discrete Loga-
+    rithm Computation, EUROCRYPT 2017 (J.-S. Coron and J. Nielsen, eds.), LNCS, vol. 10210,
+    Springer, 2017, pp. 202–231.
+14. P. Gaudry, L. Grémy, and M. Videau, Collecting relations for the number field sieve in
+    GF (p6 ), LMS J. Comput. Math 19 (2016), no. A, 332–350.
+15. J. Graver, On the foundations of linear and integer linear programming I, Mathematical
+    Programming 9 (1975), no. 1, 207–226.
+16. L. Grémy, A. Guillevic, F. Morain, and E. Thomé, Computing discrete logarithms in GF (p6 ),
+    SAC 2017 (C. Adams and J. Camenisch, eds.), LNCS, vol. 10719, Springer, 2018, pp. 85–105.
+17. A. Guillevic, Faster individual discrete logarithms with the QPA and NFS variants, Cryptol-
+    ogy ePrint Archive, Report 2016/684, 2017.
+18. K. Hayasaka, K. Aoki, T. Kobayashi, and T. Takagi, An Experiment of Number Field Sieve for
+    Discrete Logarithm Problem over GF (p12 ), Number Theory and Cryptography (M. Fischlin
+    and S. Katzenbeisser, eds.), LNCS, vol. 8260, Springer, 2013, pp. 108–120.
+19.         , A construction of 3-dimensional lattice sieve for number field sieve over Fpn , Cryp-
+    tology ePrint Archive, 2015/1179, 2015.
+20. A. Joux and C. Pierrot, Nearly sparse linear algebra and application to discrete logarithms
+    computations, Contemporary Developments in Finite Fields and Applications (A. Canteaut,
+    G. Effinger, S. Huczynska, D. Panario, and L. Storme, eds.), World Scientific Publishing
+    Company, 2016, pp. 119–144.
+21. A. Joux and R. Lercier, Improvements to the General Number Field Sieve for discrete loga-
+    rithms in prime fields, Math. Comp. 72 (2003), no. 242, 953–967.
+22. A. Joux, R. Lercier, N. Smart, and F. Vercauteren, The Number Field Sieve in the Medium
+    Prime Case, CRYPTO 2006 (C. Dwork, ed.), LNCS, vol. 4117, Springer, 2006, pp. 326–344.
+23. T. Kim and R. Barbulescu, Extended Tower Number Field Sieve: A New Complexity for
+    the Medium Prime Case, CRYPTO 2016 (M. Robshaw and J. Katz, eds.), LNCS, vol. 9814,
+    Springer, 2016, pp. 543–571.
+24. T. Kim and J. Jeong, Extended Tower Number Field Sieve with Application to Finite Fields of
+    Arbitrary Composite Extension Degree, PKC 2017 (S. Fehr, ed.), LNCS, vol. 10174, Springer,
+    2017, pp. 388–408.
+25. T. Kleinjung, On polynomial selection for the general number field sieve, Math. Comp. 75
+    (2006), no. 256, 2037–2047.
+26.         , Polynomial Selection, Slides presented at the CADO workshop on integer factoriza-
+    tion, 2008, http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+27. T. Kleinjung, C. Diem, A. Lenstra, C. Priplata, and C. Stahlke, Computation of a 768-
+    Bit Prime Field Discrete Logarithm, EUROCRYPT 2017 (J.-S. Coron and J. Nielsen, eds.),
+    LNCS, vol. 10210, Springer, 2017, pp. 185–201.
+28. A. Lenstra, General purpose integer factoring, Topics in Computational Number Theory In-
+    spired by Peter L. Montgomery (J. Bos and A. Lenstra, eds.), Cambridge University Press,
+    2017, pp. 116–160.
+29. A. Lenstra and E. Verheul, The XTR public key system, CRYPTO 2000 (M. Bellare, ed.),
+    LNCS, vol. 1880, Springer, 2000, pp. 1–19.
+30. A. Menezes, P. Sarkar, and S. Singh, Challenges with Assessing the Impact of NFS Advances
+    on the Security of Pairing-Based Cryptography, Mycrypt 2016 (R. Phan and M. Yung, eds.),
+    LNCS, vol. 10311, Springer, 2017, pp. 83–108.
+31. B. Murphy, Polynomial selection for the number field sieve integer factorisation algorithm,
+    Ph.D. thesis, The Australian National University, 1999.
+32. S. Onn, Theory and Applications of n-Fold Integer Programming, Mixed Integer Nonlinear
+    Programming (J. Lee and S. Leyffer, eds.), IMA, vol. 154, Springer, 2012, pp. 559–593.
+33. J. Pollard, The lattice sieve, The Development of the Number Field Sieve (A. Lenstra and
+    H. Lenstra, eds.), Lecture Notes in Mathematics, vol. 1554, Springer, 1993, pp. 43–49.
+34. C. Pomerance, Analysis and comparison of some integer factoring algorithms, Computational
+    Methods in Number Theory (H. Lenstra and R. Tijdeman, eds.), Mathematical Centre Tracts,
+    vol. 154, Mathematish Centrum, 1982, pp. 89–139.
+35.         , A Tale of Two Sieves, Notices Amer. Math. Soc 43 (1996), 1473–1485.
+36. K. Rubin and A. Silverberg, Torus-based cryptography, CRYPTO 2003 (D. Boneh, ed.), LNCS,
+    vol. 2729, Springer, 2003, pp. 349–365.
+16                                      LAURENT GRÉMY
+
+
+37. P. Sarkar and S. Singh, A General Polynomial Selection Method and New Asymptotic Com-
+    plexities for the Tower Number Field Sieve Algorithm, ASIACRYPT 2016 (J. Cheon and
+    T. Takagi, eds.), LNCS, vol. 10031, Springer, 2016, pp. 37–62.
+38.         , A Generalisation of the Conjugation Method for Polynomial Selection for the Ex-
+    tended Tower Number Field Sieve Algorithm, Cryptology ePrint Archive, Report 2016/537,
+    2016.
+39.         , New Complexity Trade-Offs for the (Multiple) Number Field Sieve Algorithm in
+    Non-Prime Fields, EUROCRYPT 2016 (M. Fischlin and J.-S. Coron, eds.), LNCS, vol. 9665,
+    Springer, 2016, pp. 429–458.
+40.         , Tower number field sieve variant of a recent polynomial selection method, Cryptology
+    ePrint Archive, Report 2016/401, 2016.
+41. O. Schirokauer, Discrete logarithms and local units, Philos. Trans. Roy. Soc. A 345 (1993),
+    no. 1676, 409–423.
+42.         , Virtual logarithms, J. Algorithms 57 (2005), 140–147.
+43. The CADO-NFS Development Team, CADO-NFS, an implementation of the number field
+    sieve algorithm, 2018, development version, http://cado-nfs.gforge.inria.fr/.
+44. P. Zajac, Discrete logarithm problem in degree six finite fields, Ph.D. thesis, Slovak University
+    of Technology, 2008, http://www.kaivt.elf.stuba.sk/kaivt/Vyskum/XTRDL.
+45. Y. Zhu, J. Zhuang, C. Lv, and D. Lin, Improvements on the individual logarithm step in
+    extended tower number field sieve, Cryptology ePrint Archive, Report 2016/727, 2016.
+
+   Univ Lyon, CNRS, ENS de Lyon, Inria, Université Claude Bernard Lyon 1, LIP UMR
+5668, F-69007 Lyon, France
+   Email address: firstname.lastname@ens-lyon.fr
+

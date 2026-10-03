@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/HgcUQC2cjfY7xtVIZ08oYwOTHEw</id>
+  <title>arXiv Query: search_query=au:"Konyagin S"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T18:30:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Konyagin+S%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>11</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/math/0604453v1</id>
+    <title>Two $S$-unit equations with many solutions</title>
+    <updated>2006-04-20T16:23:21Z</updated>
+    <link href="https://arxiv.org/abs/math/0604453v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0604453v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that there exist arbitrarily large sets $S$ of $s$ prime numbers such that the equation $a+b=c$ has more than $\exp(s^{2-\sqrt{2}-ε})$ solutions in coprime integers $a$, $b$, $c$ all of whose prime factors lie in the set $S$. We also show that there exist sets $S$ for which the equation $a+1=c$ has more than $\exp(s^{\frac 1{16}})$ solutions with all prime factors of $a$ and $c$ lying in $S$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-04-20T16:23:21Z</published>
+    <arxiv:comment>6 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>S. Konyagin</name>
+    </author>
+    <author>
+      <name>K. Soundararajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0605549v4</id>
+    <title>Delta-semidefinite and delta-convex quadratic forms in Banach spaces</title>
+    <updated>2007-08-28T08:31:21Z</updated>
+    <link href="https://arxiv.org/abs/math/0605549v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0605549v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A continuous quadratic form ("quadratic form", in short) on a Banach space $X$ is: (a) delta-semidefinite (i.e., representable as a difference of two nonnegative quadratic forms) if and only if the corresponding symmetric linear operator $T\colon X\to X^*$ factors through a Hilbert space; (b) delta-convex (i.e., representable as a difference of two continuous convex functions) if and only if $T$ is a UMD-operator. It follows, for instance, that each quadratic form on an infinite-dimensional $L_p(μ)$ space ($1\le p \le\infty$) is: (a) delta-semidefinite iff $p \ge 2$; (b) delta-convex iff $p&gt;1$. Some other related results concerning delta-convexity are proved and some open problems are stated.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-05-19T14:17:54Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>N. Kalton</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+    <author>
+      <name>L. Vesely</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.08807v2</id>
+    <title>On Sidon sets with squares, cubes and quartics in short intervals</title>
+    <updated>2026-05-06T15:04:11Z</updated>
+    <link href="https://arxiv.org/abs/2602.08807v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.08807v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Representative examples of our results are as follows.
+  For any positive integer $N$ the equation $$ x^3+y^3=z^3+t^3, \quad x,y,z,t\in \mathbb{N}, \quad \{x,y\}\not=\{z,t\} $$ has no solutions satisfying $$ N\le x,y,z,t &lt; N+\Bigl(\frac{38}{3}N+\frac{1297}{36}\Bigr)^{1/2}+\frac{19}{6}. $$ The strict inequality ``$&lt;$" can not be substituted by ``$\le$", that is, there exist infinitely many positive integers $N$ such that the equation has a solution with $$ N\le x,y,z,t \le N+\Bigl(\frac{38}{3}N+\frac{1297}{36}\Bigr)^{1/2}+\frac{19}{6}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ the equation has a solution satisfying $$ N\le x,y,z,t \le N+cN^{2/3}. $$
+  For any $\varepsilon&gt;0$ there exist infinitely many positive integers $N$ such that the equation has no solutions satisfying $$ N\le x,y,z,t \le N+N^{4/7-\varepsilon}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ the equation $$ x^4+y^4=z^4+t^4,\quad x,y,z,t\in\mathbb{N}, \quad \{x,y\}\not=\{z,t\}, $$ has no solutions satisfying $$ N\le x,y,z,t \le N+cN^{3/5}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ this equation has a solution satisfying $$ N\le x,y,z,t \le N+cN^{12/13}. $$</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-09T15:46:48Z</published>
+    <arxiv:comment>Minor typographical corrections</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>M. Z. Garaev</name>
+    </author>
+    <author>
+      <name>F. M. Garayev</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0607169v1</id>
+    <title>Waring problem with the Ramanujan $τ$-function</title>
+    <updated>2006-07-06T16:44:55Z</updated>
+    <link href="https://arxiv.org/abs/math/0607169v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0607169v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let $τ(n)$ be the Ramanujan $τ$-function. We prove that for any integer $N$ the diophantine equation $$ \sum_{i=1}^{74000}τ(n_i)=N $$ has a solution in positive integers $n_1, n_2,..., n_{74000}$ satisfying the condition $$ \max_{1\le i\le 74000}n_i\ll |N|^{2/11}+1. $$ We also consider similar questions in the residue ring modulo a large prime $p.$</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-07-06T16:44:55Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>M. Z. Garaev</name>
+    </author>
+    <author>
+      <name>V. C. Garcia</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0702729v1</id>
+    <title>Additive properties of product sets in fields of prime order</title>
+    <updated>2007-02-24T09:29:32Z</updated>
+    <link href="https://arxiv.org/abs/math/0702729v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0702729v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let $F_p$ be the field of a prime order $p$. Then for any positive integer $n&gt;1$, for any $ε&gt;0$, and for any subset $A$ of $F_p$, every element of $F_p$ can be represented as a sum of $N$ elements, each of them is a product of $n$ elements from $A$, where $N$ depends on $n$ and $\espilon$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-02-24T09:29:32Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>A. A. Glibichuk</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1309.6980v1</id>
+    <title>Multiplicative decomposition of arithmetic progressions in prime fields</title>
+    <updated>2013-09-26T17:19:12Z</updated>
+    <link href="https://arxiv.org/abs/1309.6980v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1309.6980v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that there exists an absolute constant $c&gt;0$ such that if an arithmetic progression $\cP$ modulo a prime number $p$ does not contain zero and has the cardinality less than $cp$, then it can not be represented as a product of two subsets of cardinality greater than 1, unless $\cP=-\cP$ or $\cP=\{-2r,r,4r\}$ for some residue $r$ modulo $p$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-09-26T17:19:12Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>M. Z. Garaev</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0303064v1</id>
+    <title>Rearrangements of Trigonometric Series and Trigonometric Polynomials</title>
+    <updated>2003-03-05T17:04:00Z</updated>
+    <link href="https://arxiv.org/abs/math/0303064v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0303064v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The paper is related to the following question of P.~L.~Ul'yanov: is it true that for any $2π$-periodic continuous function $f$ there is a uniformly convergent rearrangement of its trigonometric Fourier series? In particular, we give an affirmative answer if the absolute values of Fourier coefficients of $f$ decrease. Also, we study a problem how to choose $m$ terms of a trigonometric polynomial of degree $n$ to make the uniform norm of their sum as small as possible.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-03-05T17:04:00Z</published>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0304217v1</id>
+    <title>A sum-product estimate in fields of prime order</title>
+    <updated>2003-04-16T07:02:46Z</updated>
+    <link href="https://arxiv.org/abs/math/0304217v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0304217v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let q be a prime, A be a subset of a finite field $F=\Bbb Z/q\Bbb Z$, $|A|&lt;\sqrt{|F|}$. We prove the estimate $\max(|A+A|,|A\cdot A|)\ge c|A|^{1+ε}$ for some $ε&gt;0$ and c&gt;0. This extends the result of J. Bourgain, N. Katz, and T. Tao.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-04-16T07:02:46Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.09100v2</id>
+    <title>Large gaps between sums of two squares</title>
+    <updated>2022-04-26T17:30:49Z</updated>
+    <link href="https://arxiv.org/abs/1906.09100v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.09100v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal S=\{s_1&lt;s_2&lt;s_3&lt;\ldots\}$ be the sequence of all natural numbers which can be represented as a sum of two squares of integers. For $X\ge2$ we denote by $g(X)$ the largest gap between consecutive elements of $\mathcal S$ that do not exceed $X$. We prove that for $X \to +\infty$ the lower bound $$g(X)\geq \left(\frac{390}{449}-o(1)\right)\ln X$$ holds.
+  This estimate is twice the recent estimate by R. Dietmann and C. Elsholtz.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-21T12:46:30Z</published>
+    <arxiv:comment>5 pages; This version will not be published in this form. It will appear in a joint and expanded manuscript by R. Dietmann, C. Elsholtz, A. Kalmynin, S. Konyagin and J. Maynard</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>A. B. Kalmynin</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.05335v2</id>
+    <title>On the new bound for the number of solutions of polynomial equations in subgroups and the structure of graphs of Markoff triples</title>
+    <updated>2019-11-16T08:09:14Z</updated>
+    <link href="https://arxiv.org/abs/1711.05335v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.05335v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We sharpen the bounds of J. Bourgain, A. Gamburd and P. Sarnak (2016) on the possible number of nodes outside the "giant component" and on the size of individual connected components in the suitably defined functional graph of Markoff triples modulo $p$. This is a step towards the conjecture that there are no such nodes at all.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-14T22:36:04Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+    <author>
+      <name>S. V. Makarychev</name>
+    </author>
+    <author>
+      <name>I. E. Shparlinski</name>
+    </author>
+    <author>
+      <name>I. V. Vyugin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.26349v1</id>
+    <title>On polynomial expanders with many variables</title>
+    <updated>2026-08-26T19:31:21Z</updated>
+    <link href="https://arxiv.org/abs/2608.26349v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.26349v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a fixed integer $n\ge 2,$ we consider the homogeneous polynomial $$ P(x_1, x_2, \ldots, x_{n+2})=\sum_{i=1}^{n} (x_2-x_1)^{i-1} x_1^{n-i} x_{i+2}. $$ We prove that, for any finite set $A$ of complex numbers, $$ \Bigl|\bigl\{P(x_1,x_2,\ldots,x_{n+2}): \, x_i\in A\bigr\}\Bigr|\gg |A|^{n}. $$ The implicit constant in $\gg$ may depend only on $n.$</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T19:31:21Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>M. Z. Garaev</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,677 @@
+                                             A NEW ATTACK TO RSA WITH SMALL PRIVATE
+                                                EXPONENT AND PARTIAL INFORMATION
+
+                                                                      JORGE JIMÉNEZ URROZ
+arXiv:2606.24717v1 [math.NT] 23 Jun 2026
+
+
+
+
+                                                  Abstract. We give a new algorithm to attack RSA with small
+                                                  private exponent, when some partial information of p + q is given.
+                                                  The algorithm is a very simple modification of original Wiener’s
+                                                  attack with continued fractions, and allows us to factor n whenever
+                                                        1   δ
+                                                  d < n 2 + 2 if we know a δ-fraction of the most significant bits of n.
+                                                  The algorithm is unconditional, which is not the case in previous
+                                                  improvements that use Coppersmith method. As an example, our
+                                                  algorithm can be applied to break any cryptosystem with modulus
+                                                  n of 512 bits and d < n0.3 , given an improvement in the original
+                                                  attack of Wiener.
+
+                                                                         1. Introduction
+                                             Nowadays the organization of society is based on digital communi-
+                                           cation and over 6000 million people are connected. The efficiency and
+                                           security needed for encryption or digital signature on most of the proto-
+                                           cols like SSH, PGP, OpenPGP, SSL/TLS, software, browsers etc, rely
+                                           on RSA and since it was created in 1978 many papers have appeared
+                                           trying to break it in very different scenarios.
+
+                                              To build RSA we need a public key an a secret key. The public key
+                                           is made by two integers n, e, where n is the product of two unknown
+                                           primes p, q, and e is coprime to φ(n) = (p − 1)(q − 1) the Euler totient
+                                           function. The secret key consist in the two unknown primes p, q and
+                                           the integer d inverse of e modulo φ(n). Most of the attacks to RSA are
+                                           based on this fact and use the identity
+                                           (1)                             ed − kφ(n) = 1,
+                                           valid for some integer k, to get information on the secret exponent d
+                                           and the factors of n.
+
+                                              When the difference in computer power between sender and receiver
+                                           is high, we need to make the private and public exponents d, e small,
+                                           to make feasible computation in the lighter device. For example in a
+                                           communication between a smart card and a computer, the smart card
+                                                                                    1
+2                         JORGE JIMÉNEZ URROZ
+
+needs a short d to decrypt, while the computer needs to have a short e,
+so the smart card can encrypt. Nowadays is known that the smaller are
+those exponents, the more insecure is the protocol. A simple example
+comes with the following scenario: suppose we take the public exponent
+to be e = 3 and send the message to three different people with the same
+exponent. Then we would have c1 = m3 (mod n1 ), c2 = m3 (mod n2 )
+and c3 = m3 (mod n3 ) and then we just have to apply the chinese
+remainder theorem to get m3 ≡ c (mod n1 n2 n3 ) but m3 < n1 n2 n3 so
+m3 = c and m = c1/3 .
+
+   But there is a lot more to study on small exponents. Almost 40
+years ago Wiener proved in [27], using continued fractions in a clever
+way on Equation (1), that small private exponents d < cn1/4 for some
+constant c are insecure, and the attacker can recover the secret key
+in polynomial time. That paper was seminal and since then, until
+today, there is a strong interest in discovering attacks to break RSA
+for exponents d of bigger size. We can find several papers trying to
+improve even the constant c, up to the current record of c = 1811/4 ,
+given by Susilo et al. [22] in 2019. More information on the constant
+can be found in [1, 3, 20]. The authors of [22] also gave an example
+of d ≤ 12 n1/4 + 1 in which the method does not break the RSA. This
+                                              1
+restricts the value of the constant to c ∈ ( 2.06 , 21 ] but also proves that
+the exponent 1/4 is the best one can hope, using the method as it was
+proposed by Wiener.
+
+   There are other variants of Wiener’s attack, [5,9,10,26] that allow to
+break the RSA cryptosystem even if d is few bits longer than the pre-
+vious bound. The references [9, 10, 26] are based on an identity of the
+form d = rbm+1 + sbm where bm , bm+1 are denominators of the conver-
+gents of e/n, while the first, [5], uses another integer n′ derived from
+n and construct
+              h   the
+                    convergents
+                                   of ie/n′ . Concretely considering the
+integer n′ = n − 1 + 2√3 2 n1/2 + 1 they get up to d2 e < 8n3/2 . Ob-
+                                                                 √
+serve that for e ∼ n this increases Wiener’s bound up to d < 2 2n1/4 .
+Very recently Trishing proved in [25] that a variant of the attack also
+is able to break the RSA for large exponents d, and gives a proportion
+of n−1/2 of weak exponents.
+
+   Then, the paper by Boneh-Durfee [3] comes, and strikes the commu-
+nity showing an improvement in the exponent, and gets up to d < n0.292 ,
+at least in theory. Their method has changed completely from Wiener’s
+and creates another school to attack RSA with small private exponent.
+                        A NEW ATTACK TO RSA                              3
+
+Their tool is the powerful theorem of Coppersmith [6] to find small
+solutions to polynomial equations. Namely they consider φ(n) = A + y
+for A = (n + 1)/2 known, and y = −(p + q)/2 < n1/2 unknown, in
+Equation (1), and apply Coppersmith method to
+                 f (x, y) = x(A + y) − 1 ≡ 0   (mod e),
+                                                √
+getting a solution for |x| < nδ where δ = 1 − 22 ≈ 0.292.
+
+   Their result is asymptotic and to reach the previous value the di-
+mension of the lattice needed makes the attack infeasible. In practice,
+they get only to exponents of order 0.28 for moduli of 1000 bits, while
+0.255 for moduli of 10000 bits. There are other improvements of the
+method, like [12, 13, 16, 23], getting better results in practice, but not
+reaching d < n0.292 which remains the state of the art nowadays despite
+all the efforts.
+
+   But there are other common ways of attackng RSA, assuming that
+the attacker could have an extra information on the secret key. This
+information normally comes from certain side channel attacks, in the
+presence of convert channels, [7, 15]. The first of such instances was
+in [4] where the authors, also with lattices, recover the secret key know-
+ing only log d/4 of the least significant bits of d. In [21] the authors
+prove that the running time in [4] depends exponentially on the least
+significant bits, LSBS for short, shared by p and q. Other works as [19],
+guessing some of the most significant bits, MSBs for short, of one fac-
+tor of n reduce the information needed on d, while [11] improves the
+bounds by some refinement of the lattices. Other works using Copper-
+smith method and partial information on the secret key can be found
+in [18,24,28]. In [28] the authors go a bit further and use Coppersmith
+method somehow combined with continued fractions, to get a general
+exponent depending on the information we know about e, d and the
+MSBs of p + q. Concretely if e < N α and we know a proportion of
+1/2 − γ of the MSBs of p + q one can recover any key d < 1 − α/3 − γ/2.
+A generalization of the method to equations of the form ed − 1 ≡ 0
+(mod (pa − 1)(q a − 1))) appeared very recently in [29].
+
+  On the other hand, using only continued fractions, De Weger’s [8]
+uses the most significant bits, MSBS for short, to prove that for primes
+with |p − q| < nβ , Wiener’s attack will go up to d < n3/4−β and [2]
+combine Wiener’s attack with Coppersmith’s original theorem to factor
+any modulus such that there is a linear relation of the form ex + y ≡ 0
+(mod φ)(n) with x and y small. The authors in [17] knowing and
+4                        JORGE JIMÉNEZ URROZ
+
+approximation of p of order nα /8 MSB’s get up to d < n(1−α)/2 on
+Wiener’s attack, by using convergents of different integers as in [5].
+
+
+  It is of fundamental importance to remark now that even though the
+results using Coppersmith method are stronger, all of them depend
+on a hypothesis which works in practice, but never has been proved.
+Concretely the algebraic independence of the solutions given by the
+reduction algorithm in the lattice. On the other hand, results based on
+continued fractions are unconditional.
+
+  Our contribution. The paper is dedicated to attack RSA, find
+the private key and factor the modulus, when extra information on the
+factors is leaked. We will only use continued fractions and hence all the
+results are unconditional. In our main theorem we prove that knowing
+an approximation S of p + q, so that p + q − S < n1−δ , is enough to
+                                           1 δ
+get the private exponent whenever d < n 4 + 2 .
+
+   We dedicate a section to prove that an approximation of p + q is
+equivalent to knowing an approximation of p and q separately, and
+it is in fact another way of expressing the knowledge of the MSBs
+of the corresponding integer. In this way we can recover the results
+in [17], in terms of approximations of p + q. We get the same result
+as they when e ≈ n, but removing also the constant 1/8 from that
+paper, and generalize it to any range of e. Also, we need to emphasize
+that our method is extremely simple in comparison with them, which
+makes computation much faster than [17], since we only consider the
+computation of the convergents of a precise fraction.
+
+   The estimation in our main result is worse than in [28]. However,
+we should mention that their results, apart from being conditional to
+finding algebraically independent solutions on the lattice reduction,
+also use an extra hypothesis which seems unlikely to occur in certain
+range of the parameters that they consider. Concretely their results
+are based on the size of the inverse of a particular integer qr modulo
+qr−1 , which normally will be of the same size as the modulus.
+
+   We should mention that the authors themselves mention that they
+find a gap between their experiments and their theoretical results, with-
+out explaining why.
+                           A NEW ATTACK TO RSA                                       5
+
+   In Section 2 we include the necesary preliminaries on continued frac-
+tions. Then in Section 3 we state and prove the results. Section 4 is
+dedicated to analyze the relation between approximation of an integer
+and thier MSBs, for p + q and p and q. Finally we include some ex-
+periments in Section 5. Throughout the paper, given two integers a, b
+[a, b] will denote thier least common multiple while (a, b) will be their
+greatest common divisor.
+
+                            2. Preliminaries
+
+  To attack RSA with small d we will use continued fractions.
+Definition 2.1. Given a real number α the continued fraction of α is
+an expression of the form
+                                                1
+         α = q0 +
+                                                    1
+                    q1 +
+                                                        1
+                           q2 +
+                                                            1
+                                  q3 +
+                                                                1
+                                         q4 +
+                                                                    1
+                                                q5 +
+                                                                         1
+                                                        q6 +
+                                                                             1
+                                                                q7 +
+                                                                        q8 + · · ·
+
+where q0 = [α], r0 = {α}, qi = [1/ri−1 ], ri = {1/ri−1 } for i ≥ 1,
+until rm = 0, which will occur exactly when α ∈ Q. In this case the
+continued fraction is finite and we denote it as α = ⟨q0 , q1 , . . . , qm ⟩
+Remark 2.2. Note that qm ≥ 2 since otherwise rm−1 = 1 which is
+impossible.
+
+  We can construct the continued fraction in the following way. Let
+ni
+di
+   = ⟨q0 , . . . , qi ⟩. Then one can prove [14, Theorem 1] that
+       n0 = q0 ,             d0 = 1
+(2)    n1 = q0 q1 + 1,       d1 = q1
+       ni = qi ni−1 + ni−2 , di = qi di−1 + di−2 ,             for any 2 ≤ i ≤ m,
+and [14, Theorem 2]
+(3)         ni di−1 − di ni−1 = (−1)i+1          for any 1 ≤ i ≤ m.
+6                        JORGE JIMÉNEZ URROZ
+
+This in particular implies
+(4)                              (ni , di ) = 1,
+for all 0 ≤ i ≤ m.
+
+  We will also need to control the growth of the convergents. Con-
+cretely we have
+Theorem 2.3. Let α = ⟨q0 , . . . , qm ⟩ and let ndii its convergents for
+i = 0, . . . , m. Then for any i ≥ 4,
+                                          i−1
+                                  ni > 2 2 .
+Proof. We will prove it by induction. We know that for i ≥ 1, qi ≥ 1,
+and ni ≥ 1. Hence, noting that n3 ≥ n2 + n1 ≥ 2, we get the first two
+cases n4 ≥ n3 + n2 ≥ 3 > 23/2 and n5 ≥ n4 + n3 ≥ 5 > 24/2 . Now,
+                 i−3
+suppose ni−2 > 2 2 . Then, by (2) for i ≥ 6
+ni = qi ni−1 + ni−2 ≥ ni−1 + ni−2 ≥ ni−2 + ni−3 + ni−2 > 2ni−2 > 2(i−1)/2 .
+                                                                         □
+Remark 2.4. See [14, Theorem 12] where the inequality is proved for
+the denominators of the convergents. We did not find a reference in-
+cluding the previous inequality for the numerators.
+
+   The key fact on Wiener’s method to attack RSA comes with the
+following lemma.
+Lemma 2.5 (Wiener). Let α = ⟨q0 , . . . , qm ⟩, and α′ ∈ Q such that
+α = α′ (1 − δ) for δ < 3nm2 dm , as in (2). Then one of the convergents of
+α is α′ .
+Proof. See [27, p. 555, (22)].                                           □
+  We end this section with a simple lemma on the Euler function. We
+include the proof for convenience.
+Lemma 2.6. Let n = pq with q < p < 2q. Then
+                     3 √                    √
+(5)         n + 1 − √ n < φ(n) < n + 1 − 2 n
+                      2
+                                                        √
+Proof. The function f (p) = p + np is increasing for p > n, so under
+                                        √
+the hypothesis we get the lower bound n √   ≤ p and, multiplying
+                                                            √ by p
+                               2                          3
+in p < 2q, the upper bound p < 2n, so 2 n ≤ f (p) ≤ √2 n. The
+result follows by noting that φ(n) = n + 1 − f (p).               □
+                          A NEW ATTACK TO RSA                                     7
+
+                  3. Wiener’s approach revisited
+Theorem 3.1. Let n be an RSA modulus n = pq, with prime factors
+q < p < 2q, and suppose p + q − 1 = x + R where x is known. Let e be
+an integer coprime
+              p with φ(n)
+                        √ and d     = e−1 (mod φ(n)), verifying (1).
+Then, if d < ( 2/3n − 3n)(eR)−1/2 we can factor n in polynomial
+time in log(en).
+Proof. Dividing by d(n − x) in (1) we get
+                                                         n − p − q + 1 + k1
+                                                                             
+    e       1      k (p − 1)(q − 1)   k
+      =          +                  =
+  n−x   d(n − x) d       (n − x)      d                        n−x
+                    1
+               R− k
+          
+        k
+(6)   =    1−           .
+        d       n−x
+                              R− 11
+  Hence, by Lemma 2.5 if n−xk < 3/2kd , or equivalently
+                                     2 n−x
+(7)                           kd <             ,
+                                     3 R − 1/k
+                                e
+one of the convergents of n−x      is kd . Again Equation (1) gives trivially
+                                             ed2
+ed2 = kdφ(n) + d > kdφ(n), or kd < φ(n)           , so in particular if we have
+       q        √                           p
+d < ( 23 n − 3n)(eR)−1/2 , then d < 2/3φ(n)(eR)−1/2 by Lemma 5,
+and we get
+                            ed2      2 φ(n)      2 n−x
+                     kd <         <          <               ,
+                           φ(n)      3 R         3 R − 1/k
+and hence one of the convergents of n−x       e
+                                                  , say ndii is kd . Noting that
+(ni , di ) = (k, d) = 1 by (4) and (1), we get k = ni and d = di . Then,
+we compute φ(n) by (1), and from there the factors p, q.
+
+   By Theorem 2.3, e = nm > 2(m−1)/2 , so we need at most O(log e)
+steps to find kd , and on each step we perform one multiplication and
+one addition by 2 with integers bounded by e, n − x, since the sequence
+of numerators and denominators are increasing with limit e, and n − x
+respectively.                                                        □
+
+
+(8)                              Algorithm
+  Input: e, n, x
+  Output: d, p, q
+  for i = 1 until m we:
+                                        e
+    Compute ni , di the convergents of n−x .
+8                         JORGE JIMÉNEZ URROZ
+
+     Compute L = edni −1   i
+                               . This is our candidate of φ(n)
+                2
+     Solve X − (n − L)X + n = 0 to get the roots x1 , x2
+     If x1 , x2 ∈ N and x1 x2 = n
+        return (di , x1 , x2 )
+
+Remark 3.2. We should emphisize that the extra information needed
+on p + q would be unnecessary if the size of the modulus is not too big.
+In particular since the algorithm runs in O(log en), one could√repeat it
+   √                                          √                  √
+O( n/2l ) times with a guess of x = 2l A for 2 n/2l ≤ A < 3/ 2 n/2l
+and increasing
+       √        A by 1 each time. This would give an algorithm running
+            l
+on O( n/2 log(en)), which still is feasible for l large enough. For
+example if n is a modulus of 512-bits, then l = 200 would mean that we
+repeat the algorithm 256 times, and we capture 56 bits of p + q which
+is more than 1/10 of the bits of n, and we could factor n whenever
+d < 0.3 with no previous information at all on the primes factors of n.
+
+
+                         4. δ-approximations
+  In this section we establish, as we mentioned in the introduction,
+that knowing an approximation of p and q is equivalent to knowing
+an approximation of p + q. Before proving it, we will make a concrete
+definition for convenience in the exposition. Along the whole section
+we will denote all the constants by c, or C, but on each step of the
+argument could have different values.
+
+Definition 4.1. Let m be an unknown integer and δ > 0. We say that
+the integers K, U are a δ-approximation of m if m = K + U , K is
+known and |U | < cm1−δ for some constant c.
+
+    We include two straighforward lemmas for convenience.
+
+Lemma 4.2. Having a δ-approximation of an integer m is equivalent
+to knowning the MSBs of m.
+
+Proof. Concretely, if we know the L MSBs of an integer m, then we
+can write m = 2l A + B, where l = [log2 m] − L, A is a known integer
+                      1− L
+and 0 ≤ B < 2l < m log2 m , so we have a logL m -approximation of m.
+                                             2
+On the other hand, if m = K + U with |U | < cm1−δ < 2l , then we have
+the inequalities −1 + K2l
+                          <m2l
+                               <K
+                                2l
+                                   + 1, so
+                           hmi K 
+                                = l − ε,
+                             2l     2
+                         A NEW ATTACK TO RSA                                 9
+
+where ε = 1 if U < 0, while ε = 0 if U > 0. Hence,
+         [log2 m]                  l                  
+                          l m                     K
+           X               h i X
+                      j                   j   l
+    m=            mj 2 = 2   l
+                               +      mj 2 = 2      l
+                                                      − ε + B,
+            j=0
+                            2     j=0
+                                                   2
+
+where 0 ≤ B < 2l , and we know the [log2 m] − l MSBs of m.                   □
+Lemma 4.3. Let the public integer n = pq be the product of two
+unknown prime numbers q < p < 2q large enough. Having a δ-
+approximation of either p or q is equivalent to having a δ-approximation
+of both p and q.
+Proof. Obviously we just have to prove one implicaiton. Now, note
+that n = pq < min{p2 , 2q 2 }. Then If p = Kp + Up for |Up | < Cp1−δ ,
+then |Up | < cp, for some c < 1 and p large enough so Kp > (1 − c)p
+and
+             n     n     |p − Kp |    C           C 1−δ
+                −     =n           <      qp−δ <     q ,
+            Kp     p        pKp      1−c         1−c
+so q = Kq + Uq where Kq = Kn p and |Uq | < 1−c
+                                            C 1−δ
+                                               q . On the opposite,
+If we start knowing q = Kq + Uq for |Uq | < Cq 1−δ , the reasoning is
+analogous.
+                                                                   □
+  We now can prove our main result of apprximations.
+Proposition 4.4. Let the public integer n = pq be the product of two
+unknown prime numbers q < p < 2q.  √ Suppose p + q = K + U , is a
+δ-approximation of p + q with K ≥ κ n for some κ > 2. Then one can
+find a δ-approximation of p and a δ-approximation of q in polynomial
+time, and viceversa.
+Proof. Suppose we know a δ-approximation of each p and q, say p =
+Kp + Up for |Up | < cp p1−δ and q = Kq + Uq for |Uq | < cq q 1−δ , and
+denote C = max{cp , cq }. Then we have p + q = Kp+q + Up+q where
+Kp+q = Kp + Kq and
+  |Up+q | = |Up + Uq | ≤ |Up | + |Uq | < C(p1−δ + q 1−δ ) < c (p + q)1−δ ,
+for some constant c, using p < 2(p+q)/3, q < (p+q)/2 by the conditions
+on the primes.
+
+  Now suppose
+         √    p+q = Kp+q +Up+q where Kp+q is a known integer with
+Kp+q > κ n, for some constant κ > 2 and |Up+q | < C(p+q)1−δ for some
+constant C. By Lemma 4.3 it is enough to have a δ-approximation of
+10                        JORGE JIMÉNEZ URROZ
+
+one of the primes, say p. Then solving the equation x2 −(p+q)x+n = 0
+with solutions p, q, we get
+                                    p
+                     Kp+q + Up+q + (Kp+q + Up+q )2 − 4n
+                p=
+                                        2
+                = Kp + Up
+
+where
+                                     q
+                                       2
+                            Kp+q      Kp+q − 4n
+                     Kp =        +                ,
+                             2            2
+and
+                       2
+                     Up+q + 2Kp+q Up+q             Up+q
+        Up = p                      q          +
+            2                          2
+               (Kp+q + Up+q )2 − 4n + Kp+q − 4n     2
+
+Now, by the conditions on the primes, C1 p ≤ Kp+q < C2 p, for some
+                          2
+constants C1 , C2 , , so Up+q < |Kp+q Up+q | < Cp2−δ , for some constant
+C, while
+          q                          q                q
+                                         2                 2
+            (Kp+q + Up+q )2 − 4n + Kp+q       − 4n > Kp+q     − 4n
+              √
+          > ( c2 − 4)n1/2 > Cp,
+
+for some constant C, so
+
+                  Up < C(p1−δ + (p + q)1−δ ) < cp1−δ .
+
+for some constants C, c. The δ-approximation then will be p = K + U
+where K = [Kp ] and U = Kp − K + Up .                             □
+
+Remark 4.5. If the δ-approximation of p + q is with any K with no
+lower bound, then the same reasoging gives a δ/2-approximation of p
+and q. In this case we should use
+
+                                     p
+                     Kp+q + Up+q +    (Kp+q + Up+q )2 − 4n
+                p=
+                                       2
+                = Kp + Up
+
+where
+                                     q
+                                       2
+                            Kp+q      Kp+q − 4n
+                     Kp =        +                ,
+                             2            2
+                         A NEW ATTACK TO RSA                             11
+
+and
+                         2
+                       Up+q + 2Kp+q Up+q               Up+q
+      Up =     p                      q            +      <
+             2   (Kp+q + Up+q )2 − 4n + Kp+q 2
+                                               − 4n     2
+               q
+                  2
+             < Up+q  + 2Kp+q Up+q < cp1−δ/2 .
+for some constant c.
+                             5. Experiments
+  All the experiments have been done in python using a personal com-
+puter, concretely a Mac book pro with 2GHz intel core i5 of 4 kernels
+and 16GB of memory. The program used is included in the Appendix
+7
+Example 5.1. Let n = 123543221, and e = 3782461. n1/4 = 105.4277,
+so assume p + q = 22130 + R, where R < 106. So we consider the
+                       e     3782461
+continued fraction of n−x = 123521091 to get as its list of convergents
+              [(0, 1), (1, 32), (1, 33), (2, 65), (3, 98), (32, 1045),
+              (1187, 38763), (4780, 156097), (10747, 350957),
+              (15527, 507054), (57328, 1872119)]
+When reaching the 5-th convergent, multiply by e and take the integer
+part, we get 123520992 and quotient 1. Letting
+                 123543221 − 123520992 = 22229 = a,
+and solving the equation
+                             x2 − 22230x + n,
+we get p = 11117, q = 11113. In this case d > n0.373 .
+Example 5.2. The next example is used by the authors of [28]. They
+need more than 9 seconds to factor n. This algorithm takes miliseconds.
+n = 4974472773881384118014647795711547516478259956645613937
+    6718994215049702937974938606611020238731850953950803408
+    79242549924017891702063138282911199989251977
+e = 3362135212646195373732698994059691822491400319644492284
+    6372466250218118962134587236033368546938732470674860097
+    55286359769772827397995978362545037878464433
+x = 14279176227683147138044792728299966749821 × 1037
+
+  returns
+12                       JORGE JIMÉNEZ URROZ
+
+
+
+              4387254887864516616725764744278199052823488,
+              6491196400927340728938155227779304732403793,
+              86
+whose second coordinate is the secret exponent on the 86 convergent, in
+miliseconds. In this case the exponent is d ≈ n0.2785 .
+
+     Taking
+e = 4403407016802090047393873499278161087517856177983207067
+    7248297745308257030345671722133330755179411640118454952769
+    35054951436828450021261154418374318704225
+the program returns
+      574601190489207276358664128996126904791408049924536747334,
+      649119640092734072893815522777930473240379394857234598713,
+      110
+whose second coordinate is the secret exponent on the 110 convergent,
+also miliseconds. In this case the exponent is d ≈ n0.369 .
+Example 5.3. This is also an example used by the authors of [28].
+While they need 17 digits of the sum of the two primes, to get the
+exponent d ≈ n0.317 , we get the same with 21 digits. Observe that the 4
+digits of difference can be obtained by repeating the algorithm 104 times.
+  Now take
+n = 667881289802154038823628680614836895352147070157135359
+    517370786146585569663805767598976469948361102331675600
+    6175305149520572078488495000186844811399641203
+e = 481939619752981969109709347529972401122215764606900174
+    834517626107402697849846501416569215357100143887963073
+    4388003452670588809411338901610567571522175099
+x = 1025 y where
+y = 16637133402080618303507029737134206559438091398368285
+
+                            6. Conclusion
+  The main objective of the paper is to establish an unconditional
+improvement on the size of the secret exponent which is vulnerable to
+Wiener’s attack with continued fractions, knowing partial information
+                       A NEW ATTACK TO RSA                          13
+
+on p + q. We also prove that knowing this information is equivalent
+to knowing partial information on p and q. We observe that up to
+60 bits, this information could be found by repeating the algorithm
+until succeed, which would happen in polynomial time. In particular
+if n is a modulus of 512-bits, then running the algorithm 256 times ,
+with consecutive brute force guesses of x, we could factor n whenever
+d < 0.3.
+
+
+
+
+                            7. Appendix
+  The program first compute the gcd of two integer numbers, collecting
+the quotients on each step with the following instructions in python:
+  Computing the gcd
+  def mcd(a,b):
+  a,b=max(a,b),min(a,b)
+  q=[]
+  while b!=0:
+  q.append(a//b)
+  c=a%b
+  a=b
+  b=c
+  return q
+  Then, given the quotients, we compute the sequence of numerators
+and denominators of the convergents by the formulas in (2). For each
+convergent, we try to factor n by guessing k, d as numerator and de-
+nominator of the convergent, with the Algorithm 8, with the following
+instructions:
+  q=mcd(n-x,e)
+  num,den=[q[0],q[0]*q[1]+1],[1,q[1]]
+  for j in range(2,len(q)):
+  num.append(q[j]*num[j-1]+num[j-2])
+  den.append(q[j]*den[j-1]+den[j-2])
+  for l in range(len(num)):
+     L = (edi − 1)/ni .
+     import sympy as sym
+  x=sym.symbols(’x’)
+  eq = sym.Eq(x**2 - 1, 0)
+  roots = sym.solve(ecuacion, x)
+  if isinstance(roots[0], int):
+  print(roots)
+14                          JORGE JIMÉNEZ URROZ
+
+                                 References
+ [1] D. Bleichenbacher and A. May. New attacks on rsa with small secret crtexpo-
+     nents. PKC 2006. LNCS, 3958:1–13, 2006.
+ [2] J. Blomer and A. May. A generalized wiener attack on rsa. PKC 2004, LNCS,
+     2947:1–13, 2004.
+ [3] D. Boneh and G. Durfee. Cryptanalysis of rsa with private key d less than
+     N 0292 . IEEE Trans. Inf. Theor., 46:1339–1349, 2000.
+ [4] D. Boneh, G. Durfee, and Y. Frankel. An attack on rsa given a small fraction
+     of the private key bits. ASIACRYPT’98, LNCS 1514., 1514:25–34, 1998.
+ [5] M. Bunder and J. Tonien. A new attack on the rsa cryptosystem based on
+     continued fractions. Malays. J. Math. Sci., 11:45–57, 2017.
+ [6] D. Coppersmith. Small solutions to polynomial equations, and low exponent
+     rsa vulnerabilities. J. Cryptology, 10(233-266), 1997.
+ [7] G. De Micheli and N. Heninger. Survey: Recovering cryptographic keys from
+     partial information, by example. IACR Communications in Cryptology ISSN
+     3006-5496, 1(1):48 pages.
+ [8] B. de Weger. Cryptanalysis of rsa with small prime difference. AAECC, 13:17–
+     278, 2002.
+ [9] A. Dujella. Continued fractions and rsa with small secret exponent. Tatra Mt.
+     Math. Publ., 29:101–112, 2004.
+[10] A. Dujella. A variant of wiener’s attack on rsa. Computing 85, 77–83 (2009),
+     85:77–83, 2009.
+[11] M. Ernst, E. Jochemsz, A. May, and B. de Weger. Partial key exposure attacks
+     on rsa up to full size exponents. EUROCRYPT 2005. LNCS, 3494:371–386,
+     2005.
+[12] Y. Feng, A. Liu, Z. nad Nitaj, and Y. Pan. Practical small private exponent
+     attacks against rsa. IACR Cryptol. ePrint Arch. 1331, 2024.
+[13] M. Herrmann and A. May. Maximizing small root bounds by linearization and
+     applications to small secret exponent rsa. PKC 2010. LNCS, 6056:53–69, 2010.
+[14] A. Y. Khinchin. Continued Fractions. University of Chicago Press, 1964.
+[15] P. Kocher. Timing attacks on implementations of diffie-hellman, rsa, dss, and
+     other systems. Proc. of Cyrpto 96,, (104–113), 1996.
+[16] Q. Li, Q. Zheng, and W. Qi. Practical attacks on small private exponent rsa:
+     New records and new insights. Des. Codes Cryptogr., 91(12):4107–4142, 2023.
+[17] D. I. Nassr, H. M. Bahig, A. Bhery, and S. S. Daoud. A new rsa vulnerability
+     using continued fractions. 2008 IEEE/ACS, pages 694–701, 2008.
+[18] L. Peng, L. Hu, Z. Huang, and J. Xu. Partial prime factor exposure attacks
+     on rsa and its takagi’s variant. ISPEC 2015, LNCS, 9065:96–108, 2015.
+[19] S. Sarkar and S. Maitra. Improved partial key exposure attacks on rsa by
+     guessing a few bits of one prime factor. ICISC 2008, LNCS, 5461:37–51, 2008.
+[20] R. Steinfeld, S. Contini, H. Wang, and J. Pieprzyk. Converse results to the
+     wiener attack on rsa. PKC 2005. LNCS, 3386:184–198, 2005.
+[21] R. Steinfeld and Y. Zheng. An advantage of low-exponent rsa with modulus
+     primes sharing least significant bits. Topics in Cryptology — CT-RSA 2001.,
+     LNCS, 2020, 2001.
+[22] W. Susilo, J. Tonien, and G. Yang. The wiener attack on rsa revisited: A quest
+     for the exact bound. Information Security and Privacy: 24th Australasian
+     Conference, Proceedings. 11547., pages 381–398, 2019.
+                            A NEW ATTACK TO RSA                                    15
+
+[23] A. Takayasu and N. Kunihiro. How to generalize rsa cryptanalyses. PKC 2016,
+     LNCS, 9615:67–97, 2016.
+[24] A. Takayasu and N. Kunihiro. A tool kit for partial key exposure attacks on
+     rsa. Topics in Cryptology – CT-RSA 2017., 2017.
+[25] A. E. Trishin. Wiener attack and weak keys of the rsa cryptosystem. Discrete
+     Mathematics and Applications., 35(5):331–338, 2025.
+[26] E. Verheul and H van Tilborg. Cryptanalysis of ‘less short’ rsa secret exponents.
+     Appl. Algebra Eng. Commun. Comput., 8:425–435, 1997.
+[27] M. Wiener. Cryptanalysis of short rsa secret exponents. IEEE Trans. Inform.
+     Theory, 36:553–558, 1990.
+[28] M. Zheng, Y. Feng, A. Nitaj, and Y. Pan. Improving rsa cryptanalysis: Com-
+     bining continued fractions and coppersmith’s techniques. ACISP 2025. LNCS,
+     15660, 2025.
+[29] M. Zheng, A. Nitaj, M. Boudabra, M. Seck, O. Niang, and D. Sow. A gener-
+     alized attack on rsa and its variants. IACR Cryptol. ePrint Arch., 172, 2026.
+

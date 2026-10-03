@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/rTTtsclNhNDGNjY2AoFS3EbijHo</id>
+  <title>arXiv Query: search_query=abs:"Dickman" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:11:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Dickman%22+AND+abs:factoring&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2606.30349v1</id>
+    <title>Attenuated Poisson Dirichlet approximations for divisibility configurations</title>
+    <updated>2026-06-29T14:22:35Z</updated>
+    <link href="https://arxiv.org/abs/2606.30349v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.30349v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the point process formed by the normalized logarithms of the distinct prime factors of a harmonic random sample. We prove a quantitative convergence result, in a Wasserstein-type metric over decreasing sequences, toward the atom sequence of a Dickman Poisson cloud conditioned to have total mass at most one, equivalently a uniformly attenuated Poisson-Dirichlet law. The proof is based on the conditioned geometric representation of harmonic samples, a Poisson approximation chain for the associated point processes, monotone couplings of Poisson point processes, and Kolmogorov estimates for the Dickman approximation of weighted geometric sums.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T14:22:35Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Victor Bernal Ramirez</name>
+    </author>
+    <author>
+      <name>David Torres-Flores</name>
+    </author>
+    <author>
+      <name>Arturo Jaramillo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.1579v1</id>
+    <title>Nicolaas Govert de Bruijn, the enchanter of friable integers</title>
+    <updated>2012-12-07T10:41:45Z</updated>
+    <link href="https://arxiv.org/abs/1212.1579v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.1579v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>N.G. de Bruijn carried out fundamental work on integers having only small prime factors and the Dickman-de Bruijn function that arises on computing the density of those integers. In this he used his earlier work on linear functionals and differential-difference equations. We review the relevant work and also some later improvements by others.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.HO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-07T10:41:45Z</published>
+    <arxiv:comment>34 pages, 1 Figure</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Indag. Math. (N.S.) 24 (2013), 774--801</arxiv:journal_ref>
+    <author>
+      <name>Pieter Moree</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.05191v1</id>
+    <title>Rigidity of Averages over the Two Largest Prime Factors</title>
+    <updated>2026-08-02T18:31:36Z</updated>
+    <link href="https://arxiv.org/abs/2608.05191v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.05191v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let \(P_1(n)\) and \(P_2(n)\) be the largest and second-largest distinct prime factors of \(n\), respectively. Alladi and Johnson asked whether there exists a bounded function \(f\) on the primes for which both limits \(\frac{1}{x}\sum_{2\le n\le x} f(P_1(n)) \longrightarrow κ_1\) and \(\frac{1}{x}\sum_{2\le n\le x} f(P_2(n)) \longrightarrow κ_2\) exist with \(κ_1\neqκ_2\), where we set \(f(P_2(n))=0\) when \(n\) is a prime power. We prove that this is impossible: convergence of the first average forces convergence of the second to the same limit.
+  On the \(\log\log\)-scale, the two averages are expressed as convolutions with explicit Dickman kernels. The Fourier transform of the Dickman kernel associated with the \(P_1\)-average has no real zeros. Wiener's Tauberian theorem then yields vague convergence of the translated measures associated with the weighted prime sums. The convergence of the second average follows.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-02T18:31:36Z</published>
+    <arxiv:comment>29 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Dijia Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.07785v3</id>
+    <title>Explicit bounds for Dickman's function</title>
+    <updated>2026-08-21T15:42:44Z</updated>
+    <link href="https://arxiv.org/abs/2606.07785v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.07785v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dickman's function $ρ(u)$ denotes the natural density of integers $n$ whose largest prime factor does not exceed $n^{1/u}$. We establish numerically explicit upper and lower bounds for $ρ(u)$, resulting in estimates with a relative error of less than $0.005/u^2$ for all $u\ge 5$. This allows for an approximate evaluation of $ρ(u)$ without the need to solve the delay differential equation numerically.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-05T18:55:16Z</published>
+    <arxiv:comment>10 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andreas Weingartner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0711.1836v2</id>
+    <title>A Markov process associated with plot-size distribution in Czech Land Registry and its number-theoretic properties</title>
+    <updated>2007-12-11T07:25:10Z</updated>
+    <link href="https://arxiv.org/abs/0711.1836v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0711.1836v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The size distribution of land plots is a result of land allocation processes in the past. In the absence of regulation this is a Markov process leading an equilibrium described by a probabilistic equation used commonly in the insurance and financial mathematics. We support this claim by analyzing the distribution of two plot types, garden and build-up areas, in the Czech Land Registry pointing out the coincidence with the distribution of prime number factors described by Dickman function in the first case.</summary>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-fin.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-11-12T17:53:26Z</published>
+    <arxiv:comment>LaTeX, 7 pages with two ps figure. A discussion of convergence added; the final version to appear in J. Phys. A: Math. Theor</arxiv:comment>
+    <arxiv:primary_category term="physics.soc-ph"/>
+    <arxiv:journal_ref>J. Phys. A: Math. Theor. 41 (2008), 045004 (7pp)</arxiv:journal_ref>
+    <author>
+      <name>Pavel Exner</name>
+    </author>
+    <author>
+      <name>Petr Šeba</name>
+    </author>
+    <arxiv:doi>10.1088/1751-8113/41/4/045004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1751-8113/41/4/045004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1401.1553v1</id>
+    <title>A Simple Direct Proof of Billingsley's Theorem</title>
+    <updated>2014-01-08T00:57:22Z</updated>
+    <link href="https://arxiv.org/abs/1401.1553v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1401.1553v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Billingsley's theorem (1972) asserts that the Poisson--Dirichlet process is the limit, as $n \to \infty$, of the process giving the relative log sizes of the largest prime factor, the second largest, and so on, of a random integer chosen uniformly from 1 to $n$. In this paper we give a new proof that directly exploits Dickman's asymptotic formula for the number of such integers with no prime factor larger than $n^{1/u}$, namely $Ψ(n,n^{1/u}) \sim n ρ(u)$, to derive the limiting joint density functions of the finite-dimensional projections of the log prime factor processes. Our main technical tool is a new criterion for the convergence in distribution of non-lattice discrete random variables to continuous random variables.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-01-08T00:57:22Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Richard Arratia</name>
+    </author>
+    <author>
+      <name>Fred Kochman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.6610v2</id>
+    <title>Smooth Sums over Smooth $k$-Free Numbers and Statistical Mechanics</title>
+    <updated>2013-10-04T15:02:10Z</updated>
+    <link href="https://arxiv.org/abs/1304.6610v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.6610v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide an asymptotic estimate for certain sums over k-free integers with small prime factors. These sums depend upon a complex parameter αand involve a smooth cut-off f. They are a variation of several classical number-theoretical sums. One term in the asymptotics is an integral operator whose kernel is the α-convolution of the Dickman-de Bruijn distribution, and the other term is explicitly estimated. The trade-off between the value of αand the regularity of f is discussed. This work generalizes the results of tow previous papers by the author and Ya.G. Sinai, where k=2 and α=1.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-24T14:50:25Z</published>
+    <arxiv:comment>29 pages, 2 figures. To appear in the Moscow Journal of Combinatorics and Number Theory. Improvement of http://arxiv.org/abs/1304.6610v1</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Francesco Cellarosi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.02442v1</id>
+    <title>Explicit estimates for the distribution of numbers free of large prime factors</title>
+    <updated>2017-05-06T04:21:58Z</updated>
+    <link href="https://arxiv.org/abs/1705.02442v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.02442v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There is a large literature on the asymptotic distribution of numbers free of large prime factors, so-called $\textit{smooth}$ or $\textit{friable}$ numbers. But there is very little known about this distribution that is numerically explicit. In this paper we follow the general plan for the saddle point argument of Hildebrand and Tenenbaum, giving explicit and fairly tight intervals in which the true count lies. We give two numerical examples of our method, and with the larger one, our interval is so tight we can exclude the famous Dickman-de Bruijn asymptotic estimate as too small and the Hildebrand-Tenenbaum main term as too large.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-06T04:21:58Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Journal of Number Theory, 183 (2018), 1-23</arxiv:journal_ref>
+    <author>
+      <name>Jared D. Lichtman</name>
+    </author>
+    <author>
+      <name>Carl Pomerance</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2017.08.039</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2017.08.039" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1606.02965v6</id>
+    <title>A Natural Probabilistic Model on the Integers and its Relation to Dickman-Type Distributions and Buchstab's Function</title>
+    <updated>2017-02-01T09:05:37Z</updated>
+    <link href="https://arxiv.org/abs/1606.02965v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1606.02965v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\{p_j\}_{j=1}^\infty$ denote the set of prime numbers in increasing order, let $Ω_N\subset \mathbb{N}$ denote the set of positive integers with no prime factor larger than $p_N$ and let $P_N$ denote the probability measure on $Ω_N$ which gives to each $n\inΩ_N$ a probability proportional to $\frac1n$. This measure is in fact the distribution of the random integer $I_N\inΩ_N$ defined by $I_N=\prod_{j=1}^Np_j^{X_{p_j}}$, where $\{X_{p_j}\}_{j=1}^\infty$ are independent random variables and $X_{p_j}$ is distributed as Geom$(1-\frac1{p_j})$. We show that $\frac{\log n}{\log N}$ under $P_N$ converges weakly to the Dickman distribution. Let $D_{\text{nat}}(A)$ denote the natural density of $A\subset\mathbb{N}$, if it exists, and let $D_{\text{log-indep}}(A)=\lim_{N\to\infty}P_N(A\capΩ_N)$ denote the density of $A$ arising from $\{P_N\}_{N=1}^\infty$, if it exists. We show that the two densities coincide on a natural algebra of subsets of $\mathbb{N}$. We also show that they do not agree on the sets of $n^\frac1s$-\it smooth numbers \rm\ $\{n\in\mathbb{N}: p^+(n)\le n^\frac1s\}$, $s&gt;1$, where $p^+(n)$ is the largest prime divisor of $n$. This last consideration concerns distributions involving the Dickman function. We also consider the sets of $n^\frac1s$-\it rough numbers \rm\ $\{n\in\mathbb{N}:p^-(n)\ge n^{\frac1s}\}$, $s&gt;1$, where $p^-(n)$ is the smallest prime divisor of $n$. We show that the probabilities of these sets, under the uniform distribution on $[N]=\{1,\ldots, N\}$ and under the $P_N$-distribution on $Ω_N$, have the same asymptotic decay profile as functions of $s$, although their rates are necessarily different. This profile involves the Buchstab function. We also prove a new representation for the Buchstab function.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-06-09T13:59:27Z</published>
+    <arxiv:comment>Several typos and minor inaccuracies have been corrected</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Ross G. Pinsky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.13844v2</id>
+    <title>Cutting a unit square and permuting blocks</title>
+    <updated>2026-01-03T03:46:19Z</updated>
+    <link href="https://arxiv.org/abs/2501.13844v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.13844v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a random permutation of $kn$ objects that permutes $n$ disjoint blocks of size $k$ and then permutes elements within each block. Normalizing its cycle lengths by $kn$ gives a random partition of unity, and we derive the limit law of this partition as $k,n \to \infty$. The limit may be constructed via a simple square cutting procedure that generalizes stick breaking in the classical case of random permutations ($k=1$). The expected size of the largest part of this square cutting distribution is approximated to be $0.40$, in contrast with the Golomb-Dickman constant around $0.624$ describing the longest cycle of a uniform random permutation as well as the largest prime factor of a random integer. The distribution function of this largest part is shown to also be the mean of a certain multiplicative function. Along the way we give the first extension of the Erdős-Turán law to a proper permutation subgroup.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-23T17:11:52Z</published>
+    <arxiv:comment>23 pages. Added approximation of the limit distribution of the longest cycle and improved exposition</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Nathan Tung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.14750v2</id>
+    <title>Microemulsions in the driven Widom-Rowlinson lattice gas</title>
+    <updated>2021-12-28T07:53:24Z</updated>
+    <link href="https://arxiv.org/abs/2109.14750v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.14750v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An investigation of the two-dimensional Widom-Rowlinson lattice gas under an applied drive uncovered a remarkable non-equilibrium steady state in which uniform stripes (reminiscent of an equilibrium lamellar phase) form perpendicular to the drive direction [R. Dickman and R. K. P. Zia, Phys. Rev. E 97, 062126 (2018)]. Here we study this model at low particle densities in two and three dimensions, where we find a disordered phase with a characteristic length scale (a "microemulsion") along the drive direction. We develop a continuum theory of this disordered phase to derive a coarse-grained field-theoretic action for the non-equilibrium dynamics. The action has the form of two coupled driven diffusive systems with different characteristic velocities, generated by an interplay between the particle repulsion and the drive. We then show how fluctuation corrections in the field theory may generate the characteristic features of the microemulsion phase, including a peak in the static structure factor corresponding to the characteristic length scale. This work lays the foundation for understanding the stripe phenomenon more generally.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-29T22:45:08Z</published>
+    <arxiv:comment>17 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>Phys. Rev. E 104, 064135 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Maxim O. Lavrentovich</name>
+    </author>
+    <author>
+      <name>Ronald Dickman</name>
+    </author>
+    <author>
+      <name>R. K. P. Zia</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevE.104.064135</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevE.104.064135" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.06819v2</id>
+    <title>A new approach to the Stein-Tikhomirov method: with applications to the second Wiener chaos and Dickman convergence</title>
+    <updated>2017-06-27T21:51:46Z</updated>
+    <link href="https://arxiv.org/abs/1605.06819v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.06819v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we propose a general means of estimating the rate at which convergences in law occur. Our approach, which is an extension of the classical Stein-Tikhomirov method, rests on a new pair of linear operators acting on characteristic functions. In principle, this method is admissible for any approximating sequence and any target, although obviously the conjunction of several favorable factors is necessary in order for the resulting bounds to be of interest. As we briefly discuss, our approach is particularly promising whenever some version of Stein's method applies. We apply our approach to two examples. The first application concerns convergence in law towards targets $F_\infty$ which belong to the second Wiener chaos (i.e. $F_{\infty}$ is a linear combination of independent centered chi-squared rvs). We detail an application to $U$-statistics. The second application concerns convergence towards targets belonging to the generalized Dickman family of distributions. We detail an application to a theorem from number theory. In both cases our method produces bounds of the correct order (up to a logarithmic loss) in terms of quantities which occur naturally in Stein's method.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-22T16:57:22Z</published>
+    <arxiv:comment>45 pages. Complete re-writing of the previous version. Former applications detailed and new applications provided. Comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Benjamin Arras</name>
+    </author>
+    <author>
+      <name>Guillaume Mijoule</name>
+    </author>
+    <author>
+      <name>Guillaume Poly</name>
+    </author>
+    <author>
+      <name>Yvik Swan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.08277v2</id>
+    <title>On Erdős sums of almost primes</title>
+    <updated>2024-05-12T20:06:55Z</updated>
+    <link href="https://arxiv.org/abs/2303.08277v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.08277v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1935, Erdős proved that the sums $f_k=\sum_n 1/(n\log n)$, over integers $n$ with exactly $k$ prime factors, are bounded by an absolute constant, and in 1993 Zhang proved that $f_k$ is maximized by the prime sum $f_1=\sum_p 1/(p\log p)$. According to a 2013 conjecture of Banks and Martin, the sums $f_k$ are predicted to decrease monotonically in $k$. In this article, we show that the sums restricted to odd integers are indeed monotonically decreasing in $k$, sufficiently large. By contrast, contrary to the conjecture we prove that the sums $f_k$ increase monotonically in $k$, sufficiently large. Our main result gives an asymptotic for $f_k$ which identifies the (negative) secondary term, namely $f_k = 1 - (a+o(1))k^2/2^k$ for an explicit constant $a= 0.0656\cdots$. This is proven by a refined method combining real and complex analysis, whereas the classical results of Sathe and Selberg on products of $k$ primes imply the weaker estimate $f_k=1+O_{\varepsilon}(k^{\varepsilon-1/2})$. We also give an alternate, probability-theoretic argument related to the Dickman distribution. Here the proof reduces to showing a sequence of integrals converges exponentially quickly to $e^{-γ}$, which may be of independent interest.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-14T23:52:28Z</published>
+    <arxiv:comment>28 pages, incorporated referee comments</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>C. R. Math. Acad. Sci. Paris 362 (2024), 83-91</arxiv:journal_ref>
+    <author>
+      <name>Ofir Gorodetsky</name>
+    </author>
+    <author>
+      <name>Jared Duker Lichtman</name>
+    </author>
+    <author>
+      <name>Mo Dick Wong</name>
+    </author>
+    <arxiv:doi>10.5802/crmath.650</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5802/crmath.650" title="doi"/>
+  </entry>
+</feed>

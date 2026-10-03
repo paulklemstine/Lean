@@ -1,0 +1,1829 @@
+                                                                              ROOT NUMBERS OF CURVES
+arXiv:math/0411096v1 [math.NT] 4 Nov 2004
+
+
+
+
+                                                                                           MARIA SABITOVA
+
+                                                   Abstract. We generalize a theorem of D. Rohrlich concerning root numbers of elliptic curves over
+                                                   the field of rational numbers. Our result applies to curves of all higher genera over number fields.
+                                                   Namely, under certain conditions which naturally extend the conditions used by D. Rohrlich, we
+                                                   show that the root number W (X, τ ) associated to a smooth projective curve X over a number
+                                                   field F and a complex finite-dimensional irreducible representation τ of Gal(F /F ) with real-valued
+                                                   character is equal to 1. In the case where the ground field is Q, we show that our result is consistent
+                                                   with the refined version of the conjecture of Birch and Swinnerton-Dyer.
+
+
+
+
+                                                                                          1. Introduction
+                                               The main object of study in our paper is the root number W (X, τ ) associated to a smooth
+                                            projective curve X of genus g over a number field F and a continuous irreducible complex finite-
+                                            dimensional representation τ of Gal(F /F ) with real-valued character. The root number W (X, τ )
+                                            is a complex number of absolute value 1. Assume for simplicity that F = Q. Then W (X, τ )
+                                            appears in the following conjectural functional equation:
+                                                                             Λ(JX , τ, s) = W (X, τ ) · Λ(JX , τ ∗ , 2 − s),                                 (1.1)
+                                            where s ∈ C, JX is the Jacobian of X, τ ∗ is the dual to τ , and
+                                                                             Λ(JX , τ, s) = Asτ · Γ(s)g dim τ · L(JX , τ, s)
+                                            for some positive constant Aτ and the twisted L-function L(JX , τ, s) which is a meromorphic
+                                            function of s defined in a right half-plane. This function is conjectured to have an analytic
+                                            continuation to the entire complex plane. Since τ has real-valued character, τ ∼
+                                                                                                                           = τ ∗ and W (X, τ ) =
+                                            ±1. Moreover, assuming (1.1) and considering the power series expansion of L(JX , τ, s) about
+                                            s = 1, we get:
+                                                                              W (X, τ ) = (−1)ords=1 L(JX ,τ,s).                           (1.2)
+                                               In our paper we generalize one result by D. Rohrlich for elliptic curves ([Ro2], p. 313, Prop.
+                                            E) to smooth projective curves of an arbitrary genus. We prove the following theorem:
+                                            Theorem 1.1. Let F be a number field, L a finite Galois extension of F , and τ an irreducible
+                                            complex finite-dimensional representation of Gal(L/F ) with real-valued character. Let g be a fixed
+                                            positive integer and assume that the decomposition subgroups of Gal(L/F ) at all the places of F
+                                            lying over all the primes less or equal to 2g + 1 are abelian. If the Schur index mQ (τ ) is 2 then
+                                            W (X, τ ) = 1 for every smooth projective curve X of genus g over F .
+                                              Date: October 30, 2004.
+                                                                                                     1
+2                                              M. SABITOVA
+
+  If F = Q then Theorem 1.1 can be predicted by the conjectures of Birch-Swinnerton-Dyer and
+Deligne-Gross. Namely, the conjectures of Birch-Swinnerton-Dyer and Deligne-Gross imply
+                                      ords=1 L(JX , τ, s) = hσX , τ i,                             (1.3)
+where σX is the natural representation of Gal(Q/Q) on C ⊗Z JX (Q) and hσX , τ i is the multiplicity
+of τ in σX ([Ro3], p. 127, Prop. 2). This equality is sometimes called the refined version of Birch
+and Swinnerton-Dyer conjecture. Thus, we get from (1.2) and (1.3):
+                                         W (X, τ ) = (−1)hσX ,τ i .                                (1.4)
+Since σX is realizable over Q and τ is irreducible, mQ (τ ) divides hσX , τ i. Thus, if mQ (τ ) = 2 then
+W (X, τ ) = 1 for every smooth projective curve X over Q (cf. [Ro2], p. 313).
+  To prove Theorem 1.1 we use the following formula:
+                                                 Y
+                                    W (X, τ ) =      W (Xv , τv ),                                  (1.5)
+                                                        v
+
+where v runs through all the places of F , Xv = X ×F Fv , Fv denotes the completion of F with
+respect to v, and τv is the restriction of τ to Gal(Fv /Fv ) ֒→ Gal(F /F ). To define W (Xv , τv ) for
+every place v let σv′ denote the representation of the Weil-Deligne group W ′ (F v /Fv ) associated
+to Xv . Then W (Xv , τv ) = W (σv′ ⊗ τv ), where τv is viewed as a representation of W ′ (F v /Fv ). We
+will in fact show the following stronger result:
+Theorem 1.2. W (Xv , τv ) = 1 for all v under the hypotheses of Theorem 1.1.
+    First, we describe W (Xv , τv ). If v is an infinite place then
+                                         W (Xv , τv ) = (−1)g dim τ                                (1.6)
+(Lemma 3.1).
+  If v is a finite place, then
+                                                      ǫ(σv′ ⊗ τv , ψv , dxv )
+                                   W (σv′ ⊗ τv ) =                             ,                   (1.7)
+                                                     |ǫ(σv′ ⊗ τv , ψv , dxv )|
+where ψv is an additive character of Fv and dxv is a Haar measure on Fv ([Ro1], p. 144).
+Here σv′ is isomorphic to the representation of W ′ (F v /Fv ) afforded by the l-adic cohomology
+groups of Xv ([Chi], p. 427), where l is a rational prime, l 6= char(kv ), and kv is the residue
+class field of Fv . Since Xv is a smooth projective curve, σv′ is the representation of W ′ (F v /Fv )
+associated to the natural l-adic representation of Gal(F v /Fv ) on Hl1 (Xv ), which is the Ql -dual to
+Vl (Jv ) = Tl (Jv ) ⊗Zl Ql , where Jv is the Jacobian of Xv , and Tl (Jv ) is the l-adic Tate module of
+Jv . Clearly, W (σv′ ⊗ τv ) does not depend on the choice of dxv and it turns out that W (σv′ ⊗ τv )
+does not depend on the choice of ψv either. Moreover, W (σv′ ⊗ τv ) = ±1 (see Subsection 2.1).
+   We consider two cases: Jv is an abelian variety with potential good reduction, and the general
+case. If Jv has potential good reduction, it follows from the theory of Serre-Tate that σv′ is actually
+a representation of the Weil group W(F v /Fv ) (see Subsection 2.2). If char(kv ) > 2g + 1, we use
+the theory of Serre-Tate together with methods of the representation theory to describe the class
+                                         ROOT NUMBERS OF CURVES                                                   3
+
+           1/2
+of σv′ ⊗ ωv in the Grothendieck group of virtual representations of W(F v /Fv ) (Corollary 2.7,
+Formula (2.6)). Here ωv is the one-dimensional representation of W(F v /Fv ) given by
+                                          ωv |Iv = 1,    ωv (Φv ) = qv−1 ,
+where Iv is the inertia group of Gal(F v /Fv ), Φv is an inverse Frobenius element of Gal(F v /Fv ),
+and qv = card(kv ). Since the root number of representations of W(F v /Fv ) is multiplicative in
+short exact sequences, this result enables us to prove the following formula for W (σv′ ⊗ τv ) when
+char(kv ) > 2g + 1 (Proposition 2.9):
+                        W (σv′ ⊗ τv ) = det µ(−1)dim τ · det τ (−1)l1 · αdim τ · (−1)l2 ,                     (1.8)
+where l1 = dim µ + 12 (dim µ1 + · · · + dim µa ), µ, µ1, . . . , µa are some representations of W(F v /Fv ),
+α = ±1, l2 = a · h1, τv i + a · hηv , τv i + a · hµ̂1 ⊕ · · · ⊕ µ̂a , τv i, µ̂1 ⊕ · · · ⊕ µ̂a is a representation of
+Gal(F v /Fv ) realizable over Q, and ηv is the unramified quadratic character of Fv× (cf. [Ro2], p.
+318, Thm. 1).
+   In the general case we use the theory of uniformization of abelian varieties. According to this
+theory there exists a semi-abelian variety Gv over Fv and a discrete subgroup Yv of Gv such that,
+in terms of rigid geometry, Jv is isomorphic to the quotient Gv /Yv . The semi-abelian variety Gv
+fits into an exact sequence
+                                                             fv
+                                  0 −→ Tv −→ Gv −→ Av −→ 0,                                   (1.9)
+where Av is an abelian variety over Fv with potential good reduction, Tv is a torus over Fv of
+dimension r; Yv is an étale sheaf of free abelian groups over Spec(Fv ) of rank r. To describe σv′
+in this case we use a formula of M. Raynaud ([Ra], p. 314) which gives the action of the inertia
+group Iv on the ln -torsion points of an abelian variety over a local field in the case when the
+uniformization data splits. We need this formula to show that in this case
+                                   σ′ ∼
+                                      = κv ⊕ (χv ⊗ ω −1 ⊗ sp(2)),
+                                         v                   v                              (1.10)
+where κv is the representation of W ′ (F v /Fv ) associated to the natural l-adic representation of
+Gal(F v /Fv ) on the dual space to Vl (Av ) = Tl (Av ) ⊗Zl Ql ,
+                                        χv : Gal(F v /Fv ) −→ GLr (Z)
+is the representation of Gal(F v /Fv ) corresponding to the Galois module Yv (F v ), and sp(2) is
+given by (2.1) (see Proposition 2.10). Since the root number of a direct sum of representations
+of W ′ (F v /Fv ) equals the product of the root numbers of the summands, we get from (1.10)
+                         W (σv′ ⊗ τv ) = W (κv ⊗ τv ) · W (χv ⊗ ωv−1 ⊗ τv ⊗ sp(2)).                         (1.11)
+We show that if char(kv ) > 2g + 1 then (1.8) holds for κv , i.e.
+                        W (κv ⊗ τv ) = det µ(−1)dim τ · det τ (−1)l1 · αdim τ · (−1)l2 ,                    (1.12)
+where l1 = dim µ + 12 (dim µ1 + · · · + dim µa ), µ, µ1, . . . , µa are some representations of W(F v /Fv ),
+α = ±1, l2 = a · h1, τv i + a · hηv , τv i + a · hµ̂1 ⊕ · · · ⊕ µ̂a , τv i, µ̂1 ⊕ · · · ⊕ µ̂a is a representation of
+Gal(F v /Fv ) realizable over Q, and ηv is the unramified quadratic character of Fv× .
+4                                           M. SABITOVA
+
+  The rest of the proof of Theorem 1.2 is analogous to one of Proposition E ([Ro2], p. 347).
+Namely, it follows from Lemma on p. 339 and Lemma on p. 347 in [Ro2] that dim τ is even.
+Hence we get from (1.6) that W (Xv , τv ) = 1 for infinite places. If v is a finite place then the
+assumption mQ (τ ) = 2 implies that W (χv ⊗ ωv−1 ⊗ τv ⊗ sp(2)) = 1 ([Ro2], p. 327, Prop. 6), hence
+we have from (1.11)
+                                   W (σv′ ⊗ τv ) = W (κv ⊗ τv ).                             (1.13)
+  If v is a finite place such that char(kv ) > 2g + 1 then (1.12) holds which, together with the
+assumption mQ (τ ) = 2, implies that W (κv ⊗ τv ) = 1. Hence W (σv′ ⊗ τv ) = 1 by (1.13).
+  If v is a finite place such that char(kv ) ≤ 2g + 1 then the conditions on bad primes in Theorem
+                                                         1/2
+1.1 imply that τv is symplectic. We show that κv ⊗ ωv is symplectic too (Corollary 2.14). Since
+the real powers of ωv do not change the root number,
+                                 W (κv ⊗ τv ) = W (κv ⊗ ωv1/2 ⊗ τv ),                          (1.14)
+                 1/2
+where W (κv ⊗ ωv ⊗ τv ) = 1 as the root number of the tensor product of two symplectic repre-
+sentations of W(F v /Fv ) ([Ro2], p. 319, Prop. 2 and the remark after it). Thus, in this case we
+also have W (Xv , τv ) = 1 by (1.13) and (1.14).
+   This paper is organized in the following way. In Section 2 we study the root number W (σ ′ ⊗ τ ),
+where τ is a complex finite-dimensional representation of Gal(K/K) with real-valued character,
+K is a local non-Archimedean field of characteristic zero, and σ ′ is the representation of W ′ (K/K)
+associated to the l-adic representation of Gal(K/K) on the dual Vl (M)∗ to Vl (M), where M is an
+abelian variety over K. Subsection 2.1 contains general facts and notation used in the paper. In
+Subsection 2.2 we study the case of an abelian variety with potential good reduction. Subsection
+2.3 deals with the general case. In Section 3 we give the proof of Theorem 1.2. We put proofs
+of the results of Subsection 2.2 in Appendix A. Appendix B contains two lemmas needed for the
+proof of the main result of Subsection 2.3 (Proposition 2.10). In Appendix C we give a description
+of the representation of W ′ (K/K) associated to the natural l-adic representation of Gal(K/K)
+on Vl (M)∗ in the case when M is the quotient of a torus by a discrete subgroup (Proposition
+C.1). This result is a special case of Proposition 2.10, however we give an elementary proof which
+does not rely on the result by M. Raynaud mentioned above. In fact, we prove a more general
+result, which can be used to prove formula (1.10) for an arbitrary Jacobian variety Jv over Fv
+without using Raynaud’s result in a special case when in (1.9) the image of Yv under fv is finite.
+Instead of Raynaud’s result the description of symplectic admissible representations of W ′ (F v /Fv )
+can be used in this case. We give a description of unitary, orthogonal, or symplectic admissible
+representations of W ′ (K/K) in Appendix D.
+   Unless stated otherwise, we assume that all the representations under consideration are complex
+and finite-dimensional.
+Acknowledgments. I would like to thank my adviser Ted Chinburg for suggesting the problem
+and useful discussions. I am also grateful to Siegfried Bosch, Ching-Li Chai, Robert Kottwitz, and
+Michel Raynaud for answering my questions related to the uniformization theory, and especially
+to Michel Raynaud for providing the reference [Ra].
+                                    ROOT NUMBERS OF CURVES                                         5
+
+                                         2. Local case
+2.1. General facts and notation. Let K be a non-Archimedean local field of characteristic
+zero with ring of integers O, residue class field k, and a uniformizer ̟. Let K be a fixed
+algebraic closure of K and let K unr be the maximal unramified extension of K contained in K.
+Let I = Gal(K/K unr ) be the inertia subgroup of Gal(K/K) and let Φ be an inverse Frobenius
+element of Gal(K/K), i.e. Φ is a preimage of the inverse of the Frobenius automorphism under
+the decomposition map
+
+                                   π : Gal(K/K) −→ Gal(k/k).
+  By a representation σ of the Weil group W(K/K) we mean a continuous homomorphism
+                                    σ : W(K/K) −→ GL(U),
+where U is a finite-dimensional complex vector space. Let ω : W(K/K) −→ C× be the one-
+dimensional representation of W(K/K) given by
+                                      ω|I = 1,   ω(Φ) = q −1 ,
+where q = card(k). For a finite extension F of K contained in K, we identify by local class field
+theory the one-dimensional representations of W(K/F ) with characters of F × (i.e. continuous
+homomorphisms from F × into C× ). Also, if φ is a representation of W(K/F ), the representation
+of W(K/K) induced by φ will be denoted by IndFK φ. Analogously, if ψ is a representation of
+W(K/K), then the restriction of ψ to W(K/F ) will be denoted by ResFK ψ.
+   By a representation σ ′ of the Weil-Deligne group W ′ (K/K) we mean a continuous homomor-
+phism
+                                   σ ′ : W ′ (K/K) −→ GL(U),
+where U is a finite-dimensional complex vector space and the restriction of σ ′ to the subgroup C
+of W ′ (K/K) is complex analytic. It is known that there is a bijection between representations of
+W ′ (K/K) and pairs (σ, N), where σ : W(K/K) −→ GL(U) is a representation of W(K/K) and
+N is a nilpotent endomorphism on U such that
+                             σ(g)Nσ(g)−1 = ω(g)N,      g ∈ W(K/K).
+In what follows we identify σ ′ with the corresponding pair (σ, N) and write σ ′ = (σ, N). Also, a
+representation σ of W(K/K) is identified with the representation (σ, 0) of W ′ (K/K) ([Ro1], p.
+128, §3).
+   For a positive integer n let sp(n) = (σ, N) denote the special representation of dimension n,
+i.e. the representation of W ′ (K/K) on Cn (with the standard basis e0 , . . . , en−1 ) given by the
+following formulas:
+                       σ(g)ei = ω(g)i ei ,   0 ≤ i ≤ n − 1, g ∈ W(K/K),                        (2.1)
+                         Nej = ej+1 ,        0 ≤ j ≤ n − 2,
+                       Nen−1 = 0.
+6                                           M. SABITOVA
+
+We say that a representation σ ′ = (σ, N) of W ′ (K/K) is admissible if σ is semisimple ([Ro1], p.
+132, §5).
+   Let M be an abelian variety over K. For a rational prime l different from p = char(k) let
+Tl (M) be the l-adic Tate module of M. It is a free Zl -module of rank 2g, where g = dim M. Put
+Vl (M) = Tl (M) ⊗Zl Ql and denote by Vl (M)∗ the dual of Vl (M). Let
+                                  σl : Gal(K/K) −→ GL(Vl (M)∗ )
+denote the contragredient of the natural l-adic representation of Gal(K/K) on Vl (M). We are
+interested in the representation σ ′ = (σ, N) of W ′ (K/K) associated to σl . Let ı : Ql ֒→ C be
+a field embedding. Then σ : W(K/K) −→ GL(Vl (M)∗ ⊗ı C) is a representation of W(K/K)
+(which is not necessarily obtained from the restriction of σl to W(K/K) by extending scalars via
+ı : Ql ֒→ C) and N ∈ End(Vl (M)∗ ⊗ı C) is a nilpotent endomorphism (see [Ro1], p. 130, §4 for
+more detail). A priori, σ ′ depends on the choice of l and ı, but by abuse of notation we write σ ′
+            ′
+instead of σl,ı . We will prove later that in our context σ ′ does not depend on the choice of l and ı.
+Let τ be a representation of Gal(K/K) with real-valued character. Our goal in this section is to
+compute the root number W (σ ′ ⊗ τ ). We are particularly concerned with the case when M is the
+Jacobian of a smooth projective curve over K. In this case M is self-dual and, consequently, there
+is the Weil pairing on Mln = Hom(Z/ln Z, M(K)), which induces a nondegenerate, symplectic,
+Gal(K/K)-equivariant pairing
+                                h−, −i : Tl (M) × Tl (M) −→ Zl ⊗ ωl ,
+where ωl is the l-adic cyclotomic character of Gal(K/K). It is easy to show that σ ′ ⊗ ω 1/2 is
+symplectic (cf. [Ro1], p. 150, §16). This is the only use we will make of the fact that M is
+the Jacobian variety of a curve. Thus, throughout this section we assume that M is an abelian
+variety such that σ ′ ⊗ ω 1/2 is symplectic. Then σ ′ ⊗ ω 1/2 ⊗ τ is self-contragredient and of trivial
+determinant, hence W (σ ′ ⊗ τ ) = W (σ ′ ⊗ ω 1/2 ⊗ τ ), where W (σ ′ ⊗ ω 1/2 ⊗ τ ) does not depend on
+the choice of an additive character of K and W (σ ′ ⊗ ω 1/2 ⊗ τ ) = ±1 ([Ro2], p. 315).
+   The main theory we are using to find a formula for W (σ ′ ⊗ τ ) is the theory of uniformization
+of abelian varieties. According to this theory there exists a semi-abelian variety G over K and a
+discrete subgroup Y of G such that, in terms of rigid geometry, M is isomorphic to the quotient
+G/Y . The semi-abelian variety G fits into an exact sequence
+                                                      f
+                                    0 −→ T −→ G −→ A −→ 0,                                       (2.2)
+where A is an abelian variety over K with potential good reduction, T is a torus over K of
+dimension r; Y is an étale sheaf of free abelian groups over Spec(K) of rank r.
+2.2. Case of an abelian variety with potential good reduction. Let A be an abelian variety
+over K with potential good reduction and let
+                                  κl : Gal(K/K) −→ GL(Vl (A)∗ )
+denote the natural l-adic representation of Gal(K/K) on Vl (A)∗ . First, let us show that the
+representation κ′ = (κ, S) of W ′ (K/K) associated to κl is actually a representation of W(K/K),
+                                    ROOT NUMBERS OF CURVES                                           7
+
+i.e. S = 0. Indeed, κ′ is a representation of W(K/K) if and only if κl is trivial on an open
+subgroup of I ([Ro1], p. 131, Prop.(i)). Let
+                                  ψl : Gal(K/K) −→ Aut(Tl (A))
+denote the representation corresponding to the Gal(K/K)-module Tl (A). Since A has potential
+good reduction, the image by ψl of I is finite ([S-T], p. 496, Thm. 2(i)), which implies that the
+image by κl of I is finite, hence κl is trivial on an open subgroup of I (cf. [Ro1], p. 148).
+   It is known that a complex finite-dimensional representation λ of a group is semisimple if and
+only if its restriction to a normal subgroup of finite index is semisimple ([Che], p. 82, Prop. 1
+and [Ro1], p. 148). Moreover, since every subgroup of finite index contains a normal subgroup of
+finite index, this implies that λ is semisimple if and only if its restriction to a subgroup of finite
+index is semisimple. This fact will be used frequently throughout this paper, so for convenience
+we state it as a separate lemma:
+Lemma 2.1. A complex finite-dimensional representation of a group is semisimple if and only if
+its restriction to a subgroup of finite index is semisimple.
+Lemma 2.2. κ is semisimple.
+Proof. Since the image by κ of I is finite, by Lemma 2.1 it is enough to show that κ(Φ) is
+diagonalizable. Also, if L ⊂ K is a finite extension of K over which A acquires good reduction,
+then by the above fact κ is semisimple if and only if its restriction to W(K/L) is semisimple.
+Thus, we can assume that A has good reduction (cf. [Ro1], p. 148). Let A0 be the Néron minimal
+model of A and Ã = A0 ×O k the special fiber of A0 . Since A has good reduction, the reduction
+map defines a Gal(K/K)-equivariant isomorphism of Tl (A) onto Tl (Ã), where Gal(K/K) acts on
+Tl (Ã) via the decomposition map π ([S-T], p. 495, Lem. 2). Thus,
+                                          Vl (A) ∼
+                                                 = Vl (Ã)                                 (2.3)
+as Gal(K/K)-modules. By Tate’s result on Tate’s conjecture, the natural l-adic representation βl
+of Gal(k/k) on Vl (Ã) is semisimple. Since Gal(k/k) is abelian, βl is a direct sum of one-dimensional
+representations, hence βl (π(Φ)) is diagonalizable, consequently, κ∗l (Φ) is diagonalizable, because
+κ∗l (Φ) is equivalent to βl (π(Φ)) via (2.3). This proves that κ(Φ) is diagonalizable, because κ(Φ)
+is just κl (Φ) considered as an element of GL(Vl (A)∗ ⊗ı C).                                        
+Corollary 2.3. The representation κ does not depend on choice of l and ı.
+Proof. [Ro1], p. 148 and Lemma 2.2.                                                                 
+Remark 2.4. Throughout this subsection we assume that κ ⊗ ω 1/2 is symplectic. We will prove
+that this is true in our context, i.e. for an abelian variety A over K with potential good reduction
+fitting into exact sequence (2.2) corresponding to an abelian variety M which is the Jacobian of
+a smooth projective curve over K (Corollary 2.14).
+ Since A has potential good reduction, there exists a minimal finite subextension L/K unr of
+K/K unr over which A acquires good reduction. It is a Galois extension and it is tamely ramified
+8                                           M. SABITOVA
+
+if p > 2m + 1, where m = dim A. Moreover, Gal(K/L) is contained in the kernel of the represen-
+tation ψl ([S-T], p. 497, Cor. 2 and p. 498, Cor. 3). Thus, κ and, consequently κ ⊗ ω 1/2 , can be
+considered as representations of the group
+                    W(L/K) = W(K/K)/ Gal(K/L) ∼
+                                              = Gal(L/K unr ) ⋊ (Φ),
+where (Φ) is the infinite cyclic group generated by Φ (cf. [Ro2], p. 331). Throughout this
+subsection we assume that p > 2m + 1. Then, under this assumption B = Gal(L/K unr ) is a finite
+cyclic group of order not divisible by p and κ ⊗ ω 1/2 is a semisimple (by Lemma 2.2), symplectic
+(by assumption) representation of the semi-direct product G = B ⋊(Φ) of finite and infinite cyclic
+groups. Using Corollary on p. 499 in [S-T], it is immediate that κ has Q-valued character. Since
+ω is trivial on I, it follows that ResG B (κ ⊗ ω
+                                                 1/2
+                                                     ) has Q-valued character. The following results
+give a description of such a representation, i.e. a semisimple symplectic representation λ of a
+semi-direct product of a finite cyclic group B and an infinite cyclic group such that the restriction
+of λ to B has Q-valued character. They will be used later to generalize a formula for the root
+number obtained by D. Rohrlich.
+Proposition 2.5. Let C = (c) be an infinite cyclic group generated by an element c and let
+B = (b) be a finite cyclic group of order n generated by an element b. Let G = B ⋊ C be a
+semi-direct product, where C acts on B via c−1 bc = bk for some k ∈ (Z/nZ)× . Denote by s the
+order of k in (Z/nZ)× . Then every irreducible symplectic representation λ of G factors through
+the group H = G/(c2s ) and as a representation of H it has the following form
+                                           λ = IndH
+                                                  B⋊Γ φ,
+
+where Γ is a subgroup of C/(c2s ) generated by an element cx and φ is a one-dimensional repre-
+sentation of B ⋊ Γ satisfying the following conditions:
+     • φ(b) = ξ for an n-th root of unity ξ of order d (d 6= 1, 2)
+     • x is the order of k in (Z/dZ)×
+     • x is even
+     • φ(cx ) = −1
+             x
+     • 1 + k 2 ≡ 0 (mod d).
+Conversely, every representation of this form is symplectic and irreducible.
+   In the notation of Proposition 2.5 let λ = IndH
+                                                 B⋊Γ φ be a symplectic irreducible representation
+of G and θ the one-dimensional representation of B ⋊ Γ such that θ(cx ) = −1, θ(b) = 1. Let
+                                        λ̂ = IndH
+                                                B⋊Γ (φ ⊗ θ).                                    (2.4)
+
+Whereas λ is symplectic, λ̂ is realizable over R. It can be checked using Proposition 39 ([S], p.
+109).
+  For a group D let R(D) denote the Grothendieck group of the abelian category of finite-
+dimensional representations of D over C. If ρ is such a representation we denote by [ρ] the
+corresponding element of R(D).
+                                          ROOT NUMBERS OF CURVES                                                    9
+
+Proposition 2.6. Let G = B ⋊C be a semi-direct product as in Proposition 2.5 and λ a semisim-
+ple symplectic representation of G. If ResG
+                                          B λ has Q-valued character, then
+
+                           [λ] = [µ] + [µ∗ ] + 2 · ([µ0 ] − [µ′0 ]) + [µ1 ] + · · · + [µa ],                    (2.5)
+where µ is a representation of G, µ0 and µ′0 are symplectic representations of G with finite images,
+µ1 , . . . , µa are irreducible symplectic subrepresentations of λ with finite images, µ̂1 , . . . , µ̂a are
+representations with finite images given by (2.4) such that µ̂1 ⊕ · · · ⊕ µ̂a is realizable over Q.
+Corollary 2.7. Let κ be the representation of W(K/K) corresponding to Vl (A)∗ such that λ =
+κ ⊗ ω 1/2 is symplectic. Let m = dim A and p > 2m + 1. Then in R(W(K/K)) we have
+                           [λ] = [µ] + [µ∗ ] + 2 · ([µ0 ] − [µ′0 ]) + [µ1 ] + · · · + [µa ],                    (2.6)
+where µ is a representation of W(K/K), µ0 and µ′0 are symplectic representations of W(K/K)
+with finite images, µ1 , . . . , µa are irreducible symplectic subrepresentations of λ with finite images,
+µ̂1 , . . . , µ̂a are representations with finite images given by (2.4) such that µ̂1 ⊕ · · · ⊕ µ̂a is realizable
+over Q.
+ Let τ be a representation of Gal(K/K) with real-valued character. To compute the root number
+W (κ ⊗ τ ) we generalize the following result by D. Rohrlich ([Ro2], p. 318, Thm. 1) :
+Theorem 2.8. Let K be a local non-Archimedean field of characteristic zero. Let τ be a repre-
+sentation of Gal(K/K) with real-valued character. Then
+                       W (λ ⊗ τ ) = det τ (−1) · ϕ(uH2 /K )dim τ · (−1)h1,τ i+hη,τ i+hλ̂,τ i .
+Here λ is a two-dimensional irreducible, symplectic representation of Gal(K/K) of the form
+λ = IndH                                                                                      ×
+        K φ, where H2 is the unramified quadratic extension of K, φ is a tame character of H2 ;
+         2
+
+
+η is the unramified quadratic character of K × ; λ̂ = IndH  K (φ ⊗ θ), where θ is the unramified
+                                                             2
+
+
+quadratic character of H2× , and ϕ(uH2 /K ) = ±1 (see [Ro2], p. 318 for more detail).
+  We prove the following generalization of Theorem 2.8:
+Proposition 2.9. Let κ be the representation of W(K/K) corresponding to Vl (A)∗ such that
+κ ⊗ ω 1/2 is symplectic. Let m = dim A and p > 2m + 1. Let τ be a representation of Gal(K/K)
+with real-valued character. In the notation of Corollary 2.7 we have
+                         W (κ ⊗ τ ) = det µ(−1)dim τ · det τ (−1)l1 · αdim τ · (−1)l2 ,                         (2.7)
+where l1 = dim µ + 12 (dim µ1 + · · ·+ dim µa ), α = ±1, l2 = a · h1, τ i + a · hη, τ i + a · hµ̂1 ⊕ · · ·⊕ µ̂a , τ i,
+and η is the unramified quadratic character of K × .
+2.3. General case. We keep the notation of Subsection 2.1. Let σ ′ = (σ, N) be the represen-
+tation of W ′ (K/K) associated to the natural l-adic representation of Gal(K/K) on Vl (M)∗ , κ
+the representation of W ′ (K/K) associated to the natural l-adic representation of Gal(K/K) on
+Vl (A)∗ , and
+                                  χ : Gal(K/K) −→ GLr (Z)
+10                                          M. SABITOVA
+
+the representation corresponding to the Gal(K/K)-module Y (K). It is known that there is a finite
+Galois extension L ⊂ K of K such that Gal(K/L) acts trivially on Y (K), hence χ has finite image.
+Here κ is actually a representation of W(K/K) (see Subsection 2.2) and we identify κ with the
+representation (κ, 0) of W ′ (K/K). Also, we identify χ with the representation (ResW(K/K) χ, 0)
+of W ′ (K/K).
+   The main result of this subsection is the following proposition:
+Proposition 2.10.
+                                  σ′ ∼
+                                     = κ ⊕ (χ ⊗ ω −1 ⊗ sp(2)).                              (2.8)
+To prove Proposition 2.10 we will need the following lemmas.
+Lemma 2.11. Let λ′ = (λ, R) be the representation of W ′ (K/K) associated to the natural l-adic
+representation of Gal(K/K) on Vl (T )∗ . Then R = 0 and
+                                          λ∼
+                                           = χ ⊗ ω −1 .
+Proof. From the exact Gal(K/K)-equivariant sequence (2.2) we get the following exact sequence
+of Gal(K/K)-modules:
+                             0 −→ T (K) −→ G(K) −→ A(K) −→ 0.
+Since T (K) is a divisible group, the last sequence induces an exact Gal(K/K)-equivariant se-
+quence of l-adic Tate modules:
+                            0 −→ Tl (T ) −→ Tl (G) −→ Tl (A) −→ 0.
+By tensoring the above sequence with Ql over Zl and taking duals over Ql afterwards, we get the
+exact sequence of Gal(K/K)-modules:
+                           0 −→ Vl (A)∗ −→ Vl (G)∗ −→ Vl (T )∗ −→ 0.               (2.9)
+                                                                     ×
+  Let X be the character group of T . Then T (K) ∼ = HomZ (X(K), K ) as Gal(K/K)-modules
+over Z, hence we have the following sequence of isomorphisms of Gal(K/K)-modules:
+                                                                 ×
+                   Vl (T ) = Tl (T ) ⊗Z Ql ∼
+                                        l  = HomZ (X(K), Tl (K )) ⊗Z Ql l
+                                                                                  (2.10)
+                                                       ×
+                           ∼
+                           = HomZl (X(K) ⊗Z Zl , Tl (K )) ⊗Zl Ql
+                                                       ×
+                           ∼
+                           = HomQl (X(K) ⊗Z Ql , Vl (K ))
+                                                      ×
+                           ∼
+                           = (X(K) ⊗Z Ql )∗ ⊗Q Vl (K ).
+                                                   l
+
+It is known that there is an injective homomorphism φ : Y −→ X with finite cokernel ([F-C], p.
+58), consequently
+                                     Y (K) ⊗Z Ql ∼
+                                                 = X(K) ⊗Z Ql
+as Gal(K/K)-modules over Ql . Thus, we get from (2.10)
+                                                                 ×
+                               Vl (T )∗ ∼
+                                        = (Y (K) ⊗Z Ql ) ⊗Q Vl (K )∗ .
+                                                          l
+                                                                                        (2.11)
+Let ı : Ql ֒→ C be a field embedding and let Fl,ı be the functor which associates to an l-adic
+representation of Gal(K/K) a representation of W ′ (K/K). Since the image of the representation
+                                    ROOT NUMBERS OF CURVES                                          11
+
+of Gal(K/K) on Y (K) ⊗Z Ql under Fl,ı is χ and the image of the representation of Gal(K/K) on
+     ×
+Vl (K )∗ under Fl,ı is ω −1, by (2.11) the image λ′ of the representation of Gal(K/K) on Vl (T )∗
+under Fl,ı is χ ⊗ ω −1 . Thus λ′ ∼
+                                 = χ ⊗ ω −1 , hence λ′ is a representation of W(K/K), i.e. R = 0. 
+
+Lemma 2.12. Let ρ′ = (ρ, P ) be the representation of W ′ (K/K) associated to the natural l-adic
+representation of Gal(K/K) on Vl (G)∗ . Then P = 0 and
+                                        ρ∼
+                                         = κ ⊕ (χ ⊗ ω −1).
+Proof. Sequence (2.9) induces an exact sequence of corresponding representations of W ′ (K/K),
+i.e.
+                                         h                 g
+                    0 −→ Vl (A)∗ ⊗ı C −→ Vl (G)∗ ⊗ı C −→ Vl (T )∗ ⊗ı C −→ 0                    (2.12)
+is an exact sequence of W ′ (K/K)-modules, where ı : Ql ֒→ C is a field embedding, (κ, 0) is the
+representation of W ′ (K/K) on Vl (A)∗ ⊗ı C, ρ′ = (ρ, P ) is the representation of W ′ (K/K) on
+Vl (G)∗ ⊗ı C, and by Lemma 2.11, (χ ⊗ ω −1 , 0) is the representation of W ′ (K/K) on Vl (T )∗ ⊗ı C.
+In particular, (2.12) is an exact sequence of W(K/K)-modules and it splits if ρ is semisimple,
+which implies that ρ ∼= κ ⊕ (χ ⊗ ω −1 ). Thus, it is enough to show that P = 0 and ρ is semisimple.
+   It is known that there is a finite Galois extension L ⊂ K of K such that T ×K L splits and
+A ×K L has good reduction. Since ρ is semisimple if and only if its restriction to a subgroup of
+finite index is semisimple (Lemma 2.1) and ResW ′ (K/L) ρ′ = (ResLK ρ, P ) ([Ro1], p. 130), to prove
+that P = 0 and ρ is semisimple we can assume that T splits over K and A has good reduction over
+K. Then it follows from Lemma 2.11 that χ is trivial. Also, since the image of I under ρ is finite,
+by Lemma 2.1 to prove that ρ is semisimple it is enough to prove that ρ(Φ) is diagonalizable.
+   Taking into account that χ is trivial, from (2.12) we obtain that in a suitable basis ρ(Φ) has
+the following form:
+                                                            
+                                                  κ(Φ) ∗
+                                      ρ(Φ) =                   ,                              (2.13)
+                                                    0    qEr
+where Er is the r × r-identity matrix. Let
+                                  κl : Gal(K/K) −→ Aut(Tl (A))
+be the l-adic representation corresponding to the Galois module Tl (A). It is known that the
+absolute values of the eigenvalues of κl (Φ) are equal to q 1/2 ([S-T], Corollary on p. 499). Then
+the absolute values of the eigenvalues of κ(Φ) are equal to q −1/2 , since the eigenvalues of κ(Φ) are
+the inverses of the eigenvalues of κl (Φ). It follows that none of the eigenvalues of κ(Φ) is equal
+to q. Since κ(Φ) is diagonalizable by Lemma 2.2, (2.13) shows that ρ(Φ) is diagonalizable, hence
+ρ is semisimple and ρ′ is admissible.
+   Let us show now that P = 0. Since (2.12) is an exact sequence of W ′ (K/K)-modules, we have
+                                Nh(x) = 0,        ∀x ∈ Vl (A)∗ ⊗ı C,
+                                g(Ny) = 0,        ∀y ∈ Vl (G)∗ ⊗ı C,
+12                                          M. SABITOVA
+
+which implies that N 2 = 0. On the other hand, since ρ′ is admissible, it has the following form:
+                                               s
+                                        ρ′ ∼
+                                               M
+                                           =         αi ⊗ sp(ni ),
+                                               i=1
+
+where each αi is a representation of W(K/K), each ni is a positive integer, and we can assume
+that ni 6= nj if i 6= j ([Ro1], p. 133, Cor. 2). Since N 2 = 0, it follows that each ni is 1 or 2, i.e.
+without loss of generality we can assume that
+                                        ρ′ ∼
+                                           = α1 ⊕ (α2 ⊗ sp(2)).                                 (2.14)
+     We will show that α2 = 0. Assume that α2 6= 0. From (2.14) we have
+                                    ρ∼= α1 ⊕ α2 ⊕ (α2 ⊗ ω).
+On the other hand, since ρ is semisimple, the exact sequence (2.12) of W(K/K)-modules splits,
+i.e.
+                                       ρ∼= κ ⊕ (ω −1 )⊕r ,
+because χ is trivial. Thus, combining the last two congruences, we get
+                               α1 ⊕ α2 ⊕ (α2 ⊗ ω) ∼= κ ⊕ (ω −1)⊕r .                             (2.15)
+By assumption, A has good reduction, hence by the criterion of Néron-Ogg-Šhafarevič ([S-T], p.
+                                                         ∗
+493, Thm. 1) the inertia
+                   L2m group I acts trivially on Vl (A) . Since by Lemma 2.2, κ is semisimple
+it implies that κ = i=1 κi , where m = dim A and κ1 , . . . , κ2m are one-dimensional subrepresen-
+tations of κ. Thus, it follows from (2.15) that α2 is a sum of one-dimensional representations.
+Let α0 be one of them. Then using the uniqueness of decomposition of a semisimple module into
+simple modules we have from (2.15):
+                                    α0 ∼= ω −1 or α0 ∼ = κi
+for some κi , hence
+                                        = 1 or α0 ⊗ ω ∼
+                                 α0 ⊗ ω ∼             = κi ⊗ ω.
+In particular, the absolute value of α0 ⊗ ω(Φ) is 1 or q −3/2 , because the absolute value of κi (Φ) is
+q −1/2 for each i (see above). It implies that α0 ⊗ω is neither ω −1 nor κi for any i which contradicts
+(2.15). Thus, α2 = 0 and ρ′ is a representation of W(K/K).                                           
+Lemma 2.13. σ ′ is admissible.
+Proof. There is the following exact Gal(K/K)-equivariant sequence ([Ra], p. 312):
+                       0 −→ G(K)ln −→ M(K)ln −→ Y (K)/ln Y (K) −→ 0,                            (2.16)
+where G(K)ln (resp. M(K)ln ) denotes Hom(Z/ln Z, G(K)) (resp. Hom(Z/ln Z, M(K))). Since
+Y (K) is a free group of rank r and G(K) is divisible by Lemma B.1 (see Appendix B), we have
+the following exact sequence of Gal(K/K)-modules:
+                             0 −→ Tl (G) −→ Tl (M) −→ χ ⊗ Zrl −→ 0.
+                                   ROOT NUMBERS OF CURVES                                        13
+
+By tensoring the above sequence with Ql over Zl and taking duals over Ql afterwards, we get:
+                           0 −→ χ ⊗ Qrl −→ Vl (M)∗ −→ Vl (G)∗ −→ 0,                          (2.17)
+because χ ∼   ∗
+           = χ as a representation with finite image, realizable over Z.
+  As in the proof of Lemma 2.12, by Lemma 2.1 we can assume that A has good reduction over
+K and T splits over K. Then it follows from Lemma 2.11 that χ is trivial. Also, by Lemma 2.1
+to prove that σ ′ is admissible it is enough to prove that σ(Φ) is diagonalizable.
+  Sequence (2.17) induces an exact sequence of corresponding representations of W ′ (K/K), i.e.
+                  0 −→ (χ ⊗ Qrl ) ⊗ı C −→ Vl (M)∗ ⊗ı C −→ Vl (G)∗ ⊗ı C −→ 0                  (2.18)
+is an exact sequence of W ′ (K/K)-modules, where χ is the representation of W ′ (K/K) on (χ ⊗
+Qrl ) ⊗ı C, σ ′ = (σ, N) is the representation of W ′ (K/K) on Vl (M)∗ ⊗ı C, and by Lemma 2.12,
+κ ⊕ (χ ⊗ ω −1) is the representation of W ′ (K/K) on Vl (G)∗ ⊗ı C. Taking into account that χ is
+trivial and (2.18) is an exact sequence of W(K/K)-modules, we obtain that in a suitable basis
+σ(Φ) has the following form:
+                                                             
+                                               Er ∗       ∗
+                                    σ(Φ) =  0 qEr        ∗ .                            (2.19)
+                                               0     0 κ(Φ)
+Here κ(Φ) is diagonalizable by Lemma 2.2. Since the absolute values of the eigenvalues of κ(Φ)
+are equal to q −1/2 (see above), none of the eigenvalues of κ(Φ) is equal to 1 or q. Thus, (2.19)
+shows that σ(Φ) is diagonalizable, hence σ is semisimple, and σ ′ is admissible.               
+Proof of Proposition 2.10. Since σ ′ is admissible by Lemma 2.13 and the representations of the
+Weil-Deligne group W ′ (K/K) on (χ ⊗ Qrl ) ⊗ı C and Vl (G)∗ ⊗ı C are actually representations of
+the Weil group W(K/K), the same argument as in the proof of Lemma 2.12 applied to (2.18)
+gives that σ ′ has the following form:
+                                        σ′ ∼
+                                           = γ ⊕ (δ ⊗ sp(2)),                             (2.20)
+where γ and δ are representations of W(K/K). Hence
+                                     σ∼
+                                      = γ ⊕ δ ⊕ (δ ⊗ ω).
+On the other hand, since σ is semisimple by Lemma 2.13, the exact sequence (2.18) of W(K/K)-
+modules splits, i.e.
+                                     σ∼= χ ⊕ κ ⊕ (χ ⊗ ω −1).
+Thus, combining the last two congruences, we get
+                              γ ⊕ δ ⊕ (δ ⊗ ω) ∼
+                                              = χ ⊕ κ ⊕ (χ ⊗ ω −1).                     (2.21)
+Note that χ is isomorphic to a subrepresentation of γ ⊕ (δ ⊗ ω), because by (2.18)
+                                    χ ֒→ ker N = γ ⊕ (δ ⊗ ω).
+Thus, δ is isomorphic to a subrepresentation of κ ⊕ (χ ⊗ ω −1 ) by the uniqueness of decomposition
+of a semisimple module into simple modules. We claim that δ is isomorphic to a subrepresentation
+of χ ⊗ ω −1 . Indeed, suppose there is an irreducible subrepresentation δ0 of δ which is isomorphic
+14                                               M. SABITOVA
+
+to a subrepresentation of κ. Since the absolute values of the eigenvalues of κ(Φ) are equal to
+q −1/2 (see above), the eigenvalues of δ0 (Φ) are of absolute value q −1/2 . Hence the eigenvalues
+of δ0 ⊗ ω(Φ) are of absolute value q −3/2 . On the other hand, it follows from (2.21) that δ0 ⊗ ω
+is isomorphic to a subrepresentation of χ, κ, or χ ⊗ ω −1 , which is a contradiction because the
+eigenvalues of χ(Φ), κ(Φ), and χ ⊗ ω −1 (Φ) are of absolute values 1, q −1/2 , and q respectively.
+Thus, δ is isomorphic to a subrepresentation of χ ⊗ ω −1 . Since dim δ = r by Lemma B.2 (see
+Appendix B), we have δ ∼  = χ ⊗ ω −1 , hence γ ∼= κ by (2.21) and σ ′ ∼
+                                                                      = κ ⊕ (χ ⊗ ω −1 ⊗ sp(2)) by
+(2.20).                                                                                         
+Corollary 2.14. κ ⊗ ω 1/2 is symplectic.
+Proof. It follows from Proposition 2.10 that
+                                     σ∼= κ ⊕ (χ ⊗ ω −1) ⊕ χ.
+Thus,
+                          σ ⊗ ω 1/2 ∼
+                                    = (κ ⊗ ω 1/2 ) ⊕ (χ ⊗ ω −1/2 ) ⊕ (χ ⊗ ω 1/2 ).
+Here χ is a representation of finite image realizable over Z, hence (χ ⊗ ω 1/2 )∗ ∼= χ ⊗ ω −1/2 and
+       −1/2           1/2                              1/2
+(χ ⊗ ω      ) ⊕ (χ ⊗ ω ) is symplectic. Since σ ⊗ ω is symplectic by assumption (see Subsection
+2.1), this implies that κ ⊗ ω 1/2 is symplectic too. Indeed, since σ ⊗ ω 1/2 is semisimple and
+symplectic, it follows from Lemma A.2 (see Appendix A) that σ ⊗ ω 1/2 has the following form:
+                                  σ ⊗ ω 1/2 ∼
+                                            = ν ⊕ ν ∗ ⊕ λ1 ⊕ · · · ⊕ λs ,                     (2.22)
+where ν is a representation of W(K/K) and λ1 , . . . , λs are irreducible symplectic representations
+of W(K/K). On the other hand, we have
+                        σ ⊗ ω 1/2 ∼
+                                  = (κ ⊗ ω 1/2 ) ⊕ (χ ⊗ ω 1/2 )∗ ⊕ (χ ⊗ ω 1/2 ).              (2.23)
+Putting (2.22) and (2.23) together and taking into account the uniqueness of decomposition of a
+semisimple module into simple modules, we conclude that κ ⊗ ω 1/2 must have the same form as
+σ ⊗ ω 1/2 in (2.22), i.e. without loss of generality we can assume that
+                                  κ ⊗ ω 1/2 ∼
+                                            = µ ⊕ µ ∗ ⊕ λ1 ⊕ · · · ⊕ λt ,
+where µ is a subrepresentation of ν and t ≤ s. Thus, κ ⊗ ω 1/2 is symplectic.                            
+Corollary 2.15. The representation σ ′ does not depend on choice of l and ı.
+Proof. The statement is a consequence of Corollary 2.3 and Proposition 2.10.                             
+Corollary 2.16. Let τ be a representation of Gal(K/K) with real-valued character. Then
+                    W (σ ′ ⊗ τ ) = W (κ ⊗ τ ) · det τ (−1)r · det χ(−1)dim τ · (−1)hχ,τ i .          (2.24)
+Moreover, when p > 2g + 1 we have
+        W (σ ′ ⊗ τ ) = det µ(−1)dim τ · det χ(−1)dim τ · det τ (−1)r+l1 · αdim τ · (−1)hχ,τ i+l2 ,   (2.25)
+where l1 = dim µ + 21 (dim µ1 + · · · + dim µa ), µ is a representation of W(K/K), µ1 , . . . , µa are
+irreducible symplectic subrepresentations of κ ⊗ ω 1/2 with finite images, α = ±1, l2 = a · h1, τ i +
+                                         ROOT NUMBERS OF CURVES                                                 15
+
+a · hη, τ i + a · hµ̂1 ⊕ · · · ⊕ µ̂a , τ i, µ̂1 , . . . , µ̂a are representations with finite images given by (2.4)
+such that µ̂1 ⊕ · · · ⊕ µ̂a is realizable over Q, and η is the unramified quadratic character of K × .
+Proof. Since the root number of a direct sum of representations of W ′ (K/K) equals the product
+of the root numbers of the summands, we get from Proposition 2.10
+                           W (σ ′ ⊗ τ ) = W (κ ⊗ τ ) · W (χ ⊗ ω −1 ⊗ sp(2) ⊗ τ ),                           (2.26)
+where by Proposition 6 ([Ro2], p. 327)
+                   W (χ ⊗ ω −1 ⊗ sp(2) ⊗ τ ) = det τ (−1)r · det χ(−1)dim τ · (−1)hχ,τ i ,
+which proves (2.24).
+  Formula (2.25) is a consequence of (2.24) together with Proposition 2.9 and Corollary 2.14. 
+
+                                       3. Proof of Theorem 1.2
+  We keep the notation of the introduction.
+Lemma 3.1. Let X be a smooth projective curve of genus g over a number field F and τ a
+representation of Gal(F /F ) with real-valued character. Then at every infinite place v of F we
+have
+                                    W (Xv , τv ) = (−1)g dim τ .
+Proof. To define W (Xv , τv ) let σv′ denote the representation of the Weil-Deligne group W ′ (F v /Fv )
+associated to Xv , then W (Xv , τv ) = W (σv′ ⊗ τv ), where τv is viewed as a representation of
+W ′ (F v /Fv ). If v is an infinite place such that Fv ∼  = C, then the representation σv′ = σv of
+   ′                         ×
+W (C/C) = W(C/C) = C has the following form:
+                                     σv = (ϕ1,0 ⊗ H 1,0 ) ⊕ (ϕ0,1 ⊗ H 0,1 ),
+where ϕp,q : W(C/C) −→ C× (p, q ∈ Z) are given by
+                                               ϕp,q (z) = z −p z̄ −q ,
+H 1,0 and H 0,1 are the components of H 1 (Xv , C) in the Hodge decomposition
+                                          H 1 (Xv , C) = H 1,0 ⊕ H 0,1 .
+Here H 1,0 and H 0,1 are endowed with the trivial action of W(C/C), hence
+                                       σv = (ϕ1,0 ⊕ ϕ0,1 )⊕g .                                               (3.1)
+Let v be an infinite place such that Fv ∼
+                                        = R. We have
+                                    W ′ (C/R) = W(C/R) = C× ∪ JC× ,
+where J 2 = −1 and JzJ −1 = z̄ for z ∈ C× . Here W(C/C) is identified with the subgroup C× of
+W(C/R). In this case the representation σv′ = σv of W(C/R) associated to Xv has the following
+form:
+                                     σv = IndCR ϕ0,1 ⊗ H 0,1 ,
+16                                               M. SABITOVA
+
+where IndCR ϕ0,1 denotes the representation of W(C/R) induced from ϕ0,1 . As in the complex case,
+H 0,1 is endowed with the trivial action of W(C/R), hence
+                                             σv = (IndCR ϕ0,1 )⊕g                                 (3.2)
+([Ro1], p. 155, §20).
+  It follows from the proof of Theorem 2(i) ([Ro2], p. 329) that
+                      W ((ϕ1,0 ⊕ ϕ0,1 ) ⊗ τv ) = (−1)dim τ             if Fv ∼
+                                                                             = C and
+                        W ((IndCR ϕ0,1 ) ⊗ τv ) = (−1)dim τ                  ∼
+                                                                       if Fv = R.
+Now the statement follows from these formulas together with formulas (3.1) and (3.2).                 
+Lemma 3.2 ([Ro2], Lemma on p. 347). Let G be a finite group, D ⊆ G an abelian subgroup,
+and τ an irreducible representation of G with real-valued character. If mQ (τ ) = 2 then ResG
+                                                                                            D τ is
+symplectic.
+Lemma 3.3. Let G be a finite group and τ an irreducible representation of G with real-valued
+character. If mQ (τ ) = 2 then dim τ is even and det τ is trivial.
+Proof. By Lemma on p. 339 in [Ro2] if τ has odd dimension or nontrivial determinant, then there
+is a cyclic subgroup D of G such that ResG
+                                         D τ is not symplectic, which contradicts Lemma 3.2. 
+
+Proof of Theorem 1.2. By Lemmas 3.1 and 3.3, W (Xv , τv ) = 1 at every infinite place v of F .
+  Let v be a finite place of F lying over a prime number p. Let σv′ be the representation of
+W ′ (F v /Fv ) associated to Xv . Since by Lemma 3.3 det τ is trivial and dim τ is even, (2.24) implies
+
+                              W (Xv , τv ) = W (κv ⊗ τv ) · (−1)hχv ,τv i ,                      (3.3)
+where χv is a representation of Gal(F v /Fv ) realizable over Z (see Subsection 2.3 for the definition
+of χv ). Moreover, when p > 2g + 1 from (2.25) we have
+                            W (Xv , τv ) = (−1)ah1,τv i+ahηv ,τv i+ahλ,τv i+hχv ,τv i ,           (3.4)
+where ηv is the unramified quadratic character of Fv× , and λ = µ̂1 ⊕ · · · ⊕ µ̂a is a representation
+of Gal(F v /Fv ) realizable over Q.
+   The rest of the proof is analogous to the argument given by D. Rohrlich in [Ro2]. Let K ⊂ F
+be a finite Galois extension of F such that τ factors through the group G = Gal(K/F ) and χv
+factors through the decomposition subgroup H of G at v. Then
+                                          hχv , τv i = hIndG
+                                                           H χv , τ i
+
+by Frobenius reciprocity. Since χv is realizable over Q, IndG           H χv is realizable over Q, hence
+    G
+hIndH χv , τ i is divisible by mQ (τ ). By assumption mQ (τ ) = 2, hence hχv , τv i is even. Analo-
+gously, h1, τv i, hηv , τv i, and hλ, τv i are even, hence W (Xv , τv ) = W (κv ⊗ τv ) by (3.3) and when
+p > 2g + 1 we have W (Xv , τv ) = 1 by (3.4). When p ≤ 2g + 1 by assumption the decomposition
+subgroup of Gal(L/F ) at v is abelian, hence τv is symplectic by Lemma 3.2. Also κv ⊗ ωv 1/2 is
+symplectic by Corollary 2.14. Since κv is a representation of W(F v /Fv ) (see Subsection 2.2),
+                                W (κv ⊗ τv ) = W (κv ⊗ ωv 1/2 ⊗ τv ) = 1
+                                    ROOT NUMBERS OF CURVES                                          17
+
+by Proposition 2 and the remark after it on p. 319 in [Ro2].                                        
+
+
+                                           Appendix A.
+Lemma A.1. Let C = (c) be an infinite cyclic group generated by an element c and let B = (b)
+be a finite cyclic group of order n generated by an element b. Let G = B ⋊ C be a semi-direct
+product, where C acts on B via c−1 bc = bk for some k ∈ (Z/nZ)× . Denote by s the order of k in
+(Z/nZ)× . Then every irreducible representation λ of G has the following form:
+
+                                              λ = λ0 ⊗ φ,
+
+where λ0 is an irreducible representation of G trivial on the subgroup of C generated by cs and φ
+is a one-dimensional representation of G.
+
+Proof. Since cs is contained in the center of G and λ is an irreducible complex representation,
+by Schur’s lemma λ(cs ) is a scalar multiple of the identity matrix E, i.e. λ(cs ) = a · E for some
+a ∈ C× . Define a one-dimensional representation φ of G as follows: φ(b) = 1 and φ(c) equals an
+s-th root of a. Then λ0 = λ ⊗ φ−1 is trivial on (cs ) and λ = λ0 ⊗ φ.                             
+
+Proof of Proposition 2.5. Let λ be an irreducible symplectic representation of G. Then by Lemma
+A.1, λ = λ0 ⊗ φ, where λ0 is an irreducible representation of G trivial on the subgroup of C
+generated by cs and φ is a one-dimensional representation of G. Since λ is symplectic, λ and its
+contragredient representation have the same character, which implies that for any g ∈ G we have
+
+                                φ(g) · tr λ0 (g) = φ(g)−1 · tr λ0 (g −1 ).
+
+Taking into account that λ0 is trivial on (cs ), the above equation for g = cs gives φ(c2s ) = 1, i.e.
+λ can be considered as an irreducible symplectic representation of the finite group H = G/(c2s ) ∼  =
+B ⋊ C/(c2s ). By abuse of notation we will denote the image of c in C/(c2s ) also by c, then c2s = 1
+and c−1 bc = bk in H. As an irreducible representation of the semi-direct product H, λ can be
+constructed from a one-dimensional representation ψ1 of B in the following way. Let ψ1 (b) = ξ
+for some n-th root of unity ξ of order d in C× . Let Γ = (cx ), where x = |k| in (Z/dZ)× , and ψ2
+be a one-dimensional representation of Γ. Then ψ1 and ψ2 can be extended to representations of
+B ⋊ Γ via
+
+                                       ψ1 (cxv bt ) = ψ1 (bt ),
+                                       ψ2 (cxv bt ) = ψ2 (cxv ).
+
+Then λ = IndH  B⋊Γ (ψ1 ⊗ ψ2 ) ([S], p. 62, Prop. 25). Let W be a representation space of H
+corresponding to λ, V = Ce ⊆ W be a one-dimensional subrepresentation of ResH
+                                                                            B⋊Γ λ isomorphic
+to ψ1 ⊗ ψ2 and spanned by a nonzero vector e ∈ V over C. Then W = V ⊕ cV ⊕ c2 V ⊕ · · · ⊕ cx−1 V
+18                                                        M. SABITOVA
+
+and λ has the following form in the basis {e, ce, c2 e, . . . , cx−1 e}:
+                                            
+                      ξ 0 0 ...         0                            0 0                       0        . . . ψ2 (cx )
+                                                                                                                      
+                    0 ξk 0 . . .       0                       1 0                         0        ...      0 
+                   
+                    0 0 ξ k2 . . .     0
+                                                                 
+                                                                     0 1                       0        ...      0 .
+                                                                                                                       
+           λ(b) =                            , λ(c) = 
+                                             
+                    .. ..    .. . .     ..                      . .                         ..       ..       ..
+                                                                  .. ..
+                                                                                                                       
+                    . .       .     .    .                                                    .           .     .    
+                                         x−1
+                      0 0 0 . . . ξk                                 0 0                       0        ...      0
+Since λ is symplectic, x = dim λ is even and det λ = 1, hence det λ(c) = −ψ2 (cx ) = 1, which
+implies that ψ2 (cx ) = −1. Denote by χ the character of λ. By Proposition 39 ([S], p. 109), λ is
+symplectic if and only if
+                                             1 X
+                                     −1 =      ·    χ(y 2 ).                               (A.1)
+                                           |H| y∈H
+                                                      v
+Let y = cv bt , consequently, y 2 = c2v bt(1+k ) . Clearly, χ(y 2) = 0 if y 2 6∈ B ⋊ Γ and y 2 ∈ B ⋊ Γ if
+and only if x divides 2v and, since x is even, if and only if x2 divides v. Let v = x2 m, then we have
+
+                                                                                                    v
+                               X                    X                     X
+                                      χ(y 2) =                χ(y 2 ) =             χ(cmx bt(1+k ) )
+                               y∈H                    y∈H                 t,m
+                                                   y 2 ∈B⋊Γ
+                                                  X                v
+                                                                               X                v
+                                                                                                                           (A.2)
+                                            =             χ(bt(1+k ) ) −               χ(bt(1+k ) ).
+                                                  m,t                        m,t
+                                                 m even                     m odd
+                              v                                            v
+                       χ(bt(1+k ) ) and S2 =                    χ(bt(1+k ) ).
+             P P                                     P P
+Let S1 =
+            m even t                               m odd t
+  If m is even, then v = x( m2 ) and, since x = |k| in (Z/dZ)× , 1 + k v ≡ 2 (mod d). Since
+                                 x−1                              v
+χ(bt ) = ξ t + ξ kt + · · · + ξ k t and ξ d = 1, we have χ(bt(1+k ) ) = χ(b2t ) and S1 =          χ(b2t ).
+                                                                                          P P
+                                                                                         m even t
+                            χ(b2t ) = 0. First, note that if d = 1, 2, then λ is one-dimensional, hence
+                        P
+We will show that
+                         t
+cannot be symplectic.
+  If r ∈ Z and r ≡ 0 (mod d) then
+                                           n−1                n−1 X
+                                                                  x−1
+                                                                                j
+                                           X                  X
+                                                     rt
+                                                 χ(b ) =                  ξ rtk = nx.
+                                           t=0                t=0 j=0
+
+     If r ∈ Z and r 6≡ 0 (mod d) then
+                              n−1                      x−1
+                                                   n−1 X                  x−1           j
+                              X                    X              j
+                                                                          X   1 − ξ rnk
+                                     χ(brt ) =                ξ rtk =                          = 0.
+                               t=0                 t=0 j=0                j=0
+                                                                              1 − ξ rkj
+Thus
+                                  n−1                 
+                                  X
+                                             rt            nx, r ≡ 0 (mod d);
+                                           χ(b ) =                                                                         (A.3)
+                                                            0, r ≡
+                                                                 6 0 (mod d).
+                                     t=0
+                                      ROOT NUMBERS OF CURVES                                       19
+
+Since d 6= 1, 2, formula (A.3) implies that S1 = 0.
+                            x                                        x
+                                                     v
+  If m is odd, then k v ≡ k 2 (mod d), hence χ(bt(1+k ) ) = χ(bt(1+k 2 ) ). Thus
+                                    n−1                             n−1
+                                  X X
+                                                 t(1+k v )      2s X             x
+                           S2 =               χ(b            )=   ·     χ(bt(1+k 2 ) )
+                                  m odd t=0
+                                                                x t=0
+
+and by (A.3) we have
+                                                             x
+                                              2sn, 1 + k 2 ≡ 0 (mod d);
+                                  S2 =                   x                                     (A.4)
+                                               0, 1 + k 2 6≡ 0 (mod d).
+Hence
+                              1 X              1                    S2
+                                ·    χ(y 2) =     · (S1 − S2 ) = −
+                             |H| y∈H          2sn                  2sn
+
+which together with (A.1) and (A.4) proves the proposition.                                        
+
+  Let D be a group, U a finite-dimensional C[D]-module, and U ∗ the dual C[D]-module of U.
+Let Ǔ denote the vector space over C with the underlying abelian group U ∗ and multiplication
+by constants defined as follows:
+                                      a · φ = aφ,       a ∈ C, φ ∈ U ∗ ,
+where a is the complex conjugate of a. Clearly, the C[D]-module structure on U ∗ makes Ǔ into a
+C[D]-module. In what follows by Ǔ we mean a C[D]-module with this structure. We say that U is
+unitary if U admits a nondegenerate invariant hermitian form (not necessarily positive definite).
+Lemma A.2. Every semisimple unitary, orthogonal, or symplectic representation λ of a group
+D has the following form
+                             λ∼
+                              = ν ⊕ ν̃ ⊕ λz11 ⊕ · · · ⊕ λzt t ,
+where ν is a representation of D, ν̃ = ν ∗ if λ is orthogonal or symplectic and ν̃ = ν̌ if λ
+is unitary, λ1 , . . . , λt are pairwise nonisomorphic irreducible unitary, orthogonal, or symplectic
+representations of D respectively.
+Proof of Lemma A.2. We say that a unitary, orthogonal, or symplectic representation is minimal
+if it cannot be written as an orthogonal sum of nonzero invariant subspaces. Clearly, every unitary,
+orthogonal, or symplectic representation is an orthogonal sum of minimal unitary, orthogonal, or
+symplectic representations respectively. Thus, it is enough to prove that if λ is a semisimple
+minimal unitary, orthogonal, or symplectic representation of D, then either λ is irreducible or
+λ ∼ = ν ⊕ ν̃ for some irreducible representation ν of D. Let U be a representation space of D
+corresponding to λ, Ũ = U ∗ if λ is orthogonal or symplectic and Ũ = Ǔ if λ is unitary. Since λ is
+semisimple, U = V1 ⊕ · · · ⊕ Vn , where V1 , . . . , Vn are nonzero simple C[D]-submodules of U. Let
+h· , ·i be a nondegenerate invariant form on U. It defines a C[D]-module isomorphism φ between
+U and Ũ via φ(u) = hu , ·i, u ∈ U. Let ψ : Ũ −→ V˜1 ⊕ · · · ⊕ V˜n denote the usual isomorphism
+20                                              M. SABITOVA
+
+between Ũ = (V1 ⊕ · · · ⊕ Vn )∼ and V˜1 ⊕ · · · ⊕ V˜n . For each i and j let αij : Vi −→ V˜j be a
+C[D]-module homomorphism defined by the following diagram:
+                                               ψ◦φ
+                                          UO          / V˜ ⊕ · · · ⊕ V˜
+                                                           1                   n
+
+                                                                          πj
+                                          ?         αij
+                                                                      
+                                          Vi                       / V˜
+                                                                          j
+
+where πj is the projection onto j-th factor. Since ψ◦φ is an isomorphism, there exists some Ṽi such
+that α1i 6= 0, which implies that α1i is an isomorphism, since V1 , . . . , Vn are simple. If i = 1, then
+it follows that h· , ·i|V1 is nondegenerate, hence V1 and its orthogonal complement are invariant
+subspaces of U. Since U is minimal, it implies that U = V1 and U is irreducible. Thus, we can
+assume that for each j we have αjj = 0, which is equivalent to hVj , Vj i = 0. Without loss of
+generality we can assume that α12 6= 0. Then α21 6= 0. Indeed, if α12 6= 0, then there is some u ∈ V1
+such that hu , ·i|V2 6= 0, i.e. there is some v ∈ V2 such that hu , vi =
+                                                                       6 0, hence hv , ui =6 0, which is
+equivalent to α21 6= 0. Let us prove now that h· , ·i|V1⊕V2 is nondegenerate. Let u + v ∈ V1 ⊕ V2
+and hu + v , x + yi = 0 for any x + y ∈ V1 ⊕ V2 . We have hu + v , x + yi = hu , yi + hv , xi = 0,
+because hV1 , V1 i = hV2 , V2 i = 0. Take x = 0 in this equation, then hu , yi = 0 for any y ∈ V2 ,
+hence u = 0, because α12 (V1 ) = V˜2 . Analogously, v = 0. Since U is minimal, the same argument
+as above implies that U = V1 ⊕ V2 ∼     = V1 ⊕ V˜1 .                                                   
+Proof of Proposition 2.6. By Lemma A.2
+                                λ∼
+                                 = ν ⊕ ν ∗ ⊕ λz 1 ⊕ · · · ⊕ λz t ,
+                                                               1                   t                   (A.5)
+where ν is a representation of G and λ1 , . . . , λt are pairwise nonisomorphic irreducible symplectic
+representations of G. Let ν = ν1l1 ⊕· · ·⊕νrlr , where ν1 , . . . , νr are pairwise nonisomorphic irreducible
+representations of G. By Lemma A.1 for each i we have νi = νi0 ⊗φi , where φi is a one-dimensional
+representation of G and νi0 is an irreducible representation of G trivial on (cs ). It follows that
+νi0 can be considered as a representation of H = G/(c2s ) and as a representation of H it can be
+written in the following form νi0 = IndH     B⋊Γi ψi , where ψi is a one-dimensional representation of
+B ⋊ Γi , ψi (b) = ξi for an n-th root of unity ξi of order di , xi = |k| in (Z/di Z)× , and Γi = (cxi )
+(see the proof of Proposition 2.5 and [S], p. 62, Prop. 25). Thus
+                                                                             
+                                                   ξi 0 . . .         0
+                                              0 ξk . . .             0 
+                                                       i
+                                   νi0 (b) =  .. .. . .              ..  ,
+                                                                             
+                                              . .             .       . 
+                                                                    k xi −1
+                                                   0 0 . . . ξi
+                                                                                                  
+                                             ξi φi (b)       0           ...           0
+                           0
+                                                0      (ξi φi (b))k . . .             0           
+                 νi (b) = νi ⊗ φi (b) =         ..           ..                        ..         .
+                                                                                                  
+                                                                          ..
+                                                 .            .             .           .         
+                                                                                           k xi −1
+                                                 0           0           . . . (ξi φi (b))
+                                         ROOT NUMBERS OF CURVES                                             21
+
+In the second matrix we used the relation φi (b)k−1 = 1, which follows from the fact, that φi is
+a one-dimensional representation of G and c−1 bc = bk . By Proposition 2.5 each λi = IndH   B⋊Li ρi ,
+where ρi is a one-dimensional representation of B ⋊ Li , ρi (b) = ηi for an n-th root of unity ηi of
+order ui , yi = |k| in (Z/ui Z)× , Li = (cyi ), and ρi (cyi ) = −1.
+  We will need the following lemma:
+Lemma A.3. Let d1 , . . . , dm be pairwise distinct natural numbers. For each di let pi (X) ∈ C[X]
+be a monic polynomial, all the roots of which are some primitive di -th roots of unity and let
+p(X) = p1 (X) · · · pm (X). If p(X) ∈ Q[X], then each pi (X) is a power of the di -th cyclotomic
+polynomial Φdi (X).
+Proof. Let ξ1 be a root of p1 (X), then ξ1 is a primitive d1 -th root of unity. Since ξ1 is a root of
+p(X) ∈ Q[X] and Φd1 (X) is the minimal polynomial of ξ1 over Q, p(X) = Φd1 (X)s1 · r(X), where
+s1 is a natural number and r(X) is a polynomial over Q not divisible by Φd1 (X). Applying the
+same argument to all pi (X) and taking into account that Φd1 (X), . . . , Φdm (X) are distinct, we
+get p(X) = Φd1 (X)s1 · · · Φdm (X)sm for some s1 , . . . , sm > 0. Since the roots of each pi (X) can be
+only primitive di -th roots of unity, we conclude that pi (X) = Φdi (X)si for each i.                 
+   Since the characteristic polynomial p of λ(b) has coefficients in Q, by Lemma A.3 we can
+assume that ξ1 φ1 (b), . . . , ξr φr (b), η1 , . . . , ηt are primitive roots of unity of the same order d and
+that p = Φvd for some v, where Φd is the d-th cyclotomic polynomial. Indeed, λ can be written as
+a sum of semisimple symplectic representations of G which have this property and it is enough
+to show that for each of them (2.5) holds.
+   Let x = |k| in (Z/dZ)× and Γ = (cx ). If λ ∼              = ν ⊕ ν ∗ then there is nothing to prove. Thus, we
+                                                                                                  x
+assume that there is λ1 in (A.5). Since λ1 is symplectic, x is even, d 6= 1, 2, and k 2 ≡ −1 (mod d)
+                                                                                      x
+by Proposition 2.5. Note, that x divides each xi . Indeed, (ξi φi (b))k i = ξi φi (b), hence k xi ≡
+1 (mod d), because ξi φi (b) is a primitive d-th root of unity by assumption. For each i denote by
+pνi the characteristic polynomial of νi (b) and by pνi∗ the characteristic polynomial of νi∗ (b). Then
+                                                                         xi                     x
+pνi = pνi∗ . This is true because x divides xi , x is even, k 2 6≡ 1 (mod d), and k 2 ≡ −1 (mod d),
+hence each root of pνi appears in pνi with its complex conjugate. Thus
+                                                          2lr z1        zt
+                                           p = p2l
+                                                ν1 · · · pνr pλ1 · · · pλt ,
+                                                  1
+
+
+
+where for each i we denote by pλi the characteristic polynomial of λi (b).
+                                                                                                 x−1
+   For each primitive d-th root of unity ξ write q(ξ) = (X − ξ)(X − ξ k ) · · · (X − ξ k ), where
+                                                       x−1
+x = |k| in (Z/dZ)× . Clearly, all ξ, ξ k , . . . , ξ k     are distinct and for two primitive d-th roots of
+unity ξ and ξ either q(ξ) = q(ξ ) or q(ξ) and q(ξ ′ ) have no common roots. In this notation
+               ′                     ′
+
+pλi = q(ηi ) and pνi = q(ξi φi (f ))αi , where αi = xxi . Since λ1 , . . . , λt are irreducible, symplectic,
+and pairwise nonisomorphic, it follows from Proposition 2.5 that q(ηi ) 6= q(ηj ) for i 6= j. Without
+loss of generality we can assume that p has the following form:
+                          p = q(ξ1 φ1 (b))2m1 · · · q(ξf φf (b))2mf q(η1 )z1 · · · q(ηt )zt ,           (A.6)
+where f ≤ r, m1 , . . . , mf are positive integers, and q(ξ1 φ1 (b)), . . . , q(ξf φf (b)) have no common
+roots. There are two possibilities:
+22                                                 M. SABITOVA
+
+     (1) there exists some q(ξi φi (b)) which is not equal to any of q(η1 ), . . . , q(ηt ). Without loss of
+         generality we can assume that i = 1;
+     (2) each q(ξi φi (b)) equals some q(ηj ).
+
+  (1) In this case, since p = Φvd , it follows from (A.6) that for each j we have zj + 2 · α(j) = 2m1 ,
+where α(j) = mβ if q(ηj ) equals some q(ξβ φβ (b)) and α(j) = 0 otherwise. Thus, in this case all
+                                                                             z1                zt
+z1 , . . . , zt are even and [λ] = [ν] + [ν ∗ ] + 2 · [µ0 ], where µ0 = λ12 ⊕ · · · ⊕ λt2 is symplectic of finite
+image because all λ1 , . . . , λt are symplectic of finite images.
+
+  (2) In this case, since p = Φvd , it follows from (A.6) that for each j we have zj + 2 · α(j) = v,
+where α(j) = mβ if q(ηj ) equals some q(ξβ φβ (b)) and α(j) = 0 otherwise. Moreover, it follows
+that q(η1 ) · · · q(ηt ) = Φd . Thus
+                            [λ] = [ν] + [ν ∗ ] − 2 · [µ′0 ] + v · [λ1 ] + · · · + v · [λt ],
+               α(1)         α(t)
+where µ′0 = λ1 ⊕· · ·⊕λt is symplectic of finite image and it is enough to show that λ̂1 ⊕· · ·⊕ λ̂t
+is realizable over Q. Recall that for each i, λ̂i = IndH         B⋊Γ ϕi , where ϕi (b) = ξi for some primitive
+d-th root of unity ξi , x = |k| in (Z/dZ)× , Γ = (cx ), and ϕi (cx ) = 1 (see Proposition 2.5 and (2.4)).
+Since the representations of this form are completely defined by a root of unity ξ, we will denote
+them by Θ(ξ). For any r dividing d the cyclic group (k) acts on the set of all primitive r-th roots
+of unity via ξ 7−→ ξ k . Let {ξr1 , . . . , ξrwr } be the set of representatives for this action and let
+                                                          wr
+                                                          X
+                                                Θ(r) =           Θ(ξri ).
+                                                           i=1
+
+Then the characteristic polynomial of Θ(r)(b) is just Φr . Since the characteristic polynomial of
+λ̂1 ⊕ · · · ⊕ λ̂t is q(η1 ) · · · q(ηt ) = Φd , it follows that λ̂1 ⊕ · · · ⊕ λ̂t = Θ(d). By induction on d we
+will prove that each Θ(d) is realizable over Q.
+   Clearly, Θ(d) is realizable over Q when d = 1, because in this case Θ(d) = 1. Let L = (bd ) ⋊ C
+and π = IndH                                                                   d
+                L 1. Then the characteristic polynomial of π(b) is x − 1, consequently,
+
+                                                π∼
+                                                      X
+                                                   =     Θ(r) on B.
+                                                   r|d
+
+We will prove that this is true on the whole group H. Observe, that for any r all Θ(ξr1 ), . . . , Θ(ξrwr )
+are irreducible over C and Θ(ξri ) ∼
+                                               ′
+                                        = Θ(ξri ′ ) only if i = i′ and r = r ′ . Let χir be the character of
+Θ(ξri ). Then, using Frobenius reciprocity, we have
+                                                                d X i du v           d X i v
+      hπ, Θ(ξri )i = hIndH
+                         L 1, Θ(ξ i
+                                  r )i = h1, Res  H
+                                                  L Θ(ξ i
+                                                        r )i =        χ  (b c   ) =          χ (c ) = 1,
+                                                               2ns u,v r            2ns u,v r
+
+hence π ∼
+             P
+          = r|d Θ(r) on H. Since π is realizable over Q and Θ(r) is realizable over Q for any
+                                       P
+r < d by induction, Θ(d) = π − r|d,r6=d Θ(r) is realizable over Q.                                        
+                                        ROOT NUMBERS OF CURVES                                            23
+
+Proof of Proposition 2.9. Let λ = κ ⊗ ω 1/2 . Then W (κ ⊗ τ ) = W (λ ⊗ τ ), because real powers
+of ω do not change the root number. Since the root number of representations of W(K/K) is
+multiplicative in short exact sequences, there is the unique homomorphism
+                                          α : R(W(K/K)) −→ C×
+such that α([λ]) = W (λ) for any representation λ of W(K/K). Thus, it follows from Corollary
+2.7 that
+                                                W (µ0 ⊗ τ )2
+        W (λ ⊗ τ ) = W (µ ⊗ τ ) · W (µ∗ ⊗ τ ) ·               · W (µ1 ⊗ τ ) · · · W (µa ⊗ τ ). (A.7)
+                                                W (µ′0 ⊗ τ )2
+Since τ has finite image and real-valued character, we have
+             W (µ ⊗ τ ) · W (µ∗ ⊗ τ ) = W (µ ⊗ τ ) · W ((µ ⊗ τ )∗ )
+                                        = det(µ ⊗ τ )(−1) = det µ(−1)dim τ · det τ (−1)dim µ .
+Also, since µ0 and µ′0 are symplectic and of finite images, W (µ0 ⊗ τ ) = ±1, W (µ′0 ⊗ τ ) = ±1
+([Ro2], p. 315), hence from (A.7) we get
+                W (λ ⊗ τ ) = det µ(−1)dim τ · det τ (−1)dim µ · W (µ1 ⊗ τ ) · · · W (µa ⊗ τ ).         (A.8)
+Thus, we need to compute W (µ1 ⊗ τ ), . . . , W (µa ⊗ τ ). Let γ be an irreducible symplectic subrep-
+resentation of λ. Let L/K unr be a minimal subextension of K/K unr over which A acquires good
+reduction. Then, as was discussed in Subsection 2.2, λ and, consequently γ, can be considered as
+a representation of G = B ⋊(Φ), where B = Gal(L/K unr ) is a finite cyclic group, (Φ) is an infinite
+cyclic group. Let x = dim γ. Then by Proposition 2.5, as a representation of G, γ is induced
+from a one-dimensional representation of B ⋊ (Φx ). Hence, as a representation of W(K/K), γ
+is induced from a one-dimensional representation φ of W(K/Hx ), where Hx is the unramified
+extension of K of degree x, i.e. γ = IndH  K φ. Since γ is symplectic, x is even. Let x = 2y and
+                                              x
+
+
+let Hy be the unramified extension of K of degree y, hence K ⊆ Hy ⊆ Hx . Let γ ′ = IndH          Hy φ,
+                                                                                                  x
+
+         H                     H
+τ ′ = ResKy τ , then γ = IndKy γ ′ and by Formula (1.4) ([Ro2], p. 316) we have
+                                         H                                     H
+                   W (γ ⊗ τ ) = W (IndKy (γ ′ ⊗ τ ′ )) = W (γ ′ ⊗ τ ′ )W (IndKy 1Hy )2 dim τ .         (A.9)
+                                    H
+   Let us prove first that W (IndKy 1Hy )2 dim τ = 1. Let ̟ be a uniformizer of K. It is easy to check
+         H
+that IndKy 1Hy = y−1                                                                         ×
+                   L
+                      i=0 χi , where χ0 , . . . , χy−1 are all the unramified characters of K , satisfying
+                               H
+χi (̟)y = 1. Hence W (IndKy 1Hy ) = y−1
+                                         Q
+                                              i=0 W (χi ). By Formula (ǫ3) ([Ro1], p. 142) for each i we
+                 n(ψ)
+have W (χi ) = ξi , where n(ψ) ∈ Z, each ξi is a y-th root of unity, and ξi 6= ξj if i 6= j. Hence
+Qy−1             Qy−1 n(ψ)
+   i=0 W (χi ) =   i=0 ξi     = ±1 and
+                                                  H
+                                          W (IndKy 1Hy )2 dim τ = 1.                                 (A.10)
+    To compute W (γ ′ ⊗τ ′ ) we will show that Theorem 2.8 can be applied to Hy , γ ′ , and τ ′ . Indeed, τ ′
+is a representation of Gal(K/Hy ) with real-valued character and γ ′ = IndH   Hy φ is a two-dimensional
+                                                                                x
+
+
+representation of W(K/Hy ) induced from a character φ of finite image (by Proposition 2.5), hence
+                                                   H
+γ ′ is a representation of Gal(K/Hy ). Since IndKy γ ′ = γ is irreducible, γ ′ is irreducible too. Since
+24                                                   M. SABITOVA
+
+dim γ ′ = 2, γ ′ is symplectic if and only if det γ ′ is trivial, because Sp(2, C) = SL(2, C) ([Ro2], p.
+317). From Proposition 2.5 we find that as a representation of B ⋊ (Φy ), γ ′ has the following form
+                                                                        
+                              ′        ξ 0               ′   y       0 −1
+                            γ (f ) =              , γ (Φ ) =                 ,
+                                       0 ξ −1                        1 0
+where f is a generator of B, ξ is a root of unity. It follows immediately that det γ ′ = 1. Thus
+to be able to apply Theorem 2.8, we need only to check that φ is a tame character of Hx× . It
+follows from the fact that φ is trivial on Gal(K/L) and L/K unr is tamely ramified, because
+p > 2m + 1. We have shown that τ ′ is a representation of Gal(K/Hy ), γ ′ = IndH   Hy φ is a two-
+                                                                                     x
+
+
+dimensional symplectic, irreducible representation of Gal(K/Hy ), and φ is a tame character of
+Hx× . By Theorem 2.8
+                                                                                     ′   ′   ′           ′
+                          W (γ ′ ⊗ τ ′ ) = det τ ′ (−1) · ϕdim τ · (−1)h1,τ i+hη ,τ i+hλ̂ ,τ i ,
+                                                                                                     ′
+                                                                                                                  (A.11)
+where η ′ is the unramified quadratic character of Hy× , γ̂ ′ = IndH
+                                                                   Hy (φ ⊗ θ), θ is the unramified
+                                                                     x
+
+                           ×
+quadratic character of Hx , and ϕ = ±1.
+                 H
+  Since τ ′ = ResKy τ , we have det τ ′ = det τ ◦ NHy /K , hence
+                                  det τ ′ (−1) = det τ (−1)[Hy :K] = det τ (−1)y .                                (A.12)
+By Frobenius reciprocity
+                                                                              H                  H
+          h1, τ ′ i + hη ′ , τ ′ i = h1Hy ⊕ η ′ , τ ′ i = h1Hy ⊕ η ′ , ResKy τ i = hIndKy (1Hy ⊕ η ′ ), τ i.
+                                      H
+As was mentioned above, IndKy 1Hy = y−1
+                                                 L
+                                                      i=0 χi , where χ0 , . . . , χy−1 are all the unramified charac-
+                                                                   H
+ters of K , satisfying χi (̟) = 1. Analogously, IndKy η ′ = 2y−1
+         ×                          y
+                                                                             L
+                                                                                  i=y χi , where χy , . . . , χ2y−1 are all
+                                        ×                 y
+the unramified characters of K satisfying χi (̟) = −1 (y ≤ i ≤ 2y − 1). Thus
+                                                                      2y−1
+                                                H
+                                                                      M
+                                             IndKy (1Hy ⊕ η ′ ) =             χi ,
+                                                                      i=0
+
+where χ0 , . . . , χ2y−1 are all the unramified characters of K × satisfying χi (̟)2y = 1, and
+                                                                    2y−1
+                                                                    X
+                                                ′       ′       ′
+                                           h1, τ i + hη , τ i =            hχi , τ i.
+                                                                    i=0
+
+Since τ has a real-valued character, for each χi of order greater than 2, hχi , τ i will appear in this
+sum twice, i.e.
+                          h1, τ ′ i + hη ′ , τ ′ i ≡ h1, τ i + hη, τ i (mod 2).                 (A.13)
+Finally, by Frobenius reciprocity,
+                                                            H
+                      hγ̂ ′ , τ ′ i = hIndH               y          Hx
+                                          Hy (φ ⊗ θ), ResK τ i = hIndK (φ ⊗ θ), τ i = hγ̂, τ i.
+                                            x
+                                                                                                                  (A.14)
+Now formulas (A.9) – (A.14) imply
+                             W (γ ⊗ τ ) = det τ (−1)y · ϕdim τ · (−1)h1,τ i+hη,τ i+hγ̂ ,τ i .                     (A.15)
+                                    ROOT NUMBERS OF CURVES                                         25
+
+Applying (A.15) to µ1 , . . . , µa and substituting the result into (A.8) we get the statement of the
+proposition.                                                                                       
+
+                                          Appendix B.
+Lemma B.1. Let G be a semi-abelian scheme over a field K. Then G(K) is a divisible abelian
+group.
+Proof. From (2.2) we get the following exact sequence of abelian groups:
+                             0 −→ T (K) −→ G(K) −→ A(K) −→ 0.
+                                                ×
+Clearly, T (K) is divisible, because T (K) ∼
+                                           = (K )r as groups and A(K) is divisible, because A is
+an abelian variety. Thus, G(K) is divisible as an abelian group which is an extension of a divisible
+group by a divisible group.                                                                       
+  In the next lemma we keep the notation of Subsection 2.1.
+Lemma B.2. Let σ ′ = (σ, N) be the representation of W ′ (K/K) associated to the natural l-adic
+representation of Gal(K/K) on Vl (M)∗ and let σ ′ ∼
+                                                  = γ ⊕ (δ ⊗ sp(2)) for some representations γ
+and δ of W(K/K). Then dim δ = r.
+Proof. Since dim δ = rank N and for any finite extension L ⊂ K of K we have ResW ′ (K/L) σ ′ =
+(ResLK σ, N) ([Ro1], p. 130), by Lemma 2.1 we can assume that T splits over K and A has good
+reduction over K.
+  We have the following exact sequence of Gal(K/K)-modules ([Ra], p. 312):
+                                                     φn
+                                             l
+                      0 −→ G(K)ln −→ M(K)ln −→ Y (K)/ln Y (K) −→ 0.                            (B.1)
+Since G(K) is divisible by Lemma B.1, sequence (B.1) induces an exact Gal(K/K)-equivariant
+sequence of l-adic Tate modules:
+                               0 −→ Tl (G) −→ Tl (M) −→ Z −→ 0,
+where Z = lim(Y (K)/ln Y (K)) with the maps being the natural quotient maps. By tensoring the
+            ←−
+above sequence with Ql over Zl we get the following exact Gal(K/K)-equivariant sequence:
+                                                       φ
+                           0 −→ Vl (G) −→ Vl (M) −→ Z ⊗Zl Ql −→ 0.                             (B.2)
+  Let K tam ⊆ K be the maximal tamely ramified extension of K unr and R = Gal(K/K tam ).
+Then
+                                 I/R ∼
+                                           Y
+                                      =          Zs .
+                                                s is a prime
+                                                     s6=p
+
+Let tl : I −→ Zl denote the composition of the quotient map onto I/R with the projection onto
+Zl .
+26                                            M. SABITOVA
+
+   Let xln ∈ M(K)ln , i ∈ I, and φln (xln ) = [y] for some y ∈ Y (K) and φln given by (B.1). Then
+a formula on p. 314 in [Ra] yields:
+                                    i(xln ) = xln + νln (y ⊗ tln (i)),                          (B.3)
+where tln : I −→ Z/ln Z is the composition of tl : I −→ Zl with the canonical projection onto the
+factor Z/ln Z; νln : Y (K) ⊗Z (Z/ln Z) −→ T (K)ln is the following composition of Gal(K/K)-
+module homomorphisms:
+                                                                             ∼
+                 Y (K) ⊗Z (Z/ln Z) −→ HomZ (X(K), Z) ⊗Z (Z/ln Z) −→ T (K)ln ,
+where X is the character group of T and the first map is induced by the geometric monodromy
+                                          µ0 : Y × X −→ Z;
+finally, νln (y ⊗ tln (i)) ∈ T (K)ln is considered as an element of M(K)ln via the inclusions
+                                   T (K)ln ֒→ G(K)ln ֒→ M(K)ln .
+   For each i ∈ I we have the following maps αn (i) : Y (K)/ln Y (K) −→ T (K)ln given by the
+following composition:
+                                         ψn (i)                         νn
+                        Y (K)/ln Y (K) −→ Y (K) ⊗Z (Z/ln Z) −→
+                                                             l
+                                                               T (K)ln ,
+where ψn (i)([y]) = y ⊗tln (i), y ∈ Y (K). It is easy to show that {αn (i)} induce the homomorphism
+                                    α(i) = (αn (i)) : Z −→ Tl (T ),
+where Z = lim(Y (K)/ln Y (K)). By extending scalars to Ql we get
+            ←−
+
+                                     α′ (i) : Z ⊗Zl Ql −→ Vl (T ).                              (B.4)
+  Let βl : Gal(K/K) −→ GL(Vl (M)) be the natural l-adic representation of Gal(K/K) on Vl (M).
+Then (B.3) and (B.4) imply:
+                              βl (i) = id +α′ (i) ◦ φ, i ∈ I,
+where id : Vl (M) −→ Vl (M) is the identity map and φ is given by (B.2). On the other hand,
+                                         βl (i) = exp(tl (i)Rl ),
+where i is in some open subgroup J of I and Rl is a nilpotent endomorphism on Vl (M) ([Ro1],
+Prop. on p. 131). Since σ ′ = (σ, N) is the representation of W ′ (K/K) associated to the
+representation σl′ : Gal(K/K) −→ GL(Vl (M)∗ ), it follows that N is obtained from −Rlt by
+extending scalars via a field embedding ı : Ql ֒→ C. Thus, rank Rl = rank N = dim δ and
+Rl2 = N 2 = 0 by assumption. Thus,
+                                     α′ (i) ◦ φ = tl (i)Rl ,   i ∈ J,
+and it is enough to show that there exists i0 ∈ I such that α′ (i0 ) is surjective.
+                                     ROOT NUMBERS OF CURVES                                         27
+
+   For each n let ξn be a generator of Z/ln Z such that l · ξn+1 = ξn so ξ = (ξn ) ∈ Zl . Since
+tl : I −→ Zl is surjective, there exists i0 ∈ I such that tl (i0 ) = ξ. It implies that ψn (i0 ) is an
+isomorphism for each n, hence it is enough to show that the map
+                           ν ′ : lim(Y (K) ⊗Z (Z/ln Z)) ⊗Zl Ql −→ Vl (T )
+                                ←−
+
+induced by (νln ) is surjective. Since µ0 is nondegenerate ([F-C], p. 52, Remark 6.3), we have the
+following exact sequence:
+                                          g
+                          0 −→ Y (K) −→ HomZ (X(K), Z) −→ B −→ 0,
+where g(y) = µ0 (y, ·) and B is finite, since Y (K) and HomZ (X(K), Z) are free abelian groups of
+the same rank r. Applying the functor (−) ⊗Z (Z/ln Z) to the above sequence, we get:
+                                           νn
+                     Y (K) ⊗Z (Z/ln Z) −→
+                                        l
+                                          T (K)ln −→ B ⊗Z (Z/ln Z) −→ 0,
+hence
+                            0 −→ im νln −→ T (K)ln −→ B/ln B −→ 0.
+Since Y (K) ⊗Z (Z/ln Z) is a finite group, im νln is a finite group, hence {im νln } satisfies the
+Mittag-Leffler condition and we have the following exact sequence:
+                        0 −→ lim(im νln ) −→ Tl (T ) −→ lim(B/ln B) −→ 0.                       (B.5)
+                              ←−                              ←−
+
+Here lim(im νln ) ∼
+                  = im ν, where
+        ←−
+
+                           ν = (νln ) : lim(Y (K) ⊗Z (Z/ln Z)) −→ Tl (T ).
+                                       ←−
+
+Indeed, let Sn = Y (K) ⊗Z (Z/ln Z), then we have an exact sequence
+                               0 −→ ker νln −→ Sn −→ im νln −→ 0,
+where the maps from Sn to im νln are induced by νln . Since ker νln is finite for each n, {ker νln }
+satisfies the Mittag-Leffler condition, hence there is the following exact sequence
+                       0 −→ lim(ker νln ) −→ lim Sn −→ lim(im νln ) −→ 0.                       (B.6)
+                              ←−                  ←−           ←−
+
+On the other hand, from (B.5) we have
+                                          lim(im νln ) ֒→ Tl (T ),
+                                          ←−
+
+which together with (B.6) implies lim(im νln ) ∼
+                                               = im ν.
+                                     ←−
+  Thus, applying the exact functor (−) ⊗Zl Ql to (B.5) and taking into account that B is finite,
+we get:
+                             0 −→ (im ν) ⊗Zl Ql −→ Vl (T ) −→ 0,
+which implies that
+                                im ν ′ ∼
+                                       = (im ν) ⊗Zl Ql ∼
+                                                       = Vl (T ),
+        ′
+hence ν is surjective.                                                                        
+28                                           M. SABITOVA
+
+                                           Appendix C.
+   In this appendix we keep the notation of Subsection 2.1. Let ρ′ = (ρ, S) be the representation
+of W ′ (K/K)                                                                             ∗
+            T associated to the natural l-adic representation of Gal(K/K) on Vl (T (K)/Λ) , where
+Λ = T (K) Y (K) is a free discrete subgroup of T (K) of rank s (s ≤ r). It is known that there
+is a finite Galois extension L ⊂ K of K such that Gal(K/L) acts trivially on Y (K), hence Y (K)
+can be considered as a Gal(L/K)-module. Let
+                                     χ : Gal(L/K) −→ GLr (Z)
+denote the corresponding representation. Thus, from (2.2) we have the following exact sequence
+of Gal(L/K)-modules:
+                        0 −→ Λ ⊗Z C −→ Y (K) ⊗Z C −→ B ⊗Z C −→ 0,
+where B = f (Y (K)). Let χ1 : Gal(L/K) −→ GLs (Z) denote the representation of Gal(L/K) on
+Λ and χ2 : Gal(L/K) −→ GLr−s (Z) denote the representation of Gal(L/K) on B ⊗Z C. Then
+                                       χ∼
+                                        = χ1 ⊕ χ2 .
+Proposition C.1.
+                               ρ′ ∼
+                                  = (χ2 ⊗ ω −1 ) ⊕ (χ1 ⊗ ω −1 ⊗ sp(2)).
+Corollary C.2. Let τ be a representation of Gal(K/K) with real-valued character. If r = s, then
+χ = χ1 and we have:
+                        W (ρ′ ⊗ τ ) = det τ (−1)r · det χ(−1)dim τ · (−1)hχ,τ i .
+Proof. The statement is a consequence of Proposition C.1 and Proposition 6 on p. 327 in [Ro2]
+(cf. [Ro2], p. 329, Thm. 2(ii)).                                                           
+Proof of Proposition C.1. Let Γ = T (K)/Λ. We have the following exact sequence of Gal(K/K)-
+modules:
+                                 0 −→ Λ −→ T (K) −→ Γ −→ 0.                                (C.1)
+        ∼   s
+Since Λ = Z and T (K) is a divisible group, this sequence induces the following exact Gal(K/K)-
+equivariant sequence of l-adic Tate modules:
+                             0 −→ Tl (T ) −→ Tl (Γ) −→ χ1 ⊗ Zsl −→ 0,                           (C.2)
+where Tl (T ) denotes Tl (T (K)). Let L ⊂ K be a finite Galois extension of K over which T splits.
+Since Tl (T ) is a free Zl -module of rank r it follows from (C.2) that Tl (Γ) is a free Zl -module of
+rank s + r, hence by Proposition C.3 below we have
+                               ResL ρ′ ∼
+                                  K    = (ω −1 )⊕(r−s) ⊕ (ω −1 ⊗ sp(2))⊕s ,
+                                            L            L                                      (C.3)
+                   L
+where ωL = ResK ω. The rest of the proof is similar to the proof of Proposition 2.10. Since
+ResW ′ (K/L) ρ′ = (ResLK ρ, S) and ResLK ρ is semisimple by (C.3), ρ′ is admissible by Lemma 2.1.
+Hence it has the following form:
+                                                t
+                                          ′ ∼
+                                                M
+                                        ρ =           αt ⊗ sp(nt ),                             (C.4)
+                                                i=1
+                                    ROOT NUMBERS OF CURVES                                          29
+
+where each αi is a representation of W(K/K) and each ni is a positive integer ([Ro1], p. 133,
+Cor. 2). Also, it follows from (C.3) that S 2 = 0 and rank S = s. Thus, each ni in (C.4) is 1 or 2
+and
+                                       ρ′ ∼
+                                          = α ⊕ (β ⊗ sp(2)),                                 (C.5)
+where α is a representation of W(K/K) of dimension r − s and β is a representation of W(K/K)
+of dimension s.
+   Applying the exact functor (−) ⊗Zl Ql to (C.2) and taking duals afterwards, we get
+                            0 −→ χ1 ⊗ Qsl −→ Vl (Γ)∗ −→ Vl (T )∗ −→ 0,                           (C.6)
+where Vl (T ) = Vl (T (K)) and χ1 ∼= (χ1 )∗ , since χ1 is a representation of finite image, realizable
+over Z. Sequence (C.6) induces an exact sequence of corresponding representations of W ′ (K/K),
+i.e.
+                    0 −→ (χ1 ⊗ Qsl ) ⊗ı C −→ Vl (Γ)∗ ⊗ı C −→ Vl (T )∗ ⊗ı C −→ 0                  (C.7)
+is an exact sequence of W ′ (K/K)-modules, where χ1 is the representation of W ′ (K/K) on (χ1 ⊗
+Qsl ) ⊗ı C, ρ′ = (ρ, S) is the representation of W ′ (K/K) on Vl (Γ)∗ ⊗ı C, and by Lemma 2.11,
+χ ⊗ ω −1 is the representation of W ′ (K/K) on Vl (T )∗ ⊗ı C. Since ρ is semisimple, the exact
+sequence (C.7) of W(K/K)-modules splits, i.e.
+                                        ρ∼= χ1 ⊕ (χ ⊗ ω −1 ).
+On the other hand, from (C.5) we have:
+                                   ρ∼= α ⊕ β ⊕ (β ⊗ ω).
+Thus, combining the last two congruences, we get
+                              α ⊕ β ⊕ (β ⊗ ω) ∼
+                                              = χ1 ⊕ (χ ⊗ ω −1).                                (C.8)
+  We claim that β ⊗ ω is isomorphic to a subrepresentation of χ1 . Suppose there is an irreducible
+component β0 of β such that β0 ⊗ ω is isomorphic to a subrepresentation of χ ⊗ ω −1 , i.e.
+                                       β0 ⊗ ω ∼
+                                              = x ⊗ ω −1                                     (C.9)
+for some irreducible component x of χ. It follows from (C.8) that β0 is isomorphic to a subrepre-
+sentation of χ ⊗ ω −1 or χ1 , which is impossible, because x, χ, and χ1 have finite images, whereas
+ω does not. Indeed, suppose β0 ∼  = y ⊗ ω −1 or β0 ∼= z, where y is an irreducible component of χ
+and z is an irreducible component of χ1 . From (C.9) we get
+                                           β0 ∼
+                                              = x ⊗ ω −2 ,
+hence
+                               x ⊗ ω −2 ∼
+                                        = y ⊗ ω −1 or x ⊗ ω −2 ∼ = z.
+By taking determinants of both sides in each case, we get
+                                 det x                 det x
+                                       = ω −m+2k or          = ω 2k ,                  (C.10)
+                                 det y                 det z
+where m = dim y, k = dim x. Since x, y, and z have finite images (as being subrepresentations
+of χ or χ1 ) and ω has infinite image, (C.10) gives a contradiction.
+30                                               M. SABITOVA
+
+  Thus, β ⊗ ω is isomorphic to a subrepresentation of χ1 . Since β ⊗ ω and χ1 have the same
+dimension s, we have β ⊗ ω ∼
+                           = χ1 , hence β ∼
+                                          = χ1 ⊗ ω −1. By the uniqueness of decomposition of a
+semisimple module into simple modules, we conclude from (C.8) that α ∼= χ2 ⊗ ω −1 .         
+Proposition C.3. Let Λ ⊂ (K × )r be a free discrete subgroup of rank s (s ≤ r) and denote
+   ×
+(K )r /Λ by Γ. Let ρ′ = (ρ, S) be the representation of W ′ (K/K) associated to the l-adic repre-
+sentation of Gal(K/K) on Vl (Γ)∗ . Let Tl (Γ) be a free Zl -module of rank s + r. Then
+                                   ρ′ ∼
+                                      = (ω −1 )⊕(r−s) ⊕ (ω −1 ⊗ sp(2))⊕s .
+Proof. Let p1 , . . . , ps ∈ Λ be a basis of Λ, satisfying the assertion of Lemma C.5 below. First,
+let us choose a Ql -basis for Vl = Vl (Γ). Let f1 = (f1 (n)), . . . , fs = (fs (n)) ∈ Tl (Γ), where
+                                        ×
+f1 (n), . . . , fs (n) as elements of (K )r have the following form:
+                                           n                         n
+                                    f1 (n)l = p1 , . . . , fs (n)l = ps and
+                             f1 (n + 1)l = f1 (n), . . . , fs (n + 1)l = fs (n).
+                                         ×
+Let ξ = (ξ(n)), where each ξ(n) ∈ K is a primitive ln -th root of unity and ξ(n + 1)l = ξ(n). Let
+                                                                                                         ×
+fs+1 = (fs+1 (n)), . . . , fs+r = (fs+r (n)) ∈ Tl (Γ), where fs+1 (n), . . . , fs+r (n) as elements of (K )r
+satisfy the following properties:
+                                       fs+1 (n) = (ξ(n), 1, . . . , 1),
+                                       fs+2 (n) = (1, ξ(n), . . . , 1),
+                                            ...
+                                       fs+r (n) = (1, 1, . . . , ξ(n)).
+Then f1 , . . . , fs+r is a basis of Vl . Indeed, it is easy to check that f1 , . . . , fs+r are linearly inde-
+pendent over Zl . Since Tl (Γ) is a free Zl -module of rank s + r, it follows that f1 , . . . , fs+r is a
+basis of Vl .
+    Let ρl : Gal(K/K) −→ GL(Vl ) be the l-adic representation associated to the Gal(K/K)-module
+Vl . Then the matrix representation of ρl with respect to the basis f1 , . . . , fs+r has the following
+form:                                                                           
+                                        Es     0                       Es    0
+                           ρl (Φ) =                     , ρl (i) =                     ,                 (C.11)
+                                         ∗ q −1 · Er                  B(i) Er
+where Er and Es are the identity matrices, i ∈ I, and B(i) ∈ Matr×s (Ql ). It is known that there
+exists a nilpotent endomorphism Sl of Vl∗ such that S is obtained from Sl by extending of scalars
+via a field embedding ı : Ql ֒→ C; moreover, Sl is a unique nilpotent endomorphism such that
+                                             ρ∗l (i) = exp(tl (i)Sl ),                                 (C.12)
+where tl : I −→ Ql is a nontrivial continuous homomorphism and i belongs to an open subgroup
+of I. Furthermore, for any g ∈ W(K/K) we have
+                                        ρ(g) = ρ∗l (g)exp(−tl (i)Sl ),                                 (C.13)
+                                         ROOT NUMBERS OF CURVES                                       31
+
+where ρ∗l (g)exp(−tl (i)Sl ) is considered as an element of GL(Vl∗ ⊗ı C) via ı ([Ro1], p. 131, Prop.(i),
+(ii)). Formula (C.11) for ρl (Φ) implies that, considered as a matrix over C via ı, it is diagonaliz-
+able. It follows from Formula (C.13) that ρ(Φ) is diagonalizable, hence ρ is semisimple and ρ′ is
+admissible by Lemma 2.1.
+                                                                                   ×
+   Let ̟ be a uniformizer of K and let Π = (̟(n)), where each ̟(n) ∈ K has the following
+property:
+                                       n
+                                 ̟(n)l = ̟ and ̟(n + 1)l = ̟(n).
+There exists i0 ∈ I such that
+                              i0 (Π) = (i0 (̟(n))) = (̟(n)ξ(n)α(n) ) = ξ α Π,
+where α = (α(n)) ∈ Zl . By Lemma C.4 below α 6= 0.
+                                                                           n
+Lemma C.4. Let g ∈ O and let gn ∈ K denote a root of xl − g = 0. Then i(gn ) = gn for any
+i ∈ I and n ∈ N if and only if g ∈ O× .
+Proof. Clearly, i(gn ) = gn for any i ∈ I and n ∈ N if and only if K(gn ) is unramified over K for
+any n.
+                                                                 n
+   Let g ∈ O× . Then the assertion follows from the fact that xl − g, considered as a polynomial
+in k[x], has no multiple root ([L], p. 48, Prop. 7).
+                        n
+   Conversely, since gnl = g, the valuation of g in K(gn ) is divisible by ln . Since K(gn ) is
+unramified over K for any n, the valuation vg of g in K coincides with the valuation of g in
+K(gn ), hence vg is divisible by ln for any n, which implies that vg must be zero and g ∈ O× . 
+   Let pk = (pkj ), pkj ∈ K × , 1 ≤ k ≤ s, 1 ≤ j ≤ r. It follows from Lemma C.5 below that without
+loss of generality we can assume that pkk 6∈ O× for any k and that pkj ∈ O× whenever k > j,
+1 ≤ j ≤ r. Thus there exist uk ∈ O× and mk ∈ Z× such that pkk = uk · ̟ mk . Let (uk (n)) be a
+               ×
+sequence in K such that
+                                        n
+                                uk (n)l = uk        and uk (n + 1)l = uk (n).
+                ×                                                              ×
+For fk (n) ∈ (K )r write fk (n) = (fkj (n)), where fkj (n) ∈ K , 1 ≤ k ≤ s, 1 ≤ j ≤ r. Then as
+fkk (n) we can take uk (n) · ̟(n)mk . For i0 we have
+                    i0 (f1 ) = (i0 (f1 (n))) = (i0 (f11 (n)), i0 (f12 (n)), . . . , i0 (f1r (n))),
+where by Lemma C.4 we have:
+                    i0 (f11 (n)) = u1 (n) · ̟(n)m1 · ξ(n)α(n)m1 = f11 (n) · ξ(n)α(n)m1 .
+Analogously, using Lemma C.4, we get the following formulas:
+                                                     αm1    a2         ar
+                                    i0 (f1 ) = f1 · fs+1 · fs+2 · · · fs+r ,
+                                                     αm2    b3          br
+                                    i0 (f2 ) = f2 · fs+2 · fs+3 · · · fs+r  ,
+                                        ...
+                                                     αms    cs+1         cr
+                                    i0 (fs ) = fs · f2s  · f2s+1 · · · fs+r
+32                                             M. SABITOVA
+
+for some ai , bj , . . . , ck ∈ Zl . This implies that B(i0 ) has the following form:
+                                                                          
+                                                  αm1     0    ...     0
+                                                ∗      αm2 . . .      0 
+                                                .         ..           .. 
+                                                .              ..
+                                      B(i0 ) =  .          .      .     . ,
+                                                                           
+                                                ∗        ∗    . . . αms 
+                                                                          
+                                                    ..    ..    ..     ..
+                                                     .     .       .    .
+where α, m1 , . . . , ms ∈ Z×
+                            l , hence rank B(i0 ) = s.
+         ′
+  Since ρ is admissible,
+                                                 k
+                                           ′ ∼
+                                               M
+                                          ρ =       πj ⊗ sp(nj ),                                (C.14)
+                                                j=1
+
+where π1 , . . . , πk are representations of W(K/K) ([Ro1], p. 133, Cor. 2 ). Since ρ∗l (i) =
+exp(tl (i)Sl ) by (C.12) and (ρl (i) − Es+r )2 = 0 from (C.11), it follows that (Sl )2 = 0, i.e. each nj
+in (C.14) is 1 or 2, hence
+                                          ρ′ ∼
+                                             = α ⊕ (β ⊗ sp(2)),
+where α and β are representations of W(K/K). Since rank B(i0 ) = s, the equation (C.12) implies
+that rank S = rank Sl = s, hence  L dim −1β = s and dim
+                                                      Lα =   r − s.
+   Let us prove now that α ∼    = r−s   ω    and β  ∼
+                                                    = s  ω −1
+                                                              . It can be easily verified that (C.11) –
+(C.13) imply                                         
+                                         Es      ∗
+                               ρ(g) =                   , g ∈ W(K/K),                             (C.15)
+                                          0 (ω −1)⊕r
+hence there is a complete flag of subrepresentations
+                                   (0) 6= W1 ⊂ · · · ⊂ Ws+r = Vl∗ ⊗ı C
+of ρ. Since ρ is semisimple, it implies that ρ is a direct sum of one-dimensional subrepresentations,
+hence from (C.15)
+                                  α∼       ω −1 and β ∼
+                                       M                      M
+                                    =                       =     ω −1 .
+                                         r−s                     s
+                                                                                                      
+Lemma C.5. Let K be a non-Archimedean local field of characteristic zero with ring of integers
+O. Let Λ ⊂ (K × )r be a free discrete subgroup of rank s (s ≤ r). There exist a basis p1 , . . . , ps
+of Λ and natural numbers n1 , . . . , ns (1 ≤ n1 < n2 < · · · < ns ≤ r) with the following property:
+if pk = (pkj ), 1 ≤ k ≤ s, 1 ≤ j ≤ r, and pkj ∈ K × , then pini 6∈ O× for any i and plni ∈ O×
+whenever l > i.
+Proof. First, note that (O× )r ∩ Λ = {1}. Indeed, if x ∈ (O× )r ∩ Λ and x 6= 1, then (xn ) is
+an infinite sequence in (O× )r ∩ Λ, hence it has a limit point, because (O× )r is compact, which
+contradicts the assumption that Λ is discrete.
+  Let ̟ be a uniformizer of K. The map O× × Z −→ K × given by
+                                               (u, n) 7→ u̟ n
+                                      ROOT NUMBERS OF CURVES                                             33
+
+is an isomorphism of topological groups. For every positive integer r it induces an isomorphism
+(K × )r ∼  = (O× )r × Zr . Let π : (K × )r −→ Zr be the projection onto Zr and t1 , . . . , ts be a basis
+of Λ. Since (O× )r ∩ Λ = {1}, π(t1 ), . . . , π(ts ) form a basis of π(Λ). Indeed, otherwise, there exist
+m1 , . . . , ms ∈ Z, not all of which are zeros, such that
+                                     m1 π(t1 ) + · · · + ms π(ts ) = 0.
+Then 1 6= tm        ms    × r                   r
+           1 · · · ts ∈ (O ) ∩ Λ. Thus, π(Λ) ⊆ Z is a subgroup of rank s and it is enough to
+             1
+
+
+prove the following sublemma:
+Sublemma C.6. Let G ⊆ Zr be a subgroup of rank s (s ≤ r). There exist a basis g1 , . . . , gs of
+G and natural numbers n1 , . . . , ns (1 ≤ n1 < n2 < · · · < ns ≤ r) with the following property: if
+gk = (gkj ), 1 ≤ k ≤ s, 1 ≤ j ≤ r, and gkj ∈ Z, then gini 6= 0 for any i and glni = 0 whenever
+l > i.
+  Indeed, if we assume Sublemma C.6, then there is a basis g1 , . . . , gs of π(Λ) with the property
+described in Sublemma C.6. Since π(t1 ), . . . , π(ts ) is a basis of π(Λ), there is a matrix D = (dij ) ∈
+GLs (Z) such that                     X
+                                gi =        dij π(tj ), 1 ≤ i ≤ s.
+                                           j
+            Q    dij
+Then pi =     j tj , 1 ≤ i ≤ s, will be a basis of Λ with the required property.                        
+Proof of Sublemma C.6. Suppose r = s. We will prove the sublemma in this case by induction
+on r. Clearly, it holds when r = 1. Let r be arbitrary and e1 , . . . , er be the standard basis of Zr .
+There is k ∈ Z× such that G ∩ (er ) = (ker ), because mer ∈ G, where m = |B| and B = Zr /G.
+Then G/(ker ) ⊆ Zr−1 is a subgroup of rank r − 1. By induction, there exist g1 , . . . , gr−1 ∈ G such
+that in G/(ker ) we have:
+                                       r−1
+                                       X
+                                 g¯i =     aij ej , 1 ≤ i ≤ r − 1,
+                                          j=1
+for some aij ∈ Z such that aii 6= 0 for any i and aij = 0 whenever i > j. Then g1 , . . . , gr−1 , gr = ker
+will be a basis of G with the required property.                             P
+   Suppose now that s 6= r. Let q1 , . . . , qs be a basis of G. Then qi = j bij ej , where B = (bij ) ∈
+Mats×r (Z). Since q1 , . . . , qs is a basis, rank B = s, i.e. there exists an s × s-submatrix B0 of B
+such that det B0 6= 0. Let B0 have the following form:
+                                                b1n1 b1n2 . . . b1ns
+                                                                    
+                                              b2n1 b2n2 . . . b2ns 
+                                      B0 =   ...     ..  ..     ..  .
+                                                        .     .    . 
+                                              bsn1 bsn2 . . . bsns
+            P
+Then pi = j binj enj , 1 ≤ i ≤ s, are linearly independent, hence generate a free subgroup H of
+rank s in Zen1 ⊕ · · · ⊕ Zens . By the case r = s above there is a matrix C ∈ GLs (Z) such that
+                                       X            X
+                                           cki pi =   hknj enj ,
+                                          i            j
+34                                             M. SABITOVA
+                                                                                   P
+where hknj ∈ Z, hini 6= 0 for any i and hlni = 0 whenever l > i. Then gk =             i cki qi , 1 ≤ k ≤ s,
+will be a basis of G with the required property.                                                         
+
+                                              Appendix D.
+  We keep the notation of Subsection 2.1 except that K does not have to be of characteristic
+zero and K denotes a separable algebraic closure of K. As in Appendix A (see Lemma A.2) if
+λ : D −→ GL(U) is a representation of a group D, then by λ̌ : D −→ GL(Ǔ ) we denote the
+representation of D on Ǔ, where Ǔ is a C[D]-module with the underlying D-module U ∗ and
+multiplication by constants defined as follows:
+                                     a · φ = aφ,           a ∈ C, φ ∈ U ∗ .
+We say that U is unitary if U admits a nondegenerate invariant hermitian form (not necessarily
+positive definite).
+Proposition D.1. Let σ ′ be an admissible representation of W ′ (K/K) written in the following
+form:
+                                          k
+                                    ′ ∼
+                                         M
+                                   σ =       πi ⊗ sp(ni ),
+                                                 i=1
+
+where each πi is a representation of W(K/K) and ni 6= nj whenever i 6= j ([Ro1], p. 133, Cor. 2).
+If σ ′ is unitary, orthogonal, or symplectic with respect to a corresponding invariant nondegenerate
+form h·, ·i then each πi ⊗ sp(ni ) is unitary, orthogonal, or symplectic respectively with respect to
+the restriction of h·, ·i.
+Proof. Let U be a representation space of σ ′ and Ui a representation space of πi ⊗ sp(ni ), 1 ≤
+                          Lk
+i ≤ k, so that U =           i=1 Ui . Let h· , ·i be a nondegenerate invariant form on U and let Ũ
+          ′
+be a W (K/K)-module over C such that Ũ = U ∗ if h· , ·i is bilinear and Ũ = Ǔ if h· , ·i is
+sesquilinear. Let φ : U −→ Ũ be the isomorphism of W ′ (K/K)-modules induced by h· , ·i, and
+                         ∼
+let ψ : Ũ = ( ki=1 Ui ) −→ U˜1 ⊕ · · · ⊕ U˜k denote the usual isomorphism. It is easy to show that
+              L
+
+for any n we have sp(n)∼ ∼     = ω −(n−1) ⊗ sp(n), hence Ũi ∼  = Vi , where Vi denotes a representation
+space of π̃i ⊗ ω −(ni −1) ⊗ sp(ni ). Denote by λ : U˜1 ⊕ · · · ⊕ U˜k −→ V1 ⊕ · · · ⊕ Vk the corresponding
+isomorphism. For each i let ρi : Ui −→ Vi be defined by the following diagram:
+                                              λ◦ψ◦φ
+                                                      /V
+                                         UO                1 ⊕ · · · ⊕ Vk
+
+                                                                     πi
+                                         ?        ρi            
+                                        Ui                     / Vi
+
+where πi is the projection onto i-th factor. To prove that h· , ·i|Ui is nondegenerate for each i
+is equivalent to proving that ρi is an isomorphism for each i, which follows from Lemma D.2
+below.                                                                                         
+                                        ROOT NUMBERS OF CURVES                                               35
+
+Lemma D.2. Let α′ = (α, N) and β ′ = (β, M) be two isomorphic admissible representations of
+W ′ (K/K) written in the following forms:
+                                k                                          k
+                         α′ ∼                               and β ′ ∼
+                                M                                          M
+                            =         αi ⊗ sp(ni )                  =            βi ⊗ sp(ni ),
+                                i=1                                        i=1
+
+where each αi and βi is a representation of W(K/K), ni 6= nj whenever i 6= j. Let U (resp. V )
+be a representation space of α′ (resp. β ′ ) and for each i let Ui (resp. Vi ) be a representation space
+of αi ⊗ sp(ni ) (resp. βi ⊗ sp(ni )). Let φ : U −→ V be an isomorphism of W ′ (K/K)-modules and
+ψi : Ui −→ Vi , 1 ≤ i ≤ k, defined by the following diagram:
+                                                            φ
+                                                 UO              /V
+
+                                                                      πi
+                                                 ?         ψi    
+                                                Ui               /V
+                                                                      i
+
+where πi is the projection onto i-th factor. Then each ψi is an isomorphism of W ′ (K/K)-modules.
+Proof. We will prove the lemma by induction on k. Clearly, it holds when k = 1. Let k be
+arbitrary and let e0 , . . . , enk −1 be the standard basis of Cnk . Without loss of generality we can
+assume that nk > ni for any i. Let Uk◦ be a representation space of αk , so Uk = nj=0
+                                                                                      L k −1 ◦
+                                                                                             (Uk ⊗ ej ).
+Then
+                         U = ker N nk −1 ⊕ (Uk◦ ⊗ e0 ) and
+                     N j U = N j (ker N nk −1 ) ⊕ (Uk◦ ⊗ ej ), 0 ≤ j ≤ nk − 1.                           (D.1)
+Since φ is an isomorphism of W ′ (K/K)-modules, we have from (D.1):
+                      M j V = M j (ker M nk −1 ) ⊕ φ(Uk◦ ⊗ ej ),                 0 ≤ j ≤ nk − 1.         (D.2)
+On the other hand, (D.1) holds in V , i.e.
+                      M j V = M j (ker M nk −1 ) ⊕ (Vk◦ ⊗ ej ),              0 ≤ j ≤ nk − 1,             (D.3)
+where Vk◦ denotes a representation space of βk . We have the following filtration of V :
+                nk −1                    nk −1
+     V ⊇ ker M        ⊇ MV ⊇ M(ker M                    ) ···
+                                 ···                      ⊇ M nk −1 V = φ(Uk◦ ⊗ enk −1 ) = Vk◦ ⊗ enk −1 . (D.4)
+Since V is a semisimple W(K/K)-module, taking into account (D.2), we get from (D.4):
+                                                 nM
+                                                  k −2
+
+                                          V =(              Aj ) ⊕ φ(Uk ),                               (D.5)
+                                                      j=0
+
+where each Aj is a complement of M j+1 V in M j (ker M nk −1 ). Analogously, taking into account
+(D.3), we get from (D.4):
+                                          nM
+                                           k −2
+
+                                    V =(        Aj ) ⊕ Vk .                                (D.6)
+                                                       j=0
+36                                                    M. SABITOVA
+
+Combining (D.5) and (D.6), we see that πk ◦ φ(Uk ) = Vk , hence ψk is an isomorphism. To be able
+to apply the inductive step, note that Aj ’s can be chosen in such a way that
+                                                 nM
+                                                  k −2            k−1
+                                                                  M
+                                                         Aj =           Vi .
+                                                  j=0             i=0
+
+Indeed, this follows from the following formulas:
+                                                         nM
+                                                          k −1
+                                nk −1
+                        ker M           = MV ⊕ (                 (Vi◦ ⊗ e0 )) and
+                                                         i=0
+                                                             nM
+                                                              k −1
+                    j       nk −1               j+1
+                 M (ker M           ) = M             V ⊕(           (Vi◦ ⊗ ej )),     0 ≤ j ≤ nk − 1,
+                                                               i=0
+
+where each Vi◦ is a representation space of βi . Thus, by (D.5)
+                                        k−1
+                                        M                               k−1
+                                                                        M
+                                V =(          Vi ) ⊕ φ(Uk ) = φ(               Ui ) ⊕ φ(Uk ),
+                                        i=0                             i=0
+                                                 Lk−1                    Lk−1
+which implies that the projection of φ(               i=0 Ui ) onto            i=0 Vi is an isomorphism, hence by in-
+duction ψ1 , . . . , ψk−1 are isomorphisms.                                                                        
+
+  As in Lemma A.2 above by a minimal unitary, orthogonal, or symplectic representation we
+mean a unitary, orthogonal, or symplectic representation respectively that cannot be written as
+an orthogonal sum of nonzero invariant subrepresentations.
+Proposition D.3. Let σ ′ be a minimal unitary, orthogonal, or symplectic admissible represen-
+tation of W ′ (K/K). Let U be a representation space of σ ′ and h· , ·i a nondegenerate invariant
+form on U. Then either σ ′ is indecomposable or U ∼       = V ⊕ Ṽ , where V is an indecomposable
+submodule of U, Ṽ = V̌ if h· , ·i is bilinear, and Ṽ = V ∗ if h· , ·i is sesquilinear. Moreover, if λ is
+the isomorphism of V ⊕ Ṽ onto U and h· , ·i′ is the form on V ⊕ Ṽ given by
+
+                                   hx, yi′ = hλ(x), λ(y)i,              x, y ∈ V ⊕ Ṽ ,
+
+then h· , ·i′|V and h· , ·i′|Ṽ are degenerate, h· , ·i′ : V × Ṽ −→ C is the standard form given by
+
+                                        hu, f i′ = f (u),         u ∈ V, f ∈ Ṽ .
+Proof. Since σ ′ is minimal, it follows from Proposition D.1, that σ ′ ∼= α ⊗ sp(n),   where α is a
+                                      ′
+                                                                                    Lk
+representation of W(K/K). Since σ is admissible, α is semisimple, hence α = i=1 αi , where
+each αi is an irreducible subrepresentation of α. For each i let Ui be a representation space of
+αi ⊗ sp(n), so that U = U1 ⊕ · · · ⊕ Uk . Let φ : U −→ Ũ1 ⊕ · · · ⊕ Ũk be the composition of the
+isomorphism induced by h· , ·i with the usual isomorphism of (U1 ⊕ · · · ⊕ Uk )∼ onto Ũ1 ⊕ · · · ⊕ Ũk .
+                                      ROOT NUMBERS OF CURVES                                             37
+
+For each i and j let φij : Ui −→ Ũj be defined by the following diagram:
+                                                        φ
+                                          UO                / Ũ
+                                                                  1 ⊕ · · · ⊕ Ũk
+
+                                                                             πj
+                                         ?                 φij
+                                                                         
+                                         Ui                           / Ũ
+                                                                             j
+
+where πj is the projection onto j-th factor. We claim that for any i there is j = j(i) such that φij
+is an isomorphism. Indeed, let Ui◦ be a representation space of αi so that Ui = Ui◦ ⊗ Cn , where
+Cn is the representation space of sp(n). Let W = C be the representation space of ω −(n−1) and
+            Lk       ◦            n
+ψ : U −→      i=1 (Ũi ⊗ W ⊗ C ) the composition of φ with the usual isomorphism induced by
+αi ⊗ sp(n)∼ ∼= α̃i ⊗ ω −(n−1) ⊗ sp(n), 1 ≤ i ≤ k. For each i and j let ψij : Ui◦ ⊗ Cn −→ Ũj◦ ⊗ W ⊗ Cn
+be defined by the following diagram:
+                                  ψ
+                           UO          / (Ũ ◦ ⊗ W ⊗ Cn ) ⊕ · · · ⊕ (Ũ ◦ ⊗ W ⊗ Cn )
+                                              1                                            k
+
+                                                                                      πj
+                                                                                  
+                           ?                     ψij
+                       Ui◦ ⊗ Cn                                    / Ũ ◦ ⊗ W ⊗ Cn .
+                                                                     j
+
+Let e0 , . . . , en−1 be the standard basis of Cn . If for each i there is j = j(i) such that the projection
+of ψ(Ui◦ ⊗e0 ) onto Ũj◦ ⊗W ⊗e0 is nonzero, then Ui◦ ∼   = Ũj◦ ⊗W (because each Ui◦ is irreducible), hence
+Ui ∼ = Ũj and φij 6= 0. Then it follows from Schur’s lemma for indecomposable representations of
+    ′
+W (K/K) ([Ro1], p. 133, Cor. 1), that φij is an isomorphism.
+    Assume now that there is i such that the projection of ψ(Ui◦ ⊗ e0 ) onto Ũj◦ ⊗ W ⊗ e0 is zero for
+any j. Let N (resp. M) be the nilpotent endomorphism of U (resp. of (Ũ1◦ ⊗ W ⊗ Cn ) ⊕ · · · ⊕
+(Ũk◦ ⊗ W ⊗ Cn )). Then ψ(Ui◦ ⊗ e0 ) ⊆ X, where X = t≥1;s (Ũs◦ ⊗ W ⊗ et ) and X ⊆ ker M n−1 .
+                                                                L
+
+Since Ui◦ ⊗ e0 6⊆ ker N n−1 , we get a contradiction with ψ being an isomorphism.
+    Thus, in particular, there exists some j such that φ1j is an isomorphism. If j = 1 then h· , ·i|U1
+is nondegenerate, hence U1 and its orthogonal complement are invariant subspaces of U. Since
+U is minimal, it implies that U = U1 and U is indecomposable. If j 6= 1 then without loss
+of generality we can assume that j = 2, h· , ·i|U1 and h· , ·i|U2 are degenerate. Let us show that
+h· , ·i|U1⊕U2 is nondegenerate. Suppose it is degenerate, i.e. K = ker(h· , ·i|U1⊕U2 ) is nonzero. Let
+R1 (resp. R2 ) be the nilpotent endomorphism of       T U1 (resp. U2 ). Then R = R1 ⊕R2 is the nilpotent
+endomorphism of U1 ⊕ U2 . We claim that K ker R 6= 0. Indeed, let x ∈ K and x 6= 0. Then
+there is i (0 ≤ i ≤ n − 1) such that Ri x ∈ ker R and Ri x 6= 0. Also,
+                       hRi x, yi = (−1)i · hx, Ri yi = 0 for any y ∈ U1 ⊕ U2 ,
+hence Ri x ∈ K. Let x ∈ K ker R and x 6= 0, i.e. x = x1 + x2 , where xi ∈ ker Ri , i = 1, 2.
+                                T
+Without loss of generality we can assume that x1 6= 0. Since φ12 is an isomorphism, there is
+y2 ∈ U2 such that hx1 , y2i =
+                            6 0. By assumption, h· , ·i|TU2 is degenerate, hence K2 = ker(h· , ·i|U2 ) is
+                                                                                       ◦
+nonzero. Then by the same argument as above K2 ker R2 6= 0. Since ker R2 = U2 ⊗ en−1 , it is
+38                                              M. SABITOVA
+
+irreducible, consequently ker R2 ⊆ K2 . In particular, hx2 , y2 i = 0. Hence
+                                         hx1 + x2 , y2i = hx1 , y2 i.
+Since hx1 , y2 i =
+                 6 0 by the choice of y2 , we get a contradiction with x1 + x2 ∈ K. Thus, h· , ·i|U1⊕U2
+is nondegenerate. Since U is minimal the same argument as above implies that U = U1 ⊕ U2 ∼           =
+Ũ2 ⊕ U2 .                                                                                           
+                                               References
+[Che] C. Chevalley, “Algebra,” Springer-Verlag, New-York, 1988.
+[Chi] T. Chinburg, B. Erez, G. Pappas, and M. Taylor, ε-constants and the Galois structure of de Rham cohomol-
+     ogy, Ann. of Math. 146 (1997), 411–473.
+[F-C] G. Faltings and C. Chai, “Degeneration of abelian varieties,” Springer-Verlag, Berlin, 1990.
+[L] S. Lang, “Algebraic number theory,” 2nd ed., Springer-Verlag, New York, 1994.
+[Ra] M. Raynaud, 1-Motifs et monodromie géométrique, Astérisque 223 (1994), 295–319.
+[Ro1] D.E. Rohrlich, Elliptic curves and the Weil-Deligne group, Elliptic Curves and Related Topics, CRM Pro-
+     ceedings & Lecture Notes Vol. 4, Amer. Math. Soc., Providence, 1994, 125–157.
+[Ro2] D.E. Rohrlich, Galois theory, elliptic curves, and root numbers, Compos. Math. 100 (1996), 311–349.
+[Ro3] D.E. Rohrlich, The vanishing of certain Rankin-Selberg convolutions, Automorphic Forms and Analytic
+     Number Theory, Les publications CRM, Montréal, 1990, 123–133.
+[S] J.-P. Serre, “Linear representations of finite groups,” Springer-Verlag, New York-Heidelberg, 1977.
+[S-T] J.-P. Serre and J. Tate, Good reduction of abelian varieties, Ann. Math. 88 (1968), 492–517.
+
+  DEPARTMENT OF MATHEMATICS,
+UNIVERSITY OF PENNSYLVANIA,
+PHILADELPHIA, PA 19104,
+E-MAIL: SABITOVA@MATH.UPENN.EDU
+

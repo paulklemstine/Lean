@@ -1,0 +1,1431 @@
+          Montgomery’s method of polynomial selection for the
+                         number field sieve
+                                                 Nicholas Coxon
+
+
+
+      To cite this version:
+     Nicholas Coxon. Montgomery’s method of polynomial selection for the number field sieve. 2014. ⟨hal-
+     01097069⟩
+
+
+
+
+                                        HAL Id: hal-01097069
+                          https://inria.hal.science/hal-01097069v1
+                                      Preprint submitted on 18 Dec 2014
+
+
+
+
+    HAL is a multi-disciplinary open access archive             L’archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-        tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.       tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research          des établissements d’enseignement et de recherche
+institutions in France or abroad, or from public or pri-   français ou étrangers, des laboratoires publics ou
+vate research centers.                                     privés.
+
+
+                                              HAL Authorization
+   MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION
+           FOR THE NUMBER FIELD SIEVE
+
+                                      NICHOLAS COXON
+
+
+         Abstract. The number field sieve is the most efficient known algorithm for
+         factoring large integers that are free of small prime factors. For the polynomial
+         selection stage of the algorithm, Montgomery proposed a method of generating
+         polynomials which relies on the construction of small modular geometric pro-
+         gressions. Montgomery’s method is analysed in this paper and the existence
+         of suitable geometric progressions is considered.
+
+
+
+
+                                      1. Introduction
+    In this paper, N denotes a positive integer that is destined to be factored. When
+N is large and free of small factors, the most efficient publicly known algorithm for
+determining its factors is the number field sieve [20]. Such N include RSA [28] mod-
+uli, for which numerous record factorisations have been achieved with the number
+field sieve, including the current 768-bit record [17].
+    The number field sieve is comprised of several stages, commonly referred to as
+polynomial selection, sieving, filtering, linear algebra and square root computa-
+tion. The polynomial selection stage requires the selection of coprime irreducible
+polynomials f1 , f2 ∈ Z[x] that have a common root modulo N . After polynomial
+selection, sieving is used to identify coprime integer pairs (a, b) such that the prime
+factors of fi (a/b)bdeg fi are below some bound yi for i = 1, 2. Obtaining sufficiently
+many pairs with this property, called relations, is the most time consuming stage
+of the number field sieve, with the time taken greatly influenced by the choice of
+polynomials [24, 25].
+    Let Ψ(x, y) denote the number of positive integers less than x that are free of
+prime factors greater than y. Canfield, Erdős and Pomerance [6] showed that for any
+ε > 0, Ψ(x, x1/u ) = xu−u(1+o(1)) for u → ∞, uniformly in the region x ≥ uu(1+ε) .
+It follows, heuristically, that in the polynomial selection stage of the number field
+sieve, the polynomials f1 and f2 should be chosen to minimise the size of the values
+f1 (a/b)bdeg f1 and f2 (a/b)bdeg f2 over the pairs (a, b) considered in the sieve stage.
+Thus, it is necessary for the polynomials to have small coefficients. As a result, the
+degrees of f1 and f2 should not be too small. However, the degrees should not be
+too large either, since fi (a/b)bdeg fi is a homogeneous polynomial of degree deg fi in
+a and b. In practice, low-degree polynomials are used. For example, the two largest
+factorisations of RSA moduli [17, 4] both used a sextic polynomial together with
+a linear polynomial. To quantify the coefficient size of a polynomial, the skewed
+
+  Date: December 18, 2014.
+  2010 Mathematics Subject Classification. Primary 11Y05, 11Y16.
+  Key words and phrases. Integer factorisation, number field sieve, polynomial selection, Mont-
+gomery’s method.
+                                                1
+2                                      NICHOLAS COXON
+
+                                                               Pd
+2-norm k.k2,s is used. The norm is defined as follows: if f = i=0 ai xi is a degree d
+polynomial with real coefficients, then
+                               v
+                               u d            2
+                               uX
+                      kf k = t
+                                             d
+                             2,s       a si− 2i    for all s > 0.
+                                       i=0
+
+The parameter s captures the shape of the sieve region, which is modelled by a
+rectangular region [−A, A] × (0, B] or an elliptic region
+                     n                         p          o
+                       (x, y) ∈ R2 | 0 < y ≤ B 1 − (x/A)2
+
+such that A/B = s. In practice, the polynomial selection stage proceeds by first
+generating many “raw” polynomial pairs with small coefficients. Then various
+methods of optimisation [25, 3, 2] are used to improve the quality of the raw pairs
+by taking into account additional factors that influence a pair’s yield of relations,
+such as the presence of real roots and roots modulo small primes [24, 25].
+   The methods of polynomial selection used in all recent record factorisations [24,
+25, 15, 16] produce polynomials f1 and f2 such that one polynomial is linear.
+However, it is expected that a significant advantage is gained by using two nonlinear
+polynomials [9, Section 6.2.7] (see also [27, Section 4] for practical considerations
+relating to sieving). Montgomery [22, 23] provided a method for generating two
+nonlinear polynomials with small coefficients. This paper extends and sharpens
+Montgomery’s original analysis of the method.
+
+                               2. Montgomery’s method
+   A geometric progression of length ℓ and ratio r modulo N is an integer vector
+[cℓ−1 , . . . , c0 ] such that ci ≡ c0 ri (mod N ) for i = 0, . . . , ℓ − 1. Square brackets are
+used to distinguish geometric progressions from regular vectors, which are denoted
+with round brackets. Montgomery [22, 23] showed that a length 2d − 1 geometric
+progression c = [c2d−2 , . . . , c0 ] modulo N such that gcd(c0 , c1 , . . . , cd−2 , N ) = 1 and
+                                                                               
+                                                      c2d−2 c2d−3 . . . cd−1
+                                                    c2d−3 c2d−4 . . . cd−2 
+                                                                               
+                       C = C(c2d−2 , . . . , c0 ) =  .       ..             .. 
+                                                     ..       .              . 
+                                                      cd−1 cd−2 . . .       c0
+has full rank can be used to construct polynomials f1 , f2 ∈ Z[x] of maximum
+degree d that have a common root modulo N . Once a suitable geometric pro-
+gression c has been found, Montgomery’s method proceeds by computing a basis
+{(a1,d , . . . , a1,0 )T , (a2,d , . . . , a2,0 )T }, where AT denotes the transpose of a matrix A,
+for the free Z-module that is the set of integer vectors in the kernel of the matrix
+                                                                        
+                                                c2d−2 c2d−3 . . . cd−2
+                                             c2d−3 c2d−4 . . . cd−3 
+                                                                        
+(2.1)                             ∂C =  .                 ..         ..  .
+                                              ..           .          . 
+                                                  cd     cd−1 . . .  c0
+                                                      Pd                   P
+The basis yields polynomials f1 = i=0 a1,i xi and f2 = di=0 a2,i xi . If r is the
+ratio of the geometric progression modulo N , then (rd , rd−1 , . . . , 1) is a linear com-
+bination of the row vectors of ∂C modulo N since gcd(c0 , c1 , . . . , cd−2 , N ) = 1.
+           MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                              3
+
+
+Thus, r is a root of f1 and f2 modulo N . Denote by ∂C                c the submatrix of ∂C
+obtained by deleting its first column. Then ∂C        c has full rank since it is equal to the
+submatrix of C obtained by deleting its first row. Consequently, the kernel of ∂C
+is 2-dimensional. Moreover, and at least one of f1 and f2 has degree equal to d,
+otherwise (a1,d−1 , . . . , a1,0 )T and (a2,d−1 , . . . , a2,0 )T are linearly independent and
+in the 1-dimensional kernel of ∂C,    c which is absurd. Finally, as was observed by
+Montgomery [22] and which is shown to hold in this paper, the polynomials f1 and
+f2 are coprime since C is nonsingular.
+   To ensure that the norms kf1 k2,s and kf2 k2,s are small for some s > 0, the basis
+is chosen such that
+            n                                     T                                      T o
+(2.2)         a1,d sd , a1,d−1 sd−1 , . . . , a1,0 , a2,d sd , a2,d−1 sd−1 , . . . , a2,0
+
+is Lagrange-reduced (see [26, p. 41]). As a result,
+                        deg f1 +deg f2
+                                       −d              γ2       d−1
+(2.3)               s          2 kf1 k2,s kf2 k2,s ≤ d−2 kck2,s−1
+                                                      N
+                                      √
+(see [8, Section 3.2]), where γ2 = 2/ 3 is Hermite’s constant for dimension two,
+and the vector norm k.k2,s is defined as follows: if v = (vn , vn−1 , . . . , v0 ) is a real
+(n + 1)-dimensional vector, then
+                                v
+                                u n
+                                uX            n 2
+                       kvk2,s = t      vi si− 2     for all s > 0.
+                                            i=0
+
+Consequently, it is a requirement of Montgomery’s method that kck2,s−1 is small.
+Therein lies the difficulty of the method, as the basis (2.2) is readily computed
+in polynomial time (see [8, Section 3.1.2]). The problem of constructing small
+geometric progressions has been addressed by several authors [22, 31, 27, 18, 8].
+   It is natural to consider the existence of small geometric progressions. Mont-
+gomery [22] showed that if there exist two degree d polynomials that have small
+coefficients and a common root r modulo N , then there exists a small length 2d − 1
+geometric progression with ratio r modulo N . Montgomery’s proof is constructive
+and is generalised to two polynomials f1 and f2 of maximum degree d in this paper.
+Furthermore, it is shown that if the polynomials are coprime, then the geometric
+progression given by the construction is the unique vector (c2d−1 , . . . , c0 ), up to
+scalar multiple, such that the coefficient vectors of f1 and f2 are in the kernel
+of the matrix ∂C defined in (2.1). As a result, the analysis of the construction
+contributes to the analysis of Montgomery’s method.
+   This paper is organised as follows: the definitions and some properties of the
+Sylvester matrix, the Bezout matrix and the resultant are reviewed in the next
+section; the generalisation of Montgomery’s geometric progression construction is
+presented and analysed in Section 4; and a full analysis of Montgomery’s method
+is provided in Section 5.
+
+    3. The Sylvester matrix, the Bezout matrix and the resultant
+  Matrices with the property that each of their rows contain the coefficients of some
+polynomial are frequently encountered in this paper. The Sylvester and Bezout
+matrices are constructed in this manner. Consequently, compact notation for such
+matrices is defined before introducing the protagonists of this section.
+4                                     NICHOLAS COXON
+
+
+    For m ≥ 1 polynomials f1 , . . . , fm and any integer n ≥ max1≤i≤m deg fi , denote
+by (f1 , . . . , fm )n the m × (n + 1) matrix (ai,j )i=1,...,m;j=1,...,n+1 where ai,j is the
+coefficient of xn+1−j in fi . When n = max1≤i≤m deg fi , the subscript n is drop,
+giving the notation (f1 , . . . , fm ). The parameter n is viewed as the formal degree of
+the polynomials f1 , . . . , fm . For example, (f ) is the vector of coefficients of f , while
+(f )n for some n ≥ deg f is the vector of coefficients of f when view as a polynomial
+of formal degree n. Define ( )n to be the 0 × n empty matrix.
+3.1. The Sylvester matrix and the resultant. Let A be an integral domain.
+Then the Sylvester matrix of non-constant polynomials f1 , f2 ∈ A[x] is the matrix
+                                                                                     
+              Syl(f1 , f2 ) = xdeg f2 −1 f1 , . . . , f1 , xdeg f1 −1 f2 , . . . , f2 .
+The determinant of Syl(f1 , f2 ) is called the resultant of f1 and f2 , and is denoted
+Res(f1 , f2 ). The resultant of f1 and f2 is zero if and only if the polynomials have
+a nontrivial gcd over the field of fractions of A.
+    For non-constant polynomials f1 , f2 ∈ Z[x] and all real numbers s > 0, define
+θs (f1 , f2 ) to be the angle (in [0, π]) between the row vectors of (f1 (sx), f2 (sx)).
+The following lemma provides upper and lower bounds on the resultant of a pair of
+number field sieve polynomials (see [8, Section 2.1.2] for a proof):
+Lemma 3.1. Suppose that f1 , f2 ∈ Z[x] are non-constant, coprime and have a
+common root modulo N . Then
+                                                   min{deg f1 ,deg f2 }        deg f2        deg f1
+       N ≤ |Res(f1 , f2 )| ≤ |sin θs (f1 , f2 )|                          kf1 k2,s      kf2 k2,s
+for all s > 0.
+    As a consequence of Lemma 3.1, a pair of number field sieve polynomials in
+considered to have optimal resultant if it is equal to N , and optimal coefficient size
+        deg f      deg f
+if kf1 k2,s 2 kf2 k2,s 1 is O(N ). Thus, inequality (2.3) implies that a pair of degree
+d polynomials generated by Montgomery’s method has optimal coefficient size if
+kck2,s−1 = O(N 1−1/d ).
+3.2. The Bezout matrix. Let A be an integral domain and f1 , f2 ∈ A[x] be non-
+                        Pd
+constant. Write fi = j=0 ai,j xj for i = 1, 2 such that d = max{deg f1 , deg f2 }
+and the coefficients ai,j are elements of A. Define polynomials
+                                                      
+                 Xi                       Xi
+(3.1) pi+1 =        a2,d−i+j xj  f1 −     a1,d−i+j xj  f2 for i = 0, . . . , d − 1.
+                  j=0                          j=0
+
+Then the Bezout matrix, or Bezoutian, of f1 and f2 is the matrix Bez(f1 , f2 ) =
+(p1 , . . . , pd )d−1 . Denote by lc(f ) the leading coefficient of a polynomial f . Similar
+to the Sylvester matrix, the determinant of the Bezout matrix of f1 and f2 is related
+to their resultant (see [29, Section 2]):
+                                    d(d+1)                            d−deg f1
+(3.2) det Bez(f1 , f2 ) = (−1) 2 lc(f1 )d−deg f2 (−1)d lc(f2 )                  Res(f1 , f2 ).
+   A Hankel matrix over A is a square matrix H = (hi,j )i=1,...,n;j=1,...,n such that
+hi,j = hi+j−1 for some h1 , . . . , h2n−1 ∈ A. Lander [19] showed that the inverse
+of a Bezout matrix is a Hankel matrix and, conversely, that the inverse of a
+Hankel matrix is the Bezout matrix of two polynomials. For an m × n matrix
+H = (hi,j )i=1,...,m;j=1,...,n such that hi,j = hi+j−1 for some h1 , . . . , hm+n−1 ∈ A,
+define ∂ k H = (hi+j−1 )i=1,...,m+k;j=1,...,n−k for k = 0, . . . , m − 1. Let ∂H denote
+             MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                              5
+
+
+                         d = (hi+j )i=1,...,m+1;j=1,...,n−2 . The following result of
+the matrix ∂ 1 H. Define ∂H
+Heinig and Rost [14, Theorem 4.2] expresses the inverse of a real Hankel matrix H
+as the Bezout matrix of two polynomials obtained from the kernel of ∂H:
+Lemma 3.2. Let H = (h     i+j−1 )i=1,...,d;j=1,...,d be a real nonsingular Hankel matrix.
+If f1 , f2 ∈ R[x] such that (f1 )Td , (f2 )Td is a basis of the kernel of ∂H, then
+                                                                         
+                   1                                   hd . . . h2d−1 0               T
+      H −1 = −        Bez(f1 , f2 ) where ψ =                               (f1 , f2 )d .
+                det ψ                                   0 ...      0     1
+   The formulation of the Bezout matrix presented in this paper is different to
+that used by Heinig and Rost. Thus, it is necessary to convert between the two
+formulations:
+
+Proof of Lemma 3.2. Let H = (hi+j−1 )i=1,...,d;j=1,...,d
+                                                      be a real nonsingular Hankel
+matrix. Suppose that f1 , f2 ∈ R[x] such that (f1 )Td , (f2 )Td is a basis of the
+kernel of ∂H. Define ψ as in the statement of the theorem. The matrix ∂H           d is
+                                                                           d
+equal to the submatrix of H obtained by deleting its first row. Thus, ∂H has full
+rank. It follows that max{deg f1 , deg f2 } = d, otherwise (f1 )Td−1 and (f2 )Td−1 would
+be linearly independent and in the kernel of ∂H.d Interchanging f1 and f2 changes
+Bez(f1 , f2 ) and det ψ by a factor of −1. Therefore, assume without loss of generality
+                                Pd
+that deg f1 = d. Write fi = j=0 ai,j xj for i = 1, 2 such that the coefficients ai,j
+                                    Pd
+are real numbers. Define gi = j=0 ai,d−j xj for i = 1, 2. Then Theorem 4.2 of
+Heinig and Rost [14] implies that
+                                                 1
+(3.3)                               H −1 = −         B(g1 , g2 )
+                                               det ψ
+where the matrix B(g1 , g2 ), called the (Hankel) Bezoutian of g1 and g2 by Heinig and
+Rost [14, Section 2.1] (and many other authors), is defined as follows: B(g1 , g2 ) =
+(bi,j )i=1,...,d;j=1,...,d such that bi,j is the coefficient of xi−1 y i−1 in the polynomial
+                                         g1 (x)g2 (y) − g2 (x)g1 (y)
+                             b(x, y) =                               .
+                                                    x−y
+  Expanding the numerator of b(x, y) shows that
+          d         d
+                                              !
+          X        X          xi y k − xk y i
+b(x, y) =   a2,d−k     a1,d−i
+                   i=0
+                                  x−y
+            k=0
+            d              d                                k−1
+                                                                                          !
+            X              X              xi−k − y i−k k k X           xk−i − y k−i i i
+        =         a2,d−k           a1,d−i             x y −     a1,d−i             xy         .
+                                             x−y            i=0
+                                                                          x−y
+            k=0            i=k+1
+
+Therefore,
+                                                                                  
+                                                       −a1,d
+                                                  .     ..                          
+                                 
+                                              ..         .                          
+                                                                                     
+                      Xd
+                                 −a1,d        . . . −ad−k+1                         
+        B(g1 , g2 ) =     a2,d−k 
+                                 
+                                                                                     ,
+                                                                  ad−k−1   . . . a0 
+                                                                                     
+                      k=0                                                           
+                                                                      ..      . .
+                                                                      .    .        
+                                                                     a0
+6                                          NICHOLAS COXON
+
+
+where the omitted entries are zeros. Let k ∈ Z such that 0 ≤ k ≤ d, and p1 , . . . , pd ∈
+R[x] such that Bez(f1 , xd−k ) = (p1 , . . . , pd ). Then
+                                      i
+                                      X
+                    pi+1 = −xd−k            a1,d−i+j xj    for i = 0, . . . , k − 1,
+                                      j=0
+
+and
+                               i
+                               X                           d−i−1
+                                                            X
+    pi+1 = xi−k f1 − xk−d            a1,d−i+j xj = xi−k            aj xj   for i = k, . . . , d − 1.
+                               j=0                          j=0
+
+Hence,
+                                    d
+                                    X
+                    B(g1 , g2 ) =         a2,d−k Bez(f1 , xd−k ) = Bez(f1 , f2 ).
+                                    k=0
+Combining this equation with (3.3) completes the proof.                                                
+
+                      4. Existence of geometric progressions
+   The integer kernel of an integer matrix A is the free Z-module consisting of all
+integer column vectors x such that Ax = 0. Montgomery [22] showed that if two
+coprime degree d ≥ 2 integer polynomials f1 and f2 have a common root modulo N ,
+then a vector c ∈ Z2d−1 such that cT spans the integer kernel of the matrix
+                                                                       
+(4.1)                      xd−2 f1 , . . . , f1 , xd−2 f2 , . . . , f2
+                                                                                 d−1       d−1
+is a geometric progression modulo N . Moreover, kck2,1 = O(kf1 k2,1 kf2 k2,1 ) since
+the entries of c are, up to a constant, order 2d−2 minors of the matrix in (4.1). Koo,
+Jo and Kwon [18, Theorem 2] generalise Montgomery’s result by providing a con-
+struction which, for k ∈ {1, . . . , d−1}, uses j = ⌈(d−1)/k⌉+1 degree d polynomials
+f1 , . . . , fj with a common root modulo N to construct a length d + k − 1 geometric
+                                                                    d+k−1
+progression c such that kck2,1 = O(max1≤i≤j kfi k2,1                        ). In this section, another
+generalisation is presented, with two polynomials f1 and f2 of maximum degree d
+used to construct geometric progressions of lengths deg f1 + deg f2 − 1, . . . , 2d − 1.
+The geometric progressions are shown to have small size whenever f1 and f2 have
+small coefficients. Therefore, the existence of small geometric progressions for
+Montgomery’s method, and relaxations of the method that employ shorter pro-
+gressions [31, 27, 18, 8], is established under the assumption that good nonlinear
+polynomial pairs exist.
+    Let A be an integral domain. For f1 , f2 ∈ A[x] such that 2 ≤ deg f2 ≤ deg f1 ,
+and t ∈ {deg f2 , . . . , deg f1 }, define the (deg f1 + t − 2) × (deg f1 + t − 1) matrix
+                                                                                        
+                       St (f1 , f2 ) = xt−2 f1 , . . . , f1 , xdeg f1 −2 f2 , . . . , f2 .
+Define signed minors Mt,1 (f1 , f2 ), . . . , Mt,deg f1 +t−1 (f1 , f2 ) of the matrix St (f1 , f2 )
+as follows: for i = 1, . . . , deg f1 + t − 1, Mt,i (f1 , f2 ) is equal to (−1)1+i times the
+determinant of the submatrix of St (f1 , f2 ) obtained by deleting its ith column.
+Define
+                 ct (f1 , f2 ) = (Mt,1 (f1 , f2 ), . . . , Mt,deg f1 +t−1 (f1 , f2 ))
+for t = deg f2 , . . . , deg f1 . When f1 and f2 are clear from the context, St is used
+to denote St (f1 , f2 ), Mt,i is used to denote Mt,i (f1 , f2 ), and ct is used to denote
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                               7
+
+
+ct (f1 , f2 ). The ith entry of the vector St (f1 , f2 ) · ct (f1 , f2 )T is equal to the deter-
+minant of the matrix obtained by appending the ith row of St (f1 , f2 ) to its top,
+and thus is equal to zero. Therefore,
+(4.2)       St (f1 , f2 ) · ct (f1 , f2 )T = 0deg f1 +t−2         for t = deg f2 , . . . , deg f1 ,
+where 0n denotes the n-dimensional column vector of zeros for n = 1, 2, . . .. If A is
+an m × n integer matrix such that m ≤ n, define ∆(A) to be the greatest common
+divisor of all m × m minors of A, with ∆(A) = 0 if all such minors are zero. Then
+∆(A) is nonzero if and only if A has full rank.
+    Let f1 , f2 ∈ Z[x] be coprime degree d ≥ 2 polynomials that have a common
+root modulo N . Then Sd (f1 , f2 ) is the matrix in (4.1). Therefore, Sd (f1 , f2 ) is
+the submatrix of Syl(f1 , f2 ) obtained by first deleting its first and (d + 1)th rows,
+giving a matrix whose first column contains zeros, then deleting the first column
+of the resulting matrix. Thus, Sd (f1 , f2 ) has full rank, otherwise Syl(f1 , f2 ) is
+singular. Therefore, cd (f1 , f2 )T is nonzero and in the integer kernel of Sd (f1 , f2 ).
+Consequently, Montgomery’s result implies cd (f1 , f2 )/∆(cd (f1 , f2 )) is a geometric
+progression modulo N . More generally, if 2 ≤ deg f2 ≤ deg f1 , then the vectors
+ct (f1 , f2 ) for t = deg f2 , . . . , deg f1 are geometric progressions modulo N :
+Theorem 4.1. Let f1 and f2 be coprime integer polynomials such that 2 ≤ deg f2 ≤
+deg f1 , f1 and f2 have a common root r ∈ Z modulo N , and lc(f1 ) ∆(Sdeg f2 (f1 , f2 ))
+is relatively prime to N . Then, for t ∈ {deg f2 , . . . , deg f1 }, the vector
+                            ct = ct (f1 , f2 ) = (ct,deg f1 +t−2 , . . . , ct,0 )
+satisfies the following properties:
+    (1) ct is a nonzero geometric progression with ratio r modulo N ;
+    (2) gcd(ct,0 , N ) = 1;
+    (3) the matrix Ct = (ct,deg f1 +t−i−j )i=1,...,t;j=1,...,deg f1 has full rank;
+    (4) the vectors (f1 )Tdeg f1 and (f2 )Tdeg f1 are in the kernel of ∂Ct ; and
+    (5) the inequalities
+                                                    t−1  deg f2 −t          deg f1 −1
+           kct k2,s−1 ≤ |sin θs (f1 , f2 )| kf1 k2,s       s 2        kf2 k2,s
+          and
+                                                      deg f1
+                         t−deg f1                            −1                                       1− 1t
+        kct k2,s−1 ≥ s      2       sdeg f2 lc(f2 )     t
+                                                                   lc(f1 )t−deg f2 Res(f1 , f2 )
+          hold for all s > 0.
+   Theorem 4.1 is proved as a series of lemmas and corollaries in the next section,
+with some of the properties presented as part of more general statements. The
+requirement in the theorem that ∆(Sdeg f2 (f1 , f2 )) and N are relatively prime has
+not been encountered so far in this paper, nor is it usual to require a pair of nonlinear
+number field sieve polynomials to satisfy it. In the next section, it is shown that
+                                                      deg f2 −1
+                                                                       deg f −1
+  ∆(Sdeg f2 (f1 , f2 )) ≤ |sin θs (f1 , f2 )| kf1 k2,s            kf2 k2,s 1    for all s > 0
+(see Lemma 4.3 and Remark 4.4). Therefore, if f1 and f2 are a pair of number field
+sieve polynomials that are close the attaining the lower bound from Lemma 3.1, then
+gcd(∆(Sdeg f2 (f1 , f2 )), N ) is expected to equal one in practice, or a factorisation of
+N is possibly obtained. However, as the requirement is new, its meaning is discussed
+before proceeding to the proof of the theorem.
+8                                      NICHOLAS COXON
+
+
+   Let A be an integral domain, f1 , f2 ∈ A[x] such that 2 ≤ deg f2 ≤ deg f1 , and
+di = deg fi for i = 1, 2. Then the first subresultant of f1 and f2 is the polynomial
+     Sres1 (f1 , f2 ) = (−1)d1 +d2 −1 (Md2 ,d1 +d2 −2 (f1 , f2 )x − Md2 ,d1 +d2 −1 (f1 , f2 )) .
+Recall that Res(f1 , f2 ) = 0 if and only if deg gcd(f1 , f2 ) ≥ 1, where the gcd is
+computed over the field of fractions of A. This statement is refined by considering
+the first subresultant of the polynomials: if Res(f1 , f2 ) = 0, then deg gcd(f1 , f2 ) = 1
+if and only if Sres1 (f1 , f2 ) 6= 0 (see, for instance, [21, Section 7.7.1] or [10]).
+    Suppose now that f1 and f2 are coprime integer polynomials. Write f1 =
+Pd1          i
+                         Pd1           i
+   i=0 a1,i x and f2 =      i=0 a2,i x such that the coefficients ai,j are integers. Then
+using the Laplace expansion (see [1, Section 33]) to compute the determinant of
+Syl(f1 , f2 ) with respect to rows d2 and d1 + d2 shows that
+                                      d1
+                                      X
+         Res(f1 , f2 ) = (−1)d2 −1          (a1,i a2,0 − a1,0 a2,i ) Md2 ,d1 +d2 −i (f1 , f2 ).
+                                      i=1
+Thus, ∆(Sd2 (f1 , f2 )) divides Res(f1 , f2 ) and Sres1 (f1 , f2 ). Therefore, if p is a prime
+that divides ∆(Sd2 (f1 , f2 )) and does not divide lc(f1 ) lc(f2 ), then the reductions of
+f1 and f2 modulo p have a common factor of degree greater than one. Conversely,
+if the reductions of f1 and f2 modulo a prime p are nonzero and have a common
+divisor of degree w ≥ 2, then Gomez et al. [12] showed that pw divides Res(f1 , f2 ).
+Modifying their proof shows that pw−1 divides the minors Mdeg f2 ,i , and thus pw−1
+divides ∆(Sd2 (f1 , f2 )). Hence, if p is a prime that does not divide lc(f1 ) lc(f2 ),
+then p divides ∆(Sd2 (f1 , f2 )) if and only if the reductions of f1 and f2 modulo
+p have a common factor of degree greater than one. If f1 and f2 are a pair of
+number field sieve polynomials, then gcd(lc(f1 ) lc(f2 ), N ) is expected to equal one
+in practice. Therefore, the requirement that gcd(∆(Sdeg f2 (f1 , f2 )), N ) = 1 denies
+the possibility that f1 and f2 have a factor of degree greater than one modulo some
+factor of N .
+4.1. Proof of Theorem 4.1. In this section, f1 and f2 are integer polynomials
+such that 2 ≤ deg f2 ≤ deg f1 . Furthermore, let d = deg f1 ,
+    ct = ct (f1 , f2 ) = (ct,d+t−2 , . . . , ct,0 ) and Ct = (ct,d+t−i−j )i=1,...,t;j=1,...,d
+for t = deg f2 , . . . , d. The first lemma of this section proves Property (1) and
+Property (2) of Theorem 4.1:
+Lemma 4.2. If gcd(∆(Sdeg f2 (f1 , f2 )), N ) = 1 and there exists an integer r that is
+a root of f1 and f2 modulo N , then ct is a nonzero geometric progression with ratio
+r modulo N and gcd(ct,0 , N ) = gcd(lc(f1 )t−deg f2 , N ) for t = deg f2 , . . . , d.
+Proof. Suppose that gcd(∆(Sdeg f2 (f1 , f2 )), N ) = 1 and r ∈ Z is a root of f1 and f2
+modulo N . Let d2 = deg f2 . The lemma is proved in two steps: first, it is shown
+that cd2 is a geometric progression with ratio r modulo N ; and second, it is shown
+that if d2 < d and ct−1 is a geometric progression with ratio r modulo N for some
+t ∈ {d2 + 1, . . . , d}, then so too is ct .
+   Let U be a (d + d2 − 1) × (d + d2 − 1) unimodular matrix such that Sd2 U is
+in Hermite normal form (as defined by Cohen [7, Definition 2.4.2]). Performing
+elementary row operations on the columns of Sd2 does not change ∆(Sd2 ), which is
+nonzero since gcd(∆(Sd2 ), N ) = 1. Thus,
+                                                       
+                                   Sd2 U = 0d+d2 −2 H
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                               9
+
+
+for some (d + d2 − 2) × (d + d2 − 2) matrix H such that det H = ±∆(Sd2 ).
+   The first column vector of U is a basis for the integer kernel of Sd2 (see [7,
+Proposition 2.4.9]). Thus, (4.2) implies that cTd2 is equal to ±∆(cd2 ) times the first
+column vector of U . The definition of cd2 implies that ∆(cd2 ) = ∆(Sd2 ). Therefore,
+cd2 is nonzero and cd2 U −T = ± (∆(Sd2 ), 0, . . . , 0).
+   Let r = (rd+d2 −2 , rd+d2 −3 , . . . , 1) and rU −T = (r1 , . . . , rd+d2 −1 ). Then Sd2 rT ≡
+0d+d2 −2 (mod N ) since r is a root of f1 and f2 modulo N . Consequently,
+                                                   T
+      H(r2 , . . . , rd+d2 −1 )T ≡ (Sd2 U ) rU −T     ≡ Sd2 r T ≡ 0d+d2 −2 (mod N )
+Therefore, (r2 , . . . , rd+d2 −1 ) ≡ 0Td+d2 −2 (mod N ) since H is invertible modulo N .
+It follows that gcd(r1 , N ) = 1 since ∆(rU −T ) = ∆(r) = 1. Hence,
+                                         ∆(Sd2 ) −T
+                         cd2 U −T ≡ ±           rU             (mod N ).
+                                           r1
+Multiplying both sides of this equation on the right by U T shows that cd2 is a
+geometric progression with ratio r modulo N and gcd(cd2 ,0 , N ) = 1.
+   Suppose that d2 < d and ct−1 for some t ∈ {d2 + 1, . . . , d} is a nonzero geometric
+progression with ratio r modulo N and gcd(ct−1,0 , N ) = gcd(lc(f1 )t−1−d2 , N ). Let
+      Pd
+f1 = i=0 a1,i xi such that a1,d , . . . , a1,0 ∈ Z. Then
+                                                                      
+                                a1,d a1,d−1 . . . a1,0 0 . . . 0
+                               0                                      
+(4.3)         St (f1 , f2 ) = 
+                               ...
+                                                                       .
+                                                                       
+                                                  St−1 (f1 , f2 )
+                                     0
+Therefore, deleting the ith column of St (f1 , f2 ) and computing the determinant of
+the resulting matrix along its first row shows that
+                      (P
+                           d
+                           i=1 a1,d−i Mt−1,i if i = 1,
+(4.4)          Mt,i =
+                        −a1,d Mt−1,i−1         if i ∈ {2, . . . , d + t − 1}.
+It follows that ct is nonzero since a1,d and ct−1 are nonzero. Furthermore, ct,0 =
+−a1,d ct−1,0 and thus gcd(ct,0 , N ) = gcd(lc(f1 )t−d2 , N ).
+   By assumption, ct−1 is a geometric progression with ratio r modulo N . Thus,
+Mt−1,i r ≡ Mt−1,i−1 for i = 2, . . . , d + t − 1. Therefore, (4.4) implies that
+            Mt,i r ≡ −a1,d Mt−1,i−1 r ≡ −a1,d Mt−1,i−2 ≡ Mt,i−1            (mod N )
+                                                                       Pd
+for i = 3, . . . , d + t − 1. The first entry of St−1 cTt−1 is equal to i=0 a1,d−i Mt−1,i+1 .
+                                        Pd
+Consequently, (4.2) implies that i=0 a1,d−i Mt−1,i+1 = 0. Thus, (4.4) implies that
+                            d
+                            X                            d
+                                                         X
+Mt,2 r ≡ −a1,d Mt−1,1 r ≡          a1,d−i Mt−1,i+1 r ≡         a1,d−i Mt−1,i ≡ Mt,1   (mod N ).
+                             i=1                         i=1
+Hence, ct is a geometric progression with ratio r modulo N .                     
+                                                                 √
+  Define the volume of a real matrix A, denoted vol A, to be det AAT . For a
+matrix A over a commutative ring, define vol2 A = det AAT . If A is the 0 × n
+empty matrix, then vol A = 1 and vol2 A = 1. If A is an m × n matrix such that
+m ≤ n, then vol A is nonzero if and only if A has full rank. The volume function is
+multiplicative in the following sense: if A is an m × m matrix and B is an m × n
+matrix, then vol AB = vol A · vol B and vol2 AB = vol2 A · vol2 B.
+10                                              NICHOLAS COXON
+
+
+   The following lemma provides the upper bound on kct k2,s−1 in Theorem 4.1.
+In particular, the lemma shows that if |sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s = O(N 1/d ) for
+some s > 0, i.e., the polynomials are close the attaining the lower bound from
+Lemma 3.1, then kcd k2,s−1 = O(N 1−1/d ).
+Lemma 4.3. The inequality
+                                                 t−1                          d−1
+(4.5)   kct k2,s−1 ≤ |sin θs (f1 , f2 )| kf1 k2,s        s(deg f2 −t)/2 kf2 k2,s
+
+holds for t = deg f2 , . . . , d and all s > 0.
+Proof. If Sdeg f2 (f1 , f2 ) does not have full rank, then the recurrence relation (4.4)
+implies that ct is the zero vector for t = deg f2 , . . . , d. Thus, if Sdeg f2 (f1 , f2 )
+does not have full rank, then the lemma holds trivially. Therefore, assume that
+Sdeg f2 (f1 , f2 ) has full rank. Then the recurrence relation (4.3) implies that St (f1 , f2 )
+has full rank for t = deg f2 , . . . , d.
+   Let t ∈ {deg f2 , . . . , d}, s be a positive real number and
+                                  d+t−2                              
+                          S = s− 2 · diag sd+t−2 , sd+t−3 , . . . , 1 .
+Then the Binet–Cauchy formula (see [1, Section 36]) implies that
+                              X 
+                             d+t−1
+                                          det S
+                                                   2 d+t−1
+                                                       X M2t,i
+         2
+(4.6) vol (St (f1 , f2 )S) =       Mt,i (d+t−2i)/2   =        d+t−2i
+                                                                     = kct k22,s−1 .
+                              i=1
+                                       s               i=1
+                                                            s
+
+To complete the proof, Fischer’s inequality [11] is used to derive an upper bound
+on vol2 (St (f1 , f2 )S) in a manner similar to the proof of [8, Lemma 2.2].
+   Define matrices A1 , . . . , At as follows: A1 is the 0 × (d + t − 1) empty matrix if
+t = d; A1 = (xd−2 f2 , . . . , xt−1 f2 )d+t−2 if t 6= d; and Ai = (xt−i f1 , xt−i f2 )d+t−2 for
+i = 2, . . . , t. For i = 1, . . . , t, let Bi be the (d−t+2(i−1))×(d+t−1) matrix obtained
+by arranging the matrices A1 , . . . , Ai consecutively beneath each other. Then Bt
+is obtained from St by permuting its rows. Thus, vol2 (Bt S) = vol2 (St (f1 , f2 )S).
+Moreover, as St (f1 , f2 ) has full rank and s 6= 0, (Ai S)(Ai S)T and (Bi S)(Bi S)T are
+positive definite Hermitian for i = 1, . . . , t. Therefore, Fischer’s inequality implies
+that vol2 (Bi S) ≤ vol2 (Ai S) · vol2 (Bi−1 S) for i = 2, . . . , t. Hence,
+(4.7)                  vol2 (Bt S) ≤ vol2 (A1 S) · vol2 (A2 S) · · · vol2 (At S).
+     For i = 2, . . . , d,
+                                                           d+deg f2 −t
+                             (xd−i f2 )d+t−2 S 2 = s           2       −(i−1)
+                                                                                kf2 k2,s .
+Thus, if t 6= d, then Hadamard’s determinant theorem [13] implies that
+                               d−t+1
+                                Y                                                          d−t
+                                                                2                       2
+(4.8)       vol2 (A1 S) ≤              sd−t−deg f2 −2(i−1) kf2 k2,s = s(deg f2 −1) kf2 k2,s      .
+                                 i=2
+
+This inequality also holds trivially if t = d. The angle between the row vectors
+of Ai S is θs (f1 , f2 ) and (xt−i f1 )d+t−2 S 2 = s(t/2)−(i−1) kf1 k2,s for i = 2, . . . , t.
+Therefore, by computing (Ai S)T (Ai S) or by viewing vol Ai S as the area of the
+parallelogram generated by the row vectors of Ai S, it follows that
+                             d−deg f2
+      vol(Ai S) = st−           2     −2(i−1)
+                                                kf1 k2,s kf2 k2,s |sin θs (f1 , f2 )|    for i = 2, . . . , t.
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                      11
+
+
+Combining this equation with (4.7) and (4.8) yields the inequality
+                                              2(t−1)                          2(d−1)
+    vol2 (Bt S) ≤ |sin θs (f1 , f2 )| kf1 k2,s           s(deg f2 −t)/2 kf2 k2,s         .
+
+Combining this inequality with (4.6) (recalling that vol2 (Bt S) = vol2 (St S)) and
+computing roots yields (4.5). Hence, as t and s were chosen arbitrarily, it follows
+that (4.5) holds for t = deg f2 , . . . , d and all s > 0.                        
+Remark 4.4. The last equality of (4.6) holds for t = deg f2 , . . . , d and all s > 0.
+Thus, the inequalities
+                                                                   
+ kct k22,s−1 ≥ ∆(St (f1 , f2 ))2 sd+t−2 + sd+t−4 + . . . + s−(d+t−2) ≥ ∆(St (f1 , f2 ))2
+hold for t = deg f2 , . . . , d and all s > 0.
+   Property (4) of Theorem 4.1 is now proved. Combining this property with Prop-
+erty (1) of theorem shows that the coefficient vectors of each pair of nonlinear
+number field sieve polynomials appear in the kernel of a matrix of the form (2.1)
+for some nonzero length 2d − 1 geometric progression [c2d−2 , . . . , c0 ], where d is the
+maximum degree of the polynomials.
+Lemma 4.5. The vectors (f1 )Td and (f2 )Td belong to the kernel of ∂Ct for t =
+deg f2 , . . . , d.
+Proof. The ith entry of ∂Ct · (f1 )Td is equal to the ith entry of St (f1 , f2 ) · cTt for
+i = 1, . . . , t − 1. Similarly, the ith entry of ∂Ct · (f2 )Td is equal to the (d + i − 1)th
+entry of St (f1 , f2 ) · cTt for i = 1, . . . , t − 1. Thus, (4.2) implies that (f1 )Td and (f2 )Td
+are in the kernel of ∂Ct for t = deg f2 , . . . , d.                                             
+    Denote by adj A the adjoint (or adjugate) of a square matrix A. The following
+lemma, from which the remaining properties of Theorem 4.1 are deduced, shows
+that the adjoint of the Bezout matrix has entries which, up to sign, are minors of
+the Sylvester matrix:
+                                Pd         i
+                                                     Pd        i
+Lemma 4.6. Let g1 =                i=0 ui x and g2 =   i=0 vi x such that u0 , . . . , ud and
+v0 , . . . , vd are algebraically independent indeterminates over Z. Then
+(4.9)    adj Bez(g1 , g2 ) = (−1)d(d−1)/2 (Md,i+j−1 (g1 , g2 ))i=1,...,d;j=1,...,d .
+                 Pd                    Pd
+Proof. Let g1 = i=0 ui xi and g2 = i=0 vi xi such that u0 , . . . , ud and v0 , . . . , vd
+are algebraically independent indeterminates over Z. Then the algebraic inde-
+pendence of the coefficients implies that Res(g1 , g2 ) ∈ Z[u0 , . . . , ud , v0 , . . . , vd ] is
+nonzero. Therefore, equation (3.2) implies that it is sufficient to show that
+(4.10)         Bez(g1 , g2 ) · (Md,i+j−1 (g1 , g2 ))i=1,...,d = (−1)d Res(g1 , g2 ) · Idd ,
+                                                       j=1,...,d
+
+where Idn denotes the n × n identity matrix for all integers n ≥ 1.
+   Following (3.1), define
+                    i
+                                 !      i
+                                                      !
+                   X                  X
+                               k                    k
+(4.11) pi+1 =          vd−i+k x g1 −      ud−i+k x g2 for i = 0, . . . , d − 1.
+                      k=0                          k=0
+
+Then Bez(g1 , g2 ) = (p1 , . . . , pd ). Define
+                                                                             
+(4.12)        Hi,j = xd−j pi , xd−2 g1 , . . . , g1 , xd−2 g2 , . . . , g2       for 1 ≤ i, j ≤ d.
+12                                      NICHOLAS COXON
+
+
+The matrices Hi,j are square of order 2d − 1 since deg gi = d for i = 1, 2, and
+          pi = (ud−i vd − vd−i ud )xd−1 + lower order terms                for i = 1, . . . , d.
+Expanding the determinant of each matrix Hi,j along its first row shows that
+               Bez(g1 , g2 ) · (Md,i+j−1 (g1 , g2 ))i=1,...,d = (det Hi,j )i=1,...,d .
+                                                     j=1,...,d                 j=1,...,d
+
+It follows from (4.11) that
+                                                                      
+                         d+i−j−1
+                           X                         d+i−j−1
+                                                       X
+(4.13)       xd−j pi =          vk−i+j+1 xk  g1 −         uk−i+j+1 xk  g2
+                              k=d−j                                k=d−j
+
+for 1 ≤ i, j ≤ d. Therefore, for indices i and j such that 1 ≤ i < j ≤ d, the
+determinant det Hi,j is zero since the polynomial xd−j pi is a linear combination of
+the polynomials xd−2 g1 , . . . , g1 and xd−2 g2 , . . . , g2 . Similarly, for 1 ≤ j < i ≤ d,
+                                     d−i
+                                               !                         d−i
+                                                                                   !
+                                    X                                    X
+        d−j       i−j−1                      k             i−j−1                 k
+       x pi = x              g2 −        vk x g1 − x               g1 −      uk x g2
+                                      k=0                                    k=0
+                                                                                        
+                           d−j−1
+                            X                                    d−j−1
+                                                                  X
+                  = −              vk−i+j+1 xk  g1 +                    uk−i+j+1 xk  g2 ,
+                          k=i−j−1                                k=i−j−1
+
+Thus, det Hi,j = 0 for 1 ≤ j < i ≤ d. Consequently,
+(4.14)      Bez(g1 , g2 ) · (Md,i+j−1 (g1 , g2 ))i=1,...,d = diag (det H1,1 , . . . , det Hd,d ) .
+                                                 j=1,...,d
+
+     It is now shown that
+(4.15)                det Hi,i = (−1)d Res(g1 , g2 ) for i = 1, . . . , d.
+The special case i = d has been proved, up to sign, by Sederberg, Goldman and
+Du [29, Proposition 2.3]. Their arguments are modified to obtain (4.15). In partic-
+ular, the proof proceeds by computing the determinants of the following matrices
+two ways:
+                                                                        
+(4.16)       Hi = xd−i pi , xd−2 g1 , . . . , g1 , xd−1 g2 , . . . , g2   for i = 1, . . . , d.
+     Substituting i = j into (4.13) shows that
+                      d−1
+                                   !        d−1
+                                                        !
+                      X                     X
+          d−i                    k                    k
+         x pi =            vk+1 x g1 −          uk+1 x g2                   for i = 1, . . . , d.
+                      k=d−i                       k=d−i
+
+Therefore, by performing elementary row operations on Hi , it follows that
+                                                                            
+(4.17) det Hi = det vd xd−1 g1 , xd−2 g1 , . . . , g1 , xd−1 g2 , . . . , g2 = vd Res(g1 , g2 )
+for i = 1, . . . , d. The first column vector of Hi contains vd in the (d+1)th coordinate
+and zeros elsewhere. Furthermore, the submatrix of Hi obtained by deleting its first
+column and (d + 1)th row is equal to Hi,i . Therefore, expanding the determinant
+of Hi along its first column shows that
+(4.18)                  det Hi = (−1)d vd det Hi,i        for i = 1, . . . , d.
+Hence, combining (4.17) and (4.18) implies that (4.15) holds. Then combining
+(4.14) and (4.15) implies that (4.10) holds.                               
+             MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                       13
+
+
+  Property (3) of Theorem 4.1 is now deduced from Lemma 4.6 by specialising the
+coefficients of the generic polynomials g1 and g2 :
+Corollary 4.7. The adjoint of Bez(f1 , f2 ) is
+(4.19)                         adj Bez(f1 , f2 ) = (−1)d(d−1)/2 Cd .
+Consequently, if f1 and f2 are coprime, then Ct has full rank for t = deg f2 , . . . , d.
+Proof. Let A = Z[u0 , . . . , ud , v0 , . . . , vd ] such that u0 , . . . , ud and v0 , . . . , vd are al-
+                                                                              P
+gebraically independent indeterminates over Z. Set g1 = di=0 ui xi ∈ A[x] and
+      Pd
+g2 = i=0 vi xi ∈ A[x]. Then (4.9) holds. Define the evaluation homomorphism
+ϕ : A → Z by ui 7→ a1,i and vi 7→ a2,i for i = 0, . . . , d. Extend ϕ entry-wise
+to matrices. As deg f1 = d, it holds that ϕ(adj Bez(g1 , g2 )) = adj Bez(f1 , f2 ) and
+ϕ(Md,t (g1 , g2 )) = Md,t (f1 , f2 ) for i = 1, . . . , 2d − 1. Therefore, the ϕ-image of the
+each side of (4.9) is equal to its respective side of (4.19).
+   Suppose now that f1 and f2 are coprime. Then (3.2) implies that Bez(f1 , f2 )
+is nonsingular. Thus, (4.19) implies that Cd is nonsingular. If t ∈ Z such that
+deg f2 ≤ t ≤ d, then the recurrence relation (4.3) implies that the submatrix of Cd
+formed by its last t rows is equal to (− lc(f1 ))d−t Ct . As lc(f1 ) is nonzero, it follows
+that Ct has full rank for t = deg f2 , . . . , d.                                                       
+   All that remains in the proof of Theorem 4.1 is to establish the lower bound on
+kct k2,s−1 stated in Property (5) of the theorem. The remainder of this section is
+dedicated to the proof of this property, which proceeds as follows: first, the volume
+of (∂ k Ct )S, where S is an arbitrary nonsingular matrix, is computed; then, for an
+appropriate choice of S, the volume of (∂ k Ct )S is bounded above by a power of
+kct k2,s−1 , providing a lower bound on kct k2,s−1 ; and finally, by examining a special
+case of this bound, the lower bound stated in Property (5) is proved.
+   Let A be an m × n matrix. For all subsets I ⊆ {1, . . . , m} and J ⊆ {1, . . . , n},
+define AI,J to be the |I| × |J| submatrix of A formed by the intersection of the
+rows that have indices in I with the columns that have indices in J. If m = n, and
+{I, I ′ } and {J, J ′ } are partitions of {1, . . . , n} such that |I| = |J|, then Jacobi (see
+[1, Section 42] or [5]) showed that
+                                       P       ′ P          ′                    
+                                                                    |I|−1
+(4.20)         det (adj A)I,J = (−1) i′ ∈I ′ i + j′ ∈J ′ j (det A)        det AT I ′ ,J ′ .
+The following technical lemma is proved by repeatedly applying this identity:
+Lemma 4.8. Suppose that A and S are n × n matrices such that n ≥ 2 and S is
+invertible. Then, for each partition {I, I ′ } of {1, . . . , n},
+                                                                               
+                                      2(|I|−1)            2
+   vol2 (adj A)I,{1,...,n} S = (det A)          (det S) vol2 AT I ′ ,{1,...,n} S −T .
+Proof. Suppose that A and S are n×n matrices such that n ≥ 2 and S is invertible.
+Let {I, I ′ } be a partition of {1, . . . , n}. Set B = adj(S)A, J = {J ⊆ {1, . . . , n} |
+|J| = |I|} and J ′ = {{1, . . . , n} \ J | J ∈ J }. Then the Binet–Cauchy formula
+implies that
+                                                 X                2
+                     vol2 (adj B)I,{1,...,n} =       det (adj B)I,J .
+                                                     J∈J
+Using (4.20) to compute each summand on the right hand side shows that
+                                             2(|I|−1)
+                                                      X                 2
+           vol2 (adj B)I,{1,...,n} = (det B)              det B T I ′ ,J ′ .
+                                                             J ′ ∈J ′
+14                                     NICHOLAS COXON
+
+
+Using the Binet–Cauchy formula to compute the sum on the right hand side yields
+                                                              
+(4.21)      vol2 (adj B)I,{1,...,n} = (det B)2(|I|−1) vol2 B T I ′ ,{1,...,n} .
+If X and Y are n × n matrices, then (XY )K,{1,...,n} = XK,{1,...,n} Y for all K ⊆
+{1, . . . , n}. It follows that
+                                                                                  
+              vol2 (adj B)I,{1,...,n} = (det S)2(n−2)|I| vol2 (adj A)I,{1,...,n} S
+
+and                                                                             
+                                                            
+            vol2 B T I ′ ,{1,...,n} = (det S)2(n−|I|) vol2 AT I ′ ,{1,...,n} S −T .
+Substituting these values and det B = (det S)n−1 det A into (4.21) completes the
+proof.                                                                        
+Lemma 4.9. Let t, k ∈ Z such that deg f2 ≤ t ≤ d and 0 ≤ k < t, and S be a real
+nonsingular (d + k) × (d + k) matrix. Then
+                                                                t−k−1
+(4.22)     vol   ∂ k Ct S = |det S| lc(f1 )t−deg f2 Res(f1 , f2 )
+                                                                                                
+                               · vol   xk−1 f1 , . . . , f1 , xd−t+k−1 f2 , . . . , f2 d+k−1 S −T .
+                                       |     {z           } |        {z              }
+                                            k terms           d − t + k terms
+
+Proof. Let t, k ∈ Z such that deg f2 ≤ t ≤ d and 0 ≤ k < t, and S be a real
+nonsingular (d + k) × (d + k) matrix. Let A = R[u0 , . . . , ud , v0 , . . . , vd ] where
+u0 , . . . , ud and v0 , . . . , vd are algebraically independent indeterminates over R. De-
+                 Pd           i
+                                            Pd          i
+fine g1 =          i=0 ui x , g2 =              i=0 vi x and p1 , . . . , pd ∈ A[x] by (4.11). Then
+Bez(g1 , g2 ) = (p1 , . . . , pd ). Define a k × (d + k) matrix G and a (d + k) × (d + k)
+matrix B as follows:
+                                                                                              
+                  k−1          k−2
+                                                                             T     0k×d
+          G= x        g1 , x       g1 , . . . , g1 d+k−1 and B = G                               ,
+                                                                                 Bez(g1 , g2 )
+where 0m×n denotes the m × n matrix of zeros for all integers m, n ≥ 0. The upper
+k × k submatrix of GT is lower triangular, with each entry on its diagonal equal
+to ud . Thus, (3.2) implies that det B = ukd (−1)d(d+1)/2 Res(g1 , g2 ) ∈ A, which is
+nonzero since u0 , . . . , ud and v0 , . . . , vd are algebraically independent over R.
+   If k ≥ 1, then (4.2) implies that
+                         T
+G · (Md,i+j−1 (g1 , g2 ))j=1,...,d+k = Sd (g1 , g2 ){i,...,i+k−1},{1,...,2d−1} · cd (g1 , g2 )T = 0k
+for i = 1, . . . , d − k. Consequently, Lemma 4.6 implies that
+                                                                                             
+     (−1)d(d−1)/2 ukd (Md,i+j−1 (g1 , g2 ))i=1,...,d−k · B = 0(d−k)×2k          det B · Idd−k .
+                                           j=1,...,d+k
+
+As B is nonsingular, it follows that
+     (adj B){2k+1,...,d+k},{1,...,d+k} = (−1)d(d−1)/2 ukd (Md,i+j−1 (g1 , g2 ))i=1,...,d−k .
+                                                                                    j=1,...,d+k
+
+Therefore, on the one hand,
+                                                   
+(4.23) vol2 (adj B){d−t+2k+1,...,d+k},{1,...,d+k} S
+                                                                               
+                             2k(t−k)
+                          = ud       vol2 (Md,d−t+i+j−1 (g1 , g2 ))i=1,...,t−k S .
+                                                                                 j=1,...,d+k
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                     15
+
+
+On the other hand, as Bez(g1 , g2 ) is symmetric (which is deduced from Lemma 4.6
+by noting that adj Bez(g1 , g2 ) is symmetric), Lemma 4.8 implies that
+                                                           
+(4.24) vol2 (adj B){d−t+2k+1,...,d+k},{1,...,d+k} S
+                                                 2(t−k−1)
+                              = ukd Res(g1 , g2 )            (det S)2
+                                                                                               
+                                  · vol2 xk−1 g1 , . . . , g1 , p1 , . . . , pd−t+k d+k−1 S −T .
+                 Pd             i
+                                              Pd            i
+   Write f1 =      i=0 a1,i x and f2 =            i=0 a2,i x such that the coefficients ai,j
+are integers. Define the evaluation homomorphism ϕ : A → R by ui 7→ a1,i and
+                                                                d−deg f2
+vi 7→ a2,i for i = 0, . . . , d. Then ϕ(Res(g1 , g2 )) = a1,d                 Res(f1 , f2 ). Extend ϕ
+entry-wise to matrices and let ϕ̃ : A[x] → R[x] be the natural extension of ϕ. Then
+                                               
+      ϕ (Md,d−t+i+j−1 (g1 , g2 ))i=1,...,t−k = (Md,d−t+i+j−1 (f1 , f2 ))i=1,...,t−k
+                                       j=1,...,d+k                                   j=1,...,d+k
+
+                                                       = (−a1,d )d−t · ∂ k Ct ,
+where the final equality follows from the recurrence relation (4.4). Therefore, com-
+puting the ϕ-images of (4.23) and (4.24) and equating shows that
+                                                                   2(t−k−1)
+                                                                                  −2(d−t+k)
+(4.25) vol2 ∂ k Ct S = (det S)2 a1,d   t−deg f2
+                                                     Res(f1 , f2 )               a1,d
+                                                                                          
+                       · vol2 xk−1 f1 , . . . , f1 , ϕ̃(p1 ), . . . , ϕ̃(pd−t+k ) d+k−1 S −T .
+   From the definition of p1 , . . . , pd , it follows that if deg f2 < d, then
+                                 i−1
+                                 X
+               ϕ̃(pi ) = −f2 ·         a1,d−i+1+j xj     for i = 1, . . . , d − deg f2 .
+                                 j=0
+
+Furthermore, if d − t + k > d − deg f2 , then
+                                                                                      
+                      i−1
+                      X                                d−deg
+                                                           X f2 +i−1
+ϕ̃(pd−deg f2 +i ) =      a2,deg f2 −i+1+j xj  f1 −                a1,deg f2 −i+1+j xj  f2
+                       j=0                                         j=0
+
+for i = 1, . . . , deg f2 − t + k. As deg f2 − t + k − 1 ≤ k − 1, it follows that
+                                                                     
+   vol2 xk−1 f1 , . . . , f1 , ϕ̃(p1 ), . . . , ϕ̃(pd−t+k ) d+k−1 S −T
+                                                                                             
+                     2(d−t+k)
+                = a1,d        · vol2 xk−1 f1 , . . . , f1 , xd−t+k−1 f2 , . . . , f2 d+k−1 S −T .
+Substituting this equation into (4.25) and taking roots yields (4.22).                              
+Lemma 4.10. Let t, k ∈ Z such that deg f2 ≤ t ≤ d and 0 ≤ k < t. Then
+               t−k           t(d−t+k)+dk                                   t−k−1
+(4.26)    kct k2,s−1 ≥ s−         2        lc(f1 )t−deg f2 Res(f1 , f2 )
+                                                                                           
+                     · vol xk−1 f1 (sx), . . . , f1 (sx), xd−t+k−1 f2 (sx), . . . , f2 (sx) d+k−1
+for all s > 0.
+Proof. Let t, k ∈ Z such that deg f2 ≤ t ≤ deg f1 and 0 ≤ k < t. For a real number
+s > 0, define
+                 d+t−2                                                      
+        S1 = s− 2 diag 1, s, . . . , st−k−1 , S2 = diag 1, s, . . . , sd+k−1
+16                                         NICHOLAS COXON
+
+
+and
+                                                                                
+                     S3 = diag s−d , . . . , s−(d+k−1) , s−t , . . . , s−(d+k−1) .
+                               |            {z       }
+                                            k terms
+Then
+                                                     
+      xk−1 f1 , . . . , f1 , xd−t+k−1 f2 , . . . , f2 d+k−1 S2−T
+                                                                                          
+                     = S3 xk−1 f1 (sx), . . . , f1 (sx), xd−t+k−1 f2 (sx), . . . , f2 (sx) d+k−1 .
+Thus, Lemma 4.9 with S = S2 implies that
+                     
+(4.27) vol S1 ∂ k Ct S2
+                                                                                       t−k−1
+                  = |det S1 | |det S2 | |det S3 | lc(f1 )t−deg f2 Res(f1 , f2 )
+                                                                                            
+                      · vol xk−1 f1 (sx), . . . , f1 (sx), xd−t+k−1 f2 (sx), . . . , f2 (sx) d+k−1 .
+     Recall that ct = (ct,d+t−2 , . . . , ct,0 ) and Ct = (ct,d+t−i−j )i=1,...,t;j=1,...,d . Thus,
+                                                         d+t−2
+                                                                 
+         S1 ∂ k Ct S2 = ct,d+t−2−(i+j−2) s(i+j−2)− 2                                         .
+                                                                            i=1,...,t−1;j=1,...,d+1
+                                             k
+                                                  
+Therefore, the row vectors of S1 ∂ Ct S2 each have Euclidean length bounded by
+kct k2,s−1 . Consequently, Hadamard’s determinant theorem implies that
+                                                 t−1
+(4.28)                     vol S1 ∂ k Ct S2 ≤ kct k2,s−1 .
+Calculating the determinants of S1 , S2 and S3 yields
+                                                                     t(d−t+k)+dk
+(4.29)                       |det S1 | |det S2 | |det S3 | = s−           2        .
+Combining (4.27), (4.28) and (4.29) gives (4.26), which completes the proof since
+s was chosen arbitrarily.                                                      
+
+   To end the section, two corollaries to Lemma 4.10 are given. The first corollary
+establishes the lower bound on kct k2,s−1 stated in Property (5) of Theorem 4.1,
+completing the proof of the theorem. The second corollary is utilised in the next
+section as part of the analysis of Montgomery’s method.
+Corollary 4.11. The inequality
+                              t−d                     d
+                                                          −1                                   1− 1t
+             kct k2,s−1 ≥ s 2       sdeg f2 lc(f2 ) t          lc(f1 )t−deg f2 Res(f1 , f2 )
+holds for t = deg f2 , . . . , d and all s > 0.
+Proof. For t ∈ Z such that deg f2 ≤ t ≤ d and s > 0, the (d − t) × (d − t)
+submatrix of (xd−t−1 f2 (sx), . . . , f2 (sx))d−1 formed by columns t−deg f2 +1, . . . , d−
+deg f2 is upper triangular with sdeg f2 lc(f2 ) in each diagonal entry. By applying the
+Binet–Cauchy formula, it follows that vol2 (xd−t−1 f2 (sx), . . . , f2 (sx))d−1 is equal to
+(sdeg f2 lc(f2 ))2(d−t) plus some sum of squares. Thus, for all s > 0,
+                                                            d−t
+   vol xd−t−1 f2 (sx), . . . , f2 (sx) d−1 ≥ sdeg f2 lc(f2 )     for t = deg f2 , . . . , d.
+Substituting these inequalities into (4.26) for t = deg f2 , . . . , d and k = 0 completes
+the proof.                                                                              
+             MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                               17
+
+
+Corollary 4.12. The inequality
+       d−1          deg f2 −d                                    d−2
+  kcd k2,s−1 ≥ s        2       lc(f1 )d−deg f2 Res(f1 , f2 )          |sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s
+holds for all s > 0.
+Proof. For all s > 0, the Euclidean length of the first row vector of the matrix
+(f1 (sx), f2 (sx)) is sd/2 kf1 k2,s , the Euclidean length of the second row vector is
+sdeg f2 /2 kf2 k2,s , and the angle between the two row vectors is θs (f1 , f2 ). Therefore,
+                                    d+deg f2
+     vol (f1 (sx), f2 (sx)) = s        2       kf1 k2,s kf2 k2,s |sin θs (f1 , f2 )|    for all s > 0.
+Substituting this equation into (4.26) for t = d and k = 1 completes the proof. 
+
+                         5. Analysis of Montgomery’s method
+   Montgomery’s method is analysed in this section, providing criteria for the se-
+lection of geometric progressions that yield polynomials with optimal coefficient
+size and optimal resultant. In particular, the goal of this section is to prove the
+following theorem, which may be viewed as a converse to Theorem 4.1:
+Theorem 5.1. Let d ≥ 2 and c = [c2d−2 , . . . , c0 ] ∈ Z2d−1 be a geometric pro-
+gression with ratio r modulo N such that C = C(c2d−2 , . . . , c0 ) is nonsingular and
+gcd(c
+      0 , . . . , cd−2 , N ) = 1. Then, for f1 , f2 ∈ Z[x] such that 2 ≤ deg f2 ≤ deg f1 and
+ (f1 )Td , (f2 )Td is a basis for the integer kernel of ∂C, the following properties hold:
+    (1) deg f1 = d;
+    (2) r is a root of f1 and f2 modulo N ;
+    (3) f1 and f2 are coprime, with
+                          |det C|d−1                                                            |det C|d−2
+|Res(f1 , f2 )| =                                          and     ∆(Sd (f1 , f2 )) = ∆(c)                 ;
+                                  c d−deg f2
+                    ∆(∂C)deg f2 ∆(∂C)                                                           ∆(∂C)d−1
+    (4) the inequalities
+               1
+                                                                                                   d−1
+       c   d−1     deg f2 −d                                          1                     c
+                 ≤s 2        |sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s ≤ d−2
+      ∆(c) 2,s−1                                                    N                      ∆(c) 2,s−1
+         hold for all s > 0.
+   Property (1) and Property (2) of Theorem 5.1 are proved in Section 2. The two
+remaining properties of the theorem are proved in the next section.
+   Recall from Section 2 that in Montgomery’s method, the polynomials f1 and f2
+are chosen such that {(f1 (sx))Td , (f2 (sx))Td }, where d = max{deg f1 , deg√
+                                                                             f2 }, is a
+Lagrange-reduced basis for some s > 0. It follows that |sin θs (f1 , f2 )| ≥ 3/2 for
+the chosen value of s (see [26, p. 41]). Combining the inequalities from Property (4)
+shows that any length 2d − 1 geometric progression c that satisfies the condition
+of the theorem has norm satisfying kc/∆(c)k2,s−1 ≥ N 1−1/d for all s > 0. Thus,
+Montgomery’s method is unforgiving of a poor choice of geometric progression.
+In particular, the method generates to two degree d polynomials with optimal
+coefficient size only if a geometric progression of almost minimal size is used.
+   Property (3) of Theorem 5.1 may aid the selection of parameters for specific
+geometric progression constructions by allowing parameters to be tuned so that
+polynomials with resultant equal to a small multiple of N are obtained. Before
+18                                    NICHOLAS COXON
+
+
+completing the proof of Theorem 5.1 in the next section, Property (3) is used to
+compute the resultant given by two existing geometric progression constructions:
+Example 5.2. For d = 2, several authors [22, 31, 27, 18, 8] propose using length
+2d − 1 = 3 geometric progressions of the form
+                                                           
+                                           am2 − kN
+                       [c2 , c1 , c0 ] =            , am, ap ,
+                                               p
+where a, k, p and m are nonzero integers such that gcd(m, p) = 1 and gcd(a, N ) = 1.
+Letting C = C(c2 , c1 , c0 ), it follows that
+             det C = −akN        and ∆(∂C) = ∆ ([c2 , c1 , c0 ]) = gcd(a, c2 ).
+Let ã = a/ gcd(a, c2 ) and k̃ = k/ gcd(a, c2 ), with the latter being an integer since
+am2 − kN = pc2 and gcd(a, N ) = 1. Property (3) of Theorem 5.1 implies that if
+f1 and f2 are quadratic polynomials whose coefficient vectors form a basis for the
+integer kernel of ∂C, then Res(f1 , f2 ) = ±ãk̃N and ∆(S2 (f1 , f2 )) = 1.
+Example 5.3. For d = 3, Koo, Jo and Kwon [18] and the author [8] propose using
+length 2d − 1 = 5 geometric progressions of the form
+                                                                            
+                                       m(am3 − kN ) am3 − kN     2         2
+         [c4 , c3 , c2 , c1 , c0 ] =               ,         , am , amp, ap ,
+                                           p2           p
+where a, k, p and m are nonzero integers such that gcd(m, p) = 1 and gcd(a, N ) = 1.
+Letting C = C(c4 , . . . , c0 ), it follows that det C = −a(kN )2 ,
+                                                   
+                               am3 − kN
+          ∆(∂C) = gcd                      , am, ap   · |k|N = gcd (a, c3 /p) · |k|N
+                                    p2
+and
+                                                          
+                                      am3 − kN am3 − kN
+        ∆([c4 , . . . , c0 ]) = gcd m         ,p        , a = gcd(a, c3 /p).
+                                         p2       p2
+Let ã = a/ gcd(a, c3 /p) and k̃ = k/ gcd(a, c3 /p). Property (3) of Theorem 5.1
+implies that if f1 and f2 are cubic polynomials whose coefficient vectors form a basis
+for the integer kernel of ∂C, then Res(f1 , f2 ) = ±ã2 k̃N and ∆(S3 (f1 , f2 )) = |ã|.
+5.1. Proof of Theorem 5.1. Theorem 4.1 shows that each pair of nonlinear num-
+ber field sieve polynomials with maximum degree d ≥ 2 appears in the kernel of the
+matrix ∂C(c2d−2 , . . . , c0 ) for some geometric progression [c2d−2 , . . . , c0 ]. The follow-
+ing lemma shows that such a geometric progression is unique up to scalar multiple,
+thus allowing results from Section 4.1 to be used in the proof of Theorem 5.1:
+Lemma 5.4. Let f1 and f2 be coprime integer polynomials such that 2 ≤ deg f2 ≤
+deg f1 , and d = deg f1 . Then the vectors (f1 )Td and (f2 )Td are in the kernel of
+∂C(c2d−2 , . . . , c0 ) for some vector c = (c2d−2 , . . . , c0 ) ∈ Z2d−1 if and only if c =
+±(∆(c)/∆(cd (f1 , f2 )) · cd (f1 , f2 ).
+Proof. Let f1 and f2 be coprime integer polynomials such that 2 ≤ deg f2 ≤
+deg f1 , d = deg f1 and cd = cd (f1 , f2 ). Let c = (c2d−2 , . . . , c0 ) ∈ Z2d−1 and
+C = C(c2d−2 , . . . , c0 ). Then the ith entry of ∂C · (f1 )Td is equal to the ith entry of
+Sd (f1 , f2 ) · cT for i = 1, . . . , d − 1. Similarly, the ith entry of ∂C · (f2 )Td is equal to
+the (d + i − 1)th entry of Sd (f1 , f2 ) · cT for i = 1, . . . , d − 1. Thus, (f1 )Td and (f2 )Td
+are in the kernel of ∂C if and only if cT is in the kernel of Sd (f1 , f2 ).
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                              19
+
+
+    As f1 and f2 are coprime, Syl(f1 , f2 ) is nonsingular. The matrix Sdeg f2 (f1 , f2 )
+is the submatrix of Syl(f1 , f2 ) obtained by first deleting its first and (deg f2 + 1)th
+rows, giving a matrix whose first column contains zeros, then deleting the first col-
+umn of the resulting matrix. Therefore, Sdeg f2 (f1 , f2 ) has full rank. Consequently,
+the recurrence relation (4.3) implies that Sd (f1 , f2 ) has full rank. Lemma 4.2 and
+(4.2) imply that cTd is nonzero and belongs to the kernel of Sd (f1 , f2 ). Thus,
+{cTd /∆(cd )} is a basis of the integer kernel of Sd (f1 , f2 ). Hence, cT is in the integer
+kernel of Sd (f1 , f2 ) if and only if c = ±(∆(c)/∆(cd )) · cd .                          
+   Let n ≥ 2 and A be an n × n matrix. For i1 , i2 , j1 , j2 ∈ {1, . . . , n} such that
+i1 < i2 and j1 < j2 , define Ik = {1, . . . , n} \ {ik } and Jk = {1, . . . , n} \ {jk } for
+k = 1, 2. Then
+                                                                        
+                                                 det AI1 ,J1 det AI1 ,J2
+(5.1)        det A · det AI1 ∩I2 ,J1 ∩J2 = det                             ,
+                                                 det AI2 ,J1 det AI2 ,J2
+which is known as Sylvester’s identity (see [30, Theorem 4.1] for a proof).
+   The following lemma is obtained from Lemma 3.2 by computing the determinant
+of the matrix ψ for the case where H and the polynomials f1 and f2 are integral:
+Lemma 5.5. Let d ≥ 2 and (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 )
+is nonsingular. If f1 and f2 are integer polynomials such that (f1 )Td , (f2 )Td is a
+basis of the integer kernel of ∂C, then
+(5.2)                           adj C = ±∆(∂C) · Bez(f1 , f2 ).
+Proof. Let d ≥ 2 and (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 ) is
+nonsingular. Define (d + 1) × (d + 1) matrices
+                                                                       
+                                            1
+                                                         1             
+                                                                       
+               c2d−2 c2d−3 . . . c2d−i−1 . . . c2d−j−1 . . . cd−2 
+                                                                       
+        Bi,j = c2d−3 c2d−4 . . . c2d−i−2 . . . c2d−j−2 . . . cd−3  ,
+                                                                       
+                ..        ..                ..           ..         .. 
+                .          .                 .            .          . 
+                     cd        cd−1    ...    cd−i+1      ...    cd−j+1        ...   c0
+where the omitted entries are zeros, for 1 ≤ i, j ≤ d + 1. Define bi,j = det Bi,j for
+1 ≤ i, j ≤ d + 1. Then {(−1)i+j+1 bi,j | 1 ≤ i < j ≤ d} is the set of (d − 1) × (d − 1)
+minors of ∂C. The matrix ∂C has full rank since C is nonsingular. Therefore, there
+exist indices k and ℓ such that k < ℓ and bk,ℓ 6= 0. The first and second column
+                                               T                            T
+vectors of adj Bk,ℓ are (b1,ℓ , . . . , bd+1,ℓ) and (bk,1 , . . . , bk,d+1 ) respectively. Thus,
+these two vectors are nonzero and in the kernel of ∂C.
+   Let                                                       
+                                           bk,1 . . . bk,d+1
+                                 B=                               .
+                                           b1,ℓ . . . bd+1,ℓ
+Let j1 and j2 be indices such that 1 ≤ j1 < j2 ≤ d. Define In = {1, . . . , d + 1} \ {n}
+and Jn = {1, . . . , d + 1} \ {jn } for n = 1, 2. Then
+                         (
+                           (−1)jn +1 bjn ,ℓ if jn ≤ ℓ
+     det(Bk,ℓ )I1 ,Jn =                                  = (−1)jn +1 bjn ,ℓ for n = 1, 2.
+                           (−1)jn bℓ,jn        if jn > ℓ
+Similarly, det(Bk,ℓ )I2 ,Jn = (−1)jn bk,jn for n = 1, 2. Finally,
+                          det(Bk,ℓ )I1 ∩I2 ,J1 ∩J2 = (−1)j1 +j2 +1 bj1 ,j2 .
+20                                    NICHOLAS COXON
+
+
+Therefore, identity (5.1) implies that
+                                
+                  bk,j1 bk,j2
+(5.3)        det                   = −bk,ℓ bj1 ,j2     for 1 ≤ j1 < j2 ≤ d + 1.
+                   bj1 ,ℓ bj2 ,ℓ
+Consequently, ∆(B) = ±∆(∂C) · bk,ℓ , which is nonzero since ∂C has full rank and
+bk,ℓ 6= 0. Therefore, if V is a (d + 1) × (d + 1) unimodular matrix such that BV is
+in Hermite normal form, then
+                                                      
+                                 BV = 02×(d−1) H
+for some 2 × 2 integer matrix H. Performing elementary column operations on B
+does not change ∆(B). Thus, det H = ±∆(B) is nonzero. Hence,
+                                                
+(5.4)                    H −1 B = 02×(d−1) Id2 V −1
+has integer entries and (∂C)(H −1 B)T = 02×2 .               
+  Suppose that f1 and f2 are integer polynomials such that (f1 )Td , (f2 )Td is a
+basis of the integer kernel of ∂C. Then there exists a 2 × 2 nonsingular integer
+matrix U such that
+(5.5)                                U (f1 , f2 ) = H −1 B.
+Therefore, Lemma 3.2 implies that
+                                               1
+(5.6)                           C −1 = −           Bez(f1 , f2 ),
+                                             det ψ
+where
+                                                                        
+              cd−1   . . . c0   0            T  c             . . . c0   0
+        ψ=                         (f1 , f2 ) = d−1                          B T (HU )−T .
+                0    ... 0      1                 0           ... 0      1
+Equation (5.4) implies that ∆(H −1 B) = 1 since V is unimodular. Furthermore,
+∆((f1 , f2 )) = 1 since (f1 )Td , (f2 )Td is a basis of the integer kernel of ∂C: if
+∆((f1 , f2 )) were greater than one, then (f1 )Td and (f2 )Td would only generate a
+proper subgroup of the integer kernel [8, Section 3.1]. Thus, (5.5) implies that U
+is unimodular. Therefore,
+                            d                                     d
+                      1 X                 bk,j bk,d+1          1   X
+(5.7)    det ψ = ±            cd−j det                   =±            cd−j bj,d+1 .
+                    det H j=1              bj,ℓ bd+1,ℓ      ∆(∂C) j=1
+Expanding the determinant of C by minors along its last row shows that
+                                    d
+                                    X
+(5.8)                                     cd−i bi,d+1 = det C.
+                                    i=1
+Hence, (5.6), (5.7) and (5.8) imply that adj C = ±∆(∂C) · Bez(f1 , f2 ).                       
+   The first assertion of Property (3) of Theorem 5.1, that f1 and f2 are coprime,
+follows from Lemma 5.2 since C is nonsingular by assumption. The next step in
+the proof of the theorem is to prove the formulae for Res(f1 , f2 ) and ∆(Sd (f1 , f2 )).
+Lemma 5.6. Let d ≥ 2 and c = (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that the matrix
+C = C(c2d−2 , . . . , c0 ) is nonsingular. If f1 , f2 ∈ Z[x] such that 2 ≤ deg f2 ≤ deg f1
+and (f1 )Td , (f2 )Td is a basis for the integer kernel of ∂C, then
+                                             d−1                                             d−2
+                                    (det C)                                          |det C|
+lc(f1 )d−deg f2 Res(f1 , f2 ) = ±                  and    ∆ (Sd (f1 , f2 )) = ∆(c)            .
+                                     ∆(∂C)d                                          ∆(∂C)d−1
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                     21
+
+
+Proof. Let d ≥ 2 and c = (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 )
+is
+ nonsingular.        Suppose that f1 , f2 ∈ Z[x] such that 2 ≤ deg f2 ≤ deg f1 and
+  (f1 )Td , (f2 )Td is a basis for the integer kernel of ∂C. Then (5.2) holds and com-
+puting the determinant of both sides of the equation yields
+                    (det C)d−1 = ±∆(∂C)d lc(f1 )d−deg f2 Res(f1 , f2 ).
+As C is nonsingular, det C and ∆(∂C) are nonzero. Thus, Res(f1 , f2 ) is nonzero
+and Lemma 5.4 implies that c = ± (∆(c)/∆(cd (f1 , f2 ))) · cd (f1 , f2 ). Therefore, on
+the one hand, Corollary 4.7 implies that
+                                   ∆(cd (f1 , f2 ))      ∆ (Sd (f1 , f2 ))
+             adj Bez(f1 , f2 ) = ±                  C =±                   C
+                                      ∆(c)                   ∆(c)
+On the other hand, computing the adjoint of both side of (5.2) yields
+                        (det C)d−2 C = ±∆(∂C)d−1 adj Bez(f1 , f2 ).
+As C has at least one nonzero entry, it follows that
+                                                ∆ (Sd (f1 , f2 ))
+                    ±(det C)d−2 = ∆(∂C)d−1                        ,
+                                                    ∆(c)
+where the right hand side is positive.                                                              
+   The following lemma and its subsequent corollary complete the proof of Prop-
+                                                     c
+erty (3) of Theorem 5.1 by showing that lc(f1 ) = ±∆(∂C)/∆(∂C) when the degree
+of f2 is strictly less than d:
+Lemma 5.7. Let d ≥ 2, (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 )
+is nonsingular, and integers bi,j , for 1 ≤ i, j ≤ d + 1, be defined as in the proof of
+                                                                        Pd+1                     c
+Lemma 5.5. Then there exist integers x2 , . . . , xd+1 such that k=2 xk bk,1 = ∆(∂C)
+and, for any such integers, the set
+     (         d+1
+                                                                                               )
+          1    X                                     T    1                                  T
+                   xk (bk,1 , bk,2 , . . . , bk,d+1 ) ,       (b1,1 , b2,1 , . . . , bd+1,1 )
+        ∆(∂C)                                             c
+                                                        ∆(∂C)
+                 k=2
+is a basis of the integer kernel of ∂C.
+Proof. Let (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 ) is nonsingular
+Then ∆(∂C)     c is nonzero since C is nonsingular. Define bi,j as in the proof of
+Lemma 5.5 for 1 ≤ i, j ≤ d + 1. For distinct indices i and j, bi,j is up to sign equal
+to the determinant of the (d − 1) × (d − 1) submatrix of ∂C obtained by deleting
+                                                              c and there exist integers
+columns i and j. Thus, gcd(b2,1 , b3,1 , . . . , bd+1,1 ) = ∆(∂C)
+                            Pd+1                 c
+x2 , . . . , xd+1 such that k=2 xk bk,1 = ∆(∂C). For such integers, define
+               X  d+1
+           1                                                      1
+  b1 =           xk (bk,1 , . . . , bk,d+1 )T     and b2 =            (b1,1 , . . . , bd+1,1 )T .
+         ∆(∂C)                                                    c
+                                                                ∆(∂C)
+                  k=2
+
+Write bi = (βi,1 , . . . , βi,d+1 )T for i = 1, 2, and let B = (βi,j )i=1,2;j=1,...,d+1 . As
+bi,i = 0 for i = 1, . . . , d + 1, it follows that b1 and b2 have integer entries. Moreover,
+it follows from the proof of Lemma 5.5 that b1 and b2 belong to the integer kernel
+of ∂C. Therefore, {b1 , b2 } is a basis for the integer kernel of ∂C if and only if
+∆(B) = 1: b1 and b2 are linearly independent if and only if ∆(B) 6= 0; and
+if ∆(B) 6= 0, then {b1 , b2 } is a basis of an index ∆(B) subgroup of the integer
+kernel [8, Section 3.1].
+22                                            NICHOLAS COXON
+
+
+     For 1 ≤ i < j ≤ d + 1,
+                                           d+1
+                                             X                                         
+                    β1,i β1,j         1                 b                          bk,j
+               det              =                xk det k,i                               .
+                    β2,i β2,j            c
+                                  ∆(∂C)∆(∂C)             bi,1                      bj,1
+                                                                k=2
+
+Therefore, (5.3) implies that
+                                       d+1
+                                         X
+                β1,i β1,j         1                             bi,j
+           det              =                −xk bk,1 bi,j = −
+                β2,i β2,j            c
+                              ∆(∂C)∆(∂C)                       ∆(∂C)
+                                                              k=2
+
+for 1 ≤ i < j ≤ d+ 1. The greatest common divisor of the bi,j , for 1 ≤ i < j ≤ d+ 1,
+is equal to ∆(∂C). Hence, ∆(B) = 1.                                                
+Corollary 5.8. Let d ≥ 2 and (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that the matrix C =
+C(c2d−2 , . . . , c0 ) is nonsingular. If f1 , f2 ∈ Z[x] such that deg f2 ≤ deg f1 and
+
+                                                                    c
+  (f1 )Td , (f2 )Td is a basis for the integer kernel of ∂C, then ∆(∂C)/∆(∂C)   divides
+                                                                 c
+lc(f1 ). Furthermore, if deg f2 < deg f1 , then lc(f1 ) = ±∆(∂C)/∆(∂C).
+Proof. Let d ≥ 2 and (c2d−2 , . . . , c0 ) ∈ Z2d−1 such that C = C(c2d−2 , . . . , c0 ) is
+nonsingular. Define b1 = (β1,1 , . . . , β1,d+1 )T and b2 = (β2,1 , . . . , β2,d+1 )T as in the
+proof of Lemma 5.7. Then {b1 , b2 } is a basis for the integer kernel of ∂C,
+                          d+1
+                          X               c
+                      1                 ∆(∂C)                                      b1,1
+             β1,1 =           xk bk,1 =       6= 0                  and β2,1 =          = 0.
+                    ∆(∂C)               ∆(∂C)                                        c
+                                                                                  ∆(∂C)
+                                 k=2
+
+   Suppose that f1 , f2 ∈ Z[x] such that deg f2 ≤ deg f1 and {(f1 )Td , (f2 )Td } is a
+basis of the integer kernel of ∂C. Then there exists a unimodular matrix U =
+(ui,j )i=1,2;j=1,2 such that
+                                   U · (βi,j )i=1,2;j=1,...,d+1 = (f1 , f2 )d .
+As C is nonsingular, deg f1 = d. Therefore, lc(f1 ) = u1,1 β1,1 since β2,1 = 0. If
+deg f2 < deg f1 , then u2,1 = 0 since β1,1 6= 0 and β2,1 = 0. Thus, if deg f2 < deg f1 ,
+then u1,1 = ±1 since U is unimodular.                                                
+     Property (4) of Theorem 5.1 is now proved, completing the proof of the theorem:
+Lemma 5.9. Let d ≥ 2 and c = [c2d−2 , . . . , c0 ] be a geometric progression modulo
+N such that C = C(c2d−2 , . . . , c0 ) is nonsingular
+                                                       and gcd(∆(c), N ) = 1. If f1 , f2 ∈
+Z[x] such that 2 ≤ deg f2 ≤ deg f1 and (f1 )Td , (f2 )Td is a basis of the integer
+kernel of ∂C, then
+                 |det C|d−2                  deg f2 −d                                       d−1
+kc/∆(c)k2,s−1 ≤         d−1
+                              kck2,s−1 ≤ s 2            |sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s
+                 ∆(∂C)
+and
+      deg f2 −d                                               1      d−1      1          d−1
+  s       2       |sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s ≤         kck2,s−1 ≤ d−2 kc/∆(c)k2,s−1
+                                                            ∆(∂C)           N
+for all s > 0.
+Proof. Let d ≥ 2 and c = [c2d−2 , . . . , c0 ] be a geometric progression modulo N
+such that C = C(c2d−2 , . . . , c0 ) is nonsingular and gcd(∆(c), N ) = 1. Suppose that
+f1 , f2 ∈ Z[x] such that 2 ≤ deg f2 ≤ deg f1 and (f1 )Td , (f2 )Td is a basis for the
+integer kernel of ∂C. Let cd = cd (f1 , f2 ). Then Lemma 5.6 implies that Res(f1 , f2 )
+              MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                                          23
+
+
+and ∆(Sd (f1 , f2 )) are nonzero. Thus, f1 and f2 are coprime and Lemma 5.4 implies
+that cd = ±(∆(Sd (f1 , f2 ))/∆(c)) · c. Therefore, Lemma 5.6 implies that
+                                                                   d−2
+                             ∆(Sd (f1 , f2 ))            |det C|
+(5.9)    kcd k2,s−1 =                         kck2,s−1 =          kck2,s−1             for all s > 0.
+                                ∆(c)                     ∆(∂C)d−1
+As ∆(Sd (f1 , f2 )) is a nonzero integer, the inequality kcd k2,s−1 ≥ kc/∆(c)k2,s−1
+holds for all s > 0. Combining this inequality with (5.9) and the upper bound on
+kcd k2,s−1 provided by Lemma 4.3 yields the first set of inequalities stated in the
+corollary for all s > 0.
+   Corollary 4.12, Lemma 5.6 and (5.9) imply that
+                                                                       d−2                     d−1
+              deg f2 −d                                    ∆(∂C)d                d−1        kck2,s−1
+(5.10)    s       2       |sin θs | kf1 k2,s kf2 k2,s ≤                      kcd k2,s−1 =              ,
+                                                          (det C)d−1                        ∆(∂C)
+where θs = θs (f1 , f2 ), for all s > 0. Let r be the ratio of c modulo N . Then
+subtracting r times row i + 1 of ∂C from row i for i = 1, . . . , d − 2 produces a
+matrix whose first d − 2 rows contain multiples of N . As ∆(c) divides each entry
+of ∂C and gcd(∆(c), N ) = 1, it follows that ∆(c)d−1 N d−2 divides ∆(∂C). Thus,
+∆(c)d−1 N d−2 ≤ ∆(∂C) since ∆(∂C) 6= 0. Combining this inequality with (5.10)
+completes the proof of the second set of inequalities stated in the corollary.  
+   In the proof of Lemma 5.9, the assumption that c is a geometric progression
+modulo N such that gcd(∆(c), N ) = 1 is only used to prove the last inequality
+of the lemma. Setting c = (0, . . . , 0, 1, 0, . . . , 0) where the 1 appears in the dth
+coordinate shows that the remaining inequalities cannot be improved by a constant
+factor without using the assumption. If deg f2 = d, then (5.9) and Corollary 4.11
+imply that
+                   |det C|d−2                            1−1/d
+                              kck2,s−1 ≥ |Res(f1 , f2 )|                 for all s > 0.
+                   ∆(∂C)d−1
+If the inequality is strict, then Lemma 5.9 improves upon the lower bound on
+|sin θs (f1 , f2 )| kf1 k2,s kf2 k2,s provided by Lemma 3.1.
+
+                                         Acknowledgements
+   Part of this work was performed while the author was employed by The Univer-
+sity of Queensland, Brisbane, Australia. The author is grateful to Cyril Bouvier
+for many helpful comments and discussions.
+
+                                               References
+ 1. A. C. Aitken, Determinants and matrices, third ed., Oliver and Boyd, Edinburgh, 1944.
+ 2. Shi Bai, Cyril Bouvier, Alexander Kruppa, and Paul Zimmermann, Better polynomials for
+    GNFS, Preprint, 12 pages, 2014, https://hal.inria.fr/hal-01089507.
+ 3. Shi Bai, Richard P. Brent, and Emmanuel Thomé, Root optimization of polynomials in the
+    number field sieve, ArXiv e-Print archive, arXiv:1212.1958 [math.NT], 2012, http://arxiv.
+    org/abs/1212.1958.
+ 4. Shi Bai, Emmanuel Thomé, and Paul Zimmermann, Factorisation of RSA-704 with CADO-
+    NFS, Cryptology ePrint Archive, Report 2012/369, 2012, http://eprint.iacr.org/2012/
+    369.pdf.
+ 5. Richard A. Brualdi and Hans Schneider, Determinantal identities: Gauss, Schur, Cauchy,
+    Sylvester, Kronecker, Jacobi, Binet, Laplace, Muir, and Cayley, Linear Algebra Appl. 52/53
+    (1983), 769–791.
+24                                     NICHOLAS COXON
+
+
+ 6. E. R. Canfield, Paul Erdős, and Carl Pomerance, On a problem of Oppenheim concerning
+    “factorisatio numerorum”, J. Number Theory 17 (1983), no. 1, 1–28.
+ 7. Henri Cohen, A course in computational algebraic number theory, Graduate Texts in Mathe-
+    matics, vol. 138, Springer-Verlag, Berlin, 1993.
+ 8. Nicholas Coxon, On nonlinear polynomial selection for the number field sieve, ArXiv e-Print
+    archive, arXiv:1109.6398 [math.NT], 2011, http://arxiv.org/abs/1109.6398.
+ 9. Richard Crandall and Carl Pomerance, Prime numbers: A computational perspective, second
+    ed., Springer, New York, 2005.
+10. M’hammed El Kahoui, An elementary approach to subresultants theory, J. Symbolic Comput.
+    35 (2003), no. 3, 281–292.
+11. E Fischer, Über den hadamardschen determinantensatz, Arch. Math. Phys. 13 (1908), no. 3,
+    32–40.
+12. Domingo Gomez, Jaime Gutierrez, Álvar Ibeas, and David Sevilla, Common factors of resul-
+    tants modulo p, Bull. Aust. Math. Soc. 79 (2009), no. 2, 299–302.
+13. Jacques Hadamard, Résolution d’une question relative aux déterminants, Bull. des Sci. Math.
+    17 (1893), 240–246.
+14. Georg Heinig and Karla Rost, Introduction to Bezoutians, Numerical methods for structured
+    matrices and applications (D.A. Bini, V. Mehrmann, V. Olshevsky, E. Tyrtsyhnikov, and
+    M. van Barel, eds.), Oper. Theory Adv. Appl., vol. 199, Birkhäuser Verlag, Basel, 2010,
+    pp. 25–118.
+15. Thorsten Kleinjung, On polynomial selection for the general number field sieve, Math. Comp.
+    75 (2006), no. 256, 2037–2047.
+16.         , Polynomial selection, Slides presented at the CADO workshop on integer factoriza-
+    tion, Nancy, France, 2008, http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+17. Thorsten Kleinjung, Kazumaro Aoki, Jens Franke, Arjen K. Lenstra, Emmanuel Thomé,
+    Joppe W. Bos, Pierrick Gaudry, Alexander Kruppa, Peter L. Montgomery, Dag Arne Osvik,
+    Herman te Riele, Andrey Timofeev, and Paul Zimmermann, Factorization of a 768-bit RSA
+    modulus, Advances in cryptology–CRYPTO 2010 (Tal Rabin, ed.), Lecture Notes in Comput.
+    Sci., vol. 6223, Springer, Berlin, 2010, pp. 333–350.
+18. Namhun Koo, Gooc Hwa Jo, and Soonhak Kwon, On nonlinear polynomial selection and
+    geometric progression (mod N) for number field sieve, Cryptology ePrint Archive, Report
+    2011/292, 2011, http://eprint.iacr.org/2011/292.pdf.
+19. F. I. Lander, The Bezoutian and the inversion of Hankel and Toeplitz matrices (in Russian),
+    Mat. Issled. 9 (1974), no. 2 (32), 69–87, 249–250.
+20. A. K. Lenstra and H. W. Lenstra, Jr. (eds.), The development of the number field sieve,
+    Lecture Notes in Mathematics, vol. 1554, Springer-Verlag, Berlin, 1993.
+21. Bhubaneswar Mishra, Algorithmic algebra, Springer-Verlag New York, Inc., New York, 1993.
+22. Peter L. Montgomery, Small geometric progressions modulo n, Unpublished note of 2 pages,
+    1993, revised 1995 and 2005.
+23.         , Searching for higher-degree polynomials for the general number field sieve, Power-
+    Point presentation, 34 pages, 2006, http://www.ipam.ucla.edu/publications/scws1/scws1_
+    6223.ppt.
+24. Brian A. Murphy, Modelling the yield of number field sieve polynomials, Algorithmic number
+    theory (Joe P. Buhler, ed.), Lecture Notes in Comput. Sci., vol. 1423, Springer, Berlin, 1998,
+    pp. 137–150.
+25.         , Polynomial selection for the number field sieve integer factorisation algorithm, Ph.D.
+    thesis, Australian National University, 1999.
+26. Phong Q. Nguyen and Brigitte Vallée (eds.), The LLL algorithm: Survey and applications,
+    Information Security and Cryptography, Springer-Verlag, Berlin, 2010.
+27. Thomas Prest and Paul Zimmermann, Non-linear polynomial selection for the number field
+    sieve, J. Symbolic Comput. 47 (2012), no. 4, 401–409.
+28. R. L. Rivest, A. Shamir, and L. Adleman, A method for obtaining digital signatures and
+    public-key cryptosystems, Comm. ACM 21 (1978), no. 2, 120–126.
+29. Tom Sederberg, Ron Goldman, and Hang Du, Implicitizing rational curves by the method of
+    moving algebraic curves, J. Symbolic Comput. 23 (1997), no. 2-3, 153–175.
+30. Eugene Tyrtyshnikov, Hankel minors and Pade approximations, Numerical methods for struc-
+    tured matrices and applications (D.A. Bini, V. Mehrmann, V. Olshevsky, E. Tyrtsyhnikov,
+            MONTGOMERY’S METHOD OF POLYNOMIAL SELECTION FOR NFS                              25
+
+
+    and M. van Barel, eds.), Oper. Theory Adv. Appl., vol. 199, Birkhäuser Verlag, Basel, 2010,
+    pp. 431–439.
+31. Ronnie S. Williams, Jr., Cubic polynomials in the number field sieve, Master’s thesis, Texas
+    Tech University, 2010.
+
+    INRIA / CNRS / Universite de Lorrainé, Campus Scientifique, BP 239, 54506 Vandœuvre-
+lès-Nancy Cedex, France
+    E-mail address: nicholas.coxon@inria.fr
+

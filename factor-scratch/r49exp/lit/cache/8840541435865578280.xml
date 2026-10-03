@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Mk68j27AkQ3KRd8iiKiNTAfsc2k</id>
+  <title>arXiv Query: search_query=abs:"order-finding" AND abs:"classical" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22order-finding%22+AND+(abs:%22classical%22+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>10</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1511.04385v3</id>
+    <title>Factoring Safe Semiprimes with a Single Quantum Query</title>
+    <updated>2017-03-02T17:45:06Z</updated>
+    <link href="https://arxiv.org/abs/1511.04385v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1511.04385v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm (SFA), by its ability to efficiently factor large numbers, has the potential to undermine contemporary encryption. At its heart is a process called order finding, which quantum mechanics lets us perform efficiently. SFA thus consists of a \emph{quantum order finding algorithm} (QOFA), bookended by classical routines which, given the order, return the factors. But, with probability up to $1/2$, these classical routines fail, and QOFA must be rerun. We modify these routines using elementary results in number theory, improving the likelihood that they return the factors.
+  The resulting quantum factoring algorithm is better than SFA at factoring safe semiprimes, an important class of numbers used in cryptography. With just one call to QOFA, our algorithm almost always factors safe semiprimes. As well as a speed-up, improving efficiency gives our algorithm other, practical advantages: unlike SFA, it does not need a randomly picked input, making it simpler to construct in the lab; and in the (unlikely) case of failure, the same circuit can be rerun, without modification.
+  We consider generalizing this result to other cases, although we do not find a simple extension, and conclude that SFA is still the best algorithm for general numbers (non safe semiprimes, in other words). Even so, we present some simple number theoretic tricks for improving SFA in this case.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-11-13T18:14:37Z</published>
+    <arxiv:comment>v2 : Typo correction and rewriting for improved clarity v3 : Slight expansion, for improved clarity</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Frédéric Grosshans</name>
+    </author>
+    <author>
+      <name>Thomas Lawson</name>
+    </author>
+    <author>
+      <name>François Morain</name>
+    </author>
+    <author>
+      <name>Benjamin Smith</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.07311v4</id>
+    <title>Optimising Matrix Product State Simulations of Shor's Algorithm</title>
+    <updated>2019-01-09T07:38:15Z</updated>
+    <link href="https://arxiv.org/abs/1712.07311v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.07311v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We detail techniques to optimise high-level classical simulations of Shor's quantum factoring algorithm. Chief among these is to examine the entangling properties of the circuit and to effectively map it across the one-dimensional structure of a matrix product state. Compared to previous approaches whose space requirements depend on $r$, the solution to the underlying order-finding problem of Shor's algorithm, our approach depends on its factors. We performed a matrix product state simulation of a 60-qubit instance of Shor's algorithm that would otherwise be infeasible to complete without an optimised entanglement mapping.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-20T03:49:39Z</published>
+    <arxiv:comment>8 pages, 2 figures, 2 tables. v2 using PDFLaTeX compiler. v3 to include extra references. v4 for publication in Quantum</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum 3, 116 (2019)</arxiv:journal_ref>
+    <author>
+      <name>Aidan Dang</name>
+    </author>
+    <author>
+      <name>Charles D. Hill</name>
+    </author>
+    <author>
+      <name>Lloyd C. L. Hollenberg</name>
+    </author>
+    <arxiv:doi>10.22331/q-2019-01-25-116</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.22331/q-2019-01-25-116" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.07791v2</id>
+    <title>On the success probability of quantum order finding</title>
+    <updated>2022-11-28T12:31:12Z</updated>
+    <link href="https://arxiv.org/abs/2201.07791v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.07791v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a lower bound on the probability of Shor's order-finding algorithm successfully recovering the order $r$ in a single run. The bound implies that by performing two limited searches in the classical post-processing part of the algorithm, a high success probability can be guaranteed, for any $r$, without re-running the quantum part or increasing the exponent length compared to Shor. Asymptotically, in the limit as $r$ tends to infinity, the probability of successfully recovering $r$ in a single run tends to one. Already for moderate $r$, a high success probability exceeding e.g. $1 - 10^{-4}$ can be guaranteed. As corollaries, we prove analogous results for the probability of completely factoring any integer $N$ in a single run of the order-finding algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-19T18:58:18Z</published>
+    <arxiv:comment>This revision resolves a minor issue in Alg. 4, and addresses a number of other minor issues. It furthermore adds a number of extensions and clarifications, in particular with respect to potential optimizations. No key results or findings in the original version of the manuscript are affected by this revision</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>ACM Trans. Quantum Comput. 5(2):11 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <arxiv:doi>10.1145/3655026</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3655026" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.05976v1</id>
+    <title>Distributed Shor's algorithm</title>
+    <updated>2022-07-13T06:00:03Z</updated>
+    <link href="https://arxiv.org/abs/2207.05976v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.05976v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm is one of the most important quantum algorithm proposed by Peter Shor [Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994, pp. 124--134]. Shor's algorithm can factor a large integer with certain probability and costs polynomial time in the length of the input integer. The key step of Shor's algorithm is the order-finding algorithm. Specifically, given an $L$-bit integer $N$, we first randomly pick an integer $a$ with $gcd(a,N)=1$, the order of $a$ modulo $N$ is the smallest positive integer $r$ such that $a^r\equiv 1 (\bmod N)$. The order-finding algorithm in Shor's algorithm first uses quantum operations to obtain an estimation of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$, then $r$ is obtained by means of classical algorithms. In this paper, we propose a distributed Shor's algorithm. The difference between our distributed algorithm and the traditional order-finding algorithm is that we use two quantum computers separately to estimate partial bits of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$. To ensure their measuring results correspond to the same $\dfrac{s}{r}$, we need employ quantum teleportation. We integrate the measuring results via classical post-processing. After that, we get an estimation of $\dfrac{s}{r}$ with high precision. Compared with the traditional Shor's algorithm that uses multiple controlling qubits, our algorithm reduces nearly $\dfrac{L}{2}$ qubits and reduces the circuit depth of each computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-13T06:00:03Z</published>
+    <arxiv:comment>15 pages, 3 Figures, comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ligang Xiao</name>
+    </author>
+    <author>
+      <name>Daowen Qiu</name>
+    </author>
+    <author>
+      <name>Le Luo</name>
+    </author>
+    <author>
+      <name>Paulo Mateus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1408.2738v2</id>
+    <title>Odd orders in Shor's factoring algorithm</title>
+    <updated>2015-01-13T07:53:14Z</updated>
+    <link href="https://arxiv.org/abs/1408.2738v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.2738v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm (SFA) finds the prime factors of a number, $N=p_1 p_2$, exponentially faster than the best known classical algorithm. Responsible for the speed-up is a subroutine called the quantum order finding algorithm (QOFA) which calculates the order -- the smallest integer, $r$, satisfying $a^r \mod N =1$, where $a$ is a randomly chosen integer coprime to $N$ (meaning their greatest common divisor is one, $\gcd(a, N) =1$). Given $r$, and with probability not less than $1/2$, the factors are given by $p_1 = \gcd (a^{\frac{r}{2}} - 1, N)$ and $p_2 = \gcd (a^{\frac{r}{2}} + 1, N)$. For odd $r$ it is assumed the factors cannot be found (since $a^{\frac{r}{2}}$ is not generally integer) and the QOFA is relaunched with a different value of $a$. But a recent paper [E. Martin-Lopez: Nat Photon {\bf 6}, 773 (2012)] noted that the factors can sometimes be found from odd orders if the coprime is square.
+  This raises the question of improving SFA's success probability by considering odd orders. We show that an improvement is possible, though it is small. We present two techniques for retrieving the order from apparently useless runs of the QOFA: not discarding odd orders; and looking out for new order finding relations in the case of failure. In terms of efficiency, using our techniques is equivalent to avoiding square coprimes and disregarding odd orders, which is simpler in practice. Even still, our techniques may be useful in the near future, while demonstrations are restricted to factoring small numbers. The most convincing demonstrations of the QOFA are those that return a non-power-of-two order, making odd orders that lead to the factors attractive to experimentalists.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-08-12T15:15:08Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Information Processing, 1570-0755, 1, (2015)</arxiv:journal_ref>
+    <author>
+      <name>Thomas Lawson</name>
+    </author>
+    <arxiv:doi>10.1007/s11128-014-0910-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11128-014-0910-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.02518v1</id>
+    <title>Diffusion Computation versus Quantum Computation: A Comparative Model for Order Finding and Factoring</title>
+    <updated>2026-01-05T19:45:38Z</updated>
+    <link href="https://arxiv.org/abs/2601.02518v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.02518v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study a hybrid computational model for integer factorization in which the only non-classical resource is access to an \emph{iterated diffusion process} on a finite graph. Concretely, a \emph{diffusion step} is defined to be one application of a symmetric stochastic matrix (the half-lazy walk operator) to an $\ell^{1}$--normalized state vector, followed by an optional readout of selected coordinates.
+  Let $N\ge 3$ be an odd integer which is neither prime nor a prime power, and let $b\in(\mathbb{Z}/N\mathbb{Z})^\ast$ have odd multiplicative order $r={\rm ord}_N(b)$. We construct, without knowing $r$ in advance, a weighted Cayley graph whose vertex set is the cyclic subgroup $\langle b\rangle$ and whose edges correspond to the powers $b^{\pm 2^t}$ for $t\le \lfloor \log_2 N\rfloor+1$. Using an explicit spectral decomposition together with an elementary doubling lemma, we show that $r$ can be recovered from a single heat-kernel value after at most $O((\log_2 N)^2)$ diffusion steps, with an effective bound.
+  We then combine this order-finding model with the standard reduction from factoring to order finding (in the spirit of Shor's framework) to obtain a randomized factorization procedure whose success probability depends only on the number $m$ of distinct prime factors of $N$. Our comparison with Shor's algorithm is \emph{conceptual and model-based}. We replace unitary $\ell^2$ evolution by Markovian $\ell^1$ evolution, and we report complexity in two cost measures: digital steps and diffusion steps. Finally, we include illustrative examples and discussion of practical implementations.</summary>
+    <category term="math.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T19:45:38Z</published>
+    <arxiv:comment>This is a major revision of arXiv:2104.11616</arxiv:comment>
+    <arxiv:primary_category term="math.SP"/>
+    <author>
+      <name>Carlos A. Cadavid</name>
+    </author>
+    <author>
+      <name>Paulina Hoyos</name>
+    </author>
+    <author>
+      <name>Jay Jorgenson</name>
+    </author>
+    <author>
+      <name>Lejla Smajlović</name>
+    </author>
+    <author>
+      <name>J. D. Vélez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11269v1</id>
+    <title>A New Approach to Generic Lower Bounds: Classical/Quantum MDL, Quantum Factoring, and More</title>
+    <updated>2024-02-17T13:00:47Z</updated>
+    <link href="https://arxiv.org/abs/2402.11269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the limitations of the generic approaches to solving cryptographic problems in classical and quantum settings in various models.
+  - In the classical generic group model (GGM), we find simple alternative proofs for the lower bounds of variants of the discrete logarithm (DL) problem: the multiple-instance DL and one-more DL problems (and their mixture). We also re-prove the unknown-order GGM lower bounds, such as the order finding, root extraction, and repeated squaring.
+  - In the quantum generic group model (QGGM), we study the complexity of variants of the discrete logarithm. We prove the logarithm DL lower bound in the QGGM even for the composite order setting. We also prove an asymptotically tight lower bound for the multiple-instance DL problem. Both results resolve the open problems suggested in a recent work by Hhan, Yamakawa, and Yun.
+  - In the quantum generic ring model we newly suggested, we give the logarithmic lower bound for the order-finding algorithms, an important step for Shor's algorithm. We also give a logarithmic lower bound for a certain generic factoring algorithm outputting relatively small integers, which includes a modified version of Regev's algorithm.
+  - Finally, we prove a lower bound for the basic index calculus method for solving the DL problem in a new idealized group model regarding smooth numbers.
+  The quantum lower bounds in both models allow certain (different) types of classical preprocessing. All of the proofs are significantly simpler than the previous proofs and are through a single tool, the so-called compression lemma, along with linear algebra tools. Our use of this lemma may be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-17T13:00:47Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minki Hhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.02087v1</id>
+    <title>A survey about Hidden Subgroup Problem from a mathematical and cryptographic perspective</title>
+    <updated>2025-12-01T12:48:34Z</updated>
+    <link href="https://arxiv.org/abs/2512.02087v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.02087v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a survey on the Hidden Subgroup Problem (HSP), which plays an important role in studying the security of public-key cryptosystems. We first review the abelian case, where Kitaev's algorithm yields an efficient quantum solution to the HSP, recalling how classical problems (such as order finding, integer factorization, and discrete logarithm) can be formulated as abelian HSP instances. We then examine the current state of the art for non-abelian HSP, where no general efficient quantum solution is known, focusing on some relevant groups including dihedral group (connected to the shortest vector problem), symmetric groups (connected to the graph isomorphism problem), and semidirect product constructions (connected, in a special case, to the code equivalence problem). We also describe the main techniques for addressing the HSP in non-abelian cases, namely Fourier sampling and the black-box approach. Throughout the paper, we highlight the mathematical notions required and exploited in this context, providing a cryptography-oriented perspective.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-01T12:48:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Simone Dutto</name>
+    </author>
+    <author>
+      <name>Pietro Mercuri</name>
+    </author>
+    <author>
+      <name>Nadir Murru</name>
+    </author>
+    <author>
+      <name>Lorenzo Romano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.08051v1</id>
+    <title>The Space Just Above One Clean Qubit</title>
+    <updated>2024-10-10T15:45:37Z</updated>
+    <link href="https://arxiv.org/abs/2410.08051v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.08051v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider the model of computation where we start with two halves of a $2n$-qubit maximally entangled state. We get to apply a universal quantum computation on one half, measure both halves at the end, and perform classical postprocessing. This model, which we call $\frac12$BQP, was defined in STOC 2017 [ABKM17] to capture the power of permutational computations on special input states. As observed in [ABKM17], this model can be viewed as a natural generalization of the one-clean-qubit model (DQC1) where we learn the content of a high entropy input state only after the computation is completed. An interesting open question is to characterize the power of this model, which seems to sit nontrivially between DQC1 and BQP. In this paper, we show that despite its limitations, this model can carry out many well-known quantum computations that are candidates for exponential speed-up over classical computations (and possibly DQC1). In particular, $\frac12$BQP can simulate Instantaneous Quantum Polynomial Time (IQP) and solve the Deutsch-Jozsa problem, Bernstein-Vazirani problem, Simon's problem, and period finding. As a consequence, $\frac12$BQP also solves Order Finding and Factoring outside of the oracle setting. Furthermore, $\frac12$BQP can solve Forrelation and the corresponding oracle problem given by Raz and Tal [RT22] to separate BQP and PH. We also study limitations of $\frac12$BQP and show that similarly to DQC1, $\frac12$BQP cannot distinguish between unitaries which are close in trace distance, then give an oracle separating $\frac12$BQP and BQP. Due to this limitation, $\frac12$BQP cannot obtain the quadratic speedup for unstructured search given by Grover's algorithm [Gro96]. We conjecture that $\frac12$BQP cannot solve $3$-Forrelation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-10T15:45:37Z</published>
+    <arxiv:comment>Authors are listed in alphabetical order</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Dale Jacobs</name>
+    </author>
+    <author>
+      <name>Saeed Mehraban</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.05841v2</id>
+    <title>A Deductive Verification Framework for Circuit-building Quantum Programs</title>
+    <updated>2020-07-26T13:20:35Z</updated>
+    <link href="https://arxiv.org/abs/2003.05841v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.05841v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While recent progress in quantum hardware open the door for significant speedup in certain key areas, quantum algorithms are still hard to implement right, and the validation of such quantum programs is a challenge. Early attempts either suffer from the lack of automation or parametrized reasoning, or target high-level abstract algorithm description languages far from the current de facto consensus of circuit-building quantum programming languages. As a consequence, no significant quantum algorithm implementation has been currently verified in a scale-invariant manner. We propose Qbricks, the first formal verification environment for circuit-building quantum programs, featuring clear separation between code and proof, parametric specifications and proofs, high degree of proof automation and allowing to encode quantum programs in a natural way, i.e. close to textbook style. Qbricks builds on best practice of formal verification for the classical case and tailor them to the quantum case: we bring a new domain-specific circuit-building language for quantum programs, namely Qbricks-DSL, together with a new logical specification language Qbricks-Spec and a dedicated Hoare-style deductive verification rule named Hybrid Quantum Hoare Logic. Especially, we introduce and intensively build upon HOPS, a higher-order extension of the recent path-sum symbolic representation, used for both specification and automation. To illustrate the opportunity of Qbricks, we implement the first verified parametric implementations of several famous and non-trivial quantum algorithms, including the quantum part of Shor integer factoring (Order Finding - Shor-OF), quantum phase estimation (QPE) - a basic building block of many quantum algorithms, and Grover search. These breakthroughs were amply facilitated by the specification and automated deduction principles introduced within Qbricks.</summary>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-12T15:21:11Z</published>
+    <arxiv:primary_category term="cs.PL"/>
+    <author>
+      <name>Christophe Chareton</name>
+    </author>
+    <author>
+      <name>Sébastien Bardin</name>
+    </author>
+    <author>
+      <name>François Bobot</name>
+    </author>
+    <author>
+      <name>Valentin Perrelle</name>
+    </author>
+    <author>
+      <name>Benoit Valiron</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-030-72019-3_6</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-030-72019-3_6" title="doi"/>
+  </entry>
+</feed>

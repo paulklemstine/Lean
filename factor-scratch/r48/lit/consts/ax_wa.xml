@@ -1,0 +1,1222 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/O/YcaEtcVN30/Yf5lDzq3VKiM8s</id>
+  <title>arXiv Query: search_query=au:"Wallauer"&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T18:38:58Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Wallauer%22&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>19</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2012.11385v3</id>
+    <title>Momentum-resolved observation of exciton formation dynamics in monolayer WS$_2$</title>
+    <updated>2021-05-28T08:20:47Z</updated>
+    <link href="https://arxiv.org/abs/2012.11385v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.11385v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The dynamics of exciton formation in transition metal dichalcogenides is difficult to measure experimentally, since many momentum-indirect exciton states are not accessible to optical interband spectroscopy. Here, we combine a tuneable pump, high-harmonic probe laser source with a 3D momentum imaging technique to map photoemitted electrons from monolayer WS$_2$. This provides momentum-, energy- and time-resolved access to excited states on an ultrafast timescale. The high temporal resolution of the setup allows us to trace the early-stage exciton dynamics on its intrinsic timescale and observe the formation of a momentum-forbidden dark K$Σ$ exciton a few tens of femtoseconds after optical excitation. By tuning the excitation energy we manipulate the temporal evolution of the coherent excitonic polarization and observe its influence on the dark exciton formation. The experimental results are in excellent agreement with a fully microscopic theory, resolving the temporal and spectral dynamics of bright and dark excitons in WS$_2$.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-21T14:30:33Z</published>
+    <arxiv:comment>18 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Raul Perea-Causin</name>
+    </author>
+    <author>
+      <name>Lasse Münster</name>
+    </author>
+    <author>
+      <name>Sarah Zajusch</name>
+    </author>
+    <author>
+      <name>Samuel Brem</name>
+    </author>
+    <author>
+      <name>Jens Güdde</name>
+    </author>
+    <author>
+      <name>Katsumi Tanimura</name>
+    </author>
+    <author>
+      <name>Kaiqiang Lin</name>
+    </author>
+    <author>
+      <name>Rupert Huber</name>
+    </author>
+    <author>
+      <name>Ermin Malic</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+    <arxiv:doi>10.1021/acs.nanolett.1c01839</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1021/acs.nanolett.1c01839" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.13212v1</id>
+    <title>Coherent and incoherent excitation pathways in time-resolved photoemission orbital tomography of CuPc/Cu(001)-2O</title>
+    <updated>2023-11-22T07:51:57Z</updated>
+    <link href="https://arxiv.org/abs/2311.13212v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.13212v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Time-resolved photoemission orbital tomography (tr-POT) offers unique possibilities for tracing molecular electron dynamics. The recorded pump-induced changes of the angle-resolved photoemission intensities allow to characterize unoccupied molecular states in momentum space and to deduce the incoherent temporal evolution of their population. Here, we show for the example of CuPc/Cu(001)-2O that the method also gives access to the coherent regime and that different excitation pathways can be disentangled by a careful analysis of the time-dependent change of the photoemission momentum pattern. In particular, we demonstrate by varying photon energy and polarization of the pump light, how the incoherent temporal evolution of the LUMO distribution can be distinguished from coherent contributions of the projected HOMO. Moreover, we report the selective excitation of molecules with a specific orientation at normal incidence by aligning the electric field of the pump light along the molecular axis.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-22T07:51:57Z</published>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <arxiv:journal_ref>J.Phys.Chem.C 127, 20411 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Alexa Adamkiewicz</name>
+    </author>
+    <author>
+      <name>Miriam Raths</name>
+    </author>
+    <author>
+      <name>Monja Stettner</name>
+    </author>
+    <author>
+      <name>Marcel Theilen</name>
+    </author>
+    <author>
+      <name>Lasse Münster</name>
+    </author>
+    <author>
+      <name>Sabine Wenzel</name>
+    </author>
+    <author>
+      <name>Mark Hutter</name>
+    </author>
+    <author>
+      <name>Sergey Soubatch</name>
+    </author>
+    <author>
+      <name>Christian Kumpf</name>
+    </author>
+    <author>
+      <name>François C. Bocquet</name>
+    </author>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Frank Stefan Tautz</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+    <arxiv:doi>10.1021/acs.jpcc.3c04859</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1021/acs.jpcc.3c04859" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1006.2664v1</id>
+    <title>Interatomic Coulombic Decay following Photoionization of the Helium Dimer: Observation of Vibrational Structure</title>
+    <updated>2010-06-14T10:50:34Z</updated>
+    <link href="https://arxiv.org/abs/1006.2664v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1006.2664v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Using synchrotron radiation we simultaneously ionize and excite one helium atom of a helium dimer (He_2) in a shakeup process. The populated states of the dimer ion (i.e. He^[*+](n = 2; 3)-He) are found to deexcite via interatomic coulombic decay. This leads to the emission of a second electron from the neutral site and a subsequent coulomb explosion. In this letter we present a measurement of the momenta of fragments that are created during this reaction. The electron energy distribution and the kinetic energy release of the two He^+ ions show pronounced oscillations which we attribute to the structure of the vibrational wave function of the dimer ion.</summary>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-06-14T10:50:34Z</published>
+    <arxiv:comment>8 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atm-clus"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 104, 133401 (2010)</arxiv:journal_ref>
+    <author>
+      <name>T. Havermeier</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>K. Kreidi</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>S. Voss</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>S. Schössler</name>
+    </author>
+    <author>
+      <name>L. Foucar</name>
+    </author>
+    <author>
+      <name>N. Neumann</name>
+    </author>
+    <author>
+      <name>J. Titze</name>
+    </author>
+    <author>
+      <name>H. Sann</name>
+    </author>
+    <author>
+      <name>M. Kühnel</name>
+    </author>
+    <author>
+      <name>J. Voigtsberger</name>
+    </author>
+    <author>
+      <name>J. H. Morilla</name>
+    </author>
+    <author>
+      <name>W. Schöllkopf</name>
+    </author>
+    <author>
+      <name>H. Schmidt-Böcking</name>
+    </author>
+    <author>
+      <name>R. E. Grisenti</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.104.133401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.104.133401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.03828v2</id>
+    <title>Observation of enhanced chiral asymmetries in the inner-shell photoionization of uniaxially oriented methyloxirane enantiomers</title>
+    <updated>2017-02-16T14:05:10Z</updated>
+    <link href="https://arxiv.org/abs/1609.03828v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.03828v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most large molecules are chiral in their structure: they exist as two enantiomers, which are mirror images of each other. Whereas the rovibronic sublevels of two enantiomers are almost identical, it turns out that the photoelectric effect is sensitive to the absolute configuration of the ionized enantiomer - an effect termed Photoelectron Circular Dichroism (PECD). Our comprehensive study demonstrates that the origin of PECD can be found in the molecular frame electron emission pattern connecting PECD to other fundamental photophysical effects as the circular dichroism in angular distributions (CDAD). Accordingly, orienting a chiral molecule in space enhances the PECD by a factor of about 10.</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-13T13:45:43Z</published>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <arxiv:journal_ref>J. Phys. Chem. Lett. (2017) 8 pp 2780-2786</arxiv:journal_ref>
+    <author>
+      <name>Maurice Tia</name>
+    </author>
+    <author>
+      <name>Martin Pitzer</name>
+    </author>
+    <author>
+      <name>Gregor Kastirke</name>
+    </author>
+    <author>
+      <name>Janine Gatzke</name>
+    </author>
+    <author>
+      <name>Hong-Keun Kim</name>
+    </author>
+    <author>
+      <name>Florian Trinter</name>
+    </author>
+    <author>
+      <name>Jonas Rist</name>
+    </author>
+    <author>
+      <name>Alexander Hartung</name>
+    </author>
+    <author>
+      <name>Daniel Trabert</name>
+    </author>
+    <author>
+      <name>Juliane Siebert</name>
+    </author>
+    <author>
+      <name>Kevin Henrichs</name>
+    </author>
+    <author>
+      <name>Jasper Becht</name>
+    </author>
+    <author>
+      <name>Stefan Zeller</name>
+    </author>
+    <author>
+      <name>Helena Gassert</name>
+    </author>
+    <author>
+      <name>Florian Wiegandt</name>
+    </author>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Andreas Kuhlins</name>
+    </author>
+    <author>
+      <name>Carl Schober</name>
+    </author>
+    <author>
+      <name>Tobias Bauer</name>
+    </author>
+    <author>
+      <name>Natascha Wechselberger</name>
+    </author>
+    <author>
+      <name>Phillip Burzynski</name>
+    </author>
+    <author>
+      <name>Jonathan Neff</name>
+    </author>
+    <author>
+      <name>Miriam Weller</name>
+    </author>
+    <author>
+      <name>Daniel Metz</name>
+    </author>
+    <author>
+      <name>Max Kircher</name>
+    </author>
+    <author>
+      <name>Markus Waitz</name>
+    </author>
+    <author>
+      <name>Joshua B. Williams</name>
+    </author>
+    <author>
+      <name>Lothar Schmidt</name>
+    </author>
+    <author>
+      <name>Anne D. Mueller</name>
+    </author>
+    <author>
+      <name>Andre Knie</name>
+    </author>
+    <author>
+      <name>Andreas Hans</name>
+    </author>
+    <author>
+      <name>Ltaief Ben Ltaief</name>
+    </author>
+    <author>
+      <name>Arno Ehresmann</name>
+    </author>
+    <author>
+      <name>Robert Berger</name>
+    </author>
+    <author>
+      <name>Hironobu Fukuzawa</name>
+    </author>
+    <author>
+      <name>Kiyoshi Ueda</name>
+    </author>
+    <author>
+      <name>Horst Schmidt-Boecking</name>
+    </author>
+    <author>
+      <name>Reinhard Doerner</name>
+    </author>
+    <author>
+      <name>Till Jahnke</name>
+    </author>
+    <author>
+      <name>Philipp V. Demekhin</name>
+    </author>
+    <author>
+      <name>Markus Schoeffler</name>
+    </author>
+    <arxiv:doi>10.1021/acs.jpclett.7b01000</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1021/acs.jpclett.7b01000" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.12844v1</id>
+    <title>Subcycle videography of lightwave-driven Landau-Zener-Majorana transitions in graphene</title>
+    <updated>2026-02-13T11:50:08Z</updated>
+    <link href="https://arxiv.org/abs/2602.12844v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.12844v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Strong light fields have unlocked previously unthinkable possibilities to tailor coherent electron trajectories, engineer band structures and shape emergent phases of matter all-optically. Unravelling the underlying quantum mechanisms requires a visualisation of the lightwave-driven electron motion directly in the band structure. While photoelectron momentum microscopy has imaged optically excited electrons averaged over many cycles of light, actual subcycle band-structure videography has been limited to small electron momenta. Yet lightwave-driven elementary processes in quantum materials often occur throughout momentum space. Here, we introduce attosecond-precision, subcycle band-structure videography covering the entire first Brillouin zone (BZ) and visualize one of the most fundamental but notoriously elusive strong-field processes: non-adiabatic Landau-Zener-Majorana (LZM) tunnelling. The interplay of field-driven acceleration within the Dirac-like band structure of graphene and periodic LZM interband tunnelling manifest in a coherent displacement and distortion of the momentum distribution at the BZ edge. The extremely non-thermal electron distributions also allow us to disentangle competing scattering processes and assess their impact on coherent electronic control through electron redistribution and thermalization. Our panoramic view of strong-field-driven electron motion in quantum materials lays the foundation for a microscopic understanding of some of the most discussed light-driven phenomena in condensed matter physics.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-13T11:50:08Z</published>
+    <arxiv:comment>Landau-Zener-Majorana tunneling; Strong-field; Graphene; Ultrafast; Subcycle; Momentum microscopy; ARPES</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Vincent Eggers</name>
+    </author>
+    <author>
+      <name>Giacomo Inzani</name>
+    </author>
+    <author>
+      <name>Manuel Meierhofer</name>
+    </author>
+    <author>
+      <name>Lasse Münster</name>
+    </author>
+    <author>
+      <name>Jakob Helml</name>
+    </author>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Sarah Zajusch</name>
+    </author>
+    <author>
+      <name>Suguru Ito</name>
+    </author>
+    <author>
+      <name>Leon Machtl</name>
+    </author>
+    <author>
+      <name>Hao Yin</name>
+    </author>
+    <author>
+      <name>Christian Kumpf</name>
+    </author>
+    <author>
+      <name>François C. Bocquet</name>
+    </author>
+    <author>
+      <name>Changhua Bao</name>
+    </author>
+    <author>
+      <name>Jens Güdde</name>
+    </author>
+    <author>
+      <name>F. Stefan Tautz</name>
+    </author>
+    <author>
+      <name>Rupert Huber</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.01464v1</id>
+    <title>Wavevector Selective Metasurfaces and Tunnel Vision Filters</title>
+    <updated>2015-02-05T08:58:04Z</updated>
+    <link href="https://arxiv.org/abs/1502.01464v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.01464v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Metasurfaces offer unprecedented flexibility in the design and control of light propagation, replacing bulk optical components and exhibiting exotic optical effects. One of the basic properties of the metasurfaces, which renders them as frequency selective surfaces, is the ability to transmit or reflect radiation within a narrow spectral band that can be engineered on demand. Here we introduce and demonstrate experimentally in the THz domain the concept of wavevector selective surfaces -- metasurfaces transparent only within a narrow range of light propagation directions operating effectively as tunnel vision filters. Practical implementations of the new concept include applications in wavefront manipulation, observational instruments, vision and free-space communication in light-scattering environments, as well as passive camouflage.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-05T08:58:04Z</published>
+    <arxiv:primary_category term="physics.optics"/>
+    <arxiv:journal_ref>Light Sci. Appl. 4, e306 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Vassili. A. Fedotov</name>
+    </author>
+    <author>
+      <name>Jan Wallauer</name>
+    </author>
+    <author>
+      <name>Markus Walther</name>
+    </author>
+    <author>
+      <name>Mauro Perino</name>
+    </author>
+    <author>
+      <name>Nikitas Papasimakis</name>
+    </author>
+    <author>
+      <name>Nikolay I. Zheludev</name>
+    </author>
+    <arxiv:doi>10.1038/lsa.2015.79</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/lsa.2015.79" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.4461v1</id>
+    <title>Localization of Inner-Shell Photoelectron Emission and Interatomic Coulombic Decay in Ne$_2$</title>
+    <updated>2008-03-31T14:07:45Z</updated>
+    <link href="https://arxiv.org/abs/0803.4461v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.4461v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We used Cold Target Recoil Ion Momentum Spectroscopy (COLTRIMS) to investigate the decay of Ne$_2$ after K-shell photoionization. The breakup into Ne$^{1+}$ / Ne$^{2+}$ shows interatomic Coulombic decay (ICD) occurring after a preceding atomic Auger decay. The molecular frame angular distributions of the photoelectron and the ICD electron show distinct, asymmetric features, which imply localization of the K-vacancy created at one of the two atomic sites of the Ne$_2$ and an emission of the ICD electron from a localized site. The experimental results are supported by calculations in frozen core Hartree-Fock approach.</summary>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-31T14:07:45Z</published>
+    <arxiv:comment>4 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atm-clus"/>
+    <author>
+      <name>K. Kreidi</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>Th. Weber</name>
+    </author>
+    <author>
+      <name>T. Havermeier</name>
+    </author>
+    <author>
+      <name>R. E. Grisenti</name>
+    </author>
+    <author>
+      <name>X. Liu</name>
+    </author>
+    <author>
+      <name>Y. Morisita</name>
+    </author>
+    <author>
+      <name>S. Schössler</name>
+    </author>
+    <author>
+      <name>L. Ph. H. Schmidt</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>M. Odenweller</name>
+    </author>
+    <author>
+      <name>N. Neumann</name>
+    </author>
+    <author>
+      <name>L. Foucar</name>
+    </author>
+    <author>
+      <name>J. Titze</name>
+    </author>
+    <author>
+      <name>B. Ulrich</name>
+    </author>
+    <author>
+      <name>F. Sturm</name>
+    </author>
+    <author>
+      <name>C. Stuck</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>S. Voss</name>
+    </author>
+    <author>
+      <name>I. Lauter</name>
+    </author>
+    <author>
+      <name>H. K. Kim</name>
+    </author>
+    <author>
+      <name>M. Rudloff</name>
+    </author>
+    <author>
+      <name>H. Fukuzawa</name>
+    </author>
+    <author>
+      <name>G. Prümper</name>
+    </author>
+    <author>
+      <name>N. Saito</name>
+    </author>
+    <author>
+      <name>K. Ueda</name>
+    </author>
+    <author>
+      <name>A. Czasch</name>
+    </author>
+    <author>
+      <name>O. Jagutzki</name>
+    </author>
+    <author>
+      <name>H. Schmidt-Böcking</name>
+    </author>
+    <author>
+      <name>S. K. Semenov</name>
+    </author>
+    <author>
+      <name>N. A. Cherepkov</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+    <arxiv:doi>10.1088/0953-4075/41/10/101002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0953-4075/41/10/101002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1006.2667v1</id>
+    <title>Single photon double ionization of the helium dimer</title>
+    <updated>2010-06-14T10:59:40Z</updated>
+    <link href="https://arxiv.org/abs/1006.2667v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1006.2667v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a single photon can ionize the two helium atoms of the helium dimer in a distance up to 10 °A. The energy sharing among the electrons, the angular distributions of the ions and electrons as well as comparison with electron impact data for helium atoms suggest a knock-off type double ionization process. The Coulomb explosion imaging of He_2 provides a direct view of the nuclear wave function of this by far most extended and most diffuse of all naturally existing molecules.</summary>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-06-14T10:59:40Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atm-clus"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 104, 153401 (2010)</arxiv:journal_ref>
+    <author>
+      <name>T. Havermeier</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>K. Kreidi</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>S. Voss</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>S. Schössler</name>
+    </author>
+    <author>
+      <name>L. Foucar</name>
+    </author>
+    <author>
+      <name>N. Neumann</name>
+    </author>
+    <author>
+      <name>J. Titze</name>
+    </author>
+    <author>
+      <name>H. Sann</name>
+    </author>
+    <author>
+      <name>M. Kühnel</name>
+    </author>
+    <author>
+      <name>J. Voigtsberger</name>
+    </author>
+    <author>
+      <name>A. Malakzadeh</name>
+    </author>
+    <author>
+      <name>N. Sisourat</name>
+    </author>
+    <author>
+      <name>W. Schöllkopf</name>
+    </author>
+    <author>
+      <name>H. Schmidt-Böcking</name>
+    </author>
+    <author>
+      <name>R. E. Grisenti</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.104.153401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.104.153401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.02599v1</id>
+    <title>Tracing orbital images on ultrafast time scales</title>
+    <updated>2020-10-06T10:18:28Z</updated>
+    <link href="https://arxiv.org/abs/2010.02599v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.02599v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Frontier orbitals, i.e., the highest occupied and lowest unoccupied orbitals of a molecule, generally determine molecular properties, such as chemical bonding and reactivities. Consequently, there has been a lot of interest in measuring them, despite the fact that, strictly speaking, they are not quantum-mechanical observables. Yet, with photoemission tomography a powerful technique has recently been introduced by which the electron distribution in orbitals of molecules adsorbed at surfaces can be imaged in momentum space. This has even been used for the identification of reaction intermediates in surface reactions. However, so far it has been impossible to follow an orbital's momentum-space dynamics in time, for example through an excitation process or a chemical reaction. Here, we report a key step in this direction: we combine time-resolved photoemission employing high laser harmonics and a recently developed momentum microscope to establish a tomographic, femtosecond pump-probe experiment of unoccupied molecular orbitals. Specifically, we measure the full momentum-space distribution of transiently excited electrons. Because in molecules this momentum-space distribution is closely linked to orbital shapes, our experiment offers the extraordinary possibility to observe ultrafast electron motion in time and space. This enables us to connect their excited states dynamics to specific real-space excitation pathways.</summary>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.other" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-06T10:18:28Z</published>
+    <arxiv:primary_category term="physics.chem-ph"/>
+    <arxiv:journal_ref>Science, 10.1126/science.abf3286 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Miriam Raths</name>
+    </author>
+    <author>
+      <name>Klaus Stallberg</name>
+    </author>
+    <author>
+      <name>Lasse Münster</name>
+    </author>
+    <author>
+      <name>Dominik Brandstetter</name>
+    </author>
+    <author>
+      <name>Xiaosheng Yang</name>
+    </author>
+    <author>
+      <name>Jens Güdde</name>
+    </author>
+    <author>
+      <name>Peter Puschnig</name>
+    </author>
+    <author>
+      <name>Serguei Soubatch</name>
+    </author>
+    <author>
+      <name>Christian Kumpf</name>
+    </author>
+    <author>
+      <name>Francois C. Bocquet</name>
+    </author>
+    <author>
+      <name>Frank Stefan Tautz</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+    <arxiv:doi>10.1126/science.abf3286</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.abf3286" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.1464v1</id>
+    <title>A measurement of the evolution of Interatomic Coulombic Decay in the time domain</title>
+    <updated>2013-05-07T11:01:57Z</updated>
+    <link href="https://arxiv.org/abs/1305.1464v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.1464v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>During the last 15 years a novel decay mechanism of excited atoms has been discovered and investigated. This so called ''Interatomic Coulombic Decay'' (ICD) involves the chemical environment of the electronically excited atom: the excitation energy is transferred (in many cases over long distances) to a neighbor of the initially excited particle usually ionizing that neighbor. It turned out that ICD is a very common decay route in nature as it occurs across van-der-Waals and hydrogen bonds. The time evolution of ICD is predicted to be highly complex, as its efficiency strongly depends on the distance of the atoms involved and this distance typically changes during the decay. Here we present the first direct measurement of the temporal evolution of ICD using a novel experimental approach.</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-07T11:01:57Z</published>
+    <arxiv:comment>6 pages, 4 figures, submitted to PRL</arxiv:comment>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <author>
+      <name>F. Trinter</name>
+    </author>
+    <author>
+      <name>J. B. Williams</name>
+    </author>
+    <author>
+      <name>M. Weller</name>
+    </author>
+    <author>
+      <name>M. Waitz</name>
+    </author>
+    <author>
+      <name>M. Pitzer</name>
+    </author>
+    <author>
+      <name>J. Voigtsberger</name>
+    </author>
+    <author>
+      <name>C. Schober</name>
+    </author>
+    <author>
+      <name>G. Kastirke</name>
+    </author>
+    <author>
+      <name>C. Müller</name>
+    </author>
+    <author>
+      <name>C. Goihl</name>
+    </author>
+    <author>
+      <name>P. Burzynski</name>
+    </author>
+    <author>
+      <name>F. Wiegandt</name>
+    </author>
+    <author>
+      <name>T. Bauer</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>H. Sann</name>
+    </author>
+    <author>
+      <name>A. Kalinin</name>
+    </author>
+    <author>
+      <name>L. Ph. H. Schmidt</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>N. Sisourat</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.111.093401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.111.093401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.16688v1</id>
+    <title>Observation of an isolated flat band in the van der Waals crystal NbOCl$_2$</title>
+    <updated>2026-01-23T12:06:34Z</updated>
+    <link href="https://arxiv.org/abs/2601.16688v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.16688v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dispersionless electronic bands lead to an extremely high density of states and suppressed kinetic energy, thereby increasing electronic correlations and instabilities that can shape emergent ordered states, such as excitonic, ferromagnetic, and superconducting phases. A flat band that extends over the entire momentum space and is well isolated from other dispersive bands is, therefore, particularly interesting. Here, the band structure of the van der Waals crystal NbOCl$_2$ is revealed by utilizing photoelectron momentum microscopy. We directly map out an electronic band that is flat throughout the entire Brillouin zone and features a width of only $\sim$100 meV. This band is well isolated from both the conduction and remote valence bands. Moreover, the quasiparticle band gap shows a high tunability upon the deposition of caesium atoms on the surface. By combining the single-particle band structure with the optical transmission spectrum, the optical gap is identified. The fully isolated flat band in a van der Waals crystal provides a qualitatively new testbed for exploring flat-band physics.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-23T12:06:34Z</published>
+    <arxiv:comment>Flat band; NbOCl2; ARPES; Momentum Microscopy</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Changhua Bao</name>
+    </author>
+    <author>
+      <name>Vincent Eggers</name>
+    </author>
+    <author>
+      <name>Manuel Meierhofer</name>
+    </author>
+    <author>
+      <name>Jakob Helml</name>
+    </author>
+    <author>
+      <name>Lasse Münster</name>
+    </author>
+    <author>
+      <name>Suguru Ito</name>
+    </author>
+    <author>
+      <name>Leon Machtl</name>
+    </author>
+    <author>
+      <name>Sarah Zajusch</name>
+    </author>
+    <author>
+      <name>Giacomo Inzani</name>
+    </author>
+    <author>
+      <name>Ludwig Wittmann</name>
+    </author>
+    <author>
+      <name>Marlene Liebich</name>
+    </author>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+    <author>
+      <name>Rupert Huber</name>
+    </author>
+    <arxiv:doi>10.1038/s43246-025-01070-0</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s43246-025-01070-0" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.23001v2</id>
+    <title>Observing the spatial and temporal evolution of exciton wave functions</title>
+    <updated>2025-12-01T14:07:35Z</updated>
+    <link href="https://arxiv.org/abs/2511.23001v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.23001v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Excitons, the correlated electron-hole pairs governing optical and transport properties in organic semiconductors, have long resisted direct experimental access to their full quantum-mechanical wave functions. Here, we use femtosecond time-resolved photoemission orbital tomography (trPOT), combining high-harmonic probe pulses with time- and momentum-resolved photoelectron spectroscopy, to directly image the momentum-space distribution and ultrafast dynamics of excitons in $α$-sexithiophene thin films. We introduce a quantitative model that enables reconstruction of the exciton wave function in real space, including both its spatial extent and its internal phase structure. The reconstructed wave function reveals coherent delocalization across approximately three molecular units and exhibits a characteristic phase modulation, consistent with ab initio calculations within the framework of many-body perturbation theory. Time-resolved measurements further show a $\sim 20$\% contraction of the exciton radius within 400 fs, providing direct evidence of self-trapping driven by exciton-phonon coupling. These results establish trPOT as a general and experimentally accessible approach for resolving exciton wave functions -- with spatial, phase, and temporal sensitivity -- in a broad class of molecular and low-dimensional materials.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-28T09:04:41Z</published>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>Marcel Theilen</name>
+    </author>
+    <author>
+      <name>Siegfried Kaidisch</name>
+    </author>
+    <author>
+      <name>Monja Stettner</name>
+    </author>
+    <author>
+      <name>Sarah Zajusch</name>
+    </author>
+    <author>
+      <name>Eric Fackelman</name>
+    </author>
+    <author>
+      <name>Alexa Adamkiewicz</name>
+    </author>
+    <author>
+      <name>Robert Wallauer</name>
+    </author>
+    <author>
+      <name>Andreas Windischbacher</name>
+    </author>
+    <author>
+      <name>Christian S. Kern</name>
+    </author>
+    <author>
+      <name>Michael G. Ramsey</name>
+    </author>
+    <author>
+      <name>François C. Bocquet</name>
+    </author>
+    <author>
+      <name>Serguei Soubatch</name>
+    </author>
+    <author>
+      <name>F. Stefan Tautz</name>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+    </author>
+    <author>
+      <name>Peter Puschnig</name>
+    </author>
+    <arxiv:doi>10.1103/3zmg-276c</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/3zmg-276c" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1103.5337v1</id>
+    <title>Carbon K-shell Photo Ionization of CO: Molecular frame angular Distributions of normal and conjugate shakeup Satellites</title>
+    <updated>2011-03-28T12:12:40Z</updated>
+    <link href="https://arxiv.org/abs/1103.5337v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1103.5337v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We have measured the molecular frame angular distributions of photoelectrons emitted from the Carbon K shell of fixed-in-space CO molecules for the case of simultaneous excitation of the remaining molecular ion. Normal and conjugate shake up states are observed. Photo electrons belonging to normal Σ-satellite lines show an angular distribution resembling that observed for the main photoline at the same electron energy. Surprisingly a similar shape is found for conjugate shake up states with Π-symmetry. In our data we identify shake rather than electron scattering (PEVE) as the mechanism producing the conjugate lines. The angular distributions clearly show the presence of a Σ-shape resonance for all of the satellite lines.</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-03-28T12:12:40Z</published>
+    <arxiv:comment>8 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <arxiv:journal_ref>J. Electron Spectroscopy and Related Phenomena 183,48-52 (2011)</arxiv:journal_ref>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>J. Titze</name>
+    </author>
+    <author>
+      <name>L. Foucar</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>T. Osipov</name>
+    </author>
+    <author>
+      <name>E. P. Benis</name>
+    </author>
+    <author>
+      <name>O. Jagutzki</name>
+    </author>
+    <author>
+      <name>W. Arnold</name>
+    </author>
+    <author>
+      <name>A. Czasch</name>
+    </author>
+    <author>
+      <name>A. Staudte</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>A. Alnaser</name>
+    </author>
+    <author>
+      <name>T. Weber</name>
+    </author>
+    <author>
+      <name>M. H. Prior</name>
+    </author>
+    <author>
+      <name>H. Schmidt-Böcking</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.04999v2</id>
+    <title>Intervalley scattering in MoS$_2$ imaged by two-photon photoemission with a high-harmonic probe</title>
+    <updated>2016-10-13T11:55:21Z</updated>
+    <link href="https://arxiv.org/abs/1607.04999v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.04999v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report on the direct mapping of electron transfer in the momentum space of bulk MoS$_2$ by means of time- and angle-resolved two-photon photoemission with a high-harmonic probe. For this purpose, we have combined a high-repetition rate high-harmonic source with tunable femtosecond pump pulses and a 3D ($k_x, k_y, E$) electron spectrometer. We show that optical excitation slightly above the A exciton resonance results in an immediate occupation of the conduction band at $\overline{K}$ followed by an ultrafast transfer ($&lt; 50$~fs) to the conduction band minimum at $\overlineΣ$. Both signals, at $\overline{K}$ and $\overlineΣ$, do not vanish over the observed period of 400~fs. The technique described here enables direct access to the charge transfer dynamics in $k$-space and allows the study of decay times and decay channels in various systems with dependence on the excess energy or helicity of the excitation.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-18T10:08:33Z</published>
+    <arxiv:comment>11 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Appl. Phys. Lett. 109, 162102 (2016)</arxiv:journal_ref>
+    <author>
+      <name>Robert Wallauer</name>
+      <arxiv:affiliation>Fachbereich Physik und Zentrum für Materialwissenschaften, Philipps-Universität</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Johannes Reimann</name>
+      <arxiv:affiliation>Fachbereich Physik und Zentrum für Materialwissenschaften, Philipps-Universität</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nico Armbrust</name>
+      <arxiv:affiliation>Fachbereich Physik und Zentrum für Materialwissenschaften, Philipps-Universität</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jens Güdde</name>
+      <arxiv:affiliation>Fachbereich Physik und Zentrum für Materialwissenschaften, Philipps-Universität</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ulrich Höfer</name>
+      <arxiv:affiliation>Fachbereich Physik und Zentrum für Materialwissenschaften, Philipps-Universität</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1063/1.4965839</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4965839" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.6317v1</id>
+    <title>Controlling Intensity and Phase of Terahertz Radiation with an Optically Thin Liquid Crystal-Loaded Metamaterial</title>
+    <updated>2013-07-24T07:56:30Z</updated>
+    <link href="https://arxiv.org/abs/1307.6317v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.6317v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We experimentally demonstrate intensity and phase modulation of terahertz radiation using actively controlled large-area planar metamaterial (metafilm) hybridized with a 12 um thick layer of a liquid crystal. Active control was introduced through in-plane electrical switching of the liquid crystal, which enabled us to achieve a reversible single-pass absolute transmission change of 20 % and a phase change of 40 deg at only 20 V.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-24T07:56:30Z</published>
+    <arxiv:comment>6 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <arxiv:journal_ref>Appl. Phys. Lett. 103, 141904 (2013)</arxiv:journal_ref>
+    <author>
+      <name>O. Buchnev</name>
+    </author>
+    <author>
+      <name>J. Wallauer</name>
+    </author>
+    <author>
+      <name>M. Walther</name>
+    </author>
+    <author>
+      <name>M. Kaczmarek</name>
+    </author>
+    <author>
+      <name>N. I. Zheludev</name>
+    </author>
+    <author>
+      <name>V. A. Fedotov</name>
+    </author>
+    <arxiv:doi>10.1063/1.4823822</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4823822" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1409.2701v1</id>
+    <title>Interatomic-Coulombic-decay-induced recapture of photoelectrons in helium dimers</title>
+    <updated>2014-09-09T11:53:48Z</updated>
+    <link href="https://arxiv.org/abs/1409.2701v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1409.2701v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the onset of photoionization shakeup induced interatomic Coulombic decay (ICD) in He2 at the He+*(n = 2) threshold by detecting two He+ ions in coincidence. We find this threshold to be shifted towards higher energies compared to the same threshold in the monomer. The shifted onset of ion pairs created by ICD is attributed to a recapture of the threshold photoelectron after the emission of the faster ICD electron.</summary>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-09-09T11:53:48Z</published>
+    <arxiv:comment>5 Pages, 2 Figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atm-clus"/>
+    <arxiv:journal_ref>Physical Review A 90, 022515 (2014)</arxiv:journal_ref>
+    <author>
+      <name>P. Burzynski</name>
+    </author>
+    <author>
+      <name>F. Trinter</name>
+    </author>
+    <author>
+      <name>J. B. Williams</name>
+    </author>
+    <author>
+      <name>M. Weller</name>
+    </author>
+    <author>
+      <name>M. Waitz</name>
+    </author>
+    <author>
+      <name>M. Pitzer</name>
+    </author>
+    <author>
+      <name>J. Voigtsberger</name>
+    </author>
+    <author>
+      <name>C. Schober</name>
+    </author>
+    <author>
+      <name>G. Kastirke</name>
+    </author>
+    <author>
+      <name>C. Müller</name>
+    </author>
+    <author>
+      <name>C. Goihl</name>
+    </author>
+    <author>
+      <name>F. Wiegandt</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>A. Kalinin</name>
+    </author>
+    <author>
+      <name>L. Ph. H. Schmidt</name>
+    </author>
+    <author>
+      <name>M. Schöffler</name>
+    </author>
+    <author>
+      <name>G. Schiwietz</name>
+    </author>
+    <author>
+      <name>N. Sisourat</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.90.022515</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.90.022515" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1310.6538v3</id>
+    <title>Vibrationally Resolved Decay Width of Interatomic Coulombic Decay in HeNe</title>
+    <updated>2013-12-09T11:53:58Z</updated>
+    <link href="https://arxiv.org/abs/1310.6538v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1310.6538v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the ionization of HeNe from below the He 1s3p excitation to the He ionization threshold. We observe HeNe$^+$ ions with an enhancement by more than a factor of 60 when the He side couples resonantly to the radiation field. These ions are an experimental proof of a two-center resonant photoionization mechanism predicted by Najjari et al. [Phys. Rev. Lett. 105, 153002 (2010)]. Furthermore, our data provide electronic and vibrational state resolved decay widths of interatomic Coulombic decay (ICD) in HeNe dimers. We find that the ICD lifetime strongly increases with increasing vibrational state.</summary>
+    <category term="physics.atm-clus" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-10-24T09:44:46Z</published>
+    <arxiv:comment>7 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.atm-clus"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 111, 233004 (2013)</arxiv:journal_ref>
+    <author>
+      <name>F. Trinter</name>
+    </author>
+    <author>
+      <name>J. B. Williams</name>
+    </author>
+    <author>
+      <name>M. Weller</name>
+    </author>
+    <author>
+      <name>M. Waitz</name>
+    </author>
+    <author>
+      <name>M. Pitzer</name>
+    </author>
+    <author>
+      <name>J. Voigtsberger</name>
+    </author>
+    <author>
+      <name>C. Schober</name>
+    </author>
+    <author>
+      <name>G. Kastirke</name>
+    </author>
+    <author>
+      <name>C. Müller</name>
+    </author>
+    <author>
+      <name>C. Goihl</name>
+    </author>
+    <author>
+      <name>P. Burzynski</name>
+    </author>
+    <author>
+      <name>F. Wiegandt</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>A. Kalinin</name>
+    </author>
+    <author>
+      <name>L. Ph. H. Schmidt</name>
+    </author>
+    <author>
+      <name>M. S. Schöffler</name>
+    </author>
+    <author>
+      <name>Y. -C. Chiang</name>
+    </author>
+    <author>
+      <name>K. Gokhberg</name>
+    </author>
+    <author>
+      <name>T. Jahnke</name>
+    </author>
+    <author>
+      <name>R. Dörner</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.111.233004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.111.233004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.02932v1</id>
+    <title>ARPES sensitivity to short-range antiferromagnetic correlations</title>
+    <updated>2015-06-09T14:29:51Z</updated>
+    <link href="https://arxiv.org/abs/1506.02932v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.02932v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Angle-resolved photoemission spectroscopy (ARPES) is one of most powerful techniques to unravel the electronic properties of layered materials and in the last decades it has lead to a significant progress in the understanding of the band structures of cuprates, pnictides and other materials of current interest. On the other hand, its application to Mott-Hubbard insulating materials where a Fermi surface is absent has been more limited. Here we show that in these latter materials, where electron spins are localized, ARPES may provide significant information on the spin correlations which can be complementary to the one derived from neutron scattering experiments. Sr$_2$Cu$_{1-x}$Zn$_x$O$_2$Cl$_2$, a prototype of diluted spin $S=1/2$ antiferromagnet (AF) on a square lattice, was chosen as a test case and a direct correspondence between the amplitude of the spectral weight beyond the AF zone boundary derived from ARPES and the spin correlation length $ξ$ estimated from $^{35}$Cl NMR established. It was found even for correlation lengths of a few lattice constants a significant spectral weight in the back-bended band is present which depends markedly on $ξ$. Moreover the temperature dependence of that spectral weight is found to scale with the $x$ dependent spin-stiffness. These findings prove that ARPES technique is very sensitive to short-range correlations and its relevance in the understanding of the electronic correlations in cuprates is discussed.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.supr-con" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-09T14:29:51Z</published>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. B 91, 245149 (2015)</arxiv:journal_ref>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>S. Sanna</name>
+    </author>
+    <author>
+      <name>E. Lahoud</name>
+    </author>
+    <author>
+      <name>P. Carretta</name>
+    </author>
+    <author>
+      <name>A. Kanigel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.01363v1</id>
+    <title>Spin Mapping of Surface and Bulk Rashba States in Ferroelectric a-GeTe(111) Films</title>
+    <updated>2015-12-04T10:44:55Z</updated>
+    <link href="https://arxiv.org/abs/1512.01363v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.01363v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A comprehensive mapping of the spin polarization of the electronic bands in ferroelectric a-GeTe(111) films has been performed using a time-of-flight momentum microscope equipped with an imaging spin filter that enables a simultaneous measurement of more than 10.000 data points (voxels). A Rashba type splitting of both surface and bulk bands with opposite spin helicity of the inner and outer Rashba bands is found revealing a complex spin texture at the Fermi energy. The switchable inner electric field of GeTe implies new functionalities for spintronic devices.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-04T10:44:55Z</published>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <arxiv:journal_ref>Phys. Rev. B 94, 201403 (2016)</arxiv:journal_ref>
+    <author>
+      <name>H. J. Elmers</name>
+    </author>
+    <author>
+      <name>R. Wallauer</name>
+    </author>
+    <author>
+      <name>M. Liebmann</name>
+    </author>
+    <author>
+      <name>J. Kellner</name>
+    </author>
+    <author>
+      <name>M. Morgenstern</name>
+    </author>
+    <author>
+      <name>R. N. Wang</name>
+    </author>
+    <author>
+      <name>J. E. Boschker</name>
+    </author>
+    <author>
+      <name>R. Calarco</name>
+    </author>
+    <author>
+      <name>O. Rader</name>
+    </author>
+    <author>
+      <name>D. Kutnyakhov</name>
+    </author>
+    <author>
+      <name>S. V. Chernov</name>
+    </author>
+    <author>
+      <name>K. Medjanik</name>
+    </author>
+    <author>
+      <name>C. Tusche</name>
+    </author>
+    <author>
+      <name>M. Ellguth</name>
+    </author>
+    <author>
+      <name>H. Volfova</name>
+    </author>
+    <author>
+      <name>J. Braun</name>
+    </author>
+    <author>
+      <name>J. Minar</name>
+    </author>
+    <author>
+      <name>H. Ebert</name>
+    </author>
+    <author>
+      <name>G. Schonhense</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.94.201403</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.94.201403" title="doi"/>
+  </entry>
+</feed>

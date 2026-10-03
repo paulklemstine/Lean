@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Z85HGE3x7Lbo7QibAKyzAcF23+A</id>
+  <title>arXiv Query: search_query=abs:"rational 3-isogeny"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-03T18:31:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22rational+3-isogeny%22&amp;start=0&amp;max_results=10&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>5</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2211.06062v2</id>
+    <title>The $3$-isogeny Selmer groups of the elliptic curves $y^2=x^3+n^2$</title>
+    <updated>2023-11-29T09:11:38Z</updated>
+    <link href="https://arxiv.org/abs/2211.06062v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.06062v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider the family of elliptic curves $E_n:y^2=x^3+n^2$, where $n$ varies over positive cubefree integers. There is a rational $3$-isogeny $φ$ from $E_n$ to $\hat{E}_n:y^2=x^3-27n^2$ and a dual isogeny $\hatφ:\hat{E}_n\rightarrow E_n$. We show that for almost all $n$, the rank of $\mathrm{Sel}_φ(E_n)$ is $0$, and the rank of $\mathrm{Sel}_{\hatφ}(\hat{E}_n)$ is determined by the number of prime factors of $n$ that are congruent to $2\bmod 3$ and the congruence class of $n\bmod 9$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-11T08:29:08Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Int. Math. Res. Not. IMRN (2024), no.9, 7571-7593</arxiv:journal_ref>
+    <author>
+      <name>Stephanie Chan</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rnad266</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rnad266" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.12487v2</id>
+    <title>$3$-Selmer group, ideal class groups and cube sum problem</title>
+    <updated>2025-01-21T15:33:52Z</updated>
+    <link href="https://arxiv.org/abs/2207.12487v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.12487v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a Mordell curve $E_a:y^2=x^3+a$ with $a \in \mathbb Z$. These curves have a rational $3$-isogeny, say $\varphi$. We give an upper and a lower bound on the rank of the $\varphi$-Selmer group of $E_a$ over $\mathbb Q(ζ_3)$ in terms of the $3$-part of the ideal class group of certain quadratic extension of $\mathbb Q(ζ_3)$. Using our bounds on the Selmer groups, we prove some cases of the rational cube sum problem. Further, using these bounds, we give explicit families of the Mordell curves to show that for a positive proportion of $E_a$, ${\rm Sel}^3(E_{a}/\mathbb Q)=0$ (respectively ${\rm Sel}^3(E_{a}/\mathbb Q)$ has $\mathbb F_3$-rank $1$).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-25T19:26:28Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Somnath Jha</name>
+    </author>
+    <author>
+      <name>Dipramit Majumdar</name>
+    </author>
+    <author>
+      <name>Pratiksha Shingavekar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.18034v2</id>
+    <title>Rank distribution in cubic twist families of elliptic curves</title>
+    <updated>2024-11-28T17:30:29Z</updated>
+    <link href="https://arxiv.org/abs/2403.18034v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.18034v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $a$ be an integer which is not of the form $n^2$ or $-3 n^2$ for $n\in \mathbb{Z}$. Let $E_a$ be the elliptic curve with rational $3$-isogeny defined by $E_a:y^2=x^3+a$, and $K:=\mathbb{Q}(μ_3)$. Assume that the $3$-Selmer group of $E_a$ over $K$ vanishes. It is shown that there is an explicit infinite set of cubefree integers $m$ such that the $3$-Selmer groups over $K$ of $E_{m^2 a}$ and $E_{m^4 a}$ both vanish. In particular, the ranks of these cubic twists are seen to be $0$ over $K$. Our results are proven by studying stability properties of $3$-Selmer groups in cyclic cubic extensions of $K$, via local and global Galois cohomological techniques.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-26T18:39:40Z</published>
+    <arxiv:comment>Version 2: 26 pages, accepted for publication in Acta Arithmetica</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Acta Arithmetica Vol. 219 (2025), no. 3, pp. 249-273</arxiv:journal_ref>
+    <author>
+      <name>Anwesh Ray</name>
+    </author>
+    <author>
+      <name>Pratiksha Shingavekar</name>
+    </author>
+    <arxiv:doi>10.4064/aa240824-28-11</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4064/aa240824-28-11" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.06687v3</id>
+    <title>Heegner points at Eisenstein primes and twists of elliptic curves</title>
+    <updated>2017-11-27T20:11:45Z</updated>
+    <link href="https://arxiv.org/abs/1609.06687v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.06687v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given an elliptic curve $E$ over $\mathbb{Q}$, a celebrated conjecture of Goldfeld asserts that a positive proportion of its quadratic twists should have analytic rank 0 (resp. 1). We show this conjecture holds whenever $E$ has a rational 3-isogeny. We also prove the analogous result for the sextic twists of $j$-invariant 0 curves (Mordell curves). To prove these results, we establish a general criterion for the non-triviality of the $p$-adic logarithm of Heegner points at an Eisenstein prime $p$, in terms of the relative $p$-class numbers of certain number fields and then apply this criterion to the special case $p=3$. As a by-product, we also prove the 3-part of the Birch and Swinnerton-Dyer conjecture for many elliptic curves of $j$-invariant 0.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-21T19:08:55Z</published>
+    <arxiv:comment>include statements for abelian varieties of GL(2)-type; the proofs remain the same</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Daniel Kriz</name>
+    </author>
+    <author>
+      <name>Chao Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.01069v1</id>
+    <title>$\sqrt{-3}$-Selmer groups, ideal class groups and large $3$-Selmer ranks</title>
+    <updated>2025-02-03T05:25:34Z</updated>
+    <link href="https://arxiv.org/abs/2502.01069v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.01069v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the family of elliptic curves $E_{a,b}:y^2=x^3+a(x-b)^2$ with $a,b \in \mathbb{Z}$. These elliptic curves have a rational $3$-isogeny, say $\varphi$. We give an upper and a lower bound on the rank of the $\varphi$-Selmer group of $E_{a,b}$ over $K:=\mathbb{Q}(ζ_3)$ in terms of the $3$-part of the ideal class group of certain quadratic extension of $K$. Using our bounds on the Selmer groups, we construct infinitely many curves in this family with arbitrary large $3$-Selmer rank over $K$ and no non-trivial $K$-rational point of order $3$. We also show that for a positive proportion of natural numbers $n$, the curve $E_{n,n}/\mathbb{Q}$ has root number $-1$ and $3$-Selmer rank $=1$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-03T05:25:34Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Somnath Jha</name>
+    </author>
+    <author>
+      <name>Dipramit Majumdar</name>
+    </author>
+    <author>
+      <name>Pratiksha Shingavekar</name>
+    </author>
+  </entry>
+</feed>

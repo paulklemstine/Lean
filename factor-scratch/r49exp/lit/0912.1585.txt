@@ -1,0 +1,1003 @@
+FACTORING WITH HINTS
+
+arXiv:0912.1585v6 [math.NT] 8 Aug 2017
+
+FRANCESCO SICA
+Abstract. We introduce a new deterministic factoring algorithm, which could be described in the
+cryptographically fashionable term of “factoring with hints”: we show that, given the knowledge
+of the factorisations of O(N 1/3+ǫ ) terms surrounding N = pq product of two large primes, we can
+recover deterministically p and q in O(N 1/3+ǫ ) bit operations. Although this is slower than the
+current best factoring algorithms, this method shows that the factorisations of close integers are
+related and that consequently one can expect more results along this line of thought.
+Keywords. Riemann zeta function, RSA moduli, complex analysis.
+
+1. Introduction
+The problem of quickly factoring large integers is central in cryptography and computational
+number theory. The current state of the art in factoring large integers N , the Number Field Sieve
+algorithm [2, 3], stems from the earlier Quadratic Sieve [8] and Continued Fraction [6]. We should
+also mention the Elliptic Curve Method by H. Lenstra [4], which is particularly useful when N has
+a small prime factor p. They are all probabilistic factoring algorithms.
+
+These algorithms have heuristic running times respectively O exp(c(log N )1/3 (log log N )2/3 ) ,
+
+
+O exp(c(log N )1/2 (log log N )1/2 ) and O exp(c(log p)1/2 (log log p)1/2 ) , for some constant c (not
+always the same). The first two strive to find nontrivial arithmetical relations of the form x2 ≡ y 2
+(mod N ) (which lead to a nontrivial factor by computing gcd(N, x + y)), whereas the third is a
+generalisation of Pollard’s p − 1 method [7], involving computations in some elliptic curve group
+instead of Z/N . We should note, however, that there exist
+probabilistic algorithms with proved
+
+1/2
+1/2
+running time O exp((1 + o(1))(log N ) (log log N ) )  [5]. As far as the author is aware, no
+such rigorous bound exists in the form O exp ((log N )c ) for c < 1/2. Similarly, no deterministic
+subexponential algorithm is currently known, the best one being Shank’s square form factorization
+SQUFOF which runs in O(N 1/4+ǫ ), or in O(N 1/5+ǫ ) on the Extended Riemann Hypothesis.
+In this work, we want to introduce a new paradigm in integer factorisation, one that doesn’t
+supersede previous efforts, but rather complements it by showing that the factorisation of a small
+number of consecutive integers in related in a nontrivial way. Therefore, if numbers close to a
+product N = pq of two primes are easier to factor than N itself, we can expect a reduction
+in the time to factor N . Quantifying the number of consecutive integers versus the additional
+computational effort to find the needed relation is a matter of further investigation, some of which
+will come out in another work by ourselves. Here we content ourselves with a first nontrivial result.
+Theorem 1. Let N = pq a product of two primes. Then, given an arbitrary ǫ > 0, the factors
+p and q can be recovered in O(N 1/3+ǫ ) bit operations from the knowledge of the factorisations of
+O(N 1/3+ǫ ) integers closest to N .
+Date: October 26, 2018.
+2010 Mathematics Subject Classification. Primary 11M06; Secondary 94A60.
+Research supported in part by a grant from the Social Development Fund.
+1
+
+2. Notations
+This work borrows heavily from standard notations in analytic number theory and indeed a
+classical reference on the subject is the treatise of Davenport [1]. In particular, we will make liberal
+use of the O notation in Landau’s as well as Vinogradov’s form (≪). Hence, for instance
+
+f (u) = O g(u) ⇐⇒ f (u) ≪ g(u)
+
+means that g(u) > 0 and |f (u)|/g(u) is bounded above (usually as u → ∞ or u → 0+ , depending clearly on the context). Similarly, f (u) = o(g(u)) (resp. f (u) = Ω(g(u))) means g(u) > 0
+and |f (u)|/g(u) goes to zero (resp. |f (u)|/g(u) is bounded below). Unless specified, the implied
+constants are absolute.
+Any sum such as
+X
+a2 bc
+abc=n
+
+is to be understood as taken over all positive integers a, b, c such that abc = n. We also define
+X
+X
+f (a) =
+f (a)
+ab=n
+
+a|n
+
+P
+P
+so that for instance the number of divisors of n is d|n 1 and its sum of divisors d|n d. We also
+write s = σ + it, with σ, t ∈ R, according to the established convention in analytic number theory.
+We will also write f (n) for the n-th derivative of the function f .
+.
+Finally, we write a = b to signify that a = b+terms that are not necessarily negligible in size but
+can be computed in polynomial time (in the bit size of the challenge to be factored), so that they
+are negligible in time.
+3. Choice of a Multiplicative Function
+For λ ∈ R define
+
+σλ (n) =
+
+X
+
+dλ .
+
+d|n
+
+√
+√
+√
+Our goal will be to compute σ1/2 (N ) = 1 + N + p + √Np within O(1/N ). If so, then one gets
+an approximation A to
+√
+ 
+N
+1
+√
+(1)
+f (p) = p + √ = A + O
+.
+p
+N
+
+Let us study the function in (0, ∞)
+!
+√ !
+√
+√
+√
+1
+1
+N
+N
+3 N
+′′
+′
+−1 .
+⇒ f (z) = 3/2
+1−
+f (z) = z + √ ⇒ f (z) = √
+z
+z
+z
+2 z
+4z
+√
+The function
+f
+is
+convex
+in
+(0,
+3
+N ) with a unique critical
+point (and therefore absolute minimum)
+√
+√
+at z √
+= N . We will suppose that N = pq with p < N < q. In√fact, we may as well suppose that
+p ≤ N√
+− 2 by inspection. Note√that f ′′ (z) ≥ 2N −3/4 for z ≤ N and therefore |f ′ (z)| ≥ 2N −3/4
+for z ≤ N − 1. √Define a ∈ (0, √N − 1] by f (a) = A. To see √
+that such
+√ a exists, notice that f is
+decreasing in (0, N ]. If A < f ( N − 1), then, for some θ ∈ ( N − 2, N − 1), we can write
+√
+√
+2
+|A − f (p)| < |f ( N − 1) − f ( N − 2)| = |f ′ (θ)| ≥ 3/4 ,
+N
+2
+
+contradicting (1). Given then a ∈ (0,
+
+√
+
+N − 1] with f (a) = A, we obtain, for some ξ ≤
+
+
+1
+1
+′
+⇒ p=a+O
+|a − p| f (ξ) = |f (a) − f (p)| = |A − f (p)| ≪
+N
+N 1/4
+
+√
+
+N − 1,
+
+and therefore p = ⌊a⌉, the integer nearest to a.
+4. Choice of a Test Function
+Consider the Riemann zeta function
+ζ(s) =
+
+X 1
+
+n≥1
+
+convergent for ℜs > 1. Then
+
+ζ(s)ζ(s − 1/2) =
+
+ns
+
+,
+
+∞
+X
+σ1/2 (n)
+
+n=1
+
+ns
+
+,
+
+absolutely convergent whenever ℜs > 3/2. Now let for ν ∈ N1 with ν ≥ 2,
+(
+(1 − t)ν−1 0 ≤ t ≤ 1,
+f (t) =
+0
+t ≥ 1.
+The Mellin transform of f is by definition the beta function
+Z ∞
+Γ(ν)Γ(s)
+B(ν, s) =
+f (t)ts−1 dt
+=
+Γ(s + ν)
+0
+
+hence by the inverse Mellin transform2,
+1
+2πi
+
+(2)
+
+Z 5/2+i∞
+5/2−i∞
+
+ζ(s)ζ(s − 1/2)
+
+Call the right-hand side
+Fν (x) =
+
+X
+
+σ1/2 (n)f
+
+n≤x
+
+and note that
+
+n
+X
+Γ(ν)Γ(s) s
+.
+x ds =
+σ1/2 (n)f
+Γ(s + ν)
+x
+n≤x
+
+n
+
+=
+
+x
+
+Pν (x) = xν−1 Fν (x) =
+
+X
+
+n≤x
+
+X
+
+n≤x
+
+
+n ν−1
+σ1/2 (n) 1 −
+x
+
+σ1/2 (n)(x − n)ν−1
+
+is a piecewise polynomial (given by a different expression between consecutive integers).
+5. Functional Equation of the Riemann Zeta Function
+The Riemann zeta function is a meromorphic function having a simple pole with residue 1 at
+s = 1 and satisfying the functional equation (given here in asymmetric form)
+ζ(s) =
+
+
+
+1
+πs
+1
+(2π)s Γ(1 − s)ζ(1 − s) eiπs/2 − e−iπs/2 = (2π)s Γ(1 − s)ζ(1 − s) sin
+.
+2πi
+π
+2
+
+1In fact, ν doesn’t need to be an integer, but it simplifies calculations to assume so.
+2We will also use the notation
+
+Z
+
+(c)
+
+instead of
+
+Z c+i∞
+
+.
+
+c−i∞
+
+3
+
+6. Another Expression for Pν (x)
+A standard “integration line moving” (to ℜs = −1/4) argument in the integral of (2) will get us
+to the following, after picking up the residues of the integrand at s = 3/2, s = 1 and s = 0,
+Γ(ν)Γ(3/2) 3/2 ζ(1/2)
+1
+Fν (x) = ζ(3/2)
+x +
+x + ζ(0)ζ(−1/2) +
+Γ(ν + 3/2)
+ν
+2πi
+
+Z
+
+ζ(s)ζ(s − 1/2)
+
+Γ(ν)Γ(s) s
+x ds .
+Γ(s + ν)
+
+(−1/4)
+
+In fact, we can move the line of integration to ℜs = −1/4, since to the right of that line, for any
+given ǫ > 0,
+|ζ(s)ζ(s − 1/2)| ≪ |t|2+ǫ ,
+while
+Γ(s)
+≪ |t|−ν .
+Γ(s + ν)
+In particular the integral on the right-hand side is absolutely convergent when ν ≥ 4. It is this
+integral is the next focus of our investigation. It is very natural at this point to use the functional
+equation. We get quite straightforwardly
+1
+2πi
+
+Z
+
+ζ(s)ζ(s − 1/2)
+
+Γ(ν)Γ(s) s
+x ds
+Γ(s + ν)
+
+(−1/4)
+
+1
+=
+(2πi)3
+
+Z
+
+(2π)s Γ(1 − s)ζ(1 − s) sin
+
+πs
+2
+
+ πs
+
+−
+
+(−1/4)
+
+× (2π)s−1/2 Γ(3/2 − s)ζ(3/2 − s) sin
+=
+
++
+
+−
+
+e−iπ/4
+(2πi)3
+
+√
+
+2π
+
+eiπ/4
+√
+(2πi)3 2π
+
+2
+
+π  Γ(ν)Γ(s) s
+x ds
+4 Γ(s + ν)
+
+Γ(ν)Γ(s)
+ds
+Γ(s + ν)
+
+Z
+
+(4π 2 x)s eiπs Γ(1 − s)ζ(1 − s)Γ(3/2 − s)ζ(3/2 − s)
+
+Z
+
+(4π 2 x)s e−iπs Γ(1 − s)ζ(1 − s)Γ(3/2 − s)ζ(3/2 − s)
+
+Z
+
+(4π 2 x)s Γ(1 − s)ζ(1 − s)Γ(3/2 − s)ζ(3/2 − s)
+
+(−1/4)
+
+Γ(ν)Γ(s)
+ds
+Γ(s + ν)
+
+(−1/4)
+
+1
+√
+(2πi)3 π
+
+Γ(ν)Γ(s)
+ds
+Γ(s + ν)
+
+(−1/4)
+
+=
+
++
+
++
+
+e−iπ/4 x
+
+√
+2πi 2π
+eiπ/4 x
+
+√
+2πi 2π
+x
+√
+2πi π
+
+Z
+
+(4π 2 x)−s e−iπs Γ(s)ζ(s)Γ(s + 1/2)ζ(s + 1/2)
+
+Z
+
+(4π 2 x)−s eiπs Γ(s)ζ(s)Γ(s + 1/2)ζ(s + 1/2)
+
+Z
+
+(4π 2 x)−s Γ(s)ζ(s)Γ(s + 1/2)ζ(s + 1/2)
+
+(5/4)
+
+(5/4)
+
+(5/4)
+
+Γ(ν)Γ(1 − s)
+ds
+Γ(1 − s + ν)
+
+Γ(ν)Γ(1 − s)
+ds .
+Γ(1 − s + ν)
+
+Using the Legendre duplication formula
+
+
+√
+1
+Γ(s)Γ s +
+= π 21−2s Γ(2s) ,
+2
+4
+
+Γ(ν)Γ(1 − s)
+ds
+Γ(1 − s + ν)
+
+together with the functional equation sΓ(s) = Γ(s + 1), we obtain
+(3)
+
+
+
+√ 1−2s
+π2
+Γ(2s)
+1 Γ(s)Γ(1 − s)
+1
+ν
+Γ s+
+=Γ s+
+.
+Γ(s−ν)(cos πν−sin πν cot πs) = (−1)
+2 Γ(1 − s + ν)
+2
+(s − 1)(s − 2) · · · (s − ν)
+We can further transform (3) by noting that there exist unique constants c0,ν = 1, . . . , cν,ν such
+that
+2ν
+1
+=
+(s − 1)(s − 2) · · · (s − ν)
+(2s − 2)(2s − 4) · · · (2s − 2ν)
+ν
+2 c0,ν
+2ν c1,ν
+2ν cν,ν
+=
++
++· · ·+
+(2s − 1)(2s − 2) · · · (2s − ν) (2s − 1)(2s − 2) · · · (2s − (ν + 1))
+(2s − 1)(2s − 2) · · · (2s − 2ν)
+whenever this expression makes sense. To see this, multiply both sides by (2s−1)(2s−2) · · · (2s−2ν).
+The resulting left-hand side is a polynomial of degree ν, expressed as a linear combination of the
+polynomials resulting from the right-hand side, which form a basis of the vector space of polynomials
+of degree ≤ ν. For instance, c0,1 = c1,1 = 1 and c0,4 = 1, c1,4 = 10, c2,4 = 45, c3,4 = c4,4 = 105.
+From (3) we get
+
+
+ν
+X
+√
+1
+Γ(s − ν) = (−1)ν π 2ν+1−2s
+cm,ν Γ(2s − ν − m) .
+(−1)ν Γ s +
+2
+m=0
+
+Putting it together we obtain
+Z
+Γ(ν)Γ(s) s
+1
+ζ(s)ζ(s − 1/2)
+x ds
+2πi
+Γ(s + ν)
+(−1/4)
+
+ν ν+1/2 −iπ/4
+
+= (−1) 2
+
+e
+
+xΓ(ν)
+
+ν
+X
+
+cm,ν
+
+m=0
+
++ (−1)ν 2ν+1/2 eiπ/4 xΓ(ν)
+
+ν
+X
+
++ (−1)ν 2ν+1 xΓ(ν)
+
+ν
+X
+
+m=0
+
+cm,ν
+
+n≥1
+
+cm,ν
+
+m=0
+
+X
+
+n≥1
+
+X
+
+X
+
+n≥1
+
+1
+σ−1/2 (n)
+2πi
+
+(16π 2 xn)−s e−iπs Γ(2s − ν − m) ds
+
+(5/4)
+
+σ−1/2 (n)
+
+σ−1/2 (n)
+
+Z
+
+1
+2πi
+
+Z
+
+(16π 2 xn)−s eiπs Γ(2s − ν − m) ds
+
+(5/4)
+
+1
+2πi
+
+Z
+
+(16π 2 xn)−s Γ(2s − ν − m) ds .
+
+(5/4)
+
+We have, for y > 0,
+1
+2πi
+
+Z
+
+y −s Γ(s) ds = e−y
+
+(1/2)
+
+and after collecting the residues of the gamma function at the negative integers,
+
+Z
+k
+y2
+1
+−s
+−y
+ky
+y Γ(s) ds = e − 1 − y +
++ · · · + (−1)
+k≥0 .
+2πi
+2!
+k!
+(−(2k+1)/2)
+
+Remark that if k ≥ 1, since |Γ(s)| < e−π|t|/2 |t|−k−1 on ℜs = −k − 1/2, the left-hand side of the
+previous expression is analytic for ℜy > 0 and continuous up to ℜy = 0. Therefore the previous
+5
+
+formula for k ≥ 1 holds in the closed half-plane ℜy ≥ 0. With this explicit expression we find that
+Z
+1
+Γ(ν)Γ(s) s
+ζ(s)ζ(s − 1/2)
+x ds
+2πi
+Γ(s + ν)
+(−1/4)
+
+ν ν+1/2 −iπ/4
+
+= (−1) 2
+
+e
+
+ν
+X
+
+xΓ(ν)
+
+cm,ν
+
+m=0
+
++ (−1)ν 2ν+1/2 eiπ/4 xΓ(ν)
+
+ν
+X
+
+n≥1
+
+cm,ν
+
+m=0
+
++ (−1)ν 2ν+1 xΓ(ν)
+
+ν
+X
+
+cm,ν
+
+m=0
+
+(4)
+
+ν ν+1/2 −iπ/4
+
+= (−1) 2
+
+e
+
+ν ν−1/2 −iπ/4
+
+− (−1) 2
+(5)
+
+e
+
+ν ν+1/2 iπ/4
+
++ (−1) 2
+
+e
+
+X
+
+X
+
+n≥1
+
+X
+
+n≥1
+
+1
+σ−1/2 (n)
+2πi
+
+Z
+
+(16π 2 xn)−s e−iπs Γ(2s − ν − m) ds
+
+(5/4)
+
+σ−1/2 (n)
+
+1
+2πi
+
+Z
+
+(16π 2 xn)−s eiπs Γ(2s − ν − m) ds
+
+(5/4)
+
+σ−1/2 (n)
+
+1
+2πi
+
+Z
+
+(16π 2 xn)−s Γ(2s − ν − m) ds
+
+(5/4)
+√
+
+ν
+X
+
+X
+cm,ν
+e−4πi xn
+xΓ(ν)
+σ
+(n)
+−1/2
+2(4πi)ν+m xν/2+m/2 n≥1
+nν/2+m/2
+m=0
+
+xΓ(ν)
+
+ν
+X
+
+cm,ν
+
+m=0
+ν
+X
+
+ν−1+m
+X
+k=0
+
+X σ−1/2 (n)
+(−1)ν−3+m−k
+(ν − 3 + m − k)!(4πi)3+k x3/2+k/2 n≥1 n3/2+k/2
+√
+
+X
+e4πi xn
+(−1)ν+m cm,ν
+σ
+(n)
+xΓ(ν)
+−1/2
+2(4πi)ν+m xν/2+m/2 n≥1
+nν/2+m/2
+m=0
+
+− (−1)ν 2ν−1/2 eiπ/4 xΓ(ν)
+ν
+X
+
+ν
+X
+
+cm,ν
+
+m=0
+
+ν−1+m
+X
+k=0
+
+X σ−1/2 (n)
+(−1)ν+m
+3+k
+3/2+k/2
+(ν − 3 + m − k)!(4πi) x
+n3/2+k/2
+n≥1
+√
+
+X
+cm,ν
+e−4π xn
++ (−1)ν 2ν+1 xΓ(ν)
+σ
+(n)
+−1/2
+2(4π)ν+m xν/2+m/2 n≥1
+nν/2+m/2
+m=0
+ν ν
+
+− (−1) 2 xΓ(ν)
+
+ν
+X
+
+m=0
+
+cm,ν
+
+ν−1+m
+X
+k=0
+
+X σ−1/2 (n)
+(−1)ν−3+m−k
+.
+(ν − 3 + m − k)!(4π)3+k x3/2+k/2 n≥1 n3/2+k/2
+
+In this last expression, the only terms that we cannot calculate explicitly are the two inner series
+in (4) and (5).
+7. Factoring with Hints
+We show here, given ǫ > 0, how to calculate in O(N 1/3+ǫ ) bit operations, assuming the factorisation knowledge of O(N 1/3+ǫ ) integers immediately around N = pq, the quantity σ1/2 (N ) =
+√
+√
+√
+N + 1 + p + q within O(N −1 ), which is sufficient to derive p and q. In the following, we
+suppose that ν is a fixed (in terms of N ) integer with ν ≥ 2 + 4/3ǫ. The work done in the previous
+section allows us to write
+√
+
+ν
+
+(6)
+(7)
+
+X
+cm,ν
+e−4πi xn
+σ
+(n)
+−1/2
+(4πi)ν+m xm/2 n≥1
+nν/2+m/2
+m=0
+
+X
+.
+Pν (x) = (−1)ν 2ν−1/2 e−iπ/4 xν/2 Γ(ν)
+ν ν−1/2 iπ/4 ν/2
+
++ (−1) 2
+
+e
+
+x
+
+ν
+X
+(−1)ν+m cm,ν X
+
+√
+
+e4πi xn
+σ
+(n)
+.
+Γ(ν)
+−1/2
+(4πi)ν+m xm/2 n≥1
+nν/2+m/2
+m=0
+6
+
+Having fixed ǫ > 0, let us approximate the series
+√
+X
+e±4πi xn
+σ−1/2 (n) ν/2+m/2
+n
+n≥1
+by its [x1/3+2ǫ ]-th partial sum, with corresponding error
+≪ x−(1/3+2ǫ)(ν/2−1)
+
+and therefore (6) and (7) can be replaced by the corresponding expressions where the inner sums
+in n are truncated at n ≤ [x1/3+2ǫ ] with a total error
+≪ν xν/2 x−(1/3+2ǫ)(ν/2−1) ≤ xν/3 .
+
+Remark that the truncated series
+√
+√
+X
+X
+e±4πi xn
+e±4πi xn1 n2
+σ−1/2 (n) ν/2+m/2 =
+ν/2+m/2 ν/2+(m+1)/2
+n
+n
+n≤y
+n n ≤y n
+1 2
+
+1
+
+1
+
+can be computed trivially in O(y 1+ǫ ) bit operations since there are O(y log y) pairs n1 , n2 with
+
+n1 n2 ≤ y.
+k
+Let h > 0 and define ∇h Pν (x)(= ∇1h Pν (x)) = Pν (x) − Pν (x − h) and ∇k+1
+h Pν (x) = ∇h ∇h Pν (x)
+for k ≥ 1. The following statements can easily be shown by induction.
+(a) If P is a polynomial of degree d then ∇d+1
+h P = 0,
+Pk
+k
+k
+(b) ∇h Pν (x) = i=0 i Pν (x − ih).
+
+Letting x = N + N 1/3 and h = N 1/3 we see that ∇νh Pν (x) can be expressed as σ1/2 (N )N (ν−1)/3 +
+terms involving only σ1/2 (n) for x − νN 1/3 ≤ n ≤ x. On the other hand from (6) and (7) it can
+also be computed within O(xν/3 ) with O(x1/3+3ǫ ) bit operations.
+Therefore we can compute in O(x1/3+3ǫ ) bit operations an approximation of x(ν−1)(1/3+ǫ) σ1/2 (N )
+within O(xν/3 ). This leads to an approximation of σ1/2 (N ) within O(1/N ) as required. Recovering
+p | N is explained in Section 3.
+8. Final Considerations
+Our method relates the factorisations of O(N θ+ǫ ) numbers close to N with the factorisations
+of the first O(N θ+ǫ ) integers. The result given here (with θ = 1/3) is rather crude, because the
+series (6) and (7) were approximated by computing a partial sum trivially. There are two ways in
+which one can hope to improve this approach: one would be to find a computationally less expensive
+summation method for these series, while another would be to group together in the partial sum
+the summation of nearby terms into an expression easy to evaluate.
+References
+[1] H. Davenport. Multiplicative Number Theory, volume 74 of Graduate Texts in Mathematics. Springer Verlag, 1980.
+[2] A. K. Lenstra, H. W. Lenstra Jr., M. S. Manasse, and J. M. Pollard. The Number Field Sieve. In ACM Symposium
+on Theory of Computing, pages 564–572, 1990.
+[3] A. K. Lenstra and H. W. Lenstra, Jr., editors. The development of the number field sieve, volume 1554 of Lecture
+Notes in Mathematics. Springer-Verlag, Berlin, 1993.
+[4] H. W. Lenstra, Jr. Factoring integers with elliptic curves. Ann. of Math. (2), 126(3):649–673, 1987.
+[5] H. W. Lenstra, Jr. and Carl Pomerance. A rigorous time bound for factoring integers. J. Amer. Math. Soc.,
+5(3):483–516, 1992.
+[6] M. A. Morrison and J. Brillhart. A method of factoring and the factorization of F7 . Math. Comp., 29:183–205,
+1975. Collection of articles dedicated to Derrick Henry Lehmer on the occasion of his seventieth birthday.
+[7] J. M. Pollard. Theorems on factorization and primality testing. Proc. Cambridge Philos. Soc., 76:521–528, 1974.
+7
+
+[8] C. Pomerance. Analysis and comparison of some integer factoring algorithms. In Computational methods in number
+theory, Part I, volume 154 of Math. Centre Tracts, pages 89–139. Math. Centrum, Amsterdam, 1982.
+School of Science and Technology, Nazarbayev University, 53 Kabanbay Batyr, Astana, 010000
+Kazakhstan
+E-mail address: francesco.sica@nu.edu.kz
+
+8
+
+

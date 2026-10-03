@@ -1,0 +1,1254 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/LSa0G9cHk3KBBmDPgwFBrUKbIc0</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"bivariate"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:01Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+abs:%22bivariate%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>262</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2303.06001v1</id>
+    <title>Multivariate to Bivariate Reduction for Noncommutative Polynomial Factorization</title>
+    <updated>2023-03-10T16:03:07Z</updated>
+    <link href="https://arxiv.org/abs/2303.06001v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.06001v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Based on a theorem of Bergman we show that multivariate noncommutative polynomial factorization is deterministic polynomial-time reducible to the factorization of bivariate noncommutative polynomials. More precisely, we show the following:
+  (1) In the white-box setting, given an n-variate noncommutative polynomial f in F&lt;X&gt; over a field F (either a finite field or the rationals) as an arithmetic circuit (or algebraic branching program), computing a complete factorization of f is deterministic polynomial-time reducible to white-box factorization of a noncommutative bivariate polynomial g in F&lt;x,y&gt;; the reduction transforms f into a circuit for g (resp. ABP for g), and given a complete factorization of g the reduction recovers a complete factorization of f in polynomial time. We also obtain a similar deterministic polynomial-time reduction in the black-box setting.
+  (2) Additionally, we show over the field of rationals that bivariate linear matrix factorization of 4 x 4 matrices is at least as hard as factoring square-free integers. This indicates that reducing noncommutative polynomial factorization to linear matrix factorization (as done in our recent work [AJ22]) is unlikely to succeed over the field of rationals even in the bivariate case.
+  In contrast, multivariate linear matrix factorization for 3 x 3 matrices over rationals is in polynomial time.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-10T16:03:07Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>V. Arvind</name>
+    </author>
+    <author>
+      <name>Pushkar S. Joglekar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.11479v3</id>
+    <title>Factorization of bivariate sparse polynomials</title>
+    <updated>2018-12-18T11:13:02Z</updated>
+    <link href="https://arxiv.org/abs/1710.11479v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.11479v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a function field analogue of a conjecture of Schinzel on the factorization of univariate polynomials over the rationals. We derive from it a finiteness theorem for the irreducible factorizations of the bivariate Laurent polynomials in families with fixed set of complex coefficients and varying exponents. Roughly speaking, this result shows that the truly bivariate irreducible factors of these sparse Laurent polynomials, are also sparse. The proofs are based on a variant of the toric Bertini's theorem due to Zannier and Fuchs, Mantova and Zannier.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-31T13:56:13Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Francesco Amoroso</name>
+    </author>
+    <author>
+      <name>Martín Sombra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1802.04440v3</id>
+    <title>Bivariate representation and conjugacy class zeta functions associated to unipotent group schemes, I: Arithmetic properties</title>
+    <updated>2020-07-21T10:37:30Z</updated>
+    <link href="https://arxiv.org/abs/1802.04440v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1802.04440v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This is the first of two papers in which we introduce and study two bivariate zeta functions associated to unipotent group schemes over rings of integers of number fields. One of these zeta functions encodes the numbers of isomorphism classes of irreducible complex representations of finite dimensions of congruence quotients of the associated group and the other one encodes the numbers of conjugacy classes of each size of such quotients. In this paper, we show that these zeta functions satisfy Euler factorizations and almost all of their Euler factors are rational and satisfy functional equations. Moreover, we show that such bivariate zeta functions specialize to (univariate) class number zeta functions. In case of nilpotency class 2, bivariate representation zeta functions also specialize to (univariate) twist representation zeta functions.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-02-13T02:28:05Z</published>
+    <arxiv:comment>24 pages. Preprint of an article published in the Journal of Group Theory</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>J.Group Theory 22 (2019) 741-774;</arxiv:journal_ref>
+    <author>
+      <name>Paula Macedo Lins de Araujo</name>
+    </author>
+    <arxiv:doi>10.1515/jgth-2018-0115</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1515/jgth-2018-0115" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.02569v1</id>
+    <title>Sparse multivariate factorization by mean of a few bivariate factorizations</title>
+    <updated>2016-11-08T15:53:13Z</updated>
+    <link href="https://arxiv.org/abs/1611.02569v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.02569v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe an algorithm to factor sparse multivariate polynomials using O(d) bivariate factorizations where d is the number of variables. This algorithm is implemented in the Giac/Xcas computer algebra system.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-08T15:53:13Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Bernard Parisse</name>
+      <arxiv:affiliation>IF</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0512448v1</id>
+    <title>Curve implicitization in the bivariate tensor-product Bernstein basis</title>
+    <updated>2005-12-19T16:32:42Z</updated>
+    <link href="https://arxiv.org/abs/math/0512448v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0512448v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The approach to curve implicitization through Sylvester and Bezout resultant matrices and bivariate interpolation in the usual power basis is extended to the case of Bernstein-Bezoutian matrices constructed when the polynomials are given in the Bernstein basis. The coefficients of the implicit equation are also computed in the bivariate tensor-product Bernstein basis, and their computation involves the bidiagonal factorization of the inverses of certain totally positive matrices.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-12-19T16:32:42Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Ana Marco</name>
+    </author>
+    <author>
+      <name>Jose-Javier Martinez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.01744v4</id>
+    <title>Factorization of Quaternionic Polynomials of Bi-Degree (n,1)</title>
+    <updated>2022-02-18T09:20:31Z</updated>
+    <link href="https://arxiv.org/abs/2011.01744v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.01744v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider polynomials of bi-degree $(n,1)$ over the skew field of quaternions where the indeterminates commute with each other and with all coefficients. Polynomials of this type do not generally admit factorizations. We recall a necessary and sufficient condition for existence of a factorization with univariate linear factors that has originally been stated by Skopenkov and Krasauskas. Such a factorization is, in general, non-unique by known factorization results for univariate quaternionic polynomials. We unveil existence of bivariate polynomials with non-unique factorizations that cannot be explained in this way and characterize them geometrically and algebraically. Existence of factorizations is related to the existence of special rulings of two different types (left/right) on the ruled surface parameterized by the bivariate polynomial in the projective space over the quaternions. Special non-uniqueness in above sense can be explained algebraically by commutation properties of factors in suitable factorizations. A necessary geometric condition for this to happen is degeneration to a point of at least one of the left/right rulings.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-03T14:47:22Z</published>
+    <arxiv:comment>This version of the article has been accepted for publication, after peer review (when applicable) but is not the Version of Record and does not reflect post-acceptance improvements, or any corrections. The Version of Record is available online at: 10.1007/s13366-022-00629-z</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Johanna Lercher</name>
+    </author>
+    <author>
+      <name>Daniel F. Scharler</name>
+    </author>
+    <author>
+      <name>Hans-Peter Schröcker</name>
+    </author>
+    <author>
+      <name>Johannes Siegele</name>
+    </author>
+    <arxiv:doi>10.1007/s13366-022-00629-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s13366-022-00629-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.18366v1</id>
+    <title>Prime numbers and factorization of polynomials</title>
+    <updated>2024-11-27T14:13:30Z</updated>
+    <link href="https://arxiv.org/abs/2411.18366v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.18366v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article, we obtain upper bounds on the number of irreducible factors of some classes of polynomials having integer coefficients, which in particular yield some of the well known irreducibility criteria. For devising our results, we use the information about prime factorization of the values taken by such polynomials at sufficiently large integer arguments along with the information about their root location in the complex plane. Further, these techniques are extended to bivariate polynomials over arbitrary fields using non-Archimedean absolute values, yielding extensions of the irreducibility results of M. Ram Murty and S. Weintraub to bivariate polynomials.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-27T14:13:30Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Indian Journal of Pure and Applied Mathematics (2026)</arxiv:journal_ref>
+    <author>
+      <name>Jitender Singh</name>
+    </author>
+    <arxiv:doi>10.1007/s13226-026-00920-y</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s13226-026-00920-y" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.03969v2</id>
+    <title>Minimal determinantal representations of bivariate polynomials</title>
+    <updated>2017-04-30T22:17:25Z</updated>
+    <link href="https://arxiv.org/abs/1607.03969v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.03969v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a square-free bivariate polynomial $p$ of degree $n$ we introduce a simple and fast numerical algorithm for the construction of $n\times n$ matrices $A$, $B$, and $C$ such that $\det(A+xB+yC)=p(x,y)$. This is the minimal size needed to represent a bivariate polynomial of degree $n$. Combined with a square-free factorization one can now compute $n \times n$ matrices for any bivariate polynomial of degree $n$. The existence of such symmetric matrices was established by Dixon in 1902, but, up to now, no simple numerical construction has been found, even if the matrices can be nonsymmetric. Such representations may be used to efficiently numerically solve a system of two bivariate polynomials of small degree via the eigenvalues of a two-parameter eigenvalue problem. The new representation speeds up the computation considerably.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-14T00:41:04Z</published>
+    <arxiv:comment>18 pages, revised version</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Linear Algebra Appl. 532 (2017) 550-569</arxiv:journal_ref>
+    <author>
+      <name>Bor Plestenjak</name>
+    </author>
+    <arxiv:doi>10.1016/j.laa.2017.07.013</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.laa.2017.07.013" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.3229v1</id>
+    <title>Construction of Recurrent Fractal Interpolation Surfaces with Function Scaling Factors and Estimation of Box-counting Dimension on Rectangular Grids</title>
+    <updated>2013-07-10T01:49:13Z</updated>
+    <link href="https://arxiv.org/abs/1307.3229v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.3229v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider a construction of recurrent fractal interpolation surfaces with function vertical scaling factors and estimation of their box-counting dimension. A recurrent fractal interpolation surface (RFIS) is an attractor of a recurrent iterated function system (RIFS) which is a graph of bivariate interpolation function. For any given data set on rectangular grids, we construct general recurrent iterated function systems with function vertical scaling factors and prove the existence of bivariate functions whose graph are attractors of the above constructed RIFSs. Finally, we estimate lower and upper bounds for the box-counting dimension of the constructed RFISs.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-10T01:49:13Z</published>
+    <arxiv:comment>12 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Chol-Hui Yun</name>
+    </author>
+    <author>
+      <name>Hui-Chol Choi</name>
+    </author>
+    <author>
+      <name>Hyong-Chol O</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1005.5734v1</id>
+    <title>The Re-Encoding Transformation in Algebraic List-Decoding of Reed-Solomon Codes</title>
+    <updated>2010-05-31T19:54:28Z</updated>
+    <link href="https://arxiv.org/abs/1005.5734v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1005.5734v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The main computational steps in algebraic soft-decoding, as well as Sudan-type list-decoding, of Reed-Solomon codes are bivariate polynomial interpolation and factorization. We introduce a computational technique, based upon re-encoding and coordinate transformation, that significantly reduces the complexity of the bivariate interpolation procedure. This re-encoding and coordinate transformation converts the original interpolation problem into another reduced interpolation problem, which is orders of magnitude smaller than the original one. A rigorous proof is presented to show that the two interpolation problems are indeed equivalent. An efficient factorization procedure that applies directly to the reduced interpolation problem is also given.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-05-31T19:54:28Z</published>
+    <arxiv:comment>15 pages, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Ralf Koetter</name>
+    </author>
+    <author>
+      <name>Jun Ma</name>
+    </author>
+    <author>
+      <name>Alexander Vardy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.3497v1</id>
+    <title>Multiple Factorizations of Bivariate Linear Partial Differential Operators</title>
+    <updated>2010-10-18T06:51:36Z</updated>
+    <link href="https://arxiv.org/abs/1010.3497v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.3497v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the case when a bivariate Linear Partial Differential Operator (LPDO) of orders three or four has several different factorizations.
+  We prove that a third-order bivariate LPDO has a first-order left and right factors such that their symbols are co-prime if and only if the operator has a factorization into three factors, the left one of which is exactly the initial left factor and the right one is exactly the initial right factor. We show that the condition that the symbols of the initial left and right factors are co-prime is essential, and that the analogous statement "as it is" is not true for LPDOs of order four.
+  Then we consider completely reducible LPDOs, which are defined as an intersection of principal ideals. Such operators may also be required to have several different factorizations. Considering all possible cases, we ruled out some of them from the consideration due to the first result of the paper. The explicit formulae for the sufficient conditions for the complete reducibility of an LPDO were found also.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-18T06:51:36Z</published>
+    <arxiv:primary_category term="math.AP"/>
+    <arxiv:journal_ref>Lecture Notes in Computer Science, vol. 5743, pp. 299--309, 2009</arxiv:journal_ref>
+    <author>
+      <name>Ekaterina Shemyakova</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-642-04103-7_26</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-642-04103-7_26" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1206.4224v3</id>
+    <title>Factoring bivariate lacunary polynomials without heights</title>
+    <updated>2013-05-14T09:26:41Z</updated>
+    <link href="https://arxiv.org/abs/1206.4224v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1206.4224v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an algorithm which computes the multilinear factors of bivariate lacunary polynomials. It is based on a new Gap Theorem which allows to test whether a polynomial of the form P(X,X+1) is identically zero in time polynomial in the number of terms of P(X,Y). The algorithm we obtain is more elementary than the one by Kaltofen and Koiran (ISSAC'05) since it relies on the valuation of polynomials of the previous form instead of the height of the coefficients. As a result, it can be used to find some linear factors of bivariate lacunary polynomials over a field of large finite characteristic in probabilistic polynomial time.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-06-19T14:30:37Z</published>
+    <arxiv:comment>25 pages, 1 appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>Proceedings of the 38th International Symposium on Symbolic and Algebraic Computation (ISSAC'13), pp 141-148, ACM, 2013</arxiv:journal_ref>
+    <author>
+      <name>Arkadev Chattopadhyay</name>
+    </author>
+    <author>
+      <name>Bruno Grenet</name>
+    </author>
+    <author>
+      <name>Pascal Koiran</name>
+    </author>
+    <author>
+      <name>Natacha Portier</name>
+    </author>
+    <author>
+      <name>Yann Strozecki</name>
+    </author>
+    <arxiv:doi>10.1145/2465506.2465932</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/2465506.2465932" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.02324v1</id>
+    <title>Some factorization results for bivariate polynomials</title>
+    <updated>2024-02-04T02:38:19Z</updated>
+    <link href="https://arxiv.org/abs/2402.02324v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.02324v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide upper bounds on the total number of irreducible factors, and in particular irreducibility criteria for some classes of bivariate polynomials $f(x,y)$ over an arbitrary field $\mathbb{K}$. Our results rely on information on the degrees of the coefficients of $f$, and on information on the factorization of the constant term and of the leading coefficient of $f$, viewed as a polynomial in $y$ with coefficients in $\mathbb{K}[x]$. In particular, we provide a generalization of the bivariate version of Perron's irreducibility criterion, and similar results for polynomials in an arbitrary number of indeterminates. The proofs use non-Archimedean absolute values, that are suitable for finding information on the location of the roots of $f$ in an algebraic closure of $\mathbb{K}(x)$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-04T02:38:19Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Communications in Algebra 53, 2025</arxiv:journal_ref>
+    <author>
+      <name>Nicolae Ciprian Bonciocat</name>
+    </author>
+    <author>
+      <name>Rishu Garg</name>
+    </author>
+    <author>
+      <name>Jitender Singh</name>
+    </author>
+    <arxiv:doi>10.1080/00927872.2024.2377390</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/00927872.2024.2377390" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.17694v2</id>
+    <title>Bivariate multiple orthogonal polynomials of mixed type on the step-line</title>
+    <updated>2025-11-30T18:25:13Z</updated>
+    <link href="https://arxiv.org/abs/2507.17694v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.17694v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article studies bivariate multiple orthogonal polynomials of the mixed type on the step-line. The analysis is based on the LU factorization of a moment matrix specifically adapted to this framework. The orthogonality and biorthogonality relations satisfied by these polynomials are identified, and their precise multi-degrees are determined. The corresponding recurrence relations and the growing band matrices that encode them are also derived. Christoffel-Darboux kernels and the associated Christoffel-Darboux-type formulas are obtained. An ABC-type theorem is established, relating the inverse of the truncated moment matrix to these kernels. As an illustration, the bivariate Jacobi-Piñeiro multiple orthogonal polynomials of mixed type on the triangle are computed by means of an LU factorization implemented in a dedicated Maple script.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-23T16:59:46Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Manuel Mañas</name>
+    </author>
+    <author>
+      <name>Miguel Rojas</name>
+    </author>
+    <author>
+      <name>Jianwen Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.10826v2</id>
+    <title>Joint Probabilities within Random Permutations</title>
+    <updated>2022-05-01T10:47:19Z</updated>
+    <link href="https://arxiv.org/abs/2203.10826v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.10826v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A celebrated analogy between prime factorizations of integers and cycle decompositions of permutations is explored here. Asymptotic formulas characterizing semismooth numbers (possessing at most several large factors) carry over to random permutations. We offer a survey of practical methods for computing relevant probabilities of a bivariate or trivariate flavor.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-21T09:27:36Z</published>
+    <arxiv:comment>22 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Steven Finch</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.16408v1</id>
+    <title>A Symmetry Property of Christoffel Words</title>
+    <updated>2024-06-24T08:05:21Z</updated>
+    <link href="https://arxiv.org/abs/2406.16408v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.16408v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by the theory of trapezoidal words, whose sequences of cardinality of factors by length are symmetric, we introduce a bivariate variant of this symmetry. We show that this symmetry characterizes Christoffel words, and establish other related results. </summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-24T08:05:21Z</published>
+    <arxiv:comment>In Proceedings GASCom 2024, arXiv:2406.14588</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>EPTCS 403, 2024, pp. 123-127</arxiv:journal_ref>
+    <author>
+      <name>Yan Lanciault</name>
+      <arxiv:affiliation>LACIM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Christophe Reutenauer</name>
+      <arxiv:affiliation>LACIM</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.4204/EPTCS.403.26</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4204/EPTCS.403.26" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.5809v1</id>
+    <title>Plane mixed discriminants and toric jacobians</title>
+    <updated>2013-04-21T22:48:15Z</updated>
+    <link href="https://arxiv.org/abs/1304.5809v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.5809v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polynomial algebra offers a standard approach to handle several problems in geometric modeling. A key tool is the discriminant of a univariate polynomial, or of a well-constrained system of polynomial equations, which expresses the existence of a multiple root. We concentrate on bivariate polynomials and establish an original formula that relates the mixed discriminant of two bivariate Laurent polynomials with fixed support, with the sparse resultant of these polynomials and their toric Jacobian. This allows us to obtain a new proof for the bidegree of the mixed discriminant as well as to establish multipicativity formulas arising when one polynomial can be factored.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-21T22:48:15Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Alicia Dickenstein</name>
+    </author>
+    <author>
+      <name>Ioannis Emiris</name>
+    </author>
+    <author>
+      <name>Anna Karasoulou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.00228v1</id>
+    <title>New Results On the Sum of Two Generalized Gaussian Random Variables</title>
+    <updated>2015-05-31T13:40:55Z</updated>
+    <link href="https://arxiv.org/abs/1506.00228v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.00228v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose in this paper a new method to compute the characteristic function (CF) of generalized Gaussian (GG) random variable in terms of the Fox H function. The CF of the sum of two independent GG random variables is then deduced. Based on this results, the probability density function (PDF) and the cumulative distribution function (CDF) of the sum distribution are obtained. These functions are expressed in terms of the bivariate Fox H function. Next, the statistics of the distribution of the sum, such as the moments, the cumulant, and the kurtosis, are analyzed and computed. Due to the complexity of bivariate Fox H function, a solution to reduce such complexity is to approximate the sum of two independent GG random variables by one GG random variable with suitable shape factor. The approximation method depends on the utility of the system so three methods of estimate the shape factor are studied and presented.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-31T13:40:55Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Hamza Soury</name>
+    </author>
+    <author>
+      <name>Mohamed-Slim Alouini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.07304v1</id>
+    <title>The Two Ignored Components of Random Variation</title>
+    <updated>2015-07-27T05:52:29Z</updated>
+    <link href="https://arxiv.org/abs/1507.07304v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.07304v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A random phenomenon may have two sources of random variation: an unstable identity and a set of external variation-generating factors. When only a single source is active, two mutually exclusive extreme scenarios may ensue that result in the exponential or the normal, the only truly univariate distributions. All other supposedly univariate random variation observed in nature is truly bivariate. In this article, we elaborate on this new paradigm for random variation and develop a general bivariate distribution to reflect it. It is shown that numerous current univariate distributions are special cases of an approximation to the new bivariate distribution. We first show that the exponential and the normal are special cases of a single distribution represented by a Response Modeling Methodology model. We then develop a general bivariate distribution commensurate with the new paradigm, its properties are discussed and its moments developed. An approximating assumption results in a univariate general distribution that is shown to include as exact special cases widely used distributions like generalized gamma, log-normal, F, t, and Cauchy. Compound distributions and their relationship to the new paradigm are addressed. Empirical observations that comply with predictions derived from the new paradigm corroborate its scientific validity.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-27T05:52:29Z</published>
+    <arxiv:comment>20 pages;no figures or tables</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Haim Shore</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.03332v3</id>
+    <title>Linear and Rational Factorization of Tropical Polynomials</title>
+    <updated>2019-12-07T04:31:28Z</updated>
+    <link href="https://arxiv.org/abs/1707.03332v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.03332v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Already for bivariate tropical polynomials, factorization is an NP-Complete problem. In this paper, we give an efficient algorithm for factorization and rational factorization of a rich class of tropical polynomials in $n$ variables. Special families of these polynomials have appeared in economics, discrete convex analysis, and combinatorics. Our theorems rely on an intrinsic characterization of regular mixed subdivisions of integral polytopes, and lead to many open problems of interest in discrete geometry.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-11T15:42:37Z</published>
+    <arxiv:comment>27 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Bo Lin</name>
+    </author>
+    <author>
+      <name>Ngoc Mai Tran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1405.6370v2</id>
+    <title>Two parallel insurance lines with simultaneous arrivals and risks correlated with inter-arrival times</title>
+    <updated>2014-12-11T13:10:21Z</updated>
+    <link href="https://arxiv.org/abs/1405.6370v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1405.6370v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate an insurance risk model that consists of two reserves which receive income at fixed rates. Claims are being requested at random epochs from each reserve and the interclaim times are generally distributed. The two reserves are coupled in the sense that at a claim arrival epoch, claims are being requested from both reserves and the amounts requested are correlated. In addition, the claim amounts are correlated with the time elapsed since the previous claim arrival. We focus on the probability that this bivariate reserve process survives indefinitely. The infinite- horizon survival problem is shown to be related to the problem of determining the equilibrium distribution of a random walk with vector-valued increments with reflecting boundary. This reflected random walk is actually the waiting time process in a queueing system dual to the bivariate ruin process. Under assumptions on the arrival process and the claim amounts, and using Wiener-Hopf factor- ization with one parameter, we explicitly determine the Laplace-Stieltjes transform of the survival function, c.q., the two-dimensional equilibrium waiting time distribution. Finally, the bivariate transforms are evaluated for some examples, including for proportional reinsurance, and the bivariate ruin functions are numerically calculated using an efficient inversion scheme.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-05-25T10:32:56Z</published>
+    <arxiv:comment>24 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>Insurance: Mathematics and Economics, Volume 61, March 2015, Pages 48-61</arxiv:journal_ref>
+    <author>
+      <name>E. S. Badila</name>
+    </author>
+    <author>
+      <name>O. J. Boxma</name>
+    </author>
+    <author>
+      <name>J. A. C. Resing</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.5330v2</id>
+    <title>On Computing the Elimination Ideal Using Resultants with Applications to Gröbner Bases</title>
+    <updated>2015-10-30T09:24:37Z</updated>
+    <link href="https://arxiv.org/abs/1307.5330v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.5330v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Resultants and Gröbner bases are crucial tools in studying polynomial elimination theory. We investigate relations between the variety of the resultant of two polynomials and the variety of the ideal they generate. Then we focus on the bivariate case, in which the elimination ideal is principal. We study - by means of elementary tools - the difference between the multiplicity of the factors of the generator of the elimination ideal and the multiplicity of the factors of the resultant.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-19T20:08:11Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Matteo Gallet</name>
+    </author>
+    <author>
+      <name>Hamid Rahkooy</name>
+    </author>
+    <author>
+      <name>Zafeirakis Zafeirakopoulos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.5787v3</id>
+    <title>Factoring bivariate polynomials using adjoints</title>
+    <updated>2012-02-17T16:29:14Z</updated>
+    <link href="https://arxiv.org/abs/1201.5787v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.5787v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One relates factorization of bivariate polynomials to singularities of projective plane curves. One proves that adjoint polynomials permit to solve the recombinations of the modular factors induced by the absolute and rational factorizations, and so without using Hensel's lifting. One establishes in such a way the relations between the algorithm of Duval-Ragot (locally constant functions) and of Chèze-Lecerf (lifting and recombinations), and one shows that a fast computation of adjoint polynomials leads to a fast factorization. The proof is based on cohomological sequences and residue theory.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-01-27T14:50:38Z</published>
+    <arxiv:comment>22 pages, 2 figures. Extended version of arXiv.1201.5787</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Martin Weimann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.5921v1</id>
+    <title>The time at which a Lévy process creeps</title>
+    <updated>2011-06-29T12:26:40Z</updated>
+    <link href="https://arxiv.org/abs/1106.5921v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.5921v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that if a Lévy process creeps then, as a function of $u$, the renewal function $V(t,u)$ of the bivariate ascending ladder process $(L^{-1},H)$ is absolutely continuous on $[0,\infty)$ and left differentiable on $(0,\infty)$, and the left derivative at $u$ is proportional to the (improper) distribution function of the time at which the process creeps over level $u$, where the constant of proportionality is $\rmd_H^{-1}$, the reciprocal of the (positive) drift of $H$. This yields the (missing) term due to creeping in the recent quintuple law of Doney and Kyprianou (2006). As an application, we derive a Laplace transform identity which generalises the second factorization identity. We also relate Doney and Kyprianou's extension of Vigon's équation amicale inversée to creeping. Some results concerning the ladder process of $X$, including the second factorization identity, continue to hold for a general bivariate subordinator, and are given in this generality.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-29T12:26:40Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>Electron. J. Probab. 16, 2182--2202 (2011)</arxiv:journal_ref>
+    <author>
+      <name>Philip S. Griffin</name>
+    </author>
+    <author>
+      <name>Ross A. Maller</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1301.4870v2</id>
+    <title>From Approximate Factorization to Root Isolation with Application to Cylindrical Algebraic Decomposition</title>
+    <updated>2014-01-23T12:57:15Z</updated>
+    <link href="https://arxiv.org/abs/1301.4870v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1301.4870v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an algorithm for isolating the roots of an arbitrary complex polynomial $p$ that also works for polynomials with multiple roots provided that the number $k$ of distinct roots is given as part of the input. It outputs $k$ pairwise disjoint disks each containing one of the distinct roots of $p$, and its multiplicity. The algorithm uses approximate factorization as a subroutine.
+  In addition, we apply the new root isolation algorithm to a recent algorithm for computing the topology of a real planar algebraic curve specified as the zero set of a bivariate integer polynomial and for isolating the real solutions of a bivariate polynomial system. For input polynomials of degree $n$ and bitsize $τ$, we improve the currently best running time from $\tO(n^{9}τ+n^{8}τ^{2})$ (deterministic) to $\tO(n^{6}+n^{5}τ)$ (randomized) for topology computation and from $\tO(n^{8}+n^{7}τ)$ (deterministic) to $\tO(n^{6}+n^{5}τ)$ (randomized) for solving bivariate systems.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-01-21T14:14:07Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Kurt Mehlhorn</name>
+    </author>
+    <author>
+      <name>Michael Sagraloff</name>
+    </author>
+    <author>
+      <name>Pengming Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.03345v1</id>
+    <title>On the properties of fibotomic polynomials</title>
+    <updated>2020-09-07T18:02:24Z</updated>
+    <link href="https://arxiv.org/abs/2009.03345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.03345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Define the $n$-th fibotomic polynomial to be the product of the monic irredicible factors of the $n$-th Fibonacci polynomial which are not factors of any Fibonacci polynomial of smaller degree. In this paper, we prove a number of properties of the fibotomic polynomials. This includes determining the discriminant of the fibotomic polynomials and the resultant of pairs of fibotomic polynomials. Furthermore, we completely determine the factorization form of the fibotomic polynomials in prime fields. Results are also generalized for the bivariate homogenous fibotomic polynomials.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-07T18:02:24Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Advances in Applied Mathematics 138 (2022), Article 102344</arxiv:journal_ref>
+    <author>
+      <name>Cameron Byer</name>
+    </author>
+    <author>
+      <name>Tyler Dvorachek</name>
+    </author>
+    <author>
+      <name>Emily Eckard</name>
+    </author>
+    <author>
+      <name>Joshua Harrington</name>
+    </author>
+    <author>
+      <name>Lindsey Wise</name>
+    </author>
+    <author>
+      <name>Tony W. H. Wong</name>
+    </author>
+    <arxiv:doi>10.1016/j.aam.2022.102344</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.aam.2022.102344" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.02040v3</id>
+    <title>Bivariate representation and conjugacy class zeta functions associated to unipotent group schemes, II: Groups of type F, G, and H</title>
+    <updated>2020-07-14T09:27:24Z</updated>
+    <link href="https://arxiv.org/abs/1805.02040v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.02040v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This is the second of two papers introducing and investigating two bivariate zeta functions associated to unipotent group schemes over rings of integers of number fields. In the first part, we proved some of their properties such as rationality and functional equations. Here, we calculate such bivariate zeta functions of three infinite families of nilpotent groups of class 2 generalising the Heisenberg group of three by three unitriangular matrices over rings of integers of number fields. The local factors of these zeta functions are also expressed in terms of sums over finite hyperoctahedral groups, which provides formulae for joint distributions of three statistics on such groups.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-05T10:59:13Z</published>
+    <arxiv:comment>35 pages. Preprint of an article published in the International Journal of Algebra and Computation</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>Internat. J. Algebra Comput. (2020), online ready</arxiv:journal_ref>
+    <author>
+      <name>Paula Macedo Lins de Araujo</name>
+    </author>
+    <arxiv:doi>10.1142/S0218196720500265</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S0218196720500265" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.09138v1</id>
+    <title>Application of a General Family of Bivariate Distributions in Modelling Dependent Competing Risks Data with Associated Model Selection</title>
+    <updated>2022-06-18T07:31:58Z</updated>
+    <link href="https://arxiv.org/abs/2206.09138v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.09138v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article, a general family of bivariate distributions is used to model competing risks data with dependent factors. The general structure of competing risks data considered here includes ties. A comprehensive inferential framework for the proposed model is presented: maximum likelihood estimation, confidence interval construction, and model selection within the bivariate family of distributions for a given dependent competing risks data. The inferential methods are very convenient to implement. Through detailed simulations, the inferential methods are observed to provide quite reasonable results. Analysis of a real data from the Diabetic Retinopathy Study is carried out with the help of the proposed model as an illustrative example.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-18T07:31:58Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Aakash Agrawal</name>
+    </author>
+    <author>
+      <name>Ayon Ganguly</name>
+    </author>
+    <author>
+      <name>Debanjan Mitra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.04012v3</id>
+    <title>Comparison of KE-Theory and KK-Theory</title>
+    <updated>2015-06-01T16:53:50Z</updated>
+    <link href="https://arxiv.org/abs/1503.04012v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.04012v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the character from the bivariant K-theory KE^G introduced by Dumitrascu to E^G factors through Kasparov's KK^G for any locally compact group G. Hence KE^G contains KK^G as a direct summand.</summary>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-13T10:28:51Z</published>
+    <arxiv:primary_category term="math.KT"/>
+    <arxiv:journal_ref>J. Noncommut. Geom. 10 (2016), p. 1131-1142</arxiv:journal_ref>
+    <author>
+      <name>Ralf Meyer</name>
+    </author>
+    <arxiv:doi>10.4171/JNCG/256</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4171/JNCG/256" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1408.2473v1</id>
+    <title>An Algorithm for Deciding the Summability of Bivariate Rational Functions</title>
+    <updated>2014-06-26T02:38:19Z</updated>
+    <link href="https://arxiv.org/abs/1408.2473v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.2473v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $Δ_x f(x,y)=f(x+1,y)-f(x,y)$ and $Δ_y f(x,y)=f(x,y+1)-f(x,y)$ be the difference operators with respect to $x$ and $y$. A rational function $f(x,y)$ is called summable if there exist rational functions $g(x,y)$ and $h(x,y)$ such that $f(x,y)=Δ_x g(x,y) + Δ_y h(x,y)$. Recently, Chen and Singer presented a method for deciding whether a rational function is summable. To implement their method in the sense of algorithms, we need to solve two problems. The first is to determine the shift equivalence of two bivariate polynomials. We solve this problem by presenting an algorithm for computing the dispersion sets of any two bivariate polynomials. The second is to solve a univariate difference equation in an algebraically closed field. By considering the irreducible factorization of the denominator of $f(x,y)$ in a general field, we present a new criterion which requires only finding a rational solution of a bivariate difference equation. This goal can be achieved by deriving a universal denominator of the rational solutions and a degree bound on the numerator. Combining these two algorithms, we can decide the summability of a bivariate rational function.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-26T02:38:19Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Qing-Hu Hou</name>
+    </author>
+    <author>
+      <name>Rong-Hua Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.03011v1</id>
+    <title>Bivariate factorization using a critical fiber</title>
+    <updated>2015-01-13T14:10:45Z</updated>
+    <link href="https://arxiv.org/abs/1501.03011v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.03011v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We generalize the classical lifting and recombination scheme for rational and absolute factorization of bivariate polynomials to the case of a critical fiber. We explore different strategies for recombinations of the analytic factors, depending on the complexity of the ramification. We show that working along a critical fiber leads in some cases to a good theoretical complexity, due to the smaller number of analytic factors to recombine. We pay a particular attention to the case of polynomials that are non degenerate with respect to their P-adic Newton polytopes.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-13T14:10:45Z</published>
+    <arxiv:comment>39 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Martin Weimann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.23073v1</id>
+    <title>Addendum to "Factoring non-negative operator valued trigonometric polynomials in two variables"</title>
+    <updated>2026-08-24T10:20:23Z</updated>
+    <link href="https://arxiv.org/abs/2608.23073v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.23073v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorization for positive semidefinite matrix-valued polynomials over a nonsingular compact affine real surface is established. Corollaries include Fejér-Riesz factorization for bivariate matrix polynomials that take positive semidefinite values and resolutions to questions posed by Mehta-Slofstra-Zhao and Savchuk-Schmüdgen. An explicit example shows a conclusion of [Dri25, Theorem, p. 519] that arises organically from its proof need not hold. The difficulty is traced to [Dri25, Theorem 3.7].</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-24T10:20:23Z</published>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Michael A. Dritschel</name>
+    </author>
+    <author>
+      <name>Igor Klep</name>
+    </author>
+    <author>
+      <name>Scott McCullough</name>
+    </author>
+    <author>
+      <name>Jurij Volčič</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.09575v3</id>
+    <title>Ranking soccer teams on basis of their current strength: a comparison of maximum likelihood approaches</title>
+    <updated>2018-11-13T21:04:15Z</updated>
+    <link href="https://arxiv.org/abs/1705.09575v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.09575v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present ten different strength-based statistical models that we use to model soccer match outcomes with the aim of producing a new ranking. The models are of four main types: Thurstone-Mosteller, Bradley-Terry, Independent Poisson and Bivariate Poisson, and their common aspect is that the parameters are estimated via weighted maximum likelihood, the weights being a match importance factor and a time depreciation factor giving less weight to matches that are played a long time ago. Since our goal is to build a ranking reflecting the teams' current strengths, we compare the 10 models on basis of their predictive performance via the Rank Probability Score at the level of both domestic leagues and national teams. We find that the best models are the Bivariate and Independent Poisson models. We then illustrate the versatility and usefulness of our new rankings by means of three examples where the existing rankings fail to provide enough information or lead to peculiar results.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-26T13:16:47Z</published>
+    <arxiv:comment>16 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Christophe Ley</name>
+    </author>
+    <author>
+      <name>Tom Van de Wiele</name>
+    </author>
+    <author>
+      <name>Hans Van Eetvelde</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1403.0349v2</id>
+    <title>Nonparametric test for a constant beta between \Ito semi-martingales based on high-frequency data</title>
+    <updated>2015-02-19T09:39:55Z</updated>
+    <link href="https://arxiv.org/abs/1403.0349v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1403.0349v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We derive a nonparametric test for constant beta over a fixed time interval from high-frequency observations of a bivariate \Ito semimartingale. Beta is defined as the ratio of the spot continuous covariation between an asset and a risk factor and the spot continuous variation of the latter. The test is based on the asymptotic behavior of the covariation between the risk factor and an estimate of the residual component of the asset, that is orthogonal (in martingale sense) to the risk factor, over blocks with asymptotically shrinking time span. Rate optimality of the test over smoothness classes is derived.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-03-03T09:33:57Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Markus Reiß</name>
+    </author>
+    <author>
+      <name>Viktor Todorov</name>
+    </author>
+    <author>
+      <name>George Tauchen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.01886v1</id>
+    <title>On Modelling of Crude Oil Futures in a Bivariate State-Space Framework</title>
+    <updated>2021-08-04T07:32:19Z</updated>
+    <link href="https://arxiv.org/abs/2108.01886v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.01886v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study a bivariate latent factor model for the pricing of commodity fu- tures. The two unobservable state variables representing the short and long term fac- tors are modelled as Ornstein-Uhlenbeck (OU) processes. The Kalman Filter (KF) algorithm has been implemented to estimate the unobservable factors as well as unknown model parameters. The estimates of model parameters were obtained by maximising a Gaussian likelihood function. The algorithm has been applied to WTI Crude Oil NYMEX futures data.</summary>
+    <category term="q-fin.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-04T07:32:19Z</published>
+    <arxiv:primary_category term="q-fin.ST"/>
+    <author>
+      <name>Peilun He</name>
+    </author>
+    <author>
+      <name>Karol Binkowski</name>
+    </author>
+    <author>
+      <name>Nino Kordzakhia</name>
+    </author>
+    <author>
+      <name>Pavel Shevchenko</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-030-78965-7_40</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-030-78965-7_40" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.08790v2</id>
+    <title>Product operators on mixed norm spaces</title>
+    <updated>2016-05-14T15:33:04Z</updated>
+    <link href="https://arxiv.org/abs/1602.08790v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.08790v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Inequalities for product operators on mixed norm Lebesgue spaces and permuted mixed norm Lebesgue spaces are established. They depend only on inequalities for the factors and on the Lebesgue indices involved. Inequalities for the bivariate Laplace transform are given to illustrate the method. Also, an elementary proof is presented for an $n$-variable Young's inequality in mixed norm spaces.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-29T00:48:03Z</published>
+    <arxiv:primary_category term="math.FA"/>
+    <arxiv:journal_ref>Linear and Nonlinear Analysis, 2(2016), 189-197</arxiv:journal_ref>
+    <author>
+      <name>Wayne Grey</name>
+    </author>
+    <author>
+      <name>Gord Sinnamon</name>
+    </author>
+    <arxiv:doi>10.1090/tran6665</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/tran6665" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1405.5842v1</id>
+    <title>Stationarity of Bivariate Dynamic Contagion Processes</title>
+    <updated>2014-05-22T18:01:27Z</updated>
+    <link href="https://arxiv.org/abs/1405.5842v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1405.5842v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Bivariate Dynamic Contagion Processes (BDCP) are a broad class of bivariate point processes characterized by the intensities as a general class of piecewise deterministic Markov processes. The BDCP describes a rich dynamic structure where the system is under the influence of both external and internal factors modelled by a shot-noise Cox process and a generalized Hawkes process respectively. In this paper we mainly address the stationarity issue for the BDCP, which is important in applications. We investigate the stationary distribution by applying the the Markov theory on the branching system approximation representation of the BDCP. We find the condition under which there exists a unique stationary distribution of the BDCP intensity and the resulting BDCP has stationary increments. Moments of the stationary intensity are provided by using the Markov property.</summary>
+    <category term="q-fin.MF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-05-22T18:01:27Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="q-fin.MF"/>
+    <author>
+      <name>Angelos Dassios</name>
+    </author>
+    <author>
+      <name>Xin Dong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.17380v2</id>
+    <title>Factoring sparse polynomials fast</title>
+    <updated>2025-02-25T10:38:32Z</updated>
+    <link href="https://arxiv.org/abs/2312.17380v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.17380v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a sparse polynomial in several variables given explicitly as a sum of non-zero terms with coefficients in an effective field. In this paper, we present several algorithms for factoring such polynomials and related tasks (such as gcd computation, square-free factorization, content-free factorization, and root extraction). Our methods are all based on sparse interpolation, but follow two main lines of attack: iteration on the number of variables and more direct reductions to the univariate or bivariate case. We present detailed probabilistic complexity bounds in terms of the complexity of sparse interpolation and evaluation.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-28T22:06:11Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Alexander Demin</name>
+    </author>
+    <author>
+      <name>Joris van der Hoeven</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0602145v1</id>
+    <title>Factoring bivariate sparse (lacunary) polynomials</title>
+    <updated>2006-02-07T22:16:30Z</updated>
+    <link href="https://arxiv.org/abs/math/0602145v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0602145v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a deterministic algorithm for computing all irreducible factors of degree $\le d$ of a given bivariate polynomial $f\in K[x,y]$ over an algebraic number field $K$ and their multiplicities, whose running time is polynomial in the bit length of the sparse encoding of the input and in $d$. Moreover, we show that the factors over $\Qbarra$ of degree $\le d$ which are not binomials can also be computed in time polynomial in the sparse length of the input and in $d$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-02-07T22:16:30Z</published>
+    <arxiv:comment>20 pp, Latex 2e. We learned on January 23th, 2006, that a multivariate version of Theorem 1 had independently been achieved by Erich Kaltofen and Pascal Koiran</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Martin Avendano</name>
+    </author>
+    <author>
+      <name>Teresa Krick</name>
+    </author>
+    <author>
+      <name>Martin Sombra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1302.3979v1</id>
+    <title>Gaussian Process Vine Copulas for Multivariate Dependence</title>
+    <updated>2013-02-16T17:29:33Z</updated>
+    <link href="https://arxiv.org/abs/1302.3979v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1302.3979v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Copulas allow to learn marginal distributions separately from the multivariate dependence structure (copula) that links them together into a density function. Vine factorizations ease the learning of high-dimensional copulas by constructing a hierarchy of conditional bivariate copulas. However, to simplify inference, it is common to assume that each of these conditional bivariate copulas is independent from its conditioning variables. In this paper, we relax this assumption by discovering the latent functions that specify the shape of a conditional copula given its conditioning variables We learn these functions by following a Bayesian approach based on sparse Gaussian processes with expectation propagation for scalable, approximate inference. Experiments on real-world datasets show that, when modeling all conditional dependencies, we obtain better estimates of the underlying copula of the data.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-02-16T17:29:33Z</published>
+    <arxiv:comment>Accepted to International Conference in Machine Learning (ICML 2013)</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>David Lopez-Paz</name>
+    </author>
+    <author>
+      <name>José Miguel Hernández-Lobato</name>
+    </author>
+    <author>
+      <name>Zoubin Ghahramani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.02927v2</id>
+    <title>A bivariate risk model with mutual deficit coverage</title>
+    <updated>2015-05-04T13:01:55Z</updated>
+    <link href="https://arxiv.org/abs/1501.02927v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.02927v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider a bivariate Cramer-Lundberg-type risk reserve process with the special feature that each insurance company agrees to cover the deficit of the other. It is assumed that the capital transfers between the companies are instantaneous and incur a certain proportional cost, and that ruin occurs when neither company can cover the deficit of the other. We study the survival probability as a function of initial capitals and express its bivariate transform through two univariate boundary transforms, where one of the initial capitals is fixed at 0. We identify these boundary transforms in the case when claims arriving at each company form two independent processes. The expressions are in terms of Wiener-Hopf factors associated to two auxiliary compound Poisson processes. The case of non-mutual (reinsurance) agreement is also considered.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-13T09:33:25Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Jevgenijs Ivanovs</name>
+    </author>
+    <author>
+      <name>Onno Boxma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1301.0142v1</id>
+    <title>Semi-Supervised Domain Adaptation with Non-Parametric Copulas</title>
+    <updated>2013-01-01T22:52:22Z</updated>
+    <link href="https://arxiv.org/abs/1301.0142v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1301.0142v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new framework based on the theory of copulas is proposed to address semi- supervised domain adaptation problems. The presented method factorizes any multivariate density into a product of marginal distributions and bivariate cop- ula functions. Therefore, changes in each of these factors can be detected and corrected to adapt a density model accross different learning domains. Impor- tantly, we introduce a novel vine copula model, which allows for this factorization in a non-parametric manner. Experimental results on regression problems with real-world data illustrate the efficacy of the proposed approach when compared to state-of-the-art techniques.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-01-01T22:52:22Z</published>
+    <arxiv:comment>9 pages, Appearing on Advances in Neural Information Processing Systems 25</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>David Lopez-Paz</name>
+    </author>
+    <author>
+      <name>José Miguel Hernández-Lobato</name>
+    </author>
+    <author>
+      <name>Bernhard Schölkopf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1311.6455v3</id>
+    <title>On certain multivariate Vandermonde determinants whose variables separate</title>
+    <updated>2014-03-11T09:35:05Z</updated>
+    <link href="https://arxiv.org/abs/1311.6455v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1311.6455v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that for almost square tensor product grids and certain sets of bivariate polynomials the Vandermonde determinant can be factored into a product of univariate Vandermonde determinants. This result generalizes the conjecture [Lemma 1, L. Bos et al. (2009), Dolomites Research Notes on Approximation, 2:1-15]. As a special case, we apply the result to Padua and Padua-like points.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-11-25T20:47:25Z</published>
+    <arxiv:comment>10 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Linear Algebra and its Applications, Volume 449, Pages 17--27, 2014</arxiv:journal_ref>
+    <author>
+      <name>Stefano De Marchi</name>
+    </author>
+    <author>
+      <name>Konstantin Usevich</name>
+    </author>
+    <arxiv:doi>10.1016/j.laa.2014.01.034</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.laa.2014.01.034" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.08621v1</id>
+    <title>A sentiment-based model for the BitCoin: theory, estimation and option pricing</title>
+    <updated>2017-09-23T21:42:40Z</updated>
+    <link href="https://arxiv.org/abs/1709.08621v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.08621v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent literature it is claimed that BitCoin price behaves more likely to a volatile stock asset than a currency and that changes in its price are influenced by sentiment about the BitCoin system itself; in Kristoufek [10] the author analyses transaction based as well as popularity based potential drivers of the BitCoin price finding positive evidence. Here, we endorse this finding and consider a bivariate model in continuous time to describe the price dynamics of one BitCoin as well as a second factor, affecting the price itself, which represents a sentiment indicator. We prove that the suggested model is arbitrage-free under a mild condition and, based on risk-neutral evaluation, we obtain a closed formula to approximate the price of European style derivatives on the BitCoin. By applying the same approximation technique to the joint likelihood of a discrete sample of the bivariate process, we are also able to fit the model to market data. This is done by using both the Volume and the number of Google searches as possible proxies for the sentiment factor. Further, the performance of the pricing formula is assessed on a sample of market option prices obtained by the website deribit.com.</summary>
+    <category term="q-fin.MF" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-23T21:42:40Z</published>
+    <arxiv:comment>39, pages, 7 figures, 16 tables. arXiv admin note: substantial text overlap with arXiv:1702.00215</arxiv:comment>
+    <arxiv:primary_category term="q-fin.MF"/>
+    <author>
+      <name>Alessandra Cretarola</name>
+    </author>
+    <author>
+      <name>Gianna Figà-Talamanca</name>
+    </author>
+    <author>
+      <name>Marco Patacca</name>
+    </author>
+    <arxiv:doi>10.1007/s10203-019-00262-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10203-019-00262-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.14487v1</id>
+    <title>High-dimensional factor copula models with estimation of latent variables</title>
+    <updated>2022-05-28T17:01:59Z</updated>
+    <link href="https://arxiv.org/abs/2205.14487v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.14487v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factor models are a parsimonious way to explain the dependence of variables using several latent variables. In Gaussian 1-factor and structural factor models (such as bi-factor, oblique factor) and their factor copula counterparts, factor scores or proxies are defined as conditional expectations of latent variables given the observed variables. With mild assumptions, the proxies are consistent for corresponding latent variables as the sample size and the number of observed variables linked to each latent variable go to infinity. When the bivariate copulas linking observed variables to latent variables are not assumed in advance, sequential procedures are used for latent variables estimation, copula family selection and parameter estimation. The use of proxy variables for factor copulas means that approximate log-likelihoods can be used to estimate copula parameters with less computational effort for numerical integration.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-28T17:01:59Z</published>
+    <arxiv:comment>29pages 1 figure</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Xinyao Fan</name>
+    </author>
+    <author>
+      <name>Harry Joe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.17330v2</id>
+    <title>Derandomizing Multivariate Polynomial Factoring for Low Degree Factors</title>
+    <updated>2026-02-27T15:27:23Z</updated>
+    <link href="https://arxiv.org/abs/2411.17330v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.17330v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a polynomial $f$ from a class $\mathcal{C}$ of polynomials, we show that the problem to compute all the constant degree irreducible factors of $f$ reduces in polynomial time to polynomial identity tests (PIT) for class $\mathcal{C}$ and divisibility tests of $f$ by constant degree polynomials. We apply the result to several classes $\mathcal{C}$ and obtain the constant degree factors in
+  1. polynomial time, for $\mathcal{C}$ being polynomials that have only constant degree factors,
+  2. quasipolynomial time, for $\mathcal{C}$ being sparse polynomials,
+  3. subexponential time, for $\mathcal{C}$ being polynomials that have constant-depth circuits.
+  Result 2 and 3 were already shown by Kumar, Ramanathan, and Saptharishi with a different proof and their time complexities necessarily depend on black-box PITs for a related bigger class $\mathcal{C}'$. Our complexities vary on whether the input is given as a blackbox or whitebox.
+  We also show that the problem to compute the sparse factors of polynomial from a class $\mathcal{C}$ reduces in polynomial time to PIT for class $\mathcal{C}$, divisibility tests of $f$ by sparse polynomials, and irreducibility preserving bivariate projections for sparse polynomials. For $\mathcal{C}$ being sparse polynomials, it follows that it suffices to derandomize irreducibility preserving bivariate projections for sparse polynomials in order to compute all the sparse irreducible factors efficiently. When we consider factors of sparse polynomials that are sums of univariate polynomials, a subclass of sparse polynomials, we obtain a polynomial time algorithm. This was already shown by Volkovich with a different proof.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-26T11:18:39Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Pranjal Dutta</name>
+    </author>
+    <author>
+      <name>Amit Sinhababu</name>
+    </author>
+    <author>
+      <name>Thomas Thierauf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1404.1300v1</id>
+    <title>A construction of fractal surfaces with function scaling factors on a rectangular grid</title>
+    <updated>2014-04-03T10:49:12Z</updated>
+    <link href="https://arxiv.org/abs/1404.1300v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1404.1300v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A fractal surface is a set which is a graph of a bivariate continuous function. In the construction of fractal surfaces using IFS, vertical scaling factors in IFS are important one which characterizes a fractal feature of surfaces constructed. We construct IFS with function vertical scaling factors which are 0 on the boundaries of a rectangular grid using arbitrary data set on a rectangular grid and give a condition for an attractor of the IFS constructed being a surface. Finally, lower and upper bounds of Box-counting dimension of the constructed surface are estimated.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-04-03T10:49:12Z</published>
+    <arxiv:comment>9 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Chol-Hui Yun</name>
+    </author>
+    <author>
+      <name>Hui-Chol Choi</name>
+    </author>
+    <author>
+      <name>Hyong-Chol O</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.08500v3</id>
+    <title>A Multiplication Technique for the Factorization of Bivariate Quaternionic Polynomials</title>
+    <updated>2021-11-05T09:58:03Z</updated>
+    <link href="https://arxiv.org/abs/2105.08500v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.08500v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider bivariate polynomials over the skew field of quaternions, where the indeterminates commute with all coefficients and with each other. We analyze existence of univariate factorizations, that is, factorizations with univariate linear factors. A necessary condition for existence of univariate factorizations is factorization of the norm polynomial into a product of univariate polynomials. This condition is, however, not sufficient. Our central result states that univariate factorizations exist after multiplication with a suitable univariate real polynomial as long as the necessary factorization condition is fulfilled. We present an algorithm for computing this real polynomial and a corresponding univariate factorization. If a univariate factorization of the original polynomial exists, a suitable input of the algorithm produces a constant multiplication factor, thus giving an a posteriori condition for existence of univariate factorizations. Some factorizations obtained in this way are of interest in mechanism science. We present an example of a curious closed-loop mechanism with eight revolute joints.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-18T13:23:49Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Johanna Lercher</name>
+    </author>
+    <author>
+      <name>Hans-Peter Schröcker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.07112v3</id>
+    <title>Self-Normalization for CUSUM-based Change Detection in Locally Stationary Time Series</title>
+    <updated>2026-04-14T07:07:15Z</updated>
+    <link href="https://arxiv.org/abs/2509.07112v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.07112v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new bivariate partial sum process for locally stationary time series is introduced and its weak convergence to a Brownian sheet is established. This construction enables the development of a novel self-normalized CUSUM test statistic for detecting changes in the mean of a locally stationary time series. For stationary data, self-normalization relies on the factorization of a constant long-run variance and a stochastic factor. In this case, the CUSUM statistic can be divided by another statistic proportional to the long-run variance, so that the latter cancels, avoiding estimation of the long-run variance. Under local stationarity, the partial sum process converges to $\int_0^t σ(x) d B_x$ and no such factorization is possible. To overcome this obstacle, a bivariate partial-sum process is introduced, allowing the construction of self-normalized test statistics under local stationarity. Weak convergence of the process is proven, and it is shown that the resulting self-normalized tests attain asymptotic level $α$ under the null hypothesis of no change, while being consistent against abrupt, gradual, and multiple changes under mild assumptions. Simulation studies show that the proposed tests have accurate size and substantially improved finite-sample power relative to existing approaches. Two data examples illustrate practical performance.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-08T18:11:12Z</published>
+    <arxiv:comment>Keywords: Change point analysis, gradual changes, local stationarity, self-normalization, CUSUM test</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Florian Heinrichs</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.00058v1</id>
+    <title>A Bayesian cognition approach for belief updating of correlation judgement through uncertainty visualizations</title>
+    <updated>2020-07-31T19:51:00Z</updated>
+    <link href="https://arxiv.org/abs/2008.00058v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.00058v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding correlation judgement is important to designing effective visualizations of bivariate data. Prior work on correlation perception has not considered how factors including prior beliefs and uncertainty representation impact such judgements. The present work focuses on the impact of uncertainty communication when judging bivariate visualizations. Specifically, we model how users update their beliefs about variable relationships after seeing a scatterplot with and without uncertainty representation. To model and evaluate the belief updating, we present three studies. Study 1 focuses on a proposed ''Line + Cone'' visual elicitation method for capturing users' beliefs in an accurate and intuitive fashion. The findings reveal that our proposed method of belief solicitation reduces complexity and accurately captures the users' uncertainty about a range of bivariate relationships. Study 2 leverages the ``Line + Cone'' elicitation method to measure belief updating on the relationship between different sets of variables when seeing correlation visualization with and without uncertainty representation. We compare changes in users beliefs to the predictions of Bayesian cognitive models which provide normative benchmarks for how users should update their prior beliefs about a relationship in light of observed data. The findings from Study 2 revealed that one of the visualization conditions with uncertainty communication led to users being slightly more confident about their judgement compared to visualization without uncertainty information. Study 3 builds on findings from Study 2 and explores differences in belief update when the bivariate visualization is congruent or incongruent with users' prior belief. Our results highlight the effects of incorporating uncertainty representation, and the potential of measuring belief updating on correlation judgement with Bayesian cognitive models.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-31T19:51:00Z</published>
+    <arxiv:comment>9 pages, 8 figures, accepted at IEEE Information Visualization 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Alireza Karduni</name>
+    </author>
+    <author>
+      <name>Doug Markant</name>
+    </author>
+    <author>
+      <name>Ryan Wesslen</name>
+    </author>
+    <author>
+      <name>Wenwen Dou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1008.3596v1</id>
+    <title>Exact Bivariate Polynomial Factorization in Q by Approximation of Roots</title>
+    <updated>2010-08-21T03:28:20Z</updated>
+    <link href="https://arxiv.org/abs/1008.3596v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1008.3596v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorization of polynomials is one of the foundations of symbolic computation. Its applications arise in numerous branches of mathematics and other sciences. However, the present advanced programming languages such as C++ and J++, do not support symbolic computation directly. Hence, it leads to difficulties in applying factorization in engineering fields. In this paper, we present an algorithm which use numerical method to obtain exact factors of a bivariate polynomial with rational coefficients. Our method can be directly implemented in efficient programming language such C++ together with the GNU Multiple-Precision Library. In addition, the numerical computation part often only requires double precision and is easily parallelizable.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-08-21T03:28:20Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Yong Feng</name>
+    </author>
+    <author>
+      <name>Wenyuan Wu</name>
+    </author>
+    <author>
+      <name>Jingzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1108.2162v1</id>
+    <title>Partner selection in indoor-to-outdoor cooperative networks: an experimental study</title>
+    <updated>2011-08-10T12:22:39Z</updated>
+    <link href="https://arxiv.org/abs/1108.2162v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1108.2162v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we develop a partner selection protocol for enhancing the network lifetime in cooperative wireless networks. The case-study is the cooperative relayed transmission from fixed indoor nodes to a common outdoor access point. A stochastic bivariate model for the spatial distribution of the fading parameters that govern the link performance, namely the Rician K-factor and the path-loss, is proposed and validated by means of real channel measurements. The partner selection protocol is based on the real-time estimation of a function of these fading parameters, i.e., the coding gain. To reduce the complexity of the link quality assessment, a Bayesian approach is proposed that uses the site-specific bivariate model as a-priori information for the coding gain estimation. This link quality estimator allows network lifetime gains almost as if all K-factor values were known. Furthermore, it suits IEEE 802.15.4 compliant networks as it efficiently exploits the information acquired from the receiver signal strength indicator. Extensive numerical results highlight the trade-off between complexity, robustness to model mismatches and network lifetime performance. We show for instance that infrequent updates of the site-specific model through K-factor estimation over a subset of links are sufficient to at least double the network lifetime with respect to existing algorithms based on path loss information only.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-08-10T12:22:39Z</published>
+    <arxiv:comment>This work has been submitted to IEEE Journal on Selected Areas in Communications in August 2011</arxiv:comment>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Paolo Castiglione</name>
+    </author>
+    <author>
+      <name>Stefano Savazzi</name>
+    </author>
+    <author>
+      <name>Monica Nicoli</name>
+    </author>
+    <author>
+      <name>Thomas Zemen</name>
+    </author>
+    <arxiv:doi>10.1109/JSAC.2013.130818</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/JSAC.2013.130818" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.08312v3</id>
+    <title>Factorized $A_2$-Leonard pair</title>
+    <updated>2024-03-15T19:35:55Z</updated>
+    <link href="https://arxiv.org/abs/2312.08312v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.08312v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The notion of factorized $A_2$-Leonard pair is introduced. It is defined as a rank 2 Leonard pair, with actions in certain bases corresponding to the root system of the Weyl group $A_2$, and with some additional properties. The functions arising as entries of transition matrices are bivariate orthogonal polynomials (of Tratnik type) with bispectral properties. Examples of factorized $A_2$-Leonard pairs are constructed using classical Leonard pairs associated to families of orthogonal polynomials of the ($q$-)Askey scheme. The most general examples are associated to an intricate product of univariate ($q$-)Hahn and dual ($q$-)Hahn polynomials.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-13T17:30:53Z</published>
+    <arxiv:comment>33 pages</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Nicolas Crampe</name>
+    </author>
+    <author>
+      <name>Meri Zaimi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0912.0895v1</id>
+    <title>A lifting and recombination algorithm for rational factorization of sparse polynomials</title>
+    <updated>2009-12-04T16:56:40Z</updated>
+    <link href="https://arxiv.org/abs/0912.0895v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0912.0895v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We propose a new lifting and recombination scheme for rational bivariate polynomial factorization that takes advantage of the Newton polytope geometry. We obtain a deterministic algorithm that can be seen as a sparse version of an algorithm of Lecerf, with now a polynomial complexity in the volume of the Newton polytope. We adopt a geometrical point of view, the main tool being derived from some algebraic osculation criterions in toric varieties.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-12-04T16:56:40Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Martin Weimann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.17676v2</id>
+    <title>Toward a 2D Local Implementation of Quantum LDPC Codes</title>
+    <updated>2025-01-09T15:31:04Z</updated>
+    <link href="https://arxiv.org/abs/2404.17676v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.17676v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Geometric locality is an important theoretical and practical factor for quantum low-density parity-check (qLDPC) codes which affects code performance and ease of physical realization. For device architectures restricted to 2D local gates, naively implementing the high-rate codes suitable for low-overhead fault-tolerant quantum computing incurs prohibitive overhead. In this work, we present an error correction protocol built on a bilayer architecture that aims to reduce operational overheads when restricted to 2D local gates by measuring some generators less frequently than others. We investigate the family of bivariate bicycle qLDPC codes and show that they are well suited for a parallel syndrome measurement scheme using fast routing with local operations and classical communication (LOCC). Through circuit-level simulations, we find that in some parameter regimes bivariate bicycle codes implemented with this protocol have logical error rates comparable to the surface code while using fewer physical qubits.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-26T19:48:07Z</published>
+    <arxiv:comment>18 pages, 12 figures. v2: Accepted to PRX Quantum. Added referee suggestions</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>PRX Quantum 6, 010306 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Noah Berthusen</name>
+    </author>
+    <author>
+      <name>Dhruv Devulapalli</name>
+    </author>
+    <author>
+      <name>Eddie Schoute</name>
+    </author>
+    <author>
+      <name>Andrew M. Childs</name>
+    </author>
+    <author>
+      <name>Michael J. Gullans</name>
+    </author>
+    <author>
+      <name>Alexey V. Gorshkov</name>
+    </author>
+    <author>
+      <name>Daniel Gottesman</name>
+    </author>
+    <arxiv:doi>10.1103/PRXQuantum.6.010306</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PRXQuantum.6.010306" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.20043v1</id>
+    <title>The quantum loop algebra of $sl_2$ and $q$-Racah type bivariate functions</title>
+    <updated>2026-07-22T11:38:00Z</updated>
+    <link href="https://arxiv.org/abs/2607.20043v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.20043v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A unified algebraic framework for two different six-parameter families of bivariate $q$-Racah type functions is given using the representation theory of the quantum loop algebra $\mathcal{L} U_q sl_2$ of $sl_2$. The starting point of the analysis is two left and right coideal subalgebras of $\mathcal{L} U_q sl_2$ and six commutative subalgebras, built from eight elements in $\mathcal{L} U_q sl_2 \otimes \mathcal{L} U_q sl_2$. The eight elements depend on two scalars $a,b \in {\mathbb C}^*$, and are diagonalized on a finite-dimensional vector space. The bivariate $q$-Racah type functions are interpreted as the overlap coefficients relating six `distinguished' eigenbases parametrized by $a,b$ of the tensor product (evaluation) representations of $\mathcal{L} U_q sl_2$ labeled by the evaluation parameters $u_1,u_2$. Upon certain conditions on $a,b,u_1,u_2$, it is shown that a subset of pairs of elements act as tridiagonal pairs of type I (also called $q$-Racah type). For $u_1/u_2=1$, another subset of pairs of elements are conjectured to act as factorized Leonard pairs. Thus, in both cases corresponding overlap coefficients relating the various eigenbases associated with different pairs are obtained. Some of their properties are also discussed, as well as their relation with known bivariate polynomials of Tratnik type and the rank 2 Askey--Wilson algebra.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-22T11:38:00Z</published>
+    <arxiv:primary_category term="math.QA"/>
+    <author>
+      <name>Pascal Baseilhac</name>
+    </author>
+    <author>
+      <name>Nicolas Crampe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1510.05607v1</id>
+    <title>Pseudoscalar-exchange contribution to $(g-2)_μ$ from rational approximants</title>
+    <updated>2015-10-19T18:12:27Z</updated>
+    <link href="https://arxiv.org/abs/1510.05607v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1510.05607v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present our recent results on the hadronic light-by-light pseudoscalar-exchange contribution to the anomalous magnetic moment of the muon using rational approximants. Our work provides a generalization of Padé approximants to the bivariate case to describe the most general doubly-virtual transition form factor, which is required in the calculation. This method provides a powerful tool to systematically implement the known experimental data on transition form factors in the space-like region and low energies in a model-independent way. Given the lack of experimental data on the doubly-virtual transition form factor, we make use of the pseduoscalar decays into lepton pairs. We find an interesting and puzzling situation which calls for new experimental measurements to clarify the present state.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-19T18:12:27Z</published>
+    <arxiv:comment>10 pages, 4 figures. Proceedings to PHOTON 2015 conference in Novosibirsk</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Pablo Sanchez-Puertas</name>
+    </author>
+    <author>
+      <name>Pere Masjuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1306.6655v1</id>
+    <title>Stable and real-zero polynomials in two variables</title>
+    <updated>2013-06-27T20:33:25Z</updated>
+    <link href="https://arxiv.org/abs/1306.6655v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1306.6655v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For every bivariate polynomial $p(z_1, z_2)$ of bidegree $(n_1, n_2)$, with $p(0,0)=1$, which has no zeros in the open unit bidisk, we construct a determinantal representation of the form $$p(z_1,z_2)=\det (I - K Z),$$ where $Z$ is an $(n_1+n_2)\times(n_1+n_2)$ diagonal matrix with coordinate variables $z_1$, $z_2$ on the diagonal and $K$ is a contraction. We show that $K$ may be chosen to be unitary if and only if $p$ is a (unimodular) constant multiple of its reverse.
+  Furthermore, for every bivariate real-zero polynomial $p(x_1, x_2),$ with $p(0,0)=1$, we provide a construction to build a representation of the form $$p(x_1,x_2)=\det (I+x_1A_1+x_2A_2),$$ where $A_1$ and $A_2$ are Hermitian matrices of size equal to the degree of $p$.
+  A key component of both constructions is a stable factorization of a positive semidefinite matrix-valued polynomial in one variable, either on the circle (trigonometric polynomial) or on the real line (algebraic polynomial).</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-06-27T20:33:25Z</published>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Anatolii Grinshpan</name>
+    </author>
+    <author>
+      <name>Dmitry S. Kaliuzhnyi-Verbovetskyi</name>
+    </author>
+    <author>
+      <name>Victor Vinnikov</name>
+    </author>
+    <author>
+      <name>Hugo J. Woerdeman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.5024v2</id>
+    <title>Modular Las Vegas Algorithms for Polynomial Absolute Factorization</title>
+    <updated>2010-01-28T15:23:21Z</updated>
+    <link href="https://arxiv.org/abs/0911.5024v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.5024v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let $f(X,Y) \in \ZZ[X,Y]$ be an irreducible polynomial over $\QQ$. We give a Las Vegas absolute irreducibility test based on a property of the Newton polytope of $f$, or more precisely, of $f$ modulo some prime integer $p$. The same idea of choosing a $p$ satisfying some prescribed properties together with $LLL$ is used to provide a new strategy for absolute factorization of $f(X,Y)$. We present our approach in the bivariate case but the techniques extend to the multivariate case. Maple computations show that it is efficient and promising as we are able to factorize some polynomials of degree up to 400.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-26T07:44:51Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Cristina Bertone</name>
+      <arxiv:affiliation>INRIA Sophia Antipolis</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Guillaume Chèze</name>
+      <arxiv:affiliation>IMT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>André Galligo</name>
+      <arxiv:affiliation>INRIA Sophia Antipolis</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0904.0178v2</id>
+    <title>Algebraic osculation and factorization of sparse polynomials</title>
+    <updated>2009-04-14T18:15:51Z</updated>
+    <link href="https://arxiv.org/abs/0904.0178v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0904.0178v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We prove a theorem on algebraic osculation and we apply our result to the Computer Algebra problem of polynomial factorization. We consider X a smooth completion of the complex plane and D an effective divisor supported on the boundary of X. Our main result gives explicit conditions equivalent to that a given Cartier divisor on D extends to X. These osculation criterions are expressed with residues. We derive from this result a toric Hensel lifting which permits to compute the absolute factorization of a bivariate polynomial by taking in account the geometry of its Newton polytope. In particular, we reduce the number of possible recombinations when compared to the Galligo-Rupprecht algorithm.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-04-01T14:58:30Z</published>
+    <arxiv:comment>26 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Martin Weimann</name>
+    </author>
+  </entry>
+</feed>

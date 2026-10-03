@@ -1,0 +1,53 @@
+{
+ "30_12_10": {
+  "exhaustive": {
+   "exponentiations": 116116,
+   "secs": 2.62,
+   "us_per_exp": 22.549
+  },
+  "primorial": {
+   "exponentiations": 116116,
+   "secs": 2.54,
+   "us_per_exp": 21.864
+  },
+  "earlyabort": {
+   "exponentiations": 127216,
+   "secs": 3.63,
+   "us_per_exp": 28.521
+  }
+ },
+ "30_40_5": {
+  "exhaustive": {
+   "exponentiations": 15796,
+   "secs": 0.93,
+   "us_per_exp": 58.712
+  },
+  "primorial": {
+   "exponentiations": 15796,
+   "secs": 0.52,
+   "us_per_exp": 32.807
+  },
+  "earlyabort": {
+   "exponentiations": 15813,
+   "secs": 0.48,
+   "us_per_exp": 30.624
+  }
+ },
+ "40_20_5": {
+  "exhaustive": {
+   "exponentiations": 2034047,
+   "secs": 106.52,
+   "us_per_exp": 52.366
+  },
+  "primorial": {
+   "exponentiations": 2034047,
+   "secs": 86.52,
+   "us_per_exp": 42.538
+  },
+  "earlyabort": {
+   "exponentiations": 2197344,
+   "secs": 95.14,
+   "us_per_exp": 43.3
+  }
+ }
+}

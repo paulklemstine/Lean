@@ -1,0 +1,1443 @@
+                                           Shor’s Algorithm for Factoring Large Integers∗
+                                                                C. Lavor† , L.R.U. Manssur‡ , and R. Portugal‡
+                                                                          †
+                                                                        Instituto de Matemática e Estatı́stica
+arXiv:quant-ph/0303175v1 29 Mar 2003
+
+
+
+
+                                                                 Universidade do Estado do Rio de Janeiro - UERJ
+                                                              Rua São Francisco Xavier, 524, 6o andar, bl. D, sala 6018,
+                                                                        Rio de Janeiro, RJ, 20550-900, Brazil
+                                                                              e-mail: carlile@ime.uerj.br
+
+                                                                      ‡
+                                                                       Coordenação de Ciência da Computação
+                                                              Laboratório Nacional de Computação Cientı́fica - LNCC
+                                                              Av. Getúlio Vargas 333, Petrópolis, RJ, 25651-070, Brazil
+                                                                          e-mail: {leon,portugal}@lncc.br
+
+                                                                                   February 1, 2008
+
+
+
+                                                                                       Abstract
+                                                 This work is a tutorial on Shor’s factoring algorithm by means of a worked out
+                                                 example. Some basic concepts of Quantum Mechanics and quantum circuits
+                                                 are reviewed. It is intended for non-specialists which have basic knowledge
+                                                 on undergraduate Linear Algebra.
+
+
+                                       1        Introduction
+                                       In the last 30 years, the number of transistors per chip roughly doubled every 18 months,
+                                       amounting to an exponentially growing power of classical computers. Eventually this
+                                       statement (Moore’s law) will be violated, since the transistor size will reach the limiting
+                                       size of one atom in about 15 years. Even before that, disturbing quantum effects will
+                                       appear.
+                                            Ordinarily one states that if an algorithm is inefficient, one simply waits for hardware
+                                       efficient enough to run it. If the exponential increase in the power of classical computers
+                                       becomes saturated, the class of inefficient algorithms will remain useless. From this
+                                       pessimistic point of view, Computer Science seems to face very narrow limitations in the
+                                       near future, coming from the physics underneath computer architecture.
+                                            It is important to keep in mind that a computer is a device governed by the laws of
+                                       Physics. For decades, this fact was irrelevant. Computer Science emerged in a mathe-
+                                       matical context and the specifics imposed by Physics were so few that most computer
+                                           ∗
+                                               Contents based on lecture notes from graduate courses in Quantum Computation given at LNCC.
+
+
+
+                                                                                           1
+scientists paid no attention to them. One possible explanation for this state of matters
+is that computers work under the laws of classical physics, which are common sense.
+    In a seminal paper, Feynman [1] argued that the way classical computers work is
+a special case of some more general form allowed by the laws of Quantum Mechanics.
+He gave general arguments supporting the idea that a manifestly quantum device would
+be exponentially faster than a classical one. Subsequently, Deutsch [2] generalized the
+classical circuit model to its quantum counterpart and gave the first example of a quantum
+algorithm faster than its classical counterpart. Based on Deutsch’s work, Simon [3]
+developed a quantum algorithm exponentially faster than its classical counterpart, taking
+advantage of entanglement, corroborating with Feynman’s arguments.
+    The greatest success came with Shor’s work [4]. He developed exponentially faster
+quantum algorithms for factoring integers and for finding discrete logarithms when com-
+pared to the known classical algorithms. Shor’s algorithms allow one to render most
+current cryptographic methods useless, when a quantum computer of reasonable size is
+available.
+    This work is an introductory review of Shor’s factoring algorithm. We have put all
+our efforts to write as clear as possible for non-specialists. We assume familiarity with
+undergraduate Linear Algebra, which is the main mathematical basis of Quantum Me-
+chanics. Some previous knowledge of Quantum Mechanics is welcome, but not necessary
+for a persistent reader. The reader can find further material in [4, 5, 6, 7, 8].
+    Section 2 reviews basic notions of Quantum Mechanics necessary for Quantum Com-
+putation. Section 3 introduces the notion of quantum circuits and presents some basic
+examples. Section 4 describes how factorization can be reduced to order calculation and
+Section 5 gives a quantum algorithm for it. Section 6 shows the quantum Fourier trans-
+form. Section 7 gives an example and finally Section 8 shows the decomposition of the
+Fourier transform circuit in terms of the universal gates.
+
+
+2    Review of Quantum Mechanics for Quantum Computa-
+     tion
+In classical computers, a bit can assume only values 0 or 1. In quantum computers, the
+values 0 and 1 are replaced by the vectors |0i and |1i. This notation for vectors is called
+the Dirac notation and is standard in Quantum Mechanics. The name bit is replaced by
+qubit, short of quantum bit. The difference between bits and qubits is that a qubit |ψi
+can also be in a linear combination of the vectors |0i and |1i,
+
+                                    |ψi = α|0i + β|1i,                                 (1)
+
+where α and β are complex numbers. |ψi is said to be a superposition of the vectors |0i
+and |1i with amplitudes α and β. Thus, |ψi is a vector in a two-dimensional complex
+vector space, where {|0i, |1i} forms an orthonormal basis, called the computational basis
+(see Fig. 1 in the real case). The state |0i is not the zero vector, but simply the first
+vector of the basis. The matrix representations of the vectors |0i and |1i are given by
+                                                     
+                                    1                    0
+                             |0i =         and |1i =         .
+                                    0                    1
+
+                                            2
+In Quantum Mechanics, vectors are systematically called states. We use this term from
+now on.
+    The physical interpretation of |ψi is that it coexists in two states: |0i and |1i. It
+is similar to a coin that is partially heads up and partially tails up simultaneously. We
+cannot push further the analogy simply because quantum phenomena do not have a
+classical analogue in general. The state |ψi can store a huge quantity of information
+in its coefficients α and β, but this information lives in the quantum level, which is
+microscopic (usually quantum effects appear in atomic dimensions). To bring quantum
+information to the classical level, one must measure the qubit. Quantum Mechanics tells
+us that the measurement process inevitably disturbs a qubit state, producing a non-
+deterministic collapse of |ψi to either |0i or |1i. One gets |0i with probability |α|2 or |1i
+with probability |β|2 . The non-deterministic collapse does not allow one to determine
+the values of α and β before the measurement. They are inaccessible via measurements
+unless one has many copies of the same state. Two successive measurements of the same
+qubit give the same output. If |α|2 and |β|2 are probabilities and there are only two
+possible outputs, then
+                                       |α|2 + |β|2 = 1.                                   (2)
+Calculating the norm of |ψi, Eq. (2) gives
+                                         p
+                              || |ψi || = |α|2 + |β|2 = 1.
+    A measurement is not the only way that one can interact with a qubit. If one does not
+obtain any information about the state of the qubit, the interaction changes the values
+of α and β keeping the constraint (2). The most general transformation of this kind is a
+linear transformation U that takes unit vectors into unit vectors. Such a transformation
+is called unitary and can be defined by
+                                      U † U = U U † = I,
+where U † = (U ∗ )T (∗ indicates complex conjugation and T indicates the transpose oper-
+ation) and I is the 2 × 2 identity matrix.
+    So far we are dealing with one-qubit quantum computers. To consider the multiple
+qubit case, it is necessary to introduce the concept of tensor product. Suppose V and
+
+                                                  |1i
+                                                           |ψi
+
+
+                                                                 |0i
+
+
+
+
+       Figure 1: Computational basis for the case α, β real. In the general case (α, β
+       complex) there is still a geometrical representation called the Bloch sphere (see
+       [6] page 15).
+
+
+                                              3
+W are complex vector spaces of dimensions m and n, respectively. The tensor product
+V ⊗W is an mn-dimensional vector space. The elements of V ⊗W are linear combinations
+of tensor products |vi ⊗ |wi, satisfying the following properties (z ∈ C, |vi, |v1 i, |v2 i ∈ V ,
+and |wi, |w1 i, |w2 i ∈ W ):
+
+   1. z(|vi ⊗ |wi) = (z|vi) ⊗ |wi = |vi ⊗ (z|wi),
+
+   2. (|v1 i + |v2 i) ⊗ |wi = (|v1 i ⊗ |wi) + (|v2 i ⊗ |wi),
+
+   3. |vi ⊗ (|w1 i + |w2 i) = (|vi ⊗ |w1 i) + (|vi ⊗ |w2 i).
+
+We use also the notations |vi|wi, |v, wi or |vwi for the tensor product |vi ⊗ |wi. Note
+that the tensor product is non-commutative, so the notation must preserve the ordering.
+    Given two linear operators A and B defined on the vector spaces V and W , respec-
+tively, we can define the linear operator A ⊗ B on V ⊗ W as
+
+                              (A ⊗ B)(|vi ⊗ |wi) = A|vi ⊗ B|wi,                              (3)
+
+where |vi ∈ V and |wi ∈ W . The matrix representation of A ⊗ B is given by
+                                                         
+                                    A11 B · · · A1m B
+                        A⊗B =
+                                        .. . .        ..  ,                                (4)
+                                          .     .       . 
+                                           Am1 B · · · Amm B
+
+where A is an m × m matrix and B is a n × n matrix (we are using the same notation
+for the operator and its matrix representation). So, the matrix A ⊗ B has dimension
+mn × mn. For example, given
+                                                           
+                                                  1 0 0
+                             0 1
+                       A=              and B =  0 1 0  ,
+                             1 0
+                                                    0 0 1
+
+the tensor product A ⊗ B is
+                                                                                
+                                          0                    0   0   1   0   0
+                                       0                    0   0   0   1   0 
+                              1 0 0                                           
+                       0 1               0                    0   0   0   0   1 
+               A⊗B =         ⊗ 0 1 0 =
+                                                                               .
+                       1 0               1                    0   0   0   0   0 
+                                0 0 1   
+                                         0
+                                                                                 
+                                                               1   0   0   0   0 
+                                          0                    0   1   0   0   0
+
+The formula (4) can also be used for non-square matrices, such as the tensor product of
+two vectors. For example, if we have a 2-qubit quantum computer and the first qubit is
+in the state |0i and the second is in the state |1i, then the quantum computer is in the
+state |0i ⊗ |1i, given by
+                                                             
+                                                           0
+                                            1         0      1 
+                        |0i ⊗ |1i = |01i =       ⊗        = 0 .
+                                                                                    (5)
+                                            0         1
+                                                               0
+
+                                                 4
+The resulting vector is in a 4-dimensional vector space.
+    The general state |ψi of a 2-qubit quantum computer is a superposition of the states
+|00i, |01i, |10i, and |11i,
+
+                            |ψi = α|00i + β|01i + γ|10i + δ|11i,                            (6)
+
+with the constraint
+                                |α|2 + |β|2 + |γ|2 + |δ|2 = 1.
+Regarding the zeroes and ones as constituting the binary expansion of an integer, we can
+replace the representations of states
+
+                                    |00i, |01i, |10i, |11i,
+
+by the shorter forms
+                                      |0i, |1i, |2i, |3i,
+in decimal notation, which is handy in some formulas.
+    In general, the state |ψi of an n-qubit quantum computer is a superposition of the
+2n states |0i, |1i, ..., |2n − 1i,
+                                            n −1
+                                           2X
+                                     |ψi =      αi |ii,
+                                                i=0
+with amplitudes αi constrained to
+                                         n −1
+                                        2X
+                                               |αi |2 = 1.
+                                         i=0
+
+Recall that the orthonormal basis {|0i , . . . , |2n − 1i} is the computational basis in decimal
+notation. The state of an n-qubit quantum computer is a vector in a 2n -dimensional
+complex vector space. When the number of qubits increases linearly, the dimension of
+the associated vector space increases exponentially. As before, a measurement of a generic
+state |ψi yields the result |i0 i with probability |αi0 |2 , where 0 ≤ i0 < 2n . Usually, the
+measurement is performed qubit by qubit yielding zeroes or ones that are read together
+to form i0 . We stress again a very important feature of the measurement process. The
+state |ψi as it is before measurement is inaccessible unless it is in the computational basis.
+The measurement process inevitably disturbs |ψi forcing it to collapse to one vector of
+the computational basis. This collapse is non-deterministic, with the probabilities given
+by the squared norms of the corresponding amplitudes in |ψi.
+    If we have a 2-qubit quantum computer, the first qubit in the state
+
+                                       |ϕi = a|0i + b|1i
+
+and the second in the state
+                                      |ψi = c|0i + d|1i,
+then the state of the quantum computer is the tensor product
+
+                      |ϕi ⊗ |ψi = (a|0i + b|1i) ⊗ (c|0i + d|1i)                             (7)
+                                 = ac|00i + ad|01i + bc|10i + bd|11i.
+
+                                                 5
+Note that a general 2-qubit state (6) is of the form (7) if and only if
+
+                                         α = ac,
+                                         β = ad,
+                                         γ = bc,
+                                         δ = bd.
+
+From these equalities we have that a general 2-qubit state (6) is of the form (7) if and
+only if
+                                      αδ = βγ.
+Thus, the general 2-qubit state is not necessarily a product of two one-qubit states.
+Such non-product
+              √ states of two or more qubits are called entangled states, for example,
+(|00i + |11i)/ 2. The entangled states play an essential role in quantum computation.
+Quantum computers that do not use entanglement cannot be exponentially faster than
+classical computers. On the other hand, a naive use of entanglement does not guarantee
+any improvements.
+    A complex vector space V is a Hilbert space if there is an inner product, written in
+the form hϕ|ψi, defined by the following rules (a, b ∈ C and |ϕi, |ψi, |ui, |vi ∈ V ):
+
+  1. hψ|ϕi = hϕ|ψi∗ ,
+
+  2. hϕ|(a|ui + b|vi)i = ahϕ|ui + bhϕ|vi,
+
+  3. hϕ|ϕi > 0 if |ϕi =
+                      6 0.
+
+The norm of a vector |ϕi is given by
+                                                   p
+                                     || |ϕi || =       hϕ|ϕi.
+
+   The notation hϕ| is used for the dual vector to the vector |ϕi. The dual is a linear
+operator from the vector space V to the complex numbers, defined by
+
+                                hϕ|(|vi) = hϕ|vi,        ∀|vi ∈ V.
+
+    Given two vectors |ϕi and |ψi in a vector space V , there is also an outer product
+|ψihϕ|, defined as a linear operator on V satisfying
+
+                             (|ψihϕ|)|vi = |ψihϕ|vi,        ∀|vi ∈ V.
+
+   If |ϕi = a|0i + b|1i and |ψi = c|0i + d|1i, then the matrix representations for inner
+and outer products are:
+                                             
+                                  ∗ ∗  c
+                      hϕ|ψi =      a b            = a∗ c + b∗ d,
+                                               d
+                                                    ∗         
+                                   a  ∗ ∗            ac ad∗
+                     |ϕihψ| =            c d      =                .
+                                   b                   bc∗ bd∗
+
+The matrix of the outer product is obtained by usual matrix multiplication of a column
+matrix by a row matrix. But in this case, we can replace the matrix multiplication by
+
+                                               6
+                                                               }
+                        |ψ1 i
+                        |ψ2 i
+
+                                             U                      |ψi
+
+
+
+                        |ψn i
+
+
+       Figure 2: The sketch of the quantum computer. We consider the input nonentan-
+       gled, which is reasonable in general. On the other hand, the output is entangled
+       in general. The measurement of the state |ψi, not shown here, returns zeroes
+       and ones.
+
+
+the tensor product, i.e., |ϕihψ| = |ϕi⊗ hψ| (notice the complex conjugation in the process
+of taking the dual).
+    After the above review, we are ready to outline the quantum computer. In Fig. 2,
+we are taking a nonentangled input, what is quite reasonable. In fact, |ψi i is either |0i
+or |1i generally. |ψi, on the right hand side of Fig. 2, is the result of the application
+of a unitary operator U on the input. The last step is the measurement of the states
+of each qubit, which returns zeroes and ones that form the final result of the quantum
+calculation. Note that there is, in principle, an infinite number of possible operators U ,
+which are unitary 2n × 2n matrices.
+
+
+3    Quantum Circuits
+Let us start with one-qubit gates. In the classical case there is only one possibility, which
+is the NOT gate. The NOT gate inverts the bit value: 0 goes to 1 and vice-versa. The
+straightforward generalization to the quantum case is given in Fig. 3, where X is the
+unitary operator                                   
+                                             0 1
+                                     X=               .
+                                             1 0
+So, if the input |ψi is |0i, the output is |1i and vice-versa. But now we can have a
+situation with no classical counterpart. The state |ψi can be a superposition of states |0i
+and |1i. The general case is |ψi = α|0i+β|1i and the corresponding output is α|1i+β|0i.
+    The gate X is not the only one-qubit gate. There are infinitely many, since there are
+an infinite number of 2 × 2 unitary matrices. In principle, any unitary operation can be
+
+
+
+
+                           |ψi               X              X |ψi
+
+
+                                 Figure 3: Quantum NOT gate.
+
+
+
+                                              7
+implemented in practice. The Hadamard gate is another important one-qubit gate, given
+by                                               
+                                     1    1     1
+                                H=√                 .
+                                      2 1 −1
+It is easy to see that
+                                                 |0i + |1i
+                                   H|0i =           √      ,
+                                                      2
+                                                 |0i − |1i
+                                   H|1i =           √      .
+                                                      2
+If the input is |0i, the Hadamard gate creates a superposition of states with equal weights.
+This is a general feature, valid for two or more qubits. Let us analyze the 2-qubit case.
+    The first example of a 2-qubit gate is H ⊗ H:
+
+                    H ⊗2 |0i|0i = (H ⊗ H)(|0i ⊗ |0i) = H|0i ⊗ H|0i
+                                                            
+                                    |0i + |1i        |0i + |1i
+                                =      √        ⊗       √
+                                          2               2
+                                  1
+                                =   (|0i|0i + |0i|1i + |1i|0i + |1i|1i)
+                                  2
+                                  1
+                                =   (|0i + |1i + |2i + |3i).
+                                  2
+The result is a superposition of all basis states with equal weights. More generally, the
+Hadamard operator applied to the n-qubit state |0i is
+
+                         H ⊗n |0i = H ⊗n |0, ..., 0i = (H |0i)⊗n
+                                                
+                                      |0i + |1i ⊗n
+                                  =      √
+                                           2
+                                           n −1
+                                          2X
+                                      1
+                                  = √           |ii .                                   (8)
+                                      2n i=0
+
+Thus, the tensor product of n Hadamard operators produces an equally weighted super-
+position of all computational basis states, when the input is the state |0i. This state is
+useful for applying quantum parallelism, as we will see ahead.
+    Another important 2-qubit quantum gate is the CNOT gate. It has two input qubits,
+the control and the target qubit, respectively. The target qubit is flipped only if the
+control qubit is set to 1, that is,
+
+                                      |00i → |00i,
+                                      |01i → |01i,                                      (9)
+                                      |10i → |11i,
+                                      |11i → |10i.
+
+The action of the CNOT gate can also be represented by
+
+                                    |a, bi → |a, a ⊕ bi,
+
+                                             8
+                          |ii                           |ii
+
+
+                          |σi                          X i |σi
+
+       Figure 4: CNOT gate. |ii can be either |0i or |1i. The general case is obtained
+       by linearity.
+
+
+ where ⊕ is addition modulo 2. Now, let us obtain its matrix representation. Performing
+the same calculations that yield Eq. (5), we have
+                                                                
+                     1                0                0               0
+                    0             1              0              0 
+                    0  , |01i =  0  , |10i =  1  , |11i =  0  .
+            |00i =                                                         (10)
+                     0                0                0               1
+
+Thus, from (9) and (10), the matrix representation UCNOT of the CNOT gate is
+                                                    
+                                          1 0 0 0
+                                        0 1 0 0 
+                              UCNOT =  0 0 0 1 .
+                                                     
+
+                                          0 0 1 0
+
+    Fig. 4 describes the CNOT gate, where |ii is either |0i or |1i. The figure could
+lead one to think that the output is always nonentangled, but that is not true, since if
+the first qubit is in a more general state given by a |0i + b |1i, then the output will be
+a |0i |σi + b |1i X |σi, which is entangled in general. The input can be entangled as well.
+    We have seen two examples of 2-qubit gates. The general case is a 4 × 4 unitary
+matrix. Gates that are the direct product of other gates, such as H ⊗ H, do not produce
+entanglement. If the input is nonentangled, the output is not too. On the other hand,
+the output of the CNOT gate can be entangled while the input is nonentangled.
+    CNOT and one-qubit gates form a universal set of gates. This means that any other
+gate, operating on 2 or more qubits, can be written as compositions and direct products
+of CNOT and one-qubit gates [6].
+    At the end of Section 2, we gave a general outline of the quantum computer (Fig. 2)
+based on the action of a unitary operator U . In the present section, we have seen that
+in general U can be broken up in terms of smaller gates. This decomposition is useful
+because it corresponds to the natural steps that describe an algorithm. So, a quantum
+algorithm consists of a sequence of unitary operators acting on sets of qubits. These
+unitary operators multiplied together form the operator U of Fig. 2.
+    More details on quantum circuits can be found in [6, 9].
+
+
+4    Factorization can be reduced to order calculation
+Let us describe Shor’s algorithm for finding the prime factors of a composite number
+N . Think of a large number such as one with 300 digits in decimal notation, since such
+
+
+                                             9
+numbers are used in cryptography. Though N is large, the number of qubits necessary
+to store it is small. In general log2 N is not an integer, so let us define
+
+                                      n = ⌈log2 N ⌉.
+
+A quantum computer with n qubits can store N or any other positive integer less than
+N . With a little thought, we see that the number of prime factors of N is at most n. If
+both the number of qubits and the number of factors are less than or equal to n, then
+it is natural to ask if there is an algorithm that factors N in a number of steps which is
+polynomial in n. More technically, the question is: is there a factorization algorithm in
+the complexity class P [10]?
+     Reduction of factorization of N to the problem of finding the order of an integer x
+less than N is as follows. If x and N have common factors, then GCD(x, N ) gives a
+factor of N , therefore it suffices to investigate the case when x is coprime to N . The
+order of x modulo N is defined as the least positive integer r such that
+
+                                      xr ≡ 1 mod N.
+
+If r is even, we can define y by
+                                     xr/2 ≡ y mod N.
+The above notation means that y is the remainder of xr/2 divided by N and, by definition,
+0 ≤ y < N . Note that y satisfies y 2 ≡ 1 modulo N , or equivalently (y − 1)(y + 1) ≡
+0 modulo N , which means that N divides (y − 1)(y + 1). If 1 < y < N − 1, the factors
+y − 1 and y + 1 satisfy 0 < y − 1 < y + 1 < N , therefore N cannot divide y − 1 nor y + 1
+separately. The only alternative is that both y − 1 and y + 1 have factors of N (that yield
+N by multiplication). So, GCD(y − 1, N ) and GCD(y + 1, N ) yield non trivial factors of
+N (GCD stands for the greatest common divisor). If N has remaining factors, they can
+be calculated applying the algorithm recursively.
+   Consider N = 21 as an example. The sequence of equivalences
+
+                               24 ≡ 16 mod 21
+                               25 ≡ 11 mod 21
+                               26 ≡ 11 × 2 ≡ 1 mod 21
+
+show that the order of 2 modulo 21 is r = 6. Therefore, y ≡ 23 ≡ 8 modulo 21. y − 1
+yields the factor 7 and y + 1 yields the factor 3 of 21.
+     In summary, if we pick up at random a positive integer x less than N and calculate
+GCD(x, N ), either we have a factor of N or we learn that x is coprime to N . In the latter
+case, if x satisfies the conditions (1) its order r is even, and (2) 0 < y − 1 < y + 1 < N ,
+then GCD(y − 1, N ) and GCD(y + 1, N ) yield factors of N . If one of the conditions
+is not true, we start over until finding a proper candidate x. The method would not
+be useful if these assumptions were too restrictive, but fortunately that is not the case.
+The method sistematically fails if N is a power of some odd prime, but an alternative
+efficient classical algorithm for this case is known. If N is even, we can keep dividing by
+2 until the result turns out to be odd. It remains to apply the method for odd composite
+integers that are not a power of some prime number. It is cumbersome to prove that the
+probability of finding x coprime to N satisfying the conditions (1) and (2) is high; in fact
+
+                                            10
+this probability is 1 − 1/2k−1 , where k is the number of prime factors of N . In the worst
+case (N has 2 factors), the probability is greater than or equal to 1/2 (see the proof in
+Appendix B of [5]).
+    At first sight, it seems that we have just described an efficient algorithm to find a
+factor of N . That is not true, since it is not known an efficient classical algorithm to
+calculate the order of an integer x modulo N . On the other hand, there is (after Shor’s
+work) an efficient quantum algorithm. Let us describe it.
+
+
+5      Quantum algorithm to calculate the order
+Consider the circuit of Fig. 5. It calculates the order r of the positive integer x less than
+N , coprime to N . Vx is the unitary linear operator
+
+                                         Vx (|ji |ki) = |ji k + xj ,                                 (11)
+
+where |ji and |ki are the states of the first and second registers, respectively. The
+arithmetical operations are performed modulo N , so 0 ≤ k + xj < N . DFT is the
+Discrete Fourier Transform operator which will be described ahead.
+    The first register has t qubits, where t is generally chosen such that N 2 ≤ 2t < 2N 2 ,
+for reasons that will become clear later on [4]. As an exception, if the order r is a power
+of 2, then it is enough to take t = n. In this section we consider this very special case
+and leave the general case for Section 7. We will keep the variable t in order to generalize
+the discussion later on.
+    The states of the quantum computer are indicated by |ψ0 i to |ψ5 i in Fig. 5. The
+initial state is
+                                  |ψ0 i = |0 . . . 0i |0 . . . 0i .
+                                          | {z } | {z }
+                                                       t        n
+
+
+
+
+                       {
+                                          H
+                           |0i
+
+      first register
+                                                                                    DFT†
+       (t qubits)
+                           |0i
+                                          H
+
+                                                           Vx
+
+
+
+
+                       {
+                           |0i
+
+    second register
+       (n qubits)
+                           |0i
+
+
+                                 |ψ0 i         |ψ1 i                |ψ2 i   |ψ3 i          |ψ4 i   |ψ5 i
+
+
+            Figure 5: Quantum circuit for finding the order of the positive integer x
+            modulo N .
+
+
+
+                                                       11
+The application of the Hadamard operator
+                                                          
+                                        1           1  1
+                                     H=√
+                                         2          1 −1
+
+on each qubit of the first register yields (see Eq. (8))
+
+                                                2 −1t
+                                            1 X
+                                   |ψ1 i = √         |ji |0i .                              (12)
+                                             2t j=0
+
+The first register is then in a superposition of all states of the computational basis with
+equal amplitudes given by √1 t . Now we call the reader’s attention to what happens when
+                              2
+we apply Vx to |ψ1 i:
+
+                                |ψ2 i = Vx |ψ1 i
+                                                    t
+                                                 2 −1
+                                             1 X
+                                       =    √         Vx (|ji |0i)
+                                              2t j=0
+                                                    t
+                                                 2 −1
+                                             1 X
+                                       =    √         |ji xj .                              (13)
+                                              2t j=0
+
+The state |ψ2 i is a remarkable one. Because Vx is linear, it acts on all |ji |0i for 2t values
+of j, so this generates all powers of x simultaneously. This feature is called quantum
+parallelism. Some of these
+                        E    powers are 1, which correspond to the states |0i |1i, |ri |1i,
+               2t
+|2ri |1i, ..., r − 1 r |1i. This explains the choice (11) for Vx . Classically, one would
+calculate successively xj , for j starting from 2 until reaching j = r. Quantumly, one
+can calculate all powers of x with just one application of Vx . At the quantum level, the
+values of j that yield xj ≡ 1 modulo N are “known”. But this quantum information is
+not fully available at the classical level. A classical information of a quantum state is
+obtained by practical measurements and, at this point, it does not help if we measure
+the first register, since all states in the superposition (13) have equal amplitudes. The
+first part of the strategy to find r is to observe that the first register of the states |0i |1i,
+|ri |1i, |2ri |1i, ..., 2t − r |1i is periodic. So the information we want is a period. In
+order to simplify the calculation, let us measure the second register. Before doing this,
+we will rewrite |ψ2 i collecting equal terms in the second register. Since xj is a periodic
+function with period r, substitute ar + b for j in Eq. (13), where 0 ≤ a ≤ (2t /r) − 1 and
+0 ≤ b ≤ r − 1. Recall that we are supposing that t = n and r is a power of 2, therefore r
+divides 2t . Eq. (13) is converted to
+                                                t             
+                                                 2
+                                           r−1   r
+                                                   −1              E
+                                       1 XX                    b
+                              |ψ2 i = √              |ar + bi  x   .                      (14)
+                                        2t b=0 a=0
+
+In the second register, we have substituted xb for xar+b , since xr ≡ 1 modulo N . Now
+the second register is measured. Any output x0 , x1 , ..., xr−1 can be obtained with equal
+
+                                               12
+probability. Suppose that the result is xb0 . The state of the quantum computer is now
+                                        t                
+                                         2
+                                  r       r
+                                            −1                 E
+                                    r    X                b0
+                          |ψ3 i =             |ar + b 0 i x    .                  (15)
+                                    2t
+                                               a=0
+
+                                                                     p
+Note that after the measurement, the constant is renormalized to r/2t , since there are
+2t /r terms in the sum (15). Fig. 6 shows the probability of obtaining the states of the
+computational basis upon measuring the first register. The probabilities form a periodic
+function with period r. Their values are zero except for the states |b0 i, |r + b0 i, |2r + b0 i,
+..., 2t − r + b0 .
+     How can one find out the period of a function efficiently? The answer is in the
+Fourier transform. The Fourier transform of a periodic function with period r is a new
+periodic function with period proportional to 1/r. This makes a difference for finding r.
+The Fourier transform is the second and last part of the strategy. The whole method
+relies on an efficient quantum algorithm for calculating the Fourier transform, which is
+not available classically. In Section 8, we show that the Fourier transform is calculated
+efficiently in a quantum computer.
+
+
+6    The quantum discrete Fourier transform
+The Fourier transform of the function F : {0, . . . , N − 1} → C is a new function F̃ :
+{0, . . . , N − 1} → C defined as
+                                               N −1
+                                            1 X 2πijk/N
+                                  F̃ (k) = √      e     F (j).                              (16)
+                                            N j=0
+
+We can apply the Fourier transform either on a function or on the states of the compu-
+tational basis. The Fourier transform applied to the state |ki of the computational basis
+
+
+                    Probability distribution
+
+
+
+
+                              r
+                       {
+
+
+
+
+             r
+             2t
+
+
+
+
+                      b0            r + b0       2r + b0      3r + b0      Terms of |ψ3 i
+                                                                           (1st register)
+
+
+        Figure 6: Probability distribution of |ψ3 i measured in the computational basis
+        (for the case b0 = 3 and r = 8). The horizontal axis has 2t points. The number
+        of peaks is 2t /r and the period is r.
+
+
+                                                 13
+{|0i , . . . , |N − 1i} is
+                                                                  N −1
+                                                  1 X 2πijk/N
+                              DFT(|ki) = |ψk i = √       e    |ji ,                       (17)
+                                                   N j=0
+
+where the set {|ψk i : k = 0, . . . , N − 1} forms a new orthonormal basis. The Fourier
+transform is a unitary linear operator. So, if we know how it acts on the states of the
+computational basis, we also know how it acts on a generic state
+                                                       N
+                                                       X −1
+                                              |ψi =           F (a) |ai .
+                                                       a=0
+
+The Fourier transform of |ψi can be performed indistinctly using either (16) or (17). We
+will use the latter.
+    To prove that {|ψk i : k = 0, . . . , N − 1} is an orthonormal basis, i.e.,
+
+                                                  hψk′ |ψk i = δk′ k ,
+
+we can use the identity
+                               N −1                  
+                             1 X 2πijk/N                 1 if k is a multiple of N
+                                e        =                                                (18)
+                             N                           0 otherwise,
+                               j=0
+
+which is useful in the context of Fourier transforms. It is easy to verify that (18) is true.
+If k is a multiple of N , then e2πijk/N = 1 and the first case of the identity follows. If k is
+not a multiple of N , (18) is true even if N is not a power of 2. Fig. 7 shows each term
+e2πijk/N (j = 0, ..., 6) for the case k = 1 and N = 7, as vectors in the complex plane.
+Note that the sum of vectors must be zero by a symmetry argument: the distribution
+of vectors is isotropic. Usually it is said that the interference is destructive in this case.
+Using this identity, we can define the inverse Fourier transform, which is similar to (17),
+just with a minus sign on the exponent. Note that DFT−1 = DFT† , since DFT is a
+unitary operator.
+    We will present the details of a quantum circuit to perform the Fourier transform in
+Section 8. Now we will continue the calculation process of the circuit of Fig. 5. We are
+ready to find out the next state of the quantum computer—|ψ4 i. Applying the inverse
+Fourier transform on the first register, using Eq. (17) and the linearity of DFT† , we
+obtain
+
+                    |ψ4 i = DFT† (|ψ3 i)
+                                 t                                     
+                            r 2r −1          t −1
+                                            2X                               E
+                              r  X
+                                      √1          −2πij(ar+b0 )/2t      xb0 .
+                          =                       e                 |ji
+                              2t         2t a=0          j=0
+
+Inverting the summation order, we have
+                                                                    
+                                        2t
+                            t −1
+                           2X           r
+                                           −1                               E
+                       1         1    X      −2πija
+                                                                   t
+                                              e 2t /r  e−2πijb0 /2 |ji xb0 .
+                                                                      
+               |ψ4 i = √         t                                                      (19)
+                        r          2 /r a=0
+                                      j=0
+
+
+                                                          14
+                                                        Im
+                                           j=2
+                                                                  j=1
+
+                           j=3
+                                                             2π
+                                                              7          j=0
+
+                                                                          Re
+
+                            j=4
+
+                                                                  j=6
+
+                                           j=5
+
+       Figure 7: Vectors e2πij/7 (j = 0, ..., 6) in the complex plane. Their sum is zero
+       by symmetry arguments. This is an example of Eq. (18) for N = 7, k = 1.
+
+
+Using (18), we see that the expression in square brackets is not zero if and only if
+j = k2t /r, with k = 0, ..., r − 1. When j takes such values, the expression in the square
+brackets is equal to 1. So we have
+                                       r−1             !
+                                    1 X −2πi k b0 k2t          E
+                          |ψ4 i = √        e    r           xb0 .                     (20)
+                                     r               r
+                                           k=0
+
+In order to find r, the expression for |ψ4 i has two advantages over the expression for
+|ψ3 i (Eq. (15)): r is in the denominator of the ket label and the random parameter b0
+moved from the ket label to the exponent occupying now a harmless place. Fig. 8 shows
+the probability distribution of |ψ4 i measured in the computational basis. Measuring the
+first register, we get the value k0 2t /r, where k0 can be any number between 0 and r − 1
+with equal probability (the peaks in Fig. 8). If we obtain k0 = 0, we have no clue at
+
+
+                   Probability distribution
+
+
+
+                                      2t
+                                      r
+                                   {
+
+
+
+
+            1
+            r
+
+
+
+
+                              2t                 2 2t             3 2t         Terms of |ψ4 i
+                              r                   r                r           (1st register)
+
+
+       Figure 8: Probability distribution of |ψ4 i measured in the computational basis.
+       The horizontal axis has 2t points, only the non-null terms are shown. The number
+       of peaks is r and the period is 2t /r.
+
+
+                                                    15
+all about r, and the algorithm must be run again. If k0 6= 0, we divide k0 2t /r by 2t ,
+obtaining k0 /r. Neither k0 nor r are known. If k0 is coprime to r, we simply select the
+denominator.
+    If k0 and r have a common factor, the denominator of the reduced fraction k0 /r is
+a factor of r but not r itself. Suppose that the denominator is r1 . Let r = r1 r2 . Now
+the goal is to find r2 , which is the order of xr1 . We run again the quantum part of
+the algorithm to find the order of xr1 . If we find r2 in the first round, the algorithm
+halts, otherwise we apply it recursively. The recursive process does not last, because the
+number of iterations is less than or equal to log2 r.
+    Take N = 15 as an example, which is the least nontrivial composite number. The set
+of numbers less than 15, coprime to 15 is {1, 2, 4, 7, 8, 11, 13, 14}. The numbers in the set
+{4, 11, 14} have order 2 and the numbers in the set {2, 7, 8, 13} have order 4. Therefore,
+in any case r is a power of 2 and the factors of N = 15 can be found in a 8-bit quantum
+computer (t+n = 2⌈log 2 15⌉ = 8). The authors of [11] used a 7-qubit quantum computer,
+bypassing part of the algorithm.
+
+
+7    Generalization by means of an example
+In the previous sections, we have considered a special case when the order r is a power of 2
+and t = n (t is the number of qubits in the first register—see Fig. 5—and n = ⌈log2 N ⌉).
+In this section, we consider the factorization of N = 21, that is the next nontrivial
+composite number. We must choose t such that 2t is between N 2 and 2N 2 , which is
+always possible [4]. For N = 21, the smallest value of t is 9. This is the simplest example
+allowed by the constraints, but enough to display all properties of Shor’s algorithm.
+    The first step is to pick up x at random such that 1 < x < N , and to test whether x
+is coprime to N . If not, we easily find a factor of N by calculating GCD(x, N ). If yes,
+the quantum part of the algorithm starts. Suppose that x = 2 has been chosen. The
+goal is to find out that the order of x is r = 6. The quantum computer is initialized in
+the state
+                                       |ψ0 i = |0i |0i ,
+where the first register has t = 9 qubits and the second has n = 5 qubits. Next step is
+the application of H ⊗9 on the first register yielding (see Eq. (12))
+                                                   511
+                                            1 X
+                                  |ψ1 i = √         |ji |0i .
+                                            512 j=0
+
+The next step is the application of Vx (defined in (11)), which yields
+                        511
+                   1 X
+       |ψ2 i =   √          |ji 2j mod N
+                   512 j=0
+                       
+                   1
+             =   √        |0i |1i + |1i |2i + |2i |4i + |3i |8i + |4i |16i + |5i |11i +
+                   512
+                           |6i |1i + |7i |2i + |8i |4i + |9i |8i + |10i |16i + |11i |11i +
+                                         
+                         |12i |1i + . . . .
+
+
+                                              16
+Notice that the above expression has the following pattern: the states of the second
+register of each “column” are the same. Therefore we can rearrange the terms in order
+to collect the second register:
+                              
+                          1                                               
+              |ψ2 i = √          |0i + |6i + |12i + . . . + |504i + |510i |1i +
+                          512
+                                                                          
+                                 |1i + |7i + |13i + . . . + |505i + |511i |2i +
+                                                                  
+                                 |2i + |8i + |14i + . . . + |506i |4i +          (21)
+                                                                  
+                                 |3i + |9i + |15i + . . . + |507i |8i +
+                                                                  
+                                 |4i + |10i + |16i + . . . + |508i |16i +
+                                                                        
+                                                                  
+                                |5i + |11i + |17i + . . . + |509i |11i .
+
+This feature was made explicit in Eq. (14). Because the order is not a power of 2,
+here there is a small difference: the first two lines of Eq. (21) have 86 terms, while the
+remaining ones have 85.
+   Now one measures the second register1 , yielding one of the following numbers equiprob-
+ably: {1, 2, 4, 8, 16, 11}. Suppose that the result of the measurement is 2, then
+                             1
+                    |ψ3 i = √ (|1i + |7i + |13i + . . . + |505i + |511i) |2i .                     (22)
+                             86
+Notice that the state |ψ3 i was renormalized in order to have unit norm. It does not
+matter what is the result of the measurement; what matters is the periodic pattern of
+(22). The period of the states of the first register is the solution to the problem and the
+Fourier transform can reveal the value of the period. So, the next step is the application
+of the inverse Fourier transform on the first register of |ψ3 i:
+
+                 |ψ4 i = DFT† (|ψ3 i)
+                                        85
+                                                   !
+                                   †1 X
+                         = DFT √           |6a + 1i |2i
+                                    86 a=0
+                                511
+                                     "        85
+                                                         #           !
+                             1 X         1 X −2πi 6ja −2πi j
+                         = √           √         e   512   e 512 |ji   |2i ,                       (23)
+                            512 j=0       86 a=0
+
+where we have used Eq. (17) and have rearranged the sums. The last equation is similar
+to Eq. (19), but with an important difference. In Section 5, we were assuming that r
+divides 2t . This is not true in the present example (6 does not divide 512), therefore
+we cannot use the identity (18) to simplify the term in brackets in Eq. (23). This term
+never vanishes, but its main contribution is still around j = 0, 85, 171, 256, 341, 427,
+which are obtained rounding 512k0 /6 for k0 from 0 to 5—compare to the discussion that
+follows Eq. (20). To see this, let us plot the probability of getting the result j (in the
+interval 0 to 511) by measuring the first register of the state |ψ4 i. From (23), we have
+    1
+      As measurements can always be performed in the end (see [6] page 186), this step is not necessary.
+It is commonly used to simplify the expressions that follow.
+
+
+
+                                                  17
+that the probability is
+
+                                                             85                 2
+                                               1    X       6ja
+                                 Prob(j) =            e−2πi 512                     .                 (24)
+                                           512 × 86
+                                                             a=0
+
+The plot of Prob(j) is shown in Fig. 9. We see the peaks around j = 0, 85, 171, 256,
+341, 427, indicating a high probability of getting one of these values, or some value very
+close to them. In between, the probability is almost zero. The sharpness of the peaks
+depends on t (number of qubits in the first register). The lower limit 2t ≥ N 2 ensures
+a high probability in measuring a value of j carrying the desired information. A careful
+analysis of the expression (24) is performed in [12] and a meticulous study of the peak
+form is performed in [13].
+    Let us analyze the possible measurement results. If we get j = 0 (first peak), the
+algorithm has failed in this round. It must be run again. We keep x = 2 and rerun the
+quantum part of the algorithm. The probability of getting j = 0 is low: from Eq. (24)
+we have that Prob(0) = 86/512 ≈ 0.167. Now suppose we get j = 85 (or any value in
+the second peak). We divide by 512 yielding 85/512, which is a rational approximation
+of k0 /6, for k0 = 1. How can we obtain r from 85/512?
+    The method of continued fraction approximation allows one to extract the desired
+information. A general continued fraction expansion of a rational number j1 /j2 has the
+form
+                                  j1              1
+                                     = a0 +               ,
+                                  j2         a1 + ...+1 1
+                                                                     ap
+
+usually represented as [a0 , a1 , ..., ap ], where a0 is a non-negative integer and a1 , ..., ap are
+positive integers. The q-th convergent (0 ≤ q ≤ p) is defined as the rational number
+[a0 , a1 , ..., aq ]. It is an approximation to j1 /j2 and has a denominator smaller than j2 .
+     This method is easily applied by inversion of the fraction followed by integer division
+with rational remainder. Inverting 85/512 yields 512/85, which is equal to 6 + 2/85. We
+
+
+
+                 0.15
+
+
+
+
+                  0.1
+       Prob(j)
+
+
+
+                 0.05
+
+
+
+
+                    0
+                        0   50    100   150   200   250        300        350       400   450   500
+                                                         j
+
+        Figure 9: Plot of Prob(j) against j. Compare to the plot of Fig. 8, where peaks
+        are not spread and have the same height.
+
+
+                                                    18
+repeat the process with 2/85 until we get numerator 1. The result is
+                                          85     1
+                                             =        .
+                                         512   6+ 1 1  42+ 2
+
+So, the convergents of 85/512 are 1/6, 42/253, and 85/512. We must select the con-
+vergents that have a denominator smaller than N = 21 (since r < N )2 . This method
+yields 1/6, and then r = 6. We check that 26 ≡ 1 modulo 21, and the quantum part
+of the algorithm ends with the correct answer. The order r = 6 is an even number,
+therefore GCD(2(6/2) ± 1, 21) gives two non trivial factors of 21. A straightforward cal-
+culation shows that any measured result in the second peak (say 81 ≤ j ≤ 89) yields the
+convergent 1/6.
+    Consider now the third peak, which corresponds to k0 /6, k0 = 2. We apply again
+the method of continued fraction approximation, which yields 1/3, for any j in the third
+peak (say 167 ≤ j ≤ 175). In this case, we have obtained a factor of r (r1 = 3), since
+23 ≡ 8 6≡ 1 modulo 21. We run the quantum part of the algorithm again to find the order
+of 8. We eventually obtain r2 = 2, which yields r = r1 r2 = 3 × 2 = 6.
+    The fourth and fifth peaks yield also factors of r. The last peak is similar to the
+second, yielding r directly.
+    The general account of the succeeding probability is as follows. The area under
+all peaks is approximately the same: ≈ 0.167. The first and fourth peaks have a nature
+different from the others—they are not spread. To calculate their contribution to the total
+probability, we take the basis equal to 1. The area under the second, third, fifth, and last
+peaks are calculated by adding up Prob(j), for j running around the center of each peak.
+So, in approximately 17% cases, the algorithm fails (1st peak). In approximately 33%
+cases, the algorithm returns r in the first round (2nd and 6th peaks). In approximately
+50% cases, the algorithm returns r in the second round or more (3rd, 4th, and 5th peaks).
+Now we calculate the probability of finding r in the second round. For the 3rd and 5th
+peaks, the remaining factor is r2 = 2. The graph equivalent to Fig. 9 in this case has
+2 peaks, then the algorithm returns r2 in 50% cases. For the 4th peak, the remaining
+factor is r = 3 and the algorithm returns r2 in 66.6% cases. This amounts to 2×50%+66.6%
+                                                                                     3
+of 50%, which is equal to around 22%. In summary, the success probability for x = 2 is
+around 55%.
+
+
+8       Fourier transform in terms of the universal gates
+In the previous section, we have shown that Shor’s algorithm is an efficient probabilistic
+algorithm, assuming that the Fourier transform could be implemented efficiently. In this
+section, we decompose the Fourier transform in terms of the universal gates: CNOT
+and 1-qubit gates. This decomposition allows one to measure the efficiency of the quan-
+tum discrete Fourier transform and shows how to implement it in an actual quantum
+computer.
+    2
+     The inequality r ≤ ϕ(N ) follows from the Euler’s theorem: xϕ(N) ≡ 1 mod N , where x is a positive
+integer coprime to N and ϕ is the Euler’s totient function (ϕ(N ) gives the number of positive integers
+less than N , coprime to N ). The inequality ϕ(N ) < N follows from the definition of ϕ. (see [14] page
+492)
+
+
+                                                  19
+   The Fourier transform of the states of the computational basis is
+                                                N −1
+                                       1 X 2πijk/N
+                           DFT(|ji) = √      e     |ki .                            (25)
+                                       N k=0
+
+Noting that the right hand side of Eq. (25) has N terms and the computational basis has
+N states, we derive that the complexity to calculate classically the Fourier transform of
+the computational basis using Eq. (25) is O(N 2 ) = O(22n ) – double exponential growth.
+A very important result in Computer Science was the development of the classical fast
+Fourier transform (FFT), which reduced the complexity to O(n2n ) [15]. In the present
+context we show the improvement by recognizing that the rhs of (25) is a very special
+kind of expansion, which can be fully factored. For example, the Fourier transform of
+{|0i, |1i, |2i, |3i} can be written as
+                                                              
+                                         |0i + |1i     |0i + |1i
+                         DFT(|0i) =         √       ⊗     √
+                                              2             2
+                                                                
+                                         |0i − |1i     |0i + i |1i
+                         DFT(|1i) =         √       ⊗      √
+                                              2              2
+                                                              
+                                         |0i + |1i     |0i − |1i
+                         DFT(|2i) =         √       ⊗     √                          (26)
+                                              2             2
+                                                                
+                                         |0i − |1i     |0i − i |1i
+                         DFT(|3i) =         √       ⊗      √         .
+                                              2              2
+
+Note that in example (26), we are using base 2 in order to factor the rhs. Let us now
+factor the general expression. The first step is to write (25) in the form
+                                1     1
+                          1 X         X      P
+                                         2πij n
+                                                   kl
+              DFT(|ji) = √        ...   e      l=1 2l
+                                                      |k1 i ⊗ . . . ⊗ |kn i ,       (27)
+                           2n k =0 k =0
+                                 1         n
+
+                                                                            P
+where the ket |ki was converted to base 2 and we have used the expansion k = nl=1 kl 2n−l
+in the exponent. Using that the exponential of a sum is a product of exponentials, (27)
+turns into a (non-commutative) product of the following kets:
+                                     1        1 Y n              
+                                1 X          X             k
+                                                       2πij ll
+                    DFT(|ji) = √        ...           e    2 |k i
+                                                               l    .               (28)
+                                2n k =0     k =0 l=1
+                                       1            n
+
+
+Now we factor (28) by interchanging the sums and the product:
+                                        n    1          
+                                    1 Y X 2πij kll
+                        DFT(|ji) = √            e 2 |k i
+                                                      l    .                        (29)
+                                    2n l=1 k =0
+                                                    l
+
+
+We easily convince ourselves that the last equation is correct by going backwards: simply
+expand the product in Eq. (29) and then put all sums at the beginning of the resulting
+expression to obtain (28). Expanding the sum of Eq. (29) and then the product, we
+
+
+
+                                               20
+finally get
+                                 n
+                             1 Y                   l
+                                                        
+     DFT(|ji) =            √          |0i + e2πij/2 |1i
+                             2n l=1
+                                      j
+                                            !                 j     !                     j
+                                                                                                !
+                           |0i + e2πi 2 |1i       |0i + e2πi 22 |1i           |0i + e2πi 2n |1i
+                      =          √            ⊗         √             ⊗. . .⊗       √             . (30)
+                                   2                      2                           2
+The complexity to calculate Eq. (30) for one |ji is O(n), since there are n terms in
+the product. The complexity in the classical calculation of the fast Fourier transform
+of the whole computational basis is still exponential – O(n2n ), since the calculation is
+performed on each of the 2n basis elements, one at a time. On the other hand, the
+quantum computer uses quantum parallelism, and the Fourier transform of the state
+                                                            n −1
+                                                           2X
+                                                   |ψi =           F (a) |ai ,
+                                                           a=0
+that has an exponential number of terms, is calculated with one application of the quan-
+tum Fourier transform. The Fourier transform of the 2n basis elements is performed
+simultaneously, so the complexity of the quantum Fourier transform is measured by the
+size of its circuit. We now show that it requires O(n2 ) gates.
+    Consider the circuit of Fig. 10. It is easy to check that the value of the qubits |jm i,
+m 6= l, does not change. Let us now check the hard one: |jl i. The unitary matrices Rk
+are defined as                                          
+                                         1        0
+                                Rk =                      .
+                                         0 exp 2πi 21k
+Each Rk gate is controlled by the qubit |jk+l−1 i. So, if jk+l−1 = 0, then Rk must be
+replaced by the identity matrix (no action), and if jk+l−1 = 1, then Rk comes in action.
+This means that, for calculation purposes, the Rk ’s controlled by |jk+l−1 i can be replaced
+by the 1-qubit gates                "                       #
+                                      1         0       
+                            CRk =                  j          .                         (31)
+                                      0 exp 2πi k+l−1 2k
+
+
+
+                                     |j1 i                                        |j1 i
+
+
+                                 |jl−1 i                                          |jl−1 i
+                                     |jl i     H     R2                  Rn+1−l   |ψi
+
+                                     |jl+1 i                                      |jl+1 i
+
+
+                                     |jn i                                        |jn i
+
+
+        Figure 10: Part of the quantum Fourier transform circuit that acts on qubit
+        |jl i. The value of all qubits does not change, except |jl i that changes to |ψi =
+                       j
+              2πi
+        |0i+e       2n+1−l |1i
+                √
+                 2
+                                 .
+
+
+                                                              21
+In order to simplify the calculations, note that
+                                                jl
+                                     |0i + e2πi 2 |1i
+                           H |jl i =       √          = CR1 |+i ,                                     (32)
+                                             2
+
+where |+i = √12 (|0i + |1i). So instead of using
+
+                              |ψi = CRn+1−l . . . CR2 H |jl i ,
+
+which can be read directly from Fig. 10, we will use
+
+                              |ψi = CRn+1−l . . . CR2 CR1 |+i .
+
+We define
+                                                   1
+                                                   Y
+                                 PRn+1−l =                    CRk ,                                   (33)
+                                               k=n+1−l
+
+where the product is in the reverse order. Using (31) and (33), we get
+                                   "                                #
+                                1     1              0           
+               PRn+1−l = √                         jn           j
+                                 2 0 exp 2πi 2n+1−l + . . . + 2l
+                                   "                      #
+                                1     1        0       
+                           = √                      j       ,                                         (34)
+                                 2 0 exp 2πi 2n+1−l
+                           P
+where we have used that j = nm=1 jm 2n−m and the fact that the first l − 1 terms of this
+expansion do not contribute—they are integer multiples of 2πi in (34). We finally get
+
+                               |ψi = PRn+1−l |+i
+                                                           j
+                                                     2πi n+1−l
+                                           |0i + e      2          |1i
+                                     =                √                  .                            (35)
+                                                          2
+
+
+                                                                                         j
+                                                                                     2πi n
+                                                                             |0i+e      2 |1i
+             |+i       PR n                                                          √
+                                                                                         2
+                                                                                      j
+                                                                                 2πi n−1
+             |+i                  PR n−1                                     |0i+e  2
+                                                                                      √
+                                                                                         |1i
+                                                                                          2
+
+             |+i
+
+                                                                                         j
+                                                                                     2πi 2
+                                                                              |0i+e     2 |1i
+             |+i                                            PR 2                      √
+                                                                                          2
+                                                                                              j
+                                                                                      2πi
+             |+i                                                      PR 1    |0i+e
+                                                                                   √
+                                                                                              2 |1i
+                                                                                         2
+
+
+
+
+       Figure 11: Intermediate circuit for the quantum Fourier Transform. The input
+       is taken as |+i for calculation purposes as explained in Eq. (32). The output is
+       in reverse order with respect to Eq. (30).
+
+
+                                              22
+                |ϕi                  |ψi            |ϕi                  |ψi
+
+                                           =
+                |ψi                  |ϕi            |ψi                   |ϕi
+
+
+
+                                 Figure 12: The swap circuit.
+
+
+Note that PRn+1−l cannot be implemented directly acting only in the l-th qubit because
+it requires the values of jl+1 to jn .
+    The next step is the circuit of Fig. 11. We have merged the Rk gates using Eq. (33).
+The gates PR k (k from n to 1) are placed in sequence in Fig. 11, so that the output of
+the first qubit is the last term of Eq. (30), corresponding to the action of PR n on |ψ1 i
+controlled by the other qubits, which do not change. The same process is repeated by
+PR n−1 acting on |ψ2 i, yielding the term before the last in Eq. (30), and so on, until
+reproducing all the terms of the Fourier transform. Now it remains to reverse the order
+of the states of the qubits.
+    In order to reverse the states of 2 generic qubits, we use the circuit of Fig. 12. Let
+us show why this circuit works as desired. Take the input |ϕi |ψi = |0i |1i. The first
+CNOT of Fig. 12 does not change this state; the upside down CNOT changes to |1i |1i;
+and the last CNOT changes to |1i |0i. The output is |ψi |ϕi. If we repeat the same
+process with |0i |0i, |1i |0i, and |1i |1i, we conclude that the circuit inverts all states of
+the computational basis, therefore it inverts a generic state of the form |ϕi |ψi.
+    The decomposition is still not complete. It remains to write the controlled Rk gates
+in terms of CNOT and 1-qubit gates. This decomposition is given in Fig. 13. The
+verification of this decomposition is straightforward. One simply follows what happens
+to the computational basis {|00i , |01i , |10i , |11i} in both circuits.
+    The complete circuit for the quantum Fourier transform is given in Fig. 14. Now we
+can calculate the complexity of the quantum Fourier circuit. Counting the number of
+elementary gates in Figs. 10 to 13 we get the leading term 5n2 /2, which implies that the
+complexity is O(n2 ).
+    By now one should be asking about the decomposition of Vx in terms of the elementary
+
+
+
+                      Rk                                                  Rk
+
+
+                                 =
+
+                                            Rk             Rk†
+
+
+
+
+        Figure 13: Decomposition of the controlled Rk gates in terms of the universal
+        gates.
+
+
+
+                                               23
+                                                                                     j
+                                                                             2πi
+                                                                      |0i+e          2 |1i
+             |j1 i                                                         √
+                                                                               2
+                                                                               j
+                                                                           2πi 2
+             |j2 i                                                    |0i+e
+                                                                             √
+                                                                              2 |1i
+                                                                                 2
+                          DFT with
+                            reverse
+                            output                                            j
+                                                                         2πi n−1
+                                                                     |0i+e  2    |1i
+             |jn−1 i                                                         √
+                                                                                 2
+                                                                               j
+                                                                           2πi n
+             |jn i                                                    |0i+e
+                                                                             √
+                                                                              2 |1i
+                                                                                 2
+
+
+
+
+             Figure 14: The complete circuit for the quantum Fourier Transform.
+
+
+gates. Vx is the largest gate of Fig. 5. Actually, Shor stated in his 1997 paper that
+Vx is the “bottleneck of the quantum factoring algorithm” due to the time and space
+consumed to perform the modular exponentiation (see [4] page 10). The bottleneck is
+not so strict though since, by using the well known classical method of repeated squaring
+and ordinary multiplication algorithms (see [14] page 69), the complexity to calculate
+modular exponentiation is O(n3 ). The quantum circuit can be obtained from the classical
+circuit by replacing the irreversible classical gates by the reversible quantum counterpart.
+Vx is a problem in recursive calls of the algorithm when x changes. For each x, a new
+circuit must be built, what is troublesome at the present stage of hardware development.
+
+
+Acknowledgments
+We thank the Group of Quantum Computation at LNCC for stimulating discussions on
+the subject.
+
+
+References
+    [1] R.P. Feynman, Simulating Physics with computers, Int. J. Theor. Phys. 21 (1982)
+        467-488.
+
+    [2] D. Deutsch and R. Jozsa, Rapid solution of problems by quantum computation,
+        Proc. R. Soc. London A439 (1992) 553-558.
+
+    [3] D. Simon, On the power of quantum computation, Proc. 35th Annual Sympo-
+        sium on Foundations of Computer Science (1994) 116 and SIAM Journal on
+        Computing 26 (1997) 1474-1483.
+
+    [4] P. Shor, Algorithms for Quantum Computation: Discrete Logarithm and Factor-
+        ing, Proc. 35th Annual Symposium on Foundations of Computer Science (1994)
+        124-134 and SIAM J. Comput. 26 (1997) 1484-1509.
+
+    [5] A. Ekert and R. Jozsa, Quantum computation and Shor’s factoring algorithm,
+        Reviews of Modern Physics 68 (1996) 733-753.
+
+                                            24
+ [6] M.A. Nielsen and I.L. Chuang, Quantum Computation and Quantum Informa-
+     tion, Cambridge University Press, Cambridge (2000).
+
+ [7] J. Preskill, Quantum Information and Computation, Lecture Notes, California
+     Institute of Technology (1998).
+
+ [8] D. Aharonov, Quantum Computation, Annual Reviews of Computational
+     Physics, ed. Dietrich Stauffer, World Scientific, vol. VI (1998).
+
+ [9] A. Barenco, C.H. Bennett, R. Cleve, D.P. DiVincenzo, N. Margolus, P. Shor, T.
+     Sleator, J. Smolin, and H. Weinfurter, Elementary gates for quantum computa-
+     tion, Phys. Rev. A52 (1995) 3457-3467.
+
+[10] C.H. Papadimitriou, Computational Complexity, Addison Wesley Pub. Co., Mas-
+     sachussetts (1994).
+
+[11] L.M.K. Vandersypen, M. Steffen, G. Breyta, C.S. Yannoni, M.H. Sherwood, and
+     I.L. Chuang, Experimental realization of Shor’s quantum factoring algorithm
+     using nuclear magnetic resonance, Nature, 414 (2001) 883-887.
+
+[12] S.J. Lomonaco, Shor’s quantum factoring algorithm, Proceedings of Symposia
+     in Applied Mathematics, Vol. 58, American Mathematical Society (2002) and
+     (quant-ph/0010034).
+
+[13] G. Einarsson, Probability Analysis of a Quantum Computer, quant-ph/0303074
+     (2003).
+
+[14] J. von zur Gathen and J. Gerhard, Modern Computer Algebra, Cambridge Uni-
+     versity Press, Cambridge (1999).
+
+[15] J.W. Cooley and J.W. Tukey, An algorithm for machine calculation of complex
+     Fourier series, Math. Comp. 19 (1965) 297-301.
+
+
+
+
+                                      25
+

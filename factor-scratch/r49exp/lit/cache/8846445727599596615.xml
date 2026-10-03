@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/VWz34SGMsObiHKUVNRWJ7yQ27io</id>
+  <title>arXiv Query: search_query=all:"Riemann hypothesis" AND all:factoring AND all:"conditional"&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:14:41Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Riemann+hypothesis%22+AND+(all:factoring+AND+all:%22conditional%22)&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>24</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1406.3672v3</id>
+    <title>Deterministic polynomial factoring under the assumption of the Extended Riemann Hypothesis (ERH)</title>
+    <updated>2015-12-15T00:28:58Z</updated>
+    <link href="https://arxiv.org/abs/1406.3672v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.3672v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of deterministically factoring a univariate polynomial over a finite field under the assumption of the Extended Riemann Hypothesis (ERH). This work builds upon the line of approach first explored by Gao in $2001$. The general approach has been to implicitly construct a graph with the roots as vertices and the edges formed by some polynomial time computable relation. The algorithm then fails to factor a polynomial if this associated graph turns out to be \emph{regular}. In the first part of our work we strengthen the edge relation so that the resulting set of graphs we obtain are subgraphs of Gao's graphs, all of which must be \emph{regular}.
+  In the second part of our work we strengthen the regularity condition of these graphs. This is accomplished by finding a parallel between their algorithms and the $1$-dimensional Weisfeiler-Leman algorithm for solving the Graph Isomorphism problem. We observe that the general principle behind their algorithms is to separate the roots by computing the $1$-dimensional Weisfeiler-Leman approximation to the orbits of this graph. This leads us to the natural question of whether this approximation may be improved. We then go on to show how to implicitly compute the $2$-dimensional Weisfeiler-Leman approximation of the orbits of these graphs. The polynomials that our algorithm fails to factor form graphs that are \emph{strongly regular} and their set of adjacency matrices forms a combinatorial structure called an \emph{Association scheme}.</summary>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-14T00:47:14Z</published>
+    <arxiv:comment>Master's Thesis</arxiv:comment>
+    <arxiv:primary_category term="cs.DM"/>
+    <author>
+      <name>Aurko Roy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1103.1225v2</id>
+    <title>New horizons in multidimensional diffusion: The Lorentz gas and the Riemann Hypothesis</title>
+    <updated>2011-11-04T10:51:44Z</updated>
+    <link href="https://arxiv.org/abs/1103.1225v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1103.1225v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lorentz gas is a billiard model involving a point particle diffusing deterministically in a periodic array of convex scatterers. In the two dimensional finite horizon case, in which all trajectories involve collisions with the scatterers, displacements scaled by the usual diffusive factor $\sqrt{t}$ are normally distributed, as shown by Bunimovich and Sinai in 1981. In the infinite horizon case, motion is superdiffusive, however the normal distribution is recovered when scaling by $\sqrt{t\ln t}$, with an explicit formula for its variance. Here we explore the infinite horizon case in arbitrary dimensions, giving explicit formulas for the mean square displacement, arguing that it differs from the variance of the limiting distribution, making connections with the Riemann Hypothesis in the small scatterer limit, and providing evidence for a critical dimension $d=6$ beyond which correlation decay exhibits fractional powers. The results are conditional on a number of conjectures, and are corroborated by numerical simulations in up to ten dimensions.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-03-07T10:09:31Z</published>
+    <arxiv:comment>Now 23 pages, including a new section 2 proposing that the mean square displacement differs from the variance of the limiting distribution for this model; there are also changes to notation, figures and references</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <arxiv:journal_ref>J. Stat. Phys., 146, 181-204 (2012)</arxiv:journal_ref>
+    <author>
+      <name>Carl P. Dettmann</name>
+      <arxiv:affiliation>University of Bristol</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/s10955-011-0397-2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10955-011-0397-2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.1974v1</id>
+    <title>Schemes for Deterministic Polynomial Factoring</title>
+    <updated>2008-04-11T23:04:17Z</updated>
+    <link href="https://arxiv.org/abs/0804.1974v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.1974v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work we relate the deterministic complexity of factoring polynomials (over finite fields) to certain combinatorial objects we call m-schemes. We extend the known conditional deterministic subexponential time polynomial factoring algorithm for finite fields to get an underlying m-scheme. We demonstrate how the properties of m-schemes relate to improvements in the deterministic complexity of factoring polynomials over finite fields assuming the generalized Riemann Hypothesis (GRH). In particular, we give the first deterministic polynomial time algorithm (assuming GRH) to find a nontrivial factor of a polynomial of prime degree n where (n-1) is a smooth number.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-11T23:04:17Z</published>
+    <arxiv:comment>14 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0707.4468v1</id>
+    <title>Note Integer Factoring Methods III</title>
+    <updated>2007-07-30T18:55:27Z</updated>
+    <link href="https://arxiv.org/abs/0707.4468v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.4468v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The best deterministic unconditionally proven integer factorization algorithms have exponential running time complexities of O(N^(1/4)) arithmetic operations, and conditional on the Riemann hypothesis, there is a deterministic algorithm of exponential running time complexity O(N^(1/5)). This note proposes a new deterministic integer factorization algorithm of deterministic exponential time complexity O(N^(1/6)). Furthermore, an algorithm for decomposing composite integers that have factor differences of the form q - p = (r - 1)N^(1/2) + u, where r &gt; 1 is a fixed parameter, and | u | &lt; N^(1/3), in deterministic logarithmic time and various other results are included.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-30T18:55:27Z</published>
+    <arxiv:comment>20 Pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>N. A. Carella</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.10214v4</id>
+    <title>Product of an integer free of small prime factors and prime in arithmetic progression</title>
+    <updated>2021-07-06T02:15:36Z</updated>
+    <link href="https://arxiv.org/abs/1812.10214v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.10214v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish estimates for the number of ways to represent any reduced residue class as a product of a prime and an integer free of small prime factors. Our best results is conditional on the Generalised Riemann hypothesis (GRH). As a corollary, we make progress on a conjecture of Erdös, Odlyzko and Sárközy.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-26T03:58:09Z</published>
+    <arxiv:comment>Accepted for publication in Monatshefte für Mathematik</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kam Hung Yau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1704.03174v3</id>
+    <title>Quantum simulation of the integer factorization problem: Bell states in a Penning trap</title>
+    <updated>2018-02-12T12:28:24Z</updated>
+    <link href="https://arxiv.org/abs/1704.03174v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1704.03174v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The arithmetic problem of factoring an integer $N$ can be translated into the physics of a quantum device, a result that supports Pólya's and Hilbert's conjecture to prove Riemann's hypothesis. The energies of this system, being univocally related to the factors of $N$, are the eigenvalues of a bounded Hamiltonian. Here we solve the quantum conditions and show that the histogram of the discrete energies, provided by the spectrum of the system, should be interpreted in number theory as the relative probability for a prime to be a factor candidate of $N$. This is equivalent to a quantum sieve that is demonstrated to require only $ o(\log \sqrt N)^3$ energy measurements to solve the problem, recovering Shor's complexity result. Hence, the outcome can be seen as a probability map that a pair of primes solve the given factorization problem. Furthermore, we show that a possible embodiment of this quantum simulator corresponds to two entangled particles in a Penning trap. The possibility to build the simulator experimentally is studied in detail. The results show that factoring numbers, many orders of magnitude larger than those computed with experimentally available quantum computers, is achievable using typical parameters in Penning traps.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-11T07:31:41Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 97, 032325 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Jose Luis Rosales</name>
+    </author>
+    <author>
+      <name>Vicente Martin</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.97.032325</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.97.032325" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03801v1</id>
+    <title>From Ordered Bernoulli Levels to Critical-Line Geometry: Integer Quantization, Bernoulli Residual Phase, and Prime-Power Spectra</title>
+    <updated>2026-09-03T13:05:09Z</updated>
+    <link href="https://arxiv.org/abs/2609.03801v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03801v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the ordered Bernoulli-word kernel f(p,n,k)=p^k(1-p)^(n-k) and the geometry generated by its inverse-integer level sets. The binary level 2^(-n) selects p=1/2 as the unique real split-independent anchor. Under complement-preserving complex continuation, the pair becomes z=1/2+iu and 1-z=1/2-iu, producing a conjugation-symmetric vertical geometry before any zeta-function input is introduced. The quadratic coordinate Q(z)=z(1-z)=1/4+u^2 has a sharp minimum at the central point and admits an exact integer quantization. For critical-line zero ordinates gamma_k, the induced levels L_k=1/4+gamma_k^2 are decomposed exactly as L_k=N_k+delta_k, where N_k is the nearest integer and delta_k is a periodic first-Bernoulli residual. Circularization gives Z_k=exp(2 pi i delta_k), isolating gamma_k^2 mod 1 as the residual phase variable. Unique factorization resolves the integer shells into prime-generator coordinates, while a distinct complex exponent s lifts the same construction to the Dirichlet atoms m^(-s), linking the Dirichlet-series and Euler-product assemblies. Exact identities, classical zeta connections, numerical controls, and open conditional Weyl tests are kept explicitly separate. No proof of the Riemann Hypothesis is claimed.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T13:05:09Z</published>
+    <arxiv:comment>20 pages, 8 figures. Includes exact algebraic constructions, finite-sample numerical controls, and conditional Weyl diagnostics</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Y. Kenan Yılmaz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.04896v2</id>
+    <title>Quantum Simulation of the Factorization Problem</title>
+    <updated>2016-11-08T09:57:01Z</updated>
+    <link href="https://arxiv.org/abs/1601.04896v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.04896v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Feynman's prescription for a quantum simulator was to find a hamitonian for a system that could serve as a computer. Pólya and Hilbert conjecture was to demonstrate Riemann's hypothesis through the spectral decomposition of hermitian operators. Here we study the problem of decomposing a number into its prime factors, $N=xy$, using such a simulator. First, we derive the hamiltonian of the physical system that simulate a new arithmetic function, formulated for the factorization problem, that represents the energy of the computer. This function rests alone on the primes below $\sqrt N$. We exactly solve the spectrum of the quantum system without resorting to any external ad-hoc conditions, also showing that it obtains, for $x\ll \sqrt{N}$, a prediction of the prime counting function that is almost identical to Riemann's $R(x)$ function. It has no counterpart in analytic number theory and its derivation is a consequence of the quantum theory of the simulator alone.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-19T12:41:01Z</published>
+    <arxiv:comment>10 pages, 12 figures. Accepted for publication in Physical Review Letters</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 117, 200502 (2016)</arxiv:journal_ref>
+    <author>
+      <name>Jose Luis Rosales</name>
+    </author>
+    <author>
+      <name>Vicente Martin</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.117.200502</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.117.200502" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.07463v3</id>
+    <title>Bias in cubic Gauss sums: Patterson's conjecture</title>
+    <updated>2024-05-14T16:56:05Z</updated>
+    <link href="https://arxiv.org/abs/2109.07463v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.07463v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $W$ be a smooth test function with compact support in $(0,\infty)$. Conditional on the Generalized Riemann Hypothesis for Hecke $L$-functions over $\mathbb{Q}(ω)$, we prove that $$\sum_{p \equiv 1 \pmod{3}} \frac{1}{2 \sqrt{p}} \cdot \Big ( \sum_{x \pmod{p}} e^{2πi x^3 / p} \Big ) W \Big ( \frac{p}{X} \Big ) \sim \frac{(2π)^{2/3}}{3 Γ(\tfrac 23)} \int_{0}^{\infty} W(x) x^{-1/6} dx \cdot \frac{X^{5/6}}{\log X},$$ as $X \rightarrow \infty$ and $p$ runs over primes. This explains a well-known numerical bias in the distribution of cubic Gauss sums first observed by Kummer in 1846 and confirms (conditionally on the Generalized Riemann Hypothesis) a conjecture of Patterson from 1978.
+  There are two important byproducts of our proof. The first is an explicit level aspect Voronoi summation formula for cubic Gauss sums, extending computations of Patterson and Yoshimoto. Secondly, we show that Heath-Brown's cubic large sieve is sharp up to factors of $X^{o(1)}$ under the Generalized Riemann Hypothesis. This disproves the popular belief that the cubic large sieve can be improved.
+  An important ingredient in our proof is a dispersion estimate for cubic Gauss sums. It can be interpreted as a cubic large sieve with correction by a non-trivial asymptotic main term. This estimate relies on the Generalized Riemann Hypothesis, and is one of the fundamental reasons why our result is conditional.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-15T17:53:50Z</published>
+    <arxiv:comment>79 pages; minor corrections, accepted Annals of Math</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexander Dunn</name>
+    </author>
+    <author>
+      <name>Maksym Radziwiłł</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.06971v10</id>
+    <title>The Dirichlet Series for the Liouville Function and the Riemann Hypothesis</title>
+    <updated>2017-10-08T17:02:49Z</updated>
+    <link href="https://arxiv.org/abs/1609.06971v10" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.06971v10" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates the analytic properties of the Liouville function's Dirichlet series that obtains from the function F(s)= zeta(2s)/zeta(s), where s is a complex variable and zeta(s) is the Riemann zeta function. The paper employs a novel method of summing the series by casting it as an infinite number of sums over sub-series that exhibit a certain symmetry and rapid convergence. In this procedure, which heavily invokes the prime factorization theorem, each sub-series has the property that it oscillates in a predictable fashion, rendering the analytic properties of the Dirichlet series determinable. With this method, the paper demonstrates that, for every integer with an even number of primes in its factorization, there is another integer that has an odd number of primes (multiplicity counted) in its factorization. Furthermore, by showing that a sufficient condition derived by Littlewood (1912) is satisfied, the paper demonstrates that the function F(s) is analytic over the two half-planes Re(s) &gt; 1/2 and Re(s)&lt;1/2. This establishes that the nontrivial zeros of the Riemann zeta function can only occur on the critical line Re(s)=1/2.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-11T15:50:18Z</published>
+    <arxiv:comment>40 pages, 1 figure. In this Version, some typos have been removed and the Appendix 5 is slightly modified and a new Appendix 6 has been added</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>K. Eswaran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.4147v4</id>
+    <title>Smooth solutions to the abc equation: the xyz Conjecture</title>
+    <updated>2011-07-07T21:14:48Z</updated>
+    <link href="https://arxiv.org/abs/0911.4147v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.4147v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies integer solutions to the ABC equation A+B+C=0 in which none of A, B, C has a large prime factor. Set H(A,B, C)= max(|A|,|B|,|C|) and set the smoothness S(A, B, C) to be the largest prime factor of ABC. We consider primitive solutions (gcd(A, B, C)=1) having smoothness no larger than a fixed power p of log H. Assuming the abc Conjecture we show that there are finitely many solutions if p&lt;1. We discuss a conditional result, showing that the Generalized Riemann Hypothesis (GRH) implies there are infinitely many primitive solutions when p&gt;8. We sketch some details of the proof of the latter result.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-21T00:07:59Z</published>
+    <arxiv:comment>21 pages, presented at 26th Journees Arithmetiques, 2009; v2 added new examples 1.2, updated references; v3 changed title, more examples added, notation changes, v4 corrects misprints in Conj. 3.1, Thm. 4.3 statement, 25 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. Theor. Nombres Bordeaux 23 (2011), No. 1, 209--234</arxiv:journal_ref>
+    <author>
+      <name>Jeffrey C. Lagarias</name>
+    </author>
+    <author>
+      <name>K. Soundararajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.33794v1</id>
+    <title>Higher-order colossally abundant numbers</title>
+    <updated>2026-09-27T17:52:05Z</updated>
+    <link href="https://arxiv.org/abs/2609.33794v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.33794v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Colossally abundant numbers have large sums of divisors relative to their size. They also admit a geometric description using supporting lines of a planar convex hull. Starting from this description, we change coordinates to obtain nested subsets of these numbers, which we call colossally abundant numbers of higher order. Their definition does not depend on the Riemann hypothesis. We give conditions under which Robin's inequality holds on any one of these subsets if and only if the Riemann hypothesis is true. Some of the resulting families have infinite sets at every level but an empty intersection. For two classes of coordinates, we determine how fast the least members grow. We also prove that every fixed positive integer divides all members of sufficiently high order. Under a concavity assumption, the least members form a divisibility chain; for power abscissas, successive quotients have unbounded numbers of prime factors, with an explicit limsup growth rate. In a second class of families, every global maximum of the normalized divisor sum is retained, and the least members tend to infinity if and only if the Riemann hypothesis is true. We give numerical examples and explain how the Ramanujan--Nicolas bounds produce terminating chains.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-27T17:52:05Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Oleg R. Musin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.08914v1</id>
+    <title>Primes represented by positive definite binary quadratic forms</title>
+    <updated>2017-10-24T17:57:43Z</updated>
+    <link href="https://arxiv.org/abs/1710.08914v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.08914v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $f$ be a primitive positive definite integral binary quadratic form of discriminant $-D$ and let $π_f(x)$ be the number of primes up to $x$ which are represented by $f$. We prove several types of upper bounds for $π_f(x)$ within a constant factor of its asymptotic size: unconditional, conditional on the Generalized Riemann Hypothesis (GRH), and for almost all discriminants. The key feature of these estimates is that they hold whenever $x$ exceeds a small power of $D$ and, in some cases, this range of $x$ is essentially best possible. In particular, if $f$ is reduced then this optimal range of $x$ is achieved for almost all discriminants or by assuming GRH. We also exhibit an upper bound for the number of primes represented by $f$ in a short interval and a lower bound for the number of small integers represented by $f$ which have few prime factors.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-24T17:57:43Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Q. J. Math. 69 (2018), no. 4, 1353-1386</arxiv:journal_ref>
+    <author>
+      <name>Asif Zaman</name>
+    </author>
+    <arxiv:doi>10.1093/qmath/hay028</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/qmath/hay028" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1410.5144v2</id>
+    <title>Realization of groups with pairing as Jacobians of finite graphs</title>
+    <updated>2017-09-18T12:55:54Z</updated>
+    <link href="https://arxiv.org/abs/1410.5144v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1410.5144v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study which groups with pairing can occur as the Jacobian of a finite graph. We provide explicit constructions of graphs whose Jacobian realizes a large fraction of odd groups with a given pairing. Conditional on the generalized Riemann hypothesis, these constructions yield all groups with pairing of odd order, and unconditionally, they yield all groups with pairing whose prime factors are sufficiently large. For groups with pairing of even order, we provide a partial answer to this question, for a certain restricted class of pairings. Finally, we explore which finite abelian groups occur as the Jacobian of a simple graph. There exist infinite families of finite abelian groups that do not occur as the Jacobians of simple graphs.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-10-20T03:03:38Z</published>
+    <arxiv:comment>18 pages, 8 TikZ figures. v2: Main results strengthened. Final version to appear in the Annals of Combinatorics</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Annals of Combinatorics, December 2018, Volume 22, Issue 4, pp 781-801</arxiv:journal_ref>
+    <author>
+      <name>Louis Gaudet</name>
+    </author>
+    <author>
+      <name>David Jensen</name>
+    </author>
+    <author>
+      <name>Dhruv Ranganathan</name>
+    </author>
+    <author>
+      <name>Nicholas Wawrykow</name>
+    </author>
+    <author>
+      <name>Theodore Weisman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.02373v2</id>
+    <title>The reciprocal sum of divisors of Mersenne numbers</title>
+    <updated>2020-08-13T16:31:34Z</updated>
+    <link href="https://arxiv.org/abs/2006.02373v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.02373v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate various questions concerning the reciprocal sum of divisors, or prime divisors, of the Mersenne numbers $2^n-1$. Conditional on the Elliott-Halberstam Conjecture and the Generalized Riemann Hypothesis, we determine $\max_{n\le x} \sum_{p \mid 2^n-1} 1/p$ to within $o(1)$ and $\max_{n\le x} \sum_{d\mid 2^n-1}1/d$ to within a factor of $1+o(1)$, as $x\to\infty$. This refines, conditionally, earlier estimates of Erdős and Erdős-Kiss-Pomerance. Conditionally (only) on GRH, we also determine $\sum 1/d$ to within a factor of $1+o(1)$ where $d$ runs over all numbers dividing $2^n-1$ for some $n\le x$. This conditionally confirms a conjecture of Pomerance and answers a question of Murty-Rosen-Silverman. Finally, we show that both $\sum_{p\mid 2^n-1} 1/p$ and $\sum_{d\mid 2^n-1}1/d$ admit continuous distribution functions in the sense of probabilistic number theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-03T16:39:42Z</published>
+    <arxiv:comment>15 pages. Made several clarifications and corrections. Added new section on generalizations</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Zebediah Engberg</name>
+    </author>
+    <author>
+      <name>Paul Pollack</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.07415v2</id>
+    <title>Sum Rules for Functions of the Riemann Zeta Type</title>
+    <updated>2018-02-19T04:41:50Z</updated>
+    <link href="https://arxiv.org/abs/1801.07415v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.07415v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider analytic functions of the Riemann zeta type, for which, if $s$ is a zero, so is $1-s$. We use infinite product representations of these functions, assuming their zeros to be of first order. We use exponential factors to accelerate convergence, and by comparing the exponential factors with the Taylor series coefficients about $s=0$ of the original function, connect these coefficients with sums of powers of reciprocals of the zeros, in the form of sum rules. Such sum rules have been previously considered by Lehmer and Keiper, but the approach and applications taken here are more general. In related work, a new sufficient condition is found for the Riemann hypothesis, and the basis for this condition is discussed.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-23T07:22:53Z</published>
+    <arxiv:comment>23 pages, 13 figures, 5 tables</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>R. C. McPhedran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.06733v4</id>
+    <title>On probabilistic generalizations of the Nyman-Beurling criterion for the zeta function</title>
+    <updated>2021-06-03T12:36:45Z</updated>
+    <link href="https://arxiv.org/abs/1805.06733v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.06733v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Nyman-Beurling criterion is an approximation problem in the space of square integrable functions on $(0,\infty)$, which is equivalent to the Riemann hypothesis. This involves dilations of the fractional part function by factors $θ_k\in(0,1)$, $k\ge1$. We develop probabilistic extensions of the Nyman-Beurling criterion by considering these $θ_k$ as random: this yields new structures and criteria, one of them having a significant overlap with the general strong Báez-Duarte criterion. We start here the study of these criteria, with a special focus on exponential and gamma distributions. The main goal of the present paper is the study of the interplay between these probabilistic Nyman-Beurling criteria and the Riemann hypothesis. We are able to obtain equivalences in two main classes of examples: dilated structures as exponential $\cal E(k)$ distributions, and random variables $Z_{k,n}$, $1\le k\le n$, concentrated around $1/k$ as $n$ is growing. By means of our probabilistic point of view, we bring an answer to a question raised by Báez-Duarte in 2005: the price to pay to consider non compactly supported kernels is a controlled condition on the coefficients of the involved approximations.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-17T12:48:03Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Sébastien Darses</name>
+    </author>
+    <author>
+      <name>Erwan Hillion</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.08807v2</id>
+    <title>Effective Sato-Tate conjecture for abelian varieties and applications</title>
+    <updated>2023-10-13T13:45:36Z</updated>
+    <link href="https://arxiv.org/abs/2002.08807v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.08807v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>From the generalized Riemann hypothesis for motivic L-functions, we derive an effective version of the Sato-Tate conjecture for an abelian variety A defined over a number field k with connected Sato-Tate group. By effective we mean that we give an upper bound on the error term in the count predicted by the Sato-Tate measure that only depends on certain invariants of A. We discuss three applications of this conditional result. First, for an abelian variety defined over k, we consider a variant of Linnik's problem for abelian varieties that asks for an upper bound on the least norm of a prime whose normalized Frobenius trace lies in a given interval. Second, for an elliptic curve defined over k with complex multiplication, we determine (up to multiplication by a nonzero constant) the asymptotic number of primes whose Frobenius trace attain the integral part of the Hasse-Weil bound. Third, for a pair of abelian varieties defined over k with no common factors up to k-isogeny, we find an upper bound on the least norm of a prime at which the respective Frobenius traces have opposite sign.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-20T15:41:19Z</published>
+    <arxiv:comment>25 pages; refereed version. A table of notation has been added at the end. §5 has been removed; its content will be incorporated into a subsequent paper</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alina Bucur</name>
+    </author>
+    <author>
+      <name>Francesc Fité</name>
+    </author>
+    <author>
+      <name>Kiran S. Kedlaya</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.14748v1</id>
+    <title>On the growth of the $L^p$ norm of the Riemann zeta-function on the line Re$(s)=1$</title>
+    <updated>2021-07-30T16:47:55Z</updated>
+    <link href="https://arxiv.org/abs/2107.14748v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.14748v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that if $δ&gt;0$ and $p$ is real then $$ \sup_T \int_T^{T+δ} |ζ(1+it)|^p dt &lt;\infty,$$ if and only if $-1&lt;p&lt;1$. Furthermore, we show the omega estimates $$
+  \int_T^{T+δ} |ζ(1+it)|^{\pm 1} dt = Ω(\log \log \log T),$$ $$ \int_T^{T+δ} |ζ(1+it)|^{\pm p} dt = Ω((\log \log T)^{p-1}), \qquad (p&gt;1) $$ which with the exception of an additional $\log \log \log T$ factor in the second estimate coincides with conditional (under the Riemann hypothesis) order estimates. We also prove weaker unconditional order estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-30T16:47:55Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Johan Andersson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.15973v3</id>
+    <title>Artin's Primitive Root Conjecture in Number Fields and For Matrices</title>
+    <updated>2024-11-21T08:20:35Z</updated>
+    <link href="https://arxiv.org/abs/2306.15973v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.15973v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1927, E. Artin conjectured that all non-square integers $a\neq -1$ are a primitive root of $\mathbb{F}_p$ for infinitely many primes $p$. In 1967, Hooley showed that this conjecture follows from the Generalized Riemann Hypothesis (GRH). In this paper we consider variants of the primitive root conjecture for number fields and for matrices. All results are conditional on GRH.
+  For an algebraic number field $K$ and some element $α\in K$, we examine the order of $α$ modulo various rational primes $p$. We extend previous results of Roskam which only worked for quadratic extensions $K/\mathbb{Q}$ to more general field extensions of higher degree. Specifically, under some constraints on the Galois group of $K/\mathbb{Q}$ and on the element $α\in K$, we show that $α$ is of almost maximal order mod $p$ for almost all rational primes $p$ which factor into primes of degree 2 in $K$.
+  We also consider Artin's primitive root conjecture for matrices. Given a matrix $A\in\text{GL}_n(\mathbb{Q})$, we examine the order of $A\bmod p$ in $\text{GL}_n(\mathbb{F}_p)$ for various primes $p$, which turns out to be equivalent to the number field setting.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-28T07:21:29Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Noam Kimmel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.30340v1</id>
+    <title>Exact quantum splitting and the structure of finite algebras</title>
+    <updated>2026-08-31T06:56:14Z</updated>
+    <link href="https://arxiv.org/abs/2608.30340v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.30340v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Berlekamp's algorithm factors a squarefree polynomial $f\in\mathbb{F}_q[x]$ by deterministic linear algebra, reducing the problem to splitting an explicit commutative algebra $B\cong\mathbb{F}_q^r$ into its $r$ simple factors. For large odd $q$, the standard efficient splitting step is randomized, while known derandomizations are conditional on the Extended Riemann Hypothesis. We give an unconditional exact quantum implementation in a circuit model permitting single-qubit rotations through efficiently computable angles. The construction uses an unconditional counting argument. For a block containing $s\ge2$ irreducible factors, a quadratic-character test in odd characteristic and an absolute-trace test in characteristic $2$ yield a nonconstant test element with probability $p_{q,s}\ge\tfrac12$, known exactly in advance and depending only on $q$ and $s$, not on the unknown factorization. Exact amplitude amplification therefore converts each randomized test into a procedure succeeding with certainty after one amplification iteration. The resulting algorithm uses exactly $r-1$ quantum splitting rounds and $O(n^3\log q)$ quantum $\mathbb{F}_q$-operations and $O(n^3)$ classical operations, requiring no primitive root, quadratic non-residue, or distinct-degree preprocessing. The method also splits arbitrary finite-dimensional separable commutative $\\mathbb{F}_q$-algebras given by structure constants. Combined with R'onyai's classical structure theory, which computes the radical deterministically and reduces the remaining tasks deterministically to polynomial factorization, it yields the radical and the Wedderburn decomposition of $A/\mathrm{Rad}(A)$ into minimal two-sided ideals, with certainty, for any $n$-dimensional associative $\mathbb{F}_q$-algebra given by structure constants, using $O(n^4\log q)$ quantum $\mathbb{F}_q$-operations.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-31T06:56:14Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.04154v1</id>
+    <title>Character sums for elliptic curve densities</title>
+    <updated>2017-03-12T18:10:33Z</updated>
+    <link href="https://arxiv.org/abs/1703.04154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.04154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>If $E$ is an elliptic curve over $\mathbb{Q}$, then it follows from work of Serre and Hooley that, under the assumption of the Generalized Riemann Hypothesis, the density of primes $p$ such that the group of $\mathbb{F}_p$-rational points of the reduced curve $\tilde{E}(\mathbb{F}_p)$ is cyclic can be written as an infinite product $\prod δ_\ell$ of local factors $δ_\ell$ reflecting the degree of the $\ell$-torsion fields, multiplied by a factor that corrects for the entanglements between the various torsion fields. We show that this correction factor can be interpreted as a character sum, and the resulting description allows us to easily determine non-vanishing criteria for it. We apply this method in a variety of other settings. Among these, we consider the aforementioned problem with the additional condition that the primes $p$ lie in a given arithmetic progression. We also study the conjectural constants appearing in Koblitz's conjecture, a conjecture which relates to the density of primes $p$ for which the cardinality of the group of $\mathbb{F}_p$-points of $E$ is prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-12T18:10:33Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Julio Brau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.02953v2</id>
+    <title>Polynomial approximations in a generalized Nyman-Beurling criterion</title>
+    <updated>2022-06-01T08:15:02Z</updated>
+    <link href="https://arxiv.org/abs/2006.02953v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.02953v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Nyman-Beurling criterion, equivalent to the Riemann hypothesis (RH), is an approximation problem in the space of square integrable functions on $(0,\infty)$, involving dilations of the fractional part function by factors $θ_k\in(0,1)$, $k\ge1$. Randomizing the $θ_k$ generates new structures and criteria. One of them is a sufficient condition for RH that splits into (i) showing that the indicator function can be approximated by convolution with the fractional part, (ii) a control on the coefficients of the approximation. This self-contained paper generalizes conditions (i) and (ii) that involve a $σ_0\in(1/2,1)$, and imply $ζ(σ+it)\neq 0$ in the strip $1/2&lt;σ\leσ_0&lt;1$. We then identify functions for which (i) holds unconditionally, by means of polynomial approximations. This yields in passing a short probabilistic proof of a known consequence of Wiener's Tauberian theorem. In this context, the difficulty for proving RH is then reallocated in (ii), which heavily relies on the corresponding Gram matrices, for which two remarkable structures are obtained. We show that a particular tuning of the approximating sequence leads to a striking simplification of the second Gram matrix, then reading as a block Hankel form.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-04T15:36:09Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>François Alouges</name>
+    </author>
+    <author>
+      <name>Sébastien Darses</name>
+    </author>
+    <author>
+      <name>Erwan Hillion</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29555v1</id>
+    <title>Finite-core Volterra reductions for a Weyl-positive Riemann phase kernel</title>
+    <updated>2026-06-28T18:45:04Z</updated>
+    <link href="https://arxiv.org/abs/2606.29555v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29555v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We record a Weyl-positive reduction and certificate framework for the Riemann phase kernel associated with the even Riemann kernel $Φ$. The manuscript does not present a complete proof of the Riemann hypothesis. Its immediate analytic target is a concrete positivity theorem for a Weyl kernel whose quantum characteristic function satisfies the Kastler--Loupias--Miracle-Sole condition in all numerical tests performed so far. Several natural factorizations are ruled out. In particular, the positive anti-Wick density route is obstructed by a local heat-deconvolution test, and several natural finite-core reductions are excluded by explicit counterexamples.
+  The surviving structure is a finite-core Volterra program upgraded to a closed-trace quotient certificate for the full kernel. We derive exact same-sign finite-core formulae, the second-order theta-mode identity $φ_n(t)=(\partial_t^2-1/4)(e^{t/2}e^{-πn^2e^{2t}})$ for $n\ge1$, a Volterra boundary-plus-tail representation, and a quotient Schur factorization for the normalized full-$Φ$ source/Volterra model. The latest certificate closes the active trace-range condition, the full-continuum source-inactive domination, and the Douglas/Moore--Penrose Schur hypotheses in the normalized model. What remains outside that certificate is explicitly separated: the quotient-to-original Weyl lift, uniform $ω$-coverage for $|ω|&lt;1/2$, and the final bridge from Weyl/KLM positivity to the intended de Branges or RH-side formulation.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-28T18:45:04Z</published>
+    <arxiv:comment>102 pages. Reduction-and-certificate manuscript. Reproducibility artifacts: https://doi.org/10.5281/zenodo.20897437</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Marvin B. Freedman</name>
+    </author>
+  </entry>
+</feed>

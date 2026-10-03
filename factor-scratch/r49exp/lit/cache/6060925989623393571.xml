@@ -1,0 +1,1268 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/zdrK4ry5jWQSF/o5eL4xuzAnWZw</id>
+  <title>arXiv Query: search_query=abs:"factoring" AND cat:cs.DS AND abs:lattice&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:20Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factoring%22+AND+(cat:cs.DS+AND+abs:lattice)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>54</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1003.5461v1</id>
+    <title>A Note on Integer Factorization Using Lattices</title>
+    <updated>2010-03-29T08:45:56Z</updated>
+    <link href="https://arxiv.org/abs/1003.5461v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1003.5461v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit Schnorr's lattice-based integer factorization algorithm, now with an effective point of view. We present effective versions of Theorem 2 of Schnorr's "Factoring integers and computing discrete logarithms via diophantine approximation" paper, as well as new elementary properties of the Prime Number Lattice bases of Schnorr and Adleman.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-03-29T08:45:56Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Antonio Ignacio Vera</name>
+      <arxiv:affiliation>INRIA Lorraine - LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.19076v1</id>
+    <title>On Factoring and Power Divisor Problems via Rank-3 Lattices and the Second Vector</title>
+    <updated>2025-12-22T06:36:44Z</updated>
+    <link href="https://arxiv.org/abs/2512.19076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.19076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a deterministic algorithm based on Coppersmith's method that employs a rank-3 lattice to address factoring-related problems. An interesting aspect of our approach is that we utilize the second vector in the LLL-reduced basis to avoid trivial collisions in the Baby-step Giant-step method, rather than the shortest vector as is commonly used in the literature. Our results are as follows:
+  1. Compared to the result by Harvey and Hittmeir (Math. Comp. 91 (2022), 1367 - 1379), who achieved a complexity of O( N^(1/5) log^(16/5) N / (log log N)^(3/5)) for factoring a semiprime N = pq, we demonstrate that in the balanced p and q case, the complexity can be improved to O( N^(1/5) log^(13/5) N / (log log N)^(3/5) ).
+  2. For factoring sums and differences of powers, that is, numbers of the form N = a^n plus or minus b^n, we improve Hittmeir's result (Math. Comp. 86 (2017), 2947 - 2954) from O( N^(1/4) log^(3/2) N ) to O( N^(1/5) log^(13/5) N ).
+  3. For the problem of finding r-power divisors, that is, finding all integers p such that p^r divides N, Harvey and Hittmeir (Proceedings of ANTS XV, Research in Number Theory 8 (2022), no. 4, Paper No. 94) recently directly applied Coppersmith's method and achieved a complexity of O( N^(1/(4r)) log^(10+epsilon) N / r^3 ). By using faster LLL-type algorithms and sieving on small primes, we improve their result to O( N^(1/(4r)) log^(7+3 epsilon) N / ((log log N minus log(4r)) r^(2+epsilon)) ). The worst-case running time for their algorithm occurs when N = p^r q with q on the order of N^(1/2). By focusing on this case and employing our rank-3 lattice approach, we achieve a complexity of O( r^(1/4) N^(1/(4r)) log^(5/2) N ).
+  In conclusion, we offer a new perspective on these problems, which we hope will provide further insights.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-22T06:36:44Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yiming Gao</name>
+    </author>
+    <author>
+      <name>Yansong Feng</name>
+    </author>
+    <author>
+      <name>Honggang Hu</name>
+    </author>
+    <author>
+      <name>Yanbin Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.03613v3</id>
+    <title>On the Lattice Distortion Problem</title>
+    <updated>2016-10-30T10:54:32Z</updated>
+    <link href="https://arxiv.org/abs/1605.03613v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.03613v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce and study the \emph{Lattice Distortion Problem} (LDP). LDP asks how "similar" two lattices are. I.e., what is the minimal distortion of a linear bijection between the two lattices? LDP generalizes the Lattice Isomorphism Problem (the lattice analogue of Graph Isomorphism), which simply asks whether the minimal distortion is one.
+  As our first contribution, we show that the distortion between any two lattices is approximated up to a $n^{O(\log n)}$ factor by a simple function of their successive minima. Our methods are constructive, allowing us to compute low-distortion mappings that are within a $2^{O(n \log \log n/\log n)}$ factor of optimal in polynomial time and within a $n^{O(\log n)}$ factor of optimal in singly exponential time. Our algorithms rely on a notion of basis reduction introduced by Seysen (Combinatorica 1993), which we show is intimately related to lattice distortion. Lastly, we show that LDP is NP-hard to approximate to within any constant factor (under randomized reductions), by a reduction from the Shortest Vector Problem.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-11T20:31:01Z</published>
+    <arxiv:comment>This is the full version of a paper that appeared in ESA 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Daniel Dadush</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.13450v1</id>
+    <title>An efficient quantum algorithm for lattice problems achieving subexponential approximation factor</title>
+    <updated>2022-01-31T18:58:33Z</updated>
+    <link href="https://arxiv.org/abs/2201.13450v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.13450v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a quantum algorithm for solving the Bounded Distance Decoding (BDD) problem with a subexponential approximation factor on a class of integer lattices. The quantum algorithm uses a well-known but challenging-to-use quantum state on lattices as a type of approximate quantum eigenvector to randomly self-reduce the BDD instance to a random BDD instance which is solvable classically. The running time of the quantum algorithm is polynomial for one range of approximation factors and subexponential time for a second range of approximation factors.
+  The subclass of lattices we study has a natural description in terms of the lattice's periodicity and finite abelian group rank. This view makes for a clean quantum algorithm in terms of finite abelian groups, uses very relatively little from lattice theory, and suggests exploring approximation algorithms for lattice problems in parameters other than dimension alone.
+  A talk on this paper sparked many lively discussions and resulted in a new classical algorithm matching part of our result. We leave it as a challenge to give a classcial algorithm matching the general case.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-31T18:58:33Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Lior Eldar</name>
+    </author>
+    <author>
+      <name>Sean Hallgren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.04160v1</id>
+    <title>Searching Lattice Data Structures of Varying Degrees of Sortedness</title>
+    <updated>2016-05-13T12:51:02Z</updated>
+    <link href="https://arxiv.org/abs/1605.04160v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.04160v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lattice data structures are space efficient and cache-suitable data structures. The basic searching, insertion, and deletion operations are of time complexity $O(\sqrt{N})$. We give a jump searching algorithm of time complexity $O(J(L)\log(N))$, where $J(L)$ is the jump factor of the lattice. $J(L)$ approaches $4$ when the degree of sortedness of the lattice approaches $\sqrt{N}$. A sorting procedure of time complexity $O(\sqrt{N})$ that can be used, during the system idle time, to increase the degree of sortedness of the lattice is given.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-13T12:51:02Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>International Journal of Data Structures, 1(1) 64-76 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Mohammad Obiedat</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.04957v2</id>
+    <title>Approximate $\mathrm{CVP}_{p}$ in time $2^{0.802 \, n}$</title>
+    <updated>2020-06-16T17:31:39Z</updated>
+    <link href="https://arxiv.org/abs/2005.04957v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.04957v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a constant factor approximation of the shortest and closest lattice vector problem w.r.t. any $\ell_p$-norm can be computed in time $2^{(0.802 +ε)\, n}$. This matches the currently fastest constant factor approximation algorithm for the shortest vector problem w.r.t. $\ell_2$. To obtain our result, we combine the latter algorithm w.r.t. $\ell_2$ with geometric insights related to coverings.</summary>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-11T09:32:06Z</published>
+    <arxiv:comment>We improved the introduction and added the case $p \in [1,2)$</arxiv:comment>
+    <arxiv:primary_category term="cs.CG"/>
+    <author>
+      <name>Friedrich Eisenbrand</name>
+    </author>
+    <author>
+      <name>Moritz Venzin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1908.03724v1</id>
+    <title>Slide Reduction, Revisited---Filling the Gaps in SVP Approximation</title>
+    <updated>2019-08-10T10:43:45Z</updated>
+    <link href="https://arxiv.org/abs/1908.03724v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1908.03724v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show how to generalize Gama and Nguyen's slide reduction algorithm [STOC '08] for solving the approximate Shortest Vector Problem over lattices (SVP). As a result, we show the fastest provably correct algorithm for $δ$-approximate SVP for all approximation factors $n^{1/2+\varepsilon} \leq δ\leq n^{O(1)}$. This is the range of approximation factors most relevant for cryptography.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-08-10T10:43:45Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Jianwei Li</name>
+    </author>
+    <author>
+      <name>Phong Q. Nguyen</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.00111v2</id>
+    <title>Computing Join Queries with Functional Dependencies</title>
+    <updated>2016-04-07T00:21:42Z</updated>
+    <link href="https://arxiv.org/abs/1604.00111v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.00111v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Gottlob, Lee, Valiant, and Valiant (GLVV) presented an output size bound for join queries with functional dependencies (FD), based on a linear program on polymatroids. GLVV bound strictly generalizes the bound of Atserias, Grohe and Marx (AGM) for queries with no FD, in which case there are known algorithms running within AGM bound and thus are worst-case optimal.
+  A main result of this paper is an algorithm for computing join queries with FDs, running within GLVV bound up to a poly-log factor. In particular, our algorithm is worst-case optimal for any query where the GLVV bound is tight. As an unexpected by-product, our algorithm manages to solve a harder problem, where (some) input relations may have prescribed maximum degree bounds, of which both functional dependencies and cardinality bounds are special cases.
+  We extend Gottlob et al. framework by replacing all variable subsets with the lattice of closed sets (under the given FDs). This gives us new insights into the structure of the worst-case bound and worst-case instances. While it is still open whether GLVV bound is tight in general, we show that it is tight on distributive lattices and some other simple lattices. Distributive lattices capture a strict superset of queries with no FD and with simple FDs. We also present two simpler algorithms which are also worst-case optimal on distributive lattices within a single-$\log$ factor, but they do not match GLVV bound on a general lattice. Our algorithms are designed based on a novel principle: we turn a proof of a polymatroid-based output size bound into an algorithm.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-01T02:28:40Z</published>
+    <arxiv:primary_category term="cs.DB"/>
+    <author>
+      <name>Mahmoud Abo Khamis</name>
+    </author>
+    <author>
+      <name>Hung Q. Ngo</name>
+    </author>
+    <author>
+      <name>Dan Suciu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.04809v2</id>
+    <title>Lattice (List) Decoding Near Minkowski's Inequality</title>
+    <updated>2021-09-09T18:01:20Z</updated>
+    <link href="https://arxiv.org/abs/2010.04809v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.04809v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Minkowski proved that any $n$-dimensional lattice of unit determinant has a nonzero vector of Euclidean norm at most $\sqrt{n}$; in fact, there are $2^{Ω(n)}$ such lattice vectors. Lattices whose minimum distances come close to Minkowski's bound provide excellent sphere packings and error-correcting codes in $\mathbb{R}^{n}$.
+  The focus of this work is a certain family of efficiently constructible $n$-dimensional lattices due to Barnes and Sloane, whose minimum distances are within an $O(\sqrt{\log n})$ factor of Minkowski's bound. Our primary contribution is a polynomial-time algorithm that list decodes this family to distances approaching $1/\sqrt{2}$ of the minimum distance. The main technique is to decode Reed-Solomon codes under error measured in the Euclidean norm, using the Koetter-Vardy "soft decision" variant of the Guruswami-Sudan list-decoding algorithm.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-09T21:10:40Z</published>
+    <arxiv:comment>14 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Ethan Mook</name>
+    </author>
+    <author>
+      <name>Chris Peikert</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1409.8063v2</id>
+    <title>On the Closest Vector Problem with a Distance Guarantee</title>
+    <updated>2014-12-26T00:30:59Z</updated>
+    <link href="https://arxiv.org/abs/1409.8063v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1409.8063v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a substantially more efficient variant, both in terms of running time and size of preprocessing advice, of the algorithm by Liu, Lyubashevsky, and Micciancio for solving CVPP (the preprocessing version of the Closest Vector Problem, CVP) with a distance guarantee. For instance, for any $α&lt; 1/2$, our algorithm finds the (unique) closest lattice point for any target point whose distance from the lattice is at most $α$ times the length of the shortest nonzero lattice vector, requires as preprocessing advice only $N \approx \widetilde{O}(n \exp(α^2 n /(1-2α)^2))$ vectors, and runs in time $\widetilde{O}(nN)$.
+  As our second main contribution, we present reductions showing that it suffices to solve CVP, both in its plain and preprocessing versions, when the input target point is within some bounded distance of the lattice. The reductions are based on ideas due to Kannan and a recent sparsification technique due to Dadush and Kun. Combining our reductions with the LLM algorithm gives an approximation factor of $O(n/\sqrt{\log n})$ for search CVPP, improving on the previous best of $O(n^{1.5})$ due to Lagarias, Lenstra, and Schnorr. When combined with our improved algorithm we obtain, somewhat surprisingly, that only O(n) vectors of preprocessing advice are sufficient to solve CVPP with (the only slightly worse) approximation factor of O(n).</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-09-29T10:40:28Z</published>
+    <arxiv:comment>An early version of the paper was titled "On Bounded Distance Decoding and the Closest Vector Problem with Preprocessing". Conference on Computational Complexity (2014)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>CCC 2014</arxiv:journal_ref>
+    <author>
+      <name>Daniel Dadush</name>
+    </author>
+    <author>
+      <name>Oded Regev</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.17404v1</id>
+    <title>Module Lattice Security (Part III): Structured CVP Distance on the Log-Unit Lattice</title>
+    <updated>2026-05-17T12:00:59Z</updated>
+    <link href="https://arxiv.org/abs/2605.17404v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.17404v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that the $L^2$ CVP distance from a random short ring element to the log-unit lattice of $\Q(ζ_{2^k})$ converges to $\fracπ{2\sqrt{6}}\sqrt{n}$ as $n=2^{k-1}\to\infty$. We then show that this target lies inside the Voronoi cell of the origin for $k\ge 4$. For the $L^\infty$ norm, the maximum over $n$ sub-Gaussian coordinates yields $O(\sqrt{\log n})$ which translates into a sub-polynomial approximation factor for the Short Generator Problem. We show a Coarse Lattice Theorem that Babai's algorithm returns zero for all structured targets, yet exactly recovers unit perturbations of arbitrary size. For module determinant ideals, we further prove the Trigamma Theorem that proves an intrinsic imbalance $σ_{g_0}=O(1)$ independent of the modulus $q$. Finally, combined with Parts I and II, we reduce the CDPR factor for ML-KEM from $\exp(\tO(\sqrt{n}))$ to a sub-polynomial value.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-17T12:00:59Z</published>
+    <arxiv:comment>26 pages (simplied version). Most important part in this series</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Ming-Xing Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.05660v2</id>
+    <title>The nearest-colattice algorithm</title>
+    <updated>2020-06-11T01:44:59Z</updated>
+    <link href="https://arxiv.org/abs/2006.05660v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.05660v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we exhibit a hierarchy of polynomial time algorithms solving approximate variants of the Closest Vector Problem (CVP). Our first contribution is a heuristic algorithm achieving the same distance tradeoff as HSVP algorithms, namely $\approx
+  β^{\frac{n}{2β}}\textrm{covol}(Λ)^{\frac{1}{n}}$ for a random lattice $Λ$ of rank $n$. Compared to the so-called Kannan's embedding technique, our algorithm allows using precomputations and can be used for efficient batch CVP instances. This implies that some attacks on lattice-based signatures lead to very cheap forgeries, after a precomputation. Our second contribution is a proven reduction from approximating the closest vector with a factor $\approx n^{\frac32}β^{\frac{3n}{2β}}$ to the Shortest Vector Problem (SVP) in dimension $β$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-10T05:26:09Z</published>
+    <arxiv:comment>19 pages, presented at the Algorithmic Number Theory Symposium (ANTS 2020)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Thomas Espitau</name>
+    </author>
+    <author>
+      <name>Paul Kirchner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.05166v2</id>
+    <title>Space-Efficient Data Structures for Lattices</title>
+    <updated>2020-06-16T04:59:57Z</updated>
+    <link href="https://arxiv.org/abs/1902.05166v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.05166v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A lattice is a partially-ordered set in which every pair of elements has a unique meet (greatest lower bound) and join (least upper bound). We present new data structures for lattices that are simple, efficient, and nearly optimal in terms of space complexity.
+  Our first data structure can answer partial order queries in constant time and find the meet or join of two elements in $O(n^{3/4})$ time, where $n$ is the number of elements in the lattice. It occupies $O(n^{3/2}\log n)$ bits of space, which is only a $Θ(\log n)$ factor from the $Θ(n^{3/2})$-bit lower bound for storing lattices. The preprocessing time is $O(n^2)$. This structure admits a simple space-time tradeoff so that, for any $c \in [\frac{1}{2}, 1]$, the data structure supports meet and join queries in $O(n^{1-c/2})$ time, occupies $O(n^{1+c}\log n)$ bits of space, and can be constructed in $O(n^2 + n^{1+3c/2})$ time.
+  Our second data structure uses $O(n^{3/2}\log n)$ bits of space and supports meet and join in $O(d \frac{\log n}{\log d})$ time, where $d$ is the maximum degree of any element in the transitive reduction graph of the lattice. This structure is much faster for lattices with low-degree elements.
+  This paper also identifies an error in a long-standing solution to the problem of representing lattices. We discuss the issue with this previous work.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-13T23:47:23Z</published>
+    <arxiv:comment>Accepted in SWAT 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>J. Ian Munro</name>
+    </author>
+    <author>
+      <name>Bryce Sandlund</name>
+    </author>
+    <author>
+      <name>Corwin Sinnamon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.15064v3</id>
+    <title>Recursive lattice reduction -- A framework for finding short lattice vectors</title>
+    <updated>2025-04-20T20:38:18Z</updated>
+    <link href="https://arxiv.org/abs/2311.15064v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.15064v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a recursive lattice reduction framework for finding short non-zero vectors or dense sublattices of a lattice. The framework works by recursively searching for dense sublattices of dense sublattices (or their duals) with progressively lower rank. When the procedure encounters a recursive call on a lattice $L$ with relatively low rank, we simply use a known algorithm to find a shortest non-zero vector in $L$.
+  This new framework is complementary to basis reduction algorithms, which similarly work to reduce an $n$-dimensional lattice problem with some approximation factor $γ$ to a lower-dimensional exact lattice problem in some lower dimension $k$, with a tradeoff between $γ$, $n$, and $k$. Our framework provides an alternative and arguably simpler perspective. For example, our algorithms can be described at a high level without explicitly referencing any specific basis of the lattice, the Gram-Schmidt orthogonalization, or even projection (though, of course, concrete implementations of algorithms in this framework will likely make use of such things).
+  We present a number of instantiations of our framework. Our main concrete result is an efficient reduction that matches the tradeoff achieved by the best-known basis reduction algorithms. This reduction also can be used to find dense sublattices with any rank $\ell$ satisfying $\min\{\ell,n-\ell\} \leq n-k+1$, using only an oracle for SVP in $k$ dimensions, with slightly better parameters than what was known using basis reduction.
+  We also show a simple reduction with the same tradeoff for finding short vectors in quasipolynomial time, and a reduction from finding dense sublattices of a high-dimensional lattice to this problem in lower dimension. Finally, we present an automated search procedure that finds algorithms in this framework that (provably) achieve better approximations with fewer oracle calls.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-25T16:20:22Z</published>
+    <arxiv:comment>This version is a minor edit of the previous version</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Thomas Espitau</name>
+    </author>
+    <author>
+      <name>Spencer Peters</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.15368v1</id>
+    <title>Complexity of Robust Orbit Problems for Torus Actions and the abc-conjecture</title>
+    <updated>2024-05-24T09:05:49Z</updated>
+    <link href="https://arxiv.org/abs/2405.15368v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.15368v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>When a group acts on a set, it naturally partitions it into orbits, giving rise to orbit problems. These are natural algorithmic problems, as symmetries are central in numerous questions and structures in physics, mathematics, computer science, optimization, and more. Accordingly, it is of high interest to understand their computational complexity. Recently, Bürgisser et al. gave the first polynomial-time algorithms for orbit problems of torus actions, that is, actions of commutative continuous groups on Euclidean space. In this work, motivated by theoretical and practical applications, we study the computational complexity of robust generalizations of these orbit problems, which amount to approximating the distance of orbits in $\mathbb{C}^n$ up to a factor $γ&gt;1$. In particular, this allows deciding whether two inputs are approximately in the same orbit or far from being so. On the one hand, we prove the NP-hardness of this problem for $γ= n^{Ω(1/\log\log n)}$ by reducing the closest vector problem for lattices to it. On the other hand, we describe algorithms for solving this problem for an approximation factor $γ= \exp(\mathrm{poly}(n))$. Our algorithms combine tools from invariant theory and algorithmic lattice theory, and they also provide group elements witnessing the proximity of the given orbits (in contrast to the algebraic algorithms of prior work). We prove that they run in polynomial time if and only if a version of the famous number-theoretic $abc$-conjecture holds -- establishing a new and surprising connection between computational complexity and number theory.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-24T09:05:49Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>39th Computational Complexity Conference (CCC 2024), Leibniz International Proceedings in Informatics (LIPIcs), Volume 300, pp. 14:1-14:48 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Peter Bürgisser</name>
+    </author>
+    <author>
+      <name>Mahmut Levent Doğan</name>
+    </author>
+    <author>
+      <name>Visu Makam</name>
+    </author>
+    <author>
+      <name>Michael Walter</name>
+    </author>
+    <author>
+      <name>Avi Wigderson</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.CCC.2024.14</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.CCC.2024.14" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.06685v2</id>
+    <title>Faster Lattice Basis Computation via a Natural Generalization of the Euclidean Algorithm</title>
+    <updated>2024-11-06T20:56:55Z</updated>
+    <link href="https://arxiv.org/abs/2408.06685v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.06685v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Euclidean algorithm is the oldest algorithms known to mankind. Given two integral numbers $a_1$ and $a_2$, it computes the greatest common divisor (gcd) of $a_1$ and $a_2$ in a very elegant way. From a lattice perspective, it computes a basis of the sum of two one-dimensional lattices $a_1 \mathbb{Z}$ and $a_2 \mathbb{Z}$ as $\gcd(a_1,a_2) \mathbb{Z} = a_1 \mathbb{Z} + a_2 \mathbb{Z}$. In this paper, we show that the classical Euclidean algorithm can be adapted in a very natural way to compute a basis of a general lattice $L(A_1, \ldots , A_n)$ given vectors $A_1, \ldots , A_n \in \mathbb{Z}^d$ with $n&gt; \mathrm{rank}(a_1, \ldots ,a_d)$. Similar to the Euclidean algorithm, our algorithm is very easy to describe and implement and can be written within 12 lines of pseudocode.
+  As our main result, we obtain an algorithm to compute a lattice basis for given vectors $A_1, \ldots , A_n \in \mathbb{Z}^d$ in time (counting bit operations) $LS + \tilde{O}((n-d)d^2 \cdot \log(||A||)$, where $LS$ is the time required to obtain the exact fractional solution of a certain system of linear equalities. The analysis of the running time of our algorithms relies on fundamental statements on the fractionality of solutions of linear systems of equations.
+  So far, the fastest algorithm for lattice basis computation was due to Storjohann and Labhan [SL96] having a running time of $\tilde{O}(nd^ω\log ||A||)$. For current upper bounds of $LS$, our algorithm has a running time improvement of a factor of at least $d^{0.12}$ over [SL96]. Our algorithm is therefore the first general algorithmic improvement to this classical problem in nearly 30 years. At last, we present a postprocessing procedure which yields an improved size bound of $\sqrt{d} ||A||$ for vectors of the resulting basis matrix.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-13T07:24:53Z</published>
+    <arxiv:comment>22 pages. arXiv admin note: text overlap with arXiv:2311.15902</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Kim-Manuel Klein</name>
+    </author>
+    <author>
+      <name>Janina Reuter</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.09556v1</id>
+    <title>A $2^{n/2}$-Time Algorithm for $\sqrt{n}$-SVP and $\sqrt{n}$-Hermite SVP, and an Improved Time-Approximation Tradeoff for (H)SVP</title>
+    <updated>2020-07-19T02:08:23Z</updated>
+    <link href="https://arxiv.org/abs/2007.09556v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.09556v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show a $2^{n/2+o(n)}$-time algorithm that finds a (non-zero) vector in a lattice $\mathcal{L} \subset \mathbb{R}^n$ with norm at most $\tilde{O}(\sqrt{n})\cdot \min\{λ_1(\mathcal{L}), \det(\mathcal{L})^{1/n}\}$, where $λ_1(\mathcal{L})$ is the length of a shortest non-zero lattice vector and $\det(\mathcal{L})$ is the lattice determinant. Minkowski showed that $λ_1(\mathcal{L}) \leq \sqrt{n} \det(\mathcal{L})^{1/n}$ and that there exist lattices with $λ_1(\mathcal{L}) \geq Ω(\sqrt{n}) \cdot \det(\mathcal{L})^{1/n}$, so that our algorithm finds vectors that are as short as possible relative to the determinant (up to a polylogarithmic factor).
+  The main technical contribution behind this result is new analysis of (a simpler variant of) an algorithm from arXiv:1412.7994, which was only previously known to solve less useful problems. To achieve this, we rely crucially on the ``reverse Minkowski theorem'' (conjectured by Dadush arXiv:1606.06913 and proven by arXiv:1611.05979), which can be thought of as a partial converse to the fact that $λ_1(\mathcal{L}) \leq \sqrt{n} \det(\mathcal{L})^{1/n}$.
+  Previously, the fastest known algorithm for finding such a vector was the $2^{.802n + o(n)}$-time algorithm due to [Liu, Wang, Xu, and Zheng, 2011], which actually found a non-zero lattice vector with length $O(1) \cdot λ_1(\mathcal{L})$. Though we do not show how to find lattice vectors with this length in time $2^{n/2+o(n)}$, we do show that our algorithm suffices for the most important application of such algorithms: basis reduction. In particular, we show a modified version of Gama and Nguyen's slide-reduction algorithm [Gama and Nguyen, STOC 2008], which can be combined with the algorithm above to improve the time-length tradeoff for shortest-vector algorithms in nearly all regimes, including the regimes relevant to cryptography.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-19T02:08:23Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Zeyong Li</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.07490v4</id>
+    <title>Discrete Gaussian Sampling Reduces to CVP and SVP</title>
+    <updated>2016-04-19T19:11:11Z</updated>
+    <link href="https://arxiv.org/abs/1506.07490v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.07490v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The discrete Gaussian $D_{L- t, s}$ is the distribution that assigns to each vector $x$ in a shifted lattice $L - t$ probability proportional to $e^{-π\|x\|^2/s^2}$. It has long been an important tool in the study of lattices. More recently, algorithms for discrete Gaussian sampling (DGS) have found many applications in computer science. In particular, polynomial-time algorithms for DGS with very high parameters $s$ have found many uses in cryptography and in reductions between lattice problems. And, in the past year, Aggarwal, Dadush, Regev, and Stephens-Davidowitz showed $2^{n+o(n)}$-time algorithms for DGS with a much wider range of parameters and used them to obtain the current fastest known algorithms for the two most important lattice problems, the Shortest Vector Problem (SVP) and the Closest Vector Problem (CVP).
+  Motivated by its increasing importance, we investigate the complexity of DGS itself and its relationship to CVP and SVP. Our first result is a polynomial-time dimension-preserving reduction from DGS to CVP. There is a simple reduction from CVP to DGS, so this shows that DGS is equivalent to CVP. Our second result, which we find to be more surprising, is a polynomial-time dimension-preserving reduction from centered DGS (the important special case when $ t = 0$) to SVP. In the other direction, there is a simple reduction from $γ$-approximate SVP for any $γ= Ω(\sqrt{n/\log n})$, and we present some (relatively weak) evidence to suggest that this might be the best achievable approximation factor.
+  We also show that our CVP result extends to a much wider class of distributions and even to other norms.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-24T18:18:54Z</published>
+    <arxiv:comment>SODA 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>SODA 2016</arxiv:journal_ref>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.07903v1</id>
+    <title>Hardness of Bounded Distance Decoding on Lattices in $\ell_p$ Norms</title>
+    <updated>2020-03-17T19:23:49Z</updated>
+    <link href="https://arxiv.org/abs/2003.07903v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.07903v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>$ \newcommand{\Z}{\mathbb{Z}} \newcommand{\eps}{\varepsilon} \newcommand{\cc}[1]{\mathsf{#1}} \newcommand{\NP}{\cc{NP}} \newcommand{\problem}[1]{\mathrm{#1}} \newcommand{\BDD}{\problem{BDD}}
+  $Bounded Distance Decoding $\BDD_{p,α}$ is the problem of decoding a lattice when the target point is promised to be within an $α$ factor of the minimum distance of the lattice, in the $\ell_{p}$ norm. We prove that $\BDD_{p, α}$ is $\NP$-hard under randomized reductions where $α\to 1/2$ as $p \to \infty$ (and for $α=1/2$ when $p=\infty$), thereby showing the hardness of decoding for distances approaching the unique-decoding radius for large $p$. We also show fine-grained hardness for $\BDD_{p,α}$. For example, we prove that for all $p \in [1,\infty) \setminus 2\Z$ and constants $C &gt; 1, \eps &gt; 0$, there is no $2^{(1-\eps)n/C}$-time algorithm for $\BDD_{p,α}$ for some constant $α$ (which approaches $1/2$ as $p \to \infty$), assuming the randomized Strong Exponential Time Hypothesis (SETH). Moreover, essentially all of our results also hold (under analogous non-uniform assumptions) for $\BDD$ with preprocessing, in which unbounded precomputation can be applied to the lattice before the target is available.
+  Compared to prior work on the hardness of $\BDD_{p,α}$ by Liu, Lyubashevsky, and Micciancio (APPROX-RANDOM 2008), our results improve the values of $α$ for which the problem is known to be $\NP$-hard for all $p &gt; p_1 \approx 4.2773$, and give the very first fine-grained hardness for $\BDD$ (in any norm). Our reductions rely on a special family of "locally dense" lattices in $\ell_{p}$ norms, which we construct by modifying the integer-lattice sparsification technique of Aggarwal and Stephens-Davidowitz (STOC 2018).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-17T19:23:49Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Chris Peikert</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0802.2834v1</id>
+    <title>Trimmed Moebius Inversion and Graphs of Bounded Degree</title>
+    <updated>2008-02-20T14:15:00Z</updated>
+    <link href="https://arxiv.org/abs/0802.2834v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0802.2834v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study ways to expedite Yates's algorithm for computing the zeta and Moebius transforms of a function defined on the subset lattice. We develop a trimmed variant of Moebius inversion that proceeds point by point, finishing the calculation at a subset before considering its supersets. For an $n$-element universe $U$ and a family $\scr F$ of its subsets, trimmed Moebius inversion allows us to compute the number of packings, coverings, and partitions of $U$ with $k$ sets from $\scr F$ in time within a polynomial factor (in $n$) of the number of supersets of the members of $\scr F$. Relying on an intersection theorem of Chung et al. (1986) to bound the sizes of set families, we apply these ideas to well-studied combinatorial optimisation problems on graphs of maximum degree $Δ$. In particular, we show how to compute the Domatic Number in time within a polynomial factor of $(2^{Δ+1-2)^{n/(Δ+1)$ and the Chromatic Number in time within a polynomial factor of $(2^{Δ+1-Δ-1)^{n/(Δ+1)$. For any constant $Δ$, these bounds are $O\bigl((2-ε)^n\bigr)$ for $ε&gt;0$ independent of the number of vertices $n$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-02-20T14:15:00Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>Dans Proceedings of the 25th Annual Symposium on the Theoretical Aspects of Computer Science - STACS 2008, Bordeaux : France (2008)</arxiv:journal_ref>
+    <author>
+      <name>Andreas Björklund</name>
+      <arxiv:affiliation>HIIT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Thore Husfeldt</name>
+      <arxiv:affiliation>HIIT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Petteri Kaski</name>
+      <arxiv:affiliation>HIIT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mikko Koivisto</name>
+      <arxiv:affiliation>HIIT</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12080v2</id>
+    <title>Computing the covering radius of a polytope with an application to lonely runners</title>
+    <updated>2021-10-12T08:35:05Z</updated>
+    <link href="https://arxiv.org/abs/2009.12080v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12080v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We are concerned with the computational problem of determining the covering radius of a rational polytope. This parameter is defined as the minimal dilation factor that is needed for the lattice translates of the correspondingly dilated polytope to cover the whole space. As our main result, we describe a new algorithm for this problem, which is simpler, more efficient and easier to implement than the only prior algorithm of Kannan (1992). Motivated by a variant of the famous Lonely Runner Conjecture, we use its geometric interpretation in terms of covering radii of zonotopes, and apply our algorithm to prove the first open case of three runners with individual starting points.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-25T08:08:43Z</published>
+    <arxiv:comment>22 pages, 4 tables, 2 figures, revised version</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Combinatorica, Vol. 42, Issue 4, 463-490 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Jana Cslovjecsek</name>
+    </author>
+    <author>
+      <name>Romanos Diogenes Malikiosis</name>
+    </author>
+    <author>
+      <name>Márton Naszódi</name>
+    </author>
+    <author>
+      <name>Matthias Schymura</name>
+    </author>
+    <arxiv:doi>10.1007/s00493-020-4633-8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00493-020-4633-8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.04586v1</id>
+    <title>Algebraic and Euclidean Lattices: Optimal Lattice Reduction and Beyond</title>
+    <updated>2019-12-10T09:09:19Z</updated>
+    <link href="https://arxiv.org/abs/1912.04586v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.04586v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a framework generalizing lattice reduction algorithms to module lattices in order to practically and efficiently solve the $γ$-Hermite Module-SVP problem over arbitrary cyclotomic fields. The core idea is to exploit the structure of the subfields for designing a doubly-recursive strategy of reduction: both recursive in the rank of the module and in the field we are working in. Besides, we demonstrate how to leverage the inherent symplectic geometry existing in the tower of fields to provide a significant speed-up of the reduction for rank two modules. The recursive strategy over the rank can also be applied to the reduction of Euclidean lattices, and we can perform a reduction in asymptotically almost the same time as matrix multiplication. As a byproduct of the design of these fast reductions, we also generalize to all cyclotomic fields and provide speedups for many previous number theoretical algorithms. Quantitatively, we show that a module of rank 2 over a cyclotomic field of degree $n$ can be heuristically reduced within approximation factor $2^{\tilde{O}(n)}$ in time $\tilde{O}(n^2B)$, where $B$ is the bitlength of the entries. For $B$ large enough, this complexity shrinks to $\tilde{O}(n^{\log_2 3}B)$. This last result is particularly striking as it goes below the estimate of $n^2B$ swaps given by the classical analysis of the LLL algorithm using the so-called potential.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-10T09:09:19Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Thomas Espitau</name>
+    </author>
+    <author>
+      <name>Paul Kirchner</name>
+    </author>
+    <author>
+      <name>Pierre-Alain Fouque</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1308.1762v2</id>
+    <title>Spatial mixing and approximation algorithms for graphs with bounded connective constant</title>
+    <updated>2014-10-10T00:34:43Z</updated>
+    <link href="https://arxiv.org/abs/1308.1762v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1308.1762v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The hard core model in statistical physics is a probability distribution on independent sets in a graph in which the weight of any independent set I is proportional to lambda^(|I|), where lambda &gt; 0 is the vertex activity. We show that there is an intimate connection between the connective constant of a graph and the phenomenon of strong spatial mixing (decay of correlations) for the hard core model; specifically, we prove that the hard core model with vertex activity lambda &lt; lambda_c(Delta + 1) exhibits strong spatial mixing on any graph of connective constant Delta, irrespective of its maximum degree, and hence derive an FPTAS for the partition function of the hard core model on such graphs. Here lambda_c(d) := d^d/(d-1)^(d+1) is the critical activity for the uniqueness of the Gibbs measure of the hard core model on the infinite d-ary tree. As an application, we show that the partition function can be efficiently approximated with high probability on graphs drawn from the random graph model G(n,d/n) for all lambda &lt; e/d, even though the maximum degree of such graphs is unbounded with high probability.
+  We also improve upon Weitz's bounds for strong spatial mixing on bounded degree graphs (Weitz, 2006) by providing a computationally simple method which uses known estimates of the connective constant of a lattice to obtain bounds on the vertex activities lambda for which the hard core model on the lattice exhibits strong spatial mixing. Using this framework, we improve upon these bounds for several lattices including the Cartesian lattice in dimensions 3 and higher.
+  Our techniques also allow us to relate the threshold for the uniqueness of the Gibbs measure on a general tree to its branching factor (Lyons, 1989).</summary>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-08-08T06:08:22Z</published>
+    <arxiv:comment>26 pages. In October 2014, this paper was superseded by arxiv:1410.2595. Before that, an extended abstract of this paper appeared in Proc. IEEE Symposium on the Foundations of Computer Science (FOCS), 2013, pp. 300-309</arxiv:comment>
+    <arxiv:primary_category term="cs.DM"/>
+    <author>
+      <name>Alistair Sinclair</name>
+    </author>
+    <author>
+      <name>Piyush Srivastava</name>
+    </author>
+    <author>
+      <name>Yitong Yin</name>
+    </author>
+    <arxiv:doi>10.1109/FOCS.2013.40</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/FOCS.2013.40" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0809.2489v1</id>
+    <title>The fast intersection transform with applications to counting paths</title>
+    <updated>2008-09-15T11:15:05Z</updated>
+    <link href="https://arxiv.org/abs/0809.2489v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0809.2489v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an algorithm for evaluating a linear ``intersection transform'' of a function defined on the lattice of subsets of an $n$-element set. In particular, the algorithm constructs an arithmetic circuit for evaluating the transform in ``down-closure time'' relative to the support of the function and the evaluation domain. As an application, we develop an algorithm that, given as input a digraph with $n$ vertices and bounded integer weights at the edges, counts paths by weight and given length $0\leq\ell\leq n-1$ in time $O^*(\exp(n\cdot H(\ell/(2n))))$, where $H(p)=-p\log p-(1-p)\log(1-p)$, and the notation $O^*(\cdot)$ suppresses a factor polynomial in $n$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-09-15T11:15:05Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Andreas Björklund</name>
+    </author>
+    <author>
+      <name>Thore Husfeldt</name>
+    </author>
+    <author>
+      <name>Petteri Kaski</name>
+    </author>
+    <author>
+      <name>Mikko Koivisto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.05132v3</id>
+    <title>Low-Distortion Clustering in Bounded Growth Graphs</title>
+    <updated>2025-06-11T04:07:34Z</updated>
+    <link href="https://arxiv.org/abs/2405.05132v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.05132v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The well-known clustering algorithm of Miller, Peng, and Xu (SPAA 2013) is useful for many applications, including low-diameter decomposition and low-energy distributed algorithms. One nice property of their clustering, shown in previous work by Chang, Dani, Hayes, and Pettie (PODC 2020), is that distances in the cluster graph are rescaled versions of distances in the original graph, up to an $O(\log n)$ distortion factor and rounding issues. Minimizing this distortion factor is important for efficiency in computing the clustering, as well as in further applications, once the clustering has been constructed.
+  We prove that there exist graphs for which an $Ω((\log n)^{1/3})$ distortion factor is necessary for any clustering. We also consider a class of nice graphs which we call uniformly bounded independence graphs. These include, for example, paths, lattice graphs, and "dense" unit disk graphs. For these graphs, we prove that clusterings of constant distortion always exist, and moreover, we give an efficient distributed algorithm to construct them. Our clustering algorithm is based on Voronoi cells centered at the vertices of a maximal independent set in a suitable power graph.
+  Applications of our new clustering include low-energy simulation of distributed algorithms in the LOCAL, CONGEST, and RADIO-CONGEST models, as well as efficient approximate solutions to distributed combinatorial optimization problems. We complement these results with matching or nearly matching lower bounds.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-08T15:31:30Z</published>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Yi-Jun Chang</name>
+    </author>
+    <author>
+      <name>Varsha Dani</name>
+    </author>
+    <author>
+      <name>Thomas P. Hayes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.02387v1</id>
+    <title>Approximate $\mathrm{CVP}$ in time $2^{0.802 \, n}$ -- now in any norm!</title>
+    <updated>2021-10-05T22:39:07Z</updated>
+    <link href="https://arxiv.org/abs/2110.02387v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.02387v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a constant factor approximation of the shortest and closest lattice vector problem in any norm can be computed in time $2^{0.802\, n}$. This contrasts the corresponding $2^n$ time, (gap)-SETH based lower bounds for these problems that even apply for small constant approximation. For both problems, $\mathrm{SVP}$ and $\mathrm{CVP}$, we reduce to the case of the Euclidean norm. A key technical ingredient in that reduction is a twist of Milman's construction of an $M$-ellipsoid which approximates any symmetric convex body $K$ with an ellipsoid $\mathcal{E}$ so that $2^{\varepsilon n}$ translates of a constant scaling of $\mathcal{E}$ can cover $K$ and vice versa.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-05T22:39:07Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Thomas Rothvoss</name>
+    </author>
+    <author>
+      <name>Moritz Venzin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.02201v4</id>
+    <title>Toward a Dichotomy for Approximation of $H$-coloring</title>
+    <updated>2022-11-22T17:00:39Z</updated>
+    <link href="https://arxiv.org/abs/1902.02201v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.02201v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given two (di)graphs G, H and a cost function $c:V(G)\times V(H) \to \mathbb{Q}_{\geq 0}\cup\{+\infty\}$, in the minimum cost homomorphism problem, MinHOM(H), goal is finding a homomorphism $f:V(G)\to V(H)$ (a.k.a H-coloring) that minimizes $\sum\limits_{v\in V(G)}c(v,f(v))$. The complexity of exact minimization of this problem is well understood [34], and the class of digraphs H, for which the MinHOM(H) is polynomial time solvable is a small subset of all digraphs.
+  In this paper, we consider the approximation of MinHOM within a constant factor. For digraphs, MinHOM(H) is not approximable if H contains a digraph asteroidal triple (DAT). We take a major step toward a dichotomy classification of approximable cases. We give a dichotomy classification for approximating the MinHOM(H) when H is a graph. For digraphs, we provide constant factor approximation algorithms for two important classes of digraphs, namely bi-arc digraphs (digraphs with a conservative semi-lattice polymorphism or min-ordering), and k-arc digraphs (digraphs with an extended min-ordering). Specifically, we show that:
+  1. Dichotomy for Graphs: MinHOM(H) has a $2|V(H)|$-approximation algorithm if graph H admits a conservative majority polymorphims (i.e. H is a bi-arc graph), otherwise, it is inapproximable;
+  2. MinHOM(H) has a $|V(H)|^2$-approximation algorithm if H is a bi-arc digraph;
+  3. MinHOM(H) has a $|V(H)|^2$-approximation algorithm if H is a k-arc digraph.
+  In conclusion, we show the importance of these results and provide insights for achieving a dichotomy classification of approximable cases. Our constant factors depend on the size of H. However, the implementation of our algorithms provides a much better approximation ratio. It leaves open to investigate a classification of digraphs H, where MinHOM(H) admits a constant factor approximation algorithm that is independent of H.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-06T14:27:25Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Akbar Rafiey</name>
+    </author>
+    <author>
+      <name>Arash Rafiey</name>
+    </author>
+    <author>
+      <name>Thiago Santos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1504.01995v2</id>
+    <title>Solving the Closest Vector Problem in $2^n$ Time--- The Discrete Gaussian Strikes Again!</title>
+    <updated>2015-09-29T03:29:12Z</updated>
+    <link href="https://arxiv.org/abs/1504.01995v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1504.01995v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a $2^{n+o(n)}$-time and space randomized algorithm for solving the exact Closest Vector Problem (CVP) on $n$-dimensional Euclidean lattices. This improves on the previous fastest algorithm, the deterministic $\widetilde{O}(4^{n})$-time and $\widetilde{O}(2^{n})$-space algorithm of Micciancio and Voulgaris.
+  We achieve our main result in three steps. First, we show how to modify the sampling algorithm from [ADRS15] to solve the problem of discrete Gaussian sampling over lattice shifts, $L- t$, with very low parameters. While the actual algorithm is a natural generalization of [ADRS15], the analysis uses substantial new ideas. This yields a $2^{n+o(n)}$-time algorithm for approximate CVP for any approximation factor $γ= 1+2^{-o(n/\log n)}$. Second, we show that the approximate closest vectors to a target vector $t$ can be grouped into "lower-dimensional clusters," and we use this to obtain a recursive reduction from exact CVP to a variant of approximate CVP that "behaves well with these clusters." Third, we show that our discrete Gaussian sampling algorithm can be used to solve this variant of approximate CVP.
+  The analysis depends crucially on some new properties of the discrete Gaussian distribution and approximate closest vectors, which might be of independent interest.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-04-08T14:54:39Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>FOCS 2015</arxiv:journal_ref>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Daniel Dadush</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.7994v5</id>
+    <title>Solving the Shortest Vector Problem in $2^n$ Time via Discrete Gaussian Sampling</title>
+    <updated>2015-09-15T17:47:49Z</updated>
+    <link href="https://arxiv.org/abs/1412.7994v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.7994v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a randomized $2^{n+o(n)}$-time and space algorithm for solving the Shortest Vector Problem (SVP) on n-dimensional Euclidean lattices. This improves on the previous fastest algorithm: the deterministic $\widetilde{O}(4^n)$-time and $\widetilde{O}(2^n)$-space algorithm of Micciancio and Voulgaris (STOC 2010, SIAM J. Comp. 2013).
+  In fact, we give a conceptually simple algorithm that solves the (in our opinion, even more interesting) problem of discrete Gaussian sampling (DGS). More specifically, we show how to sample $2^{n/2}$ vectors from the discrete Gaussian distribution at any parameter in $2^{n+o(n)}$ time and space. (Prior work only solved DGS for very large parameters.) Our SVP result then follows from a natural reduction from SVP to DGS. We also show that our DGS algorithm implies a $2^{n + o(n)}$-time algorithm that approximates the Closest Vector Problem to within a factor of $1.97$.
+  In addition, we give a more refined algorithm for DGS above the so-called smoothing parameter of the lattice, which can generate $2^{n/2}$ discrete Gaussian samples in just $2^{n/2+o(n)}$ time and space. Among other things, this implies a $2^{n/2+o(n)}$-time and space algorithm for $1.93$-approximate decision SVP.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-26T21:36:03Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>STOC 2015</arxiv:journal_ref>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Daniel Dadush</name>
+    </author>
+    <author>
+      <name>Oded Regev</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.07455v1</id>
+    <title>Subspace Selection via DR-Submodular Maximization on Lattices</title>
+    <updated>2018-05-18T21:57:17Z</updated>
+    <link href="https://arxiv.org/abs/1805.07455v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.07455v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The subspace selection problem seeks a subspace that maximizes an objective function under some constraint. This problem includes several important machine learning problems such as the principal component analysis and sparse dictionary selection problem. Often, these problems can be solved by greedy algorithms. Here, we are interested in why these problems can be solved by greedy algorithms, and what classes of objective functions and constraints admit this property. To answer this question, we formulate the problems as optimization problems on lattices. Then, we introduce a new class of functions, directional DR-submodular functions, to characterize the approximability of problems. We see that the principal component analysis, sparse dictionary selection problem, and these generalizations have directional DR-submodularities. We show that, under several constraints, the directional DR-submodular function maximization problem can be solved efficiently with provable approximation factors.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-18T21:57:17Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>So Nakashima</name>
+    </author>
+    <author>
+      <name>Takanori Maehara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19629v1</id>
+    <title>Lifting Linear Sketches: Optimal Bounds and Adversarial Robustness</title>
+    <updated>2025-03-25T13:15:49Z</updated>
+    <link href="https://arxiv.org/abs/2503.19629v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19629v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a novel technique for ``lifting'' dimension lower bounds for linear sketches in the real-valued setting to dimension lower bounds for linear sketches with polynomially-bounded integer entries when the input is a polynomially-bounded integer vector. Using this technique, we obtain the first optimal sketching lower bounds for discrete inputs in a data stream, for classical problems such as approximating the frequency moments, estimating the operator norm, and compressed sensing. Additionally, we lift the adaptive attack of Hardt and Woodruff (STOC, 2013) for breaking any real-valued linear sketch via a sequence of real-valued queries, and show how to obtain an attack on any integer-valued linear sketch using integer-valued queries. This shows that there is no linear sketch in a data stream with insertions and deletions that is adversarially robust for approximating any $L_p$ norm of the input, resolving a central open question for adversarially robust streaming algorithms. To do so, we introduce a new pre-processing technique of independent interest which, given an integer-valued linear sketch, increases the dimension of the sketch by only a constant factor in order to make the orthogonal lattice to its row span smooth. This pre-processing then enables us to leverage results in lattice theory on discrete Gaussian distributions and reason that efficient discrete sketches imply efficient continuous sketches. Our work resolves open questions from the Banff '14 and '17 workshops on Communication Complexity and Applications, as well as the STOC '21 and FOCS '23 workshops on adaptivity and robustness.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T13:15:49Z</published>
+    <arxiv:comment>To appear in STOC 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Elena Gribelyuk</name>
+    </author>
+    <author>
+      <name>Honghao Lin</name>
+    </author>
+    <author>
+      <name>David P. Woodruff</name>
+    </author>
+    <author>
+      <name>Huacheng Yu</name>
+    </author>
+    <author>
+      <name>Samson Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.13248v2</id>
+    <title>Disjoint Stable Matchings in Linear Time</title>
+    <updated>2021-07-04T07:25:29Z</updated>
+    <link href="https://arxiv.org/abs/2011.13248v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.13248v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that given a SM instance G as input we can find a largest collection of pairwise edge-disjoint stable matchings of G in time linear in the input size. This extends two classical results:
+  1. The Gale-Shapley algorithm, which can find at most two ("extreme") pairwise edge-disjoint stable matchings of G in linear time, and
+  2. The polynomial-time algorithm for finding a largest collection of pairwise edge-disjoint perfect matchings (without the stability requirement) in a bipartite graph, obtained by combining König's characterization with Tutte's f-factor algorithm.
+  Moreover, we also give an algorithm to enumerate all maximum-length chains of disjoint stable matchings in the lattice of stable matchings of a given instance. This algorithm takes time polynomial in the input size for enumerating each chain. We also derive the expected number of such chains in a random instance of Stable Matching.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-26T11:39:30Z</published>
+    <arxiv:comment>Conference: International Workshop on Graph-Theoretic Concepts in Computer Science 2021 (https://wg2021.mimuw.edu.pl)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Aadityan Ganesh</name>
+    </author>
+    <author>
+      <name>Vishwa Prakash HV</name>
+    </author>
+    <author>
+      <name>Prajakta Nimbhorkar</name>
+    </author>
+    <author>
+      <name>Geevarghese Philip</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.04118v5</id>
+    <title>Reducing Matroid Optimization to Basis Search</title>
+    <updated>2026-07-15T04:12:57Z</updated>
+    <link href="https://arxiv.org/abs/2408.04118v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.04118v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Much energy has been devoted to developing a matroid's computational properties, yet parallel algorithm design for matroid optimization seems less understood. Specifically, the current state of the art is a folklore reduction from optimization to the search based on methods originating in [KUW88]. However, while this reduction adds only constant overhead in terms of \emph{adaptive complexity}, it imposes a high cost in \emph{query complexity}. In response, we present a new reduction from optimization to search within the class of \emph{binary matroids} which, when $n$ and $r$ take the size of the ground set and matroid rank respectively, implies a novel optimization algorithm terminating in $\mathcal{O}(\sqrt{n}\cdot\log r)$ parallel rounds using only $\mathcal{O}(rn\cdot\log r)$ independence queries. This is a significant improvement in query complexity when the matroid is sparse, meaning $r \ll n$, while trading off only a logarithmic factor of the rank in the adaptive complexity. At a technical level, our method begins by observing that a basis is optimal if and only if it is the set of points of minimum weight in any cocircuit. Importantly, this certificate reveals that simultaneous tests for \emph{local optimality} in cocircuits is a general paradigm for parallel matroid optimization. By combining this idea with connections between bases and cocircuits we obtain our reduction, whose efficiency follows by analyzing the lattice of flats. A primary goal of our study is initiating a finer understanding of parallel matroid optimization. And so, since many of our techniques begin with observations about general matroids and their flats, we hope that our efforts aid the future design of parallel matroid algorithms and applications of lattice theory thereof.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-07T22:57:48Z</published>
+    <arxiv:comment>There is an error in the proof of Lemma 5.9 (B does not necessarily generate the sublattice of H_1 through H_m) and in Theorem 5.10 (does not account for collisions of differences)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Robert Streit</name>
+    </author>
+    <author>
+      <name>Vijay K. Garg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.09331v1</id>
+    <title>Adaptive Robustness of Hypergrid Johnson-Lindenstrauss</title>
+    <updated>2025-04-12T20:23:34Z</updated>
+    <link href="https://arxiv.org/abs/2504.09331v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.09331v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Johnson and Lindenstrauss (Contemporary Mathematics, 1984) showed that for $n &gt; m$, a scaled random projection $\mathbf{A}$ from $\mathbb{R}^n$ to $\mathbb{R}^m$ is an approximate isometry on any set $S$ of size at most exponential in $m$. If $S$ is larger, however, its points can contract arbitrarily under $\mathbf{A}$. In particular, the hypergrid $([-B, B] \cap \mathbb{Z})^n$ is expected to contain a point that is contracted by a factor of $κ_{\mathsf{stat}} = Θ(B)^{-1/α}$, where $α= m/n$.
+  We give evidence that finding such a point exhibits a statistical-computational gap precisely up to $κ_{\mathsf{comp}} = \widetildeΘ(\sqrtα/B)$. On the algorithmic side, we design an online algorithm achieving $κ_{\mathsf{comp}}$, inspired by a discrepancy minimization algorithm of Bansal and Spencer (Random Structures &amp; Algorithms, 2020). On the hardness side, we show evidence via a multiple overlap gap property (mOGP), which in particular captures online algorithms; and a reduction-based lower bound, which shows hardness under standard worst-case lattice assumptions.
+  As a cryptographic application, we show that the rounded Johnson-Lindenstrauss embedding is a robust property-preserving hash function (Boyle, Lavigne and Vaikuntanathan, TCC 2019) on the hypergrid for the Euclidean metric in the computationally hard regime. Such hash functions compress data while preserving $\ell_2$ distances between inputs up to some distortion factor, with the guarantee that even knowing the hash function, no computationally bounded adversary can find any pair of points that violates the distortion bound.</summary>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-12T20:23:34Z</published>
+    <arxiv:primary_category term="stat.CO"/>
+    <author>
+      <name>Andrej Bogdanov</name>
+    </author>
+    <author>
+      <name>Alon Rosen</name>
+    </author>
+    <author>
+      <name>Neekon Vafa</name>
+    </author>
+    <author>
+      <name>Vinod Vaikuntanathan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.21932v1</id>
+    <title>Computing the Determinant via the Generalized Euclidean Algorithm</title>
+    <updated>2026-08-22T11:58:25Z</updated>
+    <link href="https://arxiv.org/abs/2608.21932v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.21932v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an algorithm with a natural geometric interpretation for computing the determinant of a matrix $B\in\mathbb{Z}^{d\times d}$. It improves upon the current fastest deterministic algorithms by a factor of $d^{ω(1)+1-ω(2)}\approx d^{0.1213}$, where $ω(k)$ denotes the exponent required for multiplying a $d\times d$ matrix with a $d\times d^k$ matrix. Our approach builds on a recent result of Klein and Reuter (STOC 2025), who introduced a novel algorithmic idea for lattice basis computation that can be viewed as extending the Euclidean algorithm from $\mathbb{Z}$ to $\mathbb{Z}^d$. By adapting their techniques, we compute the determinant with the same bit complexity as applying the generalized Euclidean algorithm to an input matrix $A\in\mathbb{Z}^{d\times 2d}$ with $\|A\| = \|B\|$, namely $\tilde{O}(d^{ω(2)}\log\|B\|)$. Prior to this work, the fastest deterministic algorithm for computing the determinant required $\tilde{O}(d^{ω(1)+1}\log\|B\|)$ bit operations.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-22T11:58:25Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Janina Reuter</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.1728v1</id>
+    <title>Linear-time generation of specifiable combinatorial structures: general theory and first examples</title>
+    <updated>2013-07-05T22:19:06Z</updated>
+    <link href="https://arxiv.org/abs/1307.1728v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.1728v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Various specifiable combinatorial structures, with d extensive parameters, can be exactly sampled both by the recursive method, with linear arithmetic complexity if a heavy preprocessing is performed, or by the Boltzmann method, with complexity Theta(n^{1+d/2}). We discuss a modified recursive method, crucially based on the asymptotic expansion of the associated saddle-point integrals, which can be adopted for a large number of such structures (e.g. partitions, permutations, lattice walks, trees, random graphs, all with a variety of prescribed statistics and/or constraints). The new algorithm requires no preprocessing, still it has linear complexity on average. In terms of bit complexity, instead of arithmetic, we only have extra logarithmic factors. For many families of structures, this provides, at our knowledge, the only known quasi-linear generators. We present the general theory, and detail a specific example: the partitions of n elements into k non-empty blocks, counted by the Stirling numbers of the second kind. These objects are involved in the exact sampling of minimal automata with prescribed alphabet size and number of states, which is thus performed here with average Theta(n ln n) bit complexity, outbreaking all previously known Theta(n^{3/2}) algorithms.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-05T22:19:06Z</published>
+    <arxiv:comment>10 pages + 5 title/biblio/append., submitted to SODA 2014</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Frederique Bassino</name>
+    </author>
+    <author>
+      <name>Andrea Sportiello</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.03741v3</id>
+    <title>New Bounds on Augmenting Steps of Block-structured Integer Programs</title>
+    <updated>2019-10-25T03:02:18Z</updated>
+    <link href="https://arxiv.org/abs/1805.03741v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.03741v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider 4-block $n$-fold integer programs, whose constraint matrix consists of $n$ copies of small matrices $A$, $B$, and $D$, and one copy of $C$, in a specific block structure. All existing algorithms along this line of research follows an iterative augmentation framework, which relies on the so-called Graver basis of the constraint matrix that constitutes a set of fundamental augmenting steps. Bounding the $\ell_1$- or $\ell_\infty$-norm of elements of the Graver basis is the key to these algorithms. Hemmecke et al.~[Math. Prog. 2014] showed that 4-block $n$-fold IP has Graver elements of $\ell_\infty$-norm at most $O_{FPT}(n^{2^{s_{D}}})$, leading to an algorithm with a similar runtime; here, $s_{D}$ is the number of rows of matrix $D$ and $ O_{FPT}(1)$ hides a multiplicative factor that is only dependent on the small matrices $A,B,C,D$.
+  We prove that the $\ell_{\infty}$-norm of the Graver elements of 4-block $n$-fold IP is upper bounded by $O_{FPT}(n^{s_{D}})$, improving significantly over the previous bound $O_{FPT} (n^{2^{s_{D}}})$. We also provide a matching lower bound of $Ω(n^{s_{D}})$ which even holds for arbitrary non-zero lattice elements, ruling out augmenting algorithm relying on even more restricted notions of augmentation than the Graver basis. We then consider a special case of 4-block $n$-fold in which $C$ is a zero matrix, called 3-block $n$-fold IP. We show that while even there the $\ell_{\infty}$-norm of its Graver elements is $Ω(n^{s_{D}})$, there exists a different decomposition into lattice elements whose $\ell_{\infty}$-norm is bounded by $ O_{FPT}(1)$, which allows us to provide improved upper bounds on the $\ell_{\infty}$-norm of Graver elements for 3-block $n$-fold IP.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-09T21:34:28Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Lin Chen</name>
+    </author>
+    <author>
+      <name>Lei Xu</name>
+    </author>
+    <author>
+      <name>Weidong Shi</name>
+    </author>
+    <author>
+      <name>Martin Koutecký</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.14605v5</id>
+    <title>The Subspace Flatness Conjecture and Faster Integer Programming</title>
+    <updated>2026-03-27T06:14:01Z</updated>
+    <link href="https://arxiv.org/abs/2303.14605v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.14605v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a seminal paper, Kannan and Lovász (1988) considered a quantity $μ_{KL}(Λ,K)$ which denotes the best volume-based lower bound on the covering radius $μ(Λ,K)$ of a convex body $K$ with respect to a lattice $Λ$. Kannan and Lovász proved that $μ(Λ,K) \leq n \cdot μ_{KL}(Λ,K)$ and the Subspace Flatness Conjecture by Dadush (2012) claims a $O(\log(2n))$ factor suffices, which would match the lower bound from the work of Kannan and Lovász.
+  We settle this conjecture up to a constant in the exponent by proving that $μ(Λ,K) \leq O(\log^{3}(2n)) \cdot μ_{KL} (Λ,K)$. Our proof is based on the Reverse Minkowski Theorem due to Regev and Stephens-Davidowitz (2017). Following the work of Dadush (2012, 2019), we obtain a $(\log(2n))^{O(n)}$-time randomized algorithm to solve integer programs in $n$ variables. Another implication of our main result is a near-optimal flatness constant of $O(n \log^{2}(2n))$, improving on the previous bound of $O(n^{4/3} \log^{O(1)} (2n))$.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-26T02:27:13Z</published>
+    <arxiv:comment>49 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Victor Reis</name>
+    </author>
+    <author>
+      <name>Thomas Rothvoss</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03220v1</id>
+    <title>One Discrete Gaussian Sample in $2^{n/2+o(n)}$ Time</title>
+    <updated>2026-08-04T06:53:28Z</updated>
+    <link href="https://arxiv.org/abs/2608.03220v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03220v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Aggarwal, Dadush, Regev, and Stephens-Davidowitz (ADRS; STOC 2015) sample $2^{n/2}$ discrete Gaussians at an arbitrary parameter in $2^{n+o(n)}$ time, and above smoothing in $2^{n/2+o(n)}$ time. They ask whether the latter bound suffices for one sample at an arbitrary parameter. We answer this question affirmatively: for every rank-$n$ lattice $L\subseteq\R^n$ specified by a rational basis and every rational $s^2&gt;0$, we produce one sample from $D_{L,s}$ within statistical distance $\exp(-Ω(n^3))$ in expected $2^{n/2+o(n)}$ time and $2^{n/2+o(n)}$ space on every execution. The algorithm samples from random superlattices that are smooth at the required scale with constant probability and outputs the first point in $L$; a Gaussian-mass comparison shows that the $2^{n/2}$ samples produced by one ADRS call contain a point of $L$ with inverse-polynomial probability. The factor $2^{n/2}$ is tight in this Gaussian-mass comparison. For every fixed rational $α&lt;1.4697$, the same comparison gives a sub-$2^n$ algorithm for exact CVP on targets satisfying $\dist(y,L)\leαλ_1(L)$, without a uniqueness assumption, and an exact-SVP algorithm in $2^{0.7315n+o(n)}$ time.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T06:53:28Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Jiseung Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.04979v3</id>
+    <title>Rubik Tables and Object Rearrangement</title>
+    <updated>2023-01-17T15:48:58Z</updated>
+    <link href="https://arxiv.org/abs/2002.04979v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.04979v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A great number of robotics applications demand the rearrangement of many mobile objects, e.g., organizing products on shelves, shuffling containers at shipping ports, reconfiguring fleets of mobile robots, and so on. To boost the throughput in systems designed for solving these rearrangement problems, it is essential to minimize the number of atomic operations, e.g., the pick-n-places of individual objects. However, this optimization task poses a rather difficult challenge due to complex inter-dependency between objects, especially in high-density settings.
+  In tackling the aforementioned challenges, we develop a novel algorithmic tool, Rubik Tables, that provides a clean abstraction of object rearrangement problems as the proxy problem of shuffling items stored in a table or lattice. In its basic form, a Rubik Table is an $n\times n$ table containing $n^2$ items. We show that the reconfiguration of items in such a Rubik Table can be achieved using at most $2n$ column/row shuffles in the partially labeled setting, where each column (resp., row) shuffle may arbitrarily permute the items stored in a column (resp., row) of the table. When items are fully distinguishable, additional $n$ shuffles are needed. Rubik Tables allow many generalizations, e.g., to higher dimensions.
+  Using Rubik Table, we have designed a first constant-factor optimal algorithm for stack rearrangement problems. We show that, for $nd$ items stored in $n$ stacks of depth $d$ each, using one empty stack as the swap space, $O(nd)$ stack pop-push operations are sufficient for an arbitrary reconfiguration of the stacks where $d \le n^{\frac{m}{2}}$ for arbitrary fixed $m &gt;0$. Rubik Table results also allow the development of constant-factor optimal solutions for solving multi-robot motion planning problems under extreme robot density. These algorithms based on Rubik Table results run in low-polynomial time.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-12T13:37:23Z</published>
+    <arxiv:comment>Pre-print of extended manuscript accepted by IJRR in 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Mario Szegedy</name>
+    </author>
+    <author>
+      <name>Jingjin Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1704.03928v2</id>
+    <title>On the Quantitative Hardness of CVP</title>
+    <updated>2017-10-05T19:05:01Z</updated>
+    <link href="https://arxiv.org/abs/1704.03928v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1704.03928v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>$ \newcommand{\eps}{\varepsilon} \newcommand{\problem}[1]{\ensuremath{\mathrm{#1}} } \newcommand{\CVP}{\problem{CVP}} \newcommand{\SVP}{\problem{SVP}} \newcommand{\CVPP}{\problem{CVPP}} \newcommand{\ensuremath}[1]{#1} $For odd integers $p \geq 1$ (and $p = \infty$), we show that the Closest Vector Problem in the $\ell_p$ norm ($\CVP_p$) over rank $n$ lattices cannot be solved in $2^{(1-\eps) n}$ time for any constant $\eps &gt; 0$ unless the Strong Exponential Time Hypothesis (SETH) fails. We then extend this result to "almost all" values of $p \geq 1$, not including the even integers. This comes tantalizingly close to settling the quantitative time complexity of the important special case of $\CVP_2$ (i.e., $\CVP$ in the Euclidean norm), for which a $2^{n +o(n)}$-time algorithm is known. In particular, our result applies for any $p = p(n) \neq 2$ that approaches $2$ as $n \to \infty$.
+  We also show a similar SETH-hardness result for $\SVP_\infty$; hardness of approximating $\CVP_p$ to within some constant factor under the so-called Gap-ETH assumption; and other quantitative hardness results for $\CVP_p$ and $\CVPP_p$ for any $1 \leq p &lt; \infty$ under different assumptions.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-12T20:55:59Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>FOCS 2017</arxiv:journal_ref>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Alexander Golovnev</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26261v1</id>
+    <title>The Code Distortion Problem</title>
+    <updated>2026-07-28T20:49:41Z</updated>
+    <link href="https://arxiv.org/abs/2607.26261v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26261v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Two linear error-correcting codes $\cal{C}_1, \cal{C}_2 \subseteq \mathbb{F}_q^n$ are called linearly equivalent if there is a linear isometry mapping $\cal{C}_1$ to $\cal{C}_2$. In this work, we generalize the notion of linear equivalence and study the minimum distortion $\cal{D}(\cal{C}_1, \cal{C}_2)$ of a linear mapping between codes $\cal{C}_1, \cal{C}_2 \subseteq \mathbb{F}_q^n$, which quantifies how similar $\cal{C}_1$ and $\cal{C}_2$ are. We introduce and study the Code Distortion Problem (CDP), which asks to find a minimum distortion mapping between two input codes $\cal{C}_1$ and $\cal{C}_2$. CDP generalizes the Linear Code Equivalence Problem (LCE), which is essentially the special case of CDP where $\cal{D}(\cal{C}_1, C_2) = 1$ and which is well-studied because of its role in cryptography.
+  We prove that (decisional) CDP is $\mathsf{NP}$-hard to approximate to within any constant factor, and that it is in $Σ_2^P$. We also give a single-exponential-time $k^2$-approximation algorithm for CDP, where $k$ is the dimension of the input codes. Furthermore, we give a single-exponential-time $\big(\frac{2k + 1}{3})^2$-approximation algorithm for a natural special case of CDP, and we show that our analysis is tight in this case.
+  We use techniques from analogous work on the Lattice Distortion Problem (LDP) by Bennett, Dadush, and Stephens-Davidowitz (ESA, 2016). We also introduce or study a number of additional concepts that might be of independent interest. These include an adaptation of the celebrated reduction of Goldreich, Micciancio, Safra, and Seifert (IPL, 1999) from the Shortest Vector Problem (SVP) to the Closest Vector Problem (CVP) on lattices to the analogous problems on codes; successive minima bases for codes; and the matrix $0 \to 0$ "norm" on subspaces.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-28T20:49:41Z</published>
+    <arxiv:comment>APPROX 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Matthew Fox</name>
+    </author>
+    <author>
+      <name>Bryant Morrell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.03158v1</id>
+    <title>Graph-based time-space trade-offs for approximate near neighbors</title>
+    <updated>2017-12-08T16:26:22Z</updated>
+    <link href="https://arxiv.org/abs/1712.03158v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.03158v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We take a first step towards a rigorous asymptotic analysis of graph-based approaches for finding (approximate) nearest neighbors in high-dimensional spaces, by analyzing the complexity of (randomized) greedy walks on the approximate near neighbor graph. For random data sets of size $n = 2^{o(d)}$ on the $d$-dimensional Euclidean unit sphere, using near neighbor graphs we can provably solve the approximate nearest neighbor problem with approximation factor $c &gt; 1$ in query time $n^{ρ_q + o(1)}$ and space $n^{1 + ρ_s + o(1)}$, for arbitrary $ρ_q, ρ_s \geq 0$ satisfying \begin{align} (2c^2 - 1) ρ_q + 2 c^2 (c^2 - 1) \sqrt{ρ_s (1 - ρ_s)} \geq c^4. \end{align} Graph-based near neighbor searching is especially competitive with hash-based methods for small $c$ and near-linear memory, and in this regime the asymptotic scaling of a greedy graph-based search matches the recent optimal hash-based trade-offs of Andoni-Laarhoven-Razenshteyn-Waingarten [SODA'17]. We further study how the trade-offs scale when the data set is of size $n = 2^{Θ(d)}$, and analyze asymptotic complexities when applying these results to lattice sieving.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-08T16:26:22Z</published>
+    <arxiv:comment>26 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>34th International Symposium on Computational Geometry (SoCG), pp. 57:1-57:14, 2018</arxiv:journal_ref>
+    <author>
+      <name>Thijs Laarhoven</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.SoCG.2018.57</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.SoCG.2018.57" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.11693v1</id>
+    <title>Lattice Problems Beyond Polynomial Time</title>
+    <updated>2022-11-21T18:11:46Z</updated>
+    <link href="https://arxiv.org/abs/2211.11693v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.11693v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the complexity of lattice problems in a world where algorithms, reductions, and protocols can run in superpolynomial time, revisiting four foundational results: two worst-case to average-case reductions and two protocols. We also show a novel protocol.
+  1. We prove that secret-key cryptography exists if $\widetilde{O}(\sqrt{n})$-approximate SVP is hard for $2^{\varepsilon n}$-time algorithms. I.e., we extend to our setting (Micciancio and Regev's improved version of) Ajtai's celebrated polynomial-time worst-case to average-case reduction from $\widetilde{O}(n)$-approximate SVP to SIS.
+  2. We prove that public-key cryptography exists if $\widetilde{O}(n)$-approximate SVP is hard for $2^{\varepsilon n}$-time algorithms. This extends to our setting Regev's celebrated polynomial-time worst-case to average-case reduction from $\widetilde{O}(n^{1.5})$-approximate SVP to LWE. In fact, Regev's reduction is quantum, but ours is classical, generalizing Peikert's polynomial-time classical reduction from $\widetilde{O}(n^2)$-approximate SVP.
+  3. We show a $2^{\varepsilon n}$-time coAM protocol for $O(1)$-approximate CVP, generalizing the celebrated polynomial-time protocol for $O(\sqrt{n/\log n})$-CVP due to Goldreich and Goldwasser. These results show complexity-theoretic barriers to extending the recent line of fine-grained hardness results for CVP and SVP to larger approximation factors. (This result also extends to arbitrary norms.)
+  4. We show a $2^{\varepsilon n}$-time co-non-deterministic protocol for $O(\sqrt{\log n})$-approximate SVP, generalizing the (also celebrated!) polynomial-time protocol for $O(\sqrt{n})$-CVP due to Aharonov and Regev.
+  5. We give a novel coMA protocol for $O(1)$-approximate CVP with a $2^{\varepsilon n}$-time verifier.
+  All of the results described above are special cases of more general theorems that achieve time-approximation factor tradeoffs.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-21T18:11:46Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Zvika Brakerski</name>
+    </author>
+    <author>
+      <name>Alexander Golovnev</name>
+    </author>
+    <author>
+      <name>Rajendra Kumar</name>
+    </author>
+    <author>
+      <name>Zeyong Li</name>
+    </author>
+    <author>
+      <name>Spencer Peters</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+    <author>
+      <name>Vinod Vaikuntanathan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.10040v1</id>
+    <title>Online Discrepancy Minimization for Sub-Gaussian Inputs via Regularization and Restriction</title>
+    <updated>2026-08-10T09:24:46Z</updated>
+    <link href="https://arxiv.org/abs/2608.10040v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.10040v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study online discrepancy minimization: vectors $v_1,\ldots,v_T\in\mathbb{R}^n$ arrive sequentially, and each must immediately be assigned a sign $x_t\in\{\pm1\}$, with the aim of minimizing $\|\sum_{t=1}^T x_t v_t\|_\infty$. We give a polynomial-time potential-based algorithm combining a regularization of the $\ell_\infty$-norm with restriction to an adaptively chosen coordinate set. For i.i.d. inputs with independent, symmetric, centered, unit-variance sub-Gaussian coordinates of sub-Gaussian norm at most $σ$, the algorithm achieves terminal discrepancy $O(σ^8\sqrt{n})$ with probability at least $1-\exp(-Ω(σ^3\sqrt{n}))$. If the coordinates are independently masked by Bernoulli variables with mean $k/n$, where $k\gtrsim(\log n)^2$, the bound improves to $O(σ^8\sqrt{k})$, with failure probability $\exp(-Ω(σ^3\sqrt{k}))$. Both guarantees hold for every prescribed finite horizon $T$, with no dependence on $T$. The dense result substantially generalizes a theorem of Bansal and Spencer (2020) for Rademacher inputs and gives an efficient $O(\sqrt{n})$ bound for Gaussian inputs, as conjectured by Gamarnik et al. (2022). When $T$ is polynomially larger than $n$, this is conditionally close to optimal: under worst-case hardness assumptions for standard approximate lattice problems, Vafa and Vaikuntanathan (2025) showed that no polynomial-time algorithm, even offline, can improve the $\sqrt{n}$ scale by a fixed polynomial factor in $T/n$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-10T09:24:46Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Nicola Wengiel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1401.2165v1</id>
+    <title>NextBestOnce: Achieving Polylog Routing despite Non-greedy Embeddings</title>
+    <updated>2014-01-09T21:05:57Z</updated>
+    <link href="https://arxiv.org/abs/1401.2165v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1401.2165v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Social Overlays suffer from high message delivery delays due to insufficient routing strategies. Limiting connections to device pairs that are owned by individuals with a mutual trust relationship in real life, they form topologies restricted to a subgraph of the social network of their users. While centralized, highly successful social networking services entail a complete privacy loss of their users, Social Overlays at higher performance represent an ideal private and censorship-resistant communication substrate for the same purpose.
+  Routing in such restricted topologies is facilitated by embedding the social graph into a metric space. Decentralized routing algorithms have up to date mainly been analyzed under the assumption of a perfect lattice structure. However, currently deployed embedding algorithms for privacy-preserving Social Overlays cannot achieve a sufficiently accurate embedding and hence conventional routing algorithms fail. Developing Social Overlays with acceptable performance hence requires better models and enhanced algorithms, which guarantee convergence in the presence of local optima with regard to the distance to the target.
+  We suggest a model for Social Overlays that includes inaccurate embeddings and arbitrary degree distributions. We further propose NextBestOnce, a routing algorithm that can achieve polylog routing length despite local optima. We provide analytical bounds on the performance of NextBestOnce assuming a scale-free degree distribution, and furthermore show that its performance can be improved by more than a constant factor when including Neighbor-of-Neighbor information in the routing decisions.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-01-09T21:05:57Z</published>
+    <arxiv:comment>23 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Stefanie Roos</name>
+    </author>
+    <author>
+      <name>Thorsten Strufe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03802v1</id>
+    <title>Quantum Query Complexity of Finding a Tarski Fixed Point on a High-Dimensional Grid</title>
+    <updated>2026-09-03T13:06:12Z</updated>
+    <link href="https://arxiv.org/abs/2609.03802v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03802v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Knaster-Tarski fixed-point theorem states that every monotone function over a complete lattice has a fixed point. Beyond its fundamental role in order theory, the theorem and its algorithmic variants have found broad applications in areas such as economics, game theory, and programming languages. While the query complexity of finding a Tarski fixed point has been extensively studied in classical models, comparatively little is known in the quantum setting.
+  We prove an $Ω(k\log n)$ quantum query lower bound for finding a fixed point of a monotone function on $[n]^k$, using the nonnegative spectral adversary method. In the two extremal regimes $n = 2$ and $k = 1$, our quantum lower bound matches the previous classical lower bounds $Ω(k)$ and $Ω(\log n)$, respectively. For $n, k\geq 2$, our bound improves the best previous classical lower bound when $n &lt; k$ and is within a factor of $\log n / \log k$ compared to the known classical lower bound when $n \geq k$. To construct the adversary matrix, we develop the Tree--Filtration Adversary Method. Besides yielding our lower bound, the method offers a more transparent combinatorial interpretation of the nonnegative spectral adversary method. When the hard instances of a problem admit a tree-like organization and suggest an intuition analogous to classical decision-tree lower bounds, our method provide a promising approach to establishing quantum complexity lower bounds.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T13:06:12Z</published>
+    <arxiv:comment>35 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Tongyang Li</name>
+    </author>
+    <author>
+      <name>Weiran Ma</name>
+    </author>
+    <author>
+      <name>Ziyi Yang</name>
+    </author>
+    <author>
+      <name>Xingyu Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.05760v1</id>
+    <title>Hypercube LSH for approximate near neighbors</title>
+    <updated>2017-02-19T15:48:11Z</updated>
+    <link href="https://arxiv.org/abs/1702.05760v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.05760v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A celebrated technique for finding near neighbors for the angular distance involves using a set of \textit{random} hyperplanes to partition the space into hash regions [Charikar, STOC 2002]. Experiments later showed that using a set of \textit{orthogonal} hyperplanes, thereby partitioning the space into the Voronoi regions induced by a hypercube, leads to even better results [Terasawa and Tanaka, WADS 2007]. However, no theoretical explanation for this improvement was ever given, and it remained unclear how the resulting hypercube hash method scales in high dimensions.
+  In this work, we provide explicit asymptotics for the collision probabilities when using hypercubes to partition the space. For instance, two near-orthogonal vectors are expected to collide with probability $(\frac{1}π)^{d + o(d)}$ in dimension $d$, compared to $(\frac{1}{2})^d$ when using random hyperplanes. Vectors at angle $\fracπ{3}$ collide with probability $(\frac{\sqrt{3}}π)^{d + o(d)}$, compared to $(\frac{2}{3})^d$ for random hyperplanes, and near-parallel vectors collide with similar asymptotic probabilities in both cases.
+  For $c$-approximate nearest neighbor searching, this translates to a decrease in the exponent $ρ$ of locality-sensitive hashing (LSH) methods of a factor up to $\log_2(π) \approx 1.652$ compared to hyperplane LSH. For $c = 2$, we obtain $ρ\approx 0.302 + o(1)$ for hypercube LSH, improving upon the $ρ\approx 0.377$ for hyperplane LSH. We further describe how to use hypercube LSH in practice, and we consider an example application in the area of lattice algorithms.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-19T15:48:11Z</published>
+    <arxiv:comment>18 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>42nd International Symposium on Mathematical Foundations of Computer Science (MFCS 2017), pp. 7:1-7:20, 2017</arxiv:journal_ref>
+    <author>
+      <name>Thijs Laarhoven</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.MFCS.2017.7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.MFCS.2017.7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1603.02525v2</id>
+    <title>A minimum-change version of the Chung-Feller theorem for Dyck paths</title>
+    <updated>2017-01-30T15:06:37Z</updated>
+    <link href="https://arxiv.org/abs/1603.02525v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1603.02525v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A Dyck path with $2k$ steps and $e$ flaws is a path in the integer lattice that starts at the origin and consists of $k$ many $\nearrow$-steps and $k$ many $\searrow$-steps that change the current coordinate by $(1,1)$ or $(1,-1)$, respectively, and that has exactly $e$ many $\searrow$-steps below the line $y=0$. Denoting by $D_{2k}^e$ the set of Dyck paths with $2k$ steps and $e$ flaws, the Chung-Feller theorem asserts that the sets $D_{2k}^0,D_{2k}^1,\ldots,D_{2k}^k$ all have the same cardinality $\frac{1}{k+1}\binom{2k}{k}=C_k$, the $k$-th Catalan number. The standard combinatorial proof of this classical result establishes a bijection $f'$ between $D_{2k}^e$ and $D_{2k}^{e+1}$ that swaps certain parts of the given Dyck path $x$, with the effect that $x$ and $f'(x)$ may differ in many positions. In this paper we strengthen the Chung-Feller theorem by presenting a simple bijection $f$ between $D_{2k}^e$ and $D_{2k}^{e+1}$ which has the additional feature that $x$ and $f(x)$ differ in only two positions (the least possible number). We also present an algorithm that allows to compute a sequence of applications of $f$ in constant time per generated Dyck path. As an application, we use our minimum-change bijection $f$ to construct cycle-factors in the odd graph $O_{2k+1}$ and the middle levels graph $M_{2k+1}$ --- two intensively studied families of vertex-transitive graphs --- that consist of $C_k$ many cycles of the same length.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-08T14:11:54Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>European Journal of Combinatorics 69:260-275, 2018</arxiv:journal_ref>
+    <author>
+      <name>Torsten Mütze</name>
+    </author>
+    <author>
+      <name>Christoph Standke</name>
+    </author>
+    <author>
+      <name>Veit Wiechert</name>
+    </author>
+    <arxiv:doi>10.1016/j.ejc.2017.11.003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ejc.2017.11.003" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0611101v1</id>
+    <title>Fourier meets Möbius: fast subset convolution</title>
+    <updated>2006-11-21T08:34:30Z</updated>
+    <link href="https://arxiv.org/abs/cs/0611101v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/0611101v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a fast algorithm for the subset convolution problem: given functions f and g defined on the lattice of subsets of an n-element set N, compute their subset convolution f*g, defined for all S\subseteq N by (f * g)(S) = \sum_{T \subseteq S}f(T) g(S\setminus T), where addition and multiplication is carried out in an arbitrary ring. Via Möbius transform and inversion, our algorithm evaluates the subset convolution in O(n^2 2^n) additions and multiplications, substantially improving upon the straightforward O(3^n) algorithm. Specifically, if the input functions have an integer range {-M,-M+1,...,M}, their subset convolution over the ordinary sum-product ring can be computed in O^*(2^n log M) time; the notation O^* suppresses polylogarithmic factors. Furthermore, using a standard embedding technique we can compute the subset convolution over the max-sum or min-sum semiring in O^*(2^n M) time. To demonstrate the applicability of fast subset convolution, we present the first O^*(2^k n^2 + n m) algorithm for the minimum Steiner tree problem in graphs with n vertices, k terminals, and m edges with bounded integer weights, improving upon the O^*(3^k n + 2^k n^2 + n m) time bound of the classical Dreyfus-Wagner algorithm. We also discuss extensions to recent O^*(2^n)-time algorithms for covering and partitioning problems (Björklund and Husfeldt, FOCS 2006; Koivisto, FOCS 2006).</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-11-21T08:34:30Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Andreas Björklund</name>
+    </author>
+    <author>
+      <name>Thore Husfeldt</name>
+    </author>
+    <author>
+      <name>Petteri Kaski</name>
+    </author>
+    <author>
+      <name>Mikko Koivisto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.6627v1</id>
+    <title>Minimum d-dimensional arrangement with fixed points</title>
+    <updated>2013-07-25T04:08:51Z</updated>
+    <link href="https://arxiv.org/abs/1307.6627v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.6627v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the Minimum $d$-Dimensional Arrangement Problem (d-dimAP) we are given a graph with edge weights, and the goal is to find a 1-1 map of the vertices into $\mathbb{Z}^d$ (for some fixed dimension $d\geq 1$) minimizing the total weighted stretch of the edges. This problem arises in VLSI placement and chip design.
+  Motivated by these applications, we consider a generalization of d-dimAP, where the positions of some of the vertices (pins) is fixed and specified as part of the input. We are asked to extend this partial map to a map of all the vertices, again minimizing the weighted stretch of edges. This generalization, which we refer to as d-dimAP+, arises naturally in these application domains (since it can capture blocked-off parts of the board, or the requirement of power-carrying pins to be in certain locations, etc.). Perhaps surprisingly, very little is known about this problem from an approximation viewpoint.
+  For dimension $d=2$, we obtain an $O(k^{1/2} \cdot \log n)$-approximation algorithm, based on a strengthening of the spreading-metric LP for 2-dimAP. The integrality gap for this LP is shown to be $Ω(k^{1/4})$. We also show that it is NP-hard to approximate 2-dimAP+ within a factor better than $Ω(k^{1/4-\eps})$. We also consider a (conceptually harder, but practically even more interesting) variant of 2-dimAP+, where the target space is the grid $\mathbb{Z}_{\sqrt{n}} \times \mathbb{Z}_{\sqrt{n}}$, instead of the entire integer lattice $\mathbb{Z}^2$. For this problem, we obtain a $O(k \cdot \log^2{n})$-approximation using the same LP relaxation. We complement this upper bound by showing an integrality gap of $Ω(k^{1/2})$, and an $Ω(k^{1/2-\eps})$-inapproximability result.
+  Our results naturally extend to the case of arbitrary fixed target dimension $d\geq 1$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-25T04:08:51Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Anupam Gupta</name>
+    </author>
+    <author>
+      <name>Anastasios Sidiropoulos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.02440v3</id>
+    <title>Fine-grained hardness of CVP(P) -- Everything that we can prove (and nothing else)</title>
+    <updated>2021-08-07T17:14:43Z</updated>
+    <link href="https://arxiv.org/abs/1911.02440v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.02440v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show a number of fine-grained hardness results for the Closest Vector Problem in the $\ell_p$ norm ($\mathrm{CVP}_p$), and its approximate and non-uniform variants. First, we show that $\mathrm{CVP}_p$ cannot be solved in $2^{(1-\varepsilon)n}$ time for all $p \notin 2\mathbb{Z}$ and $\varepsilon &gt; 0$, assuming the Strong Exponential Time Hypothesis (SETH). Second, we extend this by showing that there is no $2^{(1-\varepsilon)n}$-time algorithm for approximating $\mathrm{CVP}_p$ to within a constant factor $γ$ for such $p$ assuming a "gap" version of SETH, with an explicit relationship between $γ$, $p$, and the arity $k = k(\varepsilon)$ of the underlying hard CSP. Third, we show the same hardness result for (exact) $\mathrm{CVP}_p$ with preprocessing (assuming non-uniform SETH).
+  For exact "plain" $\mathrm{CVP}_p$, the same hardness result was shown in [Bennett, Golovnev, and Stephens-Davidowitz FOCS 2017] for all but finitely many $p \notin 2\mathbb{Z}$, where the set of exceptions depended on $\varepsilon$ and was not explicit. For the approximate and preprocessing problems, only very weak bounds were known prior to this work.
+  We also show that the restriction to $p \notin 2\mathbb{Z}$ is in some sense inherent. In particular, we show that no "natural" reduction can rule out even a $2^{3n/4}$-time algorithm for $\mathrm{CVP}_2$ under SETH. For this, we prove that the possible sets of closest lattice vectors to a target in the $\ell_2$ norm have quite rigid structure, which essentially prevents them from being as expressive as $3$-CNFs.
+  We prove these results using techniques from many different fields, including complex analysis, functional analysis, additive combinatorics, and discrete Fourier analysis. E.g., along the way, we give a new (and tighter) proof of Szemerédi's cube lemma for the boolean cube.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-06T15:34:28Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Divesh Aggarwal</name>
+    </author>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Alexander Golovnev</name>
+    </author>
+    <author>
+      <name>Noah Stephens-Davidowitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.04025v3</id>
+    <title>Improved Hardness of BDD and SVP Under Gap-(S)ETH</title>
+    <updated>2025-07-28T22:24:49Z</updated>
+    <link href="https://arxiv.org/abs/2109.04025v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.04025v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show improved fine-grained hardness of two key lattice problems in the $\ell_p$ norm: Bounded Distance Decoding to within an $α$ factor of the minimum distance ($\mathrm{BDD}_{p, α}$) and the (decisional) $γ$-approximate Shortest Vector Problem ($\mathrm{SVP}_{p,γ}$), assuming variants of the Gap (Strong) Exponential Time Hypothesis (Gap-(S)ETH). Specifically, we show:
+  1. For all $p \in [1, \infty)$, there is no $2^{o(n)}$-time algorithm for $\mathrm{BDD}_{p, α}$ for any constant $α&gt; α_\mathsf{kn}$, where $α_\mathsf{kn} = 2^{-c_\mathsf{kn}}$ and $c_\mathsf{kn}$ is the $\ell_2$ kissing-number constant, assuming $c_\mathsf{kn} &gt; 0$ and that non-uniform Gap-ETH holds.
+  2. For all $p \in [1, \infty)$, there is no $2^{o(n)}$-time algorithm for $\mathrm{BDD}_{p, α}$ for any constant $α&gt; α^\ddagger_p$, where $α^\ddagger_p$ is explicit and satisfies $α^\ddagger_p = 1$ for $1 \leq p \leq 2$, $α^\ddagger_p &lt; 1$ for all $p &gt; 2$, and $α^\ddagger_p \to 1/2$ as $p \to \infty$, unless randomized Gap-ETH is false.
+  3. For all $p \in [1, \infty) \setminus 2 \mathbb{Z}$ and all $C &gt; 1$, there is no $2^{n/C}$-time algorithm for $\mathrm{BDD}_{p, α}$ for any constant $α&gt; α^\dagger_{p, C}$, where $α^\dagger_{p, C}$ is explicit and satisfies $α^\dagger_{p, C} \to 1$ as $C \to \infty$ for any fixed $p \in [1, \infty)$, assuming $c_\mathsf{kn} &gt; 0$ and that non-uniform Gap-SETH holds.
+  4. For all $p &gt; p_0 \approx 2.1397$, $p \notin 2\mathbb{Z}$, and all $C &gt; C_p$, there is no $2^{n/C}$-time algorithm for $\mathrm{SVP}_{p, γ}$ for some constant $γ&gt; 1$, where $C_p &gt; 1$ is explicit and satisfies $C_p \to 1$ as $p \to \infty$, unless randomized Gap-SETH is false.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-09T03:53:57Z</published>
+    <arxiv:comment>ITCS 2022. Updated to address (non-)existence of exponential kissing number lattices</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Chris Peikert</name>
+    </author>
+    <author>
+      <name>Yi Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.04656v2</id>
+    <title>Subset Balancing and Generalized Subset Sum via Lattices</title>
+    <updated>2026-04-24T14:45:37Z</updated>
+    <link href="https://arxiv.org/abs/2604.04656v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.04656v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the Subset Balancing problem: given $x \in \mathbb{Z}^n$ and a coefficient set $C \subseteq \mathbb{Z}$, find a nonzero vector $c \in C^n$ such that $c\cdot x = 0$. The standard meet-in-the-middle algorithm runs in time $\tilde{O}(|C|^{n/2})$, and recent improvements (SODA 2022, Chen, Jin, Randolph, and Servedio; STOC 2026, Randolph and Węgrzycki) beyond this barrier apply mainly when $d$ is constant.
+  We give a reduction from Subset Balancing with $C = \{-d, \dots, d\}$ to a single instance of SVP$_{\infty}$ in dimension $n+1$. Instantiating this reduction with the best known $\ell_\infty$-SVP algorithms yields a deterministic $\tilde{O}((6\sqrt{2πe})^n)$-time algorithm and a randomized $\tilde{O}(2^{2.443n})$-time algorithm. The exponent depends only on $n$, improving on meet-in-the-middle for all $d\ge 15$. For sufficiently large $d$ we also obtain a polynomial-time algorithm. The reduction extends from the box constraint $[-d,d]^n$ to any centrally symmetric convex body $K\subseteq\mathbb{R}^n$, giving deterministic time $\tilde{O}(2^{c_K n})$ for a constant $c_K$ depending only on the shape of $K$.
+  We further study the Generalized Subset Sum problem of finding $c \in C^n$ such that $c \cdot x = τ$. For $C = \{-d, \dots, d\}$ or $C = \{-d,\dots,d\}\setminus\{0\}$, we reduce the worst-case problem to CVP$_{\infty}$ in dimension $n+1$. We observe that distances in our lattice take only integer values, so an approximate CVP$_{\infty}$ oracle still suffices, yielding a deterministic worst-case algorithm running in time $2^{O(n\log\log d)}$.
+  In the average-case setting, we demonstrate that for both coefficient sets the embedded CVP$_{\infty}$ instance satisfies a bounded-distance promise with high probability, removing the $\log\log d$ factor altogether and obtaining a deterministic algorithm running in time $\tilde{O}((18\sqrt{2πe})^n)$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-06T13:10:13Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Yiming Gao</name>
+    </author>
+    <author>
+      <name>Yansong Feng</name>
+    </author>
+    <author>
+      <name>Honggang Hu</name>
+    </author>
+    <author>
+      <name>Yanbin Pan</name>
+    </author>
+  </entry>
+</feed>

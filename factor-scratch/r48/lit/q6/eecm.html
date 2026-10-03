@@ -1,0 +1,164 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>
+Introduction to EECM
+</title>
+</head>
+<body>
+<table width="100%">
+  <tr>
+    <td align=middle bgcolor="#FFFFCC"><h1>EECM: ECM using Edwards curves</h1></td>
+  </tr>
+</table>
+<table width="100%"><tr>
+<td width="15%" align=left valign=top><table bgcolor="#FFFFCC" border width="100%"><tr><td width="100%"><table width="100%">
+<tr><td width="100%" bgcolor="#60FF60">Introduction</td></tr>
+<tr><td width="100%"><a href="mpfq.html" style="text-decoration:none">EECM-MPFQ</a></td></tr>
+<tr><td width="100%"><a href="performance.html" style="text-decoration:none">Performance</a></td></tr>
+<tr><td width="100%"><a href="goodcurves.html" style="text-decoration:none">Good curves</a></td></tr>
+</table></td></tr></table>
+</td><td align=left valign=top>
+<h1>Introduction to EECM</h1>
+ECM,
+the elliptic-curve method of integer factorization,
+was introduced in the following paper:
+<ul>
+Hendrik W. Lenstra, Jr.
+Factoring integers with elliptic curves.
+Annals of Mathematics <b>126</b> (1987), 649&ndash;673.
+</ul>
+Several refinements to ECM were eventually combined
+into a standard implementation, GMP-ECM,
+written by a team led by Paul Zimmermann.
+See <a href="http://ecm.gforge.inria.fr">http://ecm.gforge.inria.fr</a>.
+<p>
+A new addition formula
+for curves of the form x^2+y^2=1+dx^2y^2
+was introduced in the following paper,
+generalizing from one curve studied by Euler and Gauss:
+<ul>
+<li>
+Harold M. Edwards.
+A normal form for elliptic curves.
+Bulletin of the American Mathematical Society <b>44</b> (July 2007), 393&ndash;422.
+URL:
+<a href="http://www.ams.org/bull/2007-44-03/S0273-0979-07-01153-6/home.html">http://www.ams.org/bull/2007-44-03/S0273-0979-07-01153-6/home.html</a>.
+</ul>
+<p>
+Initial analysis and optimization of Edwards-curve operation counts
+by Daniel J. Bernstein and Tanja Lange
+suggested that Edwards curves would save time
+in many elliptic-curve computations,
+including ECM.
+See <a href="https://hyperelliptic.org/tanja/newelliptic/">https://hyperelliptic.org/tanja/newelliptic/</a>.
+<p>
+GMP-EECM, a variant of GMP-ECM,
+was the first software to set speed records using Edwards curves.
+<a href="mpfq.html">EECM-MPFQ</a>, the current EECM software, is even faster.
+EECM, GMP-EECM, and EECM-MPFQ were introduced in the following paper:
+<ul>
+<li><a name="eecm-paper">[eecm]</a>
+41pp.
+<a href="eecm-20111008.pdf">(PDF)</a>
+Daniel J. Bernstein, Peter Birkner, Tanja Lange, Christiane Peters.
+ECM using Edwards curves.
+Document ID: cb39208064693232e4751ec8f3494c43.
+URL: https://cr.yp.to/papers.html#eecm.
+Date: 2011.10.08.
+Supersedes:
+<a href="eecm-20080109.pdf">(PDF)</a>
+2008.01.09.
+<a href="eecm-20080120.pdf">(PDF)</a>
+2008.01.20.
+<a href="eecm-20090120.pdf">(PDF)</a>
+2009.01.20.
+<a href="eecm-20091229.pdf">(PDF)</a>
+2009.12.29.
+<a href="eecm-20100124.pdf">(PDF)</a>
+2010.01.24.
+<a href="eecm-20100616.pdf">(PDF)</a>
+2010.06.16.
+</ul>
+<p>
+GPU-ECM, a highly parallel low-memory EECM implementation for graphics cards,
+was introduced in the following paper:
+<ul>
+<li>
+<a name="gpuecm-paper">[gpuecm]</a>
+20pp.
+<a href="gpuecm-20090127.pdf">(PDF)</a>
+Daniel J. Bernstein, Tien-Ren Chen, Chen-Mou Cheng, Tanja Lange, Bo-Yin Yang.
+ECM on graphics cards.
+Document ID: 6904068c52463d70486c9c68ba045839.
+URL: https://cr.yp.to/papers.html#gpuecm.
+Date: 2009.01.27.
+(Supersedes:
+<a href="gpuecm-20081111.pdf">(PDF)</a>
+Date: 2008.11.11.)
+Pages 483&ndash;501 in
+<i>Advances in cryptology&mdash;EUROCRYPT 2009,
+28th annual international conference on the theory and applications of cryptographic techniques,
+Cologne, Germany, April 26&ndash;30, 2009, proceedings</i>,
+edited by Antoine Joux.
+Lecture Notes in Computer Science <b>5479</b>.
+Springer, 2009.
+ISBN 978-3-642-01000-2.
+</ul>
+<p>
+A rewritten CUDA-ECM with several times better GPU performance
+was introduced in the following paper,
+along with speedups for Core 2, Phenom II, and Cell:
+<ul>
+<li>
+<a name="pc109-paper">[pc109]</a>
+14pp.
+<a href="pc109-20090901.pdf">(PDF)</a>
+Daniel J. Bernstein, Hsueh-Chung Chen, Ming-Shing Chen,
+Chen-Mou Cheng, Chun-Hung Hsiao, Tanja Lange, Zong-Cing Lin, Bo-Yin Yang.
+The billion-mulmod-per-second PC.
+Document ID: 5d0b03cf72f71d39d2ac129eb7e4c5d7.
+URL: https://cr.yp.to/papers.html#pc109.
+Date: 2009.09.01.
+Workshop record of SHARCS'09: Special-purpose Hardware for Attacking Cryptographic Systems.
+</ul>
+<p>
+Even better choices of twisted Edwards curves were introduced in the following paper
+and integrated into EECM-MPFQ:
+<ul>
+<li>
+<a name="a1ecm-paper">[a1ecm]</a>
+20pp.
+<a href="a1ecm-20100614.pdf">(PDF)</a>
+Daniel J. Bernstein, Peter Birkner, Tanja Lange.
+Starfish on strike.
+Document ID: 44c7b02bb6796bb931f85794f77ef1b0.
+URL: https://cr.yp.to/papers.html#a1ecm.
+Date: 2010.06.14.
+Pages 61&ndash;80 in
+<i>LATINCRYPT 2010</i>,
+edited by Michel Abdalla and Paulo S. L. M. Barreto.
+Lecture Notes in Computer Science <b>6212</b>.
+Springer, 2010.
+</ul>
+<h2>Acknowledgments</h2>
+Daniel J. Bernstein
+(<a href="https://cr.yp.to/djb.html">https://cr.yp.to/djb.html</a>)
+was supported by
+the U.S. National Science Foundation, grant number ITR-0716498.
+"Any opinions, findings, and conclusions or recommendations
+expressed in this material
+are those of the author(s)
+and do not necessarily reflect the views of the National Science Foundation."
+<p>
+Peter Birkner (<a href="http://www.peter-birkner.de/">http://www.peter-birkner.de/</a>),
+Tanja Lange (<a href="https://www.hyperelliptic.org/tanja">https://www.hyperelliptic.org/tanja</a>),
+and
+Christiane Peters (<a href="http://www.win.tue.nl/~cpeters/">http://www.win.tue.nl/~cpeters/</a>)
+were supported by the European Commission
+through the ICT Programme under Contract ICT&ndash;2007&ndash;216676 ECRYPT-II.
+<h2>Version</h2>
+This is version 2017.01.22 of the index.html web page.
+</td></tr></table>
+</body>
+</html>

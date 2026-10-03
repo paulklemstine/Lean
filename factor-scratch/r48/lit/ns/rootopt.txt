@@ -1,0 +1,623 @@
+     Root optimization of polynomials in the number field sieve
+                               Shi Bai, Richard Brent, Emmanuel Thomé
+
+
+
+      To cite this version:
+     Shi Bai, Richard Brent, Emmanuel Thomé. Root optimization of polynomials in the number field sieve. Math-
+     ematics of Computation, 2015, 84 (295), pp.2447-2457. ⟨10.1090/S0025-5718-2015-02926-3⟩. ⟨hal-00919367⟩
+
+
+
+
+                                        HAL Id: hal-00919367
+                          https://inria.hal.science/hal-00919367v1
+                                           Submitted on 16 Dec 2013
+
+
+
+
+    HAL is a multi-disciplinary open access archive             L’archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-        tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.       tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research          des établissements d’enseignement et de recherche
+institutions in France or abroad, or from public or pri-   français ou étrangers, des laboratoires publics ou
+vate research centers.                                     privés.
+
+
+                                              HAL Authorization
+MATHEMATICS OF COMPUTATION
+Volume 00, Number 0, Pages 000–000
+S 0025-5718(XX)0000-0
+
+
+
+
+ ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER
+                   FIELD SIEVE
+
+                SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+         Abstract. The general number field sieve (GNFS) is the most efficient al-
+         gorithm known for factoring large integers. It consists of several stages, the
+         first one being polynomial selection. The quality of the chosen polynomials in
+         polynomial selection can be modelled in terms of size and root properties. In
+         this paper, we describe some algorithms for selecting polynomials with very
+         good root properties.
+
+
+
+
+                        1. The general number field sieve
+   The general number field sieve [14] is the most efficient algorithm known for
+factoring large integers. It consists of several stages including polynomial selection,
+sieving, filtering, linear algebra and finding square roots.
+   Let n be the integer to be factored. The number field sieve starts by choos-
+ing two irreducible and coprime polynomials f (x) and g(x) over Z which share a
+common root m modulo n. In practice, the notations F (x, y) and G(x, y) for the
+homogenized polynomials corresponding to f and g are often used. We want to
+find many coprime pairs (a, b) ∈ Z2 such that the polynomial values F (a, b) and
+G(a, b) are simultaneously smooth with respect to some upper bound B. An inte-
+ger is smooth with respect to bound B (or B-smooth) if none of its prime factors
+are larger than B. Lattice sieving [19] and line sieving [6] are commonly used to
+identify such pairs (a, b). The running time of sieving depends on the quality of
+the chosen polynomials in polynomial selection, hence many polynomial pairs will
+be generated and optimized in order to produce a best one.
+   This paper discusses algorithms for root optimization in polynomial selection in
+the number field sieve. We mainly focus on polynomial selection with two polyno-
+mials, one of which is a linear polynomial.
+
+                               2. Polynomial selection
+    For large integers, most polynomial selection methods [6, 11, 12, 16, 17] use a
+linear polynomial for g(x) and a quintic or sextic polynomial for f (x). Let f (x) =
+Pd         i
+   i=0 ci x and g(x) = m2 x−m1 . The standardP     method to generate such polynomial
+                                                    d
+pairs is to expand n in base-(m1 , m2 ) so n = i=0 ci mi1 md−i2 .
+    The running time of sieving depends on the smoothness of the polynomial values
+|F (a, b)| and |G(a, b)|. Let Ψ(x, x1/u ) be the number of x1/u -smooth integers below
+
+   2010 Mathematics Subject Classification. Primary 11Y05, 11Y16.
+
+                                                            c XXXX American Mathematical Society
+
+                                               1
+2               SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+x for some u. The Dickman-de Bruijn function ρ(u) [9] is often used to estimate
+Ψ(x, x1/u ), since
+                                Ψ(x, x1/u )
+                                lim          = ρ(u).
+                           x→∞        x
+The Dickman-de Bruijn function satisfies the differential equation
+                 uρ′ (u) + ρ(u − 1) = 0,    ρ(u) = 1 for 0 ≤ u ≤ 1.
+It can be shown that ρ(u) satisfies the asymptotic estimate
+                       log(ρ(u)) = −(1 + o(1)) u log u as u → ∞.
+For practical purposes, the frequency of smooth numbers can be approximated by
+the Canfield-Erdős-Pomerance theorem, which can be stated as follows [10].
+Theorem 2.1. For any fixed ǫ > 0, we have
+                               Ψ(x, x1/u ) = xu−u(1+o(1))
+as x1/u and u tend to infinity, uniformly in the region x ≥ uu/(1−ǫ) .
+    It is desirable that the polynomial pair can produce many smooth integers across
+the sieve region. Heuristically this requires that the size of polynomial values is
+small on average (Theorem 2.1). In addition, one can choose an algebraic poly-
+nomial f (x) which has many roots modulo small prime powers. Such a choice
+is driven by inheritance of practices which already date back to the CFRAC era,
+where suitable multipliers were chosen precisely in order to optimize this very prop-
+erty [15, 20]. Then the polynomial values are likely to be divisible by small prime
+powers. This may increase the smoothness probability for polynomial values. We
+first describe some methods [11, 17] to estimate and compare the quality of poly-
+nomials.
+
+2.1. Sieving test. A sieving experiment over short intervals is a relatively accurate
+method to compare polynomial pairs. It is often used to compare a few polyno-
+mial candidates in the final stage of the polynomial selection. Ekkelkamp [7] also
+described a method for predicting the number of relations needed in the sieving.
+The method conducts a short sieving test and simulates relations based on the test
+results. Experiments show that the prediction of the number of relations is close
+to the number of relations needed in the actual factorization.
+
+2.2. Size property. Let (a, b) be pairs of coprime integers in the sieving region
+Ω. For the moment, we assume that a rectangular sieving region is used where
+|a| ≤ K and 0 < b ≤ K. We also assume that polynomial values |F (a, b)| and
+|G(a, b)| behave like random integers of similar size. The number of sieving reports
+(coprime pairs that lead to smooth polynomial values) can be approximated by
+                      ZZ                                 
+                   6         log|F (x, y)|     log|G(x, y)|
+                          ρ                 ρ                 dx dy.
+                   π2           log B              log B
+                       Ω
+                   2
+The multiplier 6/π accounts for the probability of a, b being relatively prime.
+  Since G is a linear polynomial, we may assume that log(|G(a, b)|) does not vary
+much across the sieving region. A simplified approximation to compare polynomials
+        ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER FIELD SIEVE                    3
+
+
+(ignoring the constant multiplier) is to compare
+                           ZZ                    
+                                    log|F (x, y)|
+(2.1)                           ρ                   dx dy.
+                                        log B
+                              Ω
+
+   The base-(m1 , m2 ) expansion [11, 12] gives polynomials whose coefficients are
+O(n1/(d+1) ). The leading coefficients cd and cd−1 are much smaller than n1/(d+1) .
+The coefficient cd−2 is slightly smaller than n1/(d+1) . For such polynomials, it is
+often better to use a skewed sieving region where the sieving bounds for a, b have
+                                                                  2
+ratio s ≥ 1, while√keeping the area of the√ sieving region 2K . The sieving bounds
+become |a| ≤ K s and 0 < b ≤ K/ s. Each monomial in the polynomial is
+bounded by ci K d si−d/2 .
+   In the integral (2.1), computing ρ is time-consuming (cf. [2]), especially if there
+are many candidates. We can use some coarser approximations. Since ρ(u) is a
+decreasing function of u, we want to choose a polynomial pair such that the size of
+|F (a, b)| and |G(a, b)| is small on average over all (a, b). This roughly requires that
+the coefficients of the polynomials are small in absolute value. We can compare
+polynomials using the logarithm of an L2 -norm for the polynomial F (x, y) by
+                                     Z 1Z 1                    
+                           1
+(2.2)                        log s−d          F 2 (xs, y) dx dy
+                           2           −1 −1
+
+where s is the skewness of sieving region. Polynomials which minimize the expres-
+sion (2.2) are expected to be better than others.
+
+2.3. Root property. If a polynomial f (x) has many roots modulo small primes
+and prime powers, the polynomial values may behave more smoothly than random
+integers of about the same size. Boender, Brent, Montgomery and Murphy [5, 16,
+17, 18] described some quantitative measures of this effect (root property).
+   Let p be a fixed prime. Let νp (x) denote the exponent of the largest power of
+p dividing the integer x and νp (0) = ∞. Let S be a set of integers. We use (the
+same) notation νp (S) to denote the expected p-valuation of x ∈ S. If integers in S
+are random and uniformly distributed 1, the expected p-valuation νp (S) is
+                                      ∞                    ∞
+                                      X                    X 1             1
+              νp (S) = E [νp (x)] =         Pr(νp ≥ k) =              =       .
+                       x∈S                                       pk       p−1
+                                      k=1                  k=1
+
+Thus, in an informal (logarithmic) sense, an integer x in S contains an expected
+power p1/(p−1) .
+   Let now S be a set of polynomial values f (x). We use (the same) notation νp (S)
+(or νp (f )) to denote the expected p-valuation of the polynomial values S. Hensel’s
+lemma gives conditions when a root of f (mod pk ) can be lifted to a root of f
+(mod pk+1 ).
+Lemma 2.2 (Hensel’s lemma). Let r1 be a root of f (x) modulo an odd prime p.
+    (1) If r1 is a simple root, f (x) (mod pk ) has an unique root rk ≡ r1 (mod p)
+        for each k > 1.
+
+  1We consider integer random variables within a large enough bounded sample space.
+4                 SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+    (2) If rk is a multiple root 2 of f (x) (mod pk ) for k ≥ 1, there are two possible
+        cases. If pk+1 | f (rk ), then ∀ i ∈ [0, p), pk+1 | f (rk + i pk ). If pk+1 ∤ f (rk ),
+        rk cannot be lifted to a root modulo pk+1 .
+   Assume now that the integers x leading to the values f (x) ∈ S are uniformly
+random. There are two cases. First, suppose p ∤ ∆(f ), the discriminant of f (x),
+then p is an unramified prime, and hence f (x) (mod p) has only simple roots.
+Let np be the number of roots for f (x) (mod p). The expected p-valuation of
+polynomial values is νp (f ) = np /(p − 1) (apply the formula above, using Pr(νp ≥
+k) = np /pk ).
+   The second case is when p | ∆(f ). Here one may get multiple roots. The
+expected p-valuation may be obtained by counting the number of lifted roots.
+
+2.3.1. Homogeneous polynomials. In the number field sieve, we want to know the
+expected p-valuation of homogeneous polynomial values F (a, b), where (a, b) is a
+pair of coprime integers, and F (x, y) is the homogenous polynomial corresponding
+to f (x). We assume in the following that (a, b) is a uniformly random pair of
+coprime integers. We have
+(2.3)                           νp (F (a, b)) = νp (F (λa, λb))
+for any integer λ coprime to p. A pair of coprime integers (a, b) maps to a point
+(a : b) on the projective line P1 (Fp ). Because of property (2.3) above, pairs for
+which νp (F (a, b)) > 0 correspond to the points of the zero-dimensional variety on
+P1 (Fp ) defined by the polynomial F .
+   The projective line P1 (Fp ) has p + 1 points, consisting of p affine points which
+can be represented as (x : 1) with x ∈ Fp , together with the point at infinity (1 : 0).
+Among these, the zeroes of F correspond, for affine points (x : 1), to affine roots
+x ∈ Fp of the dehomogenized polynomial f . The point at infinity is a zero of F if
+and only if the leading coefficient cd of f cancels modulo p. If F has a total of np
+affine and projective zeroes in P1 (Fp ), then F (a, b) for coprime (a, b) is divisible by
+p with probability np /(p + 1).
+   It is also possible to look at (a, b) modulo a prime power pk . Then (a, b) maps
+to an equivalence class (a : b) on the projective line over the ring Z/pk Z. The
+p-valuation of F at (a : b) ∈ P1 (Z/pk Z) (an integer between 0 and k − 1, or “k or
+more”) conveys the information of what happens modulo pk . There are pk + pk−1
+points in P1 (Z/pk Z) (pk affine points of the form (x : 1), while the remaining pk−1
+points at infinity are written as (1 : py)). A coprime pair (a, b) chosen at random
+maps therefore to a given point in P1 (Z/pk Z) with probability 1/(pk−1 (p + 1)).
+   Given an unramified p, let F (x, y) (mod p) have np affine and projective roots
+(zeroes on P1 (Fp )). In application of the Hensel Lemma (applied to f at an affine
+                        1
+root x, or to pd−1 f ( py ) above the possible projective root), there is a constant
+number np of points (a : b) = P1 (Z/pk Z) such that νp (F (a : b)) ≥ k, as k grows.
+The expected p-valuation νp (F ) is thus:
+                                        ∞
+                                        X         np         np p
+(2.4)                       νp (F ) =                      = 2    .
+                                              pk−1 (p + 1)  p −1
+                                        k=1
+
+
+  2Let r be a root of f (mod pk ). We say that r is a multiple root of f (mod pk ) if f ′ (r ) ≡ 0
+         k                                      k                                           k
+(mod p); otherwise it is a simple root.
+        ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER FIELD SIEVE                   5
+
+
+For ramified p, simply counting the number np of affine and projective roots modulo
+p is not sufficient to deduce νp (F ). One can substitute np by npk (the number of
+roots modulo pk ) in the above summation. For convenience, one can also define a
+truncated version where
+                                           e
+                                           X         npk
+(2.5)                        νp (F, e) =           k−1
+                                                               .
+                                                 p     (p + 1)
+                                           k=1
+
+   Murphy [17, p. 49] defines the α(F, B) function to compare the cumulative ex-
+pected p-valuation of polynomial values to random integers of similar size. The
+function α(F, B) can be considered as the logarithmic benefit of using polynomial
+values compared to using random integers:
+                                 X  1                 
+(2.6)                α(F, B) =                − νp (F ) log p
+                                 p≤B
+                                        p−1
+                                 p prime
+
+                                                   
+                                               np p    log p
+where the summand can be written as 1 −                      when p is unramified.
+                                              p+1 p−1
+In the number field sieve, α(F, B) is often negative since we are interested in the
+case when F (x, y) has on average more than one root modulo small primes.
+
+
+2.4. Steps in polynomial selection. Polynomial selection can be divided into
+three steps: polynomial generation, size optimization and root optimization.
+   In the polynomial selection, we first generate some polynomials of relatively good
+size (cf. Subsection 2.2). Two efficient algorithms are given by Kleinjung [11, 12].
+The size and root properties of these polynomials can then be further optimized
+using translation and rotation.
+   Translation of f (x) and g(x) by t ∈ Z/nZ gives a new polynomial pair f (x+t) and
+g(x + t). The new common root is m1 /m2 − t (mod n). Translation only affects the
+size property. Rotation by a polynomial λ(x) produces a new polynomial fλ(x) (x) =
+f (x) + λ(x) (m2 x − m1 ). The linear polynomial and common root is unchanged
+during rotation. λ(x) is often a linear or quadratic polynomial, depending on the
+size of n and the skewness of f (x). Rotation can affect both size and root properties.
+   Given a polynomial pair, translation and rotation are used to find a polynomial
+of smaller (skewed) norm (Equation (2.2)). This is called size optimization. After
+size optimization, many polynomials can have comparable size. Given f (x), we can
+use polynomial rotation to find a related polynomial fλ(x) (x) which has a much
+smaller α-value but similar size. This step is referred to as root optimization. If
+the skewness of the polynomial is large, the size property of the polynomial may
+not be altered significantly. As an indication of this, the skewed L∞ norm of f ,
+defined as maxi |si−d/2 ci |, remains unchanged as long as the trailing coefficients of
+fλ (x) do not dominate. This is true for the polynomials generated by the algorithm
+of Kleinjung [12], where the skewness of the polynomials is likely to be large.
+   We discuss some algorithms for root optimization in the following sections. We
+will focus on rotation using linear polynomials. The idea naturally generalises to
+quadratic and higher degree rotations which are needed for large integers such as
+RSA-768 [13] and RSA-896.
+6                  SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+                                          3. Root sieve
+    We consider linear rotations defined by fu,v (x) = f (x) + (ux + v)g(x). We want
+to choose (u, v) such that fu,v (x) has a small α-value. The straightforward way is
+to look at individual polynomials fu,v (x) for all possible (u, v)’s and compare their
+α-values. This is time-consuming and impractical since the permissible bounds for
+u and v are often huge. Murphy [17, p. 84] describes a sieve-like procedure, namely
+the root sieve, to find polynomials with good root properties. We describe the root
+sieve in Algorithm 1.
+    Let B be the upper bound for primes in Equation (2.6) and U, V be bounds for
+the linear rotation such that |u| ≤ U and |v| ≤ V . We often choose V ≈ sU (cf.
+Subsection 2.2). The root sieve fills an array with estimated α-values. The α-values
+are estimated from p-valuations for primes p ≤ B. Alternatively, it is sufficient to
+calculate the summation of the weighted p-valuations νp (F ) log p for the purpose of
+comparison. The idea of the root sieve is that, when r is a root of fu,v (x) (mod pk ),
+it is also a root of fu+ipk ,v+jpk (x) (mod pk ) for i, j ∈ Z.
+
+
+    Algorithm 1: Murphy’s root sieve
+     Input : a polynomial pair f, g; integers U , V , B;
+     Output: an array of approximated α-values of dimension (2U + 1) × (2V + 1);
+1 for p ≤ B, p prime do
+2     for k where pk ≤ B do
+3         for x ∈ [0, pk − 1] do
+4             for u ∈ [0, pk − 1] do
+5                 compute v in f (x) + (ux + v)g(x) ≡ 0 (mod pk );
+6                   update νp (Fu+ipk ,v+jpk ) by sieving;
+
+
+
+   In general, the root sieve does not affect the projective roots significantly. It is
+sufficient to only consider the affine roots’ contribution to the α-value. In the end,
+we identify good slots (those with small α-values) in the sieving array. For each
+slot (polynomial), we can compute a more accurate α-value with a large bound
+B̃ > B and re-optimize its size using translation only (which will not affect the
+root property).
+   With B 2 ≪ U V , the asymptotic complexity of Murphy’s root sieve is
+                          log B                                     
+                           ⌊ log p ⌋                              
+                    X  X                         (2U + 1)(2V + 1) 
+                                     pk pk O(1) +
+                                                         p2k
+                                                                    
+                    p≤B            k=1
+                     p prime
+
+                            B3
+                                                            X  log B 
+                  =O                   + (2U + 1)(2V + 1)
+                           log B                              p≤B
+                                                                   log p
+                                                             p prime
+                                                 Z B
+                                                         1
+                  ≈ (2U + 1)(2V + 1) log B                    dp
+                                                   2   log2 p
+                                
+                             B
+                  = O UV           .
+                           log B
+We are interested in small primes and hence B/ log B is small. The sieving bounds
+U, V dominate the running time O(U V B/ log B).
+              ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER FIELD SIEVE                                   7
+
+
+                                        4. A faster root sieve
+    In the root sieve, we compare the number of roots of polynomials fu,v (x) for
+small primes and prime powers. In most cases, the roots are simple. Hence their
+average p-valuation follows immediately from Equation (2.4), and there is no need
+to count the lifted roots. We describe a faster root sieve (Algorithm 2) taking
+advantage of this idea.
+    First, we show that the cases corresponding to simple roots (cf. Equation (2.4))
+can be dealt with by a sieve. Suppose r1 is a simple root of f (x) (mod p). There
+exists a unique lifted root rk of f (x) (mod pk ) for each k > 1. In addition, each
+lifted root rk is a simple root of f (x) (mod p). Let rk be a simple root of fu,v (x)
+(mod pk ) for some k ≥ 1. It is clear that rk is also a simple root of polynomials
+fu+ipk ,v+jpk (x) (mod pk ). Given a simple root r1 of a polynomial fu,v (x) (mod p),
+the contribution of the root r1 to νp (Fu,v ) is p/(p2 − 1). We can update this value 3
+for all rotated polynomials fu+ip,v+jp (x) in a sieve (Line 8 of Algorithm 2).
+    Second, we consider the multiple roots. Let rk be a multiple root of a ro-
+tated polynomial fu,v (x) (mod pk ). It is also a multiple root for rotated polyno-
+mials fu+ipk ,v+jpk (x) (mod pk ). Hence we can also update the score in a sieve,
+but only for rotated polynomials fu+ipk ,v+jpk (x) (mod pk ). The lifted roots of
+fu+ipk ,v+jpk (x) (mod pk+1 ) can have different behaviours (cf. Lemma 2.2). We
+need to lift to count the multiple roots (Line 10 of Algorithm 2).
+
+     Algorithm 2: A faster root sieve
+      input : a polynomial pair f, g; integers U , V , B;
+      output: an array of approximated α-values of dimension (2U + 1) × (2V + 1);
+ 1 for p ≤ B, p prime do
+ 2     for x ∈ [0, p − 1] do
+ 3         compute ũ such that ũg 2 (x) ≡ f (x)g ′ (x) − f ′ (x)g(x) (mod p);
+ 4              for u ∈ [0, p − 1] do
+ 5                  compute v such that f (x) + (ux + v)g(x) ≡ 0 (mod p);
+ 6                  if u 6= ũ;
+7                   then
+8                       update νp (Fu+ip,v+jp ) in sieving;
+ 9                  else
+10                      lift to count multiple roots of fū,v̄ (x) (mod pk ) such that (ū, v̄) ≡ (u, v)
+                        (mod p), ū, v̄ ≤ pk ≤ B and then sieve;
+
+
+  Line 5 of Algorithm 2 describes the following optimization. Given some r ∈
+Z/pZ, we want to know when r is a multiple root for some polynomial fu,v (x)
+(mod p). If f (r) + (ur + v)g(r) ≡ 0 (mod p) and f ′ (r) + ug(r) + (ur + v)g ′ (r) ≡ 0
+(mod p), then we get
+(4.1)                          ug 2 (r) ≡ f (r)g ′ (r) − f ′ (r)g(r)     (mod p)
+since (ur + v) ≡ −f (r)/g(r) (mod p). Therefore, only one in p values of u admit a
+multiple root at r (mod p). For the other u’s, we can compute v and update the
+simple contribution p/(p2 − 1) in the sieve. If however r is a multiple root of fu,v (x)
+(mod p), we have to lift to count the multiple roots.
+
+      3ν (F
+        p     u,v ) log p, the contribution of the root r1   (mod p) to α(Fu,v , B).
+8                  SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+  The asymptotic running time has the same magnitude as Murphy’s root sieve
+where
+      X            (2U + 1)(2V + 1)
+                                           
+                                             UV
+                                                      
+                                                                B
+                                                                    
+           p (p − 1)                   + O          =  O  U V         .
+      p≤B
+                            p2               p2               log B
+       p prime
+
+
+In practice, however, we benefit from this optimization whichP avoids most prime
+powers. For comparison, Murphy’s root sieve takes about 4U V p≤B ⌊log B/ log p⌋
+                                                 P
+operations, while Algorithm 2 takes about 4U V p≤B 1 operations. Taking B =
+                   P                                  P
+200 for instance.     p≤200 ⌊log 200/ log p⌋ = 60 and   p≤200 1 = 46. Thus the
+speedup is about 1.3.
+
+
+                                 5. A two-stage method
+   If the permissible rotation bounds U, V are large, the root sieve can take a long
+time for each polynomial. We give a two-stage algorithm for the root optimization.
+The algorithm is motivated by previous work by Gower [8], Papadopoulos (personal
+communication), Stahlke and Kleinjung [21], who suggested to consider congruence
+classes modulo small primes.
+   The root optimization is based on the following ideas. A polynomial with only a
+few roots modulo small prime powers is less likely to have a small α-value. There-
+fore, rotated polynomials with many roots modulo small prime powers pei i are first
+detected, with pi ≤ P for some tiny bound P ≪ B. How exactly the powers ei are
+chosen is discussed at the end of this section. A further root sieve (cf. Algorithm 2)
+for larger prime powers pei i (where P < pi ≤ B and pei i ≤ B) can then be applied.
+   For convenience, let primes pi be ordered such that pi ≤ pj when i ≤ j.
+
+5.1. StageQ1. Let pe11 , · · · , pess be the distinct prime powers and such that ps ≤ P .
+               s
+Let M = i=1 pei i . In the first stage, we find some rotated polynomial fu0 ,v0 (x)
+which has the smallest approximated α-value (Equations (2.5) and (2.6)) among
+all u, v ∈ Z/M Z.
+   Gower [8] described an algorithm to find such fu0 ,v0 (x). The method first fixes
+some root set {ri,j } modulo pei i and then finds the rotated coefficients (u0,i , v0,i )
+(mod pei i ). Finally, the CRT (Chinese Remainder Theorem) is applied to recover
+(u0 , v0 ) (mod M ). However, it is not guaranteed that such (u0 , v0 ) leads to the
+smallest α-value among all u, v ∈ Z/M Z given the root set being fixed in advance.
+We describe a better method based on the lifting idea in Section 4.
+   Let pei i be fixed. We first find some polynomial fu0,i ,v0,i (x) that has good 4 ap-
+proximated pi -valuation νpi (Fu,v , ei ) (cf. Equation (2.5)) among all u, v ∈ Z/pei i Z.
+We use the lifting method in a p2i -ary tree (of height ei ) where each node represents
+some rotated polynomial fu,v modulo some ẽi ≤ ei . A depth-search method can be
+used since the bottom level leaves of the tree are most interesting. The number of
+nodes in this p2i -ary tree (of height ei ) can be bounded above by pei i using the rela-
+tion in Equation (4.1). Given polynomials fu0,i ,v0,i (x) (mod pei i ) for all 1 ≤ i ≤ s,
+we can then use the CRT to recover a set of good pairs {(u0 , v0 ) (mod M )}.
+
+
+    4In practice, one can record the top l such polynomials in a priority queue.
+         ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER FIELD SIEVE                                  9
+
+
+5.2. Stage 2. Fix some (u0 , v0 ) (mod M ). We apply the root sieve on the sublat-
+tice defined by (u0 + γM, v0 + βM ) where (γ, β) ∈ Z2 . The points on the sublattice
+are expected to give rotated polynomials with promising root properties, since the
+polynomials are constructed to have many roots modulo M .
+   In Stage 1, we often choose the pi ’s to be the smallest consecutive primes since
+they are likely to contribute most to the α-value. The exponents ei can be chosen
+such that M ≈ U in practice. Note U ≪ V if s is large. Since u0 ≈ M ≈ U , it is
+sufficient to sieve a single line in Stage 2.
+   Compared to a full root sieve over Z2 , the search space is reduced by a factor of
+M . The root sieve in Stage 2 runs asymptotically in U V (B−P )/(M 2 log(B−P )) ≈
+   2
+
+(V /M )(B/ log B) as B ≪ V and P ≪ B.
+
+Remark 5.1. In Stage 2, the polynomials f¯ not on the sublattice are discarded since
+we assume that they are unlikely to give rise to polynomials      Ps         with good root prop-
+erties:Pthe sum of the approximated pi -valuations i=1 νpi (F̄P               , ei ) log pi is smaller
+          s                                                                      s
+than
+Ps             ν
+          i=1 pi   (F,  e i ) log p i . However,    it may be  possible that     i=1 νpi (F̄ ) log pi ≥
+       ν
+   i=1 pi   (F ) log p i   (for   the   exact p i -valuations).  Here  we  assume     that νpi (F ) ≈
+νpi (F, ei ) which is plausible if the number of lifted multiple roots becomes station-
+ary for pki ≥ pei i (but also see below in 5.3).
+
+5.3. Choice of the valuations ei . There are several approaches to choosing the
+valuations ei in Stage 1. To start with, for consistency with the rest of the proce-
+dure, it is natural to restrict to pei i ≤ B, whence ei ≤ ⌊logpi B⌋. It is also reasonable
+to require that polynomials fu,v considered in Stage 2, for u, v within the lattice
+(u0 + γM, v0 + βM ), all share the same lifting patterns for their pi -adic roots (in
+terms of numbers of roots and multiplicities as lifting proceeds), which is to say
+that the number of lifted roots for these polynomials should be stationary above pei i .
+This would imply that we set ei to at most νpi (disc fu,v ), since setting to a larger
+value would not differentiate between lifting patterns. Of course the dependency
+of the latter expression on u, v is cumbersome. An upper bound would be needed,
+and can be obtained with moderate efforts by considering disc fu,v as a bivariate
+polynomial in u, v. In practice, however, it is generally satisfactory to restrict to
+the bound νpi (disc f ) as a first guess.
+    Another aspect leads to consider the maximum values for ei in a more relaxed
+way. So far, in our improved root sieve, we have ignored the size property of
+polynomials in the algorithms. In practice, we may want to tune the parameters
+by trying several sets of parameters (varying pi ’s and ei in Stage 1). We can run
+a test root sieve in short intervals. The set of parameters which generates the best
+score (considering both size and root properties) is then used. To summarize, while
+a bound such as ei = min(νpi (disc f ), ⌊logpi B⌋) would be advised by the analysis,
+efficiency considerations lead us to consider several sets of parameters around this
+value. This compensates for the acknowledged inaccuracy in considering νpi (disc f ).
+
+
+
+                                         6. Conclusion
+  Root optimization aims to produce polynomials that have many roots modulo
+small primes and prime powers. We gave some faster methods for root optimization
+based on Hensel’s lifting lemma and root sieve on congruence classes modulo small
+10                SHI BAI, RICHARD P. BRENT, AND EMMANUEL THOMÉ
+
+
+prime powers. The algorithms described here have been implemented in the soft-
+ware CADO-NFS [3] and tested in practice (e.g. for the factorization of the 704-bit
+RSA challenge [4]).
+
+                                   Acknowledgements
+   The authors are grateful to Pierrick Gaudry, Guillaume Hanrot, Thorsten Klein-
+jung, Jason Papadopoulos and Paul Zimmermann for many helpful comments and
+discussions on drafts of this paper. The authors would also like to thank an anony-
+mous referee for valuable comments and suggestions.
+   The work of the first author was carried out at the Australian National University
+(ANU). He would like to thank the Research School of Computer Science (ANU) for
+funding and the Mathematical Sciences Institute (ANU) for providing computing
+facilities (orac) and support. He would also like to thank NeSI (New Zealand
+eScience Infrastructure) and the Centre for eResearch at the University of Auckland
+for providing computing facilities and support.
+
+                                        References
+ 1. K. Aoki and H. Ueda. Sieving using bucket sort. In Proceedings of ASIACRYPT ’04, volume
+    3329 of Lecture Notes in Computer Science, pages 92–102. Springer, 2004.
+ 2. E. Bach and R. Peralta. Asymptotic semismoothness probabilities. Mathematics of Compu-
+    tation, 65(216):1701–1715, 1996.
+ 3. S. Bai, C. Bouvier, A. Filbois, P. Gaudry, L. Imbert, A. Kruppa, F. Morain, E. Thomé,
+    P. Zimmermann. CADO-NFS, an implementation of the number field sieve algorithm. Release
+    2.0, available from http://cado-nfs.gforge.inria.fr, 2013.
+ 4. S. Bai, E. Thomé, P. Zimmermann. Factorisation of RSA-704 with CADO-NFS. Report, 2012.
+    http://eprint.iacr.org/2012/369.pdf.
+ 5. H. Boender. Factoring large integers with the quadratic sieve. PhD thesis, Leiden University,
+    1997.
+ 6. J. Buhler, H. Lenstra, and C. Pomerance. Factoring integers with the number field sieve. In
+    Lenstra and Lenstra [14], pages 50–94.
+ 7. W. Ekkelkamp. Predicting the sieving effort for the number field sieve. In Proceedings of
+    ANTS-VIII, volume 5011 of Lecture Notes in Computer Science, pages 167–179. Springer,
+    2008.
+ 8. J. E. Gower. Rotations and translations of number field sieve polynomials. In Proceedings
+    of ASIACRYPT ’03, volume 2894 of Lecture Notes in Computer Science, pages 302–310.
+    Springer, 2003.
+ 9. A. Granville. Smooth numbers: computational number theory and beyond. In Proc. MSRI
+    Conf. Algorithmic Number Theory: Lattices, Number Fields, Curves and Cryptography. MSRI
+    Publications, Volume 44, 2008.
+10. A. Hildebrand and G. Tenenbaum. Integers without large prime factors. Journal de Théorie
+    des Nombres de Bordeaux, 5(2):411–484, 1993.
+11. T. Kleinjung. On polynomial selection for the general number field sieve. Mathematics of
+    Computation, 75(256):2037–2047, 2006.
+12. T. Kleinjung. Polynomial selection. In CADO workshop on integer factorization, INRIA
+    Nancy, 2008. http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+13. T. Kleinjung. K. Aoki, J. Franke, A. K. Lenstra, E. Thomé, J. W. Bos, P. Gaudry, A. Kruppa,
+    P. L. Montgomery, D. A. Osvik, H. J. J. te Riele, A. Timofeev, and P. Zimmermann. Fac-
+    torization of a 768-Bit RSA Modulus. In Proceedings of the CRYPTO ’10, volume 6223 of
+    Lecture Notes in Computer Science, pages 333–350. Springer, 2010.
+14. A. K. Lenstra and H. W. Lenstra, Jr., editors. The Development of the Number Field Sieve,
+    volume 1554 of Lecture Notes in Mathematics. Springer, 1993.
+15. M. A. Morrison and J. Brillhart. A method of factoring and the factorization of F7 . Math.
+    Comp., 29(129):183205, 1975.
+         ROOT OPTIMIZATION OF POLYNOMIALS IN THE NUMBER FIELD SIEVE                            11
+
+
+16. B. A. Murphy. Modelling the Yield of Number Field Sieve Polynomials. In Algorithmic Number
+    Theory - ANTS III, LNCS 1443, pages 137–147, 1998.
+17. B. A. Murphy. Polynomial selection for the number field sieve integer factorisation algorithm.
+    PhD thesis, The Australian National University, 1999.
+18. B. A. Murphy and R. P. Brent. On quadratic polynomials for the number field sieve. In
+    Proceedings of the CATS ’98, volume 20 of Australian Computer Science Communications,
+    pages 199–213. Springer, 1998.
+19. J. M. Pollard. The lattice sieve. In Lenstra and Lenstra [14], pages 43–49.
+20. C. Pomerance and J. Wagstaff, S. S. Implementation of the continued fraction integer factoring
+    algorithm. Congr. Numer., 37:99118, 1983.
+21. C. Stahlke and T. Kleinjung. Ideas for finding better polynomials to use in GNFS. In Workshop
+    on Factoring Large Numbers, Discrete Logarithmes and Cryptanalytical Hardware, Institut
+    für Experimentelle Mathematik, Universität Duisburg-Essen, 2008.
+
+   Department of Mathematics, University of Auckland, Auckland, New Zealand.
+   E-mail address: shih.bai@gmail.com
+
+   Mathematical Sciences Institute, Australian National University, Australia.
+   E-mail address: nfs@rpbrent.com
+
+   INRIA Nancy, Villers-lès-Nancy, France.
+   E-mail address: emmanuel.thome@inria.fr
+

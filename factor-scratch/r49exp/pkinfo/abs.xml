@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/tA/pbhydRqB6ZS3cnxx0GHBS1x4</id>
+  <title>arXiv Query: search_query=&amp;id_list=1605.08065,2111.14180&amp;start=0&amp;max_results=5</title>
+  <updated>2026-10-03T22:50:57Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=5&amp;id_list=1605.08065,2111.14180" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2111.14180v1</id>
+    <title>Two variable polynomial congruences and capacity theory</title>
+    <updated>2021-11-28T15:40:40Z</updated>
+    <link href="https://arxiv.org/abs/2111.14180v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.14180v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We use capacity theory to analyze Coppersmith's method for finding small solutions of linear two variable polynomial congruences. We show that the method will succeed in a positive proportion of cases and fail in a different positive proportion of cases. We also bound the number of small solutions via capacity theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-28T15:40:40Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>T. Chinburg</name>
+    </author>
+    <author>
+      <name>B. Hemenway Falk</name>
+    </author>
+    <author>
+      <name>N. Heninger</name>
+    </author>
+    <author>
+      <name>Z. Scherr</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.08065v1</id>
+    <title>Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials</title>
+    <updated>2016-05-25T20:38:56Z</updated>
+    <link href="https://arxiv.org/abs/1605.08065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.08065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We draw a new connection between Coppersmith's method for finding small solutions to polynomial congruences modulo integers and the capacity theory of adelic subsets of algebraic curves. Coppersmith's method uses lattice basis reduction to construct an auxiliary polynomial that vanishes at the desired solutions. Capacity theory provides a toolkit for proving when polynomials with certain boundedness properties do or do not exist. Using capacity theory, we prove that Coppersmith's bound for univariate polynomials is optimal in the sense that there are \emph{no} auxiliary polynomials of the type he used that would allow finding roots of size $N^{1/d+ε}$ for monic degree-$d$ polynomials modulo $N$. Our results rule out the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the possibility of even superpolynomial-time improvements to Coppersmith's bound. We extend this result to constructions of auxiliary polynomials using binomial polynomials, and rule out the existence of any auxiliary polynomial of this form that would find solutions of size $N^{1/d+ε}$ unless $N$ has a very small prime factor.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-25T20:38:56Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ted Chinburg</name>
+    </author>
+    <author>
+      <name>Brett Hemenway</name>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+    </author>
+    <author>
+      <name>Zachary Scherr</name>
+    </author>
+  </entry>
+</feed>

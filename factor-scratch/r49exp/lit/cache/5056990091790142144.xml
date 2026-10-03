@@ -1,0 +1,588 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6D9nHUOr6J9yIfBv222JDUMKiFM</id>
+  <title>arXiv Query: search_query=abs:"class group" AND abs:factoring AND abs:order&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:30Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22class+group%22+AND+(abs:factoring+AND+abs:order)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>28</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2504.17957v4</id>
+    <title>Elasticity of Orders with Prime Conductor</title>
+    <updated>2025-08-19T17:39:49Z</updated>
+    <link href="https://arxiv.org/abs/2504.17957v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.17957v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $R$ be an order in a number field whose conductor ideal $P := (R:\overline{R})$ is prime in the ring of integers $\overline{R}$. In this paper, we explore the factorization properties of such orders. Most notably, we give a complete characterization of the elasticity of $R$ in terms of its class group. We conclude with an application to the computation of class groups of certain orders.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-24T21:59:39Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Jared Kettinger</name>
+    </author>
+    <author>
+      <name>Grant Moles</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.02292v2</id>
+    <title>The mean number of 3-torsion elements in ray class groups of quadratic fields</title>
+    <updated>2021-05-20T08:18:17Z</updated>
+    <link href="https://arxiv.org/abs/1609.02292v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.02292v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We determine the average number of $3$-torsion elements in the ray class groups of fixed (integral) conductor $c$ of quadratic fields ordered by absolute discriminant, generalizing Davenport and Heilbronn's theorem on class groups. A consequence of this result is that a positive proportion of such ray class groups of quadratic fields have trivial 3-torsion subgroup whenever the conductor $c$ is taken to be a squarefree integer having very few prime factors none of which are congruent to $1 \bmod 3$. Additionally, we compute the second main term for the number of $3$-torsion elements in ray class groups with fixed conductor of quadratic fields with bounded discriminant.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-08T06:58:55Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ila Varma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0712.3334v1</id>
+    <title>The center of some braid groups and the Farrell cohomology of certain pure mapping class groups</title>
+    <updated>2007-12-20T06:46:38Z</updated>
+    <link href="https://arxiv.org/abs/0712.3334v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0712.3334v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we first show that many braid groups of low genus surfaces have their centers as direct factors. We then give a description of centralizers and normalizers of prime order elements in pure mapping class groups of surfaces with spherical quotients using automorphism groups of fundamental groups of the quotient surfaces. As an application, we use these to show that the $p$-primary part of the Farrell cohomology groups of certain mapping class groups are elementary abelian groups. At the end we compute the $p$-primary part of the Farrell cohomology of a few pure mapping class groups.</summary>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-12-20T06:46:38Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AT"/>
+    <arxiv:journal_ref>Algebr. Geom. Topol. 7 (2007) 1987-2006</arxiv:journal_ref>
+    <author>
+      <name>Yu Qing Chen</name>
+    </author>
+    <author>
+      <name>Henry H. Glover</name>
+    </author>
+    <author>
+      <name>Craig A. Jensen</name>
+    </author>
+    <arxiv:doi>10.2140/agt.2007.7.1987</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/agt.2007.7.1987" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.11161v3</id>
+    <title>Factoring periodic maps into Dehn twists</title>
+    <updated>2022-06-24T07:04:39Z</updated>
+    <link href="https://arxiv.org/abs/2010.11161v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.11161v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\text{Mod}(S_g)$ be the mapping class group of the closed orientable surface $S_g$ of genus $g \geq 1$. In this paper, we develop various methods for factoring periodic mapping classes into Dehn twists, up to conjugacy. As applications, we develop methods for factoring certain roots of Dehn twists as words in Dehn twists. We will also show the existence of conjugates of periodic maps of order $4g$ and $4g+2$, for $g\geq 2$, whose product is pseudo-Anosov.</summary>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-21T17:28:06Z</published>
+    <arxiv:primary_category term="math.GT"/>
+    <author>
+      <name>Neeraj K. Dhanwani</name>
+    </author>
+    <author>
+      <name>Ajay K. Nair</name>
+    </author>
+    <author>
+      <name>Kashyap Rajeevsarathy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.02737v1</id>
+    <title>On Delta Sets and their Realizable Subsets in Krull Monoids with Cyclic Class Groups</title>
+    <updated>2016-09-09T10:38:25Z</updated>
+    <link href="https://arxiv.org/abs/1609.02737v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.02737v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $M$ be a commutative cancellative monoid. The set $Δ(M)$, which consists of all positive integers which are distances between consecutive factorization lengths of elements in $M$, is a widely studied object in the theory of nonunique factorizations. If $M$ is a Krull monoid with cyclic class group of order $n \ge 3$, then it is well-known that $Δ(M) \subseteq \{1, \dots, n-2\}$. Moreover, equality holds for this containment when each class contains a prime divisor from $M$. In this note, we consider the question of determining which subsets of $\{1, \dots, n-2\}$ occur as the delta set of an individual element from $M$. We first prove for $x \in M$ that if $n - 2 \in Δ(x)$, then $Δ(x) = \{n-2\}$ (i.e., not all subsets of $\{1,\dots, n-2\}$ can be realized as delta sets of individual elements). We close by proving an Archimedean-type property for delta sets from Krull monoids with finite cyclic class group: for every natural number m, there exist a Krull monoid $M$ with finite cyclic class group such that $M$ has an element $x$ with $|Δ(x)| \ge m$.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-09T10:38:25Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <arxiv:journal_ref>Colloquium Mathematicum 137 (2014) 137-146</arxiv:journal_ref>
+    <author>
+      <name>Scott T. Chapman</name>
+    </author>
+    <author>
+      <name>Felix Gotti</name>
+    </author>
+    <author>
+      <name>Roberto Pelayo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.00859v1</id>
+    <title>On congruence half-factorial Krull monoids with cyclic class group</title>
+    <updated>2017-09-04T08:29:29Z</updated>
+    <link href="https://arxiv.org/abs/1709.00859v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.00859v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We carry out a detailed investigation of congruence half-factorial Krull monoids with finite cyclic class group and related problems. Specifically, we determine precisely all relatively large values that can occur as a minimal distance of a Krull monoid with finite cyclic class group, as well as the exact distribution of prime divisors over the ideal classes in these cases. Our results apply to various classical objects, including maximal orders and certain semi-groups of modules. In addition, we present applications to quantitative problems in factorization theory. More specifically, we determine exponents in the asymptotic formulas for the number of algebraic integers whose sets of lengths have a large difference.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-04T08:29:29Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>A Plagne</name>
+      <arxiv:affiliation>CMLS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wolfgang Schmid</name>
+      <arxiv:affiliation>LAGA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.05250v2</id>
+    <title>On the structure of order 4 class groups of $\mathbb{Q}(\sqrt{n^2+1})$</title>
+    <updated>2020-04-19T15:50:23Z</updated>
+    <link href="https://arxiv.org/abs/1902.05250v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.05250v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Groups of order $4$ are isomorphic to either $\mathbb{Z}/4\mathbb{Z}$ or $\mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$. We give certain sufficient conditions permitting to specify the structure of class groups of order $4$ in the family of real quadratic fields $\mathbb{Q}{(\sqrt{n^2+1})}$ as $n$ varies over positive integers. Further, we compute the values of Dedekind zeta function attached to these quadratic fields at the point $-1$. As a side result, we show that the size of the class group of this family could be made as large as possible by increasing the size of the number of distinct odd prime factors of $n$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-14T07:37:17Z</published>
+    <arxiv:comment>Title has been changed and some minor corrections have been made. To appear in Annales Mathématiques du Québec</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kalyan Chakraborty</name>
+    </author>
+    <author>
+      <name>Azizul Hoque</name>
+    </author>
+    <author>
+      <name>Mohit Mishra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1306.0834v2</id>
+    <title>Sets of lengths in maximal orders in central simple algebras</title>
+    <updated>2013-08-14T13:05:12Z</updated>
+    <link href="https://arxiv.org/abs/1306.0834v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1306.0834v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal O$ be a holomorphy ring in a global field $K$, and $R$ a classical maximal $\mathcal O$-order in a central simple algebra over $K$. We study sets of lengths of factorizations of cancellative elements of $R$ into atoms (irreducibles). In a large majority of cases there exists a transfer homomorphism to a monoid of zero-sum sequences over a ray class group of $\mathcal O$, which implies that all the structural finiteness results for sets of lengths---valid for commutative Krull monoids with finite class group---hold also true for $R$. If $\mathcal O$ is the ring of algebraic integers of a number field $K$, we prove that in the remaining cases no such transfer homomorphism can exist and that several invariants dealing with sets of lengths are infinite.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-06-04T15:41:51Z</published>
+    <arxiv:comment>40 pages; final version, with minor edits over previous one</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <arxiv:journal_ref>J. Algebra 390 (2013) 1-43</arxiv:journal_ref>
+    <author>
+      <name>Daniel Smertnig</name>
+    </author>
+    <arxiv:doi>10.1016/j.jalgebra.2013.05.016</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jalgebra.2013.05.016" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.07953v1</id>
+    <title>Unconditional Class Group Tabulation of Imaginary Quadratic Fields to $|Δ| &lt; 2^{40}$</title>
+    <updated>2015-02-27T16:21:27Z</updated>
+    <link href="https://arxiv.org/abs/1502.07953v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.07953v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an improved algorithm for tabulating class groups of imaginary quadratic fields of bounded discriminant. Our method uses classical class number formulas involving theta-series to compute the group orders unconditionally for all $Δ\not \equiv 1 \pmod{8}.$ The group structure is resolved using the factorization of the group order. The $1 \bmod 8$ case was handled using the methods of \cite{jacobson}, including the batch verification method based on the Eichler-Selberg trace formula to remove dependence on the Extended Riemann Hypothesis. Our new method enabled us to extend the previous bound of $|Δ| &lt; 2 \cdot 10^{11}$ to $2^{40}$. Statistical data in support of a variety conjectures is presented, along with new examples of class groups with exotic structures.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-27T16:21:27Z</published>
+    <arxiv:comment>26 pages, 2 figures, to appear in Math. Comp</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>A. S. Mosunov</name>
+    </author>
+    <author>
+      <name>M. J. Jacobson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.03457v2</id>
+    <title>On class groups of upper cluster algebras</title>
+    <updated>2024-02-23T16:25:30Z</updated>
+    <link href="https://arxiv.org/abs/2312.03457v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.03457v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We compute the class group of a full rank upper cluster algebra in terms of its exchange polynomials. As a corollary, we recover a theorem by Cao, Keller, and Qin from 2023 characterizing the UFDs among these algebras. Furthermore, under the additional hypothesis of acyclicity, we obtain a result by Garcia Elsener, Lampe, and Smertnig from 2019. Moreover, we show that all cluster and upper cluster algebras are finite factorization domains, meaning that every non-unit factors as a product of atoms (or irreducibles) and, for each element, there are only finitely many such factorizations up to order and associates. This strengthens another result by Cao, Keller, and Qin showing that cluster and upper cluster algebras are atomic.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-06T12:34:11Z</published>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Mara Pompili</name>
+    </author>
+    <arxiv:doi>10.4153/S0008414X25000033</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4153/S0008414X25000033" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.08704v2</id>
+    <title>Circularly ordering direct products and the obstruction to left-orderability</title>
+    <updated>2021-08-11T13:32:13Z</updated>
+    <link href="https://arxiv.org/abs/2006.08704v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.08704v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by the recent result that left-orderability of a group $G$ is intimately connected to circular orderability of direct products $G \times \mathbb{Z}/n\mathbb{Z}$, we provide necessary and sufficient cohomological conditions that such a direct product be circularly orderable. As a consequence of the main theorem, we arrive at a new characterization for the fundamental group of a rational homology 3-sphere to be left-orderable. Our results imply that for mapping class groups of once-punctured surfaces, and other groups whose actions on $S^1$ are cohomologically rigid, the products $G \times \mathbb{Z}/n\mathbb{Z}$ are seldom circularly orderable. We also address circular orderability of direct products in general, dealing with the cases of factor groups admitting a bi-invariant circular ordering, and iterated direct products whose factor groups are amenable.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-15T19:13:28Z</published>
+    <arxiv:comment>Minor changes made to accommodate the referee's comments. To appear in the Pacific Journal of Mathematics</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>Pacific J. Math. 312 (2021) 401-419</arxiv:journal_ref>
+    <author>
+      <name>Adam Clay</name>
+    </author>
+    <author>
+      <name>Tyrone Ghaswala</name>
+    </author>
+    <arxiv:doi>10.2140/pjm.2021.312.401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/pjm.2021.312.401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.06200v1</id>
+    <title>On the structure and stability of ranks of $2$-class groups in cyclotomic $\mathbb{Z}_{2}$-extensions of certain real quadratic fields</title>
+    <updated>2023-02-13T09:16:42Z</updated>
+    <link href="https://arxiv.org/abs/2302.06200v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.06200v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a real quadratic field $K= \mathbb{Q}(\sqrt{d})$ with discriminant $D_{K}$ having four distinct prime factors, we study the structure of the $2$-class group $A(K_{1})$ of the first layer $K_{1} = \mathbb{Q}(\sqrt{2},\sqrt{d})$ of the cyclotomic $\mathbb{Z}_{2}$-extension of $K$. With some suitably convenient assumptions on the rank and the order of $A(K_{1})$, we characterize $K$ for which the $2$-class group $A(K)$ is isomorphic to $\mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}$. We infer that the $2$-ranks of the class groups in each layer stabilizes by virtue of a result of Fukuda. This also provides an alternate way to establish that the Iwasawa $μ$-invariant of $K$ vanishes. In some cases, we also provide sufficient conditions on the constituent prime factors of $D_{K}$ that imply $A(K) \simeq \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}$, $A(K_{1}) \simeq \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/4\mathbb{Z}$ and $A(K^{\prime}) \simeq \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}$, where $K^{\prime} = \mathbb{Q}(\sqrt{2d})$. This extends some results obtained by Mizusawa.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-13T09:16:42Z</published>
+    <arxiv:comment>13 pages, 3 Tables</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jaitra Chattopadhyay</name>
+    </author>
+    <author>
+      <name>H Laxmi</name>
+    </author>
+    <author>
+      <name>Anupam Saikia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.2593v2</id>
+    <title>Arithmetic quotients of the mapping class group</title>
+    <updated>2015-04-09T12:16:11Z</updated>
+    <link href="https://arxiv.org/abs/1307.2593v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.2593v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To every $Q$-irreducible representation $r$ of a finite group $H$, there corresponds a simple factor $A$ of $Q[H]$ with an involution $τ$. To this pair $(A,τ)$, we associate an arithmetic group $Ω$ consisting of all $(2g-2)\times (2g-2)$ matrices over a natural order of $A^{op}$ which preserve a natural skew-Hermitian sesquilinear form on $A^{2g-2}$. We show that if $H$ is generated by less than $g$ elements, then $Ω$ is a virtual quotient of the mapping class group $Mod(Σ_g)$, i.e. a finite index subgroup of $Ω$ is a quotient of a finite index subgroup of $\Mod(Σ_g)$. This shows that the mapping class group has a rich family of arithmetic quotients (and "Torelli subgroups") for which the classical quotient $Sp(2g, Z)$ is just a first case in a list, the case corresponding to the trivial group $H$ and the trivial representation. Other pairs of $H$ and $r$ give rise to many new arithmetic quotients of $Mod(Σ_g)$ which are defined over various (subfields of) cyclotomic fields and are of type $Sp(2m), SO(2m,2m),$ and $SU(m,m)$ for arbitrarily large $m$.</summary>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-09T20:44:32Z</published>
+    <arxiv:comment>46 pages, 1 figure, minor edits, added some references and changed the discussion of some other references</arxiv:comment>
+    <arxiv:primary_category term="math.GT"/>
+    <author>
+      <name>Fritz Grunewald</name>
+    </author>
+    <author>
+      <name>Michael Larsen</name>
+    </author>
+    <author>
+      <name>Alexander Lubotzky</name>
+    </author>
+    <author>
+      <name>Justin Malestein</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1303.1917v1</id>
+    <title>Low dimensional linear representations of the mapping class group of a nonorientable surface</title>
+    <updated>2013-03-08T09:15:59Z</updated>
+    <link href="https://arxiv.org/abs/1303.1917v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1303.1917v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Suppose that $f$ is a homomorphism from the mapping class group $\mathcal{M}(N_{g,n})$ of a nonorientable surface of genus $g$ with $n$ boundary components, to $\mathrm{GL}(m,\mathbb{C})$. We prove that if $g\ge 5$, $n\le 1$ and $m\le g-2$, then $f$ factors through the abelianization of $\mathcal{M}(N_{g,n})$, which is $\mathbb{Z}_2\times\mathbb{Z}_2$ for $g\in\{5,6\}$ and $\mathbb{Z}_2$ for $g\ge 7$. If $g\ge 7$, $n=0$ and $m=g-1$, then either $f$ has finite image (of order at most two if $g\ne 8$), or it is conjugate to one of four "homological representations". As an application we prove that for $g\ge 5$ and $h&lt;g$, every homomorphism $\mathcal{M}(N_{g,0})\to\mathcal{M}(N_{h,0})$ factors through the abelianization of $\mathcal{M}(N_{g,0})$.</summary>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-03-08T09:15:59Z</published>
+    <arxiv:primary_category term="math.GT"/>
+    <arxiv:journal_ref>Algebr. Geom. Topol. 14 (2014) 2445-2474</arxiv:journal_ref>
+    <author>
+      <name>Blazej Szepietowski</name>
+    </author>
+    <arxiv:doi>10.2140/agt.2014.14.2445</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/agt.2014.14.2445" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.4397v3</id>
+    <title>Factorization theory: From commutative to noncommutative settings</title>
+    <updated>2015-09-02T14:57:22Z</updated>
+    <link href="https://arxiv.org/abs/1402.4397v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.4397v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the non-uniqueness of factorizations of non zero-divisors into atoms (irreducibles) in noncommutative rings. To do so, we extend concepts from the commutative theory of non-unique factorizations to a noncommutative setting. Several notions of factorizations as well as distances between them are introduced. In addition, arithmetical invariants characterizing the non-uniqueness of factorizations such as the catenary degree, the $ω$-invariant, and the tame degree, are extended from commutative to noncommutative settings. We introduce the concept of a cancellative semigroup being permutably factorial, and characterize this property by means of corresponding catenary and tame degrees. Also, we give necessary and sufficient conditions for there to be a weak transfer homomorphism from a cancellative semigroup to its reduced abelianization. Applying the abstract machinery we develop, we determine various catenary degrees for classical maximal orders in central simple algebras over global fields by using a natural transfer homomorphism to a monoid of zero-sum sequences over a ray class group. We also determine catenary degrees and the permutable tame degree for the semigroup of non zero-divisors of the ring of $n \times n$ upper triangular matrices over a commutative domain using a weak transfer homomorphism to a commutative semigroup.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-18T16:44:34Z</published>
+    <arxiv:comment>45 pages</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <arxiv:journal_ref>J. Algebra 441 (2015), 475-551</arxiv:journal_ref>
+    <author>
+      <name>Nicholas R. Baeth</name>
+    </author>
+    <author>
+      <name>Daniel Smertnig</name>
+    </author>
+    <arxiv:doi>10.1016/j.jalgebra.2015.06.007</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jalgebra.2015.06.007" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0910.2142v2</id>
+    <title>Moduli spaces and braid monodromy types of bidouble covers of the quadric</title>
+    <updated>2009-10-13T12:43:48Z</updated>
+    <link href="https://arxiv.org/abs/0910.2142v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0910.2142v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Bidouble covers $π: S \mapsto Q$ of the quadric Q are parametrized by connected families depending on four positive integers a,b,c,d. In the special case where b=d we call them abc-surfaces.
+  Such a Galois covering $π$ admits a small perturbation yielding a general 4-tuple covering of Q with branch curve $\De$, and a natural Lefschetz fibration obtained from a small perturbation of the composition of $ π$ with the first projection.
+  We prove a more general result implying that the braid monodromy factorization corresponding to $\De$ determines the three integers a,b,c in the case of abc-surfaces. We introduce a new method in order to distinguish factorizations which are not stably equivalent. This result is in sharp contrast with a previous result of the first and third author, showing that the mapping class group factorizations corresponding to the respective natural Lefschetz pencils are equivalent for abc-surfaces with the same values of a+c, b. This result hints at the possibility that abc-surfaces with fixed values of a+c, b, although diffeomorphic but not deformation equivalent, might be not canonically symplectomorphic.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.SG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-10-12T17:31:40Z</published>
+    <arxiv:comment>38 pages, showkeys command cancelled with %</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>Geom. Topol. 15 (2011) 351-396</arxiv:journal_ref>
+    <author>
+      <name>Fabrizio Catanese</name>
+      <arxiv:affiliation>Universitaet Bayreuth</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Michael Lönne</name>
+      <arxiv:affiliation>Universitaet Goettingen</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Bronislaw Wajnryb</name>
+      <arxiv:affiliation>Technical University of Rzeszow</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.2140/gt.2011.15.351</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/gt.2011.15.351" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0601104v2</id>
+    <title>The complexity of class polynomial computation via floating point approximations</title>
+    <updated>2008-07-25T11:29:55Z</updated>
+    <link href="https://arxiv.org/abs/cs/0601104v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/0601104v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We analyse the complexity of computing class polynomials, that are an important ingredient for CM constructions of elliptic curves, via complex floating point approximations of their roots. The heart of the algorithm is the evaluation of modular functions in several arguments. The fastest one of the presented approaches uses a technique devised by Dupont to evaluate modular functions by Newton iterations on an expression involving the arithmetic-geometric mean. It runs in time $O (|D| \log^5 |D| \log \log |D|) = O (|D|^{1 + ε}) = O (h^{2 + ε})$ for any $ε&gt; 0$, where $D$ is the CM discriminant and $h$ is the degree of the class polynomial. Another fast algorithm uses multipoint evaluation techniques known from symbolic computation; its asymptotic complexity is worse by a factor of $\log |D|$. Up to logarithmic factors, this running time matches the size of the constructed polynomials. The estimate also relies on a new result concerning the complexity of enumerating the class group of an imaginary-quadratic order and on a rigorously proven upper bound for the height of class polynomials.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-01-24T11:01:46Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Mathematics of Computation 78, 266 (2009) 1089-1107</arxiv:journal_ref>
+    <author>
+      <name>Andreas Enge</name>
+      <arxiv:affiliation>INRIA Futurs, Lix</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.00681v1</id>
+    <title>On discriminants of minimal polynomials of the Ramanujan $t_n$ class invariants</title>
+    <updated>2022-10-03T02:00:05Z</updated>
+    <link href="https://arxiv.org/abs/2210.00681v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.00681v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the discriminants of the minimal polynomials $\mathcal{P}_n$ of the Ramanujan $t_n$ class invariants, which are defined for positive integers $n\equiv11\pmod{24}$. The historical precedent for doing so comes from Gross and Zagier, which is known for computing the prime factorizations of certain resultants and discriminants of the Hilbert class polynomials $H_n$. We show that $Δ\left(\mathcal{P}_n\right)$ divides $Δ\left(H_n\right)$ with quotient a perfect square, and as a consequence, we explicitly determine the sign of $Δ\left(\mathcal{P}_n\right)$ based on the class group structure of the order of discriminant $-n$. We also show that the discriminant of the number field generated by $j\left(\frac{-1+\sqrt{-n}}{2}\right)$, where $j$ is the $j$-invariant, divides $Δ\left(\mathcal{P}_n\right)$. Moreover, we show that 3 never divides $Δ\left(\mathcal{P}_n\right)$ for all squarefree positive integers $n\equiv11\pmod{24}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-03T02:00:05Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Sarth Chavan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.13931v2</id>
+    <title>Unlimited lists of fundamental units of quadratic fields -- Applications to some arithmetic properties</title>
+    <updated>2023-06-01T12:41:57Z</updated>
+    <link href="https://arxiv.org/abs/2206.13931v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.13931v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We use the polynomials $m_s(t) = t^2 - 4 s$, $s \in \{-1, 1\}$, in an elementary process giving arbitrary large lists of {\it fundamental units} of quadratic fields of discriminants listed in ascending order. More precisely, let $\mathbf{B} \gg 0$; then as $t$ grows from $1$ to $\mathbf{B}$, for each {\it first occurrence} of a square-free integer $M \geq 2$, in the factorization $m_s(t) =: M r^2$, the unit $\frac{1}{2} \big(t + r \sqrt{M}\big)$ is the fundamental unit of norm $s$ of $\mathbb{Q}(\sqrt M)$, even if $r &gt;1$ (Theorem 4.1). Using $m_{sν}(t) = t^2 - 4 s ν$, $ν\geq 2$, the algorithm gives arbitrary large lists of {\it fundamental solutions} to $u^2 - M v^2= 4sν$ (Theorem 4.11). We deduce, for $p&gt;2$ prime, arbitrary large lists of {\it non $p$-rational} quadratic fields (Theorems 6.3, 6.4, 6.5) and of degree $p-1$ imaginary fields with non-trivial $p$-class group (Theorems 7.1,7.2). PARI programs are given to be copied and pasted.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-28T12:05:55Z</published>
+    <arxiv:comment>Minor corrections and new numerical results</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Communications in Advanced Mathematical Sciences Vol. 6, No. 3, 148-176, 2023</arxiv:journal_ref>
+    <author>
+      <name>Georges Gras</name>
+      <arxiv:affiliation>LMB</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.33434/cams.1327372</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.33434/cams.1327372" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1008.4952v4</id>
+    <title>Statistics and compression of scl</title>
+    <updated>2013-02-12T17:45:03Z</updated>
+    <link href="https://arxiv.org/abs/1008.4952v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1008.4952v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We obtain sharp estimates on the growth rate of stable commutator length on random (geodesic) words, and on random walks, in hyperbolic groups and groups acting nondegenerately on hyperbolic spaces. In either case, we show that with high probability stable commutator length of an element of length $n$ is of order $n/\log{n}$.
+  This establishes quantitative refinements of qualitative results of Bestvina-Fujiwara and others on the infinite dimensionality of 2-dimensional bounded cohomology in groups acting suitably on hyperbolic spaces, in the sense that we can control the geometry of the unit balls in these normed vector spaces (or rather, in random subspaces of their normed duals).
+  As a corollary of our methods, we show that an element obtained by random walk of length $n$ in a mapping class group cannot be written as a product of fewer than $O(n/\log{n})$ reducible elements, with probability going to 1 as $n$ goes to infinity. We also show that the translation length on the complex of free factors of a random walk of length $n$ on the outer automorphism group of a free group grows linearly in $n$.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-08-29T20:16:48Z</published>
+    <arxiv:comment>Minor edits arising from referee's comments; 45 pages</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>Ergod. Th. Dynam. Sys. 35 (2015) 64-110</arxiv:journal_ref>
+    <author>
+      <name>Danny Calegari</name>
+    </author>
+    <author>
+      <name>Joseph Maher</name>
+    </author>
+    <arxiv:doi>10.1017/etds.2013.43</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1017/etds.2013.43" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.00022v2</id>
+    <title>Hard isogeny problems over RSA moduli and groups with infeasible inversion</title>
+    <updated>2019-05-14T16:44:39Z</updated>
+    <link href="https://arxiv.org/abs/1810.00022v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.00022v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We initiate the study of computational problems on elliptic curve isogeny graphs defined over RSA moduli. We conjecture that several variants of the neighbor-search problem over these graphs are hard, and provide a comprehensive list of cryptanalytic attempts on these problems. Moreover, based on the hardness of these problems, we provide a construction of groups with infeasible inversion, where the underlying groups are the ideal class groups of imaginary quadratic orders.
+  Recall that in a group with infeasible inversion, computing the inverse of a group element is required to be hard, while performing the group operation is easy. Motivated by the potential cryptographic application of building a directed transitive signature scheme, the search for a group with infeasible inversion was initiated in the theses of Hohenberger and Molnar (2003). Later it was also shown to provide a broadcast encryption scheme by Irrer et al. (2004). However, to date the only case of a group with infeasible inversion is implied by the much stronger primitive of self-bilinear map constructed by Yamakawa et al. (2014) based on the hardness of factoring and indistinguishability obfuscation (iO). Our construction gives a candidate without using iO.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-28T18:09:21Z</published>
+    <arxiv:comment>Significant revision of the article previously titled "A Candidate Group with Infeasible Inversion" (arXiv:1810.00022v1). Cleared up the constructions by giving toy examples, added "The Parallelogram Attack" (Sec 5.3.2). 54 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Salim Ali Altug</name>
+    </author>
+    <author>
+      <name>Yilei Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.09602v1</id>
+    <title>Metacyclic actions on surfaces</title>
+    <updated>2022-01-24T11:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2201.09602v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.09602v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathrm{Mod}(S_g)$ be the mapping class group of the closed orientable surface $S_g$ of genus $g\geq 2$. In this paper, we derive necessary and sufficient conditions under which two torsion elements in $\mathrm{Mod}(S_g)$ will have conjugates that generate a finite metacyclic subgroup of $\mathrm{Mod}(S_g)$. This yields a complete solution to the problem of liftability of periodic mapping classes under finite cyclic covers. As applications of the main result, we show that $4g$ is a realizable upper bound on the order of a non-split metacyclic action on $S_g$ and this bound is realized by the action of a dicyclic group. Moreover, we give a complete characterization of the dicyclic subgroups of $\mathrm{Mod}(S_g)$ up to a certain equivalence that we will call weak conjugacy. Furthermore, we show that every periodic mapping class in a non-split metacyclic subgroup of $\mathrm{Mod}(S_g)$ is reducible. We provide necessary and sufficient conditions under which a non-split metacyclic action on $S_g$ factors via a split metacyclic action. Finally, we provide a complete classification of the weak conjugacy classes of the finite non-split metacyclic subgroups of $\mathrm{Mod}(S_{10})$ and $\mathrm{Mod}(S_{11})$.</summary>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-24T11:20:49Z</published>
+    <arxiv:comment>20 pages, 3 figures, and 2 tables. arXiv admin note: text overlap with arXiv:2007.08279</arxiv:comment>
+    <arxiv:primary_category term="math.GT"/>
+    <author>
+      <name>Kashyap Rajeevsarathy</name>
+    </author>
+    <author>
+      <name>Apeksha Sanghi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.00339v1</id>
+    <title>The quantum Johnson homomorphism and symplectomorphism of 3-folds</title>
+    <updated>2017-11-30T04:20:58Z</updated>
+    <link href="https://arxiv.org/abs/1712.00339v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.00339v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the action of symplectic monodromy on chain-level enhancements of quantum cohomology. First, we construct a family version of $A_\infty$-structure on quantum cohomology (this should morally correspond to Hochschild cohomology of a "family of Fukaya categories over the circle"). Following Kaledin, we look at the obstruction class of this structure, and argue that it can be related to a quantum version of Massey products on the one hand (which, in nice cases, can be related to actual counts of rational curves) and to the classical Andreadakis-Johnson theory of the Torelli group on the other hand.
+  In the second part of the paper, we go hunting for exotic symplectomorphism: these are elements of infinite order in the kernel $$\mathcal{K}(M,ω) := π_0 \mathrm{Symp}(M,ω) \to π_0 \mathrm{Diff}^+(M,ω)$$ of the forgetful map from the symplectic mapping class group to the ordinary MCG. We demonstrate how we can apply the theory above to prove the existence of such elements $ψ_Y$ for certain a Fano 3-fold obtained by blowing-up $\mathbb{P}^3$ at a genus 4 curve. Unlike the four-dimensional case, no power of a Dehn twist around Lagrangian 3-spheres can be exotic (because they have infinite order in smooth MCG).
+  In the final part of the paper, the classical connection between our Fano varieties and cubic 3-folds allows us to prove the existence of a new phenomena: "exotic relations" in the subgroup generated by all Dehn twists. Namely, it turns out we can factor some power of $[ψ_Y]$ in $π_0 \mathrm{Symp}(Y,ω)$ into 3-dimensional Dehn twists. So the isotopy class of the product in the ordinary MCG is torsion, but of infinite order in the symplectic MCG.</summary>
+    <category term="math.SG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-30T04:20:58Z</published>
+    <arxiv:comment>v1: 197 pages. Feedback and comments are welcome! This paper will (eventually) be split into two papers. arXiv admin note: text overlap with arXiv:1205.0713, arXiv:0904.1474, arXiv:math/0610004, arXiv:1405.0744, arXiv:1007.0265, arXiv:math/0702887, arXiv:1109.5669 by other authors</arxiv:comment>
+    <arxiv:primary_category term="math.SG"/>
+    <author>
+      <name>Netanel Rubin-Blaier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.09063v2</id>
+    <title>The typical elasticity of a quadratic order</title>
+    <updated>2025-06-01T00:38:14Z</updated>
+    <link href="https://arxiv.org/abs/2411.09063v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.09063v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an atomic domain $D$, the $elasticity$ $ρ(D)$ of $D$ is defined as $\sup\{r/s: π_1\cdots π_r = ρ_1 \cdots ρ_s,~ \text{where each $π_i, ρ_j$ is irreducible}\}$; the elasticity provides a concrete measure of the failure of unique factorization in $D$. Fix a quadratic number field $K$ with discriminant $Δ_K$, and for each positive integer $f$, let $\mathcal{O}_f = \mathbb{Z} + f\mathcal{O}_K$ denote the order of conductor $f$ in $K$. Results of Halter-Koch imply that $\mathcal{O}_f$ has finite elasticity precisely when $f$ is $\textit{split-free}$, meaning not divisible by any rational prime $p$ with $(Δ_K/p)=1$. When $K$ is imaginary, we show that for almost all split-free $f$, \[ ρ(\mathcal{O}_f) = f/(\log{f})^{\frac{1}{2}\log\log\log{f} + \frac{1}{2}C_K+o(1)}, \] for a constant $C_K$ depending on $K$. When $K$ is real, we prove under the assumption of the Generalized Riemann Hypothesis that \[ ρ(\mathcal{O}_f)= (\log{f})^{\frac12 +o(1)} \] for almost all split-free $f$. Underlying these estimates are new statistical theorems about class groups of orders in quadratic fields, whose proofs borrow ideas from investigations of Erdős, Hooley, Li, Pomerance, Schmutz, and others into the multiplicative groups $(\mathbb{Z}/m\mathbb{Z})^\times$. One novelty of the argument is the development of a weighted version of the Turán--Kubilius inequality to handle a variety of sums over split-free integers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-13T22:44:00Z</published>
+    <arxiv:comment>55 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Steve Fan</name>
+    </author>
+    <author>
+      <name>Paul Pollack</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1612.02919v2</id>
+    <title>A Dedekind Domain with Nontrivial Class Group</title>
+    <updated>2017-09-21T08:50:26Z</updated>
+    <link href="https://arxiv.org/abs/1612.02919v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1612.02919v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Analytic properties of function spaces over the real and the complex fields are different in some ways. This reflects in algebraic properties which are different at times and similar in some other respects. For instance, the ring of real-valued continuous functions on a closed interval like $[0,1]$ behaves similarly to the corresponding ring of complex-valued functions; they depend only on the topology of $[0,1]$. The ring $\mathbf{R}[X,Y]/(X^2+Y^2-1)$ of real-valued polynomial functions on the unit circle is not a unique factorization domain - witness the equation $$\cos^2(t) = (1+ \sin(t))(1- \sin(t)).$$ On the other hand, the ring $\mathbf{C}[X,Y]/(X^2+Y^2-1) \cong \mathbf{C}[X+iY, 1/(X+iY)]$ is a principal ideal domain. Again, the rings of convergent power series (over either of these fields) with radius of convergence larger than some number $ρ$ is a Euclidean domain (and hence, a principal ideal domain) - this can be seen by using for a Euclidean "norm" function, the function which counts zeroes (with multiplicity) in the disc $|z| \leq ρ$.
+  In this note, we consider the rings $C_{an}(S^1;\mathbf{R})$ of real-analytic functions on the unit circle $\mathit{S}^1$ which are real-valued and the corresponding ring $C_{an}(S^1; \mathbf{C})$ of analytic functions that are complex-valued. We will see that the latter is a principal ideal domain while the former is a Dedekind domain which is not a principal ideal domain - the class group having order $2$.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-12-09T05:22:15Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Vaibhav Pandey</name>
+    </author>
+    <author>
+      <name>Sagar Shrivastava</name>
+    </author>
+    <author>
+      <name>B. Sury</name>
+    </author>
+    <arxiv:doi>10.1080/00029890.2018.1424429</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/00029890.2018.1424429" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.11259v5</id>
+    <title>A Classification of Modular Functors via Factorization Homology</title>
+    <updated>2026-09-28T15:30:11Z</updated>
+    <link href="https://arxiv.org/abs/2212.11259v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.11259v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modular functors are traditionally defined as systems of projective representations of mapping class groups of surfaces that are compatible with gluing. They can formally be described as modular algebras over central extensions of the modular surface operad, with the values of the algebra lying in a suitable symmetric monoidal $(2,1)$-category $\mathcal{S}$ of linear categories. In this paper, we prove that modular functors in $\mathcal{S}$ are equivalent to self-dual balanced braided algebras $\mathcal{A}$ in $\mathcal{S}$ (a categorification of the notion of a commutative Frobenius algebra) for which a condition formulated in terms of factorization homology with coefficients in $\mathcal{A}$ is satisfied; we call such $\mathcal{A}$ connected. The equivalence in one direction is afforded by genus zero restriction. Our construction of the inverse equivalence is entirely topological and can be thought of as a far reaching generalization of the construction of modular functors from skein theory. In order to verify the connectedness condition in practice, we prove that it can be reduced to a single condition in genus one. Moreover, we show that cofactorizability of $\mathcal{A}$, a condition known to be satisfied for modular categories, is sufficient. Therefore, we recover in particular Lyubashenko's construction of a modular functor from a (not necessarily semisimple) modular category and show that it is determined by its genus zero part. Additionally, we exhibit modular functors that do not come from modular categories and outline applications to the theory of vertex operator algebras.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-21T18:42:50Z</published>
+    <arxiv:comment>v5: necessary re-formatting of affiliations; v4: major and final revision, to appear in G&amp;T; v3: 43 pages, material re-arranged, genus one reduction of connectedness and relation to skein theory clarified</arxiv:comment>
+    <arxiv:primary_category term="math.QA"/>
+    <arxiv:journal_ref>Geom. Topol. 30 (2026) 2157-2216</arxiv:journal_ref>
+    <author>
+      <name>Adrien Brochier</name>
+    </author>
+    <author>
+      <name>Lukas Woike</name>
+    </author>
+    <arxiv:doi>10.2140/gt.2026.30.2157</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/gt.2026.30.2157" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.03525v4</id>
+    <title>Structural properties of subadditive families with applications to factorization theory</title>
+    <updated>2018-11-12T01:00:00Z</updated>
+    <link href="https://arxiv.org/abs/1706.03525v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.03525v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $H$ be a multiplicatively written monoid. Given $k\in{\bf N}^+$, we denote by $\mathscr U_k$ the set of all $\ell\in{\bf N}^+$ such that $a_1\cdots a_k=b_1\cdots b_\ell$ for some atoms $a_1,\ldots,a_k,b_1,\ldots,b_\ell\in H$. The sets $\mathscr U_k$ are one of the most fundamental invariants studied in the theory of non-unique factorization, and understanding their structure is a basic problem in the field: In particular, it is known that, in many cases of interest, these sets are almost arithmetic progressions with the same difference and bound for all large $k$, namely, $H$ satisfies the Structure Theorem for Unions. The present paper improves the current state of the art on this problem.
+  More precisely, we show that, under mild assumptions on $H$, not only does the Structure Theorem for Unions hold, but there also exists $μ\in{\bf N}^+$ such that, for every $M\in{\bf N}$, the sequences $$ \bigl((\mathscr U_k-\inf\mathscr U_k)\cap[\![0,M]\!]\bigr)_{k\ge 1} \quad\text{and}\quad \bigl((\sup\mathscr U_k-\mathscr U_k)\cap[\![0,M]\!]\bigr)_{k\ge 1} $$ are $μ$-periodic from some point on. The result applies, e.g., to (the multiplicative monoid of) all commutative Krull domains (e.g., Dedekind domains) with finite class group; a variety of weakly Krull commutative domains (including all orders in number fields with finite elasticity); some maximal orders in central simple algebras over global fields; and all numerical monoids.
+  Large parts of the proofs are worked out in a "purely additive model", by inquiring into the properties of what we call a subadditive family, i.e., a collection $\mathscr L$ of subsets of $\bf N$ such that, for all $L_1,L_2\in\mathscr L$, there is $L\in\mathscr L$ with $L_1+L_2\subseteq L$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-12T09:12:35Z</published>
+    <arxiv:comment>22 pp., no figures. Fixed a few typos and updated statements and definitions after realizing that what is proved in the paper is slighly stronger than what claimed in the previous version. To appear in Israel Journal of Mathematics</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Israel J. Math., Vol. 234, No. 1 (2019), 1-35</arxiv:journal_ref>
+    <author>
+      <name>Salvatore Tringali</name>
+    </author>
+    <arxiv:doi>10.1007/s11856-019-1922-2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11856-019-1922-2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.24969v1</id>
+    <title>OSDTW: Optimal Shared Depth and Task Weighting for Long-Tailed Recognition</title>
+    <updated>2026-05-24T09:48:02Z</updated>
+    <link href="https://arxiv.org/abs/2605.24969v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.24969v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Long-tailed recognition suffers from a persistent head--tail trade-off: improving tail performance often degrades head accuracy and can increase training instability. Despite strong empirical results from re-weighting, decoupled training, and multi-expert methods, key design choices about representation sharing between head and tail classes and supervision weighting across class groups remain largely heuristic. In this work, we propose OSDTW, a principled task-decomposition framework that partitions the original single-label recognition problem into a head task and a tail task, implemented with a shared encoder and task-specific decoders. To handle the mutual exclusivity and statistical dependence between the two label groups, we introduce a factorized model and show that the resulting Kullback--Leibler divergence-based generalization error can be written as the sum of task-wise terms up to an additive constant, yielding a well-defined task-wise objective. We further develop a three-stage training pipeline: independent task training to estimate task-wise optima and the Fisher information matrix, weighted joint training to learn a shared encoder, and branch assembly to construct the final decoupled model. Under a block-diagonal Fisher approximation, we derive a computable second-order expansion of the expected generalization error, decomposing it into encoder variance, encoder bias, and decoder variance. This bias--variance decomposition provides a computable proxy to select the shared depth and task weights, enabling efficient hyper-parameter search. Experiments on standard long-tailed benchmarks demonstrate the effectiveness of the proposed approach over strong baselines.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-24T09:48:02Z</published>
+    <arxiv:comment>ICIC 2026 Oral</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Chang Chu</name>
+    </author>
+    <author>
+      <name>Qingyue Zhang</name>
+    </author>
+    <author>
+      <name>Shao-Lun Huang</name>
+    </author>
+    <author>
+      <name>Junxiong Zheng</name>
+    </author>
+  </entry>
+</feed>

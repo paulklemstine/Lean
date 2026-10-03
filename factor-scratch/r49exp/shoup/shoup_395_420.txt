@@ -1,0 +1,1286 @@
+14
+Matrices
+
+In this chapter, we discuss basic definitions and results concerning matrices. We
+shall start out with a very general point of view, discussing matrices whose entries
+lie in an arbitrary ring R. Then we shall specialize to the case where the entries lie
+in a field F , where much more can be said.
+One of the main goals of this chapter is to discuss “Gaussian elimination,” which
+is an algorithm that allows us to efficiently compute bases for the image and kernel
+of an F -linear map.
+In discussing the complexity of algorithms for matrices over a ring R, we shall
+treat a ring R as an “abstract data type,” so that the running times of algorithms will
+be stated in terms of the number of arithmetic operations in R. If R is a finite ring,
+such as Zm , we can immediately translate this into a running time on a RAM (in
+later chapters, we will discuss other finite rings and efficient algorithms for doing
+arithmetic in them).
+If R is, say, the field of rational numbers, a complete running time analysis
+would require an additional analysis of the sizes of the numbers that appear in the
+execution of the algorithm. We shall not attempt such an analysis here — however,
+we note that all the algorithms discussed in this chapter do in fact run in polynomial time when R = Q, assuming we represent rational numbers as fractions in
+lowest terms. Another possible approach for dealing with rational numbers is to use
+floating point approximations. While this approach eliminates the size problem, it
+creates many new problems because of round-off errors. We shall not address any
+of these issues here.
+14.1 Basic definitions and properties
+Throughout this section, R denotes a ring.
+For positive integers m and n, an m × n matrix A over a ring R is a rectangular
+
+377
+
+378
+
+Matrices
+
+array
+
+
+a11
+ a21
+
+A= .
+ ..
+
+a12
+a22
+..
+.
+
+···
+···
+
+am1 am2 · · ·
+
+
+a1n
+a2n 
+
+..  ,
+. 
+amn
+
+where each entry aij in the array is an element of R; the element aij is called the
+(i, j) entry of A, which we denote by A(i, j). For i = 1, . . . , m, the ith row of A is
+(ai1 , . . . , ain ),
+which we denote by Rowi (A), and for j = 1, . . . , n, the jth column of A is
+ 
+a1j
+ a2j 
+ 
+ ..  ,
+ . 
+amj
+which we denote by Colj (A). We regard a row of A as a 1 × n matrix, and a column
+of A as an m × 1 matrix.
+The set of all m × n matrices over R is denoted by Rm×n . Elements of R1×n
+are called row vectors (of dimension n) and elements of Rm×1 are called column vectors (of dimension m). Elements of Rn×n are called square matrices (of
+dimension n). We do not make a distinction between R1×n and R×n ; that is, we
+view standard n-tuples as row vectors.
+We can define the familiar operations of matrix addition and scalar multiplication:
+• If A, B ∈ Rm×n , then A + B is the m × n matrix whose (i, j) entry is
+A(i, j) + B(i, j).
+• If c ∈ R and A ∈ Rm×n , then cA is the m × n matrix whose (i, j) entry is
+cA(i, j).
+The m × n zero matrix is the m × n matrix, all of whose entries are 0R ; we denote
+(or just 0, when the context is clear).
+this matrix by 0m×n
+R
+Theorem 14.1. With addition and scalar multiplication as defined above, Rm×n is
+m×n
+an R-module. The matrix 0R
+is the additive identity, and the additive inverse of
+m×n
+a matrix A ∈ R
+is the m × n matrix whose (i, j) entry is −A(i, j).
+Proof. To prove this, one first verifies that matrix addition is associative and commutative, which follows from the associativity and commutativity of addition in R.
+The claims made about the additive identity and additive inverses are also easily
+
+14.1 Basic definitions and properties
+
+379
+
+verified. These observations establish that Rm×n is an abelian group. One also has
+to check that all of the properties in Definition 13.1 hold. We leave this to the
+reader. 2
+We can also define the familiar operation of matrix multiplication:
+• If A ∈ Rm×n and B ∈ Rn×p , then AB is the m × p matrix whose (i, k) entry
+is
+n
+X
+A(i, j)B(j, k).
+j=1
+
+The n × n identity matrix is the matrix I ∈ Rn×n , where I (i, i) := 1R and
+I (i, j) := 0R for i 6= j. That is, I has 1R ’s on the diagonal that runs from the
+upper left corner to the lower right corner, and 0R ’s everywhere else.
+Theorem 14.2.
+(i) Matrix multiplication is associative; that is, A(BC) = (AB)C for all
+A ∈ Rm×n , B ∈ Rn×p , and C ∈ Rp×q .
+(ii) Matrix multiplication distributes over matrix addition; that is, A(C + D) =
+AC +AD and (A+B)C = AC +BC for all A, B ∈ Rm×n and C, D ∈ Rn×p .
+(iii) The n × n identity matrix I ∈ Rn×n acts as a multiplicative identity; that
+is, AI = A and IB = B for all A ∈ Rm×n and B ∈ Rn×m ; in particular,
+CI = C = IC for all C ∈ Rn×n .
+(iv) Scalar multiplication and matrix multiplication associate; that is, c(AB) =
+(cA)B = A(cB) for all c ∈ R, A ∈ Rm×n , and B ∈ Rn×p .
+Proof. All of these are trivial, except for (i), which requires just a bit of computation to show that the (i, `) entry of both A(BC) and (AB)C is equal to (as the
+reader may verify)
+X
+A(i, j)B(j, k)C(k, `). 2
+1≤j≤n
+1≤k≤p
+
+Note that while matrix addition is commutative, matrix multiplication in general
+is not. Indeed, Theorems 14.1 and 14.2 imply that Rn×n satisfies all the properties
+of a ring except for commutativity of multiplication.
+Some simple but useful facts to keep in mind are the following:
+• If A ∈ Rm×n and B ∈ Rn×p , then the ith row of AB is equal to vB,
+where v = Rowi (A); also, the kth column of AB is equal to Aw, where
+w = Colk (B).
+
+380
+
+Matrices
+
+• If A ∈ Rm×n and v = (c1 , . . . , cm ) ∈ R1×m , then
+vA =
+
+m
+X
+
+ci Rowi (A).
+
+i=1
+
+In words: vA is a linear combination of the rows of A, with coefficients
+taken from the corresponding entries of v.
+• If A ∈ Rm×n and
+ 
+d1
+ .. 
+w =  .  ∈ Rn×1 ,
+dn
+then
+Aw =
+
+n
+X
+
+dj Colj (A).
+
+j=1
+
+In words: Aw is a linear combination of the columns of A, with coefficients
+taken from the corresponding entries of w.
+If A ∈ Rm×n , the transpose of A, denoted by A , is defined to be the n × m
+matrix whose (j, i) entry is A(i, j).
+Theorem 14.3. If A, B ∈ Rm×n , C ∈ Rn×p , and c ∈ R, then:
+(i) (A + B) = A + B ;
+(ii) (cA) = cA ;
+(iii) (A ) = A;
+(iv) (AC) = C A .
+Proof. Exercise. 2
+If Ai is an ni × ni+1 matrix, for i = 1, . . . , k, then by associativity of matrix
+multiplication, we may write the product matrix A1 · · · Ak , which is an n1 × nk+1
+matrix, without any ambiguity.
+For an n×n matrix A, and a positive integer k, we write Ak to denote the product
+A · · · A, where there are k terms in the product. Note that A1 = A. We may extend
+this notation to k = 0, defining A0 to be the n × n identity matrix. One may readily
+verify the usual rules of exponent arithmetic: for all non-negative integers k, `, we
+have
+(A` )k = Ak` = (Ak )` and Ak A` = Ak+` .
+It is easy also to see that part (iv) of Theorem 14.3 implies that for all non-negative
+
+14.2 Matrices and linear maps
+
+381
+
+integers k, we have
+(Ak ) = (A )k .
+Algorithmic issues
+For computational purposes, matrices are represented in the obvious way as arrays
+of elements of R. As remarked at the beginning of this chapter, we shall treat R as
+an “abstract data type,” and not worry about how elements of R are actually represented; in discussing the complexity of algorithms, we shall simply count “operations in R,” by which we mean additions, subtractions, and multiplications; we
+shall sometimes also include equality testing and computing multiplicative inverses
+as “operations in R.” In any real implementation, there will be other costs, such
+as incrementing counters, and so on, which we may safely ignore, as long as their
+number is at most proportional to the number of operations in R.
+The following statements are easy to verify:
+• We can multiply an m × n matrix by a scalar using mn operations in R.
+• We can add two m × n matrices using mn operations in R.
+• We can compute the product of an m × n matrix and an n × p matrix using
+O(mnp) operations in R.
+It is also easy to see that given an n×n matrix A, and a non-negative integer e, we
+can adapt the repeated squaring algorithm discussed in §3.4 so as to compute Ae
+using O(len(e)) multiplications of n×n matrices, and hence O(len(e)n3 ) operations
+in R.
+1×m , then
+E XERCISE 14.1. Let A ∈ Rm×n . Show that if vA = 01×n
+R for all v ∈ R
+A = 0m×n
+R .
+
+14.2 Matrices and linear maps
+Let R be a ring.
+For positive integers m and n, consider the R-modules R1×m and R1×n . If A is
+an m × n matrix over R, then the map
+λA : R1×m → R1×n
+v 7→ vA
+is easily seen to be an R-linear map — this follows immediately from parts (ii) and
+(iv) of Theorem 14.2. We call λA the linear map corresponding to A.
+
+382
+
+Matrices
+
+If v = (c1 , . . . , cm ) ∈ R1×m , then
+λA (v) = vA =
+
+m
+X
+
+ci Rowi (A).
+
+i=1
+
+From this, it is clear that
+• the image of λA is the submodule of R1×n spanned by {Rowi (A)}m
+i=1 ; in
+1×n ;
+spans
+R
+particular, λA is surjective if and only if {Rowi (A)}m
+i=1
+• λA is injective if and only if {Rowi (A)}m
+i=1 is linearly independent.
+There is a close connection between matrix multiplication and composition of
+corresponding linear maps. Specifically, let A ∈ Rm×n and B ∈ Rn×p , and consider
+the corresponding linear maps λA : R1×m → R1×n and λB : R1×n → R1×p . Then
+we have
+λB ◦ λA = λAB .
+
+(14.1)
+
+This follows immediately from the associativity of matrix multiplication.
+We have seen how vector/matrix multiplication defines a linear map. Conversely,
+we shall now see that the action of any R-linear map can be viewed as a vector/matrix multiplication, provided the R-modules involved have bases (which will
+always be the case for finite dimensional vector spaces).
+Let M be an R-module, and suppose that S = {αi }m
+i=1 is a basis for M, where
+m > 0. As we know (see Theorem 13.14), every element α ∈ M can be written
+uniquely as c1 α1 + · · · + cm αm , where the ci ’s are in R. Let us define
+VecS (α) := (c1 , . . . , cm ) ∈ R1×m .
+We call VecS (α) the coordinate vector of α relative to S. The function
+VecS : M → R1×m
+is an R-module isomorphism (it is the inverse of the isomorphism ε in Theorem 13.14).
+Let N be another R-module, and suppose that T = {βj }nj=1 is a basis for N,
+where n > 0. Just as in the previous paragraph, every element β ∈ N has a unique
+coordinate vector VecT (β) ∈ R1×n relative to T .
+Now let ρ : M → N be an arbitrary R-linear map. Our goal is to define a matrix
+A ∈ Rm×n with the following property:
+VecT (ρ(α)) = VecS (α)A for all α ∈ M.
+
+(14.2)
+
+In words: if we multiply the coordinate vector of α on the right by A, we get the
+coordinate vector of ρ(α).
+
+14.2 Matrices and linear maps
+
+383
+
+Constructing such a matrix A is easy: we define A to be the matrix whose ith
+row, for i = 1, . . . , m, is the coordinate vector of ρ(αi ) relative to T . That is,
+Rowi (A) = VecT (ρ(αi )) for i = 1, . . . , m.
+Then for an arbitrary α ∈ M, if (c1 , . . . , cm ) is the coordinate vector of α relative to
+S, we have
+X
+ X
+ρ(α) = ρ
+ci αi =
+ci ρ(αi )
+i
+
+i
+
+and so
+VecT (ρ(α)) =
+
+X
+i
+
+ci VecT (ρ(αi )) =
+
+X
+
+ci Rowi (A) = VecS (α)A.
+
+i
+
+Furthermore, A is the only matrix satisfying (14.2). Indeed, if A0 also satisfies
+(14.2), then subtracting, we obtain
+VecS (α)(A − A0 ) = 01×n
+R
+for all α ∈ M. Since the map VecS : M → R1×m is surjective, this means that
+v(A − A0 ) is zero for all v ∈ R1×m , and from this, it is clear (see Exercise 14.1) that
+A − A0 is the zero matrix, and so A = A0 .
+We call the unique matrix A satisfying (14.2) the matrix of ρ relative to S and
+T , and denote it by MatS,T (ρ).
+Recall that HomR (M, N) is the R-module consisting of all R-linear maps from
+M to N (see Theorem 13.12). We can view MatS,T as a function mapping elements of HomR (M, N) to elements of Rm×n .
+Theorem 14.4. The function MatS,T : HomR (M, N) → Rm×n is an R-module
+isomorphism. In particular, for every A ∈ Rm×n , the pre-image of A under MatS,T
+is VecT−1 ◦λA ◦ VecS , where λA : R1×m → R1×n is the linear map corresponding to
+A.
+Proof. To show that MatS,T is an R-linear map, let ρ, ρ0 ∈ HomR (M, N), and let
+c ∈ R. Also, let A := MatS,T (ρ) and A0 := MatS,T (ρ0 ). Then for all α ∈ M, we
+have
+VecT ((ρ + ρ0 )(α)) = VecT (ρ(α) + ρ0 (α)) = VecT (ρ(α)) + VecT (ρ0 (α))
+= VecS (α)A + VecS (α)A0 = VecS (α)(A + A0 ).
+As this holds for all α ∈ M, and since the matrix of a linear map is uniquely
+determined, we must have MatS,T (ρ + ρ0 ) = A + A0 . A similar argument shows
+that MatS,T (cρ) = cA. This shows that MatS,T is an R-linear map.
+To show that the map MatS,T is injective, it suffices to show that its kernel is
+
+384
+
+Matrices
+
+trivial. If ρ is in the kernel of this map, then setting A := 0m×n
+in (14.2), we see
+R
+that VecT (ρ(α)) is zero for all α ∈ M. But since the map VecT : N → R1×n is
+injective, this implies ρ(α) is zero for all α ∈ M. Thus, ρ must be the zero map.
+To show surjectivity, we show that every A ∈ Rm×n has a pre-image under
+MatS,T as described in the statement of the theorem. So let A be an m × n matrix,
+◦λA ◦ VecS . Again, since the matrix of a linear map is uniquely
+and let ρ := Vec−1
+T
+determined, it suffices to show that (14.2) holds for this particular A and ρ. For
+every α ∈ M, we have
+VecT (ρ(α)) = VecT (Vec−1
+(λA (VecS (α)))) = λA (VecS (α))
+T
+= VecS (α)A.
+That proves the theorem. 2
+As a special case of the above, suppose that M = R1×m and N = R1×n , and S
+and T are the standard bases for M and N (see Example 13.27). In this case, the
+functions VecS and VecT are the identity maps, and the previous theorem implies
+that the function
+Λ : Rm×n → HomR (R1×m , R1×n )
+A 7→ λA
+is the inverse of the function MatS,T : HomR (R1×m , R1×n ) → Rm×n . Thus, the
+function Λ is also an R-module isomorphism.
+To summarize, we see that an R-linear map ρ from M to N, together with
+particular bases for M and N, uniquely determine a matrix A such that the action
+of multiplication on the right by A implements the action of ρ with respect to the
+given bases. There may be many bases for M and N to choose from, and different
+choices will in general lead to different matrices. Also, note that in general, a basis
+may be indexed by an arbitrary finite set; however, in defining coordinate vectors
+and matrices of linear maps, the index set must be ordered in some way. In any
+case, from a computational perspective, the matrix A gives us an efficient way to
+compute the map ρ, assuming elements of M and N are represented as coordinate
+vectors with respect to the given bases.
+We have taken a “row-centric” point of view. Of course, if one prefers, by simply
+transposing everything, one can equally well take a “column-centric” point of view,
+where the action of ρ corresponds to multiplication of a column vector on the left
+by a matrix.
+Example 14.1. Consider the quotient ring E = R[X ]/(f ), where f ∈ R[X ] with
+deg(f ) = ` > 0 and lc(f ) ∈ R∗ . Let ξ := [X ]f ∈ E. As an R-module, E
+has a basis S := {ξ i−1 }`i=1 (see Example 13.30). Let ρ : E → E be the ξmultiplication map, which sends α ∈ E to ξα ∈ E. This is an R-linear map. If
+
+14.2 Matrices and linear maps
+
+385
+
+f = c0 + c1 X + · · · + c`−1 X `−1 + c` X ` , then the matrix of ρ relative to S is the ` × `
+matrix
+
+
+0
+1
+0
+···
+0
+ 0
+
+0
+1
+···
+0
+
+
+
+
+.
+.
+A=
+,
+.
+
+
+ 0
+
+0
+0
+···
+1
+−c0 /c` −c1 /c` −c2 /c` · · · −c`−1 /c`
+where for i = 1, . . . , ` − 1, the ith row of A contains a 1 in position i + 1, and is
+zero everywhere else. The matrix A is called the companion matrix of f. 2
+Example 14.2. Let x1 , . . . , xk ∈ R. Let R[X ]<k be the set of polynomials g ∈ R[X ]
+with deg(g) < k, which is an R-module with a basis S := {X i−1 }ki=1 (see Example 13.29). The multi-point evaluation map
+ρ : R[X ]<k → R1×k
+g 7→ (g(x1 ), . . . , g(xk ))
+is an R-linear map. Let T be the standard basis for R1×k . Then the matrix of ρ
+relative to S and T is the k × k matrix
+
+
+1
+1
+···
+1
+ x1
+x2 · · ·
+xk 
+
+
+2
+ x2
+x2 · · ·
+x2k 
+A= 1
+.
+ ..
+..
+.. 
+ .
+.
+. 
+k−1
+k−1
+k−1
+x1
+x2
+· · · xk
+The matrix A is called a Vandermonde matrix. 2
+E XERCISE 14.2. Let σ : M → N and τ : N → P be R-linear maps, and suppose
+that M, N, and P have bases S, T , and U , respectively. Show that
+MatS,U (τ ◦ σ) = MatS,T (σ) · MatT ,U (τ).
+E XERCISE 14.3. Let V be a vector space over a field F with basis S = {αi }m
+i=1 .
+Suppose that U is a subspace of V of dimension ` < m. Show that there exists
+a matrix A ∈ F m×(m−`) such that for all α ∈ V , we have α ∈ U if and only if
+VecS (α)A is zero. Such a matrix A is called a parity check matrix for U .
+E XERCISE 14.4. Let F be a finite field, and let A be a non-zero m × n matrix over
+F . Suppose one chooses a vector v ∈ F 1×m at random. Show that the probability
+that vA is the zero vector is at most 1/|F |.
+
+386
+
+Matrices
+
+E XERCISE 14.5. Design and analyze a probabilistic algorithm that takes as input
+matrices A, B, C ∈ Zpm×m , where p is a prime. The algorithm should run in time
+O(m2 len(p)2 ) and should output either “yes” or “no” so that the following holds:
+• if C = AB, then the algorithm should always output “yes”;
+• if C 6= AB, then the algorithm should output “no” with probability at least
+0.999.
+14.3 The inverse of a matrix
+Let R be a ring.
+For a square matrix A ∈ Rn×n , we call a matrix B ∈ Rn×n an inverse of A if
+BA = AB = I, where I is the n × n identity matrix. It is easy to see that if A has
+an inverse, then the inverse is unique: if B and C are inverses of A, then
+B = BI = B(AC) = (BA)C = IC = C.
+Because the inverse of A is uniquely determined, we denote it by A−1 . If A has an
+inverse, we say that A is invertible, or non-singular. If A is not invertible, it is
+sometimes called singular. We will use the terms “invertible” and “not invertible.”
+Observe that A is the inverse of A−1 ; that is, (A−1 )−1 = A.
+If A and B are invertible n × n matrices, then so is their product: in fact, it is
+easily verified that (AB)−1 = B −1 A−1 . It follows that if A is an invertible matrix,
+and k is a non-negative integer, then Ak is invertible with inverse (A−1 )k , which
+we also denote by A−k .
+It is also easy to see that A is invertible if and only if the transposed matrix A
+is invertible, in which case (A )−1 = (A−1 ) . Indeed, AB = I = BA holds if and
+only if B A = I = A B .
+We now develop a connection between invertible matrices and R-module isomorphisms. Recall from the previous section the R-module isomorphism
+Λ : Rn×n → HomR (R1×n , R1×n )
+A 7→ λA ,
+where for each A ∈ Rn×n , λA is the corresponding R-linear map
+λA : R1×n → R1×n
+v 7→ vA.
+Evidently, λI is the identity map.
+Theorem 14.5. Let A ∈ Rn×n , and let λA : R1×n → R1×n be the corresponding
+R-linear map. Then A is invertible if and only if λA is bijective, in which case
+λA−1 = λ−1
+A .
+
+14.3 The inverse of a matrix
+
+387
+
+Proof. Suppose A is invertible, and that B is its inverse. We have AB = BA = I,
+and hence λAB = λBA = λI , from which it follows (see (14.1)) that λB ◦ λA =
+λA ◦ λB = λI . Since λI is the identity map, this implies λA is bijective.
+Suppose λA is bijective. We know that the inverse map λ−1
+A is also an R-linear
+map, and since the mapping Λ above is surjective, we have λ−1
+A = λB for some
+B ∈ Rn×n . Therefore, we have λB ◦ λA = λA ◦ λB = λI , and hence (again,
+see (14.1)) λAB = λBA = λI . Since the mapping Λ is injective, it follows that
+AB = BA = I. This implies A is invertible, with A−1 = B. 2
+We also have:
+Theorem 14.6. Let A ∈ Rn×n . The following are equivalent:
+(i) A is invertible;
+(ii) {Rowi (A)}ni=1 is a basis for R1×n ;
+(iii) {Colj (A)}nj=1 is a basis for Rn×1 .
+Proof. We first prove the equivalence of (i) and (ii). By the previous theorem,
+A is invertible if and only if λA is bijective. Also, in the previous section, we
+observed that λA is surjective if and only if {Rowi (A)}ni=1 spans R1×n , and that λA
+is injective if and only if {Rowi (A)}ni=1 is linearly independent.
+The equivalence of (i) and (iii) follows by considering the transpose of A. 2
+E XERCISE 14.6. Let R be a ring, and let A be a square matrix over R. Let us call
+B a left inverse of A if BA = I, and let us call C a right inverse of A if AC = I.
+(a) Show that if A has both a left inverse B and a right inverse C, then B = C
+and hence A is invertible.
+(b) Assume that R is a field. Show that if A has either a left inverse or a right
+inverse, then A is invertible.
+Note that part (b) of the previous exercise holds for arbitrary rings, but the proof
+of this is non-trivial, and requires the development of the theory of determinants,
+which we do not cover in this text.
+E XERCISE 14.7. Show that if A and B are two square matrices over a field such
+that their product AB is invertible, then both A and B themselves must be invertible.
+E XERCISE 14.8. Show that if A is a square matrix over an arbitrary ring, and Ak
+is invertible for some k > 0, then A is invertible.
+E XERCISE 14.9. With notation as in Example 14.1, show that the matrix A is
+invertible if and only if c0 ∈ R∗ .
+
+388
+
+Matrices
+
+E XERCISE 14.10. With notation as in Example 14.2, show that the matrix A is
+invertible if and only if xi − xj ∈ R∗ for all i 6= j.
+14.4 Gaussian elimination
+Throughout this section, F denotes a field.
+A matrix B ∈ F m×n is said to be in reduced row echelon form if there exists a
+sequence of integers (p1 , . . . , pr ), with 0 ≤ r ≤ m and 1 ≤ p1 < p2 < · · · < pr ≤ n,
+such that the following holds:
+• for i = 1, . . . , r, all of the entries in row i of B to the left of entry (i, pi ) are
+zero; that is, B(i, j) = 0F for j = 1, . . . , pi − 1;
+• for i = 1, . . . , r, all of the entries in column pi of B above entry (i, pi ) are
+zero; that is, B(i0 , pi ) = 0F for i0 = 1, . . . , i − 1;
+• for i = 1, . . . , r, we have B(i, pi ) = 1F ;
+• all entries in rows r + 1, . . . , m of B are zero; that is, B(i, j) = 0F for
+i = r + 1, . . . , m and j = 1, . . . , n.
+It is easy to see that if B is in reduced row echelon form, then the sequence
+(p1 , . . . , pr ) above is uniquely determined, and we call it the pivot sequence of B.
+Several further remarks are in order:
+• All of the entries of B are completely determined by the pivot sequence,
+except for the entries (i, j) with 1 ≤ i ≤ r and j > pi with j ∈
+/ {pi+1 , . . . , pr },
+which may be arbitrary.
+• If B is an n × n matrix in reduced row echelon form whose pivot sequence
+is of length n, then B must be the n × n identity matrix.
+• We allow for an empty pivot sequence (i.e., r = 0), which will be the case
+precisely when B = 0m×n
+F .
+Example 14.3. The following 4×6 matrix B over the rational numbers is in reduced
+row echelon form:
+
+
+0 1 −2 0 0 3
+0 0 0 1 0 2 
+
+B=
+0 0 0 0 1 −4 .
+0 0 0 0 0 0
+The pivot sequence of B is (2, 4, 5). Notice that the first three rows of B form a
+linearly independent family of vectors, that columns 2, 4, and 5 form a linearly
+independent family of vectors, and that all of other columns of B are linear combinations of columns 2, 4, and 5. Indeed, if we truncate the pivot columns to their
+first three rows, we get the 3 × 3 identity matrix. 2
+
+14.4 Gaussian elimination
+
+389
+
+Generalizing the previous example, if a matrix is in reduced row echelon form,
+it is easy to deduce the following properties, which turn out to be quite useful:
+Theorem 14.7. If B is a matrix in reduced row echelon form with pivot sequence
+(p1 , . . . , pr ), then:
+(i) rows 1, 2, . . . , r of B form a linearly independent family of vectors;
+(ii) columns p1 , . . . , pr of B form a linearly independent family of vectors, and
+all other columns of B can be expressed as linear combinations of columns
+p1 , . . . , pr .
+Proof. Exercise—just look at the matrix! 2
+Gaussian elimination is an algorithm that transforms a given matrix A ∈ F m×n
+into a matrix B ∈ F m×n , where B is in reduced row echelon form, and is obtained
+from A by a sequence of elementary row operations. There are three types of
+elementary row operations:
+Type I: swap two rows;
+Type II: multiply a row by a non-zero scalar;
+Type III: add a scalar multiple of one row to a different row.
+The application of any specific elementary row operation to an m × n matrix
+C can be affected by multiplying C on the left by a suitable m × m matrix X.
+Indeed, the matrix X corresponding to a particular elementary row operation is
+simply the matrix obtained by applying the same elementary row operation to the
+m × m identity matrix. It is easy to see that for every elementary row operation, the
+corresponding matrix X is invertible.
+We now describe the basic version of Gaussian elimination. The input is an m×n
+matrix A, and the algorithm is described in Fig. 14.1.
+The algorithm works as follows. First, it makes a copy B of A (this is not necessary if the original matrix A is not needed afterwards). The algorithm proceeds column by column, starting with the left-most column, so that after processing column
+j, the first j columns of B are in reduced row echelon form, and the current value
+of r represents the length of the pivot sequence. To process column j, in steps 3–6
+the algorithm first searches for a non-zero element among B(r + 1, j), . . . , B(m, j);
+if none is found, then the first j + 1 columns of B are already in reduced row
+echelon form. Otherwise, one of these non-zero elements is selected as the pivot
+element (the choice is arbitrary), which is then used in steps 8–13 to bring column
+j into the required form. After incrementing r, the pivot element is brought into
+position (r, j), using a Type I operation in step 9. Then the entry (r, j) is set to 1F ,
+using a Type II operation in step 10. Finally, all the entries above and below entry
+(r, j) are set to 0F , using Type III operations in steps 11–13. Note that because
+
+390
+
+Matrices
+
+1. B ← A, r ← 0
+2. for j ← 1 to n do
+3.
+` ← 0, i ← r
+4.
+while ` = 0 and i ≤ m do
+5.
+i←i+1
+6.
+if B(i, j) 6= 0F then ` ← i
+7.
+if ` 6= 0 then
+8.
+r ←r+1
+9.
+swap rows r and ` of B
+10.
+Rowr (B) ← B(r, j)−1 Rowr (B)
+11.
+for i ← 1 to m do
+12.
+if i 6= r then
+13.
+Rowi (B) ← Rowi (B) − B(i, j) Rowr (B)
+14. output B
+
+Fig. 14.1. Gaussian elimination
+columns 1, . . . , j − 1 of B were already in reduced row echelon form, none of these
+operations changes any values in these columns.
+As for the complexity of the algorithm, it is easy to see that it performs O(mn)
+elementary row operations, each of which takes O(n) operations in F , so a total of
+O(mn2 ) operations in F .
+Example 14.4. Consider the execution of the Gaussian elimination algorithm on
+input
+
+
+[0] [1] [1]
+A = [2] [1] [2] ∈ Z3×3
+3 .
+[2] [2] [0]
+After copying A into B, the algorithm transforms B as follows:
+
+
+
+
+
+
+[0] [1] [1]
+[2] [1] [2]
+[1] [2] [1]
+Row1 ←[2] Row1
+Row1 ↔Row2
+[2] [1] [2] −−
+−−−−−−−→ [0] [1] [1] −−−−−−−−−−−→ [0] [1] [1]
+[2] [2] [0]
+[2] [2] [0]
+[2] [2] [0]
+
+
+
+
+[1] [2] [1]
+[1] [0] [2]
+Row3 ←Row3 −[2] Row1
+Row1 ←Row1 −[2] Row2
+−−−−−−−−−−−−−−−−→ [0] [1] [1] −−−−−−−−−−−−−−−−→ [0] [1] [1]
+[0] [1] [1]
+[0] [1] [1]
+
+14.4 Gaussian elimination
+
+391
+
+
+
+[1] [0] [2]
+Row3 ←Row3 − Row2
+−−−−−−−−−−−−−−→ [0] [1] [1] . 2
+[0] [0] [0]
+Suppose the Gaussian elimination algorithm performs a total of t elementary
+row operations. Then as discussed above, the application of the eth elementary
+row operation, for e = 1, . . . , t, amounts to multiplying the current value of the
+matrix B on the left by a particular invertible m × m matrix Xe . Therefore, the final
+output value of B satisfies the equation
+B = XA where X = Xt Xt−1 · · · X1 .
+Since the product of invertible matrices is also invertible, we see that X itself is
+invertible.
+Although the algorithm as presented does not compute the matrix X, it can
+be easily modified to do so. The resulting algorithm, which we call extended
+Gaussian elimination, is the same as plain Gaussian elimination, except that we
+initialize the matrix X to be the m × m identity matrix, and we add the following
+steps:
+• just before step 9: swap rows r and ` of X;
+• just before step 10: Rowr (X) ← B(r, j)−1 Rowr (X);
+• just before step 13: Rowi (X) ← Rowi (X) − B(i, j) Rowr (X).
+At the end of the algorithm we output X in addition to B.
+So we simply perform the same elementary row operations on X that we perform
+on B. The reader may verify that the above algorithm is correct, and that it uses
+O(mn(m + n)) operations in F .
+Example 14.5. Continuing with Example 14.4, the execution of the extended
+Gaussian elimination algorithm initializes X to the identity matrix, and then transforms X as follows:
+
+
+
+
+
+
+[1] [0] [0]
+[0] [1] [0]
+[0] [2] [0]
+Row1 ←[2] Row1
+Row1 ↔Row2
+[0] [1] [0] −−
+−−−−−−−→ [1] [0] [0] −−−−−−−−−−−→ [1] [0] [0]
+[0] [0] [1]
+[0] [0] [1]
+[0] [0] [1]
+
+
+
+
+[0] [2] [0]
+[1] [2] [0]
+Row3 ←Row3 −[2] Row1
+Row1 ←Row1 −[2] Row2
+−−−−−−−−−−−−−−−−→ [1] [0] [0] −−−−−−−−−−−−−−−−→ [1] [0] [0]
+[0] [2] [1]
+[0] [2] [1]
+
+392
+
+Matrices
+
+
+
+[1] [2] [0]
+Row3 ←Row3 − Row2
+−−−−−−−−−−−−−−→ [1] [0] [0] . 2
+[2] [2] [1]
+E XERCISE 14.11. For each type of elementary row operation, describe the matrix
+X which corresponds to it, as well as X −1 .
+E XERCISE 14.12. Given a matrix B ∈ F m×n in reduced row echelon form, show
+how to compute its pivot sequence using O(n) operations in F .
+E XERCISE 14.13. In §4.4, we saw how to speed up matrix multiplication over Z
+using the Chinese remainder theorem. In this exercise, you are to do the same, but
+for performing Gaussian elimination over Zp , where p is a large prime. Suppose
+you are given an m × m matrix A over Zp , where len(p) = Θ(m). Straightforward
+application of Gaussian elimination would require O(m3 ) operations in Zp , each of
+which takes time O(m2 ), leading to a total running time of O(m5 ). Show how to
+use the techniques of §4.4 to reduce the running time of Gaussian elimination to
+O(m4 ).
+14.5 Applications of Gaussian elimination
+Throughout this section, A is an arbitrary m×n matrix over a field F , and XA = B,
+where X is an invertible m × m matrix, and B is an m × n matrix in reduced row
+echelon form with pivot sequence (p1 , . . . , pr ). This is precisely the information
+produced by the extended Gaussian elimination algorithm, given A as input (the
+pivot sequence can easily be “read” directly from B — see Exercise 14.12). Also,
+let
+λA : F 1×m → F 1×n
+v 7→ vA
+be the linear map corresponding to A.
+Computing the image and kernel
+Consider first the row space of A, by which we mean the subspace of F 1×n spanned
+by {Rowi (A)}m
+i=1 , or equivalently, the image of λA .
+We claim that the row space of A is the same as the row space of B. To see this,
+note that since B = XA, for every v ∈ F 1×m , we have vB = v(XA) = (vX)A, and
+so the row space of B is contained in the row space of A. For the other containment,
+note that since X is invertible, we can write A = X −1 B, and apply the same
+argument.
+
+14.5 Applications of Gaussian elimination
+
+393
+
+Further, note that the row space of B, and hence that of A, clearly has dimension
+r. Indeed, as stated in Theorem 14.7, rows 1, . . . , r of B form a basis for the row
+space of B.
+Consider next the kernel K of λA , or what we might call the row null space
+of A. We claim that {Rowi (X)}m
+i=r+1 is a basis for K. Clearly, just from the
+fact that XA = B and the fact that rows r + 1, . . . , m of B are zero, it follows
+that rows r + 1, . . . , m of X are contained in K. Furthermore, as X is invertible,
+1×m (see Theorem 14.6). Thus, the family of vectors
+{Rowi (X)}m
+i=1 is a basis for F
+0
+{Rowi (X)}m
+i=r+1 is linearly independent and spans a subspace K of K. It suffices
+0
+0
+to show that K = K. Suppose to the contrary that K ( K, and let v ∈ K \ K 0 .
+Pm
+1×m , we may write v =
+As {Rowi (X)}m
+i=1 ci Rowi (X); moreover, as
+i=1 spans F
+v∈
+/ K 0 , we must have ci 6= 0F for some i = 1, . . . , r. Setting ṽ := (c1 , . . . , cm ), we
+see that v = ṽX, and so
+λA (v) = vA = (ṽX)A = ṽ(XA) = ṽB.
+Furthermore, since {Rowi (B)}ri=1 is linearly independent, rows r + 1, . . . , m of B
+are zero, and ṽ has a non-zero entry in one of its first r positions, we see that ṽB is
+not the zero vector. We have derived a contradiction, and hence may conclude that
+K 0 = K.
+Finally, note that if m = n, then A is invertible if and only if its row space has
+dimension m, which holds if and only if r = m, and in the latter case, B is the
+identity matrix, and hence X is the inverse of A.
+Let us summarize the above discussion:
+• The first r rows of B form a basis for the row space of A (i.e., the image of
+λA ).
+• The last m − r rows of X form a basis for the row null space of A (i.e., the
+kernel of λA ).
+• If m = n, then A is invertible (i.e., λA is an isomorphism) if and only if
+r = m, in which case X is the inverse of A (i.e., the matrix of λ−1
+A relative
+to the standard basis).
+So we see that from the output of the extended Gaussian elimination algorithm,
+we can simply “read off” bases for both the image and the kernel, as well as the
+inverse (if it exists), of a linear map represented as a matrix with respect to given
+bases. Also note that this procedure provides a “constructive” version of Theorem 13.28.
+Example 14.6. Continuing with Examples 14.4 and 14.5, we see that the vectors
+([1], [0], [2]) and ([0], [1], [1]) form a basis for the row space of A, while the vector
+([2], [2], [1]) is a basis for the row null space of A. 2
+
+394
+
+Matrices
+
+Solving systems of linear equations
+Suppose that in addition to the matrix A, we are given w ∈ F 1×n , and want to find
+a solution v ∈ F 1×m (or perhaps describe all solutions), to the equation
+vA = w.
+
+(14.3)
+
+Equivalently, we can phrase the problem as finding an element (or describing all
+elements) of the set λ−1
+A ({w}).
+Now, if there exists a solution at all, say v ∈ F 1×m , then λA (v) = λA (v 0 ) if and
+only if v ≡ v 0 (mod K), where K is the kernel of λA . It follows that the set of all
+solutions to (14.3) is v + K = {v + v0 : v0 ∈ K}. Thus, given a basis for K and
+any solution v to (14.3), we have a complete and concise description of the set of
+solutions to (14.3).
+As we have discussed above, the last m − r rows of X form a basis for K, so it
+suffices to determine if w ∈ Im λA , and if so, determine a single pre-image v of w.
+Also as we discussed, Im λA , that is, the row space of A, is equal to the row space
+of B, and because of the special form of B, we can quickly and easily determine if
+the given w is in the row space of B, as follows. By definition, w is in the row space
+of B if and only if there exists a vector v ∈ F 1×m such that vB = w. We may as well
+assume that all but the first r entries of v are zero. Moreover, vB = w implies that
+for i = 1, . . . , r, the ith entry of v is equal to the pi th entry of w. Thus, the vector v,
+if it exists, is completely determined by the entries of w at positions p1 , . . . , pr . We
+can construct v satisfying these conditions, and then test if vB = w. If not, then we
+may conclude that (14.3) has no solutions; otherwise, setting v := vX, we see that
+vA = (vX)A = v(XA) = vB = w, and so v is a solution to (14.3).
+One easily verifies that if we implement the above procedure as an algorithm,
+the work done in addition to running the extended Gaussian elimination algorithm
+amounts to O(m(n + m)) operations in F .
+A special case of the above procedure is when m = n and A is invertible, in
+which case (14.3) has a unique solution, namely, v := wX, since in this case,
+X = A−1 .
+The rank of a matrix
+We define the row rank of A to be the dimension of its row space, which is equal to
+dimF (Im λA ). The column space of A is defined as the subspace of F m×1 spanned
+by {Colj (A)}nj=1 ; that is, the column space of A is {Az : z ∈ F n×1 }. The column
+rank of A is the dimension of its column space.
+Now, the column space of A need not be the same as the column space of B, but
+from the identity B = XA, and the fact that X is invertible, it easily follows that
+these two subspaces are isomorphic (via the map that sends y ∈ F m×1 to Xy), and
+
+14.5 Applications of Gaussian elimination
+
+395
+
+hence have the same dimension. Moreover, by Theorem 14.7, the column rank of
+B is r, which is the same as the row rank of A.
+So we may conclude: The column rank and row rank of A are the same.
+Because of this, we may define the rank of a matrix to be the common value of
+its row and column rank.
+The orthogonal complement of a subspace
+So as to give equal treatment to rows and columns, one can also define the column
+null space of A to be the kernel of the linear map defined by multiplication on the
+left by A; that is, the column null space of A is {z ∈ F n×1 : Az = 0m×1
+F }. By
+applying the results above to the transpose of A, we see that the column null space
+of A has dimension n − r, where r is the rank of A.
+Let U ⊆ F 1×n be the row space of A, and let U ⊥ ⊆ F 1×n denote the set of
+all vectors u ∈ F 1×n whose transpose u belongs to the column null space of A.
+Now, U is a subspace of F 1×n of dimension r and U ⊥ is a subspace of F 1×n of
+dimension n − r. The space U ⊥ consists precisely of all vectors u ∈ F 1×n that are
+“orthogonal” to all vectors u ∈ U , in the sense that the “inner product” uu is zero.
+For this reason, U ⊥ is sometimes called the “orthogonal complement of U.”
+Clearly, U ⊥ is determined by the subspace U itself, and does not depend on the
+particular choice of matrix A. It is also easy to see that the orthogonal complement
+of U ⊥ is U ; that is, (U ⊥ )⊥ = U. This follows immediately from the fact that
+U ⊆ (U ⊥ )⊥ and dimF ((U ⊥ )⊥ ) = n − dimF (U ⊥ ) = dimF (U ).
+Now suppose that U ∩ U ⊥ = {0}. Then by Theorem 13.11, we have an isomorphism of U × U ⊥ with U + U ⊥ , and since U × U ⊥ has dimension n, it must be the
+case that U + U ⊥ = F 1×n . It follows that every element of F 1×n can be expressed
+uniquely as u + u, where u ∈ U and u ∈ U ⊥ .
+We emphasize that the observations in the previous paragraph hinged on the
+assumption that U ∩ U ⊥ = {0}, which itself holds provided U contains no nonzero “self-orthogonal vectors” u such that uu is zero. If F is the field of real
+numbers, then of course there are no non-zero self-orthogonal vectors, since uu
+is the sum of the squares of the entries of u. However, for other fields, there may
+very well be non-zero self-orthogonal vectors. As an example, if F = Z2 , then any
+vector u with an even number of 1-entries is self orthogonal.
+So we see that while much of the theory of vector spaces and matrices carries
+over without change from familiar ground fields, like the real numbers, to arbitrary
+ground fields F , not everything does. In particular, the usual decomposition of a
+vector space into a subspace and its orthogonal complement breaks down, as does
+any other procedure that relies on properties specific to “inner product spaces.”
+
+396
+
+Matrices
+
+For the following three exercises, as above, A is an arbitrary m × n matrix over a
+field F , and XA = B, where X is an invertible m × m matrix, and B is in reduced
+row echelon form.
+E XERCISE 14.14. Show that the column null space of A is the same as the column
+null space of B.
+E XERCISE 14.15. Show how to compute a basis for the column null space of A
+using O(r(n − r)) operations in F , given A and B.
+E XERCISE 14.16. Show that the matrix B is uniquely determined by A; more
+precisely, show that if X 0 A = B 0 , where X 0 is an invertible m × m matrix, and B 0 is
+in reduced row echelon form, then B 0 = B.
+In the following two exercises, the theory of determinants could be used; however, they can all be solved directly, without too much difficulty, using just the ideas
+developed so far in the text.
+E XERCISE 14.17. Let p be a prime. A matrix A ∈ Zm×m is called invertible modulo p if there exists a matrix B ∈ Zm×m such that AB ≡ BA ≡ I (mod p), where I
+is the m × m integer identity matrix. Here, two matrices are considered congruent
+with respect to a given modulus if their corresponding entries are congruent. Show
+that A is invertible modulo p if and only if A is invertible over Q, and the entries
+of A−1 lie in Q(p) (see Example 7.26).
+E XERCISE 14.18. You are given a matrix A ∈ Zm×m and a prime p such that A
+is invertible modulo p (see previous exercise). Suppose that you are also given
+w ∈ Z1×m .
+(a) Show how to efficiently compute a vector v ∈ Z1×m such that vA ≡
+w (mod p), and that v is uniquely determined modulo p.
+(b) Given a vector v as in part (a), along with an integer e ≥ 1, show how
+to efficiently compute v̂ ∈ Z1×m such that v̂A ≡ w (mod pe ), and that v̂
+is uniquely determined modulo pe . Hint: mimic the “lifting” procedure
+discussed in §12.5.2.
+(c) Using parts (a) and (b), design and analyze an efficient algorithm that takes
+the matrix A and the prime p as input, together with a bound H on the
+absolute value of the numerator and denominator of the entries of the vector
+v 0 that is the unique (rational) solution to the equation v 0 A = w. Your
+algorithm should run in time polynomial in the length of H, the length of
+p, and the sum of the lengths of the entries of A and w. Hint: use rational
+reconstruction, but be sure to fully justify its application.
+
+14.5 Applications of Gaussian elimination
+
+397
+
+Note that in the previous exercise, one can use the theory of determinants to
+derive good bounds, in terms of the lengths of the entries of A and w, on the size of
+the least prime p such that A is invertible modulo p (assuming A is invertible over
+the rationals), and on the length of the numerator and denominator of the entries of
+rational solution v 0 to the equation v 0 A = w. The interested reader who is familiar
+with the basic theory of determinants is encouraged to establish such bounds.
+The next two exercises illustrate how Gaussian elimination can be adapted, in
+certain cases, to work in rings that are not necessarily fields. Let R be an arbitrary
+ring. A matrix B ∈ Rm×n is said to be in row echelon form if there exists a pivot
+sequence (p1 , . . . , pr ), with 0 ≤ r ≤ m and 1 ≤ p1 < p2 < · · · < pr ≤ n, such that
+the following holds:
+• for i = 1, . . . , r, all of the entries in row i of B to the left of entry (i, pi ) are
+zero;
+• for i = 1, . . . , r, we have B(i, pi ) 6= 0R ;
+• all entries in rows r + 1, . . . , m of B are zero.
+E XERCISE 14.19. Let R be the ring Zpe , where p is prime and e > 1. Let
+π := [p] ∈ R. The goal of this exercise is to develop an efficient algorithm for the
+following problem: given a matrix A ∈ Rm×n , with m > n, find a vector v ∈ R1×m
+such that vA = 01×n
+/ πR1×m .
+R but v ∈
+(a) Show how to modify the extended Gaussian elimination algorithm to solve
+the following problem: given a matrix A ∈ Rm×n , compute X ∈ Rm×m and
+B ∈ Rm×n , such that XA = B, X is invertible, and B is in row echelon
+form. Your algorithm should run in time O(mn(m + n)e2 len(p)2 ). Assume
+that the input includes the values p and e. Hint: when choosing a pivot element, select one divisible by a minimal power of π; as in ordinary Gaussian
+elimination, your algorithm should only use elementary row operations to
+transform the input matrix.
+(b) Using the fact that the matrix X computed in part (a) is invertible, argue
+that none of its rows belong to πR1×m .
+(c) Argue that if m > n and the matrix B computed in part (a) has pivot
+sequence (p1 , . . . , pr ), then m − r > 0 and if v is any one of the last m − r
+rows of X, then vA = 01×n
+R .
+(d) Give an example that shows that {Rowi (B)}ri=1 need not be linearly independent, and that {Rowi (X)}m
+i=r+1 need not span the kernel of the linear
+map λA corresponding to A.
+E XERCISE 14.20. Let R be the ring Z` , where ` > 1 is an integer. You are given
+a matrix A ∈ Rm×n . Show how to efficiently compute X ∈ Rm×m and B ∈ Rm×n
+
+398
+
+Matrices
+
+such that XA = B, X is invertible, and B is in row echelon form. Your algorithm
+should run in time O(mn(m + n) len(`)2 ). Hint: to zero-out entries, you should use
+“rotations”—for integers a, b, d, s, t with
+d = gcd(a, b) 6= 0 and as + bt = d,
+and for row indices r, i, a rotation simultaneously updates rows r and i of a matrix
+C as follows:
+a
+b
+(Rowr (C), Rowi (C)) ← (s Rowr (C) + t Rowi (C), − Rowr (C) + Rowi (C));
+d
+d
+observe that if C(r, j) = [a]` and C(i, j) = [b]` before applying the rotation, then
+C(r, j) = [d]` and C(i, j) = [0]` after the rotation.
+E XERCISE 14.21. Consider again the setting in Exercise 14.3. Show that A ∈
+`
+F m×(m−`) is a parity check matrix for U if and only if {Colj (A) }m−
+i=1 is a basis for
+the orthogonal complement of VecS (U ) ⊆ F 1×m .
+E XERCISE 14.22. Let {vi }ni=1 be a family of vectors, where vi ∈ R1×` for each
+i = 1, . . . , n. We say that {vi }ni=1 is pairwise orthogonal if vi vj = 0 for all i 6= j.
+Show that every pairwise orthogonal family of non-zero vectors over R is linearly
+independent.
+E XERCISE 14.23. The purpose of this exercise is to use linear algebra to prove that
+any pairwise independent family of hash functions (see §8.7) must contain a large
+number of hash functions. More precisely, let {Φr }r∈R be a pairwise independent
+family of hash functions from S to T , with |T | ≥ 2. Our goal is to show that
+|R| ≥ |S|. Let n := |S|, and m := |T |, and ` := |R|. Write R = {r1 , . . . , r` } and
+S = {s1 , . . . , sn }. Without loss of generality, we may assume that T is a set of
+non-zero real numbers that sum to zero (e.g., T = {1, . . . , m − 1, −m(m − 1)/2}).
+Now define the matrix A ∈ Rn×` with A(i, j) := Φrj (si ). Show that {Rowi (A)}ni=1
+is a pairwise orthogonal family of non-zero vectors (see previous exercise). From
+this, deduce that ` ≥ n.
+14.6 Notes
+While a trivial application of the defining formulas yields a simple algorithm for
+multiplying two n × n matrices over a ring R that uses O(n3 ) operations in R, this
+algorithm is not the best, asymptotically speaking. The currently fastest algorithm
+for this problem, due to Coppersmith and Winograd [28], uses O(nω ) operations in
+R, where ω < 2.376. We note, however, that the good old O(n3 ) algorithm is still
+the only one used in almost any practical setting.
+
+15
+Subexponential-time discrete logarithms and factoring
+
+This chapter presents subexponential-time algorithms for computing discrete logarithms and for factoring integers. These algorithms share a common technique,
+which makes essential use of the notion of a smooth number.
+15.1 Smooth numbers
+If y is a non-negative real number and m is a positive integer, then we say that m is
+y-smooth if all prime divisors of m are at most y.
+For 0 ≤ y ≤ x, let us define Ψ(y, x) to be the number of y-smooth integers up to
+x. The following theorem gives us a lower bound on Ψ(y, x), which will be crucial
+in the analysis of our discrete logarithm and factoring algorithms.
+Theorem 15.1. Let y be a function of x such that
+log x
+y
+→ ∞ and u :=
+→∞
+log x
+log y
+as x → ∞. Then
+Ψ(y, x) ≥ x · exp[(−1 + o(1))u log log x].
+Proof. Let us write u = buc + δ, where 0 ≤ δ < 1. Let us split the primes up to y
+into two sets: the set V of “very small” primes that are at most y δ /2, and the set
+W of other primes that are greater than y δ /2 but at most y. To simplify matters,
+let us also include the integer 1 in the set V .
+By Bertrand’s postulate (Theorem 5.8), there exists a constant C > 0 such that
+|W | ≥ Cy/ log y for sufficiently large y. By the assumption that y/ log x → ∞ as
+x → ∞, we also have |W | ≥ 2buc for sufficiently large x.
+To derive the lower bound, we shall count those integers that can be built up by
+multiplying together buc distinct elements of W , together with one element of V .
+
+399
+
+400
+
+Subexponential-time discrete logarithms and factoring
+
+These products are clearly distinct, y-smooth numbers, and each is bounded by x,
+since each is at most y buc y δ = y u = x.
+If S denotes the set of all of these products, then for x sufficiently large, we have
+
+
+|W |
+|S| =
+· |V |
+buc
+|W |(|W | − 1) · · · (|W | − buc + 1)
+=
+· |V |
+buc!
+ |W | buc
+≥
+· |V |
+2u
+ Cy buc
+· |V |
+≥
+2u log y
+ Cy u−δ
+=
+· |V |.
+2 log x
+Taking logarithms, we have
+log|S| ≥ (u − δ)(log y − log log x + log(C/2)) + log|V |
+= log x − u log log x + (log|V | − δ log y) +
+O(u + log log x).
+
+(15.1)
+
+To prove the theorem, it suffices to show that
+log|S| ≥ log x − (1 + o(1))u log log x.
+Under our assumption that u → ∞, the term O(u + log log x) in (15.1) is clearly
+o(u log log x), and so it will suffice to show that the term (log|V | − δ log y) is also
+o(u log log x). But by Chebyshev’s theorem (Theorem 5.1), for some positive constant D, we have
+Dy δ / log y ≤ |V | ≤ y δ ,
+and taking logarithms, and again using the fact that u → ∞, we have
+log|V | − δ log y = O(log log y) = o(u log log x). 2
+15.2 An algorithm for discrete logarithms
+We now present a probabilistic, subexponential-time algorithm for computing discrete logarithms. The input to the algorithm is p, q, γ, α, where p and q are primes,
+with q | (p − 1), γ is an element of Z∗p generating a subgroup G of Z∗p of order q,
+and α ∈ G.
+We shall make the simplifying assumption that q 2 - (p − 1), which is equivalent
+to saying that q - m := (p − 1)/q. Although not strictly necessary, this assumption
+
+15.2 An algorithm for discrete logarithms
+
+401
+
+simplifies the design and analysis of the algorithm, and moreover, for cryptographic
+applications, this assumption is almost always satisfied. Exercises 15.1–15.3 below
+explore how this assumption may be lifted, as well as other generalizations.
+At a high level, the main goal of our discrete logarithm algorithm is to find a random representation of 1 with respect to γ and α — as discussed in Exercise 11.12,
+this allows us to compute logγ α (with high probability). More precisely, our main
+goal is to compute integers r and s in a probabilistic fashion, such that γ r α s = 1
+and [s]q is uniformly distributed over Zq . Having accomplished this, then with
+probability 1 − 1/q, we shall have s 6≡ 0 (mod q), which allows us to compute
+logγ α as −rs−1 mod q.
+Let H be the subgroup of Z∗p of order m. Our assumption that q - m implies
+that G ∩ H = {1}, since the multiplicative order of any element in the intersection
+must divide both q and m, and so the only possibility is that the multiplicative
+order is 1. Therefore, the map ρ : G × H → Z∗p that sends (β, δ) to βδ is injective
+(Theorem 6.25), and since |Z∗p | = qm, it must be surjective as well.
+We shall use this fact in the following way: if β is chosen uniformly at random
+from G, and δ is chosen uniformly at random from H (and independent of β), then
+βδ is uniformly distributed over Z∗p . Furthermore, since H is the image of the qpower map on Z∗p , we may generate a random δ ∈ H simply by choosing δ̂ ∈ Z∗p
+at random, and setting δ := δ̂q .
+The discrete logarithm algorithm uses a “smoothness parameter” y. We will
+discuss choice of y below, when we analyze the running time of the algorithm; for
+now, we only assume that y < p. Let p1 , . . . , pk be an enumeration of the primes
+up to y. Let πi := [pi ]p ∈ Z∗p for i = 1, . . . , k.
+The algorithm has two stages.
+In the first stage, we find relations of the form
+e
+
+e
+
+γ ri α si δi = π1i1 . . . πkik ,
+
+(15.2)
+
+for i = 1, . . . , k + 1, where ri , si , ei1 , . . . , eik ∈ Z and δi ∈ H for each i.
+We obtain each such relation by a randomized search, as follows: we choose
+ri , si ∈ {0, . . . , q − 1} at random, as well as δ̂i ∈ Z∗p at random; we then compute
+q
+δi := δ̂i , βi := γ ri α si , and mi := rep(βi δi ). Now, the value βi is uniformly distributed over G, while δi is uniformly distributed over H; therefore, the product
+βi δi is uniformly distributed over Z∗p , and hence mi is uniformly distributed over
+{1, . . . , p − 1}. Next, we simply try to factor mi by trial division, trying all the
+primes p1 , . . . , pk up to y. If we are lucky, we completely factor mi in this way,
+obtaining a factorization
+e
+
+e
+
+mi = p1i1 · · · pkik ,
+
+402
+
+Subexponential-time discrete logarithms and factoring
+
+for some exponents ei1 , . . . , eik , and we get the relation (15.2). If we are unlucky,
+then we simply keep trying until we are lucky.
+For i = 1, . . . , k + 1, let vi := (ei1 , . . . , eik ) ∈ Z×k , and let v i denote the image of
+×k
+vi in Z×k
+q (i.e., v i := ([ei1 ]q , . . . , [eik ]q )). Since Zq is a vector space over the field
+Zq of dimension k, the family of vectors v 1 , . . . , v k+1 must be linearly dependent.
+The second stage of the algorithm uses Gaussian elimination over Zq (see §14.4)
+to find a linear dependence among the vectors v 1 , . . . , v k+1 , that is, to find integers
+c1 , . . . , ck+1 ∈ {0, . . . , q − 1}, not all zero, such that
+(e1 , . . . , ek ) := c1 v1 + · · · + ck+1 vk+1 ∈ qZ×k .
+Raising each equation (15.2) to the corresponding power ci , and multiplying
+them all together, we obtain
+e
+
+e
+
+γ r α s δ = π11 · · · πkk ,
+where
+r :=
+
+k+1
+X
+i=1
+
+ci ri , s :=
+
+k+1
+X
+
+ci si , and δ :=
+
+i=1
+
+k+1
+Y
+c
+δi i .
+i=1
+ej
+
+Now, δ ∈ H, and since each ej is a multiple of q, we also have πj ∈ H
+for j = 1, . . . , k. It follows that γ r α s ∈ H. But since γ r α s ∈ G as well, and
+G ∩ H = {1}, it follows that γ r α s = 1. If we are lucky (and we will be with
+overwhelming probability, as we discuss below), we will have s 6≡ 0 (mod q), in
+which case, we can compute s0 := s−1 mod q, obtaining
+0
+
+α = γ −rs ,
+and hence −rs0 mod q is the discrete logarithm of α to the base γ. If we are very
+unlucky, we will have s ≡ 0 (mod q), at which point the algorithm simply quits,
+reporting “failure.”
+The entire algorithm, called Algorithm SEDL, is presented in Fig. 15.1.
+As already argued above, if Algorithm SEDL does not output “failure,” then
+its output is indeed the discrete logarithm of α to the base γ. There remain three
+questions to answer:
+1. What is the expected running time of Algorithm SEDL?
+2. How should the smoothness parameter y be chosen so as to minimize the
+expected running time?
+3. What is the probability that Algorithm SEDL outputs “failure”?
+Let us address these questions in turn. As for the expected running time, let
+σ be the probability that a random element of {1, . . . , p − 1} is y-smooth. Then
+
+

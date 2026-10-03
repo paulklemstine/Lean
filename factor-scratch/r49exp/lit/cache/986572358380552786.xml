@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/CX02khDgmopX5vobx+mUA4np6JQ</id>
+  <title>arXiv Query: search_query=all:"powerful numbers" AND all:sieving&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22powerful+numbers%22+AND+all:sieving&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2406.10014v2</id>
+    <title>Powered numbers in short intervals II</title>
+    <updated>2026-01-08T20:53:58Z</updated>
+    <link href="https://arxiv.org/abs/2406.10014v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.10014v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article, we derive better results concerning powered numbers in short intervals, both unconditionally and conditionally on the $abc$-conjecture. We make use of sieve method, a polynomial identity, and a recent breakthrough result on density of sets with no $k$-term arithmetic progression. In the process, we study integers over short intervals that have with a big smooth divisor.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-14T13:25:48Z</published>
+    <arxiv:comment>10 pages, an improved and corrected version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Tsz Ho Chan</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,3360 @@
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+arXiv:2409.05761v1 [math.NT] 9 Sep 2024
+
+KHALID YOUNIS
+Abstract. A number is said to be y-smooth if all of its prime factors are less
+than or equal to y. For all 17/30 < θ ≤ 1, we show that the density of y-smooth
+numbers in the short interval [x, x + xθ ] is asymptotically equal to the density of
+y-smooth numbers in the long interval [1, x], for all y ≥ exp((log x)2/3+ε ). Assuming
+the Riemann Hypothesis, we also prove that for all 1/2 < θ ≤ 1 there exists a large
+constant K such that the expected asymptotic result holds for y ≥ (log x)K .
+Our approach is to count smooth numbers using a Perron integral, shift this to a
+particular contour left of the saddle point, and employ a zero-density estimate of the
+Riemann zeta function.
+
+1. Introduction
+A positive integer is y-smooth (or y-friable) if all of its prime factors are less than or
+equal to y. Of central importance to understanding the distribution of smooth numbers
+is to ﬁrst count (at least approximately) how many there are in a large interval [1, x].
+This question has received signiﬁcant attention over the last century, and has proﬁted
+from both combinatorial and analytic approaches (see the surveys [HT93] and [Gra08]).
+To further understand their distribution, it is natural to ask how many smooth
+numbers there are in an interval (x, x + h], where h is large but much smaller than
+x. If the smooth numbers were distributed not too erratically, then, for h and y in a
+suitable range depending on x, one might expect the density of smooth numbers in
+short intervals and in long intervals to be the same. That is, as x → ∞,
+|{n ∈ (x, x + h] : n is y-smooth}|
+|{n ∈ [1, x] : n is y-smooth}|
+∼
+.
+(1.1)
+h
+x
+By ﬁrst counting numbers with a single very large prime factor and then employing
+a ‘recursive identity’ for the set of smooth numbers, the ﬁrst result establishing a
+relation of the form (1.1) was by Hildebrand [Hil86] on the range
+x/y 5/12 ≤ h ≤ x
+
+5/3+ε
+
+e(log log x)
+
+and
+
+≤ y ≤ x.
+
+The restriction on h stems from the well-known estimates of Huxley on the prime
+number theorem in short intervals, and the y bound comes from an application of
+the best known error terms in the prime number theorem. It has been suggested, for
+instance in [FG93], [HT93, §5], and [Gra08, §4], that ideas of Granville [Gra93] may
+enable the 5/12 to be improved to 1 − ε.
+Hildebrand and Tenenbaum [HT86] later proved an asymptotic of the shape (1.1)
+(though with the right-hand side multiplied by a positive quantity α = α(x, y) known
+as the saddle point, which we deﬁne later) valid in a wide range of y (which is slightly
+more tricky to state) and for which it is necessary, but not suﬃcient, to have
+3/5
+
+x/e(log x)
+
+1
+
+≤ h ≤ x.
+
+2
+
+KHALID YOUNIS
+
+Friedlander and Granville [FG93] later showed, by exploiting an ‘almost-all’ result for
+smooth numbers, the asymptotic (1.1) holds in the range
+√ 2 (log x)1/6
+5/6+ε
+xy e
+≤ h ≤ x and e(log x)
+≤ y ≤ x.
+Let us brieﬂy discuss the current best results concerning lower bounds for the
+number of y-smooth numbers in (x, x + h]. A more thorough discussion is presented
+in the surveys [HT93] and [Gra08], as well as in the following works. The breakthrough work of Matomäki and Radziwi
+√ll on multiplicative functions in short intervals
+[MR16] showed that there are at least x/(log x)4 many y-smooth numbers for y = xε
+√
+2/3
+4/3+ε
+and
+and h = C(ε) x. Matomäki [Mat16] showed that for y = e(log x) (log log x)
+1/2+o(1)
+1/2−ε
+h=x
+a lower bound of magnitude x
+is attainable. Earlier work of Xuan
+[Xua99] demonstrated the existence of such smooth numbers in essentially this regime.
+Conditional√on the Riemann Hypothesis, Soundararajan [Sou10] proved that one may
+take y = e5 log x log log x and h = x1/2+o(1) , also for a lower bound of magnitude x1/2−ε .
+These works explicitly describe their o(1) terms.
+Returning to asymptotic results, suppose we wanted the short interval to be rather
+small, say h = xθ for some ﬁxed 0 < θ < 1. We see that the results of Hildebrand,
+and of Hildebrand and Tenenbaum, stated earlier oﬀer nothing in this scenario. On
+the other hand, the Friedlander and Granville result can handle this (with θ as low as
+5/6+ε
+1/2 + o(1)) provided that e(log x)
+≤ y ≤ x1/4−ε . In this article, we improve on this
+2/3+ε
+with regards to the smoothness by showing that we may take y as low as e(log x)
+and still have asymptotic (1.1) hold for any 17/30 < θ ≤ 1. Here and throughout, we
+write Ψ(x, y) = |{n ∈ [1, x] : n is y-smooth}| and u = (log x)/ log y.
+Theorem 1.1. Let 17/30 < θ ≤ 1. There exists a constant C = C(θ) > 0 such that
+the estimate
+
+
+
+Ψ(x + h, y) − Ψ(x, y)
+log(u + 1)
+Ψ(x, y)
+1 + Oθ
+=
+h
+x
+log y
+holds uniformly for
+xθ ≤ h ≤ x
+
+and
+
+2/3 (log log x)4/3
+
+eC(log x)
+
+≤ y ≤ 2x.
+
+(1.2)
+
+The analogous result for primes, that is, the number of primes in the interval (x, x+h]
+for xθ ≤ h ≤ x being asymptotic to h/ log x, was ﬁrst established by Hoheisel for some
+0 < θ < 1, following from the explicit formula and an explicit (weaker) version of
+the zero-density estimate for the Riemann zeta function as in (1.13). The exponent
+(30 + ε)/13 in (1.13) was obtained in recent breakthrough work of Guth and Maynard
+[GM24], leading to θ > 17/30 being permissible. This improved the long-standing
+exponent of (12 + ε)/5 due to Huxley [Hux72] which allowed θ > 7/12, as well as a
+result of Heath-Brown [HB88] allowing θ = 7/12 − o(1).
+In some applications, such as in upcoming work of the author [You], it is desirable
+to have an error term which decays far faster than that in Theorem 1.1. We are able to
+do this when we allow the main term to be replaced by a more complicated expression
+which we deﬁne later on.
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+3
+
+Theorem 1.2. Let 17/30 < θ ≤ 1. There exists a constant c = c(θ) > 0, as well as a
+function fθ (x, y) which is independent of h, such that the estimate
+Ψ(x + h, y) − Ψ(x, y)
+= fθ (x, y) + Oθ (E),
+h
+with the error term
+
+
+Ψ(x, y) −c((log x)/ log log x)1/3 h log(u + 1)
+y
+E=
+e
++
+,
++
+x
+x log y
+x log x
+
+holds uniformly in the range (1.2).
+
+Naturally, we obtain a stronger result if we assume the Riemann Hypothesis.
+Theorem 1.3. Assume the Riemann Hypothesis is true. Let 1/2 < θ ≤ 1. There
+exists a constant K = K(θ) > 2, as well as a function fθ (x, y) which is independent
+of h, such that the estimates
+
+
+
+
+1 h log(u + 1) log(u + 1)
+Ψ(x, y)
+Ψ(x + h, y) − Ψ(x, y)
+1 + Oθ min
+=α
++
+,
+h
+x
+u
+x log y
+log y
+and
+
+
+
+Ψ(x + h, y) − Ψ(x, y)
+1
+Ψ(x, y)
+h log(u + 1)
+y
+= fθ (x, y) + Oθ
++
++
+h
+x
+x1/K
+x log y
+x log x
+hold uniformly for
+xθ ≤ h ≤ x and (log x)K ≤ y ≤ 2x.
+For any L > 2, the result also holds for (log x)L ≤ y ≤ 2x and some θ = θ(L) < 1.
+Our method naturally extends to estimating character sums over smooth numbers in
+short intervals, as well as to smooth numbers which are coprime to some ﬁxed integer.
+This is used in upcoming work on prescribing the digits of smooth numbers [You].
+1.1. Dependence on the interval size. Theorem 1.2 can deliver quickly decaying
+error terms except when y (or h) is very large relative to x, and one can ask whether
+this is avoidable. Suppose for example that y ≥ x/2 and x9/10 ≤ h ≤ 2x9/10 . Then
+counting y-smooth numbers in the interval (x, x + h] is equivalent to counting all
+numbers in the interval, and then excluding those which are of the form p or 2p, for
+primes p > y. That is,
+X
+X
+X
+Ψ(x + h, y) − Ψ(x, y) =
+1−
+1−
+1.
+n∈(x,x+h]
+
+p∈(x,x+h], p>y
+
+p∈(x/2,(x+h)/2], p>y
+
+Now let y = (x + x9/10 )/2 and h1 = 2x9/10 . Using Huxley’s prime number theorem in
+short intervals,
+
+
+
+1
+1
+1
+Ψ(x + h1 , y) − Ψ(x, y) = h1 1 −
+.
+−
++o
+log x 4 log y
+log x
+
+On the other hand, if h2 = x9/10 , then since 2p > 2y = x + h2 the range of the third
+sum is empty, so
+
+
+
+1
+1
+Ψ(x + h2 , y) − Ψ(x, y) = h2 1 −
+.
++o
+log x
+log x
+
+4
+
+KHALID YOUNIS
+
+This example demonstrates that the density of smooth numbers in (x, x + h] is not
+always independent of h, at least when we require error terms as small as o(1/ log x).
+1.2. Background on smooth numbers. For this subsection, let 2 ≤ y ≤ x. The
+zeta function for y-smooth numbers, which factorises as an Euler product, is
+ Y
+−1
+X
+Y
+1
+1
+1
+1
+ζ(s, y) =
+=
+1 + s + 2s + . . . =
+1− s
+.
+ns p≤y
+p
+p
+p
+p≤y
+n is y-smooth
+This is valid for s ∈ C with ℜ(s) > 0, as the ﬁnitely many geometric series converge
+here.
+The set of y-smooth numbers up to x has an associated real parameter α = α(x, y)
+known as the saddle point. This is deﬁned as the unique σ > 0 which minimises
+xσ ζ(σ, y). A short argument known as Rankin’s trick asserts that
+ x α
+X
+X
+1≤
+Ψ(x, y) =
+= xα ζ(α, y).
+n
+n is y-smooth
+n≤x is y-smooth
+Hildebrand and Tenenbaum [HT86, Thm. 1], using their celebrated saddle point
+method, proved an asymptotic formula for Ψ(x, y), which in particular shows that
+the Rankin-type bound is actually close to optimal, in the sense that
+p
+xα ζ(α, y) ≪ Ψ(x, y) log x log y.
+(1.3)
+
+As α minimises xσ ζ(σ, y), if we take the logarithm, diﬀerentiate (see (2.5)), and set
+the derivative to 0, then (provided that α > 1/2, which is certainly the case for us) we
+have
+X log p
+X Λ(n)
+log x =
+=
++ O(1).
+pα − 1 n≤y nα
+p≤y
+
+As noted by La Bretèche and Tenenbaum [BT05, §3], for all suﬃciently large x we
+have
+α<1
+(1.4)
+since classically (see e.g. [RS62, Eqn. (4.21)])
+X log p
+= log x − γ + o(1)
+p−1
+p≤x
+
+as x → ∞, where γ = 0.5772 . . . denotes Euler’s constant. An approximate formula
+for the saddle point was obtained by Hildebrand and Tenenbaum [HT86, Lemma 2]
+α =1−
+
+log(u log(u + 1)) + O(1)
+,
+log y
+
+(1.5)
+
+for log x < y ≤ x, recalling that u = (log x)/ log y. With y ≤ x in the range (1.2),
+observe that α is very close to 1.
+From the triangle inequality, it is clear that |ζ(α + it, y)| ≤ ζ(α, y) (and hence,
+as ζ(α, y) is the minimum along the positive real axis, α is called the saddle point).
+Hildebrand and Tenenbaum [HT86, Lemma 8] provided quantitative bounds, which
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+5
+
+were pivotal to their saddle point method, showing for instance that for log x < y ≤ x
+suitably large in terms of a ﬁxed ε > 0, one has
+|ζ(α + it, y)|
+2
+2
+2
+≪ε e−c0 ut /(t +(1−α) )
+ζ(α, y)
+
+(1.6)
+
+3/2−ε
+
+for 1/ log y ≤ |t| ≤ e(log y)
+and some constant c0 > 0.
+It was shown by Canﬁeld, Erdős, and Pomerance [CEP83] that
+x
+(1.7)
+Ψ(x, y) ∼ u(1+o(1)) ,
+u
+as u → ∞, whenever y ≥ (log x)1+ε . For the smallest y in the range (1.2), we have
+1/3+o(1)
+Ψ(x, y) ∼ xe−(log x)
+as x → ∞, which it is worth noting is much sparser than
+the primes. Clearly, y-smooth numbers are more frequent as y increases, thus for all
+y satisfying (1.2) we have
+x
+Ψ(x, y) ≫ (log x)0.34 .
+(1.8)
+e
+1.3. Outline of argument. By Perron’s formula (see e.g. [MV07, Thm. 5.2, Cor. 5.3])
+twice, we express the count of smooth numbers in an interval in terms of a vertical
+integral in the complex plane,
+
+
+Z α+iH
+1
+(x + h)s − xs
+x log x
+Ψ(x + h, y) − Ψ(x, y) =
+, (1.9)
+ζ(s, y)
+ds + O
+2πi α−iH
+s
+H
+for y, h, H ∈ [2, x]. By Cauchy’s residue theorem, we move the integral onto a particular
+contour Γ to obtain
+Z
+1
+(x + h)s − xs
+ζ(s, y)
+ds,
+2πi Γ
+s
+as well as an integral over two horizontal lines at imaginary height ±H connecting Γ
+to the original line. The contour Γ is chosen carefully to satisfy certain properties:
+near the real axis it remains on the line ℜ(s) = α; it then follows an exponential path
+leftwards; it narrowly avoids zeros of the zeta function; and it moves along the line
+ℜ(s) = (1+ε)/2 when no zeros are nearby. The integrand is holomorphic for ℜ(s) > 0,
+so we take on no residues in the process.
+The portion of the integral near the real axis is used to formulate a main term. In
+order to obtain a saving elsewhere at large imaginary height, we show that ζ(s, y) does
+not become too large on Γ. The Euler product structure of ζ(s, y) reveals that the
+crucial estimate we need to show is that
+1 X Λ(n)
+(1.10)
+log x n≤y ns
+is small for s on or to the right of Γ, but with ℜ(s) ≤ α. We do this by another contour
+integral depending on the size of the local zero-free region.
+As one might have guessed, our lower bound for y in (1.2) is ultimately a consequence
+of the best available zero-free region of the Riemann zeta function ζ(s) by Vinogradov
+and Korobov:
+ℜ(s) > 1 − λ and |ℑ(s)| ≤ x,
+
+6
+
+KHALID YOUNIS
+
+where here and throughout, for a suitably small absolute constant c1 > 0, we write
+c1
+λ=
+.
+(1.11)
+2/3
+(log x) (log log x)1/3
+We choose y large enough that α is well within this zero-free region. Indeed, for y ≤ x
+satisfying (1.2) we have
+1−α=
+
+log(u log(u + 1)) + O(1)
+log(u log(u + 1)) + O(1)
+≤
+≤ ελ
+log y
+C(log x)2/3 (log log x)4/3
+
+(1.12)
+
+provided we choose C ≥ 100/(εc1), for instance.
+This method only delivers a signiﬁcant enough saving if the contour Γ can be shown
+to reside suﬃciently far left, at least on average. Since we do not know the real parts of
+every individual zero of the zeta function, we utilise some knowledge of their statistical
+placement known by the log-free zero-density estimate of Guth and Maynard [GM24]:
+X
+1 ≪ε H (1−σ)(30+ε)/13 .
+(1.13)
+ζ(ρ)=0: ρ=β+iγ, β≥σ, |γ|≤H
+
+The 30/13 in the exponent is ultimately responsible for our restriction that θ > 17/30.
+If instead we were to use the the weaker zero-density result of Huxley [Hux72] throughout this paper, then we would attain the weaker bound of θ > 7/12.
+Obstacles to this method emerge when y becomes large, so we circumvent them with
+several analytic techniques. Among these is the adoption of a smooth majorant on the
+smooth numbers, leading to a weighted version of (1.10).
+However, for y very close to x, our version of the saddle point method appears to
+break down entirely. We therefore adopt a diﬀerent approach having more in common
+with that of Hildebrand [Hil86]. This transforms the problem from counting smooth
+numbers in short intervals into one of counting primes in short intervals, by observing
+that at this level of smoothness we need only exclude numbers with a few large prime
+factors. We require an estimate for the count of primes in short intervals with quickly
+decaying error terms. In order to attain this, we ﬁrst weight the primes, use the
+explicit formula, and then use the zero-density estimate of Guth and Maynard. This
+once again leads to the 17/30 bound for θ.
+1.4. Saddle point method and related work. A typical method of obtaining short
+interval results for primes is via the explicit formula. Unfortunately, the smooth numbers appear not to enjoy such a formula. An alternative approach is via the Hooley–
+Huxley contour, appearing in work of Ramachandra [Ram76], and involves dissecting
+and shifting the Perron integral to the left of the 1-line in a way that stops short of
+hitting zeros of ζ(s). One then employs the zero-density result to the savings corresponding to the location of the contour. A delicate choice of contour passing through
+zero-free regions, paired with zero-density estimates, is a key component of our proof.
+The majority of this paper follows the framework of the saddle point method, which
+ﬁrst appeared in the landmark work of Hildebrand and Tenenbaum [HT86], achieving
+an asymptotic formula for the count of smooth numbers. Additionally, the method
+was able to deliver the short interval result quoted earlier, which we discuss here.
+After expressing the count as in (1.9), a saving in xs ζ(s, y) over the trivial bound is
+fundamental for s = α + it and 1/ log y ≤ |t| ≤ H. By exploiting the Euler product
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+7
+3/2
+
+structure, a saving of at most e−u is attained, as in (1.6), provided H ≤ e(log y) (due
+to the Vinogradov–Korobov zero-free region). This saving can only be suﬃcient if it
+is greater than the length of the Perron integral, meaning H ≤ eu . Upon equalising
+these two restrictions, and noting that the error in Perron’s formula at least requires
+3/5
+that H ≥ x/h, one arrives at the lower bound of applicability h ≥ x/e(log x) .
+Of particular relevance to our proofs is work of Soundararajan [Sou08], later built
+upon by Harper [Har12b], studying the equidistribution of smooth numbers in an arithmetic progression. A key insight featured in these works is that a saving is instead
+possible from the xs term by shifting left from α + it into a (rectangular) zero-free
+region, and by showing that ζ(s, y), or rather an analogue involving Dirichlet characters, does not become too large in the process. The latter task is done by considering
+expressions similar in form to (1.10). This approach is then combined with statistical
+behaviour of the zeros of a Dirichlet L-function by zero-density estimates. Harper
+[Har12a] went on to prove results for smooth numbers in arithmetic progressions on
+average, analogous to the Bombieri–Vinogradov theorem for example, by further developing the saddle point method with several new ideas, including a delicate dissection
+of contributions from zeros of families of L-functions, as well as employing the large
+sieve (though our paper does not use the latter of these tools). Many of these ideas
+transfer to the short interval setting.
+1.5. Organisation. The plan for the remainder of the article is as follows. For small
+ε > 0, we let θ ≥ 17/30 + 10ε, and set a suitably large C ≍ 1/ε. The objective of
+Section 2 is to demonstrate a power saving for xs ζ(s, y) when shifting left into a local
+zero-free region. In Section 3 we move our Perron integral onto a contour Γ, left of the
+vertical line at ℜ(s) = α, and prove that suﬃcient savings occur away from the real
+axis when y ≤ xε (where the constant introduced in Theorem 1.2 has size c ≍ ε). We
+employ a smooth weight function in Section 4 to improve this to y ≤ x1−2ε (now with
+c ≍ ε2 ). This gives suﬃcient error terms when y ≤ x1/2−ε , or when xθ ≤ h ≤ x0.99 , say.
+In Section 5, which may essentially be read independently of earlier sections, we use a
+direct argument counting primes in short intervals to cover the range x1−2ε ≤ y ≤ 2x
+(such that c ≍ ε), as well as when x1/2−ε ≤ y ≤ x1−2ε and x0.99 ≤ h ≤ x. In Section 6,
+we combine the results on diﬀerent ranges to complete the proof of Theorem 1.2. The
+proof of Theorem 1.1 quickly follows by proving the main term fθ (x, y) approximates
+Ψ(x, y)/x.
+Finally, Section 7 contains the proof of Theorem 1.3, in which we revisit and simplify
+our method under the assumption of the Riemann Hypothesis (with K ≍ 1/ε2 , and in
+the smallest range of y with L = 2 + 10ε and 1 − θ ≍ ε instead).
+Notation. We adopt standard asymptotic notation. We write f ≪ g or f = O(g) to
+mean |f | ≤ Cg for some constant C > 0. Let f ≍ g signify f ≪ g ≪ f. For x → ∞,
+we also write f = o(g) if f /g → 0, and f ∼ g if f /g → 1.
+R
+When bounding complex integrals, we use the convenient notation r f (z) |dz| to
+Rb
+mean a f (r(t))|r ′(t)| dt for a diﬀerentiable path r, and extend the notation for piecewise diﬀerentiable paths linearly as one would expect.
+Acknowledgements. The author would like to thank Adam Harper for many helpful
+discussions and encouragement. The author is supported by the Warwick Mathematics
+
+8
+
+KHALID YOUNIS
+
+Institute Centre for Doctoral Training, and gratefully acknowledges funding by the
+Swinnerton-Dyer scholarship.
+Rights Retention. For the purpose of open access, the author has applied a Creative
+Commons Attribution (CC-BY) licence to any Author Accepted Manuscript version
+arising from this submission.
+2. Shifting left
+Recall that the deﬁning property of α is as a saddle point: for all σ > 0, one has
+xσ ζ(σ, y) ≥ xα ζ(α, y).
+In this section we show that this inequality can be reversed, and with a power saving
+in x, when σ is replaced by σ + it ∈ C in some zero-free region far away from the real
+axis. To do this, we ﬁrst establish some preparatory results.
+Lemma 2.1 (Bounded logarithmic derivative in zero-free region). Let ε > 0 be small,
+and let 0 < η ≤ 1/2. Write s0 = σ0 + it0 6= 1, where σ0 ≥ 1 − (1 − ε)η. Suppose there
+are no zeros of ζ(s) in the region
+ℜ(s) > 1 − η
+
+and ℑ(s) ∈ (t0 − 1, t0 + 1).
+
+Then
+−ζ ′
+1
+(s0 ) ≤
++ Oε (log(|t0 | + 2)) .
+ζ
+|s0 − 1|
+
+Proof. If |t0 | < 2 then, from the Laurent expansion of −ζ ′ /ζ, we ﬁnd that
+−ζ ′
+1
+(s0 ) ≤
++ O(1).
+ζ
+|s0 − 1|
+
+Now assume |t0 | ≥ 2. Consider the partial fraction expansion when |t| ≥ 2, given by
+X 1
+−ζ ′
+(s) = −
++ O(log |t|),
+ζ
+s−ρ
+ρ
+where the sum is over zeros ρ = β + iγ such that γ ∈ (t − 1, t + 1) (see e.g. [Dav80,
+§15]). Set s1 = 1 + it0 . We have the standard bound on the 1-line
+−ζ ′
+(s1 ) ≪ log |t0 |,
+ζ
+
+(2.1)
+
+(see e.g. [MV07, Thm 6.7]) and thus from the partial fraction expansion
+X 1
+ℜ
+≪ log |t0 |.
+s1 − ρ
+ρ
+Now consider the diﬀerence
+X
+−ζ ′
+−ζ ′
+(s0 ) −
+(s1 ) = −
+ζ
+ζ
+ρ
+
+
+
+1
+1
+−
+s0 − ρ s1 − ρ
+
+
+
++ O(log |t0 |).
+
+(2.2)
+
+(2.3)
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+9
+
+Our hypothesised zero-free region implies |s0 − ρ| ≍ε |s1 − ρ|, and |s1 − s0 | = 1 − σ0 ≤
+1 − β = ℜ(s1 − ρ). Each summand is therefore at most
+|s1 − s0 |
+s1 − ρ
+1
+≪ε ℜ
+=
+ℜ
+.
+|s0 − ρ||s1 − ρ|
+|s1 − ρ|2
+s1 − ρ
+
+From the earlier estimates (2.1) and (2.2), we see that (2.3) yields
+!
+X 1
+−ζ ′
+−ζ ′
++ O(log |t0 |) ≪ε log |t0 |,
+(s0 ) =
+(s1 ) + Oε ℜ
+ζ
+ζ
+s1 − ρ
+ρ
+completing the proof.
+
+
+
+In the following argument in complex analysis, we improve the log |t0 | bound by
+interpolating between this and the stronger bound (log |t0 |)2/3+ε to the right of the
+Vinogradov–Korobov zero-free region.
+Lemma 2.2 (Improved bound). Let ε > 0 be small, and let 0 < η ≤ 1/2. Write
+s0 = σ0 + it0 6= 1, where σ0 ≥ 1 − (1 − ε)η. Suppose there are no zeros of ζ(s) in the
+region
+ℜ(s) > 1 − η and ℑ(s) ∈ (t0 − 2, t0 + 2).
+Then
+−ζ ′
+1
+(s0 ) ≤
++ Oε ((log(|t0 | + 2))b ),
+ζ
+|s0 − 1|
+for some constant b = b(ε) < 1.
+Proof. Assume |t0 | ≥ 2, otherwise the result is easy to deduce as before. Consider
+circles C1 , C2 , C3 each having centre 3/2 + it0 and respective radii r1 = 1/2, r2 =
+1/2 + (1 − ε)η, and r3 = 1/2 + (1 − ε/2)η. Write Mj for the maximum value that
+| − ζ ′ (s)/ζ(s)| attains on Cj , which is ﬁnite by the assumed zero-free region. We have
+M1 ≪ (log |t0 |)2/3 (log log |t0 |)1/3 (see e.g. [Tit86, p. 135]), and M3 ≪ε log |t0 | from the
+previous lemma (with ε scaled by 1/2).
+By Hadamard’s three circle theorem (as in e.g. [Tit86, p. 337]),
+M2 ≤ M11−a M3a
+
+where
+
+log(1 + 2(1 − ε)η)
+log(r2 /r1 )
+=
+.
+log(r3 /r1 )
+log(1 + 2(1 − ε/2)η)
+Observe that a is an increasing function of η > 0, so is maximised at η = 1/2. Thus
+a ≤ log(2 − ε)/ log(2 − ε/2) < 1, and the result follows.
+
+a=
+
+Consider a trivial upper bound from the triangle inequality
+X Λ(n)
+nα+it
+n≤y
+
+≤
+
+X Λ(n)
+n≤y
+
+nα
+
+=
+
+X log p
+
+pα − 1
+p≤y
+
++ O(1) = log x + O(1).
+
+The trivial bound is even worse when replacing α + it with σ + it such that σ ≤ α. In
+order to obtain a saving, we must make use of the oscillations from n−it . To do this
+we go via Perron’s formula, provided we have a suitably large zero-free region around
+σ + it.
+
+10
+
+KHALID YOUNIS
+
+Lemma 2.3 (Shifting into local zero-free region yields cancellation). Let z ≥ 2. Let
+ε > 0 be small, and let 0 < η ≤ 1/2. Write s0 = σ0 + it0 6= 1, where 1 − (1 − ε)η ≤
+σ0 < 1 + 1/ log z. Suppose there are no zeros of ζ(s) in the region
+ℜ(s) > 1 − η
+
+and ℑ(s) ∈ (t0 − 10z η , t0 + 10z η ).
+
+Then for some b = b(ε) < 1, we have
+X Λ(n)
+n≤z
+
+ns0
+
+
+
+
+z 1−σ0 + 1
+(log z)2
+b
+≤
++ Oε (log(|t0 | + 2)) + O
+|1 − s0 |
+z εη
+
+
+((log(|t0 | + z η + 2))b + 1/η) log(z η /η)
+.
++ Oε
+z εη/2
+
+Proof. If 2 ≤ T ≤ 10z, then by Perron’s formula (see e.g. [MV07, Thm. 5.2, Cor. 5.3])
+
+ 1−σ0
+Z 1−σ0 +1/ log z+iT
+X Λ(n)
+1
+zs
+z
+(log z)2
+−ζ ′
+.
+=
+(s + s0 ) ds + O
+ns0
+2πi 1−σ0 +1/ log z−iT ζ
+s
+T
+n≤z
+A change of variable for the integral, and also insisting that T ≥ z η , leads to
+
+
+Z 1+1/ log z+it0 +iT
+1
+(log z)2
+z s−s0
+−ζ ′
+ds + O
+(s)
+.
+2πi 1+1/ log z+it0 −iT ζ
+s − s0
+z εη
+We shift the contour left to ℜ(s) = r = 1 − (1 − ε/2)η. There are two cases to consider.
+Case 1. Assume |t0 | ≥ 3z η . Set T = 2z η . We do not encounter the simple pole of
+−ζ ′ (s)/ζ(s) at s = 1. By Cauchy’s residue theorem, the integral is equal to
+Z r+it0 +iT Z r+it0 −iT
+Z 1+1/ log z+it0 +iT !
+1
+z s−s0
+−ζ ′
+−ζ ′
+ds.
++
+(s0 ) +
++
+(s)
+ζ
+2πi
+ζ
+s − s0
+r+it0 −iT
+1+1/ log z+it0 −iT
+r+it0 +iT
+(2.4)
+′
+b
+We have | − ζ (s0 )/ζ(s0)| ≤ 1/|s0 − 1| + Oε ((log(t0 + 2)) ) by Lemma 2.2.
+Case 2. Assume |t0 | < 3z η . Set T = 4z η . We apply Cauchy’s residue theorem exactly
+as before, but we do encounter the simple pole of −ζ ′ (s)/ζ(s) at s = 1, which gives
+(2.4) plus an additional term
+z 1−s0
+.
+1 − s0
+
+In either case, we now handle (2.4). By Lemma 2.2, the upper horizontal integral is
+crudely bounded by
+≪
+
+(log(|t0 | + z η + 2))b
+−ζ ′
+z 1−σ0
+(σ + it0 + iT )
+≪ε
+.
+σ∈[r,1+1/ log z]
+ζ
+T
+z εη
+max
+
+The lower horizontal integral is bounded similarly. The vertical integral is
+Z T
+−ζ ′
+1
+r−σ0
+≪z
+max
+(r + it0 + it)
+dt.
+t∈[−T,T ]
+ζ
+−T |r − σ0 + it|
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+11
+
+We have |r − σ0 + it| ≥ max{εη/2, |t|}, since we can consider the real and imaginary
+parts separately. Again using Lemma 2.2, the above expression is then
+Z T
+
+Z η
+1
+1
+(log(|t0 | + T + 2))b + 1/η
+dt +
+dt
+≪ε
+z εη/2
+η t
+−η η
+≪
+
+(log(|t0 | + z η + 2))b + 1/η
+(log(z η ) + log(1/η) + 1)
+εη/2
+z
+
+as desired.
+
+
+
+In the next lemma, we achieve the objective that we stated at the start of this section:
+we exhibit a power saving in xs ζ(s, y) as s travels far enough left from s2 = α + it0
+into a local zero free-region, provided t0 is large enough. Recall from (1.11) that the
+width of the zero-free region of Vinogradov and Korobov up to imaginary height x is
+given by
+c1
+λ=
+2/3
+(log x) (log log x)1/3
+for a suitably small absolute constant c1 > 0.
+Lemma 2.4 (Power saving from shifting left locally). Let ε > 0 be small, and let
+λ ≤ η ≤ 1/2. Write s1 = σ1 + it0 , and s2 = σ2 + it0 , where 1 − (1 − ε)η ≤ σ1 < σ2 <
+1 + 1/ log y and
+log(u + 1) 1−σ1
+y
+≤ |t0 | ≤ x.
+ε2 (log y)y 1−α
+Suppose there are no zeros of ζ(s) in the region
+ℜ(s) > 1 − η
+
+and ℑ(s) ∈ (t0 − 10y η , t0 + 10y η ).
+
+Then for y ≤ x in the range (1.2), and x sufficiently large in terms of ε, we have
+
+|xs2 ζ(s2, y)|
+.
+x(1−ε)(σ2 −σ1 )
+Q
+−1
+Proof. Recall the Euler product ζ(s, y) = p≤y (1 − p−s ) for ℜ(s) > 0, so in particular 0 < |ζ(s, y)| < ∞. Thus log |ζ(s1, y)/ζ(s2, y)| is ﬁnite and equals
+Z s1 ′
+ζ(s1, y)
+ζ
+ζ′
+ℜ log
+=ℜ
+(s, y) ds ≤ (σ2 − σ1 ) sup
+(s, y) .
+ζ(s2, y)
+ℜ(s)≥σ1 ζ
+s2 ζ
+|xs1 ζ(s1 , y)| ≪
+
+ℑ(s)=t0
+
+Using the product rule for diﬀerentiation, we have
+
+
+
+X log p
+X Λ(n)
+−ζ
+X log p 
+.
+(s, y) =
+=
++
+O
+
+s−1
+s
+ks | 
+ζ
+p
+n
+|p
+p≤y
+p≤y
+n≤y
+′
+
+(2.5)
+
+k≥2
+
+We may bound the error term, if ℜ(s) ≥ (1+ε)/2, by summing a geometric progression
+X log p
+X log p
+≪
+≪ε 1.
+pks
+|p2s |
+p≤y
+p≤y
+k≥2
+
+12
+
+KHALID YOUNIS
+
+For x large enough in terms of ε, we claim that for s in the above supremum we
+have
+X Λ(n)
+ε log x
+≤
+,
+s
+n
+2
+n≤y
+which suﬃces to prove the lemma. First observe that
+
+
+εc1 log y
+εη
+ελ
+y ≥ y = exp
+≥ (log x)Cεc1
+(log x)2/3 (log log x)1/3
+
+and choose C ≥ 100/(εc1). We then see from Lemma 2.3 that
+X Λ(n)
+n≤y
+
+ns
+
+≤
+
+y 1−σ + 1
++ Oε ((log(|t0 | + 2))b ) + Oε (1).
+|1 − s|
+
+Certainly we can bound the term
+ε log x
+10
+for x suﬃciently large in terms of ε. Next, using the approximate formula (1.5) for α,
+Oε ((log(|t0 | + 2))b ) ≤
+
+y 1−σ1
+ε2 (log y)y 1−α
+ε2 (log y)eO(1) u log(u + 1)
+ε log x
+y 1−σ
+≤
+≤
+≤
+≤
+,
+1−s
+|t0 |
+log(u + 1)
+log(u + 1)
+10
+as ε > 0 is suitably small. Similarly,
+1
+ey 1−σ1
+ε log x
+≤
+≤
+.
+1−s
+|t0 |
+10
+Assembling these bounds proves the claim, and hence the lemma.
+
+
+
+3. Contour
+Let ε > 0 be small. For each zero ρ = 1 − ν + iγ of ζ(s) with ν ≤ 1/2, consider the
+−
+(connected) path Γρ = Γ′ρ ∪ Γ+
+ρ ∪ Γρ , given by the union of a vertical line
+Γ′ρ (t) = 1 − (1 − ε)ν + i(γ + 10t),
+
+and the exponential graphs
+
+δ
+Γ±
+ρ (δ) = 1 − (1 − ε)δ + i(γ ± 10y ),
+
+t ∈ [−y ν , y ν ],
+
+
+
+1
+δ ∈ ν,
+.
+2
+
+−
+Also, let Γ0 = Γ′0 ∪ Γ+
+0 ∪ Γ0 be the union of the vertical line
+
+
+log(u + 1) log(u + 1)
+′
+,
+Γ0 (t) = α + it,
+t∈ − 2
+ε (log y) ε2 (log y)
+and the exponential graphs
+
+
+log(u + 1) δ
+1−ε
+±
+Γ0 (δ) = 1 − δ ± i 2
+.
+y ,
+δ ∈ 1 − α,
+ε (log y)y 1−α
+2
+
+For every t satisfyingS|t| ≤ H, for some H we specify later, select the largest σ such
+that σ + it ∈ Γ0 ∪ ( ρ Γρ ), and if none exists then set σ = (1 + ε)/2. This set of
+s = σ + it forms a continuous path regarded as travelling up the complex plane, which
+we denote Γ (and Γ(t) denotes this point σ + it).
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+13
+
+Recall by (1.4) that α < 1 for x suﬃciently large. The way we have constructed
+our path Γ ensures, by Lemma 2.4, that if y ≤ x is in the range (1.2), and if x is
+suﬃciently large in terms of ε, then every s = σ + it on or to the right of Γ, but to the
+left of α, satisﬁes
+|xα+it ζ(α + it, y)|
+xα ζ(α, y)
+≤
+.
+x(1−ε)(α−σ)
+x(1−ε)(α−σ)
+The second inequality is from a simple application of the triangle inequality.
+Recall from Perron’s formula (1.9) that for 2 ≤ y ≤ x and 2 ≤ H ≤ x we have
+
+
+Z α+iH
+1
+(x + h)s − xs
+x log x
+Ψ(x + h, y) − Ψ(x, y) =
+.
+ζ(s, y)
+ds + O
+2πi α−iH
+s
+H
+|xs ζ(s, y)| ≪
+
+By Cauchy’s theorem, we alter the path of integration to obtain
+!
+Z
+Z
+Z
+Z
+(x + h)s − xs
+1
++
+ζ(s,
+y)
++ S
++
+ds
+S
+σ±iH
+2πi
+s
+Γ\(Γ0 ∪( ρ Γρ ))
+Γ∩Γ0
+ρ (Γ∩Γρ )
+Γ(±H)≤σ≤α
+and encounter no poles in the process. Now observe the expansion
+
+s
+
+Z h/x
+Z h/x 
+Z v
+h
+s−1
+s−2
+1+
+= 1+s
+(1 + v)
+dv = 1 + s
+1 + (s − 1)
+(1 + w)
+dw dv.
+x
+0
+0
+0
+As ℜ(s) ≤ 10, we can bound the integrands |(1 + v)s−1 | ≪ 1 and |(1 + w)s−2 | ≪ 1, so
+(1 + h/x)s − 1
+h
+(x + h)s − xs
+= xs
+≪ |xs | ,
+s
+s
+x
+
+and
+(x + h)s − xs
+(1 + h/x)s − 1
+= xs
+= xs
+s
+s
+
+
+
+
+
+h
+h2
++ O |s − 1| 2
+,
+x
+x
+
+provided s 6= 0.
+Applying this, we extract a main term, with an error, from near the real axis
+ 2
+Z
+
+
+Z
+h
+h
+1 h
+s
+s
+min
+ζ(s, y)x ds + O
+|ζ(s, y)x | |ds|
+|s − 1|,
+2πi x Γ∩Γ0
+x2
+x
+Γ∩Γ0
+and we bound the contribution from the zeros and the ‘remainder’ line by
+Z
+Z
+hX
+h
+s
+≪
+|ζ(s, y)xs| |ds|.
+|ζ(s, y)x | |ds| +
+S
+x ρ Γ∩Γρ
+x Γ\(Γ0 ∪( ρ Γρ ))
+We also bound the integral over the horizontal path by
+Z
+1
+≪
+|ζ(s, y)xs| |ds|,
+σ±iH
+H
+Γ(±H)≤σ≤α
+
+instead using the triangle inequality
+|xs |
+(x + h)s − xs
+≪
+.
+s
+H
+
+(3.1)
+
+14
+
+KHALID YOUNIS
+
+Lemma 3.1 (Contribution from zeros). Let ε > 0 be small, and let H ≤ x13/30−5ε .
+Suppose y ≤ xε is in the range (1.2), and x is sufficiently large in terms of ε. Then
+XZ
+1/3
+|ζ(s, y)xs| |ds| ≪ε Ψ(x, y)e−c((log x)/ log log x)
+ρ
+
+Γ∩Γρ
+
+for a small constant c = c(ε) > 0.
+Proof. First consider the contribution from one vertical line
+Z
+ y ν
+ζ(α, y)xα
+|ζ(s, y)xs| |ds| ≪ |Γ′ρ | (1−ε)(α−(1−(1−ε)ν)) ≪ ζ(α, y)xαx(1−ε)(1−α) (1−ε)2 .
+x
+x
+Γ∩Γ′ρ
+Similarly, the exponential graph contributes
+Z 1/2
+Z
+d +
+2
+s
+α (1−ε)(1−α)
+x−(1−ε) δ
+|ζ(s, y)x | |ds| ≪ ζ(α, y)x x
+Γ (δ) dδ
++
+dδ ρ
+Γ∩Γρ
+ν
+Z 1/2
+2
+α (1−ε)(1−α)
+≪ ζ(α, y)x x
+x−(1−ε) δ (log y)y δ dδ
+ν
+
+α (1−ε)(1−α) log y
+
+≪ ζ(α, y)x x
+
+
+
+y
+
+log x x(1−ε)2
+
+ν
+
+.
+
+An identical calculation yields the same bound for Γ ∩ Γ−
+ρ.
+ε
+α
+Recall
+√ from (1.12) that 1 − α ≤ ελ ≤ εν, and that y ≤ x . Given that x ζ(α, y) ≪
+Ψ(x, y) log x log y (see (1.3)), we have
+X
+XZ
+p
+x−(1−4ε)ν .
+|ζ(s, y)xs| |ds| ≪ Ψ(x, y) log x log y
+ρ
+
+Γ∩Γρ
+
+ρ
+
+Since |Γρ | ≪ y 1/2 ≤ xε/2 , the only zeros contributing to Γ are those with imaginary
+height |γ| ≪ H + xε/2 . Consider the contribution to the sum of the ρ = 1 − ν + iγ with
+ℓ
+ℓ+1
+≤ν≤
+.
+log x
+log x
+The number of such zeros is ≪ε (H + xε/2 )(30+ε)(ℓ+1)/(13 log x) ≪ x(1−5ε)ℓ/ log x by the
+zero-density estimate (1.13) and the fact that H (30+ε)/13 ≤ x(13/30−5ε)(30+ε)/13 ≤ x1−5ε .
+The contribution from ρ in the stated range is therefore
+≪ε x(1−5ε)ℓ/ log x x−(1−4ε)ℓ/ log x = x−εℓ/ log x .
+The number of possible integers ℓ to cover the whole range of summation is at most
+log x. Also, we may assume that (ℓ + 1)/ log x ≥ λ, for otherwise there are no such ρ
+to consider by the Vinogradov–Korobov zero-free region. Therefore
+X
+x−(1−4ε)ν ≪ (log x)x−ελ ,
+(3.2)
+ρ
+
+which is suﬃcient to prove the result.
+
+
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+15
+
+Lemma 3.2 (Contribution from Γ±
+0 ). Let ε > 0 be small. Suppose y ≤ x is in the
+range (1.2), and x is sufficiently large in terms of ε. If y ≤ x1/2−ε then
+Z
+Ψ(x, y)e−c2 u
+,
+|s − 1||ζ(s, y)xs| |ds| ≪ε
+log x
+Γ∩Γ±
+0
+and if y ≤ x1−2ε then
+
+Z
+
+Γ∩Γ±
+0
+
+|ζ(s, y)xs| |ds| ≪ε Ψ(x, y)e−c2u ,
+
+for a small absolute constant c2 > 0.
+Proof. For s = 1 − δ + it ∈ Γ+
+0 , we claim that
+δ ≤ |t| =
+
+log(u + 1)
+
+ε2 (log y)y 1−α
+
+yδ.
+
+The inequality certainly holds when δ = 1 − α (as ε > 0 is suitably small) from
+δ
+2 1−α
+the formula (1.5). Furthermore, on Γ+
+) ≥
+0 we have d|t|/dδ = log(u + 1)y /(ε y
+2
+log(u + 1)/ε ≥ 1, proving the claim. Thus |s − 1| ≤ 2|t|. This reasoning also shows
+that dΓ+
+0 /dδ ≤ 1 + d|t|/dδ ≤ 2(d|t|/dδ). Therefore
+Z
+Z
+s
+|s − 1||ζ(s, y)x | |ds| ≪
+|t||ζ(s, y)xs| |ds|
+Γ∩Γ+
+0
+
+1−δ+it∈Γ∩Γ+
+0
+
+≪
+
+Z
+
+1−δ+it∈Γ∩Γ+
+0
+
+|t|
+
+ζ(α + it, y)xα
+x(1−ε)(α−(1−δ))
+
+d +
+Γ (δ) dδ.
+dδ 0
+
+Using the estimates (1.3) and (1.6), the above expression is
+Z
+d +
+ζ(α, y)xα
+≪
+e−c0 u |t| (1−ε)(α−(1−δ))
+Γ (δ) dδ
+x
+dδ 0
+1−δ+it∈Γ∩Γ+
+0
+
+2
+Z
+y 2δ
+log(u + 1)
+x(1−ε)(1−α) ζ(α, y)xαe−c0 u
+dδ
+≪ε
+log y
+x(1−ε)δ
+y 1−α
+1−δ+it∈Γ∩Γ+
+0
+
+2 Z (1−ε)/2  2 δ
+x(1−ε)(1−α) ζ(α, y)xαe−c0 u log(u + 1)
+y
+dδ
+=
+log y
+y 1−α
+x1−ε
+1−α
+Z (1−ε)/2  2 δ−(1−α)
+y
+−c2 u
+dδ.
+≪ Ψ(x, y)e
+x1−ε
+1−α
+If y 2 ≤ x1−2ε , we evaluate the integral to obtain an overall bound of
+≪ε
+
+Ψ(x, y)e−c2u
+.
+log x
+
+An identical calculation yields the same bound for Γ∩Γ−
+0 . The second claimed bound
+is proved very similarly by omitting a multiplicative factor.
+
+When y is relatively large we need a more delicate estimate. The next result will
+only be used when h is small compared to x, say h ≤ x0.99 (see Section 6), in which
+case (h/x)ε/2 delivers a good saving.
+
+16
+
+KHALID YOUNIS
+
+Lemma 3.3 (Contribution from Γ±
+0 , part II). Let ε > 0 be small. Suppose h and y ≤ x
+are in the range (1.2), and x is sufficiently large in terms of ε. If x1/2−ε < y ≤ x1−2ε
+then
+
+ 1+ε/2
+ 2
+Z
+h
+h
+h
+s
+|ζ(s, y)x | |ds| ≪ε
+|s − 1|,
+Ψ(x, y)(log y)e−c3 u
+min
+2
+±
+x
+x
+x
+Γ∩Γ0
+for a small absolute constant c3 > 0.
+Proof. First suppose that x1/2−ε < y ≤ x1/2−ε/2 /2. Using
+ 2
+
+h
+h2
+h
+min
+≤
+|s
+−
+1|,
+|s − 1|,
+x2
+x
+x2
+the calculation from the previous lemma gives a bound of
+Z (1−ε)/2  2 δ−(1−α)
+h2
+h2 Ψ(x, y)e−c2u
+h2
+y
+−c2 u
+≪ 2 Ψ(x, y)e
+dδ
+≪
+≪
+Ψ(x, y)e−c2u .
+1−ε
+2
+1−ε
+2
+2
+x
+x
+x log(x /y )
+x
+1−α
+Similarly, we achieve the same bound when x1/2−ε/2 /2 < y ≤ 2x1/2−ε/2 by estimating
+this last integral using the triangle inequality.
+It remains to consider 2x1/2−ε/2 < y ≤ x1−2ε . As in the previous lemma, |s − 1| ≪ |t|
+on Γ ∩ Γ+
+0 , so it suﬃces to bound
+
+ 2
+Z
+h
+h
+|ζ(s, y)xs| |ds|.
+|t|,
+min
+2
++
+x
+x
+1−δ+it∈Γ∩Γ0
+Let δ∗ = max{δ : 1 − δ + it ∈ Γ ∩ Γ+
+0 and |t| ≤ x/h}. The portion of the integral with
+δ ≤ δ∗ is
+ 2 δ∗ −(1−α)
+Z δ∗  2 δ−(1−α)
+h2
+y
+y
+h2 Ψ(x, y)e−c2u
+−c2 u
+≪ε 2 Ψ(x, y)e
+dδ ≪ 2
+. (3.3)
+1−ε
+2
+1−ε
+x
+x
+x log(y /x ) x1−ε
+1−α
+Note that
+1 + 2ε ≤
+We have
+
+2
+1
+≤u<
+.
+1 − 2ε
+1−ε
+
+log(u + 1) δ∗ −(1−α) x
+y
+≤ .
+ε2 (log y)
+h
+Raising both sides to the power of 2 − u(1 − ε) > 0, we have
+2−u(1−ε)  2 δ∗ −(1−α)  
+
+y
+x 2−u(1−ε)
+log(u + 1)
+≤
+.
+ε2 (log y)
+x1−ε
+h
+
+This leads to a bound for (3.3) of
+ u(1−ε)
+ 1+ε/2
+h
+(log y)2−u(1−ε)
+h
+−c3 u
+≪ε Ψ(x, y)e
+≪ε
+Ψ(x, y)(log y)e−c3 u .
+2
+1−ε
+x
+log(y /x )
+x
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+17
+
+Similarly, the portion of the integral with δ > δ∗ is
+Z (1−ε)/2 
+y δ−(1−α)
+h Ψ(x, y)e−c2u  y δ∗ −(1−α)
+h
+−c2 u
+dδ ≪
+≪ Ψ(x, y)e
+x
+x1−ε
+x log(x1−ε /y) x1−ε
+δ∗
+ u(1−ε)
+h
+≪ε
+Ψ(x, y)e−c3u (log y)−u(1−ε)
+x
+ 1+ε/2
+h
+≤
+Ψ(x, y)e−c3u .
+x
+An identical calculation yields the same bound for Γ ∩ Γ−
+0.
+
+
+
+Lemma 3.4 (Contribution from the remainder). Let ε > 0 be small. Suppose y ≤ x
+is in the range (1.2), and x is sufficiently large in terms of ε. Then
+Z
+p
+H
+s
+.
+log
+x
+log
+y
+|ζ(s,
+y)x
+|
+|ds|
+≪
+Ψ(x,
+y)
+S
+x1/2−2ε
+Γ\(Γ0 ∪( ρ Γρ ))
+
+Proof. Given that this integral lies on the line ℜ(s) = (1 + ε)/2, we have
+Z
+p
+H
+ζ(α, y)xα
+s
+log x log y 1/2−2ε ,
+|ζ(s,
+y)x
+|
+|ds|
+≪
+H
+≪
+Ψ(x,
+y)
+S
+(1−ε)(α−1/2−ε/2)
+x
+x
+Γ\(Γ0 ∪( ρ Γρ ))
+where we have used that 1 − α ≤ ε.
+
+
+
+Lemma 3.5 (Contribution from the horizontal). Let ε > 0 be small. Suppose y ≤ x
+is in the range (1.2), and x is sufficiently large in terms of ε. Then
+Z
+Ψ(x, y)
+|ζ(s, y)xs| |ds| ≪ √ .
+σ±iH
+u
+Γ(±H)≤σ≤α
+
+Proof. We have
+Z α+iH
+Z α
+s
+α
+|ζ(s, y)x | |ds| ≪ ζ(α, y)x
+Γ(H)+iH
+
+(1+ε)/2
+
+x−(1−ε)(α−σ) dσ ≪
+
+Ψ(x, y)
+ζ(α, y)xα
+≪ √ ,
+log x.
+u
+
+and we can similarly bound the lower horizontal.
+
+
+
+Lemma 3.6 (Contribution near real axis). Uniformly for 2 ≤ y ≤ x we have
+
+
+
+Z α+i/ log y
+1 log y
+1
+s
+,
+ζ(s, y)x ds = αΨ(x, y) 1 + O
++
+2πi α−i/ log y
+u
+y
+and the same estimate is true for
+Z α+i/ log y
+1
+|ζ(s, y)xs| |ds|.
+2π α−i/ log y
+We also have
+1
+2π
+
+Z α+i/ log y
+α−i/ log y
+
+|s − 1||ζ(s, y)xs| |ds| ≪
+
+Ψ(x, y) log(u + 1)
+.
+log y
+
+18
+
+KHALID YOUNIS
+
+Proof. The ﬁrst two results follow from [HT86, Lemma 12] and then [HT86, Thm. 1]
+(noting that both sides in [HT86, Thm. 1] are positive so we are free to divide by
+1 + O(1/u + log y/y)).
+The ﬁnal estimate follows from the fact that |s − 1| ≤ |ℜ(s − 1)| + |ℑ(s − 1)| ≤
+|1 − α| + 1/ log y ≪ log(u + 1)/ log y, by the approximate formula (1.5).
+
+Lemma 3.7 (Contribution at intermediate height). Let ε > 0. Suppose log x < y ≤ x
+is sufficiently large in terms of ε. Then uniformly
+Z
+2
+|ζ(s, y)xs| |ds| ≪ε Ψ(x, y)e−c4u/(log(u+1))
+α+it
+1/ log y≤|t|≤log(u+1)/(ε2 log y)
+
+and
+Z
+
+2
+
+α+it
+1/ log y≤|t|≤log(u+1)/(ε2 log y)
+
+|s − 1||ζ(s, y)xs| |ds| ≪ε
+
+Ψ(x, y)e−c4u/(log(u+1))
+log y
+
+for some absolute constant c4 > 0.
+Proof. We use (1.6) which implies that if 1/ log y ≤ |t| ≤ 2/ε2 then
+2
+
+|ζ(α + it, y)| ≪ ζ(α, y)e−c0u/(log(u+1))
+
+for some c0 > 0. Indeed, we have |1 − α| ≪ log(u + 1)/ log y from the approximation
+(1.5), so that t2 /(t2 + (1 − α)2 ) ≫ min{1, t2 /(1 − α)2 } ≫ 1/(log(u + 1))2 . The ﬁrst
+integral is then certainly
+√
+log(u + 1) Ψ(x, y) log x log y
+≪ 2
+,
+ε log y
+ec0 u/(log(u+1))2
+which gives the ﬁrst desired estimate.
+Given that |s − 1| ≤ |ℜ(s − 1)| + |ℑ(s − 1)| ≪ε log(u + 1)/ log y, again because
+|1 − α| ≪ log(u + 1)/ log y, the second estimate follows.
+
+Assuming H ≤ x13/30−5ε , we have shown for y ≤ xε satisfying (1.2), with x suﬃciently large in terms of ε, that Ψ(x + h, y) − Ψ(x, y) equals
+ 2
+
+Z
+h Ψ(x, y) log(u + 1)
+h 1
+s
+ζ(s, y)x ds + Oε
+2πi x Γ∩Γ0
+x2
+log y
+
+
+
+
+h
+Ψ(x, y)
+−c((log x)/ log log x)1/3
+(3.4)
+√
++ Oε
+Ψ(x, y)e
++O
+x
+H u
+
+
+
+
+p
+H
+h
+x log x
++O
+.
+Ψ(x, y) log x log y 1/2−2ε + O
+x
+x
+H
+9/10
+
+We set H = xe(log x) /h. By (1.2) we have h ≥ xθ , and so H ≤ x1−θ+o(1) . The earlier
+bound on H is then satisﬁed if, say,√θ ≥ 17/30 + 10ε. By (1.8), the ﬁnal error term in
+(3.4) is certainly ≪ (h/x)Ψ(x, y)/e log x .
+Recall that in the deﬁnition of Γ we have |t| ≤ H, and so the integral in (3.4) may
+depend on h, which gives us a main term not of the desired form. To overcome this,
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+19
+
+we ﬁrst deﬁne Γ∞ to be the contour Γ but without the restriction that |t| ≤ H, and
+set
+Z
+1 1
+ζ(s, y)xs ds.
+fθ (x, y) =
+2πi x Γ∞ ∩Γ0
+
+Note that this function depends on θ because the contour depends on ε, which in turn
+depends on θ. The next lemma allows us to approximate the main term of (3.4) by
+fθ (x, y)h, whilst introducing an additional error of only
+h Ψ(x, y)
+,
+x e(ε/2)(log x)9/10
+completing the proof of Theorem 1.2 assuming y ≤ xε .
+≪ε
+
+Lemma 3.8 (Contribution of Γ±
+0 at large height). Let ε > 0 be small. Suppose
+1−2ε
+y≤x
+is in the range (1.2), and x is sufficiently large in terms of ε. Then
+Z
+Ψ(x, y)
+|ζ(s, y)xs| |ds| ≪ε
+.
+9/10
+±
+e(ε/2)(log x)
+(Γ∞ ∩Γ±
+0 )\(Γ∩Γ0 )
+Proof. For 1 − δ + it ∈ Γ∞ ∩ Γ+
+0 , we have
+|t| =
+
+log(u + 1) δ
+y .
+ε2 (log y)y 1−α
+
+∗
+Let δ ∗ = max{δ : 1 − δ + it ∈ Γ∞ ∩ Γ+
+0 and |t| ≤ H}. If |t| < H at δ =∗ δ , then
+δ −1+α
+we are done. We may therefore assume this is not the case, so that y
+≫ε
+(log x)9/10 /2
+H(log y)/ log(u + 1) ≫ e
+. By a similar calculation to that in Lemma 3.2, we
+have
+Z
+Z
+ζ(α + it, y)xα d +
+s
+|ζ(s, y)x | |ds| ≪
+Γ (δ) dδ
++
++
+x(1−ε)(α−(1−δ)) dδ 0
+(Γ∞ ∩Γ+
+1−δ+it∈(Γ∞ ∩Γ+
+0 )\(Γ∩Γ0 )
+0 )\(Γ∩Γ0 )
+Z (1−ε)/2 
+y δ−(1−α)
+α −c0 u
+≪ε ζ(α, y)x e
+log(u + 1)
+dδ
+x1−ε
+δ∗
+ y δ∗ −1+α
+.
+≪ε Ψ(x, y)e−c2u 1−ε
+x
+Since
+ y δ∗ −1+α  1 δ∗ −1+α  1 δ∗ −1+α
+9/10
+≤
+≤
+≪ε e−(ε/2)(log x) ,
+1−ε
+ε
+ε
+x
+x
+y
+we obtain the required bound.
+−
+The proof for (Γ∞ ∩ Γ−
+
+0 ) \ (Γ ∩ Γ0 ) follows from an identical calculation.
+
+The condition y ≤ xε emerges from the contribution from the zeros ρ. This requirement ultimately comes from needing a large local zero-free region in Lemma 2.3 due
+to the slow decay of the error term for the relevant Perron integral. To overcome this
+barrier, in the next section we employ a smooth weight which leads to a better decay
+rate than that oﬀered by the Perron integral. We are then left to deal with large y,
+due to the conditions imposed when bounding the error from Γ±
+0 , which we do in a
+later section by diﬀerent means.
+
+20
+
+KHALID YOUNIS
+
+4. Smoothing to extend the range
+In this section we consider the case when
+xθ ≤ h ≤ x
+
+and
+
+xε ≤ y ≤ x1−2ε ,
+
+where 17/30 < θ ≤ 1, with ε = ε(θ) > 0 suitably small, and x suﬃciently large
+in terms of ε. We show that Theorem 1.2 holds in this range if we further assume
+y ≤ x1/2−ε . Without this assumption, the error term we obtain in this section is in
+general weaker than desired, and so requires additional work which we handle later
+on.
+For 0 < κ < 1 small, which we specify later, let W = Wκ : (0, ∞) → [0, 1] be a
+smooth function which equals 1 on (0, 1] and equals 0 on (1 + κ, ∞). We may choose
+W so that the derivative bound
+Z 1+κ
+|W (m) (x)| dx ≪m κ1−m
+(4.1)
+1
+
+holds for all m ≥ 0. Consider the weighted count of y(1 + κ)-smooth numbers
+ a1
+ ak
+X
+p1
+pk
+W
+ΨW (x, y) =
+.
+...W
+y
+y
+a
+a
+n=p 1 ...p k
+1
+
+n≤x
+
+k
+
+Lemma 4.1 (Weighted count approximates unweighted count). Let 17/30 < θ ≤ 1,
+and let 0 < ε < 1. The estimate
+
+
+
+Ψ(x, y)
+y
+ΨW (x + h, y) − ΨW (x, y) = Ψ(x + h, y) − Ψ(x, y) + Oε h
+κ+
+x
+x log x
+holds uniformly for
+xθ ≤ h ≤ x and xε ≤ y ≤ x
+provided κy ≥ 1.
+Proof. The diﬀerence between the weighted count and Ψ(x + h, y) − Ψ(x, y) is
+ a1
+ ak
+X
+p1
+pk
+W
+.
+(4.2)
+...W
+y
+y
+n=p a1 ...p ak
+1
+
+k
+
+x<n≤x+h
+∃pi >y
+
+If we ﬁrst suppose that y ≤ h, then the diﬀerence (4.2) is at most
+
+X
+X
+X h
+1≤
++ 1 ≪ κh + κy ≪ κh.
+p
+y<p≤y(1+κ) x/p<m≤(x+h)/p
+
+y<p≤y(1+κ)
+
+If instead we suppose that h < y, then the diﬀerence (4.2) is bounded above by
+X
+X
+X
+h
+.
+1≪
+m log(h/m)
+x/(y(1+κ))≤m≤(x+h)/y x/m<p≤(x+h)/m
+
+x/(y(1+κ))≤m≤(x+h)/y
+
+Here we used the simple sieve bound, a simple version of the Brun-Titchmarsh theorem,
+valid for any x′ ≥ 0 and any h′ ≥ 2 (see e.g. [MV07, Cor. 3.4]),
+X
+h′
+1≪
+.
+(4.3)
+log h′
+′
+′
+′
+x <p≤x +h
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+21
+
+We have m ≍ x/y. Thus h/m ≍ hy/x > h2 /x ≥ x2θ−1 ≥ x2/15 . The above sum is then
+X
+hy
+≪
+1.
+x log x
+x/(y(1+κ))≤m≤(x+h)/y
+
+Since h < y, the range of the sum has size at most (x+y)/y −x(1−κ)/y +1 = κx/y +2.
+Thus, our sum is
+
+
+y
+κx
+h 
+hy
+κ+
+.
++1 =
+≪
+x log x y
+log x
+x
+Given that y ≥ xε , and so Ψ(x, y) ≫ε x (see e.g. [Hil86]), the proof is complete.
+
+We estimate the weighted sum as we did for the unweighted sum, replacing ζ(s, y)
+with
+−1
+Y
+W (p/y)
+ζW (s, y) =
+1−
+.
+s
+p
+p
+
+To do this, we need the following result, which is a weighted version of Lemma 2.3.
+
+Lemma 4.2 (Shifting into local zero-free region yields cancellation, smoothed version).
+Let z ≥ 2. Let ε > 0 be small, and let 0 < η ≤ 1/2. Write s0 = σ0 + it0 6= 1, where
+1 − (1 − ε)η ≤ σ0 < 1 + 1/ log z. Suppose there are no zeros of ζ(s) in the region
+ℜ(s) > 1 − η
+
+and ℑ(s) ∈ (t0 − 10z 3εη , t0 + 10z 3εη ).
+
+If z −εη ≤ κ < 1, then for some b = b(ε) < 1 we have
+ 1−σ0
+
+
+
+X Λ(n)  n 
+
+z
++1
+log z
+b
+=O
++ Oε (log(|t0 | + 2)) + Oε
+W
+s0
+n
+z
+|t
+|
+zη
+0
+n≥1
+
+
+((log(|t0 | + z η + 2))b + 1/η) log(1/(κη))
+.
++ Oε
+z εη/2
+Proof. For s = σ + it ∈ C, the Mellin transform is given by
+Z ∞
+f (s) =
+W
+W (x)xs−1 dx.
+0
+
+Suppose σ ≥ 1/10, say. The integral is absolutely convergent here, so we may integrate
+by parts m ≥ 1 times to obtain
+Z 1+κ
+xs+m−1
+m
+f
+W (s) = (−1)
+W (m) (x)
+dx.
+(4.4)
+s(s + 1) . . . (s + m − 1)
+1
+
+This integral is absolutely convergent for all s ∈ C \ {0, −1, . . . , −m + 1}, so (4.4)
+f (s). Moreover, using (4.1) we have
+deﬁnes a meromorphic continuation of W
+Z
+1 + (1 + κ)σ+m−1 1+κ
+1
+f
+W (s) ≪
+(4.5)
+|W (m) (x)| dx ≪m m−1 m
+m
+|t|
+κ
+|t|
+1
+whenever −∞ < σ ≤ 10 (say, so that the bound does not depend on σ) and t 6= 0. By
+the Mellin inversion formula, for any σ > 0, we have
+Z σ+i∞
+1
+f (s)x−s ds.
+W
+W (x) =
+2πi σ−i∞
+
+22
+
+KHALID YOUNIS
+
+Then, with σ = 1 − σ0 + 1/ log z, and m ≥ 2, we have
+Z σ+i∞
+X Λ(n)  n 
+1
+−ζ ′
+f (s)z s ds
+=
+W
+(s + s0 )W
+s
+0
+n
+z
+2πi σ−i∞ ζ
+n≥1
+Z ∞
+
+Z σ+iT
+1−σ0
+−ζ ′
+(log
+z)z
+1
+s
+f(s)z ds + Om
+(s + s0 )W
+dt .
+=
+2πi σ−iT ζ
+κm−1 tm
+T
+
+A change of variables in the main term, and estimating the error term, gives
+
+
+Z 1+1/ log z+it0 +iT
+1
+−ζ ′ f
+(log z)z 1−σ0
+s−s0
+.
+(s)W (s − s0 )z
+ds + Om
+2πi 1+1/ log z+it0 −iT ζ
+(κT )m−1
+
+Choose m ∈ [1+1/ε, 2+1/ε) and T ≥ κ−1 z 2η/(m−1) , so the error term is Oε ((log z)/z η ).
+We shift the contour left to ℜ(s) = r = 1 −(1 −ε/2)η. As in the proof of Lemma 2.3,
+we separately consider the cases where |t0 | ≥ 3κ−1 z 2η/(m−1) (set T = 2κ−1 z 2η/(m−1) ) and
+|t0 | < 3κ−1 z 2η/(m−1) (set T = 4κ−1 z 2η/(m−1) ). In either case, T ≤ 4z εη+2η/(m−1) ≤ 4z 3εη .
+The above integral becomes
+−ζ ′
+f (1 − s0 )1|t |<3κ−1 z 2η/(m−1)
+(s0 ) + z 1−s0 W
+0
+ζ
+Z r+it0 +iT Z r+it0 −iT
+Z 1+1/ log z+it0 +iT !
+1
+−ζ ′ f
++
++
+(s)W (s − s0 )z s−s0 ds.
++
+2πi
+ζ
+r+it0 −iT
+1+1/ log z+it0 −iT
+r+it0 +iT
+
+By Lemma 2.2, we have | − ζ ′(s0 )/ζ(s0)| ≤ 1/|t0 | + Oε ((log(|t0 | + 2))b ). From (4.5),
+f(1 − s0 )| ≪ z 1−σ0 /|t0 |.
+this time with m = 1, we also have |z 1−s0 W
+We can bound the upper horizontal integral by
+≪
+
+(log(|t0 | + z 3εη + 2))b
+z 1−σ0
+−ζ ′
+(σ + it0 + iT ) m−1 m ≪ε
+.
+σ∈[r,1+1/ log z]
+ζ
+κ
+T
+zη
+max
+
+The lower horizontal integral is bounded similarly. The vertical integral is
+Z T
+−ζ ′
+r−σ0
+f (r − σ0 + it) dt
+≪z
+max
+(r + it0 + it)
+W
+t∈[−T,T ]
+ζ
+−T
+!
+Z T
+Z 1/κ
+Z η
+b
+1
+1
+1
+(log(|t0 | + T + 2)) + 1/η
+dt +
+dt +
+dt
+≪ε
+m−1 tm
+z εη/2
+t
+1/κ κ
+η
+−η η
+
+(log(|t0 | + z η + 2))b + 1/η
+(1 + log(1/(κη)) + 1) ,
+z εη/2
+where we have used Lemma 2.2, the fact that |r − σ0 + it| ≥ max{r − σ0 , |t|} ≥
+max{εη/2, |t|}, and the bound (4.5).
+
+≪
+
+2
+
+Let κ = y −ελ ≤ x−ε λ . We replace y δ with y 3εδ in the deﬁnition Γρ , meaning
+and
+
+f
+Γ′ρ (t) = 1 − (1 − ε)ν + i(γ + 10t),
+
+f± (δ) = 1 − (1 − ε)δ + i(γ ± 10y 3εδ ),
+Γ
+ρ
+
+t ∈ [−y 3εν , y 3εν ],
+
+
+1
+δ ∈ ν,
+2
+
+
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+23
+
+f+ ∪ Γ
+f− , from which we obtain a new contour Γ
+fρ = Γ
+f′ρ ∪ Γ
+e
+produces a new path Γ
+ρ
+ρ
+e We
+instead of Γ. We use Lemma 4.2 instead of Lemma 2.3 to deduce a saving on Γ.
+then proceed the same way as the unsmoothed count with virtually the same estimates,
+though with ζW (α, y) in place of ζ(α, y) (note that the proof of the version of Lemma
+fρ | ≪ y 3ε/2 ≤ x3ε/2 ). This is permissible for error
+3.1 we need carries through since |Γ
+terms because we claim that |ζW (α + it, y)| ≪ |ζ(α + it, y)|. This follows from the
+bound
+
+
+X
+X
+ζW (α + it, y)
+1
+W (p/y)
+log
+≤−
+log 1 − ℜ α+it
+≪
+≪ κy 1−α ≤ 1,
+ζ(α + it, y)
+p
+pα
+y<p≤y(1+κ)
+
+y<p≤y(1+κ)
+
+where the last inequality uses 1 − α ≤ ελ by (1.12). We then let
+Z
+1 1
+ζW (s, y)xs ds,
+fθ (x, y) =
+2πi x Γ∞ ∩Γ0
+
+and as before we are able to conclude the proof of the statement in Theorem 1.2,
+provided y ≤ x1/2−ε (where this restriction comes from the bound over Γ±
+0 in Lemma
+3.2).
+If, however, we have x1/2−ε < y ≤ x1−2ε , then we use (a suitable modiﬁcation of)
+Lemma 3.3 in place of Lemma 3.2, leading to an additional error term of size
+ 1+ε/2
+h
+≪ε
+Ψ(x, y)(log y)e−c3u .
+x
+When h ≤ x0.99 , say, this error is of no signiﬁcance. To address when this is not the
+case, we proceed via an entirely diﬀerent approach.
+5. Large y via counting primes
+Let us handle the scenario when
+′
+
+x/y 13/30−δ ≤ h ≤ x and xδ ≤ y ≤ 2x
+
+via a more direct approach, where δ > 0 is small and 0 < δ ′ < 1, for x suﬃciently
+large. In particular, setting δ ′ = 0.49 and δ = ε allows us to prove Theorem 1.2 when
+or when
+
+x17/30+10ε ≤ h ≤ x and x1−2ε ≤ y ≤ 2x,
+
+x0.99 ≤ h ≤ x and x1/2−ε ≤ y ≤ x1−2ε ,
+which we were unable to deal with by the saddle point method.
+Our initial manoeuvre is similar to that of Hildebrand [Hil86, §5]. Writing p1 , . . . , pk
+for pairwise distinct prime variables, from the inclusion-exclusion principle we have
+X
+X
+X
+1
+(−1)k
+1+
+Ψ(x + h, y) − Ψ(x, y) =
+x<n≤x+h
+
+= h + O(1) +
+
+1≤k≤u+1
+
+X
+
+(−1)k
+
+1≤k≤u+1
+
+p1 ,...,pk >y, m≥1:
+x<p1 ...pk m≤x+h
+
+X
+
+X
+
+1
+
+pk >y:
+p1 ,...,pk−1 >y, m≥1
+x<p1 ...pk m≤x+h
+
+(5.1)
+
+24
+
+KHALID YOUNIS
+
+The restriction on k is present because the ﬁrst inner sum is empty when y k > 2x. By
+introducing a logarithmic weight, we estimate the ﬁnal inner sum with a small error
+term.
+Lemma 5.1 (Primes in short intervals). Let δ > 0 be small. There exists a small
+constant c = c(δ) > 0 such that for all x′ , h′ ≥ 10 satisfying (x′ )17/30+δ ≤ h′ ≤ x′ , we
+have
+
+
+
+
+
+X
+h′
+h′
+−c(log x′ )1/3 /(log log x′ )1/3
+1=
++O
+1 + Oδ e
+.
+log x′
+x′ log x′
+′
+′
+′
+x <p≤x +h
+
+Proof. As 2 ≤ h′ ≤ x′ < p ≤ x′ + h′ , we have
+
+log(x′ + h′ )
+log p
+≤
+≤1+O
+1<
+log x′
+log x′
+
+
+
+h′
+x′ log x′
+
+
+
+.
+
+The simple sieve bound (4.3) then yields
+
+
+X
+X
+1
+(h′ )2
+1=
+log p + O
+.
+′
+′ (log x′ )2
+log
+x
+x
+′
+′
+′
+′
+′
+′
+x <p≤x +h
+x <p≤x +h
+We also have
+X
+0≤
+
+x′ <n≤x′ +h′
+
+Λ(n) −
+
+X
+
+x′ <p≤x′ +h′
+
+log p ≤
+
+X
+
+2≤k≤log(2x′ )/ log 2
+
+√
+≪ (log x′ )2 x′ .
+
+X
+
+p:
+x′ <pk ≤x′ +h′
+
+log(2x′ )
+(5.2)
+
+We have the explicit formula (see e.g [MV07, Thm. 2.5]) for 2 ≤ T ≤ x′ given by
+
+ ′
+X
+X (x′ )ρ
+x (log x′ )2
+′
+,
++O
+Λ(n) = x −
+ρ
+T
+′
+n≤x
+
+|ℑ(ρ)|≤T
+
+where the sum is over zeros ρ of ζ(s) with ℜ(ρ) ≥ 0. Then by Taylor’s theorem (see
+(3.1))
+
+
+ ′
+
+′ 2
+X
+X
+x
+(log
+x
+)
+′
+′
+′
+ℜ(ρ)−1
++O
+Λ(n) = h + O h
+(x )
+.
+T
+′
+′
+′
+x <n≤x +h
+
+|ℑ(ρ)|≤T
+
+Choose (x′ /h′ )(x′ )δ/2 ≤ T ≤ (x′ )13/30−δ/2 . This is always possible provided h′ ≥
+(x′ )17/30+δ . For a suitably small constant c = c(δ) > 0, we estimate the sum, as
+we did in (3.2), by
+
+
+
+
+′ 2
+X
+′ (log x )
+′
+′ −c(log x′ )1/3 /(log log x′ )1/3
+,
++O h
+Λ(n) = h + Oδ h e
+(x′ )δ/2
+′
+′
+′
+x <n≤x +h
+
+and the latter error term may be absorbed into the former, as can the error term (5.2).
+Combining these estimates delivers the desired conclusion.
+
+Now consider the innermost sum in (5.1), which is of the form
+X
+1,
+max{y,x/r}<p≤(x+h)/r
+
+(5.3)
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+25
+
+with r a positive integer. Writing x′ = x/r and h′ = h/r, we see that h′ ≥ (x′ )17/30+δ
+if and only if h ≥ x17/30+δ r 13/30−δ . If r ≤ x/y, then we indeed have
+x17/30+δ r 13/30−δ ≤ x17/30+δ (x/y)13/30−δ = x/y 13/30−δ ≤ h.
+
+Thus, we may apply our estimate for primes in short intervals in Lemma 5.1 to the
+triple sum in (5.1) when p1 . . . pk−1 m ≤ x/y, leading to a main term from the triple
+sum of
+X
+X
+1
+(−1)k
+h
+p . . . pk−1 m log(x/(p1 . . . pk−1 m))
+p ,...,p
+>y, m≥1: 1
+1≤k≤u
+1
+
+k−1
+
+p1 ...pk−1 m≤x/y
+
+(we may ignore when u < k ≤ u + 1 as the inner sum would be empty), and an error
+of
+
+
+X
+X
+h
+h
+−c(log y)1/3 /(log log y)1/3
+e
++
+.
+≪δ
+p
+.
+.
+.
+p
+m
+log
+y
+x
+log
+y
+1
+k−1
+p ,...,p
+>y, m≥1:
+1≤k≤u+1
+
+1
+
+k−1
+
+p1 ...pk−1 m≤x/y
+
+Each positive integer r ≤ x/y can have at most Oδ′ (1) prime factors greater than y.
+Thus r can be represented in the form p1 . . . pk−1 m, such that p1 , . . . , pk−1 > y, in at
+most Oδ′ (1) ways. It follows that
+X
+X 1
+1
+≪δ ′
+≪ log x.
+(5.4)
+p . . . pk−1m
+r
+p ,...,p
+>y, m≥1: 1
+1
+
+r≤x/y
+
+k−1
+
+p1 ...pk−1 m≤x/y
+
+The above error term is therefore
+
+1/3
+1/3
+≪δ′ h e−c(log y) /(log log y) +
+
+h
+x log y
+
+
+
+.
+
+The contribution to the sum in (5.3) from the remaining range r > x/y is
+X
+X
+y h
+h
+<
+1≤
+1≪
+r log x
+x log x
+y<p≤(x+h)/r
+
+x/r<p≤(x+h)/r
+
+by the sieve bound (4.3). Using this, along with similar reasoning to that establishing
+(5.4), the contribution to the triple sum in (5.1) when y < p1 . . . pk−1 m ≤ (x + h)/y is
+
+
+X
+X
+X
+h
+h (h + y)
+y h
+1 ≪δ ′
+≪
++1
+=
+.
+y
+x
+log
+x
+x
+log
+x
+p ,...,p
+>y, m≥1:
+1≤k≤u+1
+1
+
+k−1
+
+x/y<p1 ...pk−1 m≤(x+h)/y
+
+y<p≤(x+h)/(p1 ...pk−1 m)
+
+Writing
+g(x, y) = 1 +
+
+X
+
+(−1)k
+
+1≤k≤u
+
+we therefore obtain
+
+X
+
+1
+,
+p . . . pk−1 m log(x/(p1 . . . pk−1 m))
+>y, m≥1: 1
+
+p1 ,...,pk−1
+p1 ...pk−1 m≤x/y
+
+
+
+
+
+h+y
+−cδ′ (log x)1/3 /(log log x)1/3
+Ψ(x + h, y) − Ψ(x, y) = h g(x, y) + Oδ′ ,δ e
++
+,
+x log x
+
+which is of the shape claimed in Theorem 1.2 once we observe (see e.g. [Hil86]) that
+Ψ(x, y) ≫δ′ x in our range of y.
+
+26
+
+KHALID YOUNIS
+
+6. Proof of Theorems 1.1 and 1.2
+Let ε > 0 be small, and assume θ ≥ 17/30 + 10ε. Suppose h and y satisfy (1.2),
+with x suﬃciently large in terms of ε. If y ≤ x1/2−ε , then the statement in Theorem
+1.2 holds by the work of Sections 3 and 4. On the other hand, when y ≥ x1−2ε , the
+statement in Theorem 1.2 holds by the work of Section 5.
+Let us consider the range x1/2−ε < y < x1−2ε (and so Ψ(x, y) ≫ x). The results of
+Sections 3 and 4 imply, in particular, that if xθ ≤ h ≤ x0.99 then
+
+
+Ψ(x + h, y) − Ψ(x, y)
+−c((log x)/ log log x)1/3
+.
+= fθ (x, y) + Oε e
+h
+If instead h ≥ x0.99 , then from Section 5 we have
+
+
+Ψ(x + h, y) − Ψ(x, y)
+h+y
+−c((log x)/ log log x)1/3
+.
+= g(x, y) + Oε e
++
+h
+x log x
+
+On setting h = x0.99 , we see that
+
+
+
+1/3
+fθ (x, y) = g(x, y) + Oε e−c((log x)/ log log x)
+.
+
+This establishes the desired result in the range x1/2−ε < y < x1−2ε , and hence concludes
+the proof of Theorem 1.2.
+To deduce Theorem 1.1, we set h = x in Theorem 1.2, so that
+
+
+Ψ(x, y) log(u + 1)
+Ψ(2x, y) − Ψ(x, y)
+= fθ (x, y) + O
+x
+x
+log y
+for all y satisfying (1.2). We now appeal to the short interval result of Hildebrand
+[Hil86]
+
+
+Ψ(x, y)
+Ψ(2x, y) − Ψ(x, y)
+Ψ(x, y) log(u + 1)
+=
++O
+x
+x
+x
+log y
+5/3+1/100
+
+for e(log log x)
+≤ y ≤ x. This estimate also holds if y > x by the prime number
+theorem, as we are simply estimating the density of composite numbers in the interval
+(x, 2x]. This concludes the proof of Theorem 1.1.
+7. Assuming the Riemann Hypothesis
+In this section we assume the Riemann Hypothesis.
+7.1. Saddle point method. Suppose θ ≥ 1/2 + 10ε for a suitably small ε > 0. Let
+us further suppose that (log x)K ≤ y ≤ x1−2ε , with K ≥ 10/ε2, and that x suﬃciently
+large in terms of ε. Observe that on this range α ≥ 1 − 1/K + o(1) > (1 + ε)/2. It is
+also known by (1.7) that Ψ(x, (log x)K ) = x1−1/K+o(1) .
+Recall from Perron’s formula (1.9) that if y, h, H ∈ [2, x] then
+
+
+Z α+iH
+1
+(x + h)s − xs
+x log x
+Ψ(x + h, y) − Ψ(x, y) =
+.
+ζ(s, y)
+ds + O
+2πi α−iH
+s
+H
+We set H = x1+2/(εK) /h, so that the above error term becomes ≪ h(log x)/x2/(εK) ≪
+hΨ(x, y)/x1+1/(εK) .
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+27
+
+We then perform a shift of the integral to the left as before. We may ignore the
+contribution from the Γρ since these all already lie on the vertical ‘remainder’ line
+ℜ(s) = (1 + ε)/2. Thus we have
+!
+Z
+Z
+Z
+(x + h)s − xs
+1
++
++
+ζ(s, y)
+ds.
+σ±iH
+2πi
+s
+Γ\Γ0
+Γ∩Γ0
+Γ(±H)≤σ≤α
+
+We set η = 1/2 and apply a version of Lemma 2.4 for our range of y. We see from the
+proof that this is possible as y εη = y ε/2 beats any power of log y. The ‘remainder’ and
+horizontal integrals once again contribute
+p
+h
+Ψ(x, y)
+H
+≪ Ψ(x, y) log x log y 1/2−2ε +
+.
+x
+x
+H
+By assumption we have h ≥ xθ , and so H ≤ x1+2/(εK)−θ . As θ ≥ 1/2 + 10ε, we have
+H ≤ x1/2+2/(εK)−10ε ≤ x1/2−8ε . Thus the above error contribution is
+p
+h
+1
+h
+1
+1
+h
+≪ Ψ(x, y) log x log y 6ε + Ψ(x, y) 2/(εK) ≪ Ψ(x, y) 1/K .
+x
+x
+x
+x
+x
+x
+As before, we are left with
+ 2
+Z
+
+
+Z
+1 h
+h
+h
+s
+s
+min
+ζ(s, y)x ds + O
+|ζ(s, y)x | |ds| .
+(7.1)
+|s − 1|,
+2πi x Γ∩Γ0
+x2
+x
+Γ∩Γ0
+
+Adapting the proof of Lemma 3.8, we may replace the main term here with fθ (x, y)h,
+where
+Z
+1 1
+ζ(s, y)xs ds,
+fθ (x, y) =
+2πi x Γ∞ ∩Γ0
+introducing an error of
+h
+1
+h Ψ(x, y)
+= Ψ(x, y) 1/K .
+2ε/(2εK)
+xx
+x
+x
+By Lemmas 3.6 and 3.7, along with suitable adaptations of Lemmas 3.2 and 3.3, the
+error term in (7.1) is
+ 1+ε/2
+h2
+log(u + 1)
+h
+≪ε 2 Ψ(x, y)
++
+Ψ(x, y)(log y)e−c3u 1x1/2−ε <y≤x1−2ε .
+x
+log y
+x
+≪ε
+
+Thus, when (log x)K ≤ y ≤ x1/2−ε , we have
+
+
+
+h log(u + 1)
+1
+h
+.
+Ψ(x, y)
++
+Ψ(x + h, y) − Ψ(x, y) = fθ (x, y)h + Oε
+x
+x1/K
+x log y
+
+Our use of smoothing plays no part here, as this was used only for the paths Γρ , which
+we have no need to consider by assuming the Riemann Hypothesis. We postpone
+addressing the case x1/2−ε < y ≤ x1−2ε until we have established additional results.
+Our strategy in Section 6 for approximating fθ (x, y) by Ψ(x, y)/x relied on considering when h = x and applying the short interval result of Hildebrand. This approach
+5/3+1/100
+remains valid when e(log log x)
+≤ y ≤ x1/2−ε , leading to
+
+
+
+hΨ(x, y)
+log(u + 1)
+Ψ(x + h, y) − Ψ(x, y) =
+1 + Oε
+.
+(7.2)
+x
+log y
+
+28
+
+KHALID YOUNIS
+
+The absence of a factor of α, as compared to the statement in Theorem 1.3, is of no
+concern, because α = 1 − O(log(u + 1)/ log y) by the approximate formula (1.5).
+We require a diﬀerent approach in order to cover smaller y. From Lemmas 3.2 (after
+suitable modiﬁcation for our range of y), 3.6, and 3.7, we have
+
+
+
+
+Z
+1
+Ψ(x, y)
+Ψ(x, y) log y
+s
+ζ(s, y)x ds = αΨ(x, y) + O
++O
+2πi Γ∩Γ0
+u
+y
+
+
+
+
+Ψ(x, y)
+Ψ(x, y)
++ Oε c4 u/(log(u+1))2 + Oε
+.
+e
+ec2 u
+When (log x)K ≤ y ≤ x1/2−ε , all these error terms are ≪ε Ψ(x, y)/u, and so
+
+
+
+hΨ(x, y)
+1
+1
+h log(u + 1)
+1 + Oε
+.
+Ψ(x + h, y) − Ψ(x, y) = α
++
++
+x
+u x1/K
+x log y
+
+(7.3)
+
+We combine (7.2) and (7.3) by taking the minimum of their error terms.
+Now suppose that (log x)2+10ε ≤ y ≤ (log x)K . Then α ≥ 1 − 1/(2 + 10ε) + o(1) >
+1/2 + ε. At this level of smoothness, the small size of Ψ(x, y) presents an obstacle to
+obtaining an adequate error term from Perron’s formula. We therefore use a version
+of Perron’s formula appearing in [Har12a, §3] (see also [FT91]) which is sensitive to
+the size of the set of smooth numbers rather than the whole interval. This gives
+Ψ(x + h, y) − Ψ(x, y) equal to
+
+√
+
+Z α+iH
+log x log y
+(x + h)s − xs
+1
+1
+√
+ζ(s, y)
+ds + O Ψ(x, y)
+.
++ 1/50
+2πi α−iH
+s
+H
+H
+
+As stated earlier, inspecting the proof of Lemma 2.4 with η = 1/2 reveals that this
+result also holds our range of y, given that y εη = y ε/2 beats any power of log y. We
+shift the integral left, encountering error terms on the ‘remainder’ line (here we use
+the fact that α ≥ 1/2 + ε) and the horizontal paths of size
+p
+h
+Ψ(x, y)
+H
+≪ Ψ(x, y) log x log y 9ε/20 +
+.
+x
+x
+H
+Let H = xε/4 , so that our errors so far are ≪ Ψ(x, y)/xε/200 ≤ (h/x)Ψ(x, y)/xε/400 ≤
+(h/x)Ψ(x, y)/x1/K , provided that we take θ ≥ 1−ε/400 so that h/x ≥ xθ /x ≥ 1/xε/400 .
+The main term is handled as before.
+7.2. Counting primes. Now suppose y ≥ x1/100 and x/y 1/2−δ ≤ h ≤ x, for small
+δ > 0 and for x suﬃciently large. (As in Section 5, the following argument works even
+when replacing 1/100 with an arbitrarily small δ ′ > 0.) In particular, with δ = ε, this
+covers the case when x1−2ε ≤ y ≤ 2x and x1/2+10ε ≤ h ≤ x.
+Consider our direct approach counting primes in short intervals. As ℜ(ρ) = 1/2,
+and the number of non-trivial zeros with imaginary height bounded in magnitude by
+T is ≪ T log T, we have
+ ′
+
+ ′
+
+X
+h
+x (log x′ )2
+′
+Λ(n) = h + O √ T log T + O
+.
+T
+x′
+′
+′
+′
+x <n≤x +h
+
+Choose (x′ /h′ )(x′ )δ/2 ≤ T ≤ (x′ )1/2−δ/2 , which is always possible provided h′ ≥
+(x′ )1/2+δ . If so, both error terms become ≪ h′ (log x′ )2 /(x′ )δ/2 . As in Section 5, this
+
+ASYMPTOTICS FOR SMOOTH NUMBERS IN SHORT INTERVALS
+
+leads to
+
+X
+
+h′
+1=
+log x′
+x′ <p≤x′ +h′
+
+
+
+1+O
+
+
+
+(log x′ )2
+(x′ )δ/2
+
+
+
++O
+
+
+
+h′
+x′ log x′
+
+
+
+29
+
+.
+
+Now consider the triple sum in (5.1). With x′ = x/r and h′ = h/r, we see that
+h′ ≥ (x′ )1/2+δ if and only if h ≥ x1/2+δ r 1/2−δ . If r ≤ x/y, we indeed have
+x1/2+δ r 1/2−δ ≤ x1/2+δ (x/y)1/2−δ = x/y 1/2−δ ≤ h.
+
+Then the triple sum in (5.1) on the range p1 . . . pk−1 m ≤ x/y has a main term of
+X
+X
+1
+h
+(−1)k
+p . . . pk−1 m log(x/(p1 . . . pk−1 m))
+p ,...,p
+>y, m≥1: 1
+1≤k≤u
+1
+
+k−1
+
+p1 ...pk−1 m≤x/y
+
+with error terms of
+X
+X
+≪
+
+1≤k≤u+1 p1 ,...,pk−1 >y, m≥1:
+p1 ...pk−1 m≤x/y
+
+
+
+h log(x/p1 . . . pk−1m)
+h2
++
+xδ/2 (p1 . . . pk−1 m)1−δ/2 xp1 . . . pk−1 m(log y)2
+
+
+
+.
+
+By the reasoning of (5.4), and comparison with an integral, the ﬁrst error term is
+ δ/2
+1
+h log x x
+h log x
+h log x X X
+≪
+.
+≪
+≪ δ/2
+1−δ/2
+δ/2
+δ/2
+x
+r
+δx
+y
+δy
+1≤k≤u+1
+r≤x/y
+
+Similarly, the second error term is ≪ h2 /(x log x). The range p1 . . . pk−1 m > x/y in
+(5.1) is dealt with exactly as before. We arrive at
+
+
+
+
+
+log x
+h+y
+,
+Ψ(x + h, y) − Ψ(x, y) = h g(x, y) + O
++O
+δy δ/2
+x log x
+where
+X
+X
+1
+g(x, y) = 1 +
+(−1)k
+.
+p
+.
+.
+.
+p
+m
+log(x/(p
+.
+.
+.
+p
+m))
+1
+k−1
+1
+k−1
+p ,...,p
+>y, m≥1:
+1≤k≤u
+1
+
+k−1
+
+p1 ...pk−1 m≤x/y
+
+Once again, Ψ(x, y) ≫ x on this range of y.
+Finally, we cover the remaining range x1/2−ε < y < x1−2ε by adapting the approach
+of Section 6. This completes the proof of Theorem 1.3.
+References
+[BT05]
+
+R. de la Bretèche and G. Tenenbaum, Propriétés statistiques des entiers friables, Ramanujan
+J. 9 (2005), no. 1-2, 139–202.
+[CEP83] E. R. Canﬁeld, P. Erdős, and C. Pomerance, On a problem of Oppenheim concerning “factorisatio numerorum”, J. Number Theory 17 (1983), no. 1, 1–28.
+[Dav80] H. Davenport, Multiplicative number theory, second ed., Graduate Texts in Mathematics,
+vol. 74, Springer-Verlag, New York-Berlin, 1980, Revised by Hugh L. Montgomery.
+[FT91] É. Fouvry and G. Tenenbaum, Entiers sans grand facteur premier en progressions arithmetiques, Proc. London Math. Soc. (3) 63 (1991), no. 3, 449–494.
+[FG93] J. B. Friedlander and A. Granville, Smoothing “smooth” numbers, Philos. Trans. Roy. Soc.
+London Ser. A 345 (1993), no. 1676, 339–347.
+[Gra93] A. Granville, Integers, without large prime factors, in arithmetic progressions. II, Philos.
+Trans. Roy. Soc. London Ser. A 345 (1993), no. 1676, 349–362.
+
+30
+
+KHALID YOUNIS
+
+, Smooth numbers: computational number theory and beyond, Algorithmic number
+theory: lattices, number ﬁelds, curves and cryptography, Math. Sci. Res. Inst. Publ., vol. 44,
+Cambridge Univ. Press, Cambridge, 2008, pp. 267–323.
+[GM24] L. Guth and J. Maynard, New large value estimates for Dirichlet polynomials, preprint,
+arXiv:2405.20552, 2024.
+[Har12a] A. J. Harper, Bombieri–Vinogradov and Barban–Davenport–Halberstam type theorems for
+smooth numbers, preprint, arXiv:1208.5992, 2012.
+[Har12b]
+, On a paper of K. Soundararajan on smooth numbers in arithmetic progressions, J.
+Number Theory 132 (2012), no. 1, 182–199.
+[HB88] D. R. Heath-Brown, The number of primes in a short interval, J. Reine Angew. Math. 389
+(1988), 22–63.
+[Hil86] A. Hildebrand, On the number of positive integers ≤ x and free of prime factors > y, J.
+Number Theory 22 (1986), no. 3, 289–307.
+[HT86] A. Hildebrand and G. Tenenbaum, On integers free of large prime factors, Trans. Amer.
+Math. Soc. 296 (1986), no. 1, 265–290.
+[HT93]
+, Integers without large prime factors, J. Théor. Nombres Bordeaux 5 (1993), no. 2,
+411–484.
+[Hux72] M. N. Huxley, On the difference between consecutive primes, Invent. Math. 15 (1972), 164–
+170.
+[Mat16] K. Matomäki, Another note on smooth numbers in short intervals, Int. J. Number Theory
+12 (2016), no. 2, 323–340.
+[MR16] K. Matomäki and M. Radziwill, Multiplicative functions in short intervals, Ann. of Math.
+(2) 183 (2016), no. 3, 1015–1056.
+[MV07] H. L. Montgomery and R. C. Vaughan, Multiplicative number theory. I. Classical theory,
+Cambridge Studies in Advanced Mathematics, vol. 97, Cambridge University Press, Cambridge, 2007.
+[Ram76] K. Ramachandra, Some problems of analytic number theory, Acta Arith. 31 (1976), no. 4,
+313–324.
+[RS62] J. B. Rosser and L. Schoenfeld, Approximate formulas for some functions of prime numbers,
+Illinois J. Math. 6 (1962), 64–94.
+[Sou08] K. Soundararajan, The distribution of smooth numbers in arithmetic progressions, Anatomy
+of integers, CRM Proc. Lecture Notes, vol. 46, Amer. Math. Soc., Providence, RI, 2008,
+pp. 115–128.
+[Sou10]
+, Smooth numbers in short intervals, preprint, arXiv:1009.1591, 2010.
+[Tit86] E. C. Titchmarsh, The theory of the Riemann zeta-function, second ed., The Clarendon
+Press, Oxford University Press, New York, 1986, Edited and with a preface by D. R. HeathBrown.
+[Xua99] T. Z. Xuan, On smooth integers in short intervals under the Riemann hypothesis, Acta
+Arith. 88 (1999), no. 4, 327–332.
+[You]
+K. Younis, Smooth numbers with prescribed digits, in preparation.
+[Gra08]
+
+Mathematics Institute, Zeeman Building, University of Warwick, Coventry CV4
+7AL, United Kingdom
+Email address: khalid.younis@warwick.ac.uk
+
+

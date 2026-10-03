@@ -1,0 +1,474 @@
+                                           A precise estimation of the computational complexity in Shor’s
+                                                                 factoring algorithm
+                                                                            K.Kuriyama1∗, S.Sano1†and S. Furuichi2‡
+                                                                      1
+                                                                          Department of Applied Science, Faculty of Engineering,
+                                                                Yamaguchi University,Tokiwadai 2-16-1, Ube City, 755-0811, Japan
+arXiv:quant-ph/0406145v2 13 Aug 2005
+
+
+
+
+                                                                           2
+                                                                               Department of Electronics and Computer Science,
+                                                              Tokyo University of Science, Onoda City, Yamaguchi, 756-0884, Japan
+
+
+
+                                          Abstract. A precise estimation of the computational complexity in Shor’s factoring algorithm under
+                                       the condition that the large integer we want to factorize is composed by the product of finite prime
+                                       numbers, is derived by the results related to number theory.
+
+                                            Keywords : Shor’s factoring algorithm, computational complexity and number theory
+
+
+
+                                       1      Introduction
+                                       P.W.Shor proposed the algorithm to solve the factorization into prime factors within polynomial time by
+                                       using the quantum computer [1, 2]. See also [5], on the recent advances of the Shor’s factoring algorithm.
+                                       In his paper, the number of the computational steps was estimated. Through this paper, we consider
+                                       the case that we factorize n into finite prime numbers pi , (i = 1, · · · , k). We derive the precise estimation
+                                       of the number of the computational steps, and then we show our estimation is more precise than Shor’s
+                                       original one. Shor showed it is required at least N times to be performed correctly factorization algorithm
+                                       with the probability 1 − ε or higher than it for any ε > 0, as follows
+                                                                                              log(1/ε)
+                                                                                      N≥                   (log2 n)2 ,                                     (1)
+                                                                                           αβ(1 − 1/2k−1 )
+                                       where α, β are independent constant numbers with respect to n = p1 e1 p2 e2 . . . pk ek . In this paper, we
+                                       improve the Shor’s estimation of N in the sense that our estimation is more precise than Shor’s P              one. By
+                                                                                                                                                        k
+                                       putting pi −1 = 2τi σi with odd numbers σi and τi ≥ 1, (i = 1, 2, . . . , k), τ ′ = min(τ1 , . . . , τk ), τ̃ = i=1 τi ,
+                                       we have for any ε > 0,
+                                                                                    log(1/ε)
+                                                                        N≥                           (log2 n)2 .                                         (2)
+                                                                                       1 2k −2+2kτ ′
+                                                                            αβ 1 − 2k −1       2τ̃
+
+                                       This paper is organaized as follows: In section 2, we will review the estimation by Shor to compare with
+                                       ours in the final section. In section 3, we show some results derived from number theory. In section 4,
+                                       we show a new estimation of the computational complexity in Shor’s factoring algorithm in the case that
+                                       arbitrary integer n is factorized into finite prime numbers pi , (i = 1, · · · , k), applying the results obtained
+                                       in the previous section. Finally in section 5, we discuss the relation between our estimation and Shor’s
+                                       one.
+
+
+                                       2      An original estimation by Shor
+                                       As mentioned in the above, we review the original estimation by Shor in the case that arbitrary integer
+                                       n is factorized into finite prime numbers pi , (i = 1, · · · , k). However, for simplicity, we review the Shor’s
+                                           ∗ E-mail:kuriyama@yamaguchi-u.ac.jp
+                                           † E-mail:sano@max.apsci.yamaguchi-u.ac.jp
+                                           ‡ E-mail:furuichi@ed.yama.tus.ac.jp
+
+
+
+
+                                                                                                     1
+factoring algorithm in the case that arbitrary integer n is factorized into two prime numbers p and q in
+the following manner.
+  1◦ Choose a number a from the set {1, . . . , n − 1}.
+  2◦ Calculate gcd(a, n).
+  3◦ If gcd(a, n) = 1, then go to the next step. Otherwise, go to the step 8◦ .
+  4◦ Calculate the order r of the number a with respect to mod n. (This calculations depend on the
+     quantum computations.)
+  5◦ If r is even number, then go to the next step. Otherwise, go to the step 8◦ .
+  6◦ Calculate p′ = gcd(ar/2 + 1, n) and q ′ = gcd(ar/2 − 1, n).
+  7◦ If either p′ or q ′ is equal to n, then the next step. Otherwise, these number p′ and q ′ are the prime
+     number we seek.
+  8◦ Go to the step 1◦ , and choose another a.
+   We denote the probability which succeeds in the factorization at the first try through the above
+algorithm by PS . We need at least N times to find the prime number under the condition that PS ≥ 1−ε:
+
+                                               N ≥ log(1/ε)/PS .                                             (3)
+
+In order to evaluate the probability PS , we consider the following events:
+   • Aa : The event which can be obtained a satisfying a < n and gcd(a, n) = 1.
+   • Ar : The event which can be obtained the true order r by quantum computations.
+   • Ae : The event which the order r becomes even number.
+   • Af : The event which p′ and q ′ become prime numbers p and q we seek.
+By using the above notations, the probability PS can be represented by
+
+              PS ≥ P (Ae ∩ Af | Aa ∩ Ar )P (Aa ∩ Ar ) = P (Ae ∩ Af | Aa ∩ Ar )P (Aa )P (Ar ).                (4)
+
+Therefore we evaluate three probability P (Ar ), P (Aa ) and P (Ae ∩ Af | Aa ∩ Ar ). The event Ar is
+equivalent to the event which obtains d satisfying d < r and gcd(d, r) = 1 so that we have P (Ar ) = ϕ(r)/r
+by the use of Euler’s function ϕ. Since it is known that for Euler constant γ
+
+                                                    ϕ(r) log log r
+                                          lim inf                  = e−γ ,                                   (5)
+                                           r→∞            r
+we then have for sufficient large r,
+
+                                 ϕ(r)     e−γ        e−γ     e−γ    e−γ log2 e     α
+                     P (Ar ) =        ≥           ≥       ≥       =            =        ,                    (6)
+                                  r     log log r   log r   log n     log2 n     log2 n
+
+where α is independent constant number with respect to n. Since P (Aa ) = ϕ(n)/(n − 1), we similarly
+have
+                                                     β
+                                        P (Aa ) ≥                                                (7)
+                                                  log2 n
+where β is independent constant number with respect to n.
+     Finally we note on the probability P (Ae ∩ Af | Aa ∩ Ar ). In general, it is known that [3, 6] for n =
+p1 e1 p2 e2 . . . pk ek with different prime numbers pi (i = 1, · · · , k), the order r given by quantum computer
+is even number and
+                                                                              1
+                                           P (Ae ∩ Af | Aa ∩ Ar ) ≥ 1 − k−1 .                                 (8)
+                                                                            2
+
+
+                                                          2
+(In the section 4, we precisely estimate this probability.) Now we can estimate the computational com-
+plexity of Shor’s algorithm. Substituting Eq.(7),Eq.(6) and Eq.(8) into Eq.(4), the probability PS is
+computed by                                            
+                                                    1         αβ
+                                       PS ≥ 1 − k−1                  .                              (9)
+                                                  2        (log2 n)2
+From Eq.(3), we also have for any ε > 0,
+                                                       log(1/ε)
+                                          N≥                        (log2 n)2 .                         (10)
+                                                    αβ(1 − 1/2k−1 )
+
+3     Lemmas in number theory
+For the prime number p, we denote the field Z/pZ which all elements are invertible, by (Z/pZ)× . It is
+well known [4] that the following relation holds
+                                          {a ∈ (Z/pZ)× ; rp = d} = ϕ(d),                                (11)
+where d | p − 1 and rp represents the order of a with respect to mod p. Then we have the following two
+lemmas.
+
+Lemma 3.1 For the number of the elements of (Z/pZ)× , we may write p − 1 = 2τ σ for odd number σ
+and τ ≥ 1. Then we have
+                                      {a ∈ (Z/pZ)× ; rp : odd} = σ                                      (12)
+                                                       ×         t                       t−1
+                                      {a ∈ (Z/pZ) ; rp = 2 s (s : odd)} = 2                    σ,       (13)
+where t is a fixed number (t = 1, 2, · · · , τ ).
+(Proof ) For rp = 2t s with odd number s and t ≥ 0, the following equivalent relation holds
+                                           rp : odd, rp | p − 1 ⇐⇒ rp | σ.                              (14)
+                      t    τ                                                                        t
+Since rp | p − 1 = 2 s | 2 σ, we have t ≤ τ, s | σ, and then t = 0 by the fact that rp = 2 s is odd number.
+Therefore we have rp = s, and then we have rp | σ by s | σ. Conversely, if rp | σ, then rp is the divisor of
+σ. Thus rp is odd number. Moreover, if rp | σ, then rp | p − 1, since p − 1 = 2τ σ. Thus we have
+                                                                  X
+                              {a ∈ (Z/pZ)× ; rp : odd} =                  ϕ(rp )
+                                                                      rp |p−1, rp :odd
+                                                                      X
+                                                                 =            ϕ(rp )
+                                                                      rp |σ
+                                                                 = σ
+                           t
+    In the case of rp = 2 s, it holds the following equivalent relation
+                                                    rp | p − 1 ⇐⇒ s | σ.                                (15)
+Indeed, by assumption 1 ≤ t ≤ τ , if 2t s | 2τ σ, then we have s | σ. Conversely s | σ implies s | 2τ σ.
+Therefore for a fixed number t in (1 ≤ t ≤ τ ), we have
+                                                                    X
+                        {a ∈ (Z/pZ)× ; rp = 2t s (s : odd)} =             ϕ(rp )
+                                                                              rp |p−1, rp =2t s
+                                                                              X
+                                                                      =             ϕ(2t s)
+                                                                              s|σ
+                                                                              X
+                                                                      =             ϕ(2t )ϕ(s)
+                                                                              s|σ
+                                                                                       X
+                                                                      =       ϕ(2t )         ϕ(s)
+                                                                                       s|σ
+                                                                                    
+                                                                               t   1
+                                                                      =       2 1−     σ
+                                                                                   2
+                                                                      =       2t−1 σ
+
+                                                             3
+Lemma 3.2 For n = p1 e1 . . . pk ek with prime numbers pi , (i = 1, · · · , k), we may write pi − 1 = 2τi with
+odd numbers σi and τi ≥ 1. We denote the order of a with respect to mod n and mod pi by r and
+rpi = 2tpi spi , respectively. Then we have
+                                                                        k
+                                                                        Y
+                                    {a ∈ (Z/nZ)× ; r : odd} =                 σpi ,                                  (16)
+                                                                        i=1
+                                                                                                 k
+                                                                                                 Y
+                                    {a ∈ (Z/nZ)× ; tp1 = · · · = tpk = l} = 22(l−1)                    σpi ,         (17)
+                                                                                                 i=1
+
+where l is a fixed number such that 1 ≤ l ≤ min(τp1 , · · · , τpk ).
+(Proof ) From Chinese Remainder Theorem, we have (Z/nZ)× ∼
+                                                         = (Z/p1 Z)× ⊕ · · · ⊕ (Z/pk Z)× . Then for
+a ∈ (Z/nZ)× , we have
+
+                                               r      = lcm{rp1 , · · · , rpk },
+                                         r : odd     ⇐⇒ rp1 , · · · , rpk : odd,
+                                     (Z/nZ)×          =        (Z/p1 Z)× · · · (Z/pk Z)× .                           (18)
+
+Thus we have
+
+         {a ∈ (Z/nZ)× ; r : odd}          =    {a ∈ (Z/nZ)× ; rp1 , · · · , rpk : odd}
+                                          =    {a ∈ (Z/p1 Z)× ; rp1 : odd} · · · {a ∈ (Z/pk Z)× ; rpk : odd}
+                                               k
+                                               Y
+                                          =          σpi .
+                                               i=1
+
+Moreover, for a fixed l, we have
+
+      {a ∈ (Z/nZ)× ; tp1 = · · · = tpk = l}           =      {a ∈ (Z/nZ)× ; tp1 = l} · · · {a ∈ (Z/nZ)× ; tpk = l}
+                                                                       k
+                                                                       Y
+                                                      =      22(l−1)         σpi
+                                                                       i=1
+
+
+
+   Thanks to the above two lemmas, we have the following theorem.
+                                                                 Pk
+Theorem 3.3 Define τ ′ ≡ min(τp1 , · · · , τpk ) and τ̃                i=1 τpi . Then we have
+
+                                                                                               ′  k
+                                                                                   2k − 2 + 2kτ Y
+                                 {a ∈ (Z/nZ)× ; tp1 = . . . = tpk } =                                σpi             (19)
+                                                                                      2k − 1     i=1
+
+and                                                                                                     ′
+                               |{a ∈ (Z/nZ)× ; tp1 = . . . = tpk }|      1 2k − 2 + 2kτ
+                                                                    =                   .                            (20)
+                                         |(Z/nZ)× |                   2k − 1    2τ̃
+(Proof ) Applying Eq.(16) and Eq.(17), we have
+
+               {a ∈ (Z/nZ)× ; tp1 = . . . = tpk }
+                       ′
+                  τ
+                  [
+              =            {a ∈ (Z/nZ)× ; tp1 = . . . = tpk = l}
+                  l=0
+                   ′
+                  τ
+                  X
+              =            {a ∈ (Z/nZ)× ; tp1 = . . . = tpk = l}
+                  l=0
+
+
+                                                                  4
+                                                                                ′
+                                                                               τ
+                                                                               X
+                                      ×
+              = {a ∈ (Z/nZ) ; tp1 = . . . = tpk = 0} +                                {a ∈ (Z/nZ)× ; tp1 = . . . = tpk = l}
+                                                                               l=1
+                  k             τ′              k
+                                                            !
+                  Y             X               Y
+              =         σpi +         2k(l−1)         σpi
+                  i=1           l=1             i=1
+                              ′  k
+                  2k − 2 + 2kτ Y
+              =                     σpi
+                     2k − 1     i=1
+
+which implies Eq.(19). In addition, since we have
+                                                                                                     k
+                                                                                                     Y
+                                 (Z/nZ)× = (Z/p1 Z)× · · · (Z/pk Z)× = 2τ̃                                 σpi ,              (21)
+                                                                                                     i=1
+
+we obtain Eq.(20) from Eq.(19).
+
+
+
+4     A precise estimation of the comutational complexity
+Lemma 4.1 For n = p1 e1 . . . pk ek , with prime numbers pi , (i = 1, · · · , k), we set pi − 1 = 2τi σi with odd
+                                                         Pk
+numbers σi , τi ≥ 1, τ ′ = min(τ1 , . . . , τk ) and τ̃ = i=1 τi . Then we have
+                                                                                                           ′
+                                                                                  1 2k − 2 + 2kτ
+                                  P (Ae ∩ Af | Aa ∩ Ar ) = 1 −                  k
+                                                                                                 .                            (22)
+                                                                               2 −1      2τ̃
+(Proof ) We pay attention on the properties of the step 5◦ and 6◦ in the Shor’s factoring algorithm
+presented in section 2 so that we have
+                                                                                  
+           P (Ae ∩ Af | Aa ∩ Ar )    = P {r : even} ∩ {ar/2 6= ±1 (mod n)} Aa ∩ Ar
+                                                                                  
+                                     = P {r : even} ∩ {ar/2 6= −1 (mod n)} Aa ∩ Ar
+                                                                                     
+                                     = 1 − P {r : odd} ∪ {ar/2 = −1 (mod n)} Aa ∩ Ar .
+
+Here we denote the order of a with respect to mod n and mod pi by r = 2t s and ri = 2ti si , respectively.
+Where t ≥ 1, ti ≥ 1 and s, si are odd numbers for i = 1, · · · , k. Then the probability P (Ae ∩ Af | Aa ∩ Ar )
+is rewitten by
+
+                           P (Ae ∩ Af | Aa ∩ Ar )
+                                                                k
+                                                                                                      !               !
+                                                                \
+                                                                         r/2
+                           =1−P           {r : odd} ∪               {a         = −1      (mod pi )}         Aa ∩ Ar
+                                                                i=1
+                                                                                k
+                                                                                                !              !
+                                                                                \
+                           =1−P           {t1 = . . . = tk = 0} ∪                    {ti = t}       Aa ∩ Ar
+                                                                                i=1
+                           = 1 − P (t1 = . . . = tk | Aa ∩ Ar ) .
+
+Thus we have Eq.(22) from Eq.(20).
+
+Theorem 4.2 For n = p1 e1 . . . pk ek , with prime numbers pi , (i = 1, · · · , k), we set pi − 1 = 2τi σi with
+                                                             Pk
+odd numbers σi , τi ≥ 1, τ ′ = min(τ1 , . . . , τk ) and τ̃ = i=1 τi . Then we have
+                                                                    ′
+                                                                      !
+                                                     1 2k − 2 + 2kτ        αβ
+                                PS ≥ 1 − k                                                                 (23)
+                                                 2 −1        2τ̃        (log2 n)2
+
+
+
+                                                                      5
+and for any ε > 0,
+                                                log(1/ε)
+                                     N≥                          (log2 n)2 ,                                (24)
+                                                   1 2k −2+2kτ ′
+                                          αβ 1 − 2k −1   2τ̃
+
+where α and β does not depend on n.
+    (Proof ) Applying Eq.(22) to Eq.(4) and Eq.(3), we have the present theorem.
+
+
+
+5     Comparison of two estimations
+As for Eq.(8) and Eq.(22), we have the following relation.
+
+Proposition 5.1 For n = p1 e1 . . . pk ek , with prime numbers pi , (i = 1, · · · , k), we set pi − 1 = 2τi σi with
+                                                             Pk
+odd numbers σi , τi ≥ 1, τ ′ = min(τ1 , . . . , τk ) and τ̃ = i=1 τi . Then we have
+                                                              ′
+                                             1 2k − 2 + 2kτ        1
+                                     1−    k
+                                                            ≥ 1 − k−1 .                                       (25)
+                                          2 −1      2τ̃          2
+The equality holds when τ1 = · · · = τk = 1.
+(Prrof ) Since
+                                                                               ′
+                                             1       1 2k − 2 − 2kτ
+                                             k−1
+                                                 − k
+                                           2      2 −1       2τ̃
+                                                                       ′
+                                               1        1 2k − 2 − 2kτ
+                                           ≥ k−1 − k
+                                             2       2 −1      2kτ ′
+                                                                  
+                                               1      1           1
+                                           =      − kτ ′    1− k
+                                               2k   2           2 −1
+                                           ≥0
+
+we have inequality. If τ1 = · · · = τk = 1, then we easily find the equality holds.
+   Note that Shor’s original estimation gives the greatest lower bound of the probability P (Ae ∩ Af |
+                        k     kτ ′
+Aa ∩ Ar ) = 1 − 2k1−1 2 −2+2
+                         2τ̃
+                                .
+    From now on, we consider the simple case n = pq, where p and q are prime numbers. We also set
+p − 1 = 2τp σp and q − 1 = 2τq σq where τp , τq ≥ 1 and σp and σq are odd numbers. By the Shor’s original
+estimation, the probability is given by
+                                                                         1
+                                           P (Ae ∩ Af | Aa ∩ Ar ) ≥        .
+                                                                         2
+Moreover, by our precise estimation Eq.(22), the probability is given by
+
+                                                                  1 2 + 22 min(τp ,τq )
+                                P (Ae ∩ Af | Aa ∩ Ar ) = 1 −                            .
+                                                                  3     2τp +τq
+    The figure 1 presents the relation among the probability P (Ae ∩ Af | Aa ∩ Ar ), τp and τq . From this
+figure, we find that the probability P (Ae ∩ Af | Aa ∩ Ar ) takes a minimum value 1/2 when τp = τq = 1.
+In general, the probability P (Ae ∩ Af | Aa ∩ Ar ) takes small values when τp = τq and it is close to 1
+when τp 6= τq . For the only case that n = pq, we can estimate the probability that the number a(< n)
+satisfying gcd(a, n) = 1 is obtained.
+
+Proposition 5.2 We suppose n = pq with two different prime numbers p and q. For sufficient large n
+and any ε > 0, we have
+                                               ϕ(n)    1
+                                     P (Aa ) =      ≥ .                                       (26)
+                                                n      2
+
+
+
+                                                        6
+             Figure 1: The relation among τp , τq and the probability P (Ae ∩ Af | Aa ∩ Ar ).
+
+
+(Proof ) Firstly we consider the case: n = pq. By Euler function, we have
+                                                                      
+                     ϕ(n)         1         1          1         1     1     1
+                          = 1−          1−     ≥ 1−         1−       =    1−     .
+                      n           p         q          2         q     2     q
+By the similar way for q, we have
+                                                                 
+                                    ϕ(n)   1          1     1     1
+                                         ≥         1−     ,    1−     .
+                                     n     2          p     2     q
+
+Since we take the limit such as n → ∞ ⇐⇒ (p → ∞ or q → ∞), we then have for any ε and sufficient
+large n,
+                                            ϕ(n)    1
+                                                 > − ε.
+                                             n      2
+Secondly we consider the case n = 2q, then we have,
+                                                        
+                                         ϕ(n)    1     1
+                                              =     1−     .
+                                           n     2     q
+Taking q → ∞, we have                                 
+                                            1        1     1
+                                                  1−     −→ .
+                                            2        q     2
+Therefore we have for any positive number ε,
+                                                       
+                                  ϕ(n) 1      ϕ(n)  1
+                                          −ε<      < + ε = ∞.
+                                    n   2      n    2
+Thus we have
+                                                          ϕ(n)   1
+                                                lim inf        =
+                                                n→∞        n     2
+which implies Eq.(26) for sufficient large n.
+
+
+
+                                                          7
+Corollary 5.3 We suppose n = pq with two different prime numbers p and q. Also we set p − 1 =
+2τp σp , q − 1 = 2τq σq and τ ′ = min(τp , τq ), where σp and σq are odd numbers such that τp ≥ 1 and τq ≥ 1.
+Then we have                                                              !
+                                                                        ′
+                                                     α        1 2 + 22τ
+                                       PS ≥               1−                .                            (27)
+                                                 2 log2 n     3 2τp +τq
+Also we have for any ε > 0,
+                                                   2 log(1/ε)
+                                       N≥      
+                                                            2τ ′
+                                                                    log2 n.                            (28)
+                                             α 1 − 31 22+2
+                                                        τp +τq
+
+
+
+
+References
+ [1] P.W.Shor, Algorithms for quantum computation : Discrete log and factoring, Proceedings of the
+     35th, Annual IEEE Symposium on Foundations of Computer Science, 1994.
+ [2] P.W.Shor,Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum
+     computer, SIAM Journal on Computing, vol.26, no.5, pp.1484-1509 (1997).
+ [3] A.Ekert and R.Jozsa, Quantum Computation and Shor’s Factoring Algorithm, Rev.Mod.Phys., 68,
+     3, pp.733-753 (1996).
+ [4] G.H.Hardy and E.M.Wright, An introduction to the Theory of Numbers, Fifth Edition, Oxford
+     Science Publications (1979).
+ [5] D. McAnally, A refinement of Shor’s algorithm, http://xxx.lanl.gov/abs/quant-ph/0112055.
+ [6] M.A.Nielsen and I.Chuang, Quantum Computation and Quantum Information, Cambridge
+     Press,2000.
+
+
+
+
+                                                        8
+

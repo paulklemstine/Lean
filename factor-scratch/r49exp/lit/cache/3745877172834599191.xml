@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/yLKqQe+h/gQ2Q0qqT/FXKlDQDic</id>
+  <title>arXiv Query: search_query=abs:"smooth number" AND abs:"factoring" AND abs:heuristic&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:11:12Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22smooth+number%22+AND+(abs:%22factoring%22+AND+abs:heuristic)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2308.07804v1</id>
+    <title>Quantum and Classical Combinatorial Optimizations Applied to Lattice-Based Factorization</title>
+    <updated>2023-08-15T14:31:25Z</updated>
+    <link href="https://arxiv.org/abs/2308.07804v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.07804v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The availability of working quantum computers has led to several proposals and claims of quantum advantage. In 2023, this has included claims that quantum computers can successfully factor large integers, by optimizing the search for nearby integers whose prime factors are all small.
+  This paper demonstrates that the hope of factoring numbers of commercial significance using these methods is unfounded. Mathematically, this is because the density of smooth numbers (numbers all of whose prime factors are small) decays exponentially as n grows. Our experimental reproductions and analysis show that lattice-based factoring does not scale successfully to larger numbers, that the proposed quantum enhancements do not alter this conclusion, and that other simpler classical optimization heuristics perform much better for lattice-based factoring.
+  However, many topics in this area have interesting applications and mathematical challenges, independently of factoring itself. We consider particular cases of the CVP, and opportunities for applying quantum techniques to other parts of the factorization pipeline, including the solution of linear equations modulo 2. Though the goal of factoring 1000-bit numbers is still out-of-reach, the combinatoric landscape is promising, and warrants further research with more circumspect objectives.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-15T14:31:25Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Willie Aboumrad</name>
+    </author>
+    <author>
+      <name>Dominic Widdows</name>
+    </author>
+    <author>
+      <name>Ananth Kaushik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/9909180v2</id>
+    <title>An Asymptotic Formula for the Number of Smooth Values of a Polynomial</title>
+    <updated>2000-08-22T19:36:27Z</updated>
+    <link href="https://arxiv.org/abs/math/9909180v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/9909180v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Although we expect to find many smooth numbers (i.e., numbers with no large prime factors) among the values taken by a polynomial with integer coefficients, it is unclear what the asymptotic number of such smooth values should be; this is in contrast to the related problem of counting the number of prime values of a polynomial, for which Bateman and Horn published a conjectured asymptotic formula that is widely believed to be true. We discuss how to employ the Bateman-Horn conjecture to derive an asymptotic formula for the number of smooth values of a polynomial, with the smoothness parameter in a non-trivial range. This conditional result provides a believable heuristic for the number of smooth integers among all values {F(n)}, and also among the values {F(p)} on prime arguments only.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-09-29T19:47:32Z</published>
+    <arxiv:comment>57 pages. Revised version - an appendix has been added and some other material rewritten slightly</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. Number Theory 93 (2002), no. 2, 108-182.</arxiv:journal_ref>
+    <author>
+      <name>Greg Martin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.11724v2</id>
+    <title>ECM And The Elliott-Halberstam Conjecture For Quadratic Fields</title>
+    <updated>2023-01-17T14:07:16Z</updated>
+    <link href="https://arxiv.org/abs/2212.11724v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.11724v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The complexity of the elliptic curve method of factorization (ECM) is proven under the celebrated conjecture of existence of smooth numbers in short intervals. In this work we tackle a different version of ECM which is actually much more studied and implemented, especially because it allows us to use ECM-friendly curves. In the case of curves with complex multiplication (CM) we replace the heuristics by rigorous results conditional to the Elliott-Halberstam (EH) conjecture. The proven results mirror recent theorems concerning the number of primes p such thar p -- 1 is smooth. To each CM elliptic curve we associate a value which measures how ECM-friendly it is. In the general case we explore consequences of a statement which translated EH in the case of elliptic curves.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-22T14:15:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LFANT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Florent Jouve</name>
+      <arxiv:affiliation>IMB</arxiv:affiliation>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,369 @@
+18.783 Elliptic Curves                                                                Spring 2019
+Lecture #17                                                                           04/10/2019
+
+17     Complex multiplication
+Over the course of the last two lectures we established a one-to-one correspondence between
+lattices L ⊆ C (up to homethety) and elliptic curves E/C (up to isomorphism), given by
+the map that sends each lattice L to the elliptic curve
+                                 EL : y 2 = 4x3 − g2 (L)x − g3 (L),
+together with an explicit isomorphism
+                               Φ : C/L → EL (C)
+                                          (
+                                           (℘(z), ℘0 (z)) z 6∈ L;
+                                     z 7→
+                                           0              z ∈ L,
+where ℘(z) is the Weierstrass ℘-function for the lattice L.
+    To complete our understanding of the categorical equivalence of complex tori and elliptic
+curves, we want to relate morphisms of complex tori to isogenies of elliptic curves. In
+particular, we want to be able to explicitly understand how to relate the endomorphism ring
+of a complex torus to the endomorphism ring of the corresponding elliptic curve.
+    A complex torus C/L is both a complex manifold and a group in which the group oper-
+ations are defined by holomorphic maps (this makes it a complex Lie group). A morphism
+in the category of complex tori must respect both structures: we require morphisms of com-
+plex tori to be holomorphic maps that are also group homomorphisms (just as isogenies are
+morphisms of algebraic varieties that are also homomorphisms of abelian groups).
+
+17.1    Morphisms of complex tori
+We have not formally defined what it means to be a holomorphic map of complex manifolds
+(or even a complex manifold), but for maps ϕ : C/L1 → C/L2 of complex tori it simply
+means that ϕ is induced by a holomorphic function f : C → C that makes the following
+diagram commute:
+                                                  f
+                                          C   ←        → C
+                                          ←
+
+
+
+
+                                                         ←
+
+
+
+
+                                            π1            π2
+                                          →
+
+
+
+
+                                                         →
+
+
+
+
+                                                  ϕ
+                                        C/L1     ←    → C/L2
+
+where π1 and π2 are quotient maps.1
+   Each α ∈ C determines a holomorphic multiplication-by-α map z 7→ αz that is an
+endomorphism of C (as a group under addition). Whenever αL1 ⊆ L2 this induces a group
+homomorphism
+                                       ϕα : C/L1 → C/L2
+                                          z + L1 7→ αz + L2
+that is also a holomorphic map of complex manifolds.
+    Remarkably, every morphism of complex tori arises in this way. In fact, every holomor-
+phic map that fixes zero arises in this way; this is analogous to the fact that every morphism
+of elliptic curves that fixes zero is automatically a group homomorphism.
+  1
+    We should note that in general holomorphic maps of complex manifolds are defined locally on charts
+and need not be induced by a single global map; complex tori are a particularly simple special case.
+
+
+                                                                         Lecture by Andrew Sutherland
+Theorem 17.1. Let ϕ : C/L1 → C/L2 be a holomorphic map with ϕ(0) = 0. There is a
+unique α ∈ C for which ϕ = ϕα .
+Proof. Let πi : C → C/Li be quotient maps and let f : C → C be a holomorphic function
+for which ϕ(π1 (z)) = π2 (f (z)). For all z ∈ C and ω ∈ L1 we have
+                    π2 (f (z + ω)) = ϕ(π1 (z + ω)) = ϕ(π1 (z)) = π2 (f (z)),
+thus f (z +ω)−f (z) ∈ ker π2 = L2 . For each ω ∈ L the function gω (z) := f (z +ω)−f (z) is a
+continuous map from the connected set C to a discrete set L2 ; its image must be connected
+and therefore consists of a single point. It follows that gω (z) is constant and gω0 (z) = 0, which
+implies that f 0 (z + ω) = f 0 (z) for all z ∈ C and ω ∈ L1 . Thus f 0 (z) is periodic with respect
+to L1 and is therefore a holomorphic elliptic function, hence constant (see Remark 15.10).
+   Thus f (z) = αz + β, for some α, β ∈ C. For all ω ∈ L1 we have
+                               π2 (f (ω)) = ϕ(π1 (ω)) = ϕ(0) = 0.
+Taking ω = 0 shows that β = f (0) ∈ L2 , and we then have αL1 ⊆ L2 . For all z ∈ C we
+have ϕ(π1 (z)) = π2 (f (z) = π2 (αz), thus ϕ = ϕα . The value of α is unique: if ϕ = ϕγ for
+some γ ∈ C then (α − γ)z ∈ L2 for all z ∈ C, which implies α − γ = ((α − γ)z)0 = 0 (as
+argued above), and therefore γ = α.
+   As noted above, a morphism ϕ : C/L1 → C/L2 of complex tori is a holomorphic map
+that is also a group homomorphism; in particular, ϕ(0) = 0, so Theorem 17.1 applies and
+we have the following corollary.
+Corollary 17.2. For any two lattices L1 , L2 ⊆ C the map
+                                        
+                  α ∈ C : αL1 ⊆ L2 → morphisms ϕ : C/L1 → C/L2
+                                       α 7→ ϕα
+is an isomorphism of additive groups. If L1 = L2 it is an isomorphism of commutative rings.
+   The set {α ∈ C : αL1 ⊆ L2 } on the LHS contains 0 and is closed under addition and
+negation and is thus an additive subgroup of C, and if L1 = L2 it is also closed under
+multiplication and forms a subring of C. The set of morphisms on the RHS, which we could
+have written as Hom(C/L1 , C/L2 ), is an additive group under pointwise addition, and when
+L1 = L2 it is the endomorphism ring End(C/L1 ) with multiplication given by composition.
+Proof. Theorem 17.1 gives us a bijection of sets; we just need to check that it is a group/ring
+homomorphism. For i = 1, 2, let πi : C → C/Li be the projection maps as above. If
+αL1 ⊆ L2 and βL1 ⊆ L2 then for all z ∈ C we have
+ϕα+β (π1 (z)) = π2 ((α+β)z) = π2 (αz)+π2 (βz) = ϕα (π1 (z))+ϕβ (π1 (z)) = (ϕα +ϕβ )(π1 (z)),
+thus the map α 7→ ϕα defines a homomorphism of additive groups. If L1 = L2 and we put
+π = π1 = π2 then we also have
+             ϕαβ (π(z)) = π(αβz) = ϕα (π(βz)) = ϕα (ϕβ (π(z)) = (ϕα ϕβ )(π(z)),
+which shows that α 7→ ϕα is a ring homomorphism.
+    We will henceforth identify Hom(C/L1 , C/L2 ) with {α ∈ C : αL1 ⊆ L2 } and ϕα with
+α; we thus view any α for which αL1 ⊆ L2 both as a complex number and a morphism
+C/L1 → C/L2 . We will also freely use z ∈ C to denote its image under the quotient map
+π1 : C → C/L1 and use αz to denote ϕα (π1 (z) = π2 (αz) whenever the context is clear.
+
+                                                            18.783 Spring 2019, Lecture #17, Page 2
+17.2    Morphisms of complex tori and isogenies of elliptic curves over C
+Let L1 , L2 ⊆ C be lattices. In order to complete the proof that complex tori and el-
+liptic curves over C are equivalent categories, we need to give an explicit isomorphism
+Hom(C/L1 , C/L2 ) ≃ Hom(EL1 , EL2 ). To do this we need to first prove a lemma about
+fields of elliptic functions.
+     Recall that the set of all elliptic functions for a given lattice L forms a field C(L) that
+includes the constant functions C ⊆ C(L). We now show that the extension C(L)/C is
+generated by the Weierstrass ℘-function and its derivative, and the subfield C(L)even of
+even functions (the f ∈ C(L) for which f (−z) = f (z)) is generated by the ℘-function alone.
+Lemma 17.3. Let L ⊆ C be a lattice. The following hold:
+  (i) C(L) = C(℘, ℘0 );
+ (ii) C(L)even = C(℘);
+(iii) if f ∈ C(L)even is holomorphic on C − L then f ∈ C[℘].
+Proof. Every f ∈ C(L) can be written as the sum of an even function and an odd function:
+                                     f (z) + f (−z) f (z) − f (−z)
+                           f (z) =                 +               .
+                                            2              2
+Any odd function g ∈ C(L) can be written as
+                                                g(z) 0
+                                       g(z) =          ℘ (z),
+                                                ℘0 (z)
+where g(z)/℘0 (z) is an even function; thus (i) follows from (ii).
+   We now show that (ii) follows from (iii). Let f ∈ C(L)even and let m be the number of
+poles of f that lie in F0 − {0}, where F is the standard fundamental parallelogram for L.
+The integer m is a nonnegative and bounded by the order of f . If m > 0 then f (z) has a
+pole at some nonzero w ∈ F0 , say of order n. Now consider the even elliptic function
+
+                                     g(z) := (℘(z) − ℘(w))n ,
+
+which is holomorphic on C − L and has a zero of order at least n at w. The function
+gf ∈ C(L)even is holomorphic at w, and every pole of gf in C − L must be a pole of f ,
+so it has strictly fewer than m poles in F0 − {0}. Repeating this process m times yields a
+polynomial Q ∈ C[x] such that Q(℘)f ∈ C(L)even is holomorphic on C − L; If we assume
+(iii), then Q(℘)f = P (℘) for some P ∈ C[x] and f = P (℘)/Q(℘) ∈ C(℘), implying (ii).
+     We now prove (iii). Let f ∈ C(L)even be nonzero and holomorphic on C − L. If the
+order of f is zero then f is constant (by Liouville’s theorem, since an elliptic function is
+necessarily bounded). Otherwise f must have a pole at 0 and its Laurent series expansion
+at 0 has the form
+                                            X∞
+                                    f (z) =     a2k z 2k ,
+                                                k=−n
+
+with a−2n 6= 0, where 2n is order of f (which must be even). The function
+
+                                        f (z) − a−2n ℘n (z)
+
+is an even elliptic function holomorphic on C − L of order at most 2(n − 1). Repeating this
+at most n times yields a polynomial P ∈ C[x] such that f − P (℘) ∈ C, and (iii) follows.
+
+                                                                18.783 Spring 2019, Lecture #17, Page 3
+Theorem 17.4. For i = 1, 2 let Li ⊆ C be a lattice, let Ei := ELi be the corresponding
+elliptic curve, define ℘i (z) := ℘(z; Li ), and let Φi : C/Li → Ei (C) be the isomorphism that
+sends z 6∈ Li to (℘i (z), ℘0i (z)) and z ∈ Li to 0. For any α ∈ C, the following are equivalent:
+
+ (1) αL1 ⊆ L2 ;
+ (2) ℘2 (αz) = u(℘1 (z))/v(℘1 (z)) for some polynomials u, v ∈ C[x];
+ (3) There is a unique φα ∈ Hom(E1 , E2 ) such that the following diagram commutes:
+                                              C/L1       Φ1    E1 (C)
+
+                                                α                   φα
+
+
+                                              C/L2       Φ2    E2 (C)
+
+For every morphism φ ∈ Hom(E1 , E2 ) there is a unique α = αφ satisfying (1)–(3). The maps
+φ 7→ αφ and α 7→ φα define inverse isomorphisms of Hom(E1 , E2 ) and {α ∈ C : αL1 ⊆ L2 }.
+
+Proof. Properties (1)–(3) clearly hold for α = 0, so we assume α 6= 0.
+    (1) ⇒ (2): Let ω ∈ L1 . We have ℘2 (α(z + ω)) = ℘2 (αz + αω) = ℘2 (αz). Thus ℘2 (αz)
+is periodic with respect to L1 , and it is meromorphic, so it is an elliptic function for L1 . It
+is an even function, so it is a rational function u(℘1 (z))/v(℘1 (z)) of ℘1 (z), by Lemma 17.3.
+    (2) ⇒ (3): Let ℘2 (αz) = u(℘1 (z))/v(℘1 (z)), let s := (u0 v − v 0 u) and t := αv 2 , and define
+                                                         
+                                              u(x) s(x)
+                                     φα :=        ,     y .
+                                              v(x) t(x)
+
+Then                                                               0
+                               1              1         u(℘1 (z))            s(℘1 (z)) 0
+                  ℘02 (αz) =     (℘2 (αz))0 =                            =            ℘ (z),
+                               α              α         v(℘1 (z))            t(℘1 (z)) 1
+and we have
+                                                                 
+                                          u(℘1 (z)) s(℘1 (z)) 0
+φα (Φ1 (z)) = φα (℘1 (z), ℘01 (z) =                ,         ℘ (z) = (℘2 (αz), ℘02 (αz)) = Φ2 (αz),
+                                          v(℘1 (z)) t(℘1 (z)) 1
+
+so the diagram in (3) commutes. If φ ∈ Hom(E1 , E2 ) also satisfies φ(Φ1 (z)) = Φ2 (αz) then
+
+              (φ − φα )(Φ1 (z)) = φ(Φ1 (z)) − φα (Φ1 (z)) = Φ2 (αz) − Φ2 (αz) = 0,
+
+and φ = φα ; thus φα is the only element of Hom(E1 , E2 ) that makes the diagram commute.
+    (3) ⇒ (1): For all ω ∈ L1 we have Φ2 (αω) = φα (Φ1 (ω)) = φα (0) = 0, which implies
+αω ∈ L2 , thus αL1 ⊆ L2 .
+    For any φ ∈ Hom(E1 , E2 ), the map Φ−12 ◦ φ ◦ Φ1 is an element of Hom(C/L1 , C/L2 ) and
+is therefore induced by the multiplication-by-α map α 7→ αz for a unique α = αφ satisfying
+αL1 ⊆ L2 , by Corollary 17.2. The maps α 7→ φα and φ 7→ αφ are thus inverse bijections.
+    We now show that the map Ψ : Hom(E1 , E2 ) → {α ∈ C : αL2 ⊆ L2 } defined by φ 7→ αφ
+is a group homomorphism. We have Ψ(0) = 0, and for all φ1 , φ2 ∈ Hom(E1 , E2 )
+
+ Ψ(φ1 + φ2 ) = Φ−1                     −1             −1
+                2 ◦ (φ1 + φ2 ) ◦ Φ1 = Φ2 ◦ φ1 ◦ Φ1 + Φ2 ◦ φ2 ◦ Φ1 = Ψ(φ1 ) + Ψ(φ2 ).
+
+Thus Ψ is a group homomorphism and therefore an isomorphism, since it is a bijection.
+
+
+                                                                     18.783 Spring 2019, Lecture #17, Page 4
+17.3    Endomorphism rings of complex tori and elliptic curves over C
+We now specialize to the case L = L2 = L1 , and put E = EL , in which case the group
+{α ∈ C : αL ⊆ L} ≃ Hom(E, E) = End(E) is also a ring.
+
+Corollary 17.5. Let L ⊆ C be a lattice and let E := EL . The maps α 7→ φα and φ 7→ αφ
+are inverse ring isomorphisms between {α ∈ C : αL ⊆ L} and End(E), the involution φ 7→ φ̂
+of End(E) corresponds to complex conjugation α 7→ ᾱ in {α ∈ C : αL ⊆ L}, and we have
+T(α) := α + ᾱ = tr φα and N(α) := αᾱ = deg φα = deg u = deg v + 1, where u, v ∈ C[x] are
+as in (2) of Theorem 17.4.
+
+Proof. Let Φ : C/L → E(C) and Ψ : End(E) → {α ∈ C : αL ⊆ L} be as in Theorem 17.4
+and its proof (so Ψ(φ) = αφ ); they are both group isomorphisms. For φ1 , φ2 ∈ End(E) we
+have
+
+    Ψ(φ1 φ2 ) = Φ−1 ◦ (φ1 ◦ φ2 ) ◦ Φ = (Φ−1 ◦ φ1 ◦ Φ) ◦ (Φ−1 ◦ φ2 ◦ Φ) = Ψ(φ1 )Ψ(φ2 ),
+
+thus Ψ is a ring homomorphism and therefore a ring isomorphism, since it is a bijection.
+   For any φ ∈ End(E), the complex number α := αφ satisfies the characteristic equation
+
+                                  x2 − (tr φ)x + deg φ = 0,
+
+which has integer coefficients and discriminant tr(φ)2 − 4 deg(φ) ≤ 0. Thus α ∈ Z, or α is an
+algebraic integer in an imaginary quadratic field, and in either case its complex conjugate ᾱ
+satisfies the same quadratic equation and we have ᾱα = deg φ = φ̂φ, which implies ᾱ = φ̂
+({α ∈ C : αL ⊆ L} ≃ End(E) has no zero divisors, so the cancellation law applies), and we
+have T(α) = α + ᾱ = φ + φ̂ = tr φ and N(α) = αᾱ = φφ̂ = deg φ.
+    Finally, for any α ∈ {α ∈ C : αL ⊆ L} we can apply (2) in Theorem 17.4 to write
+v(℘(z))℘(αz) = u(℘(z)) for some u, v ∈ C[x]. The functions u(℘(z)) and v(℘(z)) have poles
+of order 2 deg u and 2 deg v at 0, respectively, while ℘(αz) has a pole of order 2 at 0, so we
+must have deg u = deg v + 1 and
+
+                     deg φ = max(deg u, deg v) = deg u = deg v + 1,
+                             
+where φ = φα := u(x) , s(x)
+                 v(x) t(x)  y   is as in the proof of Theorem 17.4.
+
+Remark 17.6. Theorem 17.4 and Corollary 17.5 explain the origin of the term complex
+multiplication (CM). When End(EL ) is bigger than Z the extra endomorphisms in End(EL )
+all correspond to multiplication-by-α maps in End(C/L), for some α ∈ C − R that is an
+algebraic integer in an imaginary quadratic field.
+
+Corollary 17.7. Let E be an elliptic curve defined over C. Then End(E) is commutative
+and therefore isomorphic to either Z or an order in an imaginary quadratic field.
+
+Proof. Let L be the lattice corresponding to E. The ring End(E) ≃ {α ∈ C : αL ⊆ L} is
+clearly commutative, and therefore not an order in a quaternion algebra. The result then
+follows from our classification of endomorphism rings of elliptic curves in Lecture 13.
+
+Remark 17.8. Corollary 17.7 applies to elliptic curves over Q, number fields, or any field
+that can be embedded in C. It can be extended to all fields of characteristic 0 via the
+Lefschetz principle; see [1, Thm. VI.6.1].
+
+
+                                                         18.783 Spring 2019, Lecture #17, Page 5
+17.4    Elliptic curves with a given endomorphism ring
+We have shown that for any lattice L ⊆ C we have ring isomorphisms
+
+                        End(EL ) ≃ {α ∈ C : αL ⊆ L} ≃ End(C/L).                             (1)
+
+As noted above, we have been treating the isomorphism on the left as an equality, and it
+will be convenient to do the same for the isomorphism on the right. The endomorphism
+algebra End0 (EL ) is isomorphic to either Q or an imaginary quadratic field, so we can
+always embed End0 (EL ) in C. Once we have done this, provided that we regard End(EL ) as
+a subring of End0 (EL ) (via the canonical injection φ 7→ φ ⊗ 1), we actually have an equality
+End(EL ) = {α ∈ C : αL ⊆ L}; moreover, when End(C/L) is an imaginary quadratic
+order O, we can choose the embedding of End0 (EL ) into C so that each multiplication-by-α
+endomorphism of C/L is identified with φα ∈ End(EL ) (as opposed to φ̂α ). This is known as
+the normalized identification of End(EL ) with End(C/L) = O, which we henceforth assume.
+    We now want to focus on the CM case, where End(EL ) is an order O in an imaginary
+quadratic field K. The order O is a lattice, and we would like to understand how the lattices
+L and O are related. In particular, for which lattices L do we have End(EL ) = O?
+    An obvious candidate is L = O. If α ∈ End(EO ), then αO ⊆ O and therefore α ∈ O,
+since the ring O contains 1. Conversely, if α ∈ O, then αO ⊆ O, since O is closed under
+multiplication, and therefore α ∈ End(EO ); thus End(EO ) = O.
+    The same holds for any lattice homothetic to O. Indeed, the set {α ∈ C : αL ⊆ L} does
+not change if we replace L with L0 = λL for any λ ∈ C× , so we are really only interested in
+lattices up to homethety (and elliptic curves up to isomorphism). The question now before
+us is this: are there any lattices L not homothetic to O for which we have End(EL ) = O?
+    Given that we are only considering lattices up to homethety, we may assume without
+loss of generality that L = [1, τ ], and we can always write O = [1, ω] for some imaginary
+quadratic integer ω. If End(EL ) = O, then we must have ω · 1 = ω ∈ L, so ω = m + nτ ,
+for some m, n ∈ Z with n 6= 0. Thus nL = [n, nτ ] = [n, ω − m] ⊆ [1, ω] = O, which means
+that L is homothetic to a sublattice of O. This sublattice must be closed under multiplication
+by O, which implies that L is homothetic to an O-ideal (recall that an O-ideal is an additive
+subgroup of O closed under multiplication by O, equivalently, any O-submodule of O).
+    But the situation is a bit more complicated than it appears. While every lattice L for
+which End(EL ) = O is an O-ideal, the converse does not hold (unless O is the maximal
+order OK ). If we start with an arbitrary O-ideal L, it is clear that the set
+
+                      O(L) := {α ∈ C : αL ⊆ L} = {α ∈ K : αL ⊆ L}
+
+is an order in K: note that O ⊆ O(L) = End(EL ), since the O-ideal L is closed under
+multiplication by O, and this implies that End0 (EL ) = K. But it is not necessarily true
+that O(L) is equal to O; if O =
+                              6 OK we can always find an O-ideal L for which O(L) strictly
+contains O (see Problem Set 9). This motivates the following definition.
+
+Definition 17.9. Let O be an order in an imaginary quadratic field K, and let L be an
+O-ideal. We say that L is a proper O-ideal if O(L) = O.
+
+    Given that we are only interested in lattices up to homethety, we shall regard two O-
+ideals as equivalent if they are homothetic as lattices. A homethety L0 = λL between lattices
+that are O-ideals can always be written with λ = a/b for some a, b ∈ O. To see this, note
+that if L = [ω1 , ω2 ] then we can take α = λω1 ∈ O and β = ω1 . Thus homothetic O-ideals L
+
+                                                         18.783 Spring 2019, Lecture #17, Page 6
+and L0 always satisfy an equation αL = βL0 for some α, β ∈ O. This motivates the following
+definition.
+
+Definition 17.10. Let O be an order in an imaginary quadratic field K. Two O-ideals a
+and b are said to be equivalent if they are homothetic as lattices; equivalently, αa = βb for
+some nonzero α, β ∈ O; we can also write this as (α)a = (β)b, where (α) and (β) denote
+principal ideals and (α)a and (β)b are products of ideals.
+
+    Recall that the product of two O-ideals a and b is the ideal generated by all products
+ab with a ∈ a and b ∈ b, and that ideal multiplication is commutative and associative. It is
+enough to consider products of generators, so if a = [a1 , a2 ] and b = [b1 , b2 ], then ab is the
+ideal generated by the four elements a1 b1 , a1 b2 , a2 b1 , a2 b2 . Since ab is an additive subgroup
+of O, it is necessarily a free Z-module of rank 2 and can be written as a lattice [c1 , c2 ], where
+c1 and c2 are O-linear combinations of a1 b1 , a1 b2 , a2 b1 , a2 b2 . Note that ideal multiplication
+respects equivalence:
+
+                          αa = βb and γc = δd       =⇒      αγac = βδcd.
+
+Definition 17.11. Let O be an order in an imaginary quadratic field. The ideal class group
+cl(O) is the multiplicative group of equivalence classes of proper O-ideals.
+
+    We should note that it is not clear a priori that cl(O) is actually a group; it is clearly
+closed under an associative multiplication and contains an identity element (the class of
+principal ideals), but it is not obvious that every element has an inverse. We will give an
+explicit proof of this in the next lecture (see Problem Set 9 for an alternative proof that also
+shows that cl(O) is finite). But even without knowing that cl(O) is actually a group, our
+discussion above makes the following proposition clear.
+
+Theorem 17.12. Let O be an order in an imaginary quadratic field. There is a one-to-
+one correspondence between elements of the ideal class group cl(O) and homethety classes of
+lattices L ⊆ C for which End(EL ) ≃ O.
+
+
+References
+[1] J.H. Silverman, The arithmetic of elliptic curves, second edition, Springer 2009.
+
+
+
+
+                                                             18.783 Spring 2019, Lecture #17, Page 7
+

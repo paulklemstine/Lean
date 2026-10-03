@@ -1,0 +1,1007 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ewmGycFRNjA9x05ygfE9jAyX/2g</id>
+  <title>arXiv Query: search_query=all:"auxiliary information" AND all:factoring&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:40Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22auxiliary+information%22+AND+all:factoring&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>61</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2303.02566v3</id>
+    <title>MFAI: A Scalable Bayesian Matrix Factorization Approach to Leveraging Auxiliary Information</title>
+    <updated>2026-01-03T22:30:41Z</updated>
+    <link href="https://arxiv.org/abs/2303.02566v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.02566v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In various practical situations, matrix factorization methods suffer from poor data quality, such as high data sparsity and low signal-to-noise ratio (SNR). Here, we consider a matrix factorization problem by utilizing auxiliary information, which is massively available in real-world applications, to overcome the challenges caused by poor data quality. Unlike existing methods that mainly rely on simple linear models to combine auxiliary information with the main data matrix, we propose to integrate gradient boosted trees in the probabilistic matrix factorization framework to effectively leverage auxiliary information (MFAI). Thus, MFAI naturally inherits several salient features of gradient boosted trees, such as the capability of flexibly modeling nonlinear relationships and robustness to irrelevant features and missing values in auxiliary information. The parameters in MFAI can be automatically determined under the empirical Bayes framework, making it adaptive to the utilization of auxiliary information and immune to overfitting. Moreover, MFAI is computationally efficient and scalable to large datasets by exploiting variational inference. We demonstrate the advantages of MFAI through comprehensive numerical results from simulation studies and real data analyses. Our approach is implemented in the R package mfair available at https://github.com/YangLabHKUST/mfair.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-05T03:26:14Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <arxiv:journal_ref>Journal of Computational and Graphical Statistics 33 (2024) 1339-1349</arxiv:journal_ref>
+    <author>
+      <name>Zhiwei Wang</name>
+    </author>
+    <author>
+      <name>Fa Zhang</name>
+    </author>
+    <author>
+      <name>Cong Zheng</name>
+    </author>
+    <author>
+      <name>Xianghong Hu</name>
+    </author>
+    <author>
+      <name>Mingxuan Cai</name>
+    </author>
+    <author>
+      <name>Can Yang</name>
+    </author>
+    <arxiv:doi>10.1080/10618600.2024.2319160</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/10618600.2024.2319160" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.04094v2</id>
+    <title>Enhancing Network Embedding with Auxiliary Information: An Explicit Matrix Factorization Perspective</title>
+    <updated>2018-03-05T03:39:23Z</updated>
+    <link href="https://arxiv.org/abs/1711.04094v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.04094v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in the field of network embedding have shown the low-dimensional network representation is playing a critical role in network analysis. However, most of the existing principles of network embedding do not incorporate auxiliary information such as content and labels of nodes flexibly. In this paper, we take a matrix factorization perspective of network embedding, and incorporate structure, content and label information of the network simultaneously. For structure, we validate that the matrix we construct preserves high-order proximities of the network. Label information can be further integrated into the matrix via the process of random walk sampling to enhance the quality of embedding in an unsupervised manner, i.e., without leveraging downstream classifiers. In addition, we generalize the Skip-Gram Negative Sampling model to integrate the content of the network in a matrix factorization framework. As a consequence, network embedding can be learned in a unified framework integrating network structure and node content as well as label information simultaneously. We demonstrate the efficacy of the proposed model with the tasks of semi-supervised node classification and link prediction on a variety of real-world benchmark network datasets.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-11T08:07:23Z</published>
+    <arxiv:comment>DASFAA 2018</arxiv:comment>
+    <arxiv:primary_category term="cs.SI"/>
+    <author>
+      <name>Junliang Guo</name>
+    </author>
+    <author>
+      <name>Linli Xu</name>
+    </author>
+    <author>
+      <name>Xunpeng Huang</name>
+    </author>
+    <author>
+      <name>Enhong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.11686v1</id>
+    <title>Improving Accuracy in Cell-Perturbation Experiments by Leveraging Auxiliary Information</title>
+    <updated>2023-07-21T16:42:11Z</updated>
+    <link href="https://arxiv.org/abs/2307.11686v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.11686v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern cell-perturbation experiments expose cells to panels of hundreds of stimuli, such as cytokines or CRISPR guides that perform gene knockouts. These experiments are designed to investigate whether a particular gene is upregulated or downregulated by exposure to each treatment. However, due to high levels of experimental noise, typical estimators of whether a gene is up- or down-regulated make many errors. In this paper, we make two contributions. Our first contribution is a new estimator of regulatory effect that makes use of Gaussian processes and factor analysis to leverage auxiliary information about similarities among treatments, such as the chemical similarity among the drugs used to perturb cells. The new estimator typically has lower variance than unregularized estimators, which do not use auxiliary information, but higher bias. To assess whether this new estimator improves accuracy (i.e., achieves a favorable trade-off between bias and variance), we cannot simply compute its error on heldout data as ``ground truth'' about the effects of treatments is unavailable. Our second contribution is a novel data-splitting method to evaluate error rates. This data-splitting method produces valid error bounds using ``sign-valid'' estimators, which by definition have the correct sign more often than not. Using this data-splitting method, through a series of case studies we find that our new estimator, which leverages auxiliary information, can yield a three-fold reduction in type S error rate.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-21T16:42:11Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Jackson Loper</name>
+    </author>
+    <author>
+      <name>Noam Solomon</name>
+    </author>
+    <author>
+      <name>Jeffrey Regier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1806.07380v1</id>
+    <title>Deep Sequence Learning with Auxiliary Information for Traffic Prediction</title>
+    <updated>2018-06-13T13:38:22Z</updated>
+    <link href="https://arxiv.org/abs/1806.07380v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1806.07380v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Predicting traffic conditions from online route queries is a challenging task as there are many complicated interactions over the roads and crowds involved. In this paper, we intend to improve traffic prediction by appropriate integration of three kinds of implicit but essential factors encoded in auxiliary information. We do this within an encoder-decoder sequence learning framework that integrates the following data: 1) offline geographical and social attributes. For example, the geographical structure of roads or public social events such as national celebrations; 2) road intersection information. In general, traffic congestion occurs at major junctions; 3) online crowd queries. For example, when many online queries issued for the same destination due to a public performance, the traffic around the destination will potentially become heavier at this location after a while. Qualitative and quantitative experiments on a real-world dataset from Baidu have demonstrated the effectiveness of our framework.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-06-13T13:38:22Z</published>
+    <arxiv:comment>KDD 2018. The first two authors share equal contributions</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Binbing Liao</name>
+    </author>
+    <author>
+      <name>Jingqing Zhang</name>
+    </author>
+    <author>
+      <name>Chao Wu</name>
+    </author>
+    <author>
+      <name>Douglas McIlwraith</name>
+    </author>
+    <author>
+      <name>Tong Chen</name>
+    </author>
+    <author>
+      <name>Shengwen Yang</name>
+    </author>
+    <author>
+      <name>Yike Guo</name>
+    </author>
+    <author>
+      <name>Fei Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.10241v1</id>
+    <title>VRConvMF: Visual Recurrent Convolutional Matrix Factorization for Movie Recommendation</title>
+    <updated>2022-02-16T08:21:03Z</updated>
+    <link href="https://arxiv.org/abs/2202.10241v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.10241v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Sparsity of user-to-item rating data becomes one of challenging issues in the recommender systems, which severely deteriorates the recommendation performance. Fortunately, context-aware recommender systems can alleviate the sparsity problem by making use of some auxiliary information, such as the information of both the users and items. In particular, the visual information of items, such as the movie poster, can be considered as the supplement for item description documents, which helps to obtain more item features. In this paper, we focus on movie recommender system and propose a probabilistic matrix factorization based recommendation scheme called visual recurrent convolutional matrix factorization (VRConvMF), which utilizes the textual and multi-level visual features extracted from the descriptive texts and posters respectively. We implement the proposed VRConvMF and conduct extensive experiments on three commonly used real world datasets to validate its effectiveness. The experimental results illustrate that the proposed VRConvMF outperforms the existing schemes.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-16T08:21:03Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zhu Wang</name>
+    </author>
+    <author>
+      <name>Honglong Chen</name>
+    </author>
+    <author>
+      <name>Zhe Li</name>
+    </author>
+    <author>
+      <name>Kai Lin</name>
+    </author>
+    <author>
+      <name>Nan Jiang</name>
+    </author>
+    <author>
+      <name>Feng Xia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.08120v1</id>
+    <title>Explaining Latent Factor Models for Recommendation with Influence Functions</title>
+    <updated>2018-11-20T08:31:24Z</updated>
+    <link href="https://arxiv.org/abs/1811.08120v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.08120v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Latent factor models (LFMs) such as matrix factorization achieve the state-of-the-art performance among various Collaborative Filtering (CF) approaches for recommendation. Despite the high recommendation accuracy of LFMs, a critical issue to be resolved is the lack of explainability. Extensive efforts have been made in the literature to incorporate explainability into LFMs. However, they either rely on auxiliary information which may not be available in practice, or fail to provide easy-to-understand explanations. In this paper, we propose a fast influence analysis method named FIA, which successfully enforces explicit neighbor-style explanations to LFMs with the technique of influence functions stemmed from robust statistics. We first describe how to employ influence functions to LFMs to deliver neighbor-style explanations. Then we develop a novel influence computation algorithm for matrix factorization with high efficiency. We further extend it to the more general neural collaborative filtering and introduce an approximation algorithm to accelerate influence analysis over neural network models. Experimental results on real datasets demonstrate the correctness, efficiency and usefulness of our proposed method.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-20T08:31:24Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Weiyu Cheng</name>
+    </author>
+    <author>
+      <name>Yanyan Shen</name>
+    </author>
+    <author>
+      <name>Yanmin Zhu</name>
+    </author>
+    <author>
+      <name>Linpeng Huang</name>
+    </author>
+    <arxiv:doi>10.1145/3292500.3330857</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3292500.3330857" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.05610v2</id>
+    <title>Classification of weak multi-view signals by sharing factors in a mixture of Bayesian group factor analyzers</title>
+    <updated>2016-06-07T18:37:29Z</updated>
+    <link href="https://arxiv.org/abs/1512.05610v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.05610v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a novel classification model for weak signal data, building upon a recent model for Bayesian multi-view learning, Group Factor Analysis (GFA). Instead of assuming all data to come from a single GFA model, we allow latent clusters, each having a different GFA model and producing a different class distribution. We show that sharing information across the clusters, by sharing factors, increases the classification accuracy considerably; the shared factors essentially form a flexible noise model that explains away the part of data not related to classification. Motivation for the setting comes from single-trial functional brain imaging data, having a very low signal-to-noise ratio and a natural multi-view setting, with the different sensors, measurement modalities (EEG, MEG, fMRI) and possible auxiliary information as views. We demonstrate our model on a MEG dataset.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-17T14:46:20Z</published>
+    <arxiv:comment>Presented at MLINI-2015 workshop, 2015 (arXiv:1605.04435)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Sami Remes</name>
+    </author>
+    <author>
+      <name>Tommi Mononen</name>
+    </author>
+    <author>
+      <name>Samuel Kaski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.04020v1</id>
+    <title>Leveraging Shared Factor Structures for Enhanced Matrix Completion with Nonconvex Penalty Regularization</title>
+    <updated>2025-04-05T02:05:32Z</updated>
+    <link href="https://arxiv.org/abs/2504.04020v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.04020v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article investigates the problem of noisy low-rank matrix completion with a shared factor structure, leveraging the auxiliary information from the missing indicator matrix to enhance prediction accuracy. Despite decades of development in matrix completion, the potential relationship between observed data and missing indicators has largely been overlooked. To address this gap, we propose a joint modeling framework for the observed data and missing indicators within the context of a generalized factor model and derive the asymptotic limit distribution of the estimators. Furthermore, to tackle the rank estimation problem for model specification, we employ matrix nonconvex penalty regularization and establish nonasymptotic probability guarantees for the Oracle property. The theoretical results are validated through extensive simulation studies and real-world data analysis, demonstrating the effectiveness of the proposed method.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-05T02:05:32Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Yuanhong A</name>
+    </author>
+    <author>
+      <name>Xinyan Fan</name>
+    </author>
+    <author>
+      <name>Bingyi Jing</name>
+    </author>
+    <author>
+      <name>Bo Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.11355v2</id>
+    <title>A dynamic factor model approach to incorporate Big Data in state space models for official statistics</title>
+    <updated>2020-02-14T18:09:08Z</updated>
+    <link href="https://arxiv.org/abs/1901.11355v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.11355v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we consider estimation of unobserved components in state space models using a dynamic factor approach to incorporate auxiliary information from high-dimensional data sources. We apply the methodology to unemployment estimation as done by Statistics Netherlands, who uses a multivariate state space model to produce monthly figures for the unemployment using series observed with the labour force survey (LFS). We extend the model by including auxiliary series of Google Trends about job-search and economic uncertainty, and claimant counts, partially observed at higher frequencies. Our factor model allows for nowcasting the variable of interest, providing reliable unemployment estimates in real-time before LFS data become available.</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-31T13:47:13Z</published>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Caterina Schiavoni</name>
+    </author>
+    <author>
+      <name>Franz Palm</name>
+    </author>
+    <author>
+      <name>Stephan Smeekes</name>
+    </author>
+    <author>
+      <name>Jan van den Brakel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.12435v3</id>
+    <title>Transfer learning for high-dimensional Factor-augmented sparse linear model</title>
+    <updated>2026-03-20T09:00:53Z</updated>
+    <link href="https://arxiv.org/abs/2511.12435v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.12435v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study transfer learning for high-dimensional factor-augmented sparse linear models, motivated by applications in economics and finance where strongly correlated predictors and latent factor structures pose major challenges for reliable estimation. Our framework simultaneously mitigates the impact of high correlation and removes the additional contributions of latent factors, thereby reducing potential model misspecification in conventional linear modeling. In such settings, the target dataset is often limited, but multiple heterogeneous auxiliary sources may provide additional information. We develop transfer learning procedures that effectively leverage these auxiliary datasets to improve estimation accuracy, and establish non-asymptotic $\ell_1$- and $\ell_2$-error bounds for the proposed estimators. To prevent negative transfer, we introduce a data-driven source detection algorithm capable of identifying informative auxiliary datasets and prove its consistency. In addition, we provide a hypothesis testing framework for assessing the adequacy of the factor model, together with a procedure for constructing simultaneous confidence intervals for the regression coefficients of interest. Numerical studies demonstrate that our methods achieve substantial gains in estimation accuracy and remain robust under heterogeneity across datasets. Overall, our framework offers a theoretical foundation and a practically scalable solution for incorporating heterogeneous auxiliary information in settings with highly correlated features and latent factor structures.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-16T03:35:40Z</published>
+    <arxiv:comment>54 pages, 1 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Bo Fu</name>
+    </author>
+    <author>
+      <name>Dandan Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.09096v1</id>
+    <title>Privacy-Preserving Matrix Factorization for Recommendation Systems using Gaussian Mechanism</title>
+    <updated>2023-04-11T13:50:39Z</updated>
+    <link href="https://arxiv.org/abs/2304.09096v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.09096v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building a recommendation system involves analyzing user data, which can potentially leak sensitive information about users. Anonymizing user data is often not sufficient for preserving user privacy. Motivated by this, we propose a privacy-preserving recommendation system based on the differential privacy framework and matrix factorization, which is one of the most popular algorithms for recommendation systems. As differential privacy is a powerful and robust mathematical framework for designing privacy-preserving machine learning algorithms, it is possible to prevent adversaries from extracting sensitive user information even if the adversary possesses their publicly available (auxiliary) information. We implement differential privacy via the Gaussian mechanism in the form of output perturbation and release user profiles that satisfy privacy definitions. We employ Rényi Differential Privacy for a tight characterization of the overall privacy loss. We perform extensive experiments on real data to demonstrate that our proposed algorithm can offer excellent utility for some parameter choices, while guaranteeing strict privacy.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-11T13:50:39Z</published>
+    <arxiv:comment>30 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sohan Salahuddin Mugdho</name>
+    </author>
+    <author>
+      <name>Hafiz Imtiaz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.06370v1</id>
+    <title>Intent-aware Multi-source Contrastive Alignment for Tag-enhanced Recommendation</title>
+    <updated>2022-11-11T17:43:19Z</updated>
+    <link href="https://arxiv.org/abs/2211.06370v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.06370v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To offer accurate and diverse recommendation services, recent methods use auxiliary information to foster the learning process of user and item representations. Many SOTA methods fuse different sources of information (user, item, knowledge graph, tags, etc.) into a graph and use Graph Neural Networks to introduce the auxiliary information through the message passing paradigm. In this work, we seek an alternative framework that is light and effective through self-supervised learning across different sources of information, particularly for the commonly accessible item tag information. We use a self-supervision signal to pair users with the auxiliary information associated with the items they have interacted with before. To achieve the pairing, we create a proxy training task. For a given item, the model predicts the correct pairing between the representations obtained from the users that have interacted with this item and the assigned tags. This design provides an efficient solution, using the auxiliary information directly to enhance the quality of user and item embeddings. User behavior in recommendation systems is driven by the complex interactions of many factors behind the decision-making processes. To make the pairing process more fine-grained and avoid embedding collapse, we propose an intent-aware self-supervised pairing process where we split the user embeddings into multiple sub-embedding vectors. Each sub-embedding vector captures a specific user intent via self-supervised alignment with a particular cluster of tags. We integrate our designed framework with various recommendation models, demonstrating its flexibility and compatibility. Through comparison with numerous SOTA methods on seven real-world datasets, we show that our method can achieve better performance while requiring less training time. This indicates the potential of applying our approach on web-scale datasets.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-11T17:43:19Z</published>
+    <arxiv:comment>14 pages, 9 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Haolun Wu</name>
+    </author>
+    <author>
+      <name>Yingxue Zhang</name>
+    </author>
+    <author>
+      <name>Chen Ma</name>
+    </author>
+    <author>
+      <name>Wei Guo</name>
+    </author>
+    <author>
+      <name>Ruiming Tang</name>
+    </author>
+    <author>
+      <name>Xue Liu</name>
+    </author>
+    <author>
+      <name>Mark Coates</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.04606v2</id>
+    <title>Towards efficient representation identification in supervised learning</title>
+    <updated>2024-12-23T22:25:34Z</updated>
+    <link href="https://arxiv.org/abs/2204.04606v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.04606v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans have a remarkable ability to disentangle complex sensory inputs (e.g., image, text) into simple factors of variation (e.g., shape, color) without much supervision. This ability has inspired many works that attempt to solve the following question: how do we invert the data generation process to extract those factors with minimal or no supervision? Several works in the literature on non-linear independent component analysis have established this negative result; without some knowledge of the data generation process or appropriate inductive biases, it is impossible to perform this inversion. In recent years, a lot of progress has been made on disentanglement under structural assumptions, e.g., when we have access to auxiliary information that makes the factors of variation conditionally independent. However, existing work requires a lot of auxiliary information, e.g., in supervised classification, it prescribes that the number of label classes should be at least equal to the total dimension of all factors of variation. In this work, we depart from these assumptions and ask: a) How can we get disentanglement when the auxiliary information does not provide conditional independence over the factors of variation? b) Can we reduce the amount of auxiliary information required for disentanglement? For a class of models where auxiliary information does not ensure conditional independence, we show theoretically and experimentally that disentanglement (to a large extent) is possible even when the auxiliary information dimension is much less than the dimension of the true latent representation.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-10T05:34:13Z</published>
+    <arxiv:comment>Updated with discussion on linear identification with ERM. Proceedings of the First Conference on Causal Learning and Reasoning</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kartik Ahuja</name>
+    </author>
+    <author>
+      <name>Divyat Mahajan</name>
+    </author>
+    <author>
+      <name>Vasilis Syrgkanis</name>
+    </author>
+    <author>
+      <name>Ioannis Mitliagkas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.05767v2</id>
+    <title>Covariance matrix completion via auxiliary information</title>
+    <updated>2025-01-30T21:24:53Z</updated>
+    <link href="https://arxiv.org/abs/2402.05767v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.05767v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Covariance matrix estimation is an important task in the analysis of multivariate data in disparate scientific fields. However, modern scientific data are often incomplete due to factors beyond the control of researchers, and traditional methods may only yield incomplete covariance matrix estimates. For example, it is impossible to obtain a complete sample covariance matrix if some variable pairs have no joint observations. We propose a novel approach, AuxCov, which exploits auxiliary variables to produce complete covariance matrix estimates from structurally incomplete data. In neuroscience, an example of an auxiliary variable is the distance between neurons, which is typically inversely related to the strength of the neuronal correlation. AuxCov estimates the relationship between the observed correlations and the auxiliary variables via regression, and uses it to predict the missing correlation estimates and to regularize the observed ones. We implement AuxCov using parametric and nonparametric regression methods, and propose procedures for tuning parameter selection and uncertainty quantification. We evaluate the performance of AuxCov through simulations and in the analysis of large-scale neuroscience data.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-08T15:52:27Z</published>
+    <arxiv:comment>18 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Joseph Steneman</name>
+    </author>
+    <author>
+      <name>Giuseppe Vinci</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.06627v1</id>
+    <title>Deep Collaborative Filtering with Multi-Aspect Information in Heterogeneous Networks</title>
+    <updated>2019-09-14T16:33:16Z</updated>
+    <link href="https://arxiv.org/abs/1909.06627v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.06627v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, recommender systems play a pivotal role in alleviating the problem of information overload. Latent factor models have been widely used for recommendation. Most existing latent factor models mainly utilize the interaction information between users and items, although some recently extended models utilize some auxiliary information to learn a unified latent factor for users and items. The unified latent factor only represents the characteristics of users and the properties of items from the aspect of purchase history. However, the characteristics of users and the properties of items may stem from different aspects, e.g., the brand-aspect and category-aspect of items. Moreover, the latent factor models usually use the shallow projection, which cannot capture the characteristics of users and items well. In this paper, we propose a Neural network based Aspect-level Collaborative Filtering model (NeuACF) to exploit different aspect latent factors. Through modelling the rich object properties and relations in recommender system as a heterogeneous information network, NeuACF first extracts different aspect-level similarity matrices of users and items respectively through different meta-paths, and then feeds an elaborately designed deep neural network with these matrices to learn aspect-level latent factors. Finally, the aspect-level latent factors are fused for the top-N recommendation. Moreover, to fuse information from different aspects more effectively, we further propose NeuACF++ to fuse aspect-level latent factors with self-attention mechanism. Extensive experiments on three real world datasets show that NeuACF and NeuACF++ significantly outperform both existing latent factor models and recent neural network models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-14T16:33:16Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Chuan Shi</name>
+    </author>
+    <author>
+      <name>Xiaotian Han</name>
+    </author>
+    <author>
+      <name>Li Song</name>
+    </author>
+    <author>
+      <name>Xiao Wang</name>
+    </author>
+    <author>
+      <name>Senzhang Wang</name>
+    </author>
+    <author>
+      <name>Junping Du</name>
+    </author>
+    <author>
+      <name>Philip S. Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.01709v4</id>
+    <title>Adapting Triplet Importance of Implicit Feedback for Personalized Recommendation</title>
+    <updated>2022-12-17T05:20:04Z</updated>
+    <link href="https://arxiv.org/abs/2208.01709v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.01709v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Implicit feedback is frequently used for developing personalized recommendation services due to its ubiquity and accessibility in real-world systems. In order to effectively utilize such information, most research adopts the pairwise ranking method on constructed training triplets (user, positive item, negative item) and aims to distinguish between positive items and negative items for each user. However, most of these methods treat all the training triplets equally, which ignores the subtle difference between different positive or negative items. On the other hand, even though some other works make use of the auxiliary information (e.g., dwell time) of user behaviors to capture this subtle difference, such auxiliary information is hard to obtain. To mitigate the aforementioned problems, we propose a novel training framework named Triplet Importance Learning (TIL), which adaptively learns the importance score of training triplets. We devise two strategies for the importance score generation and formulate the whole procedure as a bilevel optimization, which does not require any rule-based design. We integrate the proposed training procedure with several Matrix Factorization (MF)- and Graph Neural Network (GNN)-based recommendation models, demonstrating the compatibility of our framework. Via a comparison using three real-world datasets with many state-of-the-art methods, we show that our proposed method outperforms the best existing models by 3-21\% in terms of Recall@k for the top-k recommendation.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-02T19:44:47Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Haolun Wu</name>
+    </author>
+    <author>
+      <name>Chen Ma</name>
+    </author>
+    <author>
+      <name>Yingxue Zhang</name>
+    </author>
+    <author>
+      <name>Xue Liu</name>
+    </author>
+    <author>
+      <name>Ruiming Tang</name>
+    </author>
+    <author>
+      <name>Mark Coates</name>
+    </author>
+    <arxiv:doi>10.1145/3511808.3557229</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3511808.3557229" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.14899v1</id>
+    <title>Statistical Inference For Noisy Matrix Completion Incorporating Auxiliary Information</title>
+    <updated>2024-03-22T01:06:36Z</updated>
+    <link href="https://arxiv.org/abs/2403.14899v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.14899v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates statistical inference for noisy matrix completion in a semi-supervised model when auxiliary covariates are available. The model consists of two parts. One part is a low-rank matrix induced by unobserved latent factors; the other part models the effects of the observed covariates through a coefficient matrix which is composed of high-dimensional column vectors. We model the observational pattern of the responses through a logistic regression of the covariates, and allow its probability to go to zero as the sample size increases. We apply an iterative least squares (LS) estimation approach in our considered context. The iterative LS methods in general enjoy a low computational cost, but deriving the statistical properties of the resulting estimators is a challenging task. We show that our method only needs a few iterations, and the resulting entry-wise estimators of the low-rank matrix and the coefficient matrix are guaranteed to have asymptotic normal distributions. As a result, individual inference can be conducted for each entry of the unknown matrices. We also propose a simultaneous testing procedure with multiplier bootstrap for the high-dimensional coefficient matrix. This simultaneous inferential tool can help us further investigate the effects of covariates for the prediction of missing entries.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-22T01:06:36Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Shujie Ma</name>
+    </author>
+    <author>
+      <name>Po-Yao Niu</name>
+    </author>
+    <author>
+      <name>Yichong Zhang</name>
+    </author>
+    <author>
+      <name>Yinchu Zhu</name>
+    </author>
+    <arxiv:doi>10.1080/01621459.2024.2335591</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/01621459.2024.2335591" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.06432v1</id>
+    <title>Doubly Robust Inference with Non-probability Survey Samples</title>
+    <updated>2018-05-16T17:15:12Z</updated>
+    <link href="https://arxiv.org/abs/1805.06432v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.06432v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish a general framework for statistical inferences with non-probability survey samples when relevant auxiliary information is available from a probability survey sample. We develop a rigorous procedure for estimating the propensity scores for units in the non-probability sample, and construct doubly robust estimators for the finite population mean. Variance estimation is discussed under the proposed framework. Results from simulation studies show the robustness and the efficiency of our proposed estimators as compared to existing methods. The proposed method is used to analyze a non-probability survey sample collected by the Pew Research Center with auxiliary information from the Behavioral Risk Factor Surveillance System and the Current Population Survey. Our results illustrate a general approach to inference with non-probability samples and highlight the importance and usefulness of auxiliary information from probability survey samples.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-16T17:15:12Z</published>
+    <arxiv:comment>25 pages, 5 tables, this paper has been submitted for publication</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Yilin Chen</name>
+    </author>
+    <author>
+      <name>Pengfei Li</name>
+    </author>
+    <author>
+      <name>Changbao Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.24234v1</id>
+    <title>Stability of relaxed calibration</title>
+    <updated>2026-02-27T18:00:20Z</updated>
+    <link href="https://arxiv.org/abs/2602.24234v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.24234v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Estimation of the population total of a variable can be improved by calibration on a set of auxiliary variables. It is difficult to establish that such a set of variables is sufficient, that estimation could not be improved by calibration on any further variables. We address this issue by finding an upper bound for the change of the calibration estimate of the population total of a variable when the auxiliary information is supplemented by another variable for which the population total is known. This upper bound can be interpreted as a measure of sensitivity of the estimate to unavailable auxiliary information and considered as a factor in deciding whether to seek further data sources that would be included in calibration.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-27T18:00:20Z</published>
+    <arxiv:comment>30 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Nicholas T. Longford</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.00774v1</id>
+    <title>Context Retrieval via Normalized Contextual Latent Interaction for Conversational Agent</title>
+    <updated>2023-12-01T18:53:51Z</updated>
+    <link href="https://arxiv.org/abs/2312.00774v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.00774v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational agents leveraging AI, particularly deep learning, are emerging in both academic research and real-world applications. However, these applications still face challenges, including disrespecting knowledge and facts, not personalizing to user preferences, and enormous demand for computational resources during training and inference. Recent research efforts have been focused on addressing these challenges from various aspects, including supplementing various types of auxiliary information to the conversational agents. However, existing methods are still not able to effectively and efficiently exploit relevant information from these auxiliary supplements to further unleash the power of the conversational agents and the language models they use. In this paper, we present a novel method, PK-NCLI, that is able to accurately and efficiently identify relevant auxiliary information to improve the quality of conversational responses by learning the relevance among persona, chat history, and knowledge background through low-level normalized contextual latent interaction. Our experimental results indicate that PK-NCLI outperforms the state-of-the-art method, PK-FoCus, by 47.80%/30.61%/24.14% in terms of perplexity, knowledge grounding, and training efficiency, respectively, and maintained the same level of persona grounding performance. We also provide a detailed analysis of how different factors, including language model choices and trade-offs on training weights, would affect the performance of PK-NCLI.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-01T18:53:51Z</published>
+    <arxiv:comment>2023 IEEE International Conference on Data Mining Workshops (ICDMW)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>2023 IEEE International Conference on Data Mining Workshops (ICDMW)</arxiv:journal_ref>
+    <author>
+      <name>Junfeng Liu</name>
+    </author>
+    <author>
+      <name>Zhuocheng Mei</name>
+    </author>
+    <author>
+      <name>Kewen Peng</name>
+    </author>
+    <author>
+      <name>Ranga Raju Vatsavai</name>
+    </author>
+    <arxiv:doi>10.1109/ICDMW60847.2023.00196</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ICDMW60847.2023.00196" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.01524v1</id>
+    <title>Disentangled Graph Contrastive Learning for Review-based Recommendation</title>
+    <updated>2022-09-04T03:31:29Z</updated>
+    <link href="https://arxiv.org/abs/2209.01524v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.01524v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>User review data is helpful in alleviating the data sparsity problem in many recommender systems. In review-based recommendation methods, review data is considered as auxiliary information that can improve the quality of learned user/item or interaction representations for the user rating prediction task. However, these methods usually model user-item interactions in a holistic manner and neglect the entanglement of the latent factors behind them, e.g., price, quality, or appearance, resulting in suboptimal representations and reducing interpretability. In this paper, we propose a Disentangled Graph Contrastive Learning framework for Review-based recommendation (DGCLR), to separately model the user-item interactions based on different latent factors through the textual review data. To this end, we first model the distributions of interactions over latent factors from both semantic information in review data and structural information in user-item graph data, forming several factor graphs. Then a factorized message passing mechanism is designed to learn disentangled user/item representations on the factor graphs, which enable us to further characterize the interactions and adaptively combine the predicted ratings from multiple factors via a devised attention mechanism. Finally, we set two factor-wise contrastive learning objectives to alleviate the sparsity issue and model the user/item and interaction features pertinent to each factor more accurately. Empirical results over five benchmark datasets validate the superiority of DGCLR over the state-of-the-art methods. Further analysis is offered to interpret the learned intent factors and rating prediction in DGCLR.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-04T03:31:29Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yuyang Ren</name>
+    </author>
+    <author>
+      <name>Haonan Zhang</name>
+    </author>
+    <author>
+      <name>Qi Li</name>
+    </author>
+    <author>
+      <name>Luoyi Fu</name>
+    </author>
+    <author>
+      <name>Jiaxin Ding</name>
+    </author>
+    <author>
+      <name>Xinde Cao</name>
+    </author>
+    <author>
+      <name>Xinbing Wang</name>
+    </author>
+    <author>
+      <name>Chenghu Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.24342v1</id>
+    <title>A Novel Approach for Data Integration with Multiple Heterogeneous Data Sources</title>
+    <updated>2025-12-30T16:50:04Z</updated>
+    <link href="https://arxiv.org/abs/2512.24342v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.24342v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The integration of data from multiple sources is increasingly used to achieve larger sample sizes and enhance population diversity. Our previous work established that, under random sampling from the same underlying population, integrating large incomplete datasets with summary-level data produces unbiased parameter estimates. In this study, we develop a novel statistical framework that enables the integration of summary-level data with information from heterogeneous data sources by leveraging auxiliary information. The proposed approach estimates study-specific sampling weights using this auxiliary information and calibrates the estimating equations to obtain the full set of model parameters. We evaluate the performance of the proposed method through simulation studies under various sampling designs and illustrate its application by reanalyzing U.S. cancer registry data combined with summary-level odds ratio estimates for selected colorectal cancer (CRC) risk factors, while relaxing the random sampling assumption.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-30T16:50:04Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Farimah Shamsi</name>
+    </author>
+    <author>
+      <name>Andriy Derkach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.05031v2</id>
+    <title>Neural Collaborative Filtering</title>
+    <updated>2017-08-26T01:37:09Z</updated>
+    <link href="https://arxiv.org/abs/1708.05031v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.05031v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, deep neural networks have yielded immense success on speech recognition, computer vision and natural language processing. However, the exploration of deep neural networks on recommender systems has received relatively less scrutiny. In this work, we strive to develop techniques based on neural networks to tackle the key problem in recommendation -- collaborative filtering -- on the basis of implicit feedback. Although some recent work has employed deep learning for recommendation, they primarily used it to model auxiliary information, such as textual descriptions of items and acoustic features of musics. When it comes to model the key factor in collaborative filtering -- the interaction between user and item features, they still resorted to matrix factorization and applied an inner product on the latent features of users and items. By replacing the inner product with a neural architecture that can learn an arbitrary function from data, we present a general framework named NCF, short for Neural network-based Collaborative Filtering. NCF is generic and can express and generalize matrix factorization under its framework. To supercharge NCF modelling with non-linearities, we propose to leverage a multi-layer perceptron to learn the user-item interaction function. Extensive experiments on two real-world datasets show significant improvements of our proposed NCF framework over the state-of-the-art methods. Empirical evidence shows that using deeper layers of neural networks offers better recommendation performance.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-16T18:30:09Z</published>
+    <arxiv:comment>10 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xiangnan He</name>
+    </author>
+    <author>
+      <name>Lizi Liao</name>
+    </author>
+    <author>
+      <name>Hanwang Zhang</name>
+    </author>
+    <author>
+      <name>Liqiang Nie</name>
+    </author>
+    <author>
+      <name>Xia Hu</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.09665v7</id>
+    <title>Understanding the Effectiveness of Reviews in E-commerce Top-N Recommendation</title>
+    <updated>2021-09-19T21:16:21Z</updated>
+    <link href="https://arxiv.org/abs/2106.09665v7" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.09665v7" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern E-commerce websites contain heterogeneous sources of information, such as numerical ratings, textual reviews and images. These information can be utilized to assist recommendation. Through textual reviews, a user explicitly express her affinity towards the item. Previous researchers found that by using the information extracted from these reviews, we can better profile the users' explicit preferences as well as the item features, leading to the improvement of recommendation performance. However, most of the previous algorithms were only utilizing the review information for explicit-feedback problem i.e. rating prediction, and when it comes to implicit-feedback ranking problem such as top-N recommendation, the usage of review information has not been fully explored. Seeing this gap, in this work, we investigate the effectiveness of textual review information for top-N recommendation under E-commerce settings. We adapt several SOTA review-based rating prediction models for top-N recommendation tasks and compare them to existing top-N recommendation models from both performance and efficiency. We find that models utilizing only review information can not achieve better performances than vanilla implicit-feedback matrix factorization method. When utilizing review information as a regularizer or auxiliary information, the performance of implicit-feedback matrix factorization method can be further improved. However, the optimal model structure to utilize textual reviews for E-commerce top-N recommendation is yet to be determined.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-17T17:15:45Z</published>
+    <arxiv:comment>in proceedings of ICTIR 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zhichao Xu</name>
+    </author>
+    <author>
+      <name>Hansi Zeng</name>
+    </author>
+    <author>
+      <name>Qingyao Ai</name>
+    </author>
+    <arxiv:doi>10.1145/3471158.3472258</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3471158.3472258" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1905.13130v2</id>
+    <title>SAIN: Self-Attentive Integration Network for Recommendation</title>
+    <updated>2019-11-06T07:58:23Z</updated>
+    <link href="https://arxiv.org/abs/1905.13130v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1905.13130v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the growing importance of personalized recommendation, numerous recommendation models have been proposed recently. Among them, Matrix Factorization (MF) based models are the most widely used in the recommendation field due to their high performance. However, MF based models suffer from cold start problems where user-item interactions are sparse. To deal with this problem, content based recommendation models which use the auxiliary attributes of users and items have been proposed. Since these models use auxiliary attributes, they are effective in cold start settings. However, most of the proposed models are either unable to capture complex feature interactions or not properly designed to combine user-item feedback information with content information. In this paper, we propose Self-Attentive Integration Network (SAIN) which is a model that effectively combines user-item feedback information and auxiliary information for recommendation task. In SAIN, a self-attention mechanism is used in the feature-level interaction layer to effectively consider interactions between multiple features, while the information integration layer adaptively combines content and feedback information. The experimental results on two public datasets show that our model outperforms the state-of-the-art models by 2.13%</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-05-27T08:27:36Z</published>
+    <arxiv:comment>SIGIR 2019</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Seoungjun Yun</name>
+    </author>
+    <author>
+      <name>Raehyun Kim</name>
+    </author>
+    <author>
+      <name>Miyoung Ko</name>
+    </author>
+    <author>
+      <name>Jaewoo Kang</name>
+    </author>
+    <arxiv:doi>10.1145/3331184.3331342</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3331184.3331342" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.10866v1</id>
+    <title>Exploring the use of Time-Dependent Cross-Network Information for Personalized Recommendations</title>
+    <updated>2020-08-25T07:52:47Z</updated>
+    <link href="https://arxiv.org/abs/2008.10866v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.10866v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The overwhelming volume and complexity of information in online applications make recommendation essential for users to find information of interest. However, two major limitations that coexist in real world applications (1) incomplete user profiles, and (2) the dynamic nature of user preferences continue to degrade recommender quality in aspects such as timeliness, accuracy, diversity and novelty. To address both the above limitations in a single solution, we propose a novel cross-network time aware recommender solution. The solution first learns historical user models in the target network by aggregating user preferences from multiple source networks. Second, user level time aware latent factors are learnt to develop current user models from the historical models and conduct timely recommendations. We illustrate our solution by using auxiliary information from the Twitter source network to improve recommendations for the YouTube target network. Experiments conducted using multiple time aware and cross-network baselines under different time granularities show that the proposed solution achieves superior performance in terms of accuracy, novelty and diversity.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-25T07:52:47Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>ACM Multimedia 2017, (MM'17)</arxiv:journal_ref>
+    <author>
+      <name>Dilruk Perera</name>
+    </author>
+    <author>
+      <name>Roger Zimmermann</name>
+    </author>
+    <arxiv:doi>10.1145/3123266.3123447</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3123266.3123447" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1207.4385v2</id>
+    <title>Dealing with nonresponse in survey sampling: a latent modeling approach</title>
+    <updated>2013-12-03T10:22:28Z</updated>
+    <link href="https://arxiv.org/abs/1207.4385v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1207.4385v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nonresponse is present in almost all surveys and can severely bias estimates. It is usually distinguished between unit and item nonresponse: in the former, we completely fail to have information from a unit selected in the sample, while in the latter, we observe only part of the information on the selected unit. Unit nonresponse is usually dealt with by reweighting: each unit selected in the sample has associated a sampling weight and an unknown response probability; the initial sampling weight is multiplied by the inverse of estimated response probability. Item nonresponse is usually dealt with by imputation. By noting that for a particular survey variable, we just have observed and unobserved values, in this work we exploit the connection between unit and item nonresponse. In particular, we assume that the factors that drive unit response are the same as those that drive item response on selected variables of interest. Response probabilities are then estimated by using a logistic regression with a latent covariate that measures such will to respond and that can explain part of the unknown behavior of a unit to participate in the survey. The latent covariate is estimated using latent trait models. Such approach is particularly relevant for sensitive items and, therefore, can handle non-ignorable nonresponse. Auxiliary information known for both respondents and nonrespondents can be included either in the latent variable model or in the logistic model. The approach can be also used when auxiliary information is not available, and we focus here on this case. The theoretical properties of the proposed estimators are sketched and simulations studies are conducted to illustrate their finite size sample performance.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-07-18T14:44:52Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <arxiv:journal_ref>Survey Methodology, June 2015, Vol. 41, No. 1, pp. 145-164</arxiv:journal_ref>
+    <author>
+      <name>Alina Matei</name>
+    </author>
+    <author>
+      <name>M. Giovanna Ranalli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.07461v4</id>
+    <title>Bidirectional Conditional Generative Adversarial Networks</title>
+    <updated>2018-11-03T23:03:07Z</updated>
+    <link href="https://arxiv.org/abs/1711.07461v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.07461v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conditional Generative Adversarial Networks (cGANs) are generative models that can produce data samples ($x$) conditioned on both latent variables ($z$) and known auxiliary information ($c$). We propose the Bidirectional cGAN (BiCoGAN), which effectively disentangles $z$ and $c$ in the generation process and provides an encoder that learns inverse mappings from $x$ to both $z$ and $c$, trained jointly with the generator and the discriminator. We present crucial techniques for training BiCoGANs, which involve an extrinsic factor loss along with an associated dynamically-tuned importance weight. As compared to other encoder-based cGANs, BiCoGANs encode $c$ more accurately, and utilize $z$ and $c$ more effectively and in a more disentangled way to generate samples.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-20T18:54:05Z</published>
+    <arxiv:comment>To appear in Proceedings of ACCV 2018</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ayush Jaiswal</name>
+    </author>
+    <author>
+      <name>Wael AbdAlmageed</name>
+    </author>
+    <author>
+      <name>Yue Wu</name>
+    </author>
+    <author>
+      <name>Premkumar Natarajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.14709v1</id>
+    <title>Better Private Distribution Testing by Leveraging Unverified Auxiliary Data</title>
+    <updated>2025-03-18T20:17:20Z</updated>
+    <link href="https://arxiv.org/abs/2503.14709v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.14709v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We extend the framework of augmented distribution testing (Aliakbarpour, Indyk, Rubinfeld, and Silwal, NeurIPS 2024) to the differentially private setting. This captures scenarios where a data analyst must perform hypothesis testing tasks on sensitive data, but is able to leverage prior knowledge (public, but possibly erroneous or untrusted) about the data distribution.
+  We design private algorithms in this augmented setting for three flagship distribution testing tasks, uniformity, identity, and closeness testing, whose sample complexity smoothly scales with the claimed quality of the auxiliary information. We complement our algorithms with information-theoretic lower bounds, showing that their sample complexity is optimal (up to logarithmic factors).</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-18T20:17:20Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Maryam Aliakbarpour</name>
+    </author>
+    <author>
+      <name>Arnav Burudgunte</name>
+    </author>
+    <author>
+      <name>Clément Cannone</name>
+    </author>
+    <author>
+      <name>Ronitt Rubinfeld</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.00909v1</id>
+    <title>Multidimensional Item Response Theory in the Style of Collaborative Filtering</title>
+    <updated>2023-01-03T00:56:27Z</updated>
+    <link href="https://arxiv.org/abs/2301.00909v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.00909v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a machine learning approach to multidimensional item response theory (MIRT), a class of latent factor models that can be used to model and predict student performance from observed assessment data. Inspired by collaborative filtering, we define a general class of models that includes many MIRT models. We discuss the use of penalized joint maximum likelihood (JML) to estimate individual models and cross-validation to select the best performing model. This model evaluation process can be optimized using batching techniques, such that even sparse large-scale data can be analyzed efficiently. We illustrate our approach with simulated and real data, including an example from a massive open online course (MOOC). The high-dimensional model fit to this large and sparse dataset does not lend itself well to traditional methods of factor interpretation. By analogy to recommender-system applications, we propose an alternative "validation" of the factor model, using auxiliary information about the popularity of items consulted during an open-book exam in the course.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-03T00:56:27Z</published>
+    <arxiv:comment>42 pages, 2 pages, 14 tables, accepted at Psychometrika</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <arxiv:journal_ref>Psychometrika 87 (2022) 266-288</arxiv:journal_ref>
+    <author>
+      <name>Yoav Bergner</name>
+    </author>
+    <author>
+      <name>Peter F. Halpin</name>
+    </author>
+    <author>
+      <name>Jill-Jênn Vie</name>
+    </author>
+    <arxiv:doi>10.1007/s11336-021-09788-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11336-021-09788-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.05704v1</id>
+    <title>A Causal Ordering Prior for Unsupervised Representation Learning</title>
+    <updated>2023-07-11T18:12:05Z</updated>
+    <link href="https://arxiv.org/abs/2307.05704v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.05704v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unsupervised representation learning with variational inference relies heavily on independence assumptions over latent variables. Causal representation learning (CRL), however, argues that factors of variation in a dataset are, in fact, causally related. Allowing latent variables to be correlated, as a consequence of causal relationships, is more realistic and generalisable. So far, provably identifiable methods rely on: auxiliary information, weak labels, and interventional or even counterfactual data. Inspired by causal discovery with functional causal models, we propose a fully unsupervised representation learning method that considers a data generation process with a latent additive noise model (ANM). We encourage the latent space to follow a causal ordering via loss function based on the Hessian of the latent distribution.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-11T18:12:05Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Avinash Kori</name>
+    </author>
+    <author>
+      <name>Pedro Sanchez</name>
+    </author>
+    <author>
+      <name>Konstantinos Vilouras</name>
+    </author>
+    <author>
+      <name>Ben Glocker</name>
+    </author>
+    <author>
+      <name>Sotirios A. Tsaftaris</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.10651v1</id>
+    <title>Semiparametric Latent Topic Modeling on Consumer-Generated Corpora</title>
+    <updated>2021-07-13T00:22:02Z</updated>
+    <link href="https://arxiv.org/abs/2107.10651v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.10651v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Legacy procedures for topic modelling have generally suffered problems of overfitting and a weakness towards reconstructing sparse topic structures. With motivation from a consumer-generated corpora, this paper proposes semiparametric topic model, a two-step approach utilizing nonnegative matrix factorization and semiparametric regression in topic modeling. The model enables the reconstruction of sparse topic structures in the corpus and provides a generative model for predicting topics in new documents entering the corpus. Assuming the presence of auxiliary information related to the topics, this approach exhibits better performance in discovering underlying topic structures in cases where the corpora are small and limited in vocabulary. In an actual consumer feedback corpus, the model also demonstrably provides interpretable and useful topic definitions comparable with those produced by other methods.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-13T00:22:02Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Annals of Data Science, 2025</arxiv:journal_ref>
+    <author>
+      <name>Dominic B. Dayta</name>
+    </author>
+    <author>
+      <name>Erniel B. Barrios</name>
+    </author>
+    <arxiv:doi>10.1007/s40745-025-00587-y</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s40745-025-00587-y" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.15688v1</id>
+    <title>Cellular Traffic Prediction via Deep State Space Models with Attention Mechanism</title>
+    <updated>2025-05-26T04:32:15Z</updated>
+    <link href="https://arxiv.org/abs/2506.15688v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.15688v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cellular traffic prediction is of great importance for operators to manage network resources and make decisions. Traffic is highly dynamic and influenced by many exogenous factors, which would lead to the degradation of traffic prediction accuracy. This paper proposes an end-to-end framework with two variants to explicitly characterize the spatiotemporal patterns of cellular traffic among neighboring cells. It uses convolutional neural networks with an attention mechanism to capture the spatial dynamics and Kalman filter for temporal modelling. Besides, we can fully exploit the auxiliary information such as social activities to improve prediction performance. We conduct extensive experiments on three real-world datasets. The results show that our proposed models outperform the state-of-the-art machine learning techniques in terms of prediction accuracy.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-26T04:32:15Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hui Ma</name>
+    </author>
+    <author>
+      <name>Kai Yang</name>
+    </author>
+    <author>
+      <name>Man-On Pun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.08476v1</id>
+    <title>Strong Chain Rules for Min-Entropy under Few Bits Spoiled</title>
+    <updated>2017-02-27T19:14:05Z</updated>
+    <link href="https://arxiv.org/abs/1702.08476v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.08476v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well established that the notion of min-entropy fails to satisfy the \emph{chain rule} of the form $H(X,Y) = H(X|Y)+H(Y)$, known for Shannon Entropy. Such a property would help to analyze how min-entropy is split among smaller blocks. Problems of this kind arise for example when constructing extractors and dispersers.
+  We show that any sequence of variables exhibits a very strong strong block-source structure (conditional distributions of blocks are nearly flat) when we \emph{spoil few correlated bits}. This implies, conditioned on the spoiled bits, that \emph{splitting-recombination properties} hold. In particular, we have many nice properties that min-entropy doesn't obey in general, for example strong chain rules, "information can't hurt" inequalities, equivalences of average and worst-case conditional entropy definitions and others. Quantitatively, for any sequence $X_1,\ldots,X_t$ of random variables over an alphabet $\mathcal{X}$ we prove that, when conditioned on $m = t\cdot O( \log\log|\mathcal{X}| + \log\log(1/ε) + \log t)$ bits of auxiliary information, all conditional distributions of the form $X_i|X_{&lt;i}$ are $ε$-close to be nearly flat (only a constant factor away). The argument is combinatorial (based on simplex coverings).
+  This result may be used as a generic tool for \emph{exhibiting block-source structures}. We demonstrate this by reproving the fundamental converter due to Nisan and Zuckermann (\emph{J. Computer and System Sciences, 1996}), which shows that sampling blocks from a min-entropy source roughly preserves the entropy rate. Our bound implies, only by straightforward chain rules, an additive loss of $o(1)$ (for sufficiently many samples), which qualitatively meets the first tighter analysis of this problem due to Vadhan (\emph{CRYPTO'03}), obtained by large deviation techniques.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-27T19:14:05Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Maciej Skorski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.12003v2</id>
+    <title>Learning Disentangled Representation for Robust Person Re-identification</title>
+    <updated>2019-11-01T07:00:05Z</updated>
+    <link href="https://arxiv.org/abs/1910.12003v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.12003v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the problem of person re-identification (reID), that is, retrieving person images from a large dataset, given a query image of the person of interest. A key challenge is to learn person representations robust to intra-class variations, as different persons can have the same attribute and the same person's appearance looks different with viewpoint changes. Recent reID methods focus on learning discriminative features but robust to only a particular factor of variations (e.g., human pose), which requires corresponding supervisory signals (e.g., pose annotations). To tackle this problem, we propose to disentangle identity-related and -unrelated features from person images. Identity-related features contain information useful for specifying a particular person (e.g., clothing), while identity-unrelated ones hold other factors (e.g., human pose, scale changes). To this end, we introduce a new generative adversarial network, dubbed \emph{identity shuffle GAN} (IS-GAN), that factorizes these features using identification labels without any auxiliary information. We also propose an identity-shuffling technique to regularize the disentangled features. Experimental results demonstrate the effectiveness of IS-GAN, significantly outperforming the state of the art on standard reID benchmarks including the Market-1501, CUHK03 and DukeMTMC-reID. Our code and models are available online: https://cvlab-yonsei.github.io/projects/ISGAN/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-26T05:52:11Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>NeurIPS 2019</arxiv:journal_ref>
+    <author>
+      <name>Chanho Eom</name>
+    </author>
+    <author>
+      <name>Bumsub Ham</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.06521v2</id>
+    <title>Delving into 3D Action Anticipation from Streaming Videos</title>
+    <updated>2023-06-15T00:09:45Z</updated>
+    <link href="https://arxiv.org/abs/1906.06521v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.06521v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Action anticipation, which aims to recognize the action with a partial observation, becomes increasingly popular due to a wide range of applications. In this paper, we investigate the problem of 3D action anticipation from streaming videos with the target of understanding best practices for solving this problem. We first introduce several complementary evaluation metrics and present a basic model based on frame-wise action classification. To achieve better performance, we then investigate two important factors, i.e., the length of the training clip and clip sampling method. We also explore multi-task learning strategies by incorporating auxiliary information from two aspects: the full action representation and the class-agnostic action label. Our comprehensive experiments uncover the best practices for 3D action anticipation, and accordingly we propose a novel method with a multi-task loss. The proposed method considerably outperforms the recent methods and exhibits the state-of-the-art performance on standard benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-15T10:30:29Z</published>
+    <arxiv:comment>We will modify this method</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hongsong Wang</name>
+    </author>
+    <author>
+      <name>Jiashi Feng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.09087v1</id>
+    <title>TapNet: The Design, Training, Implementation, and Applications of a Multi-Task Learning CNN for Off-Screen Mobile Input</title>
+    <updated>2021-02-18T00:45:41Z</updated>
+    <link href="https://arxiv.org/abs/2102.09087v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.09087v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To make off-screen interaction without specialized hardware practical, we investigate using deep learning methods to process the common built-in IMU sensor (accelerometers and gyroscopes) on mobile phones into a useful set of one-handed interaction events. We present the design, training, implementation and applications of TapNet, a multi-task network that detects tapping on the smartphone. With phone form factor as auxiliary information, TapNet can jointly learn from data across devices and simultaneously recognize multiple tap properties, including tap direction and tap location. We developed two datasets consisting of over 135K training samples, 38K testing samples, and 32 participants in total. Experimental evaluation demonstrated the effectiveness of the TapNet design and its significant improvement over the state of the art. Along with the datasets, (https://sites.google.com/site/michaelxlhuang/datasets/tapnet-dataset), and extensive experiments, TapNet establishes a new technical foundation for off-screen mobile input.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-18T00:45:41Z</published>
+    <arxiv:comment>10 pages. CHI 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Michael Xuelin Huang</name>
+    </author>
+    <author>
+      <name>Yang Li</name>
+    </author>
+    <author>
+      <name>Nazneen Nazneen</name>
+    </author>
+    <author>
+      <name>Alexander Chao</name>
+    </author>
+    <author>
+      <name>Shumin Zhai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.12570v3</id>
+    <title>Multi-Instance Causal Representation Learning for Instance Label Prediction and Out-of-Distribution Generalization</title>
+    <updated>2022-10-05T03:08:54Z</updated>
+    <link href="https://arxiv.org/abs/2202.12570v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.12570v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-instance learning (MIL) deals with objects represented as bags of instances and can predict instance labels from bag-level supervision. However, significant performance gaps exist between instance-level MIL algorithms and supervised learners since the instance labels are unavailable in MIL. Most existing MIL algorithms tackle the problem by treating multi-instance bags as harmful ambiguities and predicting instance labels by reducing the supervision inexactness. This work studies MIL from a new perspective by considering bags as auxiliary information, and utilize it to identify instance-level causal representations from bag-level weak supervision. We propose the CausalMIL algorithm, which not only excels at instance label prediction but also provides robustness to distribution change by synergistically integrating MIL with identifiable variational autoencoder. Our approach is based on a practical and general assumption: the prior distribution over the instance latent representations belongs to the non-factorized exponential family conditioning on the multi-instance bags. Experiments on synthetic and real-world datasets demonstrate that our approach significantly outperforms various baselines on instance label prediction and out-of-distribution generalization tasks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-25T09:13:00Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Weijia Zhang</name>
+    </author>
+    <author>
+      <name>Xuanhui Zhang</name>
+    </author>
+    <author>
+      <name>Han-Wen Deng</name>
+    </author>
+    <author>
+      <name>Min-Ling Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.08488v1</id>
+    <title>MUDD: A New Re-Identification Dataset with Efficient Annotation for Off-Road Racers in Extreme Conditions</title>
+    <updated>2023-11-14T19:31:19Z</updated>
+    <link href="https://arxiv.org/abs/2311.08488v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.08488v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Re-identifying individuals in unconstrained environments remains an open challenge in computer vision. We introduce the Muddy Racer re-IDentification Dataset (MUDD), the first large-scale benchmark for matching identities of motorcycle racers during off-road competitions. MUDD exhibits heavy mud occlusion, motion blurring, complex poses, and extreme lighting conditions previously unseen in existing re-id datasets. We present an annotation methodology incorporating auxiliary information that reduced labeling time by over 65%. We establish benchmark performance using state-of-the-art re-id models including OSNet and ResNet-50. Without fine-tuning, the best models achieve only 33% Rank-1 accuracy. Fine-tuning on MUDD boosts results to 79% Rank-1, but significant room for improvement remains. We analyze the impact of real-world factors including mud, pose, lighting, and more. Our work exposes open problems in re-identifying individuals under extreme conditions. We hope MUDD serves as a diverse and challenging benchmark to spur progress in robust re-id, especially for computer vision applications in emerging sports analytics. All code and data can be found at https://github.com/JacobTyo/MUDD.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-14T19:31:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jacob Tyo</name>
+    </author>
+    <author>
+      <name>Motolani Olarinre</name>
+    </author>
+    <author>
+      <name>Youngseog Chung</name>
+    </author>
+    <author>
+      <name>Zachary C. Lipton</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.12070v1</id>
+    <title>Instrumental Variable Learning for Chest X-ray Classification</title>
+    <updated>2023-05-20T03:12:23Z</updated>
+    <link href="https://arxiv.org/abs/2305.12070v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.12070v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The chest X-ray (CXR) is commonly employed to diagnose thoracic illnesses, but the challenge of achieving accurate automatic diagnosis through this method persists due to the complex relationship between pathology. In recent years, various deep learning-based approaches have been suggested to tackle this problem but confounding factors such as image resolution or noise problems often damage model performance. In this paper, we focus on the chest X-ray classification task and proposed an interpretable instrumental variable (IV) learning framework, to eliminate the spurious association and obtain accurate causal representation. Specifically, we first construct a structural causal model (SCM) for our task and learn the confounders and the preliminary representations of IV, we then leverage electronic health record (EHR) as auxiliary information and we fuse the above feature with our transformer-based semantic fusion module, so the IV has the medical semantic. Meanwhile, the reliability of IV is further guaranteed via the constraints of mutual information between related causal variables. Finally, our approach's performance is demonstrated using the MIMIC-CXR, NIH ChestX-ray 14, and CheXpert datasets, and we achieve competitive results.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-20T03:12:23Z</published>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Weizhi Nie</name>
+    </author>
+    <author>
+      <name>Chen Zhang</name>
+    </author>
+    <author>
+      <name>Dan song</name>
+    </author>
+    <author>
+      <name>Yunpeng Bai</name>
+    </author>
+    <author>
+      <name>Keliang Xie</name>
+    </author>
+    <author>
+      <name>Anan Liu</name>
+    </author>
+  </entry>
+</feed>

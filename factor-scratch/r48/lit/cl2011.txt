@@ -1,0 +1,2240 @@
+Group Law Computations on Jacobians of Hyperelliptic Curves
+Craig Costello1,2,3⋆ and Kristin Lauter3
+1
+
+Information Security Institute
+Queensland University of Technology, GPO Box 2434, Brisbane QLD 4001, Australia
+craig.costello@qut.edu.au
+2
+Mathematics Department
+University of California, Irvine - Irvine, CA 92697-3875, USA
+3
+Microsoft Research
+One Microsoft Way, Redmond, WA 98052, USA
+klauter@microsoft.com
+
+Abstract. We derive an explicit method of computing the composition step in Cantor’s algorithm
+for group operations on Jacobians of hyperelliptic curves. Our technique is inspired by the geometric
+description of the group law and applies to hyperelliptic curves of arbitrary genus. While Cantor’s general
+composition involves arithmetic in the polynomial ring Fq [x], the algorithm we propose solves a linear
+system over the base field which can be written down directly from the Mumford coordinates of the group
+elements. We apply this method to give more efficient formulas for group operations in both affine and
+projective coordinates for cryptographic systems based on Jacobians of genus 2 hyperelliptic curves in
+general form.
+Keywords: Hyperelliptic curves, group law, Jacobian arithmetic, genus 2.
+
+1
+
+Introduction
+
+The field of curve-based cryptography has flourished for the last quarter century after Koblitz [31] and
+Miller [44] independently proposed the use of elliptic curves in public-key cryptosystems in the mid
+1980’s. Compared with traditional group structures like F∗p , elliptic curve cryptography (ECC) offers
+the powerful advantage of achieving the same level of conjectured security with a much smaller elliptic
+curve group. In 1989, Koblitz [32] generalized this idea by proposing Jacobians of hyperelliptic curves
+of arbitrary genus as a way to construct Abelian groups suitable for cryptography. Roughly speaking,
+hyperelliptic curves of genus g can achieve groups of the same size and security as elliptic curves,
+whilst being defined over finite fields with g times fewer bits4 . At the same time however, increasing
+the genus of a hyperelliptic curve significantly increases the computational cost of performing a group
+operation in the corresponding Jacobian group. Thus, the question that remains of great interest to
+the public-key cryptography community is, under which circumstances elliptic curves are preferable,
+and vice versa. At the present time, elliptic curves carry on standing as the front-runner in most
+practical scenarios, but whilst both ECC and hyperelliptic curve cryptography (HECC) continue to
+enjoy a wide range of improvements, this question remains open in general. For a nice overview of
+the progress in this race and of the state-of-the-art in both cases, the reader is referred to the talks
+by Bernstein [4], and by Lange [39].
+Cantor [6] was the first to give a concrete algorithm for performing computations in Jacobian
+groups of hyperelliptic curves over fields of odd characteristic. Shortly after, Koblitz [32] modified this
+algorithm to apply to fields of any characteristic. Cantor’s algorithm makes use of the polynomial
+representation of group elements proposed by Mumford [46], and consists of two stages: (i) the
+composition stage, based on Gauss’s classical composition of binary quadratic forms, which generally
+outputs an unreduced divisor, and (ii) the reduction stage, which transforms the unreduced divisor
+into the unique reduced divisor that is equivalent to the sum, whose existence is guaranteed by
+the Riemann-Roch theorem [33]. Cantor’s algorithm has since been substantially optimized in work
+initiated by Harley [24], who was the first to obtain practical explicit formulas in genus 2, and
+extended by Lange [34, 38], who, among several others [43, 50, 45, 49], generalized and significantly
+improved Harley’s original approach. Essentially, all of these improvements involve unrolling the
+⋆
+
+This author acknowledges funding from the Australian-American Fulbright Commission, the Gregory Schwartz
+Enrichment Grant, the Queensland Government Smart State Ph.D. Fellowship, and an Australian Postgraduate
+Award.
+4
+The security argument becomes more complicated once venturing beyond genus 2, where the attacks by Gaudry [17]
+and others [8, 21, 48] overtake the Pollard Rho method [47].
+
+2
+
+C. Costello and K. Lauter
+
+polynomial arithmetic implied by Cantor’s algorithm into operations in the underlying field, and
+finding specialized shortcuts dedicated to each of the separate cases of input (see [35, §4]).
+In this paper we propose an explicit alternative to unrolling Cantor’s polynomial arithmetic in
+the composition phase. Our method is inspired by considering the geometric description of the group
+law and applies to hyperelliptic curves of any genus. The equivalence of the geometric group law
+and Cantor’s algorithm was proven by Lauter [40] in the case of genus 2, but since then there has
+been almost no reported improvements in explicit formulas that benefit from this depiction. The
+notable exception being the work of Leitenberger [42], who used Gröbner basis reduction to show
+that in the addition of two distinct divisors on the Jacobian of a genus 2 curve, one can obtain
+explicit formulas to compute the required geometric function directly from the Mumford coordinates
+without (unrolling) polynomial arithmetic. Leitenberger’s idea of obtaining the necessary geometric
+functions in a simple and elementary way is central to the theme of this paper, although we note
+that the affine addition formulas that result from our description (which do not rely on any Gröbner
+basis reduction) are significantly faster than the direct translation of those given in [42].
+We use the geometric description of the group law to prove that the interpolating functions for
+the composition step can be found by writing down a linear system in the ground field to be solved in
+terms of the Mumford coordinates of the divisors. Therefore, the composition algorithm for arbitrary
+genera proposed in this work is immediately explicit in terms of arithmetic in Fq , in contrast to
+Cantor’s composition which operates in the polynomial ring Fq [x], the optimization of which calls
+for ad-hoc attention in each genus to unravel the Fq [x] operations into explicit formulas in Fq .
+To illustrate the value of our approach, we show that, for group operations on Jacobians of
+general genus 2 curves over large prime fields, the (affine and projective) formulas that result from
+this description are more efficient than their predecessors. Also, when applying this approach back
+to the case of genus 1, we are able to recover several of the tricks previously explored for merging
+simultaneous group operations to optimize elliptic curve computations.
+The rest of this paper is organized as follows. We briefly touch on some more related work, before
+moving to Section 2 where we give a short background on hyperelliptic curves and the Mumford
+representation of Jacobian elements. Section 3 discusses the geometry of Jacobian arithmetic on hyperelliptic curves, and shows that we can use simple linear algebra to compute the required geometric
+functions from the Mumford coordinates. Section 4 is dedicated to illustrating how this technique
+results in fast explicit formulas in genus 2, whilst Section 5 generalizes the algorithm for all g ≥ 2.
+As we hope this work will influence further progress in higher genus arithmetic, in Section 6 we highlight some further implications of adopting this geometrically inspired approach, before concluding
+in Section 7. MAGMA scripts that verify our proposed algorithms and formulas can be found in the
+appendices.
+Related work. There are several high-level papers (e.g. [27, 25]) which discuss general methods for
+computing in Jacobians of arbitrary algebraic curves. In addition, there has also been work which
+specifically addresses arithmetic on non-hyperelliptic Jacobians from a geometric perspective (e.g.
+[13, 14]).
+Khuri-Makdisi treated divisor composition on arbitrary algebraic curves with linear algebra techniques in [29] and [30]. In contrast to Khuri-Makdisi’s deep and more general approach, our paper
+specifically aims to present an explicit algorithm in an implementation-ready format that is specific
+to hyperelliptic curves, much like his joint work with Abu Salem which applied his earlier techniques
+to present explicit formulas for arithmetic on C3,4 curves [1]. Some other authors have also applied
+techniques from the realm of linear algebra to Jacobian operations: two notable examples being the
+work of Guyot et al. [23] and Avanzi et al. [2] who both used matrix methods to compute the resultant
+of two polynomials in the composition stage.
+Since we have focused on general hyperelliptic curves, our comparison in genus 2 does not include
+the record-holding work by Gaudry [19], which exploits the Kummer surface associated with curves
+of a special form to achieve the current outright fastest genus 2 arithmetic for those curve models.
+Gaudry and Harley’s second exposition [20] further describes the results in [24]. Finally, we do not
+draw comparisons with any work on real models of hyperelliptic curves, which usually result in
+slightly slower formulas than imaginary hyperelliptic curves, but we note that both Galbraith et al.
+[16] and Erickson et al. [11] achieve very competitive formulas for group law computations on real
+models of genus 2 hyperelliptic curves.
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+2
+
+3
+
+Background
+
+We give some brief background on hyperelliptic curves and the Mumford representation of points in
+the Jacobian. For a more in depth discussion, the reader is referred to [3, §4] and [15, §11]. Over the
+field K, we use Cg to denote the general (“imaginary quadratic”) hyperelliptic curve of genus g given
+by
+Cg : y 2 + h(x)y = f (x), h(x), f (x) ∈ K[x], deg(f ) = 2g + 1, deg(h) ≤ g, f monic,
+
+(1)
+
+with the added stipulation that no point (x, y) ∈ K simultaneously sends both partial derivatives
+2y + h(x) and f ′ (x) − h′ (x)y to zero [3, §14.1]. As long as char(K) 6= 2g + 1, we can isomorphically
+transform Cg into Cˆg , given as Cˆg : y 2 + h(x)y = x2g+1 + fˆ2g−1 x2g−1 + ... + fˆ1 x + fˆ0 , so that the
+coefficient of x2g is zero [3, §14.13]. In the case of odd characteristic fields, it is standard to also
+annihilate the presence of h(x) completely under a suitable transformation, in order to obtain a
+simpler model (we will make use of this in §4). We abuse notation and use Cg from hereon to refer
+to the simplified version of the curve equation in each context. Although the proofs in §3 apply to
+any K, it better places the intention of the discussion to henceforth regard K as a finite field Fq .
+We work in the Jacobian group Jac(Cg ) of Cg , where the elements are equivalence classes of
+degree zero divisors on Cg . Divisors are formal sums of points on the curve, and degree of a divisor
+is the sum of the multiplicities of points in the support of the divisor. Two divisors are equivalent
+if their difference is a principal divisor, i.e. equal to the divisor of zeros and poles of a function. It
+follows from the Riemann-Roch Theorem that for hyperelliptic curves, each class D has a unique
+reduced representative of the form
+ρ(D) = (P1 ) + (P2 ) + ... + (Pr ) − r(P∞ ),
+such that r ≤ g, Pi 6= −Pj for i 6= j, no Pi satisfying Pi = −Pi appears more than once, and
+with P∞ being the point at infinity on Cg . We drop the ρ from hereon and, unless stated otherwise,
+assume divisor equations involve reduced divisors. When referring to the non-trivial elements in the
+reduced divisor D, we mean all P ∈ supp(D) where P 6= P∞ , i.e. the elements corresponding to
+the effective part of D. For each of the r non-trivial elements appearing in D, write Pi = (xi , yi ).
+Mumford proposed a convenient way to represent such divisors as D = (u(x), v(x)), where u(x)
+is a monic polynomial with deg(u(x)) ≤ g satisfying u(xi ) = 0, and v(x) (which is not monic in
+general) with deg(v(x)) < deg(u(x)) is such that v(xi ) = yi , for 1 ≤ i ≤ r. In this way we have a
+one-to-one correspondence between reduced divisors and their so-called Mumford representation [46].
+We use ⊕ (resp. ⊖) to distinguish group additions (resp. subtractions) between Jacobian elements
+from “additions” in formal divisor sums. We use D̄ to denote the divisor obtained by taking the
+hyperelliptic involution of each of the non-trivial elements in the support of D.
+When developing formulas for implementing genus g arithmetic, we are largely concerned with
+the frequent case that arises where both (not necessarily distinct) reduced divisors D = (u(x), v(x))
+and D ′ = (u′ (x), v ′ (x)) in the sum D ⊕ D ′ are such that deg(u(x)) = deg(u′ (x)) = g. This means that
+D = E − g(P∞ ) and D ′ = E ′ − g(P∞ ), with both E and E ′ being effective divisors of degree g; from
+hereon we interchangeably refer to such divisors as full degree or degree g divisors, and we use Ĵac(Cg )
+to denote the set of all such divisor classes of full degree, where Ĵac(Cg ) ⊂ Jac(Cg ). In Section 5.2
+we discuss how to handle the special case when a divisor of degree less than g is encountered.
+
+3
+
+Computations in the Mumford function field
+
+The purpose of this section is to show how to compute group law operations in Jacobians by applying
+linear algebra to the Mumford coordinates of divisors. The geometric description of the group law
+is an important ingredient in the proof of the proposed linear algebra approach (particularly in the
+proof of Proposition 7), so we start by reviewing the geometry underlying arithmetic on Jacobians
+of hyperelliptic curves.
+Since the Jacobian of a hyperelliptic curve is the group of degree zero divisors modulo principal
+divisors, the group operation is formal addition modulo the equivalence relation. Thus two divisors
+D and D ′ can be added by finding a function whose divisor contains the support of both D and D′ ,
+and then the sum is equivalent to the negative of the complement of that support. Such a function
+
+4
+
+C. Costello and K. Lauter
+
+ℓ(x) can be obtained by interpolating the points in the support of the two divisors. The complement
+of the support of D and D′ in the support of div(ℓ) consists of the other points of intersection of
+ℓ with the curve. In general those individual points may not be defined over the ground field for
+the curve. We are thus led to work with Mumford coordinates for divisors on hyperelliptic curves,
+since the polynomials in Mumford coordinates are defined over the base field and allow us to avoid
+extracting individual roots and working with points defined over extension fields.
+For example, consider adding two full degree genus 3 divisors D, D′ ∈ Ĵac(C3 /Fq ), with respective
+′ ) = {P ′ , P ′ , P ′ } ∪ {P }, as in Figure 1. After
+supports supp(D) = {P1 , P2 , P3 } ∪ {P∞ } and
+∞
+1
+2
+3
+P5supp(D
+i
+computing the quintic function ℓ(x, y) =
+i=0 ℓi x that interpolates the six non-trivial points in
+the composition phase, computing the x-coordinates of the remaining (four) points of intersection
+explicitly would require solving
+ℓ25 ·
+
+5
+4
+3
+3
+X
+Y
+Y
+Y
+2
+′
+ℓi xi − f (x)
+(x − xi ) · (x − xi ) (x − x̄i ) =
+i=1
+
+i=1
+
+i=0
+
+i=1
+
+for x̄1 ,x̄2 ,x̄3 and x̄4 , which
+necessitate multiple
+root extractions. On the other
+ would
+ hand, the exact
+ 
+2
+Q4
+Q3
+Q3
+P5
+′
+i
+2
+division i=1 (x − x̄i ) =
+− f (x) / ℓ5 · i=1 (x − xi ) · i=1 (x − xi ) can be computed
+i=0 ℓi x
+very efficiently (and entirely over Fq ) by equating coefficients of x.
+
+P˜1
+
+P
+P˜1 • • 1
+P3 •
+
+•P
+
+P1′
+2
+
+•
+•˜
+
+P2
+
+P˜3
+
+•
+
+P˜3
+
+P3′
+
+•
+•
+
+P2′
+
+•
+
+•
+
+•
+P˜4
+
+P3′′ •
+
+•
+
+′′
+
+•P2
+
+•P ′′
+1
+
+P˜2
+P˜4 •
+
+Fig. 1. The composition stage of a general addition on
+the Jacobian of a genus 3 curve C3 over the reals R:
+the 6 points in the combined supports of D and D′
+are interpolated by a quintic polynomial which intersects C in 4 more places to form the unreduced divisor
+D̃ = P˜1 + P˜2 + P˜3 + P˜4 .
+
+Fig. 2. The reduction stage: a (vertically) magnified view
+of the cubic function which interpolates the points in the
+support of D̃ and intersects C3 in three more places to
+form D̄′′ = (P1′′ + P2′′ + P3′′ ) ∼ D̃, the reduced equivalent
+of D̃.
+
+Whilst the Mumford representation is absolutely necessary for efficient reduction, the price we
+seemingly pay in deriving formulas from the simple geometric description lies in the composition
+phase. In any case, finding the interpolating function y = ℓ(x) would be conceptually trivial if
+we knew the (x, y) coordinates of the points involved, but computing the function directly from the
+Mumford coordinates appears to be more difficult. In what follows we detail how this can be achieved
+in general, using only linear algebra over the base field. The meanings of the three propositions in
+this section are perhaps best illustrated through the examples that follow each of them.
+Proposition 1. On the Jacobian of a genus g hyperelliptic curve, the dense set Ĵac(Cg ) of divisor
+classes with reduced representatives of full degree g can be described exactly as the intersection of g
+hypersurfaces of dimension (at most) 2g.
+
+
+P
+Pg−1
+i
+i ∈ Ĵac(C (K)) be an arbitrary degree
+Proof. Let D = u(x), v(x) = xg + g−1
+g
+i=0 ui x ,
+i=0 vi x
+g divisor class representative with supp(D) = {(x1 , y1 ), ..., (xg , yg )} ∪ {P∞ }, so that u(xi ) = 0 and
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+5
+
+Pg−1
+i
+v(xi ) = yi for 1 ≤ i ≤ g. Let Ψ (x) =
+i=0 Ψi x be the polynomial obtained by substituting
+y = v(x) into the equation for Cg and reducing modulo the ideal generated by u(x). Clearly, Ψ (xi ) ≡
+0 mod hu(x)i for each of the g non-trivial elements in supp(D), but since deg(Ψ (x)) ≤ g − 1, it follows
+that each of its g coefficients Ψi must be identically zero, implying that every element D ∈ Ĵac(Cg )
+of full degree g lies in the intersection of the g hypersurfaces Ψi = Ψi (u0 , ..., ug−1 , v0 , ..., vg−1 ) = 0.
+On the other hand, each unique 2g-tuple in K which satisfies Ψi = 0 for 1 ≤ i ≤ g defines a unique
+full degree representative D ∈ Ĵac(Cg (K)) (cf. [15, ex 11.3.7]).
+⊓
+⊔
+Definition 2 (Mumford ideals). We call the g ideals hΨi i arising from the g hypersurfaces Ψi = 0
+in Proposition 1 the Mumford ideals.
+Definition 3 (Mumford function fields). The function fields of Ĵac(Cg ) and Ĵac(Cg ) × Ĵac(Cg )
+are respectively identified with the quotient fields of
+K[u0 , ..., ug−1 , v0 , ..., vg−1 ]
+hΨ0 , ..., Ψg−1 i
+
+and
+
+′
+]
+K[u0 , ..., ug−1 , v0 , ..., vg−1 , u′0 , ..., u′g−1 , v0′ , ..., vg−1
+,
+′
+hΨ0 , ..., Ψg−1 , Ψ0′ , ..., Ψg−1
+i
+
+Mum = K(Ĵac(C )) and
+which we call the Mumford function fields and denote by KDBL
+g
+Mum = K(Ĵac(C ) × Ĵac(C )) respectively. We abbreviate and use Ψ , Ψ ′ to differentiate between
+KADD
+g
+g
+i
+i
+Mum .
+′
+) when working in KADD
+Ψi = Ψi (u0 , ..., ug−1 , v0 , ..., vg−1 ) and Ψi′ = Ψi (u′0 , ..., u′g−1 , v0′ , ..., vg−1
+
+Example 4. Consider the genus 2 hyperelliptic curve defined by C : y 2 = (x5 + 2x3 − 7x2 + 5x + 1)
+over F37 . A general degree two divisor D ∈ Ĵac(C) takes the form D = (x2 + u1 x + u0 , v1 x + v0 ).
+Substituting y = v1 x + v0 into C and reducing modulo hx2 + u1 x + u0 i gives
+(v1 x + v0 )2 − (x5 + 2x3 − 7x2 + 5x + 1) ≡ Ψ1 x + Ψ0 ≡ 0 mod hx2 + u1 x + u0 i
+where
+Ψ1 (u1 , u0 , v1 , v0 ) = 3 u0 u1 2 − u1 4 − u0 2 + 2 v0 v1 − v1 2 u1 + 2 (u0 − u1 2 ) − 7u1 − 5,
+Ψ0 (u1 , u0 , v1 , v0 ) = v0 2 − v1 2 u0 + 2 u0 2 u1 − u1 3 u0 − 2u1 u0 − 7u0 − 1.
+The number of tuples (u0 , u1 , v0 , v1 ) ∈ F37 lying in the intersection of Ψ0 = Ψ1 = 0 is 1373, which is the
+number of degree 2 divisors on Jac(C), i.e. #Ĵac(C) = 1373 . There are 39 other divisors on Jac(C)
+with degrees less than 2, each of which is isomorphic to a point on the curve, so that #Jac(C) =
+#Ĵac(C) + #C = 1373 + 39 = 1412. Formulas for performing full degree divisor additions are deMum = Quot(K[u , u , v , v , u′ , u′ , v ′ , v ′ ]/hΨ , Ψ , Ψ ′ , Ψ ′ i),
+rived inside the Mumford function field KADD
+0 1 0 1 0 1 0 1
+0
+1
+0
+1
+whilst formulas for full degree divisor doublings are derived inside the Mumford function field
+Mum = Quot(K[u , u , v , v ]/hΨ , Ψ i).
+KDBL
+0 1 0 1
+0
+1
+Performing the efficient composition of two divisors amounts to finding the least degree polynomial
+function that interpolates the union of their (assumed disjoint) non-trivial supports. The following
+two propositions show that in the general addition and doubling of divisors, finding the interpolating
+functions in the Mumford function fields can be accomplished by solving linear systems.
+Proposition 5 (General divisor addition). Let D and D ′ be reduced divisors of degree g on
+Jac(Cg ) such that supp(D) = {(x1 , y1 ), ..., (xg , yg )} ∪ {P∞ }, supp(D ′ ) = {(x′1 , y1′ ), ..., (x′g , yg′ )} ∪ {P∞ }
+and xi 6= x′j for all 1 ≤ i, j ≤ g. A function ℓ on Cg that interpolates the 2g non-trivial elements in
+supp(D)∪supp(D′ ) can be determined by solving a linear system of dimension 2g inside the Mumford
+Mum .
+function field KADD
+
+
+
+P
+P
+Proof. Let D = u(x), v(x) = xg + g−1
+ui xi , g−1
+vi xi and D ′ = u′ (x), v ′ (x) = xg +
+i=0
+i=0
+
+P2g−1
+Pg−1 ′ i Pg−1 ′ i
+i
+i=0 vi x . Let the polynomial y = ℓ(x) =
+i=0 ℓi x be the desired function that
+i=0 ui x ,
+′
+interpolates the 2g non-trivial elements in supp(D) ∪ supp(D ), i.e. yi = ℓ(xi ) and yi′ = ℓ(x′i ) for
+1 ≤ i ≤ g. Focussing firstly on D, it follows that v(x) − ℓ(x) = 0 for x ∈ {xi }1≤i≤g . As in the
+proof
+1, we reduce
+the ideal generated by u(x) giving Ω(x) = v(x) − ℓ(x) ≡
+Pg−1 of Proposition
+Pg−1 modulo
+i ≡ 0 mod hxg +
+i i. Since deg(Ω(x)) ≤ g − 1 and Ω(x ) = 0 for 1 ≤ i ≤ g, it
+Ω
+x
+u
+x
+i
+i
+i
+i=0
+i=0
+follows that the g coefficients Ωi = Ωi (u0 , ..., ug−1 , v0 , ..., vg−1 , ℓ0 , ..., ℓ2g−1 ) must be all identically
+Mum .
+zero. Each gives rise to an equation that relates the 2g coefficients of ℓ(x) linearly inside KADD
+′
+′
+′
+Defining Ω (x) from D identically and reducing modulo u (x) gives another g linear equations in the
+2g coefficients of ℓ(x).
+⊓
+⊔
+
+6
+
+C. Costello and K. Lauter
+
+Example 6. Consider
+curve defined by C : y 2 = x7 + 1 over F71 , and take
+ ′ the ′genus ′ 3 hyperelliptic
+
+D = u(x), v(x) , D = u (x), v (x) ∈ Ĵac(C) as
+
+
+D = x3 + 6x2 + 41x + 33, 29x2 + 22x + 47 , D′ = x3 + 18x2 + 15x + 37, 49x2 + 46x + 59 .
+P5
+i
+We compute the polynomial ℓ(x) =
+i=0 ℓi x that interpolates the six non-trivial elements in
+′
+supp(D) ∪ supp(D ) using ℓ(x) − v(x) ≡ 0 mod hu(x)i and ℓ(x) − v ′ (x) ≡ 0 mod hu′ (x)i, to obtain
+Ωi and Ωi′ for 0 ≤ i ≤ 2. For D and D ′ , we respectively have that
+0≡
+0≡
+
+5
+X
+
+i=0
+5
+X
+
+ℓi xi − (29x2 + 22x + 47) ≡ Ω2 x2 + Ω1 x + Ω0
+
+mod hx3 + 6x2 + 41x + 33i,
+
+ℓi xi − (49x2 + 46x + 59) ≡ Ω2′ x2 + Ω1′ x + Ω0′
+
+mod hx3 + 18x2 + 15x + 37i,
+
+i=0
+
+with
+Ω2 = ℓ2 + 65ℓ3 + 66ℓ4 + 30ℓ5 − 29; Ω1 = ℓ1 + 30ℓ3 + 48ℓ5 − 22; Ω0 = ℓ0 + 38ℓ3 + 56ℓ4 + 23ℓ5 − 47;
+Ω2′ = ℓ2 + 53ℓ3 + 25ℓ4 + 67ℓ5 − 49; Ω1′ = ℓ1 + 56ℓ3 + 20ℓ4 + 7ℓ5 − 46; Ω0′ = ℓ0 + 34ℓ3 + 27ℓ4 + 69ℓ5 − 59.
+′
+Solving Ω0≤i≤2 , Ω0≤i≤2
+= 0 simultaneously for ℓ0 , ..., ℓ5 gives ℓ(x) = 21x5 +x4 +36x3 +46x2 +64x+57.
+
+Proposition 7 (General divisor doubling). Let D be a divisor of degree g representing a class on
+Jac(Cg ) with supp(D) = {P1 , ..., Pg } ∪ {P∞ }. A function ℓ on Cg such that each non-trivial element
+in supp(D) occurs with multiplicity two in div(ℓ) can be determined by a linear system of dimension
+Mum .
+2g inside the Mumford function field KDBL
+
+
+P
+P
+Proof. Let D = u(x), v(x) = xg + g−1
+ui xi , g−1
+vi xi and write Pi = (xi , yi ) for 1 ≤ i ≤ g.
+i=0
+i=0
+P
+i
+Let the polynomial y = ℓ(x) = 2g−1
+i=0 ℓi x be the desired function that interpolates the g non-trivial
+elements of supp(D), and also whose derivative ℓ′ (x) is equal to dy/dx on Cg (x, y) at each such
+P
+dy
+dℓ
+i
+element. Namely, ℓ(x) = 2g−1
+i=0 ℓi x is such that ℓ(xi ) = yi and dx (xi ) = dx (xi ) on C for 1 ≤ i ≤ g.
+This time the first g equations come from the direct interpolation as before, whilst the second g
+dy
+dℓ
+equations come from the general expression for the equated derivates, taking dx
+(xi ) = dx
+(xi ) on Cg
+as
+P
+P
+g−1
+i−1 + ( g ih xi−1 ) · y
+X
+(2g + 1)x2g + 2g−1
+ix
+i
+i−1
+i=1 if
+i=0
+P
+iℓi x
+=
+2y + gi=0 hi xi
+i=1
+
+for each xi with 1 ≤ i ≤ g. Again, it is easy to see that substituting y = v(x) and reducing modulo
+the ideal generated by u(x) will produce a polynomial Ω ′ (x) with degree less than or equal to g − 1.
+Since Ω ′ (x) has g roots, Ωi′ = 0 for 0 ≤ i ≤ g − 1, giving rise to the second g equations which
+Mum .
+importantly relate the coefficients of ℓ(x) linearly inside KDBL
+⊓
+⊔
+
+Example 8. Consider the genus 3 hyperelliptic curve defined by C : y 2 = x7 + 5x + 1 over F257 , and
+take D ∈ Ĵac(C) asP
+D = (u(x), v(x)) = (x3 + 57x2 + 26x + 80, 176x2 + 162x + 202). We compute the
+polynomial ℓ(x) = 5i=0 ℓi xi that interpolates the three non-trivial points in supp(D), and also has
+the same derivative as C at these points. For the interpolation only, we obtain Ω0 , Ω1 , Ω2 (collected
+below) identically as in Example 6.
+For Ω0′ , Ω1′ , Ω2′ , equating dy/dx on C with ℓ′ (x) gives
+7x6 + 5
+≡ 5ℓ5 x4 + 4ℓ4 x3 + 3ℓ3 x2 + 2ℓ2 x + ℓ1
+2y
+
+mod hx3 + 57x2 + 26x + 80i,
+
+which, after substituting y = 176x2 + 162x + 202, rearranges to give 0 ≡ Ω2′ x2 + Ω1′ x + Ω0′ , where
+Ω2 = 118ℓ4 + 256ℓ2 + 57ℓ3 + 96ℓ5 ;
+Ω1 = 140ℓ4 + 256ℓ1 + 26ℓ3 + 82ℓ5 ;
+Ω0 = 256ℓ0 + 80ℓ3 + 69ℓ5 + 66ℓ4 ;
+
+Ω2′ = 76ℓ5 + 2541ℓ4 + 254ℓ3 + 166;
+Ω1′ = 209 + 255ℓ2 + 104ℓ4 + 186ℓ5 ;
+Ω0′ = 73ℓ5 + 63ℓ4 + 256ℓ1 + 31.
+
+′
+Solving Ω0≤i≤2 , Ω0≤i≤2
+= 0 simultaneously for ℓ0 , ..., ℓ5 gives ℓ(x) = 84x5 +213x3 +78x2 +252x+165.
+
+This section showed that divisor composition on hyperelliptic curves can be achieved via linear
+operations in the Mumford function fields.
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+4
+
+7
+
+Generating explicit formulas in genus 2
+
+This section applies the results of the previous section to develop explicit formulas for group law
+computations involving full degree divisors on Jacobians of genus 2 hyperelliptic curves. Assuming
+an underlying field of large prime characteristic, such genus 2 hyperelliptic curves C ′ /Fq can always
+be isomorphically transformed into C2 /Fq given by C2 : y 2 = x5 + f3 x3 + f2 x2 + f1 x + f0 , where
+C2 ∼
+= C ′ (see §2). The Mumford representation of a general degree two divisor D ∈ Ĵac(C2 ) ⊂ Jac(C2 )
+is given as D = (x2 + u1 x + u0 , v1 x + v0 ). From Proposition 1, we compute the g = 2 hypersurfaces
+whose intersection is the set of all such divisors Ĵac(C2 ) as follows. Substituting y = v1 x + v0 into
+the equation for C2 and reducing modulo the ideal hx2 + u1 x + u0 i gives the polynomial Ψ (x) as
+Ψ (x) ≡ Ψ1 x + Ψ0 ≡ (v1 x + v0 )2 − (x5 + f3 x3 + f2 x2 + f1 x + f0 ) mod hx2 + u1 x + u0 i,
+where
+Ψ0 = v0 2 − f0 + f2 u0 − v1 2 u0 + 2 u0 2 u1 − u1 f3 u0 − u1 3 u0 ,
+Ψ1 = 2 v0 v1 − f1 − v1 2 u1 + f2 u1 − f3 (u1 2 − u0 ) + 3 u0 u1 2 − u1 4 − u0 2 .
+
+(2)
+
+Mum = Quot(K[u , u , v , v ]/hΨ , Ψ i) and addition formuWe will derive doubling formulas inside KADD
+0 1 0 1
+0
+1
+Mum
+las inside KADD = Quot(K[u0 , u1 , v0 , v1 , u′0 , u′1 , v0′ , v1′ ]/hΨ0 , Ψ1 , Ψ0′ , Ψ1′ i). In §4.2 particularly, we will
+see how the ideal hΨ0 , Ψ1 i is useful in simplifying the formulas that arise.
+
+•
+
+•
+
+P1′ •
+
+P1
+
+•
+
+P2′
+
+P1′′ •
+
+•
+P2 •
+
+P1′′
+
+•
+•
+
+•
+
+•
+
+P2
+
+•
+
+P1
+
+P ′′
+
+•2
+
+P2′′
+
+•
+Fig. 3. The group law (general addition) on the Jacobian
+of the genus 2 curve C2 over the reals R, for (P1 + P2 ) ⊕
+(P1′ + P2′ ) = P1′′ + P2′′ .
+
+4.1
+
+Fig. 4. A general point doubling on the Jacobian of a
+genus 2 curve C2 over the reals R, for [2](P1 + P2 ) =
+P1′′ + P2′′ .
+
+General divisor addition in genus 2
+
+Let D = (x2 + u1 x + u0 , v1 x + v0 ), D′ = (x2 + u′1 x + u′0 , v1′ x + v0′ ) ∈ Ĵac(C2 ) be two divisors with
+supp(D) = {P1 , P2 } ∪ {P∞ } and supp(D′ ) = {P1′ , P2′ } ∪ {P∞ }, such that no Pi has the same x
+coordinate as Pj′ for 1 ≤ i, j ≤ 2. Let D ′′ = (x2 + u′′1 x + u′′0 , v1′′ x + v0′′ ) = D ⊕ D ′ . The composition
+Mum that solves to give
+step in the addition of D and D ′ involves building the linear system inside KADD
+P3
+i
+the coefficients ℓi of the cubic polynomial y = ℓ(x) = i=0 ℓi x which interpolates P1 , P2 , P1′ , P2′ .
+Following Proposition 5, we have
+0 ≡ Ω1 x + Ω0 ≡ ℓ3 x3 + ℓ2 x2 + ℓ1 x + ℓ0 − (v1 x + v0 )
+≡ (ℓ3 (u1 2 − u0 ) − ℓ2 u1 + ℓ1 − v1 )x + (ℓ3 u1 u0 − ℓ2 u0 + ℓ0 − v0 )
+
+modhx2 + u1 x + u0 i,
+modhx2 + u1 x + u0 i,
+
+(3)
+
+8
+
+C. Costello and K. Lauter
+
+which provides two equations (Ω1 = 0 and Ω0 = 0) relating the four coefficients of the interpolating
+Mum . Identically, interpolating the support of D ′ produces two more
+polynomial linearly inside KADD
+linear equations which allow us to solve for the four ℓi as
+  
+
+ 
+1 0 −u0
+u1 u0
+ℓ0
+v0
+ 0 1 −u1 u2 − u0   ℓ1 
+ v1 
+1
+ ·  =  ′ .
+
+ 1 0 −u′0
+ v0 
+u′1 u′0   ℓ2 
+′
+′
+2
+′
+0 1 −u1 u1 − u0
+ℓ3
+v1′
+Observe that the respective subtraction of rows 1 and 2 from rows 3 and 4 gives rise to a smaller
+system that can be solved for ℓ2 and ℓ3 , as
+
+
+  
+ ′
+u0 − u′0
+u′1 u′0 − u1 u0
+ℓ2
+v0 − v0
+.
+(4)
+·
+=
+ℓ3
+v1′ − v1
+u1 − u′1 (u′12 − u′0 ) − (u21 − u0 )
+Remark 9. We will see in Section 5.1 that for all g ≥ 2, the linear system that arises in the computation of ℓ(x) can always be trivially reduced to be of dimension g, but for now it is useful to observe
+that once we solve the dimension g = 2 matrix system for ℓi with i ≥ g, calculating the remaining ℓi
+where i < g is computationally straightforward.
+The next step is to determine the remaining intersection points of y = ℓ(x) on C2 . Since y = ℓ(x)
+is cubic, its substitution into C2 will give a degree six equation in x. Four of the roots will correspond
+to the four non-trivial points in supp(D) ∪ supp(D′ ), whilst the remaining two will correspond to the
+two x coordinates of the non-trivial elements in supp(D̄′′ ), which are the same as the x coordinates
+in supp(D ′′ ) (see the intersection points in Figure 3). Let the Mumford representation of D̄′′ be
+D̄ ′′ = (x2 + u1 ′′ x + u0 ′′ , −v1′′ x − v0′′ ); we then have
+(x2 + u1 x + u0 ) · (x2 + u′1 x + u′0 ) · (x2 + u1 ′′ x + u0 ′′ ) =
+
+(ℓ0 + ℓ1 x + ℓ2 x2 + ℓ3 x3 )2 − f (x)
+.
+ℓ23
+
+Equating coefficients is an efficient way to compute the exact division required above to solve for
+u′′ (x). For example, equating coefficients of x5 and x4 above respectively gives
+u1 ′′ = −u1 − u′1 −
+
+1 − 2ℓ2 ℓ3
+;
+ℓ23
+
+u0 ′′ = −(u0 + u′0 + u1 u′1 + (u1 + u′1 )u1 ′′ ) +
+
+2ℓ1 ℓ3 + ℓ22
+.
+ℓ23
+
+(5)
+
+It remains to compute v1′′ and v0′′ . Namely, we wish to compute the linear function that interpolates
+the points in supp(D′′ ). Observe that reducing ℓ(x) modulo hx2 +u′′1 x+u′′0 i gives the linear polynomial
+−v1′′ x + −v0′′ which interpolates the points in supp(D̄′′ ), i.e. those points which are the involutions
+of the points in supp(D′′ ). Thus, the computation of v1′′ and v0′′ amounts to negating the result of
+ℓ(x) mod hx2 + u′′1 x + u′′0 i. From equation (3) then, it follows that
+2
+
+v1′′ = −(ℓ3 (u′′1 − u′′0 ) − ℓ2 u′′1 + ℓ1 ),
+
+v0′′ = −(ℓ3 u′′1 u′′0 − ℓ2 u′′0 + ℓ0 ).
+
+(6)
+
+We summarize the process of computing a general addition D′′ = D ⊕ D ′ on Ĵac(C2 ), as follows.
+Composition involves constructing and solving the linear system in (4) for ℓ2 and ℓ3 before computing
+ℓ0 and ℓ1 via (3), whilst reduction involves computing u′′1 and u′′0 from (5) before computing v1′′ and
+v0′′ via (6). The explicit formulas for these computations are in Table 1, where I, M and S represent
+the costs of an Fq inversion, multiplication and squaring respectively. We postpone comparisons with
+other works until after the doubling discussion.
+′′ ′′
+Remark 10. The formulas for computing v0′′ and v1′′ in (6) include operations involving u′′2
+1 and u1 u0 .
+Since those quantities are also needed in the first step of the addition formulas (see the first line
+of Table 1) for any subsequent additions involving the divisor D′′ , it makes sense to carry those
+quantities along as extra coordinates to exploit these overlapping computations. It turns out that an
+analogous overlap arises in geometric group operations for all g ≥ 2, but for now we remark that both
+additions and doublings on genus 2 curves will benefit from extending the generic affine coordinate
+system to include two extra coordinates u21 and u1 u0 .
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+AFFINE
+ADDITION
+′
+′ ′
+D = (u1 , u0 , v1 , v0 , U1 = u21 , U0 = u1 u0 ), D ′ = (u′1 , u′0 , v1′ , v0′ , U1′ = u′2
+1 , U 0 = u1 u0 )
+
+Input:
+
+σ1 ← u1 + u′1 , ∆0 ← v0 − v0′ , ∆1 ← v1 − v1′ , M1 ← U1 − u0 − U1′ + u′0 , M2 ← U0′ − U0 ,
+M3 ← u1 − u′1 , M4 ← u′0 − u0 , t1 ← (M2 − ∆0 ) · (∆1 − M1 ), t2 ← (−∆0 − M2 ) · (∆1 + M1 ),
+t3 ← (−∆0 + M4 ) · (∆1 − M3 ), t4 ← (−∆0 − M4 ) · (∆1 + M3 ),
+ℓ2 ← t1 − t2 ℓ3 ← t3 − t4 , d ← t3 + t4 − t1 − t2 − 2(M2 − M4 ) · (M1 + M3 ),
+B ← d · A, C ← d · B, D ← ℓ2 · B, E ← ℓ23 · A, CC ← C 2 ,
+′′
+2
+′
+′′
+′
+u1 ← 2D − CC − σ1 , u′′
+0 ← D + C · (v1 + v1 ) − ((u1 − CC) · σ1 + (U1 + U1 ))/2,
+′′
+′′2
+′′
+′′
+′′
+′′
+′′
+′′
+′′
+U1 ← u1 , U0 ← u1 · u0 , v1 ← D · (u1 − u1 ) + U1 − u0 − U1 + u0 ,
+′′
+v0′′ ← D · (u0 − u′′
+v1′′ ← E · v1′′ + v1 v0′′ ← E · v0′′ + v0 .
+0 ) + U0 − U0 ,
+
+A ← 1/(d · ℓ3 ),
+
+′′ ′′ ′′
+′′
+′′2
+′′
+′′ ′′
+D ′′ = ρ(D ⊕ D ′ ) = (u′′
+1 , u0 , v1 , v0 , U1 = u1 , U0 = u1 u0 ).
+
+Output:
+
+Total
+
+PROJECTIVE
+ADDITION
+D = (U1 , U0 , V1 , V0 , Z), D ′ = (U1′ , U0′ , V1′ , V0′ , Z ′ ),
+
+Input:
+
+Operations in Fq
+
+2M
+2M
+1M
+I + 5M + 2S
+2M + 1S
+2M + 1S
+3M
+I + 17M + 4S
+
+Operations
+
+ZZ ← Z1 · Z2 , U 1Z ← U1 · Z2 , U 1Z ′ ← U1′ · Z1 , U 1ZS ← U 1Z 2 , U 1ZS ′ ← U 1Z ′2 ,
+U 0Z ← U0 · Z2 , U 0Z ′ ← U0′ · Z1 , V 1Z ← V1 · Z2 , V 1Z ′ ← V1′ · Z1 ,
+M1 ← U 1ZS − U 1ZS ′ + ZZ · (U 0dZ − U 0Z), M2 ← U 1Z ′ · U 0Z ′ − U 1Z · U 0Z;
+M3 ← U 1Z − U 1Z ′ , M4 ← U 0Z ′ − U 0Z, z1 ← V 0 · Z2 − V 0′ · Z1 , z2 ← V 1Z − V 1Z ′ ,
+t1 ← (M2 − z1 ) · (z2 − M1 ), t2 ← (−z1 − M2 ) · (z2 + M1 ),
+t3 ← (−z1 + M4 ) · (z2 − M3 ), t4 ← (−z1 − M4 ) · (z2 + M3 ),
+ℓ2 ← t1 − t2 , ℓ3 ← t3 − t4 , d ← t3 + t4 − t1 − t2 − 2 · (M2 − M4 ) · (M1 + M3 ),
+
+3M + 2S
+4M
+3M
+2M
+2M
+2M
+1M
+
+A ← d2 , B ← ℓ3 · ZZ, C ← ℓ2 · B, D ← d · B, E ← ℓ3 · B, F ← U 1Z · E, G ← ZZ · E,
+H ← U 0Z · G, J ← D · G, K ← Z2 · J, U1′′ ← 2 · C − A − E · (U 1Z + U 1Z ′ ),
+
+6M + 1S
+4M
+
+U0′′ ← ℓ22 · ZZ + D · (V 1Z + V 1Z ′ ) − ((U1′′ − A) · (U 1Z + U 1Z ′ ) + E · (U 1ZS + U 1ZS ′ ))/2,
+V1′′ ← U1′′ · (U1′′ − C) + F · (C − F ) + E · (H − U0′′ ),
+V0′′ ← H · (C − F ) + U0′′ · (U1′′ − C), V1′′ ← V1′′ · ZZ + K · V1 , V0′′ ← V0′′ + K · V0 ,
+U1′′ ← U1′′ · D · ZZ, U0′′ ← U0′′ · D, Z ′′ ← ZZ · J.
+
+4M + 1S
+3M
+5M
+4M
+
+D ′′ = ρ(D ⊕ D ′ ) = (U1′′ , U0′′ , V1′′ , V0′′ , Z ′′ ).
+
+Output:
+
+Total
+
+AFFINE
+DOUBLING
+D = (u1 , u0 , v1 , v0 , U1 = u21 , U0 = u1 u0 ), with constants f2 , f3
+
+Input:
+
+43M + 4S
+
+Operations
+
+vv ← v12 , vu ← (v1 + u1 )2 − vv − U1 , M1 ← 2v0 − 2vu, M2 ← 2v1 · (u0 + 2U1 ),
+M3 ← −2v1 , M4 ← vu + 2v0 , z1 ← f2 + 2U1 · u1 + 2U0 − vv, z2 ← f3 − 2u0 + 3U1 ,
+t1 ← (M2 − z1 ) · (z2 − M1 ), t2 ← (−z1 − M2 ) · (z2 + M1 ),
+t3 ← (M4 − z1 ) · (z2 − M3 ), t4 ← (−z1 − M4 ) · (z2 + M3 ),
+ℓ2 ← t1 − t2 , ℓ3 ← t3 − t4 ,
+d ← t3 + t4 − t1 − t2 − 2(M2 − M4 ) · (M1 + M3 ),
+
+1M + 2S
+1M
+2M
+2M
+1M
+
+A ← 1/(d · ℓ3 ), B ← d · A, C ← d · B, D ← ℓ2 · B, E ← ℓ23 · A,
+′′
+2
+′′
+u1 ← 2D − C 2 − 2u1 , u′′
+U1′′ ← u′′2
+U0′′ ← u′′
+0 ← (D − u1 ) + 2C · (v1 + C · u1 ),
+1 ,
+1 · u0 ,
+′′
+′′
+′′
+′′
+′′
+′′
+′′
+v1 ← D · (u1 − u1 ) + U1 − U1 − u0 + u0 , v0 ← D · (u0 − u0 ) + U0 − U0 ,
+v1′′ ← E · v1′′ + v1 , v0′′ ← E · v0′′ + v0 .
+
+I + 5M + 1S
+
+′′ ′′ ′′
+′′
+′′2
+′′
+′′ ′′
+D ′′ = ρ([2]D) = (u′′
+1 , u0 , v1 , v0 , U1 = u1 , U0 = u1 u0 ).
+
+Output:
+
+Total
+
+PROJECTIVE
+DOUBLING
+D = (U1 , U0 , V1 , V0 , Z), curve constants f2 , f3
+
+Input:
+
+U1S ← U12 , ZS ← Z 2 , V 0Z ← V 0 · Z,
+2
+← (V1 + U1 ) − V1S − U1S , M1 ← 2 · V 0Z − 2 · U V,
+
+U U ← U1 · U0 ,
+
+U 0Z ← U 0 · Z,
+
+3M + 3S
+2M
+2M
+I + 19M + 6S
+
+Operations
+V1S ← V 12 ,
+
+UV
+M2 ← 2 · V 1 · (U 0Z + 2 · U1S ),
+M3 ← −2 · V1 , M4 ← U V + 2 · V 0Z, z1 ← Z · (f2 · ZS − V1S ) + 2 · U1 · (U1S + U 0Z),
+z2 ← f3 · ZS − 2 · U 0Z + 3 · U1S , t1 ← (M2 − z1) · (z2 − M1 ), t2 ← (−z1 − M2 ) · (z2 + M1 ),
+t3 ← (−z1 + M4 ) · (z2 − M3 ), t4 ← (−z1 − M4 ) · (z2 + M3 ),
+ℓ2 ← t1 − t2 , ℓ3 ← t3 − t4 , d ← t3 + t4 − t1 − t2 − 2 · (M2 − M4 ) · (M1 + M3 ),
+A ← ℓ22 , B ← ℓ23 , C ← ((ℓ2 + ℓ3 )2 − A − B)/2, D ← B · Z, E ← B · U1 ,
+F ← d2 ,
+
+9
+
+G ← F · Z, H ← ((d + ℓ3 )2 − F − B)/2, J ← H · Z, K ← V1 · J, L ← U 0Z · B,
+U1′′ ← 2 · C − 2 · E − G, U0′′ ← A + U1 · (E − 2 · C + 2 · G) + 2 · K,
+V1′′ ← (C − E − U1′′ ) · (E − U1′′ ) + B · (L − U0′′ ), V0′′ ← L · (C − E) + (U1′′ − C) · U0′′ .
+V1′′ ← V1′′ · Z + K · D, V0′′ ← V0′′ + V 0Z · H · D, M ← J · Z, U1′′ ← U1′′ · M, U0′′ ← U0′′ · J,
+Z ′′ ← M · D.
+′′
+′′
+Output:
+D = ρ([2]D) = (U1 , U0′′ , V1′′ , V0′′ , Z ′′ ).
+Total
+
+3M + 3S
+1M + 1S
+2M
+2M
+2M
+1M
+2M + 3S
+4M + 2S
+1M
+4M
+7M
+1M
+30M + 9S
+
+Table 1. Explicit formulas for a divisor addition D ′′ = D ⊕ D ′ involving two distinct degree 2 divisors on Jac(C2 ), and for divisor
+doubling D ′′ = [2]D of a degree 2 divisor on Jac(C2 ). A MAGMA script is provided in Appendix A.
+
+10
+
+C. Costello and K. Lauter
+
+4.2
+
+General divisor doubling in genus 2
+
+Let D = (x2 + u1 x + u0 , v1 x + v0 ) ∈ Ĵac(C2 ) be a divisor with
+= {P1 , P2 } ∪ {P∞ }. To
+P3 supp(D)
+i
+compute [2]D = D ⊕ D, we seek the cubic polynomial ℓ(x) = i=0 ℓi x that has zeroes of order two
+at both P1 = (x1 , y1 ) and P2 = (x2 , y2 ). We can immediately make use of the equations arising out
+of the interpolation of supp(D) in (3) to obtain the first g = 2 equations.
+There are two possible approaches to obtaining the second set of g = 2 equations. The first is the
+geometric flavored approach that was used in the proof of Proposition 7 and in Example 8, which
+involves matching the derivatives. The second involves reducing the substitution of ℓ(x) into Cg by
+hu(x)2 i to ensure the prescribed zeros are of multiplicity two, and using the associated Mumford
+ideals to linearize the equations. For the purpose of presenting both approaches, we will illustrate
+the latter approach in this subsection, but it is important to highlight that the guaranteed existence
+of linear equations follows from the expression gained when matching derivatives in the geometric
+approach.
+We start by setting y = ℓ(x) into C2 and reducing modulo the ideal h(x2 + u1 x + u0 )2 i, which
+gives
+Ω(x) = Ω0 + Ω1 x + Ω2 x2 + Ω3 x3 ≡ (ℓ0 + ℓ1 x + ℓ2 x2 + ℓ3 x3 )2 − f (x) mod h(x2 + u1 x + u0 )2 i
+where
+Ω0 = ℓ23 (2u30 − 3u21 u20 ) + 4ℓ3 ℓ2 u1 u20 − 2ℓ3 ℓ1 u20 + ℓ20 − ℓ22 u20 − 2u1 u20 − f0 ,
+Ω1 = 6ℓ23 (u1 u20 − u31 u0 ) + 2ℓ3 ℓ2 (4u21 u0 − u20 ) + 2ℓ1 ℓ0 − 4ℓ3 ℓ1 u0 u1 − 2ℓ22 u0 u1 − 4u21 u0 + u20 − f1 ,
+Ω2 = 3ℓ23 (u20 − u41 ) + ℓ21 − ℓ22 (u21 + 2u0 ) − 2u0 u1 − 2u31 + 4ℓ3 ℓ2 (u31 + u0 u1 ) − 2ℓ3 ℓ1 (2u0 + u21 )
++ 2ℓ2 ℓ0 − f2 ,
+Ω3 = 2ℓ23 (3u1 u0 − 2u31 ) + 2ℓ2 ℓ1 + 2ℓ3 ℓ2 (3u21 − 2u0 ) − 2ℓ22 u1 − 4ℓ3 ℓ1 u1 + 2ℓ3 ℓ0 − 3u21 + 2u0 − f3 .
+It follows that Ωi = 0 for 0 ≤ i ≤ 3. Although we now have four more equations relating the
+unknown ℓi coefficients, these equations are currently nonlinear. We linearize by substituting the
+linear equations taken from (3) above, and reducing the results modulo the Mumford ideals given in
+(2). We use the two linear equations Ω̃2 , Ω̃3 resulting from Ω2 , Ω3 , given as
+Ω̃2 = 4ℓ1 v1 + 2ℓ2 (v0 − 2v1 u1 ) − 6ℓ3 u0 v1 − 2u0 u1 − 2u31 − 3v12 − f2 ,
+Ω̃3 = 2v1 ℓ2 + ℓ3 (2v0 − 4u1 v1 ) + 2u0 − 3u21 − f3 ,
+which combine with the linear interpolating equations (in (3)) to give rise to the linear system
+  
+
+
+
+ℓ0
+−v0
+−1
+0
+u0
+−u1 u0
+  ℓ1 
+
+ 0
+
+−v1
+−1
+u1
+−u21 + u0
+·  = 
+
+.
+2
+3
+
+
+
+
+ 0
+4v1 −2v1 u1 + 2v0
+−6u0 v1
+ℓ2
+f2 + 2u1 u0 + 2u1 + 3v1 
+0
+0
+2v1
+−4v1 u1 + 2v0
+ℓ3
+f3 − 2u0 + 3u21
+As was the case with the divisor addition in the previous section, we can first solve a smaller system
+for ℓ2 and ℓ3 , by adding the appropriate multiple of the second row to the third row above, to give
+
+  
+
+
+2v1 u1 + 2v0 −2u0 v1 − 4v1 u21
+ℓ2
+f2 + 2u1 u0 + 2u31 − v12
+·
+=
+.
+2v1
+−4v1 u1 + 2v0
+ℓ3
+f3 − 2u0 + 3u21
+After solving the above system for ℓ2 and ℓ3 , the process of obtaining D′′ = [2]D = (x2 + u′′1 x +
+u′′0 , v1′′ x + v0′′ ) is identical to the case of addition in the previous section, giving rise to the analogous
+explicit formulas in Table 1.
+4.3
+
+Comparisons of formulas in genus 2
+
+Table 2 draws comparisons between the explicit formulas obtained from the above approach and
+the explicit formulas presented in previous work. In implementations where inversions are expensive
+compared to multiplications (i.e. I > 20M), it can be advantageous to adopt projective formulas
+which avoid inversions altogether. Our projective formulas compute scalar multiples faster than
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+Fq inversions
+I
+2
+
+1
+
+-
+
+Previous work
+Harley [24, 20]
+Lange [34]
+Matsuo et al. [43]
+Takahashi [50]
+Miyamoto et al. [45]
+Lange [38]
+This work
+Wollinger and Kovtun [52]
+Lange [36, 38]
+Fan et al. [12]
+Fan et al. [12]
+Lange [37, 38]
+This work
+
+#
+coords
+4
+4
+4
+4
+4
+4
+6
+5
+5
+5
+8
+8
+5
+
+11
+
+Doubling Addition Mixed
+M
+S
+M
+S
+M
+S
+30
+24
+3
+24
+6
+24
+3
+27
+25
+29
+25
+27
+26
+22
+5
+22
+3
+19
+6
+17
+4
+39
+6
+46
+4
+39
+4
+38
+6
+47
+4
+40
+3
+39
+6
+38
+3
+35
+7
+36
+5
+34
+7
+47
+7
+36
+5
+30
+9
+43
+4
+36
+5
+
+Table 2. Comparisons between our explicit formulas for genus 2 curves over prime fields and previous formulas using
+CRT based composition.
+
+all previous projective formulas for general genus 2 curves. We also note that our homogeneous
+projective formulas require only 5 coordinates in total, which is the heuristic minimum for projective
+implementations in genus 2.
+In the case of the affine formulas, it is worth commenting that, unlike the case of elliptic curves
+where point doublings are generally much faster than additions, affine genus 2 operations reveal
+divisor additions to be the significantly cheaper operation. In cases where an addition would usually
+follow a doubling to compute [2]D⊕D ′ , it is likely to be computationally favorable to instead compute
+(D ⊕ D ′ ) ⊕ D, provided temporary storage of the additional intermediate divisor is not problematic.
+Lastly, the formulas in Table 1 all required the solution to a linear system of dimension 2. This
+would ordinarily require 6 Fq multiplications, but we applied Hisil’s trick [26, eq. 3.8] to instead
+perform these computations using 5 Fq multiplications. In implementations where extremely optimized multiplication routines give rise to Fq addition costs that are relatively high compared to Fq
+multiplications, it may be advantageous to undo such tricks (including M-S trade-offs) in favor of a
+lower number of additions.
+
+5
+
+The general description
+
+This section presents the algorithm for divisor composition on hyperelliptic Jacobians of any genus
+g. The general method for reduction has essentially remained the same in all related publications
+following Cantor’s original paper (at least in the case of low genera), but we give a simple geometric
+interpretation of the number of reduction rounds required in Section 5.3 below.
+5.1
+
+Composition for g ≥ 2
+
+We extend the composition described for genus 2 in sections 4.1 and 4.2 to hyperelliptic curves of
+arbitrary genus. Importantly, there are two aspects of this general description to highlight.
+(i) In contrast to Cantor’s general description of composition which involves polynomial arithmetic,
+this general description is immediately explicit in terms of Fq arithmetic.
+(ii) The required function ℓ(x) is of degree 2g − 1 and therefore has 2g unknown coefficients. Thus,
+we would usually expect to solve a linear system of dimension 2g, but the linear system that
+requires solving in the Mumford function field is actually of dimension g.
+Henceforth we use M · x = z to denote the associated linear system of dimension g, and we focus
+our discussion on the structure of M and z.
+In the case of a general divisor addition, M is computed as M = U − U′ , where U and U′ are
+described by D and D ′ respectively. In fact, as for the system derived from coordinates of points
+above, the matrix M is completely dependent on u(x) and u′ (x), whilst the vector z depends entirely
+on v(x) and v ′ (x). Algorithm 1 details how to build U (resp. U′ ), where the first column of U is
+initialized as the Mumford coordinates {ui }1≤i<g of D, and the remaining g2 −g entries are computed
+
+12
+
+C. Costello and K. Lauter
+
+by proceeding across the columns and taking Ui,j = ui−1 · Ug,j−1 + Ui−1,j−1 . This relationship is
+obtained by a careful generalization of the process that computed (4) from (3) in the case of genus
+2.
+Algorithm 1 General composition (addition) of two distinct divisors. A MAGMA script is provided
+in Appendix C.
+Input: D = {ui , vi }0≤i≤g−1 , D′ = {u′i , vi′ }0≤i≤g−1 .
+P2g−1
+Output: ℓ(x) = i=0
+ℓi xi such that supp(D) ∪ supp(D′ ) ⊂ supp(div(ℓ)).
+1: U, U′ , M ← {0}g×g ∈ Fg×g
+, z ← {0}g ∈ Fgq .
+q
+2: for i from 1 to g do
+3:
+Ug+1−i,1 ← −ug−i ; U′g+1−i,1 ← −u′g−i
+4: end for
+5: for j from 2 to g do
+6:
+U1,j ← Ug,j−1 · U1,1 ; U′1,j ← U′g,j−1 · U′1,1 .
+7:
+for i from 2 to g do
+8:
+Ui,j ← Ug,j−1 · Ui,1 + Ui−1,j−1
+; U′i,j ← U′g,j−1 · U′i,1 + U′i−1,j−1 .
+9:
+end for
+10: end for
+11: M ← U − U′ .
+12: for i from 1 to g do
+′
+13:
+zi ← vi−1 − vi−1
+14: end for
+15: Solve M · x = z
+16: Compute x̃ = U · x
+17: for i from 1 to g do
+18:
+x̃i ← vg−i − x̃i
+19: end for
+20: return ℓ(x) (from x̃ = {ℓ0 , ..., ℓg−1 } and x = {ℓg , ..., ℓ2g−1 })
+
+Depending on the genus, we remark that Algorithm 1 will most likely not be the fastest way to
+compute M. Instead, we propose that a faster routine is likely to be achieved by using Algorithm
+1 to determine the algebraic expression for each of the elements in M, and tailor making optimized
+formulas to generate its entries, in the same way that the previous section did for genus 2.
+In addition, there is alternative way to view the structure (and computation) of the matrix M.
+This follows from observing that both U and U′ can actually be written as a sum of g matrices
+that are computed as outer products; let c = (c1 , .., cg ), c̃ = (c̃1 , ..., c̃g ) ∈ Fgq be two vectors that are
+derived solely from the g Mumford coordinates belonging to D, then
+ c c̃
+ 0
+
+ 0 ... 0 0 
+c c˜
+...
+c c̃
+0
+...
+0
+
+U=
+
+
+1 1
+
+1 2
+
+c2 c̃1
+..
+.
+cg−1 c̃1
+cg c̃1
+
+c2 c˜2
+
+...
+cg−1 c˜2
+cg c˜2
+
+1 g
+
+...
+..
+.
+...
+...
+
+c2 c̃g
+  0.
+..
++ .
+.
+  .
+cg−1 c̃g
+0
+cg c̃g
+0
+
+c1 c̃1
+
+...
+cg−2 c˜2
+cg−1 c˜2
+
+...
+..
+.
+...
+...
+
+c1 c̃g−1
+
+0
+..
+ + . . . +  ..
+.
+
+ .
+cg−2 c̃g−1
+0
+cg−1 c̃g−1
+0
+
+...
+
+0
+0
+
+.. 
+..
+.
+...
+. .
+... 0
+0
+. . . 0 c1 c̃1
+
+Example 11. Assume a general genus 3 curve and let the Mumford representations of the divisors D
+and D ′ be as usual. The matrix U is given as
+ −u
+  −u u u (−u2 + u )u   0 0
+ 0 0 0 
+u2 u0
+−u22 u0 + u1 u0
+0
+0
+0
+2 0
+1 0
+2
+2 + u )u
+0
+−u
+u
+u
+−u1 u2 u1 − u0 −u22 u1 + u21 + u2 u0
+−u
+u
+u
+(−u
+=
++
++ 0 0 0
+,
+0
+2 0
+1
+2 1
+1 1
+2
+−u2
+
+u22 − u1
+
+−u32 + 2u2 u1 − u0
+
+−u2
+
+u22
+
+(−u22 + u1 )u2
+
+0 −u1 u2 u1
+
+0 0 −u0
+
+and U′ is given identically. In this case c = (u0 , u1 , u2 )T and c̃ = (−1, u2 , −u22 + u1 )T . Setting
+M = U − U′ and P
+z = (v0 − v0′ , v1 − v1′ , v2 − v2′ )T , we find the g = 3 coefficients ℓ3 , ℓ4 and ℓ5 of
+the quintic ℓ(x) = 5i=0 ℓi xi that interpolates the 6 non-trivial elements in supp(D) ∪ supp(D′ ) by
+solving M · x = z for x = (ℓ3 , ℓ4 , ℓ5 )T . The remaining coefficients are found via a straightforward
+matrix multiplication as x̃ = (ℓ0 , ℓ1 , ℓ2 )T = U · x.
+The immediate observation in general is that cc̃T is the only outer product that requires computation in order to determine U entirely.
+For general divisor doublings the description of the linear system is much longer; this is because
+the right hand side vector z is slightly more complicated than in the case of addition: as is the case
+with general Weierstrass elliptic curves, additions tend to be independent of the curve constants
+whilst doublings do not. We reiterate that, for low genus implementations at least, Algorithm 2 is
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+13
+
+Algorithm 2 General composition (doubling) of a unique divisor with itself
+Input: D = {ui , vi }0≤i≤g−1 and curve coefficients f0 , f1 , ..., f2g−1 .
+P2g−1
+Output: ℓ(x) = i=0
+ℓi xi such that each non-trivial element in supp(D) occurs with multiplicity two in div(ℓ) .
+1: U, M ← {0}g×g ∈ Fg×g
+, v ← {0}g−1 ∈ Fg−1
+, z ← {0}g ∈ Fgq
+q
+q
+2: for i from 1 to g do
+3:
+Ug+1−i,1 ← −ug−i
+4: end for
+5: for j from 2 to g do
+6:
+U1,j ← Ug,j−1 · U1,1 .
+7:
+for i from 2 to g do
+8:
+Ui,j ← Ug,j−1 · Ui,1 + Ui−1,j−1 .
+9:
+end for
+10: end for
+11: uextra ← Ug,1 · Ug,g + Ug−1,g .
+12: for i from 1 to g do
+13:
+Mg+1−i,1 ← vg−i
+14: end for
+15: for j from 2 to g do
+16:
+Mi,j ← Mi,j + Ug,j−1 · Mi,1 + Mg,j−1 · Ui,1 + Mi−1,j−1 .
+17: end for
+18: for i from 1 to g − 1 do
+19:
+zg+1−i ← zg+1−i + 2 · Ug,1 · Ug+1−i,1 + Ug−i,1 + Ug,i+1 + f2g−i .
+20:
+for j from 1 to i do
+21:
+zg−i ← zg−i + f2g−1−i+j · Ug,j .
+22:
+vi ← vi − Mg+1−j,1 · Mg−i+j,1 .
+23:
+end for
+24: end for
+25: z1 ← z1 + 2 · Ug,1 · U1,1 + fg .
+26: zg−1 ← zg−1 + v1 .
+27: for i from 3 to g do
+28:
+for j from 2 to i − 1 do
+29:
+zg+1−i ← zg+1−i + vi−j · Ug,j−1 .
+30:
+end for
+31:
+zg+1−i ← zg+1−i + vi−1 .
+32: end for
+33: z1,1 ← z1,1 + uextra .
+34: for i from 1 to g do
+35:
+zi ← zi /2.
+36: end for
+37: Solve M · x = z
+38: Compute x̃ = −U · x
+39: for i from 1 to g do
+40:
+x̃i ← vg−i + x̃i
+41: end for
+42: return ℓ(x) (from x̃ = {ℓ0 , ..., ℓg−1 } and x = {ℓg , ..., ℓ2g−1 })
+
+intended to obtain the algebraic expressions for each element in M; as was the case with genus
+2, a faster computational route to determining the composition function will probably arise from
+genus specific attention that derives tailor-made explicit formulas. Besides, the general consequence
+of Remark 10 is that many (if not all) of the values constituting U will have already been computed
+in the previous point operation, and can therefore be temporarily stored and reused.
+5.2
+
+Handling special cases
+
+The description of divisor composition herein naturally encompasses the special cases where either
+(or both) of the divisors have degree less than g. In fact, Proposition 1 trivially generalizes to describe
+the set of divisors on Jac(Cg ) whose effective parts have degree d ≤ g, and can therefore be used to
+obtain the Mumford ideals associated with special input divisors5 .
+This will often result in fewer rounds of reduction and a simpler linear system. For example,
+whilst the general addition of two full degree divisors in genus 3 requires an additional round of
+5
+
+Perhaps the most general consequence of Proposition
+1 is using it to describe (or enumerate) the entire Jacobian by
+P
+summing over all d, as #Jac(Cg ) = #Cg + gd=2 nd , where nd is the number of 2d-tuples lying in the intersection
+of the d associated hypersurfaces.
+
+14
+
+C. Costello and K. Lauter
+
+reduction after the first points of intersection are found (see Figure 1 and Figure 2), it is easy to see
+that any group operation on a genus 3 curve involving a divisor of degree less than 3 will give rise to
+a reduced divisor immediately. Clearly, the linear systems in these cases are smaller, and therefore
+the explicit formulas arising in these special cases will always be much faster, in agreement with all
+prior expositions (cf. [3, §14]). In higher genus implementations that do not explicitly account for all
+special cases of inputs, Katagi et al. [28] noted that it can still be very advantageous to explicitly
+implement and optimize one of the special cases.
+5.3
+
+Reduction in low genera
+
+Gaudry’s chapter [18] gives an overview of different algorithms (and complexities) for the reduction
+phase. Our experiments lead us to believe that the usual method of reduction is still the most
+preferable for small g. In genus 2 we saw that point additions and doublings do not require more
+than one round of reduction, i.e. the initial interpolating function intersects C2 in at most two more
+places (refer to Figure 3), immediately giving rise to the reduced divisor that is the sum. In genus
+g ≥ 3 however, this is generally not the case. Namely, the initial interpolating function intersects Cg
+in more than g places, giving rise to an unreduced divisor that requires further reduction. We restate
+Cantor’s complexity argument concerning the number of rounds of reduction ([6, §4]) in a geometric
+way in the following proposition.
+Proposition 12. In the addition of any two reduced divisor classes on the Jacobian of a genus g
+hyperelliptic curve, the number of rounds of further reduction required to form the reduced divisor is
+at most ⌊ g−1
+2 ⌋, with equality occurring in the general case.
+Proof. For completeness note that addition on elliptic curves in Weierstrass form needs no reduction,
+so take g ≥ 2. The composition polynomial y = ℓ(x) with the 2g prescribed zeros (including multiplicities) has degree 2g − 1. Substituting y = ℓ(x) into Cg : y 2 + h(x)y = f (x) gives an equation of degree
+max{2g + 1, 3g − 1, 2(2g − 1)} = 2(2g − 1) in x, for which there are at most 2(2g − 1)− 2g = 2g − 2 new
+roots. Let nt be the maximum number of new roots after t rounds of reduction, so that n0 = 2g − 2.
+While nt > g, reduction is not complete, so continue by interpolating the nt new points with a
+polynomial of degree nt − 1, producing at most 2(nt − 1) − nt = nt − 2 new roots. It follows that
+nt = 2g − 2t − 2, and since t, g ∈ Z, the result follows.
+⊓
+⊔
+
+6
+
+Further implications and potential
+
+This section is intended to further illustrate the potential of coupling a geometric approach with
+linear algebra when performing arithmetic in Jacobians. It is our hope that the suggestions in this
+section encourage future investigations and improvements.
+We start by commenting that our algorithm can naturally be generalized to much more than
+standard divisor additions and doublings. Namely, given any set of divisors DP
+1 , ..., Dn ∈ Cg and any
+corresponding set of scalars r1 , ..., rn ∈ Z, we can theoretically compute D = ni=1 [ri ]Di at once, by
+first prescribing a function that, for each 1 ≤ i ≤ n, has a zero of order ri at each of the non-trivial
+points in the support of Di . Note that if ri 6∈ Z+ , then prescribing a zero of order ri at some point
+P is equivalent to prescribing a pole of order −ri ∈ Z+ at P instead. We first return to genus 1
+to show that this technique can be used to recover several results that were previously obtained by
+alternatively merging or overlapping consecutive elliptic curve computations (cf. [10, 7]).
+Simultaneous operations on elliptic curves. In the case of genus 1, the Mumford representation
+of reduced divisors is trivial, i.e. if P = (x1 , y1 ), the Mumford representation of the associated divisor
+is DP = (x − x1 , y1 ), and the associated Mumford ideal is (isomorphic to) the curve itself. However,
+we can again explore using the Mumford representation as an alternative to derivatives in order to
+generate the required linear systems arising from prescribing multiplicities of greater than one. In
+addition, when unreduced divisors in genus 1 are encountered, the Mumford representation becomes
+non-trivial and very necessary for efficient computations.
+To double-and-add or point triple on an elliptic curve, we can prescribe a parabola ℓ(x) =
+ℓ2 x2 + ℓ1 x + ℓ0 ∈ Fq (E) with appropriate multiplicities in advance, as an alternative to Eisenträger
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+[3]P
+
+15
+
+•
+
+•
+P
+
+•
+
+P′
+
+P
+
+P
+
+•
+
+•
+
+•
+
+•Pˆ1
+• Pˆ2
+
+[2]P + P ′
+
+•
+
+•
+Fig. 5. Computing [2]P +P ′ by prescribing a parabola which intersects
+E at P, P ′ with multiplicities two
+and one respectively.
+
+Fig. 6. Tripling the point P ∈ E by
+prescribing a parabola which intersects E at P with multiplicity three.
+
+Fig. 7. Quadrupling the point P ∈
+E by prescribing a cubic which intersects E at P with multiplicity
+four.
+
+et al.’s technique of merging two consecutive chords into a parabola [10]. Depending on the specifics
+of an implementation, computing the parabola in this fashion offers the same potential advantage
+as that presented by Ciet et al. [7]; we avoid any intermediate computations and bypass computing
+P + P ′ or [2]P along the way. When tripling the point P = (xP , yP ) ∈ E, the parabola is determined
+from the three equalities ℓ(x)2 ≡ x3 + f1 x + f0 mod h(x − u0 )i i for 1 ≤ i ≤ 3, from which we take
+one of the coefficients that is identically zero in each of the three cases. As one example, we found
+projective formulas which compute triplings on curves of the form y 2 = x3 + f0 and cost 3M + 10S
+(see Appendix A). These are the second fastest tripling formulas reported across all curve models
+[5], being only slightly slower (unless S < 0.75M) than the formulas for tripling-oriented curves
+introduced by Doche et al. [9] which require 6M + 6S.
+We can quadruple the point P by prescribing a cubic function ℓ(x) = ℓ3 x3 + ℓ2 x2 + ℓ1 x + ℓ0
+which intersects E at P with multiplicity four (see Figure 7). This time however, the cubic is zero
+on E in two other places, resulting in an unreduced divisor DP̂ = P̂1 + P̂2 , which we can represent
+in Mumford coordinates as DP̂ = (û(x), v̂(x)) (as if it were a reduced divisor in genus 2). Our
+experiments agree with prior evidence that it is unlikely that point quadruplings will outperform
+consecutive doublings in the preferred projective cases, although we believe that one application
+which could benefit from this description is pairing computations, where interpolating functions are
+necessary in the computations. To reduce DP̂ , we need the line y = ℓ̂(x) joining P̂1 with P̂2 , which
+can be computed via ℓ̂(x) ≡ ℓ(x) mod hû(x)i. The update to the pairing function requires both ℓ(x)
+and ℓ̂(x), as fupd = ℓ(x)/ℓ̂(x). We claim that it may be attractive to compute a quadrupling in
+this fashion and only update the pairing function once, rather than two doublings which update the
+pairing functions twice, particularly in implementations where inversions don’t compare so badly
+against multiplications [41]. It is also worth pointing out that in a quadruple-and-add computation,
+the unreduced divisor DP̂ need not be reduced before adding an additional point P ′ . Rather, it could
+be advantageous to immediately interpolate P̂1 , P̂2 and P ′ with a parabola instead.
+Simultaneous operations in higher genus Jacobians. Increasing the prescribed multiplicity of
+a divisor not only increases the degree of the associated interpolating function (and hence the linear
+system), but also generally increases the number of rounds of reduction required after composition.
+In the case of genus 1, we can get away with prescribing an extra zero (double-and-add or point
+tripling) without having to encounter any further reduction, but for genus g ≥ 2, this will not be the
+case in general. For example, even when attempting to simultaneously compute [2]D + D ′ for two
+general divisors D, D′ ∈ Jac(C2 ), the degree of the interpolating polynomial becomes 5, instead of
+3, and the dimension of the linear system that arises can only be trivially reduced from 6 to 4. Our
+preliminary experiments seem to suggest that unless the linear system can be reduced further, it is
+likely that computing [2]D+D ′ simultaneously using our technique won’t be as fast as computing two
+consecutive straightforward operations. However, as in the previous paragraph, we argue that such
+a trade-off may again become favorable in pairing computations where computing the higher-degree
+interpolating function would save a costly function update.
+
+16
+
+C. Costello and K. Lauter
+
+Explicit formulas in genus 3 and 4. Developing explicit formulas for hyperelliptic curves of genus
+3 and 4 has also received some attention [51, 53, 22]. It will be interesting to see if the composition
+technique herein can further improve these results. In light of Remark 10 and the general description
+in Section 5, the new entries in the matrix M will often have been already computed in the previous
+point operation, suggesting an obvious extension of the coordinates if the storage space permits it.
+Therefore the complexity of our proposed composition essentially boils down to the complexity of
+solving the dimension g linear system in Fq , and so it would also be interesting to determine for which
+(practically useful) genera one can find tailor-made methods of solving the special linear system that
+arises in Section 5.1.
+Characteristic two, special cases, and more coordinates. Although the proofs in Section
+3 were for arbitrary hyperelliptic curves over general fields, Section 4 simplified the exposition by
+focusing only on finite fields of large prime characteristic. Of course, it is possible that the description
+herein can be tweaked to also improve explicit formulas in the cases of special characteristic two curves
+(see [3, §14.5]). In addition, it is possible that the geometrically inspired derivation of explicit formulas
+for special cases of inputs will enhance implementations which make use of these (refer to Section
+5.2). Finally, we only employed straightforward homogeneous coordinates to obtain the projective
+versions of our formulas. As was the case with the previous formulas based on Cantor’s composition,
+it is possible that extending the projective coordinate system will give rise to even faster formulas.
+
+7
+
+Conclusion
+
+This paper presents a new and explicit method of divisor composition for hyperelliptic curves. The
+method is based on using simple linear algebra to derive the required geometric functions directly
+from the Mumford coordinates of Jacobian elements. In contrast to Cantor’s composition which
+operates in the polynomial ring Fq [x], the algorithm we propose is immediately explicit in terms of
+Fq operations. We showed that this achieves the current fastest general group law formulas in genus
+2, and pointed out several other potential improvements that could arise from this exposition.
+
+8
+
+Acknowledgements
+
+We wish to thank Huseyin Hisil and Michael Naehrig for many fixes and improvements to an earlier
+version of this paper.
+
+References
+1. F. K. Abu Salem and K. Khuri-Makdisi. Fast Jacobian group operations for c3,4 curves over a large finite field.
+CoRR, abs/math/0610121, 2006.
+2. R. Avanzi, N. Thériault, and Z. Wang. Rethinking low genus hyperelliptic jacobian arithmetic over binary fields:
+interplay of field arithmetic and explicit formulæ. Journal of Mathematical Cryptology, 2(3):227–255, 2008.
+3. R. M. Avanzi, H. Cohen, C. Doche, G. Frey, T. Lange, K. Nguyen, and F. Vercauteren. The Handbook of Elliptic
+and Hyperelliptic Curve Cryptography. CRC, 2005.
+4. D. J. Bernstein. Elliptic vs. hyperelliptic, part I. Talk at ECC, September 2006.
+5. D. J. Bernstein and T. Lange. Explicit-formulas database. http://www.hyperelliptic.org/EFD.
+6. D. G. Cantor. Computing in the Jacobian of a hyperelliptic curve. Mathematics of computation, 48(177):95–101,
+January 1987.
+7. M. Ciet, M. Joye, K. Lauter, and P. L. Montgomery. Trading inversions for multiplications in elliptic curve
+cryptography. Designs, Codes and Cryptography, 39(2):189–206, 2006.
+8. C. Diem. An index calculus algorithm for plane curves of small degree. In F. Hess, S. Pauli, and M. E. Pohst,
+editors, ANTS, volume 4076 of Lecture Notes in Computer Science, pages 543–557. Springer, 2006.
+9. C. Doche, T. Icart, and D. R. Kohel. Efficient scalar multiplication by isogeny decompositions. In PKC 2006 [54],
+pages 191–206, 2006.
+10. K. Eisenträger, K. Lauter, and P. L. Montgomery. Fast elliptic curve arithmetic and improved Weil pairing
+evaluation. In M. Joye, editor, CT-RSA, volume 2612 of Lecture Notes in Computer Science, pages 343–354.
+Springer, 2003.
+11. S. Erickson, M. J. Jacobson, N. Shang, and S. Shen A. Stein. Efficient formulas for real hyperelliptic curves of
+genus 2 in affine representation. In C. Carlet and B. Sunar, editors, Arithmetic of finite fields, volume 4547 of
+Lecture Notes in Computer Science, pages 202–218. Springer Berlin / Heidelberg, 2010.
+12. X. Fan, G. Gong, and D. Jao. Efficient pairing computation on genus 2 curves in projective coordinates. In R. M.
+Avanzi, L. Keliher, and F. Sica, editors, Selected Areas in Cryptography, volume 5381 of Lecture Notes in Computer
+Science, pages 18–34. Springer Berlin / Heidelberg, 2009.
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+17
+
+13. S. Flon, R. Oyono, , and C. Ritzenthaler. Fast addition on non-hyperelliptic genus 3 curves. Algebraic geometry
+and its applications, 5(3):227–256, 2008.
+14. S. Flon and R. Oyono. Fast arithmetic on jacobians of picard curves. In F. Bao, R. H. Deng, and J. Zhou, editors,
+Public Key Cryptography, volume 2947 of Lecture Notes in Computer Science, pages 55–68. Springer, 2004.
+15. S.
+D.
+Galbraith.
+Mathematics
+of
+Public
+Key
+Cryptography.
+URL:
+http://www.math.auckland.ac.nz/∼sgal018/crypto-book/crypto-book.html, 0.9 edition, February 11, 2011.
+16. S. D. Galbraith, M. Harrison, and D. J. Mireles Morales. Efficient hyperelliptic arithmetic using balanced representation for divisors. In A. van der Poorten and A. Stein, editors, Algorithmic Number Theory, volume 5011 of
+Lecture Notes in Computer Science, pages 342–356. Springer Berlin / Heidelberg, 2008.
+17. P. Gaudry. An algorithm for solving the discrete log problem on hyperelliptic curves. In B. Preneel, editor,
+EUROCRYPT, volume 1807 of Lecture Notes in Computer Science, pages 19–34. Springer, 2000.
+18. P. Gaudry. Hyperelliptic curves and the HCDLP, volume 317 of London Mathematical Society Lecture Notes,
+chapter VII, pages 133–150. Cambridge University Press, 2005.
+19. P. Gaudry. Fast genus 2 arithmetic based on Theta functions. Journal of Mathematical Cryptology, 1(3):243–265,
+2007.
+20. P. Gaudry and R. Harley. Counting points on hyperelliptic curves over finite fields. In W. Bosma, editor, ANTS,
+volume 1838 of Lecture Notes in Computer Science, pages 313–332. Springer, 2000.
+21. P. Gaudry, E. Thomé, N. Thériault, and C. Diem. A double large prime variation for small genus hyperelliptic
+index calculus. Math. Comput., 76(257):475–492, 2007.
+22. M. Gonda, K. Matsuo, K. Aoki, J. Chao, and S. Tsujii. Improvements of addition algorithm on genus 3 hyperelliptic curves and their implementation. IEICE Transactions on Fundamentals of Electronics Communications and
+Computer Sciences, pages 89–96, 2005.
+23. C. Gurot, K. Kaveh, and V. M. Patankar. Explicit algorithm for the arithmetic on the hyperelliptic Jacobians of
+genus 3. Journal of the Ramanujan Mathematical Society, 19:75–115, 2004.
+24. R. Harley. Fast arithmetic on genus 2 curves. See http://cristal.inria.fr/∼harley/hyper for C source code and
+further explanations.
+25. F. Hess. Computing Riemann-Roch spaces in algebraic function fields and related topics. J. Symb. Comput.,
+33(4):425–445, 2002.
+26. H. Hisil. Elliptic curves, group law, and efficient computation. PhD thesis, Queensland University of Technology,
+2010.
+27. M. A. Huang and D. Ierardi. Efficient algorithms for the Riemann-Roch problem and for addition in the Jacobian
+of a curve. J. Symb. Comput., 18(6):519–539, 1994.
+28. M. Katagi, I. Kitamura, T. Akishita, and T. Takagi. Novel efficient implementations of hyperelliptic curve cryptosystems using degenerate divisors. In C. H. Lim and M. Yung, editors, WISA, volume 3325 of Lecture Notes in
+Computer Science, pages 345–359. Springer, 2004.
+29. K. Khuri-Makdisi. Linear algebra algorithms for divisors on an algebraic curve. Math. Comput., 73(245):333–357,
+2004.
+30. K. Khuri-Makdisi. Asymptotically fast group operations on jacobians of general curves. Math. Comput.,
+76(260):2213–2239, 2007.
+31. N. Koblitz. Elliptic curve cryptosystems. Mathematics of computation, 48(177):203–209, 1987.
+32. N. Koblitz. Hyperelliptic cryptosystems. J. Cryptology, 1(3):139–150, 1989.
+33. S. Lang. Introduction to algebraic geometry. Addison-Wesley, 1972.
+34. T. Lange. Efficient arithmetic on hyperelliptic curves. PhD thesis, Universität-Gesamthochschule Essen, 2001.
+35. T. Lange. Efficient arithmetic on genus 2 hyperelliptic curves over finite fields via explicit formulae. Cryptology
+ePrint Archive, Report 2002/121, 2002. http://eprint.iacr.org/.
+36. T. Lange. Inversion-free arithmetic on genus 2 hyperelliptic curves. Cryptology ePrint Archive, Report 2002/147,
+2002. http://eprint.iacr.org/.
+37. T. Lange. Weighted coordinates on genus 2 hyperelliptic curves. Cryptology ePrint Archive, Report 2002/153,
+2002. http://eprint.iacr.org/.
+38. T. Lange. Formulae for arithmetic on genus 2 hyperelliptic curves. Appl. Algebra Eng. Commun. Comput.,
+15(5):295–328, 2005.
+39. T. Lange. Elliptic vs. hyperelliptic, part II. Talk at ECC, September 2006.
+40. K. Lauter. The equivalence of the geometric and algebraic group laws for Jacobians of genus 2 curves. In Topics
+in algebraic and noncommutative geometry: proceedings in memory of Ruth Michler, July 20-22, 2001, Luminy,
+France [and] October 25-28, 2001, Annapolis, Maryland, volume 324, page 165. Amer Mathematical Society, 2003.
+41. K. Lauter, P. L. Montgomery, and M. Naehrig. An analysis of affine coordinates for pairing computation. In
+M. Joye, A. Miyaji, and A. Otsuka, editors, Pairing-Based Cryptography - Pairing 2010, volume 6487 of Lecture
+Notes in Computer Science, pages 1–20. Springer Berlin / Heidelberg, 2010.
+42. F. Leitenberger. About the group law for the Jacobi variety of a hyperelliptic curve. Contributions to Algebra and
+Geometry, 46(1):125–130, 2005.
+43. K Matsuo, J. Chao, and S. Tsujii. Fast genus two hyperelliptic curve cryptosystems. Technical Report 214, IEIC,
+2001.
+44. V. S. Miller. Use of elliptic curves in cryptography. In H. C. Williams, editor, CRYPTO, volume 218 of Lecture
+Notes in Computer Science, pages 417–426. Springer, 1985.
+45. Y. Miyamoto, H. Doi, K. Matsuo, J. Chao, and S. Tsujii. A fast addition algorithm of genus two hyperelliptic
+curve. In Symposium on Cryptography and Information Security - SCICS, In Japanese, 2002.
+46. D. Mumford. Tata lectures on theta II. In Progress in Mathematics, volume 43. Birkhiauser Boston Inc., Boston,
+MA, 1984.
+47. J.M. Pollard. Monte Carlo methods for index computation (mod p). Mathematics of computation, 32(143):918–924,
+1978.
+
+18
+
+C. Costello and K. Lauter
+
+48. B. Smith. Isogenies and the discrete logarithm problem in Jacobians of genus 3 hyperelliptic curves. Journal of
+Cryptology, 22(4):505–529, 2009.
+49. H. Sugizaki, K. Matsuo, J. Chao, and S. Tsujii. An extension of Harley addition algorithm for hyperelliptic curves
+over finite fields of characteristic two. Technical Report ISEC2002-9(2002-5), IEICE, 2002.
+50. M Takahashi. Improving Harley algorithms for Jacobians of genus 2 hyperelliptic curves. In Symposium on
+Cryptography and Information Security - SCICS, In Japanese., 2002.
+51. T. Wollinger. Software and hardware implementation of hyperelliptic curve cryptosystems. PhD thesis, RuhrUniversity of Bochum, 2004.
+52. T. Wollinger and V. Kovtun. Fast explicit formulae for genus 2 hyperelliptic curves using projective coordinates.
+In Fourth International Conference on Information Technology, pages 893 – 897, 2007.
+53. T. Wollinger, J. Pelzl, and C. Paar. Cantor versus Harley: optimization and analysis of explicit formulae for
+hyperelliptic curve cryptosystems. IEEE Transactions on Computers, pages 861–872, 2005.
+54. M. Yung, Y Dodis, A. Kiayias, and T. Malkin, editors. 9th international conference on theory and practice in
+public-key cryptography, New York, NY, USA, April 24–26, 2006, proceedings, volume 3958 of Lecture Notes in
+Computer Science, Berlin, 2006. Springer.
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+A
+
+Magma scripts for affine genus 2 formulas (and projective genus 1 tripling)
+function AffADD(u1, u0, v1, v0, u1s, u01, u1d, u0d, v1d, v0d, u1ds, u01d);
+uS:=u1+u1d; v0D:=v0-v0d; v1D:=v1-v1d; M1:=u1s-u0-u1ds+u0d; M2:=u01d-u01;
+M3:=u1-u1d; M4:=u0d-u0; t1:=(M2-v0D)*(v1D-M1); t2:=(-v0D-M2)*(v1D+M1);
+//2M
+t3:=(-v0D+M4)*(v1D-M3); t4:=(-v0D-M4)*(v1D+M3);
+//2M
+l2:=t1-t2; l3:=t3-t4; d:=t3+t4-t1-t2-2*(M2-M4)*(M1+M3);
+//1M
+A :=1/(d*l3); B :=d*A; C :=d*B; D :=l2*B;
+//I + 4M
+E :=l3^2 *A; Cs :=C^2; u1dd := 2*D-Cs-uS;
+//1M + 2S
+u0dd := D^2 + C*(v1+v1d) -((u1dd-Cs)*uS+(u1s+u1ds))/2;
+//2M + 1S
+uu1dd :=u1dd^2; uu0dd:=u1dd*u0dd; v1dd := D*(u1-u1dd)+ uu1dd-u0dd-u1s+u0;
+//2M + 1S
+v0dd := D*(u0-u0dd) + uu0dd - u01; v1dd := -(E*v1dd + v1);
+v0dd := -(E*v0dd + v0);
+//3M
+Jac![x^2+u1dd*x+u0dd,v1dd*x+v0dd]; //Check
+return
+u1dd,u0dd,v1dd,v0dd,uu1dd,uu0dd;
+//Total
+end function;
+//I + 17M + 4S
+Table 3. MAGMA code for a general (affine) addition D ′′ = D + D ′ of two degree 2 divisors on Jac(C2 ).
+
+function AffDBL(u1, u0, v1, v0, uu1, uu0, f2, f3);
+vv:=v1^2 ; valpha:=(v1+u1)^2-vv-uu1; M1:=2*v0-2*valpha; M2:=2*v1*(u0+2*uu1);
+//1M + 2S
+M3:=-2*v1; M4:=valpha+2*v0; z1:=f2+2*uu1*u1+2*uu0-vv;
+//1M
+z2:=f3-2*u0+3*uu1; t1:=(M2-z1)*(z2-M1); t2:=(-z1-M2)*(z2+M1);
+//2M
+t3:=(-z1+M4)*(z2-M3); t4:=(-z1-M4)*(z2+M3); l2:=t1-t2; l3:=t3-t4;
+//2M
+d:=t3+t4-t1-t2-2*(M2-M4)*(M1+M3); A :=1/(d*l3);
+//I + 2M
+B :=d*A; C :=d*B; D :=l2*B; E :=l3^2 *A; u1dd := 2*D-C^2 -2*u1;
+//4M + 2S
+u0dd := (D-u1)^2 + 2*C*(v1 +C*u1); uu1dd:=u1dd^2 ;
+uu0dd:=u1dd*u0dd;
+//3M + 2S
+v1dd := D*(u1-u1dd)+uu1dd-uu1-u0dd+u0; v0dd := D*(u0-u0dd)+(uu0dd-uu0);
+//2M
+v1dd := -(E*v1dd + v1);
+v0dd := -(E*v0dd + v0);
+//2M
+Jac![x^2+u1dd*x+u0dd,v1dd*x+v0dd]; //Check
+return
+u1dd,u0dd,v1dd,v0dd,uu1dd,uu0dd;
+//Total
+end function;
+//I + 19M + 6S
+Table 4. MAGMA code for a general (affine) doubling D ′′ = [2]D of a degree 2 divisor on D ∈ Jac(C2 ).
+
+function ProjTRP(X, Y, Z, f0);
+Y2:=Y^2;
+Z2:=f0*Z^2; Y4:=Y2^2; Z4:=Z2^2; Y8:=Y4^2; Z8:=Z4^2;
+//6S
+Y2Z2:=((Y2+Z2)^2-Y4-Z4)/2;
+Y2Z22:=Y2Z2^2;
+Y4Y2Z2:=((Y4+Y2Z2)^2-Y2Z22-Y8);
+//3S
+Y2Z2Z4:=((Y2Z2+Z4)^2-Y2Z22-Z8);
+Y4Y2Z2:=4*Y4Y2Z2;
+Y2Z22:=18*Y2Z22;
+Z8:=27*Z8;
+//1S
+Z3:=27*Z*(Y8+Y4Y2Z2+Y2Z22-Z8);
+Z8:=3*Z8;
+Y2Z2Z4:=36*Y2Z2Z4;
+//1M
+X3:=3*X*(Y8-3*(4*Y4Y2Z2+Y2Z22-3*Y2Z2Z4+Z8)); Y3:=Y*(Y8+27*(Y4Y2Z2-5*Y2Z22+2*Y2Z2Z4-Z8));
+//2M
+return
+X3,Y3,Z3;
+//Total
+end function;
+//3M + 10S
+Table 5. MAGMA code for a general (projective) tripling P ′′ = [3]P of a point P ∈ E/Fq : y 2 = x3 + a0 .
+
+19
+
+20
+
+B
+
+C. Costello and K. Lauter
+
+Magma scripts for projective genus 2 formulas
+
+function ProjADD(U1, U0, V1, V0, Z, U1d, U0d, V1d, V0d, Zd);
+ZZ:=Z*Zd; U1Z:=U1*Zd; U1dZ:=U1d*Z; U1ZS:=U1Z^2; U1dZS:=U1dZ^2; U0Z:=U0*Zd; U0dZ:=U0d*Z;
+//5M + 2S
+V1Z:=V1*Zd; V1dZ:=V1d*Z; M1:=U1ZS-U1dZS+ZZ*(U0dZ-U0Z); M2:=U1dZ*U0dZ-U1Z*U0Z;
+//5M
+M3:=U1Z-U1dZ; M4:=U0dZ-U0Z; z1:=V0*Zd-V0d*Z; z2:=V1Z-V1dZ; t1:=(M2-z1)*(z2-M1);
+//3M
+t2:=(-z1-M2)*(z2+M1); t3:=(-z1+M4)*(z2-M3); t4:=(-z1-M4)*(z2+M3); l2:=t1-t2; l3:=t3-t4;
+//3M
+d:=t3+t4-t1-t2-2*(M2-M4)*(M1+M3); A:=d^2; B:=l3*ZZ;
+//2M + 1S
+C:=l2*B; D:=d*B; E:=l3*B; F:=U1Z*E; G:=ZZ*E; H:=U0Z*G; J:=D*G; K:=Zd*J;
+//8M
+U1dd := 2*C-A-E*(U1Z+U1dZ);
+//1M
+U0dd := l2^2*ZZ + D*(V1Z+V1dZ) -((U1dd-A)*(U1Z+U1dZ)+E*(U1ZS+U1dZS))/2;
+//4M + 1S
+V1dd := U1dd*(U1dd-C) + F*(C-F) +E*(H-U0dd); V0dd :=H*(C- F) + U0dd*(U1dd -C);
+//5M
+V1dd := -(V1dd*ZZ + K*V1); V0dd := -(V0dd + K*V0); U1dd:=U1dd*D*ZZ; U0dd:=U0dd*D; Zdd:=ZZ*J;
+//7M
+return
+U1dd,U0dd,V1dd,V0dd,Zdd;
+//Total
+end function;
+//43M + 4S
+Table 6. MAGMA code for a general addition D ′′ = D ⊕ D ′ of two degree 2 divisors on Jac(C2 ) in projective coordinates.
+
+function ProjDBL(U1, U0, V1, V0, Z, f2, f3);
+UU:=U1*U0; U1S:=U1^2; ZS:=Z^2; V0Z:=V0*Z; U0Z:=U0*Z; V1S:=V1^2; UV:=(V1+U1)^2-V1S-U1S; //3M + 4S
+M1:=2*V0Z-2*UV; M2:=2*V1*(U0Z+2*U1S); M3:=-2*V1; M4:=UV+2*V0Z;
+//1M
+z1:=Z*(f2*ZS-V1S)+2*U1*(U1S+U0Z); z2:=f3*ZS-2*U0Z+3*U1S;
+//2M
+t1:=(M2-z1)*(z2-M1); t2:=(-z1-M2)*(z2+M1); t3:=(-z1+M4)*(z2-M3); t4:=(-z1-M4)*(z2+M3);
+//4M
+l2:=t1-t2; l3:=t3-t4; d:=t3+t4-t1-t2-2*(M2-M4)*(M1+M3);
+//1M
+A:=l2^2; B:=l3^2; C:=((l2+l3)^2-A-B)/2; D:=B*Z; E:=B*U1; F:=d^2; G:=F*Z;
+//3M + 4S
+H:=((d+l3)^2-F-B)/2; J:=H*Z; K:=V1*J; L:=U0Z*B; U1dd := 2*C-2*E-G;
+//3M + 1S
+U0dd := A+U1*(E-2*C +2*G) + 2*K; V1dd := (C-E-U1dd)*(E-U1dd)+B*(L -U0dd);
+//3M
+V0dd := L*(C-E) +(U1dd-C)*U0dd; V1dd := -(V1dd*Z + K*D); V0dd := -(V0dd + V0Z*H*D);
+//6M
+M:=J*Z; U1dd:=U1dd*M; U0dd:=U0dd*J; Zdd:=M*D;
+//4M
+return
+U1dd,U0dd,V1dd,V0dd,Zdd;
+//Total
+end function;
+//30M + 9S
+Table 7. MAGMA code for a general doubling D ′′ = [2]D of a degree 2 divisor on Jac(C2 ) in projective coordinates.
+
+function ProjMIXED(U1, U0, V1, V0, Z, u1, u0, v1, v0);
+u1Z:=u1*Z; U1S:=U1^2; u1ZS:=u1Z^2; u0Z:=u0*Z; M1:=u1ZS-U1S+Z*(U0-u0Z);
+//3M + 2S
+M2:=U1*U0-u1Z*u0Z; M3:=u1Z-U1; M4:=U0-u0Z; v1Z:=v1*Z; z1:=v0*Z-V0; z2:=v1Z-V1;
+//4M
+t1:=(M2-z1)*(z2-M1); t2:=(-z1-M2)*(z2+M1); t3:=(-z1+M4)*(z2-M3); t4:=(-z1-M4)*(z2+M3);
+//4M
+l2:=t1-t2; l3:=t3-t4; d:=t3+t4-t1-t2-2*(M2-M4)*(M1+M3);
+//1M
+A:=d^2; B:=l3*Z; C:=d*B; D:=l2*B; E:=l3*B; F:=E*u1Z; G:=B^2; H:=u0Z*G; J:=C*G;
+//7M + 2S
+Zdd:=Z*J; U1dd:= 2*D-A-E*(u1Z+U1);
+//2M
+U0dd := l2^2*Z + C*(v1Z+V1) -((U1dd-A)*(u1Z+U1)+E*(u1ZS+U1S))/2;
+//4M + 1S
+V1dd := F*(D-F) +U1dd*(U1dd-D) +E*(H-U0dd); V0dd := H*(D - F) + (U1dd-D)*U0dd ;
+//5M
+V1dd := -(Z*V1dd + Zdd*v1); V0dd := -(V0dd + Zdd*v0); U1dd:=U1dd*Z*C; U0dd:=U0dd*C;
+//6M
+return
+U1dd,U0dd,V1dd,V0dd,Zdd;
+//Total
+end function;
+//36M + 5S
+Table 8. MAGMA code for a mixed addition D ′′ = D + D ′ of two degree 2 divisors on Jac(C2 ), where D is in projective
+coordinates and D ′ is in affine coordinates.
+
+Group Law Computations on Jacobians of Hyperelliptic Curves
+
+C
+
+21
+
+Magma scripts for arbitrary genus composition
+clear; q:=NextPrime(2^30); g:=6;
+/* Input prime characteristic and genus */
+Fq:=GF(q); Poly<x>:=PolynomialRing(Fq);
+coeffs:=[];
+for i:=1 to 2*g do
+coeffs:=Append(coeffs,Random(0,q));
+end for;
+f:=x^(2*g+1);
+/* Create Random Hyperelliptic Curve */
+for i:=1 to 2*g do
+f+:=coeffs[i]*x^(i-1);
+end for;
+C:=HyperellipticCurve(f); g:=Genus(C); Jac:=Jacobian(C); Inf:=PointsAtInfinity(C)[1];
+PointsVec1:=[]; PointsVec2:=[];
+/* Create full degree divisors */
+for i:=1 to g do
+PointsVec1:=Append(PointsVec1,Random(C)); PointsVec2:=Append(PointsVec2,Random(C));
+end for;
+J1:=Jac![[PointsVec1[i]: i in [1..g]],[Inf: i in [1..g]]];
+J2:=Jac![[PointsVec2[i]: i in [1..g]],[Inf: i in [1..g]]];
+MumfordTuple1:=[]; MumfordTuple2:=[];
+/* Put 2g Mumford coordinates into lists */
+for i:=1 to g do
+MumfordTuple1:=Append(MumfordTuple1, Coefficients(J1[1])[g+1-i]);
+MumfordTuple2:=Append(MumfordTuple2, Coefficients(J2[1])[g+1-i]);
+end for;
+for i:=1 to g do
+MumfordTuple1:=Append(MumfordTuple1, Coefficients(J1[2])[g+1-i]);
+MumfordTuple2:=Append(MumfordTuple2, Coefficients(J2[2])[g+1-i]);
+end for;
+U1:=ZeroMatrix(Fq,g,g); U2:=ZeroMatrix(Fq,g,g);
+for i:=1 to g do
+U1[g+1-i,1]:=-MumfordTuple1[i]; U2[g+1-i,1]:=-MumfordTuple2[i];
+end for;
+for j:=2 to g do
+U1[1,j]:=U1[g,j-1]*U1[1,1]; U2[1,j]:=U2[g,j-1]*U2[1,1];
+for i:=2 to g do
+U1[i,j]:=U1[i,j]+U1[g,j-1]*U1[i,1]+U1[i-1,j-1];
+U2[i,j]:=U2[i,j]+U2[g,j-1]*U2[i,1]+U2[i-1,j-1];
+end for;
+end for;
+M:=U1-U2; z:=[];
+/* Construct right hand side vector z */
+for i:=1 to g do
+z:=Append(z,MumfordTuple1[2*g+1-i]-MumfordTuple2[2*g+1-i]);
+end for;
+/* Magmas solve needs transposes */
+M:=Transpose(M);z:=Vector(Fq,z); sols:=Solution(M,z); solVec:=ZeroMatrix(Fq,g,1);
+for i:=1 to g do
+/* Solve linear system for li (i > g − 1) */
+solVec[i,1]:=sols[i];
+end for;
+solVec2:=U1*solVec;
+/* Get remaining li */
+for i:=1 to g do
+solVec2[g+1-i][1]:= MumfordTuple1[g+i]-solVec2[g+1-i][1];
+end for;
+Y:=Poly!0;
+for i:=1 to g do
+Y+:=solVec2[i][1]*x^(i-1); Y+:=solVec[i][1]*x^(g+i-1);
+end for;
+IsDivisibleBy(Y^2-f,J1[1]*J2[1]); /* Construct polynomial and check intersection */
+Table 9. Script for composition between two unique divisors (Algorithm 1) on arbitrary genus curves.
+
+Once the characteristic q and the genus g have been specified, the algorithms above and below
+generate an arbitrary imaginary hyperelliptic curve over Fq of genus g, and respectively perform the
+geometric composition between two unique divisors (addition) and a divisor and itself (doubling).
+
+22
+
+C. Costello and K. Lauter
+
+clear; q:=NextPrime(2^30); g:=6;
+/* Input prime characteristic and genus */
+Fq:=GF(q); Poly<x>:=PolynomialRing(Fq);
+coeffs:=[];
+for i:=1 to 2*g do
+coeffs:=Append(coeffs,Random(0,q));
+end for;
+f:=x^(2*g+1);
+/* Create Random Hyperelliptic Curve */
+for i:=1 to 2*g do
+f+:=coeffs[i]*x^(i-1);
+end for;
+C:=HyperellipticCurve(f); g:=Genus(C); Jac:=Jacobian(C); Inf:=PointsAtInfinity(C)[1];
+PointsVec:=[];
+/* Create full degree divisor */
+for i:=1 to g do
+PointsVec:=Append(PointsVec,Random(C));
+end for;
+J1:=Jac![[PointsVec[i]: i in [1..g]],[Inf: i in [1..g]]];
+MumfordTuple:=[];
+/* Put 2g Mumford coordinates into list */
+for i:=1 to g do
+MumfordTuple:=Append(MumfordTuple, Coefficients(J1[1])[g+1-i]);
+end for;
+for i:=1 to g do
+MumfordTuple:=Append(MumfordTuple, Coefficients(J1[2])[g+1-i]);
+end for;
+/* Initialize */
+U:=ZeroMatrix(Fq,g,g); M:=ZeroMatrix(Fq,g,g); v:=ZeroMatrix(Fq,g-1,1); z:=ZeroMatrix(Fq,g,1);
+for i:=1 to g do
+U[g+1-i,1]:=-MumfordTuple[i];
+end for;
+/* Form U (same as addition) */
+for j:=2 to g do
+U[1,j]:=U[g,j-1]*U[1,1];
+for i:=2 to g do
+U[i,j]:=U[g,j-1]*U[i,1]; U[i,j]+:=U[i-1,j-1];
+end for;
+end for;
+uExtra:=U[g,1]*U[g,g]+U[g-1,g];
+/* Extra element required for M */
+for i:=1 to g do
+M[g+1-i,1]:=MumfordTuple[i+g];
+end for;
+/* Construct matrix M */
+for j:=2 to g do
+M[1,j]:=M[1,j]+U[g,j-1]*M[1,1]+M[g,j-1]*U[1,1];
+for i:=2 to g do
+M[i,j]:=M[i,j]+U[g,j-1]*M[i,1]+M[i-1,j-1]+M[g,j-1]*U[i,1];
+end for;
+end for;
+for i:=1 to g-1 do
+/* Construct right hand side vector z */
+z[g+1-i,1]+:=2*U[g,1]*U[g+1-i,1] + U[g-i,1]+U[g,i+1] + coeffs[2*g+1-i];
+for j:=1 to i do
+z[g-i,1]+:=coeffs[2*g-i+j]*U[g,j]; v[i,1]+:=-M[g+1-j,1]*M[g-i+j,1];
+end for;
+end for;
+z[1,1]+:=2*U[g,1]*U[1,1] + coeffs[g+1]; z[g-1,1]+:=v[1,1];
+for i:=3 to g do
+for j:=2 to i-1 do
+z[g+1-i,1]+:=v[i-j,1]*U[g,j-1];
+end for;
+z[g+1-i,1]+:=v[i-1,1];
+end for;
+z[1,1]+:=uExtra;
+for i:=1 to g do
+z[i,1]/:=2;
+end for;
+M:=Transpose(M); z:=Vector(Fq,Transpose(z));
+/* Magmas solve needs transposes */
+sols:=Solution(M,z); solVec:=ZeroMatrix(Fq,g,1);
+/* Solve linear system for bi (i > g − 1) */
+for i:=1 to g do
+solVec[i,1]:=sols[i];
+end for;
+solVec2:=-U*solVec;
+/* Get remaining bi */
+for i:=1 to g do
+solVec2[i,1]:=MumfordTuple[2*g+1-i]+solVec2[i,1];
+end for;
+Y:=Poly!0;
+for i:=1 to g do
+Y+:=solVec2[i][1]*x^(i-1); Y+:=solVec[i][1]*x^(g+i-1);
+end for;
+IsDivisibleBy(Y^2-f,J1[1]^2);
+/* Construct polynomial and check intersection */
+Table 10. Script for geometric composition (Algorithm 2) between a divisor and itself on arbitrary genus curves.
+
+

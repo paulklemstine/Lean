@@ -1,0 +1,1596 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/bYbnqauGS39LIpSR/ma/2462c6w</id>
+  <title>arXiv Query: search_query=abs:"satellite" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:41Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22satellite%22+AND+abs:factoring&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1733</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2110.04880v1</id>
+    <title>Human Factors Considerations in Satellite Operation's Human-Computer Interaction Technologies: A Review of Current Applications and Theory</title>
+    <updated>2021-10-10T19:02:19Z</updated>
+    <link href="https://arxiv.org/abs/2110.04880v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.04880v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellite operations are a subset of remote operations that draw similarities with remotely piloted aircraft (RPA) and uncrewed aerial vehicle (UAV) operations. Increased research into boredom, complacency, habituation, and vigilance as they relate to satellite operations is required due to a lack of prevalence in the literature. Circadian rhythms, crew resource management, and shift work dynamics may exacerbate complacency-driven automation bias and social loafing errors in satellite operations. This overview of theory and applications aims to specifically focus on satellite operations literature within human factors research to identify areas requiring an expansion of knowledge. The human-in-the-loop commonality enables human factors lessons to be passed to satellite operations from unrelated sectors to mitigate catastrophic human error potentially. As such, this literature review details the need for increased research in satellite operations human factors.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-10T19:02:19Z</published>
+    <arxiv:comment>20 Pages</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <arxiv:journal_ref>International Journal of Managing Information Technology. 13 (2021) 23-43</arxiv:journal_ref>
+    <author>
+      <name>David G. I. Heinrich</name>
+    </author>
+    <author>
+      <name>Ian McAndrew</name>
+    </author>
+    <author>
+      <name>Jeremy Pretty</name>
+    </author>
+    <arxiv:doi>10.5121/ijmit.2021.13303</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5121/ijmit.2021.13303" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.06424v1</id>
+    <title>Satellite Streak Brightness Variation with Orbit Height</title>
+    <updated>2025-05-09T20:44:00Z</updated>
+    <link href="https://arxiv.org/abs/2505.06424v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.06424v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the apparent optical brightness of satellite streaks in ground-based observatory cameras as the orbit height is varied. This is done via simulations. Several factors are in play: the range to the satellite, satellite size and geometry, the diameter of the telescope aperture, and the angular velocity of the satellite image as it streaks across the camera's focal plane. For a large telescope aperture, a satellite in a lower orbit becomes out-of-focus in a camera focused at infinity. In the case of Rubin Observatory's LSSTCam, we find that these factors nearly cancel as a large satellite is moved from an orbit at 550 km down to 350 km.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-09T20:44:00Z</published>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Adam Snyder</name>
+    </author>
+    <author>
+      <name>J. Anthony Tyson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.04703v1</id>
+    <title>Lopsided Satellite Distributions around Isolated Host Galaxies</title>
+    <updated>2020-07-09T10:56:08Z</updated>
+    <link href="https://arxiv.org/abs/2007.04703v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.04703v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the spatial distribution of the satellites of bright, isolated host galaxies. In agreement with previous studies, we find that, on average, the satellites of red hosts are found preferentially close to their hosts' major axes, while the satellites of blue hosts are distributed isotropically. We compute the pairwise clustering of the satellites and find a strong tendency for pairs of satellites to be located on the same side of their host, resulting in lopsided distributions. The signal is most pronounced for the satellites of blue hosts, where the number of pairs on the same side of their host exceeds the number of pairs on opposite sides of their by a factor of 1.8 +/- 0.1. For the satellites of red hosts, the number of pairs on the same side of their host exceeds the number of pairs on opposite sides of their host by a factor of 1.08 +/- 0.03. Satellites that are far from their hosts (r_p &gt; 300 kpc) show a strong preference for being located on the same side of their hosts; satellites that are near to their hosts (r_p &lt; 100 kpc) show a weak preference for being located on opposite sides of their hosts. While lopsided distributions have been found previously for the satellites of bright pairs of galaxies, ours is the first study to find lopsided distributions for the satellites of isolated bright galaxies.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-09T10:56:08Z</published>
+    <arxiv:comment>9 pages, 5 figures, accepted for publication in ApJ Letters</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Tereasa G. Brainerd</name>
+    </author>
+    <author>
+      <name>Adam Samuels</name>
+    </author>
+    <arxiv:doi>10.3847/2041-8213/aba194</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3847/2041-8213/aba194" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1701.04705v1</id>
+    <title>In-flight calibration of NOAA POES proton detectors: Derivation of the MEPED correction factors</title>
+    <updated>2017-01-17T14:44:15Z</updated>
+    <link href="https://arxiv.org/abs/1701.04705v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1701.04705v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The MEPED instruments on board the NOAA POES andMetOp satellites have been continuously measuring energetic particles in the magnetosphere since 1978. However, degradation of the proton detectors over time leads to an increase in the energy thresholds of the instrument and imposes great challenges to studies of long-term variability in the near-Earth space environment as well as a general quantification of the proton fluxes. By comparing monthly mean accumulated integral flux from a new and an old satellite at the same magnetic local time (MLT) and time period, we estimate the change in energy thresholds. The first 12 monthly energy spectra of the new satellite are used as a reference, and the derived monthly correction factors over a year for an old satellite show a small spread, indicating a robust calibration procedure. The method enables us to determine for the first time the correction factors also for the highest-energy channels of the proton detector. In addition, we make use of the newest satellite in orbit (MetOp-01) to find correction factors for 2013 for the NOAA 17 and MetOp-02 satellites. Without taking into account the level of degradation, the proton data from one satellite cannot be used quantitatively for more than 2 to 3 years after launch. As the electron detectors are vulnerable to contamination from energetic protons, the corrected proton measurements will be of value for electron flux measurements too. Thus, the correction factors ensure the correctness of both the proton and electron measurements.</summary>
+    <category term="physics.space-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-01-17T14:44:15Z</published>
+    <arxiv:primary_category term="physics.space-ph"/>
+    <author>
+      <name>Marit Irene Sandanger</name>
+    </author>
+    <author>
+      <name>Linn-Kristine Glesnes Ødegaard</name>
+    </author>
+    <author>
+      <name>Hilde Nesse Tyssøy</name>
+    </author>
+    <author>
+      <name>Johan Stadsnes</name>
+    </author>
+    <author>
+      <name>Finn Søraas</name>
+    </author>
+    <author>
+      <name>Kjellmar Oksavik</name>
+    </author>
+    <author>
+      <name>Kjell Aarsnes</name>
+    </author>
+    <arxiv:doi>10.1002/2015JA021388</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/2015JA021388" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.00045v2</id>
+    <title>The Distribution of Satellite Galaxies in the TNG100 Simulation</title>
+    <updated>2022-07-20T18:18:39Z</updated>
+    <link href="https://arxiv.org/abs/2206.00045v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.00045v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the spatial distribution of the satellites of isolated host galaxies in the TNG100 simulation. In agreement with a previous, similar analysis of the Illustris-1 simulation, the satellites are typically poor tracers of the mean host mass density. Unlike the Illustris-1 satellites, here the spatial distribution of the complete satellite sample is well-fitted by an NFW profile; however, the concentration is a factor of ~2 lower than that of the mean host mass density. The spatial distribution of the brightest 50% and faintest 50% of the satellites are also well-fitted by NFW profiles, but the concentrations differ by a factor of ~2. When the sample is subdivided by host color and luminosity, the number density profiles for blue satellites generally fall below the mean host mass density profiles while the number density profiles for red satellites generally rise above the mean host mass density profiles. These opposite, systematic offsets combine to yield a moderately good agreement between the mean mass density profile of the brightest blue hosts and the corresponding number density profile of their satellites. Lastly, we subdivide the satellites according to the redshifts at which they joined their hosts. From this, we find that neither the oldest one third of the satellites nor the youngest one third of the satellites faithfully trace the mean host mass density.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-31T18:25:03Z</published>
+    <arxiv:comment>17 pages, 9 figures ; published in ApJ</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <arxiv:journal_ref>ApJ 933 161 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Bryanne McDonough</name>
+    </author>
+    <author>
+      <name>Tereasa Brainerd</name>
+    </author>
+    <arxiv:doi>10.3847/1538-4357/ac752d</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3847/1538-4357/ac752d" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1804.09498v2</id>
+    <title>Fault Detection and Isolation of Satellite Gyroscopes Using Relative Positions in Formation Flying</title>
+    <updated>2018-04-30T21:27:52Z</updated>
+    <link href="https://arxiv.org/abs/1804.09498v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1804.09498v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A fault detection and isolation method for satellite rate gyros is proposed based on using the satellite-to-satellite measurements such as relative position beside orbit parameters of the primary satellite. By finding a constant of motion, it is shown that the dynamic states in a relative motion are restricted in such a way that the angular velocity vector of primary satellite lies on a quadratic surface. This constant of motion is then used to detect the gyroscope faults and estimate the corresponding scale factor or bias values of the rate gyros of the primary satellite. The proposed algorithm works even in time variant fault situations as well, and does not impose any additional subsystems to formation flying satellites. Monte-Carlo simulations are used to ensure that the algorithm retains its performance in the presence of uncertainties. In presence of only measurement noise, the isolation process performs well by selecting a proper threshold. However, the isolation performance degrades as the scale factor approaches unity or bias approaches zero. Finally, the effect of orbital perturbations on isolation process is investigated by including the effect of zonal harmonics as well as drag and without loss of generality, it is shown that the perturbation effects are negligible.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-04-25T12:05:00Z</published>
+    <arxiv:comment>34 pages, 19 figures, accepted for publication in Aerospace Science and Technology</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Amir Shakouri</name>
+    </author>
+    <author>
+      <name>Nima Assadian</name>
+    </author>
+    <arxiv:doi>10.1016/j.ast.2018.04.039</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ast.2018.04.039" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1603.08019v1</id>
+    <title>Achieving QoS for TCP Traffic in Satellite Networks with Differentiated Services</title>
+    <updated>2016-03-25T20:16:23Z</updated>
+    <link href="https://arxiv.org/abs/1603.08019v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1603.08019v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellite networks play an indispensable role in providing global Internet access and electronic connectivity. To achieve such a global communications, provisioning of quality of service (QoS) within the advanced satellite systems is the main requirement. One of the key mechanisms of implementing the quality of service is traffic management. Traffic management becomes a crucial factor in the case of satellite network because of the limited availability of their resources. Currently, Internet Protocol (IP) only has minimal traffic management capabilities and provides best effort services. In this paper, we present broadband satellite network QoS model and simulated performance results. In particular, we discuss the TCP flow aggregates performance for their good behavior in the presence of competing UDP flow aggregates in the same assured forwarding. We identify several factors that affect the performance in the mixed environments and quantify their effects using a full factorial design of experiment methodology.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-25T20:16:23Z</published>
+    <arxiv:primary_category term="cs.NI"/>
+    <arxiv:journal_ref>Space Communications, Volume 17, Number 1-3, 2001, pp. 125-136</arxiv:journal_ref>
+    <author>
+      <name>Arjan Durresi</name>
+    </author>
+    <author>
+      <name>Sastri Kota</name>
+    </author>
+    <author>
+      <name>Mukul Goyal</name>
+    </author>
+    <author>
+      <name>Raj Jain</name>
+    </author>
+    <author>
+      <name>Venkata Bharani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.00010v2</id>
+    <title>Radialization of satellite orbits in galaxy mergers</title>
+    <updated>2022-02-24T10:30:30Z</updated>
+    <link href="https://arxiv.org/abs/2108.00010v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.00010v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the orbital evolution of satellites in galaxy mergers, focusing on the evolution of eccentricity. Using a large suite of N-body simulations, we study the phenomenon of satellite orbital radialization -- a profound increase in the eccentricity of its orbit as it decays under dynamical friction. While radialization is detected in a variety of different setups, it is most efficient in the cases of high satellite mass, not very steep host density profiles, and high initial eccentricity. To understand the origin of this phenomenon, we run additional simulations with various physical factors selectively turned off: satellite mass loss, reflex motion and distortion of the host, etc. We find that all these factors are important for radialization, since it does not occur for point-mass satellites or when the host potential is replaced with an unperturbed initial profile. The analysis of forces and torques acting on both galaxies confirms the major role of self-gravity of both host and satellite in the reduction of orbital angular momentum. The classical Chandrasekhar dynamical friction formula, which accounts only for the forces between the host and the satellite, but not for internal distortions of both galaxies, does not match the evolution of eccentricity observed in N-body simulations.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-30T18:00:00Z</published>
+    <arxiv:comment>matches published version</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <arxiv:journal_ref>ApJ, 926, 203 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Eugene Vasiliev</name>
+    </author>
+    <author>
+      <name>Vasily Belokurov</name>
+    </author>
+    <author>
+      <name>Wyn Evans</name>
+    </author>
+    <arxiv:doi>10.3847/1538-4357/ac4fbc</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3847/1538-4357/ac4fbc" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.03842v2</id>
+    <title>Coverage Biases in High-Resolution Satellite Imagery</title>
+    <updated>2025-05-28T10:42:53Z</updated>
+    <link href="https://arxiv.org/abs/2505.03842v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.03842v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellite imagery is increasingly used to complement traditional data collection approaches such as surveys and censuses across scientific disciplines. However, we ask: Do all places on earth benefit equally from this new wealth of information? In this study, we investigate coverage bias of major satellite constellations that provide optical satellite imagery with a ground sampling distance below 10 meters, evaluating both the future on-demand tasking opportunities as well as the availability of historic images across the globe. Specifically, forward-looking, we estimate how often different places are revisited during a window of 30 days based on the satellites' orbital paths, thus investigating potential coverage biases caused by physical factors. We find that locations farther away from the equator are generally revisited more frequently by the constellations under study. Backward-looking, we show that historic satellite image availability -- based on metadata collected from major satellite imagery providers -- is influenced by socio-economic factors on the ground: less developed, less populated places have less satellite images available. Furthermore, in three small case studies on recent conflict regions in this world, namely Gaza, Sudan and Ukraine, we show that also geopolitical events play an important role in satellite image availability, hinting at underlying business model decisions. These insights lay bare that the digital dividend yielded by satellite imagery is not equally distributed across our planet.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.EP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-05T07:30:01Z</published>
+    <arxiv:comment>To appear in the proceedings of the ICWSM'25 Workshop on Data for the Wellbeing of Most Vulnerable (DWMV). Please cite accordingly</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Vadim Musienko</name>
+    </author>
+    <author>
+      <name>Axel Jacquet</name>
+    </author>
+    <author>
+      <name>Ingmar Weber</name>
+    </author>
+    <author>
+      <name>Till Koebe</name>
+    </author>
+    <arxiv:doi>10.36190/2025.06</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.36190/2025.06" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.08721v1</id>
+    <title>Feasibility-First Satellite Integration in Robust Portfolio Architectures</title>
+    <updated>2026-01-13T16:45:12Z</updated>
+    <link href="https://arxiv.org/abs/2601.08721v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.08721v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The integration of thematic satellite allocations into core-satellite portfolio architectures is commonly approached using factor exposures, discretionary convictions, or backtested performance, with feasibility assessed primarily through liquidity screens or market-impact considerations. While such approaches may be appropriate at institutional scale, they are ill-suited to small portfolios and robustness-oriented allocation frameworks, where dominant constraints arise not from return predictability or trading capacity, but from fixed costs, irreversibility risk, and governance complexity. This paper develops a feasibility-first, non-predictive framework for satellite integration that is explicitly scale-aware. We formalize four nested feasibility layers (physical, economic, structural, and epistemic) that jointly determine whether a satellite allocation is admissible. Physical feasibility ensures implementability under concave market-impact laws; economic feasibility suppresses noise-dominated reallocations via cost-dominance threshold constraints; structural feasibility bounds satellite size through an explicit optionality budget defined by tolerable loss under thesis failure; and epistemic feasibility limits satellite breadth and dispersion through an entropy-based complexity budget. Within this hierarchy, structural optionality is identified as the primary design principle for thematic satellites, with the remaining layers acting as robustness lenses rather than optimization criteria. The framework yields closed-form feasibility bounds on satellite size, turnover, and breadth without reliance on return forecasts, factor premia, or backtested performance, providing a disciplined basis for integrating thematic satellites into small, robustness-oriented portfolios.</summary>
+    <category term="q-fin.PM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="econ.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-13T16:45:12Z</published>
+    <arxiv:comment>21 pages, 1 figures, 3 tables, conceptual and methodological paper</arxiv:comment>
+    <arxiv:primary_category term="q-fin.PM"/>
+    <author>
+      <name>Roberto Garrone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.06657v1</id>
+    <title>Starlink Generation 2 Mini Satellites: Photometric Characterization</title>
+    <updated>2023-06-11T12:04:18Z</updated>
+    <link href="https://arxiv.org/abs/2306.06657v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.06657v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Starlink Generation 2 Mini satellites are fainter than Gen 1 spacecraft despite their larger size. The mean of apparent magnitudes for satellites in brightness mitigation mode is 7.06 +/- 0.10. When these magnitudes are adjusted to a uniform distance of 1,000 km that mean is 7.87 +/- 0.09. The brightness mitigation mode reduces distance-adjusted satellite luminosity by a factor of 12 relative to spacecraft that are not mitigated.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-11T12:04:18Z</published>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Anthony Mallama</name>
+    </author>
+    <author>
+      <name>Richard E. Cole</name>
+    </author>
+    <author>
+      <name>Scott Harrington</name>
+    </author>
+    <author>
+      <name>Andreas Hornig</name>
+    </author>
+    <author>
+      <name>Jay Respler</name>
+    </author>
+    <author>
+      <name>Aaron Worley</name>
+    </author>
+    <author>
+      <name>Ron Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.10465v1</id>
+    <title>Water Quality of Lake Mjøsa through Satellite Images: A Preliminary Study</title>
+    <updated>2021-10-20T10:07:27Z</updated>
+    <link href="https://arxiv.org/abs/2110.10465v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.10465v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Since around 2010, the water quality in lake Mjøsa has begun to decline after an earlier successful effort to improve the water quality (\textit{Mjøsaksjonen}). In this study, we investigate the possibility of using satellite imagery to monitor the water quality of lake Mjøsa, and also compare the use of such an approach to current methods for monitoring the lake. Using satellite images for remote sensing has layers of complexity that were not apparent to us at first, and this paper summarizes some of our findings by discussing factors of water quality, state of the art for use of satellite imagery for water quality and some of our own initial results. While our results where not too accurate for this preliminary study, it gives an introduction to the field and some of the methods that may bring better results for further research. Satellite images can play an important role in monitoring changing waters. The field is in development and many factors of water quality may be analysed with increasing levels of accuracy.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-20T10:07:27Z</published>
+    <arxiv:comment>16 pages (incl. 2 pages for reviews), 5 figures. Manuscript submitted to NIKT 2021 (Rejected). Reviews can be read in the last two pages</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Anders Gjesdal Oliversen</name>
+    </author>
+    <author>
+      <name>Hilda Deborah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.01952v1</id>
+    <title>Scheduling for Ground-Assisted Federated Learning in LEO Satellite Constellations</title>
+    <updated>2022-06-04T09:33:22Z</updated>
+    <link href="https://arxiv.org/abs/2206.01952v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.01952v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Distributed training of machine learning models directly on satellites in low Earth orbit (LEO) is considered. Based on a federated learning (FL) algorithm specifically targeted at the unique challenges of the satellite scenario, we design a scheduler that exploits the predictability of visiting times between ground stations (GS) and satellites to reduce model staleness. Numerical experiments show that this can improve the convergence speed by a factor three.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-04T09:33:22Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Nasrin Razmi</name>
+    </author>
+    <author>
+      <name>Bho Matthiesen</name>
+    </author>
+    <author>
+      <name>Armin Dekorsy</name>
+    </author>
+    <author>
+      <name>Petar Popovski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.18040v1</id>
+    <title>A New Rarity Assessment of the `Disk of Satellites': the Milky Way System Is the Exception Rather than the Rule in the $Λ$CDM Cosmology</title>
+    <updated>2024-11-27T04:22:54Z</updated>
+    <link href="https://arxiv.org/abs/2411.18040v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.18040v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The majority of satellite galaxies around the Milky Way (MW) show disk-like distributions (the disk of satellites; DoS), which is a small-scale problem of the $Λ$CDM cosmology. The conventional definition of the MW-like DoS is a satellite system with a minor-to-major axis ratio ($c$/$a$) lower than the MW's $c$/$a$ value of 0.181. Here we question the validity of the $c$/$a$-based DoS rarity assessment and propose an alternative approach. How satellites are placed around a galaxy is dictated mainly by two factors: the distributions of satellites' orbital poles and distances from the host. Based on this premise, we construct the `satellite distribution generator' code and generate 10$^5$ `spatially and kinematically analogous systems (SKASs)' sharing these two factors. The SKAS can disclose the intrinsic, underlying $c$/$a$ probability distribution function (PDF), from which a present-day $c$/$a$ value is fortuitously determined. We find that the $c$/$a$ PDF of the MW DoS defined by 11 classical satellites is quite broad ($σ_{c/a}$$\sim$0.105), implying that a simple present-day $c$/$a$ value, combined with its highly time-variable nature, cannot fully represent the degree of flatness. Moreover, based on the intrinsic $c$/$a$ PDF, we re-evaluate the rarity of the MW DoS by comparing it with IllustrisTNG50-1 host-satellite systems and find that even with the new measure, the MW DoS remains rare (0.00$\sim$3.40%). We show that the reason behind the rareness is that both orbital poles and distances of the 11 MW satellites are far more plane-friendly than those of simulated host-satellite systems, challenging the current structure and galaxy formation model.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-27T04:22:54Z</published>
+    <arxiv:comment>23 pages, 15 figures</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Chanoul Seo</name>
+    </author>
+    <author>
+      <name>Suk-Jin Yoon</name>
+    </author>
+    <author>
+      <name>Sanjaya Paudel</name>
+    </author>
+    <author>
+      <name>Sung-Ho An</name>
+    </author>
+    <author>
+      <name>Jun-Sung Moon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1408.2023v1</id>
+    <title>Capacity and Error Rate Analysis of MIMO Satellite Communication Systems in Fading Scenarios</title>
+    <updated>2014-08-09T05:09:31Z</updated>
+    <link href="https://arxiv.org/abs/1408.2023v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.2023v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we investigated the capacity and bit error rate (BER) performance of Multiple Input Multiple Output (MIMO) satellite systems with single and multiple dual polarized satellites in geostationary orbit and a mobile ground receiving station with multiple antennas. We evaluated the effects of both system parameters such as number of satellites, number of receive antennas, and SNR and environmental factors including atmospheric signal attenuations and signal phase disturbances on the overall system performance using both analytical and spatial models for MIMO satellite systems.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-08-09T05:09:31Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Ramoni Adeogun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1504.02777v3</id>
+    <title>The abundance of satellites depends strongly on the morphology of the host galaxy</title>
+    <updated>2015-09-23T13:04:31Z</updated>
+    <link href="https://arxiv.org/abs/1504.02777v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1504.02777v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Using the spectroscopic catalogue of the Sloan Digital Survey Data Release 10, we have explored the abundance of satellites around a sample of 254 massive (10^11&lt; M_star &lt; 2 x 10^11 M_sun) local (z &lt; 0.025) galaxies. We have divided our sample into four morphological groups (E, S0, Sa, Sb/c). We find that the number of satellites with M_star &gt; 10^9 M_sun and R &lt; 300 kpc depends drastically on the morphology of the central galaxy. The average number of satellites per galaxy host (N_Sat/N_Host) down to a mass ratio of 1:100 is 4.5 +/- 0.3 for E hosts, 2.6 +/- 0.2 for S0, 1.5 +/- 0.1 for Sa and 1.2 +/- 0.2 for Sb/c. The amount of stellar mass enclosed by the satellites around massive E-type galaxies is a factor of 2, 4 and 5 larger than the mass in the satellites of S0, Sa and Sb/c types, respectively. If these satellites would eventually infall into the host galaxies, for all the morphological types, the merger channel will be largely dominated by satellites with a mass ratio satellite-host $μ$ &gt; 0.1. The fact that massive elliptical galaxies have a significant larger number of satellites than massive spirals could point out that elliptical galaxies inhabit heavier dark matter haloes than equally massive galaxies with later morphological types. If this hypothesis is correct, the dark matter haloes of late-type spiral galaxies are a factor ~2-3 more efficient on producing galaxies with the same stellar mass than those dark matter haloes of early-type galaxies.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-04-10T20:00:30Z</published>
+    <arxiv:comment>Version matching the published version. 15 pages, 6 figures, 3 tables. Comments are welcome. arXiv admin note: text overlap with arXiv:1312.4533</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Pablo Ruiz</name>
+    </author>
+    <author>
+      <name>Ignacio Trujillo</name>
+    </author>
+    <author>
+      <name>Esther Mármol-Queraltó</name>
+    </author>
+    <arxiv:doi>10.1093/mnras/stv2030</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/stv2030" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math-ph/0112060v2</id>
+    <title>Connection between type B (or C) and F factorizations and construction of algebras</title>
+    <updated>2002-02-19T14:36:24Z</updated>
+    <link href="https://arxiv.org/abs/math-ph/0112060v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math-ph/0112060v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In a recent paper (Del Sol Mesa A and Quesne C 2000 J. Phys. A: Math. Gen. 33 4059), we started a systematic study of the connections among different factorization types, suggested by Infeld and Hull, and of their consequences for the construction of algebras. We devised a general procedure for constructing satellite algebras for all the Hamiltonians admitting a type E factorization by using the relationship between type A and E factorizations. Here we complete our analysis by showing that for Hamiltonians admitting a type F factorization, a similar method, starting from either type B or type C ones, leads to other types of algebras. We therefore conclude that the existence of satellite algebras is a characteristic property of type E factorizable Hamiltonians. Our results are illustrated with the detailed discussion of the Coulomb problem.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-12-30T14:03:23Z</published>
+    <arxiv:comment>minor changes, 1 additional reference, final form to be published in JPA</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>J. Phys. A 35 (2002) 2857-2865</arxiv:journal_ref>
+    <author>
+      <name>A. Del Sol Mesa</name>
+    </author>
+    <author>
+      <name>C. Quesne</name>
+    </author>
+    <arxiv:doi>10.1088/0305-4470/35/12/310</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0305-4470/35/12/310" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.04955v1</id>
+    <title>Physical Layer Security Enhancement for Satellite Communication among Similar Channels: Relay Selection and Power Allocation</title>
+    <updated>2018-08-15T03:22:28Z</updated>
+    <link href="https://arxiv.org/abs/1808.04955v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.04955v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Channels of satellite communication are usually modeled as Rician fading channels with very large Rician factor or Gaussian channels. Therefore, when a legitimate user is close to an eavesdropping user, the legitimate channel is approximately the same as the eavesdropping channel. The physical layer security technology of traditional terrestrial wireless communication mainly takes advantage of the difference be-tween the legitimate channel and the eaves-dropping channel; thus, it is not suitable for satellite communication. To implement secure communication in similar channels for satellite communications, a secure communication mod-el based on collaboration of the interference relay of the satellite physical layer is proposed. Relay selection and power allocation are further studied to enhance the security performance of the satellite communication system based on the model. The relay selection standard under known instantaneous channel state information (CSI) and statistical CSI conditions is theoreti-cally derived, thereby accomplishing minimiza-tion of the probability of secrecy relay. In addi-tion, the power allocation factor is optimized based on minimization of the secrecy outage probability. Moreover, a power allocation method based on the statistical CSI is present-ed. The secrecy outage probability performance of each relay selection criterion and power al-location scheme are analyzed via a simulation.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-15T03:22:28Z</published>
+    <arxiv:comment>19 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Shuai Han</name>
+    </author>
+    <author>
+      <name>Xiangxue Tai</name>
+    </author>
+    <author>
+      <name>Weixiao Meng</name>
+    </author>
+    <author>
+      <name>Cheng Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.00594v2</id>
+    <title>CSAC Drift Modeling Considering GPS Signal Quality in the Case of GPS Signal Unavailability</title>
+    <updated>2025-01-20T01:54:47Z</updated>
+    <link href="https://arxiv.org/abs/2409.00594v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.00594v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Global Positioning System (GPS), one of the Global Navigation Satellite Systems (GNSS), provides accurate position, navigation and time (PNT) information to various applications. One of the application that is highly receiving attention is satellite vehicles, especially Low Earth Orbit (LEO) satellites. Due to their limited ways to get PNT information and low performance of their onboard clocks, GPS system time (GPST) provided by GPS is a good reference clock to synchronize. However, GPS is well-known for its vulnerability to intentional or unintentional interference. This study aims to maintain the onboard clock with less error relative to the GPST even when the GPS signal is disrupted. In this study, we analyzed two major factors that affects the quality of the GPS measurements: the number of the visible satellites and the geometry of the satellites. Then, we proposed a weighted model for a Chip-Scale Atomic Clock (CSAC) that mitigates the clock error relative to the GPST while considering the two factors. Based on this model, a stand-alone CSAC could maintain its error less than 4 microseconds, even in a situation where no GPS signals are received for 12 hours.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-01T03:13:57Z</published>
+    <arxiv:comment>Submitted to ICCAS 2024</arxiv:comment>
+    <arxiv:primary_category term="eess.SY"/>
+    <author>
+      <name>Seunghyeon Park</name>
+    </author>
+    <author>
+      <name>Joon Hyo Rhee</name>
+    </author>
+    <arxiv:doi>10.23919/ICCAS63016.2024.10773350</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.23919/ICCAS63016.2024.10773350" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.12215v2</id>
+    <title>The abundance of satellites around Milky Way- and M31-like galaxies with the TNG50 simulation: a matter of diversity</title>
+    <updated>2021-09-23T14:25:45Z</updated>
+    <link href="https://arxiv.org/abs/2101.12215v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.12215v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the abundance of satellite galaxies around 198 Milky Way- (MW) and M31-like hosts in TNG50, the final instalment in the IllustrisTNG suite of cosmological magnetohydrodynamical simulations. MW/M31-like analogues are defined as disky galaxies with stellar masses of Mstar = 10^10.5-11.2 Msun in relative isolation at z = 0. By defining satellites as galaxies with Mstar &gt; 5*10^6 Msun within 300 kpc (3D) of their host, we find a remarkable level of diversity and host-to-host scatter across individual host galaxies. The median (16th - 84th percentiles) TNG50 MW/M31-like galaxy hosts a total of 5 (2-11) satellites with Mstar &gt; 5*10^6 Msun, reaching up to Mstar ~ 10^8.5 Msun (10^7.4-9.4 Msun). The abundance of subhaloes with Mdyn &gt; 5*10^7 Msun is larger by a factor of more than 10. The number of all satellites (subhaloes) ever accreted is larger by a factor of 4-5 (3-5) than those surviving to z = 0. Hosts with larger galaxy stellar mass, brighter K-band luminosity, larger total halo mass, and more recent halo assembly typically have a larger number of surviving satellites. The satellite abundances around TNG50 MW/M31-like galaxies are consistent with similar hosts from observational surveys (e.g. SAGA) and previous simulations (e.g. Latte). While the observed MW satellite system falls within the TNG50 scatter across all stellar masses considered, M31 is slightly more satellite-rich than our 1 sigma scatter, possibly due to volume and mass limitations. We find a handful of systems with both a Large and a Small Magellanic Cloud-like satellite. There is no missing satellites problem with TNG50.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-28T19:00:01Z</published>
+    <arxiv:comment>Accepted by MNRAS. TNG50 is publicly available at https://www.tng-project.org/</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Christoph Engler</name>
+    </author>
+    <author>
+      <name>Annalisa Pillepich</name>
+    </author>
+    <author>
+      <name>Anna Pasquali</name>
+    </author>
+    <author>
+      <name>Dylan Nelson</name>
+    </author>
+    <author>
+      <name>Vicente Rodriguez-Gomez</name>
+    </author>
+    <author>
+      <name>Kun Ting Eddie Chua</name>
+    </author>
+    <author>
+      <name>Eva K. Grebel</name>
+    </author>
+    <author>
+      <name>Volker Springel</name>
+    </author>
+    <author>
+      <name>Federico Marinacci</name>
+    </author>
+    <author>
+      <name>Rainer Weinberger</name>
+    </author>
+    <author>
+      <name>Mark Vogelsberger</name>
+    </author>
+    <author>
+      <name>Lars Hernquist</name>
+    </author>
+    <arxiv:doi>10.1093/mnras/stab2437</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/stab2437" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.11956v2</id>
+    <title>Structure Formation Models Weaken Limits on WIMP Dark Matter from Dwarf Spheroidal Galaxies</title>
+    <updated>2020-08-26T15:38:58Z</updated>
+    <link href="https://arxiv.org/abs/2002.11956v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.11956v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dwarf spheroidal galaxies that form in halo substructures provide stringent constraints on dark matter annihilation. Many ultrafaint dwarfs discovered with modern surveys contribute significantly to these constraints. At present, because of the lack of abundant stellar kinematic data for the ultrafaints, non-informative prior assumptions are usually made for the parameters of the density profiles. Based on semi-analytic models of dark matter subhalos and their connection to satellite galaxies, we present more informative and realistic satellite priors. We show that our satellite priors lead to constraints on the annihilation rate that are between a factor of 2 and a factor of 7 weaker than under non-informative priors. As a result, the thermal relic cross section can at best only be excluded (with 95% probability) for dark matter masses of $\lesssim 40$ GeV from dwarf spheroidal data, assuming annihilation into $b\bar{b}$.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.HE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-27T07:54:20Z</published>
+    <arxiv:comment>8 pages, 4 figures; with supplementary material (20 pages, 14 figures, 4 tables); revised version accepted for publication in Physical Review D Rapid Communications</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <arxiv:journal_ref>Phys. Rev. D 102, 061302 (2020)</arxiv:journal_ref>
+    <author>
+      <name>Shin'ichiro Ando</name>
+    </author>
+    <author>
+      <name>Alex Geringer-Sameth</name>
+    </author>
+    <author>
+      <name>Nagisa Hiroshima</name>
+    </author>
+    <author>
+      <name>Sebastian Hoof</name>
+    </author>
+    <author>
+      <name>Roberto Trotta</name>
+    </author>
+    <author>
+      <name>Matthew G. Walker</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.102.061302</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.102.061302" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.05176v1</id>
+    <title>Internet of Things-Enabled Overlay Satellite-Terrestrial Networks in the Presence of Interference</title>
+    <updated>2020-01-15T08:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2001.05176v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.05176v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider an overlay satellite-terrestrial network (OSTN) where an opportunistically selected terrestrial IoT network assist primary satellite communications as well as access the spectrum for its own communications in the presence of combined interference from extra-terrestrial and terrestrial sources. Hereby, a power domain multiplexing is adopted by the IoT network by splitting its power appropriately among the satellite and IoT signals. Relying upon an amplify-and-forward (AF)-based opportunistic IoT network selection strategy that minimizes the outage probability (OP) of satellite network, we derive the closed-form lower bound OP expressions for both the satellite and IoT networks. We further derive the corresponding asymptotic OP expressions to examine the achievable diversity order of two networks. We show that the proposed OSTN with adaptive power splitting factor benefits IoT network while guaranteeing the quality of service (QoS) of satellite network. We verify the numerical results by simulations.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-15T08:27:43Z</published>
+    <arxiv:comment>7 pages, 3 figures, Submitted to National Conference on Communications 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Pankaj K. Sharma</name>
+    </author>
+    <author>
+      <name>Budharam Yogesh</name>
+    </author>
+    <author>
+      <name>Deepika Gupta</name>
+    </author>
+    <arxiv:doi>10.1109/NCC48643.2020.9056048</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/NCC48643.2020.9056048" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.11609v2</id>
+    <title>Tidal Dissipation in Satellites Prevents Hill Sphere Escape</title>
+    <updated>2023-11-12T09:12:44Z</updated>
+    <link href="https://arxiv.org/abs/2309.11609v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.11609v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The transit method is a promising means to detect exomoons, but few candidates have been identified. For planets close to their stars, the dynamical interaction between a satellite's orbit and the star must be important in their evolution. Satellites beyond synchronous orbit spiral out due to the tide raised on their planet, and it has been assumed that they would likely escape the Hill sphere. Here we follow the evolution with a three-body code that accounts for tidal dissipation within both the planet and the satellite. We show that tidal dissipation in satellites often keeps them bound to their planet, making exomoons more observable than previously thought. The probability of escape depends on the ratio of tidal quality factors of the planet and satellite; when this ratio exceeds 0.5, escape is usually avoided. Instead, the satellite moves to an equilibrium in which the spin angular momentum of the planet is not transferred into the orbit of the satellite, but is transferred into the orbit of the planet itself. While the planet continues spinning faster than the satellite orbits, the satellite maintains a semi-major axis of approximately 0.41 Hill radii. These states are accompanied with modest satellite eccentricity near 0.1 and are found to be stable over long timescales.</summary>
+    <category term="astro-ph.EP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-20T19:52:03Z</published>
+    <arxiv:primary_category term="astro-ph.EP"/>
+    <author>
+      <name>Andi Kisare</name>
+    </author>
+    <author>
+      <name>Daniel Fabrycky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math-ph/0004027v1</id>
+    <title>Connection Between Type A and E Factorizations and Construction of Satellite Algebras</title>
+    <updated>2000-04-21T13:29:38Z</updated>
+    <link href="https://arxiv.org/abs/math-ph/0004027v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math-ph/0004027v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recently, we introduced a new class of symmetry algebras, called satellite algebras, which connect with one another wavefunctions belonging to different potentials of a given family, and corresponding to different energy eigenvalues. Here the role of the factorization method in the construction of such algebras is investigated. A general procedure for determining an so(2,2) or so(2,1) satellite algebra for all the Hamiltonians that admit a type E factorization is proposed. Such a procedure is based on the known relationship between type A and E factorizations, combined with an algebraization similar to that used in the construction of potential algebras. It is illustrated with the examples of the generalized Morse potential, the Rosen-Morse potential, the Kepler problem in a space of constant negative curvature, and, in each case, the conserved quantity is identified. It should be stressed that the method proposed is fairly general since the other factorization types may be considered as limiting cases of type A or E factorizations.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-04-21T13:29:38Z</published>
+    <arxiv:comment>20 pages, LaTeX, no figure, to be published in J. Phys. A</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>J. Phys. A 33 (2000) 4059-4071</arxiv:journal_ref>
+    <author>
+      <name>A. Del Sol Mesa</name>
+    </author>
+    <author>
+      <name>C. Quesne</name>
+    </author>
+    <arxiv:doi>10.1088/0305-4470/33/22/309</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0305-4470/33/22/309" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1905.08839v1</id>
+    <title>Primordial migration of co-orbital satellites as a mechanism for the horseshoe orbit of Janus-Epimetheus</title>
+    <updated>2019-05-21T19:17:20Z</updated>
+    <link href="https://arxiv.org/abs/1905.08839v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1905.08839v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We analyze the orbital motion of two natural satellites initially in co-orbital configuration with a third (guiding) satellite embedded into a circumplanetary gas disc and undergoing tidal interactions with the central planet. By solving the exact equations of motion, including the dissipative effects and the mutual gravitational perturbations, we investigate the configuration of the system soon after the guiding satellite is disrupted when crossing the Roche limit with the central planet during its orbital decay. The application is done for the system composed of Saturn and the two small co-orbital satellites Janus and Epimetheus. We perform a large number of numerical simulations, varying the mass of the hypothetical guiding satellite, Saturn's tidal quality factor and the initial configuration and the masses of the small satellites. Analyzing the orbital configurations of Janus and Epimetheus soon after the disruption of the guiding satellite, we obtain that the mutual horseshoe co-orbital orbits appear as a natural outcome of the numerical simulations.</summary>
+    <category term="astro-ph.EP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-05-21T19:17:20Z</published>
+    <arxiv:comment>Accepted for publication in MNRAS</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.EP"/>
+    <author>
+      <name>Adrián Rodríguez</name>
+    </author>
+    <author>
+      <name>Jorge Correa-Otto</name>
+    </author>
+    <author>
+      <name>Tatiana Michtchenko</name>
+    </author>
+    <arxiv:doi>10.1093/mnras/stz1428</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/stz1428" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.09850v2</id>
+    <title>Near Real-time CO$_2$ Emissions Based on Carbon Satellite and Artificial Intelligence</title>
+    <updated>2022-10-22T09:45:16Z</updated>
+    <link href="https://arxiv.org/abs/2210.09850v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.09850v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To limit global warming to pre-industrial levels, global governments, industry and academia are taking aggressive efforts to reduce carbon emissions. The evaluation of anthropogenic carbon dioxide (CO$_2$) emissions, however, depends on the self-reporting information that is not always reliable. Society need to develop an objective, independent, and generalized system to meter CO$_2$ emissions. Satellite CO$_2$ observation from space that reports column-average regional CO$_2$ dry-air mole fractions has gradually indicated its potential to build such a system. Nevertheless, estimating anthropogenic CO$_2$ emissions from CO$_2$ observing satellite is bottlenecked by the influence of the highly complicated physical characteristics of atmospheric activities. Here we provide the first method that combines the advanced artificial intelligence (AI) techniques and the carbon satellite monitor to quantify anthropogenic CO$_2$ emissions. We propose an integral AI based pipeline that contains both a data retrieval algorithm and a two-step data-driven solution. First, the data retrieval algorithm can generate effective datasets from multi-modal data including carbon satellite, the information of carbon sources, and several environmental factors. Second, the two-step data-driven solution that applies the powerful representation of deep learning techniques to learn to quantify anthropogenic CO$_2$ emissions from satellite CO$_2$ observation with other factors. Our work unmasks the potential of quantifying CO$_2$ emissions based on the combination of deep learning algorithms and the carbon satellite monitor.</summary>
+    <category term="physics.ao-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-11T12:01:32Z</published>
+    <arxiv:primary_category term="physics.ao-ph"/>
+    <author>
+      <name>Zhengwen Zhang</name>
+    </author>
+    <author>
+      <name>Jinjin Gu</name>
+    </author>
+    <author>
+      <name>Junhua Zhao</name>
+    </author>
+    <author>
+      <name>Jianwei Huang</name>
+    </author>
+    <author>
+      <name>Haifeng Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.10476v1</id>
+    <title>Efficient Denoising Method to Improve The Resolution of Satellite Images</title>
+    <updated>2024-11-11T03:33:53Z</updated>
+    <link href="https://arxiv.org/abs/2411.10476v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.10476v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellites are widely used to estimate and monitor ground cover, providing critical information to address the challenges posed by climate change. High-resolution satellite images help to identify smaller features on the ground and classification of ground cover types. Small satellites have become very popular recently due to their cost-effectiveness. However, smaller satellites have weaker spatial resolution, and preprocessing using recent generative models made it possible to enhance the resolution of these satellite images. The objective of this paper is to propose computationally efficient guided or image-conditioned denoising diffusion models (DDMs) to perform super-resolution on low-quality images. Denoising based on stochastic ordinary differential equations (ODEs) typically takes hundreds of iterations and it can be reduced using deterministic ODEs. I propose Consistency Models (CM) that utilize deterministic ODEs for efficient denoising and perform super resolution on satellite images. The DOTA v2.0 image dataset that is used to develop object detectors needed for urban planning and ground cover estimation, is used in this project. The Stable Diffusion model is used as the base model, and the DDM in Stable Diffusion is converted into a Consistency Model (CM) using Teacher-Student Distillation to apply deterministic denoising. Stable diffusion with modified CM has successfully improved the resolution of satellite images by a factor of 16, and the computational time was reduced by a factor of 20 compared to stochastic denoising methods. The FID score of low-resolution images improved from 10.0 to 1.9 after increasing the image resolution using my algorithm for consistency models.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-11T03:33:53Z</published>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Jhanavi Hegde</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.05191v1</id>
+    <title>Multicolor and multi-spot observations of Starlink's Visorsat</title>
+    <updated>2023-04-11T12:50:12Z</updated>
+    <link href="https://arxiv.org/abs/2304.05191v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.05191v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study provides the results of simultaneous multicolor observations for the first Visorsat (STARLINK-1436) and the ordinary Starlink satellite, STARLINK-1113 in the $U$, $B$, $V$, $g'$, $r$, $i$, $R_{\rm C}$, $I_{\rm C}$, $z$, $J$, $H$, and $K_s$ bands to quantitatively investigate the extent to which Visorsat reduces its reflected light. Our results are as follows: (1) in most cases, Virorsat is fainter than STARLINK-1113, and the sunshade on Visorsat, therefore, contributes to the reduction of the reflected sunlight; (2) the magnitude at 550 km altitude (normalized magnitude) of both satellites often reaches the naked-eye limiting magnitude ($&lt;$ 6.0); (3) from a blackbody radiation model of the reflected flux, the peak of the reflected components of both satellites is around the $z$ band; and (4) the albedo of the near infrared range is larger than that of the optical range. Under the assumption that Visorsat and STARLINK-1113 have the same reflectivity, we estimate the covering factor, $C_{\rm f}$, of the sunshade on Visorsat, using the blackbody radiation model: the covering factor ranges from $0.18 \leq C_{\rm f} \leq 0.92$. From the multivariable analysis of the solar phase angle (Sun-target-observer), the normalized magnitude, and the covering factor, the phase angle versus covering factor distribution presents a moderate anti-correlation between them, suggesting that the magnitudes of Visorsat depend not only on the phase angle but also on the orientation of the sunshade along our line of sight. However, the impact on astronomical observations from Visorsat-designed satellites remains serious. Thus, new countermeasures are necessary for the Starlink satellites to further reduce reflected sunlight.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-11T12:50:12Z</published>
+    <arxiv:comment>31 pages, 9 figures, published in PASJ</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Takashi Horiuchi</name>
+    </author>
+    <author>
+      <name>Hidekazu Hanayama</name>
+    </author>
+    <author>
+      <name>Masatoshi Ohishi</name>
+    </author>
+    <author>
+      <name>Tatsuya Nakaoka</name>
+    </author>
+    <author>
+      <name>Ryo Imazawa</name>
+    </author>
+    <author>
+      <name>Koji S. Kawabata</name>
+    </author>
+    <author>
+      <name>Jun Takahashi</name>
+    </author>
+    <author>
+      <name>Hiroki Onozato</name>
+    </author>
+    <author>
+      <name>Tomoki Saito</name>
+    </author>
+    <author>
+      <name>Masayuki Yamanaka</name>
+    </author>
+    <author>
+      <name>Daisaku Nogami</name>
+    </author>
+    <author>
+      <name>Yusuke Tampo</name>
+    </author>
+    <author>
+      <name>Naoto Kojiguchi</name>
+    </author>
+    <author>
+      <name>Jumpei Ito</name>
+    </author>
+    <author>
+      <name>Masaaki Shibata</name>
+    </author>
+    <author>
+      <name>Malte Schramm</name>
+    </author>
+    <author>
+      <name>Yumiko Oasa</name>
+    </author>
+    <author>
+      <name>Takahiro Kanai</name>
+    </author>
+    <author>
+      <name>Kohei Oide</name>
+    </author>
+    <author>
+      <name>Katsuhiro L. Murata</name>
+    </author>
+    <author>
+      <name>Ryohei Hosokawa</name>
+    </author>
+    <author>
+      <name>Yutaka Takamatsu</name>
+    </author>
+    <author>
+      <name>Yuri Imai</name>
+    </author>
+    <author>
+      <name>Naohiro Ito</name>
+    </author>
+    <author>
+      <name>Masafumi Niwano</name>
+    </author>
+    <author>
+      <name>Seiko Takagi</name>
+    </author>
+    <author>
+      <name>Tatsuharu Ono</name>
+    </author>
+    <author>
+      <name>Vladimir V. Kouprianov</name>
+    </author>
+    <arxiv:doi>10.1093/pasj/psad021</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/pasj/psad021" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.00402v1</id>
+    <title>Making Sense of Constellations: Methodologies for Understanding Starlink's Scheduling Algorithms</title>
+    <updated>2023-07-01T18:34:34Z</updated>
+    <link href="https://arxiv.org/abs/2307.00402v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.00402v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Starlink constellations are currently the largest LEO WAN and have seen considerable interest from the research community. In this paper, we use high-frequency and high-fidelity measurements to uncover evidence of hierarchical traffic controllers in Starlink -- a global controller which allocates satellites to terminals and an on-satellite controller that schedules transmission of user flows. We then devise a novel approach for identifying how satellites are allocated to user terminals. Using data gathered with this approach, we measure the characteristics of the global controller and identify the factors that influence the allocation of satellites to terminals. Finally, we use this data to build a model which approximates Starlink's global scheduler. Our model is able to predict the characteristics of the satellite allocated to a terminal at a specific location and time with reasonably high accuracy and at a rate significantly higher than baseline.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-01T18:34:34Z</published>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Hammas Bin Tanveer</name>
+    </author>
+    <author>
+      <name>Mike Puchol</name>
+    </author>
+    <author>
+      <name>Rachee Singh</name>
+    </author>
+    <author>
+      <name>Antonio Bianchi</name>
+    </author>
+    <author>
+      <name>Rishab Nithyanand</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.12938v1</id>
+    <title>Ultra-Dense LEO Satellite-based Communication Systems: A Novel Modeling Technique</title>
+    <updated>2021-10-25T13:17:25Z</updated>
+    <link href="https://arxiv.org/abs/2110.12938v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.12938v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Low earth orbit (LEO) satellite plays an indispensable role in the earth network because of its low latency, large capacity, and seamless global coverage. For such an unprecedented extensive irregular system, stochastic geometry (SG) is a suitable research method. The SG model can not only cope with the increasing network scale but also accurately analyze and estimate the network's performance. Several standard satellite distribution models and satellite-ground channel models are investigated in this paper. System-level metrics such as coverage probability and their intermediates are introduced in the non-technical description. Then, the influence of some factors on latency and coverage probability is studied. Finally, this paper presents the possible challenges and corresponding solutions for the SG-based LEO satellite system analysis.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-25T13:17:25Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Ruibo Wang</name>
+    </author>
+    <author>
+      <name>Mustafa A. Kishk</name>
+    </author>
+    <author>
+      <name>Mohamed-Slim Alouini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.08061v4</id>
+    <title>Geospecific View Generation -- Geometry-Context Aware High-resolution Ground View Inference from Satellite Views</title>
+    <updated>2024-09-12T18:35:41Z</updated>
+    <link href="https://arxiv.org/abs/2407.08061v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.08061v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Predicting realistic ground views from satellite imagery in urban scenes is a challenging task due to the significant view gaps between satellite and ground-view images. We propose a novel pipeline to tackle this challenge, by generating geospecifc views that maximally respect the weak geometry and texture from multi-view satellite images. Different from existing approaches that hallucinate images from cues such as partial semantics or geometry from overhead satellite images, our method directly predicts ground-view images at geolocation by using a comprehensive set of information from the satellite image, resulting in ground-level images with a resolution boost at a factor of ten or more. We leverage a novel building refinement method to reduce geometric distortions in satellite data at ground level, which ensures the creation of accurate conditions for view synthesis using diffusion networks. Moreover, we proposed a novel geospecific prior, which prompts distribution learning of diffusion models to respect image samples that are closer to the geolocation of the predicted images. We demonstrate our pipeline is the first to generate close-to-real and geospecific ground views merely based on satellite images.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-10T21:51:50Z</published>
+    <arxiv:comment>11 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>ECCV 2024 (Oral)</arxiv:journal_ref>
+    <author>
+      <name>Ningli Xu</name>
+    </author>
+    <author>
+      <name>Rongjun Qin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.12950v1</id>
+    <title>Overlay Satellite-Terrestrial Networks for IoT under Hybrid Interference Environments</title>
+    <updated>2020-03-29T05:22:03Z</updated>
+    <link href="https://arxiv.org/abs/2003.12950v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.12950v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider an overlay satellite-terrestrial network (OSTN) where an opportunistically selected terrestrial internet-of-things (IoT) network assists the primary satellite communications as well as accesses the spectrum for its own communications under hybrid interference received from extra-terrestrial sources (ETSs) and terrestrial sources (TSs). Herein, the IoT network adopts power-domain multiplexing to amplify-and-forward the superposed satellite and IoT signals. Considering a unified analytical framework for shadowed-Rician fading with integer/non-integer Nakagami-\emph{m} parameter for satellite and interfering ETSs links along with the integer/non-integer Nakagami-\emph{m} fading for terrestrial IoT and interfering TSs links, we derive the outage probability (OP) of both satellite and IoT networks. Further, we derive the respective asymptotic OP expressions to reveal the diversity order of both satellite and IoT networks under the two conditions, namely when the transmit power of interferers: $(a)$ remains fixed; and $(b)$ varies proportional to the transmit powers of main satellite and IoT users. We show that the proposed OSTN with adaptive power-splitting factor benefits the IoT network while guaranteeing certain quality-of-service (QoS) of satellite network. We verify the numerical results by simulations.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-29T05:22:03Z</published>
+    <arxiv:comment>36 pages, 13 figures, 1 Table. Submission to possible IEEE Journal publication</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Pankaj K. Sharma</name>
+    </author>
+    <author>
+      <name>Budharam Yogesh</name>
+    </author>
+    <author>
+      <name>Deepika Gupta</name>
+    </author>
+    <author>
+      <name>Dong In Kim</name>
+    </author>
+    <arxiv:doi>10.1109/TCCN.2021.3052507</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TCCN.2021.3052507" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1105.2293v2</id>
+    <title>The Effects of Patchy Reionization on Satellite Galaxies of the Milky Way</title>
+    <updated>2012-02-07T21:52:47Z</updated>
+    <link href="https://arxiv.org/abs/1105.2293v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1105.2293v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We combine the high-resolution Aquarius simulations with three-dimensional models of reionization based on the initial density field of the Aquarius parent simulation, Millennium-II, to study the impact of patchy reionization on the faint satellite population of Milky Way halos. Because the Aquarius suite consists of zoom-in simulations of halos in the Millennium-II volume, we follow the formation of substructure and the growth of reionization bubbles due to the larger environment simultaneously, and thereby determine the reionization redshifts of satellite candidates. We do this for four different reionization models, and also compare results to instantaneous reionization. Using a simple procedure for selecting satellites and assigning luminosities in the simulations, we compare the resulting satellite populations. We find that the overall number of satellites depends sensitively on the reionization model, with a factor of 3-4 variation between the four models for a given host halo, although the difference is entirely in the population of faint satellites (M_V &gt; -10). In addition, we find that for a given reionization model the total number of satellites differs by 10%-20% between the patchy and homogeneous scenarios, provided that the redshift is chosen appropriately for the instantaneous case. However, the halo-halo scatter from the six Aquarius halos is large, up to a factor of 2-3, and so is comparable to the difference between reionization scenarios. In order to use the population of faint dwarf galaxies around the Milky Way as a probe of the local reionization history, then, it is necessary to first better understand the general distribution of substructure around Milky Way-mass halos.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-05-11T20:00:00Z</published>
+    <arxiv:comment>Matches published version. Reionization discussion expanded, major conclusions unchanged</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <arxiv:journal_ref>Astrophys.J. 746:109-118 (2012)</arxiv:journal_ref>
+    <author>
+      <name>Ragnhild Lunnan</name>
+      <arxiv:affiliation>Harvard/CfA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Vogelsberger</name>
+      <arxiv:affiliation>Harvard/CfA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Anna Frebel</name>
+      <arxiv:affiliation>Harvard/CfA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Lars Hernquist</name>
+      <arxiv:affiliation>Harvard/CfA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Adam Lidz</name>
+      <arxiv:affiliation>UPenn</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Michael Boylan-Kolchin</name>
+      <arxiv:affiliation>UC Irvine</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1088/0004-637X/746/1/109</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0004-637X/746/1/109" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1004.2708v3</id>
+    <title>Mergers in Lambda-CDM: Uncertainties in Theoretical Predictions and Interpretations of the Merger Rate</title>
+    <updated>2010-09-24T20:22:42Z</updated>
+    <link href="https://arxiv.org/abs/1004.2708v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1004.2708v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Different methodologies lead to order-of-magnitude variations in predicted galaxy merger rates. We examine and quantify the dominant uncertainties. Different halo merger rates and subhalo 'destruction' rates agree to within a factor ~2 given proper care in definitions. If however (sub)halo masses are not appropriately defined or are under-resolved, the major merger rate can be dramatically suppressed. The dominant differences in galaxy merger rates owe to baryonic physics. Hydrodynamic simulations without feedback and older models that do not agree with the observed galaxy mass function propagate factor ~5 bias in the resulting merger rates. However, if the model matches the galaxy mass function, properties of central galaxies are sufficiently converged to give small differences in merger rates. But variations in baryonic physics of satellites also have dramatic effects. The known problem of satellite 'over-quenching' in most semi-analytic models (SAMs), whereby SAM satellites are too efficiently stripped of gas, could lead to order-of-magnitude under-estimates of merger rates for low-mass, gas-rich galaxies. Fixing the satellite properties to observations tends to predict higher merger rates, but with factor ~2 empirical uncertainties. Choice of mass ratio definition matters: at low masses, most true major mergers (in baryonic/dynamical galaxy mass) will appear to be minor mergers in their stellar or luminosity mass ratio. Observations and models using these criteria may underestimate major merger rates by factors ~5. Orbital parameters and gas fractions also introduce factor ~3 differences in amount of bulge formed by mergers, even for fixed mass ratio encounters.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-04-15T20:04:45Z</published>
+    <arxiv:comment>32 Pages, 15 figures, accepted to ApJ (revised to match accepted version and correct Fig. 12)</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <arxiv:journal_ref>Astrophysical Journal, 724:915-945, 2010</arxiv:journal_ref>
+    <author>
+      <name>Philip F. Hopkins</name>
+    </author>
+    <author>
+      <name>Darren Croton</name>
+    </author>
+    <author>
+      <name>Kevin Bundy</name>
+    </author>
+    <author>
+      <name>Sadegh Khochfar</name>
+    </author>
+    <author>
+      <name>Frank van den Bosch</name>
+    </author>
+    <author>
+      <name>Rachel S. Somerville</name>
+    </author>
+    <author>
+      <name>Andrew Wetzel</name>
+    </author>
+    <author>
+      <name>Dusan Keres</name>
+    </author>
+    <author>
+      <name>Lars Hernquist</name>
+    </author>
+    <author>
+      <name>Kyle Stewart</name>
+    </author>
+    <author>
+      <name>Joshua D. Younger</name>
+    </author>
+    <author>
+      <name>Shy Genel</name>
+    </author>
+    <author>
+      <name>Chung-Pei Ma</name>
+    </author>
+    <arxiv:doi>10.1088/0004-637X/724/2/915</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0004-637X/724/2/915" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.12286v3</id>
+    <title>Low-Earth Satellite Orbit Determination Using Deep Convolutional Networks with Satellite Imagery</title>
+    <updated>2023-09-30T21:01:28Z</updated>
+    <link href="https://arxiv.org/abs/2305.12286v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.12286v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given the critical roles that satellites play in national defense, public safety, and worldwide communications, finding ways to determine satellite trajectories is a crucially important task for improved space situational awareness. However, it is increasingly common for satellites to lose connection to the ground stations with which they communicate due to signal interruptions from the Earth's ionosphere and magnetosphere, among other interferences. In this work, we propose utilizing a computer vision based approach that relies on images of the Earth taken by the satellite in real-time to predict its orbit upon losing contact with ground stations. In contrast with other works, we train neural networks on an image-based dataset and show that the neural networks outperform the de facto standard in orbit determination (the Kalman filter) in the scenario where the satellite has lost connection with its ground-based station. Moreover, our approach does not require $\textit{a priori}$ knowledge of the satellite's state and it takes into account the external factors influencing the satellite's motion using images taken in real-time.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-20T21:38:05Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rohit Khorana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.03435v2</id>
+    <title>Deciphering the Enigma of Satellite Computing with COTS Devices: Measurement and Analysis</title>
+    <updated>2024-03-18T16:46:11Z</updated>
+    <link href="https://arxiv.org/abs/2401.03435v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.03435v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the wake of the rapid deployment of large-scale low-Earth orbit satellite constellations, exploiting the full computing potential of Commercial Off-The-Shelf (COTS) devices in these environments has become a pressing issue. However, understanding this problem is far from straightforward due to the inherent differences between the terrestrial infrastructure and the satellite platform in space. In this paper, we take an important step towards closing this knowledge gap by presenting the first measurement study on the thermal control, power management, and performance of COTS computing devices on satellites. Our measurements reveal that the satellite platform and COTS computing devices significantly interplay in terms of the temperature and energy, forming the main constraints on satellite computing. Further, we analyze the critical factors that shape the characteristics of onboard COTS computing devices. We provide guidelines for future research on optimizing the use of such devices for computing purposes. Finally, we have released the datasets to facilitate further study in satellite computing.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-07T09:31:19Z</published>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Ruolin Xing</name>
+    </author>
+    <author>
+      <name>Mengwei Xu</name>
+    </author>
+    <author>
+      <name>Ao Zhou</name>
+    </author>
+    <author>
+      <name>Qing Li</name>
+    </author>
+    <author>
+      <name>Yiran Zhang</name>
+    </author>
+    <author>
+      <name>Feng Qian</name>
+    </author>
+    <author>
+      <name>Shangguang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.04795v1</id>
+    <title>Latency versus Transmission Power Trade-off in Free-Space Optical (FSO) Satellite Networks with Multiple Inter-Continental Connections</title>
+    <updated>2023-12-08T02:09:36Z</updated>
+    <link href="https://arxiv.org/abs/2312.04795v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.04795v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In free-space optical satellite networks (FSOSNs), satellites connected via laser inter-satellite links (LISLs), latency is a critical factor, especially for long-distance inter-continental connections. Since satellites depend on solar panels for power supply, power consumption is also a vital factor. We investigate the minimization of total network latency (i.e., the sum of the network latencies of all inter-continental connections in a time slot) in a realistic model of a FSOSN, the latest version of the Starlink Phase 1 Version 3 constellation. We develop mathematical formulations of the total network latency over different LISL ranges and different satellite transmission power constraints for multiple simultaneous inter-continental connections. We use practical system models for calculating network latency and satellite optical link transmission power, and we formulate the problem as a binary integer linear program. The results reveal that, for satellite transmission power limits set at 0.5 W, 0.3 W, and 0.1 W, the average total network latency for all five inter-continental connections studied in this work levels off at 339 ms, 361 ms, and 542 ms, respectively. Furthermore, the corresponding LISL ranges required to achieve these average total network latency values are 4500 km, 3000 km, and 1731 km, respectively. Different limitations on satellite transmission power exhibit varying effects on average total network latency (over 100 time slots), and they also induce differing changes in the corresponding LISL ranges. In the absence of satellite transmission power constraints, as the LISL range extends from the minimum feasible range of 1575 km to the maximum feasible range of 5016 km, the average total network latency decreases from 589 ms to 311 ms.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-08T02:09:36Z</published>
+    <arxiv:comment>Accepted for publication in IEEE Open Journal of the Communications Society</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Jintao Liang</name>
+    </author>
+    <author>
+      <name>Aizaz Chaudhry</name>
+    </author>
+    <author>
+      <name>John Chinneck</name>
+    </author>
+    <author>
+      <name>Halim Yanikomeroglu</name>
+    </author>
+    <author>
+      <name>Gunes Kurt</name>
+    </author>
+    <author>
+      <name>Peng Hu</name>
+    </author>
+    <author>
+      <name>Khaled Ahmed</name>
+    </author>
+    <author>
+      <name>Stephane Martel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.16844v1</id>
+    <title>Sugarcane Health Monitoring With Satellite Spectroscopy and Machine Learning: A Review</title>
+    <updated>2024-02-13T01:12:39Z</updated>
+    <link href="https://arxiv.org/abs/2404.16844v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.16844v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Research into large-scale crop monitoring has flourished due to increased accessibility to satellite imagery. This review delves into previously unexplored and under-explored areas in sugarcane health monitoring and disease/pest detection using satellite-based spectroscopy and Machine Learning (ML). It discusses key considerations in system development, including relevant satellites, vegetation indices, ML methods, factors influencing sugarcane reflectance, optimal growth conditions, common diseases, and traditional detection methods. Many studies highlight how factors like crop age, soil type, viewing angle, water content, recent weather patterns, and sugarcane variety can impact spectral reflectance, affecting the accuracy of health assessments via spectroscopy. However, these variables have not been fully considered in the literature. In addition, the current literature lacks comprehensive comparisons between ML techniques and vegetation indices. We address these gaps in this review. We discuss that, while current findings suggest the potential for an ML-driven satellite spectroscopy system for monitoring sugarcane health, further research is essential. This paper offers a comprehensive analysis of previous research to aid in unlocking this potential and advancing the development of an effective sugarcane health monitoring system using satellite technology.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-13T01:12:39Z</published>
+    <arxiv:comment>22 pages, 6 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Comput. Electron. Agric. 2025, 229, 109686</arxiv:journal_ref>
+    <author>
+      <name>Ethan Kane Waters</name>
+    </author>
+    <author>
+      <name>Carla Chia-Ming Chen</name>
+    </author>
+    <author>
+      <name>Mostafa Rahimi Azghadi</name>
+    </author>
+    <arxiv:doi>10.1016/j.compag.2024.109686</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.compag.2024.109686" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.15908v1</id>
+    <title>Satellite Constellation Avoidance with the Rubin Observatory Legacy Survey of Space and Time</title>
+    <updated>2022-11-29T03:52:37Z</updated>
+    <link href="https://arxiv.org/abs/2211.15908v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.15908v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate a novel satellite avoidance strategy to mitigate the impact of large commercial satellite constellations in low-Earth orbit on the Vera C. Rubin Observatory Legacy Survey of Space and Time (LSST). We simulate the orbits of currently planned Starlink and OneWeb constellations ($\sim$40,000 satellites) to test how effectively an upgraded Rubin scheduler algorithm can avoid them, and assess how the overall survey is affected. Given a reasonably accurate satellite orbit forecast, we find it is possible to adjust the scheduler algorithm to effectively avoid some satellites. Overall, sacrificing 10% of LSST observing time to avoid satellites reduces the fraction of LSST visits with streaks by a factor of two. Whether such a mitigation will be required depends on the overall impact of streaks on science, which is not yet well quantified. This is due to a lack of adequate information about satellite brightness distributions as well as the impact of glints and low surface brightness residuals on alert purity and systematic errors in cosmological parameter estimation. A significant increase in the number of satellites or their brightness during Rubin Operations may make implementing this satellite avoidance strategy worthwhile.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-29T03:52:37Z</published>
+    <arxiv:comment>8 pages, 5 figures, accepted to ApJ Letters</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Jinghan Alina Hu</name>
+    </author>
+    <author>
+      <name>Meredith L. Rawls</name>
+    </author>
+    <author>
+      <name>Peter Yoachim</name>
+    </author>
+    <author>
+      <name>Željko Ivezić</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0906.3884v1</id>
+    <title>Spacecraft Charging and Hazards to Electronics in Space</title>
+    <updated>2009-06-21T18:05:00Z</updated>
+    <link href="https://arxiv.org/abs/0906.3884v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0906.3884v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The interaction of a space system with its orbital environment is a major consideration in the design of any space system, since a variety of hazards are associated with the operation of spacecraft in the harsh space environment. In this brief review, two types of hazards to Earth-orbiting spacecraft are discussed: spacecraft charging and radiation hazards to spacecraft electronics, with emphasis on the natural environmental factors and interactions which contribute to these hazards. Following a summary of the historical eras of spacecraft charging and some observations from experimental satellites: SCATHA, CRRES and DMSP, environmental factors significant to spacecraft charging are discussed, including plasma interactions, electric and magnetic fields and solar radiation. Spacecraft charging depends on the spacecraft geometry, as well as on the characteristics of its orbit, since the natural environment may differ for each type of orbit. Low altitude orbiting satellites (LEO) usually experience less charging effects than high altitude geosynchronous (GEO) satellites, except for low altitude polar orbiting satellites which cross the auroral oval. Basic mechanisms of surface charging, differential charging and internal charging are described. Environmental factors including trapped and transient radiation, solar and galactic cosmic rays, which can profoundly damage spacecraft electronics are presented. Some effects such as ionization and atomic displacement damages to semiconductors and single event phenomena are also briefly mentioned.</summary>
+    <category term="physics.space-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-06-21T18:05:00Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="physics.space-ph"/>
+    <author>
+      <name>Tsoline Mikaelian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1101.2674v2</id>
+    <title>The Satellite Luminosity Functions of Galaxies in SDSS</title>
+    <updated>2011-06-02T14:23:03Z</updated>
+    <link href="https://arxiv.org/abs/1101.2674v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1101.2674v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the luminosity function of satellite galaxies around isolated primaries using the Sloan Digital Sky Survey (SDSS) spectroscopic and photometric galaxy samples. We select isolated primaries from the spectroscopic sample and search for potential satellites in the much deeper photometric sample. For primaries of similar luminosity to the Milky Way and M31, we are able to stack as many as $\sim\negthinspace 20,000$ galaxy systems to obtain robust statistical results. We derive the satellite luminosity function extending almost 8 magnitudes fainter than the primary galaxy. We also determine how the satellite luminosity function varies with the luminosity, colour and concentration of the primary. We find that, in the mean, isolated primaries of comparable luminosity to the Milky Way and M31 contain about a factor of two fewer satellites brighter than $M_V=-14$ than the average of the Milky Way and M31.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-01-13T21:01:21Z</published>
+    <arxiv:comment>13 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>Quan Guo</name>
+    </author>
+    <author>
+      <name>Shaun Cole</name>
+    </author>
+    <author>
+      <name>Vincent Eke</name>
+    </author>
+    <author>
+      <name>Carlos Frenk</name>
+    </author>
+    <arxiv:doi>10.1111/j.1365-2966.2011.19270.x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1111/j.1365-2966.2011.19270.x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/9804068v1</id>
+    <title>An Anderson-Fano Resonance and Shake-Up Processes in the Magneto-Photoluminescence of a Two-Dimensional Electron System</title>
+    <updated>1998-04-06T19:54:17Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/9804068v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/9804068v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We report an anomalous doublet structure and low-energy satellite in the magneto-photoluminescence spectra of a two-dimensional electron system. The doublet structure moves to higher energy with increasing magnetic field and is most prominent at odd filling factors 5 and 3. The lower-energy satellite peak tunes to lower energy for increasing magnetic field between filling factor 6 and 2. These features occur at energies below the fundamental band of recombination originating from the lowest Landau level and display striking magnetic field and temperature dependence that indicates a many-body origin. Drawing on a recent theoretical description of Hawrylak and Potemski, we show that distinct mechanisms are responsible for each feature.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-04-06T19:54:17Z</published>
+    <arxiv:comment>14 pages including 5 figures. To appear in the April 15th edition of Phy. Rev. B. rapid comm</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>M. J. Manfra</name>
+      <arxiv:affiliation>Dept of Physics, Boston University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>B. B. Goldberg</name>
+      <arxiv:affiliation>Dept of Physics, Boston University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>L. Pfeiffer</name>
+      <arxiv:affiliation>Bell Laboratories, Lucent Technologies</arxiv:affiliation>
+    </author>
+    <author>
+      <name>K. West</name>
+      <arxiv:affiliation>Bell Laboratories, Lucent Technologies</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.57.R9467</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.57.R9467" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.06031v1</id>
+    <title>Blockwise Post-processing in Satellite-based Quantum Key Distribution</title>
+    <updated>2025-03-08T03:06:04Z</updated>
+    <link href="https://arxiv.org/abs/2503.06031v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.06031v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Free-space satellite communication has significantly lower photon loss than terrestrial communication via optical fibers. Satellite-based quantum key distribution (QKD) leverages this advantage and provides a promising direction in achieving long-distance QKD. While the technological feasibility of satellite-based QKD has been demonstrated experimentally, optimizing the key rate remains a significant challenge. In this paper, we argue that improving classical post-processing is an important direction in increasing key rate in satellite-based QKD, while it can also be easily incorporated in existing satellite systems. In particular, we explore one direction, blockwise post-processing, to address highly dynamic satellite channel conditions due to various environmental factors. This blockwise strategy divides the raw key bits into individual blocks that have similar noise characteristics, and processes them independently, in contrast to traditional non-blockwise strategy that treats all the raw key bits as a whole. Using a case study, we discuss the choice of blocks in blockwise strategy, and show that blockwise strategy can significantly outperform non-blockwise strategy. Our study demonstrates the importance of post-processing in satellite QKD systems, and presents several open problems in this direction.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-08T03:06:04Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minu J. Bae</name>
+    </author>
+    <author>
+      <name>Nitish K. Panigrahy</name>
+    </author>
+    <author>
+      <name>Prajit Dhara</name>
+    </author>
+    <author>
+      <name>Md Zakir Hossain</name>
+    </author>
+    <author>
+      <name>Walter O. Krawec</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+    <author>
+      <name>Don Towsley</name>
+    </author>
+    <author>
+      <name>Bing Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.07763v1</id>
+    <title>Beam-Aware Radio Map Estimation With Physics-Consistent Parametric Modeling for Unknown Multiple Satellites</title>
+    <updated>2026-05-08T14:05:47Z</updated>
+    <link href="https://arxiv.org/abs/2605.07763v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.07763v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellite networks with dense low Earth orbit (LEO) constellations rely on aggressive spectrum reuse, making co-channel interference a dominant and rapidly varying factor that limits link availability and complicates spectrum sharing and compliance. Satellite radio map (RM) construction is therefore essential for interference cognition, yet it is challenging because the active satellite set is unknown, beam footprints and pointing are not directly observable, and received signal strength (RSS) measurements are difficult to calibrate under coupled link budget variations and noise. These latent uncertainties yield a severely underdetermined inverse problem with strong signature coherence, where existing methods often trade detection recall for precision and still fail to recover a faithful continuous RSS field. This paper proposes a beam-aware RM estimation framework that unifies active satellite identification and RSS field reconstruction through physics-consistent parametric modeling. An interpretable structural prior links geometry and beam shaping to spatial RSS formation, and an adaptive model order selection strategy infers the number of active satellites from measurements by balancing fit and complexity. Extensive experiments across varying signal to noise ratio (SNR), total satellite count, and active satellite count demonstrate consistently higher RSS spatial correlation, lower root mean squared error (RMSE), and improved F1 score, validating the proposed approach for interference-aware satellite RM construction in satellite networks.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-08T14:05:47Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Xiucheng Wang</name>
+    </author>
+    <author>
+      <name>Nan Cheng</name>
+    </author>
+    <author>
+      <name>Zhisheng Yin</name>
+    </author>
+    <author>
+      <name>Conghao Zhou</name>
+    </author>
+    <author>
+      <name>Ruijin Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1012.4845v1</id>
+    <title>Directed factor graph based fault diagnosis model construction for mode switching satellite power system</title>
+    <updated>2010-12-22T00:00:42Z</updated>
+    <link href="https://arxiv.org/abs/1012.4845v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1012.4845v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellite power system is a complex, highly interconnected hybrid system that exhibit nonlinear and mode switching behaviors. Directed factor graph is an inference model for fault diagnosis using probabilistic reasoning techniques. A novel approach for constructing the directed factor graph structure based on hybrid bond graph model is proposed. The system components status and their fault symptoms are treated as hypothesis and evidences respectively. The cause-effect relations between hypothesis and evidences are identified and concluded though qualitative equations and causal path analysis on hybrid bond graph model. A power supply module of a satellite power system is provided as case study to show the feasibility and validity of the proposed method.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-12-22T00:00:42Z</published>
+    <arxiv:primary_category term="eess.SY"/>
+    <author>
+      <name>Xiaolei Zhang</name>
+    </author>
+    <author>
+      <name>Yi Shen</name>
+    </author>
+    <author>
+      <name>Zhenhua Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0506032v1</id>
+    <title>Framework for Hopfield Network based Adaptive routing - A design level approach for adaptive routing phenomena with Artificial Neural Network</title>
+    <updated>2005-06-10T05:30:41Z</updated>
+    <link href="https://arxiv.org/abs/cs/0506032v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/0506032v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Routing, as a basic phenomena, by itself, has got umpteen scopes to analyse, discuss and arrive at an optimal solution for the technocrats over years. Routing is analysed based on many factors; few key constraints that decide the factors are communication medium, time dependency, information source nature. Parametric routing has become the requirement of the day, with some kind of adaptation to the underlying network environment. Satellite constellations, particularly LEO satellite constellations have become a reality in operational to have a non-breaking voice/data communication around the world.Routing in these constellations has to be treated in a non conventional way, taking their network geometry into consideration. One of the efficient methods of optimization is putting Neural Networks to use. Few Artificial Neural Network models are very much suitable for the adaptive control mechanism, by their nature of network arrangement. One such efficient model is Hopfield Network model.
+  This paper is an attempt to design a framework for the Hopfield Network based adaptive routing phenomena in satellite constellations.</summary>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-06-10T05:30:41Z</published>
+    <arxiv:comment>(13 pages, 7 figures, code)</arxiv:comment>
+    <arxiv:primary_category term="cs.NE"/>
+    <author>
+      <name>R. Shankar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.00634v1</id>
+    <title>Quasisynchronous LoRa for LEO Nanosatellite Communications</title>
+    <updated>2023-08-01T16:03:50Z</updated>
+    <link href="https://arxiv.org/abs/2308.00634v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.00634v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Perfect synchronization in LoRa communications between Low Earth Orbit (LEO) satellites and ground base stations is still challenging, despite the potential use of atomic clocks in LEO satellites, which offer high precision. Even by incorporating atomic clocks in LEO satellites, their inherent precision can be leveraged to enhance the overall synchronization process, perfect synchronization is infeasible due to a combination of factors such as signal propagation delay, Doppler effects, clock drift and atmospheric effects. These challenges require the development of advanced synchronization techniques and algorithms to mitigate their effects and ensure reliable communication from / to LEO satellites. However, maintaining acceptable levels of synchronization rather than striving for perfection, quasisynchronous (QS) communication can be adopted which maintains communication reliability, improves resource utilization, reduces power consumption, and ensures scalability as more devices join the communication. Overall, QS communication offers a practical, adaptive, and robust solution that enables LEO satellite communications to support the growing demands of IoT applications and global connectivity. In our investigation, we explore different chip waveforms such as rectangular and raised cosine. Furthermore, for the first time, we study the Symbol Error Rate (SER) performance of QS LoRa communication, for different spreading factors (SF), over Additive White Gaussian Noise (AWGN) channels.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-01T16:03:50Z</published>
+    <arxiv:comment>5 pages, 4 figures, IEEE International Black Sea Conference on Communications and Networking 2023</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Hasan Gokhan Uysal</name>
+    </author>
+    <author>
+      <name>Ferkan Yilmaz</name>
+    </author>
+    <author>
+      <name>Hakan Ali Cirpan</name>
+    </author>
+    <author>
+      <name>Oguz Kucur</name>
+    </author>
+    <author>
+      <name>Huseyin Arslan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.04231v1</id>
+    <title>Next Generation Mega Satellite Networks: Opportunities, Challenges, and Performance</title>
+    <updated>2021-10-08T16:33:43Z</updated>
+    <link href="https://arxiv.org/abs/2110.04231v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.04231v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Digital connectivity has become the foundation of prosperity and an essential need for functioning societies. Despite this dependence, limitation on Internet access remains a prevalent issue, largely hinged on socioeconomic and geographic factors. A promising solution to attain global access equality is based on integrated terrestrial-satellite networks that rely on low Earth orbit (LEO) mega constellations. While the benefits of LEO constellations complement the shortcomings of terrestrial networks, their incorporation impacts the network design, adding complexity and challenges. This article presents a systematic analysis of next generation LEO mega satellite constellations and outlines opportunities by virtue of the many benefits these constellations can provide and highlights the major challenges. Furthermore, it provides a synopsis of analytic models and underscores modern simulation approaches for next generation mega satellite constellations. This provides network designers with the necessary insights into satellite network performance.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-08T16:33:43Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Bassel Al Homssi</name>
+    </author>
+    <author>
+      <name>Akram Al-Hourani</name>
+    </author>
+    <author>
+      <name>Ke Wang</name>
+    </author>
+    <author>
+      <name>Phillip Conder</name>
+    </author>
+    <author>
+      <name>Sithamparanathan Kandeepan</name>
+    </author>
+    <author>
+      <name>Jinho Choi</name>
+    </author>
+    <author>
+      <name>Ben Allen</name>
+    </author>
+    <author>
+      <name>Ben Moores</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.03641v2</id>
+    <title>Toward Multi-Layer Networking for Satellite Network Operations</title>
+    <updated>2024-11-19T22:55:45Z</updated>
+    <link href="https://arxiv.org/abs/2301.03641v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.03641v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in low-Earth-orbit (LEO) satellites aim to bring resilience, ubiquitous, and high-quality service to future Internet infrastructure. However, the soaring number of space assets, increasing dynamics of LEO satellites and expanding dimensions of network threats call for an enhanced approach to efficient satellite operations. To address these pressing challenges, we propose an approach for satellite network operations based on multi-layer satellite networking (MLSN), called "SatNetOps". Two SatNetOps schemes are proposed, referred to as LEO-LEO MLSN (LLM) and GEO-LEO MLSN (GLM). The performance of the proposed schemes is evaluated in 24-hr satellite scenarios with typical payload setups in simulations, where the key metrics such as latency and reliability are discussed with the consideration of the Consultative Committee for Space Data Systems (CCSDS) standard-compliant telemetry and telecommand missions. Although the SatNetOps approach is promising, we analyze the factors affecting the performance of the LLM and GLM schemes. The discussions on the results and conclusive remarks are made in the end.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-09T19:25:19Z</published>
+    <arxiv:comment>To be published in the Proceedings of 12th Annual IEEE International Conference on Wireless for Space and Extreme Environments (WISEE 2024), Dec. 16 - 18, 2024, Daytona Beach, FL, USA</arxiv:comment>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Peng Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.08521v2</id>
+    <title>The Spatial Distribution of Satellite Galaxies Selected from Redshift Space</title>
+    <updated>2018-06-20T13:59:58Z</updated>
+    <link href="https://arxiv.org/abs/1512.08521v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.08521v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the spatial distribution of satellite galaxies using a mock redshift survey of the first Millennium Run simulation. The satellites were identified using common redshift space criteria and the sample therefore includes a large percentage of interlopers. The satellite locations are well-fitted by a combination of a Navarro, Frenk &amp; White(NFW) density profile and a power law. At fixed stellar mass, the NFW scale parameter, r_s, for the satellite distribution of red hosts exceeds r_s for the satellite distribution of blue hosts. In both cases the dependence of r_s on host stellar mass is well-fitted by a power law. For the satellites of red hosts, r_s^{red} \propto (M_\ast / M_\sun)^{0.71 \pm 0.05} while for the satellites of blue hosts, r_s^{blue} \propto (M_\ast / M_\sun)^{0.48 \pm 0.07}$. For hosts with stellar masses greater than 4.0E+10 M_sun, the satellite distribution around blue hosts is more concentrated than is the satellite distribution around red hosts. The spatial distribution of the satellites of red hosts traces that of the hosts' halos; however, the spatial distribution of the satellites of blue hosts is more concentrated than that of the hosts' halos by a factor of ~2. Our methodology is general and applies to any analysis of satellites in a mock redshift survey. However, our conclusions necessarily depend upon the semi-analytic galaxy formation model that was adopted, and different galaxy formation models may yield different results.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-28T21:00:08Z</published>
+    <arxiv:comment>25 pages, 5 figures, accepted for publication in The Astrophysical Journal</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Ingolfur Agustsson</name>
+    </author>
+    <author>
+      <name>Tereasa G. Brainerd</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/9809412v1</id>
+    <title>Sinking Satellites and the Heating of Galaxy Discs</title>
+    <updated>1998-09-30T21:30:03Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/9809412v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/9809412v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We have carried out a set of self-consistent N-body simulations to study the interaction between disc galaxies and merging satellites with the aim of determining the disc kinematical changes induced by such events. We explore a region of the parameter space embracing satellites with different masses and internal structure and orbits of various eccentricities. We find that the analyt ic estimates of Tóth and Ostriker (1992) are high; overestimating the disc heating and thickening resulting from the accretion process by a factor of about 2-3. We find that the heating and thickening of the disc differ for satellites on prograde and retrograde orbits. The former tend to heat the stellar disc while the latter primarily produce a coherent tilt. Thus, disc galaxies may accrete quite massive satellites without destroying the disc, particularly, if the orbits are retrograde. We also find that a massive bulge may play a role in reducing these effects. We have quantified the importance of the responsiveness of the halo by replacing it by a rigid potentia l in several simulations. In these cases, the increase of the vertical scale length is larger by a factor of $1.5-2$, indicating that a self-consistent treatment is essential to get realistic results. A frequent by-product of the accretion process is the formation of weak stellar warps and asymmetric discs. Finally, we have checked how well Chandrasekhar's dynamical friction formula reproduces the sinking rates in several of our experiments. We find that it works well provided a suitable value is chosen for the Coulomb logarithm and the satellite mass is taken to be the mass still bound to the satellite at each moment.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-09-30T21:30:03Z</published>
+    <arxiv:comment>17 pages, 15 figures, (to MNRAS). Figs. 3, 4 and 9 jpeg format</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <arxiv:journal_ref>Mon.Not.Roy.Astron.Soc.304:254-270,1999</arxiv:journal_ref>
+    <author>
+      <name>H. Velazquez</name>
+      <arxiv:affiliation>IAUNAM-Ensenada</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Simon D. M. White</name>
+      <arxiv:affiliation>MPA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1046/j.1365-8711.1999.02354.x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1046/j.1365-8711.1999.02354.x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.10217v1</id>
+    <title>A Walking Space Robot for On-Orbit Satellite Servicing: The ReCoBot</title>
+    <updated>2022-03-19T02:29:11Z</updated>
+    <link href="https://arxiv.org/abs/2203.10217v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.10217v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A key factor in the economic efficiency of satellites is their availability in orbit. Replacing standardized building blocks, such as empty fuel tanks or outdated electronic modules, could greatly extend the satellites' lifetime. This, however, requires flexible robots that can locomote on the surface of these satellites for optimal accessibility and manipulation. This paper introduces ReCoBot, a 7-axis walking space manipulator for locomotion and manipulation. The robot can connect to compatible structures with its symmetric ends and provides interfaces for manual teleoperation and motion planning with a constantly changing base and tip. We build on open-source robotics software and easily available components to evaluate the overall concept with an early stage demonstrator. The proposed manipulator has a length of 1.20 m and a weight of 10.4 kg and successfully locomotes over a satellite mockup in our lab environment.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-19T02:29:11Z</published>
+    <arxiv:comment>7 pages, 9 figures, submitted to the 18th IEEE International Conference on Automation Science and Engineering (CASE)</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Stefan Scherzinger</name>
+    </author>
+    <author>
+      <name>Jakob Weinland</name>
+    </author>
+    <author>
+      <name>Robert Wilbrandt</name>
+    </author>
+    <author>
+      <name>Pascal Becker</name>
+    </author>
+    <author>
+      <name>Arne Roennau</name>
+    </author>
+    <author>
+      <name>Rüdiger Dillmann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.3616v1</id>
+    <title>Satellites around massive galaxies since z$\sim$2: confronting the Millennium simulation with observations</title>
+    <updated>2012-05-16T09:49:56Z</updated>
+    <link href="https://arxiv.org/abs/1205.3616v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.3616v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Minor merging has been postulated as the most likely evolutionary path to produce the increase in size and mass observed in the massive galaxies since z$\sim$2. In this Letter, we test directly this hypothesis comparing the population of satellites around massive galaxies in cosmological simulations versus the observations. We use state-of-the-art, publically available, Millennium I and II simulations and the associated semi-analytical galaxy catalogues to explore the time evolution of the fraction of massive galaxies that have satellites, the number of satellites per galaxy, the projected distance at which the satellite locate from the host galaxy, and the mass ratio between the host galaxies and their satellites. The three virtual galaxy catalogues considered here, overproduce the fraction of galaxies with satellites by a factor ranging between 1.5 and 6 depending on the epoch, whereas the mean projected distance and ratio of the satellite mass over host mass are in closer agreement with data. The larger pull of satellites in the semi-analytical samples could suggest that the size evolution found in previous hydrodynamical simulations is an artifact due to the larger number of infalling satellites compared to the real Universe. These results advise to revise the physical ingredients implemented in the semi-analytical models in order to reconcile the observed and computed fraction of galaxies with satellites, and eventually, it would leave some room to other mechanisms explaining the galaxy size growth not related to the minor merging.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-16T09:49:56Z</published>
+    <arxiv:comment>Accepted for publication in ApJ Letters</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>Vicent Quilis</name>
+    </author>
+    <author>
+      <name>Ignacio Trujillo</name>
+    </author>
+    <arxiv:doi>10.1088/2041-8205/752/2/L19</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/2041-8205/752/2/L19" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.03888v2</id>
+    <title>Joint Hybrid Beamforming and User Scheduling for Multi-Satellite Cooperative Networks</title>
+    <updated>2023-01-13T06:36:01Z</updated>
+    <link href="https://arxiv.org/abs/2301.03888v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.03888v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider a cooperative communication network where multiple satellites provide services for ground users (GUs) (at the same time and on the same frequency). The communication and computational resources on satellites are usually restricted and the satellite-GU link determination affects the communication performance significantly when multiple satellites provide services for multiple GUs in a collaborative manner. Therefore, considering the limitation of the on-board radio-frequency chains, we first propose a hybrid beamforming method consisting of analog beamforming for beam alignment and digital beamforming for interference mitigation. Then, to establish appropriate connections between satellites and GUs, we propose a heuristic user scheduling algorithm which determines the connections according to the total spectral efficiency (SE) increment of the multi-satellite cooperative network. Next, a joint hybrid beamforming and user scheduling scheme is proposed to dramatically improve the performance of the multi-satellite cooperative network. Moreover, simulations are conducted to compare the proposed schemes with representative baselines and analyze the key factors influencing the performance of the multi-satellite cooperative network. It is shown that the proposed joint beamforming and user scheduling approach can provide 47.2% SE improvement on average as compared with its non-joint counterpart.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-10T10:22:50Z</published>
+    <arxiv:comment>7 pages, 7 figures, accepted by IEEE Wireless Communications and Networking Conference (WCNC) 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Xuan Zhang</name>
+    </author>
+    <author>
+      <name>Shu Sun</name>
+    </author>
+    <author>
+      <name>Meixia Tao</name>
+    </author>
+    <author>
+      <name>Qin Huang</name>
+    </author>
+    <author>
+      <name>Xiaohu Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.08791v1</id>
+    <title>Spatial Resolution Enhancement of Remote Sensing Mine Images using Deep Learning Techniques</title>
+    <updated>2020-07-17T07:30:13Z</updated>
+    <link href="https://arxiv.org/abs/2007.08791v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.08791v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep learning techniques are applied so as to increase the spatial resolution of Sentinel2 satellite imagery, depicting the Amynteo lignite mine in Ptolemaida, Greece. Resolution enhancement by factors 2 and 4 as well as by factors 2 and 6 using Very-Deep SuperResolution (VDSR) and DSen2 networks, respectively, provides fairly well results on Amynteo lignite mine images.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-17T07:30:13Z</published>
+    <arxiv:comment>5 pages, 4 figures, presented in 2nd Greek Remote Sensing Workshop RSSAC2020</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>E. Zioga</name>
+    </author>
+    <author>
+      <name>A. Panagiotopoulou</name>
+    </author>
+    <author>
+      <name>M. Stefouli</name>
+    </author>
+    <author>
+      <name>E. Charou</name>
+    </author>
+    <author>
+      <name>L. Grammatikopoulos</name>
+    </author>
+    <author>
+      <name>E. Bratsolis</name>
+    </author>
+    <author>
+      <name>N. Madamopoulos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.12500v2</id>
+    <title>A study on Satellite-to-Ground Propagation in Urban Environment</title>
+    <updated>2024-02-20T17:14:30Z</updated>
+    <link href="https://arxiv.org/abs/2311.12500v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.12500v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Non-Terrestrial Networks are going to play an important role in future 6G wireless networks to enhance global connectivity a performance in cooperation with terrestrial networks. In order to properly design and deploy non-terrestrial networks, the satellite-to-ground channel must be properly characterized, with particular focus on the urban environment. This paper uses a Ray-Tracing simulation tool to analyze the primary propagation mechanisms and the behaviour of the Rician K-factor as a function of satellite position in a reference urban environment. Non-specular reflection due to surface irregularities emerges as a primary propagation mechanism in non-line-of-sight cases. Additionally, the Rician K-factor shows a slightly increasing trend with elevation angle, in contrast to previous studies.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-21T10:20:33Z</published>
+    <arxiv:comment>4 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>N. Cenni</name>
+    </author>
+    <author>
+      <name>V. Degli-Esposti</name>
+    </author>
+    <author>
+      <name>E. M. Vitucci</name>
+    </author>
+    <author>
+      <name>F. Fuschini</name>
+    </author>
+    <author>
+      <name>M. Barbiroli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.16592v1</id>
+    <title>Optimizing Antenna Activation for Even Power Distribution in Multi-Beam Satellite Systems Using Genetic Algorithm</title>
+    <updated>2025-02-23T14:48:26Z</updated>
+    <link href="https://arxiv.org/abs/2502.16592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.16592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in onboard satellite communication have significantly enhanced the ability to dynamically modify the radiation pattern of a Direct Radiating Array, which is essential for both conventional communication satellites like GEO and those in lower orbits such as LEO. This is particularly relevant for communication at 28 GHz, a key frequency in the mmWave spectrum, used for high-bandwidth satellite links and 5G communications. Critical design factors include the number of beams, beamwidth, and SLL for each beam. However, in multibeam scenarios, balancing these design factors can result in uneven power distribution, leading to over-saturation in centrally located antenna elements due to frequent activations. This paper introduces a GA-based approach to optimize beamforming coefficients by modulating the amplitude component of the weight matrix, while imposing a constraint on activation instances per element to avoid over-saturation in the RF chain. The proposed method, tested on an 16x16 DRA patch antenna array at 28 GHz for a CubeSat orbiting at 500 km, demonstrates how the algorithm efficiently meets beam pattern requirements and ensures uniform activation distribution. These findings are particularly relevant for emerging satellite systems and 5G networks operating in the mmWave spectrum.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-23T14:48:26Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Juan Andrés Vasquez-Peralvo</name>
+    </author>
+    <author>
+      <name>Aral Ertug Zorkun</name>
+    </author>
+    <author>
+      <name>Jorge Querol</name>
+    </author>
+    <author>
+      <name>Eva Lagunas</name>
+    </author>
+    <author>
+      <name>Flor Ortiz</name>
+    </author>
+    <author>
+      <name>Luis Manuel Garcés-Socarrás</name>
+    </author>
+    <author>
+      <name>Jorge Luis González-Rios</name>
+    </author>
+    <author>
+      <name>Symeon Chatzinotas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.04699v1</id>
+    <title>Star Formation and Quenching of Satellite Galaxies</title>
+    <updated>2015-06-15T18:47:06Z</updated>
+    <link href="https://arxiv.org/abs/1506.04699v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.04699v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the quenching of satellite galaxies by gradual depletion of gas due to star formation, by ram-pressure striping and by tidally triggered starburst. Using progenitors constrained by the empirical model of Lu et al., in which outflow loading factor is low, we do not find an over-quenching problem in satellites even if there is no further cold gas supply from the cooling of the halo gas after a galaxy is accreted by its host. Gradual depletion alone predicts a unimodal distribution in specific star formation, in contrast to the bimodal distribution observed, and under-predicts the quenched fraction in low mass halos. Ram-pressure stripping nicely reproduces the bimodal distribution but under-predicts the quenched fraction in low-mass halos. Starbursts in gas-rich satellites triggered by tidal interactions with central galaxies can nicely reproduce the quenched satellite population in low-mass halos, but become unimportant for low-mass satellites in massive halos. The combined processes, together with the constrained progenitors, can reproduce the observed star formation properties of satellites in halos of different masses.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-15T18:47:06Z</published>
+    <arxiv:comment>14 pages, 13 figures, submitted to MNRAS</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Zhankui Lu</name>
+    </author>
+    <author>
+      <name>H. J. Mo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.10644v1</id>
+    <title>King-Hele orbit theory for periodic orbit and attitude variations</title>
+    <updated>2020-08-24T18:29:28Z</updated>
+    <link href="https://arxiv.org/abs/2008.10644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.10644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The analytical theory of satellite orbits in an atmosphere developed by King-Hele remains widely in use for satellite mission design because of its accurate approximation to numerical integration under simplifying assumptions. Over the course of six decades, modifications to the theory have addressed many of its weaknesses. However, in all subsequent modifications of the original theory, the assumption of a constant drag-coefficient has been retained. The drag-coefficient is a dynamic parameter that governs the physical interaction between the atmosphere and the satellite and depends on ambient as well as satellite specific factors. In this work, Fourier series expansion models of the drag-coefficient are incorporated in the original King-Hele theory to capture time-variations of the drag-coefficient in averaging integrals. The modified theory is validated through simulations that demonstrate the attained improvements in approximating numerical results over the original King-Hele formulation.</summary>
+    <category term="astro-ph.EP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-24T18:29:28Z</published>
+    <arxiv:comment>23 pages, 15 figures. Presented in AAS/AIAA Astrodynamics specialist conference 2020. Preprint submitted to Monthly Notices of the Royal Astronomical Society</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.EP"/>
+    <author>
+      <name>Vishal Ray</name>
+    </author>
+    <author>
+      <name>Daniel J. Scheeres</name>
+    </author>
+    <arxiv:doi>10.1093/mnras/staa3630</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/staa3630" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.07805v1</id>
+    <title>A Flat-Panel Brightness Model for the Starlink Satellites and Measurement of their Absolute Visual Magnitude</title>
+    <updated>2020-03-17T16:38:52Z</updated>
+    <link href="https://arxiv.org/abs/2003.07805v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.07805v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Starlink satellites are shaped like flat panels. The flat sides face zenith and nadir during normal operations. Their brightness is determined by the product of the solar illumination on the downward facing side of the panel multiplied by the area of that side projected toward the observer on Earth. This geometry leads to a unique brightness function that is not shared by other satellites. For example, the observed brightness is very sensitive to the solar elevation angle. There are circumstances where sunlight only illuminates the upward facing side of the satellite rendering it invisible to Earth-based observers. A brightness model depending on the solar aspect and the observer aspect of the flat panel, in addition to the satellite distance, is described. Absolute brightness is the only free parameter of the model, and it is taken to be that at a distance of 1,000 km when the solar and observer factors are unity. This model has been successfully fitted to a set of observed magnitudes. The absolute visual magnitude of a Starlink satellite as determined from this fitting is 4.1 +/- 0.1. The model could be used to determine the absolute magnitude of the Starlink satellite known as Dark Sat which has a special low-albedo coating.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.EP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-17T16:38:52Z</published>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Anthony Mallama</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6TDI0NFB0PJeGwkDIxgcZivYJZU</id>
+  <title>arXiv Query: search_query=all:factoring AND all:"ECM" AND all:constant&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:56Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:factoring+AND+(all:%22ECM%22+AND+all:constant)&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>7</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2002.03811v1</id>
+    <title>Efficient ECM factorization in parallel with the Lyness map</title>
+    <updated>2020-02-05T14:14:59Z</updated>
+    <link href="https://arxiv.org/abs/2002.03811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.03811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lyness map is a birational map in the plane which provides one of the simplest discrete analogues of a Hamiltonian system with one degree of freedom, having a conserved quantity and an invariant symplectic form. As an example of a symmetric Quispel-Roberts-Thompson (QRT) map, each generic orbit of the Lyness map lies on a curve of genus one, and corresponds to a sequence of points on an elliptic curve which is one of the fibres in a pencil of biquadratic curves in the plane. Here we present a version of the elliptic curve method (ECM) for integer factorization, which is based on iteration of the Lyness map with a particular choice of initial data. More precisely, we give an algorithm for scalar multiplication of a point on an elliptic curve, which is represented by one of the curves in the Lyness pencil. In order to avoid field inversion, and require only field multiplication (${\bf M}$), squaring (${\bf S}$) and addition, projective coordinates in $\mathbb{P}^1 \times \mathbb{P}^1$ are used. Neglecting multiplication by curve constants (assumed small), each addition of the chosen point uses $2{\bf M}$, while each doubling step requires $15{\bf M}$. We further show that the doubling step can be implemented efficiently in parallel with four processors, dropping the effective cost to $4{\bf M}$. Our scalar multiplication algorithm should require, on average, roughly twice as many multiplications per bit as the fastest state of the art methods using twisted Edwards curves with small constants, but it can be applied to any elliptic curve over $\mathbb{Q}$, whereas twisted Edwards curves (equivalent to Montgomery curves) correspond to only a subset of all elliptic curves. Hence, if implemented in parallel, our method may have potential advantages for integer factorization or elliptic curve cryptography.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-05T14:14:59Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrew N. W. Hone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-ph/0203049v1</id>
+    <title>Pion and Kaon Electromagnetic Form Factors</title>
+    <updated>2002-03-05T13:25:18Z</updated>
+    <link href="https://arxiv.org/abs/hep-ph/0203049v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-ph/0203049v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the electromagnetic form factor of the pion and kaons at low-energies with the use of Chiral Perturbation Theory. The analysis is performed within the three flavour framework and at next-to-next-to-leading order. We explain carefully all the relevant consistency checks on the expressions, present full analytical results for the pion form factor and describe all the assumptions in the analysis. From the phenomenological point of view we make use of our expression and the available data to obtain the charge radius of the pion obtaining $&lt;r^2 &gt;_V^π=(0.452+-0.013) fm^2$, as well as the low-energy constant $L_9^r(m_ρ)= (5.93+-0.43)10^{-3}$. We also obtain experimental values for 3 combinations of order $p^6$ constants.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-03-05T13:25:18Z</published>
+    <arxiv:comment>50 pages</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>JHEP 0203:046,2002</arxiv:journal_ref>
+    <author>
+      <name>Johan Bijnens</name>
+    </author>
+    <author>
+      <name>Pere Talavera</name>
+    </author>
+    <arxiv:doi>10.1088/1126-6708/2002/03/046</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1126-6708/2002/03/046" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1308.3726v1</id>
+    <title>Luminosity Upgrades for ILC</title>
+    <updated>2013-08-16T21:46:19Z</updated>
+    <link href="https://arxiv.org/abs/1308.3726v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1308.3726v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The possibility of increasing the luminosity for the ILC at Ecm &lt; 350 GeV centre-of-mass by increasing the beam power are considered. It will be shown that an approximately constant luminosity can be achieved across the centre of mass energy range (250-500 GeV) without exceeding the installed AC power for 500 GeV operation. Overall a factor of four in luminosity over the published baseline could be achieved at 250 GeV resulting in 3*10**34 cm-2s-1. The implications for the damping rings and positron source are also briefly discussed.</summary>
+    <category term="physics.acc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-08-16T21:46:19Z</published>
+    <arxiv:comment>Submitted to the proceedings of the Snowmass Process CSS2013. Work supported in part by the U.S. Department of Energy under contract number DE-AC02-76SF00515</arxiv:comment>
+    <arxiv:primary_category term="physics.acc-ph"/>
+    <author>
+      <name>Mike Harrison</name>
+    </author>
+    <author>
+      <name>Marc Ross</name>
+    </author>
+    <author>
+      <name>Nicholas Walker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/9504014v1</id>
+    <title>GUTs in Curved Spacetime: Running Gravitational Constants, Newtonian Potential and the Quantum Corrected Gravitational Equations</title>
+    <updated>1995-04-05T12:53:42Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/9504014v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/9504014v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The running coupling constants (in particular, the gravitational one) are studied in asymptotically free GUTs and in finite GUTs in curved spacetime, with explicit examples. The running gravitational coupling is used to calculate the leading quantum GUT corrections to the Newtonian potential, which turn out to be of logarithmic form in asymptotically free GUTs. A comparison with the effective theory for the conformal factor ---where leading quantum corrections to the Newtonian potential are again logarithmic--- is made. A totally asymptotically free $O(N)$ GUT with quantum higher derivative gravity is then constructed, using the technique of introducing renormalization group (RG) potentials in the space of couplings. RG equations for the cosmological and gravitational couplings in this theory are derived, and solved numerically, showing the influence of higher-derivative quantum gravity on the Newtonian potential. The RG-improved effective gravitational Lagrangian for asymptotically free massive GUTs is calculated in the strong (almost constant) curvature regime, and the non-singular De Sitter solution to the quantum corrected gravitational equations is subsequently discussed. Finally, possible extensions of the results here obtained are briefly outlined.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1995-04-05T12:53:42Z</published>
+    <arxiv:comment>LaTeX, 27 pages, 2 uu-figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Rev.D52:2202-2213,1995</arxiv:journal_ref>
+    <author>
+      <name>E. Elizalde</name>
+    </author>
+    <author>
+      <name>C. O. Lousto</name>
+    </author>
+    <author>
+      <name>S. D. Odintsov</name>
+    </author>
+    <author>
+      <name>A. Romeo</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.52.2202</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.52.2202" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/9402154v2</id>
+    <title>One-Loop Renormalization and Asymptotic Behaviour of a Higher-Derivative Scalar Theory in Curved Spacetime</title>
+    <updated>1994-03-14T08:52:52Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/9402154v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/9402154v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A higher-derivative, interacting, scalar field theory in curved spacetime with the most general action of sigma-model type is studied. The one-loop counterterms of the general theory are found. The renormalization group equations corresponding to two different, multiplicatively renormalizable variants of the same are derived. The analysis of their asymptotic solutions shows that, depending on the sign of one of the coupling constants, we can construct an asymptotically free theory which is also asymptotically conformal invariant at strong (or small) curvature. The connection that can be established between one of the multiplicatively renormalizable variants of the theory and the effective theory of the conformal factor, aiming at the description of quantum gravity at large distances, is investigated.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1994-02-28T17:32:52Z</published>
+    <arxiv:comment>11 pages, LaTeX file (some mistakes have been corrected and a reference has been added), UB-ECM-PF 94/5</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Lett.B328:297-306,1994</arxiv:journal_ref>
+    <author>
+      <name>E. Elizalde</name>
+    </author>
+    <author>
+      <name>A. G. Jacksenaev</name>
+    </author>
+    <author>
+      <name>S. D. Odintsov</name>
+    </author>
+    <author>
+      <name>I. L. Shapiro</name>
+    </author>
+    <arxiv:doi>10.1016/0370-2693(94)91483-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/0370-2693(94)91483-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0710.0855v1</id>
+    <title>Secular effects on inflation from one-loop quantum gravity</title>
+    <updated>2007-10-03T17:54:56Z</updated>
+    <link href="https://arxiv.org/abs/0710.0855v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0710.0855v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we revisit and extend a previous analysis where the possible relevance of quantum gravity effects in a cosmological setup was studied. The object of interest are non-local (logarithmic) terms generated in the effective action of gravity due to the exchange in loops of massless modes (such as photons or the gravitons themselves). We correct one mistake existing in the previous work and discuss the issue in a more general setting in different cosmological scenarios. We obtain the one-loop quantum-corrected evolution equations for the cosmological scale factor up to a given order in a derivative expansion in two particular cases: a matter dominated universe with vanishing cosmological constant, and in a de Sitter universe. We show that the quantum corrections, albeit tiny, may have a secular effect that eventually modifies the expansion rate. For a de Sitter universe they tend to slow down the rate of the expansion, while the effect seems to have the opposite sign in a matter dominated universe. To partly understand these effects we provide a complementary newtonian analysis.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-10-03T17:54:56Z</published>
+    <arxiv:comment>14 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Phys.Lett.B663:361-366,2008</arxiv:journal_ref>
+    <author>
+      <name>J. A. Cabrer</name>
+      <arxiv:affiliation>Universitat de Barcelona</arxiv:affiliation>
+    </author>
+    <author>
+      <name>D. Espriu</name>
+      <arxiv:affiliation>Universitat de Barcelona</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2008.04.047</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2008.04.047" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-ph/0109130v1</id>
+    <title>New predictions for inclusive heavy-quarkonium P-wave decays</title>
+    <updated>2001-09-14T16:59:46Z</updated>
+    <link href="https://arxiv.org/abs/hep-ph/0109130v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-ph/0109130v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that some NRQCD colour-octet matrix elements can be written in terms of (derivatives of) wave functions at the origin and non-perturbative universal constants once the factorization between the soft and ultrasoft scale is achieved by using an effective field theory where only ultrasoft degrees of freedom are kept as dynamical entities. This allows us to derive a new set of relations between inclusive heavy-quarkonium P-wave decays into light hadrons with different principal quantum number and with different heavy flavour. In particular, we can estimate the branching ratios of bottomonium P-wave states by using charmonium data.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-09-14T16:59:46Z</published>
+    <arxiv:comment>4 pages, revtex</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>Phys.Rev.Lett. 88 (2002) 012003</arxiv:journal_ref>
+    <author>
+      <name>N. Brambilla</name>
+    </author>
+    <author>
+      <name>D. Eiras</name>
+    </author>
+    <author>
+      <name>A. Pineda</name>
+    </author>
+    <author>
+      <name>J. Soto</name>
+    </author>
+    <author>
+      <name>A. Vairo</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.88.012003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.88.012003" title="doi"/>
+  </entry>
+</feed>

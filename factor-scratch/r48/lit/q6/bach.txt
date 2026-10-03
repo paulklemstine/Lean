@@ -1,0 +1,890 @@
+MATHEMATICS OF COMPUTATION
+Volume 65, Number 216
+October 1996, Pages 1701–1715
+
+
+
+
+        ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES
+
+                            ERIC BACH AND RENÉ PERALTA
+
+
+         Abstract. We call an integer semismooth with respect to y and z if each of
+         its prime factors is ≤ y, and all but one are ≤ z. Such numbers are useful in
+         various factoring algorithms, including the quadratic sieve. Let G(α, β) be the
+         asymptotic probability that a random integer n is semismooth with respect to
+         nβ and nα . We present new recurrence relations for G and related functions.
+         We then give numerical methods for computing G, tables of G, and estimates
+         for the error incurred by this asymptotic approximation.
+
+
+
+
+                                     1. Introduction
+   Many number-theoretic algorithms, such as the quadratic sieve factoring method
+[19], rely on auxiliary numbers whose prime factors lie within prescribed bounds.
+In practice, one often uses so-called “large prime” versions of these algorithms, in
+which the auxiliary numbers are composed of one moderately large prime factor and
+a number of smaller ones. In analyzing these, it is useful to know the asymptotic
+probability that a random number has this form. In this paper, we show how to
+compute this probability quickly and accurately and assess the accuracy of our
+asymptotic approximations.
+   Following Knuth and Trabb Pardo [8], we factor a positive integer n uniquely
+as n = n1 n2 . . . , where each ni is prime, and n1 ≥ n2 ≥ . . . . In other words, ni is
+the ith largest prime factor of n, counted by multiplicity. If i is greater than the
+number of prime factors, we define ni to be 1.
+   We will say that n is semismooth with respect to y and z if n1 ≤ y and n2 ≤ z.
+That is, all the prime factors of n are bounded by z, with the possible exception of
+a prime factor bounded by y. We let
+                         Ψ(x, y, z) = #{n ≤ x : n1 ≤ y, n2 ≤ z}.
+This generalizes de Bruijn’s function [3]
+                              Ψ(x, y) = #{n ≤ x : n1 ≤ y}.
+We will prove that for every α, β satisfying 0 < α < β < 1,
+(1.1)                         G(α, β) = lim Ψ(x, xβ , xα )/x
+                                           x→∞
+
+
+   Received by the editor December 14, 1992 and, in revised form, July 5, 1994 and October 23,
+1995.
+   1991 Mathematics Subject Classification. Primary 11N25; Secondary 11Y05, 11Y70.
+   The first author was supported in part by NSF Grants DCR-8552596 and CCR-9208639. The
+second author was supported in part by NSF Grant CCR-9207204.
+
+                                                              c 1996 American Mathematical Society
+
+                                              1701
+1702                       ERIC BACH AND RENÉ PERALTA
+
+
+exists. This should be thought of as the asymptotic joint distribution of the relative
+lengths of n1 and n2 . Thus, the function σ(u, v) = G(1/u, 1/v) can be considered
+a two-dimensional analog of Dickman’s well-known rho function.
+   The function G satisfies some interesting recurrence relations. In §3 we use these
+to show the limit in (1.1) exists, and to estimate the rate of convergence. In §4
+we discuss methods for computing G numerically and tabulate the results in §5.
+Finally, §6 discusses the accuracy of our asymptotic approximations.
+
+                                  2. Background
+   The Dickman rho function is defined for real x ≥ 0 by the relation
+                            (
+                              1               if 0 ≤ x ≤ 1,
+(2.1)                ρ(x) = 1 R x
+                              x x−1 ρ(t)dt otherwise.
+
+We also let F (α) = ρ(1/α).
+  Norton [17] surveys some useful properties of the rho function, which we sum-
+marize here. First, 0 < ρ(x) ≤ 1, and
+(2.2)                            ρ0 (x) = −ρ(x − 1)/x
+when x ≥ 1 (at x = 1 we take the right derivative). This implies that ρ is non-
+increasing, and |ρ0 (x)| ≤ 1. In fact, the rho function decreases very rapidly for large
+x; we have ρ(x) ≤ 1/x! .
+   The differential-delay equation (2.2) implies that ρ is piecewise analytic. More
+precisely, there is an analytic function ρk agreeing with ρ(x) when k − 1 ≤ x ≤ k,
+for k = 1, 2, 3, . . . . We have, for example, ρ1 = 1, and ρ2 = 1 − log x. It is also
+easy to see that ρ belongs to the class C k on the interval [k, ∞). R
+                                                                         x
+   Let π(x) denote the number of primes ≤ x, and let li(x) = 0 dt/ log t (the
+Cauchy principal value is intended here). We will use the prime number theorem,
+in the form
+                                                     x
+(2.3)                          π(x) = li(x) + O( c );
+                                                  log x
+this relation holds for any c > 0. We write (x) for the error term, so that π(x) =
+li(x) + (x). Schoenfeld proved, assuming the Riemann hypothesis, that
+                                          √
+(2.4)                           |(x)| < ( x log x)/(8π)
+provided x ≥ 2, 657. (See (6.18) of [22].)
+   The prime number theorem implies
+                              X1
+(2.5)                               = log log x + O(1)
+                              p<x
+                                  p
+and
+                                  X      1
+(2.6)                                         = O(1).
+                                  p<x
+                                      p log p
+   Let 0 < α < 1. Results of de Bruijn imply that if 0 < α ≤ γ and tα ≥ 2, we have
+                                                      t
+(2.7)                      Ψ(t, tγ ) = tF (γ) + O(         ).
+                                                   α log t
+(To prove this, combine (1.4) and (5.3) of [3] with (2.3) above, taking c = 4.)
+   In results such as the above, an unadorned “O” symbol indicates an absolute
+constant.
+                  ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                        1703
+
+
+         3. Recurrence relations for smoothness distributions
+   Many of the useful properties of asymptotic smoothness distributions can be
+derived from a simple heuristic model, which we call random bisection. The idea is
+that asymptotically, the relative lengths of the prime factors of a random number
+can be obtained by choosing a random λ uniformly from (0, 1)—this gives the
+relative length of the first factor—and then proceeding recursively with the smaller
+interval (0, 1 − λ). (This was previously applied to prime factorizations in [1].)
+   To illustrate, we derive a recurrence for F (α), the asymptotic probability that
+none of n’s prime factors exceed nα . This is the probability that all lengths chosen
+by random bisection are ≤ α; conditioning on the first length λ, we should have
+                                        Z α
+                                                 α
+(3.1)                           F (α) =     F(       )dλ.
+                                         0     1 − λ
+This is equivalent to (2.1), as the substitutions t = (1 − λ)/α and x = 1/α show.
+   Using a similar argument, one can deduce that F2 (α), the asymptotic probability
+that n2 ≤ nα , should satisfy
+                             Z α                 Z 1
+                                        α                 α
+(3.2)               F2 (α) =      F2 (     )dλ +     F(       )dλ.
+                               0       1−λ         α    1−λ
+(Compare with (3.8) and (3.11) of [8].)
+   Now, we let G(α, β) denote the asymptotic probability that n2 ≤ nα and n1 ≤
+ β
+n . Again by conditioning on the first length λ, we conclude that G, if it exists,
+should satisfy
+                         Z α                        Z β
+                                  α       β                  α
+(3.3)          G(α, β) =     G(       ,       )dλ +     F(       )dλ.
+                          0     1 − λ   1 − λ        α     1 − λ
+   We will prove this rigorously below, using a different relation for G that is not
+as easy to motivate:
+                                          Z β
+                                                   α  dλ
+(3.4)                   G(α, β) = F (α) +     F             .
+                                           α     1−λ λ
+We can, however, give it a probabilistic interpretation. We condition on the largest
+length λ produced by random bisection. Either λ ≤ α (which accounts for the term
+F (α)), or it lies between α and β. The second event contributes a term
+                           Z β
+                               Pr[λ(2) ≤ α|λ(1) = λ]dF (λ).
+                           α
+
+(Here λ(1) > λ(2) > · · · are the lengths produced by random bisection, in sorted
+order.) The distribution of λ(1) is absolutely continuous; from (2.2), we get
+                                               λ dλ
+                               dF (λ) = F (      ) .
+                                              1−λ λ
+Because (3.4) holds for arbitrary α ≤ β, a standard theorem of analysis (see [23, p.
+360]) implies that we can take
+                                                  α         λ
+(3.5)              Pr[λ(2) ≤ α|λ(1) = λ] = F (       )/F (     ).
+                                                 1−λ       1−λ
+  So far, we have relied on heuristic arguments. We now prove (3.4) and (3.3).
+1704                                ERIC BACH AND RENÉ PERALTA
+
+
+Theorem 3.1. If 0 < α < β < 1, then
+                                Z β
+            β   α                                        α  dλ      log(α−1 ) x
+      Ψ(x, x , x ) = xF (α) + x     F                           + O(                ).
+                                                  α     1−λ λ        α(1 − β) log x
+Therefore, the limit
+                                    G(α, β) = lim Ψ(x, xβ , xα )/x
+                                                  x→∞
+
+exists, and satisfies (3.4).
+Proof. The basic idea of the proof is to carefully repeat the conditioning argument
+for (3.4), employing a uniform estimate for the Ψ function and the prime number
+theorem.
+   We have
+(3.6)
+                          X                                 X
+  Ψ(x, xβ , xα ) =            #{n ≤ x : n1 = p} +                     #{n ≤ x : n1 = p, n2 ≤ xα }.
+                      p≤xα                               xα <p≤xβ
+
+  For the first sum, we have
+      X                                                                                     x
+           #{n ≤ x : n1 = p} = #{n ≤ x : n1 ≤ xα } = xF (α) + O(                                 ).
+                                                                                         α log x
+         p≤xα
+
+  The second sum requires more work. We first observe that
+       X                                    X
+            #{n ≤ x : n1 = p, n2 ≤ xα } =         #{m ≤ x/p : m1 ≤ xα }
+        xα <p≤xβ                                          xα <p≤xβ
+
+                              X                                             α
+(3.7)                 =                #{m ≤ x/p : m1 ≤ (x/p) 1−log p/ log x }.
+                            xα <p≤xβ
+
+When xα < p ≤ xβ ,
+                                        α           α            α
+                            0≤α<           <                  ≤     .
+                                       1−α   1 − log p/ log x   1−β
+The estimate (2.7) applies, so
+         X                                  α
+               #{m ≤ x/p : m1 ≤ (x/p) 1−log p/ log x }
+           xα <p≤xβ
+                             X        x        α                1           X           x/p
+                      =                 F(               ) + O(                                ).
+                                      p 1 − log p/ log x        α                     log(x/p)
+                          xα <p≤x   β                                     xα <p≤x   β
+
+
+Applying (2.5) and (2.6), we get
+(3.8)
+                                         X         x        α                log(α−1 ) x
+       Ψ(x, xβ , xα ) = xF (α) +                     F(               ) + O(                ).
+                                                   p 1 − log p/ log x        α(1 − β) log x
+                                       xα <p≤x   β
+
+
+  Using Stieltjes integration, we have
+                  X                                     Z xβ
+                            1           α                           1 − log t/ log x dπ(t)
+(3.9)                         F(                  )=           ρ(                   )      .
+                            p    1 − log p/ log x         xα               α           t
+                xα <p≤x   β
+                   ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                                     1705
+
+
+If we integrate by parts, substitute π(t) = li(t) + (t), and recombine the terms
+involving li(t), we obtain
+            Z xβ                              Z xβ
+                     1 − log t/ log x dπ(t)           1 − log t/ log x dt
+                  ρ(                 )      =      ρ(                 )
+              x α           α           t      x α           α          t log t
+
+(3.10)
+          h 1 − log t/ log x (t) ixβ Z xβ d 1 1 − log t/ log x 
+         + ρ(               )        −         ρ(              ) (t)dt.
+                   α           t xα    xα dt t        α
+We now show the error terms in (3.10) are small. Using |ρ| ≤ 1 and (2.3) (with
+c = 1), we obtain
+                  h 1 − log t/ log x (t) ixβ          1
+                   ρ(               )         = O(          ).
+                           α          t x   α
+                                                   α log2 x
+After differentiating the quotient and estimating each resulting term separately, we
+get
+       Z xβ                                      Z xβ
+              d 1 1 − log t/ log x                      dt           1
+                   ρ(               ) (t)dt = O           2   = O(         ).
+         xα dt t           α                      xα t log t        α log x
+This shows that
+                                Z xβ
+           β   α                            1 − log t/ log x dt             log(α−1 )x
+    Ψ(x, x , x ) = xF (α) +            ρ(                   )         + O(                ).
+                                 xα                α          t log t      α(1 − β) log x
+Making the substitution λ = log t/ log x, we obtain the first statement of the theo-
+rem. The second follows from dividing by x and letting x → ∞.
+
+  The novelty in the above theorem is a careful estimate of the error term. Knuth
+and Trabb Pardo gave (3.4) for the special case β = 2α. Weaker statements of
+Theorem 3.1 (that is, without error estimates) appear in [9] and [15]. We now
+prove (3.3), which we believe to be new.
+Theorem 3.2. We have
+                           Z α                                Z β
+                                     α   β                                α
+               G(α, β) =         G(    ,    )dλ +                   F(       )dλ.
+                            0       1−λ 1−λ                    α         1−λ
+Proof. If 0 < γ < 1, we have
+                                             Z γ
+                                                         γ
+                                 F (γ) =           F(       )dζ.
+                                               0        1−ζ
+Now substitute ζ = λ/(1 − ν) and γ = α/(1 − ν), and rearrange terms to obtain
+                             Z α
+                     α                 α                 α
+                 F(      )=      F(         )dλ + νF (      ).
+                    1−ν       0     1−ν −λ             1−ν
+If we divide this by ν, integrate over α ≤ ν ≤ β, reverse the order of integration,
+and substitute ν = (1 − λ)µ, we get
+     Z β                 Z α Z 1−λ β                          Z β
+              α dν                             α         dµ           α
+         F(       )   =      dλ       F(               )    +     F(      )dν.
+      α     1−ν ν         0       α
+                                 1−λ
+                                         (1 − λ)(1 − µ) µ      α     1−ν
+1706                           ERIC BACH AND RENÉ PERALTA
+
+                    Rα
+If we add F (α) =    0
+                         F (α/(1 − λ))dλ to both sides and apply (3.4), we get
+                     Z β
+                                   α dν
+ G(α, β) = F (α) +           F(      )
+                         α        1−ν ν
+            Z α     h Z 1−λ
+                         β
+                                                                 i                Z β
+                                      α        dµ          α                                  α
+         =        dλ        F(               )     + F(         ) +                     F(       )dν
+            0         α
+                     1−λ
+                               (1 − λ)(1 − µ) µ         (1 − λ)                    α         1−ν
+           Z α                          Z β
+                    α        β                   α
+         =     G(        ,        )dλ +     F(       )dλ.
+            0     1 − λ    1 −  λ        α     1 − λ
+
+
+                                   4. Numerical methods
+   Several authors have discussed computing smoothness distributions such as the
+Dickman rho function. We briefly discuss this work and then present our numerical
+methods for the semismoothness distribution G.
+   Implicit in the random bisection idea is the notion that smoothness distributions
+can be computed by Monte Carlo methods. This was done for the rho function by
+Chamayou [5], albeit with a different probabilistic model than ours. Although
+one could also approximate G by simulation, we have not done this because the
+probabilities of current interest are so small.
+   It is also possible to combine a recurrence relation with numerical integration.
+This was done by van de Lune and Wattel [13] and Knuth and Trabb Pardo [8]. For
+example, replacing the integral in (2.1) with an appropriate quadrature rule gives
+a linear equation that can be solved to obtain an approximation to ρ(x). Either of
+the relations (3.3) and (3.4) can be used in this way to compute G. In practice,
+however, we were dissatisfied with the performance of the resulting methods. Use
+of the recurrence relation (3.3) involves computing values of G in a two-dimensional
+region and interpolating the values on a line of integration. The relation (3.4) is
+more useful, as it only relies on values of F (i.e., ρ); however, one needs an accurate
+table of this function before numerical integration is feasible.
+   The best methods for calculating ρ are based on the following idea. Recall
+that there is an analytic function ρk that agrees with ρ on the interval [k − 1, k].
+Knowing the Taylor series for ρk , one can use (2.2) to get the Taylor series for ρk+1
+up to a constant term, which can be then determined from (2.1). This was used by
+Cheer and Goldston [6], Marsaglia, Zaman, and Marsaglia [14], and Patterson and
+Rumsey [18] to evaluate ρ and similar functions.
+   To compute G, we used Patterson and Rumsey’s method for ρ, which we sum-
+marize as follows. (Its derivation is similar to §3 of [6].) Let 0 ≤ ξ ≤ 1. Define
+              (k)
+coefficients ci by
+                                        ∞
+                                        X  (k)
+                         ρk (k − ξ) =     ci ξ k ,            k = 1, 2, . . . .
+                                        i=0
+
+Then we have
+                                  (1)          (0)
+                                  c0 = 1,     ci     = 0 for i ≥ 1,
+
+                         (2)                       (2)
+(4.1)                    c0 = 1 − log 2,       ci        = 1/(i2i) for i ≥ 1,
+                  ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                        1707
+
+
+and for k > 2
+
+                                      (k)
+                                                X
+                                                i−1 (k−1)
+                                                   cj
+(4.2)                                ci     =                  ,
+                                                j=0
+                                                      ik i−j
+
+with
+                                                   ∞
+                                              1 X cj
+                                                        (k)
+                                (k)
+(4.3)                          c0 =                         .
+                                            k − 1 j=1 j + 1
+
+                               (k)
+It can be shown that 0 ≤ ci ≤ 1/2i, so that m + 1 terms of the series will
+approximate ρk within an (absolute) error of 2−m . Empirically, we found that 55
+coefficients were enough to compute ρ to IEEE standard double precision (relative
+error about 10−17 ) in the range 0 ≤ x ≤ 20.
+   Although this suffices for our purposes, we remark that the method of [14] is
+superior when one wishes to compute ρ(x) to high precision. It expands ρk in
+circles of radius 1/2 about k − 1/2, using simpler recurrences than (4.1)–(4.3). (We
+do call attention to one oversight in [14]: the authors state that “ρ(x) behaves
+                                                                 .
+asymptotically like xαx ,” and provide data suggesting that α = −1.18. However,
+de Bruijn [4] proved that log ρ(x) ∼ −x log x as x → ∞, so α = −1.)
+   Our method for computing G uses (3.4), together with term-by-term integration
+of the Taylor series determined by (4.1)–(4.3). Rather than use (3.4) directly, it is
+more convenient to work with σ(u, v) = G(1/u, 1/v), which satisfies
+                                           Z u
+                                                         dt
+                         σ(u, v) = ρ(u) +      ρ(u − u/t) .
+                                            v             t
+(To prove this, make the substitutions α = 1/u, β = 1/v, and λ = 1/t in (3.4).)
+We define
+                                      Z u
+                                                    dt
+                         J(u, v, w) =     ρ(w − w/t) ,
+                                       v             t
+so that
+                             σ(u, v) = ρ(u) + J(u, v, u).
+  We now show how to compute J(u, v, w). Let k = dw − w/ue, and define ξ(t)
+by w − w/t = k − ξ(t).
+  If ξ(t) ∈ [0, 1] for v ≤ t ≤ u, we can proceed as follows:
+                              Z u                  ∞      Z
+                                             dt X (k) u             dt
+                 J(u, v, w) =     ρ(k − ξ(t)) =       ci      ξ(t)i
+                                v             t   i=0       v        t
+
+                             X∞       Z w/v
+                                  (k)       (η + k − w)i
+                         =       ci                      dη.
+                             i=0       w/u        η
+                                                     R w/v        i
+(Here we have substituted η = w/t.) If Hi (u, v, w) = w/u (η+k−w)
+                                                              η     dη, then writing
+(η + k − w) /η as (η + k − w)
+             i               i−1
+                                 + (η + k − w) (k − w)/η gives
+                                                 i−1
+
+                  (
+                   log(u/v)                                          if i = 0,
+    Hi (u, v, w) = (w/v+k−w)i −(w/u+k−w)i
+                              i             + (k − w)Hi−1 (u, v, w) otherwise.
+1708                               ERIC BACH AND RENÉ PERALTA
+
+
+Solving the recurrence yields
+                                                                                                       
+                                                                X
+                                                                i
+                                                                  (A/C)j               X
+                                                                                       i
+                                                                                         (B/C)j
+(4.4)         Hi (u, v, w) = C i log(u/v) +                                       −                    ,
+                                                                j=1
+                                                                         j             j=1
+                                                                                                    j
+
+
+where A = w/v + k − w, B = w/u + k − w, and C = k − w.
+  Thus, in the case ξ(t) ∈ [0, 1], we have
+
+                                               ∞
+                                               X  (k)
+(4.5)                             J(u, v, w) =   ci Hi (u, v, w),
+                                                          i=0
+
+
+where the Hi ’s are defined by (4.4). If ξ(t) 6∈ [0, 1], we must split the integral. Note
+that when t = w/(w − k + 1), we have ξ(t) = 1, that is, w − w/t = k − 1. In this
+case, we have
+
+                         Z w/(w−k+1)                                         Z u
+                                                                      dt                                       dt
+        J(u, v, w)   =                          ρ(w − w/t)               +                        ρ(w − w/t)
+                             v                                         t          w/(w−k+1)                     t
+
+                     = J(w/(w − k + 1), v, w) + J(u, w/(w − k + 1), w).
+
+   The second integral can be computed via (4.5) and the first integral is computed
+recursively. We note that the integral is split if and only if v < w/(w − k + 1).
+   We can bound the recursion depth for computing J(u, v, u) by observing that at
+the ith recursive step, u is replaced by u/(1 + i − r), where r = due − u. (This can
+be verified by induction on i.) From this it can be seen that the integral is split no
+more than u/v times.
+   If we approximate J(u, v, w) by n terms of the series (4.5), the tail is bounded
+by
+
+                      ∞
+                      X                Z u                            ∞
+                                                                      X             Z u
+                                 (k)                 dt                       (k)          dt
+                             ci              ξ(t)i          ≤                ci
+                                        v             t                                v    t
+                     i=n+1                                        i=n+1
+                                                                                    ∞
+                                                                                    X         (k)
+                                                            = log(u/v)                       ci
+                                                                                  i=n+1
+                                                                                   X∞
+                                                            ≤ log(u/v)                     (1/2)i
+                                                                                  i=n+1
+                                                                      log(u/v)
+                                                            =
+                                                                         2n
+
+when ξ(t) ∈ [0, 1]. When computing J(u, v, u), the integral is split into at most u/v
+pieces, so the total error is at most u log(u/v)
+                                          v2n    .
+   Some care is required in the computation of Hi (u, v, w), because massive cancel-
+lation occurs in (4.4) when i is large. We deal with this in the following way. In
+any recursive call (i.e., not the top level), it can be shown that 0 ≤ A ≤ 1, B = 0,
+                   ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                         1709
+
+
+and C < −1. For these cases, we replace (4.4) by the convergent series
+                                  X∞             X∞
+                                        Bj             Aj
+(4.6)             Hi (u, v, w) =              −             .
+                                 j=i+1
+                                       C j j=i+1 C j−i j
+                                         j−i
+
+
+At the top level, A/C and B/C are unbounded, and naive use of (4.4) can lead to
+overflow whenever C is close to 0. Here, in our calculations we replaced (4.4) by
+the equivalent form
+                                                Xi
+                                                     Aj    X
+                                                           i
+                                                             Bj
+(4.7)           Hi (u, v, w) = C i log(u/v) +            −
+                                                j=1
+                                                    C j j=1 C j−i j
+                                                     j−i
+
+
+whenever |C| < 0.2.
+
+                                       5. Tables
+   In this section we give tables of the asymptotic semismoothness distribution,
+computed with the methods of §4. Our calculations used 22 terms of the Taylor
+series for ρk (x) and 22 terms in the expansion given by (4.5).
+   As a check on our computations we used an independent computation of G(α, 2α)
+(using (3.2) and numerical integration), as well as Table 1 in [8]. This table includes
+values of G(α, α) = ρ(α−1 ), as well as values of G(α, 2α). Our results agree with
+[8] to seven significant figures.
+   Table 1 shows σ(u, v) = G( u1 , v1 ) for u, v in the range 2 ≤ u ≤ 20 and 2 ≤ v ≤ 10.
+   Of particular interest nowadays are values of G(α, β) for (α, β) near (1/12, 1/7.5).
+This is so because recent implementations of the multiple polynomial quadratic
+sieve are designed to factor 100-digit cryptographic integers (i.e., products of two
+large primes), using auxiliary 60-digit numbers which are semismooth with re-
+spect to bounds near 108 and 105 . It is believed that these auxiliary numbers are
+semismooth with the same probability as random numbers, so that the bulk of
+the algorithm’s work can be viewed as a search for semismooth numbers among
+what are essentially random 60-digit numbers. Thus the probability of a “hit” is
+given by Ψ(1060 , 108 , 105 ), which is approximately G(1/12, 1/7.5) (for details, see
+[10]). Most other factoring algorithms also allow for a “large prime” variation (see
+[15, 16]). Semismoothness tables should be of aid in choosing optimal parameters
+for these algorithms as well.
+   Table 2 gives values of G(α, β) for α and β in the current range of interest for
+factorization algorithms.
+   We observe that, in the range of Table 2, log(σ(u, v)) is almost linear in u, v.
+By analogy with known approximations to Dickman’s rho function we performed a
+least squares fit of a linear function of u log u, v log v. The resulting approximation
+is
+(5.1)               σ(u, v) ≈ e4.55219−0.933064u log u−0.280283v log v .
+   In the range of Table 2, this approximation has a relative error of no more than
+30% (the error increases rapidly outside this range). The approximation also shows
+that σ(u, v) is much more dependent on u than on v.
+                                                                                                                                              1710
+
+
+
+
+                            Table 1. Values of σ(u, v) = G(1/u, 1/v) for 2 ≤ u ≤ 20 ; 2 ≤ v ≤ 10
+
+u                                                                       v
+       2.0             3.0           4.0             5.0            6.0            7.0            8.0            9.0            10.0
+2.0    3.068528e-01   —–             —–             —–             —–             —–             —–             —–             —–
+3.0    2.246518e-01   4.860839e-02   —–             —–             —–             —–             —–             —–             —–
+4.0    9.639901e-02   2.465561e-02   4.910926e-03   —–             —–             —–             —–             —–             —–
+5.0    3.079212e-02   6.144568e-03   1.849280e-03   3.547247e-04   —–             —–             —–             —–             —–
+6.0    8.511187e-03   1.092267e-03   3.127192e-04   1.051674e-04   1.964970e-05   —–             —–             —–             —–
+7.0    2.184024e-03   1.596965e-04   3.754974e-05   1.317947e-05   4.778139e-06   8.745670e-07   —–             —–             —–
+8.0    5.297043e-04   2.058327e-05   3.662652e-06   1.179057e-06   4.696284e-07   1.796314e-07   3.232069e-08   —–             —–
+9.0    1.221795e-04   2.418992e-06   3.097157e-07   8.573660e-08   3.319264e-08   1.439810e-08   5.732620e-09   1.016248e-09   —–
+10.0   2.684198e-05   2.633999e-07   2.352672e-08   5.382861e-09   1.915717e-09   8.358903e-10   3.855071e-10   1.583472e-10   2.770172e-11
+11.0   5.627512e-06   2.679280e-08   1.637888e-09   3.019323e-10   9.556196e-11   3.985501e-11   1.890085e-11   9.128686e-12   3.844123e-12
+12.0   1.128672e-06   2.559021e-09   1.057229e-10   1.544758e-11   4.254912e-12   1.647475e-12   7.654740e-13   3.859215e-13   1.932249e-13
+13.0   2.170148e-07   2.304231e-10   6.373298e-12   7.303377e-13   1.725544e-13   6.086492e-14   2.698020e-14   1.355061e-14   7.158754e-15
+14.0   4.009759e-08   1.962928e-11   3.606489e-13   3.218087e-14   6.459110e-15   2.048898e-15   8.518898e-16   4.157376e-16   2.213880e-16
+                                                                                                                                              ERIC BACH AND RENÉ PERALTA
+
+
+
+
+15.0   7.134198e-09   1.587081e-12   1.923443e-14   1.329397e-15   2.252007e-16   6.367265e-17   2.454356e-17   1.145796e-17   6.005714e-18
+16.0   1.224713e-09   1.221450e-13   9.701521e-16   5.171612e-17   7.360498e-18   1.843517e-18   6.534072e-19   2.887008e-19   1.467795e-19
+17.0   2.032238e-10   8.971949e-15   4.641835e-17   1.901399e-18   2.266007e-19   5.005962e-20   1.621962e-20   6.731238e-21   3.286696e-21
+18.0   3.265002e-11   6.304945e-16   2.112631e-18   6.627200e-20   6.595740e-21   1.281259e-21   3.779199e-22   1.465048e-22   6.821566e-23
+19.0   5.086645e-12   4.248307e-17   9.169125e-20   2.195713e-21   1.820808e-22   3.103008e-23   8.307233e-24   2.996162e-24   1.323455e-24
+20.0   7.695287e-13   2.750199e-18   3.803595e-21   6.932224e-23   4.779992e-24   7.133404e-25   1.729532e-25   5.786581e-26   2.415504e-26
+                       ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                                           1711
+
+
+         Table 2. Values of σ(u, v) = G(1/u, 1/v) for 10 ≤ u ≤ 15; 6 ≤
+         v≤9
+
+ u                                                        v
+        6.0             6.5            7.0           7.5             8.0            8.5            9.0
+ 10.0   1.915717e-09   1.246194e-09   8.358903e-10   5.685742e-10   3.855071e-10   2.548590e-10   1.583472e-10
+ 10.5   4.347011e-10   2.790060e-10   1.862869e-10   1.273550e-10   8.785696e-11   6.019803e-11   4.010645e-11
+ 11.0   9.556196e-11   6.027060e-11   3.985501e-11   2.719972e-11   1.890085e-11   1.319996e-11   9.128686e-12
+ 11.5   2.042300e-11   1.261597e-11   8.230457e-12   5.579976e-12   3.879851e-12   2.734419e-12   1.930373e-12
+ 12.0   4.254912e-12   2.567571e-12   1.647475e-12   1.105464e-12   7.654740e-13   5.408660e-13   3.859215e-13
+ 12.5   8.660935e-13   5.094235e-13   3.206906e-13   2.123547e-13   1.459152e-13   1.028856e-13   7.371953e-14
+ 13.0   1.725544e-13   9.875063e-14   6.086492e-14   3.967965e-14   2.698020e-14   1.891864e-14   1.355061e-14
+ 13.5   3.369911e-14   1.873623e-14   1.128729e-14   7.230573e-15   4.854135e-15   3.375809e-15   2.408918e-15
+ 14.0   6.459110e-15   3.484569e-15   2.048898e-15   1.287611e-15   8.518898e-16   5.863181e-16   4.157376e-16
+ 14.5   1.216276e-15   6.360275e-16   3.645830e-16   2.244685e-16   1.461324e-16   9.936033e-17   6.986140e-17
+ 15.0   2.252007e-16   1.140545e-16   6.367265e-17   3.836313e-17   2.454356e-17   1.646200e-17   1.145796e-17
+
+
+
+
+                                        6. Error analysis
+   In this section, we consider the question of how closely asymptotic distributions
+such as ρ and σ approximate actual smoothness probabilities. We will show, in
+a certain sense, that if ρ is a good approximation to the smoothness distribution,
+then σ is a good approximation to the semismoothness distribution.
+   We first consider the question of whether xρ(u) is a good approximation to
+Ψ(x, x1/u ). This is of practical importance since asymptotic relations such as
+xρ(u) ∼ Ψ(x, x1/u ) do not guarantee that ρ(u) is a good approximation to the
+probability of 1/u-smoothness for any numbers of practical interest.
+   For example, from results of Ramaswami [20] (cited as equations 3.7 and 3.8 of
+[17]) and Knuth and Trabb Pardo [8], we know that
+
+                                                 x(1 − γ)ρ(u − 1)       x
+                   Ψ(x, x1/u ) = xρ(u) +                          + O( 2 ),
+                                                       log x          log x
+
+and therefore
+
+                   Ψ(x, x1/u )     ρ(u − 1) (1 − γ)           1
+                               =1+                  + O(             ).
+                     xρ(u)           ρ(u)    log x       ρ(u) log2 x
+
+(Here, γ = 0.5772... is Euler’s constant.) The unknown part of the relative error is
+
+                                                      1
+(6.1)                                       O(               ).
+                                                 ρ(u) log2 x
+
+Taking the crude approximation ρ(u) ≈ u−u , we note that for (6.1) to be small,
+we need log x  uu/2 . This is not likely to be attained in practical situations; for
+example, if u = 7.5 and x = 1060 , we have (u−u log2 x)−1 = 191.5.
+   On the other hand, accurate tables of ρ(u) have been available for at least two
+decades, going well beyond the values of u needed to evaluate current factoring
+methods. As far as we know, no discrepancy has been observed between values of
+the rho function and smoothness probabilities, in the range of interest to algorithm
+designers. For example, Table 3 exhibits smooth number counts found by Odlyzko
+(from [21]); as soon as the predicted count of smooth numbers is moderately large,
+one finds reasonable agreement with the rho function. (We note that Odlyzko only
+counted numbers whose prime power factors are small, a definition more stringent
+than ours.)
+1712                         ERIC BACH AND RENÉ PERALTA
+
+        Table 3. Counts of even 2k -smooth numbers in [1015 , 1015 + 2 × 105 ]
+
+                                                 15
+                        k    count   u = log(10
+                                          log(2k )
+                                                   )
+                                                            105 ρ(u)    ratio
+                        6    0           8.305              0.001144    0.000
+                        7    0           7.118              0.05981     0.000
+                        8    1           6.229              0.9810      1.019
+                        9    6           5.537              7.727       0.777
+                        10   27          4.983              37.18       0.726
+                        11   110         4.530              126.6       0.869
+                        12   326         4.152              336.0       0.970
+                        13   691         3.833              739.3       0.935
+                        14   1425        3.559              1416        1.006
+                        15   2416        3.322              2425        0.996
+                        16   3852        3.114              3816        1.009
+                        17   5691        2.931              5616        1.013
+                        18   7979        2.768              7823        1.020
+
+
+
+   Therefore, we will simply take as given that ρ is a good approximation to smooth-
+ness probabilities; investigating this question further is beyond the scope of this
+paper. We proceed from this assumption to study the question of when σ(u, v) is
+a good approximation to Ψ(x, x1/u , x1/v )/x.
+   The following theorem states that if F is a good approximation to the smoothness
+distribution, then G is a good approximation to the semismoothness distribution.
+In this result, α and β satisfy 0 < α < β < 1, and ρ(x) is extended to be 1 for
+negative numbers.
+Theorem 6.1. Assume the Riemann hypothesis. Choose c1 and c2 so that
+                                            Ψ(t, tγ )
+                                     c1 ≤             ≤ c2
+                                            tF (γ)
+          α
+whenever 1−α ≤ γ ≤ 1−β
+                    α
+                       and t ≥ x1−β . Then, if xα ≥ 2, 657, we have
+
+                                       Ψ(x, xβ , xα )
+                        c1 (1 − ∆) ≤                  ≤ c2 (1 + ∆),
+                                        xG(α, β)
+where
+                                 "                         #
+                          β            1−β     ρ( 1−α−β  )   log x
+(6.2)            |∆| ≤             2ρ(     )+       α
+                                                                   .
+                       4πG(α, β)        α     (1 − β) log x xα/2
+
+Proof. From (3.6) and (3.7) we obtain
+                                               X                                 α
+(6.3)        Ψ(x, xβ , xα ) = Ψ(x, xα ) +                   Ψ(x/p, (x/p) 1−log p/ log x ).
+                                            xα <p≤xβ
+
+From the definition of c2 , plus (3.9) and (6.3), we have
+                                                X 1                α
+         c−1
+          2 Ψ(x, x , x ) ≤ xF (α) + x
+                    β   α
+                                                         F(                  )
+                                              α      β
+                                                       p    1 − log p/ log x
+                                                  x <p≤x
+                                                  Z xβ
+                                                                  1 − log t/ log x dπ(t)
+                               = xF (α) + x                  ρ(                   )      .
+                                                       xα                α           t
+                        ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                                       1713
+
+
+Using (3.4) and (3.10), and writing λ(t) = log t/ log x, we have
+(6.4)
+                                          Z xβ
+                                          1 − λ(t) dt
+c−1
+ 2 Ψ(x, x , x ) ≤ xF (α) + x
+         β   α
+                                                 ρ( )         + xE1 (α, β, x) + xE2 (α, β, x)
+                                            xα α      t log t
+                       = xG(α, β) + xE1 (α, β, x) + xE2 (α, β, x),
+where
+(6.5)
+                      h 1 − λ(t) (t) ixβ      1 − β (xβ )  1 − α (xα )
+        E1 (α, β, x) = ρ(       )         = ρ(      ) β − ρ(      ) α
+                           α      t xα           α     x       α    x
+and
+(6.6)
+                                   Z xβ
+                                          d 1 1 − λ(t) 
+          E2 (α, β, x) = −                     ρ(     ) (t)dt
+                                    xα    dt t    α
+                              Z xβ
+                                             1 − λ(t)          1 − λ(t)            
+                          =          (t)t−2 ρ(        ) + ρ0 (          )/(α log x) dt.
+                               xα                α                 α
+Schoenfeld’s bound (2.4) (which assumes the Riemann hypothesis) and (6.5) imply
+(6.7)
+                                                                          
+          log x      1−β    −β/2      1−α    −α/2     log x      1−β    −α/2
+  |E1 | ≤         ρ(     )βx     + ρ(     )αx       ≤         ρ(     )βx       .
+           8π         α                α               4π         α
+Similarly, but using (2.2) and (6.6), we have
+               Z xβ                                                         
+                     log t      1 − λ(t)        1 − λ(t)
+       |E2 | ≤         3/2
+                             ρ(          ) + ρ(          − 1)/(log x − log t)  dt.
+                xα 8πt             α               α
+So far, we have assumed that ρ(x) = 0 when x < 0. If we redefine ρ(x) to be 1
+when x < 0, the inequality above still holds, and we have made ρ monotonic. Using
+this new extension of ρ, we find
+(6.8)
+                       Z xβ                                      Z ∞
+                  A                                   Aβ log x                      Aβ log x −α/2
+        |E2 | ≤               t−3/2 log t dt ≤                         t−3/2 dt =           x     ,
+                  8π    xα                              8π       xα                   4π
+where A denotes the expression
+                                   1−β        1−α−β        1
+                              ρ(       ) + ρ(       )               .
+                                    α           α     (1 − β) log x
+  Let
+                                              (E1 + E2 )
+                                          ∆(α, β, x) =    ;
+                                               G(α, β)
+then (6.4), the inequalities (6.7) and (6.8), and a little algebra give the upper bound
+in the theorem. The lower bound is proved by an entirely analogous argument,
+starting with the estimate Ψ(t, tγ ) ≥ c1 tF (γ).
+
+   With the help of Theorem 6.1, the extra relative error incurred by using the
+asymptotic two-dimensional smoothness distribution can be explicitly estimated.
+For example, if x ≈ 1060 , α = 12
+                                1            1
+                                  , and β = 7.5 , then (6.2) gives |∆| ≤ 0.062.
+1714                           ERIC BACH AND RENÉ PERALTA
+
+
+   We also remark that Theorem 6.1 can be improved slightly at some cost in
+readability. For example, the first inequalities in (6.7) and (6.8) could be used
+directly (note that the first integral in (6.8) can be expressed in closed form).
+   In a certain sense, Theorem 6.1 ascribes most of the error in the approximation
+                                  Ψ(x, xα , xβ ) ≈ xG(α, β)
+to the use of the rho function. Hildebrand [11] proved that if the Riemann hypoth-
+esis holds, then
+                                                           
+                                                 log(α−1 )
+(6.9)                  Ψ(x, xα ) = xF (α) 1 + O(           ) ,
+                                                  α log x
+as x → ∞. However, Theorem 6.1 and equation (3.4) imply that
+                                        log x
+                                ∆ = O( α/2 ),
+                                        x
+which is asymptotically much smaller than the relative error in (6.9).
+
+                                       7. Addendum
+    Following the ideas in this paper, Robert Lambert [12] has computed the asymp-
+totic probability that a random integer ≤ x has exactly two prime factors between
+xα and xβ , with all other prime factors ≤ xα .
+    Simon Tavaré has kindly informed us that the random bisection model also
+plays a role in theoretical population biology. We briefly note the connection to
+our work. We have studied the asymptotic joint distribution of the normalized
+lengths of the prime factors (ordered by size) of a random integer x ≤ n. Letting
+n1 ≥ n2 ≥ n3 ≥ · · · be these prime factors, the asymptotic joint distribution of
+                                log n1 log n2 log n3
+                                       ,       ,      ,...
+                                 log n log n log n
+is identical to the distribution of allele frequencies (in a model with infinitely many
+alleles), ranked by size. In theoretical biology this is known as the Poisson-Dirichlet
+distribution. Algorithms for computing its marginal distributions (in our terms, the
+distribution of the length of the kth-largest factor of a random integer), have been
+given by Griffiths [7]. As far as we know, however, we are the first to publish an
+algorithm for computing the joint distribution. For more on applications to biology,
+we refer the reader to [7] and references therein.
+    Finally, we remark that there is a very efficient algorithm for sampling from the
+factor length (Poisson-Dirichlet) distribution, which has been analyzed in [2].
+
+                                        References
+ 1. E. Bach, How to generate factored random numbers, SIAM J. Comput., 17:179–193, 1988.
+    MR 89e:11082
+ 2.        , Exact analysis of a priority queue algorithm for random variate generation, Proc. 5th
+    Ann. ACM-SIAM Symposium on Discrete Algorithms, pp. 48–52, 1994. MR 95h:65005
+ 3. N. G. de Bruijn, On the number of positive integers ≤ x and free of prime factors > y, Indag.
+    Math., 13:50–60, 1951. MR 13:724e
+ 4.        , The asymptotic behavior of a function occurring in the theory of primes, J. Indian
+    Math. Soc. (N.S.), 15:25–32, 1951. MR 13:326f
+ 5. J.-M.-F. Chamayou, A probabilistic approach to a differential-difference equation arising in
+    analytic number theory, Math. Comp., 27:197–203, 1973. MR 49:1725
+ 6. A. Y. Cheer and D. A. Goldston, A differential delay equation arising from the sieve of
+    Eratosthenes, Math. Comp., 55:129–141, 1990. MR 90j:11091
+                      ASYMPTOTIC SEMISMOOTHNESS PROBABILITIES                                  1715
+
+
+ 7. R. C. Griffiths, On the distribution of points in a Poisson Dirichlet process, J. Appl. Probab.,
+    25:336–345, 1988. MR 89g:92026
+ 8. D. Knuth and L. Trabb Pardo, Analysis of a simple factorization algorithm, Theoret. Comput.
+    Sci., 3:321–348, 1976. MR 58:16485
+ 9. G. Kolesnik and E. G. Straus, On the first occurrence of values of a character, Trans. Amer.
+    Math. Soc., 246:385–394, 1978. MR 80c:10045
+10. A.K. Lenstra and M.S. Manasse, Factoring by electronic mail, In EUROCRYPT 89, vol-
+    ume 434 of Lecture Notes in Computer Science, pages 355–371. Springer-Verlag, 1990. MR
+    91i:11182
+11. A. Hildebrand, Integers free of large prime factors and the Riemann hypothesis, Mathematika,
+    31:258-271, 1984. MR 87a:11086
+12. R. Lambert, Computational aspects of discrete logarithms, Ph.D. thesis, University of Water-
+    loo, 1996.
+13. J. van de Lune and E. Wattel, On the numerical solution of a differential-difference equation
+    arising in analytic number theory, Math. Comp., 23:417–421, 1969. MR 40:1050
+14. G. Marsaglia, A. Zaman, and J. C. W. Marsaglia, Numerical solution of some classical
+    differential-difference equations, Math. Comp., 53:191–201, 1989. MR 90h:65124
+15. P. L. Montgomery, An FFT extension of the elliptic curve method of factorization, Ph.D.
+    thesis, University of California - Los Angeles, 1992.
+16. P. L. Montgomery and R. D. Silverman, An FFT extension to the p − 1 factoring algorithm,
+    Math. Comp., 54:839–854, 1990. MR 90j:11142
+17. K. K. Norton, Numbers with small prime factors, and the least kth power non-residue, Mem.
+    Amer. Math. Soc., 106, 1971. MR 44:3948
+18. N. Patterson, Letter to Eric Bach, November 1988.
+19. C. Pomerance, The quadratic sieve factoring algorithm, In EUROCRYPT ’84, volume 209 of
+    Lecture Notes in Computer Science, pages 169-182. Springer-Verlag, 1985. MR 87d:11098
+20. V. Ramaswami, The number of positive integers < x and free of prime divisors > xc , and a
+    problem of S.S. Pillai, Duke Math. J., 16:99–109, 1949. MR 10:597b
+21. C.-P. Schnorr and H. W. Lenstra, Jr., A Monte Carlo factoring algorithm with linear storage,
+    Math. Comp., 43:289–311, 1984. MR 85d:11106
+22. L. Schoenfeld, Sharper bounds for the Chebyshev functions θ(x) and ψ(x). II, Math. Comp.,
+    30:337–360, 1976. MR 56:15581b
+23. E. C. Titchmarsh, The Theory of Functions. Second Edition, Oxford Univ. Press, 1939.
+
+   Computer Sciences Department, University of Wisconsin–Madison, 1210 W. Dayton
+St., Madison, Wisconsin 53706
+   E-mail address: bach@cs.wisc.edu
+
+  Department of Electrical Engineering and Computer Science, University of
+Wisconsin–Milwaukee, P.O. Box 784, Milwaukee, Wisconsin 53201
+  E-mail address: peralta@cs.uwm.edu
+

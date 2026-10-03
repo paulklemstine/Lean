@@ -1,0 +1,148 @@
+Title: Brave Search
+
+URL Source: https://search.brave.com/search?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen
+
+Markdown Content:
+[![Image 2: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-light.D0nx3pfh.svg)![Image 3: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-dark.5D16vJCY.svg)![Image 4: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-small.Bdzj7Bzm.svg)](https://search.brave.com/)
+
+[![Image 5: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-small.Bdzj7Bzm.svg)](https://search.brave.com/)
+
+[](https://search.brave.com/settings)
+
+*   [Ask](https://search.brave.com/ask?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [All](https://search.brave.com/search?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [Images](https://search.brave.com/images?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [News](https://search.brave.com/news?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [Videos](https://search.brave.com/videos?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [Maps](https://search.brave.com/maps/search?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+*   [Goggles](https://search.brave.com/goggles?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&source=web)
+
+[search operators](https://search.brave.com/help/operators) were not applied
+
+Too few matches were found
+
+Based on the provided search context, there is **no record** of a paper by Erich Kaltofen appearing in Journal of Symbolic Computation in **1990** with the page range **369-373**.
+
+The search results indicate the following relevant publications for Kaltofen in **1990** (Volume 9):
+
+*   **Special Issue Editorial**: Erich L. Kaltofen and Bruno Buchberger, "Special Issue Computational Algebraic Complexity Editorial," pp. **225–228**.
+
+*   **Research Article**: Erich Kaltofen and Barry M. Trager, "Computing with Polynomials Given By Black Boxes for Their Evaluations: Greatest Common Divisors, Factorizatio
+
+More
+
+[![Image 6: 🌐](https://imgs.search.brave.com/w8IFAQCeMcsWvji_ZD5O-PHTgADUv0pbmcWCiuqB8R4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDE0OWE4ZDNl/NzBkYTQ2MDM1NzNl/ZTZiNGUwMDhiYmQ2/YjMwNTU2YzEwZGE4/YTJlNjY1NzM4ZGUz/NjFmYTk3NC9kYmxw/Lm9yZy8) ![Image 7: 🌐](https://imgs.search.brave.com/w8IFAQCeMcsWvji_ZD5O-PHTgADUv0pbmcWCiuqB8R4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDE0OWE4ZDNl/NzBkYTQ2MDM1NzNl/ZTZiNGUwMDhiYmQ2/YjMwNTU2YzEwZGE4/YTJlNjY1NzM4ZGUz/NjFmYTk3NC9kYmxw/Lm9yZy8) dblp dblp.org › home › journals › journal of symbolic computation dblp: Journal of Symbolic Computation, Volume 9, 1990](https://dblp.org/db/journals/jsc/jsc9.html)
+
+January 3, 2026 -Erich L. Kaltofen, Bruno Buchberger: Special Issue Computational Algebraic Complexity Editorial.
+
+[![Image 8: 🌐](https://imgs.search.brave.com/I1EMyMSBcj73aBYS5cvS_XQyf0lA0e3QbYcg9F9NcRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGJlODI3M2E5/ODM4MTIzODQ2MmRj/OGYyZWZjNTk1YjRk/OTFlODJjN2Q1OTc5/NGEwODJjM2Q4YzU1/OGZhZDg3Mi9rYWx0/b2Zlbi5tYXRoLm5j/c3UuZWR1Lw) ![Image 9: 🌐](https://imgs.search.brave.com/I1EMyMSBcj73aBYS5cvS_XQyf0lA0e3QbYcg9F9NcRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGJlODI3M2E5/ODM4MTIzODQ2MmRj/OGYyZWZjNTk1YjRk/OTFlODJjN2Q1OTc5/NGEwODJjM2Q4YzU1/OGZhZDg3Mi9rYWx0/b2Zlbi5tYXRoLm5j/c3UuZWR1Lw) Ncsu kaltofen.math.ncsu.edu › bibliography › index.html Publications by Erich Kaltofen](https://kaltofen.math.ncsu.edu/bibliography/index.html)
+
+E. Kaltofen, editor. Algebraic Computational Complexity. Academic Press, London, October 1990. Special issue volume 9, number 3 (March 1990) of J. Symbolic Comput.
+
+[![Image 10: 🌐](https://imgs.search.brave.com/7z7ae2SV9PGXlDtNuXCveVup1YruNZ9Agb4H2AAIb1w/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYTUzNWIzNWMw/YjhmNTc5NjY0NDdi/MDgwZjFjZDY1MDFm/ZDA4ZTU4YjViMDUz/ZTVlMzljYzU4Mzlh/MGZhMDY5YS9mdHAu/bWF0aC51dGFoLmVk/dS8) ![Image 11: 🌐](https://imgs.search.brave.com/7z7ae2SV9PGXlDtNuXCveVup1YruNZ9Agb4H2AAIb1w/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYTUzNWIzNWMw/YjhmNTc5NjY0NDdi/MDgwZjFjZDY1MDFm/ZDA4ZTU4YjViMDUz/ZTVlMzljYzU4Mzlh/MGZhMDY5YS9mdHAu/bWF0aC51dGFoLmVk/dS8) University of Utah Mathematics Department ftp.math.utah.edu › pub › tex › bib › toc › jsymcomp.html Journal of Symbolic Computation](https://ftp.math.utah.edu/pub/tex/bib/toc/jsymcomp.html)
+
+June 11, 2026 -Erich Kaltofen Errata to: ``Fast parallel absolute irreducibility testing'' [J.\ Symbolic Comput. \bf 1 (1985), no. 1, 57--67, MR 87b:12002] . . . . . . . . . . . . . . . 320--320 Heinrich Rolletschek Shortest Division Chains in Imaginary Quadratic Number Fields . . . . . . . . 321--354 Lajos Rónyai Computing the Structure of Finite Algebras . . . . . . . . . . . . . . . . 355--374 (or 355--373??)
+
+[![Image 12: 🌐](https://imgs.search.brave.com/NJbb0P2bwbdnGnD5FijFoBbn5rA0Jwz-yK3fG5QOBng/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMjc5YWUwYmQ5/YWNmYWRiMDAxZWU5/ODc3NjJmYTVmOTNi/ZjRmYmE2OTk5Zjk2/MTUzZjMwZmE5OTQ5/MWFjY2ZjNS93d3cu/c2NpZW5jZWRpcmVj/dC5jb20v) ![Image 13: 🌐](https://imgs.search.brave.com/NJbb0P2bwbdnGnD5FijFoBbn5rA0Jwz-yK3fG5QOBng/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMjc5YWUwYmQ5/YWNmYWRiMDAxZWU5/ODc3NjJmYTVmOTNi/ZjRmYmE2OTk5Zjk2/MTUzZjMwZmE5OTQ5/MWFjY2ZjNS93d3cu/c2NpZW5jZWRpcmVj/dC5jb20v) ScienceDirect sciencedirect.com › journal › journal-of-symbolic-computation Journal of Symbolic Computation | ScienceDirect.com by Elsevier](https://www.sciencedirect.com/journal/journal-of-symbolic-computation)
+
+Read the latest articles of Journal of Symbolic Computation at ScienceDirect.com, Elsevier’s leading platform of peer-reviewed scholarly literature
+
+[![Image 14: 🌐](https://imgs.search.brave.com/i9k_3g0oYI4_sPVXnjFZaGo71Zit1K1oTxCWydGTcCE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U0MGI5MjUz/ZjJiNDA4OWI1YTZh/M2RlY2RmN2I0MGNl/MGMwYjZhODQ2OTM1/N2JmMzRiNThhNzk2/Njk2ZjRjZC91c2Vy/cy5jcy5kdWtlLmVk/dS8) ![Image 15: 🌐](https://imgs.search.brave.com/i9k_3g0oYI4_sPVXnjFZaGo71Zit1K1oTxCWydGTcCE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U0MGI5MjUz/ZjJiNDA4OWI1YTZh/M2RlY2RmN2I0MGNl/MGMwYjZhODQ2OTM1/N2JmMzRiNThhNzk2/Njk2ZjRjZC91c2Vy/cy5jcy5kdWtlLmVk/dS8) Duke University users.cs.duke.edu › ~elk27 › bibliography › kaltofen.html Publications by Erich Kaltofen](https://users.cs.duke.edu/~elk27/bibliography/kaltofen.html)
+
+Erich Kaltofen and Barry M. Trager. **Computing with polynomials given by black boxes for their evaluations: Greatest common divisors, factorization, separation of numerators and denominators**. J. Symbolic Comput., 9(3):301–320, 1990.
+
+[![Image 16: 🌐](https://imgs.search.brave.com/i9k_3g0oYI4_sPVXnjFZaGo71Zit1K1oTxCWydGTcCE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U0MGI5MjUz/ZjJiNDA4OWI1YTZh/M2RlY2RmN2I0MGNl/MGMwYjZhODQ2OTM1/N2JmMzRiNThhNzk2/Njk2ZjRjZC91c2Vy/cy5jcy5kdWtlLmVk/dS8) ![Image 17: 🌐](https://imgs.search.brave.com/i9k_3g0oYI4_sPVXnjFZaGo71Zit1K1oTxCWydGTcCE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U0MGI5MjUz/ZjJiNDA4OWI1YTZh/M2RlY2RmN2I0MGNl/MGMwYjZhODQ2OTM1/N2JmMzRiNThhNzk2/Njk2ZjRjZC91c2Vy/cy5jcy5kdWtlLmVk/dS8) Duke University users.cs.duke.edu › ~elk27 › bibliography › kaltofen.pdf pdf Publications by Erich Kaltofen September 20, 2025](https://users.cs.duke.edu/~elk27/bibliography/kaltofen.pdf)
+
+Erich Kaltofen and Barry M. Trager. Computing ... J. Symbolic Comput., 9(3):301–320, 1990.
+
+[![Image 18: 🌐](https://imgs.search.brave.com/I1EMyMSBcj73aBYS5cvS_XQyf0lA0e3QbYcg9F9NcRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGJlODI3M2E5/ODM4MTIzODQ2MmRj/OGYyZWZjNTk1YjRk/OTFlODJjN2Q1OTc5/NGEwODJjM2Q4YzU1/OGZhZDg3Mi9rYWx0/b2Zlbi5tYXRoLm5j/c3UuZWR1Lw) ![Image 19: 🌐](https://imgs.search.brave.com/I1EMyMSBcj73aBYS5cvS_XQyf0lA0e3QbYcg9F9NcRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOGJlODI3M2E5/ODM4MTIzODQ2MmRj/OGYyZWZjNTk1YjRk/OTFlODJjN2Q1OTc5/NGEwODJjM2Q4YzU1/OGZhZDg3Mi9rYWx0/b2Zlbi5tYXRoLm5j/c3UuZWR1Lw) Ncsu kaltofen.math.ncsu.edu › bibliography › 2K › Ka2K.pdf pdf Appears in Journal of Symbolic Computation (2000) 29, 891–919](https://kaltofen.math.ncsu.edu/bibliography/2K/Ka2K.pdf)
+
+E. Kaltofen: Challenges of Symbolic Computation
+
+[![Image 20: 🌐](https://imgs.search.brave.com/63qTUKXAgo4r1HRB9yuK7LiilXV6t9mMpgPwT2rPzCo/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWNhOWU5NWEy/NWJjYzRiYzJjNTYw/MjdkZDM2N2RkMGMw/NjQyMDE2ODUyMjcz/NDU0MTA1ZWVkN2Vi/YWE4YTI4OC9wdWJz/LmFtcy5vcmcv) ![Image 21: 🌐](https://imgs.search.brave.com/63qTUKXAgo4r1HRB9yuK7LiilXV6t9mMpgPwT2rPzCo/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWNhOWU5NWEy/NWJjYzRiYzJjNTYw/MjdkZDM2N2RkMGMw/NjQyMDE2ODUyMjcz/NDU0MTA1ZWVkN2Vi/YWE4YTI4OC9wdWJz/LmFtcy5vcmcv) Ams pubs.ams.org › JAMS › 2017-30-01 › S0894-0347-2016-00864-0 Journal of the American Mathematical Society](https://pubs.ams.org/JAMS/2017-30-01/S0894-0347-2016-00864-0)
+
+Erich Kaltofen and Barry M. Trager, **Computing with polynomials given by black boxes for their evaluations: greatest common divisors, factorization, separation of numerators and denominators**, J. Symbolic Comput. 9 (1990), no. 3, 301–320.
+
+[![Image 22: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ![Image 23: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ACM Digital Library dl.acm.org › journal › josc JOURNAL OF SYMBOLIC COMPUTATION Home](https://dl.acm.org/journal/josc)
+
+We occasionally run membership recruitment campaigns on social media channels and use cookies to track post-clicks. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided...
+
+[![Image 24: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) ![Image 25: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) Wikipedia en.wikipedia.org › wiki › Journal_of_Symbolic_Computation Journal of Symbolic Computation - Wikipedia](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+July 5, 2026 -The **Journal****of****Symbolic****Computation** is a peer-reviewed monthly scientific **journal** covering all aspects **of****symbolic****computation** published by Academic Press and then by Elsevier. It is targeted to both mathematicians and **computer** scientists. It was established in 1985 by Bruno Buchberger, who...
+
+[![Image 26](https://imgs.search.brave.com/fh69uowsqeKTIbzlFvz8zu6gzVZ7MSF4wp_Cfc70rlU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vNC80Yi9K/b3VybmFsY292ZXJf/SnNjLmdpZj91dG1f/c291cmNlPWVuLndp/a2lwZWRpYS5vcmcm/dXRtX2NhbXBhaWdu/PWluZGV4JnV0bV9j/b250ZW50PW9yaWdp/bmFs.jpeg)](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+[![Image 27](https://imgs.search.brave.com/fh69uowsqeKTIbzlFvz8zu6gzVZ7MSF4wp_Cfc70rlU/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vNC80Yi9K/b3VybmFsY292ZXJf/SnNjLmdpZj91dG1f/c291cmNlPWVuLndp/a2lwZWRpYS5vcmcm/dXRtX2NhbXBhaWdu/PWluZGV4JnV0bV9j/b250ZW50PW9yaWdp/bmFs.jpeg)](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+Find elsewhere
+
+[Google](https://search.brave.com/search?q=%22Journal%20of%20Symbolic%20Computation%22%201990%20%22369-373%22%20Kaltofen%20!g)[Bing](https://search.brave.com/search?q=%22Journal%20of%20Symbolic%20Computation%22%201990%20%22369-373%22%20Kaltofen%20!b)[Mojeek](https://search.brave.com/search?q=%22Journal%20of%20Symbolic%20Computation%22%201990%20%22369-373%22%20Kaltofen%20!mojeek)
+
+[![Image 28: 🌐](https://imgs.search.brave.com/xf2zlkG7-iTP3tID-f60yvMPSIPZxc6Z7EZJvbyIyqQ/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWMxMWE2YWNk/YzMwZGExMGE3MjM2/YjU2MTA1YmYxMmIy/ZmQ2NWUyMGUzMjVh/M2Y5MmRmN2E3ZTll/OTM5OGZmMS93d3cu/c2lnc2FtLm9yZy8) ![Image 29: 🌐](https://imgs.search.brave.com/xf2zlkG7-iTP3tID-f60yvMPSIPZxc6Z7EZJvbyIyqQ/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWMxMWE2YWNk/YzMwZGExMGE3MjM2/YjU2MTA1YmYxMmIy/ZmQ2NWUyMGUzMjVh/M2Y5MmRmN2E3ZTll/OTM5OGZmMS93d3cu/c2lnc2FtLm9yZy8) Sigsam sigsam.org › Resources › Journals.html SIGSAM Journal Guide](https://www.sigsam.org/Resources/Journals.html)
+
+Research in Computer Algebra, Symbolic Computation, and its applications is found in a number of scientific journals. We have developed the following list of those that regularly publish articles in the discipline.
+
+[![Image 30: 🌐](https://imgs.search.brave.com/DKX2JHf5zLTSaN28roykSU3rEFD0LZO2SBAw4SE_4HM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzYwZTAyN2Fi/YjQ1ZWVjZTczNTg4/Yzg5YWI0ZWIyZjFk/YTY3YWE3OTdjNjY2/OTg1YTU3ZjE5Yjk1/MjcxMzRkMi9zY2lz/cGFjZS5jb20v) ![Image 31: 🌐](https://imgs.search.brave.com/DKX2JHf5zLTSaN28roykSU3rEFD0LZO2SBAw4SE_4HM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzYwZTAyN2Fi/YjQ1ZWVjZTczNTg4/Yzg5YWI0ZWIyZjFk/YTY3YWE3OTdjNjY2/OTg1YTU3ZjE5Yjk1/MjcxMzRkMi9zY2lz/cGFjZS5jb20v) SciSpace scispace.com › home › journal directory › journal of symbolic computation Journal of Symbolic Computation (Elsevier BV) | 3070 Publications | 19095 Citations | Top authors | Related journals](https://scispace.com/journals/journal-of-symbolic-computation-15ys01se)
+
+Journal of Symbolic Computation is an academic journal published by Elsevier BV. The journal publishes majorly in the area(s): Polynomial & Symbolic computation. It has an ISSN identifier of 0747-7171. Over the lifetime, 2730 publications have been published receiving 86169 citations.
+
+[![Image 32](https://imgs.search.brave.com/JrXzhF2PSE_BWwmkXLSKuO3x9BuaeCfzpXUPkQ3x11g/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zY2lz/cGFjZS5jb20vdnMv/bWV0YS1pbWFnZXMv/aG9tZS1wYWdlLmpw/Zw)](https://scispace.com/journals/journal-of-symbolic-computation-15ys01se)
+
+[![Image 33](https://imgs.search.brave.com/JrXzhF2PSE_BWwmkXLSKuO3x9BuaeCfzpXUPkQ3x11g/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zY2lz/cGFjZS5jb20vdnMv/bWV0YS1pbWFnZXMv/aG9tZS1wYWdlLmpw/Zw)](https://scispace.com/journals/journal-of-symbolic-computation-15ys01se)
+
+[![Image 34: 🌐](https://imgs.search.brave.com/ufCOSsjUYU8awnokCbBWEOYmp7tA1Dq0GHE-gx3U11Y/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDQxY2UwN2Vk/NGFkY2ZkMTk1NDEy/NTY5ZDJjYWM0NjVh/M2NlOWM5M2I0ODNi/MzQzMGZiM2JhOWQ4/NGQxMDViZS9zaG9w/LmVsc2V2aWVyLmNv/bS8) ![Image 35: 🌐](https://imgs.search.brave.com/ufCOSsjUYU8awnokCbBWEOYmp7tA1Dq0GHE-gx3U11Y/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDQxY2UwN2Vk/NGFkY2ZkMTk1NDEy/NTY5ZDJjYWM0NjVh/M2NlOWM5M2I0ODNi/MzQzMGZiM2JhOWQ4/NGQxMDViZS9zaG9w/LmVsc2V2aWVyLmNv/bS8) Elsevier Shop shop.elsevier.com › journals › journal-of-symbolic-computation › 0747-7171 Subscribe to Journal of Symbolic Computation - 0747-7171 | Elsevier Shop | Elsevier Shop](https://shop.elsevier.com/journals/journal-of-symbolic-computation/0747-7171)
+
+Subscribe to Journal of Symbolic Computation, a leading Mathematics journal, directly from the official Elsevier Shop. Explore print and online subscription options.
+
+[![Image 36](https://imgs.search.brave.com/iCYaNDt-tVD4zyf5j4i0PdrRFHB_kWNn6VHAzx7jU28/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zZWN1/cmUtZWNzZC5lbHNl/dmllci5jb20vY292/ZXJzLzgwL1Rhbmdv/Mi9sYXJnZXN0LzA3/NDc3MTcxLmpwZw)](https://shop.elsevier.com/journals/journal-of-symbolic-computation/0747-7171)
+
+[![Image 37](https://imgs.search.brave.com/iCYaNDt-tVD4zyf5j4i0PdrRFHB_kWNn6VHAzx7jU28/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9zZWN1/cmUtZWNzZC5lbHNl/dmllci5jb20vY292/ZXJzLzgwL1Rhbmdv/Mi9sYXJnZXN0LzA3/NDc3MTcxLmpwZw)](https://shop.elsevier.com/journals/journal-of-symbolic-computation/0747-7171)
+
+[![Image 38: 🌐](https://imgs.search.brave.com/YHv_4ktXZgYxTFHD_Yil6lg4X164r_4DLdtMT_W4064/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMmUxM2FiYTI5/MzA5M2ExMDY5MWQ2/MDQ1OTZhY2RhN2Y3/NzdkZDg3NWViYzg1/YWU4OWIwMDA3ODA0/OGNmMzYwZC9uZXRs/aWIuc2FuZGlhLmdv/di8) ![Image 39: 🌐](https://imgs.search.brave.com/YHv_4ktXZgYxTFHD_Yil6lg4X164r_4DLdtMT_W4064/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMmUxM2FiYTI5/MzA5M2ExMDY5MWQ2/MDQ1OTZhY2RhN2Y3/NzdkZDg3NWViYzg1/YWU4OWIwMDA3ODA0/OGNmMzYwZC9uZXRs/aWIuc2FuZGlhLmdv/di8) Sandia netlib.sandia.gov › tex › bib › jsymcomp.pdf pdf A Complete Bibliography of Publications in the Journal of Symbolic Computation](https://netlib.sandia.gov/tex/bib/jsymcomp.pdf)
+
+A Complete Bibliography of Publications in the Journal · of Symbolic Computation
+
+[![Image 40: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ![Image 41: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ACM Digital Library dl.acm.org › doi › 10.5555 › 940131.940137 Cited References | Computer algebra handbook](https://dl.acm.org/doi/10.5555/940131.940137)
+
+Bronstein, Manuel. Integration of elementary functions. Journal of Symbolic Computation, 9(2):117-173, 1990.
+
+[![Image 42: 🌐](https://imgs.search.brave.com/7z7ae2SV9PGXlDtNuXCveVup1YruNZ9Agb4H2AAIb1w/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYTUzNWIzNWMw/YjhmNTc5NjY0NDdi/MDgwZjFjZDY1MDFm/ZDA4ZTU4YjViMDUz/ZTVlMzljYzU4Mzlh/MGZhMDY5YS9mdHAu/bWF0aC51dGFoLmVk/dS8) ![Image 43: 🌐](https://imgs.search.brave.com/7z7ae2SV9PGXlDtNuXCveVup1YruNZ9Agb4H2AAIb1w/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYTUzNWIzNWMw/YjhmNTc5NjY0NDdi/MDgwZjFjZDY1MDFm/ZDA4ZTU4YjViMDUz/ZTVlMzljYzU4Mzlh/MGZhMDY5YS9mdHAu/bWF0aC51dGFoLmVk/dS8) University of Utah Mathematics Department ftp.math.utah.edu › pub › tex › bib › mathcomputsimul1990.pdf pdf A Complete Bibliography of Publications in Mathematics ...](https://ftp.math.utah.edu/pub/tex/bib/mathcomputsimul1990.pdf)
+
+Kalman [734, 928]. Kaltofen [121]. Kan
+
+[![Image 44: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) ![Image 45: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) HandWiki handwiki.org › wiki › Journal_of_Symbolic_Computation Journal of Symbolic Computation - HandWiki](https://handwiki.org/wiki/Journal_of_Symbolic_Computation)
+
+November 28, 2025 -The Journal of Symbolic Computation is **a peer-reviewed monthly scientific journal covering all aspects of symbolic computation published by Academic Press and then by Elsevier**. It is targeted to both mathematicians and computer scientists.
+
+[Next](https://search.brave.com/search?q=%22Journal+of+Symbolic+Computation%22+1990+%22369-373%22+Kaltofen&offset=1&spellcheck=0)
+
+[Journal of Symbolic Computation](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+journal
+
+[elsevier.com](http://www.elsevier.com/locate/jsc)
+
+![Image 46](https://imgs.search.brave.com/QFOL5fYu0UEv57LlJZke35CnzP0iCJl-y4ShWEfC89I/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vNC80Yi9K/b3VybmFsY292ZXJf/SnNjLmdpZj91dG1f/c291cmNlPWVuLndp/a2lwZWRpYS5vcmcm/YW1wO3V0bV9jYW1w/YWlnbj1wYXJzZXIm/YW1wO3V0bV9jb250/ZW50PXRodW1ibmFp/bF91bnNjYWxlZA.jpeg)
+
+Buy Analysis
+
+The Journal of Symbolic Computation is a peer-reviewed monthly scientific journal covering all aspects of symbolic computation published by Academic Press and then by Elsevier. It is targeted to both mathematicians and … [Wikipedia](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+[![Image 47: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw)](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)[![Image 48: 🌐](https://imgs.search.brave.com/NJbb0P2bwbdnGnD5FijFoBbn5rA0Jwz-yK3fG5QOBng/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMjc5YWUwYmQ5/YWNmYWRiMDAxZWU5/ODc3NjJmYTVmOTNi/ZjRmYmE2OTk5Zjk2/MTUzZjMwZmE5OTQ5/MWFjY2ZjNS93d3cu/c2NpZW5jZWRpcmVj/dC5jb20v)](https://www.sciencedirect.com/journal/journal-of-symbolic-computation)[![Image 49: 🌐](https://imgs.search.brave.com/MeGeHCLOL3ZI3a8Oexnm8c0PnZOAXVVXxO4E0JgZvcI/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMWEyMTliNDBh/OWU1OGMyMjg0MmZi/ZGFjZjlmMDUzY2Jj/MjdhZTU2YTk5MDI4/NGExZmQ0Yjg1ZWMy/MDU1ZWI5NS93d3cu/bG9jLmdvdi8)](https://www.loc.gov/item/85644369/)[![Image 50: 🌐](https://imgs.search.brave.com/8vIq-V97PH8S0N-pyaeHgq_gFHOA8hXjBunynHio-Uw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYzdkMGIyYTky/OTJjN2RjNDEyNWYx/MGQxNjAzNmZlNDk4/ZTRmNDczNjk0ZTZl/N2IxZjI0NTVkMGE3/YTBiYjEzYi93d3cu/d2lraWRhdGEub3Jn/Lw)](http://www.wikidata.org/entity/Q6295977)[![Image 51: 🌐](https://imgs.search.brave.com/BgM_WUoVkewc3x76WdQEfU6rKtYnzdH4f9Vx8yNubW0/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGM1Yjk2Yzg0/MjQ2MWQzMmMyNDU0/YzUyZWNmYTAyNWFm/NDEyNmZjYjdmMmFj/MzFhZjQxZjBmMzU4/ZTdkNDgzMi9vcGVu/YWxleC5vcmcv)](https://openalex.org/S18904315)[![Image 52: 🌐](https://imgs.search.brave.com/XnGuq4pfCBoh3H0a_r5Nia3O0B_ae48kFvcZry8aXS8/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWU0NGJiZjNi/MGYxMDdkYzM4OTlj/M2RlM2M1M2NkMmE3/YmQxMDYxMjJkYjAw/ZjRkODI5Yjc3OGYw/ZDA5NWJkNy93d3cu/c2NvcHVzLmNvbS8)](https://www.scopus.com/sourceid/28503)[![Image 53: 🌐](https://imgs.search.brave.com/6jOnmYgHqVS3J03TKY73AX717kbiiEkgqsmMRkxDUrc/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMDU2NDQyNDFi/MzljNmQwZjMyMjRj/OWFhZjA3NDllNmMy/ZjJhZWNlMGNiZjk0/ZDYxZWRjYmFjM2Rm/ZWIyZGRkYy9hcHAu/c2NpbGl0Lm5ldC8)](https://app.scilit.net/sources/1438774)[![Image 54: 🌐](https://imgs.search.brave.com/mSc26DjWY3bxar36A_8Xl42i7ATS__9yYtGDtzniB94/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzkxODlhZTVi/OGFiOTQwMGFjMDgz/MDlhOGEyYmU3Y2Q0/YzQxYjM5YTU2ZDM5/Nzc3NmFkYzg1Y2Ri/NmRlYTM1NS9hY25w/c2VhcmNoLnVuaWJv/Lml0Lw)](https://acnpsearch.unibo.it/journal/42339)[![Image 55: 🌐](https://imgs.search.brave.com/FQrmkNFF4ARlafnpCQ8TsQuOnfRuPm2JJ8weSdrUQOE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDBhNDk4NjNl/MjM0ZWNmMzFhYjk2/Njg5NWUwZjQ1ZjJi/YTEzZTE5ZjM5NjMw/NjFjYmQ2NDgzMjQx/MWJhNDAyNS9zZWFy/Y2gud29ybGRjYXQu/b3JnLw)](https://search.worldcat.org/title/10791050)[![Image 56: 🌐](https://imgs.search.brave.com/UMIq7VKlXvnuxe0Nwy0Kn3ca3FjNYjWh2iA4vhS4EVk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMmI2YzNjZWEz/OWIzNDJlN2RlN2Yz/ZWY3MWQ3ODE1ZjQ4/ZDFlYzU5NGZhNTRk/NzYwODAzZWQyNGYw/ODAxMDJjYS9qZnAu/Y3NjLmZpLw)](https://jfp.csc.fi/jufoportal?Jufo_ID=61761)
+
+Data from [Wikipedia](https://en.wikipedia.org/wiki/Journal_of_Symbolic_Computation)
+
+###### Resources
+
+[Brave Search Premium](https://account.brave.com/?intent=checkout&product=search)[Brave Search Help](https://search.brave.com/help)[Transparency Report](https://brave.com/transparency/)[Report a security issue](https://hackerone.com/brave)[Status](https://status.brave.app/)
+
+###### Products
+
+[Brave Browser](https://brave.com/download/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Search](https://search.brave.com/)[Brave Wallet](https://brave.com/wallet/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Talk](https://talk.brave.com/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Firewall + VPN](https://brave.com/firewall-vpn/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Playlist](https://brave.com/playlist/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave News](https://brave.com/brave-news/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Rewards](https://brave.com/brave-rewards/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Search API](https://brave.com/search/api/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Ads](https://brave.com/brave-ads/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)
+
+###### Policies
+
+[Privacy Policy](https://search.brave.com/help/privacy-policy)[Terms of Use](https://brave.com/terms-of-use/)
+
+Brave Search uses private usage metrics to estimate overall activity and performance. You can turn off this option in [Settings](https://search.brave.com/settings).[Learn more.](https://search.brave.com/help/usage-metrics)

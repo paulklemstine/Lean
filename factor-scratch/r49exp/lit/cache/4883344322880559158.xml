@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api//Vd8MJQz/of5zj0Ps1fRnLLnpjE</id>
+  <title>arXiv Query: search_query=abs:"valuation tree" AND abs:"two variables"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-03T22:09:43Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22valuation+tree%22+AND+abs:%22two+variables%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2407.07103v2</id>
+    <title>The p-adic valuation of the general degree-2 and degree-3 polynomial in 2 variables</title>
+    <updated>2024-07-14T18:42:06Z</updated>
+    <link href="https://arxiv.org/abs/2407.07103v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.07103v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates the p-adic valuation trees of degree-2 and degree-3 polynomials in two variables over any prime p, building upon prior research outlined in [14].</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-23T10:56:55Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:2203.02197</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name> Shubham</name>
+    </author>
+  </entry>
+</feed>

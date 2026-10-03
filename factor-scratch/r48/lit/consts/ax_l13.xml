@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/cL1xArvnH5bUNGC+D587h4zOpOE</id>
+  <title>arXiv Query: search_query=abs:"quantum" AND abs:"factoring" AND abs:"L[1/3]"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:39:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22quantum%22+AND+(abs:%22factoring%22+AND+abs:%22L%5B1/3%5D%22)&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9503007v1</id>
+    <title>Quantum Computers, Factoring, and Decoherence</title>
+    <updated>1995-03-08T16:39:04Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9503007v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9503007v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a quantum computer any superposition of inputs evolves unitarily into the corresponding superposition of outputs. It has been recently demonstrated that such computers can dramatically speed up the task of finding factors of large numbers -- a problem of great practical significance because of its cryptographic applications. Instead of the nearly exponential ($\sim \exp L^{1/3}$, for a number with $L$ digits) time required by the fastest classical algorithm, the quantum algorithm gives factors in a time polynomial in $L$ ($\sim L^2$). This enormous speed-up is possible in principle because quantum computation can simultaneously follow all of the paths corresponding to the distinct classical inputs, obtaining the solution as a result of coherent quantum interference between the alternatives. Hence, a quantum computer is sophisticated interference device, and it is essential for its quantum state to remain coherent in the course of the operation. In this report we investigate the effect of decoherence on the quantum factorization algorithm and establish an upper bound on a ``quantum factorizable'' $L$ based on the decoherence suffered per operational step.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1995-03-08T16:39:04Z</published>
+    <arxiv:comment>7 pages,LaTex + 2 postcript figures in a uuencoded file</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>I. Chuang</name>
+    </author>
+    <author>
+      <name>Raymond Laflamme</name>
+    </author>
+    <author>
+      <name>P. Shor</name>
+    </author>
+    <author>
+      <name>W. Zurek</name>
+    </author>
+    <arxiv:doi>10.1126/science.270.5242.1633</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.270.5242.1633" title="doi"/>
+  </entry>
+</feed>

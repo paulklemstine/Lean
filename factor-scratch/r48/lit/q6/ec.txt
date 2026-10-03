@@ -1,0 +1,1121 @@
+arXiv:1004.3366v1 [math.NT] 20 Apr 2010
+
+Some Integer Factorization Algorithms
+using Elliptic Curves
+Richard P. Brent
+Computer Sciences Laboratory
+Australian National University
+24 September 1985
+Revised 10 Dec. 1985
+Republished 7 Nov. 1998
+
+Abstract
+Lenstra’s integer factorization algorithm is asymptotically one of the fastest known algorithms, and is also ideally suited for parallel computation. We suggest a way in which
+the algorithm can be speeded up by the addition of a second phase. Under some plausible
+assumptions, the speedup is of order log(p), where p is the factor which is found. In practice
+the speedup is significant. We mention some refinements which give greater speedup, an
+alternative way of implementing a second phase, and the connection with Pollard’s “p − 1”
+factorization algorithm.
+
+1
+
+Introduction
+
+Recently H.W. Lenstra Jr. proposed a new integer factorization algorithm, which we shall call
+“Lenstra’s algorithm” or the “one-phase elliptic curve algorithm” [17]. Under some plausible
+assumptions Lenstra’s algorithm finds a prime factor p of a large composite integer N in expected
+time
+T1 (p) = exp
+
+q
+
+(2 + o(1)) ln p ln ln p
+
+
+
+,
+
+(1.1)
+
+where “o(1)” means
+a term which tends
+ to zero as p → ∞. Previously algorithms with runp
+ning time exp
+(1 + o(1)) ln N ln ln N were known [27]. However, since p2 ≤ N , Lenstra’s
+algorithm is comparable in the worst case and often much better, since it often happens that
+2 ln p ≪ ln N .
+The Brent-Pollard “rho” algorithm [5] is similar to Lenstra’s algorithm in that its expected
+running time depends on p, in fact it is of order p1/2 . Asymptotically T1 (p) ≪ p1/2 , but because
+of the overheads associated with Lenstra’s algorithm we expect the “rho” algorithm to be faster
+if p is sufficiently small. The results of §8 suggest how large p has to be before Lenstra’s algorithm is faster.
+Appeared in Australian Computer Science Communications 8 (1986), 149–163.
+Retyped, with corrections and postscript, by Frances Page at Oxford University Computing Laboratory, 1998.
+Key words: integer factorization, Monte Carlo algorithm, elliptic curve algorithm, ECM, analysis of algorithms.
+Copyright c 1985, 1998 R. P. Brent.
+rpb102 typeset using LATEX.
+
+After some preliminaries in §§2–4, we describe Lenstra’s algorithm in §5, and outline the
+derivation of (1.1). In §6 and §7 we describe how Lenstra’s algorithm can be speeded up by
+the addition of a second phase which is based on the same idea as the well-known “paradox”
+concerning the probability that two people at a party have the same birthday [25]. The twophase algorithm has expected running time O(T1 (p)/ ln p). In practice, for p around 1020 , the
+“birthday paradox algorithm” is about 4 times faster than Lenstra’s (one-phase) algorithm. The
+performance of the various algorithms is compared in §8, and some refinements are mentioned
+in §9.
+
+2
+
+Our unit of work
+
+The factorization algorithms which we consider use arithmetic operations modulo N , where N
+is the number to be factorized. We are interested in the case that N is large (typically 50 to
+200 decimal digits) so multiple-precision operations are involved. As our basic unit of work (or
+time) we take one multiplication modulo N (often just called “a multiplication” below). More
+precisely, given integers a, b in [0, N ), our unit of work is the cost of computing a∗b mod N .
+Because N is assumed to be large, we can simplify the analysis by ignoring the cost of additions
+mod N or of multiplications/divisions by small (i.e. single-precision) integers, so long as the
+total number of such operations is not much greater than the number of multiplications mod N .
+See [13, 20] for implementation hints.
+In some of the algorithms considered below it is necessary to compute inverses modulo N ,
+i.e. given an integer a in (0, N ), compute u in (0, N ) such that a∗u = 1 (mod N ). We write
+u = a−1 (mod N ). u can be computed by the extended GCD algorithm [13], which finds integers
+u and v such that au + N v = g, where g is the GCD of a and N . We can always assume that
+g = 1, for otherwise g is a nontrivial factor of N , and the factorization algorithm can terminate.
+Suppose that the computation of a−1 (mod N ) by the extended GCD algorithm takes the
+same time as K multiplications (mod N ). Our first implementation gave K ≃ 30, but by using
+Lehmer’s method [16] this was reduced to 6 ≤ K ≤ 10 (the precise value depending on the size
+of N ). It turns out that most computations of a−1 (mod N ) can be avoided at the expense of
+about 8 multiplications (mod N ), so we shall assume that K = 8.
+Some of the algorithms require the computation of large powers (mod N ), i.e. given a in [0, n)
+and b ≫ 1, we have to compute ab (mod N ). We shall assume that this is done by the “binary”
+algorithm [13] which requires between log2 b and 2 log2 b multiplications (mod N ) – on average
+say (3/2) log 2 b multiplications (of which about log2 b are squarings). The constant 3/2 could be
+reduced slightly by use of the “power tree” or other sophisticated powering algorithms [13].
+
+3
+
+Prime factors of random integers
+
+In order to predict the expected running time of Lenstra’s algorithm and our extensions of it, we
+need some results on the distribution of prime factors of random integers. Consider a random
+integer close to M , with prime factors n1 ≥ n2 ≥ . . . . For α ≥ 1, β ≥ 1, define
+
+
+ρ(α) = lim Prob n1 < M 1/α
+M →∞
+
+and
+
+
+
+
+
+
+µ(α, β) = lim Prob n2 < M 1/α and n1 < M β/α .
+M →∞
+
+2
+
+(For a precise definition of “a random integer close to M ”, see [14]. It is sufficient to consider
+integers uniformly distributed in [1, M ].)
+Several authors have considered the function ρ(α), see for example [7, 9, 13, 14, 18]. It
+satisfies a differential-difference equation
+αρ′ (α) + ρ(α − 1) = 0
+and may be computed by numerical integration from
+ρ(α) =
+
+(
+
+We shall need the asymptotic results
+
+1R
+
+1 α
+α α−1 ρ(t) dt
+
+if 0 ≤ α ≤ 1
+if α > 1.
+
+ln ρ(α) = −α(ln α + ln ln α − 1) + o(α)
+
+(3.1)
+
+ρ(α − 1)/ρ(α) = α(ln α + O(ln ln α))
+
+(3.2)
+
+and
+
+as α → ∞.
+The function µ(α, β) is not so well-known, but is crucial for the analysis of the two-phase
+algorithms. Knuth and Trabb Pardo [14] consider µ(α, 2) and by following their argument with
+trivial modifications we find that
+µ(α, β) = ρ(α) +
+
+Z α−1
+
+ρ(t)
+dt.
+α−β α − t
+
+(3.3)
+
+When comparing the two-phase and one-phase algorithms the ratio ρ(α)/µ(α, β) is of interest,
+and we shall need the bound
+
+
+ρ(α)/µ(α, β) = O ln α(α ln α)−β
+
+
+
+(3.4)
+
+as α → ∞, for fixed β > 1.
+
+4
+
+The group of an elliptic curve (mod p)
+
+In this section we consider operations mod p rather than mod N , and assume that p is a prime
+and p ≥ 5. When applying the results of this section to factorization, p is an (unknown) prime
+factor of N , so we have to work mod N rather than mod p.
+Let S be the set of points (x, y) lying on the “elliptic curve”
+y 2 = x3 + ax + b
+
+(mod p),
+
+(4.1)
+
+where a and b are constants, 4a3 + 27b2 6= 0. Let
+G = S ∪ {I},
+where I is the “point at infinity” and may be thought of as (0, ∞). Lenstra’s algorithm is based
+on the fact that there is a natural way to define an Abelian group on G. Geometrically, if P1
+3
+
+and P2 ∈ G, we define P3 = P1 ∗P2 by taking P3 to be the reflection in the x-axis of the point
+Q which lies on the elliptic curve (4.1) and is collinear with P1 and P2 . Algebraically, suppose
+Pi = (xi , yi ) for i = 1, 2, 3. Then P3 is defined by:
+if P1 = I then P3 := P2
+else if P2 = I then P3 := P1
+else if (x1 , y1 ) = (x2 , −y2 ) then P3 := I
+else
+begin
+if x1 = x2 then λ := (2y1 )−1 (3x21 + a) mod p
+else λ := (x1 − x2 )−1 (y1 − y2 ) mod p;
+{λ is the gradient of the line joining P1 and P2 }
+x3 := (λ2 − x1 − x2 ) mod p;
+y3 := (λ(x1 − x3 ) − y1 ) mod p
+end.
+It is well-known that (G, ∗) forms an Abelian group with identity element I. Moreover, by the
+“Riemann hypothesis for finite fields” [12], the group order g = |G| satisfies the inequality
+√
+|g − p − 1| < 2 p.
+
+(4.2)
+
+Lenstra’s heuristic hypothesis is that, if a and b are chosen at random, then g will be essentially random in that the results of §3 will apply with M = p. Some results of Birch [3] suggest
+its plausibility. Nevertheless, the divisibility properties of g are not quite what would be expected for a randomly chosen integer near p, e.g. the probability that g is even is asymptotically
+2/3 rather than 1/2. We shall accept Lenstra’s hypothesis as we have no other way to predict
+the performance of his algorithm. Empirical results described in §8 indicate that the algorithms
+do perform roughly as predicted.
+Note that the computation of P1 ∗P2 requires (3 + K) units of work if P1 6= P2 , and (4 + K)
+units of work if P1 = P2 . (Squaring is harder than multiplication!) If we represent Pi as
+(xi /zi , yi /zi ) then the algorithm given above for the computation of P1 ∗P2 can be modified to
+avoid GCD computations; assuming that z1 = z2 (which can usually be ensured at the expense
+of 2 units of work), a squaring then requires 12 units and a nonsquaring multiplication requires
+9 units of work.
+The reader who is interested in learning more about the theory of elliptic curves should
+consult [11], [12] or [15].
+
+5
+
+Lenstra’s algorithm
+
+The idea of Lenstra’s algorithm is to perform a sequence of pseudo-random trials, where each
+trial uses a randomly chosen elliptic curve and has a nonzero probability of finding a factor
+of N . Let m and m′ be parameters whose choice will be discussed later. To perform a trial, first
+choose P = (x, y) and a at random. This defines an elliptic curve
+y 2 = x3 + ax + b
+
+(mod N )
+
+(5.1)
+
+(In practice it is sufficient for a to be a single-precision random integer, which reduces the cost
+of operations in G; also, there is no need to check if GCD (N, 4a3 + 27b2 ) 6= 1 as this is extremely
+4
+
+unlikely unless N has a small prime factor.) Next compute Q = P E , where E is a product of
+primes less than m,
+Y
+E=
+pi ei ,
+pi prime, pi <m
+
+where
+ei = ⌊ln(m′ )/ ln(pi )⌋.
+Actually, E is not computed. Instead, Q is computed by repeated operations of the form
+P := P k , where k = pi ei is a prime power less than m′ , and the operations on P are performed
+in the group G defined in §4, with one important difference. The difference is that, because
+a prime factor p of N is not known, all arithmetic operations are performed modulo N rather
+than modulo p.
+Suppose initially that m′ = N . If we are lucky, all prime factors of g = |G| will be less
+than m, so g|E and P E = I in the group G. This will be detected because an attempt to
+compute t−1 (mod N ) will fail because GCD (N, t) > 1. In this case the trial succeeds. (It may,
+rarely, find the trivial factor N if all prime factors of N are found simultaneously, but we neglect
+this possibility.)
+Making the heuristic assumption mentioned in §4, and neglecting the fact that the results of
+§3 only apply in the limit as M (or p) → ∞, the probability that a trial succeeds in finding the
+prime factor p of N is just ρ(α), where α = ln(p)/ ln(m).
+In practice we choose m′ = m rather than m′ = N , because this significantly reduces the
+cost of a trial without significantly reducing the probability of success. Assuming m′ = m,
+well-known results on the distribution of primes [10] give ln(E) ∼ m, so the work per trial
+3
+is approximately c1 m, where c1 = ( 11
+3 + K) 2 ln 2 . Here c1 is the product of the average work
+3
+required to perform a multiplication in G times the constant 2 ln
+2 which arises from our use of
+the binary algorithm for computing powers (see §2). Since m = p1/α , the expected work to find
+p is
+W1 (α) ∼ c1 p1/α /ρ(α).
+(5.2)
+To minimise W1 (α) we differentiate the right side of (5.2) and set the result to zero, obtaining
+ln(p) = −α2 ρ′ (α)/ρ(α), or (from the differential equation satisfied by ρ),
+ln p =
+
+αρ(α − 1)
+.
+ρ(α)
+
+(5.3)
+
+In practice p is not known in advance, so it is difficult to choose α so that (5.3) is satisfied.
+This point is discussed in §8. For the moment assume that we know or guess an approximation
+to log(p), and choose α so that (5.3) holds, at least approximately. From (3.2),
+ln p = α2 (ln α + O(ln ln α)) ,
+
+(5.4)
+
+s
+
+(5.5)
+
+so
+α∼
+and
+ln W1 (α) ∼
+
+2 ln p
+ln ln p
+
+p
+ρ(α − 1)
+− ln ρ(α) ∼ 2α ln α ∼ 2 ln p ln ln p .
+ρ(α)
+
+5
+
+(5.6)
+
+Thus
+T1 (p) = W1 (α) = exp
+
+q
+
+(2 + o(1)) ln p ln ln p
+
+
+
+,
+
+(5.7)
+
+as stated in §1. It may be informative to write (5.7) as
+T1 (p) = W1 (α) = p2/α+o(1/α) ,
+
+(5.8)
+
+so 2/α is roughly the exponent which is to be compared with 1 for the method of trial division
+or 1/2 for the Brent-Pollard “rho” method. For 1010 < p < 1030 , α is in the interval (3.2, 5.0).
+
+6
+
+The “birthday paradox” two-phase algorithm
+
+In this section we show how to increase the probability of success of a trial of Lenstra’s algorithm
+by the addition of a “second phase”. Let m = p1/α be as in §5, and m′ = mβ > m. Let g be
+the order of the random group G for a trial of Lenstra’s algorithm, and suppose that g has
+prime factors n1 ≥ n2 ≥ . . . Then, making the same assumptions as in §5, the probability
+that n1 < m′ and n2 < m is µ(α, β), where µ is defined by (3.3). Suppose we perform a trial of
+Lenstra’s algorithm, computing Q = P E as described in §5. With probability µ(α, β) − ρ(α) we
+have m ≤ n1 < m′ and n2 < m, in which case the trial fails because Q 6= I, but Qn1 = I in G.
+(As in §5, g should really be the order of P in G rather than the order of G, but this difference
+is unimportant and will be neglected.)
+Let H = hQi be the cyclic group generated by Q. A nice idea is to take some pseudo-random
+function f: Q → Q, define Q0 = Q and Qi+1 = f (Qi ) for i = 0, 1, . . . , and generate Q1 , Q2 , . . .
+√
+until Q2i = Qi in G. As in the Brent-Pollard “rho” algorithm [5], we expect this to take O( n1 )
+steps. The only flaw is that we do not know how to define a suitable pseudo-random function f .
+Hence, we resort to the following (less efficient) algorithm.
+Define Q1 = Q and
+Qj+1 =
+
+(
+
+with probability 1/2,
+Q2j
+2
+Qj ∗Q with probability 1/2,
+
+for j = 1, 2, . . . , r − 1, so Q1 , . . . , Qr are essentially random points in H and are generated at
+the expense of O(r) group operations. Suppose Qj = (xj , yj ) and let
+d=
+
+r−1
+Y
+
+r
+Y
+
+i=1 j=i+1
+
+(yi − yj )
+
+(mod N )
+
+(6.1)
+
+If, for some i < j ≤ r, Qi = Qj in G, then p|(yi − yj ) so p|d and we can find the factor of p of N
+by computing GCD (N, d). (We cannot find i and j by the algorithm used in the Brent-Pollard
+“rho” algorithm because Qi = Qj does not imply that Qi+1 = Qj+1 .)
+The probability that p|d is the same as the probability that at least two out of r people have
+the same birthday (on a planet with n1 days in a year). For example, if n1 = 365 and r = 23,
+the probability PE ∼
+= 1/2.
+
+6
+
+In general, for r ≪ n1 ,
+r−1
+Y
+
+r2
+PE = 1 −
+(1 − j/n1 ) ∼
+= 1 − exp −
+2n1
+j=1
+
+!
+
+,
+
+(6.2)
+
+>
+so we see that PE ≥ 1/2 if r ∼
+(2n1 ln 2)1/2 .
+
+We can obtain a good approximation to the behaviour of the “birthday paradox” algorithm
+by replacing the right side of (6.2) by a step function which is 1 if r 2 > 2n1 ln 2 and 0 if
+r 2 ≤ 2n1 ln 2. Thus, a trial of the “birthday paradox” algorithm will succeed with probability
+approximately µ(α, β), where β is defined by r 2 = 2mβ ln 2, i.e.
+β=
+
+2 ln r − ln(2 ln 2)
+ln m
+
+(6.3)
+
+and µ(α, β) is as in §3. A more precise expression for the probability of success is
+ρ(α) +
+
+Z α−1 n
+0
+
+1 − 2−p
+
+(t+β−α)/α
+
+o ρ(t)
+
+α−t
+
+dt.
+
+(6.4)
+
+Computation shows that (6.3) gives an estimate of the probability of success which is within
+10% of the estimate (6.4) for the values of p, α and β which are of interest, so we shall use (6.3)
+below (but the numerical results given in §8 were computed using (6.4)).
+A worthwhile refinement is to replace d of (6.1) by
+D=
+
+r−1
+Y
+
+r
+Y
+
+i=1 j=i+1
+
+(xi − xj )
+
+(mod N ).
+
+(6.5)
+
+Since (xj , −yj ) is the inverse of (xj , yj ) in H, this refinement effectively “folds” H by identifying
+each point in H with its inverse. The effect is that (6.2) becomes
+r2
+PE ∼
+= 1 − exp −
+n1
+
+!
+
+(6.6)
+
+and (6.3) becomes r 2 = mβ ln 2, i.e.
+β=
+
+2 ln r − ln ln 2
+ln m
+
+(6.7)
+
+(6.4) still holds so long as β is defined by (6.7) instead of (6.3).
+
+7
+
+The use of fast polynomial evaluation
+
+Let P (x) be the polynomial with roots x1 , . . . , xr , i.e.
+P (x) =
+
+r
+Y
+
+j=1
+
+(x − xj ) =
+
+r−1
+X
+
+aj xj
+
+(mod N )
+
+(7.1)
+
+j=0
+
+and let M (r) be the work necessary to multiply two polynomials of degree r, obtaining a product
+of degree 2r. As usual, we assume that all arithmetic operations are performed modulo N , where
+N is the number which we are trying to factorize.
+7
+
+Because a suitable root of unity (mod N ) is not known, we are unable to use algorithms based
+on the FFT [1]. However, it is still possible to reduce M (r) below the obvious O(r 2 ) bound. For
+example, binary splitting and the use of Karatsuba’s idea [13] gives M (r) = O(r log2 3 ).
+The Toom-Cook algorithm [13] does not depend on the FFT, and it shows that
+1/2
+
+
+
+M (r) = O r 1+(c/ ln r)
+
+
+
+(7.2)
+
+as r → ∞, for some positive constant c. However, the Toom-Cook algorithm is impractical, so
+let us just assume that we use a polynomial multiplication algorithm which has
+
+
+M (r) = O r 1+ε
+
+
+
+(7.3)
+
+for some fixed ε in (0, 1). Thus, using a recursive algorithm, we can evaluate the coefficients
+a0 , . . . , ar−1 of (7.1) in O(M (r)) multiplications, and it is then easy to obtain the coefficients
+bj = (j + 1)aj+1 in the formal derivative P ′ (x) = Σbj xj .
+Using fast polynomial evaluation techniques [4], we can now evaluate P ′ (x) at r points in
+time O(M (r)). However,
+D2 =
+
+r
+Y
+
+P ′ (xj ),
+
+(7.4)
+
+j=1
+
+so we can evaluate D 2 and then GCD (N, D 2 ).
+Thus, we can perform the “birthday paradox” algorithm in time O(m) + O(r 1+ε ) per trial,
+instead of O(m) + O(r 2 ) if (6.5) is evaluated in the obvious way. To estimate the effect of this
+improvement, choose α as in §5 and β = 2/(1 + ε) so that each phase of the “birthday paradox”
+algorithm takes about the same time. From (3.4) we have
+ln α
+ρ(α)
+=O
+µ(α, β)
+(α ln α)2/(1+ε)
+
+
+
+
+ln ln p
+=O
+(ln p ln ln p)1/(1+ε)
+
+
+
+
+.
+
+(7.5)
+
+′
+
+Thus, for any ε′ > ε, we have a speedup of at least order (ln p)1/(1+ε ) over Lenstra’s algorithm.
+If we use (7.2) instead of (7.3) we obtain a speedup of order ln p in the same way.
+Unfortunately the constants involved in the “O” estimates make the use of “fast” polynomial
+multiplication and evaluation techniques of little value unless r is quite large. If r is a power
+of 2 and binary splitting is used, so ε = log2 3 − 1 ∼
+= 0.585 above, we estimate that D 2 can be
+evaluated in 8r 1+ε + O(r) time units, compared to r 2 /2 + O(r) for the obvious algorithm. Thus,
+the “fast” technique may actually be faster if r ≥ 210 . From the results of §8, this occurs if
+p ≥ 1022 (approximately).
+
+8
+
+Optimal choice of parameters
+
+In Table 1 we give the results of a numerical calculation of the expected work W required to
+find a prime factor p of a large integer N , using four different algorithms:
+1. The Brent-Pollard “rho” algorithm [5], which may be considered as a benchmark.
+2. Lenstra’s one-phase elliptic curve algorithm, as described in §5.
+8
+
+3. Our “birthday paradox” two-phase algorithm, as described in §6, with ε = 1.
+4. The “birthday paradox” algorithm with ε = 0.585, as described in §7, with r restricted to
+be a power of 2.
+
+log10 p
+
+Alg. 1
+
+Alg. 2
+
+Alg. 3
+
+Alg. 4
+
+6
+8
+10
+12
+14
+16
+18
+20
+30
+40
+50
+
+3.49
+4.49
+5.49
+6.49
+7.49
+8.49
+9.49
+10.49
+15.49
+20.49
+25.49
+
+4.67
+5.38
+6.03
+6.62
+7.18
+7.71
+8.21
+8.69
+10.85
+12.74
+14.44
+
+4.09
+4.76
+5.39
+5.97
+6.53
+7.05
+7.56
+8.04
+10.22
+12.11
+13.82
+
+4.26
+4.91
+5.53
+6.07
+6.60
+7.12
+7.59
+8.05
+10.14
+11.97
+13.62
+
+Table 1: log10 W versus log10 p for Algorithms 1–4
+
+In all cases W is measured in terms of multiplications (mod N ), with one extended GCD
+computation counting as 8 multiplications (see §2). The parameters α and β were chosen to
+minimize the expected value of W for each algorithm (using numerical minimization if necessary). The results are illustrated in Figure 1.
+>
+From Table 1 we see that Algorithm 3 is better than Algorithm 1 for p ∼
+1010 , while Al>
+13
+gorithm 2 is better than Algorithm 1 for p ∼ 10 . Algorithm 3 is 4 to 4.5 times faster than
+>
+Algorithm 2. Algorithm 4 is slightly faster than Algorithm 3 if p ∼
+1022 .
+
+The differences between the algorithms appear more marked if we consider how large a factor
+p we can expect to find in a given time. Suppose that we can devote 1010 units of work to the
+factorization. Then, by interpolation in Table 1 (or from Figure 1), we see that the upper bounds
+on p for Algorithms 1, 2 and 3 are about 1019 , 1026 and 1029 respectively.
+
+log10 p
+
+α
+
+β
+
+m
+
+r
+
+T
+
+w21
+
+m/T
+
+S
+
+10
+20
+30
+
+3.72
+4.65
+5.36
+
+1.56
+1.35
+1.27
+
+484
+19970
+397600
+
+104
+669
+2939
+
+12.1
+147.5
+1141
+
+0.64
+0.47
+0.44
+
+40
+135
+348
+
+4.37
+4.46
+4.32
+
+Table 2: Optimal parameters for Algorithm 3
+
+In Table 2 we give the optimal parameters α, β, m = p1/α , r = (mβ ln 2)1/2 ,
+T = expected number of trials (from (6.4)), m/T , w21 = (work for phase 2)/(work for phase 1),
+and S = speedup over Lenstra’s algorithm, all for Algorithm 3 and several values of p.
+In order to check that the algorithms perform as predicted, we factored several large N with
+smallest prime factor p ∼
+= 1012 . In Table 3 we give the observed and expected work to find
+9
+
+Algorithm
+
+Number of
+Factorizations
+
+Observed work
+per factor/106
+
+Expected work
+per factor/106
+
+2
+3
+
+126
+100
+
+3.41 ± 0.30
+0.74 ± 0.06
+
+4.17
+0.94
+
+Table 3: Observed versus expected work per factor for Algorithms 2–3
+
+each factor by Algorithms 2 and 3. The agreement is reasonably good, considering the number
+of approximations made in the analysis. If anything the algorithms appear to perform slightly
+better than expected.
+In practice we do not know p in advance, so it is difficult to choose the optimal parameters
+α, β etc. There are several approaches to this problem. If we are willing to devote a certain
+amount of time to the attempt to factorize N , and intend to give up if we are unsuccessful after
+the given amount of time, then we may estimate how large a factor p we are likely to find (using
+Table 1 or Figure 1) and then choose the optimal parameters for this “worst case” p. Another
+approach is to start with a small value of m and increase m as the number of trials T increases.
+From Table 2, it is reasonable to take m/T ∼
+= 135 if we expect to find a prime factor p ∼
+= 1020 .
+Once m has been chosen, we may choose r (for Algorithms 3 or 4) so that w21 (the ratio of the
+work for phase 2 to the work for phase 1) has a moderate value. From Table 2, w21 ∼
+= 0.5 is
+reasonable. In practice these “ad hoc” strategies work well because the total work required by
+the algorithms is not very sensitive to the choice of their parameters (e.g. if m is chosen too
+small then T will be larger than expected, but the product mT is relatively insensitive to the
+choice of m).
+
+9
+
+Further refinements
+
+In this section we mention some further refinements which can be used to speed up the algorithms
+described in §§5–7. Details will appear elsewhere.
+
+9.1
+
+Better choice of random points
+
+Let e ≥ 1 be a fixed exponent, let bi and bi be random linear functions of i, ai = bei , ai = b ei ,
+and rs ∼ mβ . In the birthday paradox algorithm we may compute
+(xi , yi ) = Qai
+
+(i = 1, . . . , r)
+
+(xj , y j ) = Qaj
+
+(j = 1, . . . , s)
+
+and
+
+and replace (6.1) by
+d=
+
+s Y
+r
+Y
+
+j=1 i=1
+
+(xi − xj )
+
+10
+
+(mod N )
+
+(9.1)
+
+10
+9
+8
+7
+6
+5
+4
+
+1
+
+✟✟
+✟
+✟✟
+✟
+✟
+2
+✘✘✘
+✟✟
+✘
+✘
+✟
+✘✘✘
+✘ 3
+✟✟
+✘✘✘
+✟
+✘
+✘✘✘
+✘
+✘
+✘
+✟
+✘
+✘
+✟✘✘
+✘✘
+✘✘✘
+✘✟
+✘
+✘
+✟
+✘
+✏
+✏ ✟
+✘✘✘
+✏✏ ✟
+✏✏ ✟✟ ✘✘✘✘
+✏
+✏✏ ✟✟✏✏✏✏
+✏✏
+✏
+✟✏✏
+✏
+✟✏
+✏
+✏
+✏✏
+✟
+✏
+✏
+✏
+✏✏ ✟
+✏✏
+✏✏ ✟✟
+✏
+✟
+✏
+✏✏ ✟✟
+✟
+✟✟
+
+3
+2
+1
+0
+
+6
+
+8
+Figure 1:
+
+10
+
+12
+
+14
+
+16
+
+18
+
+log10 W versus log10 p for Algorithms 1–3
+
+Using e > 1 is beneficial because the number of solutions of xe = 1 (mod n1 ) is GCD (e, n1 − 1).
+We take bi and bi to be linear functions of i so that the e-th differences of the ai and ai
+are constant, which allows the computation of x1 , . . . , xr and x1 , . . . , xs in O((r + s)e) group
+operations. The values of xj do not need to be stored, so storage requirements are O(r) even
+if s ≫ r. Moreover, by use of rational preconditioning [22, 29] it is easy to evaluate (9.1) in
+(r + O(log r))s/2 multiplications. Using these ideas we obtain a speedup of about 6.6 over the
+one-phase algorithm for p ∼
+= 1020 .
+
+9.2
+
+Other second phases
+
+Our birthday paradox idea can be used as a second phase for Pollard’s “p − 1” algorithm [23].
+The only change is that we work over a different group. Conversely, the conventional second
+phases for Pollard’s “p − 1” algorithm can be adapted to give second phases for elliptic curve
+algorithms, and various tricks can be used to speed them up [19]. Theoretically these algorithms
+give a speedup of the order log log(p) over the one-phase algorithms, which is not as good as
+the log(p) speedup for the birthday paradox algorithm [6]. However, in practice, the speedups
+are comparable (in the range 6 to 8). We prefer the birthday paradox algorithm because it does
+not require a large table (or on-line generation) of primes for the second phase, so it is easier to
+program and has lower storage requirements.
+
+11
+
+9.3
+
+Better choice of random elliptic curves
+
+Montgomery [21] and Suyama [28] have shown that it is possible to choose “random” elliptic
+curves so that g is divisible by certain powers of 2 and/or 3. For example, we have implemented
+a suggestion of Suyama which ensures that g is divisible by 12. This effectively reduces p to
+p/12 in the analysis above, so gives a speedup which is very significant in practice, although not
+significant asymptotically.
+
+9.4
+
+Faster group operations
+
+Montgomery [21] and Chudnovsky and Chudnovsky [8] have shown that the Weierstrass normal
+form (5.1) may not be optimal if we are interested in minimizing the number of arithmetic
+operations required to perform group operations. If (5.1) is replaced by
+by 2 = x3 + ax2 + x
+
+(mod N )
+
+(9.2)
+
+then we can dispense with the y coordinate and compute P n in 10 log2 n + O(1) multiplications
+(mod N ), instead of about 32 ( 11
+3 + K) log 2 n multiplications (mod N ), a saving of about 43% if
+K = 8.
+The effect of the improvements described in §§9.3–9.4 is to speed up both the one-phase and
+two-phase algorithms by a factor of 3 to 4.
+
+10
+
+Conclusion
+
+Lenstra’s algorithm is currently the fastest known factorization algorithm for large N having
+>
+a factor p ∼
+1013 , ln p/ ln N ≪ 1/2. It is also ideally suited to parallel computation, since the
+factorization process involves a number of independent trials which can be performed in parallel.
+We have described how to improve on Lenstra’s algorithm by the addition of a second phase.
+The theoretical speedup is of order ln(p). From an asymptotic point of view this is not very
+impressive, but in practice it is certainly worth having and may increase the size of factors
+which can be found in a reasonable time by several orders of magnitude (see Figure 1 and the
+comments in §8).
+Given increasing circuit speeds and increasing use of parallelism, it is reasonable to predict
+that 1014 multiplications might be devoted to factorizing a number in the not-too-far-distant
+future (there are about 3 × 1013 microseconds in a year). Thus, from Table 1, it will be feasible
+to find prime factors p with up to about 50 decimal digits by the algorithms based on elliptic
+curves. Other algorithms [27] may be even more effective on numbers which are the product of
+two roughly equal primes. This implies that the composite numbers N on which the RSA publickey cryptosystem [25, 26] is based should have at least 100 decimal digits if the cryptosystem is
+to be reasonably secure.
+
+11
+
+Acknowledgements
+
+I wish to thank Sam Wagstaff, Jr. for introducing me to Lenstra’s algorithm, and Brendan
+McKay, Andrew Odlyzko, John Pollard, Mike Robson and Hiromi Suyama for their helpful
+comments on a first draft of this paper.
+
+12
+
+12
+
+References
+
+1. A. V. Aho, J. E. Hopcroft and J. D. Ullman, The Design and Analysis of Computer
+Algorithms, Addison-Wesley, 1974.
+2. E. Bach, Lenstra’s Algorithm for Factoring with Elliptic Curves (exposé), Computer
+Science Dept., Univ. of Wisconsin, Madison, Feb. 1985.
+3. B. J. Birch, How the number of points of an elliptic curve over a fixed prime field varies,
+J. London Math. Soc. 43 (1968), 57–60.
+4. A. Borodin and I. Munro, The Computational Complexity of Algebraic and Numeric
+Problems, Elsevier, 1975.
+5. R. P. Brent, An improved Monte Carlo factorization algorithm, BIT 20 (1980), 176–184.
+6. R. P. Brent, Some integer factorization algorithms using elliptic curves, Report CMAR32-85, Centre for Math. Analysis, Australian National University, Sept. 1985, §6.
+7. N. G. de Bruijn, The asymptotic behaviour of a function occurring in the theory of primes,
+J. Indian Math. Soc. 15 (1951), 25–32.
+8. D. V. Chudnovsky and G. V. Chudnovsky, Sequences of numbers generated by addition in
+formal groups and new primality and factorization tests, preprint, Dept. of Mathematics,
+Columbia Univ., July 1985.
+9. K. Dickman, On the frequency of numbers containing prime factors of a certain relative
+magnitude, Ark. Mat., Astronomi och Fysik , 22A, 10 (1930), 1–14.
+10. G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers, Oxford
+University Press, 4th Edition, 1960.
+11. K. F. Ireland and M. Rosen, A Classical Introduction to Modern Number Theory, SpringerVerlag, 1982, Ch. 18.
+12. J-R. Joly, Equations et variétés algébriques sur un corps fini, L’Enseignement Mathématique
+19 (1973), 1–117.
+13. D. E. Knuth, The Art of Computer Programming, Vol. 2 (2nd Edition), Addison-Wesley,
+1982.
+14. D. E. Knuth and L. Trabb Pardo, Analysis of a simple factorization algorithm, Theoretical
+Computer Science 3 (1976), 321–348.
+15. S. Lang, Elliptic Curves – Diophantine Analysis, Springer-Verlag, 1978.
+16. D. H. Lehmer, Euclid’s algorithm for large numbers, Amer. Math. Monthly 45 (1938),
+227-233.
+17. H. W. Lenstra, Jr., Elliptic Curve Factorization, personal communication via Samuel
+Wagstaff Jr., Feb. 1985.
+18. J. van de Lune and E. Wattel, On the numerical solution of a differential-difference equation
+arising in analytic number theory, Math. Comp. 23 (1969), 417–421.
+19. P. L. Montgomery, Speeding the Pollard methods of factorization, preprint, System
+Development Corp., Santa Monica, Dec. 1983.
+13
+
+20. P. L. Montgomery, Modular multiplication without trial division, Math. Comp. 44 (1985),
+519–521.
+21. P. L. Montgomery, personal communication, September 1985.
+22. M. Paterson and L. Stockmeyer, On the number of nonscalar multiplications necessary to
+evaluate polynomials, SIAM J. Computing 2 (1973), 60–66.
+23. J. M. Pollard, Theorems in factorization and primality testing, Proc. Cambridge
+Philos. Soc. 76 (1974), 521–528.
+24. J. M. Pollard, A Monte Carlo method for factorization, BIT 15 (1975), 331–334.
+25. H. Riesel, Prime numbers and computer methods for factorization, Birkhauser, 1985.
+26. R. L. Rivest, A. Shamir and L. Adleman, A method for obtaining digital signatures and
+public-key cryptosystems, Comm. ACM 21 (1978), 120–126.
+27. R. D. Silverman, The multiple polynomial quadratic sieve, preprint, Mitre Corp., Bedford
+Mass., 1985.
+28. H. Suyama, Informal preliminary report (8), personal communication, October 1985.
+29. S. Winograd, Evaluating polynomials using rational auxiliary functions, IBM Technical
+Disclosure Bulletin 13 (1970), 1133–1135.
+
+14
+
+Postscript and historical note (added 7 November 1998)
+The LATEX source file was retyped in 1998 from the version (rpb102) which appeared in Proceedings of the Ninth Australian Computer Science Conference, special issue of Australian Computer
+Science Communications 8 (1986), 149–163 [submitted 24 September 1985, and in final form
+10 December 1985]. No attempt has been made to update the contents, but minor typographical
+errors have been corrected (for example, in equations (1.1), (6.3), (6.7) and (9.2)). Some minor
+changes have been made for cosmetic reasons, e.g. d′ was changed to D in (6.5), and some
+equations have been displayed more clearly using the LATEX \frac{. . .}{. . .} and \sqrt{. . .}
+constructs – see for example (5.5)–(5.7).
+A preliminary version (rpb097tr) appeared as Report CMA-R32-85, Centre for Mathematical
+Analysis, Australian National University, September 1985. It is more detailed but does not
+include the section on “further refinements” (§9 above).
+For developments up to mid-1997, see:
+30. R. P. Brent, Factorization of the tenth Fermat number, Mathematics of Computation
+68 (January 1999), to appear (rpb161). A preliminary version (Factorization of the tenth
+and eleventh Fermat numbers, Technical Report TR-CS-96-02, Computer Sciences Laboratory, ANU, February 1996) is also available in electronic form (rpb161tr).
+
+Further remarks (added 3 December 1998)
+In the estimate (1.1), T1 (p) is the arithmetic complexity. The bit complexity is a factor M (N )
+larger, where M (N ) is the number of bit operations required to multiply integers mod N . As
+explained in §2, we take one multiplication mod N as the basic unit of work. In applications
+such as the factorization of large Fermat numbers, the factor M (N ) is significant.
+In §4 the group operation on the elliptic curve is written as multiplication, because of the
+analogy with the Pollard “p−1” method. Nowadays the group operation is nearly always written
+as addition, see for example [30].
+At the end of §8, we say that “the product mT is relatively insensitive to the choice of m”.
+See [30, Table 3] for an indication of how the choice of non-optimal m changes the efficiency of
+the method.
+
+Acknowledgement
+I am grateful to Paul Zimmermann for his comments which prompted these “further remarks”.
+
+15
+
+

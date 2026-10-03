@@ -1,0 +1,918 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/hjWO9g5HyqbDPbtcm+pG/p+FPUM</id>
+  <title>arXiv Query: search_query=abs:"quantum factoring" OR (abs:"quantum" AND abs:"factoring" AND abs:"asymptotically fastest")&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T18:47:38Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22quantum+factoring%22+OR+(abs:%22quantum%22+AND+(abs:%22factoring%22+AND+abs:%22asymptotically+fastest%22))&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>84</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9605013v1</id>
+    <title>Quantum Logical Operations on Encoded Qubits</title>
+    <updated>1996-05-14T19:05:38Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9605013v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9605013v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show how to carry out quantum logical operations (controlled-not and Toffoli gates) on encoded qubits for several encodings which protect against various 1-bit errors. This improves the reliability of these operations by allowing one to correct for one bit errors which either preexisted or occurred in course of operation. The logical operations we consider allow one to cary out the vast majority of the steps in the quantum factoring algorithm. Thus, our results help bring quantum factoring and other quantum computations closer to reality</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-05-14T19:05:38Z</published>
+    <arxiv:comment>5 pages in LaTex, 6 figures, submitted to Physical Review Letters, (May 12, 1996), the paper is also avalaible at http://qso.lanl.gov/qc/</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Wojciech Hubert Zurek</name>
+    </author>
+    <author>
+      <name>Raymond Laflamme</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.77.4683</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.77.4683" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0010034v1</id>
+    <title>Shor's Quantum Factoring Algorithm</title>
+    <updated>2000-10-09T02:42:44Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0010034v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0010034v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper is a written version of a one hour lecture given on Peter Shor's quantum factoring algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-10-09T02:42:44Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9708050v1</id>
+    <title>The Los Alamos Trapped Ion Quantum Computer Experiment</title>
+    <updated>1997-08-27T23:45:15Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9708050v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9708050v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The development and theory of an experiment to investigate quantum computation with trapped calcium ions is described. The ion trap, laser and ion requirements are determined, and the parameters required for quantum logic operations as well as simple quantum factoring are described.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-08-27T23:45:15Z</published>
+    <arxiv:comment>41 pages, 16 figures, submitted to Fortschritte der Physik</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Fortschritte der Physik 46, 329-362 (1998)</arxiv:journal_ref>
+    <author>
+      <name>R. J. Hughes</name>
+    </author>
+    <author>
+      <name>D. F. V. James</name>
+    </author>
+    <author>
+      <name>J. J. Gomez</name>
+    </author>
+    <author>
+      <name>M. S. Gulley</name>
+    </author>
+    <author>
+      <name>M. H. Holzscheiter</name>
+    </author>
+    <author>
+      <name>P. G. Kwiat</name>
+    </author>
+    <author>
+      <name>S. K. Lamoreaux</name>
+    </author>
+    <author>
+      <name>C. G. Peterson</name>
+    </author>
+    <author>
+      <name>V. D. Sandberg</name>
+    </author>
+    <author>
+      <name>M. M. Schauer</name>
+    </author>
+    <author>
+      <name>C. M. Simmons</name>
+    </author>
+    <author>
+      <name>C. E. Thorburn</name>
+    </author>
+    <author>
+      <name>D. Tupa</name>
+    </author>
+    <author>
+      <name>P. Z. Wang</name>
+    </author>
+    <author>
+      <name>A. G. White</name>
+    </author>
+    <arxiv:doi>10.1002/(SICI)1521-3978(199806)46:4/5&lt;329::AID-PROP329&gt;3.0.CO;2-X</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/(SICI)1521-3978(199806)46:4/5&lt;329::AID-PROP329&gt;3.0.CO;2-X" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0011013v1</id>
+    <title>Basic concepts in quantum computation</title>
+    <updated>2000-11-02T16:22:43Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0011013v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0011013v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Section headings: 1 Qubits, gates and networks 2 Quantum arithmetic and function evaluations 3 Algorithms and their complexity 4 From interferometers to computers 5 The first quantum algorithms 6 Quantum search 7 Optimal phase estimation 8 Periodicity and quantum factoring 9 Cryptography 10 Conditional quantum dynamics 11 Decoherence and recoherence 12 Concluding remarks</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-11-02T16:22:43Z</published>
+    <arxiv:comment>37 pages, lectures given at les Houches Summer School on "Coherent Matter Waves", July-August 1999</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Artur Ekert</name>
+    </author>
+    <author>
+      <name>Patrick Hayden</name>
+    </author>
+    <author>
+      <name>Hitoshi Inamori</name>
+    </author>
+    <arxiv:doi>10.1007/3-540-45338-5_10</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/3-540-45338-5_10" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0206101v1</id>
+    <title>A pseudo-simulation of Shor's quantum factoring algorithm</title>
+    <updated>2002-06-16T15:09:42Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0206101v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0206101v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper presents a computer program, written in Maple, that allows a user to simulate certain aspects of Shor's quantum factoring algorithm on a desktop or laptop computer. The program does not simulate the unitary operations carried out by a quantum computer but does faithfully mimic its output at the crucial "readout" step of the order-finding process. The program reqires only two inputs from the user - the number to be factored (which can be up to 10 digits long) and the number of qubits to be used in the factoring (for which a helpful hint is given). The program then returns a detailed history of all its attempts at factoring the number, beginning with its various unsuccessful attempts and ending with the final successful attempt that leads to the correct factors. The structure of the simulation is described, a typical output produced by it is shown, and the factors limiting its performance are discussed. The purpose of this simulation is to provide the user with some "hands-on" experience of how quantum factoring works on integers somewhat larger than can be handled by today's quantum computers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-06-16T15:09:42Z</published>
+    <arxiv:comment>20 pages, 4 tables, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>J. F. Schneiderman</name>
+    </author>
+    <author>
+      <name>M. E. Stanley</name>
+    </author>
+    <author>
+      <name>P. K. Aravind</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9707033v1</id>
+    <title>Quantum Algorithms and the Fourier Transform</title>
+    <updated>1997-07-17T08:14:27Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9707033v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9707033v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The quantum algorithms of Deutsch, Simon and Shor are described in a way which highlights their dependence on the Fourier transform. The general construction of the Fourier transform on an Abelian group is outlined and this provides a unified way of understanding the efficacy of these algorithms. Finally we describe an efficient quantum factoring algorithm based on a general formalism of Kitaev and contrast its structure to the ingredients of Shor's algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-07-17T08:14:27Z</published>
+    <arxiv:comment>18 pages Latex. Submitted to Proceedings of Santa Barbara Conference on Quantum Coherence and Decoherence</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Richard Jozsa</name>
+    </author>
+    <arxiv:doi>10.1098/rspa.1998.0163</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1098/rspa.1998.0163" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.05545v2</id>
+    <title>Extending Regev's factoring algorithm to compute discrete logarithms</title>
+    <updated>2024-01-30T12:29:52Z</updated>
+    <link href="https://arxiv.org/abs/2311.05545v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.05545v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Regev recently introduced a quantum factoring algorithm that may be perceived as a $d$-dimensional variation of Shor's factoring algorithm. In this work, we extend Regev's factoring algorithm to an algorithm for computing discrete logarithms in a natural way. Furthermore, we discuss natural extensions of Regev's factoring algorithm to order finding, and to factoring completely via order finding. For all of these algorithms, we discuss various practical implementation considerations, including in particular the robustness of the post-processing.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-09T17:45:28Z</published>
+    <arxiv:comment>A number of improvements have been made, and further details on the robustness of the post-processing and other practical implementation considerations added</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>In: PQCrypto 2024, Springer LNCS 14772, 211-242 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <author>
+      <name>Joel Gärtner</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-031-62746-0_10</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-031-62746-0_10" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.04579v1</id>
+    <title>Experimental Evidence about "A factorisation algorithm in adiabatic quantum computation" by T. D. Kieu</title>
+    <updated>2019-01-14T21:49:35Z</updated>
+    <link href="https://arxiv.org/abs/1901.04579v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.04579v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Computations show that the logic about a quantum factoring algorithm does not hold in reality on a D-Wave quantum computer. We demonstrate this for the integers 15 = 3 x 5, 91 = 7 x 13 and 899 = 29 x 31. The likely cause is the D-Wave hardware that does not accept input terms that are a number, i.e., only terms that contain a Boolean variable can be an input. Without terms that are numbers, the relative magnitude of the coefficients in the factoring algorithm is too great to differentiate values.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-14T21:49:35Z</published>
+    <arxiv:comment>4 pages, 1 table</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Richard H. Warren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.07311v4</id>
+    <title>Optimising Matrix Product State Simulations of Shor's Algorithm</title>
+    <updated>2019-01-09T07:38:15Z</updated>
+    <link href="https://arxiv.org/abs/1712.07311v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.07311v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We detail techniques to optimise high-level classical simulations of Shor's quantum factoring algorithm. Chief among these is to examine the entangling properties of the circuit and to effectively map it across the one-dimensional structure of a matrix product state. Compared to previous approaches whose space requirements depend on $r$, the solution to the underlying order-finding problem of Shor's algorithm, our approach depends on its factors. We performed a matrix product state simulation of a 60-qubit instance of Shor's algorithm that would otherwise be infeasible to complete without an optimised entanglement mapping.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-20T03:49:39Z</published>
+    <arxiv:comment>8 pages, 2 figures, 2 tables. v2 using PDFLaTeX compiler. v3 to include extra references. v4 for publication in Quantum</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum 3, 116 (2019)</arxiv:journal_ref>
+    <author>
+      <name>Aidan Dang</name>
+    </author>
+    <author>
+      <name>Charles D. Hill</name>
+    </author>
+    <author>
+      <name>Lloyd C. L. Hollenberg</name>
+    </author>
+    <arxiv:doi>10.22331/q-2019-01-25-116</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.22331/q-2019-01-25-116" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.24316v1</id>
+    <title>A Sharp Noise Threshold for Shor's Quantum Factoring and Discrete Log Algorithms</title>
+    <updated>2026-09-21T09:16:27Z</updated>
+    <link href="https://arxiv.org/abs/2609.24316v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.24316v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the asymptotic behavior of Shor's quantum factoring and discrete log algorithms when noise affects the precise controlled rotation gates in their quantum Fourier transforms. Improving the results of Cai (2024) and Cai and Young (2025), we identify a sharp and vanishingly small noise threshold. If the noise level lies below this threshold, then the two algorithms succeed in expected polynomial time. If the noise level exceeds this threshold, then the algorithms provably fail to solve their respective problems in expected polynomial time when the underlying primes belong to a set of positive density.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-21T09:16:27Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jin-Yi Cai</name>
+    </author>
+    <author>
+      <name>Ben Young</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.07085v1</id>
+    <title>On quantum factoring using noisy intermediate scale quantum computers</title>
+    <updated>2022-08-15T09:32:07Z</updated>
+    <link href="https://arxiv.org/abs/2208.07085v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.07085v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the performance and resource usage of the variational quantum factoring (VQF) algorithm for different instance sizes and optimization algorithms. Our simulations show better chance of finding the ground state when using VQE rather than QAOA for optimization. In gradient-based optimization we find that the time required for quantum circuit gradient estimation is a significant problem if VQF is to become competitive with classical factoring algorithms. Further, we compare entangled and non-entangled circuits in VQE optimization and fail to see significant evidence in favour of including entanglement in the VQE circuit.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-15T09:32:07Z</published>
+    <arxiv:comment>10 pages, 10 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Vivian Phan</name>
+    </author>
+    <author>
+      <name>Arttu Pönni</name>
+    </author>
+    <author>
+      <name>Matti Raasakka</name>
+    </author>
+    <author>
+      <name>Ilkka Tittonen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0601097v1</id>
+    <title>Shor's algorithm with fewer (pure) qubits</title>
+    <updated>2006-01-15T20:22:55Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0601097v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0601097v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this note we consider optimised circuits for implementing Shor's quantum factoring algorithm. First I give a circuit for which none of the about 2n qubits need to be initialised (though we still have to make the usual 2n measurements later on). Then I show how the modular additions in the algorithm can be carried out with a superposition of an arithmetic sequence. This makes parallelisation of Shor's algorithm easier. Finally I show how one can factor with only about 1.5n qubits, and maybe even fewer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-01-15T20:22:55Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Christof Zalka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.1242v1</id>
+    <title>Shor's quantum factoring algorithm on a photonic chip</title>
+    <updated>2009-11-06T13:11:48Z</updated>
+    <link href="https://arxiv.org/abs/0911.1242v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.1242v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's quantum factoring algorithm finds the prime factors of a large number exponentially faster than any other known method a task that lies at the heart of modern information security, particularly on the internet. This algorithm requires a quantum computer a device which harnesses the `massive parallelism' afforded by quantum superposition and entanglement of quantum bits (or qubits). We report the demonstration of a compiled version of Shor's algorithm on an integrated waveguide silica-on-silicon chip that guides four single-photon qubits through the computation to factor 15.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-06T13:11:48Z</published>
+    <arxiv:comment>2 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Science, 325, 1221 (2009)</arxiv:journal_ref>
+    <author>
+      <name>Alberto Politi</name>
+    </author>
+    <author>
+      <name>Jonathan C. F. Matthews</name>
+    </author>
+    <author>
+      <name>Jeremy L. O'Brien</name>
+    </author>
+    <arxiv:doi>10.1126/science.1173731</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.1173731" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.17269v1</id>
+    <title>Quantum Algorithms for Discrete Log Require Precise Rotations</title>
+    <updated>2024-12-23T04:33:19Z</updated>
+    <link href="https://arxiv.org/abs/2412.17269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.17269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Cai showed that Shor's quantum factoring algorithm fails to factor large integers when the algorithm's quantum Fourier transform (QFT) is corrupted by a vanishing level of random noise on the QFT's precise controlled rotation gates. We show that under the same error model, Shor's quantum discrete log algorithm, and its various modifications, fail to compute discrete logs modulo P for a positive density of primes P and a similarly vanishing level of noise. We also show that the same noise level causes Shor's algorithm to fail with probability 1-o(1) to compute discrete logs modulo P for randomly selected primes P.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-23T04:33:19Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jin-Yi Cai</name>
+    </author>
+    <author>
+      <name>Ben Young</name>
+    </author>
+    <arxiv:doi>10.1145/3736421</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3736421" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.12447v1</id>
+    <title>Resiliency Analysis and Improvement of Variational Quantum Factoring in Superconducting Qubit</title>
+    <updated>2020-04-26T18:15:05Z</updated>
+    <link href="https://arxiv.org/abs/2004.12447v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.12447v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Variational algorithm using Quantum Approximate Optimization Algorithm (QAOA) can solve the prime factorization problem in near-term noisy quantum computers. Conventional Variational Quantum Factoring (VQF) requires a large number of 2-qubit gates (especially for factoring a large number) resulting in deep circuits. The output quality of the deep quantum circuit is degraded due to errors limiting the computational power of quantum computing. In this paper, we explore various transformations to optimize the QAOA circuit for integer factorization. We propose two criteria to select the optimal quantum circuit that can improve the noise resiliency of VQF.</summary>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-26T18:15:05Z</published>
+    <arxiv:comment>6 pages, 7 figures, submitted to ISLPED 2020 for review</arxiv:comment>
+    <arxiv:primary_category term="cs.ET"/>
+    <author>
+      <name>Ling Qiu</name>
+    </author>
+    <author>
+      <name>Mahabubul Alam</name>
+    </author>
+    <author>
+      <name>Abdullah Ash-Saki</name>
+    </author>
+    <author>
+      <name>Swaroop Ghosh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0403146v2</id>
+    <title>Distributed quantum computing: A distributed Shor algorithm</title>
+    <updated>2004-03-23T09:50:57Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0403146v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0403146v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a distributed implementation of Shor's quantum factoring algorithm on a distributed quantum network model. This model provides a means for small capacity quantum computers to work together in such a way as to simulate a large capacity quantum computer. In this paper, entanglement is used as a resource for implementing non-local operations between two or more quantum computers. These non-local operations are used to implement a distributed factoring circuit with polynomially many gates. This distributed version of Shor's algorithm requires an additional overhead of O((log N)^2) communication complexity, where N denotes the integer to be factored.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-03-19T23:27:15Z</published>
+    <arxiv:comment>13 pages, 12 figures, extra figures are removed</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Anocha Yimsiriwattana</name>
+    </author>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <arxiv:doi>10.1117/12.546504</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1117/12.546504" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1105.0371v1</id>
+    <title>Quantizing Braids and Other Mathematical Objects: The General Quantization Procedure</title>
+    <updated>2011-05-02T16:09:06Z</updated>
+    <link href="https://arxiv.org/abs/1105.0371v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1105.0371v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Extending the methods from our previous work on quantum knots and quantum graphs, we describe a general procedure for quantizing a large class of mathematical structures which includes, for example, knots, graphs, groups, algebraic varieties, categories, topological spaces, geometric spaces, and more. This procedure is different from that normally found in quantum topology.
+  We then demonstrate the power of this method by using it to quantize braids. This general method produces a blueprint of a quantum system which is physically implementable in the same sense that Shor's quantum factoring algorithm is physically implementable. Mathematical invariants become objects that are physically observable.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-05-02T16:09:06Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+    <arxiv:doi>10.1117/12.883681</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1117/12.883681" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1301.7007v1</id>
+    <title>Pretending to factor large numbers on a quantum computer</title>
+    <updated>2013-01-29T18:08:49Z</updated>
+    <link href="https://arxiv.org/abs/1301.7007v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1301.7007v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm for factoring in polynomial time on a quantum computer\cite{Shor} gives an enormous advantage over all known classical factoring algorithm. We demonstrate how to factor products of large prime numbers using a compiled version of Shor's quantum factoring algorithm. Our technique can factor all products of $p,q$ such that $p,q$ are unequal primes greater than two, runs in constant time, and requires only two coherent qubits. This illustrates that the correct measure of difficulty when implementing Shor's algorithm is not the size of number factored, but the length of the period found.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-01-29T18:08:49Z</published>
+    <arxiv:comment>15 pages including 3 figures and supplementary material</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Nature 499, 163-165 (2013)</arxiv:journal_ref>
+    <author>
+      <name>John A. Smolin</name>
+    </author>
+    <author>
+      <name>Graeme Smith</name>
+    </author>
+    <author>
+      <name>Alex Vargo</name>
+    </author>
+    <arxiv:doi>10.1038/nature12290</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/nature12290" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.17647v1</id>
+    <title>From Period Finding to Lattice Sampling: Experimental Insights into Shor's and Regev's Factoring Algorithms</title>
+    <updated>2026-06-16T08:06:38Z</updated>
+    <link href="https://arxiv.org/abs/2606.17647v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.17647v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum algorithms for integer factorization represent one of the most prominent applications of quantum computation, with far-reaching implications for modern cryptography. While Shor's algorithm provides a polynomial-time solution in the ideal quantum model, its practical implementation is severely constrained by the limitations of current noisy intermediate-scale quantum (NISQ) hardware. These constraints have motivated the exploration of alternative factoring algorithms with different structural and resource trade-offs.
+  In this work, we present an experimental study of Regev's quantum factoring algorithm, implemented on real quantum hardware, and compare its behavior with that of Shor's algorithm under analogous conditions. Focusing on the case N = 15, we execute both algorithms on the QMIO quantum computer at the Centro de Supercomputacion de Galicia (CESGA) and contrast the results with one of IBM's open-access quantum computers and ideal simulations. This parallel execution enables a low-level comparison of the two algorithms, highlighting how their respective quantum implementations interact with hardware noise, limited circuit depth, and finite sampling.
+  Our analysis emphasizes the different ways in which Shor's and Regev's algorithms encode arithmetic structure into quantum states through Fourier sampling in one and higher dimensions, respectively, and how these differences manifest in experimental outcomes. Although neither algorithm demonstrates a practical advantage in the small N regime, the results provide insight into their relative robustness and failure modes on contemporary quantum devices. This study illustrates the value of experimental benchmarking of alternative quantum factoring algorithms as a means of understanding the practical implications of algorithmic design choices in the NISQ era.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-16T08:06:38Z</published>
+    <arxiv:comment>10 pages. Experimental comparison of Shor's and Regev's factoring algorithms on real quantum hardware and ideal simulations</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Daniela Falcó</name>
+    </author>
+    <author>
+      <name>Arturo Rodríguez</name>
+    </author>
+    <author>
+      <name>Guillermo Rivas</name>
+    </author>
+    <author>
+      <name>Ricardo S. Alonso</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.10072v1</id>
+    <title>Shor's Algorithm Does Not Factor Large Integers in the Presence of Noise</title>
+    <updated>2023-06-15T21:55:44Z</updated>
+    <link href="https://arxiv.org/abs/2306.10072v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.10072v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider Shor's quantum factoring algorithm in the setting of noisy quantum gates. Under a generic model of random noise for (controlled) rotation gates, we prove that the algorithm does not factor integers of the form $pq$ when the noise exceeds a vanishingly small level in terms of $n$ -- the number of bits of the integer to be factored, where $p$ and $q$ are from a well-defined set of primes of positive density. We further prove that with probability $1 - o(1)$ over random prime pairs $(p,q)$, Shor's factoring algorithm does not factor numbers of the form $pq$, with the same level of random noise present.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-15T21:55:44Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>SCIENCE CHINA Information Sciences 2024</arxiv:journal_ref>
+    <author>
+      <name>Jin-Yi Cai</name>
+    </author>
+    <arxiv:doi>10.1007/s11432-023-3961-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11432-023-3961-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9601021v1</id>
+    <title>Factoring in a Dissipative Quantum Computer</title>
+    <updated>1996-01-23T23:05:36Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9601021v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9601021v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We describe an array of quantum gates implementing Shor's algorithm for prime factorization in a quantum computer. The array includes a circuit for modular exponentiation with several subcomponents (such as controlled multipliers, adders, etc) which are described in terms of elementary Toffoli gates. We present a simple analysis of the impact of losses and decoherence on the performance of this quantum factoring circuit. For that purpose, we simulate a quantum computer which is running the program to factor N = 15 while interacting with a dissipative environment. As a consequence of this interaction randomly selected qubits may spontaneously decay. Using the results of our numerical simulations we analyze the efficiency of some simple error correction techniques.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-01-23T23:05:36Z</published>
+    <arxiv:comment>plain tex, 18 pages, 8 postscript figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Cesar Miquel</name>
+    </author>
+    <author>
+      <name>Juan Pablo Paz</name>
+    </author>
+    <author>
+      <name>Roberto Perazzo</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.54.2605</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.54.2605" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0202010v1</id>
+    <title>Exhibition of the periodicity of Quantum Fourier Transformation in Nuclear Magnetic Resonance</title>
+    <updated>2002-02-01T13:27:43Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0202010v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0202010v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The remarkable capability of quantum Fourier transformation (QFT) to extract the periodicity of a given periodic function has been exhibited by using nuclear magnetic resonance (NMR) techniques. Two separate sets of experiments were performed. In a full QFT, the periodicity were validated with state tomography and fidelity measurements. For a simplified QFT, the three-qubit pseudo-pure state was created by introducting an additional observer spin, and the spectra recorded on the observer spin showed intuitively the power of QFT\ to find the periodicity. Experimentally realizing the QFT provides a critical step to implement the renowned Shor's quantum factoring algorithm and many other algorithms. Moveover, it can be applied to the study of quantum chaos and other quantum information processing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-02-01T13:27:43Z</published>
+    <arxiv:comment>12 pages, 3 tables and 4 PS figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Xinhua Peng</name>
+    </author>
+    <author>
+      <name>Xiwen Zhu</name>
+    </author>
+    <author>
+      <name>Ximing Fang</name>
+    </author>
+    <author>
+      <name>Mang Feng</name>
+    </author>
+    <author>
+      <name>Xiaodong Yang</name>
+    </author>
+    <author>
+      <name>Maili Liu</name>
+    </author>
+    <author>
+      <name>Kelin Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.00899v5</id>
+    <title>Space-Efficient and Noise-Robust Quantum Factoring</title>
+    <updated>2025-04-30T20:01:38Z</updated>
+    <link href="https://arxiv.org/abs/2310.00899v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.00899v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide two improvements to Regev's recent quantum factoring algorithm (Journal of the ACM 2025), addressing its space efficiency and its noise-tolerance.
+  Our first contribution is to improve the quantum space efficiency of Regev's algorithm while keeping the circuit size the same. Our main result constructs a quantum factoring circuit using $O(n \log n)$ qubits and $O(n^{3/2} \log n)$ gates. We achieve the best of Shor and Regev (upto a logarithmic factor in the space complexity): on the one hand, Regev's circuit requires $O(n^{3/2})$ qubits and $O(n^{3/2} \log n)$ gates, while Shor's circuit requires $O(n^2 \log n)$ gates but only $O(n \log n)$ qubits. As with Regev, to factor an $n$-bit integer $N$, we run our circuit independently $O(\sqrt{n})$ times and apply Regev's classical postprocessing procedure.
+  Our optimization is achieved by implementing efficient and reversible exponentiation with Fibonacci numbers in the exponent, rather than the usual powers of 2, adapting work by Kaliski (arXiv:1711.02491) from the classical reversible setting to the quantum setting. This technique also allows us to perform quantum modular exponentiation that is efficient in both space and size without requiring significant precomputation, a result that may be useful for other quantum algorithms. A key ingredient of our exponentiation implementation is an efficient circuit for a function resembling in-place quantum-quantum modular multiplication.
+  Our second contribution is to show that Regev's classical postprocessing procedure can be modified to tolerate a constant fraction of the quantum circuit runs being corrupted by errors. In contrast, Regev's analysis of his classical postprocessing procedure requires all $\approx \sqrt{n}$ runs to be successful. In a nutshell, we achieve this using lattice reduction techniques to detect and filter out corrupt samples.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-02T04:31:21Z</published>
+    <arxiv:comment>CRYPTO 2024; previously titled "Optimizing Space in Regev's Factoring Algorithm"</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Seyoon Ragavan</name>
+    </author>
+    <author>
+      <name>Vinod Vaikuntanathan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1802.08444v2</id>
+    <title>Deterministic factoring with oracles</title>
+    <updated>2021-08-13T09:23:45Z</updated>
+    <link href="https://arxiv.org/abs/1802.08444v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1802.08444v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit the problem of integer factorization with number-theoretic oracles, including a well-known problem: can we factor an integer $N$ unconditionally, in deterministic polynomial time, given the value of the Euler totient $$Φ$(N)$? We show that this can be done, under certain size conditions on the prime factors of N. The key technique is lattice basis reduction using the LLL algorithm. Among our results, we show for example that if $N$ is a squarefree integer with a prime factor $p &gt; $\sqrt$ N$ , then we can recover p in deterministic polynomial time given $$Φ$(N)$. We also shed some light on the analogous problems for Carmichael's function, and the order oracle that is used in Shor's quantum factoring algorithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-02-23T08:58:23Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Fran{\c c}ois Morain</name>
+      <arxiv:affiliation>GRACE</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gu{é}na{ë}l Renault</name>
+      <arxiv:affiliation>LCR, PolSys</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Benjamin Smith</name>
+      <arxiv:affiliation>GRACE</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.01308v1</id>
+    <title>Controlling NMR spin systems for quantum computation</title>
+    <updated>2024-02-02T10:57:40Z</updated>
+    <link href="https://arxiv.org/abs/2402.01308v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.01308v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nuclear magnetic resonance is arguably both the best available quantum technology for implementing simple quantum computing experiments and the worst technology for building large scale quantum computers that has ever been seriously put forward. After a few years of rapid growth, leading to an implementation of Shor's quantum factoring algorithm in a seven-spin system, the field started to reach its natural limits and further progress became challenging. Rather than pursuing more complex algorithms on larger systems, interest has now largely moved into developing techniques for the precise and efficient manipulation of spin states with the aim of developing methods that can be applied in other more scalable technologies and within conventional NMR. However, the user friendliness of NMR implementations means that they remain popular for proof-of-principle demonstrations of simple quantum information protocols.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-02T10:57:40Z</published>
+    <arxiv:comment>Review paper submitted to Progress in Nuclear Magnetic Resonance Spectroscopy: 61 pages, 13 figures, 633 references</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Prog. NMR Spectrosc. 140-141, 49-85 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Jonathan A. Jones</name>
+    </author>
+    <arxiv:doi>10.1016/j.pnmrs.2024.02.002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.pnmrs.2024.02.002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.11926v1</id>
+    <title>Scalable semi-classical implementation of Shor factoring using time-multiplexed degenerate optical parametric oscillators</title>
+    <updated>2022-05-24T09:37:22Z</updated>
+    <link href="https://arxiv.org/abs/2205.11926v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.11926v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A scheme to encode arbitrarily long integer pairs on degenerate optical parametric oscillations multiplexed in time is proposed. The classical entanglement between the polarization directions and the phases of the oscillating pulses, regarded as two computational registers, furnishes the integer correlations within each pair. We show the major algorithmic steps, modular exponentiation and discrete Fourier transform, of Shor's quantum factoring algorithm can be executed in the registers as pulse interferences under the assistance of external logics. The factoring algorithm is thus rendered equivalent to a semi-classical optical-path implementation that is scalable and decoherence-free. The sought-after multiplicative order, from which the prime factors are deduced, is identified from a two-dimensional fringe image generated by four-hole interference measured at the end of the path.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-24T09:37:22Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minghui Li</name>
+    </author>
+    <author>
+      <name>Wei Wang</name>
+    </author>
+    <author>
+      <name>Zikang Tang</name>
+    </author>
+    <author>
+      <name>Hou Ian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0810.5626v2</id>
+    <title>Resource Requirements for Fault-Tolerant Quantum Simulation: The Transverse Ising Model Ground State</title>
+    <updated>2009-02-14T23:51:48Z</updated>
+    <link href="https://arxiv.org/abs/0810.5626v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0810.5626v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We estimate the resource requirements, the total number of physical qubits and computational time, required to compute the ground state energy of a 1-D quantum Transverse Ising Model (TIM) of N spin-1/2 particles, as a function of the system size and the numerical precision. This estimate is based on analyzing the impact of fault-tolerant quantum error correction in the context of the Quantum Logic Array (QLA) architecture. Our results show that due to the exponential scaling of the computational time with the desired precision of the energy, significant amount of error correciton is required to implement the TIM problem. Comparison of our results to the resource requirements for a fault-tolerant implementation of Shor's quantum factoring algorithm reveals that the required logical qubit reliability is similar for both the TIM problem and the factoring problem.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-10-31T18:02:15Z</published>
+    <arxiv:comment>19 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 79, 062314 (2009)</arxiv:journal_ref>
+    <author>
+      <name>Craig R. Clark</name>
+    </author>
+    <author>
+      <name>Kenneth R. Brown</name>
+    </author>
+    <author>
+      <name>Tzvetan S. Metodi</name>
+    </author>
+    <author>
+      <name>Samuel D. Gasster</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.79.062314</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.79.062314" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.25393v1</id>
+    <title>On the generation of multiplicative groups by small primes</title>
+    <updated>2026-09-21T20:35:48Z</updated>
+    <link href="https://arxiv.org/abs/2609.25393v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.25393v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by a question of Regev arising from his improved quantum factoring algorithm, we study how many small primes are needed to generate the group $({\mathbb Z}/q{\mathbb Z})^\times$ when each prime may be used with exponent only $0$ or $1$. We prove that, for every fixed $\varepsilon&gt;0$ and $A&gt;0$, there is an absolute constant $C_*$ and a set of at most $(\log Q)^{1+\varepsilon}$ primes, all at most $(\log Q)^{C_*(A+1)}$, such that for all but $O(Q(\log Q)^{-A})$ (with the implied constant depending only on $\varepsilon$ and $A$) integers $q\leq Q$, every element of $({\mathbb Z}/q{\mathbb Z})^\times$ is a product of a subset of these primes modulo $q$. The exponent $1+\varepsilon$ in the number of primes is best possible up to the arbitrary $\varepsilon$ in the exponent.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-21T20:35:48Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Oleksiy Klurman</name>
+    </author>
+    <author>
+      <name>Igor E. Shparlinski</name>
+    </author>
+    <author>
+      <name>Joni Teräväinen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.08927v1</id>
+    <title>Variational Quantum Factoring</title>
+    <updated>2018-08-27T16:58:40Z</updated>
+    <link href="https://arxiv.org/abs/1808.08927v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.08927v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization has been one of the cornerstone applications of the field of quantum computing since the discovery of an efficient algorithm for factoring by Peter Shor. Unfortunately, factoring via Shor's algorithm is well beyond the capabilities of today's noisy intermediate-scale quantum (NISQ) devices. In this work, we revisit the problem of factoring, developing an alternative to Shor's algorithm, which employs established techniques to map the factoring problem to the ground state of an Ising Hamiltonian. The proposed variational quantum factoring (VQF) algorithm starts by simplifying equations over Boolean variables in a preprocessing step to reduce the number of qubits needed for the Hamiltonian. Then, it seeks an approximate ground state of the resulting Ising Hamiltonian by training variational circuits using the quantum approximate optimization algorithm (QAOA). We benchmark the VQF algorithm on various instances of factoring and present numerical results on its performance.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-27T16:58:40Z</published>
+    <arxiv:comment>18 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Eric R. Anschuetz</name>
+    </author>
+    <author>
+      <name>Jonathan P. Olson</name>
+    </author>
+    <author>
+      <name>Alán Aspuru-Guzik</name>
+    </author>
+    <author>
+      <name>Yudong Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/nlin/0505057v2</id>
+    <title>Shuffling cards, factoring numbers, and the quantum baker's map</title>
+    <updated>2005-08-23T11:59:19Z</updated>
+    <link href="https://arxiv.org/abs/nlin/0505057v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/nlin/0505057v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  It is pointed out that an exactly solvable permutation operator, viewed as the quantization of cyclic shifts, is useful in constructing a basis in which to study the quantum baker's map, a paradigm system of quantum chaos. In the basis of this operator the eigenfunctions of the quantum baker's map are compressed by factors of around five or more. We show explicitly its connection to an operator that is closely related to the usual quantum baker's map. This permutation operator has interesting connections to the art of shuffling cards as well as to the quantum factoring algorithm of Shor via the quantum order finding one. Hence we point out that this well-known quantum algorithm makes crucial use of a quantum chaotic operator, or at least one that is close to the quantization of the left-shift, a closeness that we also explore quantitatively.</summary>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-05-26T11:15:31Z</published>
+    <arxiv:comment>12 pgs. Substantially elaborated version, including a new route to the quantum bakers map. To appear in J. Phys. A</arxiv:comment>
+    <arxiv:primary_category term="nlin.CD"/>
+    <arxiv:journal_ref>J. Phys. A: Math. Gen. 38 (2005) L597-L605</arxiv:journal_ref>
+    <author>
+      <name>Arul Lakshminarayan</name>
+    </author>
+    <arxiv:doi>10.1088/0305-4470/38/37/L01</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0305-4470/38/37/L01" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0210141v2</id>
+    <title>A Continuous Variable Shor Algorithm</title>
+    <updated>2004-06-08T04:07:13Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0210141v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0210141v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper, we use the methods found in quant-ph/0201095 to create a continuous variable analogue of Shor's quantum factoring algorithm. By this we mean a quantum hidden subgroup algorithm that finds the period P of a function F:R--&gt;R from the reals R to the reals R, where F belongs to a very general class of functions, called the class of admissible functions.
+  One objective in creating this continuous variable quantum algorithm was to make the structure of Shor's factoring algorithm more mathematically transparent, and thereby give some insight into the inner workings of Shor's original algorithm. This continuous quantum algorithm also gives some insight into the inner workings of Hallgren's Pell's equation algorithm. Two key questions remain unanswered. Is this quantum algorithm more efficient than its classical continuous variable counterpart? Is this quantum algorithm or some approximation of it implementable?</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-10-21T05:12:31Z</published>
+    <arxiv:comment>13 pages; a substantial revision to the first version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9605034v1</id>
+    <title>Tight bounds on quantum searching</title>
+    <updated>1996-05-23T18:26:36Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9605034v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9605034v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We provide a tight analysis of Grover's recent algorithm for quantum database searching. We give a simple closed-form formula for the probability of success after any given number of iterations of the algorithm. This allows us to determine the number of iterations necessary to achieve almost certainty of finding the answer. Furthermore, we analyse the behaviour of the algorithm when the element to be found appears more than once in the table and we provide a new algorithm to find such an element even when the number of solutions is not known ahead of time. Using techniques from Shor's quantum factoring algorithm in addition to Grover's approach, we introduce a new technique for approximate quantum counting, which allows to estimate the number of solutions. Finally we provide a lower bound on the efficiency of any possible quantum database searching algorithm and we show that Grover's algorithm nearly comes within a factor 2 of being optimal in terms of the number of probes required in the table.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-05-23T18:26:36Z</published>
+    <arxiv:comment>8 pages, LaTeX2e, PhysComp 96 submission</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Fortsch.Phys.46:493-506,1998</arxiv:journal_ref>
+    <author>
+      <name>Michel Boyer</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gilles Brassard</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Peter Hoeyer</name>
+      <arxiv:affiliation>Odense University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Alain Tapp</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1002/(SICI)1521-3978(199806)46:4/5&lt;493::AID-PROP493&gt;3.0.CO;2-P</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/(SICI)1521-3978(199806)46:4/5&lt;493::AID-PROP493&gt;3.0.CO;2-P" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0607046v1</id>
+    <title>Quantum Hidden Subgroup Algorithms: An Algorithmic Toolkit</title>
+    <updated>2006-07-06T18:50:51Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0607046v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0607046v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  One of the most promising and versatile approaches to creating new quantum algorithms is based on the quantum hidden subgroup (QHS) paradigm, originally suggested by Alexei Kitaev. This class of quantum algorithms encompasses the Deutsch-Jozsa, Simon, Shor algorithms, and many more.
+  In this paper, our strategy for finding new quantum algorithms is to decompose Shor's quantum factoring algorithm into its basic primitives, then to generalize these primitives, and finally to show how to reassemble them into new QHS algorithms. Taking an "alphabetic building blocks approach," we use these primitives to form an "algorithmic toolkit" for the creation of new quantum algorithms, such as wandering Shor algorithms, continuous Shor algorithms, the quantum circle algorithm, the dual Shor algorithm, a QHS algorithm for Feynman integrals, free QHS algorithms, and more.
+  Toward the end of this paper, we show how Grover's algorithm is most surprisingly "almost" a QHS algorithm, and how this result suggests the possibility of an even more complete "algorithmic tookit" beyond the QHS algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-07-06T18:50:51Z</published>
+    <arxiv:comment>34 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9602016v1</id>
+    <title>Efficient Networks for Quantum Factoring</title>
+    <updated>1996-02-21T22:36:14Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9602016v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9602016v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider how to optimize memory use and computation time in operating a quantum computer. In particular, we estimate the number of memory qubits and the number of operations required to perform factorization, using the algorithm suggested by Shor. A $K$-bit number can be factored in time of order $K^3$ using a machine capable of storing $5K+1$ qubits. Evaluation of the modular exponential function (the bottleneck of Shor's algorithm) could be achieved with about $72 K^3$ elementary quantum gates; implementation using a linear ion trap would require about $396 K^3$ laser pulses. A proof-of-principle demonstration of quantum factoring (factorization of 15) could be performed with only 6 trapped ions and 38 laser pulses. Though the ion trap may never be a useful computer, it will be a powerful device for exploring experimentally the properties of entangled quantum states.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-02-21T22:36:14Z</published>
+    <arxiv:comment>56 pages, 22 figures, uses REVTeX, epsf</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev.A54:1034-1063,1996</arxiv:journal_ref>
+    <author>
+      <name>David Beckman</name>
+      <arxiv:affiliation>Caltech</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Amalavoyal N. Chari</name>
+      <arxiv:affiliation>Caltech</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Srikrishna Devabhaktuni</name>
+      <arxiv:affiliation>Caltech</arxiv:affiliation>
+    </author>
+    <author>
+      <name>John Preskill</name>
+      <arxiv:affiliation>Caltech</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.54.1034</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.54.1034" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1310.2927v5</id>
+    <title>Quantum Computing with black-box Subroutines</title>
+    <updated>2013-11-21T04:29:55Z</updated>
+    <link href="https://arxiv.org/abs/1310.2927v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1310.2927v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern programming relies on our ability to treat preprogrammed functions as black boxes - we can invoke them as subroutines without knowing their physical implementation. Here we show it is generally impossible to execute an unknown quantum subroutine. This, as a special case, forbids applying black-box subroutines conditioned on an ancillary qubit. We explore how this limits many quantum algorithms - forcing their circuit implementation to be individually tailored to specific inputs and inducing failure if these inputs are not known in advance. We present a method to avoid this situation for certain computational problems. We apply this method to enhance existing quantum factoring algorithms; reducing their complexity, and the extent to which they need to be tailored to factor specific numbers. Thus, we highlight a natural property of classical information that fails in the advent of quantum logic; and simultaneously demonstrate how to mitigate its effects in practical situations.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-10-10T19:32:32Z</published>
+    <arxiv:comment>8 pages, 5 figures, this version citations have been shifted</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>New J. Phys. 20, 013004 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Jayne Thompson</name>
+    </author>
+    <author>
+      <name>Mile Gu</name>
+    </author>
+    <author>
+      <name>Kavan Modi</name>
+    </author>
+    <author>
+      <name>Vlatko Vedral</name>
+    </author>
+    <arxiv:doi>10.1088/1367-2630/aa99b3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1367-2630/aa99b3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.4867v1</id>
+    <title>Efficient classical simulations of quantum Fourier transforms and normalizer circuits over Abelian groups</title>
+    <updated>2012-01-23T21:08:46Z</updated>
+    <link href="https://arxiv.org/abs/1201.4867v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.4867v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The quantum Fourier transform (QFT) is sometimes said to be the source of various exponential quantum speed-ups. In this paper we introduce a class of quantum circuits which cannot outperform classical computers even though the QFT constitutes an essential component. More precisely, we consider normalizer circuits. A normalizer circuit over a finite Abelian group is any quantum circuit comprising the QFT over the group, gates which compute automorphisms and gates which realize quadratic functions on the group. We prove that all normalizer circuits have polynomial-time classical simulations. The proof uses algorithms for linear diophantine equation solving and the monomial matrix formalism introduced in our earlier work. We subsequently discuss several aspects of normalizer circuits. First we show that our result generalizes the Gottesman-Knill theorem. Furthermore we highlight connections to Shor's factoring algorithm and to the Abelian hidden subgroup problem in general. Finally we prove that quantum factoring cannot be realized as a normalizer circuit owing to its modular exponentiation subroutine.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-01-23T21:08:46Z</published>
+    <arxiv:comment>23 pages + appendices</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>M. Van den Nest</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.06271v2</id>
+    <title>Asymptotic Vanishing of the Success Probability in Shor's Algorithm</title>
+    <updated>2026-01-01T23:42:37Z</updated>
+    <link href="https://arxiv.org/abs/2510.06271v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.06271v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm guarantees a success probability of at least one half for any fixed modulus N = pq with distinct primes p and q. We show that this guarantee does not extend to the asymptotic regime. As N -&gt; infinity, the multiplicative groups Omega_N = (Z/NZ)^x form a non-tight family of probability spaces, and the probability weight associated with successful bases, proportional to p(success | a', N) p(a' | N), decays as 1/phi(N). The ensemble of uniform measures {mu_N} therefore admits no weak limit, implying an asymptotic loss of ergodicity. Monte Carlo simulations up to N &lt;= 10^6 confirm this decay and the absence of a stationary success probability. These results demonstrate that the "expected polynomial time" in order finding is only locally defined: no global expectation exists once the arithmetic domain expands. The asymptotic vanishing of success probability explains the empirical absence of large-N implementations of Shor's algorithm and sets a fundamental limit on the scalability of quantum factoring.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-06T11:00:58Z</published>
+    <arxiv:comment>There exists an error in fundamental Lemma in the paper</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>João P. da Cruz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0109103v1</id>
+    <title>An integral version of Shor's factoring algorithm</title>
+    <updated>2001-09-20T16:38:17Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0109103v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0109103v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider a version of Shor's quantum factoring algorithm such that the quantum Fourier transform is replaced by an extremely simple one where decomposition coefficients take only the values of $1,i,-1,-i$. In numerous calculations which have been carried out so far, our algorithm has been surprisingly stable and never failed. There are numerical indications that the probability of period finding given by the algorithm is a slowly decreasing function of the number to be factorized and is typically less than in Shor's algorithm. On the other hand, quantum computer (QC), capable of implementing our algorithm, will require a much less amount of resources and will be much less error-sensitive than standard QC. We also propose a modification of Coppersmith' Approximate Fast Fourier Transform. The numerical results show that the probability is signifacantly amplified even in the first post integral approximation. Our algorithm can be very useful at early stages of development of quantum computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-09-20T16:38:17Z</published>
+    <arxiv:comment>LaTex, 27 pages, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Felix M Lev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0305039v2</id>
+    <title>Effects of dynamical phases in Shor's factoring algorithm with operational delays</title>
+    <updated>2004-08-04T04:42:10Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0305039v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0305039v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Ideal quantum algorithms usually assume that quantum computing is performed continuously by a sequence of unitary transformations. However, there always exist idle finite time intervals between consecutive operations in a realistic quantum computing process. During these delays, coherent "errors" will accumulate from the dynamical phases of the superposed wave functions. Here we explore the sensitivity of Shor's quantum factoring algorithm to such errors. Our results clearly show a severe sensitivity of Shor's factorization algorithm to the presence of delay times between successive unitary transformations. Specifically, in the presence of these {\it coherent "errors"}, the probability of obtaining the correct answer decreases exponentially with the number of qubits of the work register. A particularly simple phase-matching approach is proposed in this paper to {\it avoid} or suppress these {\it coherent errors} when using Shor's algorithm to factorize integers. The robustness of this phase-matching condition is evaluated analytically or numerically for the factorization of several integers: $4, 15, 21$, and 33.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-05-08T06:44:33Z</published>
+    <arxiv:comment>8 pages with 5 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 71, 022317 (2005)</arxiv:journal_ref>
+    <author>
+      <name>L. F. Wei</name>
+    </author>
+    <author>
+      <name>Xiao Li</name>
+    </author>
+    <author>
+      <name>Xuedong Hu</name>
+    </author>
+    <author>
+      <name>Franco Nori</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.71.022317</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.71.022317" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.08444v4</id>
+    <title>Taxonomy and Practical Evaluation of Primality Testing Algorithms</title>
+    <updated>2026-07-02T05:43:02Z</updated>
+    <link href="https://arxiv.org/abs/2006.08444v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.08444v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many modern asymmetric encryption methods rely on prime numbers, as they have distinctive properties. For instance, the security of RSA cryptosystem relies on the computational difficulty of factoring a large composite number in its prime factors, a problem that remains challenging for classical computers but potentially solvable using quantum algorithms. On the other hand, generating large prime numbers is also challenging due to their irregular distribution among integers, necessitating the use of primality testing algorithms to verify candidate primes. In this paper, we intensively review and classify various classical and quantum algorithms for factorization and primality testing, highlighting their advantages, limitations, speed/accuracy tradeoffs, time complexities, along with a brief summary. Furthermore, we apply and compare these algorithms to gain practical insights and conduct a comprehensive performance comparison. The insights from this paper show that while quantum factoring algorithms, particularly Shor's algorithm and its refinements, have introduced significant advancements over their classical counterparts, quantum primality testing algorithms have not demonstrated comparable advantages.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-15T14:40:50Z</published>
+    <arxiv:comment>This submission is withdrawn because errors were identified in several sections of the manuscript, and the authors have decided to replace it with a substantially different manuscript. Please also note that the titles of the two versions differ. Overall, submitted the manuscript as a new version was a mistake</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Anas A. Abudaqa</name>
+    </author>
+    <author>
+      <name>Amjad Abuhassan</name>
+    </author>
+    <author>
+      <name>Muhammad Imam</name>
+    </author>
+  </entry>
+</feed>

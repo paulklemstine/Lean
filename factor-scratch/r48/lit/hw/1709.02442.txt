@@ -1,0 +1,1060 @@
+EFFICIENT POINT-COUNTING ALGORITHMS FOR SUPERELLIPTIC CURVES
+
+arXiv:1709.02442v1 [math.NT] 7 Sep 2017
+
+MATTHEW HASE-LIU AND NICHOLAS TRIANTAFILLOU
+Abstract. In this paper, we present efficient algorithms for computing the number of points
+and the order of the Jacobian group of a superelliptic curve over finite fields of prime order
+p. Our method employs the Hasse-Weil bounds in conjunction with the Hasse-Witt matrix
+for superelliptic curves, whose entries we express in terms of multinomial coefficients. We
+present a fast algorithm for counting points on specific trinomial superelliptic curves and
+a slower, more general method for all superelliptic curves. For the first case, we reduce
+the problem of simplifying the entries of the Hasse-Witt matrix modulo p to a problem of
+solving quadratic Diophantine equations. For the second case, we extend Bostan et al.’s
+method for hyperelliptic curves to general superelliptic curves. We believe the methods we
+describe are asymptotically the most efficient known point-counting algorithms for certain
+families of trinomial superelliptic curves.
+
+1. Introduction
+In this paper, we present and prove asymptotics for the fastest known algorithms for counting the number
+of points on certain families of possibly singular plane curves. A central problem in number theory is the
+study of rational solutions of polynomial equations. Even before the development of algebra, the Greeks were
+interested in systematically determining all rational solutions to the Pythagorean equation: a2 +b2 = c2 . More
+recently, Andrew Wiles proved Fermat’s Last Theorem, which states that Fermat’s equation, an +bn = cn , has
+no nontrivial rational solutions — a problem that had withstood over 350 years of effort by mathematicians.
+To study points on a curve defined by a polynomial equation, it is often helpful to keep track of the
+field where they “live.” Solutions to Fermat’s equation are called Q-rational because we are concerned with
+solutions over the field Q. More generally, solutions (x, y) to polynomial equations f (x, y) = 0 are called
+K-rational points, if both x and y are in a field K. In particular, mathematicians are concerned with
+Fpr -rational points (where p is some prime) because they 1) are easier to study than Q-rational points, 2)
+have analogues to complex analysis, and 3) are useful in investigating and understanding Q-rational points
+[15]. In this paper, we focus on counting Fp -points on the curve defined by a particular type of irreducible
+polynomial equation:
+
+0 = y a − xb f (x) = y a − mc xb+c + . . . + m0 xb .
+
+The curve C defined by y a − xb f (x) = 0 is commonly known as a superelliptic curve.
+Advances in the field of modern algebraic geometry have brought forth a wealth of techniques to further
+the study of Fpr -rational points on plane curves.1 We define #C (Fpr ) to be the number of Fpr -rational
+points on a smooth projective curve C and #JC (Fp ) to be the number of points in the Jacobian of C, an
+abelian group canonically associated with the curve. In the early 1940s, André Weil proved the Riemann
+hypothesis for curves over finite fields, which reveals a great deal about the relationship between #C (Fpr )
+and a curve’s zeta function. A direct consequence is the Hasse-Weil bounds, which state that
+2g
+2g
+√ r
+√ r
+√
+p −1
+≤ #JC (Fpr ) ≤
+p +1 ,
+(1.1)
+|pr + 1 − #C (Fpr )| ≤ 2g pr and
+
+where g is the genus of C [8].
+In this paper, we describe fast algorithms for computing #C (Fp ) and #JC (Fp ) for trinomial (when
+y a − xb f (x) consists of three monomials) and general superelliptic curves, even if they are singular at
+the origin. To do so, we employ a matrix associated with C that encodes information about #C (Fp ) and
+#JC (Fp ) modulo p (called the Hasse-Witt matrix) and explicitly compute its entries in terms of multinomial
+coefficients. We show that these multinomial coefficients are actually binomial for trinomial superelliptic
+1A plane curve is the loci of a single bivariate polynomial equation over a field.
+1
+
+curves, which allows us to reduce the problem of simplifying the Hasse-Witt matrix modulo p to a problem
+of solving Diophantine equations of the form x2 + dy 2 = m. Assuming p > 16g 2 and gcd(ac, p − 1) =
+3, 4, 6 or 8, we use both this simplified Hasse-Witt matrix and the Hasse-Weil bounds to compute
+#C (Fp )
+
+2
+probabilistically in O(M(log p) log p) time, deterministically in
+O
+M(log
+p)
+log
+p
+log
+log
+p
+(assuming
+the
+
+
+2
+
+log p
+generalized Riemann hypothesis), and deterministically in O M(log3 p) log
+time, where M(n) is the
+log p
+time needed to multiply two n-digit numbers. Similarly, we can compute #JC (Fp ) with the same running
+√
+times for g = 2 and with running time O p if g = 3, assuming that a also divides p − 1. For general
+superelliptic curves,
+ we extend the work of Bostan et al. [2] to simplify the Hasse-Witt matrix modulo p
+√
+in O M p log p time. Again, assuming p > 16g 2 (and additionally g = 2 or 3 for #JC (Fp )), we use
+this simplified 
+Hasse-Witt matrix and the Hasse-Weil bounds to also compute #C (Fp ) and #JC (Fp ) in
+√
+O M p log p time.
+Our work has salient applications in mathematics, cryptography, and coding theory. The Hasse-Witt
+matrix can be used to find the L-polynomial of a curve, which is intimately connected to the zeta function
+of a curve — the central object of study in the Weil-conjectures. In addition, Fité et al.’s classification of
+Sato-Tate distributions in curves of genus two required extensive back-and-forth between theoretical work
+and computations of #C (Fp ) [6]. Fast point-counting algorithms will be essential in studying the Sato-Tate
+groups of curves of higher genus. Moreover, JC (Fp ) is a finite abelian group, so a public-key cryptosystem
+can be constructed with it. Using the Jacobian of a curve of higher genus (typically 3 or 4) allows us to
+achieve a comparable level of security using a smaller field size, even after taking into account known attacks
+on the discrete logarithm problem for curves of genus g > 2. For example, hyperelliptic curve cryptosystems
+can have field sizes half of those used in elliptic curve cryptosystems [8]. To build such cryptosystems,
+computing #JC (Fp ) is essential to ascertain which Jacobians are cryptographically secure in practice.2
+The organization of this paper is as follows. In Section 2, we provide background information about
+regular differentials on a curve, the Cartier operator, and the Hasse-Witt matrix. In Section 3, we use the
+Cartier operator to compute the entries of the Hasse-Witt matrix in terms of multinomial coefficients. In
+Section 4, we give fast point-counting algorithms and their time complexities for both trinomial and general
+superelliptic curves. We conclude in Section 5 with a brief discussion on future work.
+
+2. Background
+In this section, we recall several facts about regular differentials on a curve, the Cartier operator, the
+Hasse-Witt matrix, and #C (Fp ) and #JC (Fp ).
+2.1. Basic Facts. In this paper, we consider
+smooth projective plane curves C with affine model y a =
+
+b
+b
+c
+c−1
+x f (x) = x mc x + mc−1 x
++ . . . + m0 over a finite field Fp , where p 6= 2, 3 is a prime, y a − xb f (x) is
+irreducible, f (x) ∈ Fp [x], a, c ≥ 2, b ≥ 0, mc 6= 0, m0 6= 0, and p > a, b + c.
+Let P be the convex hull of the set of lattice points in the interior of the Newton polygon of g(x, y) =
+y a − xb f (x). If we take a side of P and label the lattice points that lie on it 0, 1, . . . , s, construct a “side
+polynomial” h(t) with degree s + 1 such that the coefficient of ti is the coefficient of g corresponding to the
+lattice point i.
+We impose the following two conditions on our superelliptic curves:
+(1) The curves C/Z and C/Fp have the same genus.
+(2) The “side polynomials” are square-free.
+We denote the set of points on a curve C over the field Fp as C (Fp ) and the Jacobian variety as JC (Fp ).
+2.2. Regular Differentials and the Cartier Operator. Given a smooth projective variety C with coordinate
+ring k [C], we can define Ω (C), the k [C]-module of regular differentials as elements of the form
+P
+g
+df
+with
+fi , gi ∈ k [C] subject to
+i i i
+• d (f + g) = df + dg;
+• d (f g) = f dg + gdf ;
+• da = 0 if a ∈ k.
+2For a Jacobian to be secure, #J
+
+C (Fp ) is required to be a product of a very small integer and a very large prime.
+
+2
+
+It is worth noting that Ω (C) is a g-dimensional vector space over the field k, where g is the genus of C.
+Let ω be in Ω (C), where p is the prime corresponding to the finite field Fp over which C is defined. One
+can always find a0 , a1 , . . . , ap−1 such that ω = ap0 + ap1 x + . . . + app−1 xp−1 dx [3]. We can then define the
+Cartier operator as follows.
+Definition 2.1. The Cartier operator C is a map from Ω (C) to itself such that
+C (ω) = ap−1 dx.
+The following are useful properties of the Cartier operator that we use later in writing down the Hasse-Witt
+matrix [9].
+Lemma 2.2. If F is the function field of C, then for all ω ∈ Ω (C) and f ∈ F/Fp ,
+• C (f p ω) = f C(
+(ω);
+
+0,
+if pn ∤ j + 1;
+• C n xj dx =
+(j+1)/pn −1
+x
+, otherwise.
+2.3. Finding #C (Fp ) and #JC (Fp ) with the Hasse-Witt Matrix. The Hasse-Witt matrix is the matrix
+associated with a smooth curve over some finite field and the action of the Frobenius endomorphism with
+respect to a basis of regular differentials for Ω (C).
+i
+h
+1/p
+Definition 2.3. Let ω1 , . . . , ωg be a basis for Ω (C). Then, define the Hasse-Witt matrix Ap (C) as ai,j ,
+where
+g
+X
+ai,j ωj .
+C (ωi ) =
+j=1
+
+i
+h
+1/p
+Since we are dealing with only finite fields with prime order, matrix ai,j is the same as matrix [ai,j ] by
+Fermat’s little theorem. The following theorem shows how this matrix encodes information about #C (Fp )
+and #JC (Fp ) [16].
+Theorem 2.4. Let Ap (C) be the Hasse-Witt matrix of a smooth curve C and χp (t) be the characteristic
+polynomial of the Frobenius endomorphism. Then
+g
+
+χp (t) ≡ (−1) tg det (Ap (C) − tI) (mod p),
+where I is the identity matrix.
+It is well known that χp (t) is a polynomial of degree twice that of the genus g and that the coefficient of
+x2g−1 in χp (t) is simply the negative of the trace of Ap (C) by the Cayley–Hamilton theorem. The trace of
+Frobenius, tr (Ap (C)) , satisfies
+tr (Ap (C)) = p + 1 − #C (Fp ) .
+We can thus compute #C (Fp ) and #JC (Fp ) modulo p by noting that
+(2.1)
+
+#C (Fp ) ≡ 1 − tr (Ap (C)) (mod p)
+
+and
+(2.2)
+
+g
+
+#JC (Fp ) = χp (1) ≡ (−1) det (Ap (C) − I) (mod p).
+
+If p is sufficiently large, we can then uniquely determine #C (Fp ) and narrow down the candidates for
+#JC (Fp ) using the Hasse-Weil bounds.
+3
+
+3. Computing Hasse-Witt Matrices
+In this section, we express the entries of the Hasse-Witt matrix of the superelliptic curve
+
+(3.1)
+C : y a = xb f (x) = xb mc xc + mc−1 xc−1 + . . . + m0
+
+over Fp explicitly as a sum of multinomial coefficients, where p is some prime bigger than a and b + c,
+f (0) 6= 0, and deg(f ) = c. It is well-known [5] that
+
+
+xi−1 y j−1
+ωi,j =
+(i,
+j)
+∈
+N
+y a−1
+is a basis of regular differentials for Ω (C) , where N is the set of lattice points in the interior of the Newton
+polygon of y a − xb f (x):
+
+
+
+
+k
+j a
+a
+
+
+
+i+a −1 
+1 ≤ i ≤ b and − i + a + 1 ≤ j ≤ −
+
+
+
+
+b
+b+c
+or
+N = (i, j)
+.
+
+
+
+
+a
+
+
+
+
+
+
+b + 1 ≤ i ≤ b + c − 1 and 1 ≤ j ≤ −
+i+a −1
+b+c
+The following lemmas will be used in our proof of Theorem 3.8.
+
+Lemma 3.1. If gcd(p, a) = 1 and 1 ≤ j ≤ a, there exist unique integers uj and vj such that j − 1 + (a −
+1)(p − 1) = p(uj − 1) + avj , where 1 ≤ uj ≤ a and 0 ≤ vj ≤ p − 1.
+Proof. Consider the Diophantine equation p(x−1)+ay = j−1+(a−1)(p−1). If we take this equation modulo
+p, we get y ≡ a−1 (j − 1 + (p − 1) (a − 1)) (mod p). Let vj be the unique integer such that vj ≡ y (mod p)
+j−1+(a−1)(p−1)−avj
++ 1 is between 1 and a, inclusive.
+and 0 ≤ vj ≤ p − 1. Then, it remains to show that uj =
+p
+Note that avj ≡ j − 1 + (a − 1)(p − 1) (mod p) and 0 ≤ avj ≤ ap − a, so avj ≤ j − 1 + (a − 1)(p − 1). Thus,
+uj ≥ 1. Also, since j ≤ a, we have j − 1 + (a − 1)(p − 1) − avj ≤ pa − p, so uj ≤ a.
+
+Remark 3.2. It turns out that the uj are pairwise distinct, i.e. uj = uj ′ ⇒ j = j ′ . To see this, note that
+uj = uj ′ implies that a (vj − vj ′ ) = j − j ′ , so a|j − j ′ . However, 1 ≤ j, j ′ ≤ a − 1, so 0 ≤ j − j ′ ≤ a − 2.
+Thus, j = j ′ .
+Definition 3.3. Let (i, j) ∈ N and k0 , k1 , . . ., and kc be integers such that k0 + k1 + . . . + kc = vj , 0 ≤
+k0 , . . . , kc ≤ vj , and p|bvj + ckc + (c − 1)kc−1 + . . . + k1 + i. Then, define
+bvj + ckc + (c − 1)kc−1 + . . . + k1 + i
+.
+p
+m
+l
+a
+si,j (k0 , . . . , kc ) + a − 1.
+Lemma 3.4. uj ≤ − b+c
+si,j (k0 , . . . , kc ) :=
+
+k
+k a− ai −1
+j
+j
+⌊ b+c ⌋
+a((b+c)vj +i)
+a bvj +ckc +(c−1)kc−1 +...+k1 +i
++ pj ≤
++
++ pj = b+c
+p
+p(b+c)
+p
+j
+k
+j
+k
+ai
+ai
+avj +a+{ b+c
+avj +a−j+{ b+c
+}−1
+}−1
+avj +a−j
+a
+a
+≤
+, so b+c si,j (k0 , . . . , kc ) ≤
+<
+. However, b+c si,j (k0 , . . . , kc )
+p
+p
+p
+j
+k
+avj +a−j
+av +a−j
+a
+= a − uj are both integers, so b+c
+si,j (k0 , . . . , kc ) ≤
+− 1. Using the fact that
+and j p
+l
+m p
+j−avj −a
+a
+− ⌊x⌋ = ⌈−x⌉, we find that uj =
++ a ≤ − b+c
+si,j (k0 , . . . , kc ) + a − 1, as desired.
+
+p
+
+ a
+Lemma 3.5. − b si,j (k0 , . . . , kc ) + a + 1 ≤ uj for 1 ≤ si,j (k0 , . . . , kc ) ≤ b.
+Proof. Note that
+
+j
+
+k
+
+a
+b+c si,j (k0 , . . . , kc )
+
+avj +⌈ ai
+av +a−j
+b ⌉−1
+Proof. We consider two cases: 1 ≤ i ≤ b and b+1 ≤ i ≤ b+c−1. If 1 ≤ i ≤ b, note that j p
+≤
+p
+
+
+av + ai
+a(bvj +ckc +(c−1)kc−1 +...+k1 +i)
+= ab si,j (k0 , . . . , kc ) . Analogously, if b + 1 ≤ i ≤ b + c − 1, we have
+< jp b ≤
+pb
+
+
+
+
+avj +a−j
+av +a−j
+< ab si,j (k0 , . . . , kc ) . In both situations, since j p
+and ab si,j (k0 , . . . , kc ) are integers, we have
+p
+ avj +a−j
+
+
+a
+j−avj −a
++ 1. Thus uj =
++ a ≥ − ab si,j (k0 , . . . , kc ) + a + 1, as desired.
+
+b si,j (k0 , . . . , kc ) ≥
+p
+p
+4
+
+Lemma 3.6. 1 ≤ uj for c + 1 ≤ si,j (k0 , . . . , kc ) ≤ b + c − 1.
+j−avj −a
++ a ≥ j−a(p−1)−a
++ a = pj
+p
+p
+
+Proof. Note that uj =
+desired.
+
+> 0. We know uj is an integer, so uj ≥ 1, as
+
+
+Let a(i,j),(i′ ,j ′ ) be the entry of Hasse-Witt matrix corresponding to coefficient of ωi′ ,j ′ when C (ωi,j ) is
+written as a linear combination of the basis elements. In particular, a(i,j),(i,j) would refer to a diagonal entry
+on the Hasse-Witt matrix. We adopt the following notation for convenience.
+Definition 3.7. Define
+h i
+a
+b :=
+
+and
+
+(
+
+( 
+a
+b , if a, b ∈ Z≥0 ;
+0,
+otherwise.
+
+a
+b1 ,b2 ,...,bk
+
+
+P
+, if a, bi ∈ Z≥0 and
+i bi = a;
+0,
+otherwise.
+
+
+Theorem 3.8. The Hasse-Witt matrix of a superelliptic curve is given by a(i,j),(i′ ,j ′ ) , where
+i
+h
+X
+(j − a + p(a − j ′ ))/a mk0 mk1 . . . mkc .
+(3.2)
+a(i,j),(i′ ,j ′ ) =
+c
+0
+1
+k ,...,k
+h
+i
+a
+b1 , b2 , . . . , bk :=
+
+k0 +k1 +...+kc =vj =(j−a+p(a−j ′ ))/a,
+pi′ =bvj +ckc +(c−1)kc−1 +...+k1 +i
+
+0
+
+c
+
+Proof. Using Lemma 3.1 and y a = xb f (x), we find that
+xi−1 y j−1+(a−1)(p−1)
+y p(a−1)
+i−1 p(uj −1)+avj
+x y
+=
+y p(a−1)
+ uj −1 p
+X
+y
+=
+a−1
+y
+
+
+
+X
+
+
+
+ωi,j =
+
+k0 +k1 +...+kc =vj
+
+
+vj
+k0 k1
+kc bvj +ckc +(c−1)kc−1 +...+k1 +i−1
+.
+k0 , . . . , kc m0 m1 . . . mc x
+
+Then, using Lemma 2.2,
+
+C (ωi,j ) =
+
+
+vj
+k0 k1
+kc
+k0 , . . . , kc m0 m1 . . . mc ωsi,j (k0 ,k1 ,...,kc ),uj .
+
+k0 +k1 +...+kc =vj ,
+p|bvj +ckc +(c−1)kc−1 +...+k1 +i
+
+Now, Lemmas 3.4, 3.5, and 3.6 imply that (si,j (k0 , . . . , kc ), uj ) ∈ N , so ωsi,j (k0 ,...,kc ),uj is a basis element.
+The result follows.
+
+Using (2.1), we deduce the following.
+Theorem 3.9. The number of points on the smooth projective model of a superelliptic curve defined by
+y a = xb mc xc + mc−1 xc−1 + . . . + m0 over Fp is
+
+
+#C(Fp ) ≡ 1 −
+
+X 
+
+
+
+
+X
+
+
+i
+h
+(p − 1)(a − j)/a mk0 mk1 . . . mkc  (mod p),
+c 
+0
+1
+k0 , . . . , kc
+
+
+(i,j)∈N k0 +k1 +...+kc =vj =(p−1)(a−j)/a,
+p|bvj +ckc +(c−1)kc−1 +...+k1 +i
+
+where p is a prime greater than a and b + c.
+
+Corollary 3.10. The number of points on the curve C : y a = mc xb+c + m0 xb is
+
+X 
+(p
+−
+1)(a
+−
+j)/a
+mk0 mkc (mod p),
+(3.3)
+#C(Fp ) ≡ 1 −
+(p − 1)(ai + bj − ab)/(ac) 0 c
+(i,j)∈N
+
+where k0 = (p−1)((a−j)(b+c)−ai)
+and kc = (p−1)(ai+bj−ab)
+.
+ac
+ac
+5
+
+Remark 3.11. A rather interesting number-theoretic application of Theorem 3.9 tells us the number of
+solutions to the Diophantine equation y a = h(x) = ra xa +ra−1 xa−1 +. . .+r1 x+r0 modulo p. Define indζp (m)
+indζ (m)
+
+to be the smallest positive integral power of some primitive root ζp of Fp such that ζp p
+≡ m (mod p).
+Then, y a = h(x) has exactly p + 1 − w (ra ) solutions (x, y) ∈ Fp if at least one of ra , ra−1 is nonzero in Fp , at
+least one of r1 , r0 is nonzero in Fp , gcd(a, p − 1) = 1, p > 16g 2 , and h(x) is square-free, where g is the genus
+of curve C associated with the Diophantine equation and w (ra ), the number of ath roots of ra , is given by
+(
+0,
+if ra is not a residue of degree a modulo p;
+
+w (ra ) =
+gcd indζp (ra ), p , otherwise.
+
+It is worth noting that this can be extended
+to any Diophantine equation of the form
+
+y a = xb mc xc + mc−1 xc−1 + . . . + m0 . However, the number of solutions to this equation is not the same
+as #C(Fp ): Theorem 3.9 gives the number of points on the smooth projective model of the superelliptic curve
+defined by this equation, which is usually different from the number of points in the affine model. Thus, for
+the general case, a tiny correction related to the singular points has to be made to account for the discrepancy
+
+between #C(Fp ) and the number of solutions to the equation y a = xb mc xc + mc−1 xc−1 + . . . + m0 .
+4. Fast Point-Counting Algorithms
+
+Given our work in Section 3, we have reduced the problem of computing the Hasse-Witt (and hence
+#C (Fp ) and #JC (Fp ) mod p) to computing certain multinomial coefficients modulo p.
+4.1. Computing #C (Fp ) for Specific Trinomial Superelliptic Curves. We consider a specific class of
+superelliptic curves, namely those of the form y a = mc xb+c + m0 xb . To compute the number of points on
+these specific trinomial superelliptic curves, we generalize Theorem 3.5 (which applies to curves of the form
+y 2 = x8 + c and y 2 = x7 − cx) in Fité and Sutherland’s paper [7] to apply to this much more general class
+of curves.
+Theorem 4.1. Given a curve C : y a = mc xb+c + m0 xb and a prime p > 16g 2 , where g is the genus of C
+and gcd(ac, p − 1) = e = 3, 4, 6, or 8, there exists an algorithm that computes #C (Fp )
+• probabilistically in O(M(log p) log p) time;
+
+• deterministically in O M(log p) log2 p loglog p time, assuming GRH;
+2
+
+log p
+• deterministically in O M(log3 p) log
+log p
+
+time.
+
+In addition, given a positive integer N we can compute #C (Fp ) for all primes p, such that 3 < p ≤ N ,
+deterministically in O (N M (log N )) time.
+"
+
+#
+
+− 1)(a − j)/a
+modulo p
+Proof. We give such an algorithm. It consists of three steps: 1) computing (p − (p
+1)(ai + bj − ab)/(ac)
+for all (i, j) ∈ N , 2) finding #C (Fp ) mod p using (3.3), and 3) determining #C (Fp ) using (1.1). Assuming a
+and c are fixed, the second step runs in O(M(log p) log p) time and the third step runs in at most O(M(log p))
+time. In what follows, we will describe and determine the time complexity of the first step. We shall then see
+that, in similar fashion to the proof of Theorem 3.5 in Fité and Sutherland’s paper [7], the desired runtimes
+follow from the time complexities of the first step.
+Let gcd(ac, p − 1) = e and ac = ed, p − 1 = ef , where d, e, f ∈ N. Note that gcd(d, f ) = 1. Then, we have
+
+ 
+ 
+
+(ed − jc)f /d
+(p − 1)(ac − jc)/(ac)
+(p − 1)(a − j)/a
+.
+=
+=
+(ai + bj − ab)f /d
+(p − 1)(ai + bj − ab)/(ac)
+(p − 1)(ai + bj − ab)/(ac)
+
+Using congruences for binomial coefficients of the form rf
+sf modulo primes of the form p = ef + 1, we can
+
+compute #C (Fp ) extremely quickly. In particular, when e = 3, 4, 6, or 8, it is possible to compute rf
+sf
+modulo p efficiently for 1 ≤ s < r ≤ e − 1. Note that, by definition,
+
+ ( (ed−jc)f /d 
+, if d|ed − jc and d|ai + bj − ab;
+(ed − jc)f /d
+(ai+bj−ab)f /d
+=
+(ai + bj − ab)f /d
+0,
+otherwise.
+
+We can then compute this expression quickly using results from Hudson and Williams’ work [14].
+6
+
+
+We now give explicit congruence relations for the aforementioned binomial coefficients rf
+sf . We will also
+use similar notation to that of Hudson and William [14]: p = a24 + b24 for e = 4, p = a23 + 3b23 for e = 3, 6,
+p = a28 +2b28 for e = 8, a4 ≡ 1 (mod 4), a3 ≡ 1 (mod 3), and a8 ≡ 1 (mod 4). For each e, define “representative
+binomial coefficients” as the binomial coefficients sufficient to generate all of the other binomial coefficients
+through trivial congruences [14]. Table 1 summarizes the congruence relations for the representative binomial
+coefficients for e = 3, 4, 6, and 8 (let b3 ∈ Z be b3 mod 3).
+af
+bf
+
+
+
+2f
+f
+
+
+
+3f
+f 
+4f
+f
+
+5f
+2f
+
+
+
+e=3
+
+
+if b3 = 0
+2a3
+−a3 − 3b3 if b3 = 1
+
+
+−a3 + 3b3 if b3 = 2
+-
+
+4
+2a4
+-
+
+6
+
+f
+
+2 (−1) a3
+f
+(−1) (−a3 + 3b3 ) b3
+
+
+f
+(−1) (−a3 − 3b3 ) b3
+2a3
+
+8
+if b3 = 0
+if b3 = 1
+if b3 = 2
+
+-
+
+b /4
+
+(−1) 4
+
+2a8
+
+f +b4 /4
+
+(−1)
+
+2a4
+
+f
+
+(−1) 2a8
+f +b /4
+
+(−1) 4 2a8
+Table
+1. The entry that corresponds to the
+
+ row with representative binomial coefficient
+
+af
+af
+3f
+and
+column
+e
+is
+congruent
+to
+the
+≡
+bf
+bf (mod ef + 1) . For example, we have f
+2a3 (mod 6f + 1).
+We have effectively reduced the problem of computing binomial coefficients modulo p to a problem of
+solving Diophantine equations of the form x2 + dy 2 = m. We can then employ Cornacchia’s algorithm [14]
+to find a3 , a4 , a8 , b3 , b4 , and b8 . However, before doing so, we must find a square root of −d modulo m.
+There are three well-known methods of efficiently computing a square root modulo p: the Cipolla-Lehmer,
+Tonelli-Shanks, and Schoof algorithms [7]. Define M(n) to be the time needed to compute the product of two
+∗
+n-digit numbers. For practical applications, we can take M(n) to be O (n log n log log n) or O n (log n) 2log n
+[4]. The probabilistic Cipolla-Lehmer approach involves factorization of a quadratic over Fp [x] and takes
+O(M(log p) log p) time. The deterministic Tonelli-Shanks approach
+ requires computing a generator for the
+maximal 2-subgroup of F∗p and takes O M(log p) log2 p log log p time, assuming the generalized Riemann
+hypothesis
+(GRH). The
+ Schoof approach takes advantage of properties of certain elliptic curves and requires
+
+2
+
+log p
+time. Fité and Sutherland discuss these algorithms in much greater detail in their
+O M(log3 p) log
+log p
+study of computing #C (Fp ) for certain hyperelliptic curves [7].
+We can now use Cornacchia’s algorithm: given a Diophantine equation of the form x2 + dy 2 = m and a
+square root of −d modulo m, such that gcd(d, m) = 1, we can compute a solution (x, y) (if one exists). It
+turns out that the time complexity of Cornacchia’s algorithm is essentially the same as that of the Euclidean
+algorithm [7].
+To compute a3 , a4 , a8 , b3 , b4 , and b8 , we can first use Cornacchia’s algorithm to find a solution (x, y) to
+x2 + dy 2 = p, where d is 1, 2, or 3. Taking the equation x2 + y 2 = p modulo 4, it is clear that at least one of
+x and y is odd. Without loss of generality, say x is odd. We can replace x with −x, so we can assume x ≡ 1
+(mod 4) and let a4 = x. Likewise, if we take x2 + 3y 2 = p modulo 3, we can set a3 ≡ 1 (mod 3), since x is
+either 1 or −1 modulo 3 and if we take x2 + 2y 2 = p modulo 2, x must be odd, so we can set a8 ≡ 1 (mod 4)
+by letting a8 equal x or −x modulo 4.
+
+
+Remark 4.2. It is worth noting that Pila’s generalization of Schoof’s algorithm can compute #C (Fp ) and
+the zeta function in time polynomial in log p; however, the time complexity is a large power of log p that
+grows
+ quicklywith the genus. Even in genus 2, the most efficient algorithms using Pila’s approach take
+O log6+o(1) p time [17], but the algorithm we have just described performs much better.
+Example 4.3. Say p = 564819669946735512444543556507 (99-bit) and C : y 4 = x11 + x8 (note that
+gcd(564819669946735512444543556506, 12) = 6. The algorithm given in Theorem 4.1 computed
+#C (Fp ) = 564819669946736263601275822996
+7
+
+in 66.2 ms using SageMath Version 7.3 on an Intel Celeron 2955U processor at 1.4 GHz. In comparison, a
+brute-force algorithm to compute the number of points for the same curve with p = 10133 (14-bit) instead
+took over six hours to run.
+It should be noted that this algorithm can be extended to find #JC (Fp ) for genus two and three curves
+of the same form, with the additional condition that a|p − 1. It turns out that Hasse-Witt matrix Ap (C)
+of such a curve is diagonal; it is not hard to see that si,j (k0 , . . . , kc ) can only be i and uj can only be j. If
+Ap (C) is diagonal, Ap (C) − I is also diagonal, so (2.2) tells us that
+
+
+Y 
+(p − 1)(a − j)/a
+k0 kc
+g
+(4.1)
+#JC (Fp ) ≡ (−1)
+(p − 1)(ai + bj − ab)/(ac) m0 mc − 1 (mod p),
+(i,j)∈N
+
+where k0 = (p−1)((a−j)(b+c)−ai)
+and kc = (p−1)(ai+bj−ab)
+.
+ac
+ac
+For genus two curves, the Hasse-Weil bounds and #JC (Fp ) modulo p gives us a maximum of five candidates for #JC (Fp ), so we can compute #JC (Fp ) in the same time as that of #C (Fp ), because arithmetic
+in the Jacobian has a comparatively lower time complexity [8,
+For genus three curves, the Hasse 18].
+√ 
+p
+candidates
+for #JC (Fp ), so we can
+Weil bounds and #JC (Fp ) modulo
+p
+gives
+us
+a
+maximum
+of
+40
+√ 
+compute #JC (Fp ) in O p time [18, 19]. In comparison, Harvey has written down an improvement of
+
+Kedlaya’s point-counting algorithm to compute #JC (Fp ) for hyperelliptic curves in O p1/2+o(1) time [11].
+Our algorithm, however, is not efficient for curves of higher genus.
+4.2. Computing #C (Fp ) and Ap (C) for General Superelliptic Curves. We describe an algorithm
+to simplify the entries of the Hasse-Witt matrix modulo p for a general superelliptic curve and compute
+#C (Fp ) and Ap (C) efficiently. More generally, Harvey has shown how to compute the zeta function of any
+√
+algebraic variety over Fp (including superelliptic curves) in O( p log2+ǫ p) time [10], using Bostan et al.’s
+algorithm [2]. To do so, Harvey describes a new trace formula and a deformation recurrence; on the other
+hand, we find the zeta function modulo p by reducing the Hasse-Witt matrix modulo p.
+Throughout this section, we will assume that b = 0, i.e. the equation of superelliptic curve is y a =
+f (x) = mc xc + . . . + m0 , where m0 6= 0 (note that we can perform a simple coordinate change to (3.1)). We
+summarize the algorithm as follows.
+2
+Theorem 4.4. Given a curve C : y a = mc xc + . . . + m0 and a prime
+ p > 16g , where g is the genus of C,
+√
+there exists an algorithm that computes #C (Fp ) in O M p log p time, assuming fixed a and c.
+
+Proof. We give such an algorithm. It consists of three steps: 1) adapting Bostan et al.’s algorithm [2] to
+simplify the entries of the Hasse-Witt matrix, 2) adding up the diagonal entries of the Hasse-Witt matrix
+to find #C (Fp ) mod p, and 3) determining #C (Fp ) using (1.1). The second step runs in O(M(log p) log p)
+time and the third step runs in at most O(M(log p)) time. In what follows, we will describe the first step
+and determine its time complexity.
+In Section 3, we found an explicit formula for the Hasse-Witt matrix of any superelliptic curve. Specifically,
+(3.2) tells us that the problem of simplifying the Hasse-Witt matrix is essentially a question of simplifying
+certain multinomial coefficients modulo p. We can reinterpret this as a problem of computing coefficients of
+certain powers of x in f vj , where vj is defined in Lemma 3.4. For convenience, let fi,j denote the coefficient
+of xi in f j .
+Setting b = 0 in (3.2) and using the multinomial theorem (note that pi′ −i = bvi +ckc +(c−1)kc−1 +. . .+k1 )
+imply that
+a(i,j),(i′ ,j ′ ) = fpi′ −i,vj ,
+where a(i,j),(i′ ,j ′ ) is the coefficient of ω(i′ ,j ′ ) when ω(i,j) is written as a linear combination of the basis of
+regular differentials.
+We can now use Bostan et al.’s algorithm [2] for quickly computing coefficients of large powers of a
+polynomial. In their paper, they apply their algorithm to point-counting for hyperelliptic curves. We
+generalize their method to superelliptic curves; the extension is quite similar to the original method for
+hyperelliptic curves, so we will omit the finer details [1]. We can say that
+f (f vj )′ − vj f ′ f vj = 0.
+8
+
+Comparing coefficients of xk on both sides, we find that
+(k + 1) m0 fk+1,vj + (k − vj ) m1 fk,vj + . . . + ((k − c + 1) − cvj ) fk−c+1,vj = 0.
+Let
+
+
+...
+0
+...
+0
+
+
+..
+
+
+.
+.
+
+
+.
+.
+A(k) = 
+.
+
+
+..
+
+
+.
+1
+0
+0
+0
+mc (cvj −(k−c))
+mc−1 ((c−1)vj −(k−c+1))
+m1 (vj −(k−1))
+... ...
+m0 k
+m0 k
+m0 k
+
+t
+
+v t
+Now, if we define the vector Uk = fk−c+1,vj , . . . , fk−1,vj , fk,vj and initial vector U0 = 0, . . . , 0, m0j ,
+we have Uk = A(k)Uk−1 for k ∈ N. Thus, Uk = A(k)A(k − 1) . . . A(1)U0 . Thus, to compute a(i,j),(i′ ,j ′ ) =
+fpi′ −i,vj , it suffices to find Upi′ −1 (note that fpi′ −i is the ith entry of Upi′ −1 from the right). Bostan et
+al.’s algorithm [2] cannot be applied directly because the entries of A(k) are rational functions, so we must
+modify the Ui slightly: let Vk = mk0 k!Uk and B(k) = m0 kA(k). Then, Vk = B(k)B(k − 1) . . . B(1)V0 and
+the entries of the matrix B(k) are polynomials in Fp [k].
+Using either of the algorithms from Theorems 14and 15 from Bostan et al.’s paper [2], we can compute
+√
+Upi′ −1 for all i′ and a particular j in O M p log p time. The desired runtime follows from applying this
+repeatedly to all j (there are at most a possible values of j because 1 ≤ j ≤ a).
+
+
+
+0
+0
+..
+.
+
+1
+0
+..
+.
+
+0
+1
+..
+.
+
+Remark 4.5. Given that p > g, the proof of 
+Theorem 4.4 also shows that we can simplify Ap (C), the
+√
+Hasse-Witt matrix modulo p, in O M p log p time.
+
+It should be noted that this algorithm can be extended to find #J
+C (Fp ) for genus two and three
+√
+curves of the same
+form.
+We
+can
+compute
+#J
+(F
+)
+in
+O
+M
+p
+log
+p
+time for genus two curves and
+C
+p
+
+√
+in O M p log p time for genus three curves (refer to the discussion at the end of Subsection 4.1).
+5. Conclusion
+
+In this paper, we employed the Cartier operator to derive the entries of the Hasse-Witt matrix of a
+superelliptic curve in terms of multinomial coefficients, as shown in Theorem 3.8. We then described and determined the time complexities of efficient point-counting algorithms for both specific trinomial and general
+curves. In particular, for specific trinomial superelliptic curves, we reduced the problem of point-counting
+to a problem of solving Diophantine equations of the form x2 + dy 2 = m and computed
+#C (Fp ) proba
+bilistically in O(M(log p) log p) time, deterministically inO M(log p) log2 
+p log log p (assuming the gener2
+
+log p
+alized Riemann hypothesis), and deterministically in O M(log3 p) log
+log p
+
+time, assuming p > 16g 2 and
+
+gcd(ac, p − 1) = 3, 4, 6 or 8. We also described how to compute #JC (Fp ) with the same running times for
+√
+g = 2 and with running time O p if g = 3, assuming that a also divides p − 1. As shown in Example 4.3,
+we implemented and demonstrated the efficiency of the algorithm given in Theorem 4.1 to compute #C (Fp )
+for the superelliptic curve with affine model y 4 = x11 + x8 over F564819669946735512444543556507 . For general
+superelliptic curves,
+ we employed Bostan et al.’s algorithm [2] to compute #C (Fp ) , Ap (C) , and #JC (Fp )
+√
+in O M p log p time, assuming p > 16g 2 (and additionally g = 2 or 3 for #JC (Fp )). To the best of our
+knowledge, we have written down the fastest point-counting algorithms for specific trinomial superelliptic
+curves.
+In the future, we hope to write down explicit algorithms for computing #JC (Fp ), which will plausibly
+involve finding the coefficients of the characteristic polynomial of Frobenius. We also plan on implementing
+the algorithm given in Theorem 4.4 through a simple modification of the original algorithm described by
+Bostan et al. for hyperelliptic curves [2]. We also hope to improve the efficiencies of our algorithms. Harvey
+et al. discussed how the characteristic polynomials of Frobenius for genus three hyperelliptic curves can be
+computed in p1/4+o(1) time by “lifting” the characteristic polynomials modulo p [12]; it may be possible to
+extend these methods to the curves of interest in this paper. For studying Sato-Tate distributions, we will
+also look into extending Harvey et al.’s approach for efficiently computing #C (Fp ) and Hasse-Witt matrices
+for many p at once [13]. Finally, we hope to extend our methods to non-superelliptic curves. Although not
+discussed in this paper, we have also looked into interpreting the Hasse-Witt matrix through the lens of
+9
+
+Cech cohomology. We believe that such methods are easier to generalize, especially for trinomial curves of
+the form y m1 = c1 xn1 + c2 xn2 y m2 .
+6. Acknowledgments
+We would like to thank Professor Andrew Sutherland from MIT for suggesting this project and for
+providing valuable advice. Moreover, none of this research would have been possible without the help of Dr.
+Tanya Khovanova, Professor Pavel Etingof, and Dr. Slava Gerovitch from MIT for organizing PRIMES-USA,
+a math research program for high school juniors.
+References
+[1] M. Bauer, E. Teske, and A. Weng, Point counting on Picard curves in large characteristic, Math. Comp. 74 (2005),
+1983–2005.
+[2] A. Bostan, P. Gaudry, and E. Schost, Linear recurrences with polynomial coefficients and application to integer factorization
+and Cartier-Manin operator, SIAM J. Comput. 36 (2007), 1777–1806.
+[3] A. Couvreur, Codes and the Cartier operator, Proc. Amer. Math. Soc. 142 (2014), 1983–1996.
+[4] A. De, P. P. Kurur, C. Saha, and R. Saptharishi, Fast integer multiplication using modular arithmetic, SIAM J. Comput.
+42 (2013), 685–699.
+[5] B. Deconinck and M. Patterson, Computing with plane algebraic curves and Riemann surfaces: the algorithms of the
+Maple package “algcurves”, in A. I. Bobenko and C. Klein, eds., Computational Approach to Riemann Surfaces, Lect.
+Notes Math., Vol. 2013, Springer, 2011, pp. 67–123.
+[6] F. Fité, K. S. Kedlaya, V. Rotger, and A. V. Sutherland, Sato–Tate distributions and Galois endomorphism modules in
+genus 2, Compos. Math. 148 (2012), 1390–1442.
+[7] F. Fité and A. V. Sutherland, Sato-Tate groups of y 2 = x8 + c and y 2 = x7 − cx, Contemp. Math. 663 (2016), 103–126.
+[8] E. Furukawa, M. Kawazoe, and T. Takahashi, Counting points for hyperelliptic curves of type y 2 = x5 + ax over finite
+prime fields, in SAC 2003, Lect. Notes in Comp. Sci., Vol. 3006, Springer, 2003, pp. 26–41.
+[9] A. Garcia and S. Tafazolian, Certain maximal curves and Cartier operators, Acta Arith. 135 (2007), 199–218.
+[10] D. Harvey, Computing zeta functions of arithmetic schemes, Proc. Lond. Math. Soc. 111 (2015), 1379–1401.
+[11] D. Harvey, Kedlaya’s algorithm in larger characteristic, Int. Math. Res. Not. (2007).
+[12] D. Harvey, M. Massierer, and A. V. Sutherland, Computing L-series of geometrically hyperelliptic curves of genus three,
+preprint, https://arxiv.org/abs/1605.04708.
+[13] D. Harvey and A. V. Sutherland, Computing Hasse-Witt matrices of hyperelliptic curves in average polynomial time II,
+Contemp. Math. 663 (2016), 136–154.
+[14] R. H. Hudson and K. S. Williams, Binomial coefficients and Jacobi sums, Trans. Amer. Math. Soc. 281 (1984), 431–505.
+[15] N. Koblitz, Why study equations over finite fields?, Math. Mag. 55 (1982), 144–149.
+[16] Y. I. Manin, The Hasse-Witt matrix of an algebraic curve, Amer. Math. Soc. Transl. Ser. 2 45 (1965), 245–264.
+[17] J. Pila, Frobenius maps of abelian varieties and finding roots of unity in finite fields, Math. Comp. 55 (1990), 745–763.
+[18] B. Poonen, Computational aspects of curves of genus at least 2, in ANTS II, Lect. Notes in Comp. Sci., Vol. 1122, Springer,
+1996, pp. 283–306.
+[19] G. Sohn and and H. Kim, Explicit bounds of polynomial coefficients and counting points on Picard curves over finite fields,
+Math. Comput. Model. 49 (2009), 80–87.
+
+10
+
+

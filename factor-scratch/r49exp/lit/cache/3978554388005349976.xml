@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/TTO7luYo7YWoB1W2+8XTdCGfuh0</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"constant factor" AND abs:sieve&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:50Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22constant+factor%22+AND+abs:sieve)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2201.00799v1</id>
+    <title>Expansion, divisibility and parity: an explanation</title>
+    <updated>2022-01-03T18:42:55Z</updated>
+    <link href="https://arxiv.org/abs/2201.00799v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.00799v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>After seeing how questions on the finer distribution of prime factorization -- considered inaccessible until recently -- reduce to bounding the norm of an operator defined on a graph describing factorization, we will show how to bound that norm. In essence, the graph is a strong local expander, with all eigenvalues bounded by a constant factor times the theoretical minimum (i.e., the eigenvalue bound corresponding to Ramanujan graphs). The proof will take us on a walk from graph theory to linear algebra and the geometry of numbers, and back to graph theory, aided, along the way, by a generalized sieve. This is an expository paper; the full proof has appeared as a joint preprint with M. Radziwi\{l}\{l}.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-03T18:42:55Z</published>
+    <arxiv:comment>40 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Harald Andrés Helfgott</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1509.02371v1</id>
+    <title>When the sieve works II</title>
+    <updated>2015-09-08T13:45:09Z</updated>
+    <link href="https://arxiv.org/abs/1509.02371v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1509.02371v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a set of primes $\mathcal{P}$, let $Ψ(x, \mathcal{P})$ be the number of positive integers $n \leq x$ all of whose prime factors lie in $\mathcal{P}$. In this paper we classify the sets of primes $\mathcal{P}$ such that $Ψ(x, \mathcal{P})$ is within a constant factor of its expected value. This task was recently initiated by Granville, Koukoulopoulos and Matomäki and their main conjecture is proved in this paper. In particular our main theorem implies that, if not too many large primes are sieved out in the sense that \[ \sum_{\substack{p \in \mathcal{P} \\ x^{1/v} &lt; p \leq x^{1/u}}} \frac{1}{p} \geq \frac{1 + \varepsilon}{u}, \] for some $\varepsilon &gt; 0$ and $v \geq u \geq 1$, then \[ Ψ(x, \mathcal{P}) \gg_{\varepsilon, v} x \prod_{\substack{p \leq x\\ p \notin\mathcal{P}}} \left(1 - \frac{1}{p}\right). \]</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-09-08T13:45:09Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kaisa Matomäki</name>
+    </author>
+    <author>
+      <name>Xuancheng Shao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.01754v5</id>
+    <title>Learning from a Biased Sample</title>
+    <updated>2026-06-25T00:56:26Z</updated>
+    <link href="https://arxiv.org/abs/2209.01754v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.01754v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The empirical risk minimization approach to data-driven decision making requires access to training data drawn under the same conditions as those that will be faced when the decision rule is deployed. However, in a number of settings, we may be concerned that our training sample is biased in the sense that some groups (characterized by either observable or unobservable attributes) may be under- or over-represented relative to the general population; and in this setting empirical risk minimization over the training set may fail to yield rules that perform well at deployment. We propose a model of sampling bias called conditional $Γ$-biased sampling, where observed covariates can affect the probability of sample selection arbitrarily much but the amount of unexplained variation in the probability of sample selection is bounded by a constant factor. Applying the distributionally robust optimization framework, we propose a method for learning a decision rule that minimizes the worst-case risk incurred under a family of test distributions that can generate the training distribution under $Γ$-biased sampling. We apply a result of Rockafellar and Uryasev to show that this problem is equivalent to an augmented convex risk minimization problem. We give statistical guarantees for learning a model that is robust to sampling bias via the method of sieves, and propose a deep learning algorithm whose loss function captures our robust learning target. We empirically validate our proposed method in a case study on prediction of mental health scores from health survey data and a case study on ICU length of stay prediction.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-05T04:19:16Z</published>
+    <arxiv:comment>Forthcoming in Management Science</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Roshni Sahoo</name>
+    </author>
+    <author>
+      <name>Lihua Lei</name>
+    </author>
+    <author>
+      <name>Stefan Wager</name>
+    </author>
+  </entry>
+</feed>

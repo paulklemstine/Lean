@@ -1,0 +1,1667 @@
+arXiv:1605.08065v1 [cs.CR] 25 May 2016
+
+Cryptographic applications of capacity theory: On the optimality of
+Coppersmith’s method for univariate polynomials
+Ted Chinburg
+ted@math.upenn.edu
+
+Brett Hemenway
+fbrett@cis.upenn.edu
+
+Nadia Heninger
+nadiah@cis.upenn.edu
+
+Zachary Scherr
+zscherr@math.upenn.edu
+May 27, 2016
+Abstract
+We draw a new connection between Coppersmith’s method for finding small solutions to polynomial
+congruences modulo integers and the capacity theory of adelic subsets of algebraic curves. Coppersmith’s
+method uses lattice basis reduction to construct an auxiliary polynomial that vanishes at the desired
+solutions. Capacity theory provides a toolkit for proving when polynomials with certain boundedness
+properties do or do not exist. Using capacity theory, we prove that Coppersmith’s bound for univariate
+polynomials is optimal in the sense that there are no auxiliary polynomials of the type he used that
+would allow finding roots of size N 1/d+ǫ for monic degree-d polynomials modulo N . Our results rule out
+the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the
+possibility of even superpolynomial-time improvements to Coppersmith’s bound. We extend this result
+to constructions of auxiliary polynomials using binomial polynomials, and rule out the existence of any
+auxiliary polynomial of this form that would find solutions of size N 1/d+ǫ unless N has a very small
+prime factor.
+
+1
+
+Introduction
+
+Coppersmith’s method [Cop97, Cop01] is a celebrated technique in public-key cryptanalysis for finding
+small roots of polynomial equations modulo integers. In the simplest case, one is given a degree-d monic
+polynomial f (x) with integer coefficients, and one wishes to find the integers r modulo a given integer N for
+which f (r) ≡ 0 mod N . When N is prime, this problem can be efficiently solved in polynomial time, but for
+composite N of unknown factorization, no efficient method is known in general. In fact, such an algorithm
+would immediately break the RSA cryptosystem, by allowing one to decrypt ciphertexts c by finding roots
+of the polynomial f (x) = xe − c mod N .
+While it appears intractable to solve this problem in polynomial time, Coppersmith showed that one can
+efficiently find all small integers r such that f (r) ≡ 0 mod N . More precisely, he proved the following result
+in [Cop97]:
+Theorem 1 (Coppersmith 1996). Suppose one is given a modulus N and a monic polynomial f (x) =
+xd + fd−1 xd−1 + · · · + f1 x + f0 in Z[x]. One can find all r ∈ Z such that
+|r| ≤ N 1/d
+in polynomial time in log(N ) +
+
+and
+
+f (r) ≡ 0 mod N
+
+P
+
+(1)
+
+i log |fi |.
+
+The algorithm he developed to prove this result has applications across public-key cryptography, including
+cryptanalysis of low public exponent RSA with fixed-pattern or affine padding [Cop97], the security proof of
+RSA-OAEP [Sho01], and showing that the least significant bits of RSA are hardcore [SPW06]. We discuss
+these applications in more detail in §2.3. If the exponent 1/d in the bound in Equation 1 could be increased,
+it would have immediate practical impact on the security of a variety of different cryptosystems.
+1
+
+In followup work, [Cop01, §4] Coppersmith speculates about possible improvements of this exponent 1/d.
+The main conclusion of [Cop01, §4] is that “We have tried to abuse this method to obtain information that
+should otherwise be hard to get, and we always fail.” Later, the hardness of finding roots of f (x) of size
+N 1/d+ǫ for ǫ > 0 was formalized as a concrete cryptographic hardness assumption [SPW06].
+Coppersmith’s proof of Theorem 1 relies on constructing a polynomial h(x) such that any small integer r
+satisfying f (r) ≡ 0 mod N is a root of h(x) over the integers. He finds such an auxiliary polynomial h(x) by
+constructing a basis for a lattice of polynomials, and then by using the Lenstra-Lenstra-Lovasz lattice basis
+reduction algorithm [LLL82] to find a “small” polynomial in this lattice. The smallness condition ensures
+that any small integer r satisfying f (r) ≡ 0 mod N must be a root of h(x). The algorithm then checks which
+rational roots r of h(x) have the desired properties.
+Our Results. In this paper, our main result is that one cannot increase the exponent 1/d in Coppersmith’s
+theorem by using auxiliary polynomials of the kind he considers. This eliminates possible improvements to
+the method using improvements in lattice algorithms or shortest vector bounds. We obtain our results by
+drawing a new connection between this family of cryptographic techniques and results from the capacity
+theory of adelic subsets of algebraic curves. We will use fundamental results of Cantor [Can80] and Rumely
+[Rum89, Rum13] about capacity theory to prove several results about such polynomials.
+In particular, we will prove in Theorem 13 a stronger form of the following result. This result shows that
+there are no polynomials of the type used by Coppersmith that could lead to an improvement of the bound
+in (1) from N 1/d to N 1/d+ǫ for any ǫ > 0.
+Theorem 2 (Optimality of Coppersmith’s Theorem). Suppose ǫ > 0. There does not exist a non-zero
+polynomial h(x) ∈ Q[x] of the form
+X
+h(x) =
+ai,j xi (f (x)/N )j
+(2)
+i,j≥0
+
+with ai,j ∈ Z such that |h(z)| < 1 for all z in the complex disk {z ∈ C : |z| ≤ N (1/d)+ǫ }. Furthermore, if
+ǫ > ln(2)/ ln(N ) there is no such h(x) such that |h(z)| < 1 for all z in the real interval [−N 1/d+ǫ , N 1/d+ǫ ].
+Note that in order for Coppersmith’s method to run in polynomial time, h(x) should have degree bounded
+by a polynomial in ln(N ). Theorem 2 says that when ǫ > 0 there are no polynomials of any degree satisfying
+the stated bounds. We can thus eliminate the possibility of an improvement to this method with even
+superpolynomial running time.
+In [Cop01], Coppersmith already noted that it did not appear possible to improve the exponent 1/d in his
+result by searching for roots in the real interval [−N 1/d+ǫ , N 1/d+ǫ ] instead of in the complex disk of radius
+N 1/d+ǫ . The last statement in Theorem 2 quantifies this observation, since ln(2)/ ln(N ) → 0 as N → ∞.
+Coppersmith also notes that since the binomial polynomials
+bi (x) = x · (x − 1) · · · (x − i + 1)/i!
+take integral values on integers, one could replace xi in (2) by bi (x) and (f (x)/N )j by bj (f (x)/N ). Coppersmith observed (backed up by experiments) that this leads to a small improvement on the size of the root
+that can be found, and a speedup for practical computations. The improvement is proportional to the degree
+of the auxiliary polynomial h(x) that is constructed, and is thus limited for a polynomial-time algorithm.
+We show that the exponent 1/d in Coppersmith’s theorem still cannot be improved using binomial
+polynomials, but for a different reason. Our results come in two parts. First, we show that the exact
+analogue of Theorem 2 is false in the case of integral combinations of binomial polynomials. In fact, there
+are such combinations that have all the properties required in the proof of Coppersmith’s theorem. The
+problem is that these polynomials have very large degree, and in fact, they vanish at every small integer,
+not just the solutions of the congruence. This is formalized in the following theorem, which is a simplified
+version of Theorem 19.
+Theorem 3 (Existence of binomial auxiliary polynomials). Suppose δ is any positive
+real number. For all
+P
+sufficiently large integers N there is a non-zero polynomial of the form h(x) = i ai bi (x) with ai ∈ Z such
+that |h(z)| < 1 for all z in the complex disk {z ∈ C : |z| ≤ N δ }.
+2
+
+Second, we show that the existence of these polynomials still does not permit cryptographically useful
+improvements to Coppersmith’s bound beyond N 1/d . This is because if one is able to use binomial polynomials of small degree to obtain such an improvement, then the modulus N must have a small prime factor.
+In that case, it would have been more efficient to factor N and use the factorization to find the roots. More
+precisely, we will show in Theorem 21 a stronger form of the following result:
+Theorem 4 (Negative Coppersmith Theorem for binomial polynomials). Suppose ǫ > 0 and that M and N
+are integers with 1.48774N ǫ ≥ M ≥ 319. If there is a non-zero polynomial h(x) of the form
+X
+h(x) =
+ai,j bi (x) bj (f (x)/N )
+(3)
+0≤i,j≤M
+
+with ai,j ∈ Z such that |h(z)| < 1 for z in the complex disk {z ∈ C : |z| ≤ N 1/d+ǫ }, then N must have a
+prime factor less than or equal to M . In particular, this will be the case for all large N if we let M = ln(N )c
+for some fixed integer c > 0.
+Note that the integer M quantifies “smallness” in Theorem 4 in two ways. First, it is a bound on the
+degree of the binomial polynomials that are allowed to be used to create auxiliary polynomials. But then if
+a useful auxiliary polynomial exists, then N must have a factor of size less than or equal to M . As a special
+case of Theorem 4, if N = pq is an RSA modulus with two large equal sized prime factors, then any auxiliary
+polynomial of the form in (3) that can find roots of size N 1/d+ǫ must involve binomial terms with i or j at
+least 1.48774N ǫ.
+Note that Coppersmith’s theorem in its original form is not sensitive to whether or not N has small
+prime factors. Theorem 4 shows that the existence of useful auxiliary polynomials does depend on whether
+N has such small factors.
+The paper is organized in the following way. In §2.1 we begin by recalling Coppersmith’s algorithm for
+finding small solutions of polynomial congruences. In §2.3 we recall some mathematical hardness assumptions
+and we discuss their connection to the security of various cryptosystems and Coppersmith’s algorithm. In
+§3 we review some basic notions from algebraic number theory, and we recall some results of Cantor [Can80]
+and Rumely [Rum89, Rum13] on which our work is based. At the end of §3 we prove Theorem 13, which
+implies Theorem 2. We state and prove Theorem 19 and Theorem 21 in §4; these imply Theorem 3 and
+Theorem 4. One of the goals of this paper is to provide a framework for using capacity theory to show when
+these auxiliary polynomials do or do not exist. We give an outline in §5 of how one proves these types of
+results. In the conclusion we summarize the implications of our results and discuss possible directions for
+future research.
+
+2
+
+Background and Related Work
+
+Given a polynomial f (x) = xd + fd−1 xd−1 + · · · + f1 x + f0 ∈ Z[x] and a prime p we can find solutions x ∈ Z
+to the equation
+f (x) ≡ 0 mod p
+(4)
+in randomized polynomial time using e.g. Berlekamp’s algorithm or the Cantor-Zassenhaus algorithm [Ber67,
+CZ81]. While it is “easy” to find roots of f (x) in the finite field Z/pZ and over Z as well, there is no known
+efficient method to find roots of f (x) modulo N for large composite integers N unless one knows the
+factorization of N .
+
+2.1
+
+Coppersmith’s method
+
+Although finding roots of a univariate polynomial, f (x), modulo N is difficult in general, if f (x) has a
+“small” root, then this root can be found efficiently using Coppersmith’s method [Cop97].
+Coppersmith’s method for proving Theorem 1 works as follows. We follow the exposition in [Cop01],
+which incorporates simplifications due to Howgrave-Graham [HG97]. Suppose ǫ > 0 and that f (x) has a
+
+3
+
+root r ∈ Z with |r| ≤ N (1/d)−ǫ and f (r) ≡ 0 mod N . He considers the finite rank lattice L of rational
+polynomials in Q[x] of the form
+X
+hij (x) =
+ai,j xi (f (x)/N )j
+0≤i+dj<t
+
+where t ≥ 0 is an integer parameter to be varied and all ai,j ∈ Z. Here L is a finite rank lattice because the
+denominators of the coefficients of hij (x) are bounded and hij (x) has degree bounded by t.
+If we evaluate any polynomial hij ∈ L at a root r satisfying f (r) ≡ 0 mod N , hij (r) will be an integer.
+Concretely, one picks a basis for a sublattice of L ∈ Qt−1 by taking a suitable set of polynomials {hij (x)}i,j
+and representing each polynomial by its coefficient vector. Coppersmith’s method applies the LLL algorithm
+to this sublattice basis to find a short vector representing a specific polynomial, hǫ (x) in L. He shows that
+the fact that the vector of coefficients representing hǫ (x) is short implies that |hǫ (x)| < 1 for all x ∈ C with
+|x| ≤ N (1/d)−ǫ , and that for sufficiently large t, the LLL algorithm will find a short enough vector. Because
+hǫ (x) is an integral combination of terms of the form xi (f (x)/N )j , this forces h(r) ∈ Z because f (r)/N ∈ Z.
+But |r| ≤ N (1/d)−ǫ forces |hǫ (r)| < 1. Because 0 is the only integer less than 1 in absolute value, we see
+hǫ (r) = 0. So r is among the zeros of hǫ (x), and as discussed earlier, there is an efficient method to find the
+integer zeros of a polynomial in Q[x]. One then lets ǫ → 0 and does a careful analysis of the computational
+complexity of this method.
+The bound in Theorem 1 arises from cleverly choosing a subset of the possible {hij } as a lattice basis so
+that one can bound the determinant of the lattice as tightly as possible, then using the LLL algorithm in a
+black-box way on the resulting lattice basis.
+
+2.2
+
+Optimality of Coppersmith’s Theorem
+
+Since Coppersmith’s technique uses the LLL algorithm [LLL82] to find the specific polynomial h(x) in the
+lattice L, it is natural to think that improvements in lattice reduction techniques or improved bounds on
+the length of the shortest vector in certain lattices might improve the bound N 1/d in Theorem 1.
+Such an improvement would be impossible in polynomial time for arbitrary N , since the polynomial
+f (x) = xd has exponentially many roots modulo N = pd of absolute value N 1/d+ǫ , but this does not rule out
+the possibility of improvements for cases of cryptographic interest, such as polynomial congruences modulo
+RSA moduli N = pq.
+Aono, Agrawal, Satoh, and Watanabe [AASW12] showed that Coppersmith’s lattice basis construction is
+optimal under the heuristic assumption that the lattice behaves as a random lattice; however they left open
+whether improved lattice bounds or a non-lattice-based approach to solving this problem could improve the
+N 1/d bound.
+
+2.3
+
+Cryptanalytic Applications of Coppersmith’s Theorem
+
+Theorem 1 has many immediate applications to cryptanalysis, particularly the cryptanalysis of RSA. May [May07]
+gives a comprehensive survey of cryptanalytic applications of Coppersmith’s method. In this paper, we focus
+on Coppersmith’s method applied to univariate polynomials modulo integers. We highlight several applications of the univariate case below.
+The RSA assumption posits that it is computationally infeasible to invert the map x 7→ xd mod N , i.e.,
+it is infeasible to find roots of f (x) = xd − c mod N . Because of their similar structure, almost all of the
+cryptographically hard problems (some of which are outlined below) based on factoring can be approached
+using Coppersmith’s method (Theorem 1).
+Low public exponent RSA with stereotyped messages: A classic example listed in Coppersmith’s
+original paper [Cop97] is decrypting “stereotyped” messages encrypted under low public exponent RSA,
+where an approximation to the solution is known in advance. The general RSA map is x 7→ xe mod N . For
+efficiency purposes, e can be chosen to be as small as 3, so that a “ciphertext” is c0 = x30 mod N . Suppose
+we know some approximation to the message x̃0 to the message x0 . Then we can set
+f (x) = (x̃0 + x)3 − c.
+
+4
+
+Thus f (x) has a root (modulo N ) at x = x0 − x̃0 . If |x0 − x̃0 | < N (1/3) then this root can be found using
+Coppersmith’s method.
+Security of RSA-OAEP The RSA function x 7→ xe mod N is assumed to be a one-way trapdoor permutation. Optimal Asymmetric Encryption Padding (OAEP) is a general method for taking a one-way
+trapdoor permutation and a random oracle [BR93], and creating a cryptosystem that achieves security
+against adaptive chosen ciphertext attacks (IND-CCA security).
+Instantiating the OAEP protocol with the RSA one-way function yields RSA-OAEP – a standard cryptosystem. When the public exponent is e = 3, Shoup used Coppersmith’s method to show that RSA-OAEP
+is secure against an adaptive chosen-ciphertext attack (in the random oracle model) [Sho01].
+Roughly, the proof of security works as follows. Suppose there is a distinguisher for the IND-CCA
+security of the RSA-OAEP cryptosystem. Then, given a y ≡ x3 mod N , there is an adversary that can use
+this distinguisher to extract an approximation x̃ for x. Then, using Coppersmith’s method, the adversary
+can recover x. Since the RSA function is assumed to be one-way, there can be no such adversary, thus there
+can be no such distinguisher. Unfortunately, since Coppersmith’s method requires |x̃ − x| < N 1/e , this proof
+only goes through when e is small.
+Hard-core bits of the RSA Function Repeated iteration of the RSA function has been proposed as
+candidate for a pseudo random generator. In particular, we can create a stream of pseudo random bits by
+picking an initial “seed”, x0 and calculating the series
+xi 7→ xi+1
+xi 7→ xei mod N
+At each iteration, the generator will output the r least significant bits of xi . For efficiency reasons, we would
+like r to be as large as possible while still maintaining the provable security of the generator.
+When we output only 1 bit per iteration, this was shown to be secure [ACGS88, FS00], and later this was
+increased to allow the generator to output any log log(N ) consecutive bits [HN04]. The maximum number
+of bits that can be safely outputted by such a generator is tightly tied to the approximation x̃ necessary for
+recovering x from xe mod N . Thus a bound on our ability to find small roots of f (x) = (x − x̃)e − c mod N
+immediately translates into bounds on the maximum number of bits that can be safely outputted at each
+step of the RSA pseudo random generator.
+In order to construct a provably secure pseudo random generator that outputs Ω(n) pseudo random bits
+for each multiplication
+ modulo N [SPW06] assume there is no probabilistic polynomial time algorithm for
+solving the d1 + ǫ, d -SSRSA problem.
+Definition 5 (The (δ, d)-SSRSA Problem [SPW06]). Given a random n bit RSA modulus, N and a polynomial f (x) ∈ Z[x] with deg(f ) = d, find a root x0 such that |x0 | < N δ .
+
+Coppersmith’s method solves the  d1 , d -SSRSA Problem. Our results show that Coppersmith’s method
+
+cannot be used to solve the d1 + ǫ, d -SSRSA problem. Note that our results do not show the d1 + ǫ, d SSRSA problem is intractable—doing so would imply there is no polynomial-time algorithm for factoring—
+but instead we show that the best available class of techniques cannot be extended.
+
+Finding Small Roots of Polynomial Equations in Theoretic Cryptography Coppersmith’s method
+has led to a number of successful cryptanalytic attacks on the RSA cryptosystem (outlined above), but
+Coppersmith’s method can also be applied to a variety of other factoring based cryptosystems that are
+common in the cryptographic literature. Indeed, Coppersmith’s method provides the best known approaches
+to breaking these cryptosystems, but their security has not been as extensively investigated as that of RSA
+because they are not as widely deployed.
+Below, we list a number of other well-known cryptosystems that are susceptible to similar attacks to
+those described above. Although the problems listed below are all still believed to be hard in general, setting
+parameters to ensure security requires a rigorous understanding of the best attacks, and their limitations.
+The Quadratic Residuosity (QR) assumption [GM84] assumes that the set of quadratic residues modulo
+N is indistinguishable from the set of elements with Jacobi symbol 1. This assumption essentially states
+5
+
+that not only is it infeasible to find roots of f (x) = x2 − a mod N , it is infeasible to decide whether such an
+equation even has a root.
+The Benaloh and Naccache-Stern cryptosystems [Ben94, NS98] extend the QR assumption to higher
+degree polynomials. Specifically, they assume that if N = pq, and there is an r > 1 with r|p − 1, then there
+is no polynomial time algorithm that can distinguish the uniform distribution on the subgroup of rth powers
+modulo N from the uniform distribution on the entire multiplicative group. Given a value a ∈ (Z/N Z)∗ ,
+then the polynomial f (x) = xr − a has a root modulo N if and only if a is an rth power. Thus finding an
+algorithm that could find a root of f would lead to a distinguisher.
+The Okamato-Uchiyama cryptosystem [OU98] works with moduli of the form N = p2 q, and the authors
+assume that there is no polynomial time algorithm that can distinguish random samples from the set of pth
+powers modulo N from uniform elements in the multiplicative group modulo N . Since p|N , any algorithm
+that could find roots of f (x) = xN − a mod N would break the security of this cryptosystem.
+The security of the Paillier Cryptosystem [Pai99] rests on the Decisional Composite Residuosity assumption (DCR), which is the assumption that there is no polynomial time algorithm that can distinguish the
+uniform distribution on N th powers in Z/N Z from uniform elements in (Z/N Z)∗ . Thus any algorithm that
+finds roots of f (x) = xN − a mod N 2 would break the security of this cryptosystem. Because of its homomorphic properties, the Paillier Cryptosystem is a building block for many cryptographic protocols e.g.
+private searching on streaming data [OS07] and private information retrieval [Cha04, Lip05].
+2.3.1
+
+Extensions to Coppersmith’s method
+
+Coppersmith’s original work also considered the problem of finding small solutions to polynomial equations
+in two variables over the integers and applied his results to the problem of factoring RSA moduli N = pq
+when half of the most or least significant bits of one of the factors p is known. [Cop97] Howgrave-Graham
+gave an alternate formulation of this problem by finding approximate common divisors of integers using
+similar lattice-based techniques, and obtained the same bounds for factoring with partial information. [HG01]
+May [May10] gives a unified formulation of Coppersmith and Howgrave-Graham’s results to find small
+solutions to polynomial equations modulo unknown divisors of integers. Later work by Jutla [Jut98] and
+Jochemsz and May [JM06] has generalized Coppersmith’s method to multivariate equations, and Herrmann
+and May [HM08] obtained results for multivariate equations modulo divisors.
+As we will show in the next section, existing results in capacity theory can be used to directly address
+the case of auxiliary polynomials for Coppersmith’s method for univariate polynomials modulo integers.
+Adapting these results to the other settings of Coppersmith’s method listed above is a direction for future
+research.
+
+3
+
+Capacity Theory for Cryptographers
+
+In this section, we use arithmetic capacity theory to prove our main results. Classically, capacity theory
+arose from the following problem in electrostatics. How will a unit charge distribute itself so as to minimize
+potential energy if it is constrained to lie within a compact subset E∞ of C which is stable under complex
+conjugation?
+It was discovered by Fekete and Szegő [Fek23, FS55] that the distribution of small charges on such an E
+is related to the possible locations of zeros of monic integral polynomials. Heuristically, these zeros behave
+in the same way as unit charges that repel one another according to an inverse power law. This is due to the
+restriction that the discriminant of a monic integral polynomial without multiple zeros must be a non-zero
+integer, which prevents all the zeros from being too close to one another. More precisely, the total potential
+energy of the charges behaves as the negative of the logarithm of the absolute value of the discriminant of the
+above polynomial. Both are sums over distinct pairs of charges (roots) at positions w and z of − ln |z − w|.
+Since the discriminant of the polynomial has absolute value at least 1, the potential energy is not positive.
+This heuristic is behind the following striking result of Fekete and Szegő from [Fek23, FS55]. Define the
+capacity γ(E∞ ) to be e−V (E∞ ) , where V (E∞ ) is the so-called Robbin’s constant giving the minimal potential
+energy of a unit charge distribution on E∞ . Fekete and Szegő showed that if γ(E∞ ) < 1, then there are
+only finitely many irreducible monic polynomials with integer coefficients which have all of their roots in
+E∞ . This corresponds to the case in which the minimal potential energy V (E∞ ) is positive, consistent with
+6
+
+the above heuristic. Conversely, if γ(E∞ ) > 1, then for every open neighborhood U of E∞ in C, there are
+infinitely many irreducible monic polynomials with integer coefficients having all their roots in U .
+The work of Fekete and Szegő was vastly generalized by Cantor [Can80] to adelic subsets of the projective
+line, and by Rumely [Rum89, Rum13] to adelic subsets of arbitrary smooth projective curves over global
+fields. Their methods are based on potential theory, as in electrostatics. In [Chi91], Chinburg suggested a
+simpler approach, called sectional capacity theory, which applies to arbitrary regular projective varieties of
+any dimension and not just to curves. Sectional capacity theory was based on ideas from Arakelov theory,
+with the geometry of numbers and Minkowski’s theorem being the primary tools. In [RLV00], Rumely, Lau
+and Varley showed that the limits hypothesized in [Chi91] do exist under reasonable hypotheses; this is a
+deep result.
+This paper is the first application of capacity theory that we are aware of to cryptography. We will
+show that capacity theory is very suited to studying the kind of auxiliary polynomials used in the proof of
+Coppersmith’s theorem. Before we begin, however, we review some number theory.
+
+3.1
+
+p-adic Numbers
+
+For any prime p, and any n ∈ Z, we define the p-adic valuation of n, to be the supremum of the integers e
+such that pe |n, i.e.,
+
+max {e ∈ Z : pe | n} if n 6= 0
+vp (n) =
+∞
+if n = 0
+This is then extended to rational numbers in the natural way. If a, b ∈ Z and a, b 6= 0, then
+a
+= vp (a) − vp (b).
+vp
+b
+The p-adic valuation gives rise to a p-adic absolute value | |p : Q → R given by
+ −v (x)
+p p
+if x 6= 0 ,
+|x|p =
+0
+if x = 0 .
+
+(5)
+
+It is straightforward to check that the p-adic absolute value is multiplicative and satisfies a stronger form of
+the triangle inequality:
+
+
+|xy|p = |x|p · |y|p and |x + y|p ≤ max |x|p , |y|p
+for x, y ∈ Q.
+(6)
+The p-adic absolute value defines a metric on Q. The p-adic numbers, Qp , are defined to be the completion
+of Q with respect to this metric. This is similar to the construction of R as the completion of Q with respect
+to the Euclidean absolute value | | : Q → R.
+Elements of Qp are either 0 or expressed in a unique way as a formal infinite sum
+∞
+X
+
+ai p i
+
+i=k
+
+in which k ∈ Z, each ai lies in {0, 1, . . . , p − 1} and ak 6= 0. Such a sum converges to an element of Qp
+Pj
+i
+because the sequence of integers {sj }∞
+j=k defined by sj =
+i=k ai p forms a Cauchy sequence with respect to
+the metric | |p . One can add, subtract and multiply such sums by treating p as a formal variable, performing
+operations in the resulting formal power series ring in one variable over Z, and by then carrying appropriately.
+In fact, Qp is a field, since multiplication is commutative and it is possible to divide elements by non-zero
+elements of Qp .
+A field L is algebraically closed if every non-constant polynomial g(x) ∈ L[x] has a root in L. This implies
+that g(x) factors into a product of linear polynomials in L[x], since one can find in L roots of quotients of
+g(x) by products of previously found linear factors. For example, C is algebraically closed, but Q is certainly
+not.
+In general, given a field F there are many algebraically closed fields L containing F . For example, given
+one such L, one could simply label the elements of L by the elements of some other set, or one could put
+7
+
+L inside a larger algebraically closed field. Given one L, the set F of elements α ∈ L which are roots in L
+of some polynomial in F [x] is called the algebraic closure of F in L. The set F is in fact an algebraically
+closed field. For a given F , the algebraic closure F will depend on the algebraically closed field L which one
+chooses in this construction. But if one were to use a different field L̃, say, then the algebraic closure of F
+in L̃ is isomorphic to F by a (non-unique) isomorphism which is the identity on F . So we often just fix one
+algebraic closure F of F .
+For instance, if F = Q, then L = C is algebraically closed, so we can take Q to be the algebraic closure of
+Q in C. The possible field embeddings τ : Q → L = C come from pre-composing with a field automorphism
+of Q.
+However, for each prime p, there is another alternative. The field Qp is not algebraically closed, but as
+noted above, we can find an algebraically closed field containing it and then construct the algebraic closure
+Qp of Qp inside this field. Now we have Q ⊂ Qp ⊂ Qp , and Qp is algebraically closed. So we could take
+′
+L = Qp and consider the algebraic closure Q of Q inside Qp . We noted above that all algebraic closures of Q
+are isomorphic over Q in many ways. The possible isomorphisms of Q (as a subfield of C, for example) with
+′
+Q (as a subfield of Qp ) correspond to the field embeddings σ : Q → Qp . Each such σ gives an isomorphism
+′
+of Q with Q which is the identity map on Q. Note here that Qp is much larger than Q, since Qp (and in
+fact Qp as well) is uncountable while Q is countable.
+Each α ∈ Q is a root of a unique monic polynomial mα (x) ∈ Q[x] of minimal degree, and mα (x) is
+irreducible. We will later need to discuss the image of such an α under all the field embeddings τ : Q → C
+and under all field embeddings σ : Q → Qp as p varies. The possible values for τ (α) and σ(α) are simply
+the different roots of mα (x) in C and Qp , respectively.
+√
+Example 6. If α = 7 then mα (x) = x2 − 7. The possibilities for τ (α) are the positive real square root
+2.64575... and the negative real square root −2.64575... of 7. When p = 3, it turns out that x2 − 7 already
+has two roots α1 and α2 in the 3-adic numbers Q3 ⊂ Q3 . These roots are
+α1 = 1 + 1 · 3 + 1 · 32 + 0 · 33 + · · ·
+
+and α2 = 2 + 1 · 3 + 1 · 32 + 2 · 33 + · · · .
+
+These expansions result from choosing 3-adic digits so that the square of the right hand side of each equality
+is congruent to 1 modulo an increasing power of 3. This is the 3-adic counterpart of finding the decimal
+digits of the two real square roots of 7. So the possibilities for σ(α) under all embeddings σ : Q → Q3 are
+α1 and α2 .
+Basic facts about integrality and divisibility are naturally encoded using p-adic absolute values:
+Fact 7. As above, let Qp denote an algebraic closure of Qp . There is a unique extension of | |p : Qp → R to
+an absolute value | |p : Qp → R for which (6) holds for all x, y ∈ Qp .
+Fact 8. The set Z of algebraic integers is the set of all α ∈ Q for which mα (x) ∈ Z[x]. In fact, Z is a ring,
+so that adding, subtracting and multiplying algebraic integers produces algebraic integers. One can speak
+of congruences in Z by saying α ≡ β mod γZ if α − β = γ · δ for some δ ∈ Z.
+
+Fact 9. If r ∈ Q then |r|p ≤ 1 for all primes p if and only if r ∈ Z. More generally, an element α ∈ Q is in
+Z if and only if for all primes p and all field embeddings σ : Q → Qp one has |σ(α)|p ≤ 1.
+
+Fact 10. Suppose α ∈ Z and |τ (α)| < 1 for all embeddings τ : Q → C. Then in fact, α = 0. To see why,
+note that mα (0) ∈ Z is ±1 times the product of the complex roots of mα (x). These roots all have the form
+τ (α), so |mα (0)| < 1. Then mα (0) ∈ Z forces mα (0) = 0. Because mα (x) is monic and irreducible this
+means mα (x) = x, so α = 0.
+Fact 11. If N = pq for distinct primes p and q, then |N |p = p1 , |N |q = q1 , and |N |p′ = 1 for all other primes
+p′ .
+Fact 12. If a, b ∈ Z, then
+
+a|b
+
+⇔
+
+|b|p ≤ |a|p
+
+∀p
+
+Thus a|b is the statement that b is in the p-adic disc of radius |a|p centered at 0 for all p. More generally, if
+α, β ∈ Z then α divides β in Z if β = δ · α for some δ ∈ Z. This is so if and only if |σ(β))|p ≤ |σ(α))|p for all
+primes p and all field embeddings σ : Q → Qp .
+8
+
+3.2
+
+Auxiliary Functions
+
+The original question Coppersmith considered was this: Given an integer N ≥ 1, a polynomial f (x), and a
+bound X, can we find all integers z ∈ Z such that |z| ≤ X and f (z) ≡ 0 mod N ?
+When X is sufficiently small in comparison to N , Coppersmith constructed a non-zero auxiliary polynomial of the form
+X
+ai,j xi (f (x)/N )j ,
+ai,j ∈ Z
+(7)
+h(x) =
+i,j
+
+satisfying |h(z)| < 1 for every z ∈ C with |z| ≤ X. As noted in Section 2.1, this boundedness property forces
+the set of z ∈ Z satisfying |z| ≤ X and f (z) ≡ 0 mod N to be among the roots of h(x). In fact, the roots of
+the h(x) include all algebraic integers z ∈ Z satisfying
+f (z) ≡ 0 mod N · Z and |σ(z)| ≤ X
+
+for all embeddings σ : Q → C.
+
+(8)
+
+The reason is as follows. For z ∈ Z, the condition that f (z) ≡ 0 mod N Z is equivalent to the condition that
+f (z)/N ∈ Z. Therefore, for any h(x) in the form of Equation 7, we have h(z) ∈ Z whenever f (z) ≡ 0 mod N Z.
+If h(x) further satisfies |h(z)| < 1 for all z ∈ C with |z| ≤ X, then the property that |σ(z)| ≤ X for all
+embeddings σ : Q → C, means that |h(σ(z))| < 1 as well. Fact 10 therefore tells us that h(z) = 0.
+Capacity theory can be used for solving the problem of deciding whether there exist non-zero auxiliary
+polynomials h(x) which include among its roots the set of z ∈ Z satisfying Equation 8. The basic idea, which
+will be given in detail in Section 3.3, is that capacity theory gives one a way of deciding whether the set of
+algebraic integers satisfying Equation 8 is finite or infinite.
+When this set is infinite then there cannot exist any rational function h(x) of any kind vanishing on the
+z ∈ Z satisfying (8), and in particular no h(x) of the form in (7) will exist satisfying the desired properties. If,
+on the other hand, this set is finite then there will exist an auxiliary polynomial h(x) vanishing on the z ∈ Z
+satisfying (8), and in fact Coppersmith explicitly constructed such a polynomial using the LLL algorithm.
+As we will see, the boundary for finite versus infinite occurs when X = N 1/d where d is the degree of f (x).
+
+3.3
+
+When do Useful Auxiliary Polynomials Exist?
+
+In this section, we use capacity theory to give a characterization of when auxiliary polynomials h(x) of the
+kind discussed in §3.2 exist. We will use the work of Cantor in [Can80] to show the following result.
+Theorem 13 (Existence of an auxiliary polynomial). Let d be the degree of f (x). Define S(X) to be the set
+of all all algebraic integers z ∈ Z such that
+f (z) = 0 mod N Z
+
+and
+
+|σ(z)| ≤ X
+
+for all embeddings
+
+σ : Q → C.
+
+There exists a polynomial h(x) ∈ Q[x] whose roots include every element of S(X) if X < N 1/d . If X > N 1/d
+there is no rational function h(x) ∈ Q(x) whose zero set contains S(X) because S(X) is infinite.
+We break the proof into a sequence of steps.
+1. Since f (x) ∈ Z[x], and embeddings fix integers, then if z ∈ Z we have f (z) ∈ Z, and σ(f (x)) = f (σ(x))
+for all embeddings σ : Q → Qp .
+2. Suppose N = pe11 · · · pekk and x ∈ Z, then by Fact 12
+f (z) ≡ 0 mod N ⇔ |f (z)|pi ≤
+
+
+
+1
+pi
+
+ei
+
+⇔ |f (z)|pi ≤ |N |pi
+
+∀i ∈ [k]
+∀i ∈ [k]
+
+Similarly, if z ∈ Z then
+f (z) = 0 mod N Z ⇔ |σ(f (z))|pi = |f (σ(z))|pi ≤ |N |pi
+for all i ∈ [k] and for all embeddings σ : Q → Qp .
+9
+
+3. For all primes, p, define the set of elements in Qp that solve the congruence in Equation 8 p-adically:
+n
+n
+o
+o
+def
+Ep = z ∈ Qp |f (z)|p ≤ |N |p = f −1 z ∈ Qp |z|p ≤ |N |p ,
+and similarly define the set of elements with bounded complex absolute value
+def
+
+E∞ = {z ∈ C | |z| ≤ X}
+Let
+
+def
+
+E = E∞ ×
+
+Y
+
+Ep
+
+p∈primes
+
+This specifies the set of p-adic and complex constraints on our solutions. We will compute the capacity
+of E, a measurement of the size of E.
+4. We now define the local capacities γp (Ep ) and γ∞ (E∞ ) as well as the global capacity γ(E). Suppose
+0 ≤ r ∈ R. We have p-adic and complex discs of radius r defined by
+n
+o
+Dp (a, r) = z ∈ Qp |z − a|p ≤ r
+for a ∈ Qp
+and
+D∞ (a, r) = {z ∈ C | |z − a| ≤ r}
+
+for a ∈ C.
+
+Fact 14 (Capacity of a Disc). For v = p and v = ∞, one has local capacity
+γv (Dv (a, r)) = r
+If v = p, a = 0 and r = |N |p is the p-adic absolute value of an integer N ≥ 1, then Dv (0, |N |p ) ∩ Zp is
+just N Zp . We will need later the fact that the p-adic capacity of N Zp is
+γp (N Zp ) = p−1/(p−1) |N |p
+In a similar way, suppose v = ∞. The capacity of the real interval [−r, r] is
+γ∞ ([−r, r]) = r/2
+Fact 15 (Capacity of polynomial preimage). If f (x) ∈ Z[x] is a monic degree d polynomial, and S is
+a subset of Qp if v = p or of C if v = ∞ for which the capacity γv (S) is well defined, then γv (f −1 (S))
+is well defined and
+
+γv f −1 (S) = γv (S)1/d
+Facts 14 and 15 show that
+γp (Ep ) = γp (Dp (0, |N |p ))1/d = |N |1/d
+p
+and
+γ∞ (E∞ ) = γp (D∞ (0, X)) = X
+Fact 16 (Capacity of a product). If
+def
+
+S = S∞ ×
+
+Sp
+
+Y
+
+γp (Sp )
+
+p∈primes
+
+then
+γ(S) = γ∞ (S∞ ) ·
+
+10
+
+Y
+
+p∈primes
+
+Fact 16 means
+γ(E) = γ∞ (E∞ ) ·
+=X·
+=X·
+
+Y
+
+Y
+
+γp (Ep )
+
+p∈primes
+
+p∈primes
+
+|N |1/d
+p
+
+k
+Y
+−e /d
+pi i
+
+i=1
+
+= X · N −1/d
+5. Computing the capacity of our sets of interest tells us whether there exists a polynomial mapping
+the components of E into discs of radius 1. This allows us to apply the following theorem, due to
+Cantor [Can80], which tells us when an auxiliary polynomial exists.
+Theorem 17 (Existence of an auxiliary polynomial). If
+Y
+E = E∞ ×
+
+Ep
+
+p∈primes
+
+then there exists a non-zero auxiliary polynomial h(x) ∈ Q[x] satisfying
+h(Ep ) ⊂ Dp (0, 1)
+
+∀p
+
+and
+h(E∞ ) ⊂ {z ∈ C | |z| < 1}
+if γ(E) < 1, and no such polynomial exists if γ(E) > 1.
+Once we have set up this framework, we are now ready to prove Theorem 13.
+Proof of Theorem 13. Suppose first that X < N 1/d . Then by Fact 16, γ(E) < 1. By Fact 17, there exists
+a polynomial h(x) ∈ Q[x] with |h(z)|p ≤ 1 for all p and z ∈ Ep , and |h(z)| < 1 for all z ∈ E∞ . Suppose
+z ∈ S(X). Then f (z)/N ∈ Z, so Fact 9 says that for all primes p and embeddings σ : Q → Qp one has
+|σ(f (z)/N )|p ≤ 1
+Since f (x) ∈ Z[x] and N ∈ Z, we have σ(f (z)) = f (σ(z)) and σ(N ) = N . So
+|f (σ(z))|p = |σ(f (z))|p =
+
+σ(f (z))
+· |σ(N )|p = |σ(f (z)/N )|p · |N |p ≤ |N |p .
+σ(N ) p
+
+Therefore σ(z) ∈ Ep . Hence |h(σ(z))|p ≤ 1, where σ(h(z)) = h(σ(z)) since h(x) ∈ Q[x]. Because p was
+an arbitrary prime, this means h(z) is an algebraic integer, i.e. h(z) ∈ Z by Fact 9. On the other hand,
+z ∈ S(X) implies |σ(z)| ≤ X so |σ(h(z))| = |h(σ(z))| < 1 for all σ : Q → C. Thus h(z) is an algebraic integer
+such that |σ(h(z))| < 1 for all σ : Q → C, so by Fact 10, h(z) = 0 as claimed. When X > N 1/d , S(X) is
+infinite by [Can80, Thm 5.1.1].
+To try to prove stronger results about small solutions of congruences, Coppersmith also considered
+auxiliary polynomials which absolute value less than 1 on a real interval which is symmetric about 0. We
+can quantify his observation that this does not lead to an improvement of the exponent 1/d in Theorem 1
+by the following result.
+Theorem 18. Let S ′ (X) be the subset of all z ∈ S(X) such that σ(z) lies in R for every embedding
+σ : Q → C. There exists a polynomial h(x) ∈ Q[x] whose roots include every element of S ′ (X) if X < 2N 1/d .
+If X > 2N 1/d there is no non-zero rational function h(x) ∈ Q(x) whose zero set contains S ′ (X) because
+S ′ (X) is infinite.
+11
+
+Proof of Theorem 18. To prove the Theorem 18, one just replaces
+the complex disc E∞ = {z ∈ C : |z| ≤ X}
+Q
+′
+′
+by the real interval E∞
+= {z ∈ R : |z| ≤ X}. Letting E′ = p Ep × E∞
+, we find γ(E′ ) = 2 · γ(E) because
+′
+γ(E∞
+) = 2γ(E∞ ). So γ(E′ ) < 1 if X < 2N 1/d and we find as above that there is a polynomial h(x) ∈ Q[x]
+whose roots contain every element of S(X)′ . If X > 2N 1/d then γ(E′ ) > 1 and S(X)′ is infinite by the main
+result of [Rum13], so h(x) cannot exist.
+
+4
+
+Lattices of Binomial Polynomials
+
+In this section, we will answer the question of whether Coppersmith’s theorem can be improved using auxiliary
+polynomials that are combinations of binomial polynomials. The results we proved
+P in §3 showed that it is
+impossible to improve the bounds for auxiliary polynomials of the form h(x) = i,j≥0 ai,j xi (f (x)/N )j .
+Recall that if i ≥ 0 is an integer, the binomial polynomial bi (x) is
+bi (x) = x · (x − 1) · · · (x − i + 1)/i!.
+Based on a suggestion by Howgrave-Graham and Lenstra, Coppersmith considered in [Cop01] auxiliary
+polynomials constructed from binomial polynomials; that is, of the form
+X
+h(x) =
+ai,j bi (x)bj (f (x)/N ).
+(9)
+i,j≥0
+
+He found that was he unable to improve the bound of N 1/d using this alternate lattice. In this section we
+will prove some sharper forms of Theorems 3 and 4 that explain why this is the case.
+Following the method laid out in §3, we find that capacity theory cannot rule out the existence of such
+polynomials. One of the key differences is that monomials send algebraic integers to algebraic integers, while
+binomial polynomials do not because of the denominators. Therefore, we are no longer able to use the same
+sets Ep as in the previous section.
+In fact, if one uses the lattice of binomial polynomials of the form (9), then for any disk in C there
+do exist auxiliary polynomials that have the required boundedness properties. This is in contrast to the
+situation for polynomials constructed from the monomial lattice. In Theorem 19, we exhibit, for any disk,
+an explicit construction of such a polynomial. However, since this polynomial is constructed with j = 0 in
+(9), it tells us nothing about the solution to the inputs to Coppersmith’s theorem.
+Theorem 21 shows that even if one manages to find an auxiliary polynomial in the lattice given by
+(9) that does give nontrivial information about the solutions to the inputs to Coppersmith’s theorem, this
+polynomial will still not be useful. Either this polynomial must have degree so large that the root-finding
+step does not run in polynomial time, or N must have a small prime factor. For this reason, for N that has
+only large prime factors, using auxiliary polynomials constructed using binomial polynomials will not lead
+to an improvement in the N 1/d bound in Coppersmith’s method.
+Theorem 19 (Existence of bounded binomial polynomials). Suppose δ is any positive real number. Suppose
+c > 1. For all sufficiently large integers N , there is a non-zero polynomial of the form
+X
+ai bi (x)
+(10)
+h(x) =
+0≤i≤cN δ
+
+with ai ∈ Z such that |h(z)| < 1 for all z in the complex disk {z ∈ C : |z| ≤ N δ }.
+Theorem 20 (Explicit construction for Theorem 19). Suppose c > q0 = 3.80572... when q0 is the unique
+positive real number such that
+
+
+
+4
+4arctan(q0 /2) = q0 2 ln(2) − ln
++1
+(11)
+q02
+Then one can exhibit an explicit h(x) of the kind in (19) in the following way. Choose any constant c′ with
+q0 < c′ < c. Then for sufficiently large N and all integers t in the range c′ N δ /2 < t ≤ cN δ /2 − 1/2, the
+function
+h(x) = b2t+1 (x + t)
+will have the properties in (i).
+12
+
+Theorem 21 (Negative Coppersmith Theorem for binomial polynomials). Suppose ǫ > 0 and that M and
+N are positive integers. Suppose further that
+Y
+Nǫ >
+p1/(p−1)
+(12)
+p≤M
+
+where the product is over the primes p less than or equal to M . This condition holds, for example, if
+1.48774N ǫ ≥ M ≥ 319. If there is a non-zero polynomial h(x) of the form
+X
+h(x) =
+ai,j bi (x) bj (f (x)/N )
+(13)
+0≤i,j≤M
+
+with ai,j ∈ Z such that |h(z)| < 1 for z in the complex disk {z ∈ C : |z| ≤ N (1/d)+ǫ }, then N must have a
+prime factor less than M .
+
+4.1
+
+Proof of Theorems 19 and 20.
+
+The proof of Theorem 19 comes in several parts. We first use capacity theory to show that non-zero
+polynomials of the desired kind exist. This argument does not give any information about the degree of the
+polynomials, however. So we then use an explicit geometry of numbers argument to show the existence of a
+non-zero polynomial of a certain bounded degree which is of the desired type. Finally, we give an explicit
+construction of an h(x). This h(x) has a somewhat larger degree than the degree which the geometry of
+numbers argument shows can be achieved. It would be interesting to see if the LLL algorithm would lead to
+a polynomial time method for constructing a lower degree polynomial than the explicit construction.
+In this section we assume the notations of Theorem 19. The criterion that h(x) be a polynomial of the
+form
+X
+ai bi (x)
+h(x) =
+i
+
+with ai ∈ Z is an extrinsic property, which will be discussed in more detail in Step 1 of §5.1. In short, this
+extrinsic property arises because h(x) must have a particular form. We need to convert this to an intrinsic
+criterion, in this case observing that these polynomials take Zp to Zp . The key to doing so is the following
+result of Polya:
+Theorem 22. (Polya) The set of polynomials h(x) ∈ P
+Q[x] which have integral values on every rational
+integer r ∈ Z is exactly the set of integral combinations i ai bi (x) of binomial polynomials bi (x).
+P
+Corollary 4.2. The set of polynomials h(x) ∈ Q[x] which are integral combinations i ai bi (x) of binomial
+polynomials bi (x) is exactly the set of h(x) such that |h(z)|p ≤ 1 for all z ∈ Zp and all primes p.
+Proof. Suppose first that |h(z)|p ≤ 1 for all z ∈ Zp and all primes p. Since each integer z lies in Zp for all
+primes p, we conclude that if z is an integer then the rational number h(z) lies in Zp for all p. Because
+Z = Q ∩ (∩p Zp ) this shows h(x) takes integers to integers. Conversely, suppose h(x) ∈ Q[x] takes integers
+to integers and that p is a prime. Since z → h(z) defines a continuous function of z ∈ Zp and Z is dense in
+Zp , we conclude that h(z) ∈ Zp if z ∈ Zp .
+Our main goal in the proof of Theorem 19 is to show there are h(x) 6= 0 as in Corollary 4.2 such that
+|h(z)| < 1 for z in the complex disk E∞ = {z ∈ C : |z| ≤ N δ }.
+We break reaching this goal into steps.
+Applying capacity theory directly.
+In view of Corollary 4.2, the natural adelic set to consider would be
+Y
+E=
+Ep × E∞ with Ep = Zp for all p
+p
+
+13
+
+(14)
+
+However, this choice does not meet the criteria for γ(E) to be well defined, because it is not true that Ep = Zp
+for all but finitely many p. However, for all Y ≥ 2, the adelic set
+Y
+Y
+E′ =
+Zp ×
+Zp × E∞
+(15)
+p≤Y
+
+p>Y
+
+does satisfy the criteria for γ(E) to be well defined. One has
+γp (Zp ) = p−1/(p−1) ,
+So
+
+
+
+ln γ(E′ ) = ln 
+
+Y
+
+p≤Y
+
+γp (Zp ) = 1 and γ∞ (E∞ ) = N δ .
+
+
+γp (Zp ) × γ∞ (E∞ ) = −
+
+X ln(p)
+
+p≤Y
+
+p−1
+
++ ln(N δ )
+
+(16)
+
+P
+′
+Here as Y → ∞, the quantity − p≤Y ln(p)
+p−1 diverges to −∞. So for all sufficiently large Y we have γ(E ) < 1.
+We then find as before that Cantor’s work produces a non-zero polynomial h(x) ∈ Q[x] such that for all v
+and all elements z of the v-component of E′ one has |h(z)|v ≤ 1, with |h(z)| < 1 if v = ∞. In particular,
+|h(z)|p ≤ 1 for all primes p and all z ∈ Zp ⊂ Zp . So Corollary 4.2 shows h(x) is an integral combination of
+binomial polynomials such that |h(z)| < 1 if z ∈ C and |z| ≤ N δ .
+Using the geometry of numbers to control the degree of auxiliary polynomials
+Minkowski’s theorem says that if L is a lattice in a Euclidean space Rn and C is a convex symmetric
+subset of Rn of volume at least equal to 2n times the generalized index [L : Zn ], there must be a non-zero
+element of L ∩ C. To apply this to construct auxiliary polynomials, one takes C to correspond to a suitably
+bounded set of polynomials with real coefficients, and L to correspond to those polynomials with rational
+coefficients of the kind one is trying to construct.
+In the case at hand, suppose 1 ≤ r ∈ R. Let Z[x]≤r be the set of integral polynomials of degree ≤ r,
+and let L≤r be the Z-span of {bi (x) : 0 ≤ i ≤ r, i ∈ Z}. To show the first statement of Theorem 19, it will
+suffice to show that if c > 1, then for sufficiently large r = N δ > 0, there is a non-zero f (x) ∈ L≤cr such
+that |f (z)| < 1 for z ∈ C such that |z| ≤ r.
+Let m = ⌊cr⌋ be the largest integer less than or equal to cr. By considering leading coefficients, we have
+ln[L≤m : Z[x]≤m ] = ln
+
+m
+Y
+
+i=0
+
+i! = m2 ln(m)/2 · (1 + o(1))
+
+where o(1) → 0 as m → ∞. Let C be the set of polynomials with real coefficients of the form
+m
+X
+
+qi (x/r)i
+
+i=0
+
+with |qi | ≤ 1/(m + 2).
+
+We consider C as a convex symmetric subset of Rm+1 by mapping a polynomial to its vector of coefficients.
+Then
+m
+X
+i ln(r) = − ln(r)m2 /2 · (1 + o(1)).
+ln vol(C) = (m + 1) · (ln(2) − ln(m + 2)) −
+i=0
+
+Since Z[x]≤m maps to a lattice in Rm+1 with covolume 1, we find
+ln vol(C) − ln vol(Rm+1 /L≤m ) ≥ (ln(m) − ln(r))m2 /2 · (1 + o(1)) = ln(c) · m2 /2 · (1 + o(1)).
+Since ln(c) > 0, for sufficiently large m, the right hand side is greater than 2 ln(m + 1). Hence Minkowski’s
+Theorem produces a non-zero f (x) ∈ L≤m in C. One has
+|f (z)| ≤
+
+m
+X
+i=0
+
+|z/r|i /(m + 2) < 1
+
+if z ∈ C and |z| < r, so we have proved Theorem 19.
+14
+
+An explicit construction
+Theorem 20 concerns the polynomials b2t+1 (x + t) when t > 0 is an integer. This polynomial takes
+integral values at integral x, so it is an integral combination of the polynomials bi (x) with 0 ≤ i ≤ 2t + 1
+by Polya’s Theorem 22. To finish the proof of Theorem 20, it will suffice to show the following. Let q0
+is the unique positive solution of the equation (11), and suppose q > q0 . Let D(r) be the closed disk
+D(r) = {z ∈ C : |z| ≤ r}. We will show that if r is sufficiently large, then
+|b2t+1 (z + t)| < 1
+We have
+b2t+1 (z + t) =
+
+Q2t
+
+if
+
+j=0 (z + t − j)
+
+For j ≥ 0 and z ∈ D(r) we have
+
+(2t + 1)!
+
+2t ≥ qr
+
+=
+
+and z ∈ D(r).
+
+Qt
+
+j=−t (z − j)
+
+(2t + 1)!
+
+=±
+
+z·
+
+(17)
+
+Qt
+
+j=1 (z
+
+2
+
+− j2)
+
+(2t + 1)!
+
+| − r2 − j 2 | = r2 + j 2 ≥ |z 2 − j 2 |.
+
+So
+r·
+
+Qt
+
+t
+X
+
+ln(r2 + j 2 ) − ln((2t + 1)!).
+
+sup({b2t+t (z + t) : z ∈ D(r)}) =
+
+j=1 (r
+
+2
+
++ j2)
+
+(2t + 1)!
+
+.
+
+Taking logarithms gives
+ln sup({b2t+t (z + t) : z ∈ D(r)}) = ln(r) +
+
+j=1
+
+(18)
+
+We now suppose t ≥ r, so ξ = r/t ≤ 1. Then
+t
+X
+
+t
+
+1X
+ln(r + j ) = t ln(t ) + t ·
+ln(ξ 2 + (j/t)2 )
+t j=1
+j=1
+Z 1
+= 2t ln(t) + t ·
+ln(ξ 2 + s2 )ds + o(t)
+2
+
+2
+
+2
+
+(19)
+
+0
+
+as t → ∞. By integration by parts,
+Z
+ln(ξ 2 + s2 )ds = s ln(ξ 2 + s2 ) − 2s + 2ξarctan(s/ξ).
+
+(20)
+
+By Sterling’s formula,
+ln((2t + 1)!) = (2t + 1) ln(2t + 1) − (2t + 1) + o(t) = 2t ln(t) + 2t ln(2) − 2t + o(t).
+
+(21)
+
+Since ln(r) = o(t), we get from (18), (20) and (21) that
+ln(sup{b2t+t (z + t) : z ∈ D(r)}) = t · (ln(ξ 2 + 1) + 2ξarctan(ξ −1 ) − 2 ln(2)) + o(t).
+
+(22)
+
+Writing q = 2t/r = 2/ξ ≥ 2 and multiplying both sides of (22) by q > 0, we see that if
+
+
+4
+f (q) = q ln
++ 1 + 4arctan(q/2) − 2 ln(2)q < 0
+q2
+then for sufficiently large t the supremum on the left in (18) is negative and we have the desired bound. Here
+from q ≥ 2 we have
+f ′ (q) = ln(1/q 2 + 1/4) ≤ ln(1/2) < 0 < f (2) and
+
+lim f (q) = −∞.
+
+q→+∞
+
+So there is a unique positive real number q0 with f (q0 ) = 0, and f (q) < 0 for q > q0 . This establishes (17)
+and finishes the proof of part (ii) of Theorem 19.
+15
+
+4.3
+
+Proof of Theorem 21
+
+The proof of Theorem 21 uses a feedback procedure. The feedback in this case is that if N has no small
+prime factor p, then for all small primes p we can increase the set Ep . This is described in more detail in
+§5.2.
+Let M be a positive integer and suppose ǫ > 0. Suppose that there is a polynomial of the form
+X
+h(x) =
+ai,j bi (x)bj (f (x)/N )
+(23)
+0≤i,j≤M
+
+such that ai,j ∈ Z and |h(z)| < 1 for all z ∈ C such that |z| ≤ N 1/d+ǫ . We show that if M satisfies one of the
+inequalities involving N in the statement of Theorem 21, then N must have a prime divisor bounded above
+by M . We will argue by contradiction. Thus we need to show that the following hypothesis cannot hold:
+Hypothesis 23. No prime p ≤ M divides N , and either (12) holds or 1.48774N ǫ ≥ M ≥ 319.
+The point of the proof is to show that Hypothesis (23) leads to h(x) having small sup norms on all
+components of an adelic set E which has capacity larger than 1. The reason that the hypothesis that no
+prime p ≤ M divides N enters into the argument is that this guarantees that f (z)/N will lie in the p-adic
+integers Zp for all z ∈ Zp when p ≤ M . This will lead to being able to take the component of E at such p
+to be Zp . The p-adic capacity of Zp is p−1/(p−1) , as noted in Fact 14. This turns out to be relatively large
+when one applies various results from analytic number theory to get lower bounds on capacities.
+To start a more detailed proof, let p be a prime and suppose 0 ≤ i, j ≤ M .
+Lemma 24. If p ≤ M set Ep = Zp . Then |h(z)|p ≤ 1 if z ∈ Ep and the capacity γp (Ep ) equals p−1/(p−1) |N |p .
+Proof. If p ≤ M and x ∈ Zp , then bi (x) ∈ Zp since Z is dense in Zp and bi (x) ∈ Z for all x ∈ Z. Furthermore,
+f (x)/N ∈ Zp for x ∈ Zp since we have assumed N is prime to p and f (x) ∈ Z[x]. Therefore bj (f (x)/N ) ∈ Zp
+for all j. Since the coefficients ai,j in (23) are integers, we conclude |h(z)|p ≤ 1. We remarked earlier in Fact
+14 that γp (Zp ) = p−1/(p−1) . Since p ≤ M , we have supposed that p does not divide N . So |N |p = 1, and we
+get γp (Ep ) = γ(Zp ) = p−1/(p−1) |N |p .
+−1/p
+
+Lemma 25. If p > M set Ep = f −1 (N Zp ). Then |h(z)|p ≤ 1 if z ∈ Ep and γp (Ep ) = |N |p
+
+.
+
+Proof. We first note that 0 ≤ i, j ≤ M < p implies that |i!|p = |j!|p = 1. Recall that Zp = {x ∈ Qp : |x|p ≤
+1}. If x ∈ f −1 (N Zp ) then x ∈ Zp since f (x) is monic with integral coefficients. So
+|bi (x)|p =
+and
+|bj (f (x)/N )|p =
+
+|x · (x − 1) · · · (x − i + 1)|p
+≤1
+|i!|p
+
+|f (x)/N · (f (x)/N − 1) · · · (f (x)/N − j + 1)|p
+≤1
+|j!|p
+
+since x − k and f (x)/N − k lie in Zp for all integers k and |i!|p = |j!|p = 1. Because the ai,j in (2) are
+−1/p
+integral, we conclude |h(z)|p ≤ 1 if z ∈ Ep = f −1 (N Zp ). The capacity γp (Ep ) is |N |p
+by Fact 15.
+Lemma 26. Set E∞ = {z ∈ C : |z| ≤ N 1/d+ǫ }. Then |h(z)|∞ < 1 if z ∈ E∞ and γ∞ (E∞ ) = N 1/d+ǫ .
+Proof. This first statement was one of our hypotheses on h(x), while γ∞ (E∞ ) = N 1/d+ǫ by Fact 14.
+We conclude from these Lemmas and Fact 16 that when
+Y
+E=
+Ep × E∞
+p
+
+we have
+
+
+
+γ(E) = 
+
+Y
+
+p≤M
+
+
+
+
+
+p−1/(p−1)  × 
+
+Y
+
+all p
+
+
+
+
+
+ × N 1/d+ǫ = 
+|N |1/d
+p
+16
+
+Y
+
+p≤M
+
+
+
+p−1/(p−1)  N ǫ .
+
+(24)
+
+Here
+
+
+
+ln 
+
+Y
+
+p≤M
+
+
+
+p−1/(p−1)  = −
+
+X ln(p)
+
+p≤M
+
+p−1
+
+and it follows from [RS62, Theorem 6, p. 70] that if M ≥ 319 then
+−
+
+X ln(p)
+
+p≤M
+
+p−1
+
+= −
+≥ −
+
+X ln(p)
+
+−
+
+X ln(p)
+
+−
+
+p≤M
+
+p≤M
+
+p
+p
+
+X
+
+p≤M
+
+ln(p)
+p(p − 1)
+
+∞
+XX
+ln(p)
+
+≥ − ln(M ) + γ −
+
+p n=2
+
+pn
+
+1
+ln(M )
+
+(25)
+
+where γ = 0.57721... is Euler’s constant.
+Hence (24) gives
+ln(γ(E)) = −
+
+X ln(p)
+
+p≤M
+
+p−1
+
++ ǫ ln(N ) ≥ − ln(M ) + γ −
+
+1
++ ǫ ln(N ).
+ln(M )
+
+(26)
+
+The right hand side is positive if
+N ǫ · eγ−1/ ln(M) > M.
+
+Since we assumed M ≥ 319, we have e
+
+γ−1/ ln(M)
+
+(27)
+
+≥ 1.497445... and so (27) will hold if
+
+1.48744 · N ǫ > M
+
+(28)
+
+In any case, if the left hand side of (26) is positive then γ(E) > 1. However, we have shown that h(x)
+is a non-zero polynomial in Q[x] such that |h(x)|v ≤ 1 for all v when x ∈ Ev with strict inequality when
+v = ∞. By Cantor’s Theorem 17, such an h(x) cannot exist because γ(E) > 1. The contradiction shows
+that Hypothesis 23 cannot hold, and this completes the proof of Theorem 21.
+
+5
+
+A field guide for capacity-theoretic arguments
+
+The proofs in §3 and §4 illustrate how capacity theory can be used to show the nonexistence and existence
+of polynomials with certain properties. This paper is a first step toward building a more general framework
+to apply capacity theory to cryptographic applications. In this section, we step back and summarize how
+capacity theory can be used in general to show either that auxiliary polynomials with various desirable
+properties do or do not exist.
+The procedure for applying capacity theory to such problems allows for feedback between the type of
+polynomials one seeks and the computation of the relevant associated capacities. If it turns out that the
+capacity theoretic computations are not sufficient for a definite conclusion, they may suggest additional
+hypotheses either on the polynomials or on auxiliary parameters which would be useful to add in order to
+arrive at a definitive answer. They may also suggest some alternative proof methods which will succeed even
+when capacity theory used as a black box does not.
+
+5.1
+
+Showing auxiliary polynomials exist
+
+To use capacity theory to show that polynomials h(x) ∈ Q[x] with certain properties exist, one can follow
+these steps:
+Step 1. State the conditions on h(x) which one would like to achieve. These can be of an intrinsic or an
+extrinsic nature.
+(a) Intrinsic conditions have the following form:
+17
+
+(i) For each prime p, one should give a subset Ep of Qp . For all but finitely many p, Ep must be
+the set Zp .
+(ii) One should give a subset E∞ of C.
+(iii) The set of polynomials h(x) ∈ Q[x] one seeks are all polynomials such that |h(z)|p ≤ 1 for all
+primes p and all z ∈ Ep and |h(w)| < 1 if w ∈ E∞ .
+(b) To state conditions on h(x) extrinsically, one writes down the type of polynomial expressions one
+allows. For example, one might require h(x) to be an integral combination of integer multiples of
+specified polynomials, e.g. monomials in x as in Theorem 13. Suppose one uses such an extrinsic
+description, and one is trying to show the existence of h(x) of this form using capacity theory. It
+is then necessary to come up with an intrinsic description of the above kind with the property
+that any h(x) meeting the intrinsic conditions must have the required extrinsic description. We
+saw another example of this in §4 on binomial polynomials; see also Step 5 below.
+Step 2. Suppose we have stated an intrinsic condition
+on h(x) as in parts (i), (ii) and (iii) of Step 1(a). One
+Q
+then needs to check that the adelic set E = p Ep × E∞ satisfies certain standard hypotheses specified
+in [Can80] and [Rum89, Rum13]. These ensure that the capacity
+Y
+γ(E) =
+γp (Ep ) · γ∞ (E∞ )
+(29)
+p
+
+is well defined. One then needs to employ [Can80] and [Rum89, Rum13] to find an upper bounds the
+γp (Ep ), on γ∞ (E∞ ) and then on γ(E). This may also require results from analytic number theory
+concerning the distribution of primes. When using this method theoretically, there may be an issue
+concerning the computational complexity of finding such upper bounds. However, if Ep and E∞ have
+a simple form (e.g. if they are disks), explicit formulas are available. Notice that the requirement in
+part (i) of Step 1 that Ep = Zp for all but finitely many p forces γp (Ep ) = 1 for all but finitely many
+p. So the product on the right side of (29) is well defined as long as γ∞ (E∞ ) and γp (Ep ) are for all p.
+Step 3. If the computation in Step 2 shows γ(E) < 1, capacity theory guarantees that there is some nonzero polynomial h(x) ∈ Q[x] which satisfies the bounds in part (iii) of Step 1. However, one has no
+information at this point about the degree of h(x).
+Step 4. Suppose that Step 2 shows γ(E) < 1 and that we want to show there is an h(x) as in Step 3
+satisfying a certain bound on its degree. There are three levels of looking for such degree bounds.
+a. The most constructive method is to present an explicit construction of an h(x) which one can
+show works. We did this in the previous section in the case of integral combinations of binomial
+polynomials.
+b. The second most constructive method is to convert the existence of h(x) into the problem of
+finding a short vector in a suitable lattice of polynomials and to apply the LLL algorithm. One
+needs to show that the LLL criteria are met once one considers polynomials of a sufficiently large
+degree, and that a short vector will meet the intrinsic criteria on h(x). We will return in later
+papers to the general question of when γ(E) < 1 implies that there is a short vector problem
+whose solution via LLL will meet the intrinsic criteria. This need not always be the case. The
+reason is that in the geometry of numbers, one can find large complicated convex symmetric sets
+which are very far from being generalized ellipsoids. However, in practice, the statement that
+γ(E) < 1 makes it highly likely that the above LLL approach will succeed.
+c. Because of the definition of sectional capacity in [Chi91] and [RLV00], the following approach
+is guaranteed to succeed by γ(E) < 1. Minkowski’s Theorem in the geometry of numbers will
+produce (in a non-explicit manner) a polynomial h(x) of large degree m which meets the intrinsic
+criteria. One can estimate how large m must be by computing certain volumes and generalized
+indices. We illustrate such computations in §4 in the case of intrinsic conditions satisfied by
+integral combination of binomial polynomials.
+
+18
+
+Step 5. It can happen that the most Q
+natural choices for Ep and E∞ in step 1 above do not satisfy all the
+criteria for the capacity of E = p Ep × E∞ to be well defined. One can then adjust these choices
+slightly. To obtain more control on the degrees of auxiliary functions, one can try an explicit Minkowski
+argument of the kind use in the proof of the positive result concerning integral combinations of binomial
+polynomials in Theorem 19 above.
+
+5.2
+
+Showing auxiliary polynomials do not exist
+
+To use capacity theory to show that polynomials h(x) ∈ Q[x] with certain properties do not exist, one can
+follow these steps:
+Step 1. Specify the set of properties you want h(x) to have. Then show that the following is true for every
+h(x) with these properties:
+(i) For each prime p, exhibit a set Ep of Qp such that |h(z)|p ≤ 1 if z ∈ Ep . For all but finitely many
+p, Ep must be the set Zp .
+(ii) Exhibit a closed subset E∞ of C such that |h(z)| < 1 if z ∈ E∞ .
+It is important that h(x) ∈ Q[x] with the desired properties meet the criteria in (i) and (ii).
+Q
+Step 2. As before, one needs to check that the adelic set E = p Ep × E∞ satisfies certain standard
+hypotheses specified in [Can80] and [Rum89, Rum13]. These ensure that the capacity
+Y
+γ(E) =
+γp (Ep ) · γ∞ (E∞ )
+(30)
+p
+
+is well defined. One then needs to find a lower bound on γ(E) using lower bounds on the γp (Ep ) and
+on γ∞ (E∞ ). One may also require information from analytic number theory, e.g. on the distributions
+of prime numbers less than a given bound.
+Step 3. If the computation in Step 2 shows γ(E) > 1, capacity theory guarantees that there is no non-zero
+polynomial h(x) ∈ Q[x] which satisfies the intrinsic conditions (i) and (ii) of Step 1. This means there
+do not exist of polynomials h(x) having the original list of properties.
+Step 4. Suppose that in Step 3, we cannot show γ(E) > 1 due to the fact that the sets Ep and E∞ in Step
+1 are not sufficient large. One can now change the original criteria on h(x), or take into account some
+additional information, to try to enlarge the sets Ep and E∞ for which Step 1 applies. We saw in the
+previous section how this procedure works in the case of integral combinations of certain products of
+binomial polynomials. For example, if one assumes that certain other parameters (e.g. the modulus of
+a congruence) have no small prime factors, one can enlarge the sets Ep in Step 1 which are associated
+to small primes.
+
+6
+
+Conclusion
+
+In this work, we drew a new connection between two disparate research areas: lattice-based techniques for
+cryptanalysis and capacity theory. This connection has benefits for researchers in both areas.
+• Capacity Theory for cryptographers: We have shown that techniques from capacity theory can be
+used to show that the bound obtained by Coppersmith’s method in the case of univariate polynomials
+is optimal for a broad class of techniques. This implies that the best available class of techniques for
+solving these types of problems cannot be extended. This has implications for cryptanalysis, and the
+tightness of cryptographic security reductions.
+• Cryptography for capacity theorists: Capacity theory provides a method for calculating the
+conditions under which certain auxiliary polynomials exist. Coppersmith’s method provides an efficient
+algorithm for finding these auxiliary polynomials. Until this time, capacity theory has not addressed
+the computational complexity of producing auxilary functions when they do exist.
+19
+
+Concretely, we used capacity theory to answer three questions of Coppersmith in [Cop01]
+1. Can the exponent 1/d be improved (possibly through improved lattice reduction techniques)? No, the
+desired auxiliary polynomial simply does not exist.
+2. Does restricting attention to the real line [−N −1/d , N 1/d ] instead of the complex disk |z| ≤ N 1/d
+improve the situation? No.
+3. Does considering lattices based on binomial polynomials improve the situation? No, these lattices have
+the desired auxiliary polynomials, but for RSA moduli, their degree is too large to be useful.
+Since Coppersmith’s method is one of the primary tools in asymmetric cryptanalysis, these results give
+an indication of the security of many factoring-based cryptosystems.
+This paper lays a foundation for several directions of future work. Coppersmith’s study of small integral
+solutions of equations in two variables and bivariate equations modulo N [Cop97] is related to capacity theory
+on curves, as developed by Rumely in [Rum89, Rum13]. The extension of Coppersmith’s method to multivariate equations [JM06, Jut98] is connected to capacity theory on higher dimensional varieties, as developed in
+[Chi91], [RLV00] and [CMBPT15]. Multivariate problems raise deep problems in arithmetic geometry about
+the existence of finite morphisms to projective spaces which are bounded on specified archimedean and nonarchimedean sets. Interestingly, Howgrave-Graham’s extension of Coppersmith’s method to find small roots
+of modular equations modulo unknown moduli [HG01, May10] appears to pertain to joint capacities of many
+adelic sets, a topic which has not been developed to our knowledge in the capacity theory literature. It is an
+intriguing question whether capacity theory can be extended to help us understand the limitations of these
+more general variants of Coppersmith’s method.
+
+Acknowledgements
+This material is based upon work supported by the National Science Foundation under grants CNS-1513671,
+DMS-1265290, DMS-1360767, CNS-1408734, CNS-1505799, by the Simons Foundation under fellowship
+338379, and a gift from Cisco.
+
+References
+[AASW12]
+
+Yoshinori Aono, Manindra Agrawal, Takakazu Satoh, and Osamu Watanabe. On the optimality
+of lattices for the Coppersmith technique. In Willy Susilo, Yi Mu, and Jennifer Seberry, editors,
+Information Security and Privacy, volume 7372 of Lecture Notes in Computer Science, pages
+376–389. Springer Berlin Heidelberg, 2012.
+
+[ACGS88]
+
+Werner Alexi, Benny Chor, Oded Goldreich, and Claus-Peter Schnorr. RSA and Rabin functions: Certain parts are as hard as the whole. SIAM Journal on Computing, 17(2):194–209,
+1988.
+
+[Ben94]
+
+Josh C. Benaloh. Dense Probabilistic Encryption. In Proceedings of the Workshop on Selected
+Areas in Cryptography, pages 120–128, 1994.
+
+[Ber67]
+
+E. R. Berlekamp. Factoring polynomials over finite fields. Bell System Technical Journal, The,
+46(8):1853–1859, October 1967.
+
+[BR93]
+
+Mihir Bellare and Phillip Rogaway. Random oracles are practical: A paradigm for designing
+efficient protocols. In CCS ’93, pages 62–73. ACM Press, 1993.
+
+[Can80]
+
+David G. Cantor. On an extension of the definition of transfinite diameter and some applications. J. Reine Angew. Math., 316:160–207, 1980.
+
+[Cha04]
+
+Yan-Cheng Chang. Single database private information retrieval with logarithmic communication. In Information Security and Privacy, volume 3108 of Lecture Notes in Computer Science.
+Springer Berlin / Heidelberg, 2004.
+20
+
+[Chi91]
+
+Ted Chinburg. Capacity theory on varieties. Compositio Math., 80(1):75–84, 1991.
+
+[CMBPT15] T. Chinburg, L. Moret-Bailly, G. Pappas, and M. J. Taylor. Finite morphisms to projective
+space and capacity theory. J. fur die Reine und. Angew. Math., 2015.
+[Cop97]
+
+Don Coppersmith. Small solutions to polynomial equations, and low exponent RSA vulnerabilities. Journal of Cryptology, 10(4):233–260, 1997.
+
+[Cop01]
+
+Don Coppersmith. Finding small solutions to small degree polynomials. Cryptography and
+Lattices, 2146:20–31, 2001.
+
+[CZ81]
+
+David G. Cantor and Hans Zassenhaus. A new algorithm for factoring polynomials over finite
+fields. Mathematics of Computation, 36(154):587–592, 1981.
+
+[Fek23]
+
+Michael Fekete. Über die verteilung der wurzeln bei gewissen algebraischen gleichungen mit
+ganzzahligen koeffizienten. Mathematische Zeitschrift, 17(1):228–249, 1923.
+
+[FS55]
+
+M Fekete and G Szegö. On algebraic equations with integral coefficients whose roots belong to
+a given point set. Mathematische Zeitschrift, 63(1):158–172, 1955.
+
+[FS00]
+
+Roger Fischlin and Claus-Peter Schnorr. Stronger security proofs for RSA and Rabin bits.
+Journal of Cryptology, 13(2):221–244, 2000.
+
+[GM84]
+
+Shafi Goldwasser and Silvio Micali. Probabilistic encryption. Journal of Computer and System
+Sciences, 28(2):270–299, 1984.
+
+[HG97]
+
+Nicholas Howgrave-Graham. Finding small roots of univariate modular equations revisited,
+volume 1355 of Lecture Notes in Computer Science, chapter 15, pages 131–142. Springer Berlin
+/ Heidelberg, Berlin/Heidelberg, 1997.
+
+[HG01]
+
+Nick Howgrave-Graham. Approximate Integer Common Divisors. In JosephH Silverman, editor,
+Cryptography and Lattices, volume 2146 of Lecture Notes in Computer Science, pages 51–66.
+Springer Berlin Heidelberg, 2001.
+
+[HM08]
+
+Mathias Herrmann and Alexander May. Advances in Cryptology - ASIACRYPT 2008: 14th
+International Conference on the Theory and Application of Cryptology and Information Security, Melbourne, Australia, December 7-11, 2008. Proceedings, chapter Solving Linear Equations
+Modulo Divisors: On Factoring Given Any Bits, pages 406–424. Springer Berlin Heidelberg,
+Berlin, Heidelberg, 2008.
+
+[HN04]
+
+Johan Håstad and Mats Nåslund. The security of all RSA and discrete log bits. Journal of the
+ACM (JACM), 51(2):187–230, 2004.
+
+[JM06]
+
+Ellen Jochemsz and Alexander May. A strategy for finding roots of multivariate polynomials
+with new applications in attacking rsa variants. In Xuejia Lai and Kefei Chen, editors, Advances
+in Cryptology ASIACRYPT 2006, volume 4284 of Lecture Notes in Computer Science, pages
+267–282. Springer Berlin Heidelberg, 2006.
+
+[Jut98]
+
+Charanjit S. Jutla. On finding small solutions of modular multivariate polynomial equations. In
+Kaisa Nyberg, editor, EUROCRYPT ’98, volume 1403 of Lecture Notes in Computer Science,
+pages 158–170. Springer Berlin Heidelberg, 1998.
+
+[Lip05]
+
+Helger Lipmaa. An oblivious transfer protocol with log-squared communication. In ISC ’05:
+Proceedings of the eighth annual Information Security Conference, volume 3650, pages 314–328.
+Springer-Verlag, 2005.
+
+[LLL82]
+
+H. W. Lenstra, A. K. Lenstra, and L. Lovász. Factoring polynomials with rational coeficients.
+Mathematische Annalen, 261(4):515–534, 1982.
+
+21
+
+[May07]
+
+A. May. Using LLL-reduction for solving RSA and factorization problems: A survey. Conference
+Proceedings of the Conference in honor of the 25th birthday of the LLL algorithm, pages 1–34,
+2007.
+
+[May10]
+
+Alexander May. Using LLL-Reduction for Solving RSA and Factorization Problems The LLL
+Algorithm. Information Security and Cryptography, chapter 10, pages 315–348. Springer Berlin
+Heidelberg, Berlin, Heidelberg, 2010.
+
+[NS98]
+
+David Naccache and Jacques Stern. A new public key cryptosystem based on higher residues. In
+CCS ’98: Proceedings of the 5th ACM conference on Computer and communications security,
+pages 59–66, New York, NY, USA, 1998. ACM Press.
+
+[OS07]
+
+Rafail Ostrovsky and William E. Skeith III. A survey of single-database private information
+retrieval: Techniques and applications. In Tatsuaki Okamoto and Xiaoyun Wang, editors,
+Public Key Cryptography, volume 4450 of Lecture Notes in Computer Science, pages 393–411.
+Springer, 2007.
+
+[OU98]
+
+Tatsuaki Okamoto and Shigenori Uchiyama. A new public-key cryptosystem as secure as factoring. In Kaisa Nyberg, editor, EUROCRYPT’98, volume 1403 of Lecture Notes in Computer
+Science, pages 308–318. Springer Berlin / Heidelberg, 1998.
+
+[Pai99]
+
+Pascal Paillier. Public-key cryptosystems based on composite degree residuosity classes. In
+EUROCRYPT ’99, volume 1592 of Lecture Notes in Computer Science, pages 223–238. Springer
+Berlin / Heidelberg, 1999.
+
+[RLV00]
+
+Robert Rumely, Chi Fong Lau, and Robert Varley. Existence of the sectional capacity. Mem.
+Amer. Math. Soc., 145(690):viii+130, 2000.
+
+[RS62]
+
+J. Barkley Rosser and Lowell Schoenfeld. Approximate formulas for some functions of prime
+numbers. Illinois J. Math., 6:64–94, 1962.
+
+[Rum89]
+
+Robert S. Rumely. Capacity theory on algebraic curves, volume 1378 of Lecture Notes in
+Mathematics. Springer-Verlag, Berlin, 1989.
+
+[Rum13]
+
+Robert Rumely. Capacity theory with local rationality, volume 193 of Mathematical Surveys and
+Monographs. American Mathematical Society, Providence, RI, 2013. The strong Fekete-Szegö
+theorem on curves.
+
+[Sho01]
+
+Victor Shoup. OAEP reconsidered. In CRYPTO 2001, pages 239–259. Springer, 2001.
+
+[SPW06]
+
+Ron Steinfeld, Josef Pieprzyk, and Huaxiong Wang. On the provable security of an efficient
+RSA-based pseudorandom generator. In ASIACRYPT ’06, pages 194–209. Springer, 2006.
+
+22
+
+

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/OMUSvB9uCU7JqxUEGj12uxa4lU0</id>
+  <title>arXiv Query: search_query=abs:"equidistribution" AND abs:"modular" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:11:02Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22equidistribution%22+AND+(abs:%22modular%22+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>5</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2006.00121v2</id>
+    <title>Factorization length distribution for affine semigroups III: modular equidistribution for numerical semigroups with arbitrarily many generators</title>
+    <updated>2020-10-01T04:10:45Z</updated>
+    <link href="https://arxiv.org/abs/2006.00121v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.00121v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For numerical semigroups with a specified list of (not necessarily minimal) generators, we describe the asymptotic distribution of factorization lengths with respect to an arbitrary modulus. In particular, we prove that the factorization lengths are equidistributed across all congruence classes that are not trivially ruled out by modular considerations.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-29T23:16:24Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Stephan Ramon Garcia</name>
+    </author>
+    <author>
+      <name>Mohamed Omar</name>
+    </author>
+    <author>
+      <name>Christopher O'Neill</name>
+    </author>
+    <author>
+      <name>Timothy Wesley</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.17806v1</id>
+    <title>Effective Hecke eigenvalue equidistribution over the Atkin--Lehner subspaces</title>
+    <updated>2026-09-15T20:18:22Z</updated>
+    <link href="https://arxiv.org/abs/2609.17806v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.17806v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a fixed prime $p$, let $μ_p$ denote the $p$-adic Plancherel measure. Then the first main goal of this paper is to prove effective (and moreover explicit) $μ_p$-equidistribution of the $p$-th Hecke eigenvalues over the Atkin--Lehner subspaces $S_k^σ(N) \subseteq S_k(N)$ and $S_k^{\operatorname{new}, σ}(N) \subseteq S_k^{\operatorname{new}}(N)$. We then highlight five applications of this explicit equidistribution result. For the first application, we generalize Kim's vertical analog of the Atkin--Serre conjecture to the Atkin--Lehner setting. For the second application, we obtain explicit bounds on the number of newforms $f \in S_k^{\operatorname{new}, σ}(N)$ for which $p$ is extremal over $S_k^{\operatorname{new}, σ}(N)$. For the third application, we prove explicit asymptotics for the number of $\mathbb{F}_{p^r}$-points on the modular Jacobian $J_0(N),$ as well as on its factors $J_0^{\operatorname{new}}(N),$ $J_0^σ(N),$ and $J_0^{\operatorname{new}, σ}(N)$. We also make explicit an asymptotic result of Serre concerning point counts of the modular curves $X_0(N)$. For the fourth application, we generalize lower bounds due to Murty and Sinha on the sizes of large $\mathbb{Q}$-simple factors of $J_0(N)$ to analogous bounds for $J_0^σ(N)$. Finally, for the fifth application (the details of which are given in a separate paper), we use our explicit equidistribution result to prove that only finitely many modular Jacobians are supersingular modulo any fixed prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-15T20:18:22Z</published>
+    <arxiv:comment>52 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Aarya J. Kumar</name>
+    </author>
+    <author>
+      <name>Sargam Mondal</name>
+    </author>
+    <author>
+      <name>Erick Ross</name>
+    </author>
+    <author>
+      <name>Hui Xue</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.5534v4</id>
+    <title>Bounds for Rankin--Selberg integrals and quantum unique ergodicity for powerful levels</title>
+    <updated>2013-06-09T18:26:31Z</updated>
+    <link href="https://arxiv.org/abs/1205.5534v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.5534v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let f be a classical holomorphic newform of level q and even weight k. We show that the pushforward to the full level modular curve of the mass of f equidistributes as qk -&gt; infinity. This generalizes known results in the case that q is squarefree. We obtain a power savings in the rate of equidistribution as q becomes sufficiently "powerful" (far away from being squarefree), and in particular in the "depth aspect" as q traverses the powers of a fixed prime.
+  We compare the difficulty of such equidistribution problems to that of corresponding subconvexity problems by deriving explicit extensions of Watson's formula to certain triple product integrals involving forms of non-squarefree level. By a theorem of Ichino and a lemma of Michel--Venkatesh, this amounts to a detailed study of Rankin--Selberg integrals int|f|^2 E attached to newforms f of arbitrary level and Eisenstein series E of full level.
+  We find that the local factors of such integrals participate in many amusing analogies with global L-functions. For instance, we observe that the mass equidistribution conjecture with a power savings in the depth aspect is equivalent to the union of a global subconvexity bound and what we call a "local subconvexity bound"; a consequence of our local calculations is what we call a "local Lindelof hypothesis".</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-24T19:22:32Z</published>
+    <arxiv:comment>43 pages; various minor corrections (many thanks to the referee) and improvements in clarity and exposition. To appear in JAMS</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Paul D. Nelson</name>
+    </author>
+    <author>
+      <name>Ameya Pitale</name>
+    </author>
+    <author>
+      <name>Abhishek Saha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.07658v3</id>
+    <title>When Kloosterman sums meet Hecke eigenvalues</title>
+    <updated>2019-09-07T16:13:38Z</updated>
+    <link href="https://arxiv.org/abs/1801.07658v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.07658v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>By elaborating a two-dimensional Selberg sieve with asymptotics and equidistributions of Kloosterman sums from $\ell$-adic cohomology, as well as a Bombieri--Vinogradov type mean value theorem for Kloosterman sums in arithmetic progressions, it is proved that for any given primitive Hecke--Maass cusp form of trivial nebentypus, the eigenvalue of the $n$-th Hecke operator does not coincide with the Kloosterman sum $\mathrm{Kl}(1,n)$ for infinitely many squarefree $n$ with at most $100$ prime factors. This provides a partial negative answer to a problem of Katz on modular structures of Kloosterman sums.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-23T16:59:19Z</published>
+    <arxiv:comment>50 pages. To appear in Inventiones mathematicae</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ping Xi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.1292v2</id>
+    <title>Equidistribution of cusp forms in the level aspect</title>
+    <updated>2012-02-28T18:08:48Z</updated>
+    <link href="https://arxiv.org/abs/1011.1292v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.1292v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let f traverse a sequence of classical holomorphic newforms of fixed weight and increasing squarefree level q tending to infinity. We prove that the pushforward of the mass of f to the modular curve of level 1 equidistributes with respect to the Poincaré measure.
+  Our result answers affirmatively the squarefree level case of a conjecture spelled out by Kowalski, Michel and Vanderkam (2002) in the spirit of a conjecture of Rudnick and Sarnak (1994).
+  Our proof follows the strategy of Holowinsky and Soundararajan (2008) who show that newforms of level 1 and large weight have equidistributed mass. The new ingredients required to treat forms of fixed weight and large level are an adaptation of Holowinsky's reduction of the problem to one of bounding shifted sums of Fourier coefficients (which on the surface makes sense only in the large weight limit), an evaluation of the p-adic integral needed to extend Watson's formula to the case of three newforms where the level of one divides but need not equal the common squarefree level of the other two, and some additional technical work in the problematic case that the level has many small prime factors.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-04T22:47:11Z</published>
+    <arxiv:comment>24 pages; slightly expanded, nearly accepted form</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Duke Math. J. 160, no. 3 (2011), 467-501</arxiv:journal_ref>
+    <author>
+      <name>Paul D. Nelson</name>
+    </author>
+    <arxiv:doi>10.1215/00127094-144287</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1215/00127094-144287" title="doi"/>
+  </entry>
+</feed>

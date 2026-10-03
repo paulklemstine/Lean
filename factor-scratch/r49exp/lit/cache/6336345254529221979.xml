@@ -1,0 +1,805 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/KZCJ+uft7d2fbxMEaERNTkzQT00</id>
+  <title>arXiv Query: search_query=all:"square-cubed" OR all:"a^2-b^3"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:06:03Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22square-cubed%22+OR+all:%22a%5E2-b%5E3%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>49</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/0707.0593v1</id>
+    <title>Arithmetic progressions of squares, cubes and $n$-th powers</title>
+    <updated>2007-07-04T12:37:18Z</updated>
+    <link href="https://arxiv.org/abs/0707.0593v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.0593v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we continue the investigations about unlike powers in arithmetic progression. We provide sharp upper bounds for the length of primitive non-constant arithmetic progressions consisting of squares/cubes and $n$-th powers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-04T12:37:18Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Lajos Hajdu</name>
+    </author>
+    <author>
+      <name>Szabolcs Tengely</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1508.03643v2</id>
+    <title>Ehrhart polynomial for lattice squares, cubes and hypercubes</title>
+    <updated>2016-03-17T14:10:09Z</updated>
+    <link href="https://arxiv.org/abs/1508.03643v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1508.03643v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we are constructing integer lattice squares, cubes or hypercubes in $\mathbb R^d$ with $d\in \{2,3,4\}$. For squares and cubes we find a complete description of their Ehrhart polynomial. For hypercubes, we compute one of the coefficients and show that there exists a simple linear relation between the other two unknown coefficients. This allows as to formulate a conjecture of what the Ehrhart polynomial is in this case.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-08-14T20:07:58Z</published>
+    <arxiv:comment>23 pages and three figures</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Eugen J. Ionascu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.12731v1</id>
+    <title>On Waring-Goldbach Problem for Squares, Cubes and Higher Powers</title>
+    <updated>2020-03-28T06:46:32Z</updated>
+    <link href="https://arxiv.org/abs/2003.12731v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.12731v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{P}_r$ denote an almost-prime with at most $r$ prime factors, counted according to multiplicity. In this paper, we generalize the result of Vaughan for ternary admissible exponent. Moreover, we use the refined admissible exponent to prove that, for $3\leqslant k\leqslant 14$ and for every sufficiently large even integer $n$, the following equation \begin{equation*} n=x^2+p_1^2+p_2^3+p_3^3+p_4^3+p_5^k \end{equation*} is solvable with $x$ being an almost-prime $\mathcal{P}_{r(k)}$ and the other variables primes, where $r(k)$ is defined in Theorem. This result constitutes a deepening upon that of previous results.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-28T06:46:32Z</published>
+    <arxiv:comment>24 pages. arXiv admin note: text overlap with arXiv:1708.04484</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+    <author>
+      <name>Jinjiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.08807v2</id>
+    <title>On Sidon sets with squares, cubes and quartics in short intervals</title>
+    <updated>2026-05-06T15:04:11Z</updated>
+    <link href="https://arxiv.org/abs/2602.08807v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.08807v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Representative examples of our results are as follows.
+  For any positive integer $N$ the equation $$ x^3+y^3=z^3+t^3, \quad x,y,z,t\in \mathbb{N}, \quad \{x,y\}\not=\{z,t\} $$ has no solutions satisfying $$ N\le x,y,z,t &lt; N+\Bigl(\frac{38}{3}N+\frac{1297}{36}\Bigr)^{1/2}+\frac{19}{6}. $$ The strict inequality ``$&lt;$" can not be substituted by ``$\le$", that is, there exist infinitely many positive integers $N$ such that the equation has a solution with $$ N\le x,y,z,t \le N+\Bigl(\frac{38}{3}N+\frac{1297}{36}\Bigr)^{1/2}+\frac{19}{6}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ the equation has a solution satisfying $$ N\le x,y,z,t \le N+cN^{2/3}. $$
+  For any $\varepsilon&gt;0$ there exist infinitely many positive integers $N$ such that the equation has no solutions satisfying $$ N\le x,y,z,t \le N+N^{4/7-\varepsilon}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ the equation $$ x^4+y^4=z^4+t^4,\quad x,y,z,t\in\mathbb{N}, \quad \{x,y\}\not=\{z,t\}, $$ has no solutions satisfying $$ N\le x,y,z,t \le N+cN^{3/5}. $$
+  There is an absolute constant $c&gt;0$ such that for any positive integer $N$ this equation has a solution satisfying $$ N\le x,y,z,t \le N+cN^{12/13}. $$</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-09T15:46:48Z</published>
+    <arxiv:comment>Minor typographical corrections</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>M. Z. Garaev</name>
+    </author>
+    <author>
+      <name>F. M. Garayev</name>
+    </author>
+    <author>
+      <name>S. V. Konyagin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1608.08693v1</id>
+    <title>Numerical semigroups generated by squares, cubes and quartics of three consecutive integers</title>
+    <updated>2016-08-31T00:13:48Z</updated>
+    <link href="https://arxiv.org/abs/1608.08693v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1608.08693v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We derive the polynomial representations for minimal relations of generating set of numerical semigroups R_n^k=&lt;(n-1)^k,n^k,(n+1)^k&gt;, k=2,3,4, n&gt;2. We find also the polynomial representations for degrees of syzygies in the Hilbert series H(z,R_n^k) of these semigroups, their Frobenius numbers F(R_n^k) and genera G(R_n^k).</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-08-31T00:13:48Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Leonid G. Fel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0010158v1</id>
+    <title>A Generalized Numeration Base</title>
+    <updated>2000-10-16T05:06:04Z</updated>
+    <link href="https://arxiv.org/abs/math/0010158v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0010158v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A Generalized Numeration Base is defined in this paper, and then particular cases are presented, such as Prime Base, Square Base, m-Power Base, Factorial Base, and operations in these bases. These bases are important for partitions of integers into primes, squares, cubes, generally into m-powers, also into factorials, and into any strictly increasing sequence.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-10-16T05:06:04Z</published>
+    <arxiv:comment>6 pages</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Florentin Smarandache</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0604019v1</id>
+    <title>Sequences of Numbers Involved in Unsolved Problems</title>
+    <updated>2006-04-03T17:23:55Z</updated>
+    <link href="https://arxiv.org/abs/math/0604019v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0604019v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Over 300 sequences and many unsolved problems and conjectures related to them are presented herein together with theorems corollaries, formulae, examples, mathematical criteria, etc. (about integer sequences, numbers, quotients, residues, exponents, sieves, pseudo-primes/squares/cubes/factorials, almost primes, mobile periodicals, functions, tables, prime/square/factorial bases, generalized factorials, generalized palindromes, etc.).</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-04-03T17:23:55Z</published>
+    <arxiv:comment>140 pages</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Florentin Smarandache</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1603.08456v1</id>
+    <title>Various Arithmetic Functions and their Applications</title>
+    <updated>2016-03-28T17:42:31Z</updated>
+    <link href="https://arxiv.org/abs/1603.08456v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1603.08456v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Over 300 sequences and many unsolved problems and conjectures related to them are presented herein. These notions, definitions, unsolved problems, questions, theorems corollaries, formulae, conjectures, examples, mathematical criteria, etc. on integer sequences, numbers, quotients, residues, exponents, sieves, pseudo-primes squares cubes factorials, almost primes, mobile periodicals, functions, tables, prime square factorial bases, generalized factorials, generalized palindromes, so on.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-28T17:42:31Z</published>
+    <arxiv:comment>398 pages, many graphs</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Octavian Cira</name>
+    </author>
+    <author>
+      <name>Florentin Smarandache</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1510.01208v1</id>
+    <title>Asymptotics for cuspidal representations by functoriality from GL(2)</title>
+    <updated>2015-10-05T16:21:59Z</updated>
+    <link href="https://arxiv.org/abs/1510.01208v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1510.01208v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $π$ be a unitary automorphic cuspidal representation of $GL_2(\mathbb{Q}_\mathbb{A})$ with Fourier coefficients $λ_π(n)$. Asymptotic expansions of certain sums of $λ_π(n)$ are proved using known functorial liftings from $GL_2$, including symmetric powers, isobaric sums, exterior square from $GL_4$ and base change. These asymptotic expansions are manifestation of the underlying functoriality and reflect value distribution of $λ_π(n)$ on integers, squares, cubes and fourth powers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-05T16:21:59Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Huixue Lao</name>
+    </author>
+    <author>
+      <name>Mark McKee</name>
+    </author>
+    <author>
+      <name>Yangbo Ye</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.26762v1</id>
+    <title>The existence and uniqueness of magic-faced hypercubes, and applications to Khajuraho most-perfect magic squares, cubes, and hypercubes</title>
+    <updated>2026-09-22T17:42:12Z</updated>
+    <link href="https://arxiv.org/abs/2609.26762v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.26762v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A $\textit{magic-lined hypercube}$ (or, simply, $\textit{magic hypercube}$) of order $k$ and dimension $n$ is an arrangement of the numbers $1,\dots,k^n$ in a $k\times\cdots\times k$ ($n$-fold) grid such that every line of $k$ numbers parallel to a coordinate axis has the same magic sum. While such hypercubes exist for every order $k\ge 3$ and every dimension $n$, no magic-lined hypercube of order $2$ exists in any dimension $n\ge 2$.
+  For hypercubes of order $2$, we thus relax the magic condition from lines to two-dimensional faces or planes. We call an arrangement of the numbers $1,\dots,2^n$ in a $2\times\cdots\times2$ ($n$-fold) grid \emph{magic-faced} if every $2\times2$ face has the same magic sum. We prove that a magic-faced hypercube of order $2$ exists in every dimension $n\ge0$, and that it is unique up to a certain natural set of transformations of size $2^n(n+1)!$ when $n$ is even and $2^n n\cdot n!$ when $n$ is odd.
+  As an application, we recover and generalize the classical $4\times4$ Khajuraho magic square, answer a question of Coxeter on the group acting on the $384$ ``most-perfect" $4\times4$ magic squares, and extend the picture to higher dimensions. In particular, we prove that, in dimension $n$, these most-perfect objects form a single orbit under a certain natural action of the Weyl group $W(B_{2n})$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-22T17:42:12Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Manjul Bhargava</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1407.5841v2</id>
+    <title>Mechanical Proofs of Properties of the Tribonacci Word</title>
+    <updated>2014-07-27T19:04:33Z</updated>
+    <link href="https://arxiv.org/abs/1407.5841v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1407.5841v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We implement a decision procedure for answering questions about a class of infinite words that might be called (for lack of a better name) "Tribonacci-automatic". This class includes, for example, the famous Tribonacci word T = 0102010010202 ..., the fixed point of the morphism 0 -&gt; 01, 1 -&gt; 02, 2 -&gt; 0. We use it to reprove some old results about the Tribonacci word from the literature, such as assertions about the occurrences in T of squares, cubes, palindromes, and so forth. We also obtain some new results.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-07-22T12:45:51Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1406.0670</arxiv:comment>
+    <arxiv:primary_category term="cs.FL"/>
+    <author>
+      <name>Hamoon Mousavi</name>
+    </author>
+    <author>
+      <name>Jeffrey Shallit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.03705v1</id>
+    <title>Fibonacci Plays Billiards</title>
+    <updated>2020-02-04T21:33:14Z</updated>
+    <link href="https://arxiv.org/abs/2002.03705v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.03705v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A chain is an ordering of the integers 1 to n such that adjacent pairs have sums of a particular form, such as squares, cubes, triangular numbers, pentagonal numbers, or Fibonacci numbers. For example 4 1 2 3 5 form a Fibonacci chain while 1 2 8 7 3 12 9 6 4 11 10 5 form a triangular chain. Since 1 + 5 is also triangular, this latter forms a triangular necklace. A search for such chains and necklaces can be facilitated by the use of paths of billiard balls on a rectangular or other polygonal billiard table.</summary>
+    <category term="math.HO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-04T21:33:14Z</published>
+    <arxiv:primary_category term="math.HO"/>
+    <author>
+      <name>Elwyn Berlekamp</name>
+    </author>
+    <author>
+      <name>Richard K. Guy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.02108v1</id>
+    <title>Cubical Type Theory: a constructive interpretation of the univalence axiom</title>
+    <updated>2016-11-07T15:25:28Z</updated>
+    <link href="https://arxiv.org/abs/1611.02108v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.02108v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a type theory in which it is possible to directly manipulate $n$-dimensional cubes (points, lines, squares, cubes, etc.) based on an interpretation of dependent type theory in a cubical set model. This enables new ways to reason about identity types, for instance, function extensionality is directly provable in the system. Further, Voevodsky's univalence axiom is provable in this system. We also explain an extension with some higher inductive types like the circle and propositional truncation. Finally we provide semantics for this cubical type theory in a constructive meta-theory.</summary>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-07T15:25:28Z</published>
+    <arxiv:comment>To be published in the post-proceedings of the 21st International Conference on Types for Proofs and Programs, TYPES 2015</arxiv:comment>
+    <arxiv:primary_category term="cs.LO"/>
+    <author>
+      <name>Cyril Cohen</name>
+    </author>
+    <author>
+      <name>Thierry Coquand</name>
+    </author>
+    <author>
+      <name>Simon Huber</name>
+    </author>
+    <author>
+      <name>Anders Mörtberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1406.0670v4</id>
+    <title>Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance</title>
+    <updated>2014-07-27T19:01:36Z</updated>
+    <link href="https://arxiv.org/abs/1406.0670v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.0670v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We implement a decision procedure for answering questions about a class of infinite words that might be called (for lack of a better name) "Fibonacci-automatic". This class includes, for example, the famous Fibonacci word f = 01001010..., the fixed point of the morphism 0 -&gt; 01 and 1 -&gt; 0. We then recover many results about the Fibonacci word from the literature (and improve some of them), such as assertions about the occurrences in f of squares, cubes, palindromes, and so forth. As an application of our method we prove a new result: there exists an aperiodic infinite binary word avoiding the pattern x x x^R. This is the first avoidability result concerning a nonuniform morphism proven purely mechanically.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-03T11:10:34Z</published>
+    <arxiv:comment>inserted new section 9 on abelian properties</arxiv:comment>
+    <arxiv:primary_category term="cs.FL"/>
+    <author>
+      <name>Chen Fei Du</name>
+    </author>
+    <author>
+      <name>Hamoon Mousavi</name>
+    </author>
+    <author>
+      <name>Luke Schaeffer</name>
+    </author>
+    <author>
+      <name>Jeffrey Shallit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.03058v2</id>
+    <title>On the action of the $Σ(2,3,7)$ homology sphere group on its space of left-orders</title>
+    <updated>2023-01-11T14:17:39Z</updated>
+    <link href="https://arxiv.org/abs/2204.03058v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.03058v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the action of the group $Γ=\langle a,b,c\mid a^2=b^3=c^7=abc\rangle$ on its space of left-orders has exactly two minimal components.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-06T19:48:09Z</published>
+    <arxiv:comment>4 pages; title changed; final version to appear in Fund. Math</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <author>
+      <name>Kathryn Mann</name>
+    </author>
+    <author>
+      <name>Michele Triestino</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02466v2</id>
+    <title>Determination of the Representative Sample Size in Linear Regression</title>
+    <updated>2026-08-06T00:49:50Z</updated>
+    <link href="https://arxiv.org/abs/2608.02466v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02466v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Very often, accuracy of analysis and forecasting (multiple coefficient of regression and residual means) obtained for a sample used to formulate a regression model is not equal to the accuracy achieved for another homogeneous sample. Indeed, accuracy of analysis and forecasting based on another sample is much worse. This is explained by the discrepancy between a postulated and a real model. This discrepancy is caused by the redundancy of the number of terms of an approximating series. It describes a phenomenon under study with the sample noise. To filter this noise it is necessary to correctly choose the terms of an approximating series and to determine their number, which in turn depends on sample size. It is possible to include in this approximating series not only independent variables but also various functions of the value of the independent variables (e.g., squares, cubes, algorithms, etc.). This paper gives the procedure for selection of an approximating series.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T16:36:06Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Anatoly Rayev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.02867v1</id>
+    <title>Could a gravity inversion exist within the Hollow Earth of Legendary's Monsterverse?</title>
+    <updated>2024-08-05T23:36:04Z</updated>
+    <link href="https://arxiv.org/abs/2408.02867v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.02867v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One of the most popular movie franchises of late is Legendary's Monsterverse as is evidenced by the gross earnings of the series recently surpassing the two and a half billion dollar mark with the release of $\it{Godzilla X Kong}$. As is typical with many movies of this genre, in order to enjoy them one must suspend their disbelief when it comes to the laws of physics. While there are a plethora of examples of violations of basic principles (the square-cube law being the prime example) the idea of a "gravity inversion" occurring inside of the "Hollow Earth" is among the most debated as well as the most relevant to the storylines of the recent movies. The intent of this paper is to show that, while typical scientific arguments refuting the possibility of such an inversion are definitely completely correct, a slight modification of the conditions assumed to exist inside the planet in these arguments may allow for the inversion to actually occur.</summary>
+    <category term="physics.pop-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.class-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-05T23:36:04Z</published>
+    <arxiv:comment>4 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.pop-ph"/>
+    <author>
+      <name>R. Steven Millward</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.08375v1</id>
+    <title>Auxiliary Splines Space Preconditioning for B-Splines Finite Elements: The case of $\bm{H}(\bm{curl},Ω)$ and $\bm{H}(div,Ω)$ elliptic problems</title>
+    <updated>2023-03-15T05:24:17Z</updated>
+    <link href="https://arxiv.org/abs/2303.08375v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.08375v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a study of large linear systems resulting from the regular $B$-splines finite element discretization of the $\bm{curl}-\bm{curl}$ and $\bm{grad}-div$ elliptic problems on unit square/cube domains. We consider systems subject to both homogeneous essential and natural boundary conditions. Our objective is to develop a preconditioning strategy that is optimal and robust, based on the Auxiliary Space Preconditioning method proposed by Hiptmair et al. \cite{hiptmair2007nodal}. Our approach is demonstrated to be robust with respect to mesh size, and we also show how it can be combined with the Generalized Locally Toeplitz (GLT) sequences analysis presented in \cite{mazza2019isogeometric} to derive an algorithm that is optimal and stable with respect to spline degree. Numerical tests are conducted to illustrate the effectiveness of our approach.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-15T05:24:17Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Abdeladim El Akri</name>
+    </author>
+    <author>
+      <name>Khalide Jbilou</name>
+    </author>
+    <author>
+      <name>Ahmed Ratnani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.14488v1</id>
+    <title>High-Order Symmetric Positive Interior Quadrature Rules on Two and Three Dimensional Domains</title>
+    <updated>2026-01-20T21:17:45Z</updated>
+    <link href="https://arxiv.org/abs/2601.14488v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.14488v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fully symmetric positive interior (f-SPI) quadrature rules are key building blocks for high-order discretizations of partial differential equations, yet high-degree rules with few nodes remain scarce on reference elements commonly used in mesh generation. We construct new f-SPI rules on the square, cube, prism, and pyramid by coupling a variable parameterization that enforces positivity and interiority with an efficient Levenberg-Marquardt optimization and a symmetry-aware node-reduction strategy that eliminates and collapses orbits, allowing transitions between symmetry types. The resulting rules achieve degrees up to 77 on the square, 45 on the cube, and 30 on the prism and pyramid, and for most degrees use fewer nodes than previously published f-SPI quadrature rules. Verification tests demonstrate comparable accuracy to existing rules. Complete node and weight data are also provided.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-20T21:17:45Z</published>
+    <arxiv:comment>27 pages, 17 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Moustapha Diallo</name>
+    </author>
+    <author>
+      <name>Zelalem Arega Worku</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1101.5546v1</id>
+    <title>Solvability by semigroup : Application to seismic imaging with complex decomposition of wave equations and migration operators with idempotents</title>
+    <updated>2011-01-28T15:03:07Z</updated>
+    <link href="https://arxiv.org/abs/1101.5546v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1101.5546v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The classical approach of solvability using group theory is well known and one original motivation is to solve polynomials by radicals. Radicals are square, cube, square root, cube root etc of the original coefficients for the polynomial. A polynomial is solvable by radicals if the permutation group is solvable. This is exact solvability via group theory. With modern computers, we might need to relax our definition of exact solvability and move towards practical solvability. We will address seismic imaging as an example of practical solvability by semigroup theory. The difference between semigroup and group is that the semigroup operators do not have to be invertible as in group operators. Using the metaphor of complex decomposition, we will decompose an operator into simple part and complex part. The simple part of the operator is solvable by numerical methods. The complex part of the operator is interpretable but not numerically solvable. It is sometimes called the evanescent energy in geophysics.</summary>
+    <category term="physics.geo-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-01-28T15:03:07Z</published>
+    <arxiv:comment>8 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.geo-ph"/>
+    <author>
+      <name>August Lau</name>
+    </author>
+    <author>
+      <name>Chuan Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.14027v1</id>
+    <title>SPECS: Speciated Evolutionary Circuit Synthesis</title>
+    <updated>2026-07-15T16:57:32Z</updated>
+    <link href="https://arxiv.org/abs/2607.14027v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.14027v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose SPECS, a genetic algorithm for automated analog circuit synthesis with joint topology and sizing optimization. SPECS is inspired by NeuroEvolution of Augmenting Topologies (NEAT), an evolutionary algorithm originally developed to synthesize neural networks. By reformulating the genome representation and adapting the genetic operators to the analog circuit domain, we successfully transfer the core principles of NEAT to analog circuit synthesis. Circuit-specific wiring constraints are incorporated to ensure valid and physically meaningful designs throughout the evolutionary process, and speciation is used to preserve innovation while maintaining population diversity. We evaluate the proposed method on a set of computational circuit synthesis tasks consisting of square, cube, square root, and cube root functions. Experimental results demonstrate that SPECS outperforms benchmark methods across all tasks in both solution quality and reliability. The synthesized circuits and their schematics are available in the supplementary repository.</summary>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-15T16:57:32Z</published>
+    <arxiv:primary_category term="cs.NE"/>
+    <author>
+      <name>Yağız Gençer</name>
+    </author>
+    <author>
+      <name>Stefan Uhlich</name>
+    </author>
+    <author>
+      <name>Andrea Bonetti</name>
+    </author>
+    <author>
+      <name>Arun Venkitaraman</name>
+    </author>
+    <author>
+      <name>Chia-Yu Hsieh</name>
+    </author>
+    <author>
+      <name>Lorenzo Servadei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.05946v2</id>
+    <title>Entanglement and quantum combinatorial designs</title>
+    <updated>2018-04-09T17:45:43Z</updated>
+    <link href="https://arxiv.org/abs/1708.05946v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.05946v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce several classes of quantum combinatorial designs, namely quantum Latin squares, cubes, hypercubes and a notion of orthogonality between them. A further introduced notion, quantum orthogonal arrays, generalizes all previous classes of designs. We show that mutually orthogonal quantum Latin arrangements can be entangled in the same way than quantum states are entangled. Furthermore, we show that such designs naturally define a remarkable class of genuinely multipartite highly entangled states called $k$-uniform, i.e. multipartite pure states such that every reduction to $k$ parties is maximally mixed. We derive infinitely many classes of mutually orthogonal quantum Latin arrangements and quantum orthogonal arrays having an arbitrary large number of columns. The corresponding multipartite $k$-uniform states exhibit a high persistency of entanglement, which makes them ideal candidates to develop multipartite quantum information protocols.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-20T10:13:44Z</published>
+    <arxiv:comment>14 pages, 3 figures. Comments are very welcome!</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 97, 062326 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Dardo Goyeneche</name>
+    </author>
+    <author>
+      <name>Zahra Raissi</name>
+    </author>
+    <author>
+      <name>Sara Di Martino</name>
+    </author>
+    <author>
+      <name>Karol Zyczkowski</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.97.062326</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.97.062326" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.22045v3</id>
+    <title>Alternating geometric progressions modulo one and Sturmian words</title>
+    <updated>2026-07-23T13:53:34Z</updated>
+    <link href="https://arxiv.org/abs/2603.22045v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.22045v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $b\ge 2$ be an integer. Using Sturmian words we describe all irrational real numbers $ξ$ such that the image in $\mathbb{R}/\mathbb{Z}$ of the sequence $(ξ(-b)^n)_{n\ge 0}$ is contained in an interval of length $b^{-1}+b^{-2}-b^{-3}$. In previous work (arXiv:2603.16794) we showed that the image cannot be contained in a shorter interval.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-23T14:46:59Z</published>
+    <arxiv:comment>13 pages. v3: fixed typos</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Qing Lu</name>
+    </author>
+    <author>
+      <name>Weizhe Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1405.6409v3</id>
+    <title>Accurate evaluations of the field shift and lowest-order QED correction for the ground $1^1S-$states of some light two-electron ions</title>
+    <updated>2014-08-19T23:47:57Z</updated>
+    <link href="https://arxiv.org/abs/1405.6409v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1405.6409v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mass-dependent and field shift components of the isotopic shift are determined to high accuracy for the ground $1^1S-$states of some light two-electron Li$^{+}$, Be$^{2+}$, B$^{3+}$ and C$^{4+}$ ions. To determine the field components of these isotopic shifts we apply the Racah-Rosental-Breit formula. We also determine the lowest order QED corrections to the isotopic shifts for each of these two-electron ions.</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-05-25T17:57:27Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1212.6768</arxiv:comment>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <author>
+      <name>Alexei M. Frolov</name>
+    </author>
+    <arxiv:doi>10.1063/1.4895042</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4895042" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.03498v1</id>
+    <title>Arithmetic progressions in sumsets of geometric progressions</title>
+    <updated>2025-12-03T06:47:00Z</updated>
+    <link href="https://arxiv.org/abs/2512.03498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.03498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>If $a$ and $b$ are integers with $b&gt;a&gt;1$, we completely characterize ``long'' arithmetic progressions in the sumsets of the geometric progressions $1, a, a^2, a^3, \ldots$ and $1, b, b^2, b^3, \ldots$. Our proofs utilize recent applications of bounds for linear forms in logarithms to $S$-unit equations, and consequences of the modularity of Frey-Hellegouarch curves, together with elementary arguments.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-03T06:47:00Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Michael A. Bennett</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.00930v2</id>
+    <title>Transport evidence for twin-boundary pinning of superconducting vortices in FeSe</title>
+    <updated>2024-01-30T02:10:27Z</updated>
+    <link href="https://arxiv.org/abs/2311.00930v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.00930v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide bulk transport evidence for twin-boundary pinning of vortices in FeSe. We measure interlayer resistance in FeSe in magnetic fields and find that, as the field is rotated in the $ab$ plane, the flux-flow resistivity is suppressed when the field direction is parallel to twinning planes. The width of the associated dip in the resistance vs in-plane field direction curve varies as $T^{1/2}B^{-3/4}$, consistent with the creation of kinked vortices near the parallel field geometry.</summary>
+    <category term="cond-mat.supr-con" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-02T01:51:30Z</published>
+    <arxiv:comment>5 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.supr-con"/>
+    <arxiv:journal_ref>Physical Review B 109, 014518 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Taichi Terashima</name>
+    </author>
+    <author>
+      <name>Hideaki Fujii</name>
+    </author>
+    <author>
+      <name>Yoshitaka Matsushita</name>
+    </author>
+    <author>
+      <name>Shinya Uji</name>
+    </author>
+    <author>
+      <name>Yuji Matsuda</name>
+    </author>
+    <author>
+      <name>Takasada Shibauchi</name>
+    </author>
+    <author>
+      <name>Shigeru Kasahara</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.109.014518</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.109.014518" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.07116v2</id>
+    <title>The Cosmic Galois Group and Extended Steinmann Relations for Planar $\mathcal{N} = 4$ SYM Amplitudes</title>
+    <updated>2019-09-05T18:17:44Z</updated>
+    <link href="https://arxiv.org/abs/1906.07116v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.07116v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe the minimal space of polylogarithmic functions that is required to express the six-particle amplitude in planar ${\cal N}=4$ super-Yang-Mills theory through six and seven loops, in the NMHV and MHV sectors respectively. This space respects a set of extended Steinmann relations that restrict the iterated discontinuity structure of the amplitude, as well as a cosmic Galois coaction principle that constrains the functions and the transcendental numbers that can appear in the amplitude at special kinematic points. To put the amplitude into this space, we must divide it by the BDS-like ansatz and by an additional zeta-valued constant $ρ$. For this normalization, we conjecture that the extended Steinmann relations and the coaction principle hold to all orders in the coupling. We describe an iterative algorithm for constructing the space of hexagon functions that respects both constraints. We highlight further simplifications that begin to occur in this space of functions at weight eight, and distill the implications of imposing the coaction principle to all orders. Finally, we explore the restricted spaces of transcendental functions and constants that appear in special kinematic configurations, which include polylogarithms involving square, cube, fourth and sixth roots of unity.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-17T16:33:14Z</published>
+    <arxiv:comment>58+12 pages, 1 figure, 23 tables; v2: references added and minor typos corrected, version to appear in JHEP</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Simon Caron-Huot</name>
+    </author>
+    <author>
+      <name>Lance J. Dixon</name>
+    </author>
+    <author>
+      <name>Falko Dulat</name>
+    </author>
+    <author>
+      <name>Matt von Hippel</name>
+    </author>
+    <author>
+      <name>Andrew J. McLeod</name>
+    </author>
+    <author>
+      <name>Georgios Papathanasiou</name>
+    </author>
+    <arxiv:doi>10.1007/JHEP09(2019)061</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/JHEP09(2019)061" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/9606155v1</id>
+    <title>Landau Level Mixing and Levitation of Extended States in Two Dimensions</title>
+    <updated>1996-06-21T14:14:27Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/9606155v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/9606155v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the effects of mixing of different Landau levels on the energies of one-body states, in the presence of a strong uniform magnetic field and a random potential in two dimensions. We use a perturbative approach and develop a systematic expansion in both the strength and smoothness of the random potential. We find the energies of the extended states shift {\em upward}, and the amount of levitation is proportional to $(n+1/2)/B^3$ for strong magnetic field, where $B$ is the magnetic field strength and $n$ is the Landau level index.</summary>
+    <category term="cond-mat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-06-21T14:14:27Z</published>
+    <arxiv:comment>4 pages, 2 eps figures, uuencoded in 1 compressed tar file</arxiv:comment>
+    <arxiv:primary_category term="cond-mat"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 78, 298 (1997).</arxiv:journal_ref>
+    <author>
+      <name>F. D. M. Haldane</name>
+    </author>
+    <author>
+      <name>Kun Yang</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.78.298</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.78.298" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1309.1918v2</id>
+    <title>Bremstrahlung in wormhole spacetime with infinitely short throat</title>
+    <updated>2014-01-15T22:23:57Z</updated>
+    <link href="https://arxiv.org/abs/1309.1918v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1309.1918v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the total energy loss and spectral density of uniformly moving electrically charged particles in the spacetime of a wormhole with an infinitely short throat. We show that the total energy loss $\mathcal{E} \sim e^2vγa^2/b^3$, where $γ$ is relativistic factor, $a$ is the radius of the wormhole's throat and $b$ is the impact factor. The spectrum of the energy for particles radially moving through the wormhole's throat $\mathcal{E} \sim e^2vγ/a$. The spectral density of the total energy has a maximum at frequency $ω_m \sim vγ/b$ and at $ω_m \sim vγ/a$ for radial motion.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-09-07T23:36:23Z</published>
+    <arxiv:comment>11p, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Phys. Rev. D89, 024012 (2014)</arxiv:journal_ref>
+    <author>
+      <name>Nail Khusnutdinov</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.89.024012</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.89.024012" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.03432v2</id>
+    <title>Computing $n^{\rm th}$ roots in $SL_2$ and Fibonacci polynomials</title>
+    <updated>2019-11-30T03:02:27Z</updated>
+    <link href="https://arxiv.org/abs/1710.03432v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.03432v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $k$ be a field of characteristic $\neq 2$. In this paper we study squares, cubes and their products in split and anisotropic groups of type $A_1$. In split case, we show that computing $n^{\rm th}$ roots is equivalent to finding solutions of certain polynomial equations in at most two variables over the base field $k$. The description of these polynomials involves generalised Fibonacci polynomials. Using this we obtain asymptotic proportions of $n^{\rm th}$ powers, and conjugacy classes which are $n^{\rm th}$ powers, in ${\rm SL}_2(\mathbb F_q)$ when $n$ is a prime or $n = 4$.
+  We also extend already known Waring type result for ${\rm SL}_2(\mathbb F_q)$, that every element of ${\rm SL}_2(\mathbb F_q)$ is a product of two squares, to ${\rm SL}_2(k)$ for an arbitrary $k$. For anisotropic groups of type $A_1$, namely ${\rm SL}_1(Q)$ where $Q$ is a quaternion division algebra, we prove that when $2$ is a square in $k$, every element of ${\rm SL}_1(Q)$ is a product of two squares if and only if $-1$ is a square in ${\rm SL}_1(Q)$.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-10T07:42:44Z</published>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>Proc. Indian Acad. Sci. Math. Sci. 130 (2020), no. 1, 31</arxiv:journal_ref>
+    <author>
+      <name>Amit Kulshrestha</name>
+    </author>
+    <author>
+      <name>Anupam Singh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0904.3514v1</id>
+    <title>Long Arithmetic Progressions in Sets with Small Sumset</title>
+    <updated>2009-04-22T17:48:27Z</updated>
+    <link href="https://arxiv.org/abs/0904.3514v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0904.3514v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let $A, B\subseteq \mathbb{Z}$ be finite, nonempty subsets with $\min A=\min B=0$, and let $$δ(A,B)={\begin{array}{ll}
+  1 &amp; \hbox{if} A\subseteq B,
+  0 &amp; \hbox{otherwise.}
+  If $\max B\leq \max A\leq |A|+|B|-3$ and \label{one}|A+B|\leq |A|+2|B|-3-δ(A,B), then we show $A+B$ contains an arithmetic progression with difference 1 and length $|A|+|B|-1$.
+  As a corollary, if \eqref{one} holds, $\max(B)\leq \max(A)$ and either $\gcd(A)=1$ or else $\gcd(A+B)=1$ and $|A+B|\leq 2|A|+|B|-3$, then $A+B$ contains an arithmetic progression with difference 1 and length $|A|+|B|-1$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-04-22T17:48:27Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Itziar Bardaji</name>
+    </author>
+    <author>
+      <name>David J. Grynkiewicz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.1131v1</id>
+    <title>Minimizing the number of carries in addition</title>
+    <updated>2012-09-05T22:01:36Z</updated>
+    <link href="https://arxiv.org/abs/1209.1131v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.1131v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>When numbers are added in base $b$ in the usual way, carries occur. If two random, independent 1-digit numbers are added, then the probability of a carry is $\frac{b-1}{2b}$. Other choices of digits lead to less carries. In particular, if for odd $b$ we use the digits $\{-(b-1)/2, -(b-3)/2,...,...(b-1)/2\}$ then the probability of carry is only $\frac{b^2-1}{4b^2}$. Diaconis, Shao and Soundararajan conjectured that this is the best choice of digits, and proved that this is asymptotically the case when $b=p$ is a large prime. In this note we prove this conjecture for all odd primes $p$.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-05T22:01:36Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Noga Alon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.27779v1</id>
+    <title>Geometric memory in incomplete phase transitions across dimensions</title>
+    <updated>2026-04-30T12:19:14Z</updated>
+    <link href="https://arxiv.org/abs/2604.27779v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.27779v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We model a direct solid-state phase transition through a nucleation-and-growth process in which plates have simple, regular shapes - squares, cubes, or square-faced lamellae - and grow homothetically (self-similarly) until they either reach a randomly assigned maximum size or are stopped by impingement with previously formed plates. The reverse transformation is represented by the preferential disappearance of smaller plates, while larger plates are retained during an incomplete reversion. A subsequent direct transformation therefore produces a modified plate-size distribution, a memory effect that forms the main focus of this study. Building upon an earlier two-dimensional (2D) formulation, we extend the model to cubes (3D) and to lamellar plates (3DL) in order to examine how dimensionality affects transformation memory. We introduce a quantitative descriptor of memory, the size mass ratio, and find that memory is robust in all geometries but overall stronger in 2D than in 3D or 3DL. We provide growth snapshots, arrest-regrowth cycles, size distributions, and differential scanning calorimetry simulations, and we compute the Shannon size-entropy to quantify configurational diversity. Although motivated by the thermal memory effect in shape-memory alloys, the model more generally identifies a purely geometric mechanism for memory in first-order solid-solid transformations, highlighting the role of dimensionality and geometric blocking in controlling the strength of transformation memory.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-30T12:19:14Z</published>
+    <arxiv:comment>14 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>APS Open Sci. 1, 000005 (2026)</arxiv:journal_ref>
+    <author>
+      <name>F. Tolea</name>
+    </author>
+    <author>
+      <name>M. Tolea</name>
+    </author>
+    <arxiv:doi>10.1103/fh9q-z7j9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/fh9q-z7j9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.00642v2</id>
+    <title>Exact Subdomain and Embedded Interface Polynomial Integration in Finite Elements with Planar Cuts</title>
+    <updated>2022-11-07T17:13:01Z</updated>
+    <link href="https://arxiv.org/abs/2110.00642v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.00642v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The implementation of discontinuous functions occurs in many of today's state-of-the-art partial differential equation solvers. However, in finite element methods, this poses an inherent difficulty: efficient quadrature rules available when integrating functions whose discontinuity falls in the element's interior are for low order degree polynomials, not easily extended to higher order degree polynomials, and cover a restricted set of geometries. Many approaches to this issue have been developed in recent years. Among them one of the most elegant and versatile is the equivalent polynomial technique. This method replaces the discontinuous function with a polynomial, allowing integration to occur over the entire domain rather than integrating over complex subdomains. Although eliminating the issues involved with discontinuous function integration, the equivalent polynomial tactic introduces its problems. The exact subdomain integration requires a machinery that quickly grows in complexity when increasing the polynomial degree and the geometry dimension, restricting its applicability to lower order degree finite element families. The current work eliminates this issue. We provide algebraic expressions to exactly evaluate the subdomain integral of any degree polynomial on parent finite element shapes cut by a planar interface. These formulas also apply to the exact evaluation of the embedded interface integral. We provide recursive algorithms that avoid overflow in computer arithmetic for standard finite element geometries: triangle, square, cube, tetrahedron, and prism, along with a hypercube of arbitrary dimensions.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-01T20:35:11Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Eugenio Aulisa</name>
+    </author>
+    <author>
+      <name>Jonathon Loftin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0810.0957v4</id>
+    <title>K3 surfaces with non-symplectic involution and compact irreducible G_2-manifolds</title>
+    <updated>2011-03-25T17:26:15Z</updated>
+    <link href="https://arxiv.org/abs/0810.0957v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0810.0957v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the connected-sum method of constructing compact Riemannian 7-manifolds with holonomy G_2 developed in math.DG/0012189. The method requires pairs of projective complex threefolds endowed with anticanonical K3 divisors, the latter `matching' via a certain non-holomorphic map. Suitable examples of threefolds were previously obtained in math.DG/0012189 by blowing up curves in Fano threefolds.
+  In this paper, we give further suitable algebraic threefolds using theory of K3 surfaces with non-symplectic involution due to Nikulin. These threefolds are not obtainable from Fano threefolds, as above, and admit matching pairs leading to topologically new examples of compact irreducible G_2-manifolds. `Geography' of the values of Betti numbers b^2,b^3 for the new (and previously known) examples of compact irreducible G_2 manifolds is also discussed.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-10-06T15:30:02Z</published>
+    <arxiv:comment>30 pages; v2: misprint in the abstract corrected (no changes in the paper); v3: formula for b^3(M) in Theorem 2.5 corrected, respective computations of examples revised, some arguments expanded, references added; v4: enhancements in Theorem 5.3, new Proposition 5.5, more examples, presentation improved</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <arxiv:journal_ref>Math. Proc. Cambridge Philos. Soc. 151 (2011), 193-218</arxiv:journal_ref>
+    <author>
+      <name>Alexei Kovalev</name>
+    </author>
+    <author>
+      <name>Nam-Hoon Lee</name>
+    </author>
+    <arxiv:doi>10.1017/S030500411100003X</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1017/S030500411100003X" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.1807v11</id>
+    <title>Recurrence for Pandimensional Space-Filling Functions</title>
+    <updated>2015-04-20T01:09:49Z</updated>
+    <link href="https://arxiv.org/abs/1402.1807v11" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.1807v11" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A space-filling function is a bijection from the unit line segment to the unit square, cube, or hypercube. The function from the unit line segment is continuous. The inverse function, while well-defined, is not continuous. Space-filling curves, the finite approximations to space-filling functions, have found application in global optimization, database indexing, and dimension reduction among others. For these applications the desired transforms are mapping a scalar to multidimensional coordinates and mapping multidimensional coordinates to a scalar.
+  Presented are recurrences which produce space-filling functions and curves of any rank $d\ge2$ based on serpentine Hamiltonian paths on $({\bf Z}\bmod s)^d$ where $s\ge2$. The recurrences for inverse space-filling functions are also presented. Both Peano and Hilbert curves and functions and their generalizations to higher dimensions are produced by these recurrences. The computations of these space-filling functions and their inverse functions are absolutely convergent geometric series.
+  The space-filling functions are constructed as limits of integer recurrences and equivalently as non-terminating real recurrences. Scaling relations are given which enable the space-filling functions and curves and their inverses to extend beyond the unit area or volume and even to all of $d$-space.
+  This unification of pandimensional space-filling curves facilitates quantitative comparison of curves generated from different Hamiltonian paths. The isotropy and performance in dimension reduction of a variety of space-filling curves are analyzed.
+  For dimension reduction it is found that Hilbert curves perform somewhat better than Peano curves and their isotropic variants.</summary>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-08T01:01:46Z</published>
+    <arxiv:comment>19 pages, 20 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CG"/>
+    <author>
+      <name>Aubrey Jaffer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.09231v1</id>
+    <title>A construction of $G_2$-manifolds from K3 surfaces with a $\mathbb{Z}^2_2$-action</title>
+    <updated>2020-02-21T11:20:21Z</updated>
+    <link href="https://arxiv.org/abs/2002.09231v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.09231v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A product of a K3 surface $S$ and a flat 3-dimensional torus $T^3$ is a manifold with holonomy $SU(2)$. Since $SU(2)$ is a subgroup of $G_2$, $S\times T^3$ carries a torsion-free $G_2$-structure. We assume that $S$ admits an action of $\mathbb{Z}^2_2$ with certain properties. There are several possibilities to extend this action to $S\times T^3$. A recent result of Joyce and Karigiannis allows us to resolve the singularities of $(S\times T^3)/\mathbb{Z}^2_2$ such that we obtain smooth $G_2$-manifolds. We classify the quotients $(S\times T^3)/\mathbb{Z}^2_2$ under certain restrictions and compute the Betti numbers of the corresponding $G_2$-manifolds. Moreover, we study a class of quotients by a non-abelian group. Several of our examples have new values of $(b^2,b^3)$.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-21T11:20:21Z</published>
+    <arxiv:comment>37 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <author>
+      <name>Frank Reidegeld</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0909.3970v1</id>
+    <title>Simulation of quantum gates by postselection of interference experiments in multi-port beam-splitter (BS) configurations</title>
+    <updated>2009-09-22T11:53:53Z</updated>
+    <link href="https://arxiv.org/abs/0909.3970v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0909.3970v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Using multiport beam-splitter (BS) configurations eight input operators a(0),a(1),a(2) a(3),a(4) a(5),a(6), a(7) are mixed by 12 BS's to produce the output operators b(0), b(1), b(2), b(3), b(4), b(5), b(6), b(7). A single photon entering into, or exiting from, one port of a BS is considered as the |0&gt; state while that in the second port of the BS is considered as the |1&gt; state. Two single photons are inserted into two of the BS's simulating two input qubit-states by operators a(0), a(1),a(2), a(3) . In order to simulate the two-qubit gates we exclude by postselection all the cases in which one or two photons exit through output ports b(4), b(5), b(6), b(7) so that only 25% of the experiments are taken into account. The method simulates explicitly the CNOT and SWAP gates but similar methods can be used for other gates.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-09-22T11:53:53Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Y. Ben-Aryeh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1302.5996v7</id>
+    <title>On the products of bipolar harmonics</title>
+    <updated>2014-07-07T14:48:21Z</updated>
+    <link href="https://arxiv.org/abs/1302.5996v7" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1302.5996v7" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The products of the two and three bipolar harmonics ${\cal Y}^{\ell_1 \ell_2}_{LM}({\bf r}_{31}, {\bf r}_{32})$ are represented as the finite sums of powers of the three relative coordinates $r_{32}, r_{31}$ and $r_{21}$. The complete (angular+radial) integrals of the products of the two and three bipolar harmonics in the basis of exponential radial functions are expressed as finite sums of the auxiliary three-particle integrals $Γ_{n,k,l}(α, β, γ)$. The formulas derived in this study can be used to accelerate highly accurate computations of the rotationally excited (bound) states in arbitrary three-body systems. In particular, we have constructed compact (400-term) variational wave functions for the triplet and singlet $2P(L = 1)-$states in light two-electron atoms and ions. Highly accurate calculations (20 - 21 stable decimal digits in the total energy) of the triplet and singlet $2P(L = 1)-$states in the two-electron Li$^{+}$, Be$^{2+}$, B$^{3+}$ and C$^{4+}$ ions are performed for the first time</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-02-25T05:16:56Z</published>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <author>
+      <name>Alexei M. Frolov</name>
+    </author>
+    <author>
+      <name>David M. Wardlaw</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.14505v1</id>
+    <title>Gravitational Lensing Signatures of Hayward-like Black Holes</title>
+    <updated>2026-04-16T00:38:35Z</updated>
+    <link href="https://arxiv.org/abs/2604.14505v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.14505v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We examine the gravitational lensing signatures of a Hayward-like regular black hole and its potential observational distinction from a Schwarzschild black hole. In the weak-field limit, the deflection angle includes a small positive correction proportional to $m \ell^2/b^3$, indicating slightly stronger light bending than in Schwarzschild, though the effect remains observationally negligible at large impact parameters. Current galaxy-scale Einstein-ring data, such as from ESO325-G004, cannot yet constrain the regular-core scale $\ell$. In the strong-deflection regime, for Sgr A* and M87*, the asymptotic position $θ_{\infty}$ is identical to Schwarzschild's. Nevertheless, $\ell$ modifies strong-lensing coefficients $\bar a, \bar b$, influencing angular separations s, relative flux ratio $r_\mathrm{mag}$, and time delays $ΔT_{2,1}$. Our predicted values for these observables remain consistent with current data, suggesting that future high-precision measurements of strong-field lensing may distinguish Hayward-like from Schwarzschild black holes.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-16T00:38:35Z</published>
+    <arxiv:comment>8+2 pages, 15 figures, 5 tables</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Chen-Hung Hsiao</name>
+    </author>
+    <author>
+      <name>Limei Yuan</name>
+    </author>
+    <author>
+      <name>Yidun Wan</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,581 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/PvE0J91/Tn4iv+sUD/nRovRqsIs</id>
+  <title>arXiv Query: search_query=abs:"quantum" AND abs:"classical" AND abs:"equivalent" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:14:53Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22quantum%22+AND+(abs:%22classical%22+AND+(abs:%22equivalent%22+AND+abs:factoring))&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>168</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1604.00668v1</id>
+    <title>Quantum-classical equivalence and ground-state factorization</title>
+    <updated>2016-04-03T18:41:04Z</updated>
+    <link href="https://arxiv.org/abs/1604.00668v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.00668v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We have performed an analytical study of quantum-classical equivalence for quantum $XY$-spin chains with arbitrary interactions to explore the classical counterpart of the factorizing magnetic fields that drive the system into a separable ground state. We demonstrate that the factorizing line in parameter space of a quantum model is equivalent to the so-called natural boundary that emerges in mapping the quantum $XY$-model onto the two dimensional classical Ising model. As a result, we show that the quantum systems with the non-factorizable ground state could not be mapped onto the classical Ising model. Based on the presented correspondence we suggest a promising method for obtaining the factorizing field of quantum systems through the commutation of the quantum Hamiltonian and the transfer matrix of the classical model.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-03T18:41:04Z</published>
+    <arxiv:comment>5 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>EPL, 113 (2016) 37005</arxiv:journal_ref>
+    <author>
+      <name>Jahanfar Abouie</name>
+    </author>
+    <author>
+      <name>Reza Sepehrinia</name>
+    </author>
+    <arxiv:doi>10.1209/0295-5075/113/37005</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1209/0295-5075/113/37005" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.09592v1</id>
+    <title>On speeding up factoring with quantum SAT solvers</title>
+    <updated>2019-10-21T18:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1910.09592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.09592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There have been several efforts to apply quantum SAT solving methods to factor large integers. While these methods may provide insight into quantum SAT solving, to date they have not led to a convincing path to integer factorization that is competitive with the best known classical method, the Number Field Sieve. Many of the techniques tried involved directly encoding multiplication to SAT or an equivalent NP-hard problem and looking for satisfying assignments of the variables representing the prime factors. The main challenge in these cases is that, to compete with the Number Field Sieve, the quantum SAT solver would need to be superpolynomially faster than classical SAT solvers. In this paper the use of SAT solvers is restricted to a smaller task related to factoring: finding smooth numbers, which is an essential step of the Number Field Sieve. We present a SAT circuit that can be given to quantum SAT solvers such as annealers in order to perform this step of factoring. If quantum SAT solvers achieve any speedup over classical brute-force search, then our factoring algorithm is faster than the classical NFS.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-21T18:33:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+    <author>
+      <name>João Marcos Vensi Basso</name>
+    </author>
+    <author>
+      <name>Sebastian R. Verschoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.10341v1</id>
+    <title>Quantum actions on discrete quantum spaces and a generalization of Clifford's theory of representations</title>
+    <updated>2016-11-30T20:22:15Z</updated>
+    <link href="https://arxiv.org/abs/1611.10341v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.10341v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To any action of a compact quantum group on a von Neumann algebra which is a direct sum of factors we associate an equivalence relation corresponding to the partition of a space into orbits of the action. We show that in case all factors are finite-dimensional (i.e. when the action is on a discrete quantum space) the relation has finite orbits. We then apply this to generalize the classical theory of Clifford, concerning the restrictions of representations to normal subgroups, to the framework of quantum subgroups of discrete quantum groups, itself extending the context of closed normal quantum subgroups of compact quantum groups. Finally, a link is made between our equivalence relation in question and another equivalence relation defined by R.Vergnioux.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-30T20:22:15Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <arxiv:journal_ref>Israel Journal of Mathematics 226 (1) (2018), 475-503</arxiv:journal_ref>
+    <author>
+      <name>Kenny De Commer</name>
+    </author>
+    <author>
+      <name>Paweł Kasprzak</name>
+    </author>
+    <author>
+      <name>Adam Skalski</name>
+    </author>
+    <author>
+      <name>Piotr M. Sołtan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/nlin/0401021v2</id>
+    <title>Semiclassical Foundation of Universality in Quantum Chaos</title>
+    <updated>2005-03-23T18:16:48Z</updated>
+    <link href="https://arxiv.org/abs/nlin/0401021v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/nlin/0401021v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We sketch the semiclassical core of a proof of the so-called Bohigas-Giannoni-Schmit conjecture: A dynamical system with full classical chaos has a quantum energy spectrum with universal fluctuations on the scale of the mean level spacing. We show how in the semiclassical limit all system specific properties fade away, leaving only ergodicity, hyperbolicity, and combinatorics as agents determining the contributions of pairs of classical periodic orbits to the quantum spectral form factor. The small-time form factor is thus reproduced semiclassically. Bridges between classical orbits and (the non-linear sigma model of) quantum field theory are built by revealing the contributing orbit pairs as topologically equivalent to Feynman diagrams.</summary>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-01-15T20:35:28Z</published>
+    <arxiv:comment>4 pages, 2 figures; final version published in PRL, minor changes</arxiv:comment>
+    <arxiv:primary_category term="nlin.CD"/>
+    <arxiv:journal_ref>Phys.Rev.Lett. 93 (2004) 014103</arxiv:journal_ref>
+    <author>
+      <name>Sebastian Müller</name>
+    </author>
+    <author>
+      <name>Stefan Heusler</name>
+    </author>
+    <author>
+      <name>Petr Braun</name>
+    </author>
+    <author>
+      <name>Fritz Haake</name>
+    </author>
+    <author>
+      <name>Alexander Altland</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.93.014103</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.93.014103" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.13508v1</id>
+    <title>Quantum resolution of the Schwarzschild singularity</title>
+    <updated>2026-05-13T13:27:39Z</updated>
+    <link href="https://arxiv.org/abs/2605.13508v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.13508v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit the Schwarzschild singularity in a semiclassical setting where the background geometry is classical and quantum effects enter through Bohmian (quantal) trajectories associated with a Klein Gordon wave packet. Using the Madelung-Bohm decomposition of the Klein Gordon wavefunction, we show that the quantum-modified motion is equivalent to geodesic motion in an effective metric conformally related to Schwarzschild, with a conformal factor fixed by the wavefunction amplitude. Solving the wavefunction equation near $r\to 0$ determines this factor and yields finite curvature invariants, in suitable coordinates the interior extends smoothly and the effective spacetime is geodesically complete. This suggests that quantum dynamics on a fixed classical background can regularize the Schwarzschild singularity without a full theory of quantum gravity.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T13:27:39Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Vishnulal Cheriyodathillathu</name>
+    </author>
+    <author>
+      <name>Tanmay Patil</name>
+    </author>
+    <author>
+      <name>Saurya Das</name>
+    </author>
+    <author>
+      <name>Soumen Basak</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.3076v1</id>
+    <title>Operator Imprecision and Scaling of Shor's Algorithm</title>
+    <updated>2008-04-18T17:59:35Z</updated>
+    <link href="https://arxiv.org/abs/0804.3076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.3076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's algorithm (SA) is a quantum algorithm for factoring integers. Since SA has polynomial complexity while the best classical factoring algorithms are sub-exponential, SA is cited as evidence that quantum computers are more powerful than classical computers. SA is critically dependent on the Quantum Fourier Transform (QFT) and it is known that the QFT is sensitive to errors in the quantum state input to it. In this paper, we show that the polynomial scaling of SA is destroyed by input errors to the QFT part of the algorithm. We also show that Quantum Error Correcting Codes (QECC) are not capable of suppressing errors due to operator imprecision and that propagation of operator precision errors is sufficient to severely degrade the effectiveness of SA. Additionally we show that operator imprecision in the error correction circuit for the Calderbank-Shor-Steane QECC is mathematically equivalent to decoherence on every physical qubit in a register. We conclude that, because of the effect of operator precision errors, it is likely that physically realizable quantum computers will be capable of factoring integers no more efficiently than classical computers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-18T17:59:35Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>C. Ray Hill</name>
+    </author>
+    <author>
+      <name>George F. Viamontes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/0010203v2</id>
+    <title>Covariant perturbation theory and the Randall-Sundrum picture</title>
+    <updated>2001-02-23T18:46:14Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/0010203v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/0010203v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The effective action for quantum fields on a $d$-dimensional spacetime can be computed using a non local expansion in powers of the curvature. We show explicitly that, for conformal fields and up to quadratic order in the curvature, the non local effective action is equivalent to the $d+1$ action for classical gravity in $AdS_{d+1}$ restricted to a $d-1$-brane. This generalizes previous results about quantum corrections to the Newtonian potential and provides an alternative method for making local a non-local effective action. The equivalence can be easily understood by comparing the Kallen-Lehmann decomposition of the classical propagator with the spectral representation of the non local form factors in the quantum effective action.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-10-23T18:33:49Z</published>
+    <arxiv:comment>8 pages, Latex. Minor corrections. To appear in Phys. Lett. B</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Lett. B505 (2001) 236-242</arxiv:journal_ref>
+    <author>
+      <name>Ezequiel Alvarez</name>
+    </author>
+    <author>
+      <name>Francisco D. Mazzitelli</name>
+    </author>
+    <arxiv:doi>10.1016/S0370-2693(01)00322-7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/S0370-2693(01)00322-7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/9711047v1</id>
+    <title>Singularities and Classical Limit in Quantum Cosmology</title>
+    <updated>1997-11-15T21:03:26Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/9711047v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/9711047v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Minisuperspace models derived from Kaluza-Klein theories and low energy string theory are studied. They are equivalent to one and two minimally coupled scalar fields. The general classical and quantum solutions are obtained. Gaussian superposition of WKB solutions are constructed. Contrarily to what is usually expected, these states are sharply peaked around the classical trajectories only for small values of the scale factor. This behaviour is confirmed in the framework of the causal interpretation: the Bohmian trajectories of many quantum states are classical for small values of the scale factor but present quantum behaviour when the scale factor becomes large. A consequence of this fact is that these states present an initial singularity. However, there are some particular superpositions of these wave functions which have Bohmian trajectories without singularities. There are also singular Bohmian trajectories with a short period of inflation which grow forever. We could not find any non-singular trajectory which grows to the size of our universe.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-11-15T21:03:26Z</published>
+    <arxiv:comment>22 pages, LaTeX, 4 Postscript figures, uses graficx.sty</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Phys.Rev. D57 (1998) 4707-4717</arxiv:journal_ref>
+    <author>
+      <name>Roberto Colistete</name>
+    </author>
+    <author>
+      <name>Julio C. Fabris</name>
+    </author>
+    <author>
+      <name>Nelson Pinto-Neto</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.57.4707</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.57.4707" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.06687v2</id>
+    <title>Relation between quantum advantage in supervised learning and quantum computational advantage</title>
+    <updated>2023-07-01T07:03:35Z</updated>
+    <link href="https://arxiv.org/abs/2304.06687v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.06687v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The widespread use of machine learning has raised the question of quantum supremacy for supervised learning as compared to quantum computational advantage. In fact, a recent work shows that computational and learning advantage are, in general, not equivalent, i.e., the additional information provided by a training set can reduce the hardness of some problems. This paper investigates under which conditions they are found to be equivalent or, at least, highly related. The existence of efficient algorithms to generate training sets emerges as the cornerstone of such conditions. These results are applied to prove that there is a quantum speed-up for some learning tasks based on the prime factorization problem, assuming the classical intractability of this problem.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-13T17:34:53Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jordi Pérez-Guijarro</name>
+    </author>
+    <author>
+      <name>Alba Pagès-Zamora</name>
+    </author>
+    <author>
+      <name>Javier R. Fonollosa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/0108053v1</id>
+    <title>Quantum cosmological perfect fluid model and its classical analogue</title>
+    <updated>2001-08-22T19:01:14Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/0108053v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/0108053v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The quantization of gravity coupled to a perfect fluid model leads to a Schrödinger-like equation, where the matter variable plays the role of time. The wave function can be determined, in the flat case, for an arbitrary barotropic equation of state $p = αρ$; solutions can also be found for the radiative non-flat case. The wave packets are constructed, from which the expectation value for the scale factor is determined. The quantum scenarios reveal a bouncing Universe, free from singularity. We show that such quantum cosmological perfect fluid models admit a universal classical analogue, represented by the addition, to the ordinary classical model, of a repulsive stiff matter fluid. The meaning of the existence of this universal classical analogue is discussed. The quantum cosmological perfect fluid model is, for a flat spatial section, formally equivalent to a free particle in ordinary quantum mechanics, for any value of $α$, while the radiative non-flat case is equivalent to the harmonic oscillator. The repulsive fluid needed to reproduce the quantum results is the same in both cases.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-08-22T19:01:14Z</published>
+    <arxiv:comment>Latex file, 13 pages</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Phys.Rev. D65 (2002) 063519</arxiv:journal_ref>
+    <author>
+      <name>A. B. Batista</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidade Federal do Espirito Santo, Brazil</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. C. Fabris</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidade Federal do Espirito Santo, Brazil</arxiv:affiliation>
+    </author>
+    <author>
+      <name>S. V. B. Goncalves</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidade Federal do Espirito Santo, Brazil</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Joel Tossa</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidade Federal do Espirito Santo, Brazil</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.65.063519</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.65.063519" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.04097v1</id>
+    <title>How to use Unimodular Quantum Cosmology for the Prediction of a late-time Classical Universe?</title>
+    <updated>2021-11-07T14:20:39Z</updated>
+    <link href="https://arxiv.org/abs/2111.04097v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.04097v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unimodular quantum cosmology admits wavepacket solutions that evolve according to a kind of Schrödinger equation. Though this theory is equivalent to general relativity on the classical level, its canonical structure is different and the problem of time does not occur. We present an Ehrenfest theorem for the long term evolution of the expectation value of the scale factor for a spatially flat Friedmann universe with a scalar field. We find that the classical and the quantum behaviour in the asymptotic future coincide for the special case of a massless scalar field. We examine the general behaviour of uncertainties in order to single out models that can lead to a classical universe.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-07T14:20:39Z</published>
+    <arxiv:comment>7 pages, based on a talk given at 15th Marcel Grossmann Meeting, Rome, 1-7 July 2018</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Natascha Riahi</name>
+    </author>
+    <arxiv:doi>10.1142/9789811258251_0054</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/9789811258251_0054" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.12558v4</id>
+    <title>The Jacobi Factoring Circuit: Quantum Factoring with Near-Linear Gates and Sublinear Space and Depth</title>
+    <updated>2026-07-02T21:23:46Z</updated>
+    <link href="https://arxiv.org/abs/2412.12558v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.12558v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a compact quantum circuit for factoring a large class of integers, including some whose classical hardness is expected to be equivalent to RSA (but not including RSA integers themselves). Most notably, we factor $n$-bit integers of the form $P^2 Q$ with $\log Q = Θ(n^a)$ for $a \in (2/3, 1)$ in space and depth sublinear in n (specifically, $\tilde{O}(\log Q)$) using $\tilde{O}(n)$ quantum gates; for these integers, no known classical algorithms exploit the relatively small size of $Q$ to run asymptotically faster than general-purpose factoring algorithms. To our knowledge, this is the first polynomial-time circuit to achieve sublinear qubit count for a classically-hard factoring problem.
+  Our circuit builds on the quantum algorithm for squarefree decomposition discovered by Li, Peng, Du, and Suter (Nature Scientific Reports 2012), which relies on computing the Jacobi symbol in quantum superposition. The technical core of our contribution is a new space-efficient quantum algorithm to compute the Jacobi symbol of $A$ mod $B$, in the regime where $B$ is classical and much larger than $A$. Our circuit for computing the Jacobi symbol generalizes to related problems such as computing the greatest common divisor and modular inverses, and thus could be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-17T05:34:54Z</published>
+    <arxiv:comment>STOC 2025; minor updates</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gregory D. Kahanamoku-Meyer</name>
+    </author>
+    <author>
+      <name>Seyoon Ragavan</name>
+    </author>
+    <author>
+      <name>Vinod Vaikuntanathan</name>
+    </author>
+    <author>
+      <name>Katherine Van Kirk</name>
+    </author>
+    <arxiv:doi>10.1145/3717823.3718273</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3717823.3718273" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.02577v1</id>
+    <title>Analytic Non-Integrability and S-Matrix Factorization</title>
+    <updated>2019-09-05T18:00:10Z</updated>
+    <link href="https://arxiv.org/abs/1909.02577v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.02577v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We formulate an equivalence between the 2-dim $σ$-model spectrum expanded on a non-trivial massive vacuum and a classical particle Hamiltonian with variable mass and potential. By considering methods of analytic Galoisian non-integrability on appropriate geodesics of the Hamiltonian system we algebraically constrain the particle masses at fixed time, such that integrability is allowed. Through our equivalence this explicitly constrains the masses of the excited spectrum of the dual 2-dim theory in such a way to imply the S-matrix factorization and no particle production. In particular, the integrability of the classical particle system, implies the factorization of the S-matrix in the dual quantum 2-dim theory. Our proposal provides also non-trivial evidence without any assumptions, on the connection between integrability and S-matrix factorization for large class of theories with interactions that break Lorentz invariance.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-05T18:00:10Z</published>
+    <arxiv:comment>5+1 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys. Rev. D 104, 066017 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Dimitrios Giataganas</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.104.066017</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.104.066017" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.04577v1</id>
+    <title>Offloading Quantum Computation by Superposition Masking</title>
+    <updated>2020-08-11T08:32:44Z</updated>
+    <link href="https://arxiv.org/abs/2008.04577v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.04577v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Error correction will add so much overhead to large quantum computations that we suspect the most efficient algorithms will use a classical co-processor to do as much work as possible. We present a method to offload portions of a quantum computation to a classical computer by producing a superposition of masks which hide a quantum input. With the masks, we can measure the result without altering the original input and then perform classical computations on the measured output. If the task has enough structure, the classical computations will be equivalent to a quantum computation performed in superposition. We apply this technique to modular inversion, root-finding, division with remainder, sparse matrix inversion, and inverting generic group homomorphisms, achieving at least a constant-factor improvement in quantum operations for each. Unfortunately, it is difficult to uncompute or invert this technique because of the measurement, and thus we know of no useful algorithm which benefits from superposition masking.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-11T08:32:44Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel Jaques</name>
+    </author>
+    <author>
+      <name>Craig Gidney</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0204327v1</id>
+    <title>On Markovian Cocycle Perturbations in Classical and Quantum Probability</title>
+    <updated>2002-04-27T13:14:39Z</updated>
+    <link href="https://arxiv.org/abs/math/0204327v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0204327v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We introduce Markovian cocycle perturbations of the groups of transformations associated with the classical and quantum stochastic processes with stationary increments, which are characterized by a localization of the perturbation to the algebra of events of the past. It is namely the definition one needs because the Markovian perturbations of the Kolmogorov flows associated with the classical and quantum noises result in the perturbed group of transformations which can be decomposed in the sum of a part associated with deterministic stochastic processes lying in the past and a part associated with the noise isomorphic to the initial one. This decomposition allows to obtain some analog of the Wold decomposition for classical stationary processes excluding a nondeterministic part of the process in the case of the stationary quantum stochastic processes on the von Neumann factors which are the Markovian perturbations of the quantum noises. For the classical stochastic process with noncorrelated increaments it is constructed the model of Markovian perturbations describing all Markovian cocycles up to a unitary equivalence of the perturbations. Using this model we construct Markovian cocyclies transformating the Gaussian state $ρ$ to the Gaussian states equivalent to $ρ$.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-04-27T13:14:39Z</published>
+    <arxiv:comment>27 pages</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>G. G. Amosov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0007036v1</id>
+    <title>Quantum versus Classical Learnability</title>
+    <updated>2000-07-12T15:15:34Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0007036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0007036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider quantum versions of two well-studied classical learning models: Angluin's model of exact learning from membership queries and Valiant's Probably Approximately Correct (PAC) model of learning from random examples. We give positive and negative results for quantum versus classical learnability. For each of the two learning models described above, we show that any concept class is information-theoretically learnable from polynomially many quantum examples if and only if it is information-theoretically learnable from polynomially many classical examples. In contrast to this information-theoretic equivalence betwen quantum and classical learnability, though, we observe that a separation does exist between efficient quantum and classical learnability. For both the model of exact learning from membership queries and the PAC model, we show that under a widely held computational hardness assumption for classical computation (the intractability of factoring), there is a concept class which is polynomial-time learnable in the quantum version but not in the classical version of the model.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-07-12T15:15:34Z</published>
+    <arxiv:comment>16 pages, no figures, LaTeX file</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Rocco A. Servedio</name>
+    </author>
+    <author>
+      <name>Steven J. Gortler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1404.7066v1</id>
+    <title>Polynomial symmetries of spherical Lissajous systems</title>
+    <updated>2014-04-28T17:34:50Z</updated>
+    <link href="https://arxiv.org/abs/1404.7066v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1404.7066v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a previous work, both the constants of motion of a classical system and the symmetries of the corresponding quantum version have been computed with the help of factorizations. As their expressions were not polynomial, in this paper the question of finding an equivalent set of polynomial constants of motion and symmetries is addressed. The general algebraic relations as well as the appropriate Hermitian relations will also be found.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-04-28T17:34:50Z</published>
+    <arxiv:comment>15 pages, no figures. Submitted</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>J. A. Calzada</name>
+    </author>
+    <author>
+      <name>Ş. Kuru</name>
+    </author>
+    <author>
+      <name>J. Negro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.19355v2</id>
+    <title>Quantum-Inspired Weight-Constrained Neural Network: Reducing Variable Numbers by 100x Compared to Standard Neural Networks</title>
+    <updated>2026-02-19T07:30:18Z</updated>
+    <link href="https://arxiv.org/abs/2412.19355v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.19355v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Although quantum machine learning has shown great promise, the practical application of quantum computers remains constrained in the noisy intermediate-scale quantum era. To take advantage of quantum machine learning, we investigate the underlying mathematical principles of these quantum models and find that the quantum neural network with amplitude encoding is equivalent to a weight-constrained neural network. Motived by this discovery, we develop a classical weight-constrained neural network. We find that this approach can reduce the number of variables in a classical neural network by a factor of 135 while preserving its accuracy. In addition, we develop a dropout method to enhance the robustness of quantum machine learning models, which are highly susceptible to adversarial attacks. This technique can also be applied to improve the adversarial robustness of the classical weight-constrained neural network, which is essential for industry applications, such as self-driving vehicles. Our work offers a novel approach to reduce the complexity of large classical neural networks, addressing a critical challenge in machine learning.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-26T21:35:12Z</published>
+    <arxiv:comment>13 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Physical Review Research 8, 013142 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Shaozhi Li</name>
+    </author>
+    <author>
+      <name>M Sabbir Salek</name>
+    </author>
+    <author>
+      <name>Mashrur Chowdhury</name>
+    </author>
+    <author>
+      <name>Yao Wang</name>
+    </author>
+    <arxiv:doi>10.1103/wb1b-ntpc</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/wb1b-ntpc" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.36065v1</id>
+    <title>Irene: Equivalence Checking of Hybrid Quantum Programs via Structure-Preserving Symbolic Reduction</title>
+    <updated>2026-09-28T18:20:12Z</updated>
+    <link href="https://arxiv.org/abs/2609.36065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.36065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Equivalence checking is essential for validating compiler transformations of hybrid quantum programs, which combine quantum operations, measurements, and classical control. Measurement-dependent control limits unitary reasoning, while dependencies between classical outcomes and quantum operations can enlarge intermediate symbolic states. We present Irene, an equivalence-checking framework for bounded hybrid quantum programs based on structure-preserving symbolic reduction. The framework progressively simplifies equivalence obligations through three levels of reasoning. At the gate level, algebraic identities simplify unitary regions. At the hybrid path-sum (HPS) level, reduced symbolic execution states are represented as typed graphs, whose isomorphism certifies equivalence. Remaining obligations are handled by density kernels that characterize transformations of input density operators into observable outputs, allowing comparison even when internal measurement histories differ. Residual coefficient differences are encoded as SMT queries. A common set of symbolic reductions supports HPS and density-kernel reasoning by preserving factored Boolean and arithmetic expressions, eliminating reducible dependencies before expanding residual sums. We evaluate Irene against five equivalence checkers on 1,982 program pairs from seven benchmark suites. Irene solves 1,584 pairs (79.92%), compared with 57.52% for MQT QCEC, the baseline with the highest aggregate coverage, with a mean end-to-end time of 3.93 seconds per solved pair. Applied as an equivalence-checking oracle, Irene also identifies 15 previously unknown bugs in quantum compilers, including Qiskit, Cirq, and PennyLane.</summary>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-28T18:20:12Z</published>
+    <arxiv:comment>21 pages, 5 figures, 3 tables, 1 algorithm</arxiv:comment>
+    <arxiv:primary_category term="cs.PL"/>
+    <author>
+      <name>Jingyu Ke</name>
+    </author>
+    <author>
+      <name>Jingyang Li</name>
+    </author>
+    <author>
+      <name>Guoqiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.4382v1</id>
+    <title>Quantum Fourier sampling, Code Equivalence, and the quantum security of the McEliece and Sidelnikov cryptosystems</title>
+    <updated>2011-11-18T14:56:53Z</updated>
+    <link href="https://arxiv.org/abs/1111.4382v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.4382v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Code Equivalence problem is that of determining whether two given linear codes are equivalent to each other up to a permutation of the coordinates. This problem has a direct reduction to a nonabelian hidden subgroup problem (HSP), suggesting a possible quantum algorithm analogous to Shor's algorithms for factoring or discrete log. However, we recently showed that in many cases of interest---including Goppa codes---solving this case of the HSP requires rich, entangled measurements. Thus, solving these cases of Code Equivalence via Fourier sampling appears to be out of reach of current families of quantum algorithms.
+  Code equivalence is directly related to the security of McEliece-type cryptosystems in the case where the private code is known to the adversary. However, for many codes the support splitting algorithm of Sendrier provides a classical attack in this case. We revisit the claims of our previous article in the light of these classical attacks, and discuss the particular case of the Sidelnikov cryptosystem, which is based on Reed-Muller codes.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-18T14:56:53Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Hang Dinh</name>
+    </author>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0902.0143v1</id>
+    <title>On the Ricci flow and emergent quantum mechanics</title>
+    <updated>2009-02-01T17:06:25Z</updated>
+    <link href="https://arxiv.org/abs/0902.0143v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0902.0143v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Ricci flow equation of a conformally flat Riemannian metric on a closed 2-dimensional configuration space is analysed. It turns out to be equivalent to the classical Hamilton-Jacobi equation for a point particle subject to a potential function that is proportional to the Ricci scalar curvature of configuration space. This allows one to obtain Schroedinger quantum mechanics from Perelman's action functional: the quantum-mechanical wavefunction is the exponential of $i$ times the conformal factor of the metric on configuration space. We explore links with the recently discussed emergent quantum mechanics.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-02-01T17:06:25Z</published>
+    <arxiv:comment>To appear in the proceedings of DICE'08 (Castiglioncello, Italy, Sept. 2008), edited by H.-T. Elze</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>J.Phys.Conf.Ser.174:012033,2009</arxiv:journal_ref>
+    <author>
+      <name>J. M. Isidro</name>
+    </author>
+    <author>
+      <name>J. L. G. Santander</name>
+    </author>
+    <author>
+      <name>P. Fernandez de Cordoba</name>
+    </author>
+    <arxiv:doi>10.1088/1742-6596/174/1/012033</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1742-6596/174/1/012033" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19975v3</id>
+    <title>Emulation of quantum correlations by classical dynamics in a spin-1/2 Heisenberg chain</title>
+    <updated>2026-01-14T05:17:43Z</updated>
+    <link href="https://arxiv.org/abs/2503.19975v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19975v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We simulate the dynamical spin structure factor (DSSF) $\mathcal{S}({q},ω)$ of the spin-1/2 Heisenberg antiferromagnetic chain using classical simulations. By employing Landau-Lifshitz Dynamics, we emulate quantum correlations through temperature-dependent corrections, including rescaling of magnetic dipoles and renormalization of exchange interactions. Our results closely match Quantum Monte-Carlo calculations for $k_{\rm B}T/J\!\gtrsim\!1$, extending the applicability of classical dynamics to the challenging case of gapless excitations. At higher temperatures, our simulations comply with general predictions for uncorrelated paramagnetic fluctuations in the infinite temperature limit. Entanglement witnesses derived from the quantum-equivalent DSSF act as sensitive diagnostics for the quantum-to-classical crossover. Their reliability stems from their dependence on spectral features alone, enabling classical dynamics to emulate quantum thresholds without genuine entanglement. This framework also reproduces transverse spin correlations in finite magnetic fields, in agreement with quantum simulations. Together, our results establish quantum-corrected classical dynamics as a scalable and predictive tool for interpreting scattering experiments and exploring quantum correlations in strongly correlated spin systems.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T18:00:18Z</published>
+    <arxiv:comment>7 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. B 112, 214437 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Chaebin Kim</name>
+    </author>
+    <author>
+      <name>Martin Mourigal</name>
+    </author>
+    <arxiv:doi>10.1103/yvvg-cg2f</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/yvvg-cg2f" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/0310110v1</id>
+    <title>Gravitation: Global Formulation and Quantum Effects</title>
+    <updated>2003-10-24T20:00:23Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/0310110v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/0310110v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A nonintegrable phase-factor global approach to gravitation is developed by using the similarity of teleparallel gravity with electromagnetism. The phase shifts of both the COW and the gravitational Aharonov-Bohm effects are obtained. It is then shown, by considering a simple slit experiment, that in the classical limit the global approach yields the same result as the gravitational Lorentz force equation of teleparallel gravity. It represents, therefore, the quantum mechanical version of the classical description provided by the gravitational Lorentz force equation. As teleparallel gravity can be formulated independently of the equivalence principle, it will consequently require no generalization of this principle at the quantum level.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-10-24T20:00:23Z</published>
+    <arxiv:comment>Latex (IOP style), 14 pages, 3 figures. To appear in Classical and Quantum Gravity</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Class.Quant.Grav. 21 (2004) 51-62</arxiv:journal_ref>
+    <author>
+      <name>R. Aldrovandi</name>
+    </author>
+    <author>
+      <name>J. G. Pereira</name>
+    </author>
+    <author>
+      <name>K. H. Vu</name>
+    </author>
+    <arxiv:doi>10.1088/0264-9381/21/1/004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0264-9381/21/1/004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.05262v1</id>
+    <title>Noise Transfer Approach to GKP Quantum Circuits</title>
+    <updated>2024-11-08T01:47:18Z</updated>
+    <link href="https://arxiv.org/abs/2411.05262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.05262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The choice between the Schroedinger and Heisenberg pictures can significantly impact the computational resources needed to solve a problem, even though they are equivalent formulations of quantum mechanics. Here we present a method for analysing Bosonic quantum circuits based on the Heisenberg picture that allows, under certain conditions, a useful factoring of the evolution into signal and noise contributions, in a similar way as can be done with classical communication systems. We provide examples which suggest this approach may be particular useful in analysing quantum computing systems based on the Gottesman-Kitaev-Preskill (GKP) qubits.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-08T01:47:18Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Entropy, 26, 874 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Timothy C Ralph</name>
+    </author>
+    <author>
+      <name>Matthew Winnel</name>
+    </author>
+    <author>
+      <name>S Nibedita Swain</name>
+    </author>
+    <author>
+      <name>Ryan J Marshman</name>
+    </author>
+    <arxiv:doi>10.3390/e26100874</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/e26100874" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-ph/0402256v1</id>
+    <title>High energy pA collisions in the color glass condensate approach I. Gluon production and the Cronin effect</title>
+    <updated>2004-02-24T20:57:46Z</updated>
+    <link href="https://arxiv.org/abs/hep-ph/0402256v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-ph/0402256v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study gluon production in high energy proton-nucleus collisions in the semi-classical framework of the Color Glass Condensate. We develop a general formalism to compute gluon fields in covariant gauge to lowest order in the classical field of the proton and to all orders in the classical field of the nucleus. The use of the covariant gauge makes the diagrammatic interpretation of the solution more transparnt. k_t-factorization holds to this order for gluon production -- Our results for the gluon distribution are equivalent to the prior diagrammatic analysis of Kovchegov and Mueller. We also show that these results are equivalent to the computation of gluon production by Dumitru and McLerran in the Fock-Schwinger gauge. We demonstrate how the Cronin effect arises in this approach, and examine its behavior in the two extreme limits of a) no small-x quantum evolution, and b) fully saturated quantum evolution. In both cases, the formalism reduces to Glauber's formalism of multiple scatterings. We comment on the possible implications of this study for the interpretation of the recent results on Deuteron-Gold collisions at the Relativistic Heavy Ion Collider (RHIC).</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-02-24T20:57:46Z</published>
+    <arxiv:comment>46 pages, 12 postscript figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>Nucl.Phys.A743:13-56,2004</arxiv:journal_ref>
+    <author>
+      <name>J. P. Blaizot</name>
+    </author>
+    <author>
+      <name>F. Gelis</name>
+    </author>
+    <author>
+      <name>R. Venugopalan</name>
+    </author>
+    <arxiv:doi>10.1016/j.nuclphysa.2004.07.005</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nuclphysa.2004.07.005" title="doi"/>
+  </entry>
+</feed>

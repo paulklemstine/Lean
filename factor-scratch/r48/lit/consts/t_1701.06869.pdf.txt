@@ -1,0 +1,1095 @@
+                                             SUPERZETA FUNCTIONS, REGULARIZED PRODUCTS, AND
+                                                THE SELBERG ZETA FUNCTION ON HYPERBOLIC
+arXiv:1701.06869v2 [math.NT] 20 Dec 2018
+
+
+
+
+                                                          MANIFOLDS WITH CUSPS
+
+                                                     JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+                                                    Abstract. Let Λ = {λk } denote a sequence of complex numbers and assume
+                                                    that that the counting function #{λk ∈ Λ | |λk | < T } = O(T n ) for some
+                                                    integer n. From Hadamard’s theorem, we can construct an entire function f
+                                                    of order at most n such that Λ is the divisor f . In this article we prove, under
+                                                    reasonably general conditions, that the superzeta function Zf (s, z) associated
+                                                    to Λ admits a meromorphic continuation. Furthermore, we describe the rela-
+                                                    tion between the regularized product of the sequence z − Λ and the function
+                                                    f as constructed as a Weierstrass product. In the case f admits a Dirichlet
+                                                    series expansion in some right half-plane, we derive the meromorphic continu-
+                                                    ation in s of Zf (s, z) as an integral transform of f ′ /f . We apply these results
+                                                    to obtain superzeta product evaluations of Selberg zeta function associated to
+                                                    finite volume hyperbolic manifolds with cusps.
+
+
+
+
+                                                                                 1. Introduction
+                                           1.1. Background discussion. The zeta-regularized product approach to define
+                                           the product of an infinite sequence of complex numbers is, at this point, a well-
+                                           accepted mathematical concept. Let Λ = {λk } denote a sequence of complex num-
+                                           bers and assume that that the counting function #{λk ∈ Λ | |λk | < T } = O(T n )
+                                           for some integer n. For any complex number s with Re(s) > n, the function
+                                                                                    X
+                                                                         ζΛ (s) =         λk−s
+                                                                                          λk ∈Λ,λk 6=0
+
+                                           is convergent. Under additional conditions, ζΛ (s) admits a meromorphic continua-
+                                           tion to a region which includes s = 0 and is holomorphic at s = 0. In such a case,
+                                           one defines the zeta-regularized product of Λ, which is denoted by det∗ (Λ), to be
+                                           det∗ (Λ) = exp(−ζΛ′ (0)) where the prime denotes a derivative with respect to the
+                                           variable s. The use of the term determinant stems from example when Λ is a finite
+                                           sequence of non-zero numbers associated to a finite dimensional linear operator T
+                                           in which case exp(−ζΛ′ (0)) is, indeed, the determinant of T . In general, the use of
+                                           the asterisk signifies that one considers only the non-zero elements of Λ.
+                                              As stated, the zeta-regularized product of Λ requires that Λ satisfies additional
+                                           conditions which are listed as general axioms
+                                                                                     X in [11]. One of the conditions is that
+                                           the associated theta function θΛ (t) =         e−λk t is defined for real and positive
+                                                                                           λk ∈Λ
+
+                                               2010 Mathematics Subject Classification. Primary 11M36.
+                                               First-named author: The views expressed in this article are the author’s own and not those
+                                           of the U.S. Merchant Marine Academy, the Maritime Administration, the Department of Trans-
+                                           portation, or the United States government.
+                                               Second-named author’s research is supported by NSF and PSC-CUNY grants.
+                                                                                            1
+2          JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+values of t and admits an asymptotic expansion as t approaches zero. This condition
+allows one to compute ζΛ (s) as the Mellin transform of θΛ (t). If Λ is the sequence
+of eigenvalues of some Laplacian operator ∆ acting of a Hilbert space associated
+to compact Riemannian manifolds, then one views det∗ (Λ) as the determinant of
+∆ and one writes det∗ ∆ = det∗ (Λ).
+   In [23] the authors consider, among other ideas, the zeta-regularized product of
+the sequence of eigenvalues associated to the Laplacians acting on smooth sections
+of flat line bundles over genus one curves, when equipped with a unit volume flat
+metric, and higher genus Riemann surfaces, when equipped with hyperbolic metrics
+of constant negative curvature. In the genus one case, the evaluation of the deter-
+minant of the Laplacian amounts to Kronecker’s second limit formula, resulting in
+the evaluation of determinant of the Laplacian in terms of Riemann’s theta func-
+tion. For higher genus surfaces, the determinant of the Laplacian is expressed in
+terms of Selberg’s zeta function. Far-reaching applications of determinants of the
+Laplacian, and various sums known as analytic torsion, provide the underpinnings
+of the analytic aspect of Arakelov theory.
+
+1.2. Our main results. If we continue to consider the setting of Laplacians on
+finite volume Riemann surfaces, we note that the zeta-regularized approach to
+defining a determinant of the Laplacian does not extend to the setting when the
+surface admits cusps. Articles exist where the authors propose means to define
+determinants of the Laplacian in the non-compact setting by regularizing the trace
+of the heat kernel in some sense; see, for example, [12], [13], [14] and [21]. The
+purpose of the present article is to provide another approach to the problem. The
+point of view we consider can be explained through the following example. Let M
+denote a finite volume hyperbolic Riemann surface, and let ∆ denote the associated
+Laplacian which acts on the space of smooth functions on M . If M is compact,
+the spectrum of ∆ consists of discrete eigenvalues. If M is not compact, then the
+corresponding spectrum has discrete eigenvalues, whose nature is the subject of the
+Phillips-Sarnak philosophy [22], as well as a continuous spectrum with associated
+measure dµ which is absolutely continuous with respect to Lebesgue measure on R.
+Furthermore, one can write dµ(r) = φ′ /φ(1/2 + ir)dr where dr denotes Lebesgue
+measure and φ(s) is a meromorphic function of s ∈ C but whose restriction to the
+line Re(s) = 1/2 appears in the evaluation of the spectral measure. The set Λ to
+be constructed consists of the poles of the function φ(s) for all s ∈ C together with
+additional points in C associated to the L2 spectrum, appropriately computed in
+the parameter r.
+   Once the set Λ has been determined, then the regularized product we define
+follows the superzeta function construction which was systematically developed by
+Voros; see [24], [25]Xand [26]. In vague terms, which will be clarified below, one
+defines Zf (s, z) =     (z − λk )−s for s ∈ C with Re(s) sufficiently large and z ∈ C
+                  λk ∈Λ
+suitably restricted. The superzeta regularized product of z − Λ is obtained by
+proving the meromorphic continuation in s and employing a special value at s = 0.
+   The purpose of this paper is to establish general circumstances under which
+the proposed construction is valid. In section 2 we prove that for a general entire
+function f of finite order, one can define the superzeta regularized product of its
+zeros. Furthermore, we establish a precise relation between the Hadamard product
+representation of f and exp(−Zf′ (0, z)) where the prime denotes a derivative in s.
+                              SUPERZETA FUNCTIONS                                   3
+
+
+In section 3 we present an example of the results from section 2 taking f to be the
+Selberg zeta function associated to any co-finite Kleinian group. In section 4 we
+generalize results of section 2, by assuming that f is a finite order meromorphic
+function which admits a general Dirichlet series representation. We then prove,
+in Theorem 4.1, that one has the meromorphic continuation of the corresponding
+superzeta function. Section 5 yields an example of the setting of section 4 obtained
+by considering the Selberg zeta function associated to any finite volume hyperbolic
+manifold of arbitrary dimension.
+   To summarize, the main results of this article combine to prove the analytic
+continuation of the superzeta regularized product for any meromorphic function
+which admits a general Dirichlet series representation. The result is more general
+than the so-called “ladder theorem” from [10] which requires a functional equation.
+   Finally, let us note that circumstances may occur when a sequence Λ may arise
+from an operator. In [5] we took Λ to be the divisor of the Selberg zeta function
+for a finite volume, non-compact hyperbolic Riemann surface. In this case, it was
+discussed in [5] how Λ can be viewed in terms of the Lax-Phillips scattering operator
+in [19], so then we obtain a construction of what could be viewed as the determinant
+of this operator.
+
+                2. Zeta regularization of entire functions
+   Let R− = (−∞, 0] be the non-positive real numbers. Let {yk }k∈N be the sequence
+of zeros of an entire function f of order κ ≥ 1, repeated with their multiplicities.
+Let
+                                              / R− for all yk }.
+                      Xf = {z ∈ C | (z − yk ) ∈
+For z ∈ Xf , and s ∈ C (where convergent) consider the series
+                                           ∞
+                                           X
+(2.1)                        Zf (s, z) =         (z − yk )−s ,
+                                           k=1
+where the complex exponent is defined using the principal branch of the logarithm
+with arg z ∈ (−π, π) in the cut plane C \ R− .
+   Since f is of order κ, Zf (s, z) converges absolutely for Re(s) > κ. The series
+Zf (s, z) is called the zeta function associated to the zeros of f , or simply the
+superzeta function of f.
+   If Zf (s, z) has a meromorphic continuation which is regular at s = 0, we define,
+for z ∈ Xf the zeta regularized product associated to f as
+                                                         
+                                          d
+                         Df (z) = exp −      Zf (s, z)|s=0 .
+                                          ds
+   Let m = ⌊κ⌋, where ⌊κ⌋ denotes the largest integer less than or equal to κ.
+Hadamard’s product formula allows us to write
+                                    ∞ 
+                                    Y                                
+                                            z         z           zm
+(2.2)    f (z) = ∆f (z) = eg(z) z r     1−      exp      + ... +          ,
+                                           yk         yk         myk m
+                                   k=1
+
+where g(z) is a polynomial of degree m or less, r ≥ 0 is the order of the eventual
+zero of f at z = 0, and the other zeros yk are listed with multiplicity. A simple
+calculation shows that when z ∈ Xf ,
+                                       (−1)m             (m+1)
+(2.3)                Zf (m + 1, z) =         (log ∆f (z))      .
+                                         m!
+4           JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+  The following proposition is due to Voros ([24], [26], [27]). We also give a different
+proof.
+Proposition 1. Let f be an entire function of order κ ≥ 1, and for k ∈ N, let yk be
+the sequence of zeros of f. Let ∆f (z) denote the Hadamard product representation
+of f. Assume that for n > m = ⌊κ⌋ we have the following asymptotic expansion:
+                             m
+                             X                              m
+                                                            X                     n−1
+                                                                                  X
+(2.4)       log ∆f (z) =           aj z j (log z − Hj ) +
+                                   e                                   bj z j +         ak z µk + hn (z),
+                             j=0                            j=0                   k=1
+                         Pj
+where H0 = 0, Hj = l=1 (1/l), for j ≥ 1, 1 > µ1 > ... > µn → −∞, and hn (z) is
+a sequence of holomorphic functions in the sector |arg z| < θ < π, (θ > 0) such
+      (j)
+that hn (z) = O(|z|µn −j ), as |z| → ∞ in the above sector, for all integers j ≥ 0.
+   Then, for all z ∈ Xf , the superzeta function Zf (s, z) has a meromorphic con-
+tinuation to the half-plane Re(s) < κ which is regular at s = 0. Furthermore, the
+zeta regularized product Df (z) associated to Zf (s, z) is related to ∆f (z) through
+the formula
+                                                  Pm          j
+(2.5)                              Df (z) = e−(    j=0 bj z       )
+                                                                      ∆f (z)
+which also provides analytic continuation of Df (z) from Xf to the whole complex
+z−plane.
+Proof. For any z ∈ Xf , the series
+                                                  ∞
+                                                  X
+(2.6)                Zf (m + 1, z + y) =                (z + y − yk )−(m+1)
+                                                  k=1
+
+converges absolutely and uniformly for y ∈ (0, ∞). Furthermore, application of [8,
+Formula 3.194.3], with µ = m + 1 − s, ν = m + 1 and β = (z − yk )−1 yields, for all
+yk ,
+              Z∞
+                     y m−s dy        1
+                                  =    (z − yk )−s Γ(m + 1 − s)Γ(s).
+                 (z + y − yk )m+1   m!
+               0
+Absolute and uniform convergence of the series (2.6) for Re(s) > κ implies that
+                                     Z ∞
+                           m!
+(2.7)    Zf (s, z) =                     Zf (m + 1, z + y)y m−s dy
+                     Γ(m + 1 − s)Γ(s) 0
+                                     Z ∞
+                         (−1)m
+                   =                     (log ∆f (z + y))(m+1) y m−s dy,
+                     Γ(m + 1 − s)Γ(s) 0
+for κ < Re(s) < m + 1.
+   Next, we use (2.7) together with (2.4) in order to get the meromorphic con-
+tinuation of Zf (s, z) to the half plane Re(s) < m + 1. We start with (2.3) and
+differentiate Equation (2.4) (m + 1) times to get
+                             m
+                             X                                            n−1
+                                                                          X
+                 (m+1)         (−1)m−j j!(m − j)!e
+                                                 aj                             ak µk (µk − 1) · ... · (µk − m)
+(log ∆f (z + y))         =                                            +
+                             j=0
+                                      (z + y)(m+1−j)                                    (z + y)m+1−µk
+                                                                          k=1
+
+                         + h(m+1)
+                            n     (z + y),
+for any n > m.
+                                       SUPERZETA FUNCTIONS                                               5
+
+
+  Since µk ց −∞, for an arbitrary µ < 0 there exists k0 such that µk ≤ µ for all
+k ≥ k0 , hence we may write
+                                       
+                                        X m
+                                             (−1)m−j j!(m − j)!e aj
+   (log ∆f (z + y))(m+1) y m+1 = y m+1                   m+1−j
+                                         j=0
+                                                 (z + y)
+                                 n−1
+                                                                   !
+                                 X ak µk (µk − 1) · ... · (µk − m)
+                               +                                     + gµ (z + y),
+                                            (z + y)m+1−µk
+                                             k=1
+
+                                   (m+1)
+where gµ (z + y) = y m+1 hk0               (z + y).
+  Note that
+
+(2.8)   gµ (z + y) = O(y µ )          as y → ∞,       and gµ (z + y) = O(y m+1 ) as y ց 0.
+
+Application of [8, Formula 3.194.3] yields
+
+(2.9)
+                           Z ∞                                             m
+                                                                           X
+      (−1)m                                           (m+1)                                   Γ(s − j) j−s
+                                  (log ∆f (z + y))            y m−s dy =         (−1)j j!e
+                                                                                         aj           z
+  Γ(m + 1 − s)Γ(s)           0                                             j=0
+                                                                                                Γ(s)
+              0 −1
+             kX                                                            Z ∞
+                           Γ(s − µk ) µk −s       (−1)m
+         −           ak               z     +                                     gµ (z + y)y −s−1 dy.
+                          Γ(s)Γ(−µk )         Γ(m + 1 − s)Γ(s)              0
+             k=1
+
+The integral on the right hand side of (2.9) is the Mellin transform of the func-
+tion gµ . By (2.8) this integral represents a holomorphic function in s for all s in
+the half strip µ < Re(s) < m + 1. The other terms on the right hand side of
+(2.9) are meromorphic in s, hence, by R(2.7), the right-hand side of (2.9) provides
+                                            ∞
+meromorphic continuation of integral 0 Zf (m + 1, z + y)y m−s dy from the strip
+κ < Re(s) < m + 1 to the strip µ < Re(s) < m + 1. Since µ < 0 was chosen
+arbitrarily, we can let µ → −∞ and obtain the meromorphic continuation of this
+integral to the half plane Re(s) < m + 1.
+   Formula (2.9), together with (2.7), now yields the following representation of
+Zf (s, z), for an arbitrary, fixed z ∈ Xf , valid in the half plane Re(s) < m + 1:
+
+                          m
+                          X                                    k −1
+                                             Γ(s − j) j−s X  0
+                                                                    Γ(s − µk ) µk −s
+(2.10) Zf (s, z) =              (−1)j j!e
+                                        aj           z   −      ak             z
+                          j=0
+                                               Γ(s)                Γ(s)Γ(−µk )
+                                                            k=1
+                                                                 Z ∞
+                                                     (−1)m             (m+1)
+                                              +                       hk0    (z + y)y m−s dy.
+                                                Γ(m + 1 − s)Γ(s) 0
+                                         (m+1)
+From the decay properties of hk0     (z + y), it follows that Zf (s, z) is holomorphic
+                             1
+at s = 0. Furthermore since Γ(s)  has a zero at s = 0, the derivative of the last term
+in (2.10) is equal to
+                       Z ∞                                  Z
+   d 1             (−1)m         (m+1)         m       (−1)m ∞ (m+1)
+                              hk0      (z + y)y dy =                hk0     (z + y)y m dy
+  ds Γ(s) s=0 Γ(m + 1) 0                                  m!    0
+                                                     = −hk0 (z),
+6             JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+where the last equality is obtained from integration by parts m times, and using
+the decay of hk0 (z + y) and its derivatives as y → +∞, for µk0 < 0. Moreover, since
+                   d Γ(s − µk )                 d 1
+                                    = Γ(−µk ) ·             = Γ(−µk ),
+                   ds Γ(s)      s=0             ds Γ(s) s=0
+elementary computations yield that
+                                                         !
+                           0 −1
+                          kX                                            0 −1
+                                                                       kX
+                     d                Γ(s − µk ) µk −s
+                                  ak             z                 =           ak z µk .
+                     ds              Γ(s)Γ(−µk )
+                          k=1                                s=0         k=1
+
+This shows that
+(2.11)                                                
+                          X m                                                        0 −1
+                                                                                    kX
+  d                   d                  Γ(s − j) j−s 
+−    Zf (s, z)     =−          (−1)j j!e
+                                       aj         z                             +           ak z µk + hk0 (z),
+  ds           s=0    ds   j=0
+                                            Γ(s)
+                                                                                    k=1
+                                                                          s=0
+
+for z in the sector |arg z| < θ < π, (θ > 0).
+   Now, for j ∈ {1, ..., m} one has
+                                             j
+                                               Y
+       d Γ(s − j) j−s                                            d Γ(s − j)
+                    z           = (− log z)z j   (0 − k)−1 + z j              .
+      ds     Γ(s)           s=0                                  ds  Γ(s) s=0
+                                                  k=1
+
+A straightforward computation shows that
+                                      j                                   j
+         d Γ(s − j)    d Y                                    (−1)j X 1        (−1)j
+                     =     (s − k)−1                     =              = Hj ·       .
+         ds Γ(s) s=0   ds                                       j!    k          j!
+                                     k=1          s=0                    k=1
+
+Therefore,
+                                           
+              d                Γ(s − j) j−s
+                    (−1)j j!e
+                            aj         z           aj (− log z)z j + e
+                                                  =e                 a j z j Hj ,
+              ds                 Γ(s)         s=0
+
+for j ∈ {1, ..., m} and hence
+                                               
+                    m                                              m
+               d X              Γ(s − j)                          X
+          −           (−1)j j!e
+                              aj          z j−s              =          aj z j (log z − Hj ).
+                                                                         e
+              ds j=0               Γ(s)                            j=0
+                                                        s=0
+
+     Now, (2.5) follows from equation (2.11) and uniqueness of analytic continuation.
+                                                                                   
+
+    3. Superzeta functions constructed from confinite Kleinian groups
+   Let Γ be a cofinite Kleinian group. Suppose T ∈ Γ is    loxodromic. Then T
+                                                           a(T )  0
+is conjugate in PSL(2, C) to a unique element of the form    0 a(T )−1
+                                                                        such that
+a(T ) ∈ C has |a(T )| > 1. Let N (T ) = |a(T )|2 , and let C(T ) denote the centralizer of
+T in Γ. There exists a (primitive) loxodromic element T0 , and a finite cyclic elliptic
+subgroup E(T ) of order m(T ), generated by an element ET such that C(T ) =
+hT0 i × E(T ), where hT0 i = { T0n | n ∈ Z }.
+ The elliptic element ET is conjugate in PSL(2, C) to an element of the form
+    ζ(T0 ) 0
+      0 ζ(T0 )−1
+                    where here ζ(T0 ) is a primitive 2m(T )-th root of unity.
+                                   SUPERZETA FUNCTIONS                                7
+
+
+Definition 2. For Re(s) > 1 the Selberg zeta-function Z(s) is defined by
+                  Y        Y                                         
+          Z(s) =                   1 − a(T0 )−2k a(T0 )−2l N (T0 )−s−1 .
+                     {T0 }∈R     l,k≥0
+                               c(T,l,k)=1
+
+Here the product with respect to T0 extends over a maximal reduced system R of
+Γ-conjugacy classes of primitive loxodromic elements of Γ. The system R is called
+reduced if no two of its elements have representatives with the same centralizer1.
+The function c(T, l, k) is defined by c(T, l, k) = ζ(T0 )2l ζ(T0 )−2k .
+   Let ζ ∈ P1 be cusp of Γ, Γζ = { γ ∈ Γ | γζ = ζ }, and let Γ′ζ be the maximal
+torsion-free parabolic subgroup of Γζ . The possible values for the index of [Γζ : Γ′ζ ]
+are 1,2,3,4, and 6.
+Proposition 3 ([3]). Let Γ be cofinite with one class of cusp at ∞. If [Γ∞ : Γ′∞ ] = 1
+or [Γ∞ : Γ′∞ ] = 2, then Z(s) is a meromorphic function. Furthermore, the zeros of
+the Selberg zeta-function are:
+    (1) zeros at the points ±sj on the line Re(s) = 0 and on the interval [−1, 1].
+        Each point sj is related to an eigenvalue λj of the discrete spectrum of (the
+        self-adjoint extension) of Laplacian − ∆ by 1 − s2j = λj . The multiplicity
+        of each sj > 0, m(sj ), is equal to the multiplicity of the corresponding
+        eigenvalue m(λj ). If −sj < 0 happens to also be a zero of φ(s) of multiplicity
+        q(−sj ) then m(−sj ) = m(λj ) − q(−sj ). Here φ(s) is determinant of the
+        automorphic scattering matrix (in this case, it is a scalar since we assume
+        the number of cusps is one).
+    (2) zeros at the points ρj , that are poles of φ(s), which lie in the half-plane
+        Re(s) < 0. The multiplicity of each ρj is equal its multiplicity, as a pole, of
+        φ(s).
+    (3) if [Γ∞ : Γ′∞ ] = 1 then zeros at the points s = Z<0 with multiplicity 1; at the
+        point s = 0 it could be a pole or a zero, with multiplicity 12 (φ(0)−1)+2m(1),
+        where m(1) denotes the multiplicity of the possible eigenvalue λ = 1.
+    (4) if [Γ∞ : Γ′∞ ] = 2 then zeros at the points s = −1, −3, −5, . . . , with multi-
+        plicity 1; at the point s = 0 it could be a pole or a zero with multiplicity
+        1
+        2 (φ(0) − 1) + 2m(1).
+
+   Let ( c∗n ∗d ) ∈ R denote the representatives of Γ′∞ \ Γ / Γ′∞ . For Re(s) > 1, the
+scattering matrix φ(s) can be written as a Dirichlet series
+                               π     m(c0 )                 X
+                    φ(s) =        ′       s
+                                            |c0 |−2−2s (1 +   qn−2−2s ),
+                           [Γ∞ : Γ∞ ] |P|
+                                                         n≥1
+
+where qn = |cn /c0 | > 1, |P| is the co-area of the lattice associated to Γ∞ , c0 is the
+minimal (non-zero) modulus lower left entry for Γ, and m(c0 ) counts the number
+of times c0 is present as a representative in R. See [2, p. 111 and p.234 Eq. 1.10])
+for more details.
+
+3.1. The case [Γ∞ : Γ′∞ ] = 1. When [Γ∞ : Γ′∞ ] = 1, we define Z1+ (s) = Z(s)/Γ(s),
+and let Z1+ (s, z) be its superzeta function. From the asymptotic version of Stirling’s
+
+  1See [2] section 5.4 for more details
+8           JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+formula and from the product expansion of Z(s), it follows that as Re(s) → +∞,
+we have that
+                            1                              1
+               log Z1+ (s) ∼ (log s − 0) − 1s (log s − 1) − log 2π.
+                            2                              2
+Hence applying Proposition 1 to the finite-order entire function
+                                                              √     Z1+ (s), we obtain
+                                           +
+the regularized product of the zeros of Z1 (s) as DZ + (s) = 2πZ1+ (s).
+                                                       1
+   Next let Z1− (s) = φ(s)Z1+ (s). Hence it follows that as Re(s) → +∞,
+                                                                   
+             1                              1               πm(c0 )
+log Z1− (s) ∼ (log s − 0)−1s (log s − 1)− log 2π+log                  −s log(|c0 |2 |P|).
+             2                              2                |c0 |2
+Once again, applying Proposition 1 we obtain that
+                                            |c0 |2s |P|s |c0 |2 √
+                          DZ − (s) =                             2πZ1− (s).
+                               1                 πm(c0 )
+Recalling that Z1− (s) = φ(s)Z1+ (s) we obtain a formula for φ(s) as a quotient of
+regularized determinants,
+                                             DZ − (s)    πm(c0 )
+                                   φ(s) =       1
+
+                                             DZ + (s) |c0 |2s+2 |P|s
+                                                1
+
+from which one can obtain a formula for the central value of φ(s); see [6].
+
+3.2. The case [Γ∞ : Γ′∞ ] = 2. When [Γ∞ : Γ′∞ ] = 2, (this is the case e.g. for the
+Picard group) define
+                                          sZ(s)
+                               Z2+ (s) =       ,
+                                         Γ s−1
+                                             2
+and let Z2+ (s, z) be its superzeta function.
+  The asymptotic expansion of log Γ( s−1  2 ) can be computed as
+              s−1      1         s 1                    1
+          log Γ(   ) ∼ s log s − − s log 2 − log s + log 2π + log 2.
+                2      2         2 2                    2
+Hence from the product expansion of Z(s), it follows that as Re(s) → +∞,
+                                1         s 1           1
+         log Z2+ (s) ∼ 2 log s − s log s + + s log 2 − log 2π − log 2
+                                2         2 2           2
+and can be rewritten in the form required by Proposition 1
+                                     1               log 2    1
+         log Z2+ (s) ∼ 2(log s − 0) − s(log s − 1) +       s − log 2π − log 2.
+                                     2                 2      2
+Hence
+                                                √ ( 3−s ) +
+                                   DZ + (s) =    π 2 2 Z2 (s).
+                                      2
+
+    If we define Z2− (s) = φ(s)Z2+ (s) then we obtain
+                                      |c0 |2s |P|s |c0 |2 √ ( 3−s
+                        DZ − (s) =                         π 2 2 ) Z2− (s).
+                           2               πm(c0 )
+    Finally we obtain
+                                            DZ − (s)    πm(c0 )
+                               φ(s) =           2
+                                                                    .
+                                            DZ + (s) |c0 |2s+2 |P|s
+                                                2
+                              SUPERZETA FUNCTIONS                                    9
+
+
+   4. Zeta regularization of zeta-type functions through integral
+                             representation
+   In this section we assume that f is a meromorphic function of finite order κ such
+that log f possesses a representation as a generalized Dirichlet series
+                                             X∞
+                                                cn
+(4.1)                            log f (z) =      z
+                                                q
+                                             n=1 n
+converging absolutely and uniformly in any half plane Re(s) ≥ σ + ǫ, for any ǫ > 0.
+Here {qn } denotes an increasing sequence of real numbers with q1 > 1 and cn are
+complex numbers. For such a function f we say it is a zeta-type function.
+  We denote by Nf the set of zeros of f and by Pf the set of poles of f and define
+                                       / R− for all zk ∈ Nf ∪ Pf }.
+               Xf = {z ∈ C | (z − zk ) ∈
+For z ∈ Xf , and s ∈ C with Re(s) > κ consider the function
+                  X                     X
+(4.2) Zf (s, z) =     ord(ρ)(z − ρ)−s −   ord(ρ)(z − ρ)−s = ZfN (s, z)− ZfP(s, z),
+                 ρ∈Nf                   ρ∈Pf
+
+where ord(ρ) denotes the order of a zero or pole. We call Zf (s, z) the superzeta
+function associated to the meromorphic function f . Note that both series in (4.2)
+are absolutely convergent for Re(s) > κ.
+   Denote by WfN and WfP Weierstrass products of order m = ⌊κ⌋ associated to set
+of zeros and set of poles of f , respectively. Then, a straightforward computation
+shows that for z ∈ Xf
+                         (−1)m                                           
+         Zf (m + 1, z) =           (log WfN (z))(m+1) − (log WfP (z))(m+1) ,
+                           m!
+and, moreover
+             (log f (z))(m+1) = (log WfN (z))(m+1) − (log WfP (z))(m+1) .
+  We have the following theorem.
+Theorem 4. Let f be a meromorphic function of zeta-type, of finite order κ. Fix
+z ∈ Xf . The superzeta function Zf (s, z) defined by (4.2) has a holomorphic con-
+tinuation to all s ∈ C, through the equation
+                                       Z             
+                                 sin πs ∞ f ′
+(4.3)                Zf (s, z) =               (z + y) y −s dy.
+                                   π    0    f
+Proof. For z ∈ Xf and κ < Re(s) < m + 1, we apply equation (2.3) to ZfN (s, z)
+and ZfP (s, z) and proceed analogously as in the proof of (2.7) to get
+                        Zf (s, z) = ZfN (s, z) − ZfP (s, z)
+                   Z  ∞                                                
+       (−1)m
+=                        (log WfN (z + y))(m+1) − (log WfP (z + y))(m+1) y m−s dy
+   Γ(m + 1 − s)Γ(s) 0
+                                  Z ∞
+                     (−1)m                              (m+1) m−s
+(4.4)        =                         (log f (z + y))       y    dy.
+                Γ(m + 1 − s)Γ(s) 0
+   For a fixed z ∈ Xf , generalized Dirichlet series representation (4.1) yields the
+asymptotic behavior
+                             
+                      (l)       1
+       (log F (z + y)) = O          , as y → ∞, for all positive integers n
+                               yn
+10          JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+and
+                                            (l)
+                         (log F (z + y))          = O(1), as y ց 0
+for any 1 ≤ l ≤ m. Therefore, for m − 1 < Re(s) < m we may integrate by parts in
+(4.4) and obtain
+                                            Z ∞                            
+                             (−1)m                                      (m)
+(4.5)     Zf (s, z) =                            y m−s d (log f (z + y))      =
+                       Γ(m − s)(m − s)Γ(s) 0
+                                Z ∞
+                      (−1)m−1                       (m) m−1−s
+                                     (log f (z + y))    y       dy
+                   Γ(m − s)Γ(s) 0
+Integrating by parts in (4.5) for m − 2 < Re(s) < m − 1 (in case when m ≥ 2) we
+obtain
+                                       Z ∞
+                         (−1)m−2
+         Zf (s, z) =                       (log f (z + y))(m−1) y m−2−s dy.
+                     Γ(m − 1 − s)Γ(s) 0
+Proceeding inductively in m, we deduce that
+(4.6)                   Z ∞                                 Z            
+                 1                         ′          sin πs ∞ f ′
+Zf (s, z) =                 (log f (z + y)) y −s dy =              (z + y) y −s dy,
+            Γ(1 − s)Γ(s) 0                              π    0  f
+for 0 < Re(s) < 1.
+   First, we claim that for a fixed z ∈ Xf , the integral
+                                   Z ∞ ′           
+                                         f
+                         I(s, z) =           (z + y) y −s dy
+                                     0    f
+which appears on the right hand side of (4.6) is actually holomorphic function in
+the half-plane Re(s) < 1. To see this, let µ ≤ 0 be arbitrary. Decay properties of
+(log f (z + y))′ , as y → +∞ with n > −µ+ 2, yield that (log f (z + y))′ y −s = O(y −2 ),
+                                                                         ′
+                                                                           (z+y)
+as y → +∞, for all s such that µ < Re(s) ≤ 0. Moreover, the bound ff (z+y)       = O(1),
+                                               ′ −s
+for fixed z ∈ Xf implies that (log f (z + y)) y = O(1), as y → 0, for all s in the
+half plane Re(s) ≤ 0. This shows that for z ∈ Xf the integral I(s, z) is absolutely
+convergent in the strip µ < Re(s) ≤ 0, hence represents a holomorphic function for
+all s in that strip. Since µ ≤ 0 was arbitrarily chosen, we have proved that I(s, z),
+for z ∈ Xf , is holomorphic function in the half plane Re(s) ≤ 0.
+   Next, we claim that I(s, z), for z ∈ Xf , can be meromorphically continued to the
+half-plane Re(s) > 0 with simple poles at the points s = 1, 2, ... and corresponding
+residues
+                                               1
+(4.7)                    Ress=n I(s, z) = −          (log f (z))(n) .
+                                            (n − 1)!
+Since the function sin(πs) has simple zeros at points s = 1, 2, ... this would prove
+that Zf (s, z), for z ∈ Xf is actually an entire function of s and the proof would be
+complete.
+   Let µ > 0 be arbitrary, put n = ⌊µ⌋ to be the integer part of µ and let δ > 0
+(depending upon z ∈ Xf and µ) be such that for y ∈ (0, δ) we have the Taylor
+series expansion
+                                      n
+                                      X (log f (z))(j)
+                 (log f (z + y))′ =                          y j−1 + R1 (z, y),
+                                      j=1
+                                                  (j − 1)!
+                                SUPERZETA FUNCTIONS                                     11
+
+
+where R1 (z, y) = O(y n ), as y → 0. Then, for 0 < Re(s) < 1 we may write
+           X n                         Z δ                    Z ∞ ′        
+                (log f (z))(j) δ j−s                              f
+ I(s, z) =                           +     R1 (z, y)y −s dy +        (z + y) y −s dy.
+           j=1
+                   (j − 1)! j − s       0                      δ  f
+
+The bound on R1 (z, y) and the growth of (log f (z + y))′ as y → ∞ imply that the
+last two integrals are holomorphic functions of s for Re(s) ∈ (0, µ). The first sum
+is meromorphic in s, for Re(s) ∈ (0, µ), with simple poles at s = j, j ∈ {1, ..., n}
+and residues equal to −(log f (z))(j) /(j − 1)!. Since µ > 0 is arbitrary, this proves
+the claim and completes the proof.
+                                                                                    
+Remark 5. We often split a superzeta function Zf (s, z) up as
+                     Zf (s, z) = ZfNT (s, z) + ZfT (s, z) − ZfP (s, z),
+where ZfNT (s, z), ZfT (s, z) and ZfP (s, z) denote the superzeta functions associated
+to the non-trivial zeros, the trivial zeros, and the poles respectively. Often ZfT (s, z)
+and ZfP (s, z) can be expressed in terms of some special functions, namely, the
+Hurwitz zeta functions, as in [5]. Upon applying Theorem 4 one could deduce a
+relation giving a meromorphic continuation of the superzeta function associated to
+the non-trivial zeros of a zeta-type function. Moreover, by differentiating the equa-
+tion (4.3) with respect to the s−variable one may directly compute the regularized
+determinant Df (z) associated to the superzeta function constructed over the set of
+non-trivial zeros.
+    The advantage of the full asymptotic expansion (2.4) is that it yields the coef-
+ficients in the regularized determinant expression, which can not immediately be
+derived from Theorem 4.
+
+  5. Superzeta functions constructed over non-trivial zeros of the
+       Selberg zeta function on hyperbolic manifolds with cusps
+   In this section we show how to apply Theorem 4 to derive the meromorphic
+continuation of superzeta function constructed over the set of non-trivial zeros of
+the Selberg zeta function on a finite volume hyperbolic manifold with cusps. We also
+derive an expression for the regularized determinant associated to this superzeta
+function.
+   We will follow the notation from [7], where the exact divisor of the Selberg zeta
+function is given.
+   Consider real hyperbolic space of dimension d, which can be realized as the
+symmetric space G/K, where G = SO0 (d, 1) and K = SO(d). By Γ, we denote a
+discrete, torsion-free subgroup of G such that vol(Γ\G) is finite, where the volume
+is computed with respect to the standard normalized Haar measure on G. We
+assume that the metric induced from the Haar measure is such that the space G/K
+has constant curvature equal to −1 and that the group Γ satisfies the conditions
+ΓP = Γ ∩ P = Γ ∩ N (P ) for P ∈ PΓ , which ensure that the resulting manifold
+XΓ = Γ\G/K is a non-compact hyperbolic manifold with cusps. Here, PΓ is the
+set of all Γ−conjugacy classes of Γ−cuspidal parabolic subgroups in G and N (P )
+denotes the unipotent radical of P .
+   Let g = so(d, 1) and k ∼  = so(d) be the Lie algebras of G and K respectively
+and let g = k ⊕ p be the decomposition of g induced by the Cartan involution
+12              JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+θ. By a we denote the (one-dimensional) maximal abelian subspace of p and let
+M ∼ = SO(d − 1) be the centralizer of A = exp(a). The positive restricted root
+of (g, a) with the normalized Cartan-Killing norm equal to one is denoted by β,
+whereas n denotes the positive root space of β.
+   Every hyperbolic element γ ∈ Γ has the form mγ aγ ∈ M A+ , where A+ = {a ∈
+A | a = exp(tH), H ∈ a, t > 0}. The length of a closed geodesic Cγ determined
+                                                                             j(γ)
+by γ is denoted by l(Cγ ), whereas j(γ) is a positive integer such that γ = γ0 , for
+a primitive γ0 .
+   In the case when d = 2n or d = 2n + 1 and l 6= n, we denote by σl the irreducible
+                                                           Vl
+fundamental representation of M = SO(d − 1) acting on (Cd−1 ) and by d(σl ) the
+dimension of the representation space of σl . In the case when d = 2n + 1 and
+                                                                            Vnl =2nn,
+we denote by σn± the two irreducible half spin representations acting on       (C )
+and by d(σn ) the dimension of the representation space of σn± .
+   Going further, let χ be a unitary representation of Γ on a Hermitian vector space
+Vχ of a finite dimension dim Vχ . For P ∈ PΓ , let VP ⊆ Vχ denote the maximal
+subspace of Vχ on which χ|ΓP acts trivially, and put dP (χ) = dim VP .
+   For 0 ≤ k ≤ ⌊(d − 1)/2⌋, the Selberg zeta function Zχ (σk , s), for Re(s) > d − 1
+is defined by the absolutely convergent product
+
+                       Y      ∞
+                              Y                                                              
+     Zχ (σk , s) =                   det Id − σk (mγ ) ⊗ χ(γ) ⊗ S k (Ad (mγ aγ )|n )e−sl(Cγ )
+                     γΓ ∈PΓhyp k=0
+
+                                                                                          
+                     X
+     = exp −             Trχ(γ)j(γ)−1 D(γ)−1 Trσk (mγ ) exp(−(s − (d − 1/2))l(Cγ )) .
+                 γ∈Γhyp
+
+Here, PΓhyp denotes the set of Γ−conjugacy classes of primitive hyperbolic elements
+of Γ, n = θn, S k is the k−th symmetric power of Ad (mγ aγ )|n and
+                                             
+                                   d−1
+        D(γ) = D(mγ aγ ) = exp          l(Cγ ) det(Ad(mγ aγ )−1 − Id|n ) .
+                                    2
+Finally, we denote by Cχk (σk , s) the hyperbolic scattering operator (i.e. hyperbolic
+scattering matrix) defined in section 2.6. of [7], see also [15] where the divisor of
+Cχk (σk , s) is derived.
+   With the above notation, we state the divisor of Zχ (σk , s), for 0 ≤ k ≤ ⌊(d −
+1)/2⌋. The Selberg zeta function Zχ (σk , s), defined for Re(s) > d − 1, has a mero-
+morphic continuation to C with non-trivial zeros at
+       • s = (d − 1)/2 ± iλj (k) of order mj (k), where λj (k)2 + ((d − 1)/2 − k)2 is an
+           eigenvalue of the Hodge Laplacian ∆k acting on the L2 −space of k−forms
+           twisted by χ, with multiplicity mj (k)
+       • s = (d − 1)/2 + q of order d(σk )b, where s = q is a pole of det Cχk (σk , s)
+           with Re(q) < 0, of order b.
+   The location of poles and trivial zeros depends on the parity of d. When d =
+2n + 1 is odd, Zχ (σk , s) has no trivial zeros, and has poles at
+                                                           P
+       • s = k of order dc (χ)e(d, k), where dc (χ) =        P ∈PΓ dP (χ) and e(d, k) =
+                  P                 
+                k     k       j
+           (−1)       j=0 (−1) d(σj ) ≥ 0
+                                                           
+       • s = n of order 12 d(σk )Tr n(σk )Id − Cχk (σk , 0) = 12 d(σk )ak
+                                  SUPERZETA FUNCTIONS                                          13
+
+
+      • s = n − qj of order d(σk )bj , where s = qj is a pole of det Cχk (σk , s) with
+        0 < qj < n, of order bj , for finitely many j, say j = 1, ..., K
+      • s = n − l, for l ∈ N \ {n − k} of order dc (χ)d(σk ), when k 6= n and in case
+        k = n, order is 2dc (χ)d(σk ).
+  When d = 2n is even, Zχ (σk , s) has poles at
+      • s = n − 12 − qj of order d(σk )bj , where s = qj is a pole of det Cχk (σk , s) with
+        0 < qj < n, of order bj , for finitely many j
+      • s = n − 12 − l, for l ∈ N of order dc (χ)d(σk )
+and possesses zeros or poles (according to the sign of their orders) at
+      • s = k of order dc (χ)d(d, k)+(−1)k+1 dim Vχ E(XΓ ), where d(d, k) = d(σk )−
+        e(d, k) ≥ 0                           h        l+k−1                     i
+      • s = −l, l ∈ N of order − dim Vχ E(XΓ ) 2n+l−1
+                                                  l+k      k   +   2n+l−1 2n+l−k−2
+                                                                      k        l−1    ,
+        where E(XΓ ) is the Euler characteristic of XΓ .
+   We adopt the convention that in the case when the locations of zeros or poles
+coincide, their orders are added.
+   Obviously, the function Zχ (σk , s), for 0 ≤ k ≤ ⌊(d−1)/2⌋ is a zeta-type function.
+Assume that 0 ≤ k ≤ ⌊(d − 1)/2⌋ is fixed and denote by ZfNT (s, z) the superzeta
+function associated to the set of its non-trivial zeros, i.e. for Re(s) > d − 1 and
+z ∈ C such that z − s ∈ / R− , for all non-trivial (NT) zeros s of Zχ (σk , s) we have
+                 X              mj (k)                        mj (k)
+                                                                                
+    NT
+  Zχ,σk (s, z) =                                   +
+                  j
+                       (z − (d − 1)/2 − iλj (k))s    (z − (d − 1)/2 + iλj (k))s
+                                                             X               d(σk )b
+                                                        +                                  .
+                                                                      (z − (d − 1)/2 − q)s
+                                                            Re(q)<0
+
+   To define the superzeta function associated to the set of trivial zeros and poles
+we need to consider two cases, depending on the parity of d.
+   In case when d is odd, the superzeta function associated to the set of poles (P)
+of Zχ (σk , s) is defined for Re(s) > d − 1 and z ∈ C such that z − s ∈ / R− , for all
+poles s of Zχ (σk , s) by
+
+       P               dc (χ)e(d, k) 1                                
+      Zχ,σ  (s, z) =                + d(σk )Tr n(σk )Id − Cχk (σk , 0) (z − n)−s
+          k
+                         (z − k)s    2
+                       K
+                       X       d(σk )bj
+                  +                         + (1 + δkn )dc (χ)d(σk )ζH (s, z − n + 1)
+                       j=1
+                           (z − (n − qj ))s
+                  − (1 − δkn )dc (χ)d(σk )(z − k)−s .
+                                                     P
+Note that ζH is the Hurwitz zeta function ζH (s, z) = ∞          −s
+                                                       l=0 (z +l) ; and δkn denotes
+the Kronecker delta function.
+   In the case when d = 2n+ 1 is odd, we have the following corollary of Theorem 4.
+Corollary 6. For d = 2n + 1, 0 ≤ k ≤ n and z ∈ C such that z − s ∈        / R− , for any
+                                                              NT
+non-trivial zero s of Zχ (σk , s) the superzeta function Zχ,σk (s, z) associated to the
+set of non-trivial zeros of Zχ (σk , s), initially defined for Re(s) > 2n + 1, possesses
+a meromorphic continuation to the whole complex s-plane, with only one simple
+pole at s = 1 with corresponding residue equal to β(k, n, χ) = (1 + δkn )dc (χ)d(σk ).
+14          JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+Moreover, the zeta regularized product associated to this zeta function is given by
+                                                                YK
+        d NT                                           1
+exp −     Zχ,σk (s, z)       = (z − k)α(k,n,χ) (z − n) 2 d(σk )ak    (z − (n − qj ))d(σk )bj ·
+       ds              s=0                                        j=1
+                                             −β(k,n,χ)
+                                 Γ(z − n + 1)
+(5.1)                        ·       √                    Zχ (σk , z),
+                                      2π
+where α(k, n, χ) = dc (χ)(e(d, k) − (1 − δkn )d(σk )).
+Proof. Remark 5, Theorem 4 together with definition of the superzeta function
+associated to the set of poles of Zχ (σk , s) yield that
+         NT
+        Zχ,σk
+              (s, z) = dc (χ)(e(d, k) − (1 − δkn )d(σk ))(z − k)−s
+                     + d(σk )(ak /2 − (1 + δkn )dc (χ))(z − n)−s
+                         K
+                         X     d(σk )bj
+(5.2)                +                       + (1 + δkn )dc (χ)d(σk )ζH (s, z − n)
+                       j=1
+                           (z −  (n − qj ))s
+                              Z                     
+                       sin πs ∞ Zχ (σk , z + y)′
+                     +                                 y −s dy,
+                         π     0     Zχ (σk , z + y)
+and the above equation is valid for all admissible z, i.e. z ∈ C such that z − s ∈/ R− ,
+for all non-trivial zeros s of Zχ (σk , s).
+   For a fixed, admissible z, all terms on the right-hand side of (5.2), except the
+Hurwitz zeta function are holomorphic in s. Therefore, for a fixed, admissible z,
+                P
+the function Zχ,σ k
+                    (s, z) possesses a meromorphic continuation to the whole complex
+s−plane, with only one pole at s = 1 and corresponding residue (1 + δkn )dc (χ)d(σk )
+stemming from the factor of the Hurwitz zeta function.
+   Differentiating equation (5.2) with respect to the√  s variable, inserting s = 0, and
+                        d
+employing equation ds     ζH (s, z)|s=0 = log Γ(z) − log 2π, we get (5.1).             
+
+  In the case when d = 2n is even, the superzeta function constructed over
+poles/trivial zeros is somewhat more complicated. First, we introduce multiple
+Hurwitz zeta function and multiple gamma functions.
+  For a positive integer m, the multiple Hurwitz zeta function is defined for Re(s) >
+m and z ∈ C \ {0, −1, −2, ...} by the absolutely convergent series
+                                    ∞ 
+                                    X            
+                                        m+l−1
+                        ζm (s, z) =                (z + l)−s ,
+                                            l
+                                      l=0
+
+which possesses a meromorphic continuation to the whole complex s−plane with
+simple poles at s = 1, 2, ..., m (see [1], p. 505). In [1] it is also proved that the
+multiple Hurwitz zeta function is related to Hurwitz zeta function via the formula
+                                        m−1
+                                        X
+                          ζm (s, z) =         pm,j (z)ζH (s − j, z),
+                                        j=0
+
+where pm,j (z) are polynomials in z defined by
+                                      m−1
+                                      X             
+                                1                   l
+                pm,j (z) =               (−1)m+1−j    s(n, l + 1)z l−j
+                             (m − 1)!               j
+                                        l=j
+                                     SUPERZETA FUNCTIONS                                           15
+
+
+and s(n, l) is the Stirling number of the first kind, i.e. the coefficient in the expan-
+sion
+                                                    m
+                                                    X
+                (z)m = z(z + 1) · · · (z + m − 1) =    (−1)m+l s(m, l)z l
+                                                            l=0
+of the Pochhammer symbol (z)m .
+   Since the Hurwitz zeta function ζH (s, z) possesses only one simple pole at s = 1,
+with residue one, it is immediate that residues of ζm (s, z) at s = k ∈ {1, ..., m} are
+                                Ress=k ζm (s, z) = pm,k−1 (z).
+The multiple gamma function Γm is defined by
+                                                      
+                                      d
+                      Γm (z) = exp       ζm (s, z)       .
+                                      ds           s=0
+
+Corollary 7. For d = 2n, 0 ≤ k ≤ n − 1 and z ∈ C such that z − s ∈            / R− , for
+                                                                  NT
+any non-trivial zero s of Zχ (σk , s) the superzeta function Zχ,σk (s, z) associated to
+the set of non-trivial zeros of Zχ (σk , s), initially defined for Re(s) > 2n, possesses
+a meromorphic continuation to the whole complex s-plane, with simple poles at
+sr = r, for r ∈ {1, ..., 2n} with corresponding residues equal to
+              NT
+(5.3) Ress=r Zχ,σk
+                   (z, s) = δ1r dc (χ)d(σk )
+                          Xk              
+                                   j   2n
+       + dim Vχ E(XΓ )        (−1)           (p2n,r−1 (z − j) + p2n,r−1 (z + j + 1)) .
+                          j=0
+                                      k−j
+
+Moreover, the zeta regularized product associated to this superzeta function is given
+by
+(5.4)
+                                                                                     
+                                                            YK
+          d NT                                                        1
+    exp −   Z     (s, z)       = Zχ (σk , z)·(z−k)−γ(k,n,χ)  (z − n − − qj )d(σk )bj 
+          ds χ,σk        s=0                                  j=1
+                                                                      2
+                                                                                       dim VΓ E(XΓ )
+                  −dc (χ)d(σk )        K
+                                         Y
+  Γ(z − n + 23 )                                                                   2n
+                                             (Γ2n (z − j)Γ2n (z + j + 1))(−1) (         )
+                                                                             j
+·     √                             ·                                            k−j
+                                                                                                         ,
+        2π                           j=0
+
+where γ(k, n, χ) = dc (χ)d(d, k) + (−1)k+1 (1 − dim Vχ E(XΓ )).
+Proof. From definition of divisor of Zχ (σk , s), for all z ∈ C such that z − s ∈ / R−
+for all w which belong to the set of non-trivial zeros or poles of Zχ (σk , s) we define
+for Re(s) > 2n (following notation set in Remark 5)
+
+   P              T                      dc (χ)d(d, k) + (−1)k+1 dim VΓ E(XΓ )
+  Zχ,σ  (z, s) − Zχ,σ  (s, z) = −
+      k              k
+                                                         (z − k)s
+                 K
+                 X     d(σk )bj
+             +                         + dc (χ)d(σk )ζH (s, z − n + 3/2)
+            j=1
+                (z − (n − 1/2 − qj ))s
+               X 2n + l − 1l + k − 1 2n + l − 12n + l − k − 2
++dim Vχ E(XΓ )                                +                           (z+l)−s
+                       l+k             k               k              l−1
+                   l∈N
+16              JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+Next, we employ the following transformation formulas for the binomial coefficients:
+         k−m
+         X                                
+                 j      2n        2n + j − 1
+             (−1)                              = 0, for m ∈ {0, ..., k − 1};
+         j=0
+                    k−m−j             j
+
+          k
+          X                                                      
+                      j     2n     2n + m + j − 1   2n + m − 1 m + k − 1
+                (−1)                              =
+          j=0
+                           k−j         m+j            m+k         k
+and
+ min{k,m−1}
+       X                                                                 
+                       j       2n     2n + m − j − 2   2n + m − 1 2n + m − k − 2
+                (−1)                                 =                           ,
+       j=0
+                              k−j       m−j−1              k          m−1
+
+for positive integers m to deduce, by equating coefficients of (z+m)−s , for m−1 ≥ k,
+that
+   X 2n + l − 1l + k − 1 2n + l − 12n + l − k − 2
+                                       +                                   (z + l)−s =
+              l+k             k                k               l−1
+   l∈N
+
+          Xk               
+                       2n
+       =      (−1)j
+                              (ζ2n (s, z − j) + ζ2n (s, z + j + 1)) + (−1)k+1 (z − k)−s .
+          j=0
+                     k −  j
+
+     Therefore, application of Theorem 4 yields the equation
+                       K
+                       X
+      NT                          d(σk )bj
+     Zχ,σ  (s, z) =                               + dc (χ)d(σk )ζH (s, z − n + 3/2)+
+         k
+                       j=1
+                           (z − (n − 1/2 − qj ))s
+                                k
+                                X           
+                                    2n
+          + dim Vχ E(XΓ )            (−1)j
+                                         (ζ2n (s, z − j) + ζ2n (s, z + j + 1)) +
+                       j=0
+                                  k−j
+                                                       Z                     
+  (−1)k+1 (dim Vχ E(XΓ ) − 1) − dc (χ)d(d, k) sin πs ∞ Zχ (σk , z + y)′
++                                            +                                  y −s dy.
+                   (z − k)s                       π     0     Zχ (σk , z + y)
+For admissible values of z, function on the right-hand side of the above equation is
+meromorphic in s with simple poles at s ∈ {1, ..., 2n} and corresponding residues
+at s = r ∈ {1, ..., 2n} given by equation (5.3), which proves the first part.
+   By taking derivatives with respect to the s−variable, inserting s = 0 and using
+the definition of multiple gamma function, we immediately deduce (5.4).               
+                                                                                      
+                                                                    d   NT
+Remark 8. The zeta regularized product Dχ,σk (z) = exp − ds           Zχ,σk
+                                                                            (s, z) s=0
+associated to the Selberg zeta function is evaluated in Corollaries 6 and 7 for ad-
+missible values of z, i.e. z ∈ C such that z − s ∈/ R− , for any non-trivial zero s of
+Zχ (σk , s). The right-hand side of (5.1) and (5.4) provides meromorphic continua-
+tion of Dχ,σk (z) to the cut plane C \ (−∞, n].
+
+                                                 References
+ 1. J. Choi, H. M. Srivastava, The multiple Hurwitz zeta function and the multiple Hurwitz-Euler
+    eta function, Taiwanese J. Math. 15 (2011), 501 - 522.
+ 2. Elstrodt, Jürgen and Grunewald, Fritz and Mennicke, Groups acting on hyperbolic space,
+    Springer Monographs in Mathematics, Springer-Verlag, Berlin, 1998, Harmonic analysis and
+    number theory.
+                                   SUPERZETA FUNCTIONS                                         17
+
+
+ 3. J. S. Friedman, The Selberg trace formula and Selberg zeta-function for cofinite Kleinian
+    groups with finite-dimensional unitary representations. Mathematische Zeitschrift, 250(4)
+    (2005), 939-965.
+ 4. J. S. Friedman, Regularized determinants of the Laplacian for cofinite Kleinian groups with
+    finite-dimensional unitary representations, Comm. Math. Phys. 275 (2007), no. 3, 659–684.
+ 5. J. S. Friedman, J. Jorgenson, L. Smajlović, The determinant of the Lax-Phillips scattering
+    operator, preprint (arxiv.org/abs/1603.07613).
+ 6. J. S. Friedman, J. Jorgenson, L. Smajlović, An evaluation of the central value of the auto-
+    morphic scattering determinant, preprint (arxiv.org/abs/1607.08053).
+ 7. Y. Gon, J. Park, The zeta functions of Ruelle and Selberg for hyperbolic manifolds with cusps,
+    Math. Ann. 346 (2010), 719 - 767.
+ 8. I. S. Gradshteyn abd I. M. Rzyzhik, Table of integrals, series and products, seventh ed.,
+    Elsevier Academic Press, 2007.
+ 9. G. Illies, Regularized products and determinants, Comm. Math. Phys. 220 (2001), 69-94.
+10. J. Jorgenson, S. Lang, On Cramer’s theorem for general Euler products with functional equa-
+    tion, Math. Ann. 297 (1993), 383-416.
+11. J. Jorgenson, S. Lang, Basic analysis of regularized series and products, Lecture Notes in
+    Mathematics 1564, 1-122, Spirnger Verlag, 1993.
+12. J. Jorgenson, R. Lundelius, Convergence theorems for relative spectral functions on hyperbolic
+    Riemann surfaces of finite volume, Duke Math. J. 80 (1995), 785-819.
+13. J. Jorgenson, R. Lundelius, Continuity of relative hyperbolic spectral theory through metric
+    degeneration, Duke Math. J. 84 (1996) 47-81.
+14. J. Jorgenson, R. Lundelius, Convergence of the normalized spectral counting function on
+    degenerating hyperbolic Riemann surfaces of finite volume, J. Funct. Anal. 149 (1997), no. 1,
+    25–57.
+15. D. Kelmer, On distribution of poles of Eisenstein series and the length spectrum of Hyperbolic
+    manifolds, Int. Math. Res. Notices 2015(23) (2015), 12319-12344.
+16. K. Kimoto, M. Wakayama, Remarks on zeta regularized products, Int. Math. Res. Not. 17
+    (2004), 855-875.
+17. N. Kurokawa, M. Wakayama, Zeta regularizations, Acta App. Math. 81 (2004), 147-166.
+18. N. Kurokawa, M. Wakayama, Y. Yamasaki, Milnor-Selberg zeta functions and zeta regular-
+    izations, J. Geom. Phys 64 (2013) no. 1, 120 - 145.
+19. P. Lax, R. Phillips, Scattering theory for automorphic functions, Annals of Mathematics
+    Studies No. 87., Princeton Univ. Press, Princeton, N.J., 1976.
+20. P. Lax, R. Phillips, Scattering theory for automorphic functions, Bull. Amer. Math. Soc.
+    (N.S.) 2 (1980), no. 2, 261–295.
+21. W. Müller, Relative zeta functions, relative determinants and scattering theory, Comm. Math.
+    Phys. 192 (1998), no. 2, 309–347.
+22. R. Phillips, P. Sarnak, Pertubation theory for the laplacian on automorphic functions, J. Am.
+    Math. Soc. 5 (1992), no. 1, 1-32.
+23. D. Ray, I. Singer, Analytic torsion for analytic manifolds, Ann. Math. 98 (1973), 154-177.
+24. A. Voros, Spectral functions, special functions and the Selbeg zeta functions, Commun. Math.
+    Phys. 110 (1987), 439-465.
+25. A. Voros, Zeta functions for the Riemann zeros, Ann. Inst. Fourier (Grenoble) 53 (2003), 665
+    - 699.
+26. A. Voros, More Zeta functions for the Riemann zeros I, In: Frontiers in Number Theory,
+    Physics and Geometry, Springer Berlin (2006), 349-363.
+27. A. Voros, Zeta functions over Zeros of Zeta Functions, Lecture Notes of the Unione Matem-
+    atica Italiana, Spirnger Verlag, 2010.
+18        JOSHUA S. FRIEDMAN, JAY JORGENSON, AND LEJLA SMAJLOVIĆ
+
+
+  Joshua S. Friedman, Department of Mathematics and Science, United States Mer-
+chant Marine Academy, 300 Steamboat Road, Kings Point, NY 11024, U.S.A.
+  E-mail address: friedmanj@usmma.edu, CrownEagle@gmail.com
+
+   Jay Jorgenson, Department of Mathematics, The City College of New York, Con-
+vent Avenue at 138th Street, New York, NY 10031 U.S.A.
+   E-mail address: jjorgenson@mindspring.com
+
+  Lejla Smajlović, Department of Mathematics, University of Sarajevo, Zmaja od
+Bosne 35, 71 000 Sarajevo, Bosnia and Herzegovina
+  E-mail address: lejlas@pmf.unsa.ba
+

@@ -1,0 +1,1712 @@
+Mathematical Cryptology, 1(1): 1–18
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+Aude Le Gluher1,* , Pierre-Jean Spaenlehauer1 , Emmanuel Thomé1
+1 Université de Lorraine, CNRS, Inria, LORIA, F-54000 Nancy, France
+
+Received: | Revised: | Accepted:
+
+Abstract The classical heuristic complexity of the Number Field Sieve (NFS) involves an unknown function,
+usually noted 𝑜(1) and called 𝜉 (𝑁) throughout this paper, which tends to zero as the entry 𝑁 grows. The aim of this
+paper is to find optimal asymptotic choices of the parameters of NFS as 𝑁 grows, in order to minimize its heuristic
+asymptotic computational cost. This amounts to minimizing a function of the parameters of NFS bound together by
+a non-linear constraint. We provide precise asymptotic estimates of the minimizers of this optimization problem,
+which yield refined formulas for the asymptotic complexity of NFS. One of the main outcomes of this analysis
+is that 𝜉 (𝑁) has a very slow rate of convergence: We prove that it is equivalent to 4logloglog 𝑁/(3loglog 𝑁).
+Moreover, 𝜉 (𝑁) has an unpredictable behavior for practical estimates of the complexity. Indeed, we provide an
+asymptotic series expansion of 𝜉 and numerical experiments indicate that this series starts converging only for
+𝑁 > exp(exp(25)), far beyond the practical range of NFS. This raises doubts on the relevance of NFS running time
+estimates that are based on setting 𝜉 = 0 in the asymptotic formula.
+Keywords: Complexity, Asymptotic optimization, Number Field Sieve.
+2010 Mathematics Subject Classification: 68W40 (Analysis of algorithms), 11Y05 (Factorization).
+
+1 INTRODUCTION
+Factoring integers and solving discrete logarithms in finite fields are two fundamental problems in computational
+number theory, which are core routines for a very large range of applications. Perhaps their most prominent and
+critical use is the fact that the security of many currently deployed cryptosystems — e.g. RSA, finite field DiffieHellman, ElGamal — relies directly on their computational difficulty. This explains why the development of
+algorithms for solving these two problems and the analysis of their complexity are central topics in computational
+mathematics.
+To this day, the Number Field Sieve (NFS) is the most efficient method to factor integers and to compute discrete
+logarithms in prime finite fields. It is an active research area, and implementations of NFS have led to several
+record computations which give a good idea of the computational power required to factor RSA moduli up to 2800 ,
+or to compute discrete logarithms in prime fields of the same size [4]. Existing software can also be used to form
+reasonable estimates of the hardness of these problems, up to roughly 1024 bits.
+Another approach to estimate the computational power needed is to use a theoretical cost analysis of NFS. The
+asymptotic complexity of the usual variant of NFS to factor an integer 𝑁, under various heuristic assumptions, is
+known to be
+!
+r
+3 64
+exp
+(log 𝑁) 1/3 (log log 𝑁) 2/3 (1 + 𝜉 (𝑁))
+(1)
+9
+where 𝜉 (𝑁) ∈ 𝑜(1) as 𝑁 grows. This asymptotic formula is obtained by solving an optimization problem, which
+involves a number-theoretic function related to the notion of smoothness:
+Definition 1. Let 𝑥 ≥ 1 and 𝑦 ≥ 1 be two real numbers. An integer in [1, 𝑥] is 𝑦-smooth if all of its prime factors
+are below 𝑦. We let
+Ψ(𝑥, 𝑦) = #{integers in [1, 𝑥] that are 𝑦-smooth}.
+In particular, Ψ(𝑥, 𝑦)/𝑥 is the probability that a uniformly random integer in [1, 𝑥] is 𝑦-smooth. For convenience,
+we also use the notation 𝑝(𝑢, 𝑣) = log (Ψ(𝑒 𝑢 , 𝑒 𝑣 )/𝑒 𝑢 ).
+Unfortunately, the complexity given by Formula (1) is not very satisfactory. First, it relies on several heuristics,
+most notably on the fact that norms of random ideals in a given number field have the same smoothness probability
+as random integers of the same order of magnitude. A second point is that even if we consider that these assumptions
+hold, the complexity given by Formula (1) involves a function 𝜉 which is never spelled out explicitly.
+* Corresponding Author: aude.le-gluher@loria.fr
+
+1
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+This inaccuracy conflicts with the fact that for the last few decades, the widespread development of public-key
+cryptography has created a pressing need to answer the following question: Given some computational power 𝐶,
+what size of RSA modulus 𝑁 should be considered so that the cost of NFS exceeds 𝐶? This is of interest, for
+example, to regulatory bodies, see for example [17, Sec. 7.5], [1, Sec. B.2.2], or [11, Table 3.1]. A common way to
+answer this is to consider the complexity formula, assume that 𝜉 = 0 since we know 𝜉 (𝑁) ∈ 𝑜(1) when 𝑁 grows,
+and use a computational record to set a proportionality ratio. Since the 2000s, the validity of this approach has been
+considered differently. In [15, §2.4.4], the reader is warned that 𝜉 should not be neglected for large extrapolations,
+and omitting it probably yields biased estimations. Later work gradually moved to considering 𝜉 = 0 as a totally
+acceptable simplification assumption, not heeding the warning. We emphasize that this method for computing key
+sizes is the international standard for deployed RSA-based cryptography.
+The goal of this paper is to question the relevance of neglecting 𝜉 and to give insights on what this function
+hides. In particular, assuming the standard heuristics for the complexity of NFS, we show (Thm. 17) that
+𝜉 (𝑁) =
+
+4logloglog 𝑁 −2 log 2 + log 3/6 − 2
++
+(1 + 𝑜(1)).
+3loglog 𝑁
+loglog 𝑁
+
+This asymptotic expansion of 𝜉 can be extended to a bivariate series expansion evaluated at logloglog 𝑁/loglog 𝑁
+and 1/loglog 𝑁. We provide algorithms — together with publicly available implementations in SageMath — with
+which we were able to compute more than a hundred of terms of this asymptotic expansion. This may sound
+like good news for practical formula-based keysize computations, as it seems that this would provide more precise
+estimates. In fact, the contrary happens: We observe experimentally that values of 𝑁 that would be useful for
+cryptography are far too small compared to the radius of convergence at infinity of the series involved in the
+expansion of 𝜉. Said otherwise, this means that the exponent in the classical formula used for estimating practical
+RSA key sizes is the first term of a divergent series. In order to illustrate this phenomenon, let us consider the
+following example functions:
+
+
+
+
+(log 𝑁) 1/3 (loglog 𝑁) 2/3
+1/3
+2/3
+𝑔0 : 𝑁 ↦→ exp (log 𝑁) (loglog 𝑁)
+; 𝑔 : 𝑁 ↦→ exp
+.
+1 + 20/loglog 𝑁
+While it is true that 𝑔 belongs to the class exp((log 𝑁) 1/3 (loglog 𝑁) 2/3 (1 + 𝑜(1))), the radius of convergence
+Í
+of 1/(1 + 𝑥) = 𝑖 (−𝑥) 𝑖 is 1. This implies that if 𝑁 ≤ exp(exp(20)) ≈ 2699945421 , then equalling 𝑜(1) with 0
+means estimating the exponent of the function 𝑔 by evaluating the first term of a divergent series. Numerical
+computations show that 𝑔(22048 ) ≈ 216 , while 𝑔0 (22048 ) ≈ 261 , so estimating 𝑜(1) by 0 in the case 𝑁 = 22048 yields
+completely erroneous results. If one were to compare “projected values” between 𝑁 = 2512 and 𝑁 = 22048 based
+on the simplification 𝑜(1) = 0, the corresponding calculation would yield 𝑔0 (22048 )/𝑔0 (2512 ) ≈ 228 , compared to
+𝑔(22048 )/𝑔(2512 ) ≈ 29 . Carelessly neglecting the 𝑜(1) term can lead to dramatic errors in the assessment of a
+complexity in the class given by Formula (1), and of its growth as 𝑁 varies.
+The asymptotic expansion of 𝜉 that we obtain in the complexity of NFS exhibits a behavior similar to the
+example function 𝑔. This raises questions on the relevance of using the asymptotic formula for estimating practical
+cryptographic key lengths. In particular, we obtain completely different results for the final NFS complexity
+depending on how many terms we consider in our series expansion of 𝜉, see Figure 1. This asks — at the very least
+— for strong justification when one chooses to set 𝜉 = 0 in the complexity formula.
+Beyond NFS, the complexity of several algorithms is linked to the asymptotics of smoothness probabilities.
+This is the case for example of the quadratic sieve and its variants, of class group computations in number fields,
+or of the elliptic curve factoring method. In all of these cases, the methods of this article apply, and yield similar
+conclusions; NFS is just an example.
+
+ORGANIZATION OF THE PAPER
+In Section 2, we briefly describe NFS and we state the optimization problem whose minimum is the complexity.
+Section 3 provides a refined asymptotic expansion of Dickman–De Bruijn function at infinity, which is used to
+estimate the smoothness probabilities in NFS. Then Section 4 is devoted to the series expansion of the function 𝜉.
+Finally, Section 5 reports on experimental results obtained by using the refined asymptotic formulas for the
+complexity.
+
+IMPLEMENTATION
+The computation of the asymptotic expansion of 𝜉 relies on three algorithms described in Section 4.3. Our
+implementation in SageMath of these algorithms is available at the following URL
+https://gitlab.inria.fr/NFS_asymptotic_complexity/simulations.
+
+2
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+At the same location, we also detail some of the unilluminating technical calculations that are omitted for
+brevity in the text.
+
+NOTATIONS AND CONVENTIONS
+Throughout the article, log 𝑥 denotes the natural logarithm to base 𝑒. We use the notation log𝑚 to denote the 𝑚-th
+iterate of the log function, so that log𝑚+1 = log ◦ log𝑚 . The notation 𝑢 = Θ(𝑣) denotes: (𝑢 = 𝑂 (𝑣) and 𝑣 = 𝑂 (𝑢)).
+Throughout the paper, we assume a RAM computation model, where the cost of memory accesses is neglected.
+
+2 BACKGROUND ON NFS
+In a nutshell, NFS defines two irreducible integer polynomials 𝑓0 and 𝑓1 , and searches for integer pairs (𝑢, 𝑣)
+in a search space A such that the integers Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 (𝑥)) and Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 (𝑥)) are smooth with respect to
+chosen smoothness bounds 𝐵0 and 𝐵1 , where Res 𝑥 denotes the resultant with respect to 𝑥. The notations 𝐾𝑖 for
+𝑖 = 0, 1 denote the number fields Q[𝑥]/ 𝑓𝑖 (𝑥). The number of smooth pairs that must be collected must be at least
+(𝜋 𝐾0 (𝐵0 ) + 𝜋 𝐾1 (𝐵1 )), which is the number of prime ideals with norm at most 𝐵0 and 𝐵1 in the rings of integers of
+𝐾0 and 𝐾1 . A linear algebra calculation follows, and its dimension is again (𝜋 𝐾0 (𝐵0 ) + 𝜋 𝐾1 (𝐵1 )). These two steps
+of the algorithm are the most costly.
+In order to analyze the algorithm, we consider a simplified version, which has of course little to do with
+computational feats that use the Number Field Sieve [4]. In particular, we consider the straightforward “base-𝑚”
+polynomial selection. For a chosen degree 𝑑, we set 𝑚 = d𝑁 1/(𝑑+1) e, 𝑓0 = 𝑥 − 𝑚, and 𝑓1 of degree 𝑑 such that
+𝑓1 (𝑚) = 𝑁 and || 𝑓1 || ∞ < 𝑚. We have 𝐾0 = Q, and 𝐾1 is a degree 𝑑 number field. Side 0 is therefore called
+the rational side, and side 1 is called the algebraic side. We assume that the smoothness bounds 𝐵0 and 𝐵1 can
+be chosen equal to the same bound 𝐵 without increasing the overall asymptotic complexity. Letting 𝐵0 and 𝐵1
+have distinct values would add an extra layer of technicality to the analysis, but we acknowledge that it would be
+interesting to investigate the general case in future work. In our simplified NFS algorithm, we pick the pairs (𝑢, 𝑣)
+from a set A = [−𝐴, 𝐴] 2 , for some bound 𝐴. The integers that we check for smoothness in NFS are bounded by
+𝑀0 and 𝑀1 , which we define as follows
+|Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 (𝑥))| ≤ 𝑀0 = (𝑚 + 1) 𝐴,
+and |Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 (𝑥))| ≤ 𝑀1 = (𝑑 + 1)𝑚 𝐴 𝑑 .
+It is important to point out the heuristic nature of the estimate given by Formula (1), which is related to the
+estimation of the probabilities of smoothness.
+Heuristic assumption 2. In the Number Field Sieve algorithm, the probability that the two integers Res 𝑥 (𝑢 −𝑣𝑥, 𝑓0 )
+and Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 ) are simultaneously 𝐵-smooth, as (𝑢, 𝑣) are picked uniformly from the search space A, is
+0 ,𝐵)
+1 ,𝐵)
+given by the probability that two random integers of the same size are 𝐵-smooth, which is Ψ( 𝑀
+· Ψ( 𝑀
+.
+𝑀0
+𝑀1
+This assumption is very bold, and in fact wrong in several ways. Correcting terms, which are actually used in
+practice, can be used to lessen the gap between Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 ) and integers of the same size [16, 2]. However,
+this heuristic is not that wrong asymptotically, as evidenced by [12, Eq. (1.21)]. We also note that if the number
+field is a random variable, positive results do exist [14].
+Our goal is not to get rid of this heuristic assumption. The usual complexity analysis of NFS already uses it as
+a base and we will do the same to improve on the asymptotic estimate in Formula (1).
+Our simplified version of NFS has three main parameters that we can tune, as functions of log 𝑁, in order to
+optimize the asymptotic complexity: the degree 𝑑 = deg 𝑓1 , and the bounds 𝐴 and 𝐵. The time complexity of NFS
+is then the sum of the time taken by the search for smooth pairs and the time taken by linear algebra. We write
+these as
+𝐶search = 𝐴2 · 𝐶test ,
+𝐶linear algebra = (𝜋 𝐾0 (𝐵) + 𝜋 𝐾1 (𝐵)) 2 (1 + 𝑜(1)).
+In the expressions above, 𝐶test is the time spent per pair (𝑢, 𝑣). Several techniques can be used to bring 𝐶test to
+an amortized cost of 𝑂 (1); sieving is the most popular, but ECM-testing also works (heuristically), and it is also
+possible to detect smooth values with product trees as in [3]. Furthermore, we counted a quadratic cost for linear
+algebra, as this can be carried out with sparse linear algebra algorithms such as [18]. We wish to minimize the cost,
+subject to one constraint: We need enough smooth pairs, as we mentioned in the first paragraph of this section.
+𝐴2 ·
+
+Ψ(𝑀0 , 𝐵) Ψ(𝑀1 , 𝐵)
+·
+≥ 𝜋 𝐾0 (𝐵) + 𝜋 𝐾1 (𝐵).
+𝑀0
+𝑀1
+
+3
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+Of course, we can assume that this is an equality, since otherwise decreasing 𝐴 would decrease the complexity.
+We are looking for expressions for 𝑑, 𝐴, and 𝐵 that are functions of 𝜈 = log 𝑁. Let now 𝑎(𝜈) = log 𝐴(𝜈) and
+𝑏(𝜈) = log 𝐵(𝜈). Note that all functions are expected to tend to infinity as 𝜈 = log 𝑁 tends to infinity and that
+log(𝜋 𝐾0 (𝐵(𝜈))) = 𝑏(𝜈)(1 + 𝑜(1)) and log(𝜋 𝐾1 (𝐵(𝜈))) = 𝑏(𝜈)(1 + 𝑜(1)) by Chebotarev’s density theorem. We
+have
+log 𝐶search = 𝑂 (1) + 2𝑎(𝜈),
+
+
+log 𝐶linear algebra = 𝑂 (1) + log (𝜋 𝐾0 (𝐵(𝜈)) + 𝜋 𝐾1 (𝐵(𝜈))) 2
+= 𝑂 (1) + 2𝑏(𝜈),
+log(𝐶search + 𝐶linear algebra ) = 𝑂 (1) + log max(𝐶search , 𝐶linear algebra )
+= 𝑂 (1) + 2 max(𝑏(𝜈), 𝑎(𝜈)).
+Likewise, the constraint on the probabilities can be rewritten, using the notation 𝑝(𝑢, 𝑣) from Definition 1 :
+2𝑎(𝜈) +
+
+Õ
+
+𝑝(log 𝑀𝑖 , 𝑏) = log(𝜋 𝐾0 (𝐵(𝜈)) + 𝜋 𝐾1 (𝐵(𝜈)))
+
+𝑖 ∈ {0,1}
+
+= log (2(1 + 𝑜(1))𝐵(𝜈))
+= 𝑂 (1) + 𝑏(𝜈).
+Given the inaccuracy that exists in Formula (1), we can profit from some simplifications before we formulate
+our optimization problem. In light of this, it is sufficient to minimize the function max(𝑎(𝜈), 𝑏(𝜈)), as this would
+imply a cost that would be at most within a constant factor of the optimal. Likewise, the 𝑂 (1) in the constraint
+can be dropped. Using this latter argument, we can also take into account only the important parts of the bounds
+𝑀0 and 𝑀1 , namely 𝑚 𝐴 and 𝑚 𝐴 𝑑 . Our optimization problem is therefore rewritten as the following simplified
+problem, which is our main target here as well as in Section 4.
+Problem 3 (Simplified optimization problem). Find three functions,
+𝑎(𝜈), 𝑏(𝜈), 𝑑 (𝜈) : R>0 → R>0
+which for all 𝜈 ∈ R>0 minimize max(𝑎(𝜈), 𝑏(𝜈)) subject to the constraint
+𝑝 (𝑎 + 𝜈/𝑑, 𝑏) + 𝑝 ( 𝑑 𝑎 + 𝜈/𝑑, 𝑏) + 2 𝑎 − 𝑏 = 0.
+
+(2)
+
+To deal with the optimization problem, the usual analysis of NFS relies on the following result.
+Proposition 4 (Canfield-Erdős-Pomerance [6] and De Bruijn [9]). Let 𝜀 ∈]0, 1[. If 3 ≤ 𝑥/𝑦 ≤ (1 − 𝜀)𝑥/log 𝑥 then,
+as 𝑥/𝑦 → +∞:
+𝑝(𝑥, 𝑦) = −(𝑥/𝑦) · log(𝑥/𝑦) · (1 + 𝑜(1)).
+Using this low-order result, the analysis is completely classical, and yields the following well-known expressions,
+see e.g. [5, ğ11]:
+Proposition 5. Let (𝑎, 𝑏, 𝑑) be a minimizer for Problem 3. Then
+𝑎(𝜈) = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑜(1)),
+𝑏(𝜈) = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑜(1)),
+𝑑 (𝜈) = (3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)).
+Furthermore,
+1
+(3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)),
+2
+3
+(𝑑 (𝜈)𝑎(𝜈) + 𝜈/𝑑 (𝜈))/𝑏(𝜈) = (3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)).
+2
+(𝑎(𝜈) + 𝜈/𝑑 (𝜈))/𝑏(𝜈) =
+
+4
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+3 SMOOTHNESS
+In the following paragraphs we will encounter multiple times two functions, which we denote by X : 𝜂 ↦→
+log2 𝜂/log 𝜂 and Y : 𝜂 ↦→ 1/log 𝜂.
+The notation R[[𝑋, 𝑌 ]] is used for bivariate formal series with real coefficients, and for S ∈ R[[𝑋, 𝑌 ]] and
+𝑖 ∈ Z ≥0 , the notation S (𝑖) stands for the truncation of S to total degree less than or equal to 𝑖.
+We introduce the following class of functions, to capture the asymptotic behavior of several functions of interest
+at infinity.
+Definition 6. The class of functions C is the set of functions 𝑓 defined over a neighborhood of +∞ with values in R
+such that
+∃ F ∈ R[[𝑋, 𝑌 ]], ∀𝑛 ∈ Z ≥0 , 𝑓 (𝜂) = F (𝑛) (X, Y) + 𝑜(Y 𝑛 ).
+We say that F is the series associated to 𝑓 .
+An important property of C that we will use intensively in Section 4 is that if 𝑓 ∈ C and its associated series F
+satisfies F(0, 0) ≠ 0 then 1/ 𝑓 stays in C. If moreover F(0, 0) is positive then log 𝑓 is also in C.
+Definition 6 deserves several comments. First, the map from 𝑓 ∈ C to its associated series F is clearly not
+injective, since for example the function 1/𝜂 is in C, and its associated series is zero. It is also important to notice
+that the truncation F (𝑛) that appears in Definition 6 is necessary, as the evaluation of F at a given value need not
+make sense: the series F is only intended to capture the asymptotic behavior of the function 𝑓 at infinity.1
+
+3.1 SMOOTHNESS RESULTS
+The precision of an asymptotic expansion of the NFS complexity is tightly connected to the precision in results
+regarding smoothness probabilities. Canfield, Erdős and Pomerance actually prove a better result than Proposition 4.
+Theorem 7 (Canfield, Erdős and Pomerance [6]). For all 𝑥 ≥ 1 and for all 𝑢 = 𝑥/𝑦 ≥ 3, we have
+𝑝(𝑥, 𝑦) ≥ −𝑢 log 𝑢 · 𝑝(𝑢),
+
+where 𝑝(𝑢) = 1 + X(𝑢) − Y (𝑢) + X(𝑢)Y (𝑢) − Y (𝑢) 2 + 𝑂 X(𝑢) 2 Y (𝑢) .
+In fact, it turns out that Theorem 7 is at the same time too strong and too weak for our purposes. On the one
+hand, it is too bad that the asymptotic expansion of the right-hand side of the inequality stops at some point. On
+the other hand it is a really strong result since it is true for basically all 𝑥, 𝑢 without any restriction. But in the NFS
+context, we know the magnitudes of 𝑥, 𝑢: We do not need a smoothness result that would be unconditionally true.
+A better approximation of the smoothness probability in a narrower range would suit us. Hildebrand proves such a
+result.
+Theorem 8 (Hildebrand [13]). Let 𝜀 > 0. For 1 ≤ 𝑢 ≤ exp((log 𝑦) 3/5−𝜀 ) and 𝑥 = 𝑦 𝑢 , we have
+
+
+
+Ψ(𝑥, 𝑦)
+log(𝑢 + 1)
+= 𝜌(𝑢) 1 + 𝑂
+,
+𝑥
+log 𝑦
+where 𝜌 is the Dickman–de Bruijn function.
+Under the Riemann hypothesis this result even holds in a wider range [13, p. 290]. In the NFS context we are
+in the appropriate range to apply Theorem 8. Indeed, based on Proposition 5, we expect to use Theorem 8 in a
+context where log 𝑦 = 𝑏 = Θ(𝜈 1/3 (log 𝜈) 2/3 ) and 𝑢 = Θ((𝜈/log 𝜈) 1/3 ): 𝑢 is polynomial in log 𝑦, while the bound in
+Theorem 8 is subexponential.
+Asymptotically, the result of Theorem 8 is therefore very precise. This leads us to study more precisely the
+expansion of 𝜌.
+
+3.2 ASYMPTOTIC EXPANSION OF THE DICKMAN–DE BRUIJN FUNCTION
+In [10], De Bruijn proves the following formula :
+ ∫ 𝜉 𝑠
+
+𝑒𝛾
+𝑠𝑒 − 𝑒 𝑠 + 1
+𝜌(𝑢) ∼ √
+× exp −
+d𝑠
+𝑢→+∞
+𝑠
+0
+2𝜋𝑢
+Í
+1In fact (but we will not need this), it is easy to extend Borel’s lemma to show that the link from C to F is surjective: Any series 𝑖, 𝑗 𝑎𝑖, 𝑗 𝑋 𝑖 𝑌 𝑗 ,
+Í
+𝑖 𝑗
+regardless of any notion of convergence, can be realized as the asymptotic expansion of a function in C written
+Í as 𝑓 ( 𝑥) = 𝑖, 𝑗 𝑎𝑖, 𝑗 𝜏𝑖+ 𝑗 ( 𝑥) X Y
+where 𝜏𝑛 is a smooth transition function from 0 to 1 whose transition point is adjusted as a function of 𝑖+ 𝑗=𝑛 |𝑎𝑖, 𝑗 |.
+
+5
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+for all 𝑢 > 1 and 𝜉 = (𝑒 𝑢 − 1)/𝑢. Let 𝜂 = (𝑒 𝑠 − 1)/𝑠, so that 𝑠 = log(1 + 𝑠𝜂). By substitution we have:
+∫ 𝜉 𝑠
+∫ 𝑢
+𝑠𝑒 − 𝑒 𝑠 + 1
+d𝑠 =
+𝑠d𝜂.
+𝑠
+0
+1
+Let us study the integral on the right-hand side. First, we need to know more about 𝑠.
+Proposition 9. The function 𝜂 → 𝑠(𝜂)/log 𝜂 is in C.
+Proof. We prove by induction on 𝑛 that there exists 𝑃𝑛 ∈ R[𝑋, 𝑌 ] such that, as 𝜂 → +∞, we have 𝑠 = log 𝜂 ·
+(𝑃𝑛 (X, Y) + 𝑜(Y 𝑛 )). First we show that 𝑠 = (log 𝜂)(1 + 𝑜(1)) when 𝜂 → +∞, which is to say 𝑃0 = 1. Indeed
+𝜑 : 𝑠 ↦−→ (𝑒 𝑠 − 1)/𝑠 is bijective on R>0 and strictly increasing, and so is 𝜑−1 . Since 𝜑(log 𝜂) = (𝜂 − 1)/log 𝜂 <
+𝜂 = 𝜑(𝑠), we have log 𝜂 < 𝑠. Let now 𝜀 > 0. When 𝜂 is large enough, we have 𝜂1+𝜀 > (1 + 𝜀)𝜂 log 𝜂 + 1. This
+leads to 𝜑(𝑠) < 𝜑((1 + 𝜀) log 𝜂), hence to 𝑠 < (1 + 𝜀) log 𝜂 and proves the base case.
+We now proceed with the induction step. Since 𝑠 = log(1 + 𝑠𝜂), we may write
+𝑠 = log 𝑠 + log 𝜂 + log(1 + 1/(𝑠𝜂))
+= log 𝜂 · (1 + log 𝑠/log 𝜂 + 𝑜(1/𝜂))
+
+
+= log 𝜂 · 1 + X + Y · log 𝑃𝑛 (X, Y) + 𝑜(Y 𝑛+1 ) ,
+where the last expression omits some terms that are swallowed by 𝑜(Y 𝑛+1 ). Since the constant coefficient of 𝑃𝑛
+is 1, an expansion of the inner logarithm above to 𝑛 terms gives the desired result. More precisely, it is easy to
+verify that 𝑃𝑛+1 is the truncation to total degree at most 𝑛 + 1 of
+1 + 𝑋 −𝑌
+
+𝑛
+Õ
+
+(−1) 𝑖
+
+(𝑃𝑛 − 1) 𝑖
+.
+𝑖
+
+𝑖=1
+
+
+In fact, a more explicit version of the series associated to 𝑠(𝜂)/log 𝜂 can be computed:
+Proposition 10. Letting P denote the series associated to 𝑠(𝜂)/log 𝜂, we have
+P(𝑋, 𝑌 ) = 1 + 𝑋 + 𝑌 ·
+
++∞ Õ
+𝑖
+Õ
+𝑆(𝑖, 𝑖 − 𝑗 + 1)
+
+𝑋 𝑗 𝑌 𝑖− 𝑗
+
+𝑗!
+𝑖=1 𝑗=1
+
+where the 𝑆(𝑖, 𝑗) are signed Stirling numbers of the first kind.
+Proof. By [7] (see also [8, Sec. 5, Exercise 22]), the reciprocal 𝑔(𝑦) of 𝑓 : 𝑥 ↦→ 𝑒 𝑥 /𝑥 has the following asymptotic
+series expansion at the neighborhood of ∞:
+log 𝑦 + log2 𝑦 +
+
++∞ Õ
+𝑖
+Õ
+𝑆(𝑖, 𝑖 − 𝑗 + 1) (log 𝑦) 𝑗
+2
+
+(log 𝑦) 𝑖
+
+𝑗!
+
+.
+
+𝑖=1 𝑗=1
+
+By definition, 𝑠(𝑦) is the reciprocal of the function ℎ : 𝑥 ↦→ 𝑒 𝑥 /𝑥 − 1/𝑥. We will show that 𝑠(𝑦) − 𝑔(𝑦) ∼
+(𝑦 log 𝑦) −1 as 𝑦 → +∞. This will conclude our proof since it will ensure that for all 𝑛 ∈ Z ≥0 ,
+𝑠(𝑦) = log 𝑦 + log2 𝑦 +
+
+𝑛 Õ
+𝑖
+Õ
+𝑆(𝑖, 𝑖 − 𝑗 + 1) (log 𝑦) 𝑗
+
+
+
+1
++𝑜
+(log 𝑦) 𝑛
+(log 𝑦) 𝑖
+
+
+
+2
+
+𝑗!
+𝑖=1 𝑗=1
+
+as 𝑦 grows.
+First, using the fact that ℎ(𝑠(𝑦)) = 𝑒 𝑠 ( 𝑦) 𝑦 −1 − 𝑠(𝑦) −1 = 𝑦, we get that 𝑓 (𝑠(𝑦)) − 𝑓 (𝑔(𝑦)) = 𝑒 𝑠 ( 𝑦) 𝑠(𝑦) −1 − 𝑦 =
+𝑠(𝑦) −1 . By the mean value theorem, there exists 𝜃 𝑦 between 𝑔(𝑦) and 𝑠(𝑦) such that 𝑠(𝑦) −1 = 𝑓 (𝑠(𝑦)) − 𝑓 (𝑔(𝑦)) =
+𝑓 0 (𝜃 𝑦 )(𝑠(𝑦) − 𝑔(𝑦)). Since 𝑠(𝑦) = log 𝑦 + log2 𝑦 + 𝑜(1) and 𝑔(𝑦) = log 𝑦 + log2 𝑦 + 𝑜(1), we deduce that 𝜃 𝑦 =
+log 𝑦 + log2 𝑦 + 𝑜(1) when 𝑦 → +∞, hence 𝑓 0 (𝜃 𝑦 ) ∼ 𝑦. Consequently, 𝑠(𝑦) − 𝑔(𝑦) ∼ (𝑦𝑠(𝑦)) −1 ∼ (𝑦 log 𝑦) −1 . 
+Proposition 11. The series
++∞ Õ
+𝑖
+Õ
+𝑆(𝑖, 𝑖 − 𝑗 + 1)
+
+𝑗!
+𝑖=1 𝑗=1
+
+converges uniformly for 𝜂 ∈ [176, +∞[.
+
+6
+
+X 𝑗 Y 𝑖− 𝑗
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+Proof. First, for all 𝑘 ∈ Z ≥0 and all 𝜂 > 𝑒 𝑒 we have Y ≤ X, so that
+𝑘 Õ
+𝑖
+Õ
+𝑠(𝑖, 𝑖 − 𝑗 + 1)
+
+X 𝑗 Y 𝑖− 𝑗 ≤
+
+𝑘 Õ
+𝑖
+Õ
+𝑠(𝑖, 𝑖 − 𝑗 + 1)
+
+𝑗!
+𝑖
+Í
+𝑠 (𝑖,𝑖− 𝑗+1)
+𝑗!
+
+𝑖=1 𝑗=1
+𝑖
+Í
+
+. Let 𝑎 𝑖 = 𝑖!
+
+𝑗=1
+
+𝑘
+Õ
+
+𝑐𝑖 X𝑖
+
+𝑗!
+
+𝑖=1 𝑗=1
+
+where 𝑐 𝑖 =
+
+X𝑖 =
+
+𝑖=1
+
+𝑠 (𝑖,𝑖− 𝑗+1)
+. According to the asymptotic formula for the sequence A138013
+𝑗!
+
+𝑗=1
+
+of the OEIS2, we have, as 𝑖 → +∞:
+p
+𝑎 𝑖 ∼ −1 − 𝑊 (−1, −𝑒 −2 ) × (−𝑊 (−1, −𝑒 −2 )) 𝑖 × 𝑖 𝑖−1 /𝑒 𝑖
+where 𝑊 is the Lambert 𝑊 function, so that
+𝑎 𝑖 /𝑖!
+1
+−→
+.
+𝑎 𝑖+1 /(𝑖 + 1)! 𝑖→∞ −𝑊 (−1, −𝑒 −2 )
+This shows that the power series with
+𝑎 𝑖 /𝑖! has a finite radius of convergence equal to −1/𝑊 (−1, −𝑒 −2 ).
+Í coefficients
+𝑖
+Since |𝑐 𝑖 | ≤ 𝑎 𝑖 /𝑖!, the power series 𝑐 𝑖 𝑋 also has finite radius of convergence, which is at most as large as the
+log 𝜂
+former. Therefore the series converges uniformly for log2 𝜂 ≤ −1/𝑊 (−1, −𝑒 −2 ), and this inequality is satisfied for
+𝜂 ≥ 176.
+
+∫𝑢
+We now shift gears and study the asymptotic behavior of 1 𝑠d𝜂 as 𝑢 grows. The first step towards this goal
+lies in the following proposition.
+∫𝑢
+1
+Proposition 12. The function 𝑢 → 𝑢 log
+𝑢 · 𝑒 𝑠d𝜂 is in C, and the coefficients of its associated series Q can be
+computed explicitly.
+Proof. We prove that for all 𝑛 ∈ Z ≥0 , there is a polynomial 𝑄 𝑛 such that, as 𝑢 → +∞:
+∫ 𝑢
+𝑠d𝜂 = 𝑢 log 𝑢 · (𝑄 𝑛 (X(𝑢), Y (𝑢))) + 𝑜 (Y (𝑢) 𝑛 )) ,
+𝑒
+
+and that for all 𝑖, 𝑗 ≥ 0, 𝑄 𝑖 (𝑋, 𝑌 ) ≡ 𝑄 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) . We emphasize that our proof provides an explicit
+method to compute 𝑄 𝑛 .
+Let us first notice that since we are looking for an asymptotic expansion of a divergent integral as 𝑢 → ∞, up
+to terms that also tend to infinity, we are free to choose the lower bound of the integral.
+Let Δ be the R-linear operator defined on R[𝑋, 𝑌 ] by Δ1 = 0, Δ𝑋 = 𝑌 · (𝑌 − 𝑋), Δ𝑌 = −𝑌 2 , and Δ(𝑈𝑉) =
+𝑈Δ𝑉 + (Δ𝑈)𝑉. One can check that:
+∀𝑇 ∈ R[𝑋, 𝑌 ],
+
+d
+1
+𝑇 (X, Y) = · (Δ𝑇)(X, Y).
+d𝜂
+𝜂
+
+Notice that ΔR[𝑋, 𝑌 ] ⊂ 𝑌 R[𝑋, 𝑌 ].
+We use the properties of Δ to prove an intermediate result. Let 𝑇 be an arbitrary bivariate polynomial in
+R[𝑋, 𝑌 ]. Using the above notation, repeated integration by parts yields:
+∫ 𝑢
+∫ 𝑢
+𝑇 (X, Y)d𝜂 = [𝜂𝑇 (X, Y)] 𝑢𝑒 −
+(Δ𝑇)(X, Y)d𝜂
+𝑒
+
+𝑒
+
+=
+
+𝑛−1
+Õ
+
+∫ 𝑢
+(−1) 𝑖 [𝜂 · (Δ𝑖 𝑇)(X, Y)] 𝑢𝑒 + (−1) 𝑛
+
+(Δ𝑛𝑇)(X, Y)d𝜂
+𝑒
+
+𝑖=0
+
+∫ 𝑢
+= [𝜂 · 𝑅(X, Y)] 𝑢𝑒 +
+
+𝑜(Y 𝑛−1 )d𝜂
+𝑒
+
+Í𝑛−1
+for 𝑅 = 𝑖=0
+(−1) 𝑖 Δ𝑖 𝑇 ∈ R[𝑋, 𝑌 ]. Note that 𝑅 is a truncation of (1 + Δ) −1𝑇.
+This allows us to quickly conclude. Indeed, using Proposition 9, for all 𝑛 ∈ Z ≥0 :
+∫ 𝑢
+𝑠d𝜂 = [(𝜂 log 𝜂 − 𝜂)P (𝑛) (X, Y)] 𝑢𝑒 +
+𝑒
+∫ 𝑢
+∫ 𝑢
+(1 − log 𝜂)Δ(P (𝑛) )(X, Y)d𝜂 +
+𝑜(Y 𝑛−1 )d𝜂.
+𝑒
+
+𝑒
+
+2https://oeis.org/A138013
+
+7
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+Since (1 − log 𝜂)Δ(P (𝑛) )(X, Y) can be written as 𝑇𝑛 (X, Y) for some 𝑇𝑛 ∈ R[𝑋, 𝑌 ], the previous result shows
+that there exists 𝑅𝑛 ∈ R[𝑋, 𝑌 ] such that
+∫ 𝑢
+∫ 𝑢
+𝑠d𝜂 = [𝜂 log 𝜂 · (1 − Y) · P (𝑛) (X, Y)] 𝑢𝑒 + [𝜂 · 𝑅𝑛 (X, Y)] 𝑢𝑒 +
+𝑜(Y 𝑛−1 )d𝜂.
+𝑒
+
+𝑒
+
+∫𝑢
+The claimed expression, with 𝑄 𝑛 = (1 − 𝑌 )P (𝑛) + 𝑌 · 𝑅𝑛 , follows from the verification that 𝑒 𝑜(1/(log 𝜂) 𝑛−1 )d𝜂 =
+𝑜(𝑢/(log 𝑢) 𝑛−1 ) as 𝑢 → +∞, which is unilluminating but easy. Finally, we notice that for all 𝑖, 𝑗 ≥ 0, 𝑅𝑖 (𝑋, 𝑌 ) ≡
+𝑅 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) , which implies that 𝑄 𝑖 (𝑋, 𝑌 ) ≡ 𝑄 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) .
+The series Q has therefore the following expression, which makes it easy to compute Q from P.
+Q = (1 − 𝑌 )P + 𝑌 (1 + Δ) −1 (1 − 𝑌 −1 )ΔP.
+
+Corollary 13. We recall that Q is the series introduced in Proposition 12. For all 𝑛 ∈ Z ≥0 we have, as 𝑢 → +∞:
+
+
+
+𝜌(𝑢) = exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+Proof. We use the equivalent of 𝜌 introduced at the
+∫ 𝑢 very beginning of the section. Constant offsets are absorbed in
+the error term that comes from the expansion of
+𝑠d𝜂, and the result is a direct consequence of Proposition 12.
+ ∫ 𝑢
+
+𝑒𝛾
+𝜌(𝑢) ∼ √
+× exp −
+𝑠d𝜂
+𝑢→+∞
+1
+2𝜋𝑢
+ ∫ 𝑢
+
+= exp −
+𝑠d𝜂 + 𝑂 (1)
+𝑒
+
+
+
+= exp −𝑢 log 𝑢 · Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+
+Corollary 14. In the optimal parameter range of NFS, the asymptotic expansion of the smoothness probabilities
+follows from the previous result. For any 𝑛 ∈ Z ≥0 we have, on both sides (rational and algebraic), as 𝑁 → +∞:
+
+
+
+Ψ(𝑀𝑖 , 𝐵)/𝐵 = exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) ,
+where 𝑢 denotes log 𝑀𝑖 /log 𝐵, which is the size ratio on side 𝑖 ∈ {0, 1}.
+Proof. As we argued when justifying the use of Theorem 8, Proposition 5 tells us that the optimal parameter range
+of NFS leads to 𝑢 = Θ((𝜈/log 𝜈) 1/3 ), with 𝜈 = log 𝑁 as in Section 2. It follows that 𝑏 = Θ(𝑢 log 𝑢), so that the
+right-hand side of Theorem 8 can be written as
+
+ 
+
+
+
+1
+1
+𝜌(𝑢) 1 + 𝑂
+= 𝜌(𝑢) exp −𝑢 log 𝑢 · 𝑂 2
+𝑢
+𝑢 log 𝑢
+
+
+
+= exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+
+Put otherwise, a function within 𝑂
+
+1
+𝜂 2 log 𝜂
+
+
+
+is always in C, and its associated series is zero.
+
+
+
+3.3 COMPUTATION OF Q
+Propositions 9 and 10 are completely explicit. In Proposition 12, the expression of Q is straightforward to
+compute as well. For example, the terms of Q up to degree 3, are:
+Q (3) (𝑋, 𝑌 ) = 1 + 𝑋 − 𝑌 + 𝑋𝑌 − 𝑌 2 −
+
+𝑋 2𝑌
++ 2𝑋𝑌 2 − 2𝑌 3 .
+2
+
+4 ASYMPTOTIC EXPANSION OF 𝜉
+This section is devoted to the analysis of the asymptotic behavior of the unknown function 𝜉 involved in the
+heuristic complexity of NFS. To this end, we compute the asymptotic expansion of the unknown functions written
+𝑜(1) in Prop. 5.
+
+8
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+4.1 EXTENSION OF THE CLASS C
+In order to express conveniently our results on the asymptotic expansion of the function 𝜉, we introduce a
+variant of the class C defined in Section 3.
+Definition 15. Let 𝛼, 𝛽 ∈ R. The class of functions C [ 𝛼,𝛽 ] is the set of functions 𝑓 with values in R such that
+𝜈 ↦→ 𝜈 −𝛼 (log 𝜈) −𝛽 𝑓 (𝜈) is in C.
+In particular, C [0,0] = C. If 𝑓 is in C [ 𝛼,𝛽 ] , then we denote by F ∈ R[𝑋, 𝑌 ] the series associated to 𝜈 ↦→
+𝜈 −𝛼 (log 𝜈) −𝛽 𝑓 (𝜈) and call it, by extension, the series associated to 𝑓 . Note however that this extension deserves
+some caution, as the association makes sense only relative to a given (𝛼, 𝛽).
+The introduction of these classes C [ 𝛼,𝛽 ] is motivated by the fact that in the context of NFS, the function
+𝑢 ↦→ − log 𝜌(𝑢), which gives the relevant smoothness probabilities, is in C [1,1] (see Corollaries 13 and 14). The
+following proposition establishes stability properties for elements of the classes C [ 𝛼,𝛽 ] .
+Proposition 16. Let 𝑓 ∈ C [ 𝛼,𝛽 ] with associated series F ∈ R[[𝑋, 𝑌 ]] such that 𝛼 > 0 and F(0, 0) > 0. Then
+1. log 𝑓 ∈ C [0,1] and its associated series is 𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼;
+2. Y ( 𝑓 ) = (log 𝑓 ) −1 ∈ C and its associated series is
+𝑌 /(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼);
+3. if 𝛼 > 0, then X( 𝑓 ) = log2 𝑓 /log 𝑓 ∈ C and its associated series is
+(𝑋 + 𝑌 log(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼))/(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼).
+
+
+Proof. The result follows by direct computations.
+
+4.2 TWO NEW PROVEN TERMS FOR THE NFS COMPLEXITY
+In this section we develop the functions of interest 𝑎, 𝑏, 𝑑, defined in Section 2. The end result of this section is
+an asymptotic expansion of the complexity of NFS with two new terms. We also introduce several reasonings that
+will be intensively used and automatized in Section 4.3.
+Theorem 17. The minimizers 𝑎, 𝑏, 𝑑 satisfy :
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X(𝜈) + 𝑎 01 Y (𝜈) + 𝑜(Y (𝜈))),
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X(𝜈) + 𝑎 01 Y (𝜈) + 𝑜(Y (𝜈))),
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X(𝜈) + 𝑑01 Y (𝜈) + 𝑜(Y (𝜈))),
+where 𝑎 10 = 4/3, 𝑎 01 = −2 log 2 + log 3/6 − 2, 𝑑10 = −2/3 and 𝑑01 = log 2 − 5 log 3/6 + 1.
+Before proving Thm. 17, we show that there exist functions 𝑎, 𝑏, 𝑑 as in Thm. 17 which satisfy Eq. (2). They
+will serve as a baseline for our minimization problem. One could wonder where the constants 𝑎 𝑖 𝑗 and 𝑑𝑖 𝑗 in the
+statement of Thm. 17, and also in the following lemma, come from. To obtain these constants, we used a computer
+algebra system to iteratively expand the constraint (2) and then we minimized the coefficients of the expansions of
+𝑎, 𝑏, 𝑑 by hand. In the rest of the section, we will always omit the argument 𝜈 of the functions X and Y.
+Lemma 18. There exist functions 𝑎, 𝑏, 𝑑 which satisfy Eq. (2) and such that
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + 𝑜(Y 2 ))
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + 𝑜(Y 2 ))
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X + 𝑑01 Y + 𝑜(Y)),
+where
+𝑎 10 = 4/3, 𝑎 01 = −2 log 2 + log 3/6 − 2,
+𝑎 20 = −4/9, 𝑎 11 = 4 log 2/3 − log 3/9 + 4,
+𝑎 02 = −(log 2) 2 + (log 2 · log 3)/6 − 7(log 3) 2 /36 − 6 log 2 + log 3/2 − 5,
+𝑑10 = −2/3, and 𝑑01 = log 2 − 5 log 3/6 + 1.
+
+9
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+Proof. Set
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + e
+𝑎X3 )
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 )
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X + 𝑑01 Y),
+where 𝑎 10 , 𝑎 01 , 𝑎 20 , 𝑎 11 , 𝑎 02 , 𝑑10 , 𝑑01 are as in the lemma, and e
+𝑎 is an unknown function of the variable 𝜈.
+Given these expressions, we wish to rewrite Eq. (2) as a function of e
+𝑎 . This is particularly tedious, but
+straightforward. The only needed tools are formulas in Prop. 16 over the function field R(e
+𝑎 ). The code repository
+mentioned in the introduction of this article shows how the expansion can be carried out with a computer algebra
+system (and the same holds for other calculations in this section). We obtain that Eq. (2) with the functions set
+above can be rephrased as:
+(e
+𝑎 − 32/81) = 𝜀(e
+𝑎 , 𝜈),
+for a continuous function 𝜀 such that for all 𝑡 ∈ R, lim𝜈→∞ 𝜀(𝑡, 𝜈) = 0. Let now 𝑡− = 31/81 and 𝑡 + = 33/81. Since
+𝜀(𝑡− , 𝜈) and 𝜀(𝑡 + , 𝜈) both tend to zero, we can define 𝜈− and 𝜈+ such that
+∀𝜈 > 𝜈− , (𝑡− − 32/81) − 𝜀(𝑡− , 𝜈) < 0,
+∀𝜈 > 𝜈+ , (𝑡+ − 32/81) − 𝜀(𝑡 + , 𝜈) > 0.
+By the intermediate value theorem, we obtain that for any 𝜈 > max(𝜈− , 𝜈+ ), there exists 𝑡 ∈ [𝑡 − , 𝑡 + ] such that
+(𝑡 − 32/81) = 𝜀(𝑡, 𝜈). Let now e
+𝑎 be the function of 𝜈 that returns such a number 𝑡. Then the functions 𝑎, 𝑏, and 𝑑
+defined above satisfy by construction the desired property.
+
+Proof of Theorem 17. The roadmap of the proof is the following:
+1. We express the constraint (2) using a sufficiently precise asymptotic expansion of the smoothness probability
+(given by Corollary 14) and the asymptotic expansions of 𝑎, 𝑏, 𝑑 known so far. Then we prove that the
+𝑜(1) involved in the asymptotic expansions of 𝑎, 𝑏, 𝑑 are actually in the class 𝑂 (X 𝜆 Y 𝜇 ) for some 𝜆, 𝜇 ≥ 0
+(not both being zero) so that we can write these 𝑜(1) as 𝐶 · X 𝜆 Y 𝜇 where 𝐶 is a function bounded at a
+neighbourhood of ∞.
+2. We prove that 𝐶 = 𝑐 + 𝑜(1) where 𝑐 is a constant computed along the way and restart the whole process
+using the more precise asymptotic expansions for 𝑎, 𝑏, 𝑑 that we have just obtained in order to compute the
+next coefficients.
+Step 1: By Proposition 5, minimizers can be written as
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+𝑎 ),
+1/3 1/3
+2/3
+e
+𝑏 = (8/9) 𝜈 (log 𝜈) (1 + 𝑏),
+e
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑),
+where e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1).
+Direct computations and simplifications (that involve Taylor series expansions, Prop. 16, and the asymptotic
+expansion of the smoothness probability in Corollary 14) that take into account the fact that e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1) rephrase
+Eq. (2) as
+2 2 1 e2
+e
+𝑎= e
+𝑏 + 𝑑 + 𝑂 (X).
+3
+3
+−1
+The last equation shows that e
+𝑎 X is bounded below by a finite constant. Moreover, Lemma 18 ensures the
+existence of functions 𝑎 0 , 𝑏 0 , 𝑑0 that can be used as substitutes for e
+𝑎, e
+𝑏, 𝑑eabove, that satisfy the constraint (2), and
+−1
+such that lim 𝑎 0 X exists and is finite. Since 𝑎, 𝑏, 𝑑 are minimizers of Problem 3, e
+𝑎 X −1 is also upper bounded by
+2
+2
+−1
+e
+e
+𝑎 0 X . Therefore, e
+𝑎 ∈ 𝑂 (X), whence the same also holds for 𝑏 and 𝑑 .
+1
+1
+Replacing e
+𝑎, e
+𝑏, 𝑑erespectively by 𝑎X, 𝑏X 2 , 𝑑X 2 for some functions 𝑎, 𝑏, 𝑑 bounded at a neighborhood of +∞
+in Eq. (2), we obtain that
+2 2 1 2 4
+−𝑎 + 𝑏 + 𝑑 + = 𝑜(1),
+3
+3
+3
+which means in particular that 𝑎 ≥ 4/3 + 𝑜(1). By minimality of 𝑎 we must also have 𝑎 ≤ 4/3 + 𝑜(1) so as not to
+contradict Lemma 18. So 𝑎 = 4/3 + 𝑜(1) and we must necessarily have 𝑏 = 𝑑 = 𝑜(1). Therefore, we obtain
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + e
+𝑎 X),
+1
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+𝑏X 2 ),
+1
+
+e 2 ),
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑X
+
+10
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+for some fresh functions e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1).
+Step 2: We use the result obtained in Step 1 and the asymptotic expansion of the smoothness probability
+(Corollary 14) to deduce by direct computations the following equality enforced by Eq. (2):
+
+
+2 2 1 e2
+−e
+𝑎+ e
+𝑏 + 𝑑 · X = 𝑂 (Y).
+3
+3
+1
+1
+e 12 Y − 12 must be bounded at a neighborhood
+Following the same reasoning as in Step 1, e
+𝑎 XY −1 , e
+𝑏X 2 Y − 2 and 𝑑X
+e by 𝑎X −1 Y (resp. 𝑏X − 12 Y 12 and 𝑑X − 12 Y 12 ) for some functions 𝑎, 𝑏, 𝑑 bounded at a
+of +∞. Replacing e
+𝑎 (resp. e
+𝑏, 𝑑)
+neighborhood of +∞, we obtain the following equality:
+
+2
+
+2
+
+2𝑏
+𝑑
+log 3
+−𝑎 +
++
+− 2 log 2 +
+− 2 = 𝑜(1).
+3
+3
+6
+By minimality and using our baseline result Lemma 18 as we did in Step 1, the equalities 𝑎 = −2 log 2 +
+log 3/6 − 2 + 𝑜(1), 𝑏 = 𝑜(1), and 𝑑 = 𝑜(1) must hold, which means that:
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + (−2 log 2 + log 3/6 − 2)Y + e
+𝑎 Y),
+1
+
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+𝑏Y 2 ),
+e 12 ),
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑Y
+for some fresh functions e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1).
+Step 3: Again we use the asymptotic expansion obtained in Step 2 to refine the asymptotic equality from Eq. (2)
+and obtain:
+
+
+
+  3
+5 log(3)
+2 log(3)
+Y2
+e
+−2 log(2) +
+− 2 + 𝑜(1) 𝑑 + 8 log(2) −
++ 2 + 𝑜(1) e
+𝑏
+3
+3
+3
+!
+!
+2
+2
+e
+e
+e
+e
+1
+𝑑
+2𝑏
+4𝑑 16𝑏
++ −e
+𝑎+
++
+Y+
+−
+XY 2 = 𝑂 (X 2 ).
+3
+3
+9
+9
+e which we omit for brevity.
+where 𝑜(1) are explicit expressions in e
+𝑎, e
+𝑏, 𝑑,
+This can be rephrased as
+
+
+ 2
+1 e 1 2
+5 log(3)
+2
+𝑑Y + X + − log(2) +
+− 1 + 𝑜(1) Y +
+3
+3
+6
+|
+{z
+}
+= 𝛿 (𝜈)
+
+ 2
+2 e 1 4
+log(3) 1
+𝑏Y 2 − X + 2 log(2) −
++ + 𝑜(1) Y −e
+𝑎 Y = 𝑂 (X 2 ).
+3
+3
+6
+2
+|
+{z
+}
+
+
+
+
+=𝛽 (𝜈)
+
+We prove now that 𝛽(𝜈) = 𝑂 (X 2 ) and 𝛿(𝜈) = 𝑂 (X 2 ). Assume by contradiction that this does not hold. Then
+e
+𝑎 (𝜈) is positive asymptotically and it cannot belong to the class 𝑂 (X 2 ). This would contradict our upper bound
+for the minimum given in Lemma 18.
+Consequently, 𝛽(𝜈) and 𝛿(𝜈) belong to 𝑂 (X 2 ) and then so does e
+𝑎 Y. This means that e
+𝑎 = 𝑂 (X 2 Y −1 ) and
+1
+1
+1
+−
+−2
+−1
+−1
+e
+e Y 2 bounded at ∞, and we
+𝑏, 𝑑e = 𝑂 (XY 2 ). As usual we call 𝑎, 𝑏, 𝑑 the functions e
+𝑎 X Y, e
+𝑏X Y 2 and 𝑑X
+substitute in Eq. (2) to get
+
+
+
+
+2
+
+2
+4
+2
+4
+1
+2
+−𝑎 −
++
+𝑏−
++
+𝑑+
+= 𝑜(1).
+9
+3
+3
+3
+3
+
+(3)
+
+Lemma 18 ensures that we must have 𝑎 ≤ −4/9 + 𝑜(1), otherwise it would contradict the minimality of 𝑎.
+The equation above ensures that we must have 𝑎 ≥ −4/9 + 𝑜(1) as well. So 𝑎 = −4/9 + 𝑜(1), which implies that
+𝑏 = 4/3 + 𝑜(1) and 𝑑 = −2/3 + 𝑜(1). This third step of this proof gives:
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + (−2 log 2 + log 3/6 − 2)Y − 4X 2 /9 + e
+𝑎 X 2 ),
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + e
+𝑏X),
+e
+𝑑 = (3𝜈/log 𝜈) 1/3 (1 − 2X/3 + 𝑑X),
+
+11
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+for some fresh unknown functions e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1).
+Step 4: Substituting the asymptotic expansion obtained in Step 3 yields
+!
+2e
+𝑏 2 𝑑e2
+−e
+𝑎+
++
+· X 2 = 𝑂 (XY).
+3
+3
+1
+
+1
+
+As in Step 1, e
+𝑎 must belong to 𝑂 (X −1 Y) and e
+𝑏, 𝑑eto 𝑂 (X − 2 Y 2 ) so as not to contradict Lemma 18. Using the
+1
+1
+e 12 Y − 12 , we find by substitution
+notations 𝑎, 𝑏, 𝑑 for the asymptotically bounded functions e
+𝑎 XY −1 , e
+𝑏X 2 Y − 2 and 𝑑X
+in Eq. (2) that 𝑏 = 𝑜(1), 𝑑 = 𝑜(1) and 𝑎 = 4 log 2/3 − log 3/9 + 4 + 𝑜(1), i.e.,
+𝑎 =(8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + (−2 log 2 + log 3/6 − 2)Y
+− 4X 2 /9 + (4 log 2/3 − log 3/9 + 4)XY + e
+𝑎 XY),
+1
+
+1
+
+𝑏 =(8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + e
+𝑏X 2 Y 2 ),
+1
+
+1
+
+e 2 Y 2 ),
+𝑑 =(3𝜈/log 𝜈) 1/3 (1 − 2X/3 + 𝑑X
+for some fresh unknown functions e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1).
+Step 5: We expand the constraint for the last time and after a factorization that follows the pattern of Step 3 we
+get:
+
+
+
+2
+1
+1 e 1
+5 log 3
+𝑑X 2 + − log 2 +
+− 1 Y 2 Y+
+3
+6
+
+
+
+2
+1
+2 e 1
+log 3 1
+𝑏X 2 + 2 log 2 −
++
+Y2 Y − e
+𝑎 XY = 𝑂 (Y 2 ).
+3
+6
+2
+1
+1
+Again, we must have e
+𝑎 = 𝑂 (X −1 Y) and e
+𝑏, 𝑑e = 𝑂 (X − 2 Y 2 ), so as not to contradict Lemma 18. We also
+compute the associated limits for e
+𝑏 and 𝑑eby using the same method as in the previous steps: we let 𝑎, 𝑏, 𝑑 denote
+1
+1
+−1
+e 12 Y − 12 . Direct computations yield
+the bounded functions e
+𝑎 XY , e
+𝑏X 2 Y − 2 , 𝑑X
+
+"
+
+#
+
+2
+
+2
+2
+log 3 1
+3
+1
+5 log 3
+𝑏 + 2 log 2 −
++
+−
++
+𝑑+
+− log 2 − 1 =
+3
+6
+2
+2
+3
+6
+
+
+
+log 2 log 3 7(log 3) 2
+log 3
+𝑎 − −(log 2) 2 +
+−
+6 − 6 log 2 +
+− 5 + 𝑜(1).
+6
+3
+2
+Lemma 18 ensures that 𝑏 ≤ 𝑎 01 + 𝑜(1) and 𝑎 ≤ 𝑎 02 + 𝑜(1). This implies that the lefthand side of the equality
+is bounded below by some function in 𝑜(1) and hence lim 𝑎 = 𝑎 02 . Therefore we get that
+1
+
+1
+
+1
+
+1
+
+lim e
+𝑏X 2 Y − 2 = −2 log 2 + log 3/6 − 2,
+e 2 Y − 2 = log 2 − 5 log 3/6 + 1,
+lim 𝑑X
+
+
+which concludes the proof.
+
+Corollary 19. Let Φ(𝜈) = max(𝑎(𝜈), 𝑏(𝜈)) be the quantity minimized by Problem 3. The heuristic complexity
+𝐶 (𝑁) = exp(2Φ(log 𝑁)) to factor an integer 𝑁 with NFS satisfies:
+r
+log 𝐶 (𝑁) =
+
+3
+
+
+
+
+log 𝑁
+64
+𝑎 01
+1
+(log 𝑁) 1/3 (log2 𝑁) 1/3 1 + 𝑎 10 3 +
++𝑜
+9
+log2 𝑁 log2 𝑁
+log2 𝑁
+
+where 𝑎 10 = 4/3 and 𝑎 01 = −2 log 2 + log 3/6 − 2.
+A natural question to ask is whether the process used in the proof of Thm. 17 can be continued. As we will see
+in the next section, the answer to this question is yes.
+
+12
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+4.3 FURTHER TERMS IN THE ASYMPTOTIC EXPANSION OF THE COMPLEXITY OF NFS
+In this section, we describe how the arguments of Section 4.2 can be turned into three algorithms that allow
+to compute more precise asymptotic expansions for the minimizers 𝑎, 𝑏, 𝑑. These three algorithms take as input
+the precision requested for the asymptotic expansion of the complexity and they mirror the three steps used in the
+proof of Theorem 17:
+• Algorithm GuessTerms guesses the asymptotic expansion of the minimizers of Problem 3.
+• Algorithm ProveExistence proves the existence of functions satisfying the constraint in Problem 3, and
+whose asymptotic expansion is the output of Algorithm GuessTerms. This establishes an upper bound for
+the minimum of the objective function in Problem 3.
+• Algorithm ProveMinimality proves that the asymptotic expansion of the minimizers of Problem 3 must be
+the output of Algorithm GuessTerms.
+These algorithms are used in the following way. We set a degree 𝑛 > 1. The three algorithms are used to
+prove that 𝜉 (𝑁) = 𝑄(X(log 𝑁), Y (log 𝑁)) + 𝑜(Y (log 𝑁) 𝑛 ) where 𝑄 is a bivariate polynomial of total degree
+𝑛, whose coefficients are computed along the way. We emphasize that these algorithms might fail, i.e., become
+unable to compute or prove new terms at some point. We were unable to prove that our algorithms never fail, but
+experimentally they never did. And even if one of them does, the terms of the complexity computed up until the
+failure point are guaranteed to be correct. We also point out that all the bivariate polynomials that we consider
+in these algorithms have coefficients in Q(log 2, log 3), so they can be described exactly without having to rely on
+floating-point computations.
+We now describe more precisely the algorithms GuessTerms, ProveExistence and ProveMinimality assuming there is no failure.
+Algorithm GuessTerms assumes that 𝑎, 𝑏, 𝑑 belong respectively to the classes C [1/3,2/3] , C [1/3,2/3] , C [1/3,−1/3]
+and even that 𝑎 = 𝑏. We call A, B, D the bivariate series associated to 𝑎, 𝑏, 𝑑. First, we expand Eq. (2) based on the
+asymptotic expansions of 𝑎, 𝑏 and 𝑑 (initialized thanks to the result of Theorem 17). Then we minimize the leading
+term of the asymptotic expansion of the objective function in Problem 3 under the constraint that the coefficient of
+the main term in the asymptotic expansion of Eq. (2) must vanish. This is done thanks to Taylor series expansions
+at infinity and bivariate series computations at finite precision. From this, we deduce the next coefficients of our
+series. The repetition of this process provides an algorithm to iteratively compute the coefficients of the series
+A, B, D. These series will be our candidates for the asymptotic expansion of the minimizers of Problem 3.
+Algorithm ProveExistence is the counterpart of Lemma 18. It checks that there exist functions 𝛼, 𝛽, 𝛿 such
+that:
+• The asymptotic expansion of 𝛼 is 𝛼 = A (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 );
+• The asymptotic expansion of 𝛽 is 𝛽 = B (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 );
+• The asymptotic expansion of 𝛿 is 𝛿 = D (𝑛+1)/2 (X, Y) + 𝑜(Y (𝑛+1)/2 );
+• The functions 𝛼, 𝛽, 𝛿 satisfy the constraint (2).
+Algorithm ProveExistence serves the same purpose as Lemma 18: Give a baseline result that ensures the
+existence of functions that satisfy the constraint (2) and whose asymptotic expansions are known up to a given
+degree. In particular, a solution to Problem 3 must be smaller than 𝛼, 𝛽, 𝛿. The algorithm works similarly to the
+proof of Lemma 18 by setting three functions 𝑎, 𝑏, 𝑑 where 𝑎 depends on an unknown function e
+𝑎:
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛+1) (X, Y) + e
+𝑎 X 𝑛+2 );
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 B (𝑛+1) (X, Y);
+𝑑 = (3𝜈/log 𝜈) 1/3 D (𝑛+1)/2 (X, Y).
+Then the algorithm checks by using Taylor series expansions that the constraint of Problem 3 instantiated with
+these functions can be rewritten as (e
+𝑎 − 𝜅) = 𝜀(e
+𝑎 , 𝜈) for some 𝜅 ∈ R and 𝜀 a function as in the proof of Lemma 18.
+Algorithm ProveMinimality is the counterpart of the proof of Theorem 17 and it follows its roadmap. We
+proceed iteratively with the terms of the asymptotic expansion, computing and proving the expansions of the
+minimizers 𝑎, 𝑏, 𝑑 up to degree 𝑛. To do so, we use the current (proven) knowledge of the asymptotic expansions
+of 𝑎, 𝑏, 𝑑, initialized thanks to Theorem 17, and expand the constraint by computing Taylor series expansions at
+infinity.
+To prove that the next terms of the series guessed by Algorithm GuessTerms are correct, we proceed as
+𝑗
+𝑖
+follows. First, we prove that the remainder of the series expansion, which has form 𝑜(X 2 Y 2 ), is in fact of the form
+0
+0
+𝑗
+𝑗0
+𝑖
+𝑖0
+𝑂 (X 2 Y 2 ), where (𝑖 0, 𝑗 0) is strictly larger than (𝑖, 𝑗) for the graded lexicographical ordering, so that 𝑂 (X 2 Y 2 )
+
+13
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+𝑖
+
+𝑗
+
+is a proper subset of 𝑜(X 2 Y 2 ). This first step works as long as the equation derived from the constraint follows
+certain patterns, which are given in Proposition 20 below.
+𝑗0
+𝑖0
+In a second step, we prove that this remainder has in fact the form 𝜅X 2 Y 2 (1 + 𝑜(1)), where 𝜅 is the
+corresponding coefficient in the guessed series. This verification involves an equation that is similar to Eq. (3) in
+the proof of Theorem 17. Again, the shape of the equation encountered is crucial to proceed.
+Based on our experiments, we surmise that only three patterns occur in the first step, and that the equation
+encountered in the second step always matches the shape of Eq. (3). Algorithm ProveMinimality only consists
+in verifying that this holds.
+Proposition 20. Let e
+𝑎, e
+𝑏, 𝑑e = 𝑜(1) be three functions.
+• Pattern (P1): Let 𝑖 > 0, 𝑗 ≥ 0. Assume that e
+𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 , 𝑏 0 = 𝑂 (X −1 Y). Assume
+further that
+!
+𝑑e2
+−e
+𝑎 − 2e
+𝑏 X 𝑖 Y 𝑗 = 𝑂 (X 𝑖−1 Y 𝑗+1 ).
+3
+1
+1
+Then e
+𝑎, e
+𝑏 = 𝑂 (X −1 Y) and 𝑑e = 𝑂 (X − 2 Y 2 ).
+
+• Pattern (P2): Let 𝑖 > 1 and 𝜅 ∈ R. Assume that e
+𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 , 𝑏 0 = 𝑂 (X 𝑖+1 Y −𝑖 ).
+Assume further that
+!
+𝑖
+𝑑e2
+e
+e 𝑖+1
+2 Y 2 (1 + 𝑜(1)) = 𝑂 (X 𝑖+1 ).
+−e
+𝑎 − 2𝑏(1 + 𝑜(1)) Y 𝑖 + 𝜅 𝑑X
+3
+1
+𝑖+1
+𝑖
+Then e
+𝑎 = 𝑂 (X 𝑖+1 Y −𝑖 ), e
+𝑏 ∈ 𝑂 (X 𝑖+1 Y −𝑖 ) ⊂ 𝑂 (Y 2 ), and 𝑑e = 𝑂 (X 2 Y − 2 ).
+• Pattern (P3): Let 𝑖 > 2. Assume that e
+𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 = 𝑂 (X −1 Y) and 𝑏 0 =
+3
+
+𝑂 (X 𝑖−1 Y −𝑖+ 2 ). Assume further that
+
+!
+1
+𝑑e2
+−e
+𝑎 X 𝑖 − 2e
+𝑏Y 𝑖− 2 = 𝑂 (X 𝑖−1 Y).
+3
+3
+
+1
+
+1
+
+Then e
+𝑎 = 𝑂 (X −1 Y) and e
+𝑏 = 𝑂 (X 𝑖−1 Y −𝑖+ 2 ), and 𝑑e = 𝑂 (X 2 Y − 2 ).
+Proof. The proof in all three cases is very similar. We only prove Pattern (P1) as an example.
+Dividing the equality by X 𝑖 Y 𝑗 , we get
+e
+𝑎 + 2e
+𝑏=
+
+𝑑e2
++ 𝑂 (X −1 Y),
+3
+
+which shows that e
+𝑎 + 2e
+𝑏 is bounded below by a function in 𝑂 (X −1 Y). Since e
+𝑎 + 2e
+𝑏 ≤ 𝑎 0 + 2𝑏 0 = 𝑂 (X −1 Y),
+−1
+−1
+−1
+e
+e
+we deduce that e
+𝑎 + 2𝑏 = 𝑂 (X Y). Writing 𝑎, 𝑏 for e
+𝑎 XY , 𝑏XY respectively, we get that 𝑎 + 2𝑏 = 𝑂 (1).
+Together with the fact that 𝑎, 𝑏 are bounded above by lim sup 𝑎 0 XY −1 , lim sup 𝑏 0 XY −1 respectively, this implies
+that 𝑎, 𝑏 ∈ 𝑂 (1), and hence that e
+𝑎, e
+𝑏 ∈ 𝑂 (X −1 Y). Hence 𝑑e2 must also belong to 𝑂 (X −1 Y).
+
+In fact these three patterns do not appear at random during the proof: They appear according to the shape of the
+remainder 𝑜(X 𝑖 Y 𝑗 ) in the series expansion of 𝑎 we are currently considering. When 𝑖 ≠ 0 and 𝑗 ≠ 0 the equation
+follows pattern (P1), when 𝑖 = 0 it follows pattern (P2) and when 𝑗 = 0 it follow pattern (P3). In particular, pattern
+(P3) is always encountered one step after pattern (P2) has been encountered. We want to consider that e
+𝑏 is in
+1
+𝑂 (Y 2 ) instead of the tighter class 𝑂 (X 𝑖+1 Y −𝑖 ) at the end of pattern (P2) precisely to ensure that the next step will
+yield an equation that follows pattern (P3).
+The three algorithms GuessTerms, ProveExistence and ProveMinimality are used consecutively in order
+to compute a proven asymptotic expansion of 𝑎, 𝑏, 𝑑 at a given precision 𝑛. We have implemented a function ComputeProvenExpansion which performs this process: It takes as input an integer 𝑛 > 1 and — if it does not fail
+— it returns two bivariate polynomials A (𝑛+1) , D (𝑛+1)/2 of respective degrees 𝑛 + 1 and (𝑛 + 1)/2 such that the
+minimizers 𝑎, 𝑏, 𝑑 of Problem 3 satisfy
+𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 )),
+𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛) (X, Y) + 𝑜(Y 𝑛 )),
+𝑑 = (3𝜈/log 𝜈) 1/3 (D (𝑛+1)/2 (X, Y) + 𝑜(Y (𝑛+1)/2 )).
+
+14
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+The expansion for 𝑏 is proven up to a degree one less than the one for 𝑎. The underlying reasons are the same
+as in the proof of Theorem 17, where this behavior was first encountered.
+This implies that the heuristic complexity of NFS is bounded above by
+"r
+
+
+
+
+#
+log
+𝑁
+1
+1
+3 64
+3
+exp
+(log 𝑁) 1/3 (log2 𝑁) 2/3 A (𝑛)
+,
++𝑜
+.
+9
+log2 𝑁 log2 𝑁
+(log2 𝑁) 𝑛
+
+5 EXPERIMENTAL RESULTS
+In this section, we report on experimental results obtained with our implementation of the algorithms described
+in Section 4.3. Our implementation is available in the code repository mentioned in the introduction of this article.
+These algorithms provide an asymptotic expansion of the heuristic complexity 𝐶 (𝑁) of NFS. More precisely,
+they output coefficients of a bivariate series A ∈ Q(log 2, log 3) [[𝑋, 𝑌 ]] such that for all 𝑛 ≥ 0 such as our
+algorithms do not fail, we have:
+r
+
+
+
+
+
+log3 𝑁
+1
+1
+3 64
+log 𝐶 (𝑁) =
+(log 𝑁) 1/3 (log2 𝑁) 2/3 A (𝑛)
+,
++𝑜
+.
+9
+log2 𝑁 log2 𝑁
+(log2 𝑁) 𝑛
+Here are the first coefficients of the series A(𝑋, 𝑌 ) =
+𝑎 00
+𝑎 10
+𝑎 01
+𝑎 20
+𝑎 11
+𝑎 02
+𝑎 30
+𝑎 21
+𝑎 12
+𝑎 03
+
+Í
+
+𝑖 𝑗
+𝑖, 𝑗 ≥0 𝑎 𝑖 𝑗 𝑋 𝑌 obtained via this implementation:
+
+1
+4/3
+−2 log 2 + log 3/6 − 2
+−4/9
+4 log 2/3 − log 3/9 + 4
+−(log 2) 2 + log 2 log 3/6 − 7(log 3) 2 /36 − 6 log 2 + log 3/2 − 5
+32/81
+−16 log 2/9 + 4 log 3/27 − 56/9
+8(log 2) 2 /3 − 4 log 2 log 3/9 + 56 log 2/3 + 14(log 3) 2 /27 − 14 log 3/9 + 64/3
+−4(log 2) 3 /3 + (log 2) 2 log 3/3 − 14(log 2) 2 − 7 log 2(log 3) 2 /9
++7 log 2 log 3/3 − 32 log 2 + 41(log 3) 3 /648 − 49(log 3) 2 /18 + 8 log 3/3 − 85/3
+
+The function 𝜉 in the introduction can be approximated asymptotically by evaluating at (log3 𝑁/log2 𝑁, 1/log2 𝑁)
+the truncations of the series A(𝑋, 𝑌 ) − 1. Using the algorithms in Section 4.3, we were able to compute the series
+A, B = A, and D up to degree 14 (more than a hundred terms). The fact that A = B has been verified so far backs
+the claim that the patterns encountered while proving minimality are always as expected. Moreover, despite the
+fact the algorithms ProveExistence and ProveMinimality regularly have to consider terms X 𝑖 Y 𝑗 with 𝑖 or 𝑗 in
+1
+2 Z in the expansions of 𝑎, 𝑏, 𝑑, the coefficients of these terms always turned out to be zero in our experiments.
+These remarks allow us to formulate the following conjecture:
+Conjecture 21. The minimizers 𝑎, 𝑏, 𝑑 of Problem 3 belong respectively to the classes of functions C [1/3,2/3] ,
+C [1/3,2/3] , C [1/3,−1/3] . Moreover, the series A, B ∈ R[[𝑋, 𝑌 ]] associated to 𝑎, 𝑏 are equal.
+For 𝑖 ≥ 0, we let 𝜉𝑖 (𝑁) denote the function A (𝑖) (log3 𝑁/log2 𝑁, 1/log2 𝑁) − 1. In particular, for all 𝑖 ≥ 0, we
+have 𝜉 (𝑁) = 𝜉𝑖 (𝑁) + 𝑜(1/(log2 𝑁) 𝑖 ). Figure 1 shows the behavior of 𝜉𝑖 for cryptographically relevant values of
+𝑁. Figure 2 focuses on the range where we observe experimentally the convergence of the truncations 𝜉𝑖 .
+These figures raise questions on the relevance of the traditional assumption 𝜉 = 0 for estimating the complexity
+of NFS in the range which is useful for cryptographic applications, i.e., 𝑁 ≤ 220000 . Indeed, we only start to observe
+convergence for 𝑁 > exp(exp(25)) ≈ 2103881111194 . Let us also notice that the convergence of 𝜉 to zero is very slow
+as 𝑁 grows, since 𝜉 (𝑁) ∼ 4 log3 𝑁/(3 log2 𝑁) (Theorem 17). One could think that adding more and more terms
+in the developement of 𝜉 would yield a more precise formula for the complexity of NFS. However, it turns out that
+for practical values of 𝑁, replacing 𝜉 by 𝜉𝑖 for 𝑖 > 0 is possibly even worse since the asymptotic series expansion
+of 𝜉 seems to diverge for 𝑁 ≤ exp(exp(25)). In summary, all the asymptotic estimations for 𝜉 that we have at our
+disposal, including the brutal approximation 𝜉 = 0, say little to nothing about the behavior of the complexity of
+NFS in the range where the algorithm can be used.
+In fact, the expansion of 𝜉 relies on the expansion of 𝜌, and the latter involves a series that converges only for suffi
+ciently large values as stated in Proposition 11. We recall that 𝜌(𝑢) ∼ exp −𝑢 log 𝑢 Q (𝑖) (X(𝑢), Y (𝑢)) + 𝑜 Y (𝑢) 𝑖
+where Q is defined in Proposition 12. To experimentally assess the convergence properties of 𝜌 estimations, Figure 3
+plots the functions 𝑢 ↦→ Q (𝑖) (X(𝑢), Y (𝑢)) in function of 𝑢 for 1 ≤ 𝑖 ≤ 6.
+
+15
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+0.00
+0.25
+0.50
+0.75
+1.00
+
+degree
+0
+1
+2
+3
+4
+5
+
+1.25
+1.50
+1.75
+
+e e5
+
+e e6
+
+e e7
+
+e e8
+
+e e9
+
+ee11
+
+ee10
+
+Figure 1: Truncations of 𝜉 up to total degree 𝑖 for 0 ≤ 𝑖 ≤ 5 in function of 𝑁 for cryptographically relevant values
+of 𝑁. The abscissa axis is in log log scale.
+
+0.048
+0.046
+0.044
+0.042
+
+degree
+1
+2
+3
+4
+5
+
+0.040
+0.038
+
+ee21 ee22 ee23 ee24 ee25 ee26 ee27
+
+Figure 2: Converging behavior for 𝜉𝑖 . The abscissa axis is in log log scale.
+
+16
+
+Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+1.16
+1.15
+1.14
+1.13
+1.12
+i
+
+1.11
+1.10
+1.09
+1.08
+
+e4
+
+e6
+
+e8
+
+e10
+
+e12
+
+1
+2
+3
+4
+5
+6
+
+e14
+
+Figure 3: Plot of the functions 𝑢 ↦→ Q (𝑖) (X(𝑢), Y (𝑢)) for 1 ≤ 𝑖 ≤ 6, see Corollary 13.
+
+Experimentally, we observe in Figure 3 that the asymptotic series expansion of 𝜌 starts to converge around
+𝑢 ≈ 𝑒 8 . When assessing the complexity of NFS, we evaluate 𝜌 for values of 𝑢 that have the same order of magnitude
+than (log 𝑁) 1/3 . This is consistent with the observed convergence of the series expansion of 𝜉 for 𝑁 > exp(exp(25))
+in Figure 2 since exp(25) 1/3 ≈ 𝑒 8 .
+Conclusion. Under a few classical hypotheses and heuristics, we proved that the function 𝑜(1) hidden in the
+complexity of NFS decreases as 4 log3 𝑁/(3 log2 𝑁). We have also proposed an algorithm to compute an asymptotic
+expansion of the function 𝜉 on which the complexity of NFS rests. Unfortunately, replacing 𝜉 by a truncation of its
+asymptotic expansion, even up to a high degree, in an attempt to have a better understanding of the NFS complexity
+may be irrelevant for practical uses. Indeed, it comes down to replacing a series by its first terms in a range where
+the series diverges. Consequently, we recommend prudence when using Formula (1) or other truncated asymptotic
+expansions of the heuristic complexity of NFS in order to extrapolate keysizes for cryptography. This stresses the
+importance of simulation tools that rely on precise numerical evaluations of 𝜌, or possibly on actual smoothness
+tests, to estimate the complexity of NFS.
+
+REFERENCES
+[1]
+
+Agence nationale de la sécurité des systèmes d’information. Référentiel général de sécurité, v2.03, Annexe
+B1. Publicly available at https://www.ssi.gouv.fr/uploads/2014/11/RGS_v-2-0_B1.pdf. 2014.
+
+[2]
+
+R. Barbulescu and A. Lachand. “Some mathematical remarks on the polynomial selection in NFS”. In: Math.
+Comp. 86.303 (2017), pp. 397–418. doi: 10.1090/mcom/3112.
+
+[3]
+
+D. J. Bernstein. How to find small factors of integers. 2002. url: http://cr.yp.to/papers.html#sf.
+
+[4]
+
+F. Boudot et al. “Comparing the Difficulty of Factorization and Discrete Logarithm: A 240-Digit Experiment”. In: CRYPTO 2020, Part II. Ed. by Daniele Micciancio and Thomas Ristenpart. Vol. 12171. LNCS.
+Springer, Heidelberg, Aug. 2020, pp. 62–91. doi: 10.1007/978-3-030-56880-1_3.
+
+[5]
+
+J. P. Buhler, A. K. Lenstra, and C. Pomerance. “Factoring integers with the number field sieve”. In: The
+development of the number field sieve. Ed. by A. K. Lenstra and H. W. Lenstra, Jr. Vol. 1554. Lecture Notes
+in Math. Springer–Verlag, 1993, pp. 50–94. doi: 10.1007/BFb0091539.
+
+[6]
+
+E. R. Canfield, P. Erds, and C. Pomerance. “On a problem of Oppenheim concerning factorisatio numerorum”.
+In: J. Number Theory 17.1 (1983), pp. 1–28. doi: 10.1016/0022-314X(83)90002-1.
+
+[7]
+
+L. Comtet. “Inversion de 𝑦 𝛼 𝑒 𝑦 et 𝑦 log 𝛼 𝑦 au moyen des nombres de Stirling”. In: C. R. Hebdo. Acad. Sci.
+Paris Sér. A Math. 270 (1970), pp. 1085–1088.
+
+17
+
+Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+[8]
+
+L. Comtet. Advanced Combinatorics: The art of finite and infinite expansions. 1974.
+
+[9]
+
+N. G. De Bruijn. “On the number of positive integers ≤ 𝑥 and free of prime factors > 𝑦”. In: Proceedings of
+the Koninklijke Nederlandse Akademie van Wetenschappen: Series A: Mathematical Sciences 54.1 (1951),
+pp. 50–60. doi: 10.1016/S1385-7258(51)50008-2.
+
+[10]
+
+N. G. De Bruijn. “The asymptotic behaviour of a function occurring in the theory of primes”. In: J. Indian
+Math. Soc. (N.S.) 15 (1951), pp. 25–32. doi: 10.18311/jims/1951/17064.
+
+[11]
+
+ENISA. Algorithms, key sizes and parameters report. European Union Agency for Network and Information
+Security. Report available at https://www.enisa.europa.eu/publications/algorithms-keysize-and-parameters-report-2014. 2014.
+
+[12]
+
+A. Granville. “Smooth numbers: Computational number theory and beyond”. In: Algorithmic Number Theory:
+Lattices, Number Fields, Curves and Cryptography. Ed. by J. P. Buhler and P. Stevenhagen. Vol. 44. Math.
+Sci. Res. Inst. Publ. Cambridge University Press, Dec. 2008, pp. 267–323.
+
+[13]
+
+A. Hildebrand. “On the number of positive integers ≤ 𝑥 and free of prime factors > 𝑦”. In: J. Number Theory
+22.3 (1986), pp. 289–307. doi: 10.1016/0022-314X(86)90013-2.
+
+[14]
+
+J. D. Lee and R. Venkatesan. “Rigorous analysis of a randomised number field sieve”. In: J. Number Theory
+187 (2018), pp. 92–159. doi: 10.1016/j.jnt.2017.10.019.
+
+[15]
+
+A. K. Lenstra and E. R. Verheul. “Selecting cryptographic key sizes”. In: J. Cryptology 14.4 (2001), pp. 255–
+293. doi: 10.1007/s00145-001-0009-4.
+
+[16]
+
+B. A. Murphy. “Polynomial Selection for the Number Field Sieve Integer Factorisation Algorithm”. PhD
+thesis. Australian National University, 1999. url: http://maths-people.anu.edu.au/~brent/pd/
+Murphy-thesis.pdf.
+
+[17]
+
+National Institute of Standards and Technology and Canadian Centre for Cyber Security. Implementation
+Guidance for FIPS 140-2 and the Cryptographic Module Validation Program. Version of 2019, December
+3. Available at https : / / csrc . nist . gov / CSRC / media / Projects / Cryptographic - Module Validation-Program/documents/fips140-2/FIPS1402IG.pdf.
+
+[18]
+
+D. Wiedemann. “Solving sparse linear equations over finite fields”. In: IEEE Transactions on Information
+Theory 32.1 (1986), pp. 54–62. doi: 10.1109/TIT.1986.1057137.
+
+18
+
+

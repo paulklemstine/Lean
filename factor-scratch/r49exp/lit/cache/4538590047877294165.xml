@@ -1,0 +1,1334 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/GSszlsW9bLhUJcFIOH6WR/vSXrM</id>
+  <title>arXiv Query: search_query=abs:"lower bound" AND abs:factoring AND cat:cs.CC&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22lower+bound%22+AND+(abs:factoring+AND+cat:cs.CC)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>370</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2402.04134v1</id>
+    <title>A quasi-optimal lower bound for skew polynomial multiplication</title>
+    <updated>2024-02-06T16:38:11Z</updated>
+    <link href="https://arxiv.org/abs/2402.04134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.04134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish a lower bound for the complexity of multiplying two skew polynomials. The lower bound coincides with the upper bound conjectured by Caruso and Borgne in 2017, up to a log factor. We present algorithms for three special cases, indicating that the aforementioned lower bound is quasi-optimal. In fact, our lower bound is quasi-optimal in the sense of bilinear complexity. In addition, we discuss the average bilinear complexity of simultaneous multiplication of skew polynomials and the complexity of skew polynomial multiplication in the case of towers of extensions.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-06T16:38:11Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Qiyuan Chen</name>
+    </author>
+    <author>
+      <name>Ke Ye</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1003.0514v1</id>
+    <title>The finite-dimensional Witsenhausen counterexample</title>
+    <updated>2010-03-02T07:44:14Z</updated>
+    <link href="https://arxiv.org/abs/1003.0514v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1003.0514v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recently, a vector version of Witsenhausen's counterexample was considered and it was shown that in that limit of infinite vector length, certain quantization-based control strategies are provably within a constant factor of the optimal cost for all possible problem parameters. In this paper, finite vector lengths are considered with the dimension being viewed as an additional problem parameter. By applying a large-deviation "sphere-packing" philosophy, a lower bound to the optimal cost for the finite dimensional case is derived that uses appropriate shadows of the infinite-length bound. Using the new lower bound, we show that good lattice-based control strategies achieve within a constant factor of the optimal cost uniformly over all possible problem parameters, including the vector length. For Witsenhausen's original problem -- the scalar case -- the gap between regular lattice-based strategies and the lower bound is numerically never more than a factor of 8.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-03-02T07:44:14Z</published>
+    <arxiv:comment>32 pages, 7 figures, 1 table. Presented at ConCom 2009, Seoul, Korea. Submitted to IEEE Transactions on Automatic Control</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Pulkit Grover</name>
+    </author>
+    <author>
+      <name>Se Yong Park</name>
+    </author>
+    <author>
+      <name>Anant Sahai</name>
+    </author>
+    <arxiv:doi>10.1109/WIOPT.2009.5291559</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/WIOPT.2009.5291559" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.11372v3</id>
+    <title>First Approximation for Uniform Lower and Upper Bounded Facility Location Problem avoiding violation in Lower Bounds</title>
+    <updated>2021-06-25T17:22:39Z</updated>
+    <link href="https://arxiv.org/abs/2106.11372v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.11372v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With growing emphasis on e-commerce marketplace platforms where we have a central platform mediating between the seller and the buyer, it becomes important to keep a check on the availability and profitability of the central store. A store serving too less clients can be non-profitable and a store getting too many orders can lead to bad service to the customers which can be detrimental for the business. In this paper, we study the facility location problem(FL) with upper and lower bounds on the number of clients an open facility serves. Constant factor approximations are known for the restricted variants of the problem with only the upper bounds or only the lower bounds. The only work that deals with bounds on both the sides violates both the bounds [8]. In this paper, we present the first (constant factor) approximation for the problem violating the upper bound by a factor of (5/2) without violating the lower bounds when both the lower and the upper bounds are uniform. We first give a tri-criteria (constant factor) approximation violating both the upper and the lower bounds and then get rid of violation in lower bounds by transforming the problem instance to an instance of capacitated facility location problem.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-21T19:12:01Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Sapna Grover</name>
+    </author>
+    <author>
+      <name>Neelima Gupta</name>
+    </author>
+    <author>
+      <name>Rajni Dabas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.2485v1</id>
+    <title>Minimizing Communication in Linear Algebra</title>
+    <updated>2009-05-15T07:26:56Z</updated>
+    <link href="https://arxiv.org/abs/0905.2485v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.2485v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In 1981 Hong and Kung proved a lower bound on the amount of communication needed to perform dense, matrix-multiplication using the conventional $O(n^3)$ algorithm, where the input matrices were too large to fit in the small, fast memory. In 2004 Irony, Toledo and Tiskin gave a new proof of this result and extended it to the parallel case. In both cases the lower bound may be expressed as $Ω$(#arithmetic operations / $\sqrt{M}$), where M is the size of the fast memory (or local memory in the parallel case). Here we generalize these results to a much wider variety of algorithms, including LU factorization, Cholesky factorization, $LDL^T$ factorization, QR factorization, algorithms for eigenvalues and singular values, i.e., essentially all direct methods of linear algebra. The proof works for dense or sparse matrices, and for sequential or parallel algorithms. In addition to lower bounds on the amount of data moved (bandwidth) we get lower bounds on the number of messages required to move it (latency). We illustrate how to extend our lower bound technique to compositions of linear algebra operations (like computing powers of a matrix), to decide whether it is enough to call a sequence of simpler optimal algorithms (like matrix multiplication) to minimize communication, or if we can do better. We give examples of both. We also show how to extend our lower bounds to certain graph theoretic problems.
+  We point out recently designed algorithms for dense LU, Cholesky, QR, eigenvalue and the SVD problems that attain these lower bounds; implementations of LU and QR show large speedups over conventional linear algebra algorithms in standard libraries like LAPACK and ScaLAPACK. Many open problems remain.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-15T07:26:56Z</published>
+    <arxiv:comment>27 pages, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>SIAM. J. Matrix Anal. &amp; Appl. 32 (2011), no. 3, 866-901</arxiv:journal_ref>
+    <author>
+      <name>Grey Ballard</name>
+    </author>
+    <author>
+      <name>James Demmel</name>
+    </author>
+    <author>
+      <name>Olga Holtz</name>
+    </author>
+    <author>
+      <name>Oded Schwartz</name>
+    </author>
+    <arxiv:doi>10.1137/090769156</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/090769156" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.00966v3</id>
+    <title>From Reverse Detection--Estimation Gaps to Computational Lower Bounds for Norm Approximation</title>
+    <updated>2026-08-26T16:45:22Z</updated>
+    <link href="https://arxiv.org/abs/2604.00966v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.00966v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a general reduction scheme that converts reverse detection--estimation gaps into computational lower bounds for norm approximation. If an efficiently computable estimator has error well below a conjectured computational detection threshold, then a sufficiently accurate norm approximator applied to this estimator would yield an efficient test, transferring average-case detection hardness to worst-case approximation hardness. The ratio between the detection and estimation scales becomes a lower bound on the achievable approximation factor.
+  We apply the reduction in three settings. Using a previously established reverse gap for high-order cumulant tensors, we obtain a conditional lower bound for polynomial-time approximation of the order-$d$ tensor spectral norm. We then establish new reverse gaps for the $k$-sparse matrix spectral norm and a normalized $k$-sparse matrix cut norm under planted-clique hardness. The resulting lower bounds are of order $\sqrt{k}$ up to a logarithmic factor, matching the simple deterministic $\sqrt{k}$ certificates, whereas previous hardness results for the sparse principal component objective rule out only constant factors. Finally, under a model-specific low-degree conjecture, a new reverse gap forces polynomially growing approximation factors for the order-$d$ tensor cut norm when $d\ge3$. These results identify reverse detection--estimation gaps as a systematic source of computational lower bounds for norm approximation.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-01T14:40:41Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Runshi Tang</name>
+    </author>
+    <author>
+      <name>Yuefeng Han</name>
+    </author>
+    <author>
+      <name>Anru R. Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.02374v2</id>
+    <title>The composition complexity of majority</title>
+    <updated>2022-05-16T18:32:36Z</updated>
+    <link href="https://arxiv.org/abs/2205.02374v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.02374v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the complexity of computing majority as a composition of local functions: \[ \text{Maj}_n = h(g_1,\ldots,g_m), \] where each $g_j :\{0,1\}^{n} \to \{0,1\}$ is an arbitrary function that queries only $k \ll n$ variables and $h : \{0,1\}^m \to \{0,1\}$ is an arbitrary combining function. We prove an optimal lower bound of \[ m \ge Ω\left( \frac{n}{k} \log k \right) \] on the number of functions needed, which is a factor $Ω(\log k)$ larger than the ideal $m = n/k$. We call this factor the composition overhead; previously, no superconstant lower bounds on it were known for majority.
+  Our lower bound recovers, as a corollary and via an entirely different proof, the best known lower bound for bounded-width branching programs for majority (Alon and Maass '86, Babai et al. '90). It is also the first step in a plan that we propose for breaking a longstanding barrier in lower bounds for small-depth boolean circuits.
+  Novel aspects of our proof include sharp bounds on the information lost as computation flows through the inner functions $g_j$, and the bootstrapping of lower bounds for a multi-output function (Hamming weight) into lower bounds for a single-output one (majority).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-05T00:31:45Z</published>
+    <arxiv:comment>to appear in CCC 2022. Fixed typos, updated references</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Victor Lecomte</name>
+    </author>
+    <author>
+      <name>Prasanna Ramakrishnan</name>
+    </author>
+    <author>
+      <name>Li-Yang Tan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.06725v2</id>
+    <title>A Lower Bound of 21 for $3\times3$ Matrix Multiplication over $\mathbb{F}_2$</title>
+    <updated>2026-09-11T08:52:01Z</updated>
+    <link href="https://arxiv.org/abs/2609.06725v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.06725v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that $3\times3$ matrix multiplication over $\mathbb{F}_2$ has bilinear complexity at least $21$, improving the previous lower bound of $20$. Lower bounds for restrictions of the first input constrain how many first factors of a decomposition can lie in each subspace. For a hypothetical $20$-term decomposition, the strengthened restriction bounds force all first factors of matrix rank at least two into a single coset of a three-dimensional rank-one subspace. An exhaustive computation finds no admissible first-factor profile with $20$ terms. We also prove that $2\times3$ by $3\times3$ matrix multiplication over $\mathbb{F}_3$ has rank exactly $15$: three profiles with $14$ terms survive the corresponding computation up to symmetry, and short restriction arguments exclude them. We combine Wang's automated framework for tensor-rank lower bounds with D'Ambrosio's capacity-and-profile strategy. Our computational contributions are rank-one-span searches that strengthen the subspace lower-bound table and a direct, symmetry-reduced profile enumerator that enforces all subspace capacities simultaneously.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-06T16:56:45Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Chengu Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.04599v1</id>
+    <title>Determinants vs. Algebraic Branching Programs</title>
+    <updated>2023-08-08T21:56:44Z</updated>
+    <link href="https://arxiv.org/abs/2308.04599v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.04599v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that for every homogeneous polynomial of degree $d$, if it has determinantal complexity at most $s$, then it can be computed by a homogeneous algebraic branching program (ABP) of size at most $O(d^5s)$. Moreover, we show that for $\textit{most}$ homogeneous polynomials, the width of the resulting homogeneous ABP is just $s-1$ and the size is at most $O(ds)$.
+  Thus, for constant degree homogeneous polynomials, their determinantal complexity and ABP complexity are within a constant factor of each other and hence, a super-linear lower bound for ABPs for any constant degree polynomial implies a super-linear lower bound on determinantal complexity; this relates two open problems of great interest in algebraic complexity. As of now, super-linear lower bounds for ABPs are known only for polynomials of growing degree, and for determinantal complexity the best lower bounds are larger than the number of variables only by a constant factor.
+  While determinantal complexity and ABP complexity are classically known to be polynomially equivalent, the standard transformation from the former to the latter incurs a polynomial blow up in size in the process, and thus, it was unclear if a super-linear lower bound for ABPs implies a super-linear lower bound on determinantal complexity. In particular, a size preserving transformation from determinantal complexity to ABPs does not appear to have been known prior to this work, even for constant degree polynomials.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-08T21:56:44Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Abhranil Chatterjee</name>
+    </author>
+    <author>
+      <name>Mrinal Kumar</name>
+    </author>
+    <author>
+      <name>Ben Lee Volk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0809.2093v2</id>
+    <title>An approximation algorithm for approximation rank</title>
+    <updated>2021-03-07T13:14:48Z</updated>
+    <link href="https://arxiv.org/abs/0809.2093v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0809.2093v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One of the strongest techniques available for showing lower bounds on quantum communication complexity is the logarithm of the approximation rank of the communication matrix--the minimum rank of a matrix which is entrywise close to the communication matrix. This technique has two main drawbacks: it is difficult to compute, and it is not known to lower bound quantum communication complexity with entanglement.
+  Linial and Shraibman recently introduced a norm, called gamma_2^{alpha}, to quantum communication complexity, showing that it can be used to lower bound communication with entanglement. Here the parameter alpha is a measure of approximation which is related to the allowable error probability of the protocol. This bound can be written as a semidefinite program and gives bounds at least as large as many techniques in the literature, although it is smaller than the corresponding alpha-approximation rank, rk_alpha. We show that in fact log gamma_2^{alpha}(A)$ and log rk_{alpha}(A)$ agree up to small factors. As corollaries we obtain a constant factor polynomial time approximation algorithm to the logarithm of approximate rank, and that the logarithm of approximation rank is a lower bound for quantum communication complexity with entanglement.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-09-11T20:06:56Z</published>
+    <arxiv:comment>v2 fixes error from v1 in the proof of the dimension reduction theorem</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Troy Lee</name>
+    </author>
+    <author>
+      <name>Adi Shraibman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.03110v1</id>
+    <title>Near-optimal bounds on bounded-round quantum communication complexity of disjointness</title>
+    <updated>2015-05-12T18:23:54Z</updated>
+    <link href="https://arxiv.org/abs/1505.03110v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.03110v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a near optimal round-communication tradeoff for the two-party quantum communication complexity of disjointness. For protocols with $r$ rounds, we prove a lower bound of $\tildeΩ(n/r + r)$ on the communication required for computing disjointness of input size $n$, which is optimal up to logarithmic factors. The previous best lower bound was $Ω(n/r^2 + r)$ due to Jain, Radhakrishnan and Sen [JRS03]. Along the way, we develop several tools for quantum information complexity, one of which is a lower bound for quantum information complexity in terms of the generalized discrepancy method. As a corollary, we get that the quantum communication complexity of any boolean function $f$ is at most $2^{O(QIC(f))}$, where $QIC(f)$ is the prior-free quantum information complexity of $f$ (with error $1/3$).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-12T18:23:54Z</published>
+    <arxiv:comment>41 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Mark Braverman</name>
+    </author>
+    <author>
+      <name>Ankit Garg</name>
+    </author>
+    <author>
+      <name>Young Kun Ko</name>
+    </author>
+    <author>
+      <name>Jieming Mao</name>
+    </author>
+    <author>
+      <name>Dave Touchette</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21360v1</id>
+    <title>Linear Functional Testing with General Loadings in Sparse Regression: Separation Rates and Computational Barriers</title>
+    <updated>2026-05-20T16:24:54Z</updated>
+    <link href="https://arxiv.org/abs/2605.21360v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21360v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of testing $H_0: ξ^\topβ=t_0$ in high-dimensional sparse linear regression with Gaussian random design and unknown design covariance. The loading vector $ξ$ is arbitrary, and the exact sparsity level $k$ is unknown but bounded by a known value $k_u$. Tests are required to control Type I error uniformly over the $k_u$-sparse null, while power is evaluated against $k$-sparse alternatives. We construct a computationally efficient mixed test that gives an upper bound on the adaptive separation distance and establish an information-theoretic lower bound calibrated to the magnitude profile of $ξ$. In the ultra-sparse regime $k_u\lesssim \sqrt n/\log p$, these bounds characterize the adaptive separation rate up to logarithmic factors for arbitrary $ξ$. In the moderately sparse regime $\sqrt n/\log p\ll k_u\lesssim n/\log p$, these bounds match for several classes of loading vectors but may differ in general. In this regime, we further prove a low-degree lower bound that matches the upper bound up to logarithmic factors. This provides evidence that improving on the rate of the mixed test, if statistically possible, may be computationally hard. For flat sparse loadings, we complement this evidence with a polynomial-time reduction from sparse CCA. Finally, we examine how information about the design covariance affects the adaptive separation rate in two settings. Under a sparse signed-spiked covariance model, the information-theoretic lower bound is attainable up to logarithmic factors by a computationally inefficient procedure, while the low-degree lower bound and sparse-CCA reduction continue to apply, providing evidence for a statistical-computational gap. When the design covariance is known and diagonal, the adaptive separation rate takes the same form as in the ultra-sparse regime.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T16:24:54Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Jie Xie</name>
+    </author>
+    <author>
+      <name>Dongming Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.14033v3</id>
+    <title>On Lower Bounds of Approximating Parameterized $k$-Clique</title>
+    <updated>2022-08-03T06:38:52Z</updated>
+    <link href="https://arxiv.org/abs/2111.14033v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.14033v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a simple graph $G$ and an integer $k$, the goal of $k$-Clique problem is to decide if $G$ contains a complete subgraph of size $k$. We say an algorithm approximates $k$-Clique within a factor $g(k)$ if it can find a clique of size at least $k / g(k)$ when $G$ is guaranteed to have a $k$-clique. Recently, it was shown that approximating $k$-Clique within a constant factor is W[1]-hard [Lin21].
+  We study the approximation of $k$-Clique under the Exponential Time Hypothesis (ETH). The reduction of [Lin21] already implies an $n^{Ω(\sqrt[6]{\log k})}$-time lower bound under ETH. We improve this lower bound to $n^{Ω(\log k)}$. Using the gap-amplification technique by expander graphs, we also prove that there is no $k^{o(1)}$ factor FPT-approximation algorithm for $k$-Clique under ETH.
+  We also suggest a new way to prove the Parameterized Inapproximability Hypothesis (PIH) under ETH. We show that if there is no $n^{O(\frac{k}{\log k})}$ algorithm to approximate $k$-Clique within a constant factor, then PIH is true.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-28T03:09:41Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Bingkai Lin</name>
+    </author>
+    <author>
+      <name>Xuandi Ren</name>
+    </author>
+    <author>
+      <name>Yican Sun</name>
+    </author>
+    <author>
+      <name>Xiuhan Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.11795v5</id>
+    <title>Quantum Distributed Complexity of Set Disjointness on a Line</title>
+    <updated>2022-03-08T22:07:19Z</updated>
+    <link href="https://arxiv.org/abs/2002.11795v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.11795v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Set Disjointness on a Line is a variant of the Set Disjointness problem in a distributed computing scenario with $d+1$ processors arranged on a path of length $d$. It was introduced by Le Gall and Magniez (PODC 2018) for proving lower bounds on the quantum distributed complexity of computing the diameter of an arbitrary network in the CONGEST model. However, they were only able to provide a lower bound when the local memory used by the processors on the intermediate vertices of the path consists of O$( \log n)$ qubits for $n$-bit inputs. We prove an unconditional lower bound of $\widetildeΩ\big(\sqrt[3]{n d^2}+\sqrt{n} \, \big)$ rounds for Set Disjointness on a Line with $d + 1$ processors. The result gives us a new lower bound of $\widetildeΩ \big( \sqrt[3]{nδ^2}+\sqrt{n} \, \big)$ on the number of rounds required for computing the diameter $δ$ of any $n$-node network with quantum messages of size O$(\log n)$ in the CONGEST model.
+  We draw a connection between the distributed computing scenario above and a new model of query complexity. The information-theoretic technique we use for deriving the round lower bound for Set Disjointness on a Line also applies to the number of rounds in this query model. We provide an algorithm for Set Disjointness in this query model with round complexity that matches the round lower bound stated above, up to a polylogarithmic factor. This presents a barrier for obtaining a better round lower bound for Set Disjointness on the Line. At the same time, it hints at the possibility of better communication protocols for the problem.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-26T21:17:53Z</published>
+    <arxiv:comment>24 pages, 2 figures. In v3, background on Theorem 3.5 (from prior work) was included in an appendix. In v4, a detail in the statement of Theorem 3.5 has been corrected, and corresponding changes have been made in the rest of the paper. The results remain unchanged. In v5, extended main theorems to the entanglement-assisted setting, added explanations and clarifications, corrected typos</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>ACM Transactions on Computation Theory, Volume 14, Issue 1, March 2022, Article No.: 5, pp 1-22</arxiv:journal_ref>
+    <author>
+      <name>Frederic Magniez</name>
+    </author>
+    <author>
+      <name>Ashwin Nayak</name>
+    </author>
+    <arxiv:doi>10.1145/3512751</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3512751" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03802v1</id>
+    <title>Quantum Query Complexity of Finding a Tarski Fixed Point on a High-Dimensional Grid</title>
+    <updated>2026-09-03T13:06:12Z</updated>
+    <link href="https://arxiv.org/abs/2609.03802v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03802v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Knaster-Tarski fixed-point theorem states that every monotone function over a complete lattice has a fixed point. Beyond its fundamental role in order theory, the theorem and its algorithmic variants have found broad applications in areas such as economics, game theory, and programming languages. While the query complexity of finding a Tarski fixed point has been extensively studied in classical models, comparatively little is known in the quantum setting.
+  We prove an $Ω(k\log n)$ quantum query lower bound for finding a fixed point of a monotone function on $[n]^k$, using the nonnegative spectral adversary method. In the two extremal regimes $n = 2$ and $k = 1$, our quantum lower bound matches the previous classical lower bounds $Ω(k)$ and $Ω(\log n)$, respectively. For $n, k\geq 2$, our bound improves the best previous classical lower bound when $n &lt; k$ and is within a factor of $\log n / \log k$ compared to the known classical lower bound when $n \geq k$. To construct the adversary matrix, we develop the Tree--Filtration Adversary Method. Besides yielding our lower bound, the method offers a more transparent combinatorial interpretation of the nonnegative spectral adversary method. When the hard instances of a problem admit a tree-like organization and suggest an intuition analogous to classical decision-tree lower bounds, our method provide a promising approach to establishing quantum complexity lower bounds.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T13:06:12Z</published>
+    <arxiv:comment>35 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Tongyang Li</name>
+    </author>
+    <author>
+      <name>Weiran Ma</name>
+    </author>
+    <author>
+      <name>Ziyi Yang</name>
+    </author>
+    <author>
+      <name>Xingyu Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.02015v1</id>
+    <title>Lower Bounds by Birkhoff Interpolation</title>
+    <updated>2015-07-08T04:10:11Z</updated>
+    <link href="https://arxiv.org/abs/1507.02015v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.02015v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we give lower bounds for the representation of real univariate polynomials as sums of powers of degree 1 polynomials. We present two families of polynomials of degree d such that the number of powers that are required in such a representation must be at least of order d. This is clearly optimal up to a constant factor. Previous lower bounds for this problem were only of order $Ω$($\sqrt$ d), and were obtained from arguments based on Wronskian determinants and "shifted derivatives." We obtain this improvement thanks to a new lower bound method based on Birkhoff interpolation (also known as "lacunary polynomial interpolation").</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-08T04:10:11Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Ignacio Garcia-Marco</name>
+      <arxiv:affiliation>LIP</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pascal Koiran</name>
+      <arxiv:affiliation>LIP</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.06513v2</id>
+    <title>Exponential Lower Bounds for Smooth 3-LCCs and Sharp Bounds for Designs</title>
+    <updated>2024-10-28T14:00:45Z</updated>
+    <link href="https://arxiv.org/abs/2404.06513v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.06513v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give improved lower bounds for binary $3$-query locally correctable codes (3-LCCs) $C \colon \{0,1\}^k \rightarrow \{0,1\}^n$. Specifically, we prove:
+  (1) If $C$ is a linear design 3-LCC, then $n \geq 2^{(1 - o(1))\sqrt{k} }$. A design 3-LCC has the additional property that the correcting sets for every codeword bit form a perfect matching and every pair of codeword bits is queried an equal number of times across all matchings. Our bound is tight up to a factor $\sqrt{8}$ in the exponent of $2$, as the best construction of binary $3$-LCCs (obtained by taking Reed-Muller codes on $\mathbb{F}_4$ and applying a natural projection map) is a design $3$-LCC with $n \leq 2^{\sqrt{8 k}}$. Up to a $\sqrt{8}$ factor, this resolves the Hamada conjecture on the maximum $\mathbb{F}_2$-codimension of a $4$-design.
+  (2) If $C$ is a smooth, non-linear, adaptive $3$-LCC with perfect completeness, then, $n \geq 2^{Ω(k^{1/5})}$.
+  (3) If $C$ is a smooth, non-linear, adaptive $3$-LCC with completeness $1 - \varepsilon$, then $n \geq \tildeΩ(k^{\frac{1}{2\varepsilon}})$. In particular, when $\varepsilon$ is a small constant, this implies a lower bound for general non-linear LCCs that beats the prior best $n \geq \tildeΩ(k^3)$ lower bound of [AGKM23] by a polynomial factor.
+  Our design LCC lower bound is obtained via a fine-grained analysis of the Kikuchi matrix method applied to a variant of the matrix used in [KM23]. Our lower bounds for non-linear codes are obtained by designing a from-scratch reduction from nonlinear $3$-LCCs to a system of "chain XOR equations": polynomial equations with similar structure to the long chain derivations that arise in the lower bounds for linear $3$-LCCs [KM23].</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-09T17:59:47Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Pravesh K. Kothari</name>
+    </author>
+    <author>
+      <name>Peter Manohar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.17047v1</id>
+    <title>Secret Sharing at the Shannon Ceiling</title>
+    <updated>2026-08-17T18:50:49Z</updated>
+    <link href="https://arxiv.org/abs/2608.17047v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.17047v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For every $n\geq 9$ that is a multiple of 3, we construct an explicit access structure on $n$ participants. In every perfect secret-sharing scheme realising this access structure, if $S$ denotes the random secret, then the sum of the share entropies is at least $\left(\frac{n^2}{9}+\frac{2n}{3}\right)H(S)$, and some participant has share entropy at least $\left(\frac{n}{6}+\frac12\right)H(S)$. After normalisation by $H(S)$, these are respectively $Ω(n^2)$ and $Ω(n)$ lower bounds and also give the same asymptotic lower bounds on the total and largest expected binary lengths of the shares. This improves by a logarithmic factor the longstanding general lower bounds of $Ω(n^2/\log n)$ for total share size and $Ω(n/\log n)$ for maximum share size due to Csirmaz. The proof uses only elementary Shannon inequalities, together with some averaging arguments. The Shannon-information method has universal $O(n^2)$ and $O(n)$ ceilings for the total and maximum normalised entropy lower bounds it can certify, so our construction reaches both ceilings up to constant factors.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-17T18:50:49Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Christopher Williamson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.04342v1</id>
+    <title>Improved Lower Bounds for Submodular Function Minimization</title>
+    <updated>2022-07-09T21:54:15Z</updated>
+    <link href="https://arxiv.org/abs/2207.04342v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.04342v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a generic technique for constructing families of submodular functions to obtain lower bounds for submodular function minimization (SFM). Applying this technique, we prove that any deterministic SFM algorithm on a ground set of $n$ elements requires at least $Ω(n \log n)$ queries to an evaluation oracle. This is the first super-linear query complexity lower bound for SFM and improves upon the previous best lower bound of $2n$ given by [Graur et al., ITCS 2020]. Using our construction, we also prove that any (possibly randomized) parallel SFM algorithm, which can make up to $\mathsf{poly}(n)$ queries per round, requires at least $Ω(n / \log n)$ rounds to minimize a submodular function. This improves upon the previous best lower bound of $\tildeΩ(n^{1/3})$ rounds due to [Chakrabarty et al., FOCS 2021], and settles the parallel complexity of query-efficient SFM up to logarithmic factors due to a recent advance in [Jiang, SODA 2021].</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-09T21:54:15Z</published>
+    <arxiv:comment>To appear in FOCS 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Deeparnab Chakrabarty</name>
+    </author>
+    <author>
+      <name>Andrei Graur</name>
+    </author>
+    <author>
+      <name>Haotian Jiang</name>
+    </author>
+    <author>
+      <name>Aaron Sidford</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1407.4308v1</id>
+    <title>Some upper and lower bounds on PSD-rank</title>
+    <updated>2014-07-16T13:49:17Z</updated>
+    <link href="https://arxiv.org/abs/1407.4308v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1407.4308v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Positive semidefinite rank (PSD-rank) is a relatively new quantity with applications to combinatorial optimization and communication complexity. We first study several basic properties of PSD-rank, and then develop new techniques for showing lower bounds on the PSD-rank. All of these bounds are based on viewing a positive semidefinite factorization of a matrix $M$ as a quantum communication protocol. These lower bounds depend on the entries of the matrix and not only on its support (the zero/nonzero pattern), overcoming a limitation of some previous techniques. We compare these new lower bounds with known bounds, and give examples where the new ones are better. As an application we determine the PSD-rank of (approximations of) some common matrices.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-07-16T13:49:17Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Troy Lee</name>
+    </author>
+    <author>
+      <name>Zhaohui Wei</name>
+    </author>
+    <author>
+      <name>Ronald de Wolf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1007.2678v1</id>
+    <title>Approximating Multilinear Monomial Coefficients and Maximum Multilinear Monomials in Multivariate Polynomials</title>
+    <updated>2010-07-15T23:12:11Z</updated>
+    <link href="https://arxiv.org/abs/1007.2678v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1007.2678v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper is our third step towards developing a theory of testing monomials in multivariate polynomials and concentrates on two problems: (1) How to compute the coefficients of multilinear monomials; and (2) how to find a maximum multilinear monomial when the input is a $ΠΣΠ$ polynomial. We first prove that the first problem is \#P-hard and then devise a $O^*(3^ns(n))$ upper bound for this problem for any polynomial represented by an arithmetic circuit of size $s(n)$. Later, this upper bound is improved to $O^*(2^n)$ for $ΠΣΠ$ polynomials. We then design fully polynomial-time randomized approximation schemes for this problem for $ΠΣ$ polynomials. On the negative side, we prove that, even for $ΠΣΠ$ polynomials with terms of degree $\le 2$, the first problem cannot be approximated at all for any approximation factor $\ge 1$, nor {\em "weakly approximated"} in a much relaxed setting, unless P=NP. For the second problem, we first give a polynomial time $λ$-approximation algorithm for $ΠΣΠ$ polynomials with terms of degrees no more a constant $λ\ge 2$. On the inapproximability side, we give a $n^{(1-ε)/2}$ lower bound, for any $ε&gt;0,$ on the approximation factor for $ΠΣΠ$ polynomials. When terms in these polynomials are constrained to degrees $\le 2$, we prove a $1.0476$ lower bound, assuming $P\not=NP$; and a higher $1.0604$ lower bound, assuming the Unique Games Conjecture.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-07-15T23:12:11Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Zhixiang Chen</name>
+    </author>
+    <author>
+      <name>Bin Fu</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-642-17458-2_26</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-642-17458-2_26" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.10277v4</id>
+    <title>Quadratic Lower bounds on the Approximate Stabilizer Rank: A Probabilistic Approach</title>
+    <updated>2024-03-29T23:55:52Z</updated>
+    <link href="https://arxiv.org/abs/2305.10277v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.10277v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The approximate stabilizer rank of a quantum state is the minimum number of terms in any approximate decomposition of that state into stabilizer states. Bravyi and Gosset showed that the approximate stabilizer rank of a so-called "magic" state like $|T\rangle^{\otimes n}$, up to polynomial factors, is an upper bound on the number of classical operations required to simulate an arbitrary quantum circuit with Clifford gates and $n$ number of $T$ gates. As a result, an exponential lower bound on this quantity seems inevitable. Despite this intuition, several attempts using various techniques could not lead to a better than a linear lower bound on the "exact" rank of ${|T\rangle}^{\otimes n}$, meaning the minimal size of a decomposition that exactly produces the state. For the "approximate" rank, which is more realistically related to the cost of simulating quantum circuits, no lower bound better than $\tilde Ω(\sqrt n)$ has been known. In this paper, we improve the lower bound on the approximate rank to $\tilde Ω(n^2)$ for a wide range of the approximation parameters. An immediate corollary of our result is the existence of polynomial time computable functions which require a super-linear number of terms in any decomposition into exponentials of quadratic forms over $\mathbb{F}_2$, resolving a question in [Wil18]. Our approach is based on a strong lower bound on the approximate rank of a quantum state sampled from the Haar measure, a step-by-step analysis of the approximate rank of a magic-state teleportation protocol to sample from the Haar measure, and a result about trading Clifford operations with $T$ gates by [LKS18].</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-17T15:09:41Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Saeed Mehraban</name>
+    </author>
+    <author>
+      <name>Mehrdad Tahmasbi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.13005v3</id>
+    <title>Quantum Linear Algorithm for Edit Distance Using the Word QRAM Model</title>
+    <updated>2023-02-06T14:13:19Z</updated>
+    <link href="https://arxiv.org/abs/2112.13005v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.13005v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many problems that can be solved in quadratic time have bit-parallel speed-ups with factor $w$, where $w$ is the computer word size. For example, edit distance of two strings of length $n$ can be solved in $O(n^2/w)$ time. In a reasonable classical model of computation, one can assume $w=Θ(\log n)$. There are conditional lower bounds for such problems stating that speed-ups with factor $n^ε$ for any $ε&gt;0$ would lead to breakthroughs in complexity theory. However, these conditional lower bounds do not cover quantum models of computing. Indeed, Boroujeni et al. (J. ACM, 2021) showed that edit distance can be approximated within a factor $3$ in sub-quadratic time $O(n^{1.81})$ using quantum computing. They also showed that, in their chosen model of quantum computing, the approximation factor cannot be improved using sub-quadractic time.
+  To break through the aforementioned classical conditional lower bounds and this latest quantum lower bound, we enrich the model of computation with a quantum random access memory (QRAM), obtaining what we call the word QRAM model. Under this model, we show how to convert the bit-parallelism of quadratic time solvable problems into quantum algorithms that attain speed-ups with factor $n$. The technique we use is simple and general enough to apply to many bit-parallel algorithms that use Boolean logics and bit-shifts. To apply it to edit distance, we first show that the famous $O(n^2/w)$ time bit-parallel algorithm of Myers (J. ACM, 1999) can be adjusted to work without arithmetic + operations. As a direct consequence of applying our technique to this variant, we obtain linear time edit distance algorithm under the word QRAM model for constant alphabet. We give further results on a restricted variant of the word QRAM model to give more insights to the limits of the model.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-24T09:26:55Z</published>
+    <arxiv:comment>An incorrect assumption invalidates the results</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Massimo Equi</name>
+    </author>
+    <author>
+      <name>Arianne Meijer-van de Griend</name>
+    </author>
+    <author>
+      <name>Veli Mäkinen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.02210v3</id>
+    <title>Shrinkage under Random Projections, and Cubic Formula Lower Bounds for $\mathsf{AC}^0$</title>
+    <updated>2024-12-05T22:52:23Z</updated>
+    <link href="https://arxiv.org/abs/2012.02210v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.02210v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>$\newcommand{\ACz}{\mathbf{AC}^0}$ Håstad showed that any De Morgan formula (composed of AND, OR and NOT gates) shrinks by a factor of $\tilde{O}(p^{2})$ under a random restriction that leaves each variable alive independently with probability $p$ [SICOMP, 1998]. Using this result, he gave an $\widetildeΩ(n^{3})$ formula size lower bound for the Andreev function, which, up to lower order improvements, remains the state-of-the-art lower bound for any explicit function.
+  In this paper, we extend the shrinkage result of Håstad to hold under a far wider family of random restrictions and their generalization -- random projections. Based on our shrinkage results, we obtain an $\widetildeΩ(n^{3})$ formula size lower bound for an explicit function computable in $\ACz$. This improves upon the best known formula size lower bounds for $\ACz$, that were only quadratic prior to our work. In addition, we prove that the KRW conjecture [Karchmer et al., Computational Complexity 5(3/4), 1995] holds for inner functions for which the unweighted quantum adversary bound is tight. In particular, this holds for inner functions with a tight Khrapchenko bound.
+  Our random projections are tailor-made to the function's structure so that the function maintains structure even under projection -- using such projections is necessary, as standard random restrictions simplify $\ACz$ circuits. In contrast, we show that any De Morgan formula shrinks by a quadratic factor under our random projections, allowing us to prove the cubic lower bound.
+  Our proof techniques build on Håstad's proof for the simpler case of balanced formulas. This allows for a significantly simpler proof at the cost of slightly worse parameters. As such, when specialized to the case of $p$-random restrictions, our proof can be used as an exposition of Håstad's result.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-03T19:00:55Z</published>
+    <arxiv:comment>Published in Theory of Computing, Volume 19 (2023), Article 7; Received: February 19, 2021, Revised: December 28, 2021, Published: December 5, 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>Theory of Computing 19(7):1-51, 2023</arxiv:journal_ref>
+    <author>
+      <name>Yuval Filmus</name>
+    </author>
+    <author>
+      <name>Or Meir</name>
+    </author>
+    <author>
+      <name>Avishay Tal</name>
+    </author>
+    <arxiv:doi>10.4086/toc.2023.v019a007</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4086/toc.2023.v019a007" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.4745v1</id>
+    <title>A Lower Bound for Fourier Transform Computation in a Linear Model Over 2x2 Unitary Gates Using Matrix Entropy</title>
+    <updated>2013-05-21T07:58:28Z</updated>
+    <link href="https://arxiv.org/abs/1305.4745v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.4745v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Obtaining a non-trivial (super-linear) lower bound for computation of the Fourier transform in the linear circuit model has been a long standing open problem. All lower bounds so far have made strong restrictions on the computational model. One of the most well known results, by Morgenstern from 1973, provides an $Ω(n \log n)$ lower bound for the \emph{unnormalized} FFT when the constants used in the computation are bounded. The proof uses a potential function related to a determinant. The determinant of the unnormalized Fourier transform is $n^{n/2}$, and thus by showing that it can grow by at most a constant factor after each step yields the result.
+  This classic result, however, does not explain why the \emph{normalized} Fourier transform, which has a unit determinant, should take $Ω(n\log n)$ steps to compute. In this work we show that in a layered linear circuit model restricted to unitary $2\times 2$ gates, one obtains an $Ω(n\log n)$ lower bound. The well known FFT works in this model. The main argument concluded from this work is that a potential function that might eventually help proving the $Ω(n\log n)$ conjectured lower bound for computation of Fourier transform is not related to matrix determinant, but rather to a notion of matrix entropy.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-21T07:58:28Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nir Ailon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.3783v1</id>
+    <title>Unifying the Landscape of Cell-Probe Lower Bounds</title>
+    <updated>2010-10-19T02:44:43Z</updated>
+    <link href="https://arxiv.org/abs/1010.3783v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.3783v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a large fraction of the data-structure lower bounds known today in fact follow by reduction from the communication complexity of lopsided (asymmetric) set disjointness. This includes lower bounds for:
+  * high-dimensional problems, where the goal is to show large space lower bounds.
+  * constant-dimensional geometric problems, where the goal is to bound the query time for space O(n polylog n).
+  * dynamic problems, where we are looking for a trade-off between query and update time. (In this case, our bounds are slightly weaker than the originals, losing a lglg n factor.)
+  Our reductions also imply the following new results:
+  * an Omega(lg n / lglg n) bound for 4-dimensional range reporting, given space O(n polylog n). This is quite timely, since a recent result solved 3D reporting in O(lglg n) time, raising the prospect that higher dimensions could also be easy.
+  * a tight space lower bound for the partial match problem, for constant query time.
+  * the first lower bound for reachability oracles.
+  In the process, we prove optimal randomized lower bounds for lopsided set disjointness.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-19T02:44:43Z</published>
+    <arxiv:comment>To appear in SIAM Journal on Computing (SICOMP). The conference version appeared in FOCS'08 under the title "(Data) Structures"</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Mihai Patrascu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.00026v3</id>
+    <title>On the Communication Complexity of Distributed Clustering</title>
+    <updated>2017-02-02T01:48:20Z</updated>
+    <link href="https://arxiv.org/abs/1507.00026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.00026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we give a first set of communication lower bounds for distributed clustering problems, in particular, for k-center, k-median and k-means. When the input is distributed across a large number of machines and the number of clusters k is small, our lower bounds match the current best upper bounds up to a logarithmic factor. We have designed a new composition framework in our proofs for multiparty number-in-hand communication complexity which may be of independent interest.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-30T20:29:01Z</published>
+    <arxiv:comment>This paper has been withdrawn by the author due to the fact that simpler proofs exist; see arXiv:1702.00196</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Qin Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24845v1</id>
+    <title>A Near-Optimal Parallel Algorithm for Finding Matroid Bases</title>
+    <updated>2026-06-23T17:24:37Z</updated>
+    <link href="https://arxiv.org/abs/2606.24845v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24845v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We settle the classic question of the parallel complexity of computing a matroid basis, as first posed in the seminal work of Karp, Upfal, and Wigderson (FOCS 1985, JCSS 1988). Our algorithm runs in $O(n^{1/3}\log^{1/3}n)$ rounds, matching the lower bound of KUW up to a $\log^{2/3}(n)$ factor.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T17:24:37Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Sanjeev Khanna</name>
+    </author>
+    <author>
+      <name>Aaron Putterman</name>
+    </author>
+    <author>
+      <name>Junkai Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1101.4555v1</id>
+    <title>Tight bounds on the randomized communication complexity of symmetric XOR functions in one-way and SMP models</title>
+    <updated>2011-01-24T14:53:10Z</updated>
+    <link href="https://arxiv.org/abs/1101.4555v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1101.4555v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the communication complexity of symmetric XOR functions, namely functions $f: \{0,1\}^n \times \{0,1\}^n \rightarrow \{0,1\}$ that can be formulated as $f(x,y)=D(|x\oplus y|)$ for some predicate $D: \{0,1,...,n\} \rightarrow \{0,1\}$, where $|x\oplus y|$ is the Hamming weight of the bitwise XOR of $x$ and $y$. We give a public-coin randomized protocol in the Simultaneous Message Passing (SMP) model, with the communication cost matching the known lower bound for the \emph{quantum} and \emph{two-way} model up to a logarithm factor. As a corollary, this closes a quadratic gap between quantum lower bound and randomized upper bound for the one-way model, answering an open question raised in Shi and Zhang \cite{SZ09}.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-01-24T14:53:10Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>TAMC11', Proceedings of the 8th Theory and Applications of Models of Computation Lecture Notes in Computer Science, 2011, Volume 6648/2011, pages 403-408</arxiv:journal_ref>
+    <author>
+      <name>Ming Lam Leung</name>
+    </author>
+    <author>
+      <name>Yang Li</name>
+    </author>
+    <author>
+      <name>Shengyu Zhang</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-642-20877-5_39</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-642-20877-5_39" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9804066v2</id>
+    <title>The quantum query complexity of approximating the median and related statistics</title>
+    <updated>1998-11-15T01:36:43Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9804066v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9804066v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let X = (x_0,...,x_{n-1})$ be a sequence of n numbers. For ε&gt; 0, we say that x_i is an ε-approximate median if the number of elements strictly less than x_i, and the number of elements strictly greater than x_i are each less than (1+ε)n/2. We consider the quantum query complexity of computing an ε-approximate median, given the sequence X as an oracle. We prove a lower bound of Ω(\min{{1/ε},n}) queries for any quantum algorithm that computes an ε-approximate median with any constant probability greater than 1/2. We also show how an ε-approximate median may be computed with O({1/ε}\log({1\/ε}) \log\log({1/ε})) oracle queries, which represents an improvement over an earlier algorithm due to Grover. Thus, the lower bound we obtain is essentially optimal. The upper and the lower bound both hold in the comparison tree model as well.
+  Our lower bound result is an application of the polynomial paradigm recently introduced to quantum complexity theory by Beals et al. The main ingredient in the proof is a polynomial degree lower bound for real multilinear polynomials that ``approximate'' symmetric partial boolean functions. The degree bound extends a result of Paturi and also immediately yields lower bounds for the problems of approximating the kth-smallest element, approximating the mean of a sequence of numbers, and that of approximately counting the number of ones of a boolean function. All bounds obtained come within polylogarithmic factors of the optimal (as we show by presenting algorithms where no such optimal or near optimal algorithms were known), thus demonstrating the power of the polynomial method.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-04-29T02:00:07Z</published>
+    <arxiv:comment>20 pages. Preliminary draft. Extends results of previous version to several other problems, and gives some new upper bounds</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ashwin Nayak</name>
+    </author>
+    <author>
+      <name>Felix Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.0845v1</id>
+    <title>Adversary Lower Bound for the Orthogonal Array Problem</title>
+    <updated>2013-04-03T05:36:55Z</updated>
+    <link href="https://arxiv.org/abs/1304.0845v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.0845v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a quantum query lower bound Ω(n^{(d+1)/(d+2)}) for the problem of deciding whether an input string of size n contains a k-tuple which belongs to a fixed orthogonal array on k factors of strength d&lt;=k-1 and index 1, provided that the alphabet size is sufficiently large. Our lower bound is tight when d=k-1.
+  The orthogonal array problem includes the following problems as special cases: k-sum problem with d=k-1, k-distinctness problem with d=1, k-pattern problem with d=0, (d-1)-degree problem with 1&lt;=d&lt;=k-1, unordered search with d=0 and k=1, and graph collision with d=0 and k=2.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-03T05:36:55Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Robert Spalek</name>
+      <arxiv:affiliation>Google</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.12458v3</id>
+    <title>On the Degree of Boolean Functions as Polynomials over $\mathbb{Z}_m$</title>
+    <updated>2020-05-01T10:10:03Z</updated>
+    <link href="https://arxiv.org/abs/1910.12458v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.12458v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polynomial representations of Boolean functions over various rings such as $\mathbb{Z}$ and $\mathbb{Z}_m$ have been studied since Minsky and Papert (1969). From then on, they have been employed in a large variety of fields including communication complexity, circuit complexity, learning theory, coding theory and so on. For any integer $m\ge2$, each Boolean function has a unique multilinear polynomial representation over ring $\mathbb Z_m$. The degree of such polynomial is called modulo-$m$ degree, denoted as $\mathrm{deg}_m(\cdot)$.
+  In this paper, we investigate the lower bound of modulo-$m$ degree of Boolean functions. When $m=p^k$ ($k\ge 1$) for some prime $p$, we give a tight lower bound that $\mathrm{deg}_m(f)\geq k(p-1)$ for any non-degenerated function $f:\{0,1\}^n\to\{0,1\}$, provided that $n$ is sufficient large. When $m$ contains two different prime factors $p$ and $q$, we give a nearly optimal lower bound for any symmetric function $f:\{0,1\}^n\to\{0,1\}$ that $\mathrm{deg}_m(f) \geq \frac{n}{2+\frac{1}{p-1}+\frac{1}{q-1}}$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-28T06:06:15Z</published>
+    <arxiv:comment>To appear in ICALP'20</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Xiaoming Sun</name>
+    </author>
+    <author>
+      <name>Yuan Sun</name>
+    </author>
+    <author>
+      <name>Jiaheng Wang</name>
+    </author>
+    <author>
+      <name>Kewen Wu</name>
+    </author>
+    <author>
+      <name>Zhiyu Xia</name>
+    </author>
+    <author>
+      <name>Yufan Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.06256v1</id>
+    <title>Classical lower bounds from quantum upper bounds</title>
+    <updated>2018-07-17T07:12:45Z</updated>
+    <link href="https://arxiv.org/abs/1807.06256v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.06256v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove lower bounds on complexity measures, such as the approximate degree of a Boolean function and the approximate rank of a Boolean matrix, using quantum arguments. We prove these lower bounds using a quantum query algorithm for the combinatorial group testing problem.
+  We show that for any function f, the approximate degree of computing the OR of n copies of f is Omega(sqrt{n}) times the approximate degree of f, which is optimal. No such general result was known prior to our work, and even the lower bound for the OR of ANDs function was only resolved in 2013.
+  We then prove an analogous result in communication complexity, showing that the logarithm of the approximate rank (or more precisely, the approximate gamma_2 norm) of F: X x Y -&gt; {0,1} grows by a factor of Omega~(sqrt{n}) when we take the OR of n copies of F, which is also essentially optimal. As a corollary, we give a new proof of Razborov's celebrated Omega(sqrt{n}) lower bound on the quantum communication complexity of the disjointness problem.
+  Finally, we generalize both these results from composition with the OR function to composition with arbitrary symmetric functions, yielding nearly optimal lower bounds in this setting as well.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-17T07:12:45Z</published>
+    <arxiv:comment>46 pages; to appear at FOCS 2018</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Shalev Ben-David</name>
+    </author>
+    <author>
+      <name>Adam Bouland</name>
+    </author>
+    <author>
+      <name>Ankit Garg</name>
+    </author>
+    <author>
+      <name>Robin Kothari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.13086v2</id>
+    <title>Quantum Algorithms and Lower Bounds for Linear Regression with Norm Constraints</title>
+    <updated>2022-07-19T10:59:29Z</updated>
+    <link href="https://arxiv.org/abs/2110.13086v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.13086v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lasso and Ridge are important minimization problems in machine learning and statistics. They are versions of linear regression with squared loss where the vector $θ\in\mathbb{R}^d$ of coefficients is constrained in either $\ell_1$-norm (for Lasso) or in $\ell_2$-norm (for Ridge). We study the complexity of quantum algorithms for finding $\varepsilon$-minimizers for these minimization problems. We show that for Lasso we can get a quadratic quantum speedup in terms of $d$ by speeding up the cost-per-iteration of the Frank-Wolfe algorithm, while for Ridge the best quantum algorithms are linear in $d$, as are the best classical algorithms. As a byproduct of our quantum lower bound for Lasso, we also prove the first classical lower bound for Lasso that is tight up to polylog-factors.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-25T16:26:37Z</published>
+    <arxiv:comment>v2: Main changes are the addition of a tight classical lower bound for Lasso, and small improvements in the existing text. 38 pages LaTeX</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Yanlin Chen</name>
+      <arxiv:affiliation>QuSoft, CWI</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ronald de Wolf</name>
+      <arxiv:affiliation>QuSoft, CWI and University of Amsterdam</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.08888v2</id>
+    <title>QMA Lower Bounds for Batch Verification via Approximate Degree</title>
+    <updated>2026-09-09T16:13:24Z</updated>
+    <link href="https://arxiv.org/abs/2607.08888v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.08888v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study batch verification in QMA query and communication complexity, where the goal is to understand how the resources needed to verify $m$ copies of a Boolean function $f$ depend on $m$. We give a general technique for proving lower bounds on the witness-query tradeoff needed to batch verify a function $f$ in terms of its approximate degree. Applying this technique to an explicit family of DNF formulas $f$, we show that attempting to save even a constant factor on the witness length of the baseline approach to batch verifying $f$ necessitates a large polynomial increase in the query cost. We also obtain new lower bounds on the QMA query complexity of read-once CNF formulas and on the surjectivity and $k$-element distinctness functions. Our lower bounds also lift to give communication analogs of these results.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-09T19:26:15Z</published>
+    <arxiv:comment>A conference version of this paper was published at RANDOM 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Mark Bun</name>
+    </author>
+    <author>
+      <name>Mandar Juvekar</name>
+    </author>
+    <author>
+      <name>Samuel King</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.APPROX/RANDOM.2026.69</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.APPROX/RANDOM.2026.69" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1302.0418v1</id>
+    <title>Arthur-Merlin Streaming Complexity</title>
+    <updated>2013-02-02T19:26:50Z</updated>
+    <link href="https://arxiv.org/abs/1302.0418v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1302.0418v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the power of Arthur-Merlin probabilistic proof systems in the data stream model. We show a canonical $\mathcal{AM}$ streaming algorithm for a wide class of data stream problems. The algorithm offers a tradeoff between the length of the proof and the space complexity that is needed to verify it.
+  As an application, we give an $\mathcal{AM}$ streaming algorithm for the \emph{Distinct Elements} problem. Given a data stream of length $m$ over alphabet of size $n$, the algorithm uses $\tilde O(s)$ space and a proof of size $\tilde O(w)$, for every $s,w$ such that $s \cdot w \ge n$ (where $\tilde O$ hides a $\polylog(m,n)$ factor). We also prove a lower bound, showing that every $\mathcal{MA}$ streaming algorithm for the \emph{Distinct Elements} problem that uses $s$ bits of space and a proof of size $w$, satisfies $s \cdot w = Ω(n)$.
+  As a part of the proof of the lower bound for the \emph{Distinct Elements} problem, we show a new lower bound of $Ω(\sqrt n)$ on the $\mathcal{MA}$ communication complexity of the \emph{Gap Hamming Distance} problem, and prove its tightness.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-02-02T19:26:50Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Tom Gur</name>
+    </author>
+    <author>
+      <name>Ran Raz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0903.1291v2</id>
+    <title>The quantum query complexity of certification</title>
+    <updated>2014-10-06T18:40:56Z</updated>
+    <link href="https://arxiv.org/abs/0903.1291v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0903.1291v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the quantum query complexity of finding a certificate for a d-regular, k-level balanced NAND formula. Up to logarithmic factors, we show that the query complexity is Theta(d^{(k+1)/2}) for 0-certificates, and Theta(d^{k/2}) for 1-certificates. In particular, this shows that the zero-error quantum query complexity of evaluating such formulas is O(d^{(k+1)/2}) (again neglecting a logarithmic factor). Our lower bound relies on the fact that the quantum adversary method obeys a direct sum theorem.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-03-06T21:22:18Z</published>
+    <arxiv:comment>8 pages; Updated to reflect changes in final journal version and to point out that the main result only applies for k&gt;1</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Information and Computation 10, 181-188 (2010)</arxiv:journal_ref>
+    <author>
+      <name>Andris Ambainis</name>
+    </author>
+    <author>
+      <name>Andrew M. Childs</name>
+    </author>
+    <author>
+      <name>François Le Gall</name>
+    </author>
+    <author>
+      <name>Seiichiro Tani</name>
+    </author>
+    <arxiv:doi>10.26421/QIC10.3-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.26421/QIC10.3-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.14305v1</id>
+    <title>One-Sided-Error Parameterized Reductions for the Minimum Distance and Shortest Vector Problems</title>
+    <updated>2026-08-14T13:43:37Z</updated>
+    <link href="https://arxiv.org/abs/2608.14305v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.14305v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is notoriously difficult to obtain deterministic reductions for the Minimum Distance Problem (MDP) and the Shortest Vector Problem (SVP). Under two-sided-error randomized reductions, Bennett, Cheraghchi, Guruswami, and Ribeiro (STOC 2023) proved parameterized hardness of approximation for these problems. We partially derandomize their reductions and present one-sided-error randomized reductions: MDP is W[1]-hard to approximate within an arbitrary constant factor under FPT many-one one-sided-error randomized reductions; For every $p \ge 1$, SVP in the $\ell_p$ norm is W[1]-hard to approximate within an arbitrary constant factor below $2^{1/p}$.
+  We demonstrate the usefulness of one-sided-error randomized reductions by showing that they can be conditionally derandomized when the target problem has an OR function. Under a standard hardness-vs-randomness assumption, namely a plausible lower-bound assumption against nondeterministic circuits, we prove a general theorem formalizing this derandomization. Here, an OR function combines several instances into one instance that preserves their disjunction. We construct such OR functions for the relevant MDP and SVP gap problems, and thereby obtain deterministic W[1]-hardness for approximating MDP over every fixed finite field within every constant factor, and for approximating SVP in $\ell_p$ norms for every fixed integer $p$ within every factor below $2^{1/p}$. Applying the same framework to Micciancio's one-sided-error randomized reduction (ToC 2012) yields, under the same circuit lower-bound assumption, deterministic polynomial-time NP-hardness of approximating Euclidean SVP within every constant factor.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T13:43:37Z</published>
+    <arxiv:comment>Full version of RANDOM 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Shuichi Hirahara</name>
+    </author>
+    <author>
+      <name>Kazuki Ogitsuka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1207.5321v1</id>
+    <title>Cancellation-free circuits: An approach for proving superlinear lower bounds for linear Boolean operators</title>
+    <updated>2012-07-23T08:50:09Z</updated>
+    <link href="https://arxiv.org/abs/1207.5321v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1207.5321v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We continue to study the notion of cancellation-free linear circuits. We show that every matrix can be computed by a cancellation- free circuit, and almost all of these are at most a constant factor larger than the optimum linear circuit that computes the matrix. It appears to be easier to prove statements about the structure of cancellation-free linear circuits than for linear circuits in general. We prove two nontrivial superlinear lower bounds. We show that a cancellation-free linear circuit computing the $n\times n$ Sierpinski gasket matrix must use at least 1/2 n logn gates, and that this is tight. This supports a conjecture by Aaronson. Furthermore we show that a proof strategy for proving lower bounds on monotone circuits can be almost directly converted to prove lower bounds on cancellation-free linear circuits. We use this together with a result from extremal graph theory due to Andreev to prove a lower bound of Ω(n^(2- ε)) for infinitely many $n \times n$ matrices for every $ε&gt; 0$ for. These lower bounds for concrete matrices are almost optimal since all matrices can be computed with $O(n^2/\log n)$ gates.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-07-23T08:50:09Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Joan Boyar</name>
+    </author>
+    <author>
+      <name>Magnus Find</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.13335v1</id>
+    <title>Closing the Oracle-Complexity Gap in Derivative-Free Convex Optimization: A Near-Quadratic Lower Bound from Exact Function Values</title>
+    <updated>2026-07-14T23:45:21Z</updated>
+    <link href="https://arxiv.org/abs/2607.13335v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.13335v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the deterministic query complexity of minimizing a convex Lipschitz function over a $d$-dimensional Euclidean ball using only exact function values. At accuracy $Θ(d^{-1/2})$, the previously applicable lower bound was $Ω(d)$, inherited from the stronger full first-order oracle, while an upper bound from Protasov's value-only method requires $O(d^2\log^2 d)$ evaluations. By providing a lower bound of $Ω(\,\frac{d^2}{\log(d+1)})$ on the oracle complexity in this setting, we thereby close this gap dating back to 1996, up to polylogarithmic factors. Furthermore, we are able to lift this result to the mixed-integer setting: Mixed-integer convex optimization with $d$ continuous and $n$ discrete variables using function values requires $\tildeΩ(d^2\cdot 2^n)$ queries.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T23:45:21Z</published>
+    <arxiv:comment>36 pages, 0 figures</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Phillip Kerger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.11469v3</id>
+    <title>Sum of squares lower bounds from symmetry and a good story</title>
+    <updated>2018-12-14T00:11:25Z</updated>
+    <link href="https://arxiv.org/abs/1711.11469v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.11469v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we develop machinery which makes it much easier to prove sum of squares lower bounds when the problem is symmetric under permutations of $[1,n]$ and the unsatisfiability of our problem comes from integrality arguments, i.e. arguments that an expression must be an integer. Roughly speaking, to prove SOS lower bounds with our machinery it is sufficient to verify that the answer to the following three questions is yes:
+  1. Are there natural pseudo-expectation values for the problem?
+  2. Are these pseudo-expectation values rational functions of the problem parameters?
+  3. Are there sufficiently many values of the parameters for which these pseudo-expectation values correspond to the actual expected values over a distribution of solutions which is the uniform distribution over permutations of a single solution?
+  We demonstrate our machinery on three problems, the knapsack problem analyzed by Grigoriev, the MOD 2 principle (which says that the complete graph $K_n$ has no perfect matching when $n$ is odd), and the following Turan type problem: Minimize the number of triangles in a graph $G$ with a given edge density. For knapsack, we recover Grigoriev's lower bound exactly. For the MOD 2 principle, we tighten Grigoriev's linear degree sum of squares lower bound, making it exact. Finally, for the triangle problem, we prove a sum of squares lower bound for finding the minimum triangle density. This lower bound is completely new and gives a simple example where constant degree sum of squares methods have a constant factor error in estimating graph densities.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-30T15:47:13Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Aaron Potechin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0902.2152v1</id>
+    <title>Büchi complementation made tight</title>
+    <updated>2009-02-12T16:26:28Z</updated>
+    <link href="https://arxiv.org/abs/0902.2152v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0902.2152v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The precise complexity of complementing Büchi automata is an intriguing and long standing problem. While optimal complementation techniques for finite automata are simple - it suffices to determinize them using a simple subset construction and to dualize the acceptance condition of the resulting automaton - Büchi complementation is more involved. Indeed, the construction of an EXPTIME complementation procedure took a quarter of a century from the introduction of Büchi automata in the early 60s, and stepwise narrowing the gap between the upper and lower bound to a simple exponent (of (6e)n for Büchi automata with n states) took four decades. While the distance between the known upper (O'(0.96 n)n') and lower ('(0.76 n)n') bound on the required number of states has meanwhile been significantly reduced, an exponential factor remains between them. Also, the upper bound on the size of the complement automaton is not linear in the bound of its state space. These gaps are unsatisfactory from a theoretical point of view, but also because Büchi complementation is a useful tool in formal verification, in particular for the language containment problem. This paper proposes a Büchi complementation algorithm whose complexity meets, modulo a quadratic (O(n2)) factor, the known lower bound for Büchi complementation. It thus improves over previous constructions by an exponential factor and concludes the quest for optimal Büchi complementation algorithms.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-02-12T16:26:28Z</published>
+    <arxiv:primary_category term="cs.FL"/>
+    <arxiv:journal_ref>26th International Symposium on Theoretical Aspects of Computer Science - STACS 2009 (2009) 433-444</arxiv:journal_ref>
+    <author>
+      <name>Sven Schewe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.06256v1</id>
+    <title>A Paturi Theorem for Signed Subcube Representations</title>
+    <updated>2026-08-06T16:45:20Z</updated>
+    <link href="https://arxiv.org/abs/2608.06256v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.06256v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We obtain exponential upper bounds on approximate generalized weight and generalized sparsity in terms of the deepest transition depth D(F), and show that these bounds are optimal up to constant factors in the exponent. We further characterize approximate generalized sparsity, establish a dual lower-bound framework based on exponential restriction profiles, and derive a Paturi-type characterization relating approximate generalized weight to quantum query complexity.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-06T16:45:20Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Hangyu liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.02452v2</id>
+    <title>A Lower Bound on Determinantal Complexity</title>
+    <updated>2021-12-02T13:42:45Z</updated>
+    <link href="https://arxiv.org/abs/2009.02452v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.02452v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The determinantal complexity of a polynomial $P \in \mathbb{F}[x_1, \ldots, x_n]$ over a field $\mathbb{F}$ is the dimension of the smallest matrix $M$ whose entries are affine functions in $\mathbb{F}[x_1, \ldots, x_n]$ such that $P = Det(M)$. We prove that the determinantal complexity of the polynomial $\sum_{i = 1}^n x_i^n$ is at least $1.5n - 3$.
+  For every $n$-variate polynomial of degree $d$, the determinantal complexity is trivially at least $d$, and it is a long standing open problem to prove a lower bound which is super linear in $\max\{n,d\}$. Our result is the first lower bound for any explicit polynomial which is bigger by a constant factor than $\max\{n,d\}$, and improves upon the prior best bound of $n + 1$, proved by Alper, Bogart and Velasco [ABV17] for the same polynomial.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-05T03:50:35Z</published>
+    <arxiv:comment>v2: corrected a few typos and added references</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Mrinal Kumar</name>
+    </author>
+    <author>
+      <name>Ben Lee Volk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.04092v2</id>
+    <title>A Fixed-Depth Size-Hierarchy Theorem for AC$^0[\oplus]$ via the Coin Problem</title>
+    <updated>2019-02-20T07:41:22Z</updated>
+    <link href="https://arxiv.org/abs/1809.04092v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.04092v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove the first Fixed-depth Size-hierarchy Theorem for uniform AC$^0[\oplus]$ circuits; in particular, for fixed $d$, the class $\mathcal{C}_{d,k}$ of uniform AC$^0[\oplus]$ formulas of depth $d$ and size $n^k$ form an infinite hierarchy. For this, we find the first class of explicit functions giving (up to polynomial factor) matching upper and lower bounds for AC$^0[\oplus]$ formulas, derived from the $δ$-Coin Problem, the computational problem of distinguishing between coins that are heads with probability $(1+δ)/2$ or $(1-δ)/2,$ where $δ$ is a parameter going to $0$. We study this problem's complexity and make progress on both upper bounds and lower bounds.
+  Upper bounds. We find explicit monotone AC$^0$ formulas solving the $δ$-coin problem, having depth $d$, size $\exp(O(d(1/δ)^{1/(d-1)}))$, and sample complexity poly$(1/δ)$, for constant $d\ge2$. This matches previous upper bounds of O'Donnell and Wimmer (ICALP 2007) and Amano (ICALP 2009) in terms of size and improves the sample complexity.
+  Lower bounds. The upper bounds are nearly tight even for the stronger model of AC$^0[\oplus]$ formulas (which allow NOT and Parity gates): any AC$^0[\oplus]$ formula solving the $δ$-coin problem must have size $\exp(Ω(d(1/δ)^{1/(d-1)})).$ This strengthens a result of Cohen, Ganor and Raz (APPROX-RANDOM 2014), who prove a similar result for AC$^0$, and a result of Shaltiel and Viola (SICOMP 2010), who give a superpolynomially weaker (still exponential) lower bound.
+  The upper bound is a derandomization involving a use of Janson's inequality (as far as we know, the first such use of the inequality) and classical combinatorial designs. For the lower bound, we prove an optimal (up to constant factor) degree lower bound for multivariate polynomials over $\mathbb{F}_2$ solving the $δ$-coin problem, which may be of independent interest.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-11T18:04:36Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nutan Limaye</name>
+    </author>
+    <author>
+      <name>Karteek Sreenivasaiah</name>
+    </author>
+    <author>
+      <name>Srikanth Srinivasan</name>
+    </author>
+    <author>
+      <name>Utkarsh Tripathi</name>
+    </author>
+    <author>
+      <name>S. Venkitesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.08149v5</id>
+    <title>Problems in NP can Admit Double-Exponential Lower Bounds when Parameterized by Treewidth or Vertex Cover</title>
+    <updated>2025-03-15T13:04:32Z</updated>
+    <link href="https://arxiv.org/abs/2307.08149v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.08149v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Treewidth (tw) is an important parameter that, when bounded, yields tractability for many problems. For example, graph problems expressible in Monadic Second Order (MSO) logic and QUANTIFIED SAT or, more generally, QUANTIFIED CSP, are FPT parameterized by the tw of the input's (primal) graph plus the length of the MSO-formula [Courcelle, Information &amp; Computation 1990] and the quantifier rank [Chen, ECAI 2004], resp. The algorithms from these (meta-)results have running times whose dependence on tw is a tower of exponents. A conditional lower bound by Fichte et al. [LICS 2020] shows that, for QUANTIFIED SAT, the height of this tower is equal to the number of quantifier alternations. Lower bounds showing that at least double-exponential factors in the running time are necessary are rare: there are very few (for tw and vertex cover vc parameterizations) and they are for problems that are complete for #NP, $Σ_2^p$, $Π_2^p$, or higher levels of the polynomial hierarchy.
+  We show, for the first time, that it is not necessary to go higher up in the polynomial hierarchy to obtain such lower bounds. We design a novel, yet simple versatile technique based on Sperner families to obtain such lower bounds and apply it to 3 problems: METRIC DIMENSION, STRONG METRIC DIMENSION, and GEODETIC SET. We prove that they do not admit $2^{2^{o(tw)}} \cdot n^{O(1)}$-time algorithms, even on bounded diameter graphs, unless the ETH fails. For STRONG METRIC DIMENSION, the lower bound holds even for vc. We complement our lower bounds with matching upper bounds.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-16T20:55:52Z</published>
+    <arxiv:comment>Shortened abstract to meet arxiv requirements. We split the original paper to keep paper length more manageable. This is the first part following an accompanying paper arXiv:2405.01344; and was presented at ICALP 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Florent Foucaud</name>
+    </author>
+    <author>
+      <name>Esther Galby</name>
+    </author>
+    <author>
+      <name>Liana Khazaliya</name>
+    </author>
+    <author>
+      <name>Shaohua Li</name>
+    </author>
+    <author>
+      <name>Fionn Mc Inerney</name>
+    </author>
+    <author>
+      <name>Roohani Sharma</name>
+    </author>
+    <author>
+      <name>Prafullkumar Tale</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.16760v2</id>
+    <title>Fair Interventions in Weighted Congestion Games</title>
+    <updated>2024-07-16T13:32:33Z</updated>
+    <link href="https://arxiv.org/abs/2311.16760v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.16760v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work we study the power and limitations of fair interventions in weighted congestion games. Specifically, we focus on interventions that aim at improving the equilibrium quality (price of anarchy) and are fair in a suitably defined sense. Within this setting, we provide three key contributions. First, we show that no fair intervention can reduce the price of anarchy below a given factor depending solely on the class of latencies considered. Interestingly, this lower bound is unconditional, i.e., it applies regardless of how much computation interventions are allowed to use. Second, we design a taxation mechanism that is fair and achieves a price of anarchy matching this unconditional lower bound, all the while being polynomial-time computable. Third, we show that no intervention (fair or not) can achieve a better approximation if polynomial computability is required. We do so by proving that the minimum social cost is NP-hard to minimize below a factor identical to the one previously introduced. In doing so, our work shows that the algorithm proposed by Makarychev and Sviridenko (Journal of the ACM, 2018) to tackle optimization problems with a "diseconomy of scale" is optimal, and provide a novel way to derandomize its solution via equilibrium computation.</summary>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-28T13:02:45Z</published>
+    <arxiv:primary_category term="cs.GT"/>
+    <author>
+      <name>Miriam Fischer</name>
+    </author>
+    <author>
+      <name>Martin Gairing</name>
+    </author>
+    <author>
+      <name>Dario Paccagnan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1504.01656v1</id>
+    <title>Tight Size-Degree Bounds for Sums-of-Squares Proofs</title>
+    <updated>2015-04-07T16:15:22Z</updated>
+    <link href="https://arxiv.org/abs/1504.01656v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1504.01656v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We exhibit families of $4$-CNF formulas over $n$ variables that have sums-of-squares (SOS) proofs of unsatisfiability of degree (a.k.a. rank) $d$ but require SOS proofs of size $n^{Ω(d)}$ for values of $d = d(n)$ from constant all the way up to $n^δ$ for some universal constant$δ$. This shows that the $n^{O(d)}$ running time obtained by using the Lasserre semidefinite programming relaxations to find degree-$d$ SOS proofs is optimal up to constant factors in the exponent. We establish this result by combining $\mathsf{NP}$-reductions expressible as low-degree SOS derivations with the idea of relativizing CNF formulas in [Krajíček '04] and [Dantchev and Riis'03], and then applying a restriction argument as in [Atserias, Müller, and Oliva '13] and [Atserias, Lauria, and Nordström '14]. This yields a generic method of amplifying SOS degree lower bounds to size lower bounds, and also generalizes the approach in [ALN14] to obtain size lower bounds for the proof systems resolution, polynomial calculus, and Sherali-Adams from lower bounds on width, degree, and rank, respectively.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-04-07T16:15:22Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Massimo Lauria</name>
+    </author>
+    <author>
+      <name>Jakob Nordström</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.08797v1</id>
+    <title>Tight Lower Bound for Approximating Parametrized Maximum Likelihood Decoding under ETH</title>
+    <updated>2026-05-09T08:39:36Z</updated>
+    <link href="https://arxiv.org/abs/2605.08797v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.08797v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a simple deterministic reduction which, assuming the Exponential Time Hypothesis ($\mathsf{ETH}$), yields tight lower bounds for approximating the parameterized Maximum Likelihood Decoding problem ($\mathsf{MLD}$) and the parameterized Nearest Codeword Problem ($\mathsf{NCP}$) within some fixed constant factor. Our starting point is the ETH-based exponential-time hardness of $(c,s)$-Gap-$\mathsf{MAXLIN}$ established in [BHI+24]. We transform a $(c,s)$-Gap-$\mathsf{MAXLIN}$ instance into an instance of $γ$-Gap $k$-$\mathsf{MLD}$ via a novel combinatorial object that we call a cover family. We provide both a randomized construction of the required cover families and a subsequent derandomization. Prior to our work, $n^{Ω(k)}$ hardness for constant-factor approximation was only shown under the randomized Gap Exponential Time Hypothesis Gap-$\mathsf{ETH}$ [Man20], which is a much stronger assumption than $\mathsf{ETH}$. Under $\mathsf{ETH}$, the strongest known lower bound was $n^{Ω(k/\operatorname{poly} \log k)}$ due to [BKM25]. Unlike previous approaches that rely on reductions from the hardness of approximating $2$-$\mathsf{CSP}$, our reduction provides a more direct and conceptually simpler route to achieving the optimal lower bounds.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-09T08:39:36Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Rishav Gupta</name>
+    </author>
+    <author>
+      <name>Bingkai Lin</name>
+    </author>
+    <author>
+      <name>Xin Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.02465v1</id>
+    <title>On the Probabilistic Degrees of Symmetric Boolean functions</title>
+    <updated>2019-10-06T15:43:27Z</updated>
+    <link href="https://arxiv.org/abs/1910.02465v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.02465v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The probabilistic degree of a Boolean function $f:\{0,1\}^n\rightarrow \{0,1\}$ is defined to be the smallest $d$ such that there is a random polynomial $\mathbf{P}$ of degree at most $d$ that agrees with $f$ at each point with high probability. Introduced by Razborov (1987), upper and lower bounds on probabilistic degrees of Boolean functions --- specifically symmetric Boolean functions --- have been used to prove explicit lower bounds, design pseudorandom generators, and devise algorithms for combinatorial problems.
+  In this paper, we characterize the probabilistic degrees of all symmetric Boolean functions up to polylogarithmic factors over all fields of fixed characteristic (positive or zero).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-06T15:43:27Z</published>
+    <arxiv:comment>A preliminary version of this paper will appear in the conference FSTTCS 2019</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Srikanth Srinivasan</name>
+    </author>
+    <author>
+      <name>Utkarsh Tripathi</name>
+    </author>
+    <author>
+      <name>S. Venkitesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.05837v2</id>
+    <title>Tight Hardness Results for Maximum Weight Rectangles</title>
+    <updated>2016-03-03T00:12:38Z</updated>
+    <link href="https://arxiv.org/abs/1602.05837v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.05837v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given $n$ weighted points (positive or negative) in $d$ dimensions, what is the axis-aligned box which maximizes the total weight of the points it contains?
+  The best known algorithm for this problem is based on a reduction to a related problem, the Weighted Depth problem [T. M. Chan, FOCS'13], and runs in time $O(n^d)$. It was conjectured [Barbay et al., CCCG'13] that this runtime is tight up to subpolynomial factors. We answer this conjecture affirmatively by providing a matching conditional lower bound. We also provide conditional lower bounds for the special case when points are arranged in a grid (a well studied problem known as Maximum Subarray problem) as well as for other related problems.
+  All our lower bounds are based on assumptions that the best known algorithms for the All-Pairs Shortest Paths problem (APSP) and for the Max-Weight k-Clique problem in edge-weighted graphs are essentially optimal.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-18T15:24:22Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Arturs Backurs</name>
+    </author>
+    <author>
+      <name>Nishanth Dikkala</name>
+    </author>
+    <author>
+      <name>Christos Tzamos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.01438v3</id>
+    <title>Tight Space Lower Bound for Pseudo-Deterministic Approximate Counting</title>
+    <updated>2024-10-05T03:58:19Z</updated>
+    <link href="https://arxiv.org/abs/2304.01438v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.01438v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate one of the most basic problems in streaming algorithms: approximating the number of elements in the stream. In 1978, Morris famously gave a randomized algorithm achieving a constant-factor approximation error for streams of length at most N in space $O(\log \log N)$. We investigate the pseudo-deterministic complexity of the problem and prove a tight $Ω(\log N)$ lower bound, thus resolving a problem of Goldwasser-Grossman-Mohanty-Woodruff.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-04T01:23:31Z</published>
+    <arxiv:comment>Clarified example 2 in the technical overview. Appeared in FOCS 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Ofer Grossman</name>
+    </author>
+    <author>
+      <name>Meghal Gupta</name>
+    </author>
+    <author>
+      <name>Mark Sellke</name>
+    </author>
+    <arxiv:doi>10.1109/FOCS57990.2023.00091</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/FOCS57990.2023.00091" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/9903009v1</id>
+    <title>Space-Efficient Routing Tables for Almost All Networks and the Incompressibility Method</title>
+    <updated>1999-03-10T19:01:02Z</updated>
+    <link href="https://arxiv.org/abs/cs/9903009v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/9903009v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We use the incompressibility method based on Kolmogorov complexity to determine the total number of bits of routing information for almost all network topologies. In most models for routing, for almost all labeled graphs $Θ(n^2)$ bits are necessary and sufficient for shortest path routing. By `almost all graphs' we mean the Kolmogorov random graphs which constitute a fraction of $1-1/n^c$ of all graphs on $n$ nodes, where $c &gt; 0$ is an arbitrary fixed constant. There is a model for which the average case lower bound rises to $Ω(n^2 \log n)$ and another model where the average case upper bound drops to $O(n \log^2 n)$. This clearly exposes the sensitivity of such bounds to the model under consideration. If paths have to be short, but need not be shortest (if the stretch factor may be larger than 1), then much less space is needed on average, even in the more demanding models. Full-information routing requires $Θ(n^3)$ bits on average. For worst-case static networks we prove a $Ω(n^2 \log n)$ lower bound for shortest path routing and all stretch factors $&lt;2$ in some networks where free relabeling is not allowed.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-03-10T19:01:02Z</published>
+    <arxiv:comment>19 pages, Latex, 1 table, 1 figure; SIAM J. Comput., To appear</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Harry Buhrman</name>
+      <arxiv:affiliation>CWI</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jaap-Henk Hoepman</name>
+      <arxiv:affiliation>CWI and University of Amsterdam</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Paul Vitanyi</name>
+      <arxiv:affiliation>CWI and University of Amsterdam</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.04213v1</id>
+    <title>The Demand Query Model for Bipartite Matching</title>
+    <updated>2019-06-10T18:17:27Z</updated>
+    <link href="https://arxiv.org/abs/1906.04213v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.04213v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a `concrete complexity' model for studying algorithms for matching in bipartite graphs. The model is based on the "demand query" model used for combinatorial auctions. Most (but not all) known algorithms for bipartite matching seem to be translatable into this model including exact, approximate, sequential, parallel, and online ones. A perfect matching in a bipartite graph can be found in this model with O(n^{3/2}) demand queries (in a bipartite graph with n vertices on each side) and our main open problem is to either improve the upper bound or prove a lower bound. An improved upper bound could yield "normal" algorithms whose running time is better than the fastest ones known, while a lower bound would rule out a faster algorithm for bipartite matching from within a large class of algorithms. Our main result is a lower bound for finding an approximately maximum size matching in parallel: A deterministic algorithm that runs in n^{o(1)} rounds, where each round can make at most n^{1.99} demand queries cannot find a matching whose size is within n^{o(1)} factor of the maximum. This is in contrast to randomized algorithms that can find a matching whose size is $99\%$ of the maximum in O(\log n) rounds, each making n demand queries.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-10T18:17:27Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Noam Nisan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02533v1</id>
+    <title>Optimal Unambiguous DNFs and Alon-Saks-Seymour</title>
+    <updated>2026-08-03T17:26:54Z</updated>
+    <link href="https://arxiv.org/abs/2608.02533v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02533v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct unambiguous DNFs having width $O(n)$ but $0$-certificate complexity $Ω(n^2)$. By utilizing the special structure of these DNFs, we prove a lifting theorem with a constant-sized gadget that lifts the DNF to a communication problem, while losslessly translating the separation in certificate complexity to a separation in communication complexity. This leads to an optimal refutation of the Alon-Saks-Seymour conjecture, as well as an optimal communication lower bound for the Clique versus Independent Set problem, improving the previous results of Balodis, Ben-David, Göös, Jain and Kothari (FOCS 2021, SICOMP 2023) by several doubly logarithmic factors. As further applications of our construction to query complexity and learning theory, we exhibit: (a) a family of Boolean functions that has an optimal quartic separation between certificate complexity and approximate degree, and (b) a sample compression lower bound of $Ω(\sqrt{\log c})$ for multiclass concept classes over $c$ labels.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T17:26:54Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Chirag Pabbaraju</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.10145v1</id>
+    <title>Lower Bounds for Approximating the Matching Polytope</title>
+    <updated>2017-11-28T06:41:18Z</updated>
+    <link href="https://arxiv.org/abs/1711.10145v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.10145v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that any extended formulation that approximates the matching polytope on $n$-vertex graphs up to a factor of $(1+\varepsilon)$ for any $\frac2n \le \varepsilon \le 1$ must have at least $\binom{n}{α/{\varepsilon}}$ defining inequalities where $0&lt;α&lt;1$ is an absolute constant. This is tight as exhibited by the $(1+\varepsilon)$ approximating linear program obtained by dropping the odd set constraints of size larger than $({1+\varepsilon})/{\varepsilon}$ from the description of the matching polytope. Previously, a tight lower bound of $2^{Ω(n)}$ was only known for $\varepsilon = O\left(\frac{1}{n}\right)$ [Rothvoss, STOC '14; Braun and Pokutta, IEEE Trans. Information Theory '15] whereas for $\frac2n \le \varepsilon \le 1$, the best lower bound was $2^{Ω\left({1}/{\varepsilon}\right)}$ [Rothvoss, STOC '14]. The key new ingredient in our proof is a close connection to the non-negative rank of a lopsided version of the unique disjointness matrix.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-28T06:41:18Z</published>
+    <arxiv:comment>To appear in proceedings of SODA '18</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Makrand Sinha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1110.1360v1</id>
+    <title>Polynomial integrality gaps for strong SDP relaxations of Densest k-subgraph</title>
+    <updated>2011-10-06T19:29:01Z</updated>
+    <link href="https://arxiv.org/abs/1110.1360v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1110.1360v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The densest k-subgraph (DkS) problem (i.e. find a size k subgraph with maximum number of edges), is one of the notorious problems in approximation algorithms. There is a significant gap between known upper and lower bounds for DkS: the current best algorithm gives an ~ O(n^{1/4}) approximation, while even showing a small constant factor hardness requires significantly stronger assumptions than P != NP. In addition to interest in designing better algorithms, a number of recent results have exploited the conjectured hardness of densest k-subgraph and its variants. Thus, understanding the approximability of DkS is an important challenge.
+  In this work, we give evidence for the hardness of approximating DkS within polynomial factors. Specifically, we expose the limitations of strong semidefinite programs from SDP hierarchies in solving densest k-subgraph. Our results include:
+  * A lower bound of Omega(n^{1/4}/log^3 n) on the integrality gap for Omega(log n/log log n) rounds of the Sherali-Adams relaxation for DkS. This also holds for the relaxation obtained from Sherali-Adams with an added SDP constraint. Our gap instances are in fact Erdos-Renyi random graphs.
+  * For every epsilon &gt; 0, a lower bound of n^{2/53-eps} on the integrality gap of n^{Omega(eps)} rounds of the Lasserre SDP relaxation for DkS, and an n^{Omega_eps(1)} gap for n^{1-eps} rounds. Our construction proceeds via a reduction from random instances of a certain Max-CSP over large domains.
+  In the absence of inapproximability results for DkS, our results show that even the most powerful SDPs are unable to beat a factor of n^{Omega(1)}, and in fact even improving the best known n^{1/4} factor is a barrier for current techniques.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-10-06T19:29:01Z</published>
+    <arxiv:comment>26 ages, 1 figure. To appear in Symposium on Discrete Algorithms (SODA) 2012</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Aditya Bhaskara</name>
+    </author>
+    <author>
+      <name>Moses Charikar</name>
+    </author>
+    <author>
+      <name>Venkatesan Guruswami</name>
+    </author>
+    <author>
+      <name>Aravindan Vijayaraghavan</name>
+    </author>
+    <author>
+      <name>Yuan Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.2844v11</id>
+    <title>Unleashing the power of Schrijver's permanental inequality with the help of the Bethe Approximation</title>
+    <updated>2012-06-20T00:55:40Z</updated>
+    <link href="https://arxiv.org/abs/1106.2844v11" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.2844v11" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $A \in Ω_n$ be doubly-stochastic $n \times n$ matrix. Alexander Schrijver proved in 1998 the following remarkable inequality per(\widetilde{A}) \geq \prod_{1 \leq i,j \leq n} (1- A(i,j)); \widetilde{A}(i,j) =: A(i,j)(1-A(i,j)), 1 \leq i,j \leq n.
+  We use the above Shrijver's inequality to prove the following lower bound:
+  \frac{per(A)}{F(A)} \geq 1; F(A) =: \prod_{1 \leq i,j \leq n} (1- A(i,j))^{1- A(i,j)}.
+  We use this new lower bound to prove S.Friedland's Asymptotic Lower Matching Conjecture(LAMC) on monomer-dimer problem.
+  We use some ideas of our proof of (LAMC) to disprove [Lu,Mohr,Szekely] positive correlation conjecture.
+  We present explicit doubly-stochastic $n \times n$ matrices $A$ with the ratio $\frac{per(A)}{F(A)} = \sqrt{2}^{n}$; conjecture that
+  \max_{A \in Ω_n}\frac{per(A)}{F(A)} \approx (\sqrt{2})^{n} and give some examples supporting the conjecture.
+  If true, the conjecture (and other ones stated in the paper) would imply a deterministic poly-time algorithm to approximate the permanent of $n \times n$ nonnegative matrices within the relative factor $(\sqrt{2})^{n}$. The best current such factor is $e^n$.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-14T23:43:36Z</published>
+    <arxiv:comment>30 pages, more typos are fixed, more remarks are added, importantly a concrete counter-example to [Lu,Mohr,Szekely] positive correlation conjecture is presented</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Leonid Gurvits</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.17506v1</id>
+    <title>Sum-of-Squares Lower Bounds for Densest $k$-Subgraph</title>
+    <updated>2023-03-30T16:15:53Z</updated>
+    <link href="https://arxiv.org/abs/2303.17506v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.17506v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a graph and an integer $k$, Densest $k$-Subgraph is the algorithmic task of finding the subgraph on $k$ vertices with the maximum number of edges. This is a fundamental problem that has been subject to intense study for decades, with applications spanning a wide variety of fields. The state-of-the-art algorithm is an $O(n^{1/4 + ε})$-factor approximation (for any $ε&gt; 0$) due to Bhaskara et al. [STOC '10]. Moreover, the so-called log-density framework predicts that this is optimal, i.e. it is impossible for an efficient algorithm to achieve an $O(n^{1/4 - ε})$-factor approximation. In the average case, Densest $k$-Subgraph is a prototypical noisy inference task which is conjectured to exhibit a statistical-computational gap.
+  In this work, we provide the strongest evidence yet of hardness for Densest $k$-Subgraph by showing matching lower bounds against the powerful Sum-of-Squares (SoS) algorithm, a meta-algorithm based on convex programming that achieves state-of-art algorithmic guarantees for many optimization and inference problems. For $k \leq n^{\frac{1}{2}}$, we obtain a degree $n^δ$ SoS lower bound for the hard regime as predicted by the log-density framework.
+  To show this, we utilize the modern framework for proving SoS lower bounds on average-case problems pioneered by Barak et al. [FOCS '16]. A key issue is that small denser-than-average subgraphs in the input will greatly affect the value of the candidate pseudoexpectation operator around the subgraph. To handle this challenge, we devise a novel matrix factorization scheme based on the positive minimum vertex separator. We then prove an intersection tradeoff lemma to show that the error terms when using this separator are indeed small.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-30T16:15:53Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Chris Jones</name>
+    </author>
+    <author>
+      <name>Aaron Potechin</name>
+    </author>
+    <author>
+      <name>Goutham Rajendran</name>
+    </author>
+    <author>
+      <name>Jeff Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.14682v1</id>
+    <title>Exact quantum query complexity of computing Hamming weight modulo powers of two and three</title>
+    <updated>2021-12-29T17:57:41Z</updated>
+    <link href="https://arxiv.org/abs/2112.14682v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.14682v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of computing the Hamming weight of an $n$-bit string modulo $m$, for any positive integer $m \leq n$ whose only prime factors are 2 and 3. We show that the exact quantum query complexity of this problem is $\left\lceil n(1 - 1/m) \right\rceil$. The upper bound is via an iterative query algorithm whose core components are the well-known 1-query quantum algorithm (essentially due to Deutsch) to compute the Hamming weight a 2-bit string mod 2 (i.e., the parity of the input bits), and a new 2-query quantum algorithm to compute the Hamming weight of a 3-bit string mod 3.
+  We show a matching lower bound (in fact for arbitrary moduli $m$) via a variant of the polynomial method [de Wolf, SIAM J. Comput., 32(3), 2003]. This bound is for the weaker task of deciding whether or not a given $n$-bit input has Hamming weight 0 modulo $m$, and it holds even in the stronger non-deterministic quantum query model where an algorithm must have positive acceptance probability iff its input evaluates to 1. For $m&gt;2$ our lower bound exceeds $n/2$, beating the best lower bound provable using the general polynomial method [Theorem 4.3, Beals et al., J. ACM 48(4), 2001].</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-29T17:57:41Z</published>
+    <arxiv:comment>12 pages LaTeX</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Arjan Cornelissen</name>
+    </author>
+    <author>
+      <name>Nikhil S. Mande</name>
+    </author>
+    <author>
+      <name>Maris Ozols</name>
+    </author>
+    <author>
+      <name>Ronald de Wolf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0501060v1</id>
+    <title>A quantum lower bound for the query complexity of Simon's problem</title>
+    <updated>2005-01-12T16:49:08Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0501060v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0501060v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Simon in his FOCS'94 paper was the first to show an exponential gap between classical and quantum computation. The problem he dealt with is now part of a well-studied class of problems, the hidden subgroup problems. We study Simon's problem from the point of view of quantum query complexity and give here a first nontrivial lower bound on the query complexity of a hidden subgroup problem, namely Simon's problem. Our bound is optimal up to a constant factor.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-01-12T16:49:08Z</published>
+    <arxiv:comment>8 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Pascal Koiran</name>
+    </author>
+    <author>
+      <name>Vincent Nesme</name>
+    </author>
+    <author>
+      <name>Natacha Portier</name>
+    </author>
+  </entry>
+</feed>

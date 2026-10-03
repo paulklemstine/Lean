@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Ed82nWkzlJvLmMDw8OEXwdO75fI</id>
+  <title>arXiv Query: search_query=abs:"sub-exponential" AND abs:factoring AND abs:"lower bound"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:39Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22sub-exponential%22+AND+(abs:factoring+AND+abs:%22lower+bound%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>12</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1209.6281v1</id>
+    <title>On approximations by projections of polytopes with few facets</title>
+    <updated>2012-09-27T16:46:07Z</updated>
+    <link href="https://arxiv.org/abs/1209.6281v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.6281v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide an affirmative answer to a problem posed by Barvinok and Veomett, showing that in general an n-dimensional convex body cannot be approximated by a projection of a section of a simplex of a sub-exponential dimension. Moreover, we establish a lower bound of the Banach-Mazur distance between n-dimensional projections of sections of an N-dimensional simplex and a certain convex symmetric body, which is sharp up to a logarithmic factor for all N&gt;n.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-27T16:46:07Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Alexander E. Litvak</name>
+    </author>
+    <author>
+      <name>Mark Rudelson</name>
+    </author>
+    <author>
+      <name>Nicole Tomczak-Jaegermann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.06305v2</id>
+    <title>Correlation matrices, Clifford algebras, and completely positive semidefinite rank</title>
+    <updated>2018-09-28T04:11:07Z</updated>
+    <link href="https://arxiv.org/abs/1702.06305v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.06305v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a notion of matrix valued Gram decompositions for correlation matrices whose study is motivated by quantum information theory. We show that for extremal correlations, the matrices in such a factorization generate a Clifford algebra and thus, their size is exponential in terms of the rank of the correlation matrix. Using this we give a self-contained and succinct proof of the existence of completely positive semidefinite matrices with sub-exponential cpsd-rank, recently derived in the literature. This fact also underlies and generalizes Tsirelson's seminal lower bound on the local dimension of a quantum system necessary to generate an extreme quantum correlation.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-21T09:29:27Z</published>
+    <arxiv:comment>New title. To appear in Linear &amp; Multilinear Algebra. 15 pages. Comments welcome!</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Anupam Prakash</name>
+    </author>
+    <author>
+      <name>Antonios Varvitsiotis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1803.05933v1</id>
+    <title>Some Closure Results for Polynomial Factorization and Applications</title>
+    <updated>2018-03-15T18:20:42Z</updated>
+    <link href="https://arxiv.org/abs/1803.05933v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1803.05933v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a sequence of seminal results in the 80's, Kaltofen showed that the complexity class VP is closed under taking factors. A natural question in this context is to understand if other natural classes of multivariate polynomials, for instance, arithmetic formulas, algebraic branching programs, bounded depth arithmetic circuits or the class VNP, are closed under taking factors.
+  In this paper, we show that all factors of degree at most $\log^a n$ of polynomials with poly(n) size depth $k$ circuits have poly(n) size circuits of depth at most $O(k + a)$. This partially answers a question of Shpilka-Yehudayoff and has applications to hardness-randomness tradeoffs for bounded depth arithmetic circuits. More precisely, this shows that a superpolynomial lower bound for bounded depth arithmetic circuits, for a family of explicit polynomials of degree poly$(\log n)$ implies deterministic sub-exponential time algorithms for polynomial identity testing (PIT) for bounded depth arithmetic circuits. This is incomparable to a beautiful result of Dvir et al., where they showed that super-polynomial lower bounds for constant depth arithmetic circuits for any explicit family of polynomials (of potentially high degree) implies sub-exponential time deterministic PIT for bounded depth circuits of bounded individual degree. Thus, we remove the "bounded individual degree" condition in [DSY09] at the cost of strengthening the hardness assumption to hold for polynomials of low degree.
+  As direct applications of our techniques, we also show that the complexity class VNP is closed under taking factors, thereby confirming a conjecture of Bürgisser and get an alternate proof of the fact (first shown by Dutta et al.) that if a polynomial $Q$ of degree at most $d$ divides a polynomial $P$ computable by a formula of size $s$, then $Q$ has a formula of size at most poly$(s, d^{\log d}, deg(P))$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-03-15T18:20:42Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Chi-Ning Chou</name>
+    </author>
+    <author>
+      <name>Mrinal Kumar</name>
+    </author>
+    <author>
+      <name>Noam Solomon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.20745v1</id>
+    <title>Isotropic Noise in Stochastic and Quantum Convex Optimization</title>
+    <updated>2025-10-23T17:09:41Z</updated>
+    <link href="https://arxiv.org/abs/2510.20745v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.20745v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of minimizing a $d$-dimensional Lipschitz convex function using a stochastic gradient oracle. We introduce and motivate a setting where the noise of the stochastic gradient is isotropic in that it is bounded in every direction with high probability. We then develop an algorithm for this setting which improves upon prior results by a factor of $d$ in certain regimes, and as a corollary, achieves a new state-of-the-art complexity for sub-exponential noise. We give matching lower bounds (up to polylogarithmic factors) for both results. Additionally, we develop an efficient quantum isotropifier, a quantum algorithm which converts a variance-bounded quantum sampling oracle into one that outputs an unbiased estimate with isotropic error. Combining our results, we obtain improved dimension-dependent rates for quantum stochastic convex optimization.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-23T17:09:41Z</published>
+    <arxiv:comment>NeurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Annie Marsden</name>
+    </author>
+    <author>
+      <name>Liam O'Carroll</name>
+    </author>
+    <author>
+      <name>Aaron Sidford</name>
+    </author>
+    <author>
+      <name>Chenyi Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.12473v4</id>
+    <title>Approximation in Hilbert spaces of the Gaussian and related analytic kernels</title>
+    <updated>2025-10-02T10:52:53Z</updated>
+    <link href="https://arxiv.org/abs/2209.12473v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.12473v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider linear approximation based on function evaluations in reproducing kernel Hilbert spaces of certain analytic weighted power series kernels and stationary kernels on the interval $[-1,1]$. Both classes contain the popular Gaussian kernel $K(x, y) = \exp(-\tfrac{1}{2}\varepsilon^2(x-y)^2)$. For weighted power series kernels we derive almost matching upper and lower bounds on the worst-case error. When applied to the Gaussian kernel, our results state that, up to a sub-exponential factor, the $n$th minimal error decays as $(\varepsilon/2)^n (n!)^{-1/2}$. The proofs are based on weighted polynomial interpolation and classical polynomial coefficient estimates that we use to bound the Hilbert space norm of a weighted polynomial fooling function.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-26T07:33:08Z</published>
+    <arxiv:comment>To appear in IMA Journal of Numerical Analysis</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Toni Karvonen</name>
+    </author>
+    <author>
+      <name>Yuya Suzuki</name>
+    </author>
+    <arxiv:doi>10.1093/imanum/draf050</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imanum/draf050" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.08321v2</id>
+    <title>Deep learning from strongly mixing observations: Sparse-penalized regularization and minimax optimality</title>
+    <updated>2025-07-08T11:59:11Z</updated>
+    <link href="https://arxiv.org/abs/2406.08321v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.08321v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The explicit regularization and optimality of deep neural networks estimators from independent data have made considerable progress recently. The study of such properties on dependent data is still a challenge. In this paper, we carry out deep learning from strongly mixing observations, and deal with the squared and a broad class of loss functions. We consider sparse-penalized regularization for deep neural network predictor. For a general framework that includes, regression estimation, classification, time series prediction,$\cdots$, oracle inequality for the expected excess risk is established and a bound on the class of Hölder smooth functions is provided. For nonparametric regression from strong mixing data and sub-exponentially error, we provide an oracle inequality for the $L_2$ error and investigate an upper bound of this error on a class of Hölder composition functions. For the specific case of nonparametric autoregression with Gaussian and Laplace errors, a lower bound of the $L_2$ error on this Hölder composition class is established. Up to logarithmic factor, this bound matches its upper bound; so, the deep neural network estimator attains the minimax optimal rate.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-12T15:21:51Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>William Kengne</name>
+    </author>
+    <author>
+      <name>Modou Wade</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.12548v2</id>
+    <title>Improved bounds for Hadwiger's covering problem via thin-shell estimates</title>
+    <updated>2020-12-06T21:42:04Z</updated>
+    <link href="https://arxiv.org/abs/1811.12548v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.12548v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A central problem in discrete geometry, known as Hadwiger's covering problem, asks what the smallest natural number $N\left(n\right)$ is such that every convex body in ${\mathbb R}^{n}$ can be covered by a union of the interiors of at most $N\left(n\right)$ of its translates. Despite continuous efforts, the best general upper bound known for this number remains as it was more than sixty years ago, of the order of ${2n \choose n}n\ln n$.
+  In this note, we improve this bound by a sub-exponential factor. That is, we prove a bound of the order of ${2n \choose n}e^{-c\sqrt{n}}$ for some universal constant $c&gt;0$.
+  Our approach combines ideas from previous work by Artstein-Avidan and the second named author with tools from Asymptotic Geometric Analysis. One of the key steps is proving a new lower bound for the maximum volume of the intersection of a convex body $K$ with a translate of $-K$; in fact, we get the same lower bound for the volume of the intersection of $K$ and $-K$ when they both have barycenter at the origin. To do so, we make use of measure concentration, and in particular of thin-shell estimates for isotropic log-concave measures.
+  Using the same ideas, we establish an exponentially better bound for $N\left(n\right)$ when restricting our attention to convex bodies that are $ψ_{2}$. By a slightly different approach, an exponential improvement is established also for classes of convex bodies with positive modulus of convexity.</summary>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-30T00:24:56Z</published>
+    <arxiv:comment>references updated, remark on Ehrhard's conjecture added</arxiv:comment>
+    <arxiv:primary_category term="math.MG"/>
+    <arxiv:journal_ref>J. Eur. Math. Soc. (JEMS) 24 (2022), no. 4, 1431--1448</arxiv:journal_ref>
+    <author>
+      <name>Han Huang</name>
+    </author>
+    <author>
+      <name>Boaz A. Slomka</name>
+    </author>
+    <author>
+      <name>Tomasz Tkocz</name>
+    </author>
+    <author>
+      <name>Beatrice-Helen Vritsiou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02614v1</id>
+    <title>Near-Optimal Algorithms for Maximal Clique Enumeration in Structurally Sparse Graphs</title>
+    <updated>2026-05-21T14:12:05Z</updated>
+    <link href="https://arxiv.org/abs/2608.02614v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02614v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the exact enumeration of maximal cliques in graph classes defined by excluded clique minors and excluded clique immersions. For n-vertex K_t-minor-free graphs, we give an algorithm that lists all maximal cliques in n * 4^(2t/5+o(t)) time, significantly improving the previous n * 2^O(t log log t) bound of Eppstein, Löffler, and Strash. For n-vertex K_t-immersion-free graphs, we establish the first exact enumeration algorithm parameterized by immersion number, achieving a running time of n * 3^(t/3+o(t)). While both algorithms employ a common degeneracy-based root-assignment scheme, their analyses require distinct structural mechanisms. Crucially, rather than applying generic sparsity bounds, our algorithms deeply integrate the specific structural obstructions -- local density thresholds for minors and minimum-degree branchings for immersions -- directly into the enumeration logic. We also prove matching output-size lower bounds, up to sub-exponential factors in t, using specialized constructions. Consequently, the exponential bases 4^(2/5) and 3^(1/3) are asymptotically optimal.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T14:12:05Z</published>
+    <arxiv:comment>14 pages. Comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Jianfeng Hou</name>
+    </author>
+    <author>
+      <name>Hongbin Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.06554v1</id>
+    <title>On the Hardness of Massively Parallel Computation</title>
+    <updated>2020-08-14T19:46:09Z</updated>
+    <link href="https://arxiv.org/abs/2008.06554v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.06554v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate whether there are inherent limits of parallelization in the (randomized) massively parallel computation (MPC) model by comparing it with the (sequential) RAM model. As our main result, we show the existence of hard functions that are essentially not parallelizable in the MPC model. Based on the widely-used random oracle methodology in cryptography with a cryptographic hash function $h:\{0,1\}^n \rightarrow \{0,1\}^n$ computable in time $t_h$, we show that there exists a function that can be computed in time $O(T\cdot t_h)$ and space $S$ by a RAM algorithm, but any MPC algorithm with local memory size $s &lt; S/c$ for some $c&gt;1$ requires at least $\tildeΩ(T)$ rounds to compute the function, even in the average case, for a wide range of parameters $n \leq S \leq T \leq 2^{n^{1/4}}$. Our result is almost optimal in the sense that by taking $T$ to be much larger than $t_h$, \textit{e.g.}, $T$ to be sub-exponential in $t_h$, to compute the function, the round complexity of any MPC algorithm with small local memory size is asymptotically the same (up to a polylogarithmic factor) as the time complexity of the RAM algorithm. Our result is obtained by adapting the so-called compression argument from the data structure lower bounds and cryptography literature to the context of massively parallel computation.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-14T19:46:09Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Kai-Min Chung</name>
+    </author>
+    <author>
+      <name>Kuan-Yi Ho</name>
+    </author>
+    <author>
+      <name>Xiaorui Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1908.05368v3</id>
+    <title>Robust One-Bit Recovery via ReLU Generative Networks: Near-Optimal Statistical Rate and Global Landscape Analysis</title>
+    <updated>2020-08-22T06:44:50Z</updated>
+    <link href="https://arxiv.org/abs/1908.05368v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1908.05368v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the robust one-bit compressed sensing problem whose goal is to design an algorithm that faithfully recovers any sparse target vector $θ_0\in\mathbb{R}^d$ \textit{uniformly} via $m$ quantized noisy measurements. Specifically, we consider a new framework for this problem where the sparsity is implicitly enforced via mapping a low dimensional representation $x_0 \in \mathbb{R}^k$ through a known $n$-layer ReLU generative network $G:\mathbb{R}^k\rightarrow\mathbb{R}^d$ such that $θ_0 = G(x_0)$. Such a framework poses low-dimensional priors on $θ_0$ without a known sparsity basis. We propose to recover the target $G(x_0)$ solving an unconstrained empirical risk minimization (ERM). Under a weak \textit{sub-exponential measurement assumption}, we establish a joint statistical and computational analysis. In particular, we prove that the ERM estimator in this new framework achieves a statistical rate of $m=\widetilde{\mathcal{O}}(kn \log d /\varepsilon^2)$ recovering any $G(x_0)$ uniformly up to an error $\varepsilon$. When the network is shallow (i.e., $n$ is small), we show this rate matches the information-theoretic lower bound up to logarithm factors of $\varepsilon^{-1}$. From the lens of computation, we prove that under proper conditions on the network weights, our proposed empirical risk, despite non-convexity, has no stationary point outside of small neighborhoods around the true representation $x_0$ and its negative multiple; furthermore, we show that the global minimizer of the empirical risk stays within the neighborhood around $x_0$ rather than its negative multiple under further assumptions on the network weights.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-08-14T22:56:34Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Shuang Qiu</name>
+    </author>
+    <author>
+      <name>Xiaohan Wei</name>
+    </author>
+    <author>
+      <name>Zhuoran Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.07777v2</id>
+    <title>Bounds on Covert Capacity with Sub-Exponential Random Slot Selection</title>
+    <updated>2025-07-18T08:25:27Z</updated>
+    <link href="https://arxiv.org/abs/2409.07777v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.07777v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of covert communication with random slot selection over binary-input Discrete Memoryless Channels and Additive White Gaussian Noise channels, in which a transmitter attempts to reliably communicate with a legitimate receiver while simultaneously maintaining covertness with respect to an eavesdropper. Covertness refers to the inability of the eavesdropper to distinguish the transmission of a message from the absence of communication, modeled by the transmission of a fixed channel input. Random slot selection refers to the transmitter's ability to send a codeword in a time slot with known boundaries selected uniformly at random among a predetermined number of slots. Our main contribution is to develop bounds for the information-theoretic limit of communication in this model, called the covert capacity, when the number of time slots scales sub-exponentially with the codeword length. Our upper and lower bounds for the covert capacity are within a multiplicative factor of $\sqrt{2}$ independent of the channel. This result partially fills a characterization gap between the covert capacity without random slot selection and the covert capacity with random selection among an exponential number of slots in the codeword length. Our key technical contributions consist of i) a tight upper bound for the relative entropy characterizing the effect of random slot selection on the covertness constraint in our achievability proof; ii) a careful converse analysis to characterize the maximum allowable weight or power of codewords to meet the covertness constraint. Our results suggest that, unlike the case without random slot selection, the choice of covertness metric does not change the covert capacity in the presence of random slot selection.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-12T06:23:22Z</published>
+    <arxiv:comment>Accepted to IEEE Transactions on Information Theory</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Shi-Yuan Wang</name>
+    </author>
+    <author>
+      <name>Keerthi S. K. Arumugam</name>
+    </author>
+    <author>
+      <name>Matthieu R. Bloch</name>
+    </author>
+    <arxiv:doi>10.1109/TIT.2025.3589575</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TIT.2025.3589575" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.02986v1</id>
+    <title>A Birthday Repetition Theorem and Complexity of Approximating Dense CSPs</title>
+    <updated>2016-07-11T14:54:04Z</updated>
+    <link href="https://arxiv.org/abs/1607.02986v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.02986v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A $(k \times l)$-birthday repetition $\mathcal{G}^{k \times l}$ of a two-prover game $\mathcal{G}$ is a game in which the two provers are sent random sets of questions from $\mathcal{G}$ of sizes $k$ and $l$ respectively. These two sets are sampled independently uniformly among all sets of questions of those particular sizes. We prove the following birthday repetition theorem: when $\mathcal{G}$ satisfies some mild conditions, $val(\mathcal{G}^{k \times l})$ decreases exponentially in $Ω(kl/n)$ where $n$ is the total number of questions. Our result positively resolves an open question posted by Aaronson, Impagliazzo and Moshkovitz (CCC 2014).
+  As an application of our birthday repetition theorem, we obtain new fine-grained hardness of approximation results for dense CSPs. Specifically, we establish a tight trade-off between running time and approximation ratio for dense CSPs by showing conditional lower bounds, integrality gaps and approximation algorithms. In particular, for any sufficiently large $i$ and for every $k \geq 2$, we show the following results:
+  - We exhibit an $O(q^{1/i})$-approximation algorithm for dense Max $k$-CSPs with alphabet size $q$ via $O_k(i)$-level of Sherali-Adams relaxation.
+  - Through our birthday repetition theorem, we obtain an integrality gap of $q^{1/i}$ for $\tildeΩ_k(i)$-level Lasserre relaxation for fully-dense Max $k$-CSP.
+  - Assuming that there is a constant $ε&gt; 0$ such that Max 3SAT cannot be approximated to within $(1-ε)$ of the optimal in sub-exponential time, our birthday repetition theorem implies that any algorithm that approximates fully-dense Max $k$-CSP to within a $q^{1/i}$ factor takes $(nq)^{\tilde Ω_k(i)}$ time, almost tightly matching the algorithmic result based on Sherali-Adams relaxation.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-11T14:54:04Z</published>
+    <arxiv:comment>45 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Pasin Manurangsi</name>
+    </author>
+    <author>
+      <name>Prasad Raghavendra</name>
+    </author>
+  </entry>
+</feed>

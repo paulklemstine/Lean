@@ -1,0 +1,1280 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/foB4ZCGNP+47cfFKA7EJNBMsmck</id>
+  <title>arXiv Query: search_query=abs:"Vandermonde" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:48Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Vandermonde%22+AND+abs:factoring&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>84</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1211.1566v1</id>
+    <title>Inverse of the Vandermonde and Vandermonde confluent matrices</title>
+    <updated>2012-11-07T14:56:08Z</updated>
+    <link href="https://arxiv.org/abs/1211.1566v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1211.1566v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The inverse of the Vandermonde and confluent Vandermonde matrices are presented. In the case of the Vandermonde matrix, we present a decomposition in three factors, one of them a diagonal matrix. The evaluation of such inverse matrices is a key point to find functions of a matrix, namely exponential functions (evolution operators)and logarithmic functions (entropies) in quantum mechanical topics.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-11-07T14:56:08Z</published>
+    <arxiv:comment>Published as: Applied Mathematics and Information Sciences 5(3) (2011), 361-366</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>Applied Mathematics and Information Sciences 5(3) (2011), 361-366</arxiv:journal_ref>
+    <author>
+      <name>Héctor Moya-Cessa</name>
+    </author>
+    <author>
+      <name>Francisco Soto-Eguibar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.03188v1</id>
+    <title>Linear Projections of the Vandermonde Polynomial</title>
+    <updated>2017-05-09T05:52:18Z</updated>
+    <link href="https://arxiv.org/abs/1705.03188v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.03188v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An n-variate Vandermonde polynomial is the determinant of the n x n matrix where the ith column is the vector (1, x_i, x_i^2, ...., x_i^{n-1})^T. Vandermonde polynomials play a crucial role in the theory of alternating polynomials and occur in Lagrangian polynomial interpolation as well as in the theory of error correcting codes. In this work we study structural and computational aspects of linear projections of Vandermonde polynomials. Firstly, we consider the problem of testing if a given polynomial is linearly equivalent to the Vandermonde polynomial. We obtain a deterministic polynomial time algorithm to test if the polynomial f is linearly equivalent to the Vandermonde polynomial when f is given as product of linear factors. In the case when the polynomial f is given as a black-box our algorithm runs in randomized polynomial time. Exploring the structure of projections of Vandermonde polynomials further, we describe the group of symmetries of a Vandermonde polynomial and show that the associated Lie algebra is simple.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-09T05:52:18Z</published>
+    <arxiv:comment>Submitted to a conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>C. Ramya</name>
+    </author>
+    <author>
+      <name>B. V. Raghavendra Rao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1311.6455v3</id>
+    <title>On certain multivariate Vandermonde determinants whose variables separate</title>
+    <updated>2014-03-11T09:35:05Z</updated>
+    <link href="https://arxiv.org/abs/1311.6455v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1311.6455v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that for almost square tensor product grids and certain sets of bivariate polynomials the Vandermonde determinant can be factored into a product of univariate Vandermonde determinants. This result generalizes the conjecture [Lemma 1, L. Bos et al. (2009), Dolomites Research Notes on Approximation, 2:1-15]. As a special case, we apply the result to Padua and Padua-like points.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-11-25T20:47:25Z</published>
+    <arxiv:comment>10 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Linear Algebra and its Applications, Volume 449, Pages 17--27, 2014</arxiv:journal_ref>
+    <author>
+      <name>Stefano De Marchi</name>
+    </author>
+    <author>
+      <name>Konstantin Usevich</name>
+    </author>
+    <arxiv:doi>10.1016/j.laa.2014.01.034</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.laa.2014.01.034" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03325v1</id>
+    <title>Generalized Hankel/Toeplitz matrix for array signal processing</title>
+    <updated>2026-09-03T03:24:08Z</updated>
+    <link href="https://arxiv.org/abs/2609.03325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we introduce generalized Hankel/Toeplitz matrices (GHM/GTM) and the associated generalized Vandermonde decomposition for nonuniform array signal processing and multi-dimensional super-resolution. The proposed framework was discovered from the study of resolution limit theory and extends the classical Hankel/Toeplitz structure by allowing substantially more flexible sampling geometries while preserving the underlying low-rank Vandermonde factorization. Through devising an optimal algorithm based on this GHM framework, we derive the state-of-the-art upper bound estimate for the computational resolution limit (CRL) of source-number detection in general $d$-dimensional super-resolution problems. For segmented sampling sets, whose geometry is closely related to sparse and distributed arrays, we establish deterministic lower bounds for the minimum singular values of the associated generalized Vandermonde matrices and derive corresponding stability and number-detection guarantees for multi-clump source configurations. To address the computational bottleneck of conventional multi-level Hankel constructions in high dimensions, we further introduce randomized GHM constructions whose matrix dimensions scale with the effective degrees of freedom rather than with the full tensor-product grid, together with deterministic recovery guarantees conditional on the realized Vandermonde factors. We also extend the framework to source localization by developing GHM-based MUSIC algorithms for nonuniform measurements, with stability characterized through the conditioning of the generalized Vandermonde factors. Numerical experiments on synthetic data demonstrate that the proposed GHM-based methods achieve competitive resolution and recovery accuracy while substantially reducing matrix size and computational cost, especially in high-dimensional settings.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T03:24:08Z</published>
+    <arxiv:comment>48 pages, 13 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Wenchong Huang</name>
+    </author>
+    <author>
+      <name>Kunpeng Li</name>
+    </author>
+    <author>
+      <name>Ping Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0812.3115v1</id>
+    <title>Accurate numerical linear algebra with Bernstein-Vandermonde matrices</title>
+    <updated>2008-12-16T17:50:17Z</updated>
+    <link href="https://arxiv.org/abs/0812.3115v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0812.3115v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The accurate solution of some of the main problems in numerical linear algebra (linear system solving, eigenvalue computation, singular value computation and the least squares problem) for a totally positive Bernstein-Vandermonde matrix is considered. Bernstein-Vandermonde matrices are a generalization of Vandermonde matrices arising when considering for the space of the algebraic polynomials of degree less than or equal to $n$ the Bernstein basis, a widely used basis in Computer Aided Geometric Design, instead of the monomial basis.
+  Our approach is based on the computation of the bidiagonal factorization of a totally positive Bernstein-Vandermonde matrix (or its inverse) by means of Neville elimination. The explicit expressions obtained for the determinants involved in the process makes the algorithm both fast and accurate.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-12-16T17:50:17Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Ana Marco</name>
+    </author>
+    <author>
+      <name>Jose-Javier Martinez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.00779v1</id>
+    <title>Radix-2 Self-Recursive Sparse Factorizations of Delay Vandermonde Matrices for Wideband Multi-Beam Antenna Arrays</title>
+    <updated>2022-06-01T21:44:39Z</updated>
+    <link href="https://arxiv.org/abs/2206.00779v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.00779v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a self-contained factorization for the Vandermonde matrices associated with true-time delay based wideband analog multi-beam beamforming using antenna arrays. The proposed factorization contains sparse and orthogonal matrices. Novel self-recursive radix-2 algorithms for Vandermonde matrices associated with true time delay based delay-sum filterbanks are presented to reduce the circuit complexity of multi-beam analog beamforming systems. The proposed algorithms for Vandermonde matrices by a vector attain $\mathcal{O}(N \log N)$ delay-amplifier circuit counts. Error bounds for the Vandermode matrices associated with true-time delay are established and then analyzed for numerical stability. The potential for real-world circuit implementation of the proposed algorithms will be shown through signal flow graphs that are the starting point for high-frequency analog circuit realizations.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-01T21:44:39Z</published>
+    <arxiv:comment>20 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <arxiv:journal_ref>IEEE Access, vol. 8, 2020</arxiv:journal_ref>
+    <author>
+      <name>S. M. Perera</name>
+    </author>
+    <author>
+      <name>A. Madanayake</name>
+    </author>
+    <author>
+      <name>R. J. Cintra</name>
+    </author>
+    <arxiv:doi>10.1109/ACCESS.2020.2970342</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ACCESS.2020.2970342" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0903.3192v2</id>
+    <title>Generation of the Symmetric Field by Newton Polynomials in prime Characteristic</title>
+    <updated>2011-10-15T16:52:48Z</updated>
+    <link href="https://arxiv.org/abs/0903.3192v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0903.3192v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $N_m = x^m + y^m$ be the $m$-th Newton polynomial in two variables, for $m \geq 1$. Dvornicich and Zannier proved that in characteristic zero three Newton polynomials $N_a, N_b, N_c$ are always sufficient to generate the symmetric field in $x$ and $y$, provided that $a,b,c$ are distinct positive integers such that $(a,b,c)=1$. In the present paper we prove that in case of prime characteristic $p$ the result still holds, if we assume additionally that $a,b,c,a-b,a-c,b-c$ are prime with $p$. We also provide a counterexample in the case where one of the hypotheses is missing.
+  The result follows from the study of the factorization of a generalized Vandermonde determinant in three variables, that under general hypotheses factors as the product of a trivial Vandermonde factor and an irreducible factor. On the other side, the counterexample is connected to certain cases where the Schur polynomials factor as a product of linear factors.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-03-18T16:13:36Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Maurizio Monge</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.12666v1</id>
+    <title>DOA Estimation for Transmit Beamspace MIMO Radar via Tensor Decomposition with Vandermonde Factor Matrix</title>
+    <updated>2021-01-29T16:13:16Z</updated>
+    <link href="https://arxiv.org/abs/2101.12666v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.12666v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the problem of tensor decomposition in application to direction-of-arrival (DOA) estimation for transmit beamspace (TB) multiple-input multiple-output (MIMO) radar. A general 4-order tensor model that enables computationally efficient DOA estimation is designed. Whereas other tensor decomposition-based methods treat all factor matrices as arbitrary, the essence of the proposed DOA estimation method is to fully exploit the Vandermonde structure of the factor matrices to take advantage of the shift-invariance between and within different subarrays. Specifically, the received signal of TB MIMO radar is expressed as a 4-order tensor. Depending on the target Doppler shifts, the constructed tensor is reshaped into two distinct 3-order tensors. A computationally efficient tensor decomposition method is proposed to decompose the Vandermonde factor matrices. The generators of the Vandermonde factor matrices are computed to estimate the phase rotations between subarrays, which can be utilized as a look-up table for finding target DOA. It is further shown that our proposed method can be used in a more general scenario where the subarray structures can be arbitrary but identical. The proposed DOA estimation method requires no prior information about the tensor rank and is guaranteed to achieve precise decomposition result. Simulation results illustrate the performance improvement of the proposed DOA estimation method as compared to conventional DOA estimation techniques for TB MIMO Radar.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-29T16:13:16Z</published>
+    <arxiv:comment>14 pages, 9 figures, submitted to IEEE Transactions on Signal Processing</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Feng Xu</name>
+    </author>
+    <author>
+      <name>Matthew W. Morency</name>
+    </author>
+    <author>
+      <name>Sergiy A. Vorobyov</name>
+    </author>
+    <arxiv:doi>10.1109/TSP.2022.3176092</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TSP.2022.3176092" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.06248v1</id>
+    <title>Relations Among Two Methods for Computing the Partition Function of the Two-Dimensional One-Component Plasma</title>
+    <updated>2015-03-20T23:35:30Z</updated>
+    <link href="https://arxiv.org/abs/1503.06248v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.06248v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two-dimensional one-component plasma ---2dOCP--- is a system composed by $n$ mobile particles with charge $q$ over a neutralizing background in a two-dimensional surface. The Boltzmann factor of this system, at temperature $T$, takes the form of a Vandermonde determinant to the power $Γ= q^2/(2π\varepsilon k_BT)$, where $Γ$ is the coupling constant of this Coulomb system. The partition function of the model has been computed exactly for the even values of the coupling constant $Γ$, and a finite number of particles $n$, by two means: 1) by recognizing that the Boltzmann factor is the square of a Jack polynomial and expanding it in an appropriate monomial base, and 2) by mapping the system onto a 1-dimensional chain of interacting fermions. In this work the connection among the two methods is derived, and some properties of the expansion coefficients for the power of the Vandermonde determinant are explored.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-20T23:35:30Z</published>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>J. Stat. Phys. 160, 4--28 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Johnny Alejandro Mora Grimaldo</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidad de los Andes, Bogota, Colombia</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gabriel Tellez</name>
+      <arxiv:affiliation>Departamento de Fisica, Universidad de los Andes, Bogota, Colombia</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/s10955-015-1249-2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10955-015-1249-2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.03251v1</id>
+    <title>Structured inversion of the Bernstein-Vandermonde Matrix</title>
+    <updated>2020-05-07T05:13:51Z</updated>
+    <link href="https://arxiv.org/abs/2005.03251v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.03251v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Bernstein polynomials, long a staple of approximation theory and computational geometry, have also increasingly become of interest in finite element methods. Many fundamental problems in interpolation and approximation give rise to interesting linear algebra questions. When attempting to find a polynomial approximation of boundary or initial data, one encounters the Bernstein-Vandermonde matrix, which is found to be highly ill-conditioned. Previously, we used the relationship between monomial Bezout matrices and the inverse of Hankel matrices to obtain a decomposition of the inverse of the Bernstein mass matrix in terms of Hankel, Toeplitz, and diagonal matrices. In this paper, we use properties of the Bernstein-Bezout matrix to factor the inverse of the Bernstein-Vandermonde matrix into a difference of products of Hankel, Toeplitz, and diagonal matrices. We also use a nonstandard matrix norm to study the conditioning of the Bernstein-Vandermonde matrix, showing that the conditioning in this case is better than in the standard 2-norm. Additionally, we use properties of multivariate Bernstein polynomials to derive a block $LU$ decomposition of the Bernstein-Vandermonde matrix corresponding to equispaced nodes on the $d$-simplex.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-07T05:13:51Z</published>
+    <arxiv:comment>21 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Larry Allen</name>
+    </author>
+    <author>
+      <name>Robert C. Kirby</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.08406v1</id>
+    <title>Bjorck-Pereyra-type methods and total positivity</title>
+    <updated>2018-11-20T18:26:55Z</updated>
+    <link href="https://arxiv.org/abs/1811.08406v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.08406v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The approach to solving linear systems with structured matrices by means of the bidiagonal factorization of the inverse of the coefficient matrix is first considered, the starting point being the classical Bjorck-Pereyra algorithms for Vandermonde systems, published in 1970 and carefully analyzed by Higham in 1987. The work of Higham showed the crucial role of total positivity for obtaining accurate results, which led to the generalization of this approach to totally positive Cauchy, Cauchy-Vandermonde and generalized Vandermonde matrices. Then, the solution of other linear algebra problems (eigenvalue and singular value computation, least squares problems) is addressed, a fundamental tool being the bidiagonal decomposition of the corresponding matrices. This bidiagonal decomposition is related to the theory of Neville elimination, although for achieving high relative accuracy the algorithm of Neville elimination is not used. Numerical experiments showing the good behaviour of these algorithms when compared with algorithms which ignore the matrix structure are also included.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-20T18:26:55Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Jose-Javier Martinez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.2433v1</id>
+    <title>Vandermonde factorizations of a regular Hankel matrix and their application on the computation of Bézier curves</title>
+    <updated>2010-11-10T17:04:28Z</updated>
+    <link href="https://arxiv.org/abs/1011.2433v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.2433v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, a new method to compute a Bézier curve of degree n = 2m-1 is introduced, here formulated as a set of points whose coordinates are calculated from two Hankel forms in $\C^m$. From Vandermonde factorizations of the two associated Hankel matrices $H_x$ and $H_y$, the Hankel forms can be easily calculated, thus yielding points on the Bézier curve. Here, a new proof of the existence of a Vandermonde factorization of regular Hankel matrix is given from Pascal matrices techniques. But, even when the Hankel matrix associated to the form is singular, the method can still be used by shifting its skew-diagonal and counteracting it after, which is pratically done without costs.. By comparing this new method with a Pascal matrix method and Casteljau's, we see that the results suggest that this new method is very effective with regard to accuracy and time of computation for various values of n.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-10T17:04:28Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Licio Hernanes Bezerra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.6003v1</id>
+    <title>Expanded Vandermonde powers and sum rules for the two-dimensional one-component plasma</title>
+    <updated>2012-04-26T18:58:44Z</updated>
+    <link href="https://arxiv.org/abs/1204.6003v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.6003v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two-dimensional one-component plasma (2dOCP) is a system of $N$ mobile particles of the same charge $q$ on a surface with a neutralising background. The Boltzmann factor of the 2dOCP at temperature $T$ can be expressed as a Vandermonde determinant to the power $Γ=q^{2}/(k_B T)$. Recent advances in the theory of symmetric and anti-symmetric Jack polymonials provide an efficient way to expand this power of the Vandermonde in their monomial basis, allowing the computation of several thermodynamic and structural properties of the 2dOCP for $N$ values up to 14 and $Γ$ equal to 4, 6 and 8. In this work, we explore two applications of this formalism to study the moments of the pair correlation function of the 2dOCP on a sphere, and the distribution of radial linear statistics of the 2dOCP in the plane.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-26T18:58:44Z</published>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>J. Stat. Phys. 148:824-855 (2012)</arxiv:journal_ref>
+    <author>
+      <name>Gabriel Tellez</name>
+    </author>
+    <author>
+      <name>Peter J. Forrester</name>
+    </author>
+    <arxiv:doi>10.1007/s10955-012-0551-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10955-012-0551-5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.00750v1</id>
+    <title>Vandermonde Factorization of Hankel Matrix for Complex Exponential Signal Recovery -- Application in Fast NMR Spectroscopy</title>
+    <updated>2018-09-04T00:24:14Z</updated>
+    <link href="https://arxiv.org/abs/1809.00750v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.00750v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many signals are modeled as a superposition of exponential functions in spectroscopy of chemistry, biology and medical imaging. This paper studies the problem of recovering exponential signals from a random subset of samples. We exploit the Vandermonde structure of the Hankel matrix formed by the exponential signal and formulate signal recovery as Hankel matrix completion with Vandermonde factorization (HVaF). A numerical algorithm is developed to solve the proposed model and its sequence convergence is analyzed theoretically. Experiments on synthetic data demonstrate that HVaF succeeds over a wider regime than the state-of-the-art nuclear-normminimization-based Hankel matrix completion method, while has a less restriction on frequency separation than the state-of-the-art atomic norm minimization and fast iterative hard thresholding methods. The effectiveness of HVaF is further validated on biological magnetic resonance spectroscopy data.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-04T00:24:14Z</published>
+    <arxiv:comment>14 pages, 9 figures, 3 tables, 63 references</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Jiaxi Ying</name>
+    </author>
+    <author>
+      <name>Jian-Feng Cai</name>
+    </author>
+    <author>
+      <name>Di Guo</name>
+    </author>
+    <author>
+      <name>Gongguo Tang</name>
+    </author>
+    <author>
+      <name>Zhong Chen</name>
+    </author>
+    <author>
+      <name>Xiaobo Qu</name>
+    </author>
+    <arxiv:doi>10.1109/TSP.2018.2869122</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TSP.2018.2869122" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.01762v2</id>
+    <title>Elliptic $q,t$ matrix models</title>
+    <updated>2020-11-11T11:26:38Z</updated>
+    <link href="https://arxiv.org/abs/2011.01762v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.01762v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Gaussian matrix model is known to deform to the $q,t$-matrix model. We consider further deformation to the elliptic $q,t$ matrix model by properly deforming the Gaussian density as well as the Vandermonde factor. Properties of an associated basis of symmetric functions that provide the matrix model property $&lt;char&gt;\sim {\rm char}$ in the deformed elliptic case are discussed.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-03T15:03:35Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Lett. B816 (2021) 136196</arxiv:journal_ref>
+    <author>
+      <name>A. Mironov</name>
+    </author>
+    <author>
+      <name>A. Morozov</name>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2021.136196</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2021.136196" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.07650v1</id>
+    <title>Extending Babbage's (Non-)Primality Tests</title>
+    <updated>2018-12-18T21:40:06Z</updated>
+    <link href="https://arxiv.org/abs/1812.07650v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.07650v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We recall Charles Babbage's 1819 criterion for primality, based on simultaneous congruences for binomial coefficients, and extend it to a least-prime-factor test. We also prove a partial converse of his non-primality test, based on a single congruence. Two problems are posed. Along the way we encounter Bachet, Bernoulli, Bezout, Euler, Fermat, Kummer, Lagrange, Lucas, Vandermonde, Waring, Wilson, Wolstenholme, and several contemporary mathematicians.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-18T21:40:06Z</published>
+    <arxiv:comment>10 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Combinatorial and additive number theory. II, 269-277, Springer Proc. Math. Stat., 220, Springer, Cham, 2017</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Sondow</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.14063v1</id>
+    <title>Convexity Meets Curvature: Lifted Near-Field Super-Resolution</title>
+    <updated>2026-02-15T09:24:19Z</updated>
+    <link href="https://arxiv.org/abs/2602.14063v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.14063v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Extra-large apertures, high carrier frequencies, and integrated sensing and communications (ISAC) are pushing array processing into the Fresnel region, where spherical wavefronts induce a range-dependent phase across the aperture. This curvature breaks the Fourier/Vandermonde structure behind classical subspace methods, and it is especially limiting with hybrid front-ends that provide only a small number of pilot measurements. Consequently, practical systems need continuous angle resolution and joint angle-range inference where many near-field approaches still rely on costly 2D gridding. We show that convexity can meet curvature via a lifted, gridless superresolution framework for near-field measurements. The key is a Bessel-Vandermonde factorization of the Fresnel-phase manifold that exposes a hidden Vandermonde structure in angle while isolating the range dependence into a compact coefficient map. Building on this, we introduce a lifting that maps each range bin and continuous angle to a structured rank-one atom, converting the nonlinear near-field model into a linear inverse problem over a row-sparse matrix. Recovery is posed as atomic-norm minimization and an explicit dual characterization via bounded trigonometric polynomials yields certificate-based localization that super-resolves off-grid angles and identifies active range bins. Simulations with strongly undersampled hybrid observations validate reliable joint angle-range recovery for next-generation wireless and ISAC systems.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-15T09:24:19Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Sajad Daei</name>
+    </author>
+    <author>
+      <name>Gábor Fodor</name>
+    </author>
+    <author>
+      <name>Mikael Skoglund</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.08494v1</id>
+    <title>Hankel and Toeplitz operators of finite rank and Prony's problem in several variables</title>
+    <updated>2018-05-22T10:53:24Z</updated>
+    <link href="https://arxiv.org/abs/1805.08494v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.08494v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Prony's problem in several variables has attracted some attention recently and provides an interesting combination of polynomial ideal theory with analytic and numeric computations. This note points out further connections to Hankel operators of finite rank as they appear in multidimensional moment problems, shift invariance signal spaces, annihilating ideals of filters and factorization of the Hankel matrices and operators by means of Vandermonde matrices. In fact, it turns out that these concepts are essentially equivalent.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-22T10:53:24Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Tomas Sauer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1303.5869v1</id>
+    <title>A block Hankel generalized confluent Vandermonde matrix</title>
+    <updated>2013-03-23T17:44:39Z</updated>
+    <link href="https://arxiv.org/abs/1303.5869v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1303.5869v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vandermonde matrices are well known. They have a number of interesting properties and play a role in (Lagrange) interpolation problems, partial fraction expansions, and finding solutions to linear ordinary differential equations, to mention just a few applications. Usually, one takes these matrices square, $q\times q$ say, in which case the $i$-th column is given by $u(z_i)$, where we write $u(z)=(1,z,...,z^{q-1})^\top$. If all the $z_i$ ($i=1,...,q$) are different, the Vandermonde matrix is non-singular, otherwise not. The latter case obviously takes place when all $z_i$ are the same, $z$ say, in which case one could speak of a confluent Vandermonde matrix. Non-singularity is obtained if one considers the matrix $V(z)$ whose $i$-th column ($i=1,...,q$) is given by the $(i-1)$-th derivative $u^{(i-1)}(z)^\top$.
+  We will consider generalizations of the confluent Vandermonde matrix $V(z)$ by considering matrices obtained by using as building blocks the matrices $M(z)=u(z)w(z)$, with $u(z)$ as above and $w(z)=(1,z,...,z^{r-1})$, together with its derivatives $M^{(k)}(z)$. Specifically, we will look at matrices whose $ij$-th block is given by $M^{(i+j)}(z)$, where the indices $i,j$ by convention have initial value zero. These in general non-square matrices exhibit a block-Hankel structure. We will answer a number of elementary questions for this matrix. What is the rank? What is the null-space? Can the latter be parametrized in a simple way? Does it depend on $z$? What are left or right inverses? It turns out that answers can be obtained by factorizing the matrix into a product of other matrix polynomials having a simple structure. The answers depend on the size of the matrix $M(z)$ and the number of derivatives $M^{(k)}(z)$ that is involved. The results are obtained by mostly elementary methods, no specific knowledge of the theory of matrix polynomials is needed.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-03-23T17:44:39Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <arxiv:journal_ref>Linear Algebra and its Applications 455, 32-72 (2014)</arxiv:journal_ref>
+    <author>
+      <name>Andre Klein</name>
+    </author>
+    <author>
+      <name>Peter Spreij</name>
+    </author>
+    <arxiv:doi>10.1016/j.laa.2012.03.002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.laa.2012.03.002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.11205v3</id>
+    <title>Multi-scale Vandermonde test kernels for spectral trace formulas</title>
+    <updated>2026-04-07T13:26:08Z</updated>
+    <link href="https://arxiv.org/abs/2602.11205v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.11205v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a family of test kernels for use in spectral trace formulas on locally symmetric spaces. The key innovation is the factorization $h_T = g_T \star \widetilde{g}_T$, which simultaneously achieves: (i) automatic positive semi-definiteness of the spectral multiplier $m_{h_T}(π) = |m_{g_T}(π)|^2 \ge 0$; (ii) $J$-fold moment annihilation via a multi-scale Vandermonde construction, yielding super-polynomial decay of all error terms; (iii) uniform spectral parameter bounds (Master-Bound) $\mathfrak{E}_{\mathrm{tot}}(T) \ll T^{d+1-δ}$ with $δ&gt; 0$ depending only on the symmetry order $k$ and the annihilation depth $J \asymp \sqrt{(\log T)/k}$, representing a power saving over the main term $\asymp T^{d+1}$. The cost is a controlled polynomial growth $T^{c_0^2/2+o(1)}$ in the Vandermonde coefficients (with exponent strictly less than 1), which is dominated by the super-polynomial decay of the off-diagonal terms. The construction is axiomatized over two analytic hypotheses -- a Weyl law and Bessel/Airy asymptotics -- making it applicable beyond the classical $\mathrm{GL}(2)$ setting.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-10T17:09:30Z</published>
+    <arxiv:comment>Error found in kuznetsov side of annihilation. keeping kloosterman side and resubmit</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Stefan Horvath</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.04365v1</id>
+    <title>RLWE and PLWE over cyclotomic fields are not equivalent</title>
+    <updated>2022-01-12T09:01:25Z</updated>
+    <link href="https://arxiv.org/abs/2201.04365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.04365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that the Ring Learning With Errors (RLWE) and the Polynomial Learning With Errors (PLWE) problems over the cyclotomic field $\mathbb{Q}(ζ_n)$ are not equivalent. Precisely, we show that reducing one problem to the other increases the noise by a factor that is more than polynomial in $n$. We do so by providing a lower bound, holding for infinitely many positive integers $n$, for the condition number of the Vandermonde matrix of the $n$th cyclotomic polynomial.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-12T09:01:25Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Antonio J. Di Scala</name>
+    </author>
+    <author>
+      <name>Carlo Sanna</name>
+    </author>
+    <author>
+      <name>Edoardo Signorini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0606614v1</id>
+    <title>Noncommutative symmetric functions and W-polynomials</title>
+    <updated>2006-06-24T08:55:53Z</updated>
+    <link href="https://arxiv.org/abs/math/0606614v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0606614v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let K,S,D be a division ring, an endomorphism and a S-derivation of K, respectively. In this setting we introduce generalized noncommutative symmetric functions and obtain Vieta formula and decompositions of differential operators. W-polynomials show up naturally, their connections with P-independency, Vandermonde and Wronskian matrices are briefly studied. The different linear factorizations of W-polynomials are analysed. Connections between the existence of LLCM of monic linear polynomials with coefficients in a ring and the left duo property are established at the end of the paper.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-06-24T08:55:53Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>J. Delenclos</name>
+    </author>
+    <author>
+      <name>A. Leroy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.01474v3</id>
+    <title>Confluent Vandermonde matrix and related topics</title>
+    <updated>2025-08-25T16:16:23Z</updated>
+    <link href="https://arxiv.org/abs/2403.01474v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.01474v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this note, we explore the connections between the confluent Vandermonde matrix over an arbitrary field and several mathematical topics, including interpolation polynomials, Hasse derivatives, LU factorization, companion matrices and their Jordan forms, and the partial fraction decomposition. Using a unified approach based on polynomial evaluations and derivative computations at selected points, we provide accessible proofs that not only clarify key results but also offer insights for both experienced researchers and those new to the subject.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-03T10:51:31Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Chi-Kwong Li</name>
+    </author>
+    <author>
+      <name>Jephian C. -H. Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1704.07035v2</id>
+    <title>Elliptic supersymmetric integrable model and multivariable elliptic functions</title>
+    <updated>2017-10-25T08:08:10Z</updated>
+    <link href="https://arxiv.org/abs/1704.07035v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1704.07035v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the elliptic integrable model introduced by Deguchi and Martin, which is an elliptic extension of the Perk-Schultz model. We introduce and study a class of partition functions of the elliptic model by using the Izergin-Korepin analysis. We show that the partition functions are expressed as a product of elliptic factors and elliptic Schur-type symmetric functions. This result resembles the recent works by number theorists in which the correspondence between the partition functions of trigonometric models and the product of the deformed Vandermonde determinant and Schur functions were established.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-24T04:19:18Z</published>
+    <arxiv:comment>27 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>Prog. Theor. Exp. Phys. 2017, 123A01</arxiv:journal_ref>
+    <author>
+      <name>Kohei Motegi</name>
+    </author>
+    <arxiv:doi>10.1093/ptep/ptx159</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/ptep/ptx159" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0806.2797v1</id>
+    <title>Polynomial least squares fitting in the Bernstein basis</title>
+    <updated>2008-06-17T14:20:54Z</updated>
+    <link href="https://arxiv.org/abs/0806.2797v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0806.2797v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The problem of polynomial regression in which the usual monomial basis is replaced by the Bernstein basis is considered. The coefficient matrix A of the overdetermined system to be solved in the least squares sense is then a rectangular Bernstein-Vandermonde matrix. In order to use the method based on the QR decomposition of A, the first stage consists of computing the bidiagonal decomposition of the coefficient matrix A. Starting from that bidiagonal decomposition, an algorithm for obtaining the QR decomposition of A is the applied. Finally, a triangular system is solved by using the bidiagonal decomposition of the R-factor of A. Some numerical experiments showing the behavior of this approach are included.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-06-17T14:20:54Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Ana Marco</name>
+    </author>
+    <author>
+      <name>Jose-Javier Martinez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.12562v1</id>
+    <title>On least squares problems with certain Vandermonde--Khatri--Rao structure with applications to DMD</title>
+    <updated>2018-11-30T01:05:39Z</updated>
+    <link href="https://arxiv.org/abs/1811.12562v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.12562v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper proposes a new computational method for solving structured least squares problems that arise in the process of identification of coherent structures in fluid flows. It is deployed in combination with dynamic mode decomposition (DMD) which provides a non-orthogonal set of modes --- corresponding to particular temporal frequencies --- a subset of which is used to represent time snapshots of the underlying dynamics. The coefficients of the representation are determined from a solution of a structured linear least squares problem with the matrix that involves the Khatri--Rao product of a triangular and a Vandermonde matrix. Such a structure allows a very efficient normal equation based least squares solution, which is used in state of the art CFD tools such as the sparsity promoting DMD (DMDSP). A new numerical analysis of the normal equations approach provides insights about its applicability and its limitations. Relevant condition numbers that determine numerical robustness are identified and discussed. Further, the paper offers a corrected semi-normal solution and QR factorization based algorithms. It is shown how to use the Vandermonde--Khatri--Rao structure to efficiently compute the QR factorization of the least squares coefficient matrix, thus providing a new computational tool for the ill-conditioned cases where the normal equations may fail to compute a sufficiently accurate solution. Altogether, the presented material provides a firm numerical linear algebra framework for a class of structured least squares problems arising in a variety of applications.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-30T01:05:39Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Zlatko Drmač</name>
+    </author>
+    <author>
+      <name>Igor Mezić</name>
+    </author>
+    <author>
+      <name>Ryan Mohr</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1612.03375v2</id>
+    <title>Sample complexity of the distinct elements problem</title>
+    <updated>2018-01-15T03:03:03Z</updated>
+    <link href="https://arxiv.org/abs/1612.03375v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1612.03375v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the distinct elements problem, where the goal is to estimate the number of distinct colors in an urn containing $ k $ balls based on $n$ samples drawn with replacements. Based on discrete polynomial approximation and interpolation, we propose an estimator with additive error guarantee that achieves the optimal sample complexity within $O(\log\log k)$ factors, and in fact within constant factors for most cases. The estimator can be computed in $O(n)$ time for an accurate estimation. The result also applies to sampling without replacement provided the sample size is a vanishing fraction of the urn size.
+  One of the key auxiliary results is a sharp bound on the minimum singular values of a real rectangular Vandermonde matrix, which might be of independent interest.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-12-11T06:17:40Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Yihong Wu</name>
+    </author>
+    <author>
+      <name>Pengkun Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.13184v2</id>
+    <title>A matrix model of a non-Hermitian $β$-ensemble</title>
+    <updated>2024-11-08T21:22:04Z</updated>
+    <link href="https://arxiv.org/abs/2305.13184v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.13184v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce the first random matrix model of a complex $β$-ensemble. The matrices are tridiagonal and can be thought of as the non-Hermitian analogue of the Hermite $β$-ensembles discovered by Dumitriu and Edelman (J. Math. Phys., Vol. 43, 5830 (2002)). The main feature of the model is that the exponent $β$ of the Vandermonde determinant in the joint probability density function (j.p.d.f.) of the eigenvalues can take any value in $\mathbb{R}_+$. However, when $β=2$, the j.p.d.f. does not reduce to that of the Ginibre ensemble, but it contains an extra factor expressed as a multidimensional integral over the space of the eigenvectors.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-22T16:12:05Z</published>
+    <arxiv:comment>28 pages, 2 figures. Added Lemma 2.1 and Appendix B. Minor corrections</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>Random Matrices: Th. Appl. 14(1), 2450027 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Francesco Mezzadri</name>
+    </author>
+    <author>
+      <name>Henry Taylor</name>
+    </author>
+    <arxiv:doi>10.1142/S2010326324500278</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S2010326324500278" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1803.03508v1</id>
+    <title>A Unified Form of EVENODD and RDP Codes and Their Efficient Decoding</title>
+    <updated>2018-03-09T13:53:41Z</updated>
+    <link href="https://arxiv.org/abs/1803.03508v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1803.03508v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Array codes have been widely employed in storage systems, such as Redundant Arrays of Inexpensive Disks (RAID). The row-diagonal parity (RDP) codes and EVENODD codes are two popular double-parity array codes. As the capacity of hard disks increases, better fault tolerance by using array codes with three or more parity disks is needed. Although many extensions of RDP codes and EVENODD codes have been proposed, the high decoding complexity is the main drawback of them. In this paper, we present a new construction for all families of EVENODD codes and RDP codes, and propose a unified form of them. Under this unified form, RDP codes can be treated as shortened codes of EVENODD codes. Moreover, an efficient decoding algorithm based on an LU factorization of Vandermonde matrix is proposed when the number of continuous surviving parity columns is no less than the number of erased information columns. The new decoding algorithm is faster than the existing algorithms when more than three information columns fail. The proposed efficient decoding algorithm is also applicable to other Vandermonde array codes. Thus the proposed MDS array code is practically very meaningful for storage systems that need higher reliability.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-03-09T13:53:41Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Hanxu Hou</name>
+    </author>
+    <author>
+      <name>Yunghsiang S. Han</name>
+    </author>
+    <author>
+      <name>Kenneth W. Shum</name>
+    </author>
+    <author>
+      <name>Hui Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.00658v2</id>
+    <title>Conditioning of partial nonuniform Fourier matrices with clustered nodes</title>
+    <updated>2019-06-19T09:31:42Z</updated>
+    <link href="https://arxiv.org/abs/1809.00658v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.00658v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove sharp lower bounds for the smallest singular value of a partial Fourier matrix with arbitrary "off the grid" nodes (equivalently, a rectangular Vandermonde matrix with the nodes on the unit circle), in the case when some of the nodes are separated by less than the inverse bandwidth. The bound is polynomial in the reciprocal of the so-called "super-resolution factor", while the exponent is controlled by the maximal number of nodes which are clustered together. As a corollary, we obtain sharp minimax bounds for the problem of sparse super-resolution on a grid under the partial clustering assumptions.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-03T17:02:55Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Dmitry Batenkov</name>
+    </author>
+    <author>
+      <name>Laurent Demanet</name>
+    </author>
+    <author>
+      <name>Gil Goldman</name>
+    </author>
+    <author>
+      <name>Yosef Yomdin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1511.01353v1</id>
+    <title>A N-Body Solver for Free Mesh Interpolation</title>
+    <updated>2015-10-31T15:58:41Z</updated>
+    <link href="https://arxiv.org/abs/1511.01353v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1511.01353v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorization of the Gaussian RBF kernel is developed for free-mesh interpolation in the flat, polynomial limit corresponding to Taylor expansion and the Vandermonde basis of geometric moments. With this spectral approximation, a top-down octree-scoping of an interpolant is found by recursively decomposing the residual, similar to the work of Driscoll and Heryudono (2007), except that in the current approach the grid is decoupled from the low rank approximation, allowing partial separation of sampling errors (the mesh) from representation errors (the polynomial order). Then, it is possible to demonstrate roughly 5 orders of magnitude improvement in free-mesh interpolation errors for the three-dimensional Franke function, relative to previous benchmarks. As in related work on $N$-body methods for factorization by square root iteration (Challacombe 2015), some emphasis is placed on resolution of the identity.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-31T15:58:41Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Matt Challacombe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.07328v4</id>
+    <title>Factorization structures, cones, and polytopes</title>
+    <updated>2026-01-18T13:36:08Z</updated>
+    <link href="https://arxiv.org/abs/2311.07328v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.07328v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorization structures occur in toric differential and discrete geometry, and can be viewed in multiple ways, e.g., as objects determining substantial classes of explicit toric Sasaki and Kähler geometries, as special coordinates on such, or as an apex generalisation of cyclic polytopes featuring a generalised Gale's evenness condition. This article presents a comprehensive study of factorization structures. It establishes their structure theory and introduces their use in the geometry of cones and polytopes. The article explains the construction of polytopes and cones compatible with a given factorization structure, and exemplifies it for product Segre-Veronese and Veronese factorization structures, where the latter case includes cyclic polytopes. Further, it derives the generalised Gale's evenness condition for compatible cones, polytopes and their duals, and explicitly describes faces of these. Factorization structures naturally provide generalised Vandermonde identities, which relate normals of any compatible polytope, and which are used for Veronese factorization structure to find examples of Delzant and rational Delzant compatible polytopes. The article offers a myriad of factorization structure examples, which are later characterised to be precisely factorization structures with decomposable curves, and raises the question if these encompass all factorization structures, i.e., the existence of an indecomposable factorization curve.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-13T13:28:52Z</published>
+    <arxiv:comment>54 pages, v4, as published, problems with the package cleveref fixed</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Roland Púček</name>
+    </author>
+    <arxiv:doi>10.1017/prm.2025.10046</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1017/prm.2025.10046" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1701.07017v1</id>
+    <title>Accelerated Magnetic Resonance Spectroscopy with Vandermonde Factorization</title>
+    <updated>2017-01-24T08:06:00Z</updated>
+    <link href="https://arxiv.org/abs/1701.07017v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1701.07017v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-dimensional magnetic resonance spectroscopy is an important tool for studying molecular structures, interactions and dynamics in bio-engineering. The data acquisition time, however, is relatively long and non-uniform sampling can be applied to reduce this time. To obtain the full spectrum,a reconstruction method with Vandermonde factorization is proposed.This method explores the general signal property in magnetic resonance spectroscopy: Its time domain signal is approximated by a sum of a few exponentials. Results on synthetic and realistic data show that the new approach can achieve faithful spectrum reconstruction and outperforms state-of-the-art low rank Hankel matrix method.</summary>
+    <category term="physics.med-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-01-24T08:06:00Z</published>
+    <arxiv:comment>4 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.med-ph"/>
+    <author>
+      <name>Xiaobo Qu</name>
+    </author>
+    <author>
+      <name>Jiaxi Ying</name>
+    </author>
+    <author>
+      <name>Jian-Feng Cai</name>
+    </author>
+    <author>
+      <name>Zhong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.5723v2</id>
+    <title>The inverse moment problem for convex polytopes</title>
+    <updated>2012-04-22T15:07:37Z</updated>
+    <link href="https://arxiv.org/abs/1106.5723v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.5723v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The goal of this paper is to present a general and novel approach for the reconstruction of any convex d-dimensional polytope P, from knowledge of its moments. In particular, we show that the vertices of an N-vertex polytope in R^d can be reconstructed from the knowledge of O(DN) axial moments (w.r.t. to an unknown polynomial measure od degree D) in d+1 distinct generic directions. Our approach is based on the collection of moment formulas due to Brion, Lawrence, Khovanskii-Pukhikov, and Barvinok that arise in the discrete geometry of polytopes, and what variously known as Prony's method, or Vandermonde factorization of finite rank Hankel matrices.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-28T16:48:03Z</published>
+    <arxiv:comment>LaTeX2e, 24 pages including 1 appendix</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Discrete and Computational Geometry, 48(2012), pp. 596--621</arxiv:journal_ref>
+    <author>
+      <name>Nick Gravin</name>
+    </author>
+    <author>
+      <name>Jean Lasserre</name>
+    </author>
+    <author>
+      <name>Dmitrii Pasechnik</name>
+    </author>
+    <author>
+      <name>Sinai Robins</name>
+    </author>
+    <arxiv:doi>10.1007/s00454-012-9426-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00454-012-9426-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.01455v1</id>
+    <title>Euler matrices and their algebraic properties revisited</title>
+    <updated>2018-11-04T23:14:34Z</updated>
+    <link href="https://arxiv.org/abs/1811.01455v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.01455v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper is concerned with the generalized Euler polynomial matrix $\E^{(α)}(x)$ and the Euler matrix $\E$. Taking into account some properties of Euler polynomials and numbers, we deduce product formulae for $\E^{(α)}(x)$ and determine the inverse matrix of $\E$. We establish some explicit expressions for the Euler polynomial matrix $\E(x)$, which involving the generalized Pascal, Fibonacci and Lucas matrices, respectively. From these formulae we get some new interesting identities involving Fibonacci and Lucas numbers. Also, we provide some factorizations of the Euler polynomial matrix in terms of Stirling matrices, as well as, a connection between the shifted Euler matrices and Vandermonde matrices.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-04T23:14:34Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yamilet Quintana</name>
+    </author>
+    <author>
+      <name>William Ramírez</name>
+    </author>
+    <author>
+      <name>Alejandro Urieles</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.04125v2</id>
+    <title>SVP$_p$ is Deterministically NP-Hard for all $p &gt; 2$, Even to Approximate Within a Factor of $2^{\log^{1-\varepsilon} n}$</title>
+    <updated>2026-03-29T02:16:03Z</updated>
+    <link href="https://arxiv.org/abs/2511.04125v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.04125v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that SVP$_p$ is NP-hard to approximate within a factor of $2^{\log^{1 - \varepsilon} n}$, for all constants $\varepsilon &gt; 0$ and $p &gt; 2$, under standard deterministic Karp reductions. This result is also the first proof that \emph{exact} SVP$_p$ is NP-hard in a finite $\ell_p$ norm. Hardness for SVP$_p$ with $p$ finite was previously only known if NP $\not \subseteq$ RP, and under that assumption, hardness of approximation was only known for all constant factors. As a corollary to our main theorem, we show that under the Sliding Scale Conjecture, SVP$_p$ is NP-hard to approximate within a small polynomial factor, for all constants $p &gt; 2$.
+  Our proof techniques are surprisingly elementary; we reduce from a \emph{regularized} PCP instance directly to the shortest vector problem by using simple gadgets related to Vandermonde matrices and Hadamard matrices.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-06T07:18:14Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Isaac M. Hair</name>
+    </author>
+    <author>
+      <name>Amit Sahai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.03146v4</id>
+    <title>Stable super-resolution limit and smallest singular value of restricted Fourier matrices</title>
+    <updated>2022-10-13T21:11:41Z</updated>
+    <link href="https://arxiv.org/abs/1709.03146v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.03146v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the inverse problem of recovering the locations and amplitudes of a collection of point sources represented as a discrete measure, given $M+1$ of its noisy low-frequency Fourier coefficients. Super-resolution refers to a stable recovery when the distance $Δ$ between the two closest point sources is less than $1/M$. We introduce a clumps model where the point sources are closely spaced within several clumps. Under this assumption, we derive a non-asymptotic lower bound for the minimum singular value of a Vandermonde matrix whose nodes are determined by the point sources. Our estimate is given as a weighted $\ell^2$ sum, where each term only depends on the configuration of each individual clump. The main novelty is that our lower bound obtains an exact dependence on the {\it Super-Resolution Factor} $SRF=(MΔ)^{-1}$. As noise level increases, the {\it sensitivity of the noise-space correlation function in the MUSIC algorithm} degrades according to a power law in $SRF$ where the exponent depends on the cardinality of the largest clump. Numerical experiments validate our theoretical bounds for the minimum singular value and the sensitivity of MUSIC. We also provide lower and upper bounds for a min-max error of super-resolution for the grid model, which in turn is closely related to the minimum singular value of Vandermonde matrices.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-10T17:45:45Z</published>
+    <arxiv:comment>fixed some typos; 40 pages, 5 figures; Applied and Computational Harmonic Analysis 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Weilin Li</name>
+    </author>
+    <author>
+      <name>Wenjing Liao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21815v1</id>
+    <title>A Moment--Hankel Rank Method for Identifying the Number of Point Sources in the Heat Equation</title>
+    <updated>2026-06-20T00:29:45Z</updated>
+    <link href="https://arxiv.org/abs/2606.21815v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21815v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a low-frequency moment--Hankel rank method for identifying the number of time-independent point sources in the heat equation from boundary flux data. The method is formulated in the unit disk, where the Laplace-transformed and normalized boundary flux admits an explicit Fourier moment representation. By taking the low-frequency limit, we obtain a finite exponential-sum moment sequence in which the nodes encode the source locations, the weights encode the source strengths, and the number of terms equals the number of point sources. The associated Hankel matrix admits a Vandermonde factorization, and its rank is exactly the source number under the natural assumptions that the source locations are distinct and the source strengths are nonzero. We also analyze the effect of discrete and noisy boundary data. A uniform moment perturbation bound is propagated to the empirical Hankel matrix, and Weyl's singular-value perturbation inequality yields a sufficient condition for stable numerical rank recovery in terms of the smallest nonzero singular value of the ideal Hankel matrix. Numerical experiments confirm the exact rank pattern in the noiseless case, validate the stability threshold under moment noise, and illustrate the loss of resolution for close or weak sources. After the source number is identified, the same moment sequence can be used for location and strength recovery through an annihilating-polynomial and Vandermonde reconstruction procedure.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-20T00:29:45Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Zhiliang Deng</name>
+    </author>
+    <author>
+      <name>Xiaomei Yang</name>
+    </author>
+    <author>
+      <name>Ailin Qian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00164v2</id>
+    <title>Exact joint eigenvalue densities of non-Hermitian random matrices are Calogero scattering states</title>
+    <updated>2026-09-25T04:18:23Z</updated>
+    <link href="https://arxiv.org/abs/2609.00164v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.00164v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Determining exact joint eigenvalue densities is central to random matrix theory. We solve this long-standing problem for non-Hermitian matrices with transposition symmetry (complex symmetric and complex self-dual) at arbitrary matrix size. Up to a Vandermonde factor, they are scattering-state wave functions of the Calogero model, a line of particles interacting through an inverse-square potential, with the coupling strength set by the symmetry. In contrast to many previously known joint densities, the densities cannot be written as a gas of eigenvalues with pairwise interactions. We further compute the complex level spacing distributions and two-point spectral correlation functions, which carry power-law tails, absent in a Coulomb gas. Our results shed light on the interplay among random matrices, integrability, and symmetry.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-31T18:00:43Z</published>
+    <arxiv:comment>31 pages (10 pages main text and 21 pages Supplemental Material), 3 figures; revised version with updated author list</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <author>
+      <name>Zhenyu Xiao</name>
+    </author>
+    <author>
+      <name>Ze Chen</name>
+    </author>
+    <author>
+      <name>Shinsei Ryu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17626v1</id>
+    <title>Explicit Determinants of Homogeneous Polynomial Evaluation Matrices and Applications</title>
+    <updated>2026-01-24T23:24:21Z</updated>
+    <link href="https://arxiv.org/abs/2601.17626v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17626v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, the determinants of matrices constructed by evaluating homogeneous bivariate polynomials at pairs of vectors are investigated. For a polynomial $p(x,y)=\sum\limits_{i=0}^k α_i x^{k-i}y^i$, an explicit factorization of the determinant of the associated $n\times n$ evaluation matrix $A_{\mathbf{a},\mathbf{b}}(p(x,y))=\bigl[p(a_r,b_s)\bigr]_{r,s=1}^n$ is presented for all $n \ge k+1$ and for all pairs of vectors $\mathbf a=(a_1,\dots,a_n)$ and $\mathbf b=(b_1,\dots,b_n)$ of length $n$. In particular, it is proved that $\det (A_{\mathbf{a},\mathbf{b}}(p(x,y)))=0$ when $n \ge k+2$, while in the borderline case $n=k+1$ a closed formula involving Vandermonde determinants is derived in the vector sets and the coefficients of $p(x,y)$. Several well-known determinants, including those arising from $(x+y)^k$ and classical quotient forms $\frac{a^k-b^k}{a-b}$ and $\frac{a^k+b^k}{a+b}$, emerge as special cases. We also provide a discussion for $n \le k$, connecting the problem to symmetric functions and generalized Vandermonde determinants. Finally, applications such matrices and determinants are provided, including an explicit formula and equivariance law under linear changes of variables for the sum-form \(p(x,y)=f(x+y)\), and a non-vanishing bound over finite fields via Schwartz-Zippel lemma.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-24T23:24:21Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Somphong Jitman</name>
+    </author>
+    <author>
+      <name>Wannarut Rungrottheera</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.13882v1</id>
+    <title>NMR Spectra Denoising with Vandermonde Constraints</title>
+    <updated>2023-10-21T01:12:22Z</updated>
+    <link href="https://arxiv.org/abs/2310.13882v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.13882v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nuclear magnetic resonance (NMR) spectroscopy serves as an important tool to analyze chemicals and proteins in bioengineering. However, NMR signals are easily contaminated by noise during the data acquisition, which can affect subsequent quantitative analysis. Therefore, denoising NMR signals has been a long-time concern. In this work, we propose an optimization model-based iterative denoising method, CHORD-V, by treating the time-domain NMR signal as damped exponentials and maintaining the exponential signal form with a Vandermonde factorization. Results on both synthetic and realistic NMR data show that CHORD-V has a superior denoising performance over typical Cadzow and rQRd methods, and the state-of-the-art CHORD method. CHORD-V restores low-intensity spectral peaks more accurately, especially when the noise is relatively high.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-21T01:12:22Z</published>
+    <arxiv:comment>10 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Di Guo</name>
+    </author>
+    <author>
+      <name>Runmin Xu</name>
+    </author>
+    <author>
+      <name>Jinyu Wu</name>
+    </author>
+    <author>
+      <name>Meijin Lin</name>
+    </author>
+    <author>
+      <name>Xiaofeng Du</name>
+    </author>
+    <author>
+      <name>Xiaobo Qu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.21418v1</id>
+    <title>Sublinear Time Low-Rank Approximation of Hankel Matrices</title>
+    <updated>2025-11-26T14:09:28Z</updated>
+    <link href="https://arxiv.org/abs/2511.21418v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.21418v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hankel matrices are an important class of highly-structured matrices, arising across computational mathematics, engineering, and theoretical computer science. It is well-known that positive semidefinite (PSD) Hankel matrices are always approximately low-rank. In particular, a celebrated result of Beckermann and Townsend shows that, for any PSD Hankel matrix $H \in \mathbb{R}^{n \times n}$ and any $ε&gt; 0$, letting $H_k$ be the best rank-$k$ approximation of $H$, $\|H-H_k\|_F \leq ε\|H\|_F$ for $k = O(\log n \log(1/ε))$. As such, PSD Hankel matrices are natural targets for low-rank approximation algorithms. We give the first such algorithm that runs in \emph{sublinear time}. In particular, we show how to compute, in $\polylog(n, 1/ε)$ time, a factored representation of a rank-$O(\log n \log(1/ε))$ Hankel matrix $\widehat{H}$ matching the error guarantee of Beckermann and Townsend up to constant factors. We further show that our algorithm is \emph{robust} -- given input $H+E$ where $E \in \mathbb{R}^{n \times n}$ is an arbitrary non-Hankel noise matrix, we obtain error $\|H - \widehat{H}\|_F \leq O(\|E\|_F) + ε\|H\|_F$. Towards this algorithmic result, our first contribution is a \emph{structure-preserving} existence result - we show that there exists a rank-$k$ \emph{Hankel} approximation to $H$ matching the error bound of Beckermann and Townsend. Our result can be interpreted as a finite-dimensional analog of the widely applicable AAK theorem, which shows that the optimal low-rank approximation of an infinite Hankel operator is itself Hankel. Armed with our existence result, and leveraging the well-known Vandermonde structure of Hankel matrices, we achieve our sublinear time algorithm using a sampling-based approach that relies on universal ridge leverage score bounds for Vandermonde matrices.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-26T14:09:28Z</published>
+    <arxiv:comment>To appear in SODA 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Michael Kapralov</name>
+    </author>
+    <author>
+      <name>Cameron Musco</name>
+    </author>
+    <author>
+      <name>Kshiteej Sheth</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/0306022v5</id>
+    <title>Global unitary fixing and matrix-valued correlations in matrix models</title>
+    <updated>2003-07-28T19:53:32Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/0306022v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/0306022v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider the partition function for a matrix model with a global unitary invariant energy function. We show that the averages over the partition function of global unitary invariant trace polynomials of the matrix variables are the same when calculated with any choice of a global unitary fixing, while averages of such polynomials without a trace define matrix-valued correlation functions, that depend on the choice of unitary fixing. The unitary fixing is formulated within the standard Faddeev-Popov framework, in which the squared Vandermonde determinant emerges as a factor of the complete Faddeev-Popov determinant. We give the ghost representation for the FP determinant, and the corresponding BRST invariance of the unitary-fixed partition function. The formalism is relevant for deriving Ward identities obeyed by matrix-valued correlation functions.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-06-03T16:25:54Z</published>
+    <arxiv:comment>Tex, 22 pages</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Lett. B570 (2003) 73-81</arxiv:journal_ref>
+    <author>
+      <name>Stephen L. Adler</name>
+    </author>
+    <author>
+      <name>Lawrence P. Horwitz</name>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2003.07.025</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2003.07.025" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.00723v1</id>
+    <title>Estimating Channels With Hundreds of Sub-Paths for MU-MIMO Uplink: A Structured High-Rank Tensor Approach</title>
+    <updated>2024-09-01T13:49:25Z</updated>
+    <link href="https://arxiv.org/abs/2409.00723v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.00723v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This letter introduces a structured high-rank tensor approach for estimating sub-6G uplink channels in multi-user multiple-input and multiple-output (MU-MIMO) systems. To tackle the difficulty of channel estimation in sub-6G bands with hundreds of sub-paths, our approach fully exploits the physical structure of channel and establishes the link between sub-6G channel model and a high-rank four-dimensional (4D) tensor Canonical Polyadic Decomposition (CPD) with three factor matrices being Vandermonde-constrained. Accordingly, a stronger uniqueness property is derived in this work. This model supports an efficient one-pass algorithm for estimating sub-path parameters, which ensures plug-in compatibility with the widely-used baseline. Our method performs much better than the state-of-the-art tensor-based techniques on the simulations adhering to the 3GPP 5G protocols.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-01T13:49:25Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Panqi Chen</name>
+    </author>
+    <author>
+      <name>Lei Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.06414v1</id>
+    <title>On the limit of random hives with GUE boundary conditions</title>
+    <updated>2025-02-10T12:54:08Z</updated>
+    <link href="https://arxiv.org/abs/2502.06414v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.06414v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that hives chosen at random with independent GUE boundary conditions on two sides, weighted by a Vandermonde factor depending on the third side (which is necessary in the context of the randomized Horn problem), when normalized so that the eigenvalues at the edge are asymptotically constant, converge in probability to a continuum hive as $n \rightarrow \infty.$ It had previously been shown in joint work with Sheffield and Tao \cite{NST} that the variance of these scaled random hives tends to $0$ and consequently, from compactness, that they converge in probability subsequentially. In the present paper, building on \cite{NST}, we prove convergence in probability to a single continuum hive, without having to pass to a subsequence. We moreover show that the value at a given point $v$ of this continuum hive equals the supremum of a certain functional acting on asymptotic height functions of lozenge tilings.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-10T12:54:08Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Hariharan Narayanan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.03296v2</id>
+    <title>Search-free DOA Estimation Method Based on Tensor Decomposition and Polynomial Rooting for Transmit Beamspace MIMO Radar</title>
+    <updated>2020-10-14T12:24:08Z</updated>
+    <link href="https://arxiv.org/abs/2010.03296v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.03296v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In order to improve the accuracy and resolution for transmit beamspace multiple-input multiple-output (MIMO) radar, a search-free direction-of-arrival (DOA) estimation method based on tensor decomposition and polynomial rooting is proposed. In the proposed method, a 3-order tensor is firstly designed to model the received signal of MIMO radar on the basis of the multi-linear property. Then, the factor matrix with target DOA information is obtained by the tensor decomposition via alternating least squares (ALS) algorithm, and subsequently the DOA estimation is converted into the independent minimization problem. By exploiting the Vandermonde structure of the transmit steering vector, a polynomial function is constructed to solve the minimization problem via polynomial rooting. The factor matrix contained in the coefficients of the polynomial can be regarded as a block matrix in the generalized sidelobe canceller (GSC), which accordingly forms a unique deep null in the direction of target in the transmit beampattern. The proposed method can obtain the DOA estimation without the requirements of spectrum searching or transmit beamspace matrix design, which is different from the conventional DOA estimation techniques. The effectiveness of the proposed method is verified by the simulations.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-07T09:18:39Z</published>
+    <arxiv:comment>14 pages, 4 figures,1 table, submitted to Signal Processing</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Feng Xu</name>
+    </author>
+    <author>
+      <name>Xiaopeng Yang</name>
+    </author>
+    <author>
+      <name>Tian Lan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.19486v3</id>
+    <title>A Determinant Congruence Conjectured by Sun</title>
+    <updated>2026-05-27T18:08:39Z</updated>
+    <link href="https://arxiv.org/abs/2605.19486v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.19486v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a strengthened form of a conjecture of Sun on a determinant attached to a binary quadratic form. Let $n&gt;3$ and let $c,d\in\Z$. If $n$ is composite, then \[
+  \det\big[(i^2+cij+dj^2)^{n-2}\big]_{0\leq i,j\leq n-1}\equiv 0\pmod {n^2} \] with no condition on $c$ and $d$. If $n=p$ is prime, the same congruence holds whenever the Legendre symbol $\leg{d}{p}$ is $-1$. For composite $n$, a polynomial determinant is divisible by two Vandermonde factors; after specialisation, their product already yields the required square divisor. For prime $n=p$, we estimate the rank of the matrix modulo $p$. The required rank defect follows from a coefficient cancellation obtained from the involution $t\mapsto d/t$ on $\Fp^\times$ and the condition $\leg{d}{p}=-1$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-19T07:37:46Z</published>
+    <arxiv:comment>Accepted for publication in the Bulletin of the Australian Mathematical Society</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yutong Zhang</name>
+    </author>
+    <author>
+      <name>Yaoran Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.01373v2</id>
+    <title>From fermionic spin-Calogero-Sutherland models to the Haldane-Shastry chain by freezing</title>
+    <updated>2024-02-28T10:15:57Z</updated>
+    <link href="https://arxiv.org/abs/2212.01373v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.01373v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Haldane-Shastry spin chain has a myriad of remarkable properties, including Yangian symmetry and, for spin $1/2$, explicit highest-weight eigenvectors featuring (the case $α= 1/2$ of) Jack polynomials. This stems from the spin-Calogero-Sutherland model, which reduces to Haldane-Shastry in a special `freezing' limit.
+  In this work we clarify various points that, to the best of our knowledge, were missing in the literature. We have two main results. First, we show that freezing the $\mathit{fermionic}$ spin-1/2 Calogero-Sutherland model naturally accounts for the precise form of the Haldane-Shastry wave functions, including the Vandermonde factor squared. Second, we use the fermionic framework to prove the claim of Bernard-Gaudin-Haldane-Pasquier that the Yangian highest-weight eigenvectors of the $SU(r)$-version of the Haldane-Shastry chain arise by freezing $SU(r-1)$ spin-Calogero-Sutherland eigenvectors at $α= 1/2$.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-02T18:56:01Z</published>
+    <arxiv:comment>v1: 38 pages, 1 figure, 1 table. v2: various minor improvements; 43 pages, 2 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>J. Phys. A: Math. Theor. 57 (2024) 235205</arxiv:journal_ref>
+    <author>
+      <name>Jules Lamers</name>
+    </author>
+    <author>
+      <name>Didina Serban</name>
+    </author>
+    <arxiv:doi>10.1088/1751-8121/ad4b79</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1751-8121/ad4b79" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00781v3</id>
+    <title>Bessel Multiple Orthogonal Polynomials of Mixed Type</title>
+    <updated>2026-09-24T18:35:07Z</updated>
+    <link href="https://arxiv.org/abs/2608.00781v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.00781v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article constructs a Bessel family of mixed-type multiple orthogonal polynomials for a $q\times p$ matrix weight on the unit circle. Unlike a rank-one product weight, this matrix has generic rank $\min\{q,p\}$ outside a finite subset of the circle. Its reciprocal-Gamma moments recover the multiple Bessel system when $q=1$ and the Bessel-like system of Wolfs when $p=1$. The same matrix is obtained as a scaled Markov-Stieltjes limit of a rank-one Jacobi system, although the interval measures themselves have no finite limit. For balanced near-diagonal indices, explicit formulas are obtained for the mixed $A$ and $B$ polynomial vectors. Their orthogonality and weak normality are proved, and componentwise strong normality is characterized. The components have terminating generalized hypergeometric representations; the $B$ components also admit finite Kampé de Fériet representations and a matrix Rodrigues-type formula. In the one-row reduction, the bivariate representation becomes a generalized hypergeometric polynomial governed by a reflected type-II multiple Hahn polynomial. Finite Gamma-Pochhammer formulas give the near-diagonal and step-line recurrence coefficients. The corresponding banded recurrence matrix has a bidiagonal Christoffel factorization: the lower factors are evaluated from transformed polynomial vectors, while the upper factors are expressed through finite tau determinants. When $q=1$, every Christoffel step remains within the multiple Bessel family, and Gamma-Vandermonde determinants yield the complete factorization.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-01T17:28:24Z</published>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Manuel Mañas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1603.01746v1</id>
+    <title>Exact Energy Computation of the One Component Plasma on a Sphere for Even Values of the Coupling Parameter</title>
+    <updated>2016-03-05T17:56:52Z</updated>
+    <link href="https://arxiv.org/abs/1603.01746v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1603.01746v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two dimensional one component plasma 2dOCP is a classical system consisting of $N$ identical particles with the same charge $q$ confined in a two dimensional surface with a neutralizing background. The Boltzmann factor at temperature $T$ may be expressed as a Vandermonde determinant to the power $Γ=q^2/(k_B T)$. Several statistical properties of the 2dOCP have been studied by expanding the Boltzmann factor in the monomial basis for even values of $Γ$. In this work, we use this formalism to compute the energy of the 2dOCP on a sphere. Using the same approach the entropy is computed. The entropy as well as the free energy in the thermodynamic limit have a universal finite-size correction term $\fracχ{12}\log N$, where $χ=2$ is the Euler characteristic of the sphere. A non-recursive formula for coefficients of monomial functions expansion is used for exploring the energy as well as structural properties for sufficiently large values of $Γ$ to appreciate the crystallization features for $N=2,3,\ldots,9$ particles. Finally, we make a brief comparison between the exact and numerical energies obtained with the Metropolis method for even values of $Γ$.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-05T17:56:52Z</published>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <author>
+      <name>Robert Salazar</name>
+    </author>
+    <author>
+      <name>Gabriel Téllez</name>
+    </author>
+    <arxiv:doi>10.1007/s10955-016-1562-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10955-016-1562-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.14005v1</id>
+    <title>From superintegrability to tridiagonal representation of $β$-ensembles</title>
+    <updated>2021-10-26T20:23:33Z</updated>
+    <link href="https://arxiv.org/abs/2110.14005v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.14005v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The wonderful formulas by I.Dumitriu and A.Edelman rewrite $β$-ensemble, with eigenvalue integrals containing Vandermonde factors in the power $2β$, through integrals over tridiagonal matrices, where $β$-dependent are the powers of individual matrix elements, not their differences. These potentially useful formulas are usually deduced from rather complicated and non-transparent combinatorics and are not as widely known as they deserve. We explain that the superintegrability property, i.e. a simple expression of the Gaussian averages of arbitrary Jack polynomials through the same Jack polynomials, is immediately consistent with this tridiagonal representation, which may serve as a clue to its simple and transparent interpretation. For a formal non-perturbative proof, we use the Virasoro constraints, which themselves acquire an interesting structure in the tridiagonal realization. We also attract attention to the surprising spontaneous breakdown of discrete invariance by the tridiagonal measure, which may signal a new interesting anomaly at the elementary level of the basic eigenvalue matrix model.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-26T20:23:33Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>A. Mironov</name>
+    </author>
+    <author>
+      <name>A. Morozov</name>
+    </author>
+    <author>
+      <name>A. Popolitov</name>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2022.137038</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2022.137038" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.04432v2</id>
+    <title>Total positivity and accurate computations related to $q$-Abel polynomials</title>
+    <updated>2024-10-21T20:32:38Z</updated>
+    <link href="https://arxiv.org/abs/2410.04432v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.04432v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The attainment of accurate numerical solutions of ill-conditioned linear algebraic problems involving totally positive matrices has been gathering considerable attention among researchers over the last years. In parallel, the interest of $q$-calculus has been steadily growing in the literature. In this work the $q$-analogue of the Abel polynomial basis is studied. The total positivity of the matrix of change of basis between monomial and $q$-Abel bases is characterized, providing its bidiagonal factorization. Moreover, well-known high relative accuracy results of Vandermonde matrices corresponding to increasing positive nodes are extended to the decreasing negative case. This further allows to solve with high relative accuracy several algebraic problems concerning collocation, Wronskian and Gramian matrices of $q$-Abel polynomials. Finally, a series of numerical tests support the presented theoretical results and illustrate the goodness of the method where standard approaches fail to deliver accurate solutions.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-06T10:03:44Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>J Sci Comput 101, 56 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Y. Khiar</name>
+    </author>
+    <author>
+      <name>E. Mainar</name>
+    </author>
+    <author>
+      <name>E. Royo-Amondarain</name>
+    </author>
+    <author>
+      <name>B. Rubio</name>
+    </author>
+    <arxiv:doi>10.1007/s10915-024-02699-8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10915-024-02699-8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.19358v2</id>
+    <title>An optimal Poincaré inequality for the complex Ginibre log-gas</title>
+    <updated>2026-08-27T04:31:35Z</updated>
+    <link href="https://arxiv.org/abs/2608.19358v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.19358v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish an optimal Poincaré inequality for real-valued symmetric observables of the complex Ginibre log-gas. Equality is attained by the real and imaginary parts of the center-of-mass observable. Equivalently, we determine the exact spectral gap of the associated overdamped Langevin dynamics, for real symmetric observables. The Hessian of the energy of this log-gas is unbounded below, so standard convexity arguments do not directly apply. The proof instead combines a Vandermonde transform, a holomorphic projection, and a complex Gaussian d-bar spectral-gap estimate, corresponding to the constant-curvature case of the Hörmander-Berndtsson estimate. It is short and self-contained. It remains valid, beyond the quadratic potential, for rotationally invariant additive plurisubharmonic potential perturbations. Additionally, we provide four alternative proofs, two of which yield sum-of-squares formulas for the deficit, based respectively on a Hermite expansion and on an integrated Bochner-Kodaira formula, the other two use the spectral analysis of a two-sided number-operator factorization and a Hermite-Slater polynomial expansion. We furthermore present new results related to linear statistics, Gaussian factorization, polynomial eigenfunctions, log-Sobolev inequalities, matrix lift and eigenvector overlaps, and non-quadratic potentials.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-19T18:20:55Z</published>
+    <arxiv:comment>30 pages, 2 graphics</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Djalil Chafaï</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.02753v1</id>
+    <title>Numerical methods for accurate computation of the eigenvalues of Hermitian matrices and the singular values of general matrices</title>
+    <updated>2020-06-04T10:21:11Z</updated>
+    <link href="https://arxiv.org/abs/2006.02753v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.02753v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper offers a review of numerical methods for computation of the eigenvalues of Hermitian matrices and the singular values of general and some classes of structured matrices. The focus is on the main principles behind the methods that guarantee high accuracy even in the cases that are ill-conditioned for the conventional methods. First, it is shown that a particular structure of the errors in a finite precision implementation of an algorithm allows for a much better measure of sensitivity and that computation with high accuracy is possible despite a large classical condition number. Such structured errors incurred by finite precision computation are in some algorithms e.g. entry-wise or column-wise small, which is much better than the usually considered errors that are in general small only when measured in the Frobenius matrix norm. Specially tailored perturbation theory for such structured perturbations of Hermitian matrices guarantees much better bounds for the relative errors in the computed eigenvalues. %
+Secondly, we review an unconventional approach to accurate computation of the singular values and eigenvalues of some notoriously ill-conditioned structured matrices, such as e.g. Cauchy, Vandermonde and Hankel matrices. The distinctive feature of accurate algorithms is using the intrinsic parameters that define such matrices to obtain a non-orthogonal factorization, such as the \textsf{LDU} factorization, and then computing the singular values of the product of thus computed factors. The state of the art software is discussed as well.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-04T10:21:11Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Zlatko Drmač</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.23858v2</id>
+    <title>Stable High-Order Interpolation on the Grassmann Manifold by Maximum-Volume Coordinates and Arnoldi Orthogonalization</title>
+    <updated>2026-03-27T09:06:48Z</updated>
+    <link href="https://arxiv.org/abs/2603.23858v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.23858v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-order interpolation on the Grassmann manifold $\Gr(n, p)$ is often hindered by the computational overhead and derivative instability of SVD-based geometric mappings. To solve the challenges, we propose a stabilized framework that combines Maximum-Volume (MV) local coordinates with Arnoldi-orthogonalized polynomial bases. First, manifold data are mapped to a well-conditioned Euclidean domain via MV coordinates. The approach bypasses the costly matrix factorizations inherent to traditional Riemannian normal coordinates. Within the coordinate space, we use the Vandermonde-with-Arnoldi (V+A) method for Lagrange interpolation and its confluent extension (CV+A) for derivative-enriched Hermite interpolation. By constructing discrete orthogonal bases directly from the parameter nodes, the solution of ill-conditioned linear system is avoided. Theoretical bounds are established to verify the stability of the geometric mapping and the polynomial approximation. Extensive numerical experiments demonstrate that the proposed MV-(C)V+A framework can produce highly accurate approximation in high-degree polynomial interpolation.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-25T02:34:57Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Qiang Niu</name>
+    </author>
+    <author>
+      <name>Wen Jiang</name>
+    </author>
+    <author>
+      <name>Jie Fei</name>
+    </author>
+    <author>
+      <name>Ruoyu Xiong</name>
+    </author>
+    <author>
+      <name>Yuxuan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26403v1</id>
+    <title>An Invertible Family of Hurwitz--Lerch Type Functions Associated with $k$-Augmented Centered Triangular Numbers</title>
+    <updated>2026-07-29T02:34:23Z</updated>
+    <link href="https://arxiv.org/abs/2607.26403v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26403v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper defines a family of Hurwitz--Lerch type functions whose
+  coefficients are the \(k\)-augmented centered triangular numbers. For this
+  family, we obtain the convergence conditions, a reduction formula, and an
+  Euler-operator form. A Vandermonde-based inversion formula is derived for a
+  class of polynomially weighted Hurwitz--Lerch functions. The family considered
+  here is the quadratic case with geometric factors \(1\), \(2\), and \(4\).
+  The resulting formulas show that three consecutive functions recover the
+  classical Hurwitz--Lerch transcendent and its first two Euler derivatives.
+  We also derive recurrence formulas, ordinary generating functions, finite
+  sums, and special values. The values at \(z=1\) are expressed through
+  Hurwitz zeta functions and Bernoulli polynomials. When \(a=1\), the numerator
+  polynomials of the rational values \(H_k(z,-m,1)\) are written in terms of
+  Eulerian polynomials, while the alternating values \(H_k(-1,-m,a)\) are
+  expressed through Euler polynomials.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T02:34:23Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Noel B. Lacpao</name>
+    </author>
+    <author>
+      <name>Rushel S. Acope</name>
+    </author>
+    <author>
+      <name>Marlon S. Frias</name>
+    </author>
+    <author>
+      <name>Mark Ivan P. Arcillas</name>
+    </author>
+    <author>
+      <name>Rey Carl P. Tiu</name>
+    </author>
+    <author>
+      <name>Francis Jay R. Romagos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.18067v2</id>
+    <title>Cooperative Bistatic ISAC Systems for Low-Altitude Economy</title>
+    <updated>2025-11-18T08:25:33Z</updated>
+    <link href="https://arxiv.org/abs/2506.18067v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.18067v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The burgeoning low-altitude economy (LAE) necessitates integrated sensing and communication (ISAC) systems capable of high-accuracy multi-target localization and velocity estimation under hardware and coverage constraints inherent in conventional ISAC architectures. This paper addresses these challenges by proposing a cooperative bistatic ISAC framework within MIMO-OFDM cellular networks, enabling robust sensing services for LAE applications through standardized 5G New Radio (NR) infrastructure. We first develop a low-complexity parameter extraction algorithm employing CANDECOMP/PARAFAC (CP) tensor decomposition, which exploits the inherent Vandermonde structure in delay-related factor matrices to efficiently recover bistatic ranges, Doppler velocities, and angles-of-arrival (AoA) from multi-dimensional received signal tensors. To resolve data association ambiguity across distributed transmitter-receiver pairs and mitigate erroneous estimates, we further design a robust fusion scheme based on the minimum spanning tree (MST) method, enabling joint 3D position and velocity reconstruction. Comprehensive simulation results validate the framework's superiority in computational efficiency and sensing performance for low-altitude scenarios.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-22T15:32:07Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Zhenkun Zhang</name>
+    </author>
+    <author>
+      <name>Yining Xu</name>
+    </author>
+    <author>
+      <name>Cunhua Pan</name>
+    </author>
+    <author>
+      <name>Hong Ren</name>
+    </author>
+    <author>
+      <name>Qixuan Zhang</name>
+    </author>
+    <author>
+      <name>Songtao Gao</name>
+    </author>
+    <author>
+      <name>Jiangzhou Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1407.3754v4</id>
+    <title>Towards matrix model representation of HOMFLY polynomials</title>
+    <updated>2022-07-17T17:40:20Z</updated>
+    <link href="https://arxiv.org/abs/1407.3754v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1407.3754v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate possibilities of generalizing the TBEM eigenvalue matrix model, which represents the non-normalized colored HOMFLY polynomials for torus knots as averages of the corresponding characters. We look for a model of the same type, which is a usual Chern-Simons mixture of the Gaussian potential, typical for Hermitean models, and the sine Vandermonde factors, typical for the unitary ones. We mostly concentrate on the family of twist knots, which contains a single torus knot, the trefoil. It turns out that for the trefoil the TBEM measure is provided by an action of Laplace exponential on the Jones polynomial. This procedure can be applied to arbitrary knots and provides a TBEM-like integral representation for the N=2 case. However, beyond the torus family, both the measure and its lifting to larger N contain non-trivial corrections in \hbar=\log q. A possibility could be to absorb these corrections into a deformation of the Laplace evolution by higher Casimir and/or cut-and-join operators, in the spirit of Hurwitz tau-function approach to knot theory, but this remains a subject for future investigation.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-07-14T18:14:55Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>JETP Letters, 100 (2014) 271-278 / Pis'ma v ZhETF, 100 (2014) 297-304</arxiv:journal_ref>
+    <author>
+      <name>A. Alexandrov</name>
+    </author>
+    <author>
+      <name>A. Mironov</name>
+    </author>
+    <author>
+      <name>A. Morozov</name>
+    </author>
+    <author>
+      <name>An. Morozov</name>
+    </author>
+    <arxiv:doi>10.1134/S0021364014160036</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1134/S0021364014160036" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.00778v1</id>
+    <title>Efficient and Self-Recursive Delay Vandermonde Algorithm for Multi-Beam Antenna Arrays</title>
+    <updated>2022-06-01T21:44:10Z</updated>
+    <link href="https://arxiv.org/abs/2206.00778v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.00778v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a self-contained factorization for the delay Vandermonde matrix (DVM), which is the super class of the discrete Fourier transform, using sparse and companion matrices. An efficient DVM algorithm is proposed to reduce the complexity of radio-frequency (RF) $N$-beam analog beamforming systems. There exist applications for wideband multi-beam beamformers in wireless communication networks such as 5G/6G systems, system capacity can be improved by exploiting the improvement of the signal to noise ratio (SNR) using coherent summation of propagating waves based on their directions of propagation. The presence of a multitude of RF beams allows multiple independent wireless links to be established at high SNR, or used in conjunction with multiple-input multiple-output (MIMO) wireless systems, with the overall goal of improving system SNR and therefore capacity. To realize such multi-beam beamformers at acceptable analog circuit complexities, we use sparse factorization of the DVM in order to derive a low arithmetic complexity DVM algorithm. The paper also establishes an error bound and stability analysis of the proposed DVM algorithm. The proposed efficient DVM algorithm is aimed at implementation using analog realizations. For purposes of evaluation, the algorithm can be realized using both digital hardware as well as software defined radio platforms.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-01T21:44:10Z</published>
+    <arxiv:comment>25 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <arxiv:journal_ref>IEEE Open Journal of Signal Processing, vol. 1, 2020</arxiv:journal_ref>
+    <author>
+      <name>S. M. Perera</name>
+    </author>
+    <author>
+      <name>A. Madanayake</name>
+    </author>
+    <author>
+      <name>R. J. Cintra</name>
+    </author>
+    <arxiv:doi>10.1109/OJSP.2020.2991586</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/OJSP.2020.2991586" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.11051v1</id>
+    <title>Tensor Decomposition Based Mixed-Field Sensing for XL-MIMO AFDM Systems</title>
+    <updated>2026-09-10T03:53:59Z</updated>
+    <link href="https://arxiv.org/abs/2609.11051v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.11051v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integrated sensing and communications enabled by extremely large-scale MIMO (XL-MIMO) and affine frequency division multiplexing (AFDM) is a highly promising paradigm for vehicular networks. However, the near-field spherical wavefront distortions induce severe non-linear parameter coupling, while the highly dynamic scattering environments exacerbate mismatch errors. To address these critical challenges, this paper proposes a novel tensor-based sensing scheme for XL-MIMO AFDM systems. First, the received signals are reformulated into a tensor, followed by an efficient decomposition approach that exploits the inherent Vandermonde structure of the factor matrices. This allows parameters to be directly estimated from the decomposed matrices, effectively avoiding inter-parameter coupling. Subsequently, a symmetric decoupling and real-domain manifold optimization algorithm is proposed for angle of arrival estimation, circumventing the high-dimensional searches typically induced by near-field effects. Furthermore, a baseband reconstruction and analytical gradient-based algorithm is developed to perform delay-Doppler estimation in the continuous parameter domain, fundamentally eradicating the grid-mismatch errors inherent in high-mobility scenarios. With these decoupled factors, the remaining unknown angle of departure can be readily extracted. Extensive simulation results demonstrate that the proposed scheme achieves orders-of-magnitude improvements in delay-Doppler accuracy and eliminates the error floors in angular estimation that severely bottleneck state-of-the-art baselines.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-10T03:53:59Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Lei Yao</name>
+    </author>
+    <author>
+      <name>Yin Xu</name>
+    </author>
+    <author>
+      <name>Aimin Tang</name>
+    </author>
+    <author>
+      <name>Taohe Chen</name>
+    </author>
+    <author>
+      <name>Tianyao Ma</name>
+    </author>
+    <author>
+      <name>Wenjun Zhang</name>
+    </author>
+  </entry>
+</feed>

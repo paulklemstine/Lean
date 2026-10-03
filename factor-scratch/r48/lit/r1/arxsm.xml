@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/9lvWgumlW+Prk2nRea4wGFEQef0</id>
+  <title>arXiv Query: search_query=all:"Saxena" AND all:"smoothness" AND all:"factoring"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-03T18:24:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Saxena%22+AND+(all:%22smoothness%22+AND+all:%22factoring%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1205.5653v1</id>
+    <title>Deterministic Polynomial Factoring and Association Schemes</title>
+    <updated>2012-05-25T10:24:12Z</updated>
+    <link href="https://arxiv.org/abs/1205.5653v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.5653v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of finding a nontrivial factor of a polynomial f(x) over a finite field F_q has many known efficient, but randomized, algorithms. The deterministic complexity of this problem is a famous open question even assuming the generalized Riemann hypothesis (GRH). In this work we improve the state of the art by focusing on prime degree polynomials; let n be the degree. If (n-1) has a `large' r-smooth divisor s, then we find a nontrivial factor of f(x) in deterministic poly(n^r,log q) time; assuming GRH and that s &gt; sqrt{n/(2^r)}. Thus, for r = O(1) our algorithm is polynomial time. Further, for r &gt; loglog n there are infinitely many prime degrees n for which our algorithm is applicable and better than the best known; assuming GRH.
+  Our methods build on the algebraic-combinatorial framework of m-schemes initiated by Ivanyos, Karpinski and Saxena (ISSAC 2009). We show that the m-scheme on n points, implicitly appearing in our factoring algorithm, has an exceptional structure; leading us to the improved time complexity. Our structure theorem proves the existence of small intersection numbers in any association scheme that has many relations, and roughly equal valencies and indistinguishing numbers.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-25T10:24:12Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>LMS J. Comput. Math. 17 (2014) 123-140</arxiv:journal_ref>
+    <author>
+      <name>Manuel Arora</name>
+    </author>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157013000296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157013000296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.1974v1</id>
+    <title>Schemes for Deterministic Polynomial Factoring</title>
+    <updated>2008-04-11T23:04:17Z</updated>
+    <link href="https://arxiv.org/abs/0804.1974v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.1974v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work we relate the deterministic complexity of factoring polynomials (over finite fields) to certain combinatorial objects we call m-schemes. We extend the known conditional deterministic subexponential time polynomial factoring algorithm for finite fields to get an underlying m-scheme. We demonstrate how the properties of m-schemes relate to improvements in the deterministic complexity of factoring polynomials over finite fields assuming the generalized Riemann Hypothesis (GRH). In particular, we give the first deterministic polynomial time algorithm (assuming GRH) to find a nontrivial factor of a polynomial of prime degree n where (n-1) is a smooth number.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-11T23:04:17Z</published>
+    <arxiv:comment>14 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02262v1</id>
+    <title>Complexity of counting points on curves and the factor $P_1(T)$ of the zeta function of surfaces</title>
+    <updated>2025-11-04T05:09:29Z</updated>
+    <link href="https://arxiv.org/abs/2511.02262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article concerns the computational complexity of a fundamental problem in number theory: counting points on curves and surfaces over finite fields. There is no subexponential-time algorithm known and it is unclear if it can be $\mathrm{NP}$-hard.
+  Given a curve, we present the first efficient Arthur-Merlin protocol to certify its point-count, its Jacobian group structure, and its Hasse-Weil zeta function. We extend this result to a smooth projective surface to certify the factor $P_{1}(T)$, corresponding to the first Betti number, of the zeta function; by using the counting oracle. We give the first algorithm to compute $P_{1}(T)$ that is poly($\log q$)-time if the degree $D$ of the input surface is fixed; and in quantum poly($D\log q$)-time in general.
+  Our technique in the curve case, is to sample hash functions using the Weil and Riemann-Roch bounds, to certify the group order of its Jacobian. For higher dimension varieties, we first reduce to the case of a surface, which is fibred as a Lefschetz pencil of hyperplane sections over $\mathbb{P}^{1}$. The formalism of vanishing cycles, and the inherent big monodromy, enable us to prove an effective version of Deligne's `theoreme du pgcd' using the hard-Lefschetz theorem and an equidistribution result due to Katz. These reduce our investigations to that of computing the zeta function of a curve, defined over a finite field extension $\mathbb{F}_{Q}/\mathbb{F}_{q}$ of poly-bounded degree. This explicitization of the theory yields the first nontrivial upper bounds on the computational complexity.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T05:09:29Z</published>
+    <arxiv:comment>25 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Diptajit Roy</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Madhavan Venkatesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.14481v1</id>
+    <title>Segmentation-Aware Latent Diffusion for Satellite Image Super-Resolution: Enabling Smallholder Farm Boundary Delineation</title>
+    <updated>2025-11-18T13:21:58Z</updated>
+    <link href="https://arxiv.org/abs/2511.14481v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.14481v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Delineating farm boundaries through segmentation of satellite images is a fundamental step in many agricultural applications. The task is particularly challenging for smallholder farms, where accurate delineation requires the use of high resolution (HR) imagery which are available only at low revisit frequencies (e.g., annually). To support more frequent (sub-) seasonal monitoring, HR images could be combined as references (ref) with low resolution (LR) images -- having higher revisit frequency (e.g., weekly) -- using reference-based super-resolution (Ref-SR) methods. However, current Ref-SR methods optimize perceptual quality and smooth over crucial features needed for downstream tasks, and are unable to meet the large scale-factor requirements for this task. Further, previous two-step approaches of SR followed by segmentation do not effectively utilize diverse satellite sources as inputs. We address these problems through a new approach, $\textbf{SEED-SR}$, which uses a combination of conditional latent diffusion models and large-scale multi-spectral, multi-source geo-spatial foundation models. Our key innovation is to bypass the explicit SR task in the pixel space and instead perform SR in a segmentation-aware latent space. This unique approach enables us to generate segmentation maps at an unprecedented 20$\times$ scale factor, and rigorous experiments on two large, real datasets demonstrate up to $\textbf{25.5}$ and $\textbf{12.9}$ relative improvement in instance and semantic segmentation metrics respectively over approaches based on state-of-the-art Ref-SR methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-18T13:21:58Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aditi Agarwal</name>
+    </author>
+    <author>
+      <name>Anjali Jain</name>
+    </author>
+    <author>
+      <name>Nikita Saxena</name>
+    </author>
+    <author>
+      <name>Ishan Deshpande</name>
+    </author>
+    <author>
+      <name>Michal Kazmierski</name>
+    </author>
+    <author>
+      <name>Abigail Annkah</name>
+    </author>
+    <author>
+      <name>Nadav Sherman</name>
+    </author>
+    <author>
+      <name>Karthikeyan Shanmugam</name>
+    </author>
+    <author>
+      <name>Alok Talekar</name>
+    </author>
+    <author>
+      <name>Vaibhav Rajan</name>
+    </author>
+  </entry>
+</feed>

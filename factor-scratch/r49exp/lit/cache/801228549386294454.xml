@@ -1,0 +1,1211 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/2MqmdfEAzrbT6wVsu3hKzgc2zrM</id>
+  <title>arXiv Query: search_query=abs:"factorization" AND abs:"Hilbert" AND abs:"polynomial"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:11:21Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factorization%22+AND+(abs:%22Hilbert%22+AND+abs:%22polynomial%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>110</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1403.4287v1</id>
+    <title>Factorization of Graded Traces on Nichols Algebras</title>
+    <updated>2014-03-17T22:11:50Z</updated>
+    <link href="https://arxiv.org/abs/1403.4287v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1403.4287v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the factorization of the Hilbert series and more general graded traces of a Nichols algebra into cyclotomic polynomials. Nichols algebras play the role of Borel subalgebras of finite-dimensional quantum groups, so this observation can be viewed as an analog to the factorization of the order of finite Lie groups into cyclotomic polynomials. We prove results on this factorization and give a table of many examples of rank 1 over nonabelian groups.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-03-17T22:11:50Z</published>
+    <arxiv:comment>34 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.QA"/>
+    <author>
+      <name>Simon Lentner</name>
+    </author>
+    <author>
+      <name>Andreas Lochmann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9910115v3</id>
+    <title>A Comment on Fisher Information and Quantum Algorithms</title>
+    <updated>2000-02-16T23:26:03Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9910115v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9910115v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that Grover's algorithm defines a geodesic in quantum Hilbert space with the Fubini-Study metric. From statistical point of view Grover's algorithm is characterized by constant Fisher's function. Quantum algorithms changing complexity class as Shor's factorization does not preserve constant Fisher's information. An adiabatic quantum factorization algorithm in non polynomial time is presented to exemplify the result.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-10-27T22:54:18Z</published>
+    <arxiv:comment>5 pages, LaTex file, Shor's factoring algorithm discussion added (new sections 5 and 6)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>J. J. Alvarez</name>
+    </author>
+    <author>
+      <name>C. Gomez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.07952v1</id>
+    <title>Some Fano manifolds whose Hilbert polynomial is totally reducible over $\mathbb Q$</title>
+    <updated>2022-01-20T01:56:33Z</updated>
+    <link href="https://arxiv.org/abs/2201.07952v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.07952v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $(X,L)$ be any Fano manifold polarized by a positive multiple of its fundamental divisor $H$. The polynomial defining the Hilbert curve of $(X,L)$ boils down to being the Hilbert polynomial of $(X,H)$, hence it is totally reducible over $\mathbb C$; moreover, some of the linear factors appearing in the factorization have rational coefficients, e.g. if $X$ has index $\geq 2$. It is natural to ask when the same happens for all linear factors. Here the total reducibility over $\mathbb Q$ of the Hilbert polynomial is investigated for three special kinds of Fano manifolds: Fano manifolds of large index, toric Fano manifolds of low dimension, and Fano bundles of low coindex.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-20T01:56:33Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Antonio Lanteri</name>
+    </author>
+    <author>
+      <name>Andrea Luigi Tironi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0806.1171v3</id>
+    <title>Supertropical algebra</title>
+    <updated>2009-12-07T06:34:54Z</updated>
+    <link href="https://arxiv.org/abs/0806.1171v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0806.1171v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We develop the algebraic polynomial theory for "supertropical algebra," as initiated earlier over the real numbers by the first author. The main innovation there was the introduction of "ghost elements," which also play the key role in our structure theory. Here, we work somewhat more generally over an ordered monoid, and develop a theory which contains the analogs of several basic theorems of classical commutative algebra. This structure enables one to develop a Zariski-type algebraic geometric approach to tropical geometry, viewing tropical varieties as sets of roots of (supertropical) polynomials, leading to an analog of the Hilbert Nullstellensatz. Particular attention is paid to factorization of polynomials. In one indeterminate, any polynomial can be factored into linear and quadratic factors, and unique factorization holds in a certain sense. On the other hand, the failure of unique factorization in several indeterminates is explained by geometric phenomena described in the paper.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-06-06T14:35:45Z</published>
+    <arxiv:comment>48 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Zur Izhakian</name>
+    </author>
+    <author>
+      <name>Louis Rowen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/nlin/0009002v1</id>
+    <title>Generalized orthogonal polynomials, discrete KP and Riemann-Hilbert problems</title>
+    <updated>2000-09-01T10:09:24Z</updated>
+    <link href="https://arxiv.org/abs/nlin/0009002v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/nlin/0009002v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Classically, a single weight on an interval of the real line leads to moments, orthogonal polynomials and tridiagonal matrices. Appropriately deforming this weight with times t=(t_1,t_2,...), leads to the standard Toda lattice and tau-functions, expressed as Hermitian matrix integrals.
+  This paper is concerned with a sequence of t-perturbed weights, rather than one single weight. This sequence leads to moments, polynomials and a (fuller) matrix evolving according to the discrete KP-hierarchy. The associated tau-functions have integral, as well as vertex operator representations.
+ Among the examples considered, we mention: nested Calogero-Moser systems, concatenated solitons and m-periodic sequences of weights. The latter lead to 2m+1-band matrices and generalized orthogonal polynomials, also arising in the context of a Riemann-Hilbert problem.
+ We show the Riemann-Hilbert factorization is tantamount to the factorization of the moment matrix into the product of a lower- times upper-triangular matrix.</summary>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-09-01T10:09:24Z</published>
+    <arxiv:comment>40 pages</arxiv:comment>
+    <arxiv:primary_category term="nlin.SI"/>
+    <arxiv:journal_ref>Comm. Math. Phys., 207, 589--620 (1999)</arxiv:journal_ref>
+    <author>
+      <name>Mark Adler</name>
+    </author>
+    <author>
+      <name>Pierre van Moerbeke</name>
+    </author>
+    <arxiv:doi>10.1007/s002200050738</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s002200050738" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.07496v1</id>
+    <title>Factorization method and general second order linear difference equation</title>
+    <updated>2017-09-21T19:03:23Z</updated>
+    <link href="https://arxiv.org/abs/1709.07496v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.07496v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper addresses an investigation on a factorization method for difference equations. It is proved that some classes of second order linear difference operators, acting in Hilbert spaces, can be factorized using a pair of mutually adjoint first order difference operators. These classes encompass equations of hypergeometic type describing classical orthogonal polynomials of a discrete variable.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-21T19:03:23Z</published>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>Alina Dobrogowska</name>
+    </author>
+    <author>
+      <name>Mahouton Norbert Hounkonnou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0611742v1</id>
+    <title>The characteristic polynomial of a multiarrangement</title>
+    <updated>2006-11-24T04:38:59Z</updated>
+    <link href="https://arxiv.org/abs/math/0611742v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0611742v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Given a multiarrangement of hyperplanes we define a series by sums of the Hilbert series of the derivation modules of the multiarrangement. This series turns out to be a polynomial. Using this polynomial we define the characteristic polynomial of a multiarrangement which generalizes the characteristic polynomial of an arragnement. The characteristic polynomial of an arrangement is a combinatorial invariant, but this generalized characteristic polynomial is not. However, when the multiarrangement is free, we are able to prove the factorization theorem for the characteristic polynomial. The main result is a formula that relates `global' data to `local' data of a multiarrangement given by the coefficients of the respective characteristic polynomials. This result gives a new necessary condition for a multiarrangement to be free. Consequently it provides a simple method to show that a given multiarrangement is not free.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-11-24T04:38:59Z</published>
+    <arxiv:comment>12 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <arxiv:journal_ref>Advances in Math. 215 (2007), 825-838</arxiv:journal_ref>
+    <author>
+      <name>Takuro Abe</name>
+    </author>
+    <author>
+      <name>Hiroaki Terao</name>
+    </author>
+    <author>
+      <name>Max Wakefield</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.01232v1</id>
+    <title>Extremal Hilbert series</title>
+    <updated>2017-11-03T16:42:12Z</updated>
+    <link href="https://arxiv.org/abs/1711.01232v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.01232v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given an ideal of forms in an algebra (polynomial ring, tensor algebra, exterior algebra, Lie algebra, bigraded polynomial ring), we consider the Hilbert series of the factor ring. We concentrate on the minimal Hilbert series, which is achieved when the forms are generic. In the polynomial ring we also consider the opposite case of maximal series. This is mainly a survey article, but we give a lot of problems and conjectures. The only novel results concern the maximal series in the polynomial ring.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-03T16:42:12Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <arxiv:journal_ref>Rev. Union Mat. Argentina 59 (2018), no. 2, 415--429</arxiv:journal_ref>
+    <author>
+      <name>Ralf Fröberg</name>
+    </author>
+    <author>
+      <name>Samuel Lundqvist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.00168v2</id>
+    <title>Factorization of Hilbert class polynomials over prime fields</title>
+    <updated>2021-08-04T14:42:04Z</updated>
+    <link href="https://arxiv.org/abs/2108.00168v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.00168v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $D$ be a negative integer congruent to $0$ or $1\bmod{4}$ and $\mathcal{O}=\mathcal{O}_D$ be the corresponding order of $ K=\mathbb{Q}(\sqrt{D})$. The Hilbert class polynomial $H_D(x)$ is the minimal polynomial of the $j$-invariant $ j_D=j(\mathbb{C}/\mathcal{O})$ of $\mathcal{O}$ over $K$. Let $n_D=(\mathcal{O}_{\mathbb{Q}( j_D)}:\mathbb{Z}[ j_D])$ denote the index of $\mathbb{Z}[ j_D]$ in the ring of integers of $\mathbb{Q}(j_D)$. Suppose $p$ is any prime. We completely determine the factorization of $H_D(x)$ in $\mathbb{F}_p[x]$ if either $p\nmid n_D$ or $p\nmid D$ is inert in $K$ and the $p$-adic valuation $v_p(n_D)\leq 3$. As an application, we analyze the key space of Oriented Supersingular Isogeny Diffie-Hellman (OSIDH) protocol proposed by Colò and Kohel in 2019 which is the roots set of the Hilbert class polynomial in $\mathbb{F}_{p^2}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-31T07:30:57Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jianing Li</name>
+    </author>
+    <author>
+      <name>Songsong Li</name>
+    </author>
+    <author>
+      <name>Yi Ouyang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.08019v2</id>
+    <title>Integer characteristic polynomial factorization and Hilbert space fragmentation</title>
+    <updated>2025-12-05T13:54:27Z</updated>
+    <link href="https://arxiv.org/abs/2210.08019v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.08019v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Models with Hilbert space fragmentation are characterized by (exponentially) many dynamically disconnected subspaces, not associated with conventional symmetries but captured by nontrivial Krylov subspaces. These subspaces usually exhibit a whole range of thermalization properties, from chaotic to integrable, to quantum many-body scars. However, so far, they have not been properly defined, nor can they be easily found, given a Hamiltonian. In this work, we consider Hamiltonians that have integer representations, a common feature of many (most) celebrated models in condensed matter. We show the equivalence of the integer characteristic polynomial factorization and the existence of Krylov subspaces generated from integer vectors. Considering the pair-hopping model, we illustrate how the factorization property can be used as a method to unveil Hilbert space fragmentation. We discuss the generalization over other rings of integers, for example those based on the cyclotomic field which are relevant when working in a given ($\ne 0, π$) momentum sector.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-14T18:00:01Z</published>
+    <arxiv:comment>8 pages. Added two appendices and a new author. Fixed a few typos</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <author>
+      <name>Nicolas Regnault</name>
+    </author>
+    <author>
+      <name>Shuo Liu</name>
+    </author>
+    <author>
+      <name>B. Andrei Bernevig</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0902.2155v1</id>
+    <title>Supertropical Polynomials and Resultants</title>
+    <updated>2009-02-12T16:30:47Z</updated>
+    <link href="https://arxiv.org/abs/0902.2155v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0902.2155v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper, a continuation of [3], involves a closer study of polynomials of supertropical semirings and their version of tropical geometry in which we introduce the concept of relatively prime polynomials and resultants, with the aid of some topology. Polynomials in one indeterminant are seen to be relatively prime iff they do not have a common tangible root, iff their resultant is tangible. The Frobenius property yields a morphism of supertropical varieties; this leads to a supertropical version of Bézout's theorem. Also, a supertropical variant of factorization is introduced which yields a more comprehensive version of Hilbert's Nullstellensatz than the one given in [3].</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-02-12T16:30:47Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Zur Izhakian</name>
+    </author>
+    <author>
+      <name>Louis Rowen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1410.4251v1</id>
+    <title>Möbius Polynomials and Splitting Algebras of Direct Products of Posets</title>
+    <updated>2014-10-15T22:44:09Z</updated>
+    <link href="https://arxiv.org/abs/1410.4251v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1410.4251v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we will study the Möbius polynomial, an invariant of ranked posets that arises in the study of splitting algebras. We will present a formula for the Möbius polynomial of the direct product of posets in terms of the Möbius polynomials of the factors. We will then use this formula to calculate Hilbert series and graded trace generating functions associated to the splitting algebras of the Boolean algebra and the poset of factors of a natural number n.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-10-15T22:44:09Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Susan Durst</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.06411v3</id>
+    <title>Rationality of Hilbert series in noncommutative invariant theory</title>
+    <updated>2017-08-21T16:01:16Z</updated>
+    <link href="https://arxiv.org/abs/1512.06411v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.06411v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is a fundamental result in commutative algebra and invariant theory that a finitely generated graded module over a commutative finitely generated graded algebra has rational Hilbert series, and consequently the Hilbert series of the algebra of polynomial invariants of a group of linear transformations is rational, whenever this algebra is finitely generated. This basic principle is applied here to prove rationality of Hilbert series of algebras of invariants that are neither commutative nor finitely generated. Our main focus is on linear groups acting on certain factor algebras of the tensor algebra that arise naturally in the theory of polynomial identities.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-20T17:35:54Z</published>
+    <arxiv:comment>Examples both from commutative and noncommutative invariant theory are included, a problem is formulated and references are added. Comments for v3: references added, minor revision</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>M. Domokos</name>
+    </author>
+    <author>
+      <name>V. Drensky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0601224v2</id>
+    <title>Hilbert series of algebras associated to directed graphs</title>
+    <updated>2006-04-05T18:55:55Z</updated>
+    <link href="https://arxiv.org/abs/math/0601224v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0601224v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Few changes. We compute the Hilbert series of some algebras associated to directed graphs and related to factorizations of noncommutative polynomials.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-01-10T18:49:03Z</published>
+    <arxiv:comment>AMSLaTeX, 9 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Vladimir Retakh</name>
+    </author>
+    <author>
+      <name>Shirlei Serconek</name>
+    </author>
+    <author>
+      <name>Robert Lee Wilson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.8592v2</id>
+    <title>Generalized Macdonald polynomials, spectral duality for conformal blocks and AGT correspondence in five dimensions</title>
+    <updated>2015-02-18T13:21:55Z</updated>
+    <link href="https://arxiv.org/abs/1412.8592v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.8592v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study five dimensional AGT correspondence by means of the q-deformed beta-ensemble technique. We provide a special basis of states in the q-deformed CFT Hilbert space consisting of generalized Macdonald polynomials, derive the loop equations for the beta-ensemble and obtain the factorization formulas for the corresponding matrix elements. We prove the spectral duality for Nekrasov functions and discuss its meaning for conformal blocks. We also clarify the relation between topological strings and q-Liouville vertex operators.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-30T09:33:59Z</published>
+    <arxiv:comment>22 pages, 1 figure, v2: typos corrected, a reference added</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>JHEP 1505 (2015) 131</arxiv:journal_ref>
+    <author>
+      <name>Yegor Zenkevich</name>
+    </author>
+    <arxiv:doi>10.1007/JHEP05(2015)131</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/JHEP05(2015)131" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0401271v1</id>
+    <title>A Riemann-Hilbert Approach to the Akhiezer Polynomials</title>
+    <updated>2004-01-21T13:10:01Z</updated>
+    <link href="https://arxiv.org/abs/math/0401271v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0401271v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we study those polynomials orthogonal with respect to a particular weight over the union of disjoint intervals first introduced by N.I. Akhiezer, via a reformulation as a matrix factorization or Riemann-Hilbert problem. This approach complements the method proposed in a previous paper, that involves the construction of a certain meromorphic function on a hyperelliptic Riemann surface. The method described here is based on the general Riemann-Hilbert scheme of the theory of integrable systems and will enable us to derive, in a very straightforward way, the relevant system of Fuchsian differential equations for the polynomials and the associated system of the Schlesinger deformation equations for certain quantities involving the corresponding recurrence coefficients. Both of these equations were obtained earlier by A. Magnus. In our approach, however, we are able to go beyond Magnus's results by actually solving the equations in terms of the Riemann Theta functions. We also show that the related Hankel determinant can be interpreted as the relevant tau function.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-01-21T13:10:01Z</published>
+    <arxiv:comment>33 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Y. Chen</name>
+    </author>
+    <author>
+      <name>A. Its</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1802.04056v1</id>
+    <title>Solomon-Terao algebra of hyperplane arrangements</title>
+    <updated>2018-02-12T14:18:34Z</updated>
+    <link href="https://arxiv.org/abs/1802.04056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1802.04056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a new algebra associated with a hyperplane arrangement $\mathcal{A}$, called the Solomon-Terao algebra $\mbox{ST}(\mathcal{A},η)$, where $η$ is a homogeneous polynomial. It is shown by Solomon and Terao that $\mbox{ST}(\mathcal{A},η)$ is Artinian when $η$ is generic. This algebra can be considered as a generalization of coinvariant algebras in the setting of hyperplane arrangements. The class of Solomon-Terao algebras contains cohomology rings of regular nilpotent Hessenberg varieties. We show that $\mbox{ST}(\mathcal{A},η)$ is a complete intersection if and only if $\mathcal{A}$ is free. We also give a factorization formula of the Hilbert polynomials when $\mathcal{A}$ is free, and pose several related questions, problems and conjectures.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-02-12T14:18:34Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Takuro Abe</name>
+    </author>
+    <author>
+      <name>Toshiaki Maeno</name>
+    </author>
+    <author>
+      <name>Satoshi Murai</name>
+    </author>
+    <author>
+      <name>Yasuhide Numata</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.04404v1</id>
+    <title>On a class of elliptic orthogonal polynomials and their integrability</title>
+    <updated>2023-05-08T01:15:19Z</updated>
+    <link href="https://arxiv.org/abs/2305.04404v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.04404v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building upon the recent works of Bertola; Fasondini, Olver and Xu, we define a class of orthogonal polynomials on elliptic curves and establish a corresponding Riemann-Hilbert framework. We then focus on the special case, defined by a constant weight function, and use the Riemann-Hilbert problem to derive recurrence relations and differential equations for the orthogonal polynomials. We further show that the sub-class of even polynomials is associated to the elliptic form of Painlevé VI, with the tau function given by the Hankel determinant of even moments, up to a scaling factor. The first iteration of these even polynomials relates to the special case of Painlevé VI studied by Hitchin in relation to self-dual Einstein metrics.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-08T01:15:19Z</published>
+    <arxiv:comment>31 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Harini Desiraju</name>
+    </author>
+    <author>
+      <name>Tomas Lasic Latimer</name>
+    </author>
+    <author>
+      <name>Pieter Roffelsen</name>
+    </author>
+    <arxiv:doi>10.1007/s00365-024-09687-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00365-024-09687-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.4279v2</id>
+    <title>Appell polynomials and their relatives III. Conditionally free theory</title>
+    <updated>2009-08-12T00:32:24Z</updated>
+    <link href="https://arxiv.org/abs/0803.4279v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.4279v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We extend to the multivariate non-commutative context the descriptions of a "once-stripped" probability measure in terms of Jacobi parameters, orthogonal polynomials, and the moment generating function. The corresponding map Phi on states was introduced previously by Belinschi and Nica. We then relate these constructions to the c-free probability theory, which is a version of free probability for algebras with two states, introduced by Bozejko, Leinert, and Speicher. This theory includes as two extreme cases the free and Boolean probability theories. The main objects in the paper are the analogs of the Appell polynomial families in the two state context. They arise as fixed points of the transformation which takes a polynomial family to the associated polynomial family (in several variables), and their orthogonality is also related to the map Phi above. In addition, we prove recursions, generating functions, and factorization and martingale properties for these polynomials, and describe the c-free version of the Kailath-Segall polynomials, their combinatorics, and Hilbert space representations.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-29T20:16:32Z</published>
+    <arxiv:comment>A major revision: same theorems, different emphasis</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <arxiv:journal_ref>Illinois J. Math. 53 (2009), 39-66</arxiv:journal_ref>
+    <author>
+      <name>Michael Anshelevich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.12473v4</id>
+    <title>Approximation in Hilbert spaces of the Gaussian and related analytic kernels</title>
+    <updated>2025-10-02T10:52:53Z</updated>
+    <link href="https://arxiv.org/abs/2209.12473v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.12473v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider linear approximation based on function evaluations in reproducing kernel Hilbert spaces of certain analytic weighted power series kernels and stationary kernels on the interval $[-1,1]$. Both classes contain the popular Gaussian kernel $K(x, y) = \exp(-\tfrac{1}{2}\varepsilon^2(x-y)^2)$. For weighted power series kernels we derive almost matching upper and lower bounds on the worst-case error. When applied to the Gaussian kernel, our results state that, up to a sub-exponential factor, the $n$th minimal error decays as $(\varepsilon/2)^n (n!)^{-1/2}$. The proofs are based on weighted polynomial interpolation and classical polynomial coefficient estimates that we use to bound the Hilbert space norm of a weighted polynomial fooling function.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-26T07:33:08Z</published>
+    <arxiv:comment>To appear in IMA Journal of Numerical Analysis</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Toni Karvonen</name>
+    </author>
+    <author>
+      <name>Yuya Suzuki</name>
+    </author>
+    <arxiv:doi>10.1093/imanum/draf050</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imanum/draf050" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.03709v1</id>
+    <title>Irreducibility of Random Polynomials</title>
+    <updated>2017-05-10T11:51:28Z</updated>
+    <link href="https://arxiv.org/abs/1705.03709v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.03709v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the probability that a random polynomial with integer coefficients is reducible when factored over the rational numbers. Using computer-generated data, we investigate a number of different models, including both monic and non-monic polynomials. Our data supports conjectures made by Odlyzko and Poonen and by Konyagin, and we formulate a universality heuristic and new conjectures that connect their work with Hilbert's Irreducibility Theorem and work of van der Waerden. The data indicates that the probability that a random polynomial is reducible divided by the probability that there is a linear factor appears to approach a constant and, in the large-degree limit, this constant appears to approach one. In cases where the model makes it impossible for the random polynomial to have a linear factor, the probability of reducibility appears to be close to the probability of having a non-linear, low-degree factor. We also study characteristic polynomials of random matrices with +1 and -1 entries.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-10T11:51:28Z</published>
+    <arxiv:comment>14 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Christian Borst</name>
+    </author>
+    <author>
+      <name>Evan Boyd</name>
+    </author>
+    <author>
+      <name>Claire Brekken</name>
+    </author>
+    <author>
+      <name>Samantha Solberg</name>
+    </author>
+    <author>
+      <name>Melanie Matchett Wood</name>
+    </author>
+    <author>
+      <name>Philip Matchett Wood</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0405246v1</id>
+    <title>Minimal representations of unitary operators and orthogonal polynomials on the unit circle</title>
+    <updated>2004-05-13T11:34:07Z</updated>
+    <link href="https://arxiv.org/abs/math/0405246v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0405246v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we prove that the simplest band representations of unitary operators on a Hilbert space are five-diagonal. Orthogonal polynomials on the unit circle play an essential role in the development of this result, and also provide a parametrization of such five-diagonal representations which shows specially simple and interesting decomposition and factorization properties. As an application we get the reduction of the spectral problem of any unitary Hessenberg matrix to the spectral problem of a five-diagonal one. Two applications of these results to the study of orthogonal polynomials on the unit circle are presented: the first one concerns Krein's Theorem; the second one deals with the movement of mass points of the orthogonality measure under monoparametric perturbations of the Schur parameters.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-05-13T11:34:07Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>M. J. Cantero</name>
+    </author>
+    <author>
+      <name>L. Moral</name>
+    </author>
+    <author>
+      <name>L. Velazquez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.01799v1</id>
+    <title>Commuting row contractions with polynomial characteristic functions</title>
+    <updated>2020-08-04T19:57:19Z</updated>
+    <link href="https://arxiv.org/abs/2008.01799v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.01799v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A characteristic function is a special operator-valued analytic function defined on the open unit ball of $\mathbb{C}^n$ associated with an $n$-tuple of commuting row contraction on some Hilbert space. In this paper, we continue our study of the representations of $n$-tuples of commuting row contractions on Hilbert spaces, which have polynomial characteristic functions. Gleason's problem plays an important role in the representations of row contractions. We further complement the representations of our row contractions by proving theorems concerning factorizations of characteristic functions. We also emphasize the importance and the role of the noncommutative operator theory and noncommutative varieties to the classification problem of polynomial characteristic functions.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-04T19:57:19Z</published>
+    <arxiv:comment>26 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Monojit Bhattacharjee</name>
+    </author>
+    <author>
+      <name>Kalpesh J. Haria</name>
+    </author>
+    <author>
+      <name>Jaydeb Sarkar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.01377v1</id>
+    <title>The Lecture Hall Cone as a toric deformation</title>
+    <updated>2018-09-05T08:22:10Z</updated>
+    <link href="https://arxiv.org/abs/1809.01377v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.01377v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lecture Hall cone is a simplicial cone whose lattice points naturally correspond to Lecture Hall partitions. The celebrated Lecture Hall Theorem of Bousquet-Mélou and Eriksson states that a particular specialization of its multivariate Ehrhart series factors in a very nice and unexpected way. Over the years, several proofs of this result have been found, but it is still not considered to be well-understood from a geometric perspective. In this note we propose two conjectures which aim at clarifying this result. Our main conjecture is that the Ehrhart ring of the Lecture Hall cone is actually an initial subalgebra $A_n$ of a certain subalgebra of a polynomial ring, which is itself isomorphic to a polynomial ring. As passing to initial subalgebras does not affect the Hilbert function, this explains the observed factorization. We give a recursive definition of certain Laurent polynomials, which generate the algebra $A_n$. Our second conjecture is that these Laurent polynomials are in fact polynomials. We computationally verified that both conjectures hold for Lecture Hall partitions of length at most 12.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-05T08:22:10Z</published>
+    <arxiv:comment>10 pages, To appear in the proceedings of the 2018 Summer Workshop on Lattice Polytopes at Osaka University</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Lukas Katthän</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0603327v5</id>
+    <title>Construction of some algebras associated to directed graphs and related to factorizations of noncommutative polynomials</title>
+    <updated>2006-05-26T16:59:00Z</updated>
+    <link href="https://arxiv.org/abs/math/0603327v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0603327v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This is a survey of recently published results. We introduce and study a wide class algebras associated to directed graphs and related to factorizations of noncommutative polynomials. In particular, we show that for many well-known graphs such algebras are Koszul and compute their Hilbert series.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-03-14T17:56:54Z</published>
+    <arxiv:comment>To appear in Proceedings of the Conference "Lie Algebras, Vertex Operator Algebras and Their Applications"</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Vladimir Retakh</name>
+    </author>
+    <author>
+      <name>Shirlei Serconek</name>
+    </author>
+    <author>
+      <name>Robert Lee Wilson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.11784v4</id>
+    <title>The Hilbert-Kunz density functions of quadric hypersurfaces</title>
+    <updated>2023-07-03T09:55:16Z</updated>
+    <link href="https://arxiv.org/abs/2109.11784v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.11784v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the Hilbert-Kunz density function of a quadric hypersurface of Krull dimension $n+1$ is a piecewise polynomial on a subset of $[0, n]$, whose complement in $[0, n]$ has measure zero. Our explicit description of the Hilbert-Kunz density function confirms a conjecture of Watanabe-Yoshida on the lower bound of the Hilbert-Kunz multiplicity of the quadric of dimension $n+1$, provided the characteristic is at least $n-1$. We also show that the Hilbert-Kunz multiplicity of a quadric of fixed dimension is an eventually strictly decreasing function of the characteristic confirming a conjecture of Yoshida.
+  The main input comes from the classification of Arithmetically Cohen-Macaulay bundles on the projective variety defined by the quadric via matrix factorizations.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-24T07:25:39Z</published>
+    <arxiv:comment>51 pages. Final version, accepted for publication in Advances in Mathematics</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Vijaylaxmi Trivedi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.08915v2</id>
+    <title>Generalized class polynomials</title>
+    <updated>2022-09-29T12:48:15Z</updated>
+    <link href="https://arxiv.org/abs/2207.08915v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.08915v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Hilbert class polynomial has as roots the j-invariants of elliptic curves whose endomorphism ring is a given imaginary quadratic order. It can be used to compute elliptic curves over finite fields with a prescribed number of points. Since its coefficients are typically rather large, there has been continued interest in finding alternative modular functions whose corresponding class polynomials are smaller. Best known are Weber's functions, that reduce the size by a factor of 72 for a positive density subset of imaginary quadratic discriminants. On the other hand, Bröker and Stevenhagen showed that no modular function will ever do better than a factor of 100.83. We introduce a generalization of class polynomials, with reduction factors that are not limited by the Bröker-Stevenhagen bound. We provide examples matching Weber's reduction factor. For an infinite family of discriminants, their reduction factors surpass those of all previously known modular functions by a factor at least 2.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-18T20:09:58Z</published>
+    <arxiv:comment>28 pp. 5 fig</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Marc Houben</name>
+    </author>
+    <author>
+      <name>Marco Streng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.12693v1</id>
+    <title>An analog of polynomially integrable bodies in even-dimensional spaces</title>
+    <updated>2022-11-23T04:04:49Z</updated>
+    <link href="https://arxiv.org/abs/2211.12693v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.12693v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A bounded domain $K \subset \mathbb R^n$ is called polynomially integrable if the $(n-1)$-dimensional volume of the intersection $K$ with a hyperplane $Π$ polynomially depends on the distance from $Π$ to the origin. It was proved in [7] that there are no such domains with smooth boundary if $n$ is even, and if $n$ is odd then the only polynomially integrable domains with smooth boundary are ellipsoids. In this article, we modify the notion of polynomial integrability for even $n$ and consider bodies for which the sectional volume function is a polynomial up to a factor which is the square root of a quadratic polynomial, or, equivalently, the Hilbert transform of this function is a polynomial. We prove that ellipsoids in even dimensions are the only convex infinitely smooth bodies satisfying this property.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-23T04:04:49Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Mark Agranovsky</name>
+    </author>
+    <author>
+      <name>Alexander Koldobsky</name>
+    </author>
+    <author>
+      <name>Dmitry Ryabogin</name>
+    </author>
+    <author>
+      <name>Vladyslav Yaskin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1309.4375v1</id>
+    <title>Geometric spectral theory for compact operators</title>
+    <updated>2013-09-17T16:33:55Z</updated>
+    <link href="https://arxiv.org/abs/1309.4375v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1309.4375v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a notion of joint spectrum for a tuple of compact operators on a separable Hilbert space and show that in many situations these operators commute if and only if the joint spectrum consists of countably many, locally finite, complex hyperplanes. In particular, we show that normal matrices (of the same size) $A_1,\cdots,A_n$ commute if and only if the polynomial $\det(z_1A_1+\cdots+z_nA_n+I)$ is completely reducible, that is, it can be factored into a product of linear polynomials.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-09-17T16:33:55Z</published>
+    <arxiv:comment>29 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Isaak Chagouel</name>
+    </author>
+    <author>
+      <name>Michael Stessin</name>
+    </author>
+    <author>
+      <name>Kehe Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.04678v1</id>
+    <title>Scattering by a perforated sandwich membrane: method of Riemann surfaces</title>
+    <updated>2023-04-03T23:26:27Z</updated>
+    <link href="https://arxiv.org/abs/2304.04678v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.04678v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The model problem of scattering of a sound wave by an infinite plane structure formed by a semi-infinite acoustically hard screen and a semi-infinite sandwich panel perforated from one side and covered by a membrane from the other is exactly solved. The model is governed by two Helmholtz equations for the velocity potentials in the upper and lower half-planes coupled by the Leppington effective boundary condition and the equation of vibration of a membrane in a fluid. Two methods of solution are proposed and discussed. Both methods reduce the problem to an order-2 vector Riemann-Hilbert problem. The matrix coefficients have different entries, have the Chebotarev-Khrapkov structure and share the same order-4 characteristic polynomial. Exact Wiener-Hopf matrix factorization requires solving a scalar Riemann-Hilbert on an elliptic surface and the associated genus-1 Jacobi inversion problem solved in terms of the associated Riemann $θ$-function. Numerical results for the absolute value of the total velocity potentials are reported and discussed.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-03T23:26:27Z</published>
+    <arxiv:comment>28 pages. 9 figures</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>Y. A. Antipov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.00294v1</id>
+    <title>Bridging Commutant and Polynomial Methods for Hilbert Space Fragmentation</title>
+    <updated>2026-01-01T10:24:26Z</updated>
+    <link href="https://arxiv.org/abs/2601.00294v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.00294v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A quantum model exhibits Hilbert space fragmentation (HSF) if its Hilbert space decomposes into exponentially many dynamically disconnected subspaces, known as Krylov subspaces. A model may however have different HSFs depending on the method for identifying them. Here we establish a connection between two vastly distinct methods recently proposed for identifying HSF: the commutant algebra (CA) method and integer characteristic polynomial factorization (ICPF) method. For a Hamiltonian consisting of operators admitting rational number matrix representations, we prove a theorem that, if its center of commutant algebra have all eigenvalues being rational, the HSF from the ICPF method must be equal to or finer than that from the CA method. We show that this condition is satisfied by most known models exhibiting HSF, for which we demonstrate the validity of our theorem. We further discuss representative models for which ICPF and CA methods yield different HSFs. Our results may facilitate the exploration of a unified definition of HSF.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-01T10:24:26Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <author>
+      <name>Bo-Ting Chen</name>
+    </author>
+    <author>
+      <name>Yu-Ping Wang</name>
+    </author>
+    <author>
+      <name>Biao Lian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1907.04328v2</id>
+    <title>Factorization of noncommutative polynomials and Nullstellensätze for the free algebra</title>
+    <updated>2020-05-01T14:52:48Z</updated>
+    <link href="https://arxiv.org/abs/1907.04328v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.04328v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article gives a class of Nullstellensätze for noncommutative polynomials. The singularity set of a noncommutative polynomial $f=f(x_1,\dots,x_g)$ is $Z(f)=(Z_n(f))_n$, where $Z_n(f)=\{X \in M_n^g: \det f(X) = 0\}.$ The first main theorem of this article shows that the irreducible factors of $f$ are in a natural bijective correspondence with irreducible components of $Z_n(f)$ for every sufficiently large $n$.
+  With each polynomial $h$ in $x$ and $x^*$ one also associates its real singularity set $Z^{re}(h)=\{X: \det h(X,X^*)=0\}$. A polynomial $f$ which depends on $x$ alone (no $x^*$ variables) will be called analytic. The main Nullstellensatz proved here is as follows: for analytic $f$ but for $h$ dependent on possibly both $x$ and $x^*$, the containment $Z(f) \subseteq Z^{re}(h)$ is equivalent to each factor of $f$ being "stably associated" to a factor of $h$ or of $h^*$.
+  For perspective, classical Hilbert type Nullstellensätze typically apply only to analytic polynomials $f,h $, while real Nullstellensätze typically require adjusting the functions by sums of squares of polynomials (sos). Since the above "algebraic certificate" does not involve a sos, it seems justified to think of this as the natural determinantal Hilbert Nullstellensatz. An earlier paper of the authors (Adv. Math. 331 (2018) 589-626) obtained such a theorem for special classes of analytic polynomials $f$ and $h$. This paper requires few hypotheses and hopefully brings this type of Nullstellensatz to near final form.
+  Finally, the paper gives a Nullstellensatz for zeros $V(f)=\{X: f(X,X^*)=0\}$ of a hermitian polynomial $f$, leading to a strong Positivstellensatz for quadratic free semialgebraic sets by the use of a slack variable.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-09T18:00:00Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <arxiv:journal_ref>Int. Math. Res. Not. IMRN Issue 11 (2022) 343--372</arxiv:journal_ref>
+    <author>
+      <name>J. William Helton</name>
+    </author>
+    <author>
+      <name>Igor Klep</name>
+    </author>
+    <author>
+      <name>Jurij Volčič</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rnaa122</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rnaa122" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.04932v2</id>
+    <title>Galois groups over rational function fields and explicit Hilbert irreducibility</title>
+    <updated>2019-12-02T03:22:24Z</updated>
+    <link href="https://arxiv.org/abs/1708.04932v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.04932v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $P\in\mathbb Q[t,x]$ be a polynomial in two variables with rational coefficients, and let $G$ be the Galois group of $P$ over the field $\mathbb Q(t)$. It follows from Hilbert's Irreducibility Theorem that for most rational numbers $c$ the specialized polynomial $P(c,x)$ has Galois group isomorphic to $G$ and factors in the same way as $P$. In this paper we discuss methods for computing the group $G$ and obtaining an explicit description of the exceptional numbers $c$, i.e., those for which $P(c,x)$ has Galois group different from $G$ or factors differently from $P$. To illustrate the methods we determine the exceptional specializations of three sample polynomials. In addition, we apply our techniques to prove a new result in arithmetic dynamics.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-15T04:19:31Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:1610.03528</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Krumm</name>
+    </author>
+    <author>
+      <name>Nicole Sutherland</name>
+    </author>
+    <arxiv:doi>10.1016/j.jsc.2019.11.003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jsc.2019.11.003" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.03630v3</id>
+    <title>Reducible Fibers of Polynomial Maps</title>
+    <updated>2022-09-08T10:10:48Z</updated>
+    <link href="https://arxiv.org/abs/2001.03630v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.03630v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a degree $n$ polynomial $f$ over the rationals, the elements in the fiber $f^{-1}(a)$ are of degree $n$ over $\mathbb Q$ for most rational values $a$ by Hilbert's irreducibility theorem. Determining the set of exceptional $a$'s without this property is a long standing open problem that is closely related to the Davenport--Lewis--Schinzel problem (1959) on reducibility of separated polynomials. As opposed to previous work which mostly concerns indecomposable $f$, we answer both problems for decomposable $f=f_1\circ\cdots\circ f_r$, as long as the indecomposable factors $f_i\in\mathbb Q[x]$ are of degree at least $5$ and are not $x^n$ or a Chebyshev polynomial composed with linear polynomials.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-10T19:02:19Z</published>
+    <arxiv:comment>26 pgs. The manuscript was shortened to focus on polynomials and makes clearer the use of the classification of finite simple groups</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Joachim König</name>
+    </author>
+    <author>
+      <name>Danny Neftin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.3394v2</id>
+    <title>Class invariants by the CRT method</title>
+    <updated>2010-06-30T17:02:30Z</updated>
+    <link href="https://arxiv.org/abs/1001.3394v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.3394v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We adapt the CRT approach for computing Hilbert class polynomials to handle a wide range of class invariants. For suitable discriminants D, this improves its performance by a large constant factor, more than 200 in the most favourable circumstances. This has enabled record-breaking constructions of elliptic curves via the CM method, including examples with |D|&gt;10^15.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-19T19:49:33Z</published>
+    <arxiv:comment>15 pages, final version, to appear in ANTS IX (Algorithmic Number Theory Symposium, 2010)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Algorithmic Number Theory 9th International Symposium (ANTS IX), LNCS 6197, pp. 142-156, Springer, 2010</arxiv:journal_ref>
+    <author>
+      <name>Andreas Enge</name>
+      <arxiv:affiliation>INRIA Bordeaux - Sud-Ouest</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Andrew V. Sutherland</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-642-14518-6_14</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-642-14518-6_14" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.08617v3</id>
+    <title>On the strength of general polynomials</title>
+    <updated>2021-06-22T05:13:06Z</updated>
+    <link href="https://arxiv.org/abs/2005.08617v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.08617v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A slice decomposition is an expression of a homogeneous polynomial as a sum of forms with a linear factor. A strength decomposition is an expression of a homogeneous polynomial as a sum of reducible forms. The slice rank and strength of a polynomial are the minimal lengths of such decompositions, respectively. The slice rank is an upper bound for the strength and the gap between these two values can be arbitrary large. However, in line with a conjecture by Catalisano et al. on the dimensions of secant varieties of the varieties of reducible forms, we conjecture that equality holds for general forms. By using a weaker version of Fröberg's Conjecture on the Hilbert series of ideals generated by general forms, we show that our conjecture holds up to degree $7$ and in degree $9$.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-18T11:55:56Z</published>
+    <arxiv:comment>19 pages, final revision</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Arthur Bik</name>
+    </author>
+    <author>
+      <name>Alessandro Oneto</name>
+    </author>
+    <arxiv:doi>10.1080/03081087.2021.1947955</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/03081087.2021.1947955" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0101166v1</id>
+    <title>Small polynomials with integer coefficients</title>
+    <updated>2001-01-20T16:39:40Z</updated>
+    <link href="https://arxiv.org/abs/math/0101166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0101166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the problem of minimizing the supremum norm, on a segment of the real line or on a compact set in the plane, by polynomials with integer coefficients. The extremal polynomials are naturally called integer Chebyshev polynomials. Their factors, zero distribution and asymptotics are the main subjects of this paper. In particular, we show that the integer Chebyshev polynomials for any infinite subset of the real line must have infinitely many distinct factors, which answers a question of Borwein and Erdélyi. Furthermore, it is proved that the accumulation set for their zeros must be of positive capacity in this case.
+  We also find the first nontrivial examples of explicit integer Chebyshev constants for certain classes of lemniscates. Since it is rarely possible to obtain an exact value of integer Chebyshev constant, good estimates are of special importance.
+  Introducing the methods of weighted potential theory, we generalize and improve the Hilbert-Fekete upper bound for integer Chebyshev constant. These methods also give bounds for the multiplicities of factors of integer Chebyshev polynomials, and lower bounds for integer Chebyshev constant. Moreover, all the mentioned bounds can be found numerically, by using various extremal point techniques, such as weighted Leja points algorithm. Applying our results in the classical case of the segment $[0,1]$, we improve the known bounds for the integer Chebyshev constant and the multiplicities of factors of the integer Chebyshev polynomials.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-01-20T16:39:40Z</published>
+    <arxiv:comment>35 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <arxiv:journal_ref>J. d'Analyse Math. 96 (2005), 151-190</arxiv:journal_ref>
+    <author>
+      <name>Igor E. Pritsker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1208.3346v2</id>
+    <title>On the Complexity of Hilbert Refutations for Partition</title>
+    <updated>2013-08-05T18:59:41Z</updated>
+    <link href="https://arxiv.org/abs/1208.3346v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1208.3346v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a set of integers W, the Partition problem determines whether W can be divided into two disjoint subsets with equal sums. We model the Partition problem as a system of polynomial equations, and then investigate the complexity of a Hilbert's Nullstellensatz refutation, or certificate, that a given set of integers is not partitionable. We provide an explicit construction of a minimum-degree certificate, and then demonstrate that the Partition problem is equivalent to the determinant of a carefully constructed matrix called the partition matrix. In particular, we show that the determinant of the partition matrix is a polynomial that factors into an iteration over all possible partitions of W.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-08-16T11:52:54Z</published>
+    <arxiv:comment>Final version</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>J. Symbolic Comp. 66(2015), 70-83</arxiv:journal_ref>
+    <author>
+      <name>Susan Margulies</name>
+    </author>
+    <author>
+      <name>Shmuel Onn</name>
+    </author>
+    <author>
+      <name>Dmitrii Pasechnik</name>
+    </author>
+    <arxiv:doi>10.1016/j.jsc.2013.06.005</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jsc.2013.06.005" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/funct-an/9705002v1</id>
+    <title>Two 1935 questions of Mazur about polynomials in Banach spaces: a counter-example</title>
+    <updated>1997-05-20T06:32:14Z</updated>
+    <link href="https://arxiv.org/abs/funct-an/9705002v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/funct-an/9705002v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We construct a continuous scalar-valued 2-polynomial, $W$, on the separable Hilbert space $l_2$ and an unbounded set $R\subset l_2$ such that (i) $W$ is bounded on an $ε$-neighbourhood of $R$; (ii) $W$ is unbounded on ${1/2} R$; (iii) consequently, $W$ does not factor through any bounded 1-polynomial on $l_2$ sending $R$ to a bounded set. This answers in the negative two 1935 questions asked by Mazur (problems 55 and 75 in the Scottish Book). The construction is valid both over $\R$ and $\C$. (In finite dimensions the questions were answered in the positive by Auerbach soon after being asked.)</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-05-20T06:32:14Z</published>
+    <arxiv:comment>3 pages, standard AMS-TeX file</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Vladimir Pestov</name>
+      <arxiv:affiliation>Victoria University of Wellington</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.27728v1</id>
+    <title>The Davenport-Lewis-Schinzel problem on the reducibility of $f(X)-g(Y)$</title>
+    <updated>2026-03-29T15:05:39Z</updated>
+    <link href="https://arxiv.org/abs/2603.27728v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.27728v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We solve the problem of Davenport--Lewis--Schinzel (DLS), originating in the 1950s, regarding the reducibility of $f(X)-g(Y)\in\mathbb C[X,Y]$. This yields an almost-complete solution to the Hilbert--Siegel problem: For a polynomial map $f$ whose composition factors avoid only very specific low-degree polynomials, we explicitly describe over which integers the fibers of $f$ are reducible. We further apply the solution to stability of iterates of $f$ in arithmetic dynamics, and to solving the functional equation $f(X)=g(Y)$ in $X,Y\in\mathbb{C}(z)$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-29T15:05:39Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Angelot Behajaina</name>
+    </author>
+    <author>
+      <name>Joachim König</name>
+    </author>
+    <author>
+      <name>Danny Neftin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.11996v2</id>
+    <title>K-theoretic positivity for matroids</title>
+    <updated>2024-09-19T13:45:15Z</updated>
+    <link href="https://arxiv.org/abs/2311.11996v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.11996v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hilbert polynomials have positivity properties under favorable conditions. We establish a similar "K-theoretic positivity" for matroids. As an application, for a multiplicity-free subvariety of a product of projective spaces such that the projection onto one of the factors has birational image, we show that a transformation of its K-polynomial is Lorentzian. This partially answers a conjecture of Castillo, Cid-Ruiz, Mohammadi, and Montano. As another application, we show that the h*-vector of a simplicially positive divisor on a matroid is a Macaulay vector, affirmatively answering a question of Speyer for a new infinite family of matroids.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-20T18:26:59Z</published>
+    <arxiv:comment>To appear in Alg. Geom</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Christopher Eur</name>
+    </author>
+    <author>
+      <name>Matt Larson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.18456v1</id>
+    <title>Verblunsky coefficients, CMV matrices and numerical invariants of homogeneous bidisc submodules</title>
+    <updated>2026-08-19T02:29:51Z</updated>
+    <link href="https://arxiv.org/abs/2608.18456v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.18456v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $[p]$ be the principal submodule generated by a polynomial in $H^2(\mathbb D^2)$. For homogeneous $p$, the homogeneous slices of $[p]$ admit a weighted OPUC model in which the two wandering vectors are an orthonormal polynomial and its reversal. We show that the associated Verblunsky coefficients determine the singular values of the wandering-projection product and the restricted cross-commutator, as well as the non-zero spectrum of the core operator. Toeplitz-determinant and Mahler-measure identities yield exact Fredholm determinants and Schatten estimates, while $[(z-w)^N]$ rules out a uniform Hilbert--Schmidt bound. The same model gives explicit singular values of $[S_z^*,S_w]$ on the homogeneous quotient $H^2(\mathbb D^2)\ominus[p]$; for $p=(z-w)^N$, its squared Hilbert--Schmidt norm is asymptotic to $N$. For arbitrary polynomial generators, we construct a weighted bivariate model with a doubly Toeplitz, block-banded moment matrix and prove $C_p^2|_{\mathscr E_z}=Γ_p^*Γ_p$, relating the core spectrum to the cross-Gram operator between the two edge spaces. We also discuss cyclic-factor obstructions, represent higher numerical invariants by alternating CMV products, and give a quadratic counterexample to their proposed monotonicity.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-19T02:29:51Z</published>
+    <arxiv:comment>35 pages</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Yufeng Lu</name>
+    </author>
+    <author>
+      <name>Chao Zu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.12354v4</id>
+    <title>A Riemann--Hilbert approach to the perturbation theory for orthogonal polynomials: Applications to numerical linear algebra and random matrix theory</title>
+    <updated>2022-09-21T22:50:13Z</updated>
+    <link href="https://arxiv.org/abs/2112.12354v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.12354v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish a new perturbation theory for orthogonal polynomials using a Riemann--Hilbert approach and consider applications in numerical linear algebra and random matrix theory. This new approach shows that the orthogonal polynomials with respect to two measures can be effectively compared using the difference of their Stieltjes transforms on a suitably chosen contour. Moreover, when two measures are close and satisfy some regularity conditions, we use the theta functions of a hyperelliptic Riemann surface to derive explicit and accurate expansion formulae for the perturbed orthogonal polynomials.
+  In contrast to other approaches, a key strength of the methodology is that estimates can remain valid as the degree of the polynomial grows. The results are applied to analyze several numerical algorithms from linear algebra, including the Lanczos tridiagonalization procedure, the Cholesky factorization and the conjugate gradient algorithm. As a case study, we investigate these algorithms applied to a general spiked sample covariance matrix model by considering the eigenvector empirical spectral distribution and its limits. For the first time, we give precise estimates on the output of the algorithms, applied to this wide class of random matrices, as the number of iterations diverges. In this setting, beyond the first order expansion, we also derive a new mesoscopic central limit theorem for the associated orthogonal polynomials and other quantities relevant to numerical algorithms.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-23T04:25:54Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Xiucai Ding</name>
+    </author>
+    <author>
+      <name>Thomas Trogdon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.19082v1</id>
+    <title>More stability and convergence results for higher-order Wiener-Wintner systems</title>
+    <updated>2025-10-21T21:14:07Z</updated>
+    <link href="https://arxiv.org/abs/2510.19082v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.19082v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>"Higher-order Wiener-Wintner averages" were constructed by Assani, Folks, and Moore to quantitatively control multiple recurrence averages. Systems in which these averages converge at a polynomial rate for a sufficiently large subset are termed "higher-order Wiener-Wintner systems of power type", in which properties like pointwise convergence of multiple recurrence averages and multiple return times averages has been shown. We establish that these higher-order Wiener-Wintner averages satisfy a type of sublinearity, and that they bound conditional expectations and products, which transfers to improved stability results of higher-order Wiener-Wintner systems under sums, factors, and products. We also establish more general convergence results for such systems, which include a polynomial return times theorem and convergence of the multilinear one-side ergodic Hilbert transform with polynomial phase.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-21T21:14:07Z</published>
+    <arxiv:comment>43 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Jacob Folks</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.13083v1</id>
+    <title>Rationality of Equivariant Hilbert Series and Asymptotic Properties</title>
+    <updated>2020-06-23T15:05:42Z</updated>
+    <link href="https://arxiv.org/abs/2006.13083v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.13083v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An FI- or an OI-module $\mathbf{M}$ over a corresponding noetherian polynomial algebra $\mathbf{P}$ may be thought of as a sequence of compatible modules $\mathbf{M}_n$ over a polynomial ring $\mathbf{P}_n$ whose number of variables depends linearly on $n$. In order to study invariants of the modules $\mathbf{M}_n$ in dependence of $n$, an equivariant Hilbert series is introduced if $\mathbf{M}$ is graded. If $\mathbf{M}$ is also finitely generated, it is shown that this series is a rational function. Moreover, if this function is written in reduced form rather precise information about the irreducible factors of the denominator is obtained. This is key for applications. It follows that the Krull dimension of the modules $\mathbf{M}_n$ grows eventually linearly in $n$, whereas the multiplicity of $\mathbf{M}_n$ grows eventually exponentially in $n$. Moreover, for any fixed degree $j$, the vector space dimensions of the degree $j$ components of $\mathbf{M}_n$ grow eventually polynomially in $n$. As a consequence, any graded Betti number of $\mathbf{M}_n$ in a fixed homological degree and a fixed internal degree grows eventually polynomially in $n$. Furthermore, evidence is obtained to support a conjecture that the Castelnuovo-Mumford regularity and the projective dimension of $\mathbf{M}_n$ both grow eventually linearly in $n$. It is also shown that modules $\mathbf{M}$ whose width $n$ components $\mathbf{M}_n$ are eventually Artinian can be characterized by their equivariant Hilbert series. Using regular languages and finite automata, an algorithm for computing equivariant Hilbert series is presented.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-23T15:05:42Z</published>
+    <arxiv:comment>39 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Uwe Nagel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0707.3607v3</id>
+    <title>Algebras associated to acyclic directed graphs</title>
+    <updated>2008-06-11T17:38:58Z</updated>
+    <link href="https://arxiv.org/abs/0707.3607v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.3607v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We construct and study a class of algebras associated to generalized layered graphs, i.e. directed graphs with a ranking function on their vertices. Each finite directed acyclic graph admits countably many structures of a generalized layered graph. We construct linear bases in such algebras and compute their Hilbert series. Our interest to generalized layered graphs and algebras associated to those graphs is motivated by their relations to factorizations of polynomials over noncommutative rings.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-24T16:55:41Z</published>
+    <arxiv:comment>20 pages, Latex; an expanded and corrected version; to appear in "Advances of Applied Mathematics"</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Vladimir Retakh</name>
+    </author>
+    <author>
+      <name>Robert Lee Wilson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/9210007v2</id>
+    <title>Unitary Equivalence of the Metric and Holonomy Formulations of 2+1 Dimensional Quantum Gravity on the Torus</title>
+    <updated>1992-12-31T16:53:09Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/9210007v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/9210007v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recent work on canonical transformations in quantum mechanics is applied to transform between the Moncrief metric formulation and the Witten-Carlip holonomy formulation of 2+1-dimensional quantum gravity on the torus. A non-polynomial factor ordering of the classical canonical transformation between the metric and holonomy variables is constructed which preserves their classical modular transformation properties. An extension of the definition of a unitary transformation is briefly discussed and is used to find the inner product in the holonomy variables which makes the canonical transformation unitary. This defines the Hilbert space in the Witten-Carlip formulation which is unitarily equivalent to the natural Hilbert space in the Moncrief formulation. In addition, gravitational theta-states arising from ``large'' diffeomorphisms are found in the theory.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1992-10-13T08:01:41Z</published>
+    <arxiv:comment>31 pages LaTeX [Important Revision: a section is added constructing the inner product/Hilbert space for the Witten-Carlip holonomy formulation; the proof of unitary equivalence of the metric and holonomy formulations is then completed. Other additions include discussion of relation of canonical and unitary transformations. Title/abstract change.]</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Arlen Anderson</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.47.4458</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.47.4458" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.2564v2</id>
+    <title>Painleve IV asymptotics for orthogonal polynomials with respect to a modified Laguerre weight</title>
+    <updated>2008-07-08T08:24:56Z</updated>
+    <link href="https://arxiv.org/abs/0804.2564v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.2564v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study polynomials that are orthogonal with respect to the modified Laguerre weight $z^{-n + ν} e^{-Nz} (z-1)^{2b}$ in the limit where $n, N \to \infty$ with $N/n \to 1$ and $ν$ is a fixed number in $\mathbb{R} \setminus \mathbb{N}_0$. With the effect of the factor $(z-1)^{2b}$, the local parametrix near the critical point $z =1$ can be constructed in terms of $Ψ$-functions associated with the Painleve IV equation. We show that the asymptotics of the recurrence coefficients of orthogonal polynomials can be described in terms of specified solution of the Painleve IV equation in the double scaling limit. Our method is based on the Deift/Zhou steepest decent analysis of the Riemann-Hilbert problem associated with orthogonal polynomials.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-16T10:05:22Z</published>
+    <arxiv:comment>57 pages, 15 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <arxiv:journal_ref>Studies in Applied Mathematics 122 (2009), 29--83</arxiv:journal_ref>
+    <author>
+      <name>Dan Dai</name>
+      <arxiv:affiliation>K.U. Leuven, Belgium</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Arno B. J. Kuijlaars</name>
+      <arxiv:affiliation>K.U. Leuven, Belgium</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.02557v1</id>
+    <title>Synthesis of passive multidimensional scattering matrices: a survey</title>
+    <updated>2026-06-27T21:21:41Z</updated>
+    <link href="https://arxiv.org/abs/2607.02557v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.02557v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The goal of this exposition is twofold. First, it surveys the current status of the synthesis of rational multivariable ($n$-dimensional) passive linear shift-invariant bounded-real (or positive-real) transfer functions as scattering (or immittance) matrices of networks composed of a finite number of $n$ types of inductive and capacitive elements together with memoryless reciprocal and nonreciprocal components, such as transformers and gyrators. The theory seeks to extend the classical $1$-D network synthesis framework to the multidimensional ($n$-D) setting. Second, the exposition examines the fundamental connection between $n$-D network synthesis and Hilbert's 17th problem concerning the representation of positive polynomials as sums of squares. This connection is shown to be the principal mathematical obstacle to extending many classical synthesis results to higher dimensions. Both lossless and dissipative transfer functions are considered. While every $2$-D lossless transfer function can be synthesized, the classical procedure of embedding a dissipative transfer function into a lossless one by solving an associated matrix dilation problem can be executed via spectral factorization only partially in $2$-D and fails in general for $n&gt;2$. Moreover, for $n&gt;2$, even lossless transfer functions are not, in general, synthesizable, except for certain low-degree stable all-pass functions. These limitations ultimately stem from Hilbert's 17th problem referred to above. The exposition also reviews failure of several other classical $1$-D synthesis techniques, including matrix-factorization methods, thereby providing a comprehensive account of the current state of $n$-D network synthesis. Depending on the context, both continuous and discrete time formulations are employed; for the class of linear shift-invariant systems considered here, this change of setting entails no loss of generality.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-27T21:21:41Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Sankar Basu</name>
+      <arxiv:affiliation>National Science Foundation, USA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.00797v2</id>
+    <title>Asymptotics of matrix valued orthogonal polynomials on $[-1,1]$</title>
+    <updated>2023-04-10T08:07:56Z</updated>
+    <link href="https://arxiv.org/abs/2210.00797v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.00797v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We analyze the large degree asymptotic behavior of matrix valued orthogonal polynomials (MVOPs), with a weight that consists of a Jacobi scalar factor and a matrix part. Using the Riemann-Hilbert formulation for MVOPs and the Deift-Zhou method of steepest descent, we obtain asymptotic expansions for the MVOPs as the degree tends to infinity, in different regions of the complex plane (outside the interval of orthogonality, on the interval away from the endpoints and in neighborhoods of the endpoints), as well as for the matrix coefficients in the three-term recurrence relation for these MVOPs. The asymptotic analysis follows the work of Kuijlaars, McLaughlin, Van Assche and Vanlessen on scalar Jacobi-type orthogonal polynomials, but it also requires several different factorizations of the matrix part of the weight, in terms of eigenvalues/eigenvectors and using a matrix Szegő function. We illustrate the results with two main examples, MVOPs of Jacobi and Gegenbauer type, coming from group theory.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-03T10:10:52Z</published>
+    <arxiv:comment>48 pages, 8 figures. Some typos corrected in the last version</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Alfredo Deaño</name>
+    </author>
+    <author>
+      <name>Arno B. J. Kuijlaars</name>
+    </author>
+    <author>
+      <name>Pablo Román</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.2753v1</id>
+    <title>On a conjecture of A. Magnus concerning the asymptotic behavior of the recurrence coefficients of the generalized Jacobi polynomials</title>
+    <updated>2009-05-17T17:38:55Z</updated>
+    <link href="https://arxiv.org/abs/0905.2753v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.2753v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In 1995 Magnus posed a conjecture about the asymptotics of the recurrence coefficients of orthogonal polynomials with respect to the weights on [-1,1] of the form
+  $$
+  (1-x)^α(1+x)^β|x_0 - x|^γ\times a jump at x_0, $$ with $α, β, γ&gt;-1$ and $x_0 \in (-1,1)$. We show rigorously that Magnus' conjecture is correct even in a more general situation, when the weight above has an extra factor, which is analytic in a neighborhood of [-1,1] and positive on the interval. The proof is based on the steepest descendent method of Deift and Zhou applied to the non-commutative Riemann-Hilbert problem characterizing the orthogonal polynomials. A feature of this situation is that the local analysis at $x_0$ has to be carried out in terms of confluent hypergeometric functions.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-17T17:38:55Z</published>
+    <arxiv:comment>29 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>A. Foulquie Moreno</name>
+    </author>
+    <author>
+      <name>A. Martinez-Finkelshtein</name>
+    </author>
+    <author>
+      <name>V. L. Sousa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.05227v1</id>
+    <title>The global dimension of the algebras of polynomial integro-differential operators $\mathbb{I}_n$ and the Jacobian algebras $\mathbb{A}_n$</title>
+    <updated>2017-05-11T19:05:24Z</updated>
+    <link href="https://arxiv.org/abs/1705.05227v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.05227v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The aim of the paper is to prove two conjectures that the (left and right) global dimension of the algebra of polynomial integro-differential operators $\mathbb{I}_n$ and the Jacobian algebra $\mathbb{A}_n$ is equal to $n$ (over a field of characteristic zero). An analogue of Hilbert's Syzygy Theorem is proven for them. The algebras $\mathbb{I}_n$ and $\mathbb{A}_n$ are neither left nor right Noetherian. Furthermore, they contain infinite direct sums of nonzero left/right ideals and are not domains. It is proven that the global dimension of all prime factor algebras of the algebras $\mathbb{I}_n$ and $\mathbb{A}_n$ is $n$ and the weak global dimension of all the factor algebras of $\mathbb{I}_n$ and $\mathbb{I}_n$ is $n$.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-11T19:05:24Z</published>
+    <arxiv:comment>22 pages. arXiv admin note: text overlap with arXiv:0912.0723</arxiv:comment>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>V. V. Bavula</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.01541v3</id>
+    <title>Quantum one-way permutation over the finite field of two elements</title>
+    <updated>2017-04-27T22:05:06Z</updated>
+    <link href="https://arxiv.org/abs/1609.01541v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.01541v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In quantum cryptography, a one-way permutation is a bounded unitary operator $U:\mathcal{H} \to \mathcal{H}$ on a Hilbert space $\mathcal{H}$ that is easy to compute on every input, but hard to invert given the image of a random input. Levin [Probl. Inf. Transm., vol. 39 (1): 92-103 (2003)] has conjectured that the unitary transformation $g(a,x)=(a,f(x)+ax)$, where $f$ is any length-preserving function and $a,x \in GF_{{2}^{\|x\|}}$, is an information-theoretically secure operator within a polynomial factor. Here, we show that Levin's one-way permutation is provably secure because its output values are four maximally entangled two-qubit states, and whose probability of factoring them approaches zero faster than the multiplicative inverse of any positive polynomial $poly(x)$ over the Boolean ring of all subsets of $x$. Our results demonstrate through well-known theorems that existence of classical one-way functions implies existence of a universal quantum one-way permutation that cannot be inverted in subexponential time in the worst ca</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-05T11:44:18Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>Quantum Information Processing. 16:149 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Alexandre de Castro</name>
+    </author>
+    <arxiv:doi>10.1007/s11128-017-1599-6</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11128-017-1599-6" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.3982v2</id>
+    <title>On the solvability of the quantum Rabi model and its 2-photon and two-mode generalizations</title>
+    <updated>2013-10-09T06:17:55Z</updated>
+    <link href="https://arxiv.org/abs/1304.3982v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.3982v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the solvability of the time-independent matrix Schrödinger differential equations of the quantum Rabi model and its 2-photon and two-mode generalizations in Bargmann Hilbert spaces of entire functions. We show that the Rabi model and its 2-photon and two-mode analogs are quasi-exactly solvable. We derive the exact, closed-form expressions for the energies and the allowed model parameters for all the three cases in the solvable subspaces. Up to a normalization factor, the eigenfunctions for these models are given by polynomials whose roots are determined by systems of algebraic equations.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-15T05:10:40Z</published>
+    <arxiv:comment>LaTex 16 pages. Some modifications and addition of references. Version to appear in J. Math. Phys</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>J. Math. Phys. 54, 102104 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Yao-Zhong Zhang</name>
+    </author>
+    <arxiv:doi>10.1063/1.4826356</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4826356" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.05815v3</id>
+    <title>Factorizations of Contractions</title>
+    <updated>2017-10-16T06:24:33Z</updated>
+    <link href="https://arxiv.org/abs/1607.05815v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.05815v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The celebrated theorem of Berger, Coburn and Lebow on pairs of commuting isometries can be formulated as follows: a pure isometry $V$ on a Hilbert space $\mathcal{H}$ is a product of two commuting isometries $V_1$ and $V_2$ in $\mathcal{B}(\mathcal{H})$ if and only if there exists a Hilbert space $\mathcal{E}$, a unitary $U$ in $\mathcal{B}(\mathcal{E})$ and an orthogonal projection $P$ in $\mathcal{B}(\mathcal{E})$ such that $(V, V_1, V_2)$ and $(M_z, M_Φ, M_Ψ)$ on $H^2_{\mathcal{E}}(\mathbb{D})$ are unitarily equivalent, where \[ Φ(z)=(P+zP^{\perp})U^*\;\text{and}\; Ψ(z)=U(P^{\perp}+zP) \;;(z \in \mathbb{D}). \] Here we prove a similar factorization result for pure contractions. More particularly, let $T$ be a pure contraction on a Hilbert space $\mathcal{H}$ and let $P_{\mathcal{Q}} M_z|_{\mathcal{Q}}$ be the Sz.-Nagy and Foias representation of $T$ for some canonical $\mathcal{Q} \subseteq H^2_{\mathcal{D}}(\mathbb{D})$. Then $T = T_1 T_2$, for some commuting contractions $T_1$ and $T_2$ on $\mathcal{H}$, if and only if there exists $\mathcal{B}(\mathcal{D})$-valued polynomials $\varphi$ and $ψ$ of degree $ \leq 1$ such that $\mathcal{Q}$ is a joint $(M_{\varphi}^*, M_ψ^*)$-invariant subspace, \[P_{\mathcal{Q}} M_z|_{\mathcal{Q}} = P_{\mathcal{Q}} M_{\varphi ψ}|_{\mathcal{Q}} = P_{\mathcal{Q}} M_{ψ\varphi}|_{\mathcal{Q}} \; \mbox{and} \;(T_1, T_2) \cong (P_{\mathcal{Q}} M_{\varphi}|_{\mathcal{Q}}, P_{\mathcal{Q}} M_ψ|_{\mathcal{Q}}).\]</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-20T04:13:57Z</published>
+    <arxiv:comment>12 pages. Some corrections. To appear in Adv. in Math</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>B. Krishna Das</name>
+    </author>
+    <author>
+      <name>Jaydeb Sarkar</name>
+    </author>
+    <author>
+      <name>Srijan Sarkar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0202071v1</id>
+    <title>Ideals of Quasi-Symmetric Functions and Super-Covariant Polynomials for S_n</title>
+    <updated>2002-02-08T14:18:33Z</updated>
+    <link href="https://arxiv.org/abs/math/0202071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0202071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The aim of this work is to study the quotient ring R_n of the ring Q[x_1,...,x_n] over the ideal J_n generated by non-constant homogeneous quasi-symmetric functions. We prove here that the dimension of R_n is given by C_n, the n-th Catalan number. This is also the dimension of the space SH_n of super-covariant polynomials, that is defined as the orthogonal complement of J_n with respect to a given scalar product. We construct a basis for R_n whose elements are naturally indexed by Dyck paths. This allows us to understand the Hilbert series of SH_n in terms of number of Dyck paths with a given number of factors.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-02-08T14:18:33Z</published>
+    <arxiv:comment>LaTeX, 3 figures, 12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Adv. Math. 181 (2004), no. 2, 353--367</arxiv:journal_ref>
+    <author>
+      <name>J. -C. Aval</name>
+    </author>
+    <author>
+      <name>F. Bergeron</name>
+    </author>
+    <author>
+      <name>N. Bergeron</name>
+    </author>
+    <arxiv:doi>10.1016/S0001-8708(03)00068-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/S0001-8708(03)00068-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.04491v2</id>
+    <title>Holomorphic Hermite polynomials in two variables</title>
+    <updated>2018-03-14T09:32:59Z</updated>
+    <link href="https://arxiv.org/abs/1706.04491v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.04491v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generalizations of the Hermite polynomials to many variables and/or to the complex domain have been located in mathematical and physical literature for some decades. Polynomials traditionally called complex Hermite ones are mostly understood as polynomials in $z$ and $\bar{z}$ which in fact makes them polynomials in two real variables with complex coefficients. The present paper proposes to investigate for the first time holomorphic Hermite polynomials in two variables. Their algebraic and analytic properties are developed here. While the algebraic properties do not differ too much for those considered so far, their analytic features are based on a kind of non-rotational orthogonality invented by van Eijndhoven and Meyers. Inspired by their invention we merely follow the idea of Bargmann's seminal paper (1961) giving explicit construction of reproducing kernel Hilbert spaces based on those polynomials. "Homotopic" behavior of our new formation culminates in comparing it to the very classical Bargmann space of two variables on one edge and the aforementioned Hermite polynomials in $z$ and $\bar{z}$ on the other. Unlike in the case of Bargmann's basis our Hermite polynomials are not product ones but factorize to it when bonded together with the first case of limit properties leading both to the Bargmann basis and suitable form of the reproducing kernel. Also in the second limit we recover standard results obeyed by Hermite polynomials in $z$ and $\bar{z}$.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-14T13:49:08Z</published>
+    <arxiv:primary_category term="math.CA"/>
+    <arxiv:journal_ref>J. Math. Anal. Appl. 470 (2019) 750--769</arxiv:journal_ref>
+    <author>
+      <name>K. Górska</name>
+    </author>
+    <author>
+      <name>A. Horzela</name>
+    </author>
+    <author>
+      <name>F. H. Szafraniec</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.05197v2</id>
+    <title>Local Uniqueness of the Born Rule on Categories with Complex-Weighted Morphisms</title>
+    <updated>2026-08-23T21:24:44Z</updated>
+    <link href="https://arxiv.org/abs/2608.05197v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.05197v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>I prove a local uniqueness theorem for the Born rule in the setting of quiver-generated categories equipped with complex morphism weights and path-amplitude probability functionals. Given (i) non-negativity, (ii) invariance of bounded total degree, (iii) global U(1) invariance, (iv) classical-limit additivity over mutually exclusive paths, and (v) normalization, I show that the probability assignment P: C -&gt; R&gt;=0 is uniquely determined to be P(z) = |z|^2. The notion of mutually exclusive paths is given a precise categorical formulation as the absence of a shared factorization through any common morphism. I relate the result to reconstructions of quantum probability due to Gleason, Hardy, Chiribella-D'Ariano-Perinotti, and several further, more recent reconstructions, and identify the extension to global coherence under morphism composition as an open problem connected to synthetic probability theory in Markov categories. The Born rule emerges as the unique locally consistent probability law on complex amplitudes, fixed by phase invariance and classical-limit behavior together with polynomiality and normalization, independent of any Hilbert-space framework.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T15:13:05Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Tayfun Ustun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.12657v1</id>
+    <title>How Far Can Vierbeins Simplify Gravity?</title>
+    <updated>2026-09-11T10:02:34Z</updated>
+    <link href="https://arxiv.org/abs/2609.12657v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.12657v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a classical formulation of gravity in terms of the vierbein that makes the Hilbert action polynomial in gravitational perturbations and identify some matter models that admit a polynomial coupling to such perturbations as well. We introduce the density vierbein variables that factorize the inverse metric density while retaining an explicit local Lorentz frame. With the introduction of a new auxiliary field, one can construct an action that is polynomial in such variables and their perturbations. Constructed the BRST complex for the model and derived propagators and interaction rules. In four dimensions, a scalar field with the canonical kinetic term and a potential admits a finite number of coupling terms with the density vierbein perturbations. Among all Horndeski gravity models, only a narrow subclass admits a polynomial coupling to the density vierbein perturbations. For instance, the Einstein--scalar--Gauss--Bonnet model always has an infinite tower of interactions with the density vierbein perturbation. Similarly, the standard kinetic term for the Dirac fermions and the standard kinetic term for a vector field both admit an infinite tower of interactions. Consequently, the density vierbein variables provide a great simplification for scalar-gravitational couplings, but the simplification is not strong enough to produce a realistic model with a finite number of matter-gravity terms.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-11T10:02:34Z</published>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Boris Latosh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math-ph/0501031v1</id>
+    <title>Scattering theory for quantum fields with indefinite metric</title>
+    <updated>2005-01-12T12:51:00Z</updated>
+    <link href="https://arxiv.org/abs/math-ph/0501031v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math-ph/0501031v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work, we discuss the scattering theory of local, relativistic quantum fields with indefinite metric. Since the results of Haag--Ruelle theory do not carry over to the case of indefinite metric, we propose an axiomatic framework for the construction of in- and out- states, such that the LSZ asymptotic condition can be derived from the assumptions. The central mathematical object for this construction is the collection of mixed vacuum expectation values of local, in- and out- fields, called the ``form factor functional'', which is required to fulfill a Hilbert space structure condition. Given a scattering matrix with polynomial transfer functions, we then construct interpolating, local, relativistic quantum fields with indefinite metric, which fit into the given scattering framework.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-01-12T12:51:00Z</published>
+    <arxiv:primary_category term="math-ph"/>
+    <arxiv:journal_ref>Commun.Math.Phys. 216 (2001) 491-513</arxiv:journal_ref>
+    <author>
+      <name>S. Albeverio</name>
+    </author>
+    <author>
+      <name>H. Gottschalk</name>
+    </author>
+    <arxiv:doi>10.1007/s002200000332</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s002200000332" title="doi"/>
+  </entry>
+</feed>

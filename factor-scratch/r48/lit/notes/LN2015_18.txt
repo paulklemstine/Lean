@@ -1,0 +1,417 @@
+18.783 Elliptic Curves                                                                     Spring 2015
+Lecture #18                                                                                04/14/2015
+
+
+18      The CM action
+Let L ⊆ C be a lattice and EL /C the corresponding elliptic curve y 2 = 4x3 −g2 (L)x−g3 (L).
+In the previous lecture we proved that the endomorphism rings End(EL ) and End(C/L)
+are both isomorphic to the ring
+
+                                      O(L) := {α ∈ C : αL ⊆ L},
+
+which is either equal to Z, or an order O in an imaginary quadratic field. We then considered
+the following question: given an order O in an imaginary quadratic field, for which lattices L
+do we have O(L) = O. By the Uniformization Theorem (Corollary 16.12), this is equivalent
+to asking which elliptic curves E/C have complex multiplication (CM) by O; recall that this
+means End(E) = O.
+    We established the necessary condition that L must be homothetic to an O-ideal, and
+defined proper O-ideals to be the O-ideals L for which O(L) = O.1 So, by construction,
+O(L) = O if and only if L is homothetic to a proper O-ideal; in this lecture we will give a
+more intrinsic condition for an O-ideal to be proper. We defined the ideal class group cl(O)
+as the set of proper O-ideals modulo the equivalence relation
+
+                     a∼b          ⇐⇒         γa = δb for some nonzero γ, δ ∈ O,
+
+which holds precisely when a and b are homothetic as lattices. It follows that there is a
+one-to-one relationship between cl(O) and the set of homethety classes of lattices L for
+which O(L) = O, equivalently, the set of isomorphism classes of elliptic curves E/C for
+which End(E) = O.
+    Recalling that isomorphism classes of elliptic curves over an algebraically closed field
+are uniquely identified by their j-invariants, we now define the set
+
+                   EllO (C) = {j(E) : E is defined over C and End(E) = O}.
+
+It follows from our discussion above that there is a bijection from cl(O) to EllO (C) that
+sends the equivalence class [a] of a proper O-ideal a to the isomorphism class j(Ea ) = j(a);
+the reverse map is given by the Uniformization theorem, which tells us that we can construct
+a lattice L for which j(L) = j(E), and this lattice L is then homothetic to a proper O-ideal a
+that has the same j-invariant j(a) = j(E) when viewed as a lattice.
+    As you will prove in Problem Set 9, cl(O) is a finite group; thus the set EllO (C) is finite.
+Its cardinality is the class number h(O) = |cl(O)|, which we may also write as h(D), where
+D = disc(O). Remarkably, not only are the sets cl(O) and EllO (C) in bijection, the set
+EllO (C) admits a group action by cl(O). In order to define this action, and to gain a better
+understanding of what it means for an O-ideal to be proper, we first introduce the notion
+of a fractional O-ideal.
+   1
+     The term “proper O-ideal” is an unfortunate historical choice, since this terminology can also refer to
+O-ideals that are properly contained in O. In this lecture we will prove that O-ideals are proper if and only
+if they are invertible and henceforth use the term “invertible O-ideal” instead.
+
+
+
+
+                                                                                     Andrew V. Sutherland
+18.1     Fractional ideals
+Definition 18.1. Let O be an integral domain with fraction field K. Any set of the form
+b = λa with λ ∈ K × and a an O-ideal is called a fractional O-ideal. Multiplication of
+fractional ideals b = λa and b0 = λa0 is defined in the obvious way:
+
+                                            bb0 := (λλ0 )aa0 ,
+
+where aa0 is the product of the O-ideals a and a0 .2
+    Like O-ideals, fractional O-ideals are O-modules (additive groups that admit a scalar
+multiplication by O).3 Fractional O-ideals that happen to lie in O are thus O-ideals (such
+fractional O-ideal are sometimes called integral O-ideals to emphasize this); conversely,
+every O-ideal is a fractional O-ideal. If b = λa is a fractional O-ideal we can always write
+λ = ab for some a, b ∈ O with b 6= 0, and after replacing a with aa we can write b = 1b a
+with b ∈ O nonzero and a an O-ideal. In our setting, where O is an order in an imaginary
+quadratic field K (which must be its fraction field since it is the smallest field containing
+O), we can even make b a positive integer by rationalizing the denominator and noting that
+a = −1 · a for any O-ideal a.
+
+18.2     Norms
+We now let O be an order in an imaginary quadratic field K. We want to define the norm
+of fractional O-ideal b = λa, which will be a rational number that is the product of the
+norms of λ and a, but first we need to define the norm of a field element λ ∈ K × , and the
+norm of an O-ideal a.
+Definition 18.2. Let K/Q be a number field and let α ∈ K × . Let α1 , . . . , αm be the roots
+of the minimal polynomial f ∈ Q[x] of α over Q (which may lie in an extension of K), and
+let n = [K : Q(α)]. The (field) norm and trace of α are defined by
+                               m
+                               Y                                    m
+                                                                    X
+                       Nα :=         αin ∈ Q×      and      Tα :=          nαi ∈ Q.
+                               i=1                                   i=1
+
+Note that Nα is a power of the constant term of the monic polynomial f , and Tα is a
+multiple of the negation of the degree m − 1 coefficient of f ; this makes it clear that both
+Nα and Tα lie in Q (and in Z if α is an algebraic integer). Note that Nα is nonzero because
+the constant term of f cannot be nonzero (otherwise f would not be minimal).
+    When K/Q is a Galois extension we can simply take the product and sum over all mn
+Galois conjugates σ(α) for σ ∈ Gal(K/Q). This makes it clear that in this case the norm
+map is multiplicative. In fact this holds for any number field K; this follows from the proof
+of Lemma 18.4 below, which relates Nα to the determinant of the multiplication-by-α map,
+which can be viewed as a linear transformation of the Q-vector space K.
+    Note that Nα depends on K, not just α; for example, if α ∈ Q× then Nα = α[K:Q] ,
+which will vary if we fix α and change K. It should really be viewed as a homomorphism
+
+                                             N : K × → Q×
+   One can also add fractional O-ideals via b + b0 := {b + b0 : b ∈ b, b0 ∈ b}, but we won’t need this.
+   2
+   3
+   Some authors define fractional O-ideals to be finitely generated O-modules that are contained in K.
+Every finitely generated O-module in K is a fractional ideal under our definition, and when O is noetherian
+(which applies to orders in number fields, the only case we care about), the definitions are equivalent.
+and is often written as NK/Q to emphasis this. Definition 18.2 generalizes to any finite ex-
+tension K/k (just replace Q with k), and is then denoted NK/k and defines a homomorphism
+K × → k× .
+    When K ≃ End0 (E) is an imaginary quadratic field, Definition 18.2 coincides with our
+definition of the (reduced) norm and trace of α as an element of End0 (E) (see Definition
+13.6). If K is an imaginary quadratic field embedded in C, this is equivalent to taking
+Nα = αᾱ and Tα = α + ᾱ, where ᾱ denotes complex conjugation (equivalently, conjugation
+by the non-trivial element of Gal(K/Q). Thus in this setting the complex conjugate
+
+                                           ᾱ = Tα − α = α̂
+
+corresponds to the dual of α ∈ End0 (E) = K ,→ C.
+
+Definition 18.3. Let O be an order in a number field K and let a be a nonzero O-ideal.
+The (ideal) norm of a is
+                            Na := [O : a] = #O/a ∈ Z>0 .
+
+    Alternatively, if we fix Z-bases for O and a we have
+
+                                             Na = | det Ma |
+
+where Ma is an integer matrix whose rows express the basis elements of a as Z-linear
+combinations of basis elements of O. Note that | det Ma | is independent of the choice of
+basis, and it is nonzero because a and O are both free Z-modules of rank r = dim K (which
+also makes it clear why [O : a] is actually finite).4 That these two definitions are equivalent
+follows from the fact that we can diagonalize Ma using row and column operations that do
+not change | det Ma | (each corresponding to a change of basis for O or a).5 It is then clear
+that we have O/a ≃ Z/d1 Z ⊕ · · · ⊕ Z/dr Z, where d1 , . . . , dr are the diagonal entries of this
+matrix, and we then have |d1 · · · dr | = | det Ma |. We can also interpret Na as the ratio of
+the volumes of fundamental parallelograms for a and O, which we may view as Z-lattices
+embedded in the Q-vector space K ≃ Qr (with the Euclidean metric).
+    We now relate the norm of a nonzero element of O to the norm of the principal ideal it
+generates.
+
+Lemma 18.4. Let α be a nonzero element of an order O in a number field K. Then
+
+                                             N(α) = |Nα|,
+
+where (α) denotes the principal O-ideal generated by α.
+
+Proof. Let OK be the maximal order in K. Note that N(α) = [O : αO] = [OK : αOK ] is
+the same as the norm of the principal OK -ideal generated by α, so without loss of generality
+we assume O = OK . Let L = Q(α) ⊆ K, and let us fix a Z-basis for OK that contains a
+Z-basis for OL ; this is possible because OL is a free Z-module of rank m = [L : Q] that
+is contained in the free Z-module OK of rank r = [K : Q]. Note that m|r, since K is an
+L-vector space of dimension n = [K : L]. Moreover, we may order our basis into n blocks
+   4
+     That a is a free Z-module follows from the fact that it is a submodule of the free Z-module O and Z is
+a principal ideal domain (submodules of free module over PIDs are always free, but this is not true of more
+general rings). That a has the same rank as O follows from the fact that it contains a nonzero integer (for
+example, the norm of any of its elements) and therefore an integer multiple of O.
+   5
+     This amounts to putting Ma in Smith normal form.
+of size m, each of which is a Q-basis for an m-dimensional subspace of K isomorphic to L.
+Let us now consider the r × r matrix M(α) of the Z-linear transformation given by the
+multiplication-by-α map O → O with respect to this basis. Assuming we order our basis
+appropriately, the matrix M(α) is then a block diagonal matrix consisting of n square m × m
+matrices along the diagonal, all of which are conjugate. We then have
+
+                                    N(α) = | det M(α) |.
+
+On the other hand, the characteristic polynomial g ∈ Z[x] of M(α) is the nth power of the
+minimal polynomial f of α over Q (which lies in Z[x] because α is an algebraic integer),
+and Nα is the constant coefficient of g, which has the same absolute value as det M(α) .
+    To see this, note that if B is the first block diagonal matrix of M , representing the
+multiplication by α map on OL , then f is the minimal polynomial of B, since it is the
+minimal polynomial of α, and it has degree m so it is the characteristic polynomial of B. The
+n block diagonal matrices of M are all conjugate, hence they all have the same characteristic
+polynomial, and therefore g = f n .
+
+Warning 18.5. Given that the field norm is multiplicative and that we can view the ideal
+norm as the absolute value of a determinant, it would be reasonable to expect the ideal
+norm to be multiplicative. This is not true. As an example, consider the ideal a = [2, 2i]
+in the order O = [1, 2i], which has norm Na = [O : a] = 2. Then a2 = [4, 4i] and
+
+                                  Na2 = 8 6= 22 = (Na)2 .
+
+However, as we shall see (at least when O is an order in an imaginary quadratic field),
+the ideal norm is multiplicative when a and b are both proper/invertible O-ideals, hence
+in all cases when O = OK is the maximal order. In any case we always have the following
+corollary of Lemma 18.4.
+Corollary 18.6. Let O be an order in a number field, let α ∈ O be nonzero, and let a be
+an O-ideal. Then
+                                  N(αa) = NαNa.
+Proof. We have
+
+          N(αa) = [O : αa] = [O : a][a : αa] = [O : a][O : αO] = NaN(α) = NαNa
+
+    The corollary implies that N(ab) = NaNb whenever one of a and b is principal. This
+allows us to make the following definition.
+Definition 18.7. Let b = λa be a nonzero fractional ideal in an order O of a number field.
+The norm of b is
+                                  Nb := NλNa ∈ Q× .
+Corollary 18.6 ensures that this is well defined: if λa = λ0 a0 , after writing λ = a/b and
+λ0 = a0 /b0 we have ab0 a = a0 ba0 and therefore
+
+                                        NaNb0       Nλ
+                                Na0 =          Na =     Na,
+                                        Na0 Nb      Nλ0
+so Nλ0 Na0 = NλNa.
+Taking λ = 1 or a = O, we can view this as a generalization of Definitions 18.2 and 18.3.
+18.3    Invertible ideals
+We now return to our original setting, where O is an order in an imaginary quadratic field.
+Extending our terminology for O-ideals, for any fractional O-ideal b we define
+
+                                           O(b) := {α : αb ⊆ b},
+
+and say that b is proper if O(b) = O. We say that a fractional O-ideal b is invertible if
+there exists a fractional O-ideal b−1 for which bb−1 = O. Notice that this definition applies
+in the case that b is an O-ideal, but then b−1 will not be an O-ideal (unless b = O). As we
+shall see, the notions of properness and invertibility coincide, but let us first note that for
+b = λa, whether b is proper or invertible depends only on the O-ideal a.
+Lemma 18.8. Let O be an order in an imaginary quadratic field, let a be a nonzero O-ideal,
+and let b = λa be a fractional O-ideal. Then a is proper if and only if b is proper, and a is
+invertible if and only if b is invertible.
+Proof. For the first statement, note that {α : αb ⊆ b} = {α : αλa ⊆ λa} = {α : αa ⊆ a}.
+For the second, if a is invertible then b−1 = λ−1 a−1 , and if b is invertible then a−1 = λb−1 ,
+since we have aa−1 = aλb−1 = bb−1 = O.
+
+   We now prove that the invertible O-ideals are precisely the proper O-ideals and give an
+explicit formula for the inverse when it exists. Our proof follows the presentation in [1, §7].
+Theorem 18.9. Let O be an order in an imaginary quadratic field and let a = [α, β] be an
+O-ideal. Then a is proper if and only if a is invertible. Whenever a is invertible we have
+aā = (Na), where ā = [ᾱ, β̄] and (Na) is the principal O-ideal generated by the integer Na;
+the inverse of a is then the fractional O-ideal a−1 = Na 1
+                                                           ā.
+Proof. We first assume that a = [α, β] is a proper O-ideal and show that aā = (Na), which
+implies a−1 = Na   1
+                     ā. Let τ = β/α, so that a = α[1, τ ], and let ax2 + bx + c be the least
+multiple of the minimal polynomial of τ that lies in Z[x], so gcd(a, b, c) = 1. The fractional
+ideal [1, τ ] is homothetic to a, and we have O([1, τ ]) = O(a) = O, since a is proper.
+    Let O = [1, ω]. Then ω ∈ [1, τ ] and ω = m + nτ for some m, n ∈ Z; after replacing ω
+with ω − m, we may assume ω = nτ . We also have ωτ ∈ [1, τ ], so nτ 2 ∈ [1, τ ], which implies
+that a|n, since otherwise the polynomial ax2 +bx+c would have a leading coefficient smaller
+than a in absolute value. And aτ [1, τ ] ⊆ [1, τ ], so ατ ∈ O([1, τ ]) = O, therefore n = a and
+O = [1, aτ ]. Thus
+                                           1                    1           N(α)
+       N(a) = [O : a] = [1, aτ ] : α[1, τ ] = [1, aτ ] : α[1, aτ ] = [O : αO] =      .
+                                             a                      a            a
+We also have
+                      aā = [α, β][ᾱ, β̄] = αᾱ[1, τ ][1, τ̄ ] = N(α)[1, τ, τ̄ , τ τ̄ ].
+Since aτ 2 + bτ + c = 0, we have τ + τ̄ = −b/a, and τ τ̄ = c/a, with gcd(a, b, c) = 1. So
+                                           N(α)
+          aā = N(α)[1, τ, τ̄ , τ τ̄ ] =        [a, aτ, −b, c] = Na[1, aτ ] = (Na)O = (Na)
+                                            a
+as claimed. Conversely, if a is invertible, then for any γ ∈ C we have
+
+                    γa ⊆ a =⇒ γaa−1 ⊆ aa−1 =⇒ γO ⊆ O =⇒ γ ∈ O,
+
+so O(a) ⊆ O, and therefore a is a proper O-ideal, since we always have O ⊆ O(a).
+Corollary 18.10. Let O be an order in an imaginary quadratic field and let a and b be
+invertible fractional O-ideals. Then N(ab) = NaNb.
+
+Proof. If a = αa0 and b = βb0 for some α, β ∈ K × and O-ideals a0 and b0 , then a0 and
+b0 are invertible, by Lemma 18.8. By definition, Na = NαNa0 and Nb = NβNb0 , and the
+field norm is multiplicative, so N(αβ) = NαNβ. Thus it suffices to consider the case where
+a = a0 and b = b0 are invertible O-ideals. We then have
+
+                        (N(ab)) = abab = abab = aabb = (Na)(Nb),
+
+and it follows that N(ab) = NaNb.
+
+18.4    The CM action
+Now let E/C be an elliptic curve with End(E) = O. Then E is isomorphic to Eb , for some
+proper O-ideal b. For any proper O-ideal a we define the action of a on Eb via
+
+                                         aEb = Ea−1 b                                      (1)
+
+(the reason for using Ea−1 b rather than Eab will become clear later). The action of the
+equivalence class [a] on the isomorphism class j(Eb ), is then defined by
+
+                                     [a]j(Eb ) = j(Ea−1 b ),                               (2)
+
+which we can also write as
+                                      [a]j(b) = j(a−1 b),
+and it is clear that this does not depend on the choice of representatives a and b.
+   If a is a nonzero principal O-ideal, then the lattices b and a−1 b are homothetic, and
+we have aEb ≃ Eb . Thus the identity element of cl(O) acts trivially on EllO (C). For any
+proper O-ideals a,b, and c we have
+
+                 a(bEc ) = aEb−1 c = Ea−1 b−1 c = E(ba)−1 c = (ba)Ec = (ab)Ec .
+
+Thus we have a group action of cl(O) on EllO (C).
+    For any proper O-ideals a and b, we have [a]j(b) = j(a−1 b = j(b) if and only if b is
+homothetic to a−1 b, by Theorem 16.5, and in this case we have ab = λb for some nonzero
+λ ∈ O, and then a = λO = (λ) is principal. Thus the only element of cl(O) that fixes
+any element of EllO (C) is the identity. This implies that the action of cl(O) is not only
+faithful, it is free: only the identity has a fixed point. The fact that the sets cl(O) and
+EllO (C) have the same cardinality implies that the action must be transitive: if we fix any
+j0 ∈ EllO (C) the images [a]j0 of j0 under the action of each [a] ∈ cl(O) must all be distinct,
+otherwise the action would not be free); there are only #EllO (C) = #cl(O) possibilities, so
+the cl(O)-orbit of j0 is EllO (C).
+    A group action that is both free and transitive is said to be regular. Equivalently, the
+action of a group G on a set X is regular if and only if for all x, y ∈ X there is a unique
+g ∈ G for which gx = y. In this situation the set X is said to be a principal homogeneous
+space for G, or simply a G-torsor. With this terminology, the set EllO (C) is a cl(O)-torsor.
+    If we fix a particular element x of a G-torsor X, we can then view X as a group that
+is isomorphic to G under the map that sends y ∈ X to the unique element g ∈ G for
+which gx = y. Note that this involves an arbitrary choice of the identity element x; rather
+than thinking of elements of X as group elements, it is more appropriate to think of the
+“difference” or “ratios” of elements of X as group elements. In the case of the cl(O)-torsor
+EllO (C) there is an obvious choice for the identity element: the isomorphism class j(EO ).
+But when we reduce to a finite field Fq and work with the cl(O)-torsor EllO (Fq ), as we shall
+soon do, we cannot readily distinguish the element of EllO (Fq ) that corresponds to j(EO ).
+
+18.5    Isogenies over the complex numbers
+To better understand the cl(O)-action on EllO (C) we need to look at isogenies between
+elliptic curves over the complex numbers. Let L ⊆ L0 be lattices, and let E and E 0 be the
+elliptic curves corresponding to C/L and C/L0 , respectively. The map ι : C/L → C/L0 that
+lifts z ∈ C/L to C and then reduces it modulo L0 induces an isogeny φ : E → E 0 that makes
+the following diagram commute:
+
+                                      C/L         ι    C/L0
+
+                                       Φ                Φ0
+
+
+                                     E(C)         φ   E 0 (C)
+
+Note that L0 contains L as a sublattice, so this is well-defined: equivalence modulo L0
+implies equivalence modulo L (but not vice versa). The isomorphism Φ sends z ∈ C/L to
+the point ℘(z; L),       ℘0 (z; L) on E, and the isomorphism Φ0 sends z ∈ C/L0 to the point
+ ℘(z; L0 ), ℘0 (z; L0 ) on E 0 .
+                       
+
+    It is clear that the induced map φ := Φ0 ◦ ι ◦ Φ−1 is a group homomorphism; to show
+that it is an isogeny we need to check that it is also a rational map. To see this, notice that
+the meromorphic function ℘(z; L0 ) is periodic with respect to L0 , and therefore also periodic
+with respect to the sublattice L. It is thus an elliptic function for L, and since it is an even
+function, it may be expressed as a rational function of ℘(z; L), by Lemma 17.1. Thus
+                                                             
+                                              0    u ℘(z; L)
+                                        ℘(z; L ) =           
+                                                   v ℘(z; L)
+
+for some polynomials u, v ∈ C[x]. Similarly, ℘0 (z; L0 ) is an odd elliptic function for L, so
+℘0 (z : L0 )/℘0 (z : L) is an even elliptic function for L, and we therefore have
+                                                          
+                                     0     0    s ℘(z; L) 0
+                                   ℘ (z, L ) =             ℘ (z; L),
+                                                t ℘(z; L)
+
+for some s, t ∈ C[x]. Thus                                  
+                                                  u(x) s(x)
+                                  φ(x, y) =           ,     y .
+                                                  v(x) t(x)
+The points in the kernel of φ are precisely the points ℘(z; L), ℘0 (z; L) for which z ∈
+                                                                             
+
+L0 (modulo L). It follows that the kernel of φ has cardinality [L0 : L], and we are in
+characteristic zero, so the isogeny φ is separable and therefore deg φ = | ker φ| = [L0 : L].
+   We now note that the homothetic lattice L00 = nL0 has index n in L, by Lemma 17.15. If
+we let E 00 /C be the elliptic curve corresponding to C/L00 (which is isomorphic to E 0 ), then
+the inclusion map ι : C/L00 → C/L induces an isogeny φ̃ : E 00 → E of degree n. Composing
+φ̃ with the isomorphism from E 0 to E 00 , we obtain the dual isogeny φ̂ : E 0 → E, since the
+composition φ ◦ φ̂ is precisely the multiplication-by-n map on E 0 .
+    If a and b are invertible O-ideals then we have an isogeny from Eb to aEb = Ea−1 b
+induced by the lattice inclusion b ⊆ a−1 b (to see that this is an inclusion, note that ab ⊆ b).
+Thus there is an isogeny φa associated to the action of a on Eb defined in (1). Given any
+elliptic curve E/C with endomorphism ring O and an invertible O-ideal a, we define the
+a-torsion subgroup
+                         E[a] = {P ∈ E(C) : αP = 0 for all α ∈ a},
+where we view α ∈ a ⊂ O ≃ End(E) as the multiplication-by-α endomorphism.
+Theorem 18.11. Let O be an imaginary quadratic order, let E/C be an elliptic curve with
+endomorphism ring O, let a be an invertible O-ideal, and let φa be the corresponding isogeny
+from E to aE. The following hold:
+  (i) ker φa = E[a];
+
+ (ii) deg φa = N a.
+Proof. By composing φa with an isomorphism if necessary, we may assume without loss of
+generality we assume E = Eb for some proper O-ideal b. Let Φ be the isomorphism from
+C/b → Eb that sends z to (℘(z), ℘0 (z)). We have
+
+                         Φ−1 (E[a]) = {z ∈ C/b : αz = 0 for all α ∈ a}
+                                     = {z ∈ C : αz ∈ b for all α ∈ a}/b
+                                     = {z ∈ C : za ⊆ b}/b
+                                     = {z ∈ C : zO ⊆ a−1 b}/b
+                                     = (a−1 b)/b
+                                                        
+                                                 z→z
+                                     = ker C/b −→ C/a−1 b
+                                     = Φ−1 (ker φa ).
+
+This proves (i). We then note that
+
+            #E[a] = #(a−1 b)/b = [a−1 b : b] = [b : ab] = [O : aO] = [O : a] = N a,
+
+which proves (ii).
+
+18.6    The Hilbert class polynomial
+Let O be an order of discriminant D in an imaginary quadratic field K. The first main
+theorem of complex multiplication states that the elements of EllO (C) are algebraic integers
+that all have the same minimal polynomial over K:
+                                           Y
+                            HD (X) =               (X − j(E))
+                                           j(E)∈EllO (C)
+
+known as the Hilbert class polynomial (of discriminant D).6 Remarkably, not only do the
+coefficients of HD (X) lie in K, they actually lie in Z. Moreover, the theorem states that
+  6
+    Some authors reserve the term Hilbert class polynomial for the case O = OK and call HD (X) a ring
+class polynomial in general.
+the splitting field L of HD (X) over K has Galois group isomorphic to cl(O). The roots of
+HD (X) are precisely the elements of EllO (C), and the action of the Galois group Gal(L/K)
+is precisely the cl(O)-action on EllO (C) defined above.
+    The first main theorem of complex multiplication is one of the central results of what
+is known as class field theory. We will prove it over the course of the next two lectures.
+
+
+References
+[1] David A. Cox, Primes of the form x2 + ny 2 : Fermat, class field theory, and complex
+   multiplication, second edition, Wiley, 2013.
+

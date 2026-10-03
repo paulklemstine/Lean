@@ -1,0 +1,1204 @@
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+arXiv:2609.35610v1 [math.NT] 28 Sep 2026
+
+GENHENG ZHAO
+Abstract. We prove that each of the inequalities P + (p+1) > P + (p−1)
+and P + (p − 1) > P + (p + 1) holds for a positive proportion of primes.
+The argument combines a logarithmic balance identity with a uniform
+Selberg sieve over a thin cofactor strip. The same transfer mechanism
+applies to either shift and converts a one-sided large-prime-factor reservoir into an unconditional ordering result in both directions.
+
+1. Introduction
+For n > 1, let P + (n) denote its largest prime factor, and set P + (1) = 1.
+All logarithms are natural. We write
+G(x) = #{p ≤ x : P + (p + 1) > P + (p − 1)},
+e
+G(x)
+= #{p ≤ x : P + (p − 1) > P + (p + 1)}.
+where p always denotes a prime.
+The comparison of largest prime factors at neighbouring arguments has a
+long history. The Erdős–Turán conjecture predicts that P + (n) < P + (n + 1)
+holds for a set of integers of asymptotic density 1/2. Erdős and Pomerance
+[3] established a positive lower density in 1978. Subsequent quantitative
+refinements include the published bound 0.2017 of Lü and Wang [6]. In a
+different direction, Teräväinen [9, Theorem 1.16] proved that the logarithmic
+density is 1/2, and Tao–Teräväinen [8, Corollary 1.16] obtained the ordinary
+density 1/2 at all scales outside an exceptional set of logarithmic density
+zero. Neither statement asserts the ordinary density limit at every scale.
+These results concern an unrestricted integer variable; restricting the middle argument to primes introduces an additional distribution problem and
+does not follow by restriction of an integer-density estimate. For the primevariable ordering considered here, Wang proved a positive-proportion result
+under the Elliott–Halberstam conjecture [11]; his survey [10] discusses the
+prime-variable problem. Our purpose is to obtain unconditional positiveproportion conclusions in both directions.
+
+2020 Mathematics Subject Classification. 11N13, 11N35.
+Key words and phrases. largest prime factor, shifted primes, Selberg sieve, Bombieri–
+Vinogradov theorem.
+1
+
+2
+
+GENHENG ZHAO
+
+Theorem 1.1. Each ordering occurs for a positive proportion of primes.
+More precisely,
+x
+x
+e
+G(x) ≫
+,
+G(x)
+≫
+,
+log x
+log x
+and hence
+e
+G(x)
+G(x)
+lim inf
+> 0,
+lim inf
+> 0.
+x→∞ π(x)
+x→∞ π(x)
+Remark 1.2. The proof permits a numerical positive lower coefficient, but we
+do not calculate it here since it would be very tiny. For instance, the elementary reservoir estimate in Proposition 2.3 permits θ = 11/20 and δ = 1/4; the
+remaining sieve and Euler-product constants may be bounded coarsely. Our
+emphasis is the mechanism rather than a small numerical value. No effective
+starting point is asserted, since we use the classical Bombieri–Vinogradov
+theorem.
+The key feature is a transfer from one-sided large prime factors to a comparison of two adjacent shifts. The one-sided problem has its own classical development: Goldfeld [4] obtained a positive-proportion result for
+P + (p+a) > xθ , for fixed nonzero a, beyond θ = 1/2, with exponent 0.583 . . .;
+Baker and Harman [2] later reached 0.677. The formulation recorded by
+Akbary–Hambrook [1, Theorem 1.1] supplies, for any fixed 1/2 < θ ≤ 0.677,
+a δ > 0 such that
+x
+#{p ≤ x : P + (p + 1) > xθ } ≥ δ
+log x
+for sufficiently large x. For the proof below, it is enough to obtain the
+weaker choice θ = 11/20, δ = 1/4 directly, as we do in Proposition 2.3.
+Such a reservoir alone does not decide which of P + (p − 1) and P + (p + 1)
+is larger. We bridge that gap by dividing the reverse orderings according to
+their distance from the diagonal.
+Write Q = P + (p + 1) and R = P + (p − √
+1). Within the reservoir Q > xθ , a
+balance identity for the logarithms above x + 1 shows that a small number
+of desired orderings forces a small number of reverse orderings with R > xη Q,
+for any fixed η > 0. This is an averaged constraint, not a pointwise relation
+between Q and R. For the remaining reverse orderings, write p + 1 = 2aQ
+and p − 1 = 2bR. The ratio restriction confines the cofactors to the thin
+multiplicative strip b < a ≤ 2xη b. A three-linear-form upper-bound sieve,
+followed by harmonic summation over this strip, gives
+x
+x
+#{p ≤ x : Q(p) > xθ , Q(p) < R(p) ≤ xη Q(p)} ≪θ η
++
+.
+log x log2 x
+The small factor η is the decisive gain: summation over the unrestricted
+cofactor box would lose it. The same argument works with the roles of p + 1
+and p − 1 reversed. In that case the reservoir is R > xθ , the undesired neardiagonal ordering is R < Q ≤ xη R, and the cofactor relation aQ − bR = 1
+forces a < b; the identical uniform sieve then applies on the reflected thin
+strip.
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+3
+
+A second feature is that the sieve estimate is uniform in cofactors which
+grow with x. We apply a classical Selberg upper-bound theorem whose constants depend only on fixed local sieve conditions, and verify those conditions
+and the remainder uniformly. Thus no prime-tuple asymptotic or unverified
+dependence on growing coefficients is needed. Combining the two controls
+and choosing a small fixed η completes the transfer.
+For comparison, Yang’s recent preprint [12, Theorem 1.6] treats Py+ (n),
+the largest prime factor of n not exceeding y. It gives a positive-proportion
+ordering result for shifted primes when y = xα and 0 < α < 17/32, which
+does not directly imply the untruncated ordering considered here. Cofactor
+sieves also occur in that work; the transfer above relies on their combination
+with logarithmic balance and a thin strip.
+Section 2 establishes the logarithmic estimates and the far-from-diagonal
+bounds in both directions. Section 3 treats the two reflected near-diagonal
+sets by the same uniform sieve and thin-strip summation. Section 4 closes
+both arguments. All external analytic inputs are classical published results.
+2. Logarithmic estimates and far reverse orderings
+2.1. The balance identity. For primes p ≤ x, write
+Q(p) = P + (p + 1),
+
+R(p) = P + (p − 1),
+
+Z=
+
+√
+
+x + 1,
+
+and define
+L− (p) = 1R(p)>Z log R(p),
+
+L+ (p) = 1Q(p)>Z log Q(p).
+
+Lemma 2.1. As x → ∞,
+X
+
+(1)
+L− (p) − L+ (p) = o(x).
+p≤x
+
+In fact the proof gives O(x log log x/ log x).
+Proof. Let Λ be the von Mangoldt function and let
+P π(x; d, c) count primes
+at most x congruent to c modulo d. Since log n = d|n Λ(d),
+X
+X
+
+p−1
+(2)
+log
+=
+Λ(d) π(x; d, 1) − π(x; d, −1) + log 3.
+p+1
+3≤p≤x
+
+d≤x+1
+
+This is exact for x ≥ 3: the only correction is removal of p = 2, whose
+contribution is − log 3. There is no discrepancy at d = x + 1. The left side
+is O(log log x) because | log((p − 1)/(p + 1))| ≪ 1/p.
+Apply the classical Bombieri–Vinogradov theorem in its maximal ψ-form,
+as recorded in [1, Introduction], with saving exponent A = 3. Choose its
+1/2
+B
+associated fixed
+P B, enlarge it to B ≥ 6, and put D = x /(log x) . Here
+ψ(t; d, c) = n≤t, n≡c (mod d) Λ(n). Thus
+X
+d≤D
+
+max max ψ(t; d, c) −
+
+(c,d)=1 2≤t≤x
+
+t
+x
+≪
+.
+φ(d)
+log3 x
+
+4
+
+GENHENG ZHAO
+
+√
+Removing prime powers costs at most O( x log2 x) per modulus, uniformly
+for t ≤ x. Partial summation against 1/ log t then gives the π-form below:
+its kernel has bounded total variation
+x], and the summed prime-power
+√ on [2,
+2
+and lower-endpoint errors are O(D x log x+D) ≪ x/ log4 x. Consequently
+X
+
+max π(x; d, c) −
+(c,d)=1
+
+d≤D
+
+x
+Li(x)
+≪
+.
+φ(d)
+log3 x
+
+The main terms in the two reduced classes 1, −1 cancel, giving
+X
+
+(3)
+
+
+Λ(d) π(x; d, 1) − π(x; d, −1) ≪
+
+d≤D
+
+x
+.
+log2 x
+
+For D < d ≤ Z, Brun–Titchmarsh [1, Lemma 3.1(f), equation (3.11)]
+gives
+x
+x
+≪
+.
+π(x; d, ±1) ≪
+φ(d) log(x/d)
+φ(d) log x
+√
+The constants are uniform since d ≤ x + 1 < x and log(x/d) ≥ (1/2 +
+o(1)) log x. We shall use
+X Λ(n)
+= log y + O(1).
+(4)
+φ(n)
+n≤y
+
+P
+Indeed, the classical estimate n≤y Λ(n)/n = log y + O(1) implies this because
+
+ X
+XX
+1
+1
+log q
+log q
+− k =
+< ∞.
+k
+(q − 1)2
+φ(q ) q
+q
+q
+k≥1
+
+Subtracting (4) at Z and D therefore yields
+(5)
+
+
+X
+
+x
+Z
+x log log x
+Λ(d) π(x; d, 1) + π(x; d, −1) ≪
+1 + log
+≪
+.
+log x
+D
+log x
+D<d≤Z
+
+An integer at most x+1 has at most one prime divisor greater than Z, and
+that divisor cannot occur to the second power. Thus the terms d = q > Z in
+(2) give exactly L− (p) − L+ (p). The remaining terms d = q k > Z, k ≥ 2, are
+bounded in absolute value by a prime-power error Epp . Each class modulo
+q k contains at most x/q k + 1 positive integers at most x, so
+
+
+
+
+X
+X
+x
+log(x + 1)
+Epp ≪
+log q
++1 ,
+K=
+.
+log 2
+qk
+k
+2≤k≤K Z<q ≤x+1
+
+For k = 2, Chebyshev’s bound
+x
+
+X
+
+P
+
+log q
++
+q2
+1/4
+
+q>(x+1)
+
+q≤t log q ≪ t and partial summation give
+
+X
+q≤(x+1)1/2
+
+log q ≪ x3/4 + x1/2 .
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+5
+
+For k ≥ 3, put yk = (x + 1)1/(2k) . Uniformly for real y ≥ 1 and integers
+k ≥ 2,
+X log n
+(6)
+≪ y 1−k log(2y).
+k
+n
+n>y
+For completeness, split the integers into 2j y < n ≤ 2j+1 y. The contribution
+of the jth block is at most an absolute constant times y 1−k 2−j(k−1) (log(2y)+
+(j + 1) log 2); summing the geometric series proves (6) with a constant independent of k. It follows that the kth contribution is
+≪ x1/2+1/(2k) log x + (x + 1)1/k ≪ x2/3 log x + x1/3 .
+There are O(log x) such k, whence
+Epp ≪ x3/4 + x2/3 log2 x = o(x).
+
+(7)
+
+Combining (2), (3), (5) and (7) proves the lemma. Restoring p = 2 costs
+only O(1).
+□
+2.2. One-sided reservoirs for both shifts.
+Lemma 2.2. For either sign s ∈ {−1, 1}, as x → ∞,
+
+
+X
+x log log x
+x
++
+(8)
+.
+1P + (p+s)>Z log P (p + s) = + O
+2
+log x
+p≤x
+
+For s = −1, the term p = 2 is understood as zero.
+Proof. The proof of Lemma 2.1 also estimates each small-divisor sum separately. For D = x1/2 / logB x, its small-modulus part is
+X
+X Λ(d)
+Λ(d)π(x; d, −s) = Li(x)
++ O(x/ log2 x)
+φ(d)
+d≤D
+
+d≤D
+
+= Li(x)(log D + O(1)) + O(x/ log2 x)
+
+
+x
+x log log x
+= +O
+.
+2
+log x
+The part D < d ≤ Z is bounded
+by (5). The quantitative prime number
+P
+theorem in the form ϑ(t) = p≤t log p = t + O(t/ log t) [1, Lemma 3.1(d)]
+P
+gives
+3≤p≤x log(p + s) = x + O(x/ log x): replacing log(p + s) by log p
+costs O(log log x). The prime-power discrepancy above Z is bounded by (7).
+Subtracting the small-divisor sum from the total logarithmic mass therefore
+gives (8). The p = 2 endpoint costs O(1).
+□
+Proposition 2.3. For 1/2 < β < 1, put
+1
+∆(β) = + 2 log(2 − 2β).
+2
+Then, for either sign s ∈ {−1, 1},
+log x
+(9)
+lim inf
+#{p ≤ x : P + (p + s) > xβ } ≥ ∆(β).
+x→∞
+x
+
+6
+
+GENHENG ZHAO
+
+In particular this coefficient is positive for β < 1 − 12 e−1/4 .
+Proof. Fix s ∈ {−1, 1} and β > 1/2. Eventually xβ > Z. At most one prime
+factor of p + s exceeds Z, so, apart from the harmless endpoint p = 2 when
+s = −1, the logarithmic mass removed between Z and xβ is exactly
+X
+(log q)π(x; q, −s).
+Bs (x; β) =
+Z<q≤xβ
+
+Brun–Titchmarsh [1, Lemma 3.1(f), equation (3.11)] bounds this uniformly
+in the sign by
+X
+log q
+2x
+.
+(q − 1) log(x/q)
+β
+Z<q≤x
+
+Replacing q −P1 by q changes this bound by oβ (x), since log(x/q) ≥ (1 −
+2
+β) log x and
+q>Z log q/q ≪ 1/Z. Use the Mertens estimate A(t) =
+P
+q≤t log q/q = log t + O(1). Partial summation against 1/ log(x/t) gives
+X
+
+log q
+=
+q log(x/q)
+β
+
+Z<q≤x
+
+Z xβ
+Z
+
+dt
++ Oβ (1/ log x)
+t log(x/t)
+
+log(x/Z)
++ Oβ (1/ log x)
+(1 − β) log x
+= − log(2 − 2β) + oβ (1).
+
+= log
+
+The partial summation error follows because the endpoint values and the
+total variation of 1/ log(x/t) on this interval are Oβ (1/ log x). Lemma 2.2
+now implies, uniformly for the fixed sign s,
+X
+log P + (p + s) ≥ ∆(β)x + oβ (x).
+p≤x
+P + (p+s)>xβ
+
+Each logarithm is at most log(x + 1), proving (9). If ∆(β) ≤ 0, the resulting
+lower bound is simply vacuous.
+□
+Remark 2.4. See [1, Theorem 2.5] for the same expression ∆ in the quantitative minus-shift setting. The argument above treats both signs directly
+using standard published inputs: Bombieri–Vinogradov, Brun–Titchmarsh,
+Mertens’ theorem, and the prime number theorem. An explicit density coefficient does not give an effective starting point, since the BV estimate used
+in Lemma 2.2 is ineffective.
+2.3. Orderings far from the diagonal. Fix 1/2 < θ < 1 and define
+Aθ (x) = {p ≤ x : Q(p) > xθ }.
+For fixed η > 0, put
+Fη (x) = {p ∈ Aθ (x) : R(p) > xη Q(p)}.
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+7
+
+Lemma 2.5. For every fixed η > 0,
+
+
+G(x)
+x
+(10)
+#Fη (x) ≤
+.
++ oη
+η
+log x
+Proof. For sufficiently large x, xθ > Z. Every prime in Fη (x) contributes to
+the balance sum an amount
+R(p)
+log
+> η log x.
+Q(p)
+The truncated logarithm is nondecreasing for t ≥ 1. Hence primes with
+Q(p) ≤ R(p) contribute nonnegatively, and only primes counted by G(x)
+can contribute negatively, by at most log(x + 1) each. Therefore
+η log x #Fη (x) ≤ G(x) log(x + 1) + o(x).
+After division, replacing log(x + 1)/ log x by 1 costs O(1/ log x), even using
+the trivial G(x) ≤ x. This proves (10); the error is for fixed η, as required.
+□
+For the opposite ordering define
+Aeθ (x) = {p ≤ x : R(p) > xθ },
+Feη (x) = {p ∈ Aeθ (x) : Q(p) > xη R(p)}.
+Lemma 2.6. For every fixed η > 0,
+
+
+e
+G(x)
+x
+(11)
+#Feη (x) ≤
++ oη
+.
+η
+log x
+Proof. Apply the balance identity with the sign reversed. Every prime in
+Feη (x) contributes to L+ (p) − L− (p) an amount
+log
+
+Q(p)
+> η log x.
+R(p)
+
+Primes with R(p) ≤ Q(p) contribute nonnegatively to this reversed balance
+e
+sum, while only primes counted by G(x)
+can contribute negatively, and each
+such contribution has absolute value at most log(x + 1). Hence
+e
+η log x #Feη (x) ≤ G(x)
+log(x + 1) + o(x),
+□
+
+which gives (11) exactly as in Lemma 2.5.
+3. A uniform sieve over a thin cofactor strip
+3.1. Cofactors and local densities. Put
+Nη (x) = {p ∈ Aθ (x) : Q(p) < R(p) ≤ xη Q(p)}.
+For later use in the opposite direction also put
+eη (x) = {p ∈ Aeθ (x) : R(p) < Q(p) ≤ xη R(p)}.
+N
+
+For p ∈ Nη (x), write q = Q(p), r = R(p). Since q, r > xθ > 3, these factors
+are odd and we can write uniquely
+(12)
+
+p + 1 = 2aq,
+
+p − 1 = 2br,
+
+aq − br = 1.
+
+8
+
+GENHENG ZHAO
+
+Consequently (a, b) = 1, and for x ≥ 1 the explicit bounds are
+1 ≤ a, b ≤ x1−θ .
+
+(13)
+Also
+
+a
+rp+1
+=
+,
+p + 1 ≥ q > xθ .
+b
+qp−1
+Thus, for sufficiently large x depending only on θ,
+b < a ≤ 2xη b.
+
+(14)
+
+One of p−1, p+1 is divisible by 4 and one by 3. Since q, r > 3, the remaining
+factors 2, 3 occur in a or b, so 6 | ab.
+Fix a coprime pair satisfying 6 | ab and (13). The congruences
+n ≡ −1
+
+n≡1
+
+(mod 2a),
+
+(mod 2b)
+
+are compatible modulo their common factor 2, and have a unique solution
+modulo 2ab. Choose 1 ≤ n0 < 2ab, and set
+n0 + 1
+,
+2a
+L2 (m) = 2abm + B2 , B2 = n0 ,
+(15)
+n0 − 1
+.
+L3 (m) = am + B3 ,
+B3 =
+2b
+For triples from (12) these are q, p, r respectively. All intercepts are nonnegative integers, and leading coefficients are positive. With A1 = b, A2 =
+2ab, A3 = a, the determinants are
+L1 (m) = bm + B1 ,
+
+(16)
+
+A1 B2 − A2 B1 = −b,
+
+B1 =
+
+A1 B3 − A3 B1 = −1,
+
+A2 B3 − A3 B2 = −a.
+
+Define
+H(n) =
+
+(17)
+
+Y ℓ−1
+ℓ>3
+ℓ|n
+
+ℓ−3
+
+.
+
+Lemma 3.1 (Primitive forms and local densities). The three forms are primitive and pairwise nonproportional. For the number ρ(ℓ) of roots of L1 L2 L3
+modulo ℓ,
+(
+3, ℓ > 3, ℓ ∤ ab,
+(18)
+ρ(2) = ρ(3) = 1,
+ρ(ℓ) =
+1, ℓ > 3, ℓ | ab.
+In particular 0 < ρ(ℓ) < ℓ at every prime, and
+Y
+(19)
+S(a, b) =
+(1 − ρ(ℓ)/ℓ)(1 − 1/ℓ)−3 = C3 H(ab),
+ℓ
+
+where C3 = 9
+constant.
+
+Q
+
+ℓ>3 (1 − 3/ℓ)(1 − 1/ℓ)
+
+−3 is an absolutely convergent positive
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+9
+
+Proof. The defining congruences give (2ab, n0 ) = 1. If an odd prime divided
+both b and B1 , then n0 ≡ 1 (mod ℓ) and n0 + 1 ≡ 0 (mod ℓ), an impossibility. If 2 | b, a is odd and n0 ≡ 1 (mod 4), so (n0 + 1)/(2a) is odd.
+Thus (b, B1 ) = 1. Similarly (a, B3 ) = 1: when 2 | a, b is odd and n0 ≡ −1
+(mod 4), so B3 is odd. The nonzero determinants establish nonproportionality.
+If ℓ > 3 and ℓ ∤ ab, all three coefficients are invertible and (16) gives three
+distinct roots. If an odd ℓ | a, then ℓ ∤ b, L2 ≡ −1 and L3 ≡ −b−1 (mod ℓ),
+while L1 has exactly one root. If an odd ℓ | b, the symmetric calculation
+gives L2 ≡ 1 and L1 ≡ a−1 (mod ℓ), with only L3 having a root. Since
+exactly one of a, b is divisible by 3, this also proves ρ(3) = 1.
+If 2 | a, L2 and L3 are always odd and L1 has one root modulo 2. If
+2 | b, L2 and L1 are always odd and L3 has one root. This proves (18). The
+factors at 2, 3 in (19) have product 9; at ℓ > 3 dividing ab the ratio to the
+generic factor is (ℓ − 1)/(ℓ − 3). At the remaining primes the generic factor
+is 1 + O(ℓ−2 ), proving convergence.
+□
+3.2. Uniform Selberg sieve. We use Richert’s classical upper-bound sieve
+in the form of [7, Theorem 11.3, p. 135]; see also [5, Chapters 4–5]. The
+point of using this formulation is that its implied constant depends only on
+the fixed sieve parameters occurring in (Ω1 ) and (Ω2 (κ)) (and on the fixed
+exponent in the condition z ≤ X A ), not on the coefficients of the linear
+forms. We record the verification in our family because a and b grow with
+x.
+Q
+For real z > 2 put P (z) = ℓ<z ℓ and F (m) = L1 (m)L2 (m)L3 (m).
+Extend ρ multiplicatively to squarefree integers, with ρ(1) = 1. For every
+squarefree d, the Chinese remainder theorem gives
+ρ(d)
++ rd ,
+|rd | ≤ ρ(d).
+d
+Indeed, there are exactly ρ(d) relevant residue classes modulo d, and each
+contains M/d + O(1) integers in [1, M ]. Thus Richert’s remainder condition
+(R), namely |rd | ≤ ω(d) for squarefree d, holds with his local-density function
+ω(d) = ρ(d).
+(20)
+
+Ad := #{1 ≤ m ≤ M : d | F (m)} = M
+
+Lemma 3.2 (Uniform sifted-set bound). For every fixed A > 0, uniformly
+for M ≥ 2 and 3 < z ≤ M A ,
+M
+(21)
+#{1 ≤ m ≤ M : (F (m), P (z)) = 1} ≪A H(ab) 3 ,
+log z
+where the implied constant is independent of a, b, M, z.
+Proof. We apply Richert’s Theorem 11.3 with X = M and ω(ℓ) = ρ(ℓ). Let
+us check the hypotheses with constants independent of a and b.
+Richert’s condition (Ω1 ) is
+0≤
+
+ω(ℓ)
+1
+≤1−
+.
+ℓ
+A1
+
+10
+
+GENHENG ZHAO
+
+By (18),
+ρ(ℓ)
+3
+1
+≤ =1−
+,
+ℓ
+5
+5/2
+so (Ω1 ) holds with the absolute choice A1 = 5/2. His one-sided dimension
+condition (Ω2 (3)) asks for an absolute A2 such that, for 2 ≤ u ≤ v,
+X ρ(ℓ) log ℓ
+v
+≤ 3 log + A2 .
+ℓ
+u
+0≤
+
+u≤ℓ<v
+
+Since ρ(ℓ) ≤ 3, this follows immediately from Mertens’ estimate
+X log ℓ
+v
+= log + O(1),
+ℓ
+u
+u≤ℓ<v
+
+with an absolute A2 . Finally, (20) is precisely condition (R).
+Richert’s theorem therefore gives, for z ≤ M A ,
+#{1 ≤ m ≤ M : (F (m), P (z)) = 1} ≪A M V (z),
+where
+
+
+Y
+ρ(ℓ)
+V (z) =
+1−
+.
+ℓ
+ℓ<z
+
+and the implied constant depends only on A, A1 , A2 and the fixed sieve dimension 3. In particular, it is uniform in the growing coefficients a, b.
+By (18), for z > 3,
+Y ℓ−1
+1 Y
+H(ab)
+.
+V (z) =
+(1 − 3/ℓ)
+≪
+3
+ℓ−3
+log3 z
+3<ℓ<z
+3<ℓ<z
+ℓ|ab
+
+Here Mertens’ product formula, together with the absolutely convergent
+generic Euler product in (19), gives the first factor ≪ (log z)−3 ; extending the second product to all prime divisors of ab only increases it. This
+proves (21).
+□
+Lemma 3.3. Fix 1/2 < θ < 1. Uniformly for coprime a, b satisfying 6 | ab
+and (13), let Nθ (a, b; x) count integers 0 ≤ m ≤ M , where
+
+
+x − n0
+(22)
+M=
+,
+2ab
+for which all three values in (15) are prime and L1 (m), L3 (m) > xθ . Then
+x
+(23)
+Nθ (a, b; x) ≪θ H(ab)
+.
+ab log3 x
+Proof. Since n0 < 2ab and ab ≤ x2−2θ ,
+x
+x
+(24)
+M=
++ O(1) ≍ ,
+M ≫ x2θ−1 ,
+log M ≍θ log x.
+2ab
+ab
+All constants here are uniform in a, b once x is sufficiently large in terms of
+the fixed θ. In particular M → ∞ uniformly. The single endpoint m = 0
+costs at most 1.
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+11
+
+Put
+
+2θ − 1
+,
+z = xκ .
+8
+Then 0 < κ < θ. Moreover (24) gives, uniformly in a, b,
+κ=
+
+z 4 = x(2θ−1)/2 ≤ M
+for all sufficiently large x depending only on θ; hence z ≤ M 1/4 . Thus
+Lemma 3.2 applies with the fixed choice A = 1/4.
+For a triple counted by Nθ (a, b; x) with m ≥ 1, L1 , L3 > xθ , while from
+(15)
+L2 = 2aL1 − 1 > xθ − 1 > z
+for sufficiently large x. Since all three values are prime and exceed z, their
+product is coprime to P (z). Lemma 3.2 therefore gives
+x
+M
+.
+Nθ (a, b; x) ≪θ 1 + H(ab) 3 ≪θ 1 + H(ab)
+log z
+ab log3 x
+Finally, H(ab) ≥ 1 and (24) imply x/(ab log3 x) → ∞ uniformly, so the
+endpoint term is absorbed. This proves (23).
+□
+3.3. Harmonic summation over the strip.
+Lemma 3.4 (Mean and interval harmonic bounds). There is an absolute
+constant CH such that, for T ≥ 1,
+X
+X H(n)
+(25)
+AH (T ) :=
+≤ CH (1 + log T ).
+H(n) ≤ CH T,
+n
+n≤T
+
+n≤T
+
+For all real 1 ≤ U < V ,
+X
+(26)
+U <n≤V
+
+H(n)
+≤ CH
+n
+
+
+
+V
+1 + log
+.
+U
+
+Proof. Let c be multiplicative, with c(1) = 1, c(2) = c(3) = 0, c(ℓ) = 2/(ℓ−3)
+for primes ℓ > 3, and c(ℓk ) P
+= 0 for every prime ℓ and k ≥ 2. Expanding the
+local factors gives H(n) = d|n c(d). The coefficients are nonnegative, so
+ 
+X
+X c(d)
+T
+AH (T ) =
+c(d)
+≤T
+= CH T,
+d
+d
+d≤T
+
+where
+CH =
+
+d≥1
+
+Y
+ℓ>3
+
+1+
+
+2
+ℓ(ℓ − 3)
+
+
+< ∞.
+
+For real endpoints partial summation is exactly
+Z V
+X H(n)
+AH (V ) AH (U )
+AH (t)
+=
+−
++
+dt.
+n
+V
+U
+t2
+U
+U <n≤V
+
+Discard the nonpositive term and use AH (t) ≤ CH t to obtain (26). For the
+full harmonic sum, add H(1) = 1 = AH (1) to the exact identity with U = 1.
+
+12
+
+GENHENG ZHAO
+
+RT
+The negative boundary term cancels, leaving AH (T )/T + 1 AH (t)t−2 dt ≤
+CH (1 + log T ). This includes T = 1 and does not enlarge CH .
+□
+Proposition 3.5. For fixed 1/2 < θ < 1 and every η > 0,
+x
+x
+(27)
+#Nη (x) ≪θ η
++
+.
+log x log2 x
+The implied constant and a sufficiently large threshold for x are independent
+of η.
+Proof. Each p ∈ Nη (x) determines a unique (a, b) satisfying (13), (14),
+(a, b) = 1, 6 | ab. Lemma 3.3, applied before discarding the restrictions,
+gives
+X
+x
+H(ab)
+.
+#Nη (x) ≪θ
+3
+ab
+log x
+η
+b<a≤2x b
+a,b≤x1−θ
+(a,b)=1, 6|ab
+
+For every positive integer pair, H(ab) ≤ H(a)H(b); shared prime factors can
+only increase the right side. With T = x1−θ , we can now discard the arithmetic restrictions and the upper bound on the inner variable a. Lemma 3.4
+gives
+X H(ab) X H(b) X H(a)
+≤
+ab
+b
+a
+η
+η
+b<a≤2x b
+a,b≤T
+
+b≤T
+
+b<a≤2x b
+
+≤ CH (1 + log 2 + η log x)
+
+X H(b)
+b≤T
+
+b
+
+≪ log x(1 + η log x).
+All constants here are absolute (apart from the fixed θ in the sieve). Multiplication by x/ log3 x proves (27).
+□
+Proposition 3.6 (Reflected thin-strip bound). For fixed 1/2 < θ < 1 and
+every η > 0,
+eη (x) ≪θ η x + x .
+(28)
+#N
+log x log2 x
+The implied constant and a sufficiently large threshold for x are independent
+of η.
+eη (x) and write q = Q(p), r = R(p) and
+Proof. Let p ∈ N
+p + 1 = 2aq,
+
+p − 1 = 2br,
+
+aq − br = 1.
+
+Here q > r > xθ , so the box bounds (13), coprimality (a, b) = 1, and 6 | ab
+are unchanged. Moreover a < b. Indeed, if a ≥ b, then, since q and r are
+distinct odd primes,
+1 = aq − br = a(q − r) + (a − b)r ≥ q − r ≥ 2,
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+13
+
+a contradiction. Also
+
+b
+qp−1
+q
+=
+< ≤ xη ,
+a
+rp+1
+r
+so the cofactors lie in the reflected strip
+a < b ≤ xη a.
+
+(29)
+
+For each such pair the same linear forms (15) have prime values q, p, r,
+and Lemma 3.3 applies without any change. Consequently, after discarding (a, b) = 1 and 6 | ab and using H(ab) ≤ H(a)H(b), with T = x1−θ we
+have
+X H(a)H(b)
+eη (x) ≪θ x
+.
+#N
+ab
+log3 x
+η
+a<b≤x a
+a,b≤T
+
+Using Lemma 3.4 first in the b-variable gives
+X H(a)H(b)
+X H(a)
+≤
+ab
+a
+η
+a<b≤x a
+a,b≤T
+
+a≤T
+
+X
+a<b≤xη a
+
+≤ CH (1 + η log x)
+
+H(b)
+b
+
+X H(a)
+a≤T
+
+a
+
+≪ log x(1 + η log x).
+Multiplication by x/ log3 x proves (28).
+
+□
+
+4. Completion of the argument
+Proposition 4.1 (Square-root-breaking criterion). Fix 1/2 < θ < 1. Suppose there is δ > 0 such that, for all sufficiently large x,
+x
+(30)
+#Aθ (x) ≥ δ
+.
+log x
+Then G(x) ≫θ,δ x/ log x.
+Proof. For p > 3, equality Q(p) = R(p) is impossible. A common largest
+prime factor would divide 2, making both p−1, p+1 powers of 2. If p−1 = 2u
+and p + 1 = 2v , then 2u (2v−u − 1) = 2, forcing u = 1, v = 2, p = 3. Thus, up
+to a bounded endpoint exception,
+Aθ (x) ⊆ {p ≤ x : Q(p) > R(p)} ∪ Fη (x) ∪ Nη (x).
+By (30), Lemma 2.5 and Proposition 3.5, there is Cθ > 0, independent of η,
+such that for every fixed η > 0,
+
+
+
+
+1
+x
+x
+x
+≤ 1+
+G(x) + Cθ η
++ oθ,η
+.
+(31)
+δ
+log x
+η
+log x
+log x
+Fix η > 0 with Cθ η < δ/2. Then take x sufficiently large that the last error
+has absolute value at most δx/(4 log x). It follows explicitly that
+δη
+x
+G(x) ≥
+.
+4(1 + η) log x
+
+14
+
+GENHENG ZHAO
+
+The order of choices is θ, δ, then Cθ , then a fixed η, and finally x → ∞; no
+error estimate uniform as η → 0 is used.
+□
+Proposition 4.2 (Reverse square-root-breaking criterion). Fix 1/2 < θ < 1.
+Suppose there is δ > 0 such that, for all sufficiently large x,
+x
+(32)
+#Aeθ (x) ≥ δ
+.
+log x
+Then
+e
+G(x)
+≫θ,δ
+
+x
+.
+log x
+
+Proof. For p > 3 equality Q(p) = R(p) is impossible, as observed in the
+proof of Proposition 4.1. Hence, up to a bounded endpoint exception,
+eη (x).
+Aeθ (x) ⊆ {p ≤ x : R(p) > Q(p)} ∪ Feη (x) ∪ N
+Using Lemma 2.6 and Proposition 3.6, we obtain, for every fixed η > 0,
+
+
+
+
+x
+1 e
+x
+x
+′
+≤ 1+
+G(x) + Cθ η
++ oθ,η
+,
+δ
+log x
+η
+log x
+log x
+where Cθ′ is independent of η. Choosing η and then x in the same order as
+in Proposition 4.1 proves the claim.
+□
+Proof of Theorem 1.1. Use Proposition 2.3 with θ = 11/20. The bound
+− log(9/10) ≤ 1/9 gives ∆(11/20) > 1/4. For s = 1 the strict liminf margin
+yields (30) with δ = 1/4 for all sufficiently large x, so Proposition 4.1 gives
+G(x) ≫ x/ log x.
+For s = −1 the same proposition gives (32), again with δ = 1/4 for all
+e
+sufficiently large x. Proposition 4.2 therefore gives G(x)
+≫ x/ log x. The
+prime number theorem converts both estimates into the asserted positive
+lower proportions.
+□
+References
+[1] A. Akbary and K. Hambrook, A variant of the Bombieri–Vinogradov theorem with
+explicit constants and applications, Math. Comp. 84 (2015), no. 294, 1901–1932.
+doi:10.1090/S0025-5718-2014-02919-0. Author’s version: arXiv:1309.2730v2.
+[2] R. C. Baker and G. Harman, Shifted primes without large prime factors, Acta Arith.
+83 (1998), no. 4, 331–361. doi:10.4064/aa-83-4-331-361.
+[3] P. Erdős and C. Pomerance, On the largest prime factors of n and n + 1, Aequationes
+Math. 17 (1978), 311–321. doi:10.1007/BF01818569.
+[4] M. Goldfeld, On the number of primes p for which p + a has a large prime factor,
+Mathematika 16 (1969), no. 1, 23–27. doi:10.1112/S0025579300004575.
+[5] H. Halberstam and H.-E. Richert, Sieve Methods, London Mathematical Society
+Monographs, no. 4, Academic Press, London, 1974.
+[6] X. Lü and Z. Wang, On the largest prime factors of consecutive integers, Monatsh.
+Math. 206 (2025), no. 2, 403–418. doi:10.1007/s00605-024-02036-z.
+[7] H.-E. Richert, Lectures on Sieve Methods, notes by S. Srinivasan, Tata Institute of
+Fundamental Research Lectures on Mathematics and Physics, Mathematics, no. 55,
+Bombay, 1976. TIFR full text.
+
+ON THE LARGEST PRIME FACTORS OF p − 1 AND p + 1
+
+15
+
+[8] T. Tao and J. Teräväinen, The structure of correlations of multiplicative functions
+at almost all scales, with applications to the Chowla and Elliott conjectures, Algebra
+Number Theory 13 (2019), no. 9, 2103–2150. doi:10.2140/ant.2019.13.2103.
+[9] J. Teräväinen, On binary correlations of multiplicative functions, Forum Math. Sigma
+6 (2018), Paper No. e10, 41 pp. doi:10.1017/fms.2018.10.
+[10] Z. Wang, The largest prime factors of consecutive integers, Sci. Sin. Math. 56 (2026),
+no. 2, 493–500 (Chinese). doi:10.1360/SSM-2024-0264.
+[11] Z. Wang, Autour des plus grands facteurs premiers d’entiers consécutifs voisins d’un
+entier criblé, Quart. J. Math. 69 (2018), no. 3, 995–1013. doi:10.1093/qmath/hay010.
+[12] Z. Yang, On the largest prime factors less than y of consecutive shifted primes,
+preprint (2026), arXiv:2609.15166v1.
+Academy of Mathematics and Systems Science, Chinese Academy of Sciences,, 55 Zhongguancun East Road, Haidian District, Beijing 100190, China
+Email address: zhaogenheng@amss.ac.cn
+
+

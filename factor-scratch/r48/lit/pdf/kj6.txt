@@ -1,0 +1,796 @@
+Polynomial selection
+for the number field sieve
+Thorsten Kleinjung
+EPFL IC LACAL, Station 14, CH-1015 Lausanne, Switzerland
+
+Abstract
+In this chapter the development of the polynomial selection step of the number
+field sieve is described, emphasising Peter Montgomery’s contributions.
+
+This article appeared as Chapter 6 of the book Topics in Computational Number Theory inspired by Peter L. Montgomery, edited by Joppe W. Bos and
+Arjen K. Lenstra and published by Cambridge University Press. See www.
+cambridge.org/9781107109353.
+
+Contents
+
+6
+
+Polynomial selection for the number field sieve
+6.1
+The problem
+6.2
+Early methods
+6.3
+General remarks
+6.4
+A lattice based method
+6.5
+Skewness
+6.6
+Base m method and skewness
+6.7
+Root sieve
+6.8
+Later developments
+Bibliography
+Subject index
+
+page 1
+1
+1
+4
+5
+8
+10
+11
+13
+15
+17
+
+6
+Polynomial selection for the number field sieve
+Thorsten Kleinjung
+
+6.1 The problem
+Given an integer n to be factored, the very first step of the number field sieve
+consists in choosing two coprime polynomials f1 , f2 ∈ Z[x], each of whose
+coefficients are also coprime, such that the polynomials have a common root
+r modulo n (equivalently, that the resultant of f1 and f2 is a non-zero multiple
+of n). In the following step, the sieving stage, one searches for sufficiently
+many relations, i.e., coprime pairs (a, b) ∈ Z2 such that both values fi ( ab )bdeg fi ,
+i = 1, 2, are L-smooth, i.e., split into primes below L, for some parameter L.
+The running time of the sieving stage (and, in general, of the number field
+sieve) is determined by the number of pairs (a, b) one needs to inspect which
+in turn depends on the choice of the polynomials. Therefore it is important to
+carefully select a polynomial pair so that the running time of the number field
+sieve computation is minimised, as much as is practically possible.
+In the following it is assumed that the polynomials f1 and f2 are both irreducible; otherwise one can split n non-trivially or one can replace the polynomials by divisors that have r as a root modulo n since the polynomial values
+for a pair (a, b) will be replaced by divisors and thus remain smooth.
+
+6.2 Early methods
+Since the goal of polynomial selection is to minimise the running time of the
+number field sieve and since it is easy to produce polynomial pairs satisfying
+the conditions given in the previous section, for instance, f1 = x+n and f2 = x,
+it is important to have some means to compare (or to assess) polynomial pairs.
+Obviously, a more precise assessment is more costly than an imprecise one so
+that, if the number of produced polynomial pairs is too big, a quick imprecise
+
+2
+assessment method is needed (or even a chain of methods with increasing accuracy and decreasing speed). The most accurate method, namely executing the
+remaining steps of the number field sieve, is impractical but can be altered into
+executing a small but representative fraction of the sieving stage and counting the number of relations. This is still very expensive and can only be used
+for comparing a small number of polynomial pairs. Faster assessment methods can be devised by observing that the quality of a polynomial pair seems to
+be mainly influenced by two properties, namely by the size of the coefficients
+and by the number of roots of the polynomials modulo small primes. Taking
+into account both properties gives a method (cf. Section 6.7 on page 11) which
+is faster than the sieving based assessment from above but which is not fast
+enough for processing a huge set of candidates. A much faster method is to
+focus only on the size of the coefficients by computing || f1 ||∞ || f2 ||∞ , the product of the maximum norms of the polynomials. This assessment function (and
+its variant in Section 6.5 on page 8) is considered in the following sections
+until Section 6.7. Notice that it only gives a meaningful result if the degrees
+of the polynomials are fixed; polynomial pairs of different degree pairs must
+be compared by other means, e.g., the sieving based assessment method described above. In the first years after the introduction of the number field sieve
+the standard procedure was to consider the product of the norms followed by a
+sieving based assessment for the best polynomial pairs.
+The first and most natural method of constructing polynomial pairs consists
+of setting f2 = x − m for some positive integer m < n, writing n in base m, i.e.,
+P
+P
+n = di=0 ai mi with 0 ≤ ai < m and d minimal, as well as setting f1 = di=0 ai xi
+so that the polynomials are coprime and have the common root m modulo n. It
+can be assumed that the coefficients of f1 are coprime, otherwise their greatest
+common divisor is a non-trivial divisor of n. Usually one wants to find f1 of a
+given degree d which can be achieved by choosing m appropriately.
+In the early days of the number field sieve m was chosen to be slightly
+1
+smaller than n d which results in a monic degree d polynomial f1 , with the
+monicity simplifying some parts of the later stages of the number field sieve.
+1
+This gives coefficients of size about n d for each polynomial, so the product of
+2
+the maximum norms is about n d . Heuristically and informally, the size of the
+polynomial f1 can be reduced by generating many polynomial pairs in this way
+and hoping to encounter one with small coefficients. More precisely, let C > 1
+(C stands for cost) be the number of polynomial pairs one is willing to exam1
+ine, i.e., for C random choices of m slightly smaller than n d the corresponding
+monic polynomial f1 is computed and its maximum norm is examined. It is
+1
+assumed that C is not too big, e.g., C < n 2d would do, which is no restriction
+in practice for integers for which the number field sieve is used. One expects
+
+Polynomial selection for the number field sieve
+
+3
+
+to find (within cost C) one value of m for which the coefficients a0 , . . . , ad−1 of
+1
+1
+the corresponding f1 are bounded by C − d n d , thus reducing the product of the
+1
+maximum norms by a factor of C d .
+More important was the size reduction by choosing m slightly bigger than
+1
+n d+1 , thus giving rise to a non-monic f1 . The sizes of the coefficients of f1 and
+1
+2
+f2 are about n d+1 so that the product of the maximum norms is about n d+1 which
+1
+2
+1
+is smaller than C − d n d as C < n 2d is assumed. As above this method can be
+improved by repeatedly choosing random m and selecting the m that gives rise
+to the polynomial f1 with the smallest maximum norm. In order to increase the
+chance
+ qof hitting an f1 with small coefficients one observes that by choosing
+m = d and for a given leading coefficient ad the size of the coefficient ad−1 in
+the base m expansion is about the size of ad (factors like 2d are considered to
+be
+q negligible since d is assumed to be small). Indeed, for m ≥ d one has with
+d n
+ad = m + µ, 0 ≤ µ < 1
+
+
+!d
+
+
+n − a d md
+(m + µ)d − md
+1
+
+
+=
+a
+<
+a
+m
+1
++
+−
+1
+0 ≤ ad−1 ≤
+
+d
+d
+
+m
+md−1
+md−1
+d
+
+< ad m(e m − 1) < ad (e − 1)d.
+For the analysis of the expected gain let, as above, C > 1 be the number of
+1
+polynomial pairs one is willing to examine and let c = C d2 −1 . Choosing ad
+1
+near c−d n d+1 and m as above, the values of the d − 1 coefficients a0 , . . . , ad−2
+1
+which are a priori of size cn d+1 , will be of size ad with probability c−(d+1)(d−1) =
+C −1 so that after about C trials one expects to find a polynomial pair with
+1
+1
+|| f1 ||∞ = c−d n d+1 . Since || f2 ||∞ = cn d+1 , the product of the maximum norms can
+1
+be decreased for d > 1; with an effort of C a factor of C d+1 can be gained.
+In all methods described so far a factor of about 2 can be gained by allowing
+signed coefficients in the base m expansion.
+There are two further methods from the early days which were not really
+used at that time since it was not known how to exploit them, but which became
+important later on (cf. Section 6.8 on page 13). One consists in choosing a nonmonic f2 = lx − m and adapting the base m expansion to a base ml expansion,
+thus resulting in a larger supply of linear polynomials. Since monic f2 already
+provided more than enough polynomials, there was no need to consider nonmonic f2 . The other method used lattice reduction to find, given f2 = x − m (or
+f2 = lx − m), polynomials f1 with small coefficients and the same root modulo
+1
+n as f2 . In this method the size of the coefficients is about n d+1 which is the
+same as above.
+
+4
+
+6.3 General remarks
+Before proceeding with Montgomery’s first involvement in polynomial selection, a counting argument along the lines of [4, Section 12] is described that
+computes what coefficient sizes one can expect for given degrees.
+Let di = deg fi , i = 1, 2, be fixed, let M be an integer and let ci ≥ 0,
+i = 1, 2. The goal is to compute the expected number of triples (n, f1 , f2 ) such
+that n is in the interval [M, 2M], ( f1 , f2 ) is a valid polynomial pair for n and
+(the absolute values of) the coefficients of fi are bounded by M ci . The number
+of polynomial pairs ( f1 , f2 ) satisfying the above restriction on the coefficient
+sizes is Θ(M (d1 +1)c1 +(d2 +1)c2 ). If one restricts to pairs for which f1 and f2 each
+have coprime coefficients and for which gcd( f1 , f2 ) = 1, the number of pairs is
+still Θ(M (d1 +1)c1 +(d2 +1)c2 ). This number must be at least Θ(M) in order to obtain
+a valid polynomial pair for each n in the interval [M, 2M], which gives the
+condition
+(d1 + 1)c1 + (d2 + 1)c2 ≥ 1.
+
+(6.1)
+
+The resultant of f1 and f2 can be bounded by O(M d2 c1 +d1 c2 ) where the Oconstant depends on d1 and d2 . Since the resultant must be divisible by n ≥ M,
+this gives a second condition
+d2 c1 + d1 c2 ≥ 1.
+
+(6.2)
+
+If this second condition is satisfied, the number of triples (n, f1 , f2 ) as above is
+expected to be Θ(M (d1 +1)c1 +(d2 +1)c2 ), i.e., for any n in the interval [M, 2M] one
+expects to find on average Θ(M (d1 +1)c1 +(d2 +1)c2 −1 ) valid polynomial pairs.
+Heuristically, for the pairs (c1 , c2 ) ∈ R2≥0 satisfying the two inequalities
+above it is possible, for an integer n, to find polynomial pairs with coefficient
+bounds nci . This region is defined by the points in the first quadrant lying above
+the two lines given by the equality cases of the two conditions (cf. Figure 6.1
+on page 6). Since smaller coefficients are assumed to be better, the interesting
+part consists of the pairs lying on one (or both) lines.
+Notice the different nature of Conditions (6.1) and (6.2), with the former
+being based on an elementary counting argument and the latter being imposed
+by the common root requirement. The line corresponding to (6.1) marks the
+border at which one can expect to find polynomial pairs for every integer. Below this line only a fraction of these integers admits polynomial pairs, this
+is the realm of the special number field sieve which is not further considered
+here. The other line is, however, a hard bound and no polynomial pair can exist
+below it.
+
+Polynomial selection for the number field sieve
+
+5
+
+In the case d1 , d2 the two lines intersect in the point
+!
+(d1 + 1) − d2
+d1 − (d2 + 1)
+,
+∈ R2≥0 .
+P=
+d1 (d1 + 1) − d2 (d2 + 1) d1 (d1 + 1) − d2 (d2 + 1)
+For d1 > d2 the interesting part consists of the line segment between the points
+(0, d21+1 ) and P, and the line segment between the points P and ( d12 , 0); similarly
+for d1 < d2 it consists of the line segment between the points (0, d11 ) and P, and
+the line segment between the points P and ( d11+1 , 0) (note that one of the segments has length zero if d1 and d2 differ by 1). From the slopes of the two lines
+it follows that the minimum of c1 + c2 is d1 +d22 +1 and it is attained at P; thus
+the region near this point is the most interesting one. The polynomial selection
+method of the preceding section achieves (at cost C = 1) in the case d2 = 1 (assuming d1 > 1) coefficient sizes corresponding to the point ( d11+1 , d11+1 ) which
+lies on the second line but is not P. Hence it might be advantageous to try to
+move the coefficient sizes towards P which is exactly what was done in the
+preceding section by considering many polynomial pairs. However, attaining
+the point P results in an exponential cost1 with the current state-of-the-art algorithms. For the case d1 = 5, d2 = 1 the situation is depicted in Figure 6.1.
+In the case d = d1 = d2 Condition (6.2) implies Condition (6.1). Therefore
+the interesting part consists of the line segment between the points (0, d1 ) and
+1
+( d1 , 0) on which c1 + c2 takes the value d1 and one expects to find Θ(n d ) polynomial pairs on average. It can be argued that d = d1 = d2 is a bad choice
+of degrees since the region satisfying the two inequalities for d = d1 = d2 is a
+proper subset of the union of the corresponding regions for degrees (d+1, d−1)
+and for degrees (d − 1, d + 1); for the case d = 3 this is illustrated in Figure 6.2
+below. However, due to the absence of polynomial selection algorithms attaining the point P in acceptable time, the case d = d1 = d2 is still of interest.
+
+6.4 A lattice based method
+In 1993 Montgomery [5] addressed the case d = d1 = d2 and described a polynomial selection method using lattices. For d = 2, i.e., two quadratic polynomials, this method produces optimal polynomials in the sense of the preceding
+section, namely c1 + c2 = 12 .
+1
+
+This is no longer true if n is prime, i.e., if the number field sieve is used for computing
+discrete logarithms in Fn . The method in [9] addresses the case d1 = d2 + 1 and attains the
+point P = (0, d11 ) by picking a random polynomial f1 with coefficients of size O(1) and
+computing its roots modulo n (here the primality of n is used). Then, using lattice reduction,
+1
+
+each root allows to construct polynomials f2 with coefficients of size O(n d1 ).
+
+6
+c2
+1
+2
+
+SNFS
+1
+5
+
+5
+)
+P = ( 283 , 28
+
+( 16 , 61 )
+forbidden
+1
+6
+
+c1
+
+Figure 6.1 For the case d1 = 5, d2 = 1 the two lines corresponding to the
+equality cases of Conditions (6.1) and (6.2) on page 4 as well as their intersection P are depicted. The region above the bold part of the lines satisfies both inequalities. Moreover, the point ( 61 , 61 ) corresponding to the method
+from Section 6.2 on page 1 is featured.
+
+By identifying polynomials in Z[x] of degree at most d with vectors in Zd+1
+P
+via f = di=0 ai xi 7→ (a0 , . . . , ad )T , it is easy to see that the set of such polynomials having r modulo n as a root is a lattice Lr ⊂ Zd+1 of covolume n.
+Moreover, polynomials whose absolute values of the coefficients are bounded
+by O(nc ) correspond to vectors of length (with respect to the Euclidian norm)
+O(nc ). Therefore, in the case of equal degrees d = d1 = d2 , the polynomial
+selection problem can be rephrased in terms of lattices. The task is to find a
+lattice Lr such that it contains two short independent vectors for which the corresponding polynomials are coprime. In general, the latter condition is satisfied
+but it can be violated in special situations, e.g., if there exists a polynomial f
+of degree smaller than d with small coefficients such that f (r) ≡ 0 (mod n)
+then f and x f correspond to short vectors violating the coprimality condition.
+For any (d + 1)-dimensional lattice of covolume n a basis v1 , . . . , vd+1 satisQ
+fying d+1
+i=1 |vi | = O(n) with the O-constant depending on d can, for instance,
+be found using the lattice basis reduction method from [12]. Therefore, for any
+2
+r it is possible to find two vectors in Lr with product of their lengths O(n d+1 ); in
+1
+general one also expects that the two vectors have length O(n d+1 ) (as well as all
+other basis vectors). Since this is optimal in the case d = 1 (cf. final paragraph
+of Section 6.3 on page 5; note that the coprimality condition is satisfied), d ≥ 2
+is assumed from now on.
+
+Polynomial selection for the number field sieve
+
+7
+
+c2
+1
+2
+
+1
+3
+1
+4
+1
+5
+
+1
+5
+
+1
+4
+
+1
+3
+
+1
+2
+
+c1
+
+Figure 6.2 For each of the cases d1 = 3, d2 = 3 (normal line), d1 = 4, d2 = 2
+(dashed lines) and d1 = 2, d2 = 4 (dotted lines) the two lines corresponding
+to the equality cases of Conditions (6.1) and (6.2) on page 4 are depicted.
+The bold parts of the dashed and dotted lines (connecting the highlighted
+intersection points) are below the line corresponding to d1 = d2 = 3.
+
+If a lattice Lr admits a basis with two short basis vectors, i.e., the product of
+2
+their lengths being much smaller than n d+1 , then the other d − 1 basis vectors
+must be longer on average. One way to achieve this is to construct Lr such that
+at least one of the vectors in a reduced basis is long by stipulating the existence
+of a non-zero linear form λ : Lr → Z with small coefficients, i.e., a short vector
+in the dual lattice Lr∗ . Via the standard identification of the dual of Qd+1 with
+Qd+1 the lattice Lr∗ is generated by Zd+1 and the vector w = 1n (1, r, . . . , rd )T .
+Then a vector of length O(n−z ) in Lr∗ ensures the existence of a vector of length
+at least of order nz in a reduced basis which implies the existence of two basis
+2(1−z)
+1
+this is shorter than
+vectors with product of their lengths O(n d ). For z > d+1
+in the simple construction above.
+In order to find a lattice Lr such that its dual lattice contains a short vector
+1
+1
+one can set r ≡ ut (mod n) with t = O(n d ), u = Θ(n d ) so that the first d
+coordinates of ud−1 w plus an appropriate vector in Zd+1 are equal to 1n (ti ud−1−i )
+1
+for i = 0, . . . , d − 1, thus are O(n− d ). If u divides td − n (or td + hn for some
+d
+1
+small integer h , 0), the last coordinate is t nu−n = O(n− d ). Thus the product of
+2(d−1)
+
+the two shortest basis vectors is O(n d2 ), i.e., if the coprimality condition is
+satisfied, one gets c1 + c2 ≤ 2(d−1)
+(and in general c1 = c2 = d−1
+). Finding t and
+d2
+d2
+d
+u such that u divides t − n can be done in many ways; Montgomery suggested
+to choose u as a prime such that n is a d-th power modulo u.
+
+8
+For d = 2 this gives the optimal bound 12 for c1 + c2 (cf. Section 6.3 on
+page 4); notice that if the coprimality condition is not satisfied, one can split n.
+Moreover, the number of polynomial pairs of this construction is heuristically
+1
+Θ(n 2 ) which coincides with the expected value from the preceding section
+(after a slight modification of the construction, namely replacing the prime u
+by a product of primes for all of which n is a quadratic residue). In the early
+1990s this method with the improvement described in the next section was
+used for several at that time large factoring projects [14],[8].
+
+6.5 Skewness
+In the sieving stage of the number field sieve a certain set of pairs (a, b) ∈
+[−A, A] × [1, B] ∩ Z2 for suitable A and B is processed; this set of pairs is called
+the sieving region. Line sieving processes all pairs in [−A, A] × [1, B] ∩ Z2 by
+first considering the pairs with b = 1, then b = 2 and so on where each change
+of b involves some overhead. Additionally, if A is small compared to the size of
+the primes in the factor base, the procedure becomes less efficient. Therefore it
+is desirable to keep E = AB constant while decreasing B in order to speed up
+sieving if this can be achieved without increasing the values of the polynomials
+f1 and f2 over the sieving region.
+If a pair of quadratic polynomials is selected as described in the preceding
+1
+section, they will, in general,
+have coefficients of size n 4 , so most polynomial
+√
+1
+values for A = B = E will be of size En 4 . Thus, by changing A and B as
+1
+above most polynomial values will be of size AB En 4 which is bigger by a factor
+of S = AB , called skewness, due to the increased contribution of the leading
+terms. There is an efficient procedure to fix this problem by demanding that
+1
+1
+the leading coefficients are of size S −1 n 4 , the middle coefficients of size n 4
+1
+and the constant coefficients of size S n 4 ; such polynomials are called skewed
+polynomials. In the following it is supposed that S ≥ 1 holds; the case S ≤ 1
+is symmetric.
+These considerations led Montgomery to adapt his lattice based method,
+described in the previous section, to skewed polynomials by changing the inner
+P
+Pd+1 i−1− d
+2 y z where y resp. z is
+product from hy, zi = d+1
+i i
+i
+i
+i=1 yi zi to hy, ziS =
+i=1 S
+the i-th coordinate of y resp. z and d = d1 = d2 as in the previous section.
+For the dual lattice the inner product has to be changed to h, iS −1 and in the
+1
+construction of r one has to choose u = Θ(S −1 n d ). Care has to be taken to
+not choose S too large, otherwise the vector corresponding to ux − t will occur
+in the reduced lattice basis; for more details cf. [17] and also [15],[7]. In the
+1
+case d = 2 any skewness S = O(n 4 − ) with 0 ≤  ≤ 14 works and produces
+
+Polynomial selection for the number field sieve
+
+9
+
+polynomial pairs as asked for above. Asymptotically as well as in practice for
+1
+integers n of, say, more than 40 digits E is smaller than n 4 so that one can even
+choose S = E resulting in B = 1, i.e., a sieving region consisting of a single
+line, which almost completely removes the overhead. Montgomery noticed as
+well that lattice sieving, a more efficient but more complicated sieving variant,
+can benefit significantly from squeezing the sieving region to a single line,
+thus making it extremely efficient in this case. Details and reports of some
+computations can be found in [8] (beware, in that paper lattice sieving for
+B = 1 is called line sieving).
+The reader may have noticed that the number of polynomial pairs obtained
+1
+by the construction above with d = 2 is heuristically Θ(S −1 n 2 ) which becomes
+smaller as S gets bigger. However, each polynomial pair can be expanded into
+Θ(S ) polynomial pairs of similar coefficient sizes by translating them by an
+integer h of size up to O(S ), i.e., replacing ( f1 , f2 ) by ( f1 (x + h), f2 (x + h)).
+These translated polynomial pairs do not provide new information since the
+translation corresponds to a shear mapping of the sieving region. Thus, for a
+1
+fixed skewness S , one gets heuristically again Θ(n 2 ) skewed polynomial pairs,
+1
+although only Θ(S −1 n 2 ) of them are essentially different.
+This is a general phenomenon as will be explained by revising the discussion from Section 6.3 on page 4 in the light of skewness. For a given skewness S = M s (with the notation from that section, i.e., n being in the interval
+P
+[M, 2M]) the S -maximum norm of a polynomial f = di=0 ai xi ∈ Z[x] is ded
+fined as || f ||S ,∞ = max(|ai |S i− 2 ). Since the existence of a degree d polynomial
+d
+with || f ||S ,∞ ≤ M c for c ∈ R implies S 2 ≤ M c , fixing a skewness S = M s
+sd
+entails the bound 2 ≤ c. As before let di = deg fi , i = 1, 2, be fixed and let
+|| fi ||S ,∞ ≤ M ci for i = 1, 2 so that the number of such polynomial pairs ( f1 , f2 )
+is again Θ(M (d1 +1)c1 +(d2 +1)c2 ). On average, translation by an integer of size O(S )
+does not change the S -maximum norms of f1 and f2 by much and it does not
+change the resultant of f1 and f2 . Therefore the polynomial pairs are clustered
+into classes having the same resultant so that one needs at least Θ(MS ) polynomial pairs in order to obtain a valid polynomial pair for each n in the interval
+[M, 2M]. Thus Condition (6.1) on page 4 becomes
+(d1 + 1)c1 + (d2 + 1)c2 ≥ 1 + s.
+
+(6.3)
+
+Condition (6.2) on page 4 is not affected by the skewness and remains the
+same.
+In the case d = d1 = d2 Condition (6.2) implies Condition (6.3) since
+1
+c1 + c2 ≥ 2 sd2 ≥ s. Therefore one can expect to find Θ(M d −s ) essentially different polynomial pairs with c1 + c2 = d1 whenever ci ≥ sd2 , i = 1, 2. For
+d1 = d2 = 2 this is exactly what was observed above.
+
+10
+In the general case d1 > d2 the two lines given by the equality cases of
+Conditions (6.3) and (6.2) intersect in the point
+!
+(d1 + 1) − d2 (1 + s)
+d1 (1 + s) − (d2 + 1)
+,
+.
+Ps =
+d1 (d1 + 1) − d2 (d2 + 1) d1 (d1 + 1) − d2 (d2 + 1)
+For s = 0, i.e., skewness S = 1, this is the point P from Section 6.3 on page 4
+and for increasing s it moves on the line associated to Condition (6.2) to the
+1 −2d2 −2
+right. For s > s1 = d1 (d1 (d12d+1)−d
+the first coordinate of P s violates c1 ≥
+2 (d2 +1)−2)
+sd1
+sd2
+1
+2 and for larger s it also violates c2 ≥ 2 . Thus for s1 < s ≤ s2 = d1 d2
+the optimal point (with respect to minimising c1 + c2 ) is ( sd21 , d11 − sd22 ) and for
+s > s2 it is ( sd21 , sd22 ).
+When considering these optimal points, the value of c1 +c2 is minimal for s =
+0, increases slightly for 0 < s ≤ s1 and more rapidly for s > s1 . Similarly the
+expected number of polynomial pairs is Θ(1) for s = 0 and grows with s. These
+considerations suggest that searching for skewed polynomial pairs is a bad
+idea. However, as remarked above, there are no known methods for attaining
+the optimal point P (resp. P s ) so that using skewness might be a good idea,
+and, as shown in the next section, it turns out that using skewness is indeed
+very useful. Moreover, assessing the quality of the polynomial pair via the
+value c1 + c2 is adequate for asymptotic considerations but is a very rough
+assessment in practice where one wants to distinguish between c1 and c2 as
+well as include the number of roots modulo small primes. The impact of using
+skewness on the latter is discussed in Section 6.7.
+
+6.6 Base m method and skewness
+Once the concept of skewness has been introduced it is relatively easy to include it in the base m method. In the following the notation from Section 6.2
+on page 1 is used, in particular d = d1 , d2 = 1, and f2 = x − m. For simplifying
+the presentation it is also assumed that d > 3; the case d = 3 can be handled
+with some modifications although it is probably irrelevant in practice. As be1
+fore, many polynomial
+pairs are generated by choosing ad smaller than n d+1 ,
+q
+picking m near d and so that the coefficient ad−1 is of size ad , and then checking
+whether the remaining coefficients are small enough with respect to some previously fixed skewness S . More precisely, denote the cost, i.e., the number of
+polynomial pairs to be inspected, by C (again assuming that C is not too big),
+2
+1
+set S = C (d−3)(d−2) , and choose ad near (nS (1−d)d ) d+1 . This choice follows from
+stipulating that ad−i , i = 2, . . . , d − 1 is bounded by ad S i , that the bound ad S d−1
+
+Polynomial selection for the number field sieve
+11
+q
+for a1 is of size m ≈ d and and that these bounds are satisfied with probability
+C −1 . Thus, after having checked about C coefficients ad , one can expect to find
+one polynomial pair satisfying
+d
+
+1
+
+d−1
+
+2
+
+|| f1 ||S ,∞ ≤ C − (d−2)(d+1) n d+1
+
+and
+
+1
+
+1
+
+|| f2 ||S ,∞ ≤ C (d−2)(d+1) n d+1 ,
+
+i.e., || f1 ||S ,∞ || f2 ||S ,∞ ≤ C − (d−2)(d+1) n d+1 . In other words, with an effort of C one can
+d−1
+1
+gain a factor of C (d−2)(d+1) which is better than the factor of C d+1 in the unskewed
+base m method. Notice that the basic operations involved in checking a polynomial pair are the same as in the unskewed base m method so this speedup
+carries over to practice.
+
+6.7 Root sieve
+Using skewed polynomials provides another advantage, namely that it is possible to increase the number of roots of the polynomials modulo small primes.
+Montgomery contributed substantially to the development of the algorithm described below (and presented in more detail in [16], cf. also [6]).
+With the parameter choice as in the previous section the bound for || f1 ||S ,∞
+implies that the coefficient a1 can be of size m and that the coefficient a0 can
+be of size S m. Therefore one can expect to find about Θ(S ) integers i such that
+d
+1
+|| f1 +i f2 ||S ,∞ ≤ C − (d−2)(d+1) n d+1 . This provides Θ(S ) polynomial pairs ( f1 +i f2 , f2 )
+which each have approximately the same S -maximum norm as the original
+pair ( f1 , f2 ). Notice that this is a different type of amplifying polynomial pairs
+than the translations x 7→ x + h discussed in Section 6.5 on page 8. The main
+difference is that translating conserves the number of roots modulo a prime,
+whereas adding a multiple of f2 often changes this number. Thus, by considering the polynomials f1 + i f2 for integers i = O(S ), the quality of a polynomial
+pair can be improved at cost O(S ) which is O(C) for d = 4 and o(C) for d > 4.
+Before describing a procedure for inspecting this set of polynomials it is necessary to know how the number of roots modulo small primes influences the
+quality of a polynomial pair.
+In order to simplify the discussion assume that sieving is done with only
+one polynomial f of degree d and that the polynomial values f ( ab )bd over the
+sieving region do not depend much on the polynomials to be assessed, e.g.,
+all polynomials to be assessed have the same degree d and the sizes of their
+coefficients do not vary by much. Let p be a (small) prime that neither divides
+the leading coefficient nor the discriminant of f . This condition implies that the
+number of roots of f modulo pk does not depend on k ≥ 1; denote this number
+
+12
+by n p ( f ). Therefore, exactly (p − 1)pk−1 n p ( f ) of the (p2 − 1)p2k−2 polynomial
+values f ( ab )bd where 0 < a, b < pk , p - gcd(a, b), are divisible by pk , whereas
+for the same number of random values one expects (p2 − 1)pk−2 of them to be
+divisible by pk . Summing over all k ≥ 1 one expects that a polynomial value
+pn p ( f )
+
+in the sieving region is divisible by p p2 −1 on average (geometric mean) and
+1
+that a random value is divisible by p p−1 on average. This suggests to define
+pn ( f )
+1
+α p ( f ) = ( p−1
+− p2p−1 ) log p. For primes dividing the leading coefficient or
+the discriminant of f a similar (slightly more complicated) definition can be
+derived, and one sets
+X
+α( f ) =
+αp( f )
+(6.4)
+p < P, p prime
+
+P
+where P is a small bound, e.g., P = 1000. Notice that the sum p prime α p ( f )
+converges [3] and that the contribution of p ≥ P can be neglected in practice.
+The interpretation of α( f ) is that on average the P-smooth part of a polynomial value in the sieving region is e−α( f ) times the P-smooth part of a random
+value of similar size. This suggests to use || f ||S ,∞ eα( f ) for measuring the quality
+of a polynomial f . Notice that α( f ) is constant and positive for linear polynomials f so that the corresponding values f ( ab )bd behave slightly worse than
+random integers with respect to the number of roots modulo small primes. Indeed, one has n p ( f ) = 1 so that (p − 1)pk−1 of the (p2 − 1)p2k−2 polynomial
+values considered above are divisible by pk which is less than the (p2 − 1)pk−2
+values for random integers. Since f2 is linear in the base m method, the function || f1 ||S ,∞ || f2 ||S ,∞ eα( f1 ) can be used for assessing polynomial pairs produced
+by this method. More functions for determining the quality of polynomial pairs
+can be found in [16].
+Returning to the set of polynomial pairs ( f1 + i f2 , f2 ) one notices that || f2 ||S ,∞
+does not depend on i and that, by construction, || f1 + i f2 ||S ,∞ does usually not
+depend on i so that it is sufficient to compute α( f1 + i f2 ) in order to find the
+best polynomial pairs in the set. Notice that computing α( f ) for a polynomial f
+involves finding the roots of f modulo many small primes p so that the computation of α( f ) is much slower than, say, the computation of || f ||S ,∞ . Therefore
+it is desirable to speed up this computation, which can be done as follows by
+using a sieving procedure, called root sieve, that computes an approximation
+of α( f1 +i f2 ) for i in an interval. For a prime p < P and an s with 0 ≤ s < p it is
+easy to determine all i such that f1 + i f2 has s as a root modulo p; prime powers
+pk can be handled similarly. The cases where a prime divides the discriminant
+of f1 + i f2 for an i in the interval require a slightly bigger effort but are rare.
+Suppressing these cases and prime powers for this description, the sieving proP
+p
+cedure consists of initialising an array indexed by i with p < P, p prime log
+p−1 and
+
+Polynomial selection for the number field sieve
+
+13
+
+subtracting for each pair (p, s) with p a prime, p < P, 0 ≤ s < p, (an approxp
+imation of) the value log
+p+1 from all positions i for which s is a root of f1 + i f2
+modulo p. This gives approximations of α( f1 + i f2 ) and one can further inspect
+the best ones, i.e., the smallest values.
+In general, it is possible to sieve over polynomials f1 + g f2 for arbitrary
+g ∈ Z[x] which for deg g = 0 is described above. However, for g of bigger
+degree the S -maximum norm of f1 + g f2 is usually much bigger. This can be
+countered by changing the skewness or by translations but so far, i.e., for n up
+to 768 bit, it is sufficient to consider g of degree 1. In this case the sieving is
+carried out for f1 + (i1 x + i0 ) f2 which can be done as above with the obvious
+modifications; notice that the bounds on i1 are much smaller than those on i0
+so that a simple loop over i1 and proceeding per i1 -value as above is almost
+sufficient.
+
+6.8 Later developments
+In this final section a few later improvements are described. The skewed base m
+method is a two stage algorithm: first a brute force search produces a few polynomial pairs with a good product of the S -maximum norms, then for each such
+pair a root sieve is applied to improve the α-value while almost conserving the
+norms. Since a better α-value can be expected for a larger search area, it is
+tempting to increase the search area, thereby increasing the norms, and hoping that this is compensated for by an improved α-value. If this approach is
+adopted, the time spent in the root sieve will increase and may eventually dominate the polynomial selection running time so that improvements for speeding
+up the root sieve are needed. One improvement is to inspect only the most
+promising candidates in the search area, namely those for which the first few
+terms in the sum (6.4) are already good, i.e., small. This can result in a significant speedup at the cost of missing a few good candidates, and is described
+in [2]. The paper also explains how to reduce to almost zero the time spent in
+dealing with prime powers.
+Returning to the first stage of the polynomial selection, the two methods
+mentioned in the final paragraph of Section 6.2 (on page 3) eventually proved
+to be useful. The first method, namely considering non-monic f2 , was used
+in [11] (and earlier in the less efficient algorithm [10]) to produce polynomial
+pairs with a small third coefficent ad−2 . Since ad and ad−1 are small by construction, ad−2 has the biggest impact on || f1 ||S ,∞ and it is therefore important to
+reduce its size. With the notation from Section 6.6 on page 10 one has to check
+2
+about C d−2 values of ad in order to find an expansion for which the bound on
+
+14
+1
+
+ad−2 is satisfied. The new method produces with an effort C d−2 (suppressing
+logarithmic terms) a polynomial pair satisfying the bound on ad−2 . Thus, rebalancing all parameters, one expects, by spending an effort of C, to gain a
+d−1
+factor of C (d−3)(d+1) . After the effort for producing polynomials with small third
+coefficient ad−2 has been reduced, the main obstacle for d > 5 is the fourth
+coefficient ad−3 . This is considered in [1] where the second method from the
+final paragraph of Section 6.2 is combined with the method just described and
+a careful choice of a translation.
+These new developments do not introduce fundamentally new concepts but
+build on the methods described before, many of which having been invented
+by Peter Montgomery.
+
+Bibliography
+[1] S. Bai, C. Bouvier, A. Kruppa, and P. Zimmermann. Better polynomials for
+GNFS. Mathematics of Computation, pages 1–12, December 2015. (Cited on
+page 14.)
+[2] S. Bai, R. P. Brent, and E. Thomé. Root optimization of polynomials in the number field sieve. Mathematics of Computation, 84(295), 2015. (Cited on page 13.)
+[3] R. Barbulescu and A. Lachand. Some mathematical remarks on the polynomial
+selection in NFS. Mathematics of Computation, 86(303):397–418, 2017. (Cited
+on page 12.)
+[4] J. P. Buhler, H. W. Lenstra Jr., and C. Pomerance. Factoring integers with the
+number field sieve. pages 50–94 in [13], 1992. (Cited on page 4.)
+[5] J. P. Buhler, P. Montgomery, R. Robson, and R. Ruby. Technical report implementing the number field sieve. Oregon State University, Corvallis, OR, 1994.
+(Cited on page 5.)
+[6] S. Cavallar, B. Dodson, A. K. Lenstra, P. C. Leyland, W. M. Lioen, P. L. Montgomery, B. Murphy, H. te Riele, and P. Zimmermann. Factorization of RSA140 using the number field sieve. In K.-Y. Lam, E. Okamoto, and C. Xing, editors, Advances in Cryptology – ASIACRYPT’99, volume 1716 of Lecture Notes in
+Computer Science, pages 195–207. Springer, Heidelberg, Nov. 1999. (Cited on
+page 11.)
+[7] N. Coxon. Montgomery’s method of polynomial selection for the number field
+sieve. Linear Algebra and its Applications, 485:72–102, 2015. (Cited on page 8.)
+[8] M. Elkenbracht-Huizing. An implementation of the number field sieve. Experimental Mathematics, 5(3):231–253, 1996. (Cited on pages 8 and 9.)
+[9] A. Joux and R. Lercier. Improvements to the general number field sieve for discrete logarithms in prime fields. A comparison with the gaussian integer method.
+Mathematics of Computation, 72(242):953–967, 2003. (Cited on page 5.)
+[10] T. Kleinjung. On polynomial selection for the general number field sieve. Mathematics of Computation, 75(256):2037–2047, 2006. (Cited on page 13.)
+[11] T. Kleinjung.
+Polynomial selection, presented at the CADO workshop.
+See http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf,
+2008. (Cited on page 13.)
+[12] A. K. Lenstra, H. W. Lenstra, and L. Lovász. Factoring polynomials with rational
+coefficients. Mathematische Annalen, 261(4):515–534, 1982. (Cited on page 6.)
+[13] A. K. Lenstra and H. W. Lenstra Jr. The Development of the Number Field Sieve,
+volume 1554 of Lecture Notes in Mathematics. Springer-Verlag, 1993. (Cited on
+page 15.)
+[14] P. L. Montgomery. A survey of modern integer factorization algorithms. CWI
+Quarterly, 7(4):337–366, December 1994. (Cited on page 8.)
+[15] P. L. Montgomery. Searching for higher-degree polynomials for the general
+number field sieve. helper.ipam.ucla.edu/publications/scws1/scws1_
+6223.ppt, October 2006. (Cited on page 8.)
+[16] B. A. Murphy. Polynomial selection for the number field sieve integer factorisation algorithm. PhD thesis, Australian National University, 1999. (Cited on
+pages 11 and 12.)
+
+16
+
+Bibliography
+
+[17] T. Prest and P. Zimmermann. Non-linear polynomial selection for the number
+field sieve. J. Symb. Comput., 47(4):401–409, 2012. (Cited on page 8.)
+
+Subject index
+
+number field sieve, 1
+polynomial selection, 1
+alpha, see quality of a polynomial pair,
+alpha
+base m method, 3
+with skewness, 10–11
+counting argument, 4
+early abort, 13
+lattice based method, 5–8
+quality of a polynomial pair, see quality of a
+polynomial pair
+quality of a polynomial pair, 2, 10–12
+alpha, 12, 13
+root sieve, 11–13
+skewness, 8–10
+
+

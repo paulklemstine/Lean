@@ -1,0 +1,614 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/xrGSH7zXGrIPRltwrGeOxMw3ilM</id>
+  <title>arXiv Query: search_query=abs:"factorization" AND abs:"hidden subgroup" AND cat:quant-ph&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:57:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factorization%22+AND+(abs:%22hidden+subgroup%22+AND+cat:quant-ph)&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>36</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9807029v1</id>
+    <title>On Quantum Algorithms for Noncommutative Hidden Subgroups</title>
+    <updated>1998-07-10T20:14:50Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9807029v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9807029v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Quantum algorithms for factoring and discrete logarithm have previously been generalized to finding hidden subgroups of finite Abelian groups. This paper explores the possibility of extending this general viewpoint to finding hidden subgroups of noncommutative groups. We present a quantum algorithm for the special case of dihedral groups which determines the hidden subgroup in a linear number of calls to the input function. We also explore the difficulties of developing an algorithm to process the data to explicitly calculate a generating set for the subgroup. A general framework for the noncommutative hidden subgroup problem is discussed and we indicate future research directions.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-07-10T20:14:50Z</published>
+    <arxiv:comment>13 pages, no figures, LaTeX2e</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proceedings of 16th Annual Symposium on Theoretical Aspects of Computer Science (STACS), Trier, Germany, pp. 478-487, 1999</arxiv:journal_ref>
+    <author>
+      <name>Mark Ettinger</name>
+      <arxiv:affiliation>LANL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Peter Hoyer</name>
+      <arxiv:affiliation>Odense University</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/3-540-49116-3_45</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/3-540-49116-3_45" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.08376v1</id>
+    <title>Zero sum subsequences and hidden subgroups</title>
+    <updated>2023-04-17T15:40:30Z</updated>
+    <link href="https://arxiv.org/abs/2304.08376v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.08376v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a method for solving the hidden subgroup problem in nilpotent groups. The main idea is iteratively transforming the hidden subgroup to its images in the quotient groups by the members of a central series, eventually to its image in the commutative quotient of the original group; and then using an abelian hidden subgroup algorithm to determine this image. Knowing this image allows one to descend to a proper subgroup unless the hidden subgroup is the full group. The transformation relies on finding zero sum subsequences of sufficiently large sequences of vectors over finite prime fields. We present a new deterministic polynomial time algorithm for the latter problem in the case when the size of the field is constant. The consequence is a polynomial time exact quantum algorithm for the hidden subgroup problem in nilpotent groups having constant nilpotency class and whose order only have prime factors also bounded by a constant.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-17T15:40:30Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.14436v3</id>
+    <title>Deterministic Algorithms for the Hidden Subgroup Problem</title>
+    <updated>2022-06-10T20:49:17Z</updated>
+    <link href="https://arxiv.org/abs/2104.14436v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.14436v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present deterministic algorithms for the Hidden Subgroup Problem. The first algorithm, for abelian groups, achieves the same asymptotic worst-case query complexity as the optimal randomized algorithm, namely O($\sqrt{ n}\,$), where $n$ is the order of the group. The analogous algorithm for non-abelian groups comes within a $\sqrt{ \log n}$ factor of the optimal randomized query complexity. The best known randomized algorithm for the Hidden Subgroup Problem has expected query complexity that is sensitive to the input, namely O($\sqrt{ n/m}\,$), where $m$ is the order of the hidden subgroup. In the first version of this article (arXiv:2104.14436v1 [cs.DS]), we asked if there is a deterministic algorithm whose query complexity has a similar dependence on the order of the hidden subgroup. Prompted by this question, Ye and Li (arXiv:2110.00827v1 [cs.DS]) present deterministic algorithms for abelian groups which solve the problem with O($\sqrt{ n/m }\,$ ) queries, and find the hidden subgroup with O($\sqrt{ n (\log m) / m} + \log m$) queries. Moreover, they exhibit instances which show that in general, the deterministic query complexity of the problem may be o($\sqrt{ n/m } \,$), and that of finding the entire subgroup may also be o($\sqrt{ n/m } \,$) or even $ω(\sqrt{ n/m } \,)$. We present a different deterministic algorithm for the Hidden Subgroup Problem that also has query complexity O($\sqrt{ n/m }\,$) for abelian groups. The algorithm is arguably simpler. Moreover, it works for non-abelian groups, and has query complexity O($\sqrt{ (n/m) \log (n/m) }\,$) for a large class of instances, such as those over supersolvable groups. We build on this to design deterministic algorithms to find the hidden subgroup for all abelian and some non-abelian instances, at the cost of a $\log m$ multiplicative factor increase in the query complexity.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-29T15:55:15Z</published>
+    <arxiv:comment>v3: 14 pages. Added some details. Minor edits for clarity. Close to published version. v2: 14 pages. Added references to past and recent related work, added new algorithms partially resolving an open question from the previous version. v1: 7 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>Quantum Information and Computation, Vol. 22, No. 9&amp;10 (2022), pp. 755--769</arxiv:journal_ref>
+    <author>
+      <name>Ashwin Nayak</name>
+    </author>
+    <arxiv:doi>10.26421/QIC22.9-10-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.26421/QIC22.9-10-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0102014v1</id>
+    <title>Efficient quantum algorithms for some instances of the non-Abelian hidden subgroup problem</title>
+    <updated>2001-02-02T17:22:27Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0102014v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0102014v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we show that certain special cases of the hidden subgroup problem can be solved in polynomial time by a quantum algorithm. These special cases involve finding hidden normal subgroups of solvable groups and permutation groups, finding hidden subgroups of groups with small commutator subgroup and of groups admitting an elementary Abelian normal 2-subgroup of small index or with cyclic factor group.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-02-02T17:22:27Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+    <author>
+      <name>Frederic Magniez</name>
+    </author>
+    <author>
+      <name>Miklos Santha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0501060v1</id>
+    <title>A quantum lower bound for the query complexity of Simon's problem</title>
+    <updated>2005-01-12T16:49:08Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0501060v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0501060v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Simon in his FOCS'94 paper was the first to show an exponential gap between classical and quantum computation. The problem he dealt with is now part of a well-studied class of problems, the hidden subgroup problems. We study Simon's problem from the point of view of quantum query complexity and give here a first nontrivial lower bound on the query complexity of a hidden subgroup problem, namely Simon's problem. Our bound is optimal up to a constant factor.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-01-12T16:49:08Z</published>
+    <arxiv:comment>8 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Pascal Koiran</name>
+    </author>
+    <author>
+      <name>Vincent Nesme</name>
+    </author>
+    <author>
+      <name>Natacha Portier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0703223v2</id>
+    <title>Quantum algorithm for the hidden subgroup problem on a class of semidirect product groups</title>
+    <updated>2007-04-23T14:39:02Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0703223v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0703223v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present efficient quantum algorithms for the hidden subgroup problem (HSP) on the semidirect product of cyclic groups $\Z_{p^r}\rtimes_φ\Z_{p^2}$, where $p$ is any odd prime number and $r$ is any integer such that $r&gt;4$. We also address the HSP in the group $\Z_{N}\rtimes_φ\Z_{p^2}$, where $N$ is an integer with a special prime factorization. These quantum algorithms are exponentially faster than any classical algorithm for the same purpose.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-03-23T16:55:58Z</published>
+    <arxiv:comment>5 pages, no figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Carlos Magno M. Cosme</name>
+    </author>
+    <author>
+      <name>Renato Portugal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0211124v3</id>
+    <title>The Hidden Subgroup Problem in Affine Groups: Basis Selection in Fourier Sampling</title>
+    <updated>2003-02-24T21:42:34Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0211124v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0211124v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Many quantum algorithms, including Shor's celebrated factoring and discrete log algorithms, proceed by reduction to a hidden subgroup problem, in which a subgroup H of a group G must be determined from a quantum state y uniformly supported on a left coset of H. These hidden subgroup problems are then solved by Fourier sampling: the quantum Fourier transform of y is computed and measured. When the underlying group is non-Abelian, two important variants of the Fourier sampling paradigm have been identified: the weak standard method, where only representation names are measured, and the strong standard method, where full measurement occurs. It has remained open whether the strong standard method is indeed stronger, that is, whether there are hidden subgroups that can be reconstructed via the strong method but not by the weak, or any other known, method. In this article, we settle this question in the affirmative. We show that hidden subgroups of semidirect products of Z_p by Z_q, where q divides (p-1) and q = p / polylog(p), can be efficiently determined by the strong standard method. Furthermore, the weak standard method and the ``forgetful'' Abelian method are insufficient for these groups. We extend this to an information-theoretic solution for the hidden subgroup problem over semidirect products of Z_p by \Z_q where q divides (p-1) and, in particular, the Affine groups A_p. Finally, we prove a closure property for the class of groups over which the hidden subgroup problem can be solved efficiently.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-11-20T06:58:32Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Daniel Rockmore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+    <author>
+      <name>Leonard Schulman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0205034v1</id>
+    <title>Solving Shift Problems and Hidden Coset Problem Using the Fourier Transform</title>
+    <updated>2002-05-07T21:55:09Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0205034v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0205034v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We give a quantum algorithm for solving a shifted multiplicative character problem over Z/nZ and finite fields. We show that the algorithm can be interpreted as a matrix factorization or as solving a deconvolution problem and give sufficient conditions for a shift problem to be solved efficiently by our algorithm. We also show that combining the shift problem with the hidden subgroup problem results in a hidden coset problem. This naturally captures the redundancy in the shift due to the periodic structure of multiplicative characters over Z/nZ.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-05-07T21:55:09Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Lawrence Ip</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.11298v2</id>
+    <title>The Hidden Subgroup Problem for Universal Algebras</title>
+    <updated>2020-05-01T20:14:21Z</updated>
+    <link href="https://arxiv.org/abs/2001.11298v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.11298v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Hidden Subgroup Problem (HSP) is a computational problem which includes as special cases integer factorization, the discrete logarithm problem, graph isomorphism, and the shortest vector problem. The celebrated polynomial-time quantum algorithms for factorization and the discrete logarithm are restricted versions of a generic polynomial-time quantum solution to the HSP for abelian groups, but despite focused research no full solution has yet been found. We propose a generalization of the HSP to include arbitrary algebraic structures and analyze this new problem on powers of 2-element algebras. We prove a complete classification of every such power as quantum tractable (i.e. polynomial-time), classically tractable, quantum intractable, and classically intractable. In particular, we identify a class of algebras for which the generalized HSP exhibits super-polynomial speedup on a quantum computer compared to a classical one.</summary>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-30T13:09:35Z</published>
+    <arxiv:primary_category term="cs.LO"/>
+    <author>
+      <name>Matthew Moore</name>
+    </author>
+    <author>
+      <name>Taylor Walenczyk</name>
+    </author>
+    <arxiv:doi>10.1145/3373718.3394764</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3373718.3394764" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0101004v1</id>
+    <title>Decomposing Finite Abelian Groups</title>
+    <updated>2001-01-05T15:32:16Z</updated>
+    <link href="https://arxiv.org/abs/cs/0101004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/0101004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper describes a quantum algorithm for efficiently decomposing finite Abelian groups. Such a decomposition is needed in order to apply the Abelian hidden subgroup algorithm. Such a decomposition (assuming the Generalized Riemann Hypothesis) also leads to an efficient algorithm for computing class numbers (known to be at least as difficult as factoring).</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-01-05T15:32:16Z</published>
+    <arxiv:comment>6 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Kevin K. H. Cheung</name>
+    </author>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0808.0369v1</id>
+    <title>Quantum Algorithms</title>
+    <updated>2008-08-04T02:14:39Z</updated>
+    <link href="https://arxiv.org/abs/0808.0369v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0808.0369v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This article surveys the state of the art in quantum computer algorithms, including both black-box and non-black-box results. It is infeasible to detail all the known quantum algorithms, so a representative sample is given. This includes a summary of the early quantum algorithms, a description of the Abelian Hidden Subgroup algorithms (including Shor's factoring and discrete logarithm algorithms), quantum searching and amplitude amplification, quantum algorithms for simulating quantum mechanical systems, several non-trivial generalizations of the Abelian Hidden Subgroup Problem (and related techniques), the quantum walk paradigm for quantum algorithms, the paradigm of adiabatic algorithms, a family of ``topological'' algorithms, and algorithms for quantum tasks which cannot be done by a classical computer, followed by a discussion.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-08-04T02:14:39Z</published>
+    <arxiv:comment>71 pages, 1 figure, to appear in the Springer Encyclopedia of Complexity and Systems Science</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0511054v1</id>
+    <title>Strong Fourier Sampling Fails over $G^n$</title>
+    <updated>2005-11-07T02:45:06Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0511054v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0511054v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a negative result regarding the hidden subgroup problem on the powers $G^n$ of a fixed group $G$. Under a condition on the base group $G$, we prove that strong Fourier sampling cannot distinguish some subgroups of $G^n$. Since strong sampling is in fact the optimal measurement on a coset state, this shows that we have no hope of efficiently solving the hidden subgroup problem over these groups with separable measurements on coset states (that is, using any polynomial number of single-register coset state experiments). Base groups satisfying our condition include all nonabelian simple groups. We apply our results to show that there exist uniform families of nilpotent groups whose normal series factors have constant size and yet are immune to strong Fourier sampling.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-11-07T02:45:06Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gorjan Alagic</name>
+    </author>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0212002v1</id>
+    <title>The Quantum Fourier Transform and Extensions of the Abelian Hidden Subgroup Problem</title>
+    <updated>2002-11-30T00:40:09Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0212002v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0212002v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The quantum Fourier transform (QFT) has emerged as the primary tool in quantum algorithms which achieve exponential advantage over classical computation and lies at the heart of the solution to the abelian hidden subgroup problem, of which Shor's celebrated factoring and discrete log algorithms are a special case. We begin by addressing various computational issues surrounding the QFT and give improved parallel circuits for both the QFT over a power of 2 and the QFT over an arbitrary cyclic group. These circuits are based on new insight into the relationship between the discrete Fourier transform over different cyclic groups. We then exploit this insight to extend the class of hidden subgroup problems with efficient quantum solutions. First we relax the condition that the underlying hidden subgroup function be distinct on distinct cosets of the subgroup in question and show that this relaxation can be solved whenever G is a finitely-generated abelian group. We then extend this reasoning to the hidden cyclic subgroup problem over the reals, showing how to efficiently generate the bits of the period of any sufficiently piecewise-continuous function on R. Finally, we show that this problem of period-finding over R, viewed as an oracle promise problem, is strictly harder than its integral counterpart. In particular, period-finding over R lies outside the complexity class MA, a class which contains period-finding over the integers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-11-30T00:40:09Z</published>
+    <arxiv:comment>PhD Thesis UC Berkeley Spring 2002</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Lisa R. Hales</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0503095v1</id>
+    <title>The Power of Strong Fourier Sampling: Quantum Algorithms for Affine Groups and Hidden Shifts</title>
+    <updated>2005-03-09T19:06:26Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0503095v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0503095v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Many quantum algorithms, including Shor's celebrated factoring and discrete log algorithms, proceed by reduction to a Hidden Subgroup problem, in which an unknown subgroup H of a group G must be determined from a uniform superposition on a left coset of H. These hidden subgroup problems are typically solved by Fourier sampling. When G is nonabelian, two important variants of Fourier sampling have been identified: the weak standard method, where only representation names are measured, and the strong standard method, where full measurement (i.e., the row and column of the representation, in a suitably chosen basis) occurs. It has remained open whether the strong standard method is indeed stronger. In this article, we settle this question in the affirmative. We show that hidden subgroups H of the q-hedral groups, i.e., semidirect products Z_q \ltimes Z_p where q | (p-1), and in particular the affine groups A_p, can be information-theoretically reconstructed using the strong standard method. Moreover, if |H| = p/ \polylog(p), these subgroups can be fully reconstructed with a polynomial amount of quantum and classical computation. We show that, for some q, neither the ``forgetful'' abelian method nor measuring in a random basis succeeds, even information-theoretically. Thus, at least for some groups, it is crucial to use the full power of representation theory: namely, to measure the high-dimensional representations in an adapted basis that respects the group's subgroup structure. We apply our algorithm for the hidden subgroup problem to new families of cryptographically motivated Hidden Shift problems, generalizing work of van Dam, Hallgren and Ip on shifts of multiplicative characters.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-03-09T19:06:26Z</published>
+    <arxiv:comment>Submitted journal version of our SODA 2004 paper; supersedes quant-ph/0211124. This version includes a fair amount of new material, including a section on random vs. adapted bases and a section applying the algorithm for finding hidden conjugate subgroups in A_p to hidden shift problems</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Daniel Rockmore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+    <author>
+      <name>Leonard J. Schulman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16998v2</id>
+    <title>$\mathcal{O}(n)$ alternative to Quantum Fourier Transform with efficient neural net classical post-processing</title>
+    <updated>2026-09-15T06:23:04Z</updated>
+    <link href="https://arxiv.org/abs/2605.16998v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16998v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Quantum Fourier Transform (QFT) is employed by hidden subgroup problem (HSP) algorithms, including Shor's algorithm for factoring. The circuit depth of the QFT remains challenging for near-term hardware. To find shallower alternatives we identify two properties that are exploited by the QFT to enable HSP. Firstly, the shift invariance of the QFT allows for the removal of a random overall shift. Secondly, the QFT retains information about the hidden subgroup generator accessible in the measurement outcomes. We quantify that information via the discrete Fisher information. We construct a family of shallow circuits using Hadamards and controlled-Phase gates, HP-$L$ circuits, that we prove preserve shift invariance. Numerical analysis shows these circuits retain exponentially growing Fisher information. The $\mathcal{O}(n)$ HP-$1$ is employed in place of the $\mathcal{O}(n^2)$ QFT in our numerical implementation of Shor's algorithm. An efficient neural network is used for the corresponding classical post-processing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-16T13:47:11Z</published>
+    <arxiv:comment>Added evidence for efficient scaling of neural-network decoding; strengthened the numerical support through full Shor factoring simulations at larger system sizes; and improved the presentation for clarity and accessibility</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Kaiming Bian</name>
+    </author>
+    <author>
+      <name>Zujin Wen</name>
+    </author>
+    <author>
+      <name>Oscar Dahlsten</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0705.2784v1</id>
+    <title>Quantum algorithms for hidden nonlinear structures</title>
+    <updated>2007-05-21T18:31:12Z</updated>
+    <link href="https://arxiv.org/abs/0705.2784v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0705.2784v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Attempts to find new quantum algorithms that outperform classical computation have focused primarily on the nonabelian hidden subgroup problem, which generalizes the central problem solved by Shor's factoring algorithm. We suggest an alternative generalization, namely to problems of finding hidden nonlinear structures over finite fields. We give examples of two such problems that can be solved efficiently by a quantum computer, but not by a classical computer. We also give some positive results on the quantum query complexity of finding hidden nonlinear structures.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-05-21T18:31:12Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proc. 48th IEEE Symposium on Foundations of Computer Science (FOCS 2007), pp. 395-404</arxiv:journal_ref>
+    <author>
+      <name>Andrew M. Childs</name>
+    </author>
+    <author>
+      <name>Leonard J. Schulman</name>
+    </author>
+    <author>
+      <name>Umesh V. Vazirani</name>
+    </author>
+    <arxiv:doi>10.1109/FOCS.2007.18</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/FOCS.2007.18" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.04047v3</id>
+    <title>An exact quantum hidden subgroup algorithm and applications to solvable groups</title>
+    <updated>2022-05-02T12:21:41Z</updated>
+    <link href="https://arxiv.org/abs/2202.04047v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.04047v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a polynomial time exact quantum algorithm for the hidden subgroup problem in $Z_{m^k}^n$. The algorithm uses the quantum Fourier transform modulo m and does not require factorization of m. For smooth m, i.e., when the prime factors of m are of size poly(log m), the quantum Fourier transform can be exactly computed using the method discovered independently by Cleve and Coppersmith, while for general m, the algorithm of Mosca and Zalka is available. Even for m=3 and k=1 our result appears to be new. We also present applications to compute the structure of abelian and solvable groups whose order has the same (but possibly unknown) prime factors as m. The applications for solvable groups also rely on an exact version of a technique proposed by Watrous for computing the uniform superposition of elements of subgroups.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-08T18:22:35Z</published>
+    <arxiv:comment>Further minor changes and corrections, further new references</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.06430v2</id>
+    <title>A quantum algorithm for greatest common divisor problem</title>
+    <updated>2017-08-01T03:28:10Z</updated>
+    <link href="https://arxiv.org/abs/1707.06430v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.06430v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a quantum algorithm solving the greatest common divisor (GCD) problem. This quantum algorithm possesses similar computational complexity with classical algorithms, such as the well-known Euclidean algorithm for GCD. This algorithm is an application of the quantum algorithms for the hidden subgroup problems, the same as Shor factoring algorithm. Explicit quantum circuits realized by quantum gates for this quantum algorithm are provided. We also give a computer simulation of this quantum algorithm and present the expected outcomes for the corresponding quantum circuit.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-20T09:51:28Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Wen Wang</name>
+    </author>
+    <author>
+      <name>Xu Jiang</name>
+    </author>
+    <author>
+      <name>Liang-zhu Mu</name>
+    </author>
+    <author>
+      <name>Heng Fan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.04343v1</id>
+    <title>Hidden Prime-Factor Subgroups in Molecular and Condensed-Phase Systems</title>
+    <updated>2026-05-05T23:02:52Z</updated>
+    <link href="https://arxiv.org/abs/2605.04343v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.04343v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe a group theoretic analysis of Shor's algorithm and other related hidden subgroup problems in mathematics and relate these to symmetries of molecular and condensed phase assemblies. By recasting Shor's algorithm through the lens of group theory, we expose the possibility that physical systems such as molecular orbitals, condensed phase assemblies and optical beams may be designed such that these contain information pertaining to the solution to hard mathematical problems such as prime-factoring. We discuss real molecular systems, whose orbitals are constructed from symmetry-adapted linear combinations of atomic orbitals, and show that these contain information pertaining to the prime-factors of corresponding integers. Due to the broad significance of prime-factoring towards a variety of encryption problems in cyber-security, we believe this novel and fundamental approach may have broad impact.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-05T23:02:52Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Srinivasan S. Iyengar</name>
+    </author>
+    <author>
+      <name>Amr Sabry</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9903071v1</id>
+    <title>The Hidden Subgroup Problem and Eigenvalue Estimation on a Quantum Computer</title>
+    <updated>1999-03-20T13:55:56Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9903071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9903071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A quantum computer can efficiently find the order of an element in a group, factors of composite integers, discrete logarithms, stabilisers in Abelian groups, and `hidden' or `unknown' subgroups of Abelian groups. It is already known how to phrase the first four problems as the estimation of eigenvalues of certain unitary operators. Here we show how the solution to the more general Abelian `hidden subgroup problem' can also be described and analysed as such. We then point out how certain instances of these problems can be solved with only one control qubit, or `flying qubits', instead of entire registers of control qubits.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-03-20T13:55:56Z</published>
+    <arxiv:comment>16 pages, 3 figures, LaTeX2e, to appear in Proceedings of the 1st NASA International Conference on Quantum Computing and Quantum Communication (Springer-Verlag)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Michele Mosca</name>
+      <arxiv:affiliation>Centre for Quantum Computation, Oxford</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Artur Ekert</name>
+      <arxiv:affiliation>Centre for Quantum Computation, Oxford</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0609220v1</id>
+    <title>Hidden Subhypergroup Problem</title>
+    <updated>2006-09-28T10:41:21Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0609220v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0609220v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Hidden Subgroup Problem is used in many quantum algorithms such as Simon's algorithm and Shor's factoring and discrete log algorithms. A polynomial time solution is known in case of abelian groups, and normal subgroups of arbitrary finite groups. The general case is still open. An efficient solution of the problem for symmetric group $S_n$ would give rise to an efficient quantum algorithm for Graph Isomorphism Problem. We formulate a hidden sub-hypergroup problem for finite hypergroups and solve it for finite commutative hypergroups. The given algorithm is efficient if the corresponding QFT could be calculated efficiently.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-09-28T10:41:21Z</published>
+    <arxiv:comment>part of a technical report to IPM, Tehran</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Massoud Amini</name>
+    </author>
+    <author>
+      <name>Mehrdad Kalantar</name>
+    </author>
+    <author>
+      <name>Mahmood M. Roozbehani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0605243v2</id>
+    <title>Quantum computation from a quantum logical perspective</title>
+    <updated>2006-10-28T22:39:26Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0605243v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0605243v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  It is well-known that Shor's factorization algorithm, Simon's period-finding algorithm, and Deutsch's original XOR algorithm can all be formulated as solutions to a hidden subgroup problem. Here the salient features of the information-processing in the three algorithms are presented from a different perspective, in terms of the way in which the algorithms exploit the non-Boolean quantum logic represented by the projective geometry of Hilbert space. From this quantum logical perspective, the XOR algorithm appears directly as a special case of Simon's algorithm, and all three algorithms can be seen as exploiting the non-Boolean logic represented by the subspace structure of Hilbert space in a similar way. Essentially, a global property of a function (such as a period, or a disjunctive property) is encoded as a subspace in Hilbert space representing a quantum proposition, which can then be efficiently distinguished from alternative propositions, corresponding to alternative global properties, by a measurement (or sequence of measurements) that identifies the target proposition as the proposition represented by the subspace containing the final state produced by the algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-05-29T15:27:07Z</published>
+    <arxiv:comment>17 pages, no figures. The title has been changed, misprints and minor errors have been corrected, and some clarifying remarks have been added</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jeffrey Bub</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0210141v2</id>
+    <title>A Continuous Variable Shor Algorithm</title>
+    <updated>2004-06-08T04:07:13Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0210141v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0210141v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper, we use the methods found in quant-ph/0201095 to create a continuous variable analogue of Shor's quantum factoring algorithm. By this we mean a quantum hidden subgroup algorithm that finds the period P of a function F:R--&gt;R from the reals R to the reals R, where F belongs to a very general class of functions, called the class of admissible functions.
+  One objective in creating this continuous variable quantum algorithm was to make the structure of Shor's factoring algorithm more mathematically transparent, and thereby give some insight into the inner workings of Shor's original algorithm. This continuous quantum algorithm also gives some insight into the inner workings of Hallgren's Pell's equation algorithm. Two key questions remain unanswered. Is this quantum algorithm more efficient than its classical continuous variable counterpart? Is this quantum algorithm or some approximation of it implementable?</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-10-21T05:12:31Z</published>
+    <arxiv:comment>13 pages; a substantial revision to the first version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.4867v1</id>
+    <title>Efficient classical simulations of quantum Fourier transforms and normalizer circuits over Abelian groups</title>
+    <updated>2012-01-23T21:08:46Z</updated>
+    <link href="https://arxiv.org/abs/1201.4867v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.4867v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The quantum Fourier transform (QFT) is sometimes said to be the source of various exponential quantum speed-ups. In this paper we introduce a class of quantum circuits which cannot outperform classical computers even though the QFT constitutes an essential component. More precisely, we consider normalizer circuits. A normalizer circuit over a finite Abelian group is any quantum circuit comprising the QFT over the group, gates which compute automorphisms and gates which realize quadratic functions on the group. We prove that all normalizer circuits have polynomial-time classical simulations. The proof uses algorithms for linear diophantine equation solving and the monomial matrix formalism introduced in our earlier work. We subsequently discuss several aspects of normalizer circuits. First we show that our result generalizes the Gottesman-Knill theorem. Furthermore we highlight connections to Shor's factoring algorithm and to the Abelian hidden subgroup problem in general. Finally we prove that quantum factoring cannot be realized as a normalizer circuit owing to its modular exponentiation subroutine.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-01-23T21:08:46Z</published>
+    <arxiv:comment>23 pages + appendices</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>M. Van den Nest</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0201095v3</id>
+    <title>Quantum Hidden Subgroup Problems: A Mathematical Perspective</title>
+    <updated>2002-06-17T19:24:43Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0201095v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0201095v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The ultimate objective of this paper is to create a stepping stone to the development of new quantum algorithms. The strategy chosen is to begin by focusing on the class of abelian quantum hidden subgroup algorithms, i.e., the class of abelian algorithms of the Shor/Simon genre. Our strategy is to make this class of algorithms as mathematically transparent as possible. By the phrase "mathematically transparent" we mean to expose, to bring to the surface, and to make explicit the concealed mathematical structures that are inherently and fundamentally a part of such algorithms. In so doing, we create symbolic abelian quantum hidden subgroup algorithms that are analogous to the those symbolic algorithms found within such software packages as Axiom, Cayley, Maple, Mathematica, and Magma.
+  As a spin-off of this effort, we create three different generalizations of Shor's quantum factoring algorithm to free abelian groups of finite rank. We refer to these algorithms as wandering (or vintage Z_Q) Shor algorithms. They are essentially quantum algorithms on free abelian groups A of finite rank n which, with each iteration, first select a random cyclic direct summand Z of the group A and then apply one iteration of the standard Shor algorithm to produce a random character of the "approximating" finite group A=Z_Q, called the group probe. These characters are then in turn used to find either the order P of a maximal cyclic subgroup Z_P of the hidden quotient group H_phi, or the entire hidden quotient group H_phi. An integral part of these wandering quantum algorithms is the selection of a very special random transversal, which we refer to as a Shor transversal. The algorithmic time complexity of the first of these wandering Shor algorithms is found to be O(n^2(lgQ)^3(lglgQ)^(n+1)).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-01-22T06:20:07Z</published>
+    <arxiv:comment>63 pages, 4 figures, Table of Contents is included in paper. Typos corrected. Flowcharts of algorithms added. To appear in AMS Contemporary Math</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.00075v2</id>
+    <title>Highly-efficient quantum Fourier transformations for some nonabelian groups</title>
+    <updated>2024-08-05T21:15:36Z</updated>
+    <link href="https://arxiv.org/abs/2408.00075v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.00075v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum Fourier transformations are an essential component of many quantum algorithms, from prime factoring to quantum simulation. While the standard abelian QFT is well-studied, important variants corresponding to \emph{nonabelian} groups of interest have seen less development. In particular, fast nonabelian Fourier transformations are important components for both quantum simulations of field theories as well as approaches to the nonabelian hidden subgroup problem. In this work, we present fast quantum Fourier transformations for a number of nonabelian groups of interest for high energy physics, $\mathbb{BT}$, $\mathbb{BO}$, $Δ(27)$, $Δ(54)$, and $Σ(36\times3)$. For each group, we derive explicit quantum circuits and estimate resource scaling for fault-tolerant implementations. Our work shows that the development of a fast Fourier transformation can substantively reduce simulation costs by up to three orders of magnitude for the finite groups that we have investigated.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-31T18:00:04Z</published>
+    <arxiv:comment>14 pages, 12 figures, 8 tables; minor typographical corrections</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Edison M. Murairi</name>
+    </author>
+    <author>
+      <name>M. Sohaib Alam</name>
+    </author>
+    <author>
+      <name>Henry Lamm</name>
+    </author>
+    <author>
+      <name>Stuart Hadfield</name>
+    </author>
+    <author>
+      <name>Erik Gustafson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0607046v1</id>
+    <title>Quantum Hidden Subgroup Algorithms: An Algorithmic Toolkit</title>
+    <updated>2006-07-06T18:50:51Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0607046v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0607046v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  One of the most promising and versatile approaches to creating new quantum algorithms is based on the quantum hidden subgroup (QHS) paradigm, originally suggested by Alexei Kitaev. This class of quantum algorithms encompasses the Deutsch-Jozsa, Simon, Shor algorithms, and many more.
+  In this paper, our strategy for finding new quantum algorithms is to decompose Shor's quantum factoring algorithm into its basic primitives, then to generalize these primitives, and finally to show how to reassemble them into new QHS algorithms. Taking an "alphabetic building blocks approach," we use these primitives to form an "algorithmic toolkit" for the creation of new quantum algorithms, such as wandering Shor algorithms, continuous Shor algorithms, the quantum circle algorithm, the dual Shor algorithm, a QHS algorithm for Feynman integrals, free QHS algorithms, and more.
+  Toward the end of this paper, we show how Grover's algorithm is most surprisingly "almost" a QHS algorithm, and how this result suggests the possibility of an even more complete "algorithmic tookit" beyond the QHS algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-07-06T18:50:51Z</published>
+    <arxiv:comment>34 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19494v1</id>
+    <title>Probabilistic Bounds on the Number of Elements to Generate Finite Nilpotent Groups and Their Applications</title>
+    <updated>2025-11-23T12:30:46Z</updated>
+    <link href="https://arxiv.org/abs/2511.19494v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19494v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work establishes a new probabilistic bound on the number of elements to generate finite nilpotent groups. Let $\varphi_k(G)$ denote the probability that $k$ random elements generate a finite nilpotent group $G$. For any $0 &lt; ε&lt; 1$, we prove that $\varphi_k(G) \ge 1 - ε$ if $k \ge \operatorname{rank}(G) + \lceil \log_2(2/ε) \rceil$ (a bound based on the group rank) or if $k \ge \operatorname{len}(G) + \lceil \log_2(1/ε) \rceil$ (a bound based on the group chain length). Moreover, these bounds are shown to be nearly tight. Both bounds sharpen the previously known requirement of $k \ge \lceil \log_2 |G| + \log_2(1/ε) \rceil + 2$. Our results provide a foundational tool for analyzing probabilistic algorithms, enabling a better estimation of the iteration count for the finite Abelian hidden subgroup problem (AHSP) standard quantum algorithm and a reduction in the circuit repetitions required by Regev's factoring algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-23T12:30:46Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ziyuan Dong</name>
+    </author>
+    <author>
+      <name>Xiang Fan</name>
+    </author>
+    <author>
+      <name>Tengxun Zhong</name>
+    </author>
+    <author>
+      <name>Daowen Qiu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.4382v1</id>
+    <title>Quantum Fourier sampling, Code Equivalence, and the quantum security of the McEliece and Sidelnikov cryptosystems</title>
+    <updated>2011-11-18T14:56:53Z</updated>
+    <link href="https://arxiv.org/abs/1111.4382v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.4382v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Code Equivalence problem is that of determining whether two given linear codes are equivalent to each other up to a permutation of the coordinates. This problem has a direct reduction to a nonabelian hidden subgroup problem (HSP), suggesting a possible quantum algorithm analogous to Shor's algorithms for factoring or discrete log. However, we recently showed that in many cases of interest---including Goppa codes---solving this case of the HSP requires rich, entangled measurements. Thus, solving these cases of Code Equivalence via Fourier sampling appears to be out of reach of current families of quantum algorithms.
+  Code equivalence is directly related to the security of McEliece-type cryptosystems in the case where the private code is known to the adversary. However, for many codes the support splitting algorithm of Sendrier provides a classical attack in this case. We revisit the claims of our previous article in the light of these classical attacks, and discuss the particular case of the Sidelnikov cryptosystem, which is based on Reed-Muller codes.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-18T14:56:53Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Hang Dinh</name>
+    </author>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0811.3208v2</id>
+    <title>Quantum algorithms for highly non-linear Boolean functions</title>
+    <updated>2009-11-24T21:13:50Z</updated>
+    <link href="https://arxiv.org/abs/0811.3208v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0811.3208v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Attempts to separate the power of classical and quantum models of computation have a long history. The ultimate goal is to find exponential separations for computational problems. However, such separations do not come a dime a dozen: while there were some early successes in the form of hidden subgroup problems for abelian groups--which generalize Shor's factoring algorithm perhaps most faithfully--only for a handful of non-abelian groups efficient quantum algorithms were found. Recently, problems have gotten increased attention that seek to identify hidden sub-structures of other combinatorial and algebraic objects besides groups. In this paper we provide new examples for exponential separations by considering hidden shift problems that are defined for several classes of highly non-linear Boolean functions. These so-called bent functions arise in cryptography, where their property of having perfectly flat Fourier spectra on the Boolean hypercube gives them resilience against certain types of attack. We present new quantum algorithms that solve the hidden shift problems for several well-known classes of bent functions in polynomial time and with a constant number of queries, while the classical query complexity is shown to be exponential. Our approach uses a technique that exploits the duality between bent functions and their Fourier transforms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-11-19T21:13:00Z</published>
+    <arxiv:comment>15 pages, 1 figure, to appear in Proceedings of the 21st Annual ACM-SIAM Symposium on Discrete Algorithms (SODA'10). This updated version of the paper contains a new exponential separation between classical and quantum query complexity</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proceedings of the 21st Annual ACM-SIAM Symposium on Discrete Algorithms (SODA'10), pp. 448-457, 2010</arxiv:journal_ref>
+    <author>
+      <name>Martin Roetteler</name>
+    </author>
+  </entry>
+</feed>

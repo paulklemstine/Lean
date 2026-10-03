@@ -1,0 +1,742 @@
+    Size Optimization of Sextic Polynomials in the Number Field
+                                Sieve
+                                          Shi Bai, Paul Zimmermann
+
+
+
+      To cite this version:
+     Shi Bai, Paul Zimmermann. Size Optimization of Sextic Polynomials in the Number Field Sieve. 2012. ⟨hal-
+     00760331⟩
+
+
+
+
+                                        HAL Id: hal-00760331
+                          https://inria.hal.science/hal-00760331v1
+                                       Preprint submitted on 3 Dec 2012
+
+
+
+
+    HAL is a multi-disciplinary open access archive             L’archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-        tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.       tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research          des établissements d’enseignement et de recherche
+institutions in France or abroad, or from public or pri-   français ou étrangers, des laboratoires publics ou
+vate research centers.                                     privés.
+
+
+                                              HAL Authorization
+   SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE
+                 NUMBER FIELD SIEVE
+
+
+                           SHI BAI AND PAUL ZIMMERMANN
+
+
+        Abstract. The general number field sieve (GNFS) is the most efficient al-
+        gorithm known for factoring large integers. It consists of several stages, the
+        first one being polynomial selection. The quality of the chosen polynomials in
+        polynomial selection can be modelled in terms of size and root properties. In
+        this paper, we describe some methods to optimize the size property of sextic
+        polynomials.
+
+
+
+
+                             1. Introduction to GNFS
+   The general number field sieve [10] is the most efficient algorithm known for
+factoring large integers. It has been used in many (current and previous) record
+factorizations such as RSA-768 [17]. GNFS consists of several stages including
+polynomial selection, sieving, filtering, linear algebra and finding square roots.
+   Let n be the integer to be factored. In polynomial selection, we want to choose
+two irreducible and coprime polynomials f (x) and g(x) over Z which share a com-
+mon root m modulo n. In practice, the homogenized polynomials F (x, y) and
+G(x, y) are often used. We want to find many coprime pairs (a, b) ∈ Z2 such that
+the polynomials values F (a, b) and G(a, b) are simultaneously smooth. An integer
+is smooth with respect to bound B (or B-smooth) if none of its prime factors are
+larger than B. The line sieving and lattice sieving [16] are commonly used to iden-
+tify such pairs (a, b). The running-time of sieving depends on the quality of the
+chosen polynomials in polynomial selection, hence many polynomial pairs will be
+generated and optimized in order to produce a good one.
+   This paper discusses algorithms for size optimization in polynomial selection in
+the number field sieve. We focus on polynomial selection with two polynomials, one
+of which is a linear polynomial and the other is a polynomial of degree six. Such
+polynomials are of great practical interest since they have been used in current and
+previous record factorizations such as RSA-768 [17] and may be used for future
+records.
+
+                              2. Polynomial selection
+   For large integers, most methods for polynomial selection [3, 8, 9, 11, 12] in GNFS
+use a linear polynomial for g(x) and a quintic or sextic polynomial for f (x). The
+standard method to generate such polynomial pairs is to expand n in base-(m1 , m2 )
+         Pd                                                             Pd
+so n = i=0 ci mi1 m2d−i . The polynomial pair is given by f (x) = i=0 ci xi and
+g(x) = m2 x − m1 .
+
+  2010 Mathematics Subject Classification. Primary 11Y05, 11Y16.
+                                              1
+2                           SHI BAI AND PAUL ZIMMERMANN
+
+
+   The running-time of sieving depends on the smoothness of the polynomial values
+|F (a, b)| and |G(a, b)|. Let Ψ(x, x1/u ) be the number of x1/u -smooth integers below
+x for some u > 0. The Dickman-de Bruijn function ρ(u) [6] is often used to estimate
+the density of smooth numbers Ψ(x, x1/u ). It can be shown that
+
+                                Ψ(x, x1/u )
+                                  lim        = ρ(u).
+                           x→∞        x
+The Dickman-de Bruijn function satisfies the differential equation
+                 uρ′ (u) + ρ(u − 1) = 0,   ρ(u) = 1 for 0 ≤ u ≤ 1.
+It may be shown that ρ satisfies the asymptotic estimate
+                       log(ρ(u)) = −(1 + o(1))u log u as u → ∞.
+For practical purposes, the frequency of smooth numbers can be approximated by
+the Canfield-Erdős-Pomerance theorem, which can be stated as follows (Corollary
+1.3 from [7]).
+Theorem 2.1. For any fixed ǫ > 0, we have
+                              Ψ(x, x1/u ) = xu−u(1+o(1))
+as x1/u and u tend to infinity, uniformly in the region x ≥ uu/(1−ǫ) .
+   We want to choose the polynomials in a way such that it can produce many
+smooth polynomial values across the sieve region. This heuristically requires that
+the size of polynomial values is small in general. In addition, one can choose
+an algebraic polynomial f (x) which has many roots modulo small prime powers.
+Then the polynomial values are likely to be divisible by small prime powers. This
+may increase the smoothness chance for polynomial values. We describe some
+methods [8, 12] to estimate and compare the quality of polynomials.
+2.1. Quality of polynomials. The quality of the chosen polynomials in polyno-
+mial selection can be modelled in terms of size and root properties [12].
+2.1.1. Size property. Let (a, b) be pairs of relatively prime integers in the sieving
+region Ω. For the moment, we assume that a rectangle sieving region is used where
+|a| ≤ U and 0 < b ≤ U . We also assume that polynomial values |F (a, b)| and
+|G(a, b)| behave like random integers of similar size. The number of sieving reports
+(coprime pairs that lead to smooth polynomial values) can be approximated by
+                      ZZ                                  
+                   6         log|F (x, y)|      log|G(x, y)|
+                          ρ                 ρ                  dx dy.
+                   π2            log B             log B
+                       Ω
+                   2
+The multiplier 6/π accounts for the probability of a, b being relatively prime.
+   Since G is a linear polynomial, we may assume that log(|G(a, b)|) does not vary
+much across the sieving region. A simplified approximation to compare polynomials
+(ignoring the constant multiplier) is
+                            ZZ                   
+                                    log|F (x, y)|
+(2.1)                           ρ                   dx dy.
+                                       log B
+                              Ω
+
+  The base-(m1 , m2 ) expansion [8, 9] can yield polynomials whose coefficients are
+O(n1/(d+1) ). The leading coefficients cd and cd−1 are usually much smaller than
+     SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE                        3
+
+
+n1/(d+1) . The coefficient cd−2 is slightly smaller than n1/(d+1) . For such polyno-
+mials, it is often better to use a skewed sieving region where the sieving bounds
+for a, b have ratio s, while
+                          √ keeping the area √   of the sieving region 2U 2 . The sieving
+bounds become |a| ≤ U s and 0 < b ≤ U/ s. Each monomial in the polynomial
+F (a, b) is bounded by |ci |U d si−d/2 .
+   In the integral (2.1), computing ρ is time-consuming, especially if there are many
+candidates. We can use some coarser approximations.
+   Since ρ(u) is a decreasing function of u, we want to choose a polynomial pair
+such that the size of |F (a, b)| (and |G(a, b)|) is small on average over all (a, b). This
+roughly requires that the coefficients of the polynomials are small in absolute value.
+   We can compare polynomials by the logarithmic average of polynomial values
+across the sieving region.
+                                                         
+                                     ZZ
+                               log      |F (x, y)| dx dy  .
+                                       Ω
+
+   For computational convenience, one can use the logarithmic L2 norm for poly-
+nomial F (x, y) by
+                                                     
+                          1
+                                 ZZ
+(2.2)                       log     F 2 (x, y) dx dy  .
+                          2
+                                        Ω
+
+   The logarithmic L2 -norm is influenced by the skewness and the location of real
+roots. The integral in (2.2) can be expressed as a polynomial in the coefficients of
+F (x, y).
+   One can also change the range and shape of the integral region (the domain Ω),
+while keeping the skewness. We consider a modified logarithmic L2 -norm defined
+by
+                                  Z 1Z 1                
+                       1        −d          2
+(2.3)                    log s            F (xs, y) dx dy .
+                       2            −1 −1
+where s is the skewness of sieving region.
+   The logarithmic L2 -norm given in Equation (2.3) is defined on a square domain.
+One can also use a variant with elliptic domain. We change to polar coordinates
+where x = r cos θ and y = r sin θ.
+                           Z 2π Z 1                                 
+                 1
+(2.4)              log s−d           F 2 (s cos θ, sin θ) r2d+1 dr dθ .
+                 2           0     0
+
+The logarithmic L2 -norm in Equation (2.3) is not exactly the same as the logarith-
+mic L2 -norm in Equation (2.4), because the integrals are over different domains
+(ellipse and rectangle). They are both (but slightly different) approximations to
+the size of polynomials.
+   For sextic polynomial, the logarithmic L2 -norm in Equation (2.4) can be ex-
+pressed as
+          1      π
+            log           231 c̃20 + 42 c̃0 c̃2 + 14 c̃0 c̃4 + 10 c̃0 c̃6 + 21 c̃21 + 14 c̃1 c̃3
+          2      7168
+(2.5)            + 10 c̃1 c̃5 + 7 c̃22 + 10 c̃2 c̃4 + 14 c̃2 c̃6 + 5 c̃23 + 14 c̃3 c̃5
+                                                             
+                 + 7 c̃24 + 42 c̃4 c̃6 + 21 c̃25 + 231 c̃26
+4                          SHI BAI AND PAUL ZIMMERMANN
+
+
+where c˜i = ci si−d/2 .
+   For a given norm defined in Equations (2.3) or (2.4), one should not only be
+able to estimate accurately that norm for a given skewness, but find the optimal
+skewness that gives the minimal norm.
+
+2.1.2. Root property. If a polynomial f (x) has many roots modulo small prime
+powers, the polynomial values may behave more smooth than random integers of
+about the same size. Boender, Brent, Montgomery and Murphy [2, 11, 12, 13]
+described some quantitative measures of this effect (root property).
+   Let p be a prime and x ≥ 0 be an integer. We denote contp (x) the exponent of
+the largest power of p dividing x and contp (0) = ∞. Let S be a set of uniformly
+distributed random integers. We denote contp (S) the average p-valuation over
+elements of S.
+   For a fixed prime p, the expected p-valuation contp (S) is
+                                               
+                        1    1          1     1               1
+                   1·     − 2 +2·         2
+                                            −   3
+                                                    + ··· =     .
+                        p p             p     p             p−1
+   In the number field sieve, we want to know the expected p-valuation of homoge-
+neous polynomial values. Let F (x, y) be an algebraic polynomial and f (x) be its
+dehomogenized polynomial. We discuss the roots of F (x, y). Let pk | F (a, b) for
+some coprime integers a, b and some integer k. Then there are two cases: either p ∤ b
+and f (a/b) ≡ 0 (mod pk ) or p | b and h(b/a) ≡ 0 (mod pk ) where h(x) = xd f (1/x).
+   In the first case, pairs (a, b) can be identified by (a/b (mod pk ), 1). They are
+referred to as the affine roots. F (x, y) (mod pk ) can have pk possible affine roots,
+each of which relates to pk − pk−1 equivalent (a, b) pairs.
+   For the second case, pairs (a, b) can be identified by 1, b/a (mod pk ) . We call
+                                                                           
+
+them the projective roots. There are at most pk−1 projective roots. Each relates
+to pk − pk−1 equivalent (a, b) pairs.
+   Let np,k be the number of affine and projective roots (counting without mul-
+tiplicities) of F (mod pk ) for k ≥ 1. The expected p-valuation of homogeneous
+polynomial values is
+                                                ∞
+                                            1 X np,k
+(2.6)                       contp (F ) =             .
+                                           p+1  pk−1
+                                               k=1
+
+   Murphy [12] defines the α(F ) function to compare the cumulative expected p-
+valuation of polynomial values to random integers of similar size. α(F ) can be
+considered as the logarithmic benefit compared to using random integers.
+                              X 1                   
+                      α(F ) =            − contp (F ) log p.
+                                    p−1
+                               p≤B
+
+    In the number field sieve, we want α(F ) negative and large in absolute value.
+
+2.1.3. Combined score function. The logarithmic L2 -norm in Equation (2.3) can be
+modified to take the root property into account. Since the α(F ) function affects
+the polynomial size on logarithmic scale, the combined function can be defined by
+adding α(F ) to the logarithmic L2 -norm. We refer to it as the combined score
+function. The combined score is only a rough estimate to compare polynomials. In
+practice, it is only trustful when the differences between polynomials are large.
+     SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE                   5
+
+
+2.2. Optimizing the quality of polynomials. Polynomial selection can be di-
+vided into three steps: polynomial generation, size optimization and root optimiza-
+tion.
+   In polynomial generation, we generate many raw polynomials whose size is ad-
+missible. We further reduce the size of the raw polynomials in size optimization.
+Many polynomials can have comparable size after size optimization. We produce
+and choose the best polynomials in terms of root properties in root optimization.
+   Translation and rotation are useful to optimize the size and root properties. Let
+          Pd
+f (x) = i=0 ci xi and g(x) = m2 x − m1 where m1 /m2 (mod n) is the common
+root.
+   Translation of f (x) by k gives a new polynomial fk (x) defined by fk (x) = f (x +
+k). The linear polynomial gk (x) is m2 x − m1 + km2 . The common root becomes
+m1 /m2 − k (mod n). Translation does not alter the root properties.
+   Rotation by a polynomial λ(x) gives a new polynomial fλ(x) (x) defined by
+fλ(x) (x) = f (x) + λ(x) g(x). The linear polynomial is unchanged gλ(x) (x) = g(x) =
+m2 x − m1 . The root is unchanged. λ(x) is often a linear or quadratic polynomial,
+depending on n and on the skewness of f (x). Rotation can affect both size and
+root properties.
+
+                                3. Size optimization
+    Polynomial generation (e.g. using Kleinjung’s methods [8, 9]) gives many raw
+polynomials with small leading coefficients. The raw polynomials have very small
+|cd |, |cd−1 | and small |cd−2 |. The coefficients |cd−3 |, · · · , |c0 | are comparable to
+(n/cd )1/d .
+    For quintic polynomials, coefficients |c5 |, |c4 | and |c3 | are small.√ The next non-
+controlled coefficient is c2 . Let the sieving bounds be |a| ≤ U s and 0 < b ≤
+    √
+U/ s. The polynomial values are bounded below by |c2 |s−1/2 U 5 . As s ≥ 1, the
+contribution of c2 on the polynomial value is already reduced by a factor of s−1/2 .
+    For sextic polynomials, the polynomial values are bounded below by terms
+|c3 |U 6 . As c3 is not controlled in the polynomial generation step, we do not get
+a reduction in size like the s−1/2 factor for quintic polynomials. Therefore, it is
+important to size-optimize them before trying to optimize the root properties.
+    In this paper, we focus on the size optimization of raw, sextic polynomials. In size
+optimization, we want to produce polynomials with smaller logarithmic L2 -norm
+(e.g. Equation (2.4)) by changing the skewness, translating and rotating.
+
+3.1. Local descent method. Let f (x) be a sextic polynomial. We can use qua-
+dratic rotations since c3 , · · · , c0 have order (n/cd )1/d . A quadratic rotation is de-
+fined by
+(3.1)                  fu,v,w (x) = f (x) + (ux2 + vx + w) g(x)
+for some integers u, v, w.
+    Murphy [12] used the classic multivariable optimization technique to optimize
+the L2 -norm. For sextic polynomials, there are five variables u, v, w, k, s, where k
+is the translation amount and s is the skewness. u, v, w, k are integers and s is real.
+    The allowed range of these parameters is huge. The standard iterative methods,
+such as the gradient descent, are slow and tend to get stuck in local minima. For
+efficiency, we use a local descent method to optimize the size.
+6                          SHI BAI AND PAUL ZIMMERMANN
+
+
+   In each iteration, we attempt some translations k and rotations u, v, w, and
+descend into the local minimum in the direction determined by some k, u, v, w.
+During the procedure, we need to re-optimize the skewness of the polynomial. We
+describe the method in Algorithm 1.
+
+    Algorithm 1: Local descent method
+                                         Pd
+     Input : polynomial pair f (x) = i=0 ci xi and g(x) = m2 x − m1 ;
+     Output: polynomial pair f ′ , g ′ of smaller L2 -norm;
+ 1 k = u = v = w = 1;
+ 2 while local minimum is found or loop limit is reached do
+ 3    f ′ (x) = f (x ± k), g ′ (x) = g(x) ± km2 ;
+ 4    if either L2 (f ′ ) < L2 (f ) then
+ 5         f = f ′ , g = g ′ , k = 2k;
+ 6    else
+ 7         k = ⌈k/2⌉;
+ 8    f ′ (x) = f (x) ± u x2 g(x);
+ 9    if either L2 (f ′ ) < L2 (f ) then
+10         f = f ′ , u = 2u;
+11    else
+12         u = ⌈u/2⌉;
+13    Search similarly (e.g. lines 8-12) for linear and constant rotations;
+14 return f (x), g(x);
+
+
+   The method seems to work for quintic polynomials, when the searching space is
+not too huge. However, it performs badly in practice for sextic polynomials. Many
+iterations get stuck at local minima without giving much reduction in size. We
+demonstrate this situation below.
+   We examine a data set consisting of 105 raw sextic polynomials for RSA-768.
+The polynomials are generated by Kleinjung’s 2008 algorithm [9]. Figure 1 shows
+the discrete density distribution of logarithmic L2 -norm for the raw and optimized
+(by the local descent) polynomials.
+   In Figure 1, the raw polynomials have average logarithmic L2 -norm 80.75 and
+standard deviation 1.00. The optimized polynomials have average logarithmic L2 -
+norm 79.06 and standard deviation 3.55. It can be seen that only a few polynomials
+are optimized well by the local descent procedure. Many of them seem to descend
+to a local minimum rapidly and then get stuck. We discuss below some better
+methods to optimize such polynomials.
+   To overcome local minima, we could use some global optimization methods such
+as simulated annealing. However, they do not seem to work efficiently in our ex-
+periments, due to the huge search space and large coefficients.
+   Instead, we first translate the algebraic polynomial to increase the skewness.
+Heuristically, it moves away from the starting point and decreases the chance to
+get stuck in a local minimum. If the skewness of the polynomial is larger than the
+translation amount k, the translation does not affect the norm significantly. This
+can be seen from the coefficients of f (x + k). A local optimization method such as
+descent can then be applied. One question is how to decide the translation amount.
+We describe some methods in Subsection 3.2.
+     SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE                      7
+
+
+                    0.8
+                                    Raw
+                               Optimized
+                    0.7
+
+                    0.6
+
+                    0.5
+          Density
+
+
+
+
+                    0.4
+
+                    0.3
+
+                    0.2
+
+                    0.1
+
+                     0
+                          68      70       72       74      76        78     80   82
+                                                Logarithmic L2 norm
+
+
+                               Figure 1. Local descent optimization
+
+
+3.2. A better method. We want to produce a polynomial with small L2 -norm
+by translation and rotation.
+    In the raw polynomial, c0 , c1 , c2 , c3 have similar size and are much larger than
+c4 , c5 , c6 . In Equation (2.5), the c̃0 , c̃1 , c̃2 are bounded by c̃3 . Therefore, the L2 -
+norm can be controlled by terms involving c̃3 , c̃4 , c̃6 . A lower bound, not depending
+on skewness, is dominated by the term c̃23 = c23 . We demonstrate this situation
+for a raw polynomial A768 in Appendix A. It is a raw polynomial generated by
+Kleinjung’s 2008 algorithm [9] that could be used for RSA-768.
+    Let s = 3916800 be the optimal skewness for the raw polynomial. We consider
+the relative weight of each term in Equation (2.5). The largest term is 5c̃23 ≈
+2.58 × 1066 , whereas the second largest term is 10 c̃2 c̃4 ≈ 1.23 × 1061 . Hence, a
+small c3 is a necessary condition for a small L2 -norm. The idea is to minimize c3
+by translation.
+    Translation by k gives a polynomial in x whose coefficients are functions of k:
+
+                           f (x + k) = c6 x6
+                                       + (6c6 k + c5 )x5
+                                       + (15c6 k 2 + 5c5 k + c4 )x4
+                                       + (20c6 k 3 + 10c5 k 2 + 4c4 k + c3 )x3
+                                       + ···
+
+Let ci (k) be the coefficients of the i-th term in the translated polynomial. c3 (k) of
+f (x + k) is a cubic polynomial in k. The coefficients c0 (k), c1 (k), c2 (k) will increase
+due to translation. We can use rotation to reduce them, if needed.
+
+3.2.1. Minimizing c3 (k). The cubic polynomial c3 (k) has either one or three real
+roots. For each real root r, we choose K to be either ⌈r⌉ or ⌊r⌋, whichever minimizes
+8                          SHI BAI AND PAUL ZIMMERMANN
+
+
+|c3 (k)|. We translate f (x) by K. The optimization is expected to work for all sextic
+polynomials since there exists at least one real root for a cubic polynomial.
+    In the cubic polynomial c3 (k), the constant term c3 is O(m1 ) (see Lemma 2.1
+of [8]). The real root r is about O((m1 /c6 )1/3 ). Hence c5 (K) is bounded by
+      1/3 2/3                                        2/3 1/3
+O(m1 c6 + c5 ) and c4 (K) is bounded by O(m1 c6 + c4 ). Empirically, c4 is
+comparable to c4 (K) for the raw polynomials found by algorithms [8, 9]. On the
+other hand, m1 ≫ |c6 | and |c6 | ≈ |c5 | and hence the coefficient c5 (K) can increase
+significantly.
+    After translation, c3 (k) is minimized and often smaller than the original c3 . Let
+δ = K − r and hence |δ| < 1. It follows that
+            |c3 (K)| = |20c6 K 3 + 10c5 K 2 + 4c4 K + c3 |
+                    = |20c6 (δ 3 + 3r2 δ + 3rδ 2 ) + 10c5 (2rδ + δ 2 ) + 4c4 δ|
+(3.2)               ≤ 20 |c6 | (1 + 3r2 + 3 |r|) + 10 |c5 | (2 |r| + 1) + 4 |c4 |
+Given r ∼ O((m1 /c6 )1/3 ) where m1 ≫ |c6 | and |c5 | ≈ |c6 |, equation (3.2) above
+                 2/3 1/3
+has order O(m1 c6 + c4 ). |c3 (K)| is likely to be smaller than |c3 | ∼ O(m1 ) since
+                                                                       2/3 1/3
+c4 < c3 in the raw polynomial. Assume further that |c4 | ∼ O(m1 c6 ), which
+appears to be practical (see Kleinjung’s 2008 method [9]). After translation, |c3 |
+can be reduced by a factor of (m1 /c6 )1/3 .
+    Once K is fixed in minimizing c3 (k), we can further optimize the polynomial
+locally by the local descent method.
+                                                                      1/3 2/3
+    In the translated polynomial fK (x), the coefficients c5 (K) ∼ O(m1 c6 ), c4 (K) ∼
+      2/3 1/3                2/3 1/3                  4/3   1/3               5/3 2/3
+O(m1 c6 ), c3 (K) ∼ O(m1 c6 ), c2 (K) ∼ O(m1 / c6 ), c1 (K) ∼ O(m1 / c6 ),
+                2
+c0 (K) ∼ O(m1 /c6 ). The coefficients c2 (K), c1 (K), c0 (K) are increased during the
+translation. We can reduce them using rotation in the local optimization. As an
+example, we apply a quadratic rotation on fK (x) to reduce c0 (K), c1 (K), c2 (K) to
+O(m1 ). The quadratic polynomial ux2 + vx + w used in the rotation has parame-
+ters w ∼ O(m1 /c6 ), v ∼ O((m1 /c6 )2/3 ) and u ∼ O((m1 /c6 )1/3 ) (using m2 ≪ m1 ).
+Let the rotated polynomial be f˜K (x) whose coefficients are c̃i (K) for 0 ≤ i ≤ 6.
+                                 2/3 1/3                             2/3 1/3
+The coefficient c̃3 (K) ∼ O(m1 c6 + m2 (m1 /c6 )1/3 ) ∼ O(m1 c6 ). Hence
+c0 (K), c1 (K), c2 (K) are reduced to O(m1 ) without increasing too much c3 (K).
+Compared f˜K (x) to the raw polynomial, c̃5 (K) is increased, while c̃3 (K) is of-
+ten smaller. If the gain from a smaller c̃3 (K) exceeds the deterioration from a
+larger c̃5 (K), the L2 -norm can be reduced. In practice, the local descent method
+(Algorithm 1) can be applied, instead of a single rotation.
+3.2.2. Example and statistics. We give an example for the polynomial A768 in Ap-
+pendix A. It has logarithmic L2 -norm 72.59. The coefficient of x3 in f (x + k)
+is
+           71727600k 3 + 190647000k 2 + 1129504938822234180339372k+
+           718693701130240225274612814188142.
+The cubic polynomial has a real root near k = −191352410. We translate f (x)
+by k and then apply the local descent method to the translated polynomial. The
+resulting optimized polynomial B768 in Appendix A has logarithmic L2 -norm 67.60.
+   The method works better on average than the local descent method used alone.
+We consider the same data set of 105 polynomials used in Figure 1. Figure 2 shows
+    SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE               9
+
+
+the discrete density distribution of logarithmic L2 -norm for the raw and optimized
+polynomials. The improved method can reduce the average logarithmic L2 -norm to
+70.34 with a standard deviation 0.60. We gain almost 9 on the average logarithmic
+L2 -norm with respect to the local descent method used alone.
+
+                     0.9
+                                     Raw
+                     0.8        Optimized
+
+                     0.7
+
+                     0.6
+          Density
+
+
+
+
+                     0.5
+
+                     0.4
+
+                     0.3
+
+                     0.2
+
+                     0.1
+
+                      0
+                           64    66    68   70   72    74    76   78   80   82
+                                                        2
+                                            Logarithmic L norm
+
+
+                    Figure 2. Optimizing c3 (k) before the local descent
+
+
+3.2.3. Further improvement. Thorsten Kleinjung (personal communication) describes
+a method which helps further reduce the norm. Before translation, we attempt sev-
+eral cubic rotations by f (x) + δx3 g(x) for small δ’s on the raw polynomial f (x).
+This gives some variation during the optimization. For each rotated polynomial,
+we repeat the optimization procedure and record the minimum norm found.
+    The variation gives some benefits in practice. We consider the same data set
+of 105 polynomials used in Figure 1. In experiments, we rotate polynomials by
+|δ| ≤ 256 and optimize the size using the above method. Figure 3 shows the discrete
+density distribution of logarithmic L2 -norm for the raw and optimized polynomials.
+This method can further reduce the average logarithmic L2 -norm to 69.84 with a
+standard deviation 0.56. We gain another 0.5 on the average logarithmic L2 -norm
+compared to the above method.
+
+3.3. Trade-off between size and root. The raw polynomial often has a small c5 ,
+which permits a larger rotation bound in root optimization. The size optimization
+procedure leads to a much larger c5 due to translation. This may lead to a smaller
+rotation space. We could have optimized the root property (of the raw polynomial)
+first and then optimized the size by translating and changing the skewness. If the
+root property is outstanding, we might expect that it can better than the size-root
+(in order) optimization. However, we give a heuristic argument that this is difficult
+in practice.
+    Let fu,v,w (x) be the rotated polynomial in Equation (3.1). If c3 ∼ O(m1 ) and
+c0 ∼ c3 s3 , c1 ∼ c3 s2 , c2 ∼ c3 s, we have an upper bound O(s6 ) for the rotation
+10                               SHI BAI AND PAUL ZIMMERMANN
+
+
+                    0.9
+                                    Raw
+                    0.8        Optimized
+
+                    0.7
+
+                    0.6
+          Density
+
+
+
+
+                    0.5
+
+                    0.4
+
+                    0.3
+
+                    0.2
+
+                    0.1
+
+                     0
+                          64    66    68   70   72      74    76     78   80   82
+                                           Logarithmic L2 norm
+
+
+      Figure 3. Optimizing c3 (k) before the local descent: a better variant
+
+
+space. We want to estimate the expected minimum α(F ) after K polynomials are
+chosen where K is about s6 .
+
+3.3.1. Expected minimum α(F ). Emmanuel Thomé described a method (personal
+communication) to estimate the expected minimum of α(F ) using order statistics.
+We assume that the α(F ) values of random polynomials follow a standard Gaussian
+(normal) distribution N (µ, σ 2 ) (see Figure 4).
+   Let Φ(x) be the cumulative density function for the standard N (0, 1) normal
+distribution φ(x) where
+                                                                
+                         1         2              1            x
+                φ(x) = √ e−x /2 , Φ(x) =              1 + erf √      .
+                         2π                       2             2
+In Φ(x) , erf(x) is the error function [5] defined by
+                                             Z x
+                                          2         2
+                               erf(x) = √        e−t dt.
+                                           π 0
+The probability distribution for the minimum order statistic is given by
+                                                        K−1
+                                pK (x) = K (1 − Φ(x))         φ(x)
+where K is the cardinality of the sample set. We use an asymptotic approxi-
+mation [4] for the expected value of the minimum order statistic of the normal
+distribution.
+                                                         
+                           p           log(log K) + 1.377
+(3.3)               µ−σ      2 log K −       √              .
+                                           2 2 log K
+  In practice, we need to estimate the parameters µ, σ of the actual distribution.
+We examine a data set of 107 polynomials for RSA-768. The polynomials are
+generated by CADO-NFS [1] and Msieve [14, 15]. The data has mean µ = −0.257
+and standard deviation σ = 0.824. Here the average α(F ) is negative since the
+    SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE              11
+
+
+raw polynomials are generated in a way such that they are expected to have good
+projective root property (e.g. cd is divisible by many small primes).
+
+               0.5
+                             Data
+                          Gaussian
+
+               0.4
+
+
+
+               0.3
+     Density
+
+
+
+
+               0.2
+
+
+
+               0.1
+
+
+
+                0
+                     -4     -3       -2    -1     0       1   2   3      4
+                                                α(F )
+
+
+                Figure 4. Distribution of α of raw RSA-768 polynomials
+
+   In Figure 4, we show the density estimate of the data. The estimated distribution
+of α(F ) is close to a Gaussian distribution with above parameters µ, σ. We use
+these parameters to estimate the expected value of the minimum order statistic
+(e.g. Equation (3.3)).
+3.3.2. Order of optimization. Assume α(F ) follows a normal distribution with mean
+µ = −0.257 and deviation σ = 0.824. Equation (3.3) shows that the expected min-
+imum α is roughly proportional to the square root of logarithmic scale of skewness.
+    We consider the situation of sextic polynomials for RSA-768. Let s = 1010 , which
+is reasonably large for raw polynomials. It gives an expected minimum α = −13.80
+after s6 polynomials are generated. In an ideal situation, we can expect to find
+such α without affecting the size. In practice, a rotation space of s6 is very likely
+to increase the size and it is very hard to find polynomials with such α while
+keeping the size constrained. We can also apply a size optimization of two variables
+(translation and skewness) afterwards. However, such optimization is restricted as
+none rotation can be used and is likely to be ineffective.
+    On the other hand, if we first conduct size optimization, Figure 3 shows that
+a reduction of 10 in norm is common. A following root optimization can further
+reduce the combined norm by 7–11, despite increasing the size. Put together, size-
+root (in order) optimization often behaves much better than root-size optimization
+in experiments. Therefore, it is suggested to optimize the size property first and
+then the root property.
+
+                                          4. Conclusion
+   We discussed the size optimization in polynomial selection for the number field
+sieve. Size optimization aims to further reduce the size of the raw polynomials
+12                           SHI BAI AND PAUL ZIMMERMANN
+
+
+by changing skewness, translating and rotating. Traditional local optimization
+techniques fail for many sextic polynomials when the integers to be factored are
+large. We described some better methods to optimize the size by determining an
+appropriate initial polynomial for the iteration and then locally optimizing the
+polynomial.
+
+                           Appendix A. Some polynomials
+     The appendix contains polynomial pairs A768 , B768 discussed in the paper.
+Polynomial A768 :
+                 f (x) =     3586380 x6
+                           + 19064700x5
+                           + 282376234705558545084843x4
+                           + 718693701130240225274612814188142x3
+                           + 4340200162893339761259991222380911282x2
+                           − 12541568233611627968693736065307030120x
+                           + 9008374174467563445936947139641332877
+                 g(x) =      53362054832582019225383 x
+                           − 26457722251514149087911384249044520830
+              skewness: 3916800.00
+              L2 -norm: 72.59
+                 α(F ): − 1.08
+Polynomial B768 :
+            f (x) =     3586380 x6
+                      − 4117247962908300x5
+                      + 2251833225235534190109843x4
+                      + 136220930040469670784138610516x3
+                      − 17501466895317212327777571690641007037x2
+                      − 261107030382558999477876428688304027476731x
+                      + 7615515160280039774928055019776311036048363657612
+            g(x) =      53362054832582019225383 x
+                      − 26457732461661641051994527730477303005
+        skewness: 2593792.00
+        L2 -norm: 67.60
+            α(F ): − 2.04
+     SIZE OPTIMIZATION OF SEXTIC POLYNOMIALS IN THE NUMBER FIELD SIEVE                         13
+
+
+                                         References
+ 1. S. Bai, P. Gaudry, A. Kruppa, F. Morain, L. Muller, E. Thomé, P. Zimmermann, and et al.
+    CADO-NFS v1.1, an implementation of the number field sieve. http://cado-nfs.gforge.
+    inria.fr, 2011.
+ 2. H. Boender. Factoring large integers with the quadratic sieve. PhD thesis, Leiden University,
+    1997.
+ 3. J. Buhler, H. Lenstra, and C. Pomerance. Factoring integers with the number field sieve. In
+    Lenstra and Lenstra [10], pages 50–94.
+ 4. H. Cramér. Mathematical Methods of Statistics. Princeton University Press, 1999.
+ 5. W. Gautschi. Chapter 7. Error function and Fresnel integrals. In M. Abramowitz and I. A.
+    Stegun, editors, Handbook of Mathematical Functions: with Formulas, Graphs, and Mathe-
+    matical Tables, page 1046. Dover Publications, 1972.
+ 6. A. Granville. Smooth numbers: computational number theory and beyond. In Proc. MSRI
+    Conf. Algorithmic Number Theory: Lattices, Number Fields, Curves and Cryptography. MSRI
+    Publications, Volume 44, 2008.
+ 7. A. Hildebrand and G. Tenenbaum. Integers without large prime factors. Journal de Théorie
+    des Nombres de Bordeaux, 5(2):411–484, 1993.
+ 8. T. Kleinjung. On polynomial selection for the general number field sieve. Mathematics of
+    Computation, 75(256):2037–2047, 2006.
+ 9. T. Kleinjung. Polynomial selection. In CADO workshop on integer factorization, INRIA
+    Nancy, 2008. http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+10. A. K. Lenstra and H. W. Lenstra, Jr., editors. The Development of the Number Field Sieve,
+    volume 1554 of Lecture Notes in Mathematics. Springer, 1993.
+11. B. A. Murphy. Modelling the Yield of Number Field Sieve Polynomials. In Algorithmic Number
+    Theory - ANTS III, LNCS 1443, pages 137–147, 1998.
+12. B. A. Murphy. Polynomial selection for the number field sieve integer factorisation algorithm.
+    PhD thesis, The Australian National University, 1999.
+13. B. A. Murphy and R. P. Brent. On quadratic polynomials for the number field sieve. In
+    Proceedings of the CATS ’98, volume 20 of Australian Computer Science Communications,
+    pages 199–213. Springer, 1998.
+14. J. Papadopoulos. Call for volunteers: RSA768 polynomial selection, 2011. http://www.
+    mersenneforum.org/showthread.php?t=15540.
+15. J. Papadopoulos. Msieve v1.48, 2011. http://sourceforge.net/projects/msieve/.
+16. J. M. Pollard. The lattice sieve. In Lenstra and Lenstra [10], pages 43–49.
+17. T. Kleinjung, K. Aoki, J. Franke, A. K. Lenstra, E. Thomé, J. W. Bos, P. Gaudry, A. Kruppa,
+    P. L. Montgomery, D. A. Osvik, H. J. J. te Riele, A. Timofeev, and P. Zimmermann. Factor-
+    ization of a 768-bit RSA modulus. In Proceedings of CRYPTO ’10, volume 6223 of Lecture
+    Notes in Computer Science, pages 333–350. Springer, 2010.
+
+   Australian National University, Canberra, Australia.
+   E-mail address: shi.bai@anu.edu.au
+
+   INRIA Nancy, Grand Est, Villers-les-Nancy, France.
+   E-mail address: Paul.Zimmermann@loria.fr
+

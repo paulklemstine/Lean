@@ -1,0 +1,56 @@
+== ST0. shared harness calibration ==
+  [PASS] shared dickman harness calibrated
+== ST1. multiplication counter ==
+  [PASS] pow_counted matches pow() and hand counts
+== ST2. FbTest vs shared is_smooth ==
+  [PASS] FbTest agrees with shared is_smooth (412 probes) and exponent vectors reconstruct exactly
+== ST3. the discriminator flags degenerate samplers and passes sound ones ==
+  (n=2^33, B=37, |FB|=12, u=6.24)
+  null density: rho(u)=1.182e-05  MEASURED=1.000e-04  ratio measured/rho = 8.46
+  [PASS] sound `random` sampler: S=1.12 within [0.3, 3.0] (NOT flagged) (trials/rel 11167.5)
+  [PASS] degenerate #1 (i.i.d. tiny, different signature) S=0.0002 < 0.5 FLAGGED 
+  [PASS] degenerate #2 (`seq` walk) S=0.169 < 0.7 FLAGGED (trials/rel 1685.17)
+== ST3b. rho(u) is NOT a valid null in the Stange regime ==
+  [PASS] at u=6.24, measured density exceeds rho(u) by > 5x (8.46x) 
+  [PASS] at B=2^17, n=2^33 (u=1.91), rho(u)=0.3510 vs measured 0.3635 -- ratio 1.04 in [0.8,1.25] 
+== ST4. stride at full-size x0 is NOT flagged; stride at x0=1 IS ==
+  [PASS] stride x0=1 (small-x corner) S=0.701 FLAGGED vs sound 1.12 
+  [PASS] stride x0=n/4 (the repair) S=0.87 NOT flagged 
+== ST5. the axis-2 panel flags a rank-collapsed relation set ==
+  [PASS] proportional columns -> rank 1 < b=12 FLAGGED 
+  [PASS]   and all selected alpha_t are zero (zero_frac=1.00) 
+  [PASS] generic columns -> rank 12 == b (not flagged) 
+  [PASS]   and not all alpha_t zero 
+== ST6. the relation invariant g^x == prod p^e (mod n) ==
+  [PASS] real `stride` sampler satisfies the invariant (6 rels) 
+  [PASS] the mod-n-wrapped sampler is REJECTED by the invariant 
+
+ALL SELFTESTS PASS -- the harness can see both degeneracy axes and can reject a broken exponent label.
+
+PREREGISTERED PREDICTIONS
+=====
+  [PASS] Psi(64, 2) = 7 vs brute 7
+  [PASS] Psi(100, 3) = 20 vs brute 20
+  [PASS] Psi(500, 5) = 67 vs brute 67
+  [PASS] Psi(200, 13) = 98 vs brute 98
+  [PASS] Psi(10000, 13) = 733 vs brute 733
+  [PASS] Psi(100000, 37) = 6952 vs brute 6952
+  [PASS] Psi(100000, 71) = 13754 vs brute 13754
+  [PASS] Psi(1000000, 71) = 52526 vs brute 52526
+====================================================================================
+PART A -- smoothness rate and COST per relation, b=12
+====================================================================================
+  NULL = exact Psi(2^bits, B)/2^bits (NOT Dickman: at u=5..8 rho is ~5-9x
+  low, see harness ST3b).  ops = modular multiplications + FB reductions.
+
+ bits      sampler  rels  trials/rel     1/dens   mults/rel  smops/rel     ops/rel      S    flag
+   26       random    90       323.8      291.1     11830.5     4646.6     16477.2   1.11      ok
+   26       stride    90       280.6      291.1       281.9     4028.7      4310.5   0.96      ok
+   26          seq    90        72.4      291.1        72.4     1037.2      1109.6   0.25   DEGEN
+        ==> SAVING                                    3.82x                  3.82x   (random ops/rel / stride ops/rel)
+
+   33       random    90      4341.1     3824.6    197798.4    62341.6    260140.0   1.14      ok
+   33       stride    90      4797.1     3824.6      4798.6    68886.4     73684.9   1.25      ok
+   33          seq    90         1.0     3824.6         1.0       16.5        17.5   0.00   DEGEN
+        ==> SAVING                                    3.53x                  3.53x   (random ops/rel / stride ops/rel)
+

@@ -1,0 +1,1652 @@
+                                T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25
+                                           www.theoryofcomputing.org
+
+
+
+
+     A new quantum lower bound method, with
+      an application to a strong direct product
+           theorem for quantum search
+                                                     Andris Ambainis∗
+                      Received: July 6, 2007; revised: July 24, 2009; published: January 12, 2010.
+
+
+
+
+         Abstract: We present a new method for proving lower bounds on quantum query al-
+         gorithms. The new method is an extension of the adversary method, by analyzing the
+         eigenspace structure of the problem.
+             Using the new method, we prove a strong direct product theorem for quantum search.
+         This result was previously proved by Klauck, Špalek, and de Wolf (FOCS’04) using the
+         polynomials method. No proof using the adversary method was known before.
+
+ACM Classification: F1.2, F2.2
+AMS Classification: 81P68, 68Q17
+Key words and phrases: quantum computing, quantum algorithms, quantum lower bounds
+
+1      Introduction
+Many quantum algorithms (for example, Grover’s algorithm [13] and quantum counting [11]) can be
+analyzed in the query model where the input is accessed via a black box that answers queries about the
+values of input bits.
+    There are two main methods for proving lower bounds on quantum query algorithms: the adversary
+method [3] and the polynomials method [9]. Both of them have been studied in detail. The limits of
+the adversary method are particularly well understood. The original adversary method [3] has been
+     ∗ Supported by University of Latvia grant ZP01-100, a Marie Curie International Reintegration Grant (IRG), and ESF project
+
+1DP/1.1.1.2.0/09/APIA/VIAA/044. Most of this work was done at the University of Waterloo and supported by NSERC,
+CIFAR, ARO, MITACS, and an IQC University Professorship.
+
+
+    2010 Andris Ambainis
+    Licensed under a Creative Commons Attribution License                                        DOI: 10.4086/toc.2010.v006a001
+                                             A NDRIS A MBAINIS
+
+generalized in several different ways [4, 18, 8]. Špalek and Szegedy [23] then showed that all the
+generalizations are equivalent and, for certain problems, cannot improve the best known lower bounds.
+For example, it was shown in [23, 24] that the p
+                                               adversary methods of [4, 18, 8] cannot prove a lower bound
+for a total Boolean function that exceeds O( C0 ( f )C1 ( f )), where C0 ( f ) and C1 ( f ) are the certificate
+complexities of f on 0-inputs and 1-inputs, resp. This implies that the adversary methods of [4, 18, 8]
+cannot prove a tight lower bound for element distinctness or improve the best known lower bound for
+triangle finding. (The complexity of √  element distinctness is Θ(N 2/3 ) [2, 5] but the adversary method
+cannot prove a bound better than Ω( N). For triangle finding [19], the best known lower bound is
+Ω(N) and it is known that it cannot be improved using the adversary method. It is, however, possible
+that the bound is not tight, because the best algorithm uses O(N 1.3 ) queries.)
+     In this paper we describe a new version of the quantum adversary method which may not be subject
+to those limitations. We then use the new method to prove a strong direct product theorem for the K-fold
+search problem.
+     In the K-fold search problem, a black box contains x1 , . . . , xN such that |{i : xi = 1}|
+                                                                                              √ = K and we
+have to find all the K values of i such that xi = 1. This problem can be solved √    with   O(   NK) queries.
+It can be easily shown, using any of the previously known
+                                                        √ methods, that Ω( NK) quantum queries are
+required. A more difficult problem is to show that Ω( NK) queries are required, even if the algorithm
+only has to be correct with an exponentially small probability c−K , c > 1. This result is known as the
+strong direct product theorem for k-fold search. Besides being interesting on its own, the strong direct
+product theorem is useful for proving time-space tradeoffs for quantum sorting [16] and lower bounds
+on quantum computations that use advice [1].
+     The strong direct product theorem for quantum search was first shown by Klauck, Špalek, and de
+Wolf [16], using the polynomials method. No proof using the adversary method has been known and, as
+we show in Section 3, the previously known adversary methods are insufficient to prove a strong direct
+product theorem for K-fold search.
+
+Recent developments       After the author completed the research presented in this paper, several devel-
+opments occurred.
+   1. Together with Špalek and de Wolf [7], we have used the methods from this paper to prove a direct
+      product theorem for t-threshold functions. This implies time-space tradeoffs for the problem of
+      deciding systems of linear inequalities.
+      This paper and [7] were merged for publication at STOC’06 [6]. We have decided to publish the
+      journal versions separately.
+      The relation between the two papers is as follows. A direct product theorem for k-threshold
+      functions implies a direct product theorem for search. Thus, the result of [7] implies the result in
+      this paper. The proof of our result is, however, substantially simpler than the proof of the more
+      general result in [7]. Because of that, we think that our proof continues to be of interest even
+      though the result in this paper has been generalized by [7].
+   2. Špalek [22] generalized the results of the current paper and [7], obtaining a multiplicative adver-
+      sary method. This is a general framework for proving lower bounds which includes the results of
+      the current paper and [7] as particular cases.
+
+                            T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                 2
+                                   N EW QUANTUM LOWER BOUND METHOD
+
+    3. Høyer, Lee, and Špalek [14] generalized the usual adversary method in a different way, by extend-
+       ing the usual weighted adversary method of [4] to negative weights. Reichardt [21] has shown
+       that this method is optimal: if Adv± ( f ) is the best adversary lower bound that can be proven for
+       a function f , then f can be evaluated using
+
+                                                         log Adv± ( f )
+                                                                            
+                                                    ±
+                                           O Adv ( f )
+                                                       log log Adv± ( f )
+
+       queries. Although the negative weight adversary method is guaranteed to provide nearly optimal
+       results, the other lower bound methods also remain interesting because particular lower bounds
+       may follow more easily using different tools.
+
+
+2    Preliminaries
+We consider the following problem.
+Search for K marked elements, SEARCHK (N): Given a black box containing x1 , . . . , xN ∈ {0, 1} such
+that xi = 1 for exactly K values i ∈ {1, 2, . . . , N}, find all K values i1 , . . . , iK satisfying xi j = 1.
+      This problem can be viewed as computing an NK -valued function f (x1 , . . . , xN ) in the variables
+                                                              
+
+x1 , . . . , xN ∈ {0, 1}, with values of the function being indices for the NK sets S ⊆ [N] of size K, in some
+                                                                                   
+
+canonical ordering of those sets.
+      We study this problem in the quantum query model. (For a survey on the quantum query model,
+see [12]). In this model, the input bits can be accessed by queries to an oracle X and the complexity of f
+is the number of quantum queries needed to compute f . A quantum computation with T queries is just
+a sequence of unitary transformations
+
+                               U0 → O → U1 → O → · · · → UT −1 → O → UT .
+
+    The U j can be arbitrary unitary transformations that do not depend on the input bits x1 , . . . , xN . The
+transformations O are query (oracle) transformations which depend on x1 , . . . , xN . To define O, we
+represent basis states as |i, zi where i consists of dlog(N + 1)e bits and z consists of all other bits. Then,
+Ox maps |0, zi to itself and |i, zi to (−1)xi |i, zi for i ∈ {1, ..., N} (i. e., we change phase depending on xi ,
+unless i = 0 in which case we do nothing).
+    The computation starts with a state |0i. Then we apply           U0 , Ox , . . . , Ox ,UT and measure the final
+                                                                  N
+state. The result of the computation is the string of dlog2 K e rightmost bits of the state obtained by the
+measurement, which is interpreted as a description of one of the NK subsets S ⊆ {1, . . . , N}, |S| = K.
+                                                                              
+
+
+
+3    Overview of the adversary method
+We describe the adversary method of [3].
+    Let X be a subset of the set of possible inputs {0, 1}N . We run the algorithm on a superposition of
+inputs in X. More formally, let HA be the workspace of the algorithm. We consider a bipartite system
+
+                             T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                     3
+                                                 A NDRIS A MBAINIS
+
+H = HA ⊗ HI where HI is an “input subspace” spanned by basis vectors |xi corresponding to inputs
+x ∈ X.
+    Let UT OUT −1 · · ·U0 be the sequence of unitary transformations on HA performed by the algorithm
+A, where U0 , . . . ,UT denote the transformations that do not depend on the input and O stands for the
+query transformations. We transform this sequence into a sequence of unitary transformations on H. A
+unitary transformation Ui on HA corresponds to the transformation Ui0 = Ui ⊗ I on the whole H. The
+query transformation O corresponds to a transformation O0 that is equal to Ox on the subspace HA ⊗ |xi.
+    We perform the sequence of transformations UT0 O0 UT0 −1 · · ·U00 on the starting state
+
+                                              |ψstart i = |0i ⊗ ∑ αx |xi .
+                                                               x∈S
+
+Then, the final state is
+                                             |ψend i = ∑ αx |ψx i ⊗ |xi ,
+                                                        x∈X
+
+where |ψx i is the final state of A = UT OUT −1 . . .U0 on input x. This follows from the fact that the
+restrictions of UT0 , O0 ,UT0 −1 , . . . ,U00 to HA ⊗ |xi are UT , Ox ,UT −1 , . . . ,U0 and these are exactly the trans-
+formations of the algorithm A on input x.
+    Let ρend be the reduced density matrix of the HI register of the state |ψend i. The adversary method
+of [3, 4] works by showing the following two statements.
+    • Let x ∈ X and y ∈ X be such that f (x) 6= f (y) (where f is the function that is being computed). If
+      the algorithm outputs the correct answer with probability 1 − ε on both x and y then
+                                                       p
+                                      |(ρend )x,y | ≤ 2 ε(1 − ε)|αx ||αy | .
+
+    • For any algorithm that uses T queries, there exist inputs x, y ∈ S such that f (x) 6= f (y) and
+                                                    p
+                                      (ρend )x,y > 2 ε(1 − ε)|αx ||αy | .
+
+These two statements together imply that any algorithm computing f must use more than T queries.
+     An equivalent approach [15, 4] is to consider the inner productsphψx |ψy i between the final states
+|ψx i and |ψy i p
+                of the algorithm on inputs x and y. Then, |(ρend )x,y | ≤ 2 ε(1 − ε)|αx ||αy | is equivalent to
+|hψx |ψy i| ≤ 2 ε(1 − ε).
+     As a result, both of the above statements can be described in terms of inner products hψx |ψy i, without
+explicitly introducing the register HI . The first statement says that, for the algorithm to succeed on inputs
+x, y such that f (x) 6= f (y), the states |ψxp
+                                             i and |ψy i must be sufficiently far apart from one another (so that
+the inner product |hψx |ψy i| is at most 2 ε(1 − ε)). The second statement says that this is impossible if
+the algorithm only uses T queries.
+     This approach breaks down if we consider computing a function f with success probability p < 1/2.
+( f has to have more than 2 values for this task to be nontrivial.) Then, |ψx i and |ψy i could be the
+same and the algorithm may still succeed on both inputs, if it outputs x with probability 1/2 and y with
+probability 1/2. In the case of strong direct product theorems, the situation is even more difficult. Since
+the algorithm only has to be correct with probability c−K , the algorithm could have almost the same final
+state on cK different inputs and still “succeed” on every one of them.
+
+                              T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                         4
+                                    N EW QUANTUM LOWER BOUND METHOD
+
+    In this paper, we present a new method that does not suffer from this problem. Our method, described
+in the next section, uses the idea of augmenting the algorithm with an input register HI , together with
+two new ingredients:
+    1. Symmetrization. We symmetrize the algorithm by applying a random permutation π ∈ SN to the
+       input x1 , . . . , xN .
+
+    2. Eigenspace analysis. We study the eigenspaces of ρstart , ρend and density matrices describing the
+       state of HI at intermediate steps and use them to bound the progress of the algorithm.
+The eigenspace analysis is the main new technique. Symmetrization is necessary to simplify the structure
+of the eigenspaces, to make the eigenspace analysis possible.
+
+
+4     Our result
+Theorem 4.1. There exist ε and c satisfying ε > 0, 0 < c <√1 such that, for any K ≤ N/2, solving
+SEARCHK (N) with probability at least cK requires (ε − o(1)) NK queries.
+
+4.1    General framework
+We first give a high-level overview of the new method, in a form that may be applicable to a variety of
+problems. After that, in Section 4.2, we will describe how to adapt this general method to the K-fold
+search problem.
+    As before, let X ⊆ {0, 1}N be a subset of the set of inputs for the function f (x1 , . . . , xN ). Let G be
+the group of all permutations π on {1, . . . , N} that fix X:
+
+                                  {(xπ(1) , . . . , xπ(N) ) : (x1 , . . . , xN ) ∈ X} = X .
+
+Additionally we assume for all π ∈ G that f (xπ(1) , . . . , xπ(N) ) and π uniquely determine f (x1 , . . . , xN ).
+     We choose X so that X consists of “hard” inputs (inputs on which f is difficult to evaluate with few
+queries) and the symmetry group G is as large as possible. For example, in the case of K-fold search, X
+is the set of all x ∈ {0, 1}N , |x| = K and G consists of all permutations on {1, . . . , N}.
+     Let A be an algorithm for f (x1 , . . . , xN ) and let HA be the workspace on which A operates.
+     We first “symmetrize” A by adding an extra register HS holding a permutation π ∈ G. Initially, HS
+holds a uniform superposition of all permutations π:
+                                                      1
+                                                     p    ∑ |πi .
+                                                      |G| π∈G
+
+Before each query O, we insert a transformation |ii|πi 7→ |π −1 (i)i|πi on the part of the state containing
+the index i to be queried and HS . After the query, we insert a transformation |ii|πi 7→ |π(i)i|πi. The
+effect of the symmetrization is that, on the subspace |si ⊗ |πi, the algorithm is effectively running on
+the input xπ(1) , . . . , xπ(N) . At the end of algorithm, we apply a unitary transformation that replaces the
+answer for f (xπ(1) , . . . , xπ(N) ) with the corresponding answer for f (x1 , . . . , xN ). (This is possible because
+of our requirement that f (xπ(1) , . . . , xπ(N) ) and π uniquely determine f (x1 , . . . , xN ).)
+
+                              T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                       5
+                                               A NDRIS A MBAINIS
+
+     If the original algorithm A succeeds on every input (x1 , . . . , xN ) with probability at least ε, the sym-
+metrized algorithm also succeeds with probability at least ε, since its success probability is just the
+average of the success probabilities of A over all (xπ(1) , . . . , xπ(N) ), π ∈ G. Next, we recast A into a
+different form, using a register that stores the input x1 , . . . , xN , as in Section 3.
+     Let HI be an |X|-dimensional Hilbert space whose basis states correspond to inputs (x1 , . . . , xN ) ∈ X.
+We transform the symmetrized version of A into a sequence of transformations on a Hilbert space
+H = HA ⊗ HS ⊗ HI . As before, a non-query transformation U on HA ⊗ HS is replaced by U ⊗ I on
+H. A query is replaced by a transformation O that is equal to Ox1 ,...,xN ⊗ I on the subspace consisting
+of states of the form |siA,S ⊗ |x1 . . . xN iI . The starting state of the algorithm on Hilbert space H is
+|ϕ0 i = |ψstart iA,S ⊗ |ψ0 iI where |ψstart iA,S is the starting state of A as an algorithm acting on HA ⊗ HS
+and |ψ0 iI is some fixed superposition of states |x1 . . . xN i, (x1 , . . . , xN ) ∈ X.
+     Let |ψt i be the state of the algorithm A, as a sequence of transformations on H, after the t th query.
+Let ρt be the mixed state obtained from |ψt i by tracing out the HA ⊗ HS register and let λ1 , λ2 , . . . be
+all the distinct eigenvalues of ρt . Let Si be the subspace of HI consisting of all eigenvectors with the
+eigenvalue λi and let Pi be the projector to the subspace Si . Then,
+                                                   ρt = ∑ λi Pi .
+                                                           i
+
+For a permutation π ∈ G, let Uπ be the unitary transformation on the register HI defined by
+                                       Uπ |x1 . . . xN i = |xπ(1) . . . xπ(N) i .
+Then, because of the symmetrization step, ρt is invariant under Uπ : ρt = Uπ ρt Uπ−1 . This means that
+every eigenspace Si is fixed by Uπ , for every π ∈ G.
+    Let V be the collection of all invariant subspaces S ≤ HA (subspaces S that are fixed by all π ∈ G).
+Then, we can always express ρt as
+                                               ρt = ∑ λS PS
+                                                         S∈V
+where PS is a projector to the subspace S. This means that the state of the algorithm can be fully
+described by the vector (λS )S∈V . (For some symmetry groups G, there could be infinitely many invariant
+subspaces. Then V will be infinite but only finitely many of the λS will be nonzero.)
+    We divide V into a set Vgood of “good” subspaces and a set Vbad of “bad” subspaces so that, if the
+algorithm A succeeds, a non-negligible part of the final state ρT must consist of PS , S ∈ Vgood .
+    To prove a lower bound on the number of queries, we show that the initial state of HI is in Vbad and
+then prove that T0 queries are not enough to move a non-negligible part of the state to S ∈ Vgood . That is
+done by bounding the change in (λS )S∈V in one query, as follows. Let ρt be the state of HI before the
+(t + 1)st query. We decompose
+                                                           N
+                                                   ρt = ∑ ρt,i ,
+                                                          i=0
+
+with ρt,i being the part of the state in which the query register of A contains i. Let G(i) consist of all
+π ∈ S with π(i) = i. Then ρt,i is fixed by Uπ for all π ∈ G(i) . Let V(i) consist of all subspaces S that are
+fixed by all Uπ , π ∈ G(i) . Then
+                                             ρt,i = ∑ λS PS .
+                                                        S∈V(i)
+
+
+                            T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                   6
+                                     N EW QUANTUM LOWER BOUND METHOD
+
+We use this decomposition to describe the effect of a query on ρt,i . Then we relate subspaces S ∈ V(i) to
+subspaces S ∈ V. This allows us to bound the change in (λS )S∈V .
+
+Specialization to k-fold search In the case of k-fold search (described in the next section), there are
+just K + 1 invariant subspaces S0 , . . . , SK with Si intuitively corresponding to the algorithm knowing
+locations of i out of K items j with x j = 1. The state of the algorithm can then be described by a vector
+(λ0 , . . . , λK ) of length K + 1, where λi describes the probability that the algorithm knows locations of i
+out of the K items.
+     The bad subspaces that make up Vbad are S0 , . . . , SK/2 which correspond to A knowing at most K/2
+of the K locations j with x j = 1. The good subspaces that make up Vgood are SK/2+1 , . . . , SK which
+correspond to A knowing more than K/2 of the K locations j with x j = 1.
+
+4.2 K-fold search
+                                                                                       √
+We now prove Theorem 4.1. Let A be an algorithm for SEARCHK (N) that uses T ≤ ε NK queries.
+    As described in the previous subsection, we first “symmetrize” A by adding an extra register HS
+holding a permutation π ∈ SN . Initially, HS holds a uniform superposition of all permutations π:
+                                                         1
+                                                        √     ∑ |πi .
+                                                          N! π∈SN
+
+The result of this step is that, on the subspace consisting of all states |si ⊗ |πi, the algorithm runs on the
+input xπ(1) , . . . , xπ(N) . At the end of the algorithm, we apply the transformation
+
+                                   |i1 i . . . |iK i|πi 7→ |π −1 (i1 )i . . . |π −1 (iK i|πi
+
+on the part of HA that holds the output of the algorithm and HS . This converts the answer for the input
+xπ(1) , . . . , xπ(N) into the answer for the actual input x1 , . . . , xN .
+    We then add an input register HI which initially, holds the starting state
+                                                1
+                                       |ψ0 i = q               ∑           |x1 . . . xN i .
+                                                        N    x1 ,...,xN :
+                                                        K x1 +···+xN =K
+
+Let |ψt i be the state of the algorithm A, as a sequence of transformations on H = HA ⊗ HS ⊗ HI , after
+the t th query. Then,
+                                 1                         x ,...,x
+                       |ψt i = q          ∑         ∑   |ψt π(1) π(N) iA |πiS |x1 , . . . , xN iI
+                                N      x1 ,...,xN : π∈SN
+                                K N! x +···+x =K
+                                            1       N
+
+          x   ,...,x
+where |ψt π(1) π(N) i denotes the state of HA after t steps, on the input xπ(1) , . . . , xπ(N) .
+    Let ρt be the mixed state obtained from |ψt i by tracing out the HA register. We claim that the states
+ρt have a special form, due to our symmetrization step.
+Lemma 4.2. The entries (ρt )x,y are the same for all x = (x1 , . . . , xN ), y = (y1 , . . . , yN ) with the same
+cardinality of the set {` : x` = y` = 1}.
+
+                              T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                 7
+                                                    A NDRIS A MBAINIS
+
+Proof. Since ρt is independent of the way how the HA ⊗ HS is traced out, we first measure HS (in the
+|πi basis) and then measure HA (arbitrarily). When measuring HS , every π is obtained with an equal
+probability. Let ρt,π be the reduced density matrix of HI , conditioned on the measurement of HS giving
+π. Then
+                                                      1
+                                             ρt = ∑ ρt,π .
+                                                   π N!
+
+The entry (ρt,π )x,y is the same as the entry (ρt,id )π −1 (x),π −1 (y) because the symmetrization by π maps
+π −1 (x), π −1 (y) to x, y. Let x, y, x0 , y0 be such that |{i : xi = yi = 1}| = |{i : xi0 = y0i = 1}|. Then there is a
+permutation τ ∈ SN such that τ(x) = x0 , τ(y) = y0 . Therefore,
+                                     1                  1
+                        (ρt )x,y =       ∑ (ρt,π )x,y = N! ∑ (ρt,id )π −1 (x),π −1 (y)
+                                     N! π∈S N             π∈SN
+                                     1
+                               =         ∑ (ρt,id )π −1 τ(x),π −1 τ(y) = (ρt )τ(x),τ(y) = (ρt )x0 ,y0 .
+                                     N! π∈S N
+
+
+This means that (ρt )x,y only depends on |{` : x` = y` = 1}|.
+
+    Any NK × NK matrix with this property shares the same eigenspaces. Namely, we have
+                     
+
+Lemma 4.3 (Knuth [17]). Let A be an NK × NK matrix whose rows and columns are indexed by 0-1
+                                                        
+
+sequences x1 , . . . , xN with x1 + · · · + xN = K. Assume that A is such that Ax,y only depends on the number
+of bits {i : xi = yi = 1}. Then, the eigenspaces of A are S0 , S1 , . . . , SK where T0 = S0 consists of multiples
+of |ψ0 i and, for j > 0, S j = T j ∩ (T j−1 )⊥ , with T j being the space spanned by all states
+                                                       1
+                                 |ψi1 ,...,i j i = q                     ∑            |x1 , . . . , xN i .
+                                                         N
+                                                               
+                                                                       x1 ,...,xN :
+                                                        K− j
+                                                                   x1 +···+xN =K,
+                                                                   xi1 =···=xi j =1
+
+    Let τ j be the completely mixed state over the subspace S j .
+Lemma 4.4. There exist pt,0 ≥ 0, . . . , pt,K ≥ 0 such that ρt = ∑Kj=0 pt, j τ j .
+Proof. By Lemma 4.3, S0 , . . . , SK are the eigenspaces of ρt . Therefore, ρt is a linear combination of the
+projectors to S0 , . . . , SK . Since τ j is a multiple of the projector to S j , we have
+                                                                   K
+                                                       ρt = ∑ pt, j τ j .
+                                                               j=0
+
+Since ρt is a density matrix, it must be positive semidefinite. This means that pt,0 ≥ 0, . . . , pt,K ≥ 0.
+
+    Informally, we can interpret pt, j as the probability that, after t queries, the algorithm HA knows the
+locations for t out of the K items j with x j = 1. Let qt, j = pt, j + pt, j+1 + · · · + pt,K . The theorem now
+follows from the following lemmas.
+Lemma 4.5. p0,0 = 1, p0, j = 0 for j > 0.
+
+
+                              T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                       8
+                                         N EW QUANTUM LOWER BOUND METHOD
+
+Proof. In the starting state, HI contains the state |ϕ0 i, independent of HA and HP . Therefore, tracing
+out HA ⊗ HP leaves the state ρ0 = |ψ0 ihψ0 |.
+                                                                                       √
+Lemma 4.6. For all j ∈ {1, . . . , K} and all t we have qt+1, j+1 ≤ qt, j+1 + 4√NK qt, j .
+
+Proof. In Section 5.
+
+                       t
+                             4√K  j
+Lemma 4.7. qt, j ≤     j
+                               √
+                                N
+                                         .
+
+Proof. By induction on t. The base case, t = 0 follows immediately from p0,0 = 1 and
+
+                                                     p0,1 = · · · = p0,K = 0 .
+
+For the induction step, we have
+                                  √               √ !j     √         √ ! j−1
+                                 4 K          t    4 K      4 K   t     4 K
+               qt+1, j ≤ qt, j + √ qt, j−1 ≤       √     + √            √
+                                   N          j      N        N j−1       N
+                                          √ !j           √ !j
+                               t      t       4 K       t +1    4 K
+                       =          +             √     =         √     ,
+                               j     j−1         N        j       N
+
+where the first inequality follows from Lemma 4.6 and the second inequality follows from the inductive
+assumption.
+                         √
+Lemma 4.8. If t ≤ 0.03 NK then qt, j < 0.66 j for all j > K/2.
+
+Proof. By the well known inequality tj < (et/ j) j for j ≥ 1, we have
+                                        
+
+                                                          √ !j           √    !j
+                                                      t    4 K            4 Ket
+                                             qt, j ≤       √     ≤         √       .
+                                                      j      N              Nj
+                        √
+Let j > K/2 and t ≤ 0.03 NK. Then
+                               √           √ √
+                              4 Ket   0.12e K NK
+                               √    ≤    √       < 0.66 ,
+                                 Nj        NK/2
+
+implying the lemma.
+
+Lemma 4.9. The success probability of A is at most
+                                         N
+                                            
+                                       K/2      p
+                                         N
+                                            + 4 qt,K/2+1 .
+                                                       K
+
+Proof. In Section 6.
+
+                               T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                       9
+                                                    A NDRIS A MBAINIS
+                                                                          √
+    To complete the proof, given the two Lemmas, we choose a constant c > 4 0.66 = 0.90133 . . . and
+set ε = 0.03. Then, by Lemma 4.9, the success probability of A is at most
+                                                     N
+                                                         
+                                                    K/2
+                                                                  p
+                                                     N
+                                                            +4    0.66K/2 .
+                                                     K
+
+The first term is equal to
+                     N
+                        
+                    K/2          K!(N − K)!           K(K − 1) . . . (K/2 + 1)
+                     N      =                 =
+                              (K/2)!(N − K/2)! (N − K/2)(N − K/2 − 1) . . . (N − K + 1)
+                       
+                     K
+                                        K/2 
+                                                N/2 K/2
+                                                         K/2
+                                   K                        2
+                            ≤               ≤           =             = o(cK ) ,
+                                N − K/2        3N/4         3
+                                                                         √
+where the last two inequalities follow from K < N/2. The second term is 4 0.66K/2 = o(cK ).
+
+
+5     Proof of Lemma 4.6
+Let |ψt i be the state before (t + 1)st query. We decompose |ψt i as ∑Ni=0 ai |ψt,i i, where |ψt,i i is the part in
+which the query register contains |ii. Because of symmetrization, we must have |a1 | = |a2 | = · · · = |aN |.
+Also, we can choose the relative phases so that a1 , · · · , aN are all positive reals and, thus, a1 = a2 = · · · =
+aN . Let ρt,i = |ψt,i ihψt,i |. Then
+                                                                 N
+                                                       ρt = ∑ a2i ρt,i .                                                (5.1)
+                                                               i=0
+
+Claim 5.1. Let i ∈ {1, . . . , N}. The entry (ρt,i )x,y only depends on xi , yi , and the cardinality of {` : ` 6=
+i, x` = y` = 1}.
+
+Proof. The main idea is similar to Lemma 4.2.
+    This time, we trace out all registers, except for HI and the query register. This gives us a density
+matrix ρ whose rows and columns are indexed by pairs (x, j) where x is an input and j ∈ {1, . . . , N}. Let
+x ∈ {0, 1}N , y ∈ {0, 1}N , j ∈ [N], k ∈ [N] and x0 ∈ {0, 1}N , y0 ∈ {0, 1}N , j0 ∈ [N], k0 ∈ [N] be such that
+there is a permutation π ∈ SN with x0 = π(x), y0 = π(y), i0 = π(i) and j0 = π( j). By an argument similar
+to the proof of Lemma 4.2, we have
+
+                                                ρ(x,i),(y, j) = ρ(x0 ,i0 ),(y0 , j0 ) .                                 (5.2)
+
+We now observe that ρt,i is the submatrix of ρ consisting of rows and columns indexed by pairs (x, i),
+with all possible x ∈ {0, 1}N , |{i : xi = 1}| = K.
+     If we have inputs x, y, x0 , y0 with xi = xi0 , yi = y0i and |{` : ` 6= i, x` = y` = 1}| = |{` : ` 6= i, x`0 = y0` = 1}|,
+then we can construct a permutation π with π(i) = i, π(x) = x0 and π(y) = y0 . Equation (5.2) then implies
+(ρt,i )x,y = (ρt,i )x0 ,y0 .
+
+                                T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                           10
+                                       N EW QUANTUM LOWER BOUND METHOD
+
+    We now describe the eigenspaces of matrices ρt,i . The proofs of some claims are postponed to
+Section 7.
+    We define the following subspaces of states. Let i ∈ [N] and j ∈ {0, 1, . . . , K}. We define T ji,0 to be
+the subspace spanned by all states
+                                                          1
+                                 |ψii,0
+                                     1 ,...,i j
+                                                i= q                                  ∑                  |x1 . . . xN i ,
+                                                        N− j−1
+                                                                       
+                                                         K− j                     x:|x|=K
+                                                                           xi1 =···=xi j =1,xi =0
+
+with (i1 , . . . , i j ) ranging over all tuples of j distinct elements of [N] − {i}. Similarly, we define T ji,1 to be
+the subspace spanned by all states
+                                                          1
+                                 |ψii,1
+                                     1 ,...,i j
+                                                i= q                                  ∑                  |x1 . . . xN i .
+                                                        N− j−1
+                                                                       
+                                                        K− j−1                    x:|x|=K
+                                                                           xi1 =···=xi j =1,xi =1
+
+Let Si,0    i,0    i,0 ⊥      i,1    i,1    i,1 ⊥                                i,0     i,1
+      j = T j ∩ (T j−1 ) and S j = T j ∩ (T j−1 ) . Equivalently, we can define S j and S j as the
+subspaces spanned by the states |ψ̃ii,0
+                                     1 ,...,i j
+                                                i and |ψ̃ii,1
+                                                           1 ,...,i j
+                                                                      i, respectively, with
+
+                                              |ψ̃ii,`
+                                                   1 ,...,i j
+                                                              i = P(T i,` )⊥ |ψii,`
+                                                                                 1 ,...,i j
+                                                                                            i.
+                                                                             j−1
+
+     i
+Let Sα,β , j be the subspace spanned by all states
+
+                                                   |ψ̃ii,0
+                                                        1 ,...,i j
+                                                                   i                 |ψ̃ii,1
+                                                                                          1 ,...,i j
+                                                                                                     i
+                                             α                             +β                            .                  (5.3)
+                                                 k|ψ̃ii,0
+                                                       1 ,...,i j
+                                                                  ik               k|ψ̃ii,1
+                                                                                         1 ,...,i j
+                                                                                                    ik
+where (i1 , . . . , i j ) again ranges over all tuples of j distinct elements of [N] − {i}.
+                                                                  i
+Claim 5.2. Every eigenspace of ρt,i is a direct sum of subspaces Sα,β , j for some α, β , j.
+Proof. In Section 7.
+         i
+    Let τα,β                                         i
+             , j be the completely mixed state over Sα,β , j . Similarly to Lemma 4.4, we can write ρt,i as
+
+                                              ρt,i =             ∑             piα,β , j τα,β
+                                                                                          i
+                                                                                              ,j ,                          (5.4)
+                                                          (α,β , j)∈At,i
+
+where (α, β , j) range over some finite set At,i . (This set is finite because the HI register holding |x1 . . . xN i
+is finite dimensional and, therefore, decomposes into a direct sum of finitely many eigenspaces.) For
+every pair (α, β , j) ∈ At,i , we normalize α, β by multiplying them by the same constant so that α 2 +β 2 =
+1. Querying xi transforms this state to
+                                              0
+                                             ρt,i =            ∑              piα,β , j τα,−β
+                                                                                         i
+                                                                                              ,j ,
+                                                         (α,β , j)∈At,i
+
+because |ψ̃ii,`
+             1 ,...,i j
+                        i is a superposition of |xi with xi = ` and, therefore, a query leaves |ψ̃ii,0
+                                                                                                    1 ,...,i j
+                                                                                                               i unchanged
+and flips a phase on |ψ̃ii,1
+                          1 ,...,i j
+                                                           0 = ρ , because, if the query register contains |0i,
+                                     i. If i = 0, we have ρt,0  t,0
+the query maps any state to itself, thus leaving ρt,0 unchanged.
+
+                               T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                               11
+                                                              A NDRIS A MBAINIS
+                                q                                     q
+Claim 5.3. Let α0 =                 N−K
+                                    N− j   ψ̃ii,0
+                                               1 ,...,i j
+                                                          and β0 =        K− j
+                                                                          N− j    ψ̃ii,1
+                                                                                      1 ,...,i j
+                                                                                                 .
+
+   (i) Sαi 0 ,β0 , j ⊆ S j ;
+
+  (ii) Sβi 0 ,−α0 , j ⊆ S j+1 .
+Proof. In Section 7.
+                                     i
+Corollary 5.4. For any α, β we have Sα,β , j ⊆ S j ⊕ S j+1 .
+
+Proof. We have Sα,β , j ⊆ Si,0   i,1                                                                i,0
+                            j ⊕ S j , since Sα,β , j is spanned by linear combinations of states |ψ̃i1 ,...,i j i
+(which belong to Si,0                i,1                              i,1
+                   j ) and states |ψ̃i1 ,...,i j i (which belong to S j ). As shown in the proof of Claim 5.3
+above,
+                              Si,0     i,1
+                                j ⊕ S j ⊆ Sα0 ,β0 , j ⊕ S−β0 ,α0 , j ⊆ S j ⊕ S j+1 .
+
+
+
+                                                   i
+    The next claim quantifies the overlap between Sα,β , j and S j+1 .
+
+Claim 5.5.
+                                                             i             |αβ0 − β α0 |2
+                                                  Tr PS j+1 τα,β ,j =                     .
+                                                                             α02 + β02
+Proof. In Section 7.
+
+   To be able to use this bound, we also need to bound α0 and β0 .
+                       q
+                           4(K− j)
+Claim 5.6. √ β20 2 ≤ N+3K−4        j.
+                    α0 +β0
+
+Proof. In Section 7.
+
+    We can now complete the proof of Lemma 4.6. By projecting both sides of ρt = ∑i pt,i τi to (T j )⊥ =
+S j+1 ⊕ · · · ⊕ SK and taking trace, we get
+                                                       K                                       K
+                                     Tr P(Tj )⊥ ρt = ∑ pt, j0 Tr P(T j )⊥ τ j0 =              ∑ pt, j = qt, j ,
+                                                                                                          0                       (5.5)
+                                                      j0 =0                               j0 = j+1
+
+with the second equality following because the states τ j0 are uniform mixtures over subspaces S j0 and
+S0 , . . . , S j are contained in T j while S j+1 , . . . , SK are contained in (T j )⊥ . Because of equations (5.1) and
+(5.4), this means that
+                                                                 N
+                               qt, j+1 = a20 Tr P(Tj )⊥ ρt,0 + ∑ a2i           ∑             piα,β , j0 Tr P(Tj )⊥ τα,β
+                                                                                                                    i
+                                                                                                                        , j0 .    (5.6)
+                                                                i=1    (α,β , j0 )∈At,i
+
+Decomposing the state after the query in a similar way, we get
+                                                                 N
+                                                      0
+                          qt+1, j+1 = a20 Tr P(Tj )⊥ ρt,0 + ∑ a2i                ∑           piα,β , j0 Tr P(Tj )⊥ τα,−β
+                                                                                                                    i
+                                                                                                                         , j0 .
+                                                                 i=1      (α,β , j0 )∈At,i
+
+
+                                     T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                               12
+                                        N EW QUANTUM LOWER BOUND METHOD
+
+                                        0 = ρ , we get
+By substracting the two sums and using ρt,0  t,0
+
+                                               N
+                     qt+1, j+1 − qt, j+1 = ∑ a2i             ∑            piα,β , j0 Tr P(Tj )⊥ (τα,−β
+                                                                                                  i            i
+                                                                                                       , j0 − τα,β , j0 ) .   (5.7)
+                                              i=1      (α,β , j0 )∈At,i
+
+
+We now claim that all the terms in this sum with j0 6= j are 0. For j0 < j, Sα,β , j0 ⊆ T j0 +1 ⊆ T j , implying
+                 i                                          i                     0                                   ⊥
+that Tr P(Tj )⊥ τα,β , j0 = 0 and, similarly, Tr P(T j )⊥ τα,−β , j0 = 0. For j > j, Sα,β , j0 ⊆ S j ⊕ S j +1 ⊆ (T j ) ,
+                                                                                                    0     0
+
+implying that
+                                                i                         i
+                                    Tr P(Tj )⊥ τα,β , j0 = 1, Tr P(Tj )⊥ τα,−β , j0 = 1 ,
+
+and the difference of the two is 0. By removing those terms from (5.7), we get
+                                                N
+                      qt+1, j+1 − qt, j+1 = ∑ a2i             ∑           piα,β , j Tr P(Tj )⊥ (τα,−β
+                                                                                                 i           i
+                                                                                                      , j − τα,β , j ) .      (5.8)
+                                               i=1      (α,β , j)∈At,i
+
+    We have
+
+                      i           i                       i           i                   |αβ0 + β α0 |2 |αβ0 − β α0 |2
+         Tr P(Tj )⊥ (τα,−β , j − τα,β , j ) = Tr PS j+1 (τα,−β , j − τα,β , j ) =                       −               ,
+                                                                                            α02 + β02      α02 + β02
+
+where the first equality follows from Corollary 5.4, S j ⊆ T j , and S j+1 ⊆ (T j )⊥ , and the second equality
+follows from Claim 5.5. This is at most
+                                                                      s                      r
+            |αβ α0 β0 |       α0 β0         α0           β0                4(K − j)             4K
+           4 2      2
+                        ≤2 2        2
+                                      = 2q         q              ≤2                     ≤2        ,
+             α0 + β0        α0 + β0        α2 + β 2 α2 + β 2             N + 3K − 4 j            N
+                                                         0        0          0       0
+
+where the first inequality follows from
+
+                                                                |α|2 + |β |2 1
+                                                    |αβ | ≤                 =
+                                                                     2        2
+and the second inequality follows from Claim 5.6 and √ α20 2 ≤ 1. Together with equation (5.7), this
+                                                         α0 +β0
+means                                             √ N
+                                                 4 K
+                           qt+1, j+1 − qt, j+1 ≤ √ ∑ a2i      ∑ pi .                          (5.9)
+                                                   N i=1 (α,β , j)∈At,i α,β , j
+
+Similarly to equation (5.5) we have
+
+                                              pt, j+1 + pt, j = Tr P(S j ⊕S j+1 ) ρt .
+
+We can then express the right hand side, similarly to equation (5.6), as a sum of terms p0j0 Tr P(S j ⊕S j+1 ) τ j0
+and piα,β , j0 Tr P(S j ⊕S j+1 ) τα,β
+                                  i                 i
+                                      , j0 . Since Sα,β , j ⊆ S j ⊕ S j+1 (by Corollary 5.4), we have
+
+                                                                        i
+                                                     Tr P(S j ⊕S j+1 ) τα,β ,j = 1.
+
+
+                                T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                                13
+                                                A NDRIS A MBAINIS
+
+This means that
+                                                       N
+                                     pt, j+1 + pt, j ≥ ∑ a2i         ∑           piα,β , j .
+                                                      i=1       (α,β , j)∈At,i
+
+Together with equation (5.9), this implies
+                                          √                      √            √
+                                         4 K                    4 K K        4 K
+                   qt+1, j+1 − qt, j+1 ≤ √ (pt, j + pt, j+1 ) ≤ √ ∑ pt, j0 = √ qt, j .
+                                           N                      N j0 = j     N
+
+
+
+
+6    Proof of Lemma 4.9
+We start with the case when pT,K/2+1 = · · · = pT,K = 0.
+                                                                                                 N
+                                                                                               (K/2  )
+Lemma 6.1. If pT,K/2+1 = · · · = pT,K = 0, the success probability of A is at most                     .
+                                                                                                (NK )
+
+Proof. Let |ψi be the final state. The state of register HI lies in TK/2 , which is an K/2
+                                                                                        N
+                                                                                          
+                                                                                           -dimensional
+                                                                              N
+                                                                                
+space. Therefore, there is a Schmidt decomposition for |ψi with at most K/2 terms. This means that
+the state of HA lies in an K/2
+                            N
+                                -dimensional subspace of HA ⊗ HS .
+                               
+
+    We express the final state as
+                                                      1
+                                      |ψi = ∑ q  |ψx i|xi .
+                                                        N
+                                                  x:|x|=K
+                                                                 K
+
+We can think of |ψx i as a quantum encoding for x and the final measurement as a decoding procedure
+that takes |ψx i and produces a guess for x. The probability that algorithm A succeeds is then equal to
+the average success probability of the encoding. We now use
+
+Theorem 6.2. [20] For any encoding |ψx i of M classical values by quantum states in d dimensions, the
+probability of success is at most d/M.
+
+    In our case, M = NK and d = K/2     N                                        N
+                                                                                 
+                                            because the states |ψi all lie in a K/2 -dimensional subspace
+of HA ⊗ HS . Therefore, Theorem 6.2 √    implies Lemma√6.1.
+    We decompose the state |ψT i as 1 − δ |ψT0 i + δ |ψT00 i where |ψT0 i is in the subspace HA ⊗ TK/2
+and |ψT00 i is in HA ⊗ (TK/2 )⊥ . We have
+
+                                                            K
+                                                δ=         ∑      pT, j .
+                                                      j=K/2+1
+
+
+The success probability of A is the probability that, if we measure both the register of HA containing
+the result of the computation and HI then we get i1 , . . . , iK and x1 , . . . , xN such that xi1 = · · · = xiK = 1.
+
+                             T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                     14
+                                           N EW QUANTUM LOWER BOUND METHOD
+
+    Consider the probability of getting i1 , . . . , iK and x1 , . . . , xN such that xi1 = · · · =
+                                                                                                    xiK = 1, when mea-
+                                                                                         N
+suring |ψT0 i (instead of |ψT i). By Lemma 6.1, this probability is at most K/2             / NK . We have
+                                          p                 √                p           √     √
+               kψT − ψT0 k ≤ (1 −          1 − δ 2 )kψT0 k + δ kψT00 k = (1 − 1 − δ 2 ) + δ ≤ 2 δ .
+
+We now apply
+Lemma 6.3. [10] For any states |ψi and |ψ 0 i and any measurement, the total variation distance between
+the probability distributions obtained by applying M to |ψi and to |ψ 0 i is at most 2kψ − ψ 0 k.
+    By Lemma 6.3, the probabilities of getting i1√  , . . . , iK and x1 , . . . , xN such that xi1 = · · · = xiK = 1,
+                                                                √
+when measuring |ψT i and |ψT0 i differ by at most 4 δ = 4 qT,K/2+1 . Therefore, the success probability
+of A is at most
+                                             N
+                                                
+                                           K/2      p
+                                             N
+                                                + 4 qT,K/2+1 .
+                                                         K
+
+
+7     Structure of the eigenspaces of ρt,i
+In this section, we prove Claims 5.2, 5.3, 5.5, and 5.6 describing the structure of the eigenspaces of ρt,i .
+Before giving the proofs, we briefly summarize the results in this section.
+    1. Let ρt,i be a matrix whose rows and columns are indexed by (x1 , . . . , xN ), xi ∈ {0, 1} with x1 +
+       . . . + xN = K. By Claim 5.2, if ρt,i is symmetric w. r. t. any permutation π ∈ SN that fixes i, then
+                                        i
+       its eigenspaces are of the form Sα,β  , j , which is the subspace spanned by the states of the form
+
+                                                          |ψ̃ii,0
+                                                               1 ,...,i j
+                                                                          i          |ψ̃ii,1
+                                                                                          1 ,...,i j
+                                                                                                     i
+                                                    α                         +β
+                                                        k|ψ̃ii,0
+                                                              1 ,...,i j
+                                                                         ik        k|ψ̃ii,1
+                                                                                         1 ,...,i j
+                                                                                                    ik
+
+       where |ψ̃ii,0
+                  1 ,...,i j
+                             i and |ψ̃ii,1
+                                        1 ,...,i j
+                                                   i are the states defined at the beginning of Section 5.
+                                          i
+    2. We then relate the eigenspaces Sα,β  , j to the subspaces S0 , . . . , SK defined in Section 4.2. In
+       Claim 5.3 we show that, for certain α0 and β0 , we have
+
+           • Sαi 0 ,β0 , j ⊆ S j ;
+              i
+           • S−β          ⊆ S j+1 ;
+                0 ,α0 , j
+
+
+       A corollary of this is that, for any α, β , we have
+                                              i          i             i
+                                             Sα,β , j ⊆ Sα0 ,β0 , j ⊕ S−β0 ,α0 , j ⊆ S j ⊕ S j+1 .
+
+       This is shown in Corollary 5.4.
+
+    3. Next, in Claim 5.5, we quantify how close Sα,β      i
+                                                             , j is to S j and S j+1 . The result is an expression for
+                  i               i                                             i
+       Tr PS j+1 τα,β , j (where τα,β , j is the maximally mixed state over Sα,β    , j ) that involves α, β and α0 , β0 .
+       To use that expression, we also need a bound on the ratio of α0 and β0 (Claim 5.6).
+
+                                     T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                  15
+                                                        A NDRIS A MBAINIS
+
+Proof of Claim 5.2. We rearrange the rows and the columns of ρt,i so that all rows and columns corre-
+sponding to |x1 . . . xN i with xi = 0 are before the rows and the columns corresponding to |x1 . . . xN i with
+xi = 1. We then express ρt,i as
+                                                              
+                                                        A B
+                                               ρt,i =            ,
+                                                        C D
+
+where A is an N−1       N−1                                                                     N−1       N−1
+                                                                                                           
+                K   ×     K      square  matrix  indexed by |x1 . . . xN i with xi = 0, D is an K−1    ×  K−1
+square matrix indexed by |x1 . . . xN i with xi = 1, and B and C are rectangular matrices with rows
+(columns) indexed by |x1 . . . xN i with xi = 0 and columns (rows) indexed by |x1 . . . xN i with xi = 1.
+    We claim that
+
+                                ρt,i |ψ̃ii,0
+                                          1 ,...,i j
+                                                     i = a11 |ψ̃ii,0
+                                                                  1 ,...,i j
+                                                                             i + a12 |ψ̃ii,1
+                                                                                          1 ,...,i j
+                                                                                                     i and
+                                ρt,i |ψ̃ii,1
+                                          1 ,...,i j
+                                                     i = a21 |ψ̃ii,0
+                                                                  1 ,...,i j
+                                                                             i + a22 |ψ̃ii,1
+                                                                                          1 ,...,i j
+                                                                                                     i,           (7.1)
+
+where a11 , a12 , a21 , a22 are independent of i1 , . . . , i j . To prove that, we first note that A and D are matrices
+where Axy and Dxy only depend on |{t : xt = yt }|. Therefore Lemma 4.3 applies. This means that Si,0                  j
+and Si,1
+      j are eigenspaces for A and D, respectively, and
+
+
+                                             A|ψ̃ii,0
+                                                   1 ,...,i j
+                                                              i = a11 |ψ̃ii,0
+                                                                           1 ,...,i j
+                                                                                      i and
+                                             D|ψ̃ii,1
+                                                   1 ,...,i j
+                                                              i = a22 |ψ̃ii,1
+                                                                           1 ,...,i j
+                                                                                      i,
+
+
+where a11 and a22 are the eigenvalues of A and D for the eigenspaces Si,0     i,1
+                                                                       j and S j . It remains to prove
+that
+
+                                             B|ψ̃ii,0
+                                                   1 ,...,i j
+                                                              i = a12 |ψ̃ii,1
+                                                                           1 ,...,i j
+                                                                                      i and                       (7.2)
+                                             C|ψ̃ii,1
+                                                   1 ,...,i j
+                                                              i = a21 |ψ̃ii,0
+                                                                           1 ,...,i j
+                                                                                      i.                          (7.3)
+
+
+Let M be a rectangular matrix, with entries indexed by x, y, with |x| = |y| = K and xi = 1 and yi = 0. The
+entries of M are Mxy = 1 if x and y differ in two places, with xi = 1, yi = 0 and xl = 0, yl = 1 for some
+l 6= i and Mxy = 0 otherwise. We claim
+
+
+                                                   M|ψ̃ii,0
+                                                         1 ,...,i j
+                                                                    i = c|ψ̃ii,1
+                                                                              1 ,...,i j
+                                                                                         i                        (7.4)
+
+for some c that may depend on N, k, and j but not on i1 , . . . , i j . To prove that, we need to prove two
+things. First,
+                                                   M|ψii,0
+                                                        1 ,...,i j
+                                                                   i = c|ψii,1
+                                                                            1 ,...,i j
+                                                                                       i.                         (7.5)
+
+                             T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                        16
+                                         N EW QUANTUM LOWER BOUND METHOD
+
+This follows by
+
+                                       1
+              M|ψii,0
+                   1 ,...,i j
+                              i= q                      ∑            M|xi
+                                     N− j−1
+                                              
+                                            x:xi1 =···=xi j =1,
+                                      k− j
+                                                   xi =0
+                                       1
+                            =q
+                                     N− j−1
+                                                       ∑             ∑ |x1 . . . x`−1 0x`+1 . . . xi−1 1xi+1 . . . xN i
+                                            x:xi1 =···=xi j =1 `:x` =1
+                                      K− j
+                                                   xi =0
+                                       1
+                                                                                                (K − j)(N − K)|ψii,1
+                                                                                          p
+                            =q
+                                     N− j−1
+                                             (N − K)                ∑            |yi =                           1 ,...,i j
+                                                                                                                             i.
+                                                             y:yi1 =···=yi j =1
+                                       K− j
+                                                                    yi =1
+
+
+Second, M(T ji,0 ) ⊆ T ji,1 and M(T ji,0 )⊥ ⊆ (T ji,1 )⊥ . The first statement immediately follows from equa-
+tion (7.5), because the subspaces T ji,0 and T ji,1 are spanned by the states |ψii,0
+                                                                                  1 ,...,i j
+                                                                                             i and |ψii,1
+                                                                                                       1 ,...,i j
+                                                                                                                  i, respec-
+tively. To prove the second statement, let |ψi ∈ (T ji,0 )⊥ and |ψi = ∑x ax |xi. We would like to prove
+M|ψi ∈ (T ji,1 )⊥ . This is equivalent to hψii,1
+                                              1 ,...,i j
+                                                         |M|ψi = 0 for all i1 , . . . , i j . We have
+
+                                                              1
+                            hψii,1
+                                1 ,··· ,i j
+                                            |M|ψi = q                           ∑              hy|M|ψi
+                                                            N− j−1
+                                                                      
+                                                                   y:yi1 =···=yi j =1
+                                                            K− j−1
+                                                              1
+                                                   =q                           ∑                  ∑       ax
+                                                            N− j−1
+                                                                      
+                                                                   x:xi1 =···=xi j =1, l:xl =1,
+                                                            K− j−1
+                                                                          xi =0       l ∈{i
+                                                                                        / 1 ,...,i j }
+                                                              1
+                                                   =q
+                                                            N− j−1
+                                                                       (K − j)                ∑         ax = 0 .
+                                                                                    x:xi1 =···=xi j =1
+                                                            K− j−1
+
+
+The first equality follows by writing out hψii,1
+                                               1 ,...,i j
+                                                          |, the second equality follows by writing out M. The
+third equality follows because, for every x with |x| = K and xi1 = · · · = xi j = 1, there are K − j more l ∈ [N]
+satisfying xl = 1. The fourth equality follows because ∑x:xi =···=xi j =1 ax is a constant times hψii,0 1 ,...,i j
+                                                                                                                   |ψi
+                                                                                    1
+
+and hψii,0
+        1 ,...,i j
+                   |ψi = 0, because |ψi ∈ (T ji,0 )⊥ .
+   Furthermore, BM is an N−1            × N−1
+                                                 
+                                    K        K      matrix, with (BM)x,y only depending on |{` : x` = y` = 1}|.
+Therefore, S j is an eigenspace of BM and, since |ψ̃ii,1
+                   i,1
+                                                             1 ,...,i j
+                                                                        i ∈ Si,1
+                                                                              j , we have
+
+
+                                                   BM|ψ̃ii,1
+                                                          1 ,...,i j
+                                                                     i = λ |ψ̃ii,1
+                                                                                1 ,...,i j
+                                                                                           i
+
+for an eigenvalue λ independent of i1 , . . . , i j . Together with equation (7.4), this implies equation (7.2)
+with a12 = λ /c.
+    Equation (7.3) follows by proving
+
+                         M T |ψ̃ii,1
+                                  1 ,...,i j
+                                             i = c|ψ̃ii,0
+                                                       1 ,...,i j
+                                                                  i and CM T |ψ̃ii,0
+                                                                                  1 ,...,i j
+                                                                                             i = λ |ψ̃ii,0
+                                                                                                        1 ,...,i j
+                                                                                                                   i,
+
+                               T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                                   17
+                                                                A NDRIS A MBAINIS
+
+in a similar way.
+    We now diagonalize the matrix                                                           
+                                                                 0          a11 a12
+                                                             M =                                  .
+                                                                            a21 a22
+                                                                  
+                                       α1                    α2
+It has two eigenvectors:                        and                   . Equation (7.1) implies that, for any i1 , . . . , i j ,
+                                       β1                    β2
+
+                                                           α1 |ψ̃ii,0
+                                                                   1 ,...,i j
+                                                                              i + β1 |ψ̃ii,1
+                                                                                          1 ,...,i j
+                                                                                                     i
+
+is an eigenvector of ρt,i with the same eigenvalue λ . Therefore, Sαi 1 ,β1 , j is an eigenspace of ρt,i . Similarly,
+Sαi 2 ,β2 , j is an eigenspace of ρt,i . Vectors α1 |ψ̃ii,0
+                                                         1 ,...,i j
+                                                                    i + β1 |ψ̃ii,1
+                                                                                1 ,...,i j
+                                                                                           i and α2 |ψ̃ii,0
+                                                                                                         1 ,...,i j
+                                                                                                                    i + β2 |ψ̃ii,1
+                                                                                                                                1 ,...,i j
+                                                                                                                                           i together
+span the same space as vectors |ψ̃ii,0
+                                    1 ,...,i j
+                                               i and |ψ̃ii,1
+                                                          1 ,...,i j
+                                                                     i. Since the vectors |ψ̃ii,`
+                                                                                               1 ,...,i j
+                                                                                                          i span Si,`
+                                                                                                                   j , this means
+that
+                                         Si,0       i,1
+                                            j ⊕ S j ⊆ Sα1 ,β1 ,i ⊕ Sα2 ,β2 ,i .
+
+Therefore, repeating this argument for every j gives a collection of eigenspaces that span the entire state
+space for HI . This means that any eigenspace of ρt,i is a direct sum of some of eigenspaces Sα,β
+                                                                                               i
+                                                                                                   , j.
+
+Proof of Claim 5.3. For part (i), consider the states |ψi1 ,...,i j i spanning T j . We have
+                                                           s                                s
+                                                               N − k i,0                         K − j i,1
+                                       |ψi1 ,...,i j i =            |ψ           i+                   |ψ           i                          (7.6)
+                                                               N − j i1 ,...,i j                 N − j i1 ,...,i j
+
+because an (N − K)/(N − j) fraction of the states |x1 . . . xN i with |x| = K and xi1 = · · · = xi j = 1 have
+                                                                      i,0     i,1 ⊥
+xi = 0 and the rest have xi = 1. The projection of these states to (T j−1 ⊕ T j−1 ) are
+                                               s                                   s
+                                                   N − K i,0                            K − j i,1
+                                                        |ψ̃          i+                      |ψ̃          i
+                                                   N − j i1 ,...,i j                    N − j i1 ,...,i j
+
+which, by equation (5.3) are exactly the states spanning Sαi 0 ,β0 , j . Furthermore, we claim that
+
+                                                                     i,0     i,1
+                                                           T j−1 ⊆ T j−1 ⊕ T j−1 ⊆ Tj .                                                       (7.7)
+
+The first containment is true because T j−1 is spanned by the states |ψi1 ,...,i j−1 i which either belong to
+  i,1     i,1
+T j−2 ⊆ T j−1 (if one of i1 , . . . , i j−1 is equal to i) or are a linear combination of states |ψii,0
+                                                                                                     1 ,...,i j−1
+                                                                                                                  i and
+|ψii,1
+    1 ,...,i j−1
+                                     i,0
+                 i which belong to T j−1       i,1
+                                         and T j−1 . The second containment follows because the states |ψii,1
+                                                                                                           1 ,...,i j−1
+                                                                                                                        i
+           i,1
+spanning T j−1 are the same as the states |ψi,i1 ,...,i j−1 i which belong to T j and the states |ψii,0
+                                                                                                     1 ,...,i j−1
+                                                                                                                  i spanning
+  i,0
+T j−1  can be expressed as linear combinations of |ψi1 ,...,i j−1 i and |ψi,i1 ,...,i j−1 i which both belong to T j .
+      The first part of (7.7) now implies
+                                                                   i,0     i,1 ⊥
+                                                Sαi 0 ,β0 , j ⊆ (T j−1 ⊕ T j−1 ) ⊆ (T j−1 )⊥ .
+
+                                    T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                                             18
+                                          N EW QUANTUM LOWER BOUND METHOD
+
+We also have Sαi 0 ,β0 , j ⊆ T j , because, Sαi 0 ,β0 , j is spanned by the states
+
+                                P(T i,0 ⊕T i,1 )⊥ |ψi1 ,...,i j i = |ψi1 ,...,i j i − PT i,0 ⊕T i,1 |ψi1 ,...,i j i
+                                    j−1     j−1                                                    j−1      j−1
+
+
+and |ψi1 ,...,i j i belongs to T j by the definition of T j and PT i,0 ⊕T i,1 |ψi1 ,...,i j i belongs to T j because of the
+                                                                                          j−1      j−1
+second part of (7.7). Therefore, Sαi 0 ,β0 , j ⊆ T j ∩ (T j−1 )⊥ = S j .
+    For the part (ii), we have
+
+                                          Sαi 0 ,β0 , j ⊆ Si,0   i,1    i,0   i,1
+                                                            j ⊕ S j ⊆ T j ⊕ T j ⊆ T j+1 ,
+
+where the first containment is true because Sαi 0 ,β0 , j is spanned by linear combinations of vectors |ψ̃ii,0
+                                                                                                            1 ,...,i j
+                                                                                                                       i
+(which belong to Si,0                 i,1                                      i,1
+                   j ) and vectors |ψ̃i1 ,...,i j i (which belong to S j ) and the last containment is true because
+of the second part of equation (7.7).
+    Let
+                                                     |ψ̃ii,0
+                                                          1 ,...,i j
+                                                                     i        |ψ̃ii,1
+                                                                                   1 ,...,i j
+                                                                                              i
+                                  |ψi = β0                              − α0                                   (7.8)
+                                                   k|ψ̃ii,0
+                                                          1 ,...,i j
+                                                                     ik      k|ψ̃ii,1
+                                                                                   1 ,...,i j
+                                                                                              ik
+be one of the vectors spanning Sβi 0 ,−α0 , j . To prove that |ψi is in S j+1 = T j+1 − T j , it remains to prove
+that |ψi is orthogonal to T j . This is equivalent to proving that |ψi is orthogonal to every vector |ψi01 ,...,i0j i
+spanning T j .
+
+                                                                           i,0     i,1 ⊥
+Case 1 {i01 , . . . , i0j } = {i1 , . . . , i j }: Since |ψi belongs to (T j−1 ⊕ T j−1 ) , it suffices to prove that |ψi
+                                                               i,0      i,1 ⊥
+is orthogonal to the projection of |ψi1 ,...,i j i to (T j−1       ⊕ T j−1  ) which, by the discussion after the equa-
+tion (7.6), is equal to
+                                           |ψ̃ii,01 ,...,i j
+                                                             i          |ψ̃ii,1
+                                                                             1 ,...,i j
+                                                                                        i
+                                    α0           i,0
+                                                                 + β 0      i,1
+                                                                                          .                       (7.9)
+                                         k|ψ̃i1 ,...,i j ik            k|ψ̃i1 ,...,i j ik
+¿From equations (7.8) and (7.9) we see that the inner product of the two states is α0 β0 − β0 α0 = 0.
+
+Case 2 {i01 , . . . , i0j } 6= {i1 , . . . , i j } but one of i01 , . . . , i0j is equal to i: For simplicity, assume i = i0j . Then
+|ψi01 ,...,i0j i is the same as |ψii,1
+                                     0 ,...,i0    i which belongs to T j−1        i,1                          i
+                                                                                      . By the definition of Sα,β , j , the vector |ψi
+                                    1     j−1
+              i,0     i,1 ⊥
+belongs to (T j−1 ⊕ T j−1 ) and is therefore orthogonal to |ψii,1
+                                                               0 ,...,i0 i.
+                                                                                              1      j−1
+
+
+
+Case 3 {i01 , . . . , i0j } 6= {i1 , . . . , i j } and none of i01 , . . . , i0j is equal to i: One of i01 , . . . , i0j must be not in
+{i1 , . . . , i j }. For simplicity, assume it is i0j . We have
+
+                                            |ψi01 ,...,i0j−1 i =          ∑               |ψi01 ,...,i0j−1 ,i0 i .
+                                                                      / 01 ,...,i0j−1 }
+                                                                   i0 ∈{i
+
+                                                                   i,0     i,1
+Also, hψi01 ,...,i0j−1 |ψi = 0, because |ψi01 ,...,i0j−1 i is in T j−1 ⊕ T j−1 . As proved in the previous case,
+
+                                                          hψi01 ,...,i0j−1 ,i |ψi = 0 .
+
+                                 T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                                   19
+                                                               A NDRIS A MBAINIS
+
+We therefore have
+                                                         ∑                   hψi01 ,...,i0j−1 ,i0 |ψi = 0 .                 (7.10)
+                                                   / 01 ,...,i0j−1 ,i}
+                                                i0 ∈{i
+
+By symmetry, the inner product hψi01 ,...,i0j−1 ,i0 |ψi is the same for every i0 ∈           / {i01 , . . . , i0j−1 , i}. Therefore,
+equation (7.10) means hψi01 ,...,i0j−1 ,i0 |ψi = 0 for every i0 ∈
+                                                                / {i01 , . . . , i0j−1 , i}.
+                      i                                                     i
+Proof of Claim 5.5. τα,β , j is a mixture of states |ψi from the subspace Sα,β , j . We prove the claim by
+showing that, for any of those states |ψi, the squared norm of its projection to S j+1 is equal to the right
+hand side of Claim 5.5. Since |ψi ∈ Sα,βi
+                                           , j we can write it as
+
+                                      |ψi =         ∑ ai ,...,i (α|ψ̃ii,0,...,i i + β |ψ̃ii,1,...,i i)
+                                                                   1         j           1       j         1       j
+                                                 i1 ,...,i j
+
+for some ai1 ,...,i j . Let
+
+                                |ψ + i =     ∑ ai ,...,i (β0 |ψ̃ii,0,...,i i − α0 |ψ̃ii,1,...,i i) and
+                                                          1            j             1       j         1       j
+                                           i1 ,...,i j
+
+                                |ψ − i =     ∑ ai ,...,i (α0 |ψ̃ii,0,...,i i + β0 |ψ̃ii,1,...,i i) .
+                                                          1            j             1       j         1       j
+                                           i1 ,...,i j
+
+Then, |ψi is a linear combination of |ψ + i which belongs to Sβi 0 ,−α0 , j ⊂ S j+1 (by Claim 5.3) and |ψ − i
+which belongs to Sαi 0 ,β0 , j ⊆ S j . Moreover, all three states are linear combinations of |ψ 0 i, |ψ 1 i defined
+by
+                                           |ψ ` i = ∑ ai1 ,...,i j |ψ̃ii,`
+                                                                        1 ,...,i j
+                                                                                   i.
+                                                                       i1 ,...,i j
+
+We have
+
+           |ψi = α|ψ 0 i + β |ψ 1 i ,        |ψ + i = β0 |ψ 0 i − α0 |ψ 1 i and |ψ − i = α0 |ψ 0 i + β0 |ψ 1 i .
+
+Since |ψ + i and |ψ − i belong to subspaces S j+1 and S j which are orthogonal, we must have hψ + |ψ − i = 0.
+This means
+                                       α0 β0 kψ 0 k2 − β0 α0 kψ 1 k2 = 0 .
+By dividing the equation by α0 β0 , we get kψ 0 k2 = kψ 1 k2 and kψ 0 k = kψ 1 k. Since kψk = 1, this means
+that
+                                                            1
+                                    kψ 0 k = kψ 1 k = p           = 1.
+                                                         α +β2
+                                                           2
+
+       Since |ψi lies in the subspace spanned by |ψ + i which belongs to S j+1 and |ψ − i which belongs to
+S j , the norm of the projection of |ψi to S j+1 is equal to |hψ|ψ + i|/kψ + k. By expressing |ψi and |ψ + i
+in terms of |ψ 0 i and |ψ 1 i, we get
+                               |hψ|ψ + i| αβ0 kψ 0 k2 − α0 β kψ 1 k2 |αβ0 − α0 β |
+                                         = q                           = q         ,
+                                 kψ + k      β 2 kψ 0 k2 + α 2 kψ 0 k2    α2 + β 2
+                                                               0                         0                         0   0
+
+proving the claim.
+
+                                T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                                 20
+                                         N EW QUANTUM LOWER BOUND METHOD
+
+Proof of Claim 5.6. We will prove kψ̃ii,0
+                                       1 ,...,i j
+                                                  k ≥ 12 kψ̃ii,1
+                                                              1 ,...,i j
+                                                                         k, because that means
+                           √                      √     √                     √
+                            N − K i,0            1 N − K K − j i,1              N −K
+                      α0 = √      kψ̃          k≥ √     √     kψ̃          k= √      β0
+                             N − j i1 ,...,i j   2 K − j N − j i1 ,...,i j   2 K− j
+
+and                                                                                                           p
+                             β0                       β0                               1   4(K − j)
+                        q              ≤q                               =q            =√              .
+                           α02 + β02           N−K     2    2                  N−K       N + 3K − 4 j
+                                              4(K− j) β0 + β0             1 + 4(K− j)
+
+      To prove kψ̃ii,0
+                    1 ,...,i j
+                               k ≥ kψ̃ii,1
+                                        1 ,...,i j
+                                                   k, we calculate the vector
+
+                                                   |ψ̃ii,0
+                                                        1 ,...,i j
+                                                                   i = P(T i,0 )⊥ |ψii,0
+                                                                                      1 ,...,i j
+                                                                                                 i.
+                                                                           j−1
+
+
+
+Both the vector |ψii,0
+                    1 ,...,i j
+                                                    i,0
+                               i and the subspace T j−1 are fixed by
+
+                                                       Uπ |xi = |xπ(1) . . . xπ(N) i
+
+for any permutation π that fixes i and maps {i1 , . . . , i j } to itself. This means that |ψ̃ii,0
+                                                                                                1 ,...,i j
+                                                                                                           i is fixed by
+any such Uπ as well. Therefore, the amplitude of |xi, |x| = K, xi = 0 in |ψ̃ii,0
+                                                                              1 ,...,i j
+                                                                                         i only depends on
+|{i1 , . . . , i j } ∩ {t : xt = 1}|. This means |ψ̃ii,0
+                                                      1 ,...,i j
+                                                                 i is of the form
+
+                                                           j
+                                           |ψ0 i = ∑ αm                          ∑                    |xi .
+                                                        m=0                 x:|x|=K,xi =0
+                                                                    |{i1 ,...,i j }∩{t:xt =1}|=m
+
+To simplify the following calculations, we multiply α0 , . . . , α j by the same constant so that
+
+                                                                             1
+                                                               αj = q                .
+                                                                            N− j−1
+                                                                             K− j
+
+
+Then, |ψ̃ii,0
+           1 ,...,i j
+                      i remains a multiple of |ψ0 i but may no longer be equal to |ψ0 i.
+    The coefficients α0 , . . . , α j−1 should be such that the state is orthogonal to T j−1 and, in particular,
+orthogonal to states |ψii,0    1 ,...,i`
+                                         i for ` ∈ {0, . . . , j − 1}. By writing out hψ0 |ψii,0
+                                                                                              1 ,...,i`
+                                                                                                        i = 0, we get
+
+                                               j                                   
+                                                               N − j−1            j−`
+                                             ∑ αm                                       = 0.                          (7.11)
+                                             m=`                K −m              m−`
+
+To show that, we first note that |ψii,0
+                                     1 ,...,i`
+                                               i is a uniform superposition of all |xi, |x| = K, xi = 0, xi1 = · · · =
+xil = 1. If we want to choose x subject to those constraints and also satisfying |{i1 , . . . , i j }∩{t : xt = 1}| =
+m, we have to set xt = 1 for m − ` different t ∈ {i`+1 , . . . , i j } and for K − m different t ∈   / {i, i1 , . . . , i j }.
+                        j−`       N− j−1
+                                            
+This can be done in m−` and K−m different ways, respectively.
+
+                                  T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                         21
+                                                     A NDRIS A MBAINIS
+
+    By solving the system of equations (7.11), we get that the only solution is
+
+                                                             N− j−1
+                                                                                   
+                                                         j−m K− j
+                                               αm = (−1)     N− j−1
+                                                                    αj .                                         (7.12)
+                                                              K−m
+
+
+    Let |ψ00 i = |ψ0 i/kψ0 k be the normalized version of |ψ0 i. Then
+
+                                     |ψ̃ii,0
+                                          1 ,...,i j
+                                                     i = hψ00 |ψii,0
+                                                                  1 ,...,i j
+                                                                             i|ψ00 i and
+                                                                                 hψ0 |ψii,0
+                                                                                         1 ,...,i j
+                                                                                                    i
+                                    kψ̃ii,0
+                                         1 ,...,i j
+                                                    k = hψ00 |ψii,0
+                                                                 1 ,...,i j
+                                                                            i=                          .         (7.13)
+                                                                                       kψ0 k
+
+First, we have
+                                                         hψ0 |ψii,0
+                                                                 1 ,...,i j
+                                                                            i = 1,
+
+because |ψii,0         i consists of N−   j−1
+                                              
+            1 ,...,i j                   K− j   basis states |xi, xi = 0, xi1 = · · · = xi j = 1, each of which has
+               q
+                       N− j−1
+                                in both |ψ0 i and |ψii,0
+                              
+amplitude 1/             K− j                         1 ,...,i j
+                                                                 i. Second,
+
+                                                                            2
+                                j
+                                                        j   N− j−1
+                                  j   N −   j − 1                j    K−  j
+                   kψ0 k2 = ∑                      αm2 = ∑            N− j−1
+                                                                              α 2j
+                            m=0   m     K  −  m            m=0  m      K−m
+                             j   N− j−1
+                                             
+                                                    j  
+                                  j    K− j               j (K − m)!(N − K + m − j − 1)!
+                          = ∑         N− j−1
+                                             = ∑
+                            m=0 m      K−m        m=0 m           (K − j)!(N − K − 1)!
+                             j     
+                                  j       (K − m) · · · (K − j + 1)
+                          = ∑                                                                                     (7.14)
+                            m=0 m (N − K − 1) · · · (N − K + m − j)
+
+
+with the first equality following because there are mj N−            j−1
+                                                                         
+                                                                 K−m vectors x such that |x| = K, xi = 0, xt = 1
+for m different t ∈ {i1 , . . . , i j } and K − m different t ∈
+                                                              / {i, i1 , . . . , i j }, the second
+                                                                                             q     equality following from
+                                                                                                N− j−1
+                                                                                                       
+equation (7.12) and the third equality following from our choice α j = 1/                        K− j .
+    We can similarly calculate kψ̃ii,1
+                                    1 ,...,i j
+                                               k. We omit the details and just state the result. The counterpart
+of equation (7.13) is
+                                                                    hψ1 |ψii,1
+                                                                            1 ,...,i j
+                                                                                       i
+                                               kψ̃ii,1
+                                                    1 ,...,i j
+                                                               k=                          ,
+                                                                         kψ1 k
+
+with |ψ1 i being the counterpart of |ψ0 i:
+
+                                                     j
+                                       |ψ1 i = ∑ αm                        ∑                   |xi ,
+                                                  m=0                  x:|x|=K,xi =1
+                                                               |{i1 ,...,i j }∩{`:x` =1}|=m
+
+
+                              T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                                         22
+                                 N EW QUANTUM LOWER BOUND METHOD
+            q
+                                                         i,1
+with α0 = 1/ N−  j−1
+                     
+              K− j−1 . Similarly as before, we get hψ1 |ψi1 ,...,i j i = 1 and
+
+                                      j   N− j−1
+                                         j  K− j−1
+                           kψ1 k2 = ∑       N− j−1
+                                                   
+                                    m=0  m  K−m−1
+                                     j  
+                                         j     (K − m − 1) . . . (K − j)
+                                  = ∑                                       .               (7.15)
+                                    m=0 m (N − K) . . . (N − K + m − j + 1)
+
+Each term in (7.14) is
+                                          (K − m)(N − K + m − j)
+                                              (K − j)(N − K)
+times the corresponding term in equation (7.15). We have
+                                  K −m N −K +m− j    K
+                                                  ≤     ·2 = 4,
+                                  K− j    N −K      K/2
+
+because j ≤ K/2 and N − K + m − j ≤ N − K (because of m ≤ j). Therefore, kψ0 k2 ≤ 4kψ1 k2 which
+implies
+                                              1       1     1
+                          kψ̃ii,0
+                               1 ,...,i j
+                                          k=       ≥√      = kψ̃ii,1
+                                                                   ,...,i k .
+                                             kψ0 k   4kψ1 k 2 1 j
+
+    Acknowledgment. I would like to thank Frederic Magniez, Robert Špalek, Ronald de Wolf, and
+several anonymous referees for very helpful comments on a draft of this paper.
+
+
+References
+ [1] S. A ARONSON: Limitations of quantum advice and one-way communication. Theory of Comput-
+     ing, 1:1–28, 2005. Conference version in CCC’2004. [ToC:v001/a001, arXiv:quant-ph/0402095].
+     2
+
+ [2] S. A ARONSON AND Y. S HI: Quantum lower bounds for the collision and the element distinctness
+     problems. J. ACM, 51(4):595–605, 2004. [JACM:1008731.1008735]. 2
+
+ [3] A. A MBAINIS: Quantum lower bounds by quantum arguments. J. Comput. System Sci.,
+     64(4):750–767, 2002.   Conference version in STOC’00. [JCSS:10.1006/jcss.2002.1826,
+     STOC:335305.335394, arXiv:quant-ph/0002066]. 1, 3, 4
+
+ [4] A. A MBAINIS: Polynomial degree vs. quantum query complexity. J. Comput. System Sci.,
+     72(2):220–238, 2006. Conference version in FOCS’03. [JCSS:10.1016/j.jcss.2005.06.006,
+     FOCS:10.1109/SFCS.2003.1238197, arXiv:quant-ph/0305028]. 2, 3, 4
+
+ [5] A. A MBAINIS: Quantum walk algorithm for element distinctness.        SIAM J. Comput.,
+     37(1):210–239, 2007. Conference version in FOCS’04. [SICOMP:10.1137/S0097539705447311,
+     arXiv:quant-ph/0311001]. 2
+
+                           T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                    23
+                                         A NDRIS A MBAINIS
+
+ [6] A. A MBAINIS , R. Š PALEK , AND R. DE W OLF: A new quantum lower bound method, with ap-
+     plications to direct product theorems and time-space tradeoffs. In Proc. 38th STOC, pp. 618–633.
+     ACM Press, 2006. [STOC:10.1145/1132516.1132604]. 2
+
+ [7] A. A MBAINIS , R. Š PALEK , AND R. DE W OLF: Quantum direct product theorems for symmetric
+     functions and time-space tradeoffs. Algorithmica, 55(3):422–461, 2009. 2
+
+ [8] H. BARNUM , M. S AKS , AND M. S ZEGEDY: Quantum decision trees and semidefinite program-
+     ming. In Proc. 18th IEEE Conf. on Comput. Complex. (CCC’03), pp. 179–193. IEEE Press, 2003.
+     [CCC:10.1109/CCC.2003.1214419]. 2
+
+ [9] R. B EALS , H. B UHRMAN , R. C LEVE , M. M OSCA , AND R. DE W OLF: Quantum lower
+     bounds by polynomials. J. ACM, 48(4):778–797, 2001. Conference version in FOCS’98.
+     [JACM:502090.502097, FOCS:10.1109/SFCS.1998.743485, arXiv:quant-ph/9802049]. 1
+
+[10] E. B ERNSTEIN AND U. VAZIRANI: Quantum complexity theory. SIAM J. Comput., 26(5):1411–
+     1473, 1997. [SICOMP:10.1137/S0097539796300921]. 15
+
+[11] G. B RASSARD , P. H ØYER , AND A. TAPP: Quantum counting. In Proc. 25th Intern. Conf. Au-
+     tomata, Languages and Programming (ICALP’98), volume 1443 of LNCS, pp. 820–831. Springer,
+     1998. [ICALP:ap2mrf08d8gcqppe, arXiv:quant-ph/9805082]. 1
+
+[12] H. B UHRMAN AND R. DE W OLF: Complexity measures and decision tree complexity: A survey.
+     Theoret. Comput. Sci., 288:21–43, 2002. [TCS:10.1016/S0304-3975(01)00144-X]. 3
+
+[13] L. G ROVER: A fast quantum mechanical algorithm for database search. In Proc. 28th STOC, pp.
+     212–219. ACM Press, 1996. [STOC:237814.237866, arXiv:quant-ph/9605043]. 1
+
+[14] P. H ØYER , T. L EE , AND R. Š PALEK: Negative weights make adversaries stronger. In Proc. 39th
+     STOC, pp. 526–535. ACM Press, 2007. [STOC:10.1145/1250790.1250867]. 3
+
+[15] P. H OYER , J. N EERBEK , AND Y. S HI: Quantum lower bounds of ordered searching, sorting
+     and element distinctness. Algorithmica, 34:429–448, 2002. Conference version at ICALP’01.
+     [Algorithmica:25gl9elr5rxr3q6a, arXiv:quant-ph/0102078]. 4
+
+[16] H. K LAUCK , R. Š PALEK , AND R. DE W OLF: Quantum and classical strong direct product theo-
+     rems and optimal time-space tradeoffs. SIAM J. Comput., 36(5):1472–1493, 2007. Conference ver-
+     sion at FOCS’04. [SICOMP:10.1137/05063235X, FOCS:10.1109/FOCS.2004.52, arXiv:quant-
+     ph/0402123]. 2
+
+[17] D. K NUTH: Combinatorial matrices. In Selected Papers on Discrete Mathematics, CSLI Lecture
+     Notes, no. 106. University of Chicago Press, 2003. 8
+
+[18] S. L APLANTE AND F. M AGNIEZ: Lower bounds for randomized and quantum query com-
+     plexity using Kolmogorov arguments. SIAM J. Comput., 38(1):46–62, 2008. Conference ver-
+     sion at CCC’04. [SICOMP:10.1137/050639090, CCC:10.1109/CCC.2004.1313852, arXiv:quant-
+     ph/0311189]. 2
+
+                         T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                         24
+                               N EW QUANTUM LOWER BOUND METHOD
+
+[19] F. M AGNIEZ , M. S ANTHA , AND M. S ZEGEDY: Quantum algorithms for the triangle
+     problem.  SIAM J. Comput., 37(2):413–424, 2007.       Conference version at SODA’05.
+     [SICOMP:10.1137/050643684, arXiv:quant-ph/0310134]. 2
+
+[20] A. NAYAK: Optimal lower bounds for quantum automata and random access codes. In Proc.
+     40th FOCS, pp. 369–377. IEEE Press, 1999. [FOCS:10.1109/SFFCS.1999.814608, arXiv:quant-
+     ph/9904093]. 14
+
+[21] B. R EICHARDT: Span programs and quantum query complexity: The general adversary bound is
+     nearly tight for every Boolean functionnote. Quant-ph, arXiv:0904.2759, 2009. [arXiv:0904.2759].
+     3
+
+[22] R. Š PALEK: The multiplicative quantum adversary. In Proc. 23rd IEEE Conf. on Comput. Com-
+     plex., pp. 237–248. IEEE Press, 2008. [CCC:10.1109/CCC.2008.9]. 2
+
+[23] R. Š PALEK AND M. S ZEGEDY: All quantum adversary methods are equivalent. Theory of
+     Computing, 2(1):1–18, 2006. Conference version at ICALP’05. [ToC:v002/a001, arXiv:quant-
+     ph/0409116]. 2
+
+[24] S. Z HANG: On the power of Ambainis’s lower bounds.              Theoret. Comput. Sci., 339(2–
+     3):241–256, 2005.  Conference version in ICALP’04.               [TCS:10.1016/j.tcs.2005.01.019,
+     ICALP:gm2ff6wpc0q39v3x, arXiv:quant-ph/0311060]. 2
+
+
+AUTHOR
+
+      Andris Ambainis
+      professor
+      University of Latvia
+      Raina bulv. 19, Riga, LV-1586, Latvia
+      andris ambainis lu lv
+      http://home.lanet.lv/∼ambainis
+
+
+ABOUT THE AUTHOR
+
+      A NDRIS A MBAINIS received his Ph. D. from the University of California, Berkeley in 2001,
+         supervised by Umesh Vazirani. After that, he was a postdoc at the Institute for Advanced
+         Study, Princeton and at the University of California, Berkeley, and a faculty member at
+         the University of Waterloo, Canada. In 2007, Andris returned to his native Latvia and
+         became Professor at the University of Latvia. His research interests include many areas
+         of quantum computing and quantum information theory (quantum algorithms, quantum
+         complexity theory, quantum cryptography, pseudorandom quantum states, etc.), as well
+         as the classical theory of computation.
+
+
+
+                         T HEORY OF C OMPUTING, Volume 6 (2010), pp. 1–25                           25
+

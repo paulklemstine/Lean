@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/U5WETLyk3rjySSxCvX5phys8Zyw</id>
+  <title>arXiv Query: search_query=abs:"integer factorization" AND abs:"heuristic"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:46Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22integer+factorization%22+AND+abs:%22heuristic%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>10</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1305.4365v1</id>
+    <title>Performance Analysis of Parallel Pollard's Rho Algorithm</title>
+    <updated>2013-05-19T14:44:57Z</updated>
+    <link href="https://arxiv.org/abs/1305.4365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.4365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is one of the vital algorithms discussed as a part of analysis of any black-box cipher suites where the cipher algorithm is based on number theory. The origin of the problem is from Discrete Logarithmic Problem which appears under the analysis of the crypto-graphic algorithms as seen by a crypt-analyst. The integer factorization algorithm poses a potential in computational science too, obtaining the factors of a very large number is challenging with a limited computing infrastructure. This paper analyses the Pollards Rho heuristic with a varying input size to evaluate the performance under a multi-core environment and also to estimate the threshold for each computing infrastructure.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-19T14:44:57Z</published>
+    <arxiv:comment>8 pages, 4 figures, Journal</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Anjan K. Koundinya</name>
+    </author>
+    <author>
+      <name>Harish G.</name>
+    </author>
+    <author>
+      <name>Srinath N. K.</name>
+    </author>
+    <author>
+      <name>Raghavendra G. E.</name>
+    </author>
+    <author>
+      <name>Pramod Y. V.</name>
+    </author>
+    <author>
+      <name>Sandeep R.</name>
+    </author>
+    <author>
+      <name>Punith Kumar G</name>
+    </author>
+    <arxiv:doi>10.5121/ijcsit.2013.5214</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5121/ijcsit.2013.5214" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.10074v1</id>
+    <title>Integer factorization as subset-sum problem</title>
+    <updated>2022-05-20T10:41:52Z</updated>
+    <link href="https://arxiv.org/abs/2205.10074v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.10074v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper elaborates on a sieving technique that has first been applied in 2018 for improving bounds on deterministic integer factorization. We will generalize the sieve in order to obtain a polynomial-time reduction from integer factorization to a specific instance of the multiple-choice subset-sum problem. As an application, we will improve upon special purpose factorization algorithms for integers composed of divisors with small difference. In particular, we will refine the runtime complexity of Fermat's factorization algorithm by a large subexponential factor. Our first procedure is deterministic, rigorous, easy to implement and has negligible space complexity. Our second procedure is heuristically faster than the first, but has non-negligible space complexity.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-20T10:41:52Z</published>
+    <arxiv:comment>22 pages (including appendix)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2023.02.010</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2023.02.010" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1003.3261v3</id>
+    <title>Four Integer Factorization Algorithms</title>
+    <updated>2010-08-31T19:20:03Z</updated>
+    <link href="https://arxiv.org/abs/1003.3261v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1003.3261v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The theoretical aspects of four integer factorization algorithms are discussed in details in this note. The focus is on the performances of these algorithms on the subset of hard to factor balanced integers N = pq, p &lt; q &lt; 2p. The running time complexity of these algorithms ranges from deterministic exponential time complexity O(N^(1/2)) to heuristic and unconditional logarithmic time complexity O((log N)^c), c &gt; 0 constant.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-03-16T21:57:31Z</published>
+    <arxiv:comment>Improvements in Theorem 14, 12 Pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>N. A. Carella</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09151v1</id>
+    <title>Probability Analysis and Comparison of Well-Known Integer Factorization Algorithms</title>
+    <updated>2021-01-21T06:50:05Z</updated>
+    <link href="https://arxiv.org/abs/2101.09151v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09151v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Two prominent methods for integer factorization are those based on general integer sieve and elliptic curve. The general integer sieve method can be specialized to quadratic integer sieve method. In this paper, a probability analysis for the success of these methods is described, under some reasonable conditions. The estimates presented are specialized for the elliptic curve factorization. These methods are compared through heuristic estimates. It is shown that the elliptic curve method is a probabilistic polynomial time algorithm under the assumption of uniform probability distribution for the arising group orders and clearly more likely to succeed, faster asymptotically.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-21T06:50:05Z</published>
+    <arxiv:primary_category term="math.GM"/>
+    <arxiv:journal_ref>Global Journal of Pure and Applied Mathematics, Volume 17, Number 1 (2021), pp. 1-8 (ISSN 0973-1768)</arxiv:journal_ref>
+    <author>
+      <name>Duggirala Meher Krishna</name>
+    </author>
+    <author>
+      <name>Duggirala Ravi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.09651v2</id>
+    <title>A comment on "Factoring integers with sublinear resources on a superconducting quantum processor"</title>
+    <updated>2023-07-21T09:32:10Z</updated>
+    <link href="https://arxiv.org/abs/2307.09651v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.09651v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing has the potential to revolutionize cryptography by breaking classical public-key cryptography schemes, such as RSA and Diffie-Hellman. However, breaking the widely used 2048-bit RSA using Shor's quantum factoring algorithm is expected to require millions of noisy physical qubits and is well beyond the capabilities of present day quantum computers. A recent proposal by Yan et. al. tries to improve the widely debated Schnorr's lattice-based integer factorization algorithm using a quantum optimizer (QAOA), and further claim that one can break RSA 2048 using only 372 qubits. In this work, we present an open-source implementation of the algorithm proposed by Yan et. al. and show that, even if we had a perfect quantum optimizer (instead of a heuristic like QAOA), the proposed claims don't hold true. Specifically, our implementation shows that the claimed sublinear lattice dimension for the Hybrid quantum+classical version of Schnorr's algorithm successfully factors integers only up to 70 bits and fails to find enough factoring relations for random 80 bit integers and beyond. We further hope that our implementation serves as a playground for the community to easily test other hybrid quantum + classical integer factorization algorithm ideas using lattice based reductions.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-18T21:46:54Z</published>
+    <arxiv:comment>6 pages, 1 algorithm, 1 table</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Tanuj Khattar</name>
+    </author>
+    <author>
+      <name>Noureldin Yosri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.03215v2</id>
+    <title>The cycle structure of unicritical polynomials</title>
+    <updated>2018-01-24T21:55:12Z</updated>
+    <link href="https://arxiv.org/abs/1801.03215v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.03215v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A polynomial with integer coefficients yields a family of dynamical systems indexed by primes as follows: for any prime $p$, reduce its coefficients mod $p$ and consider its action on the field $\mathbb{F}_p$. The questions of whether and in what sense these families are random have been studied extensively, spurred in part by Pollard's famous "rho" algorithm for integer factorization (the heuristic justification of which is the randomness of one such family). However, the cycle structure of these families cannot be random, since in any such family, the number of cycles of a fixed length in any dynamical system in the family is bounded. In this paper, we show that the cycle statistics of many of these families are as random as possible. As a corollary, we show that most members of these families have many cycles, addressing a conjecture of Mans et. al.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-10T02:09:50Z</published>
+    <arxiv:comment>19 pages, minor typos corrected</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <arxiv:journal_ref>Int. Math. Res. Not. IMRN (2020), no. 23, 9120-9147</arxiv:journal_ref>
+    <author>
+      <name>Andrew Bridy</name>
+    </author>
+    <author>
+      <name>Derek Garton</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rny232</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rny232" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.1516v1</id>
+    <title>Distributed Wake-Up Scheduling for Energy Saving in Wireless Networks</title>
+    <updated>2011-06-08T08:12:19Z</updated>
+    <link href="https://arxiv.org/abs/1106.1516v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.1516v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A customary solution to reduce the energy consumption of wireless communication devices is to periodically put the radio into low-power sleep mode. A relevant problem is to schedule the wake-up of nodes in such a way as to ensure proper coordination among devices, respecting delay constraints while still saving energy. In this paper, we introduce a simple algebraic characterization of the problem of periodic wake-up scheduling under both energy consumption and delay constraints. We demonstrate that the general problem of wake-up times coordination is equivalent to integer factorization and discuss the implications on the design of efficient scheduling algorithms. We then propose simple polynomial time heuristic algorithms that can be implemented in a distributed fashion and present a message complexity of the order of the number of links in the network. Numerical results are provided in order to assess the performance of the proposed techniques when applied to wireless sensor networks.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-08T08:12:19Z</published>
+    <arxiv:comment>13 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Francesco De Pellegrini</name>
+    </author>
+    <author>
+      <name>Karina Gomez</name>
+    </author>
+    <author>
+      <name>Daniele Miorandi</name>
+    </author>
+    <author>
+      <name>Imrich Chlamtac</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.0298v1</id>
+    <title>Steepest Ascent Hill Climbing For A Mathematical Problem</title>
+    <updated>2010-10-02T07:27:43Z</updated>
+    <link href="https://arxiv.org/abs/1010.0298v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.0298v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The paper proposes artificial intelligence technique called hill climbing to find numerical solutions of Diophantine Equations. Such equations are important as they have many applications in fields like public key cryptography, integer factorization, algebraic curves, projective curves and data dependency in super computers. Importantly, it has been proved that there is no general method to find solutions of such equations. This paper is an attempt to find numerical solutions of Diophantine equations using steepest ascent version of Hill Climbing. The method, which uses tree representation to depict possible solutions of Diophantine equations, adopts a novel methodology to generate successors. The heuristic function used help to make the process of finding solution as a minimization process. The work illustrates the effectiveness of the proposed methodology using a class of Diophantine equations given by a1. x1 p1 + a2. x2 p2 + ...... + an . xn pn = N where ai and N are integers. The experimental results validate that the procedure proposed is successful in finding solutions of Diophantine Equations with sufficiently large powers and large number of variables.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-02T07:27:43Z</published>
+    <arxiv:comment>8 Pages, 3 Figures, 2 Tables, International Symposium on Advanced Engineering and Applied Management 40th Anniversary in Higher Education - Informatics &amp; Computer Science, University Politehnica, Timisoara, 4-5 November, 2010, Hunedoara, ROMANIA</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Siby Abraham</name>
+    </author>
+    <author>
+      <name>Imre Kiss</name>
+    </author>
+    <author>
+      <name>Sugata Sanyal</name>
+    </author>
+    <author>
+      <name>Mukund Sanglikar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.19390v1</id>
+    <title>A Probabilistic Computing Approach to the Closest Vector Problem for Lattice-Based Factoring</title>
+    <updated>2025-10-22T09:06:08Z</updated>
+    <link href="https://arxiv.org/abs/2510.19390v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.19390v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The closest vector problem (CVP) is a fundamental optimization problem in lattice-based cryptography and its conjectured hardness underpins the security of lattice-based cryptosystems. Furthermore, Schnorr's lattice-based factoring algorithm reduces integer factoring (the foundation of current cryptosystems, including RSA) to the CVP. Recent work has investigated the inclusion of a heuristic CVP approximation `refinement' step in the lattice-based factoring algorithm, using quantum variational algorithms to perform the heuristic optimization. This coincides with the emergence of probabilistic computing as a hardware accelerator for randomized algorithms including tasks in combinatorial optimization. In this work we investigate the application of probabilistic computing to the heuristic optimization task of CVP approximation refinement in lattice-based factoring. We present the design of a probabilistic computing algorithm for this task, a discussion of `prime lattice' parameters, and experimental results showing the efficacy of probabilistic computing for solving the CVP as well as its efficacy as a subroutine for lattice-based factoring. The main results found that (a) this approach is capable of finding the maximal available CVP approximation refinement in time linear in problem size and (b) probabilistic computing used in conjunction with the lattice parameters presented can find the composite prime factors of a semiprime number using up to 100x fewer lattice instances than similar quantum and classical methods.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-22T09:06:08Z</published>
+    <arxiv:comment>18 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Max O. Al-Hasso</name>
+    </author>
+    <author>
+      <name>Marko von der Leyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.02277v1</id>
+    <title>A modified block Lanczos algorithm with fewer vectors</title>
+    <updated>2016-04-08T08:49:24Z</updated>
+    <link href="https://arxiv.org/abs/1604.02277v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.02277v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The block Lanczos algorithm proposed by Peter Montgomery is an efficient means to tackle the sparse linear algebra problem which arises in the context of the number field sieve factoring algorithm and its predecessors. We present here a modified version of the algorithm, which incorporates several improvements: we discuss how to efficiently handle homogeneous systems and how to reduce the number of vectors stored in the course of the computation. We also provide heuristic justification for the success probability of our modified algorithm. While the overall complexity and expected number of steps of the block Lanczos is not changed by the modifications presented in this article, we expect these to be useful for implementations of the block Lanczos algorithm where the storage of auxiliary vectors sometimes has a non-negligible cost. 1 Linear systems for integer factoring For factoring a composite integer N, algorithms based on the technique of combination of congruences look for several pairs of integers (x, y) such that x 2 $\not\equiv$ y 2 mod N. This equality is hoped to be non trivial for at least one of the obtained pairs, letting gcd(x -- y, N) unveil a factor of the integer N. Several algorithms use this strategy: the CFRAC algorithm, the quadratic sieve and its variants, and the number field sieve. Pairs (x, y) as above are obtained by combining relations which have been collected as a step of these algorithms. Relations are written multiplicatively as a set of valuations. All the algorithms considered seek a multiplicative combination of these relations which can be rewritten as an equality of squares. This is achieved by solving a system of linear equations defined over F 2, where equations are parity constraints on</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-08T08:49:24Z</published>
+    <arxiv:comment>Topics in Computational Number Theory inspired by Peter L. Montgomery, Cambridge University Press, 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+  </entry>
+</feed>

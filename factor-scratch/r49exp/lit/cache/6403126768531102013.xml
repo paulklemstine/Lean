@@ -1,0 +1,504 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/CtkOG5BrZRXbckBXmimZCzuK1IQ</id>
+  <title>arXiv Query: search_query=abs:"index calculus"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:04Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22index+calculus%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>25</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2211.06821v2</id>
+    <title>Factoring using multiplicative relations modulo $n$: a subexponential algorithm inspired by the index calculus</title>
+    <updated>2023-07-16T14:20:32Z</updated>
+    <link href="https://arxiv.org/abs/2211.06821v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.06821v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We demonstrate that a modification of the classical index calculus algorithm can be used to factor integers. More generally, we reduce the factoring problem to finding an overdetermined system of multiplicative relations in any factor base modulo $n$, where $n$ is the integer whose factorization is sought. The algorithm has subexponential runtime $\exp(O(\sqrt{\log n \log \log n}))$ (or $\exp(O( (\log n)^{1/3} (\log \log n)^{2/3} ))$ with the addition of a number field sieve), but requires a rational linear algebra phase, which is more intensive than the linear algebra phase of the classical index calculus algorithm. The algorithm is certainly slower than the best known factoring algorithms, but is perhaps somewhat notable for its simplicity and its similarity to the index calculus.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-13T05:28:04Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Katherine E. Stange</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.07544v3</id>
+    <title>A Las Vegas algorithm to solve the elliptic curve discrete logarithm problem</title>
+    <updated>2018-02-05T10:27:33Z</updated>
+    <link href="https://arxiv.org/abs/1703.07544v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.07544v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we describe a new Las Vegas algorithm to solve the elliptic curve discrete logarithm problem. The algorithm depends on a property of the group of rational points of an elliptic curve and is thus not a generic algorithm. The algorithm that we describe has some similarities with the most powerful index-calculus algorithm for the discrete logarithm problem over a finite field.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-22T07:03:29Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ayan Mahalanobis</name>
+    </author>
+    <author>
+      <name>Vivek Mallick</name>
+    </author>
+    <arxiv:doi>10.13140/RG.2.2.22661.86249</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.13140/RG.2.2.22661.86249" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1405.1059v2</id>
+    <title>Index Calculus in the Trace Zero Variety</title>
+    <updated>2015-02-23T10:29:16Z</updated>
+    <link href="https://arxiv.org/abs/1405.1059v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1405.1059v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We discuss how to apply Gaudry's index calculus algorithm for abelian varieties to solve the discrete logarithm problem in the trace zero variety of an elliptic curve. We treat in particular the practically relevant cases of field extensions of degree 3 or 5. Our theoretical analysis is compared to other algorithms present in the literature, and is complemented by results from a prototype implementation.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-05-05T20:15:29Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Elisa Gorla</name>
+    </author>
+    <author>
+      <name>Maike Massierer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.04870v2</id>
+    <title>t-multiple discrete logarithm problem and solving difficulty</title>
+    <updated>2018-03-23T02:33:30Z</updated>
+    <link href="https://arxiv.org/abs/1605.04870v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.04870v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Considering the difficult problem under classical computing model can be solved by the quantum algorithm in polynomial time, t-multiple discrete logarithm problems presented. The problem is non-degeneracy and unique solution. We talk about what the parameter effects the problem solving difficulty. Then we pointed out that the index-calculus algorithm is not suitable for the problem, and two sufficient conditions of resistance to the quantum algorithm for the hidden subgroup problem are given.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-22T11:50:01Z</published>
+    <arxiv:comment>7 pages, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xiangqun Fu</name>
+    </author>
+    <author>
+      <name>Wansu Bao</name>
+    </author>
+    <author>
+      <name>Jianhong Shi</name>
+    </author>
+    <author>
+      <name>Xiang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1005.0205v1</id>
+    <title>Practical improvements to class group and regulator computation of real quadratic fields</title>
+    <updated>2010-05-03T06:49:09Z</updated>
+    <link href="https://arxiv.org/abs/1005.0205v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1005.0205v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present improvements to the index-calculus algorithm for the computation of the ideal class group and regulator of a real quadratic field. Our improvements consist of applying the double large prime strategy, an improved structured Gaussian elimination strategy, and the use of Bernstein's batch smoothness algorithm. We achieve a significant speed-up and are able to compute the ideal class group structure and the regulator corresponding to a number field with a 110-decimal digit discriminant.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-05-03T06:49:09Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Lecture notes in computer science (2010)</arxiv:journal_ref>
+    <author>
+      <name>Jean-François Biasse</name>
+      <arxiv:affiliation>LIX, INRIA Bordeaux - Sud-Ouest</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jacobson John Michael</name>
+      <arxiv:affiliation>CPSC</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.10818v1</id>
+    <title>A categorified excision principle for elliptic symbol families</title>
+    <updated>2019-01-30T13:37:42Z</updated>
+    <link href="https://arxiv.org/abs/1901.10818v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.10818v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a categorical index calculus for elliptic symbol families. The categorified index problems we consider are a secondary version of the traditional problem of expressing the index class in K-theory in terms of differential-topological data. They include orientation problems for moduli spaces as well as similar problems for skew-adjoint and self-adjoint operators. The main result of this paper is an excision principle which allows the comparison of categorified index problems on different manifolds. Excision is a powerful technique for actually solving the orientation problem; applications appear in the companion papers arXiv:1811.01096, arXiv:1811.02405, and arXiv:1811.09658.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-30T13:37:42Z</published>
+    <arxiv:comment>32 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <author>
+      <name>Markus Upmeier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0606607v1</id>
+    <title>Index calculus with double large prime variation for curves of small genus with cyclic class group</title>
+    <updated>2006-06-23T21:09:52Z</updated>
+    <link href="https://arxiv.org/abs/math/0606607v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0606607v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an index calculus algorithm with double large prime variation which lends itself well to a rigorous analysis. Using this algorithm we prove that for fixed genus $g \geq 2$, the discrete logarithm problem in degree 0 class groups of non-singular curves over finite fields $\mathbb{F}_q$ can be solved in an expected time of $\tilde{O}(q^{2-2/g})$, provided that the curve is given by a plane model of bounded degree and the degree 0 class group is cyclic.
+  The result generalizes a previous result for hyperelliptic curves given by an imaginary Weierstraß equation obtained by Gaudry, Thomé, Thériault and the author.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-06-23T21:09:52Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Claus Diem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.16644v1</id>
+    <title>Solving norm equations in global function fields</title>
+    <updated>2024-01-30T00:35:13Z</updated>
+    <link href="https://arxiv.org/abs/2401.16644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.16644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present two new algorithms for solving norm equations over global function fields with at least one infinite place of degree 1 and no wild ramification. The first of these is a substantial improvement of a method due to Gaál and Pohst, while the second approach uses index calculus techniques and is significantly faster asymptotically and in practice. Both algorithms incorporate compact representations of field elements which results in a significant gain in performance compared to the Gaál-Pohst approach. We provide Magma implementations, analyze the complexity of all three algorithms under varying asymptotics on the field parameters, and provide empirical data on their performance.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-30T00:35:13Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Sumin Leem</name>
+    </author>
+    <author>
+      <name>Michael Jacobson</name>
+    </author>
+    <author>
+      <name>Renate Scheidler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0710.2363v1</id>
+    <title>Global duality, signature calculus and the discrete logarithm problem</title>
+    <updated>2007-10-11T23:35:18Z</updated>
+    <link href="https://arxiv.org/abs/0710.2363v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0710.2363v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the discrete logarithm problem for the multiplicative group and for elliptic curves over a finite field by using a lifting of the corresponding object to an algebraic number field and global duality. We introduce the \textit{signature} of a Dirichlet character (in the multiplicative group case) or principal homogeneous space (in the elliptic curve case), which is a measure of the ramification at certain places. We then develop \textit{signature calculus}, which generalizes and refines the index calculus method. Finally, we show the random polynomial time equivalence for these two cases between the problem of computing signatures and the discrete logarithm problem.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-10-11T23:35:18Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ming-Deh Huang</name>
+    </author>
+    <author>
+      <name>Wayne Raskind</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.04698v1</id>
+    <title>Levi-Civita connections for a class of noncommutative minimal surfaces</title>
+    <updated>2021-02-09T08:21:26Z</updated>
+    <link href="https://arxiv.org/abs/2102.04698v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.04698v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study connections on hermitian modules, and show that metric connections exist on regular hermitian modules; i.e finitely generated projective modules together with a non-singular hermitian form. In addition, we develop an index calculus for such modules, and provide a characterization in terms of the existence of a pseudo-inverse of the matrix representing the hermitian form with respect to a set of generators. As a first illustration of the above concepts, we find metric connections on the fuzzy sphere. Finally, the framework is applied to a class of noncommutative minimal surfaces, for which there is a natural concept of torsion, and we prove that there exist metric and torsion-free connections for every minimal surface in this class.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-09T08:21:26Z</published>
+    <arxiv:primary_category term="math.QA"/>
+    <author>
+      <name>Joakim Arnlind</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.3661v2</id>
+    <title>Resolution of Linear Algebra for the Discrete Logarithm Problem Using GPU and Multi-core Architectures</title>
+    <updated>2014-12-04T19:28:20Z</updated>
+    <link href="https://arxiv.org/abs/1402.3661v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.3661v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In cryptanalysis, solving the discrete logarithm problem (DLP) is key to assessing the security of many public-key cryptosystems. The index-calculus methods, that attack the DLP in multiplicative subgroups of finite fields, require solving large sparse systems of linear equations modulo large primes. This article deals with how we can run this computation on GPU- and multi-core-based clusters, featuring InfiniBand networking. More specifically, we present the sparse linear algebra algorithms that are proposed in the literature, in particular the block Wiedemann algorithm. We discuss the parallelization of the central matrix--vector product operation from both algorithmic and practical points of view, and illustrate how our approach has contributed to the recent record-sized DLP computation in GF($2^{809}$).</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-15T07:10:15Z</published>
+    <arxiv:comment>Euro-Par 2014 Parallel Processing, Aug 2014, Porto, Portugal. \&amp;lt;http://europar2014.dcc.fc.up.pt/\&amp;gt;</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hamza Jeljeli</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.05270v2</id>
+    <title>Curves, Jacobians, and Cryptography</title>
+    <updated>2018-11-09T22:16:55Z</updated>
+    <link href="https://arxiv.org/abs/1807.05270v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.05270v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The main purpose of this paper is to give an overview over the theory of abelian varieties, with main focus on Jacobian varieties of curves reaching from well-known results till to latest developments and their usage in cryptography. In the first part we provide the necessary mathematical background on abelian varieties, their torsion points, Honda-Tate theory, Galois representations, with emphasis on Jacobian varieties and hyperelliptic Jacobians. In the second part we focus on applications of abelian varieties on cryptography and treating separately, elliptic curve cryptography, genus 2 and 3 cryptography, including Diffie-Hellman Key Exchange, index calculus in Picard groups, isogenies of Jacobians via correspondences and applications to discrete logarithms. Several open problems and new directions are suggested.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-13T20:02:23Z</published>
+    <arxiv:comment>66 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>Contemp. Math., 724, pg. 279 -- 344, Amer. Math. Soc., Providence, RI, 2019</arxiv:journal_ref>
+    <author>
+      <name>Gerhard Frey</name>
+    </author>
+    <author>
+      <name>Tony Shaska</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.07173v1</id>
+    <title>Cover attacks for elliptic curves with prime order</title>
+    <updated>2020-12-13T22:41:08Z</updated>
+    <link href="https://arxiv.org/abs/2012.07173v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.07173v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a new approach to the elliptic curve discrete logarithm problem over cubic extension fields $\mathbb{F}_{q^3}$. It is based on a transfer: First an $\mathbb{F}_q$-rational $(\ell,\ell,\ell)$-isogeny from the Weil restriction of the elliptic curve under consideration with respect to $\mathbb{F}_{q^3}/\mathbb{F}_q$ to the Jacobian variety of a genus three curve over $\mathbb{F}_q$ is applied and then the problem is solved in the Jacobian via the index-calculus attacks. Although using no covering maps in the construction of the desired homomorphism, this method is, in a sense, a kind of cover attack. As a result, it is possible to solve the discrete logarithm problem in some elliptic curve groups of prime order over $\mathbb{F}_{q^3}$ in a time of $\tilde{O}(q)$.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-13T22:41:08Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Journal of Cryptology 36, 2023</arxiv:journal_ref>
+    <author>
+      <name>Song Tian</name>
+    </author>
+    <arxiv:doi>10.1007/s00145-023-09474-2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00145-023-09474-2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.09967v1</id>
+    <title>Extending the GLS endomorphism to speed up GHS Weil descent using Magma</title>
+    <updated>2021-06-18T07:44:26Z</updated>
+    <link href="https://arxiv.org/abs/2106.09967v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.09967v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $q = 2^n$, and let $E / \mathbb{F}_{q^{\ell}}$ be a generalized Galbraith--Lin--Scott (GLS) binary curve, with $\ell \ge 2$ and $(\ell, n) = 1$.We show that the GLS endomorphism on $E / \mathbb{F}_{q^{\ell}}$ induces an efficient endomorphism on the Jacobian $J_H(\mathbb{F}_q)$ of the genus-$g$ hyperelliptic curve $H$ corresponding to the image of the GHS Weil-descent attack applied to $E/\mathbb{F}_{q^\ell}$, and that this endomorphism yields a factor-$n$ speedup when using standard index-calculus procedures for solving the Discrete Logarithm Problem (DLP) on $J_H(\mathbb{F}_q)$. Our analysis is backed up by the explicit computation of a discrete logarithm defined on a prime-order subgroup of a GLS elliptic curve over the field $\mathbb{F}_{2^{5\cdot 31}}$. A Magma implementation of our algorithm finds the aforementioned discrete logarithm in about $1,035$ CPU-days.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-18T07:44:26Z</published>
+    <arxiv:comment>Finite Fields and Their Applications, Elsevier, In press, 75</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Jesús-Javier Chi-Domínguez</name>
+      <arxiv:affiliation>CINVESTAV-IPN</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Francisco Rodríguez-Henríquez</name>
+      <arxiv:affiliation>CINVESTAV-IPN</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Benjamin Smith</name>
+      <arxiv:affiliation>GRACE, LIX</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1016/j.ffa.2021.101891</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ffa.2021.101891" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0806.2995v2</id>
+    <title>Isogenies and the Discrete Logarithm Problem in Jacobians of Genus 3 Hyperelliptic Curves</title>
+    <updated>2009-02-27T12:45:26Z</updated>
+    <link href="https://arxiv.org/abs/0806.2995v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0806.2995v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We describe the use of explicit isogenies to translate instances of the Discrete Logarithm Problem (DLP) from Jacobians of hyperelliptic genus 3 curves to Jacobians of non-hyperelliptic genus 3 curves, where they are vulnerable to faster index calculus attacks. We provide explicit formulae for isogenies with kernel isomorphic to $(\ZZ/2\ZZ)^3$ (over an algebraic closure of the base field) for any hyperelliptic genus 3 curve over a field of characteristic not 2 or 3. These isogenies are rational for a positive fraction of all hyperelliptic genus 3 curves defined over a finite field of characteristic $p &gt; 3$. Subject to reasonable assumptions, our constructions give an explicit and efficient reduction of instances of the DLP from hyperelliptic to non-hyperelliptic Jacobians for around 18.57% of all hyperelliptic genus 3 curves over a given finite field. We conclude with a discussion on extending these ideas to isogenies with more general kernels. A condensed version of this work appeared in the proceedings of the EUROCRYPT 2008 conference.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-06-18T13:31:52Z</published>
+    <arxiv:comment>This is an extended version of work that appeared in the proceedings of the Eurocrypt 2008 conference</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Benjamin Smith</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.2386v1</id>
+    <title>Conformal Computing: Algebraically connecting the hardware/software boundary using a uniform approach to high-performance computation for software and hardware applications</title>
+    <updated>2008-03-17T02:38:49Z</updated>
+    <link href="https://arxiv.org/abs/0803.2386v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.2386v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a systematic, algebraically based, design methodology for efficient implementation of computer programs optimized over multiple levels of the processor/memory and network hierarchy. Using a common formalism to describe the problem and the partitioning of data over processors and memory levels allows one to mathematically prove the efficiency and correctness of a given algorithm as measured in terms of a set of metrics (such as processor/network speeds, etc.). The approach allows the average programmer to achieve high-level optimizations similar to those used by compiler writers (e.g. the notion of "tiling").
+  The approach presented in this monograph makes use of A Mathematics of Arrays (MoA, Mullin 1988) and an indexing calculus (i.e. the psi-calculus) to enable the programmer to develop algorithms using high-level compiler-like optimizations through the ability to algebraically compose and reduce sequences of array operations. Extensive discussion and benchmark results are presented for the Fast Fourier Transform and other important algorithms.</summary>
+    <category term="cs.MS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-17T02:38:49Z</published>
+    <arxiv:primary_category term="cs.MS"/>
+    <author>
+      <name>Lenore R. Mullin</name>
+    </author>
+    <author>
+      <name>James E. Raynolds</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1312.6751v1</id>
+    <title>A lagrangian description of elastic motion in riemannian manifolds and an angular invariant of axially-symmetric elasticity tensors</title>
+    <updated>2013-12-24T04:01:34Z</updated>
+    <link href="https://arxiv.org/abs/1312.6751v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1312.6751v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article is a description of elasticity theory for readers with mathematical background. The first sections are an abridgment of parts of the book by Marsden and Hughes, including a compact identification of the equations of motion as the Euler-Lagrange equations for the lagrangian density. The other sections describe the basic first-order classification of materials, from the point of view of representation theory as opposed to index calculus. It includes a computation of the axes of symmetry, when they exist, for most of the irreducible components of the elasticity tensor. When the two components of the 5-dimensional type $V_5$ have axes of symmetry, some invariants appear: 2 angles in $S^{1}$ that measure the deviation of an associated decomposition $V_5\otimes \mathbb{R}^2=V_5\oplus V_5$ from the standard one. See also the classification appearing for example in (Chadwick, Vianello, and Cowin) and (Bona, Bucataru, and Slawinski) by symmetry group in $SO(3)$. A somewhat more representation-theoretic approach can be found in (Itin and Hehl), and a complete list of polynomial invariants for generic elasticity tensors can be found in (Boehler, Kirillov Jr, and Onat).</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-12-24T04:01:34Z</published>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>James Mathews</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.5520v4</id>
+    <title>Accelerating Iterative SpMV for Discrete Logarithm Problem Using GPUs</title>
+    <updated>2014-12-04T19:23:53Z</updated>
+    <link href="https://arxiv.org/abs/1209.5520v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.5520v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the context of cryptanalysis, computing discrete logarithms in large cyclic groups using index-calculus-based methods, such as the number field sieve or the function field sieve, requires solving large sparse systems of linear equations modulo the group order. Most of the fast algorithms used to solve such systems --- e.g., the conjugate gradient or the Lanczos and Wiedemann algorithms --- iterate a product of the corresponding sparse matrix with a vector (SpMV). This central operation can be accelerated on GPUs using specific computing models and addressing patterns, which increase the arithmetic intensity while reducing irregular memory accesses. In this work, we investigate the implementation of SpMV kernels on NVIDIA GPUs, for several representations of the sparse matrix in memory. We explore the use of Residue Number System (RNS) arithmetic to accelerate modular operations. We target linear systems arising when attacking the discrete logarithm problem on groups of size 100 to 1000 bits, which includes the relevant range for current cryptanalytic computations. The proposed SpMV implementation contributed to solving the discrete logarithm problem in GF($2^{619}$) and GF($2^{809}$) using the FFS algorithm.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-25T07:37:11Z</published>
+    <arxiv:comment>International Workshop on the Arithmetic of Finite Fields WAIFI 2014, Sep 2014, Gebze, Turkey. \&amp;lt;http://waifi.org/\&amp;gt;</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hamza Jeljeli</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.1566v1</id>
+    <title>A complete realisability semantics for intersection types and arbitrary expansion variables</title>
+    <updated>2009-05-11T08:01:02Z</updated>
+    <link href="https://arxiv.org/abs/0905.1566v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.1566v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Expansion was introduced at the end of the 1970s for calculating principal typings for $λ$-terms in intersection type systems. Expansion variables (E-variables) were introduced at the end of the 1990s to simplify and help mechanise expansion. Recently, E-variables have been further simplified and generalised to also allow calculating other type operators than just intersection. There has been much work on semantics for intersection type systems, but only one such work on intersection type systems with E-variables. That work established that building a semantics for E-variables is very challenging. Because it is unclear how to devise a space of meanings for E-variables, that work developed instead a space of meanings for types that is hierarchical in the sense of having many degrees (denoted by indexes). However, although the indexed calculus helped identify the serious problems of giving a semantics for expansion variables, the sound realisability semantics was only complete when one single E-variable is used and furthermore, the universal type $ω$ was not allowed. In this paper, we are able to overcome these challenges. We develop a realisability semantics where we allow an arbitrary (possibly infinite) number of expansion variables and where $ω$ is present. We show the soundness and completeness of our proposed semantics.</summary>
+    <category term="math.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-11T08:01:02Z</published>
+    <arxiv:comment>5th International Colloquium on Theoretical Aspects of Computing, ICTAC 2008, 1-3 September 2008, Istanbul : Turquie (2008)</arxiv:comment>
+    <arxiv:primary_category term="math.LO"/>
+    <author>
+      <name>Fairouz Kamareddine</name>
+      <arxiv:affiliation>ULTRA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Karim Nour</name>
+      <arxiv:affiliation>LAMA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Vincent Rahli</name>
+      <arxiv:affiliation>ULTRA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. B. Wells</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10158v4</id>
+    <title>Solving Modular Linear Systems with a Constraint by parallel decomposition of the Smith form and extended Euclidean division modulo powers of primes divisors</title>
+    <updated>2025-09-07T14:07:45Z</updated>
+    <link href="https://arxiv.org/abs/2503.10158v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10158v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integral linear systems $Ax=b$ with matrices $A$, $b$ and solutions $x$ are also required to be in integers, can be solved using invariant factors of $A$ (by computing the Smith Canonical Form of $A$). This paper explores a new problem which arises in applications, that of obtaining conditions for solving the Modular Linear System $Ax=b\rem n$ given $A,b$ in $\zz_n$ for $x$ in $\zz_n$ along with the constraint that the value of the linear function $φ(x)=\la w,x\ra$ is coprime to $n$ for some solution $x$. In this paper we develop decomposition of the system to coprime moduli $p^{r(p)}$ which are divisors of $n$ and show how such a decomposition simplifies the computation of Smith form. This extends the well known index calculus method of computing the discrete logarithm where the moduli over which the linear system is reduced were assumed to be prime (to solve the reduced systems over prime fields) to the case when the factors of the modulus are prime powers $p^{r(p)}$. It is shown how this problem can be addressed effciently using the invariant factors and Smith form of the augmented matrix $[A,-p^{r(p)}I]$ and conditions modulo $p$ satisfied by $w$, where $p^{r(p)}$ vary over all divisors of $n$ with $p$ prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T08:36:00Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Virendra Sule</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.01588v2</id>
+    <title>Rigorous methods for computational number theory</title>
+    <updated>2026-02-19T11:43:27Z</updated>
+    <link href="https://arxiv.org/abs/2512.01588v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.01588v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the first algorithm for computing class groups and unit groups of arbitrary number fields that provably runs in probabilistic subexponential time, assuming the Extended Riemann Hypothesis (ERH). Previous subexponential algorithms were either restricted to imaginary quadratic fields, or relied on several heuristic assumptions that have long resisted rigorous analysis.
+  The heart of our method is a new general strategy to provably solve a recurring computational problem in number theory (assuming ERH): given an ideal class $[\mathfrak{a}]$ of a number field $K$, sample an ideal $\mathfrak b \in [\mathfrak{a}]$ belonging to a particular family of ideals (e.g., the family of smooth ideals, or near-prime ideals). More precisely, let $\mathcal{S}$ be an arbitrary family of ideals, and $\mathcal{S}_B$ the family of $B$-smooth ideals. We describe an efficient algorithm that samples ideals $\mathfrak b \in [\mathfrak{a}]$ such that $\mathfrak b \in \mathcal{S} \cdot\mathcal{S}_B$ with probability proportional to the density of $\mathcal{S}$ within the set of all ideals.
+  The case where $\mathcal{S}$ is the set of prime ideals yields the family $\mathcal{S}\cdot\mathcal{S}_B$ of near-prime ideals, of particular interest in that it constitutes a dense family of efficiently factorable ideals. The case of smooth ideals $\mathcal{S} = \mathcal{S}_B$ regularly comes up in index-calculus algorithms (notably to compute class groups and unit groups), where it has long constituted a theoretical obstacle overcome only by heuristic arguments.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-01T12:03:30Z</published>
+    <arxiv:comment>154 pages,</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Koen de Boer</name>
+    </author>
+    <author>
+      <name>Alice Pellet-Mary</name>
+    </author>
+    <author>
+      <name>Benjamin Wesolowski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.01032v1</id>
+    <title>Semi-regular sequences and other random systems of equations</title>
+    <updated>2020-11-02T15:21:38Z</updated>
+    <link href="https://arxiv.org/abs/2011.01032v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.01032v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The security of multivariate cryptosystems and digital signature schemes relies on the hardness of solving a system of polynomial equations over a finite field. Polynomial system solving is also currently a bottleneck of index-calculus algorithms to solve the elliptic and hyperelliptic curve discrete logarithm problem. The complexity of solving a system of polynomial equations is closely related to the cost of computing Groebner bases, since computing the solutions of a polynomial system can be reduced to finding a lexicographic Groebner basis for the ideal generated by the equations. Several algorithms for computing such bases exist: We consider those based on repeated Gaussian elimination of Macaulay matrices. In this paper, we analyze the case of random systems, where random systems means either semi-regular systems, or quadratic systems in n variables which contain a regular sequence of n polynomials. We provide explicit formulae for bounds on the solving degree of semi-regular systems with m &gt; n equations in n variables, for equations of arbitrary degrees for m = n+1, and for any m for systems of quadratic or cubic polynomials. In the appendix, we provide a table of bounds for the solving degree of semi-regular systems of m = n + k quadratic equations in n variables for 2 &lt;= k; n &lt;= 100 and online we provide the values of the bounds for 2 &lt;= k; n &lt;= 500. For quadratic systems which contain a regular sequence of n polynomials, we argue that the Eisenbud-Green-Harris Conjecture, if true, provides a sharp bound for their solving degree, which we compute explicitly.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-02T15:21:38Z</published>
+    <arxiv:comment>27 pages, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>M. Bigdeli</name>
+    </author>
+    <author>
+      <name>E. De Negri</name>
+    </author>
+    <author>
+      <name>M. M. Dizdarevic</name>
+    </author>
+    <author>
+      <name>E. Gorla</name>
+    </author>
+    <author>
+      <name>R. Minko</name>
+    </author>
+    <author>
+      <name>S. Tsakou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11269v1</id>
+    <title>A New Approach to Generic Lower Bounds: Classical/Quantum MDL, Quantum Factoring, and More</title>
+    <updated>2024-02-17T13:00:47Z</updated>
+    <link href="https://arxiv.org/abs/2402.11269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the limitations of the generic approaches to solving cryptographic problems in classical and quantum settings in various models.
+  - In the classical generic group model (GGM), we find simple alternative proofs for the lower bounds of variants of the discrete logarithm (DL) problem: the multiple-instance DL and one-more DL problems (and their mixture). We also re-prove the unknown-order GGM lower bounds, such as the order finding, root extraction, and repeated squaring.
+  - In the quantum generic group model (QGGM), we study the complexity of variants of the discrete logarithm. We prove the logarithm DL lower bound in the QGGM even for the composite order setting. We also prove an asymptotically tight lower bound for the multiple-instance DL problem. Both results resolve the open problems suggested in a recent work by Hhan, Yamakawa, and Yun.
+  - In the quantum generic ring model we newly suggested, we give the logarithmic lower bound for the order-finding algorithms, an important step for Shor's algorithm. We also give a logarithmic lower bound for a certain generic factoring algorithm outputting relatively small integers, which includes a modified version of Regev's algorithm.
+  - Finally, we prove a lower bound for the basic index calculus method for solving the DL problem in a new idealized group model regarding smooth numbers.
+  The quantum lower bounds in both models allow certain (different) types of classical preprocessing. All of the proofs are significantly simpler than the previous proofs and are through a single tool, the so-called compression lemma, along with linear algebra tools. Our use of this lemma may be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-17T13:00:47Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minki Hhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.12648v1</id>
+    <title>Solving $X^{q+1}+X+a=0$ over Finite Fields</title>
+    <updated>2019-12-29T13:38:09Z</updated>
+    <link href="https://arxiv.org/abs/1912.12648v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.12648v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Solving the equation $P_a(X):=X^{q+1}+X+a=0$ over finite field $\GF{Q}$, where $Q=p^n, q=p^k$ and $p$ is a prime, arises in many different contexts including finite geometry, the inverse Galois problem \cite{ACZ2000}, the construction of difference sets with Singer parameters \cite{DD2004}, determining cross-correlation between $m$-sequences \cite{DOBBERTIN2006,HELLESETH2008} and to construct error-correcting codes \cite{Bracken2009}, as well as to speed up the index calculus method for computing discrete logarithms on finite fields \cite{GGGZ2013,GGGZ2013+} and on algebraic curves \cite{M2014}.
+  Subsequently, in \cite{Bluher2004,HK2008,HK2010,BTT2014,Bluher2016,KM2019,CMPZ2019,MS2019}, the $\GF{Q}$-zeros of $P_a(X)$ have been studied: in \cite{Bluher2004} it was shown that the possible values of the number of the zeros that $P_a(X)$ has in $\GF{Q}$ is $0$, $1$, $2$ or $p^{\gcd(n, k)}+1$.
+  Some criteria for the number of the $\GF{Q}$-zeros of $P_a(x)$ were found in \cite{HK2008,HK2010,BTT2014,KM2019,MS2019}. However, while the ultimate goal is to identify all the $\GF{Q}$-zeros, even in the case $p=2$, it was solved only under the condition $\gcd(n, k)=1$ \cite{KM2019}.
+  We discuss this equation without any restriction on $p$ and $\gcd(n,k)$. New criteria for the number of the $\GF{Q}$-zeros of $P_a(x)$ are proved. For the cases of one or two $\GF{Q}$-zeros, we provide explicit expressions for these rational zeros in terms of $a$. For the case of $p^{\gcd(n, k)}+1$ rational zeros, we provide a parametrization of such $a$'s and express the $p^{\gcd(n, k)}+1$ rational zeros by using that parametrization.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-29T13:38:09Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Kwang Ho Kim</name>
+    </author>
+    <author>
+      <name>Junyop Choe</name>
+    </author>
+    <author>
+      <name>Sihem Mesnager</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.01003v1</id>
+    <title>Complete solution over $\GF{p^n}$ of the equation $X^{p^k+1}+X+a=0$</title>
+    <updated>2021-01-04T14:26:16Z</updated>
+    <link href="https://arxiv.org/abs/2101.01003v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.01003v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of solving explicitly the equation $P_a(X):=X^{q+1}+X+a=0$ over the finite field $\GF{Q}$, where $Q=p^n$, $q=p^k$ and $p$ is a prime, arises in many different contexts including finite geometry, the inverse Galois problem \cite{ACZ2000}, the construction of difference sets with Singer parameters \cite{DD2004}, determining cross-correlation between $m$-sequences \cite{DOBBERTIN2006} and to construct error correcting codes \cite{Bracken2009}, cryptographic APN functions \cite{BTT2014,Budaghyan-Carlet_2006}, designs \cite{Tang_2019}, as well as to speed up the index calculus method for computing discrete logarithms on finite fields \cite{GGGZ2013,GGGZ2013+} and on algebraic curves \cite{M2014}.
+  Subsequently, in \cite{Bluher2004,HK2008,HK2010,BTT2014,Bluher2016,KM2019,CMPZ2019,MS2019,KCM19}, the $\GF{Q}$-zeros of $P_a(X)$ have been studied. In \cite{Bluher2004}, it was shown that the possible values of the number of
+  the zeros that $P_a(X)$ has in $\GF{Q}$ is $0$, $1$, $2$ or $p^{\gcd(n, k)}+1$.
+  Some criteria for the number of the $\GF{Q}$-zeros of $P_a(x)$ were
+  found in \cite{HK2008,HK2010,BTT2014,KM2019,MS2019}. However, while the ultimate goal is to explicit all the $\GF{Q}$-zeros,
+  even in the case $p=2$, it was solved only under the condition $\gcd(n, k)=1$ \cite{KM2019}.
+  In this article, we discuss this equation without any restriction on $p$ and $\gcd(n,k)$. In \cite{KCM19}, for the cases of one or two $\GF{Q}$-zeros, explicit expressions for these rational zeros in terms of $a$ were provided, but for the case of $p^{\gcd(n, k)}+1$ $\GF{Q}-$ zeros it was remained open to explicitly compute the zeros. This paper solves the remained problem, thus now the equation $X^{p^k+1}+X+a=0$ over $\GF{p^n}$ is completely solved for any prime $p$, any integers $n$ and $k$.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-04T14:26:16Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:1912.12648</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Kwang Ho Kim</name>
+    </author>
+    <author>
+      <name>Jong Hyok Choe</name>
+    </author>
+    <author>
+      <name>Sihem Mesnager</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,1026 @@
+Advances in Mathematics of Communications
+Volume X, No. 0X, 200X, X–XX
+
+Web site: http://www.aimSciences.org
+
+IMPROVEMENTS IN THE COMPUTATION OF IDEAL CLASS
+GROUPS OF IMAGINARY QUADRATIC NUMBER FIELDS
+
+Jean-François Biasse
+LIX - École Polytechnique
+91128 Palaiseau , France
+
+(Communicated by Renate Scheidler)
+Abstract. We investigate improvements to the algorithm for the computation
+of ideal class group described by Jacobson in the imaginary quadratic case.
+These improvements rely on the large prime strategy and a new method for
+performing the linear algebra phase. We achieve a significant speed-up and are
+able to compute 110-decimal digits discriminant ideal class group in less than
+a week.
+
+1. Introduction
+Given a fundamental discriminant ∆, it is known that the corresponding
+ideal
+√
+class group Cl(∆) of the order O∆ of discriminant ∆ in K = Q( ∆) is a finite
+abelian group that can be decomposed as
+M
+Cl(∆) ≃
+Z/di Z,
+i
+
+where the divisibility condition di |di+1 holds. In this paper we investigate improvements in the computation of the group structure of Cl(∆): that is determining
+the di , which is of both cryptographic and number theoretic interest. Indeed some
+key-exchange protocols relying on the difficulty of solving the discrete logarithm
+problem (DLP) in imaginary quadratic orders have been proposed [3, 9] and solving instances of the DLP is closely related to finding the group structure of Cl(∆).
+In 1968 Shanks [18] proposed an algorithm relying on the baby-step giant-step
+method in order to compute the structure
+of¢ the ideal
+of an imaginary
+¡
+¡ class group
+¢
+quadratic number field in time O |∆|1/4+² , or O |∆|1/5+² under the extended
+Riemann hypothesis [13]. This allows us to compute class groups of discriminants
+having up to 20 or 25 decimal digits. Then a subexponential strategy was described
+in 1989 by Hafner and McCurley [8]. The expected running time of this method is
+√
+
+√
+
+e( 2+o(1)) log ∆ log log ∆ .
+Buchman and Düllmann [2] computed class groups with discriminants of around
+50 decimal digits using an implementation of this algorithm. An improvement of
+this method was published by Jacobson in 1999 [10]. He achieved a significant
+speed-up by using sieving strategies to generate the matrix of relations. He was
+able to compute the structure of class groups of discriminants having up to 90
+2000 Mathematics Subject Classification: Primary: 58F15, 58F17; Secondary: 53C35.
+Key words and phrases: Ideal Class group, index calculus, large prime variant, Gaussian elimination, Hermite normal form.
+The author is supported by a DGA grant.
+1
+
+c
+°200X
+AIMS-SDU
+
+2
+
+Jean-François Biasse
+
+decimal digits. More recently Sutherland [21] used generic methods in order to
+compute class groups with discriminants having 100 decimal digits. Unlike the
+previous algorithms, this one relies heavily on the particular structure of Cl(∆)
+thus obtaining variable performances depending on the values of ∆.
+Our approach is based on that of Jacobson, using new techniques to accelerate
+both the sieving phase and the linear algebra phase; we have obtained the group
+structure of class groups of 110 decimal digit discriminants.
+2. The ideal class group
+In this section we give essential results concerning the ideal class group and the
+subexponential strategies for computing its structure. For a more detailed description of the theory of ideal class groups we refer to
+√ [5] and [16]. In the following, ∆
+denotes a fundamental discriminant and K = Q( ∆) is the corresponding number
+field.
+2.1. Description. Elements of Cl(∆) are obtained from fractional ideals of the
+ring of integer OK of K. We denote by I the set of fractional ideals, which are
+Z-modules of the form:
+Ã
+!
+√
+b+ ∆
+a = q aZ +
+Z
+2
+where a and b are integers with b ≡ ∆ mod 2 and q is a rational number. The prime
+ideals are the p ∈ I for which there exists a prime number p such that:
+√
+bp + ∆
+p = pZ +
+Z or p = pZ (case inert)
+2
+For every a ∈ I there exist uniquely determined prime ideals p1 , . . . , pn and exponents e1 , . . . , en in Z such that
+a = pe11 . . . pnen .
+Definition 2.1 (Ideal Class group). Let I be the set of fractional ideals of K and
+P = {(α) ∈ I, α ∈ K} the subset of principal ideals. We define the ideal class group
+of ∆ as :
+Cl(∆) := I/P
+Unlike I, the ideal class group Cl(∆) is a finite group. Its order is called the
+class number and usually denoted by h(∆). It grows like |∆|1/2+² as it is shown in
+[19].
+2.2. Computing the group structure. The algorithm for computating the
+group structure of Cl(∆) is divided into two major phases: relation collection
+and linear algebra. In the first phase, we begin by precomputing a factor base
+B = {p1 , . . . , pn } of non-inert prime ideals satisfying N (pi ) ≤ B, where B is a
+smoothness bound. Then we look for relations of the form
+(α) = pe11 . . . penn ,
+where α ∈ K. Every n-tuple [e1 , . . . , en ] collected becomes a row of what we will
+refer to as the relation matrix A ∈ Zm×n . We have from [1] the following important
+result:
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+3
+
+Theorem 2.2. Let Λ be the lattice spanned by the set of the possible relations.
+Assuming GRH, if B ≥ 6 log2 ∆, then we have
+Cl(∆) ≃ Zn /Λ.
+After the relation collection phase we can test if A has full rank and if its rows
+generate Λ using methods described in §3.3. If it is not the case then we have to
+compute more relations. From now on we assume that A has full rank and that its
+rows generate Λ.
+The linear algebra phase consists of computing the Smith Normal Form (SNF)
+of A. Any matrix A in Zn×n with non zero determinant can be written as
+
+
+d1 0 . . . 0
+
+. 
+ 0 d2 . . . ..  −1
+U
+A = V −1 
+ . .
+
+.. ... 0 
+ ..
+0 . . . 0 dn
+where di+1 |di for all 1 ≤ i < n and U and V are unimodular matrices in Zn×n . The
+matrix diag(d1 , . . . , dn ) is called the SNF of A. If m = n and diag(d1 , . . . , dn ) =
+SNF(A) then
+Cl(∆) ≃
+
+n
+M
+
+Z/di Z.
+
+i=1
+
+This reduces the problem of computing the group structure of Cl(∆) to computing
+the SNF of a relation matrix A in Zn×n . For an arbitrary A in Zm×n we start by
+computing the Hermite Normal Form (HNF) of A. A matrix H is said to be in
+HNF if it has the shape
+
+
+h
+0
+.
+.
+.
+0
+ 1,1
+
+
+
+ .
+.. 
+..
+ .
+
+.
+. 
+ . h2,2
+
+
+ .
+
+..
+..
+ ..
+. 0 
+.
+H=
+
+
+
+ ∗
+∗ . . . hn,n 
+
+
+
+
+
+
+
+
+
+
+(0)
+where 0 ≤ hij < hii for all j < i and hij = 0 for all j > i. For each matrix A in
+Zm×n there exists an H in HNF and a unimodular matrix W in Zm×m such that
+H = W A.
+The upper block of H is a n × n relation matrix whose SNF provides us the group
+structure of Cl(∆). There is an index l such that hi,i = 1 for every i ≥ l. The upper
+left l × l submatrix of H is called the essential part of H. In order to compute the
+group structure of Cl(∆) it suffices to compute the SNF of the essential part of H,
+which happens to have small dimension in our context.
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+4
+
+Jean-François Biasse
+
+2.3. The use of sieving for computing the relation matrix. The use of
+sieving to create the relation matrix was first described by Jacobson [10]. Here we
+follow the approach of [11], which relies on the following lemma:
+³
+´
+√
+Lemma 2.3. If a = aZ + b+2 ∆ Z with a > 0, then for all x, y in Z there exists
+a b in I such that ab ∈ P and
+b2 − ∆ 2
+N (b) = ax2 + bxy +
+y .
+4a
+Q ei
+The strategy for finding relations is the following: We start with
+p a = i pi
+which is B-smooth. Then we choose a sieve radius R satisfying R ≈ |∆|/2/N (a)
+and we look for values of x ∈ [−R, R] such that ϕ(x, 1) is B-smooth where
+b2 − ∆ 2
+ϕ(x, y) = ax2 + bxy +
+y ,
+4a
+Q
+which allows us to find b = i pfi i satisfying ab =Q
+(γ) for some γ in K. The pi and
+fi are deduced from the decomposition ϕ(x, 1) = i pvi i . For more details we refer
+to [11]. This method yields the relation
+Y e +f
+(γ) =
+pi i i .
+i
+
+Now given a binary quadratic form ϕ(x, y) = ax2 + bxy + cy 2 of discriminant ∆,
+we are interested in finding values of x ∈ [−R, R] such that ϕ(x, 1) is B-smooth.
+This can be done trivially by testing all the possible values of x, but there is a
+well-known method for pre-selecting some values of x in [−R, R] that are going to
+be tested, namely the quadratic sieve (introduced by Pomerance [17]). It consists
+0
+in initializing to 0 an array S of length 2R + 1 and precomputing the ³
+roots
+´ ri and
+
+ri00 , or the double root ri0 , of ϕ(x, 1) mod pi for each pi ≤ B such that p∆i 6= −1 .
+Then for each x in [−R, R] of the form x = ri + kpi for some k we add blog pi c to
+S[x]. At the p
+end of this procedure, if ϕ(x, 1) is B-smooth, then S[x] ≈ log ϕ(x, 1).
+As ϕ(x, 1) ≈ ∆/2R, we set a bound
+Ãr
+!
+∆
+(1)
+F = log
+R − T log(pn )
+2
+where T is a number representing the tolerance to rounding errors due to integer
+approximations. We then perform a trial division test on every ϕ(x, 1) such that
+S[x] ≥ F .
+3. Practical improvements
+In this section we describe the improvements that allowed us to achieve a significant speed-up with respect to the existing algorithm and the computation of class
+group structures of large discriminants. Our contribution is to take advantage of
+the large prime variants, of an algorithm due to Vollmer [22] for the SNF which had
+not been implemented in the past, and of special Gaussian elimination techniques.
+3.1. Large prime variants. The large prime variants were developed in the context of integer factorization to speed up the relation collection phase in both the
+quadratic sieve and the number field sieve. Jacobson considered analogous variants
+for class group computation [10], but the speed-up of the relation collection phase
+was achieved at the price of such a slow-down of the linear algebra that it did not
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+5
+
+significantly improve the overall time. The main idea is the following: We define the
+”small primes” to be the prime ideals in the factor base and the small prime bound
+as the corresponding bound B1 = B. Then we define a large prime bound B2 .
+During the relation collection phase we choose not to restrict ourselves to relations
+only involving primes p in B but we also keep relations of the form
+(α) = p1 . . . pn p and (α) = p1 . . . pn pp0
+for pi in B, and for p, p0 of norm less than B2 . We will respectively refer to them as
+1-partial relations and 2-partial relations. Keeping partial relations only involving
+one large prime is the single large prime variant, whereas keeping two of them is
+the double large prime variant which was first described by Lenstra and Manasse
+[12]. In this paper we do not consider the case of more large primes, but it is a
+possibility that has been studied in the context of factorization [14].
+Partial relations may be identified as follows. Let m be the residue of ϕ(x, 1)
+after the division by all primes p ≤ B1 , and assume that B2 < B12 . If m = 1 then
+we have a full relation. If m ≤ B2 then we have a 1-partial relation. We can see
+here that detecting 1-partial relations is almost for free. If we also intend to collect
+2-partial relations then we have to consider the following possibilities:
+1. m > B22 ;
+2. m is prime and m > B2 ;
+3. m ≤ B2 ;
+4. m is composite and B12 < m ≤ B22 .
+In Cases 1 and 2 we discard the relation. In Case 3 we have a 1-partial relation, and
+in Case 4 we have m = pp0 where p = N (p) and p0 = N (p0 ). After testing if we are
+in Cases 1, 2, or 3 we have to factorize the residue. We have done that using Milan’s
+implementation of the SQUFOF algorithm [15] based on the theoretical work of [7].
+Even though we might have to factor the residue, collecting a partial relation is
+much faster than collecting a full relation because the probability that N (b) is B2 smooth is much greater than the probability that it is B1 -smooth. This improvement
+in the speed of the relation collection phase comes at a price: The number of columns
+in the relation matrix is much greater, thus preventing us from running the linear
+algebra phase directly on the resulting relation matrix and forcing us to find many
+more relations since since we have to produce a full rank matrix. We will see in §3.2
+how we reduced the dimensions of the relation matrix using Gaussian elimination
+techniques and in §4 how to optimize the parameters to make the creation of the
+relation matrix faster, even though there are many more relations to be found.
+3.2. Gaussian elimination techniques. Traditionally rows were recombined to
+give full relations as follows: In the case of 1-partial relations, any pair of relations
+involving the same large prime p were recombined into a full relation. In the case
+of 2-partial relations, Lenstra [12] described the construction of a graph whose
+vertices were the relations and whose edges linked vertices having one large prime in
+common. Finding independent cycles in this graph allows us to find recombinations
+of partial relations into full relations.
+In this paper we rather follow the approach of Cavallar [4], developed for the
+number field sieve, which uses Gaussian elimination on columns without distinguishing those corresponding to the large primes from the others. One of the main
+differences between our relation matrices and the matrices produced in the number
+field sieve is that our entries are in Z rather than F2 , thus obliging us to monitor the
+evolution of the size of the coefficients. Indeed, eliminating columns at the price of
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+6
+
+Jean-François Biasse
+
+an explosion of the size of the coefficients can be counter-productive in preparation
+for the HNF algorithm.
+In what follows we will use a few standard definitions that we briefly recall here.
+First, subtracting two rows is called merging. This is because rows are stored as
+lists of the non-zero entries sorted with respect to the corresponding columns and
+subtracting them corresponds to merging the two sorted lists. If two rows r1 and
+r2 share the same prime p with coefficients c1 and c2 respectively then multipling
+r1 by c2 and r2 by c1 and merging is called pivoting. Finally, finding a sequence
+of pivots leading to the elimination of a column of Hamming weight k is a k-way
+merge.
+We aim to reduce the dimension of the relation matrix by performing k-way
+merges on the columns of weight k = 1, . . . , w in increasing order for a certain
+bound w. Unfortunately, the density of the rows and the size of the coefficients increase during the course of the algorithm, thus obliging us to use optimized pivoting
+strategies. In what follows we describe an algorithm performing k-way merges to
+minimize the growth of both the density and the size of the coefficients.
+First we have to define a cost function defined over the set of the rows encapsulating the difficulty induced for the HNF algorithm. In factorization, we want to
+find a vector in the kernel of the relation matrix which is defined over F2 ; the only
+property of the row that really matters is its Hamming weight. In our context, we
+need to minimize the Hamming weight of the row, but we also have to take into
+account the size of the coefficients. Different cost functions lead to different elimination strategies. Our cost function was determined empirically: We took the number
+of non-zero entries, counting c times those whose absolute value was above a bound
+Q
+Q, where c is a positive number. If r = [e1 , . . . , en ] corresponds to (α) = i pei i
+then
+X
+X
+C(r) =
+1+c
+1
+1≤|ei |≤Q
+
+|ej |>Q
+
+Indeed as we will see matrices with small entries are better suited for the HNF
+algorithm described in §3.3. Let us assume now that we are to perform a k-way
+merge on a given column. We construct a complete graph G of size k as follows:
+• The vertices are the rows ri .
+• Every edge linking ri and rj is labeled by C(rij ), where rij is obtained by
+pivoting ri and rj .
+Finding the best sequence of pivots with respect to the cost function c we chose
+is equivalent to finding the minimum spanning tree T of G, and then recombining
+every row r with its parent starting with the leaves of T .
+Unfortunately, some coefficients might grow during the course of column eliminations despite the use of this strategy. Once a big coefficient is created in a given
+row r, it is likely to spread to other rows once r is involved in another column
+elimination. We must therefore discard such rows as quickly as possible. In our implementation we chose to do it regularly: Once we performed all the k-way merges
+for k ≤ 10·i and i = 1, . . . , w/10 we discard a fixed number K of the rows containing
+the largest coefficients.
+We show in Table 1 the effect of the use of a cost function taking into account the
+size of the coefficients and the regular discard of the worst rows for ∆ = −4(1070 +1)
+with c = 100, Q = 8 and K = 10. We kept track of the evolution of the dimensions
+of the matrix, the average Hamming weight of the rows and the maximum and
+minimum size of the coefficients. In the first case we use the traditional cost function
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+7
+
+that only takes into account the Hamming weight of the rows and we keep deleting
+the worst rows regularly; this corresponds to taking c = 1 and K = 10. In the
+second case, we use the cost function described above but without row elimination
+by setting c = 100 and K = 0. In the third case, we combine the two (c = 100 and
+K = 10). We clearly see that the coefficients are properly monitored only in the
+latter case. Indeed using a cost function that does not take into account the size of
+the coefficients and just discarding the worst rows regularly seems more efficient in
+terms of reduction of the matrix dimension, but the row corresponding to i = 12
+(that is to say after all the 120-way merges) clearly shows that we run the risk of
+an explosion of the coefficients.
+
+Figure 1. Comparative table of elimination strategies
+Without score depending on the size of the coefficients
+i Row Nb Col Nb Average weight
+max
+min
+0
+38752
+45975
+22
+10
+-10
+2
+2334
+1668
+76
+21
+-20
+4
+2123
+1477
+117
+52
+-56
+6
+2028
+1402
+146
+59
+-62
+8
+1951
+1345
+175
+72
+-65
+10
+1890
+1304
+203
+193
+-196
+12
+1836
+1270
+219
+212
+-2147483648
+Without row elimination
+i Row Nb Col Nb Average weight
+max
+min
+0
+38752
+45975
+22
+10
+-10
+2
+2373
+1687
+79
+30
+-40
+4
+2224
+1538
+118
+67
+-50
+6
+2158
+1472
+148
+71
+-132
+8
+2117
+1431
+179
+2648
+-10568
+10
+2097
+1411
+196
+347136
+-337920
+12
+2080
+1394
+214
+268763136 -173162496
+With adapted score and row elimination
+i Row Nb Col Nb Average weight
+max
+min
+0
+38752
+45975
+22
+10
+-10
+2
+2357
+1691
+76
+17
+-17
+4
+2176
+1530
+114
+27
+-30
+6
+2074
+1448
+149
+37
+-37
+8
+2013
+1407
+177
+43
+-43
+10
+1958
+1372
+199
+44
+-45
+12
+1908
+1342
+224
+54
+-53
+
+3.3. Vollmer’s algorithm for computing the HNF. In [10] it has been observed that the algorithm used to compute the HNF of the relation matrix relied
+heavily on the sparsity of the matrix. While recombinations of the kind described
+in [12] or the techniques of §3.2 reduce the dimensions of the matrix, they also dramatically increase the density of the matrix, thus slowing down the computation
+of the HNF. We had to find an HNF algorithm whose features were adapated to
+our situation. Vollmer described in [22] an algorithm of polynomial complexity depending on the capacity to solve diophantine linear systems, but not on the density
+of the matrix. It was not implemented at the time because there was no efficient
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+8
+
+Jean-François Biasse
+
+diophantine linear system solver available. We implemented Vollmer’s algorithm
+using the IML [20] library provided by Storjohann.
+Here we give a brief description of the algorithm (for more details we refer to
+[22]). We assume we have created an m × n relation matrix A of full rank. For each
+i ≤ n, we define two matrices
+
+
+
+
+0
+a
+.
+.
+.
+a
+1,1 
+
+
+ m,1
+
+
+
+
+ .. 
+
+
+ . 
+
+
+.
+..  and ei = 
+.
+Ai = 
+
+
+ ..
+. 
+ 0 
+
+
+
+
+
+
+
+
+ a
+...
+ai,1 
+m,i
+1
+For each i, we define hi to be the minimal denominator of a rational solution of the
+system
+Ai x = ei ;
+this is computed using the function MinCertifiedSol of IML. In [22] it is shown
+that
+Y
+h(∆) =
+hi .
+i
+
+Fortunately, analytic formulae allow us to compute a bound h∗ such that
+h∗ ≤ h(∆) < 2h∗ ,
+so we do not have to compute hi for every i ∈ [1, n]. In addition, the matrices
+produced for the computation of the group structure of Cl(∆) have small essential
+part, which keeps the number of diophantine systems to solve small (about the same
+size as the number of columns of the essential part) as shown in [22].
+Algorithm 1 Computation of the class number
+Input: ∆, relation matrix A of full rank and h∗
+Output: h(∆)
+h←1
+i←1
+while h < h∗ do
+Compute the minimal denominator hi of a solution of Ai · x = ei
+h ← h · hi
+i←i+1
+end while
+return h
+We can compute the essential part of the HNF of A with a little extra effort
+involving only modular reductions of coefficients; we refer to [22] for more details.
+This part of the algorithm is highly dependent on the performance of the diophantine
+solver we use, which in turn is mostly influenced by the number of columns of the
+matrix and the size of the coefficients. The bechmarks available [20] show that the
+algorithm runs much faster on matrices with 3-bit coefficients, which is why we took
+coefficient size into account in the cost function for the Gaussian elimination.
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+9
+
+4. Optimization of the parameters
+In this section we proceed to optimize the parameters involved in the relation
+collection phase. Each parameter has an effect on the overall time taken to compute
+the group structure of Cl(∆). Recall (1) giving the bound F ; when we collect partial
+relations it should be adapted in the following way:
+Ãr
+!
+∆
+F = log
+R − T log B2 ,
+2
+where B2 is the large prime bound.
+4.1. Optimization of T . The parameter T represents the tolerance to rounding
+errors in the traditional sieving algorithms. Its value is empirically determined, and
+usually lies in the interval [1, 2]. In the large prime variant it also encapsulates the
+number of large primes we want to allow. Indeed, if there were no rounding errors
+one would expect this value to be 1 for one large prime and 2 for two large primes.
+In practice, we can exhibit an optimum value which differs slightly from what we
+would expect. In figure 2 we show the overall running time of the algorithm when
+the parameter T varies between 1.5 and 3.5 for the discriminant ∆ = −4(1075 + 1).
+The size of the factor base taken is 3250, the ratio B2 /B1 equals 120, and we allow
+two large primes.
+Figure 2. Optimum value of T
+25000
+
+Time
+
+20000
+
+15000
+
+10000
+
+5000
+1
+
+1.5
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+T
+
+One of the main issues for determining the optimal value of T is that it tends to
+shift when one modifies the value of B1 , the rest being unchanged. Indeed, if for
+example B2 /B1 = 120 then
+Ãr
+!
+∆
+R − T log 120B1 ,
+F = log
+2
+so when we increase B1 we have to lower T to compensate. Figure 3 illustrates this
+phenomenon on the example ∆ = −4(1075 + 1), with two large primes.
+In Figure 4 we study the evolution of the optimal value of T for the single and
+double large prime variants on discriminants of the form −4(10n +1) where n ranges
+between 60 and 80. It appears that, as we expected, the optimal value for the double
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+10
+
+Jean-François Biasse
+
+Figure 3. Effect of |F B| on the optimal value of T
+3.5
+
+T
+
+3
+
+2.5
+
+2
+
+1.5
+2500
+
+3000
+
+3500
+
+4000
+
+4500
+
+|FB|
+
+large prime variant is greater than the one corresponding to the single large prime
+variant. This value is between 2 and 2.3 for one large prime and around 2.7 when
+we allow two large primes.
+Figure 4. Optimal value of T when n varies
+3
+2.8
+
+T
+
+2.6
+2.4
+2.2
+2
+
+1 large prime
+2 large primes
+
+1.8
+55
+
+60
+
+65
+
+70
+
+75
+
+80
+
+85
+
+n
+
+4.2. The size of the factor base. The optimal size of the factor base reflects
+the trade-of between the time spent on the relation collection phase and on the linear
+algebra phase. This optimum is usually not the size that minimizes the time spent
+on the relation collection phase. To illustrate this, Figure 5 shows the time taken
+by the algorithm for ∆ = −4(1075 + 1) with B2 /B1 = 120 and the corresponding
+optimal T .
+The optimal size of the factor base increases with the size of the discriminant.
+Figure 6 shows the optimal size of the factor base for discriminants of the form
+−4(10n + 1) as n ranges between 60 and 80 for both one large prime and two large
+primes. We notice that the single large prime variant requires smaller factor bases
+than without large primes, and bigger factor bases than the double large prime
+variant.
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+11
+
+Figure 5. Optimal value of |F B|
+10000
+9500
+9000
+
+Time
+
+8500
+8000
+7500
+7000
+6500
+6000
+5500
+2000 2500 3000 3500 4000 4500 5000 5500 6000 6500
+|FB|
+
+Figure 6. Optimal value of |F B| when n varies
+0 large primes
+1 large prime
+2 large primes
+
+10000
+
+|FB|
+
+8000
+
+6000
+
+4000
+
+2000
+
+55
+
+60
+
+65
+
+70
+
+75
+
+80
+
+85
+
+n
+
+4.3. The ratio B2 /B1 . Theoretically B2 should not exceed B12 . In practice, when
+the ratio B2 /B1 is too high we lose time taking into account partial relations involving primes that are so large that they are very unlikely to occur twice and to
+lead to a recombination. This phenomenon is known in the context of factorization,
+and 120 is a common choice of value of B2 /B1 (see [6]). We ran experiments using
+12, 120 and 1200 as values for the ratio B2 /B1 . Figure 7 shows the results for
+∆ = −4(1075 + 1) with two large primes. We give the optimum timings for each
+value of the size of the factor base, and compare those values for the three different
+ratios. It appears that 120 is indeed the best choice, but the performance of the
+algorithm is not highly dependent on this parameter.
+5. Computational results
+5.1. Comparative timings. In Figure 8 we give comparative timings in seconds
+between no large primes and the large prime variants for discriminants of the form
+−4(10n + 1), for n between 60 and 80. We used 2.4GHz Opterons with 16MB of
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+12
+
+Jean-François Biasse
+
+Figure 7. Comparative table of B2 /B1
+|F B|
+12
+120
+1200
+3000 6399.60 6051.11 6173.66
+3250 6795.43 6185.67 6754.02
+3500 6539.69 6821.77 6754.02
+3750 6916.93 6750.88 7456.92
+4000 6671.18 6390.48 7009.72
+memory, and the NTL library with GMP. It appears that we achieved a significant
+speed-up by using the large prime strategy. Direct comparison with previous methods based on sieving is hard since the timings available in [10] were obtained on 296
+MHz UtraSPARC-II processors; therefore we just quote that the computation of
+the group structure corresponding to ∆ = −4(1080 + 1) took 5.37 days at the time.
+We also notice that the double large prime variant does not provide an impressive
+improvement on the overall time for the sizes of discriminant involved. The performance is comparable for discriminants of 60 decimal digits and starts showing an
+improvement when we reach 75 digit discrimants.
+Figure 8. Comparative table of the performances
+n 0 Large primes 1 Large prime 2 Large primes
+60
+374
+284
+280
+65
+1019
+756
+776
+68
+2010
+1489
+1122
+70
+2148
+1663
+1680
+75
+8409
+6669
+5347
+80
+21215
+17123
+14664
+5.2. Large discriminants. In the imaginary case, the largest class groups that
+had been computed using relation collection methods had 90 digits; some 100 decimal digit discriminant class group structures could be computed using the techniques of [21]. With the techniques described in this paper, we achieved the computation of a 110 decimal digit discrimant class group. We used 2.4GHz Opteron
+processors with 16 GB of memory each for the sieving, and one 2.66 GHz Opteron
+with 64 GB of memory for the linear algebra, which is the real bottleneck of this
+algorithm. Indeed, the sieving phase can be trivially parallelized for as many processors as we have and does not require much memory, whereas the linear algebra
+can only be parallelized into the number of factors of h that we get from Vollmer’s
+algorithm (around 10 in our examples) and requires a lot of memory. Indeed the
+limit in terms of matrix dimensions for the diophantine solver on a 64GB memory
+computer seems to be around 10000 columns. For comparison in the case of the
+110 decimal digit discriminant we had to handle an 8000-column matrix (after the
+Gaussian reduction).
+Acknowledgements
+The author thanks Andreas Enge for his support on this project, the fruitful
+discussions we had and a careful reading of this article. We thank Nicolas Thériault
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+Computation of ideal class groups
+
+n
+100
+110
+
+13
+
+Figure 9. Decomposition of Cl(∆) for ∆ = −4(10n + 1)
+decomposition
+C(2)5 × C(45702868108506102330365447370546729224277527471)
+C(2)11 × C(8576403641950292891121955131452148838284294200071440)
+
+and all the organizing comitee of the conference CHILE 2009 where the original
+results of this paper were first presented. We also thank Jérôme Milan for his
+support on issues regarding implementation, especially with the TIFA library.
+References
+[1] E. Bach, Explicit bounds for primality testing and related problems, Mathematics of Computations, 55 (1990), 335–380.
+[2] J. Buchmann and S. Düllmann, On the computation of discrete logarithms in class groups, in
+“Advances in Cryptology - CRYPTO ’90,” Lecture Notes in Computer Science, 537 (1991),
+134–139.
+[3] J. Buchmann and H.C. Williams, A key-exchange system based on imaginary quadratic fields,
+Journal of Cryptology, 1 (1988), 107–118.
+[4] S. Cavallar, Strategies in Filtering in the Number Field Sieve, in “ANTS-IV: Proceedings of
+the 4th International Symposium on Algorithmic Number Theory,” Lecture Notes in Computer Science, 1838 (2000), 209–232.
+[5] H. Cohen, “A course in computational algebraic number theory,” vol 138 of Graduate Texts
+in Mathematics, Springer-Verlag, 1991.
+[6] S. Contini “Factoring integers with the self initializing quadratic sieve,” Master thesis, University of Georgia, 1997
+[7] J.E. Gower and S. Wagstaff, Square form factorization, Mathematics of Computations, 77
+(2008), 551–588.
+[8] J.L. Hafner and K.S. McCurley, A rigorous subexponential algorithm for computation of class
+groups, J. Amer. Math. Soc., 2 (1989), 839–850.
+[9] D. Hühnlein, M.J. Jacobson, S. Paulus and T. Takagi, A cryptosystem based on non-maximal
+imaginary quadratic orders with fast decryption, in “Advances in Cryptology - EUROCRYPT
+’98,” Lecture Notes in Computer Science, 1403 (1998), 294–307.
+[10] M. Jacobson, “Subexponential Class Group Computation in Quadratic Orders,” Ph.D thesis,
+Technische Universität Darmstadt, 1999, Shaker Verlag GmbH.
+[11] M.J. Jacobson and H.C. Williams, “Solving the Pell equation,” CMS Books in Mathematics,
+Springer-Verlag, 2009.
+[12] A.K. Lenstra and M.S. Manasse, Factoring with two large primes (extended abstract), in
+“Advances in Cryptology - EUROCRYPT ’90,” Lecture Notes in Computer Science, 473
+(1991), 72–82.
+[13] A.K. Lenstra, On the calculation of regulators and class numbers of quadratic fields, in
+“Journées arithmétiques,” Cambridge Univ. Press, (1982).
+[14] P.C. Leyland, A.K. Lenstra, B. Dodson, A. Muffett and S. Wagstaff, MPQS with Three
+Large Primes, in “ANTS-V: Proceedings of the 5th International Symposium on Algorithmic
+Number Theory,” Lecture Notes in Computer Science, 2369 (2002), 446–460.
+[15] J. Milan, “TIFA”, http://www.lix.polytechnique.fr/Labo/Jerome.Milan/tifa/tifa.xhtml.
+[16] J. Neukirch, “Algebraic Number Theory,” vol 322 of Comprehensive Studies in Mathematics,
+Springer-Verlag, 1999. Translation into english by Norbert Schappacher.
+[17] C. Pomerance, Analysis and comparison of some integer factoring algorithms, in “Computational methods in number theory I,” Mathematical Centre Tracts, 154 (1982), 89–139.
+[18] D. Shanks, Class number, a theory of factorization, and genera, in “Proceedings of symposia
+in pure mathematics,” American Mathematical Society, 20 (1969), 415–440.
+[19] C.Siegel, Über die Klassenzahl quadratischer Zahlkörper, Acta Arithmetica, 1 (1936), 83–86.
+[20] A. Storjohann, “IML”, http://www.cs.uwaterloo.ca/ z4chen/iml.html.
+[21] A. Sutherland, “Order Computations in Generic Groups,” Ph.D thesis, Massachusetts Institute of Technology, 2007.
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+14
+
+Jean-François Biasse
+
+[22] U. Vollmer, A note on the Hermite Basis Computation of Large Integer Matrices, in “ISSAC
+’03: Proceedings of the 2003 international symposium on Symbolic and algebraic computation,” ACM, (2003), 255–257.
+
+Received June 2009; revised XXX.
+E-mail address: biasse@lix.polytechnique.fr
+
+Advances in Mathematics of Communications
+
+Volume X, No. X (200X), X–XX
+
+

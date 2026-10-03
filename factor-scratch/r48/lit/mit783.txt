@@ -1,0 +1,600 @@
+18.783 Elliptic Curves
+Lecture #7
+
+Spring 2021
+03/10/2021
+
+7
+
+Point counting
+
+7.1
+
+Separable and inseparable endomorphisms
+
+Recall that the Frobenius endomorphism πE is inseparable. In order to prove Hasse’s theorem we will need to use the fact that πE − 1 is separable. This follows from a much
+more general result: adding a separable isogeny to an inseparable isogeny always yields a
+separable isogeny. Note that the sum of two separable isogenies need not be separable: in
+characteristic p > 0, if we have a + b = p and both a and b prime to p, then [a] and [b] are
+both separable but [a] + [b] = [a + b] = [p] is inseparable.
+Lemma 7.1. Let α and β be isogenies from E1 to E2 , with α inseparable. Then α + β is
+inseparable if and only if β is inseparable.
+Proof. If β is inseparable then by Corollary 5.4 we can write α = αsep ◦π m and β = βsep ◦π n ,
+where π is the p-power Frobenius map and m, n > 0. We then have
+α + β = αsep ◦ π m + βsep ◦ π n = (αsep ◦ π m−1 + βsep ◦ π n−1 ) ◦ π,
+which is inseparable (any composition involving an inseparable isogeny is inseparable because
+inseparable degrees multiply). If α+β is inseparable, then so is −(α+β), and α−(α+β) = β
+is a sum of inseparable isogenies, which we have just shown is inseparable.
+Remark 7.2. Since the composition of an inseparable isogeny with any isogeny is always
+inseparable, Lemma 7.1 implies that the inseparable endomorphisms in End(E) form an
+ideal (provided we view 0 as inseparable, which we do).
+
+7.2
+
+Hasse’s Theorem
+
+We are now ready to prove Hasse’s theorem.
+Theorem 7.3 (Hasse). Let E/Fq be an elliptic curve over a finite field. Then
+#E(Fq ) = q + 1 − t,
+√
+where t := tr πE is the trace of the Frobenius endomorphism πE and |t| ≤ 2 q.
+Proof. Recall that we defined Fq as the splitting field of xq − x over Fp , where p = char(Fq ),
+thus Fq = {α ∈ Fp : αq − α = 0} = {α ∈ Fq : αq − α = 0} is precisely the subfield of
+Fq fixed by the q-power Frobenius automorphism x 7→ xq . The Frobenius endomorphism
+πE : E → E is defined by πE (x : y : z) = (xq : y q : z q ), therefore
+E(Fq ) = {P ∈ E(Fq ) : πE (P ) = P } = {P ∈ E(Fq ) : πE (P ) − P = 0} = ker(πE − 1),
+where 1 denotes the multiplication-by-1 map [1] ∈ End(E). The Frobenius endomorphism
+πE is inseparable and −1 is separable, so by Lemma 7.1 the endomorphism πE − 1 is
+separable, thus the cardinality of its kernel is equal to its degree (by Theorem 5.8). Therefore
+#E(Fq ) = # ker(πE −1) = deg(πE −1) = (π\
+E − 1)(πE −1) = π̂E πE +1−(π̂E +πE ) = q+1−t.
+√
+It remains only to show that |t| ≤ 2 q.
+
+Lecture by Andrew Sutherland
+
+Consider the endomorphism rπE − s for r, s ∈ Z with s 6= 0. We have
+\
+deg(rπE − s) = (rπ
+E − s)(rπE − s) = (π̂E r̂ − ŝ)(rπE − s) = (π̂E r − s)(rπE − s)
+= π̂E r2 πE − π̂E rs − srπ + s2 = r2 π̂E πE − rs(π̂E + πE ) + s2
+= r2 deg πE − rs tr πE + s2
+= r2 q − rst + s2 ,
+where we have used Lemmas 6.11 and 6.12, and the fact that Z is in the center of End(E).
+Dividing by s2 and noting that deg(r − πE s) ≥ 0 yields the inequality
+q (r/s)2 − t (r/s) + 1 ≥ 0,
+valid for all rational numbers r/s. Now Q is dense in R, so we must have qx2 − tx + 1 ≥ 0
+for all real numbers x. It follows that the discriminant t2 − 4q cannot be positive, which
+√
+yields the desired bound |t| ≤ 2 q.
+
+Recall that for an odd prime p the Legendre symbol ap is defined by
+
+  
+ 1
+a
+=
+0
+
+p
+
+−1
+
+
+if y 2 = a has two solutions mod p
+
+if y 2 = a has one solution mod p
+if y 2 = a has no solutions mod p
+
+= #{α ∈ Fp : α2 = a} − 1.
+
+
+
+
+We extend the Legendre symbol to all finite fields Fq of odd characteristic by defining
+ 
+a
+= #{α ∈ Fq : α2 = a} − 1 ∈ {−1, 0, 1}.
+Fq
+
+Thus 1 + Faq counts the solutions to y 2 = a in Fq . It follows that if E/Fq is given by the
+Weierstrass equation y 2 = x3 + Ax + B, then
+ 3
+
+X 
+x0 + Ax0 + B
+#E(Fq ) = 1 +
+1+
+Fq
+x0 ∈Fq
+X  x3 + Ax0 + B 
+0
+=q+1+
+.
+(1)
+Fq
+x0 ∈Fq
+
+Hasse’s Theorem is equivalent to the statement that the sum in (1) has absolute value
+√
+at most 2 q. This is remarkable for a sum with q terms, almost all of which are ±1. From a
+√
+probabilistic point of view, one might expect that on average an O( q) bound should hold,
+but Hasse’s theorem guarantees that it always holds.
+The bound in Hasse’s theorem is the best possible. Later in the course we will see how
+to explicitly construct elliptic curves E/Fq with cardinalities matching every integer value
+in the Hasse interval
+√
+√
+√
+√
+H(q) := [q + 1 − 2 q, q + 1 + 2 q] = [( q − 1)2 , ( q + 1)2 ]
+when q is prime, and all but at most two integers when q is not prime.
+
+18.783 Spring 2021, Lecture #7, Page 2
+
+7.3
+
+Point counting
+
+We now consider the problem of computing the cardinality of E(Fq ), which is crucial to
+cryptographic applications; as we shall see, it is quite important to know the cardinality of
+the group one is working in. The most naïve approach one might take would be to evaluate
+the curve equation y 2 = x3 + Ax + B for E at every pair (x0 , y0 ) ∈ F2q , count the number
+of solutions, and add 1 for the point at infinity. This takes O(q 2 M(log q)) time. Note that
+the input to this problem is the pair of coefficients A, B ∈ Fq , which each have O(n) bits,
+where n = log q. Thus in terms of the size of its input, this algorithm takes
+
+O exp(2n) M(n)
+time, which is obviously exponential in n.
+A slightly less naïve approach is to precompute a table of quadratic
+ residues in Fq so
+·
+that we can very quickly compute the extended Legendre symbol Fq . We can construct
+such a table in O(q M(log q)) time, and then compute
+X  x3 + Ax + B 
+#E(Fq ) = q + 1 +
+Fq
+x∈Fq
+
+in O(q M(log q)) time, yielding a total running time of
+O(exp(n) M(n)).
+So far we have not taken advantage of Hasse’s theorem which gives us an interval H(q)
+√
+of width 4 q which we know must contain the integer #E(Fq ) we wish to determine.
+
+7.4
+
+Computing the order of a point
+
+Before giving an algorithm to compute #E(Fq ) using Hasse’s theorem, let us first consider
+an easier problem: computing the order |P | of a single point P ∈ E(Fq ). Since the order of
+the group E(Fq ) lies in H(q), we know that H(q) contains at least one integer M for which
+M P = 0, namely M = #E(Fq ), and any such M is a multiple of |P |. To find such an M ,
+√
+we set M0 = d( q − 1)2 e, compute M0 P using double-and-add scalar multiplication, and
+then generate the sequence of points
+M0 P, (M0 + 1)P, (M0 + 2)P, . . . , M P = 0,
+√
+√
+by adding P repeatedly. Note that M is bounded by M0 + 4 q, so 4 q additions suffice.
+We then compute the prime factorization M = pe11 · · · peww (easy, compared to the time
+to find M , we could even use trial division). To compute the exact order of the point P we
+use the following generic algorithm.
+Algorithm 7.4. Given an element P of an additive group and the prime factorization
+M = pe11 · · · perr of an integer M for which M P = 0, compute the order of P as follows:
+1. Let m = M = pe11 · · · perr .
+2. For each prime pi , while pi |m and (m/pi )P = 0, replace m by m/pi .
+3. Output m.
+
+18.783 Spring 2021, Lecture #7, Page 3
+
+When this procedure is complete we know that mP = 0 and (m/p) 6= 0 for every prime p
+dividing m; this implies that m = |P |. You will analyze the efficiency of this algorithm and
+develop several improvements to it in Problem Set 4, but the number of group operations is
+clearly polynomial in log M , which is all we need for the moment.
+The time to compute |P | is thus dominated by the time to find a multiple of |P | in H(q).
+√
+√
+This involves O( q) operations in E(Fq ), yielding a bit complexity of O( q M(log q)) or
+
+O exp(n/2) M(n) ,
+assuming that we use projective coordinates to avoid field inversions when adding points.
+We will shortly see how this can be further improved, but first let us consider how to use
+our algorithm for computing |P | to compute #E(Fq ). If we are lucky (and if q is large we
+almost always will be), the first multiple M of |P | that we find in H(q) will actually be the
+only multiple of |P | in H(q). If this happens, then we must have M = #E(Fq ). Otherwise,
+we might try our luck with a different point P . If we can find a combination of points for
+which the least common multiple of their orders has a unique multiple in H(q), then we
+can determine the group order. Unfortunately this will not always be possible, but before
+addressing that issue, let us consider the question of how long it might take to compute the
+least common multiple of the orders of all the points in E(Fq ), which is a lot less than one
+might expect.
+
+7.5
+
+The group exponent
+
+Definition 7.5. For a finite group G, the exponent of G, denoted λ(G), is defined by
+λ(G) = lcm{|α| : α ∈ G}.
+Note that λ(G) is a divisor of #G and is divisible by the order of every element of G.
+Thus λ(G) is the maximal possible order of an element of G, and when G is abelian this
+maximum is achieved: there exists an element α ∈ G with order |α| = λ(G). To see this,
+note that the structure theorem for finite abelian groups allows us to decompose G as
+G ≃ Z/n1 Z ⊕ Z/n2 Z ⊕ · · · ⊕ Z/nr Z,
+with ni |ni+1 for 1 ≤ i < r. Thus λ(G) = nr , and any α = (α1 , . . . , αr ) ∈ G for which αr is
+a generator for Z/nr Z will necessarily satisfy |α| = λ(G).
+Rather than searching for a single α with maximal order, it is enough to find any set of
+elements S ⊆ G for which lcm{|α| : α ∈ S} = λ(G). If we choose S randomly, how large
+does it need to be to have a good chance of determining λ(G)? The answer is surprisingly
+small: for |S| = 2 we already have a better than 50/50 chance.
+Theorem 7.6. Let G be a finite abelian group with exponent λ(G). Let α and β be uniformly
+distributed random elements of G. Then
+Pr[lcm(|α|, |β|) = λ(G)] >
+
+6
+.
+π2
+
+Proof. We first reduce to the case that G is cyclic. As noted above, G ≃ Z/n1 Z⊕· · ·⊕Z/nr Z
+with ni |ni+1 and λ(G) = nr . Let αr and βr be the projections of α and β to Z/nr Z. Then
+lcm(|αr |, |βr |) = λ(G) certainly implies lcm(|α|, |β|) = λ(G), thus
+Pr[lcm(|α|, |β|) = λ(G)] ≥ Pr[lcm(|αr |, |βr |) = λ(G)],
+18.783 Spring 2021, Lecture #7, Page 4
+
+and in the worst case G is cyclic and this inequality is an equality, which we now assume.
+So let G = hγi and let pe11 · · · pekk be the prime factorization of |γ| = λ(G) = #G. Then
+α = aγ, with 0 ≤ a < |γ|, and unless a is divisible by pi , which occurs with probability 1/pi ,
+the order of α will be divisible by pei i (and similarly for β). The two probabilities for α and
+β are independent, thus with probability 1 − 1/p2i at least one of α and β has order divisible
+by pei i . Call this event Ei . The events E1 , . . . , Ek are independent, since we may write G
+as a direct sum of cyclic groups of prime-power orders pe11 , . . . , pekk , and the projections of α
+and β to each of these cyclic groups are uniformly and independently distributed. Thus
+Pr[lcm(|α|, |β|) = λ(G)] = Pr[E1 ∩ · · · ∩ Ek ]
+=
+
+Y
+(1 − p−2 ) =
+(1 − p−2 ) >
+
+Y
+p|λ(G)
+
+where ζ(s) =
+
+P
+
+p
+
+∞
+X
+1
+n=1
+
+n2
+
+!−1
+=
+
+6
+1
+= 2,
+ζ(2)
+π
+
+n−s is the Riemann zeta function.
+
+Theorem 7.6 implies that if we generate random points P ∈ E(Fq ) and accumulate the
+least common multiple N of their orders, we should expect to obtain λ(E(Fq )) within O(1)
+iterations. Regardless of when we obtain λ(E(Fq )), at every stage we know that N divides
+#E(Fq ), and if we ever find that N has a unique multiple M in the Hasse interval H(q),
+then we know that #E(Fq ) = M .
+√
+Unfortunately this might not ever happen; it can happen that λ(E(Fq )) ≤ 4 q, in which
+case it is possible for λ(E(Fq )) to have more than one multiple in H(q). To deal with this
+problem we need to consider the quadratic twist of E, which you saw on Problem Set 1.
+
+7.6
+
+The quadratic twist of an elliptic curve
+
+
+Suppose s is an element of Fq that is not a square, meaning that Fsq = −1. If we consider
+e defined by sy 2 = x3 + Ax + B, then the affine point (x, y) will lie on
+the elliptic curve E
+the curve if and only if x3 + Ax + B is not a square. Thus
+X  x3 + Ax + B 
+e q) = q + 1 −
+#E(F
+,
+Fq
+x∈Fq
+
+e q ) = q + 1 + t. The curve E
+e is called the
+and it follows that if #E(Fq ) = q + 1 − t, then #E(F
+e in standard Weierstrass
+quadratic twist of E (by s). We can put the curve equation for E
+2
+form by substituting x/s for x and y/s for y and then clearing denominators, yielding
+y 2 = x3 + s2 Ax + s3 B.
+Notice that it does not matter which non-residue s we choose. As you showed in Problem
+f0
+e and E
+Set 1, if s and s0 are any two non-squares in Fq , then the corresponding curves E
+e as “the” quadratic twist of E.1
+are isomorphic over Fq ; we thus we refer to E
+Our interest in the quadratic twist of E lies in the fact that
+e q ) = 2q + 2.
+#E(Fq ) + #E(F
+e q ), we can easily determine both values.
+Thus if we can compute either #E(Fq ) or #E(F
+1
+
+This situation is specific to finite fields. Over Q, for example, every elliptic curve has infinitely many
+quadratic twists that are not isomorphic over Q (of course they are all isomorphic over Q).
+18.783 Spring 2021, Lecture #7, Page 5
+
+7.7
+
+Mestre’s Theorem
+
+As noted above, it is not necessarily the case that the exponent of E(Fp ) has a unique
+e p ), then a
+multiple in the Hasse interval. But if we also consider the quadratic twist E(F
+theorem of Mestre (published by Schoof in [4]) ensures that for all primes p > 229, either
+e p )) has a unique multiple in the Hasse interval H(p). A generalization of
+λ(E(Fp )) or λ(E(F
+this theorem that works for arbitrary prime powers q can be found in [2], but we will restrict
+ourselves to the case of primes p > 229 for the sake of simplicity.
+Theorem 7.7 (Mestre). Let p > 229 be prime, and let E/Fp be an elliptic curve with
+e p . At least one of the integers λ(E(Fp )) and λ(E(F
+e p )) has a unique
+quadratic twist E/F
+√
+√
+2
+2
+multiple in the Hasse interval H(p) = [( p − 1) , ( p + 1) ].
+e p ) ≃ Z/mZ ⊕ Z/M Z, where n|N and m|M .
+Proof. Let E(Fp ) ≃ Z/nZ ⊕ Z/N Z and E(F
+Let t be the trace of the Frobenius endomorphism π of E. We have E[n] = E(Fp )[n], so
+π fixes E[n] and the matrix πn corresponding to the restriction of π to E[n] is the identity
+matrix. The matrix πn2 then has the form
+
+
+1 + an
+bn
+,
+πn2 =
+cn
+1 + dn
+for some a, b, c, d ∈ Z/nZ, and we have
+p ≡ det πn2 ≡ 1 + (a + d)n mod n2 ,
+t ≡ tr πn2 ≡ 2 + (a + d)n mod n2 .
+e is −t, and we similarly
+It follows that 4p − t2 ≡ 0 mod n2 . The trace of Frobenius for E
+2
+2
+2
+2
+2
+obtain 4p − t ≡ 0 mod m . Thus lcm(m , n ) divides 4p − t . We also have t = un + 2 and
+t = vm − 2, for some integers u and v, and subtracting these equations yields vm − un = 4.
+This implies gcd(m, n) ≤ 4, and therefore gcd(m2 , n2 ) ≤ 16. Thus
+m2 n2
+≤ lcm(m2 , n2 ) ≤ 4p − t2 ≤ 4p.
+16
+
+(2)
+
+e p )) both have
+Suppose for the sake of contradiction that N = λ(E(Fp )) and M = λ(E(F
+√
+more than one multiple in H(p). Then M and N are both less than 4 p and M N < 16p.
+√
+√
+Since mM and nN lie in H(p), both are greater than ( p − 1)2 , and mnM N > ( p − 1)4 .
+√
+It follows that mn > ( p − 1)4 /(16p). Dividing by 4 and squaring both sides yields
+√
+( p − 1)8
+m2 n2
+>
+.
+16
+4096p2
+
+(3)
+
+√
+16384p3 > ( p − 1)8 .
+
+(4)
+
+Combining (2) and (3), we have
+
+This implies that if neither M nor N has a unique multiple in H(p), then p < 17413. An
+exhaustive computer search for p < 17413 finds that in fact we must have p ≤ 229.
+
+18.783 Spring 2021, Lecture #7, Page 6
+
+7.8
+
+Computing the group order with Mestre’s Theorem
+
+We now give a complete algorithm to compute #E(Fp ) using Mestre’s theorem, assuming
+that p is a prime greater than 229 (if p is smaller than this we can easily count points using
+one of our naïve algorithms); see [2] for an analogous algorithm that works for all prime
+√
+√
+powers q > 49. As usual, H(p) := [( p − 1)2 , ( p + 1)2 ] denotes the Hasse interval.
+Algorithm 7.8. Given E/Fp with p > 229 prime, compute #E(Fp ) as follows:
+e of E using a randomly chosen non-square s ∈ Fp .
+1. Compute a quadratic twist E
+e let N0 = N1 = 1, and let i = 0.
+2. Let E0 = E and E1 = E,
+3. While neither N0 nor N1 has a unique multiple in H(p):
+a. Generate a random point P ∈ Ei (Fp ).
+b. Find an integer M ∈ H(p) such that M P = 0.
+c. Factor M and compute |P | via Algorithm 7.4.
+d. Replace Ni by lcm(Ni , |P |) and replace i by 1 − i.
+4. If N0 has a unique multiple M0 in H(p) return M0 , otherwise return M0 = 2p+2−M1 ,
+where M1 is the unique multiple of N1 in H(p) guaranteed by Mestre’s theorem.
+It is clear that the output of the algorithm is correct, and it follows from Theorems 7.6
+and 7.7 that the expected number of iterations of step 3 is O(1). We thus have a Las Vegas
+algorithm to compute #E(Fp ). Its running time is dominated by the time to find M in
+√
+step 3b, and we obtain a total expected running time of O( p M(log p)), or
+
+O exp(n/2) M(n) .
+We now show how this complexity can be improved using the baby-steps giant-steps method
+to find a suitable M in step 3b.
+
+7.9
+
+Baby-steps giant-steps
+
+The baby-steps giant-steps method is a generic group algorithm that was first introduced
+by Daniel Shanks in [5] and subsequently generalized by many authors. In the context of
+searching H(q) for an integer M such that M P = 0, it works as follows.
+Algorithm 7.9. Given P ∈ E(Fq ) compute M ∈ H(q) such that M P = 0:
+√
+√
+1. Pick integers r and s such that rs ≥ 4 q and let a := d( q − 1)2 e = min(H(q) ∩ Z).
+2. Compute the set Sbaby := {0, P, 2P, . . . , (r − 1)P } of baby steps.
+3. Compute the set Sgiant := {aP, (a + r)P, (a + 2r)P, . . . , (a + (s − 1)r)P } of giant steps.
+4. For each giant step Pgiant = (a + ir)P ∈ Sgiant , check whether Pgiant + Pbaby = 0 for
+some baby step Pbaby = jP ∈ Sbaby . If so, output M = a + ri + j.
+Note that every integer in H(q) can be written in the form a + ir + j with 0 ≤ i < s and
+0 ≤ j < r, and for at least one such M we must have
+M P = (a + ri)P + jP = Pgiant + Pbaby = 0
+for some Pgiant ∈ Sgiant and Pbaby ∈ Sbaby ; this shows that the algorithm is correct.
+18.783 Spring 2021, Lecture #7, Page 7
+
+To implement this algorithm efficiently, we typically store the baby steps Sbaby in a
+lookup table (such as a hash table or binary tree) and as each giant step Pgiant is computed,
+we look up −Pgiant in this table. Alternatively, one may compute the sets Sbaby and Sgiant
+in their entirety, sort both sets, and then efficiently search for a match. In both cases, we
+need the points in Sbaby and Sgiant to be uniquely represented.
+If we are using projective coordinates this means we must convert each point to affine
+form: the point (x : y : z) is put in the form (x/z : y/z : 1) by computing the inverse of z
+in Fq . Done naïvely, this requires r + s field inversions, which costs O((r + s) M(n) log n),
+but by using the method described in the next section, it is possible to perform r + s field
+inversions in O((r + s) M(n)) time. Assuming this is done, if we choose r ≈ s ≈ 2q 1/4 , then
+the running time of the algorithm above is O(q 1/4 M(log q)).
+Using the baby-steps giant-steps method to implement step 3b of Algorithm 7.8 thus
+allows us to compute #E(Fq ) in expected time
+
+O exp(n/4) M(n) .
+
+7.10
+
+Batching field inversions
+
+Suppose we are given a list of elements α1 , . . . , αm ∈ Fq whose inverses we wish to compute.
+The following algorithm accomplishes this using just one field inversion.
+−1 as follows:
+Algorithm 8.2 Given α1 , . . . , αm ∈ Fq compute α1−1 , . . . , αm
+
+1. Set β0 = 1 and βi = βi−1 αi for i from 1 to m.
+
+[βi = (α1 · · · αi )]
+
+−1 .
+2. Compute γm = βm
+
+[γm = (α1 · · · αm )−1 ]
+
+3. For i from m down to 1:
+a. Compute αi−1 = βi−1 γi .
+b. Compute γi−1 = γi αi .
+
+[αi−1 = (α1 · · · αi−1 )(α1 · · · αi )−1 ]
+[γi−1 = (α1 · · · αi−1 )−1 ]
+
+The algorithm performs less than 3m multiplications in Fq and just one inversion in Fq .
+Provided that m = Ω(log n), its running time is O(m M(n)).
+In the context of Algorithm 8.1, if we are using a table of baby steps, we can compute
+all of the baby steps using projective coordinates, convert them to affine form using just one
+field inversion, and then construct the lookup table. For the giant steps we work in batches
+of size m > log n, converting an entire batch to affine form using one field inversion and
+then performing table lookups.
+
+7.11
+
+Optimizations
+
+There are a wide range of optimizations to the baby-steps giant-steps method that have
+been developed over the years. Here we mention just a few.
+1. Optimize expected time: If we suppose that
+p M is uniformly distributed over an
+interval of width N , then we should
+use
+r
+≈
+N/2 baby steps so that the average
+p
+√
+number of giant steps is s/2 ≈ 2N /2 = N/2.
+2. Optimize for known distribution: In the case of elliptic curves we know that M is
+not uniformly distributed – it has a semi-circular distribution.2 This means we should
+2
+
+This follows from results showing that the Sato-Tate conjecture holds “on average”; see [1].
+
+18.783 Spring 2021, Lecture #7, Page 8
+
+search from the middle outwards by taking our first giant step in the middle of the
+interval (at q +1), and then alternating steps on either side. We should also choose the
+number of baby steps to optimize the expected time, using the fact that the expected
+8 √
+distance between M and the middle of the interval is 3π
+q.
+3. Fast inverses: In groups such as E(Fq ) where we can compute inverses very quickly
+(the inverse of the point (x, y) is just (x, −y)), it makes sense to compute −Pgiant at the
+same time we compute Pgiant and see whether either matches a baby step; equivalently,
+whether Pgiant ± Pbaby = 0 holds. This allows us to double the width of the giant steps
+and use half as many,
+√ or (better), reduce both the number of baby steps and giant
+steps by a factor of 2.
+4. Parity: We can easily determine the parity of #E(Fq ) by checking whether it has a
+point of order 2. If the curve equation is y 2 = f (x) = x3 + Ax + B, then #E(Fq )
+has even parity if and only if f (x) has a root in Fq (recall that points of order 2
+have y-coordinate 0), which we can determine using a root-finding algorithm.3 Once
+we know the parity of M we can modify Algorithm 8.1 to only use baby steps that
+correspond to multiples of P with the same parity (so if M is odd we compute baby
+steps P, 3P, 5P, . . . , adding 2P to each previous step), and use giant steps
+√ with even
+parity. We should then reduce the number of baby steps by a factor of 2.
+
+References
+[1] William D. Banks and Igor E. Shparlinski, Sato-Tate, cyclicity, and divisibility statistics
+on average for elliptic curves of small height, Israel J. Math. 173 (2009), pp. 253–277.
+[2] John E. Cremona and Andrew V. Sutherland, On a theorem of Mestre and Schoof ,
+Journal de Théorie des Nombres de Bordeaux 22 (2010), pp. 353–358.
+[3] Joachim von zur Gathen and Jürgen Garhard, Modern computer algebra, third edition,
+Cambridge University Press, 2013.
+[4] René Schoof, Counting points on elliptic curves over finite fields, Journal de Théorie des
+Nombres de Bordeaux 7 (1995), pp. 219–254.
+[5] Daniel Shanks, Class number, a theory of factorization and genera, in 1969 Number
+Theory Institute (Proc. Symp. Pure Math., Vol. XX), Amer. Math. Soc., 1971, pp. 415–
+440.
+[6] Joseph .H. Silverman, The arithmetic of elliptic curves, Graduate Texts in Mathematics
+106, second edition, Springer 2009.
+[7] Lawrence C. Washington, Elliptic Curves: Number theory and cryptography, second edition, Chapman and Hall/CRC, 2008.
+
+3
+
+In fact we only need to check whether deg gcd(xq − x, f (x)) > 0, so we can do this deterministically.
+18.783 Spring 2021, Lecture #7, Page 9
+
+MIT OpenCourseWare
+https://ocw.mit.edu
+
+18.783 / 18.7831 Elliptic Curves
+Spring 2021
+
+For information about citing these materials or our Terms of Use, visit: https://ocw.mit.edu/terms.
+
+

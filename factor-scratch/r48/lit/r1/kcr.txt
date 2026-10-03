@@ -1,0 +1,1026 @@
+MATHEMATICS OF COMPUTATION
+Volume 67, Number 223, July 1998, Pages 1179–1197
+S 0025-5718(98)00944-2
+
+
+
+
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS
+                  OVER FINITE FIELDS
+
+                          ERICH KALTOFEN AND VICTOR SHOUP
+
+
+          Abstract. New probabilistic algorithms are presented for factoring univariate
+          polynomials over finite fields. The algorithms factor a polynomial of degree
+          n over a finite field of constant cardinality in time O(n1.815 ). Previous al-
+          gorithms required time Θ(n2+o(1) ). The new algorithms rely on fast matrix
+          multiplication techniques. More generally, to factor a polynomial of degree
+          n over the finite field Fq with q elements, the algorithms use O(n1.815 log q)
+          arithmetic operations in Fq .
+              The new “baby step/giant step” techniques used in our algorithms also yield
+          new fast practical algorithms at super-quadratic asymptotic running time, and
+          subquadratic-time methods for manipulating normal bases of finite fields.
+
+
+
+
+                                       1. Introduction
+   In this paper, we present a new probabilistic approach for factoring univariate
+polynomials over finite fields. The resulting algorithms factor a polynomial of degree
+n over a finite field Fq whose cardinality q is constant in time O(n1.815 ). The best
+previous algorithms required time Θ(n2+o(1) ).
+   This running-time bound relies on fast matrix multiplication algorithms. Let ω
+be an exponent of matrix multiplication; that is, ω is chosen so that we can multiply
+two n × n matrices using O(nω ) arithmetic operations (we assume that 2 < ω ≤ 3).
+Using the result of Coppersmith and Winograd [11], we can take ω < 2.375477.
+   More generally, we prove the following:
+Theorem 1. For any 0 ≤ β ≤ 1, there exists a probabilistic algorithm for factoring
+a univariate polynomial of degree n over a finite field Fq that uses an expected
+number of
+                         O(n(ω+1)/2+(1−β)(ω−1)/2 + n1+β+o(1) log q)
+
+   Received by the editor October 12, 1995 and, in revised form, March 29, 1996.
+   1991 Mathematics Subject Classification. Primary 12E20, 13P05, 68Q40.
+   Key words and phrases. Factoring, polynomials, finite fields, randomized algorithms, normal
+bases.
+   This material is based on work supported in part by the National Science Foundation under
+Grant No. CCR-9319776 (first author) and by an Alexander von Humboldt Research Fellowship
+(second author).
+   A major part of the work was performed while the first author was at Rensselaer Polytechnic
+Institute, Department of Computer Science, in Troy, New York and while the second author was
+at the Universität des Saarlandes, FB 14–Informatik, in Saarbrücken, Germany.
+   A preliminary version of this paper appears in the Proc. 27th Annual ACM Symp. Theory of
+Computing, ACM Press, pp. 398–406 (1995).
+
+                                                               c 1998 American Mathematical Society
+
+                                                    1179
+1180                   ERICH KALTOFEN AND VICTOR SHOUP
+
+
+arithmetic operations in Fq . In particular, choosing ω < 2.375477 and minimizing
+the exponent of n, we get O(n1.815 log q) operations in Fq .
+Relation to Previous Work. The first random polynomial-time algorithm for
+this problem is due to Berlekamp [4]. Berlekamp’s algorithm reduces the problem to
+that of finding elements in the null space of an n×n matrix over Fq . Using standard
+techniques from linear algebra, Berlekamp’s algorithm can be implemented so as
+to use an expected number of O(nω + n1+o(1) log q) operations in Fq . Note that
+the algorithm by Rabin [31] has an inferior running time, but Rabin completes
+the mathematical justification for the expected running time of the probabilistic
+Berlekamp method.
+    A very different algorithm is described by Cantor and Zassenhaus [9] (see also
+Ben-Or [3], especially for the case where the characteristic is 2). Starting with a
+square-free polynomial, that algorithm first separates the irreducible factors of dis-
+tinct degree (distinct-degree factorization), and then completely factors each of the
+resulting factors (equal-degree factorization). The Cantor/Zassenhaus algorithm
+can be implemented so as to use an expected number of O(n2+o(1) log q) operations
+in Fq .
+    Von zur Gathen and Shoup [17] developed new algorithmic techniques that es-
+sentially allow one to implement the Cantor/Zassenhaus algorithm so that it uses
+an expected number of O(n2+o(1) + n1+o(1) log q) operations in Fq . Their tech-
+niques allow one to solve the special problem of equal-degree factorization using an
+expected number of O(n(ω+1)/2+o(1) + n1+o(1) log q) operations in Fq .
+    Niederreiter [28] developed an alternate approach to factoring polynomials over
+finite fields. However, from a complexity point of view this method is closely related
+to Berlekamp’s original algorithm (Fleischmann [15] Niederreiter and Göttfert [29]).
+    Kaltofen and Lobo [20] adapted the linear system solver of Wiedemann [36] to
+Berlekamp’s algorithm. Utilizing techniques from von zur Gathen and Shoup, they
+show how their Black Box Berlekamp algorithm can be implemented so as to use
+an expected number of O(n2+o(1) + n1+o(1) log q) in Fq .
+    Notice that at β = 0, the running-time of our algorithm matches that of Ber-
+lekamp’s, and at β = 1 it matches that of Cantor/Zassenhaus, so that in some sense
+it interpolates between these two algorithms.
+    When log q is not too large in relation to n, then our new algorithm is asymptot-
+ically faster than previous algorithms. This is certainly clear if q is a constant and
+ω < 3. Also, for ω < 2.375477, as n and q tend to infinity with log q = O(n0.454 ),
+our new algorithm uses O(n2−Ω(1) ) operations in Fq , whereas the best previous algo-
+rithms require Θ(n2+o(1) ) operations. Figure 1 plots the running times of selected
+algorithms in dependence of both n and log q when a fast matrix multiplication
+algorithm is used. The method by von zur Gathen and Shoup to-date remains
+the champion when log q = Ω(n0.454 ) and simultaneously log q = O(n1.375477 ). At
+larger fields the term n log q in the Berlekamp algorithm dominates all running
+times.
+Overview. Our Theorem 1 is proved using the Cantor/Zassenhaus strategy. The
+main technical contribution here is a subquadratic distinct-degree factorization
+algorithm, which is based on a “baby step/giant step” strategy. Our Fast
+Cantor/Zassenhaus algorithm is described in §2.
+   We also show how to modify the Black Box Berlekamp algorithm, using a very
+similar baby step/giant step technique, to get a subquadratic-time algorithm as
+         SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                                    1181
+
+
+        y
+
+              time = O(ny )
+  2.6
+                                                                                                 y=x+1
+
+                                      y=x+2
+                                                                                Berlekamp 1970
+ 2.4
+                                                         y= ω
+
+
+                              Cantor/Zassenhaus 1981
+  2.2
+
+
+
+
+                                                  von zur Gathen/Shoup 1992
+  2.0
+                                                                y=2
+
+               Ours
+                          y = 1.815 + 0.407 x
+                                                                                         ω -1
+ 1.8                                                                                                       x
+        0.0            0.2           0.4           0.6            0.8     1.0      1.2           1.4
+
+                                                                                         log(q) = O(nx)
+
+
+
+              Figure 1. Running time comparisons for variable field cardinality
+
+well. This algorithm is described in §3. Interestingly, our techniques for the Black
+Box Berlekamp algorithm lead to subquadratic algorithms for finding a normal
+element in a finite field and for converting to and from normal coordinates. We
+present those algorithms in §4.
+   At the heart of our algorithms is the following problem. Given polynomials f ,
+g, and h in Fq [x] of degree bounded by n, compute g(h) mod f ∈ Fq [x]. Recently,
+this so-called modular polynomial composition problem has arisen in many contexts
+(von zur Gathen and Shoup [17], Shoup [34]). The algorithm of Brent and Kung
+[6] solves this problem using O(n(ω+1)/2 ) operations in Fq .
+   Any improvement in the complexity of this problem would yield an improve-
+ment in the complexity of factoring. Indeed, if this problem could be solved using
+O(n1+o(1) ) operations in Fq , then our Fast Cantor/Zassenhaus algorithm could be
+implemented so as to use O(n1.5+o(1) + n1+o(1) log q) operations in Fq .
+   Our algorithms rely on fast multiplication of matrices, indeed of n1/2 × n1/2
+matrices, and therefore are not particularly practical. Interestingly, however, the
+techniques themselves can be adapted so as to give a quite practical factoring
+algorithm that uses
+                                                O(n2.5 + n1+o(1) log q)
+operations in Fq and space for O(n1.5 ) elements in Fq , where the implied “big-O”
+constants are quite reasonable. From practical experience, we have found that
+when q is a large prime, this new algorithm allows much larger polynomials to be
+factored using a reasonable amount of space and time than was previously possible
+using other algorithms. This is briefly discussed in §5; a more complete discussion,
+including a description of an implementation of this algorithm as well as the results
+of empirical tests, is given in Shoup [35].
+1182                      ERICH KALTOFEN AND VICTOR SHOUP
+
+
+   To attain a subquadratic running time, our algorithms rely on randomization.
+Even if we restrict ourselves to the field F2 , the asymptotically fastest known de-
+terministic algorithm (Shoup [33]) runs in time O(n2+o(1) ), and it remains an open
+problem to find a subquadratic deterministic algorithm.
+
+                  2. The fast Cantor/Zassenhaus algorithm
+   Like the original Cantor/Zassenhaus algorithm, our algorithm splits the problem
+of factoring into three sub-problems:
+   Square-free factorization: The input is a polynomial f ∈ Fq [x] of degree n.
+      The output is f1 , . . . , fn ∈ Fq [x] such that
+                                    f = f1 · f22 · · · · · fnn .
+   Distinct-degree factorization: The input is a square-free polynomial f ∈
+      Fq [x] of degree n. The output is f [1] , . . . , f [n] ∈ Fq [x] such that for 1 ≤ d ≤ n,
+      f [d] is the product of the monic irreducible factors of f of degree d.
+   Equal-degree factorization: The input is a polynomial f ∈ Fq [x] of degree
+      n and an integer d such that f is the product of distinct monic irreducible
+      polynomials, each of degree d. The output is the set of irreducible factors
+      of f .
+   The factoring algorithm proceeds in three stages as follows. In the first stage, the
+input polynomial is fed into a square-free factorizer. In the second stage, the non-
+trivial outputs from the first stage are fed into distinct-degree factorizers. In the
+last stage, the non-trivial outputs from the second stage are fed into equal-degree
+factorizers.
+   The square-free factorization problem can be solved on degree n inputs using
+O(n1+o(1) + n log q) operations in Fq , using the algorithm of Yun (see Knuth [23]).
+   The equal-degree factorization problem can be solved on degree n inputs with
+the probabilistic algorithm of von zur Gathen and Shoup [17] using an expected
+number of
+                             O(n(ω+1)/2+o(1) + n1+o(1) log q),
+or
+                                 O(n1.688 + n1+o(1) log q)
+operations in Fq .
+  We shall now present a family of (deterministic) algorithms for the distinct-
+degree factorization problem, parameterized by β with 0 ≤ β ≤ 1, that uses
+                       O(n(ω+1)/2+(1−β)(ω−1)/2 + n1+β+o(1) log q)
+operations in Fq . For any choice of β, this dominates the time required for square-
+free factorization and equal-degree factorization, establishing Theorem 1.
+   Our distinct-degree factorization algorithm uses a “baby step/giant step” strat-
+egy that exploits the following fact.
+                                                                          i      j
+Lemma 1. For nonnegative integers i and j, the polynomial xq − xq ∈ Fq [x] is
+divisible by precisely those irreducible polynomials in Fq [x] whose degree divides i−j.
+                                                                     i     j         i−j     j
+Proof. Assume without loss of generality that i ≥ j. Then xq − xq = (xq − x)q ,
+                                                           k
+and the result follows at once from the factorization of xq − x, which consists of
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                               1183
+
+
+all irreducible factors whose degree is a divisor of k (see Lidl and Niederreiter [24],
+Theorem 3.20).
+
+   We first present a high-level description of our distinct-degree factorization al-
+gorithm. The details of how each step is to be implemented are deferred until
+later.
+Algorithm D. This algorithm takes as input a square-free polynomial f ∈ Fq [x]
+of degree n. The output is f [1] , . . . , f [n] ∈ Fq [x] such that for 1 ≤ d ≤ n, f [d] is
+the product of the monic irreducible factors of f of degree d. The algorithm is
+parameterized by a constant β, with 0 ≤ β ≤ 1.
+   Step D1 (compute baby steps): Let l = dnβ e. For 0 ≤ i ≤ l, compute
+             i
+      hi = xq mod f ∈ Fq [x].
+   Step D2 (compute giant steps): Let m = dn/2le. For 1 ≤ j ≤ m, compute
+               lj
+      Hj = xq mod f ∈ Fq [x].
+   Step D3 (compute interval polynomials): For 1 ≤ j ≤ m, compute
+                              Y
+                      Ij =           (Hj − hi ) mod f ∈ Fq [x].
+                                   0≤i<l
+
+     Note that by Lemma 1, the polynomial Ij is divisible by those irreducible
+     factors of f whose degree divides an integer k with (j − 1)l < k ≤ jl.
+   Step D4 (compute coarse DDF): In this step, we compute polynomials
+     F1 , . . . , Fm , where Fj = f [(j−1)l+1] f [(j−1)l+2] · · · f [jl] . This is done as follows.
+              f∗ ← f;
+              for j ← 1 to m do
+                    {Fj ← gcd(f ∗ , Ij ); f ∗ ← f ∗ /Fj }
+   Step D5 (compute fine DDF): In this step, we compute the output polyno-
+     mials f [1] , . . . , f [n] . First, initialize f [1] , . . . , f [n] to 1. Then do the following.
+           for j ← 1 to m do
+                  {g ← Fj ;
+                    for i ← l − 1 down to 0 do
+                           {f [lj−i] ← gcd(g, Hj − hi ); g ← g/f [lj−i] }
+                  }
+                                           ∗
+           if f ∗ 6= 1 then f [deg(f )] ← f ∗ ;
+
+   The correctness of this algorithm is clear from the comments contained therein.
+   Before establishing the running-time bound in Theorem 1, we begin with the
+following slightly weaker, but simpler, result.
+Theorem 2. Algorithm D can be implemented so as to use
+                             O(n(ω+1)/2+1−β + n1+β+o(1) log q)
+operations in Fq . In particular, choosing ω < 2.375477 and minimizing the exponent
+of n, we get O(n1.844 log q) operations in Fq .
+    The proof of Theorem 2 is based on the observation that for any positive integer
+                         r
+r, if we are given h = xq mod f ∈ Fq [x], then for any g ∈ Fq [x], we can compute
+   r
+g q mod f as g(h) mod f ∈ Fq [x]. To solve this so-called “modular composition”
+problem, we use the following result.
+1184                   ERICH KALTOFEN AND VICTOR SHOUP
+
+
+Lemma 2. Given a polynomial f ∈ K[x] of degree n over an arbitrary field K,
+and polynomials g, h ∈ K[x] of degree less than n, we can compute the polynomial
+g(h) mod f ∈ K[x] using O(n(ω+1)/2 ) arithmetic operations in K.
+Proof. This is essentially Algorithm 2.1 in Brent and Kung [6].
+   We now prove Theorem 2.
+   Step D1 is performed by iterating the standard repeated-squaring algorithm l
+times. This takes O(n1+β+o(1) log q) operations in Fq .
+   Step D2 is performed by setting H1 = hl , and then iterating the algorithm
+of Lemma 2, computing each Hj as Hj−1 (H1 ) mod f ∈ Fq [x]. This takes
+O(n(ω+1)/2+1−β ) operations in Fq .
+   Step D3 is performed as follows. Let R be the ring Fq [x]/(f ). We first compute
+the coefficients of the polynomial H(Y ) ∈ R[Y ] of degree l, where
+                                    Y
+                           H(Y ) =     (Y − (hi mod f )).
+                                   0≤i<l
+
+Then we evaluate H(Y ) at the m points
+                        (H1 mod f ), . . . , (Hm mod f ) ∈ R.
+Using fast algorithms for multiplication of polynomials in R[Y ] (Cantor and
+Kaltofen [8]) Step D3 can be implemented so as to use O(n1+β+o(1) + n2−β+o(1) )
+operations in Fq (Aho et al. [1]).
+   In Step D4, we need to compute O(m) GCD’s and divisions, requiring
+O(n2−β+o(1) ) operations in Fq .
+   To implement Step D5 efficiently, we first reduce each hi modulo each Fj . Re-
+ducing one hi modulo each Fj takes O(n1+o(1) ) operations in Fq , using standard
+“Chinese remaindering” techniques (Aho et al. [1]). Thus, reducing all of the hi ’s
+modulo all of the Fj ’s takes just O(n1+β+o(1) ) operations in Fq . Also, we compute
+Hj mod Fj for each Fj . This takes O(n2−β+o(1) ) operations in Fq . With these
+pre-computations, the total cost of computing the GCD’s and divisions in the inner
+loop amounts to O(n1+β+o(1) ) operations in Fq . Thus the total cost of Step D5 is
+O(n1+β+o(1) + n2−β+o(1) ) operations in Fq .
+   That proves Theorem 2.
+   We now show how to modify the implementation of Step D2 to obtain the slightly
+better running-time bound of Theorem 1.
+Theorem 3. Algorithm D can be implemented so as to use
+                    O(n(ω+1)/2+(1−β)(ω−1)/2 + n1+β+o(1) log q)
+operations in Fq . In particular, choosing ω < 2.375477 and minimizing the exponent
+of n, we get O(n1.815 log q) operations in Fq .
+   To prove this theorem, it will suffice to show that we can compute the polynomi-
+als H1 , . . . , Hm in Step D2 using O(n(ω+1)/2+(1−β)(ω−1)/2 ) operations in Fq . This
+is an immediate consequence of the following two lemmas.
+Lemma 3. Given a polynomial f ∈ K[x] of degree n over an arbitrary field K, and
+polynomials g1 , . . . , gk , h ∈ K[x] of degree less than n, where k = O(n), we can
+compute
+                       g1 (h) mod f, . . . , gk (h) mod f ∈ K[x]
+        SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS               1185
+
+
+using
+                                    O(n(ω+1)/2 k (ω−1)/2 )
+arithmetic operations in K.
+                    √
+Proof. Setting t = d nke, we decompose each of the input polynomials g1 , . . . , gk
+as
+                                X
+(1)                        gi =     gi,j y j , y = xt ,
+                                     0≤j<n/t
+
+where the gi,j ’s are polynomials of degree less than t. We first compute the poly-
+nomials h(i) = hi mod f for 0 ≤ i ≤ t. Next, we compute all of the polynomi-
+als gi,j (h) mod f by computing the following product of an n × t matrix and a
+t × (kdn/te) matrix:
+   h                     i                                                     
+     ~h(0) . . . ~h(t−1) · ~g1,0 . . . ~g1,dn/te−1 . . . ~gk,0 . . . ~gk,dn/te−1 .
+
+Here, we use the notation ~· to denote the column vector consisting
+                                                              p of the coefficients
+of a polynomial. This computation is done by performing O( n/k) multiplications
+of t×t matrices. Finally, we compute for 1 ≤ i ≤ k the polynomial gi (h) mod f (x) ∈
+K[x] by substituting the polynomial h(t) for y in the formula (1), and performing
+a Horner evaluation scheme. This is done by iteratively performing dn/te − 1
+polynomial multiplications mod f and O(n/t) polynomial additions.
+   It is easily seen that the dominant cost is again the matrix multiplication step,
+which can be carried out using the stated number of operations.
+  We remark that when k = 1, the algorithm in the above proof is the same as
+Brent and Kung’s modular composition algorithm.
+Lemma 4. Let f ∈ Fq [x] be a polynomial of degree n. Suppose that we are given
+  r
+xq mod f ∈ Fq [x]. Then we can compute
+                      r             2r                       kr
+                     xq mod f, xq        mod f, . . . , xq        mod f ∈ Fq [x],
+where k = O(n), using
+                                    O(n(ω+1)/2 k (ω−1)/2 )
+operations in Fq .
+                                         ir
+Proof. For i ≥ 1, let Gi = xq mod f ∈ Fq [x]. Assume we have computed
+G1 , . . . , Gm . Then we can compute Gm+1 , . . . , G2m by computing G1 (Gm ) mod
+f, . . . , Gm (Gm ) mod f using the algorithm in the previous lemma.
+    So to compute G1 , . . . , Gk given G1 , we simply repeat the above “doubling” step
+O(log k) times. The stated running-time estimate then follows easily.
+
+               3. The Fast Black Box Berlekamp algorithm
+   In Kaltofen and Lobo [20], a version of Berlekamp’s factoring algorithm was
+given based on Wiedemann’s [36] sparse linear system solver. In this section, we
+show how to modify that algorithm to obtain a probabilistic, subquadratic-time
+algorithm.
+   We split this section into two parts. In §3.1, we review the ideas behind the
+Black Box Berlekamp algorithm, presenting a high-level description of that algo-
+rithm. Then in §3.2, we describe a subquadratic-time implementation, first proving
+1186                    ERICH KALTOFEN AND VICTOR SHOUP
+
+
+a running time bound of O(n1.880 + n1.808 log q) operations in Fq . We then modify
+this method to obtain the bound O(n1.852 + n1.763 log q). With yet a bit more work,
+we show how to obtain the bound O(n1.815 log q).
+3.1. The Black Box Berlekamp Algorithm. We first recall the main ideas
+behind the Black Box Berlekamp algorithm. Suppose the coefficient field Fq has
+characteristic p. Let f ∈ Fq [x] be a monic square-free polynomial of degree n to be
+factored. Assume that the factorization of f into irreducibles is
+                                      f = f 1 · · · fr .
+For 1 ≤ i ≤ r, let di = deg(fi ), and let pei be the highest power of p that divides
+di . Furthermore, let e = max{ei : 1 ≤ i ≤ r}.
+    Now consider the q-th power map σ : α 7→ αq for α ∈ Fq [x]/(f ). Let φ ∈ Fq [λ]
+be the minimum polynomial of σ over Fq , i.e., φ is the monic polynomial of least
+degree such that φ(σ) = 0. The polynomial φ can easily be described in terms of
+the degrees of the irreducible factors of f , as follows. By the Chinese remainder
+theorem we have the Fq -algebra isomorphism
+                      Fq [x]/(f ) ∼
+                                  = Fq [x]/(f1 ) ⊕ · · · ⊕ Fq [x]/(fr ).
+For 1 ≤ i ≤ r, let σi be the q-th power map on Fq [x]/(fi ), and let φi ∈ Fq [λ]
+be its minimum polynomial. From the basic theory of finite fields, we know that
+φi = λdi − 1. Moreover, by the Chinese remainder theorem,
+                 φ = lcm{φ1 , . . . , φr } = lcm{λd1 − 1, . . . , λdr − 1}.
+Now consider the polynomial µ(λ) = φ(λ)/(λ − 1), and the image Ii ⊂ Fq [x]/(fi )
+of µ(σi ). Since (σi − 1)(α) = αq − α = 0 for all α ∈ Ii , it follows that Ii ⊂ Fq . It is
+easily seen that λ − 1 divides λdi − 1 exactly to the power pei , which implies that
+Ii = Fq if ei = e, and Ii = {0} if ei < e (see Kaltofen and Lobo [20], §3, for more
+details).
+   These considerations motivate the following recursive algorithm. The details of
+how each step is to be implemented are deferred until later.
+Algorithm B. The algorithm takes as input a monic square-free polynomial f ∈
+Fq [x] of degree n, and produces as output the set of irreducible factors of f .
+    Step B1 (compute minimum polynomial): Probabilistically compute a
+       polynomial φ∗ ∈ Fq [λ] that with probability at least 1/2 is equal to φ, the min-
+       imum polynomial of the q-th power map σ on Fq [x]/(f ), and that otherwise
+       divides φ.
+    Step B2 (evaluate polynomial): If φ∗ (λ) = λn − 1, then halt, as f is then
+       certified to be irreducible. If λ − 1 does not divide φ∗ (λ), go back to Step B1,
+       as then φ∗ is clearly erroneous. Otherwise, set µ∗ (λ) = φ∗ (λ)/(λ − 1), choose
+       a random α ∈ Fq [x]/(f ), and compute
+                             α∗ = (µ∗ (σ))(α) ∈ Fq [x]/(f ).
+   Step B3 (split): Let α∗ = (g mod f ). Compute h1 = gcd(g, f ) and h2 = f /h1 .
+     If φ∗ = φ then the degrees of all irreducible factors of h2 are divisible by pe
+     and the residues of h2 modulo these factors are random elements in Fq \ {0}.
+     Compute h∗ ∈ Fq [x]/(h2 ) as
+                           (
+                      ∗       g (q−1)/2 mod h2    if p > 2,
+                     h =      Pk−1 2j
+                                  j=0 g  mod h2 if q = 2k .
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                 1187
+
+
+      Recursively factor h1 , h∗2 = gcd(1 + h∗ mod h2 , h2 ) and h2 /h∗2 .
+   Before going into the details of each step, we first calculate a bound on the
+recursion depth of this algorithm.
+Lemma 5. The expected value of the recursion depth of Algorithm B is
+O(dlogp ne log r), where r is the number of irreducible factors of f .
+Proof. Consider one invocation of the algorithm and recall the notation preceding
+the algorithm. Each factor fi with ei = e will be separated from the factors fj
+with ej < e in Step B3 with probability bounded away from 0 by a constant. If f
+has several factors with ei = e, then each pair of such factors will be separated in
+Step B3 with probability bounded away from 0 by a constant. These statements
+follow easily from the fact that φ∗ is correctly computed with probability 1/2, and
+from the discussion preceding the algorithm.
+   Using a standard argument (see, for example, Lemma 4.1 in von zur Gathen and
+Shoup [17], at an expected depth of O(log r), all irreducible factors fi with ei = e
+will be isolated, and the only reducible factors remaining will have ei < e.
+   It follows that at an expected depth of O(dlogp ne log r), all irreducible factors
+of f will be isolated.
+   Next, we discuss the problem of computing φ∗ in Step B1. Following Wiedemann
+[36], this is done as follows. We choose random α ∈ Fq [x]/(f ) and a random Fq -
+linear map u : Fq [x]/(f ) → Fq , and compute the minimum polynomial of the linearly
+generated sequence {ai : ai = u(σ i (α)) and i ≥ 0}. Using an asymptotically fast
+version of the Berlekamp-Massey algorithm (Massey [27], Dornstetter [12]), given
+the first 2n terms of the sequence {ai : i ≥ 0}, we can determine the minimum
+polynomial φα,u ∈ Fq [λ] of this sequence using O(n1+o(1) ) operations in Fq . In
+general, φα,u divides φ, but the probability that φα,u = φ (for random α, u) may be
+less than 1/2, and indeed not even bounded away from 0 by a constant. To increase
+this probability, we repeat the above procedure some number ρ(n, q) times, each
+time choosing a new α and a new u at random, thus obtaining polynomials φαi ,ui ,
+where 1 ≤ i ≤ ρ(n, q). Then we compute
+                          φ∗ = lcm{φαi ,ui : 1 ≤ i ≤ ρ(n, q)}.
+The value ρ(n, q) can be chosen as indicated in the next lemma.
+Lemma 6. Let ρ(n, q) be defined as follows. If q ≥ 4n, then ρ(n, q) = 1. Other-
+wise,
+                                 
+                                 
+                                   6 if q = 2,
+                                 
+                                    4 if q = 3,
+                       ρ(n, q) =
+                                 
+                                   3 if 4 ≤ q ≤ 9,
+                                 
+                                    2 if q ≥ 11.
+Then the probability that φ∗ = φ is at least 1/2.
+Proof. If q ≥ 4n, then the result follows by the analysis of Kaltofen and Pan
+[21]. Otherwise we argue along the same lines as Wiedemann [36, §VI]. Suppose
+φ = ψ1η1 · · · ψsηs is the factorization of φ into irreducibles. Suppose α ∈ Fq [x]/(f )
+and u : Fq [x]/(f ) → Fq are chosen at random. As above, let φα ∈ Fq [λ] be the
+minimum polynomial of the sequence {σ i (α) : i ≥ 0} and let φα,u be the minimum
+polynomial of the sequence {u(σ i (α)) : i ≥ 0}.
+1188                    ERICH KALTOFEN AND VICTOR SHOUP
+
+                                                                    η
+Claim. For any single j with 1 ≤ j ≤ s, the probability that ψj j does not divide
+φα,u is no more than
+                         (2/q − 1/q 2 )δ   where δ = deg(ψj ).
+    We prove this claim by using a fact established by Wiedemann. He shows that
+there exists a surjective Fq -linear map L : V → W depending on α, where V is
+the linear space of Fq -linear maps from Fq [x]/(f ) to Fq and W is the linear space
+of polynomials of degree less than deg(φα ), such that for any u ∈ V we have
+                                                     η                        η
+φα,u = φα / gcd(φα , L(u)). Suppose now that ψj j divides φα . Then ψj j divides
+φα,u if ψj does not divide L(u), which for a random u is a random polynomial
+over Fq of degree less than deg(φα ). Clearly, of all q deg(φα ) such polynomials only
+q deg(φα )−δ are divisible by ψj , so the probability that ψj does not divide L(u) is
+1 − 1/q δ . Furthermore, by considering the rational canonical form of the linear
+transform σ we can show the existence of an element α0 such that φα0 = φ. As L
+is surjective, there also must exist a u0 such that φα0 ,u0 = φα0 = φ. By switching
+the rôles of u and α, as Wiedemann does in the proof of his Proposition 4, we can
+                                     η
+obtain that the probability that ψj j divides φα,u0 is 1 − 1/q δ . Thus, the probability
+        ηj
+that ψj divides φα is no less.
+                                         η
+    Therefore, the probability that ψj j does not divide φα,u is no less than 1 −
+(1 − 1/q ) = 2/q − 1/q . The claim then follows from the inequality 2cδ − c2δ ≤
+          δ 2       δ      2δ
+
+(2c − c2 )δ , which holds for all real numbers c with 0 < c ≤ 1/2 and all integers
+δ ≥ 1.
+    From this claim, one sees that if this procedure is repeated k = ρ(n, q) times,
+and we compute φ∗ as the polynomial least common multiple of all of the φαi ,ui ’s,
+then the probability that ψj j does not divide φ∗ is at most (2/q − 1/q 2 )k deg(ψj ) .
+                              η
+
+                                l
+    Since the factorization of xq − x includes each irreducible polynomial of degree
+l, the number of irreducibles of degree l is at most q l /l. Hence summing over all
+irreducible polynomials dividing φ, as well as all those irreducible polynomials not
+dividing φ, we get an upper bound on the probability that φ∗ 6= φ of
+                  X ql
+                         (2/q − 1/q 2 )k l = − log(1 − q(2/q − 1/q 2 )k ).
+                      l
+                 l≥1
+
+The lemma then follows from a simple numerical calculation.
+
+   For sufficiently large q it is possible to improve the expected recursion depth of
+Algorithm 1 to O(logp n + log r) as follows. First, we make the probability that
+φ∗ 6= φ in Step B1 smaller than 1/q by computing the least common multiple of ρ0
+many polynomials φαi ,ui , where
+                                         
+                                         
+                                           6 if q = 2,
+                                         
+                                         
+                                          5 if q = 3,
+                             ρ0 (n, q) =    4 if q = 4, 5,
+                                         
+                                         
+                                         
+                                           3 if q ≥ 7,
+                                         
+                                            2 if q > 4n2 .
+The values for ρ0 follow as in the proof of Lemma 6. Suppose now that φ∗ = φ.
+Then the probability that all re irreducible factors fi of f with ei = e are separated
+from the remaining factors in a single gcd in Step B3 is equal to the probability that
+re random elements of Fq are simultaneously not equal to zero, which is (1 − 1/q)re .
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                  1189
+
+
+Overall, we succeed to separate the fi with ei = e from the rest in a single try with
+probability ≥ (1 − 1/q) (1 − 1/q)re .
+  Let rη be the number of irreducible factors fj of f with ej = η. Then with
+probability no less than
+                Ye        1+rη           e+r+1  (e+r+1)/q
+                         1                1             1
+                      1−         ≥ 1−               ≥
+                η=0
+                         q                q             4
+
+the factors with ej = η are split off for all η by a recursion of depth e + 1. Now
+suppose that for a constant c > 0 we have
+                               q ≥ c (blogp nc + r + 1).
+Then the probability that all pairs fi and fj with ei 6= ej are separated at recursion
+depth O(logp n) is bounded away from 0 by a constant (namely 4−1/c ). It is then
+easy to show that the expected depth is O(logp n+log r). We note that for constant
+q, however, the expected recursion depth can be Θ((log n)2 ).
+3.2. A Subquadratic-Time Implementation.
+Theorem 4. For any constant β with 0 ≤ β ≤ 1, Algorithm B can be implemented
+so as to use an expected number of
+(2)     O(n(ω+1)/2+(3−ω)|β−1/2|+o(1) + n(ω+1)/2+1−β+o(1) + n1+β+o(1) log q)
+operations in Fq . In particular, choosing ω < 2.375477 and minimizing the exponent
+of n, we get O(n1.880 + n1.808 log q) operations in Fq .
+Remark 1. The first term in (2) is dominated by the second exactly when β <
+(ω − 5)/(2(ω − 4)), and thus at least when β < 3/4.
+   To prove Theorem 4, we first show that one invocation of Algorithm B, not
+counting the recursive calls, can be implemented so as to satisfy the bound in
+Theorem 4. By Lemma 5, multiplying this by O((log n)2 ) gives a bound on the
+total cost of the algorithm, and thus the theorem will follow.
+   The cost of Step B3 is O(n1+o(1) log q) operations in Fq , and the cost of the
+Berlekamp-Massey algorithm in Step B1 is O(n1+o(1) ) operations in Fq . So to
+prove our result, we have to solve the following two types of problems within the
+stated time bounds.
+   automorphism projection: Given α ∈ Fq [x]/(f ), u : Fq [x]/(f ) → Fq , and a
+         positive integer k = O(n), compute u(σ i (α)) ∈ Fq for all i with 0 ≤ i < k.
+   automorphism evaluation: Given α ∈ Fq [x]/(f ) and a polynomial µ ∈ Fq [λ]
+         of degree less than k, where k = O(n), compute (µ(σ))(α) ∈ Fq [x]/(f ).
+   We first claim that these two problems are computationally equivalent, in a
+very strong sense. Consider the n × k matrix A whose columns consist of the co-
+ordinates with respect to the natural power basis 1, x, x2 , . . . , xn−1 for Fq [x]/(f )
+of α, σ(α), . . . , σ k−1 (α). Then the automorphism projection problem consists of
+multiplying A on the left by a row vector (u0 , . . . , un−1 ) ∈ Fq1×n . The automor-
+phism evaluation problem consists of multiplying A on the right by a column vector
+(µ0 , . . . , µk−1 )T ∈ Fqk×1 . Thus these two problems are merely the transpose of each
+other, and by the so-called transposition principle a straight-line program of length l
+for one can be quickly converted (in time O(l)) into a straightline program of length
+O(l) for the other, provided the straight-line program computes linear forms in the
+1190                    ERICH KALTOFEN AND VICTOR SHOUP
+
+
+input variables {ui } (respectively, {µi }). It should be noted that this observation
+applies to the Wiedemann algorithm in general. For example, in Algorithm 1 in
+Wiedemann [36] step 4 and step 6 are computationally equivalent within a constant
+factor. The discovery of the transposition principle goes back to the Ph.D. thesis
+of Fiduccia [14], Theorem 2 for multiplications (see also Fiduccia [13], Theorem 4)
+and Theorem 5 for additions and subtractions. The additive version with a similar
+proof is rediscovered in (Kaminski et al. [22]). Furthermore, we remark that the
+transposition principle is a direct consequence of the so-called reverse mode in au-
+tomatic differentiation, see Canny et al. [7]; for reverse mode see also Ostrowski et
+al. [30], Linnainmaa [25], Baur and Strassen [2], and Griewank [19].
+   Thus, to prove our theorem, it will suffice to prove the required bound for just
+one of these problems. We prove it for the automorphism evaluation problem.
+The following algorithm for automorphism evaluation is based on the same “baby
+step/giant step” strategy used in Brent and Kung’s modular composition algorithm.
+Algorithm AE. This algorithm takes as input an element α ∈ Fq [x]/(f ), where
+f ∈ Fq [x] is of degree n, and a polynomial µ ∈ Fq [λ] of degree less than k, where
+k = O(n). The output is (µ(σ))(α) ∈ Fq [x]/(f ). The algorithm is parameterized
+by a constant β, with 0 ≤ β ≤ 1.
+  We set t = dnβ e and m = dk/te, and we write µ as
+                                      X
+                                µ=        µj (λ)λtj ,
+                                      0≤j<m
+
+where each µj ∈ Fq [λ] has degree less than t.
+  Then we have
+                                      X
+                        (µ(σ))(α) =        σ tj ( (µj (σ))(α) ).
+                                      0≤j<m
+
+  The algorithm proceeds as follows.
+   Step AE1: Compute σ i (α) ∈ Fq [x], for all i with 0 ≤ i < t, by iterating a
+     repeated squaring algorithm.
+   Step AE2: Using the values computed in Step AE1, we next compute
+     (µj (σ))(α) ∈ Fq [x] for all j with 0 ≤ j < m. This is done by multiplying an
+     m × t matrix by a t × n matrix.
+                                  t
+   Step AE3: We compute xq mod f , using the method of Algorithm 5.2 in von
+     zur Gathen and Shoup [17], which requires the computation of xq mod f , plus
+     O(log t) modular polynomial compositions.
+   Step AE4: We use the values computed in Steps AE2 and AE3 together with
+     a Horner evaluation scheme to get (µ(σ))(α). This is done iteratively, per-
+     forming m − 1 modular compositions.
+Lemma 7. Algorithm AE can be implemented so as to use
+             O(n(ω+1)/2+(3−ω)|β−1/2| + n(ω+1)/2+1−β + n1+β+o(1) log q)
+operations in Fq [x]. Moreover, the algorithm satisfies the conditions of the transpo-
+sition principle.
+Proof. Step AE1 takes O(n1+β+o(1) log q) operations in Fq .
+  In Step AE2, if β > 1/2, we compute O(n1+β /n2(1−β) ) multiplications of square
+matrices of dimension O(n1−β ); otherwise, if β ≤ 1/2, we perform O(n2−β /n2β )
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS             1191
+
+
+multiplications of square matrices of dimension O(nβ ). In either case, the number
+of operations in Fq is readily calculated as O(n(ω+1)/2+(3−ω)|β−1/2| ).
+   Step AE3 takes O(n(ω+1)/2 + n1+o(1) log q) operations in Fq .
+   Step AE4 takes O(n(ω+1)/2+1−β ) operations in Fq .
+   To prove the second assertion in the lemma, one easily checks that all of the
+values computed by the algorithm are linear in the input variables representing the
+coefficients of µ.
+
+   Although the above discussion implies the existence of an algorithm for automor-
+phism projection, it is not too difficult to give an explicit algorithm. We describe
+one here.
+   Let Q be the n × n matrix representing the q-th power map σ on Fq [x]/(f ), with
+respect to the natural power basis. The matrix Q is the transpose of Petr’s matrix
+(see Schwarz [32]) computed in the classical Berlekamp algorithm. We represent the
+projection map u as a row vector ~u T , and we let α
+                                                   ~ be the column vector consisting
+of the coordinates of α. We want to compute the values
+(3)                            ~u T Qi α
+                                       ~        (0 ≤ i < k).
+Algorithm AP. This algorithm takes as input α and u as above and computes
+the quantities (3). The algorithm is parameterized by a constant β, with 0 ≤ β ≤ 1.
+   Set t = dnβ e and m = dk/te. We rewrite (3) as
+(4)                (~u T Qtj ) · (Qi α
+                                     ~)       (0 ≤ j < m, 0 ≤ i < t).
+  The algorithm proceeds as follows.
+  Step AP1: Compute the vectors Qi α     ~ , for 0 ≤ i < t, by iterating a repeated
+    squaring algorithm t − 1 times (left multiplication by Q is the same as q-th
+    powering).
+                           t
+  Step AP2: Compute xq as in Step AE3.
+  Step AP3: Compute the vectors ~u T Qtj , for 0 ≤ j < m, by iteratively comput-
+    ing m − 1 “transposed” modular polynomial compositions to carry out the
+    right multiplications by Qt , each of which (by the transposition principle) has
+                                                                   t
+    the same cost as an ordinary modular composition (with xq mod f ).
+  Step AP4: Using the values computed in Steps AP1 and AP3, all of the values
+    in (4) are computed by multiplying an m × n matrix by an n × t matrix.
+  It is straightforward to check that Lemma 7 also holds for Algorithm AP. We
+point out that an explicit algorithm for the “transposed” modular composition
+problem in Step AP3 is given in Shoup [35, §4.1].
+  Interestingly, Algorithm AP suggests a slightly faster algorithm for automor-
+phism projection. Notice that the term n(ω+1)/2+1−β in the running-time bound
+comes from Step AP3. Using the transposition principle and the strategy used to
+prove Theorem 3, we can reduce this term to n(ω+1)/2+(1−β)(ω−1)/2 as follows.
+                     t
+Lemma 8. Given xq mod f , we can compute ~u T Qtj for all j with 0 ≤ j < m,
+where m = O(n), using O(n(ω+1)/2 m(ω−1)/2 ) operations in Fq .
+Proof. We use the same “doubling” strategy used in the algorithm in the proof of
+Lemma 4. Assume we have computed the row vectors
+(5)                          ~u T , ~u T Qt , . . . , ~u T Q(k−1)t ,
+1192                   ERICH KALTOFEN AND VICTOR SHOUP
+
+            kt
+as well as xq mod f for some k ≥ 1. Then we multiply each vector in the sequence
+                            2kt
+(5) by Qkt and compute xq mod f . The problem of applying Qkt to the sequence
+(5) is precisely the transpose of the problem solved by the algorithm in Lemma 3,
+and so by the transposition principle, now applied to a block diagonal matrix with
+Qkt as diagonal blocks, we can do this in O(n(ω+1)/2 k (ω−1)/2 ) arithmetic operations.
+                2kt               kt
+Computing xq mod f from xq mod f requires just one modular composition.
+That completes the description of the doubling step. The running time bound
+follows easily.
+   Again, by the transposition principle, this implies the existence of an algorithm
+for the automorphism evaluation problem with the same complexity, although it is
+not entirely clear at the moment how to explicitly describe this algorithm.
+   Combining all of this with our previous analysis of Algorithm B, we have proved
+the following.
+Theorem 5. For any constant β with 0 ≤ β ≤ 1, Algorithm B can be implemented
+so as to use an expected number of
+(6) O(n(ω+1)/2+(3−ω)|β−1/2|+o(1) + n(ω+1)/2+(1−β)(ω−1)/2+o(1) + n1+β+o(1) log q)
+operations in Fq . In particular, choosing ω < 2.375477 and minimizing the exponent
+of n, we get O(n1.852 + n1.763 log q) operations in Fq .
+Remark 2. The first term in (6) is dominated by the second exactly when β <
+2/(5 − ω), and thus at least when β < 2/3.
+   For ω = 2.375477, by making use of techniques for fast rectangular matrix mul-
+tiplication, the operation count (6) in Theorem 5 can be reduced to
+                  O(n(ω+1)/2+(1−β)(ω−1)/2+o(1) + n1+β+o(1) log q),
+and in particular to O(n1.815 log q) for an appropriate choice of β. We indicate how
+this is done.
+   The first term in (6) arises from the rectangular m × n times n × t matrix
+multiplication in Step AP4. By the remark after Theorem 5, we may assume
+β ≥ 2/3 and in particular that t > m.
+   Techniques for fast rectangular matrix multiplication allow us to multiply a bδ ×b
+matrix by a b × b matrix with O(b2+o(1) ) operations for some δ > 0 (Coppersmith
+[10], Lotti and Romani [26]). With the construction yielding ω < 2.375477 by
+Coppersmith and Winograd [11], we may chose δ = 0.29 (Coppersmith, private
+communication).
+   The needed m × n × t matrix product is done with O(n/t) products of m × t
+times t × t matrices. We shall carry out each of the latter products by multiplying
+a (t/b) × (t/b) block matrix with (mb/t) × b blocks times a (t/b) × (t/b) block
+matrix with b × b blocks. If mb/t = bδ , i.e., b = (t/m)1/(1−δ) , each block product
+costs O(b2+o(1) ) operations, yielding a total of O((t/b)ω b2+o(1) ) operations for the
+m × t × t product. Substituting m = O(n1−β ) and t = O(nβ ), we get for the entire
+m × n × t product
+(7)                      O(n1−β+ωβ−(ω−2)(2β−1)/(1−δ)+o(1) )
+operations.
+   Now, for ω = 2.375477 and δ = 0.29, one routinely checks that for 2/3 ≤ β ≤ 1,
+the quantity (7) is dominated by either the second or the third term of (6).
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                 1193
+
+
+                       4. Applications to normal bases
+   The results of §3 can be used to speed certain operations with so-called normal
+basis of finite extensions of Fq . In this section we describe those subquadratic
+algorithms.
+   A finite field Fqn of q n elements can be represented as an n-dimensional vector
+space over Fq . For instance, if f (x) ∈ Fq [x] is an irreducible monic polynomial of
+degree n over Fq , the powers 1, x, . . . , xn−1 form a basis for the Kronecker repre-
+sentation Fq [x]/(f (x)) of the field Fqn . It can be advantageous for performing arith-
+metic in Fqn , in particular exponentiation, if one finds a normal element α ∈ Fqn
+with the property that
+                                                        n−1
+                                   α, αq , . . . , αq
+is a Fq -vector space basis for Fqn . Von zur Gathen and Giesbrecht [16] give a ran-
+domized algorithm for finding a normal element α ∈ Fq [x]/(f (x)) in O(n2+o(1) log q)
+arithmetic operations in Fq . The running time of their algorithm is reduced in (von
+zur Gathen and Shoup [17]) to O(n2+o(1) + n1+o(1) log q) arithmetic operations in
+Fq . Here we give O(n1.815 log q) solutions to the following three problems:
+    basis selection: Given f (x) ∈ Fq [x] irreducible monic of degree n, compute a
+      normal element α ∈ Fq [x]/(f (x)).
+    conversion to power basis coordinates: Given f and α as above and c0 , . . . ,
+                                                   n−1
+      cn−1 ∈ Fq , compute c0 α + · · · + cn−1 αq       in power basis representation.
+    conversion to normal coordinates: Given f and α as above and γ ∈
+      Fq [x]/(f (x)), compute c0 , . . . , cn−1 ∈ Fq such that
+                                                        n−1
+                             c0 α + · · · + cn−1 αq           = γ.
+Theorem 6. We have probabilistic algorithms that can solve the basis selection
+and conversion to and from power basis coordinates problems in
+(8)               O(n(ω+1)/2+(1−β)(ω−1)/2+o(1) + n1+β+o(1) log q),
+arithmetic operations in Fq for any β with 0 ≤ β ≤ 1.
+Proof. Suppose α~ is the column vector containing the coefficients of the canonical
+representative of α. Using the notation of §3 we have that Qi α ~ is the coefficient
+                                            i
+vector of the canonical representative of αq , where Q is the matrix representing
+the q-th power map on Fq [x]/(f (x)). Hence α is normal if
+                               α    α, Q2 α
+                               ~ , Q~     ~ , . . . , Qn−1 α
+                                                           ~
+ are linearly independent vectors. Since f is irreducible and the minimum polyno-
+ mial of Q is λn − 1 such an α must exist. Furthermore, for a random row vector
+~u T and for a random column vector α  ~ the probability that the minimum linear
+ generator of
+                                  ~u T Qi α
+                                          ~      (0 ≤ i)
+remains λ − 1 is no less than 1/(12 max{logq (n), 1}) (see Wiedemann [36, Propo-
+          n
+
+sition 3], or Giesbrecht[18, §6.1]). Therefore, a normal element can be found with
+success probability no less than 1 − 1/e by running the automorphism projection
+algorithm of §3 12 max{logq (n), 1} times. The stated complexity (8) then follows
+from our estimates at the end of §3.
+1194                   ERICH KALTOFEN AND VICTOR SHOUP
+
+
+   Conversion to power basis coordinates is simply the automorphism evaluation
+problem of §3, so it remains to demonstrate conversion to normal basis coordinates
+in time (8). By first applying the q-th power map n − 1 times to
+                                                                n−1
+                               γ = c0 α + · · · + cn−1 αq
+and then applying a linear map u from Fqn to Fq we obtain
+                           j       X
+                                   n−1
+                                                   i+j
+(9)                   u(γ q ) =          ci u(αq         )   (0 ≤ j < n).
+                                   i=0
+                                                                                 i
+If the linear map u preserves λn − 1 as the minimum linear generator for u(αq ),
+where i ≥ 0, then the Hankel matrix on the right side of (9) must be non-singular,
+because otherwise one could find a second linear generator of degree n. Such a u is
+a by-product of our basis selection method and can be found in a similar way if only
+                                                   i+j
+α is given. The same is true for the entries u(αq ) in the Hankel matrix, while
+                            j
+the left side elements u(γ q ) are computed again by automorphism projection. The
+Hankel system is finally solved for the ci in O(n1+o(1) ) arithmetic steps (Brent et
+al. [5]).
+
+                           5. Practical algorithms
+   In this section, we describe how the methods developed in this paper can be used
+to obtain practical algorithms, without relying on fast matrix multiplication.
+   Consider our Fast Cantor/Zassenhaus algorithm. A practical variant of Al-
+gorithm
+     p D, the distinct-degree
+                       p          factorizer, runs as follows. In Step D1, we set
+l ≈ n/2, so m ≈ n/2 as well. We compute xq mod f via repeated squar-
+ing. We generate both the baby steps and the giant steps (Steps D1 and D2) by
+iteratively applying a modular composition algorithm. Steps D3, D4, and D5 are
+performed by carrying them out quite literally as they are described, without any
+“tricks.”
+   The cost of each step is then as follows:
+                             √
+   Steps D1 and D2: ≈ 2n modular compositions;
+   Step D3: ≈ p   n/2 multiplications of polynomials modulo f ;
+   Step D4: ≈ n/2 GCD’s;                                                      p
+   Step D5: O(n3/4 ) polynomial divisions and the equivalent of at most ≈ n/2
+      GCD’s.
+   To appreciate the practical significance of this, one must realize that, in spite
+of popular prejudice, asymptotically fast polynomial multiplication algorithms are
+in fact fast in practice, for quite reasonably sized n. This is demonstrated, for
+example, in Shoup [35].
+   Because of this, the dominant cost in Brent and Kung’s modular composition
+algorithm is indeed the ≈ n2 scalar multiplications and additions, although the cost
+of the O(n1/2 ) polynomial multiplications cannot be entirely ignored.
+   The time spent taking GCD’s can be reduced by using a fast “Half-GCD” al-
+gorithm (which is in practice faster than Euclid’s algorithm, although not spectac-
+ularly so), and by “buffering” the GCD’s, i.e., computing the product of several
+polynomials modulo f , and then taking just one GCD. With these techniques, the
+time spent taking GCD’s can be made a small percentage of the total. Also the
+time spent is Step D5 is in practice a small percentage of the total.
+      SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                 1195
+
+
+   Finally, we note that the space requirement of this algorithm is just O(n1.5 )
+elements in Fq .
+   In summary, this variant of our distinct-degree factorizer uses
+                                O(n2.5 + n1+o(1) log q)
+operations in Fq and space for O(n1.5 ) elements in Fq . Moreover, both of the implied
+“big-O” constants are reasonably small.
+   Of course, in general, we may have to perform one or more equal-degree factor-
+izations as well. The equal-degree factorization algorithm in von zur Gathen and
+Shoup [17] can be implemented so as to use
+                              O(n2 log n + n1+o(1) log q)
+operations in Fq and space for O(n1.5 ) elements in Fq , where again the implied
+constants are reasonably small.
+   In Shoup [35], this factoring algorithm is developed in further detail, and an
+implementation as well as the results of empirical tests are described. That paper
+concludes that if q is a large prime, then this new algorithm allows much larger
+polynomials to be factored in a reasonable amount of time and space than was
+previously possible using other algorithms. As an example from that paper, a
+pseudo-random degree 128 polynomial was factored modulo a 128-bit prime on a
+SUN SPARC-station ELC, which is rated at about 20 MIPS. The running time
+was under 2 minutes. To put this in some context, for the same polynomial on the
+same machine, the built-in Maple factorizer (based on Cantor/Zassenhaus) required
+about 25 hours. As another example, a pseudo-random degree 1024 polynomial was
+factored modulo a 1024-bit prime in about 50 hours, using about 11 megabytes of
+memory.
+   It is also possible to obtain a practical version of the Fast Black Box Berlekamp
+algorithm using similar techniques, although we have not as yet implemented this.
+That algorithm would require significantly fewer GCD calculations than the above
+algorithm, and would also avoid the occasional need to perform a large equal-
+degree factorization; however, it would require at least twice as many modular
+compositions as the above algorithm. Empirical analysis of the relative costs of
+these operations indicate that the disadvantages would outweigh the advantages of
+Fast Black Box Berlekamp over Fast Cantor/Zassenhaus. Moreover, a Fast Black
+Box Berlekamp algorithm would require about twice as much space. Therefore, at
+the moment, for practical purposes, Fast Cantor/Zassenhaus appears preferable to
+Fast Black Box Berlekamp.
+
+                              Note added in proof
+   Bürgisser et al. [37] have traced the transposition principle discussed in §3.2
+to Tellegen’s theorem of control theory. By use of the new exponents for rectan-
+gular matrix multiplication [38] the asymptotic complexity of modular polynomial
+composition and hence of our factorization algorithms can be lowered a little bit.
+For example, the O(n1.815 log q) running time of Theorem 1 can be lowered to
+O(n1.8054 log q). For large q and small characteristic p it is possible to improve the
+binary running time of the von zur Gathen/Shoup algorithm. In [39] we show, for
+example, that for q = 2k with k = Ω(n1.46 ) one may factor a polynomial of degree
+n with coefficients in Fq in O(n(log q)1.67 ) fixed precision operations. Here the field
+Fq is represented as a polynomial residue ring, performing ring arithmetic modulo
+1196                       ERICH KALTOFEN AND VICTOR SHOUP
+
+
+an irreducible polynomial of degree k with coefficients in F2 . Binary running time,
+that is, fixed precision cost, includes the time for executing each field operation in
+Fq .
+    Many of Kaltofen’s publications are accessible through links in the BibTEX bib-
+liography database at http://www.math.ncsu.edu/∼kaltofen/bibliography/.
+
+
+                                         References
+ 1. Aho, A., Hopcroft, J. and Ullman, J., Design and Analysis of Computer Algorithms, Addison
+    and Wesley, Reading, MA, 1974. MR 54:1706
+ 2. Baur, W. and Strassen, V., The complexity of partial derivatives, Theoretical Comp. Sci., vol.
+    22, 317–330, 1983. MR 84c:68027
+ 3. Ben-Or, M., Probabilistic algorithms in finite fields, Proc. 22nd IEEE Symp. Foundations
+    Comp. Sci., 394–398, 1981.
+ 4. Berlekamp, E. R., Factoring polynomials over large finite fields, Math. Comp., 24, 1970, 713–
+    735. MR 43:1948
+ 5. Brent, R. P., Gustavson, F. G., and Yun, D. Y. Y., Fast solution of Toeplitz systems of
+    equations and computation of Padé approximants, J. Algorithms, vol. 1, 259–295, 1980. MR
+    82d:65033
+ 6. Brent, R. P. and Kung, H. T., Fast algorithms for manipulating formal power series, J. ACM,
+    vol. 25, no. 4, 581–595, 1978. MR 58:25090
+ 7. Canny, J., Kaltofen, E. and Lakshman Yagati, Solving systems of non-linear polynomial equa-
+    tions faster, Proc. ACM-SIGSAM 1989 Internat. Symp. Symbolic Algebraic Comput., 121–
+    128, ACM Press, 1989.
+ 8. Cantor, D. G. and Kaltofen, E., On fast multiplication of polynomials over arbitrary algebras,
+    Acta Inform., vol. 28, no. 7, 693–701, 1991. MR 92i:68068
+ 9. Cantor, D. G. and Zassenhaus, H., A new algorithm for factoring polynomials over finite fields,
+    Math. Comp., vol. 36, 587–592, 1981. MR 82e:12020
+10. Coppersmith, D., Rapid multiplication of rectangular matrices, SIAM J. Comput., vol. 11,
+    no. 3, 467–471, 1982. MR 83j:68047a
+11. Coppersmith, D. and Winograd, S., Matrix multiplication via arithmetic progressions, J.
+    Symbolic Comput., vol. 9, no. 3, 251–280, 1990. MR 91i:68058
+12. Dornstetter, J. L., On the equivalence between Berlekamp’s and Euclid’s algorithms, IEEE
+    Trans. Inf. Theory, vol. 33, no. 3, 428–431, 1987. MR 88j:94018
+13. Fiduccia, C. M., On obtaining upper bounds on the complexity of matrix multiplication,
+    Complexity of Computer Computations, (R. E. Miller and J. W. Thatcher), Plenum Press,
+    New York, 1972, 31–40. MR 52:12398
+14. Fiduccia, C. M., On the Algebraic Complexity of Matrix Multiplication, Ph.D. Thesis, Center
+    Comput. Inform. Sci., Div. Engin., Brown Univ., Providence, Rhode Island, June 1973.
+15. Fleischmann, P., Connections between the algorithms of Berlekamp and Niederreiter for fac-
+    toring polynomials over Fq , Linear Algebra and Applications, vol. 192, 101–108, 1993. MR
+    94f:11129
+16. von zur Gathen, J., and Giesbrecht, M., Constructing normal bases in finite fields, J. Symbolic
+    Comput., vol. 10, no. 6, 547–570, 1990. MR 92e:11142
+17. von zur Gathen, J., and Shoup, V., Computing Frobenius maps and factoring polynomials,
+    Comput. Complexity, vol. 2, 187–224, 1992. MR 94d:12011
+18. Giesbrecht, M., Nearly optimal algorithms for canonical matrix forms, Ph.D. Thesis, Dept.
+    Comput. Science, University of Toronto, Toronto, Canada, 1993.
+19. Griewank, A., Achieving logarithmic growth of temporal and spatial complexity in reverse
+    automatic differentiation, Optimization Methods and Software, Gordon and Breach Science
+    Publishers, vol. 1, 35–54, 1992.
+20. Kaltofen, E., and Lobo, A., Factoring high-degree polynomials by the black box Berlekamp
+    algorithm, Proc. Internat. Symp. Symbolic Algebraic Comput. ISSAC ’94, (J. von zur Gathen
+    and M. Giesbrecht), ACM Press, New York, N. Y., 90–98, 1994.
+21. Kaltofen, E., and Pan, V., Processor efficient parallel solution of linear systems over an ab-
+    stract field, Proc. 3rd Ann. ACM Symp. Parallel Algor. Architecture, ACM Press, 1991,
+    180–191.
+       SUBQUADRATIC-TIME FACTORING OF POLYNOMIALS OVER FINITE FIELDS                              1197
+
+
+22. Kaminski, M., Kirkpatrick, D. G. and Bshouty, N. H., Addition requirements for matrix and
+    transposed matrix products, J. Algorithms, vol. 9, 354–364, 1988. MR 89m:68061
+23. Knuth, D. E., The Art of Computer Programming, Vol. 2, Seminumerical Algorithms, Ed. 2,
+    Addison Wesley, Reading, MA, 1981. MR 83i:68003
+24. Lidl, R. and Niederreiter, H., Finite Fields, Addison-Wesley, Reading, MA, 1983. MR
+    86c:11106
+25. Linnainmaa, S., Taylor expansion of the accumulated rounding error, BIT, vol. 16, 146–160,
+    1976. MR 54:9070
+26. Lotti, G., and Romani, F., On the asymptotic complexity of rectangular matrix multiplication,
+    Theoretical Comput. Sci.,, vol. 23, 171–185, 1983. MR 84g:68029
+27. Massey, J. L., Shift-register synthesis and BCH decoding, IEEE Trans. Inf. Theory, vol. 15,
+    122–127, 1969. MR 39:3887
+28. Niederreiter, H., A new efficient factorization algorithm for polynomials over small finite fields,
+    Applic. Algebra Engin., Commun. Comput., vol. 4, 81–87, 1993. MR 94h:11112
+29. Niederreiter, H. and Göttfert, R., Factorization of polynomials over finite fields and charac-
+    teristic sequences, J. Symbolic Comput., vol. 16, no. 5, 401–412, 1993. MR 95d:68072
+30. Ostrowski, G. M., Wolin, Ju. M. and Borisow, W. W., Über die Berechnung von Ableitungen,
+    Wissenschaftliche Zeitschrift Techn. Hochsch. Chem. Leuna-Merseburg, vol. 13, no. 4, 382–
+    384, 1971.
+31. Rabin, M. O., Probabilistic algorithms in finite fields, SIAM J. Comp., vol. 9, 273–280, 1980.
+    MR 81g:12002
+32. Schwarz, Št., On the reducibility of polynomials over a finite field, Quart. J. Math. Oxford
+    Ser. (2), vol. 7, 110–124, 1956. MR 20:3162
+33. Shoup, V., On the deterministic complexity of factoring polynomials over finite fields, Inform.
+    Process. Letters, vol. 33, no. 5, 261–267, 1990. MR 91f:11088
+34. Shoup, V., Fast construction of irreducible polynomials over finite fields, J. Symbolic Comput.,
+    vol. 17, no. 5, 371–391, 1994. MR 95k:11156
+35. Shoup, V., A new polynomial factorization algorithm and its implementation, J. Symbolic
+    Comput., vol. 20, 363–397, 1995. MR 97d:12011
+36. Wiedemann, D., Solving sparse linear equations over finite fields, IEEE Trans. Inf. Theory,
+    vol. 32, 54–62, 1986. MR 87g:11166
+37. Bürgisser, P., Clausen, M. and Shokrollahi, M. A., Algebraic Complexity Theory, Springer-
+    Verlag, Heidelberg, Germany, 1997. CMP 97:10
+38. Huang, X. and Pan, V., Fast rectangular matrix multiplications and improving parallel matrix
+    computations, In Proc. Second Internat. Symp. Parallel Symbolic Comput. PASCO ’97, M.
+    Hitz and E. Kaltofen, editors, pages 11–23, New York, N.Y., 1997. ACM Press.
+39. Kaltofen, E. and Shoup, V., Fast polynomial factorization over high algebraic extensions
+    of finite fields. In ISSAC 97 Proc. 1997 Internat. Symp. Symbolic Algebraic Comput., W.
+    Küchlin, editor, pages 184–188, New York, N.Y., 1997. ACM Press.
+
+   Department of Mathematics, North Carolina State University, Raleigh, North Car-
+olina 27695-8205
+   E-mail address: kaltofen@eos.ncsu.edu
+   URL: http://www.math.ncsu.edu/∼ kaltofen
+
+  Bellcore, 445 South St., Morristown, New Jersey 07960-6438
+  Current address: IBM Zurich Research Laboratory, Säumerstrasse 4, Ch-8803 Rüschlikon,
+Switzerland
+  E-mail address: sho@zurich.ibm.com
+

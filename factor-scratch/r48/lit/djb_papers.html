@@ -1,0 +1,3220 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+body{font-family:"Noto Sans","Droid Sans","DejaVu Sans","Arial",sans-serif;line-height:1.6}
+tt{font-family:Consolas,Monaco,"Noto Sans Mono","DejaVu Sans Mono",monospace,sans-serif;font-size:1em;}
+h1{font-size:1.5em}
+h2{font-size:1.3em}
+h3{font-size:1.0em}
+h1 a{text-decoration:none}
+.paperheading {line-height:1.8}
+.refereed {color:#808000}
+.book {color:#008080}
+.journal {color:#800080}
+.pp {border:solid 1px;padding:1px}
+.tag {padding:1px;border-radius:7px}
+.link {padding:1px;border-radius:7px;background-color:#80ff80}
+.linkold {padding:1px;border-radius:7px;background-color:#d0ffd0}
+.date {border:solid 1px;border-radius:7px;padding:1px;background-color:#ffffff}
+.firstdate {border:solid 1px;border-radius:7px;padding:1px;color:#606060;}
+</style>
+<title>D. J. Bernstein / Papers</title>
+</head>
+<body>
+<a href="djb.html">D. J. Bernstein</a>
+<h1>Index of formal scientific papers</h1>
+<details><summary><b>Papers by title (alphabetical)</b></summary>
+<table>
+<tr><td><a href="#completed">completed</a></td><td> A complete set of addition laws for incomplete Edwards curves</td></tr>
+<tr><td><a href="#categories">categories</a></td><td> A discretization attack</td></tr>
+<tr><td><a href="#zeroseek">zeroseek</a></td><td> A fast journaling filesystem</td></tr>
+<tr><td><a href="#nfsi">nfsi</a></td><td> A general number field sieve implementation</td></tr>
+<tr><td><a href="#grovernfs">grovernfs</a></td><td> A low-resource quantum factoring algorithm</td></tr>
+<tr><td><a href="#231">231</a></td><td> A non-iterative 2-adic statement of the 3N+1 conjecture</td></tr>
+<tr><td><a href="#ntrw">ntrw</a></td><td> A one-time single-bit fault leaks all previous NTRU-HRSS session keys to a chosen-ciphertext attack</td></tr>
+<tr><td><a href="#sigs">sigs</a></td><td> A secure public-key signature system with extremely fast verification</td></tr>
+<tr><td><a href="#easycbc">easycbc</a></td><td> A short proof of the unpredictability of cipher block chaining</td></tr>
+<tr><td><a href="#unipat">unipat</a></td><td> A simple universal pattern-matching automaton</td></tr>
+<tr><td><a href="#safegcd2">safegcd2</a></td><td> Accelerating and verifying constant-time modular inversion</td></tr>
+<tr><td><a href="#efd">efd</a></td><td> Analysis and optimization of elliptic-curve single-scalar multiplication</td></tr>
+<tr><td><a href="#antiquad">antiquad</a></td><td> Analysis of QUAD</td></tr>
+<tr><td><a href="#pqcomplexity">pqcomplexity</a></td><td> Analyzing the complexity of reference post-quantum software: the case of lattice-based KEMs</td></tr>
+<tr><td><a href="#psi">psi</a></td><td> Arbitrarily tight bounds on the distribution of smooth integers</td></tr>
+<tr><td><a href="#groverxl">groverxl</a></td><td> Asymptotically faster quantum algorithms to solve multivariate quadratic equations</td></tr>
+<tr><td><a href="#latticeasymp">latticeasymp</a></td><td> Asymptotics for the standard block size in primal lattice attacks: second order, formally verified</td></tr>
+<tr><td><a href="#hybrid">hybrid</a></td><td> Asymptotics of hybrid primal lattice attacks</td></tr>
+<tr><td><a href="#mceliece">mceliece</a></td><td> Attacking and defending the McEliece cryptosystem</td></tr>
+<tr><td><a href="#obviouscation">obviouscation</a></td><td> Bad directions in cryptographic hash functions</td></tr>
+<tr><td><a href="#basicblocker">basicblocker</a></td><td> BasicBlocker: ISA redesign to make Spectre-immune CPUs faster</td></tr>
+<tr><td><a href="#bbe">bbe</a></td><td> Batch binary Edwards</td></tr>
+<tr><td><a href="#batchnfs">batchnfs</a></td><td> Batch NFS</td></tr>
+<tr><td><a href="#genbday">genbday</a></td><td> Better price-performance ratios for generalized birthday attacks</td></tr>
+<tr><td><a href="#edwards2">edwards2</a></td><td> Binary Edwards curves</td></tr>
+<tr><td><a href="#psi-abs">psi-abs</a></td><td> Bounding smooth integers</td></tr>
+<tr><td><a href="#ecc2k130">ecc2k130</a></td><td> Breaking ECC2K-130</td></tr>
+<tr><td><a href="#cachetiming">cachetiming</a></td><td> Cache-timing attacks on AES</td></tr>
+<tr><td><a href="#calculus">calculus</a></td><td> Calculus for mathematicians</td></tr>
+<tr><td><a href="#curvezero">curvezero</a></td><td> Can we avoid tests for zero in fast elliptic-curve arithmetic?</td></tr>
+<tr><td><a href="#chacha">chacha</a></td><td> ChaCha, a variant of Salsa20</td></tr>
+<tr><td><a href="#cipherdag">cipherdag</a></td><td> Cipher DAGs</td></tr>
+<tr><td><a href="#nfscircuit">nfscircuit</a></td><td> Circuits for integer factorization: a proposal</td></tr>
+<tr><td><a href="#rings">rings</a></td><td> Commutative rings</td></tr>
+<tr><td><a href="#latticeproofs">latticeproofs</a></td><td> Comparing proofs of security for lattice-based encryption</td></tr>
+<tr><td><a href="#stream256">stream256</a></td><td> Comparison of 256-bit stream ciphers at the beginning of 2006</td></tr>
+<tr><td><a href="#compose">compose</a></td><td> Composing power series over a finite ring in essentially linear time</td></tr>
+<tr><td><a href="#logfloor">logfloor</a></td><td> Computing logarithm floors in essentially linear time</td></tr>
+<tr><td><a href="#logagm">logagm</a></td><td> Computing logarithm intervals with the arithmetic-geometric-mean iteration</td></tr>
+<tr><td><a href="#cuberoot">cuberoot</a></td><td> Computing small discrete logarithms faster</td></tr>
+<tr><td><a href="#binecc">binecc</a></td><td> Concrete quantum cryptanalysis of binary elliptic curves</td></tr>
+<tr><td><a href="#nfspoly">nfspoly</a></td><td> Controlling three coefficients in number-field-sieve polynomials</td></tr>
+<tr><td><a href="#collisioncost">collisioncost</a></td><td> Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?</td></tr>
+<tr><td><a href="#cat">cat</a></td><td> CryptAttackTester: high-assurance attack analysis</td></tr>
+<tr><td><a href="#competitions">competitions</a></td><td> Cryptographic competitions</td></tr>
+<tr><td><a href="#naclcrypto">naclcrypto</a></td><td> Cryptography in NaCl</td></tr>
+<tr><td><a href="#ctidh">ctidh</a></td><td> CTIDH: faster constant-time CSIDH</td></tr>
+<tr><td><a href="#curve25519">curve25519</a></td><td> Curve25519: new Diffie-Hellman speed records</td></tr>
+<tr><td><a href="#curve41417">curve41417</a></td><td> Curve41417: Karatsuba revisited</td></tr>
+<tr><td><a href="#aecycles">aecycles</a></td><td> Cycle counts for authenticated encryption</td></tr>
+<tr><td><a href="#decompress">decompress</a></td><td> Data decompression</td></tr>
+<tr><td><a href="#dspr">dspr</a></td><td> Decisional second-preimage resistance: When does SPR imply PRE?</td></tr>
+<tr><td><a href="#powers2">powers2</a></td><td> Detecting perfect powers by factoring into coprimes</td></tr>
+<tr><td><a href="#powers">powers</a></td><td> Detecting perfect powers in essentially linear time</td></tr>
+<tr><td><a href="#diffchain">diffchain</a></td><td> Differential addition chains</td></tr>
+<tr><td><a href="#prime2004">prime2004</a></td><td> Distinguishing prime numbers from composite numbers: the state of the art in 2004</td></tr>
+<tr><td><a href="#divergence">divergence</a></td><td> Divergence bounds for random fixed-weight vectors obtained by sorting</td></tr>
+<tr><td><a href="#zkcrypt">zkcrypt</a></td><td> Does ZK-Crypt version 1 flunk a repetition test?</td></tr>
+<tr><td><a href="#dagger">dagger</a></td><td> Double-base scalar multiplication revisited</td></tr>
+<tr><td><a href="#focus">focus</a></td><td> Doubly focused enumeration of locally square polynomial values</td></tr>
+<tr><td><a href="#dual-ec">dual-ec</a></td><td> Dual EC: a standardized back door</td></tr>
+<tr><td><a href="#gpuecc2k">gpuecc2k</a></td><td> ECC2K-130 on NVIDIA GPUs</td></tr>
+<tr><td><a href="#gpuecm">gpuecm</a></td><td> ECM on graphics cards</td></tr>
+<tr><td><a href="#eecm">eecm</a></td><td> ECM using Edwards curves</td></tr>
+<tr><td><a href="#eddsa">eddsa</a></td><td> EdDSA for more curves</td></tr>
+<tr><td><a href="#elligator">elligator</a></td><td> Elligator: Elliptic-curve points indistinguishable from uniform random strings</td></tr>
+<tr><td><a href="#epsi">epsi</a></td><td> Enumerating and counting smooth integers</td></tr>
+<tr><td><a href="#sortedsums">sortedsums</a></td><td> Enumerating solutions to p(a)+q(b)=r(c)+s(d)</td></tr>
+<tr><td><a href="#smoothdep">smoothdep</a></td><td> Estimating the dependence time for smooth integers</td></tr>
+<tr><td><a href="#decoco">decoco</a></td><td> Explicit bounds for generic decoding algorithms for code-based cryptography</td></tr>
+<tr><td><a href="#mldsa">mldsa</a></td><td> Exploiting ML-DSA bugs</td></tr>
+<tr><td><a href="#xsalsa">xsalsa</a></td><td> Extending the Salsa20 nonce</td></tr>
+<tr><td><a href="#dcba">dcba</a></td><td> Factoring into coprimes in essentially linear time</td></tr>
+<tr><td><a href="#smartfacts">smartfacts</a></td><td> Factoring RSA keys from certified smart cards: Coppersmith in the wild</td></tr>
+<tr><td><a href="#nistecc">nistecc</a></td><td> Failures in NIST's ECC standards</td></tr>
+<tr><td><a href="#safegcd">safegcd</a></td><td> Fast constant-time gcd computation and modular inversion</td></tr>
+<tr><td><a href="#fiall">fiall</a></td><td> Fast ideal arithmetic via lazy localization</td></tr>
+<tr><td><a href="#multapps">multapps</a></td><td> Fast multiplication and its applications</td></tr>
+<tr><td><a href="#abeliannorms">abeliannorms</a></td><td> Fast norm computation in smooth-degree Abelian number fields</td></tr>
+<tr><td><a href="#nistp224">nistp224</a></td><td> Fast point multiplication on the NIST P-224 elliptic curve</td></tr>
+<tr><td><a href="#2reg">2reg</a></td><td> Faster 2-regular information-set decoding</td></tr>
+<tr><td><a href="#newelliptic">newelliptic</a></td><td> Faster addition and doubling on elliptic curves</td></tr>
+<tr><td><a href="#nonsquare">nonsquare</a></td><td> Faster algorithms to find non-squares modulo worst-case integers</td></tr>
+<tr><td><a href="#badbatch">badbatch</a></td><td> Faster batch forgery identification</td></tr>
+<tr><td><a href="#auth256">auth256</a></td><td> Faster binary-field multiplication and faster binary-field MACs</td></tr>
+<tr><td><a href="#velusqrt">velusqrt</a></td><td> Faster computation of isogenies of large prime degree</td></tr>
+<tr><td><a href="#sect113r2">sect113r2</a></td><td> Faster elliptic-curve discrete logarithms on FPGAs</td></tr>
+<tr><td><a href="#dcba2">dcba2</a></td><td> Faster factorization into coprimes</td></tr>
+<tr><td><a href="#zmult">zmult</a></td><td> Faster multiplication of integers</td></tr>
+<tr><td><a href="#sqroot">sqroot</a></td><td> Faster square roots in annoying finite fields</td></tr>
+<tr><td><a href="#hash127">hash127</a></td><td> Floating-point arithmetic and message authentication</td></tr>
+<tr><td><a href="#footloose">footloose</a></td><td> FO derandomization sometimes damages security</td></tr>
+<tr><td><a href="#fsbday">fsbday</a></td><td> FSBday: implementing Wagner's generalized birthday attack against the SHA-3 round-1 candidate FSB</td></tr>
+<tr><td><a href="#gigo">gigo</a></td><td> Further analysis of the impact of distancing upon the COVID-19 pandemic</td></tr>
+<tr><td><a href="#gge">gge</a></td><td> Generalized Gaussian elimination</td></tr>
+<tr><td><a href="#gimli">gimli</a></td><td> Gimli: a cross-platform permutation</td></tr>
+<tr><td><a href="#grovercode">grovercode</a></td><td> Grover vs. McEliece</td></tr>
+<tr><td><a href="#hash127-abs">hash127-abs</a></td><td> Guaranteed message authentication faster than MD5 (abstract)</td></tr>
+<tr><td><a href="#amac">amac</a></td><td> Hash-function based PRFs: AMAC and its multi-user security</td></tr>
+<tr><td><a href="#fastgraeffe">fastgraeffe</a></td><td> High-precision roots of high-degree polynomials</td></tr>
+<tr><td><a href="#ed25519">ed25519</a></td><td> High-speed high-security signatures</td></tr>
+<tr><td><a href="#highergenus">highergenus</a></td><td> Higher-genus McEliece</td></tr>
+<tr><td><a href="#hila5">hila5</a></td><td> HILA5 Pindakaas: On the CCA security of lattice-based encryption with error correction</td></tr>
+<tr><td><a href="#sf">sf</a></td><td> How to find small factors of integers</td></tr>
+<tr><td><a href="#smoothparts">smoothparts</a></td><td> How to find smooth parts of integers</td></tr>
+<tr><td><a href="#bada55">bada55</a></td><td> How to manipulate curve standards: a white paper for the black hat</td></tr>
+<tr><td><a href="#stretch">stretch</a></td><td> How to stretch random functions: the security of protected counter sums</td></tr>
+<tr><td><a href="#hyperand">hyperand</a></td><td> Hyper-and-elliptic-curve cryptography</td></tr>
+<tr><td><a href="#inverted">inverted</a></td><td> Inverted Edwards coordinates</td></tr>
+<tr><td><a href="#cpupuf">cpupuf</a></td><td> Investigating SRAM PUFs in large CPUs and GPUs</td></tr>
+<tr><td><a href="#holographic">holographic</a></td><td> Is the security of quantum cryptography guaranteed by the laws of physics?</td></tr>
+<tr><td><a href="#fastgcd">fastgcd</a></td><td> Kronecker matrices and polynomial GCDs</td></tr>
+<tr><td><a href="#kummer">kummer</a></td><td> Kummer strikes back: new DH speed records</td></tr>
+<tr><td><a href="#kyberslash">kyberslash</a></td><td> KyberSlash: Exploiting secret-dependent division timings in Kyber implementations</td></tr>
+<tr><td><a href="#goppalist">goppalist</a></td><td> List decoding for binary Goppa codes</td></tr>
+<tr><td><a href="#groverrho">groverrho</a></td><td> Low-communication parallel quantum multi-target preimage search</td></tr>
+<tr><td><a href="#mimd">mimd</a></td><td> Matrix inversion made difficult</td></tr>
+<tr><td><a href="#mcbits">mcbits</a></td><td> McBits: fast constant-time code-based cryptography</td></tr>
+<tr><td><a href="#mctiny">mctiny</a></td><td> McTiny: fast high-confidence post-quantum key erasure for tiny network servers</td></tr>
+<tr><td><a href="#minimalt">minimalt</a></td><td> MinimaLT: Minimal-latency networking through better security</td></tr>
+<tr><td><a href="#meecrt">meecrt</a></td><td> Modular exponentiation via the explicit Chinese remainder theorem</td></tr>
+<tr><td><a href="#montladder">montladder</a></td><td> Montgomery curves and the Montgomery ladder</td></tr>
+<tr><td><a href="#lprrr">lprrr</a></td><td> Multi-ciphertext security degradation for lattices</td></tr>
+<tr><td><a href="#multischnorr">multischnorr</a></td><td> Multi-user Schnorr security, revisited</td></tr>
+<tr><td><a href="#mmecrt">mmecrt</a></td><td> Multidigit modular multiplication with the Explicit Chinese Remainder Theorem</td></tr>
+<tr><td><a href="#m3">m3</a></td><td> Multidigit multiplication for mathematicians</td></tr>
+<tr><td><a href="#neoncrypto">neoncrypto</a></td><td> NEON crypto</td></tr>
+<tr><td><a href="#bunny">bunny</a></td><td> Never trust a bunny</td></tr>
+<tr><td><a href="#aesspeed">aesspeed</a></td><td> New AES software speed records</td></tr>
+<tr><td><a href="#westinghouse">westinghouse</a></td><td> New fast algorithms for pi and e</td></tr>
+<tr><td><a href="#spherical">spherical</a></td><td> Non-randomness of S-unit lattices</td></tr>
+<tr><td><a href="#nonuniform">nonuniform</a></td><td> Non-uniform cracks in the concrete: the power of free precomputation</td></tr>
+<tr><td><a href="#ntruprime">ntruprime</a></td><td> NTRU Prime: reducing attack surface at low cost</td></tr>
+<tr><td><a href="#comet">comet</a></td><td> Observations on COMET</td></tr>
+<tr><td><a href="#negation">negation</a></td><td> On the correct use of the negation map in the Pollard rho method</td></tr>
+<tr><td><a href="#dualectls">dualectls</a></td><td> On the practical exploitability of Dual EC in TLS implementations</td></tr>
+<tr><td><a href="#rc4biases">rc4biases</a></td><td> On the security of RC4 in TLS and WPA</td></tr>
+<tr><td><a href="#opensslntru">opensslntru</a></td><td> OpenSSLNTRU: Faster post-quantum TLS key exchange</td></tr>
+<tr><td><a href="#sha3opt">sha3opt</a></td><td> Optimization failures in SHA-3 software</td></tr>
+<tr><td><a href="#doublebase">doublebase</a></td><td> Optimizing double-base elliptic-curve single-scalar multiplication</td></tr>
+<tr><td><a href="#linearmod2">linearmod2</a></td><td> Optimizing linear maps modulo 2</td></tr>
+<tr><td><a href="#pwccp">pwccp</a></td><td> Papers with computer-checked proofs</td></tr>
+<tr><td><a href="#pippenger">pippenger</a></td><td> Pippenger's exponentiation algorithm</td></tr>
+<tr><td><a href="#pema">pema</a></td><td> Polynomial evaluation and message authentication</td></tr>
+<tr><td><a href="#fallout">fallout</a></td><td> Post-quantum cryptography—dealing with the fallout of physics success</td></tr>
+<tr><td><a href="#pqrsa">pqrsa</a></td><td> Post-quantum RSA</td></tr>
+<tr><td><a href="#pqconnect">pqconnect</a></td><td> PQConnect: automated post-quantum end-to-end tunnels</td></tr>
+<tr><td><a href="#hblcs">hblcs</a></td><td> Predicting a linear congruential sequence from its high bits</td></tr>
+<tr><td><a href="#pppqefs">pppqefs</a></td><td> Predicting performance for post-quantum encrypted-file systems</td></tr>
+<tr><td><a href="#primesieves">primesieves</a></td><td> Prime sieves using binary quadratic forms</td></tr>
+<tr><td><a href="#forgery">forgery</a></td><td> Protecting communications against forgery</td></tr>
+<tr><td><a href="#aks">aks</a></td><td> Proving primality after Agrawal-Kayal-Saxena</td></tr>
+<tr><td><a href="#quartic">quartic</a></td><td> Proving primality in essentially quartic random time</td></tr>
+<tr><td><a href="#rwtight">rwtight</a></td><td> Proving tight security for Rabin-Williams signatures</td></tr>
+<tr><td><a href="#qrcsp">qrcsp</a></td><td> Quantifying risks in cryptographic selection processes</td></tr>
+<tr><td><a href="#qsubsetsum">qsubsetsum</a></td><td> Quantum algorithms for the subset-sum problem</td></tr>
+<tr><td><a href="#quantumsha3">quantumsha3</a></td><td> Quantum attacks against Blue Midnight Wish, ECHO, Fugue, Grøstl, Hamsi, JH, Keccak, Shabal, SHAvite-3, SIMD, and Skein</td></tr>
+<tr><td><a href="#qisog">qisog</a></td><td> Quantum circuits for the CSIDH: optimizing quantum evaluation of isogenies</td></tr>
+<tr><td><a href="#rfsb">rfsb</a></td><td> Really fast syndrome-based hashing</td></tr>
+<tr><td><a href="#smallheight">smallheight</a></td><td> Reducing lattice bases to find small-height values of univariate polynomials</td></tr>
+<tr><td><a href="#relaxing">relaxing</a></td><td> Relaxing constraints in Simon's algorithm</td></tr>
+<tr><td><a href="#fastnewton">fastnewton</a></td><td> Removing redundancy in high-precision Newton iteration</td></tr>
+<tr><td><a href="#kpqc">kpqc</a></td><td> Report on evaluation of KpqC Round-2 candidates</td></tr>
+<tr><td><a href="#rsrst">rsrst</a></td><td> Robust statistics for rejection-sampling timings</td></tr>
+<tr><td><a href="#rwsota">rwsota</a></td><td> RSA signatures and Rabin-Williams signatures: the state of the art</td></tr>
+<tr><td><a href="#safecurves">safecurves</a></td><td> Safe curves for elliptic-curve cryptography</td></tr>
+<tr><td><a href="#huptrie">huptrie</a></td><td> Saving space and time in hash tries</td></tr>
+<tr><td><a href="#scaledmod">scaledmod</a></td><td> Scaled remainder trees</td></tr>
+<tr><td><a href="#dacmitm">dacmitm</a></td><td> Searching for differential addition chains</td></tr>
+<tr><td><a href="#interop">interop</a></td><td> SHA-3 interoperability</td></tr>
+<tr><td><a href="#abccong">abccong</a></td><td> Sharper ABC-based bounds for congruent polynomials</td></tr>
+<tr><td><a href="#multiquad">multiquad</a></td><td> Short generators without quantum computers: the case of multiquadratics</td></tr>
+<tr><td><a href="#simplelist">simplelist</a></td><td> Simplified high-speed high-distance list decoding for alternant codes</td></tr>
+<tr><td><a href="#siphash">siphash</a></td><td> SipHash: a fast short-input PRF</td></tr>
+<tr><td><a href="#slidingright">slidingright</a></td><td> Sliding right into disaster: Left-to-right sliding windows leak</td></tr>
+<tr><td><a href="#ballcoll">ballcoll</a></td><td> Smaller decoding exponents: ball-collision decoding</td></tr>
+<tr><td><a href="#qmailsec">qmailsec</a></td><td> Some thoughts on security after ten years of qmail 1.0</td></tr>
+<tr><td><a href="#sphincs">sphincs</a></td><td> SPHINCS: practical stateless hash-based signatures</td></tr>
+<tr><td><a href="#a1ecm">a1ecm</a></td><td> Starfish on strike</td></tr>
+<tr><td><a href="#permutations">permutations</a></td><td> Stronger security bounds for permutations</td></tr>
+<tr><td><a href="#securitywcs">securitywcs</a></td><td> Stronger security bounds for Wegman-Carter-Shoup authenticators</td></tr>
+<tr><td><a href="#senfs">senfs</a></td><td> Superelliptic integrals and the number-field sieve</td></tr>
+<tr><td><a href="#surf">surf</a></td><td> SURF: Simple Unpredictable Random Function</td></tr>
+<tr><td><a href="#symexemu">symexemu</a></td><td> Symbolically executing emulators</td></tr>
+<tr><td><a href="#3x1conjmap">3x1conjmap</a></td><td> The 3x+1 conjugacy map</td></tr>
+<tr><td><a href="#abc">abc</a></td><td> The ABC polygon</td></tr>
+<tr><td><a href="#pc109">pc109</a></td><td> The billion-mulmod-per-second PC</td></tr>
+<tr><td><a href="#ecc2x">ecc2x</a></td><td> The Certicom challenges ECC2-X</td></tr>
+<tr><td><a href="#c3">c3</a></td><td> The complexity of complex convolution</td></tr>
+<tr><td><a href="#cryptoint">cryptoint</a></td><td> The cryptoint library</td></tr>
+<tr><td><a href="#eraa">eraa</a></td><td> The error rate of algorithm analyses</td></tr>
+<tr><td><a href="#mlnfs">mlnfs</a></td><td> The multiple-lattice number field sieve</td></tr>
+<tr><td><a href="#shootout">shootout</a></td><td> The new SHA-3 software shootout</td></tr>
+<tr><td><a href="#poly1305">poly1305</a></td><td> The Poly1305-AES message-authentication code</td></tr>
+<tr><td><a href="#salsafamily">salsafamily</a></td><td> The Salsa20 family of stream ciphers</td></tr>
+<tr><td><a href="#coolnacl">coolnacl</a></td><td> The security impact of a new cryptographic library</td></tr>
+<tr><td><a href="#spx">spx</a></td><td> The SPHINCS+ signature framework</td></tr>
+<tr><td><a href="#tangentfft">tangentfft</a></td><td> The tangent FFT</td></tr>
+<tr><td><a href="#dal">dal</a></td><td> The ubiquitous dal function</td></tr>
+<tr><td><a href="#pro">pro</a></td><td> Tighter, faster, simpler side-channel security evaluations beyond computing power</td></tr>
+<tr><td><a href="#tightkem">tightkem</a></td><td> Towards KEM unification</td></tr>
+<tr><td><a href="#tweetnacl">tweetnacl</a></td><td> TweetNaCl: a crypto library in 100 tweets</td></tr>
+<tr><td><a href="#twisted">twisted</a></td><td> Twisted Edwards curves</td></tr>
+<tr><td><a href="#hessian">hessian</a></td><td> Twisted Hessian curves</td></tr>
+<tr><td><a href="#grumpy">grumpy</a></td><td> Two grumpy giants and a baby</td></tr>
+<tr><td><a href="#opb">opb</a></td><td> Type-II optimal polynomial bases</td></tr>
+<tr><td><a href="#goppadecoding">goppadecoding</a></td><td> Understanding binary-Goppa decoding</td></tr>
+<tr><td><a href="#bruteforce">bruteforce</a></td><td> Understanding brute force</td></tr>
+<tr><td><a href="#gpuasm">gpuasm</a></td><td> Usable assembly language for GPUs: a success story</td></tr>
+<tr><td><a href="#kdvseries">kdvseries</a></td><td> Using fast power-series arithmetic in the Kedlaya-Denef-Vercauteren algorithm</td></tr>
+<tr><td><a href="#controlbits">controlbits</a></td><td> Verified fast formulas for control bits for permutation networks</td></tr>
+<tr><td><a href="#bestat">bestat</a></td><td> Visualizing area-time tradeoffs for SHA-3</td></tr>
+<tr><td><a href="#paretoviz">paretoviz</a></td><td> Visualizing size-security tradeoffs for lattice-based encryption</td></tr>
+<tr><td><a href="#expandxor">expandxor</a></td><td> What output size resists collisions in a xor of independent expansions?</td></tr>
+<tr><td><a href="#broken">broken</a></td><td> Which eSTREAM ciphers have been broken?</td></tr>
+<tr><td><a href="#phase3speed">phase3speed</a></td><td> Which phase-3 eSTREAM ciphers provide the best software speeds?</td></tr>
+<tr><td><a href="#wild">wild</a></td><td> Wild McEliece</td></tr>
+<tr><td><a href="#wild2">wild2</a></td><td> Wild McEliece incognito</td></tr>
+</table></details>
+<h2>Papers by date (reverse chronological)</h2>
+<p>
+Sorted by date of the most recently published version.
+When another date is listed,
+it is the date of the first published version.
+</p>
+<hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="relaxing" href="https://cr.yp.to/papers.html#relaxing"><tt>relaxing</tt></a></span>
+<span class=date>2026.08.13</span>
+<span class=pp>6pp</span>
+<span class=link><a href="papers/relaxing-20260813.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Relaxing constraints in Simon's algorithm."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mldsa" href="https://cr.yp.to/papers.html#mldsa"><tt>mldsa</tt></a></span>
+<span class=date>2026.06.01</span>
+<span class=pp>59pp</span>
+<span class=link><a href="papers/mldsa-20260601.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Exploiting ML-DSA bugs."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="safegcd2" href="https://cr.yp.to/papers.html#safegcd2"><tt>safegcd2</tt></a></span>
+<span class=date>2026.05.11</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+</span>
+<br>
+Daniel J. Bernstein, Han-Ting Chen, John R. Harrison, Cesare Huang, Gregory Maxwell, Bow-Yaw Wang, Pieter Wuille, Bo-Yin Yang.
+"Accelerating and verifying constant-time modular inversion."
+Pages 598–627 in <i>Advances in cryptology—EUROCRYPT 2026—45th annual international conference on the theory and applications of cryptographic techniques, Rome, Italy, May 10–14, 2026, proceedings, part VII</i> (edited by Joan Daemen, Emmanuel Thomé), Lecture Notes in Computer Science <b>16547</b>, Springer, 2026, ISBN 978-3-032-25335-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="symexemu" href="https://cr.yp.to/papers.html#symexemu"><tt>symexemu</tt></a></span>
+<span class=date>2026.02.01</span>
+<span class=pp>21pp</span>
+<span class=link><a href="papers/symexemu-20260201.pdf">PDF</a></span>
+<span class=linkold><a href="papers/symexemu-20250505.pdf">old PDF</a></span>
+<span class=firstdate>2025.05.05</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Symbolically executing emulators."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="highergenus" href="https://cr.yp.to/papers.html#highergenus"><tt>highergenus</tt></a></span>
+<span class=date>2025.12.08</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Alex Pellegrini.
+"Higher-genus McEliece."
+Pages 498–531 in <i>Advances in cryptology—ASIACRYPT 2025—31st international conference on the theory and application of cryptology and information security, Melbourne, VIC, Australia, December 8–12, 2025, proceedings, part IV</i> (edited by Goichiro Hanaoka, Bo-Yin Yang), Lecture Notes in Computer Science <b>16248</b>, Springer, 2025, ISBN 978-981-95-5112-5.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rsrst" href="https://cr.yp.to/papers.html#rsrst"><tt>rsrst</tt></a></span>
+<span class=date>2025.07.27</span>
+<span class=pp>14pp</span>
+<span class=link><a href="papers/rsrst-20250727.pdf">PDF</a></span>
+<span class=linkold><a href="papers/rsrst-20250720.pdf">old PDF</a></span>
+<span class=firstdate>2025.07.20</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Robust statistics for rejection-sampling timings."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pwccp" href="https://cr.yp.to/papers.html#pwccp"><tt>pwccp</tt></a></span>
+<span class=date>2025.05.20</span>
+<span class=pp>51pp</span>
+<span class=link><a href="papers/pwccp-20250520.pdf">PDF</a></span>
+<span class=linkold><a href="papers/pwccp-20240727.pdf">old PDF</a></span>
+<span class=linkold><a href="papers/pwccp-20230909.pdf">older PDF</a></span>
+<span class=linkold><a href="papers/pwccp-20230907.pdf">even older PDF</a></span>
+<span class=linkold><a href="papers/pwccp-20230906.pdf">oldest PDF</a></span>
+<span class=firstdate>2023.09.06</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Papers with computer-checked proofs."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cryptoint" href="https://cr.yp.to/papers.html#cryptoint"><tt>cryptoint</tt></a></span>
+<span class=date>2025.04.24</span>
+<span class=pp>42pp</span>
+<span class=link><a href="papers/cryptoint-20250424.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The cryptoint library."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="eraa" href="https://cr.yp.to/papers.html#eraa"><tt>eraa</tt></a></span>
+<span class=date>2025.02.03</span>
+<span class=pp>26pp</span>
+<span class=link><a href="papers/eraa-20250203.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The error rate of algorithm analyses."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="kyberslash" href="https://cr.yp.to/papers.html#kyberslash"><tt>kyberslash</tt></a></span>
+<span class=date>2025.01.15</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>30pp</span>
+<span class=link><a href="https://kyberslash.cr.yp.to/kyberslash-20250115.pdf">PDF</a></span>
+<span class=linkold><a href="https://kyberslash.cr.yp.to/kyberslash-20240628.pdf">old PDF</a></span>
+<span class=link><a href="https://kyberslash.cr.yp.to">more</a></span>
+<span class=firstdate>2024.06.28</span>
+</span>
+<br>
+Daniel J. Bernstein, Karthikeyan Bhargavan, Shivam Bhasin, Anupam Chattopadhyay, Tee Kiah Chia, Matthias J. Kannwischer, Franziskus Kiefer, Thales B. Paiva, Prasanna Ravi, Goutam Tamvada.
+"KyberSlash: Exploiting secret-dependent division timings in Kyber implementations."
+IACR Transactions on Cryptographic Hardware and Embedded Systems <b>2025 issue 2</b> (2025), 209–234.
+CHES 2025 Best Paper Award.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="footloose" href="https://cr.yp.to/papers.html#footloose"><tt>footloose</tt></a></span>
+<span class=date>2024.12.30</span>
+<span class=refereed>refereed</span>
+<span class=pp>25pp</span>
+<span class=link><a href="papers/footloose-20241230.pdf">PDF</a></span>
+<span class=linkold><a href="papers/footloose-20210705.pdf">old PDF</a></span>
+<span class=firstdate>2021.07.05</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"FO derandomization sometimes damages security."
+IACR Communications in Cryptology, to appear.
+Previous title: "On the looseness of FO derandomization".
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="kpqc" href="https://cr.yp.to/papers.html#kpqc"><tt>kpqc</tt></a></span>
+<span class=date>2024.12.26</span>
+<span class=pp>211pp</span>
+<span class=link><a href="papers/kpqc-20241226.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Jolijn Cottaar, Emanuele Di Giandomenico, Kathrin Hövelmanns, Andreas Hülsing, Mikhail Kudinov, Tanja Lange, Mairon Mahzoun, Matthias Meijers, Alex Pellegrini, Alberto Ravagnani, Silvia Ritsch, Sven Schäge, Tianxin Tang, Monika Trimoska, Marc Vorstermans, Fiona Johanna Weber.
+"Report on evaluation of KpqC Round-2 candidates."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pqconnect" href="https://cr.yp.to/papers.html#pqconnect"><tt>pqconnect</tt></a></span>
+<span class=date>2024.12.06</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="papers/pqconnect-20241206.pdf">PDF</a></span>
+<span class=link><a href="https://www.pqconnect.net">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Jonathan Levin, Bo-Yin Yang.
+"PQConnect: automated post-quantum end-to-end tunnels."
+<i>32nd annual network and distributed system security symposium, NDSS 2025, San Diego, California, USA, February 24–28, 2025</i>.
+First posting was 27 December 2024,
+on the "PQConnect: Papers" page.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="safecurves" href="https://cr.yp.to/papers.html#safecurves"><tt>safecurves</tt></a></span>
+<span class=date>2024.08.09</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>68pp</span>
+<span class=link><a href="papers/safecurves-20240809.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Safe curves for elliptic-curve cryptography."
+Pages 124–191 in <i>Information security in a connected world: celebrating the life and work of Ed Dawson</i> (edited by Colin Boyd, Reihaneh Safavi-Naini, Leonie Simpson), Lecture Notes in Computer Science <b>15600</b>, Springer, 2025, ISBN 978-3-031-83489-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="latticeasymp" href="https://cr.yp.to/papers.html#latticeasymp"><tt>latticeasymp</tt></a></span>
+<span class=date>2024.07.27</span>
+<span class=refereed>refereed</span>
+<span class=pp>36pp</span>
+<span class=link><a href="papers/latticeasymp-20240727.pdf">PDF</a></span>
+<span class=linkold><a href="papers/latticeasymp-20240427.pdf">old PDF</a></span>
+<span class=linkold><a href="papers/latticeasymp-20240413.pdf">older PDF</a></span>
+<span class=firstdate>2024.04.13</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Asymptotics for the standard block size in primal lattice attacks: second order, formally verified."
+IACR Communications in Cryptology, to appear.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="goppadecoding" href="https://cr.yp.to/papers.html#goppadecoding"><tt>goppadecoding</tt></a></span>
+<span class=date>2024.07.02</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>64pp</span>
+<span class=link><a href="papers/goppadecoding-20240702.pdf">PDF</a></span>
+<span class=linkold><a href="papers/goppadecoding-20240412.pdf">old PDF</a></span>
+<span class=linkold><a href="papers/goppadecoding-20230818.pdf">older PDF</a></span>
+<span class=linkold><a href="papers/goppadecoding-20220816.pdf">even older PDF</a></span>
+<span class=linkold><a href="papers/goppadecoding-20220320.pdf">oldest PDF</a></span>
+<span class=firstdate>2022.03.20</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Understanding binary-Goppa decoding."
+IACR Communications in Cryptology <b>1</b> (2024), article 1.14.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dacmitm" href="https://cr.yp.to/papers.html#dacmitm"><tt>dacmitm</tt></a></span>
+<span class=date>2024.06.27</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>23pp</span>
+<span class=link><a href="papers/dacmitm-20240627.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Jolijn Cottaar, Tanja Lange.
+"Searching for differential addition chains."
+Research in Number Theory <b>11</b> (2025), article 45.
+Algorithmic Number Theory Symposium (ANTS) 2024.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cat" href="https://cr.yp.to/papers.html#cat"><tt>cat</tt></a></span>
+<span class=date>2024.06.12</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>90pp</span>
+<span class=link><a href="https://cat.cr.yp.to/cryptattacktester-20240612.pdf">PDF</a></span>
+<span class=linkold><a href="https://cat.cr.yp.to/cryptattacktester-20231020.pdf">old PDF</a></span>
+<span class=linkold><a href="https://cat.cr.yp.to/cryptattacktester-20230614.pdf">older PDF</a></span>
+<span class=link><a href="https://cat.cr.yp.to">more</a></span>
+<span class=firstdate>2023.06.14</span>
+</span>
+<br>
+Daniel J. Bernstein, Tung Chou.
+"CryptAttackTester: high-assurance attack analysis."
+Pages 141–182 in <i>Advances in cryptology—CRYPTO 2024—44th annual international cryptology conference, Santa Barbara, CA, USA, August 18–22, 2024, proceedings, part VI</i> (edited by Leonid Reyzin, Douglas Stebila), Lecture Notes in Computer Science <b>14925</b>, Springer, 2024, ISBN 978-3-031-68390-9.
+Previous title: "CryptAttackTester: formalizing attack analyses".
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pqcomplexity" href="https://cr.yp.to/papers.html#pqcomplexity"><tt>pqcomplexity</tt></a></span>
+<span class=date>2024.04.19</span>
+<span class=pp>31pp</span>
+<span class=link><a href="papers/pqcomplexity-20240419.pdf">PDF</a></span>
+<span class=linkold><a href="papers/pqcomplexity-20231221.pdf">old PDF</a></span>
+<span class=linkold><a href="papers/pqcomplexity-20231217.pdf">older PDF</a></span>
+<span class=firstdate>2023.12.17</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Analyzing the complexity of reference post-quantum software: the case of lattice-based KEMs."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pppqefs" href="https://cr.yp.to/papers.html#pppqefs"><tt>pppqefs</tt></a></span>
+<span class=date>2024.03.27</span>
+<span class=pp>17pp</span>
+<span class=link><a href="papers/pppqefs-20240327.pdf">PDF</a></span>
+<span class=linkold><a href="papers/pppqefs-20231206.pdf">old PDF</a></span>
+<span class=firstdate>2023.12.06</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Predicting performance for post-quantum encrypted-file systems."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="competitions" href="https://cr.yp.to/papers.html#competitions"><tt>competitions</tt></a></span>
+<span class=date>2024.01.13</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>42pp</span>
+<span class=link><a href="papers/competitions-20240113.pdf">PDF</a></span>
+<span class=linkold><a href="papers/competitions-20230701.pdf">old PDF</a></span>
+<span class=linkold><a href="papers/competitions-20211226.pdf">older PDF</a></span>
+<span class=linkold><a href="papers/competitions-20201225.pdf">oldest PDF</a></span>
+<span class=firstdate>2020.12.25</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cryptographic competitions."
+Journal of Cryptology <b>37</b> (2024), article 7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hybrid" href="https://cr.yp.to/papers.html#hybrid"><tt>hybrid</tt></a></span>
+<span class=date>2023.12.08</span>
+<span class=pp>28pp</span>
+<span class=link><a href="papers/hybrid-20231208.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Asymptotics of hybrid primal lattice attacks."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="qrcsp" href="https://cr.yp.to/papers.html#qrcsp"><tt>qrcsp</tt></a></span>
+<span class=date>2023.12.02</span>
+<span class=pp>35pp</span>
+<span class=link><a href="papers/qrcsp-20231202.pdf">PDF</a></span>
+<span class=linkold><a href="papers/qrcsp-20231124.pdf">older PDF</a></span>
+<span class=linkold><a href="papers/qrcsp-20231123.pdf">oldest PDF</a></span>
+<span class=firstdate>2023.11.23</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Quantifying risks in cryptographic selection processes."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="lprrr" href="https://cr.yp.to/papers.html#lprrr"><tt>lprrr</tt></a></span>
+<span class=date>2023.03.17</span>
+<span class=pp>55pp</span>
+<span class=link><a href="papers/lprrr-20230317.pdf">PDF</a></span>
+<span class=linkold><a href="papers/lprrr-20221114.pdf">old PDF</a></span>
+<span class=firstdate>2022.11.14</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Multi-ciphertext security degradation for lattices."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ntrw" href="https://cr.yp.to/papers.html#ntrw"><tt>ntrw</tt></a></span>
+<span class=date>2022.10.25</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>29pp</span>
+<span class=link><a href="https://pqsrc.cr.yp.to/ntrw-20221025.pdf">PDF</a></span>
+<span class=linkold><a href="https://pqsrc.cr.yp.to/ntrw-20220829.pdf">old PDF</a></span>
+<span class=firstdate>2022.08.29</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A one-time single-bit fault leaks all previous NTRU-HRSS session keys to a chosen-ciphertext attack."
+Pages 617–643 in <i>Progress in cryptology—INDOCRYPT 2022, 23rd international conference on cryptology in India, Kolkata, India, December 11–14, 2022, proceedings</i> (edited by Takanori Isobe, Santanu Sarkar), Lecture Notes in Computer Science <b>13774</b>, Springer, 2022, ISBN 978-3-031-22911-4.
+INDOCRYPT 2022 Best Paper Award.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="abeliannorms" href="https://cr.yp.to/papers.html#abeliannorms"><tt>abeliannorms</tt></a></span>
+<span class=date>2022.07.31</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>59pp</span>
+<span class=link><a href="https://s-unit.attacks.cr.yp.to/abeliannorms-20220731.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Fast norm computation in smooth-degree Abelian number fields."
+Research in Number Theory <b>9</b> (2023), article 82.
+Algorithmic Number Theory Symposium (ANTS) 2022.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="spherical" href="https://cr.yp.to/papers.html#spherical"><tt>spherical</tt></a></span>
+<span class=date>2021.10.23</span>
+<span class=pp>58pp</span>
+<span class=link><a href="papers/spherical-20211023.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Non-randomness of S-unit lattices."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="opensslntru" href="https://cr.yp.to/papers.html#opensslntru"><tt>opensslntru</tt></a></span>
+<span class=date>2021.10.06</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="https://opensslntru.cr.yp.to/opensslntru-20211006.pdf">PDF</a></span>
+<span class=link><a href="https://opensslntru.cr.yp.to">more</a></span>
+<span class=firstdate>2021.06.15</span>
+</span>
+<br>
+Daniel J. Bernstein, Billy Bob Brumley, Ming-Shing Chen, Nicola Tuveri.
+"OpenSSLNTRU: Faster post-quantum TLS key exchange."
+Pages 845–862 in <i>Proceedings of the 31st USENIX Security Symposium</i> (edited by Kevin R. B. Butler, Kurt Thomas), USENIX Association, 2022, ISBN 978-1-939133-31-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ctidh" href="https://cr.yp.to/papers.html#ctidh"><tt>ctidh</tt></a></span>
+<span class=date>2021.05.13</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>36pp</span>
+<span class=link><a href="https://ctidh.isogeny.org/ctidh-20210513.pdf">PDF</a></span>
+<span class=link><a href="https://ctidh.isogeny.org">more</a></span>
+</span>
+<br>
+Gustavo Banegas, Daniel J. Bernstein, Fabio Campos, Tung Chou, Tanja Lange, Michael Meyer, Benjamin Smith, Jana Sotáková.
+"CTIDH: faster constant-time CSIDH."
+IACR Transactions on Cryptographic Hardware and Embedded Systems <b>2021 issue 4</b> (2021), 351–387.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="basicblocker" href="https://cr.yp.to/papers.html#basicblocker"><tt>basicblocker</tt></a></span>
+<span class=date>2021.05.04</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>22pp</span>
+<span class=link><a href="papers/basicblocker-20210504.pdf">PDF</a></span>
+<span class=linkold><a href="papers/basicblocker-20200731.pdf">old PDF</a></span>
+<span class=firstdate>2020.07.31</span>
+</span>
+<br>
+Jan Philipp Thoma, Jakob Feldtkeller, Markus Krausz, Tim Güneysu, Daniel J. Bernstein.
+"BasicBlocker: ISA redesign to make Spectre-immune CPUs faster."
+Pages 103–118 in <i>RAID '21: 24th International Symposium on Research in Attacks, Intrusions and Defenses, San Sebastian, Spain, October 6–8, 2021</i> (edited by Leyla Bilge, Tudor Dumitras), ACM, 2021, ISBN 978-1-4503-9058-3.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="comet" href="https://cr.yp.to/papers.html#comet"><tt>comet</tt></a></span>
+<span class=date>2020.11.13</span>
+<span class=pp>5pp</span>
+<span class=link><a href="papers/comet-20201113.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Henri Gilbert, Meltem Sönmez Turan.
+"Observations on COMET."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="binecc" href="https://cr.yp.to/papers.html#binecc"><tt>binecc</tt></a></span>
+<span class=date>2020.10.16</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>33pp</span>
+<span class=link><a href="https://binary.cr.yp.to/binecc-20201016.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/reversible.html#binecc-paper">more</a></span>
+</span>
+<br>
+Gustavo Banegas, Daniel J. Bernstein, Iggy van Hoof, Tanja Lange.
+"Concrete quantum cryptanalysis of binary elliptic curves."
+IACR Transactions on Cryptographic Hardware and Embedded Systems <b>2021 issue 1</b> (2021), 451–472.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="controlbits" href="https://cr.yp.to/papers.html#controlbits"><tt>controlbits</tt></a></span>
+<span class=date>2020.09.23</span>
+<span class=pp>67pp</span>
+<span class=link><a href="papers/controlbits-20200923.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Verified fast formulas for control bits for permutation networks."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="categories" href="https://cr.yp.to/papers.html#categories"><tt>categories</tt></a></span>
+<span class=date>2020.09.18</span>
+<span class=pp>28pp</span>
+<span class=link><a href="papers/categories-20200918.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A discretization attack."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="velusqrt" href="https://cr.yp.to/papers.html#velusqrt"><tt>velusqrt</tt></a></span>
+<span class=date>2020.06.16</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>22pp</span>
+<span class=link><a href="https://velusqrt.isogeny.org/velusqrt-20200616.pdf">PDF</a></span>
+<span class=link><a href="https://velusqrt.isogeny.org">more</a></span>
+<span class=firstdate>2020.03.20</span>
+</span>
+<br>
+Daniel J. Bernstein, Luca De Feo, Antonin Leroux, Benjamin Smith.
+"Faster computation of isogenies of large prime degree."
+Pages 39–55 in <i>ANTS XIV: proceedings of the fourteenth algorithmic number theory symposium, Auckland 2020</i> (edited by Steven Galbraith), Open Book Series <b>4</b>, Mathematical Sciences Publishers, 2020, ISBN 978-1-935107-07-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gigo" href="https://cr.yp.to/papers.html#gigo"><tt>gigo</tt></a></span>
+<span class=date>2020.03.30</span>
+<span class=pp>19pp</span>
+<span class=link><a href="papers/gigo-20200330.pdf">PDF</a></span>
+<span class=linkold><a href="papers/gigo-20200329.pdf">old PDF</a></span>
+<span class=firstdate>2020.03.29</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Further analysis of the impact of distancing upon the COVID-19 pandemic."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mctiny" href="https://cr.yp.to/papers.html#mctiny"><tt>mctiny</tt></a></span>
+<span class=date>2019.12.02</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="https://mctiny.org/mctiny-20191202.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"McTiny: fast high-confidence post-quantum key erasure for tiny network servers."
+Pages 1731–1748 in <i>Proceedings of the 29th USENIX Security Symposium</i> (edited by Srdjan Capkun, Franziska Roesner), USENIX Association, 2020, ISBN 978-1-939133-17-5.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="spx" href="https://cr.yp.to/papers.html#spx"><tt>spx</tt></a></span>
+<span class=date>2019.09.23</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>24pp</span>
+<span class=link><a href="papers/spx-20190923.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Andreas Hülsing, Stefan Kölbl, Ruben Niederhagen, Joost Rijneveld, Peter Schwabe.
+"The SPHINCS+ signature framework."
+Pages 2129–2146 in <i>Proceedings of the 2019 ACM SIGSAC conference on computer and communications security, CCS 2019, London, UK, November 11–15, 2019</i> (edited by Lorenzo Cavallaro, Johannes Kinder, XiaoFeng Wang, Jonathan Katz), ACM, 2019, ISBN 978-1-4503-6747-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dspr" href="https://cr.yp.to/papers.html#dspr"><tt>dspr</tt></a></span>
+<span class=date>2019.09.23</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>36pp</span>
+<span class=link><a href="https://sphincs.org/data/dspr-20190923.pdf">PDF</a></span>
+<span class=linkold><a href="https://sphincs.org/data/dspr-20190513.pdf">old PDF</a></span>
+<span class=firstdate>2019.05.13</span>
+</span>
+<br>
+Daniel J. Bernstein, Andreas Hülsing.
+"Decisional second-preimage resistance: When does SPR imply PRE?"
+Pages 33–62 in <i>Advances in cryptology—ASIACRYPT 2019—25th international conference on the theory and application of cryptology and information security, Kobe, Japan, December 8–12, 2019, proceedings, part III</i> (edited by Steven D. Galbraith, Shiho Moriai), Lecture Notes in Computer Science <b>11923</b>, Springer, 2019, ISBN 978-3-030-34617-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="latticeproofs" href="https://cr.yp.to/papers.html#latticeproofs"><tt>latticeproofs</tt></a></span>
+<span class=date>2019.07.19</span>
+<span class=refereed>refereed</span>
+<span class=pp>52pp</span>
+<span class=link><a href="papers/latticeproofs-20190719.pdf">PDF</a></span>
+<span class=linkold><a href="papers/latticeproofs-20190608.pdf">old PDF</a></span>
+<span class=firstdate>2019.06.08</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Comparing proofs of security for lattice-based encryption."
+Second PQC Standardization Conference.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="paretoviz" href="https://cr.yp.to/papers.html#paretoviz"><tt>paretoviz</tt></a></span>
+<span class=date>2019.06.03</span>
+<span class=refereed>refereed</span>
+<span class=pp>16pp</span>
+<span class=link><a href="papers/paretoviz-20190603.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Visualizing size-security tradeoffs for lattice-based encryption."
+Second PQC Standardization Conference.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="safegcd" href="https://cr.yp.to/papers.html#safegcd"><tt>safegcd</tt></a></span>
+<span class=date>2019.04.13</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>59pp</span>
+<span class=link><a href="https://gcd.cr.yp.to/safegcd-20190413.pdf">PDF</a></span>
+<span class=link><a href="https://gcd.cr.yp.to/papers.html#safegcd">more</a></span>
+<span class=firstdate>2019.03.05</span>
+</span>
+<br>
+Daniel J. Bernstein, Bo-Yin Yang.
+"Fast constant-time gcd computation and modular inversion."
+IACR Transactions on Cryptographic Hardware and Embedded Systems <b>2019 issue 3</b> (2019), 340–398.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="qisog" href="https://cr.yp.to/papers.html#qisog"><tt>qisog</tt></a></span>
+<span class=date>2019.03.05</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>56pp</span>
+<span class=link><a href="https://quantum.isogeny.org/qisog-20190305.pdf">PDF</a></span>
+<span class=link><a href="https://quantum.isogeny.org">more</a></span>
+<span class=firstdate>2018.10.31</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Chloe Martindale, Lorenz Panny.
+"Quantum circuits for the CSIDH: optimizing quantum evaluation of isogenies."
+Pages 409–441 in <i>Advances in cryptology—EUROCRYPT 2019—38th annual international conference on the theory and applications of cryptographic techniques, Darmstadt, Germany, May 19–23, 2019, proceedings, part II</i> (edited by Yuval Ishai, Vincent Rijmen), Lecture Notes in Computer Science <b>11477</b>, Springer, 2019, ISBN 978-3-030-17655-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="tightkem" href="https://cr.yp.to/papers.html#tightkem"><tt>tightkem</tt></a></span>
+<span class=date>2018.05.28</span>
+<span class=pp>37pp</span>
+<span class=link><a href="papers/tightkem-20180528.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Edoardo Persichetti.
+"Towards KEM unification."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="divergence" href="https://cr.yp.to/papers.html#divergence"><tt>divergence</tt></a></span>
+<span class=date>2018.04.30</span>
+<span class=pp>10pp</span>
+<span class=link><a href="https://ntruprime.cr.yp.to/divergence-20180430.pdf">PDF</a></span>
+<span class=link><a href="https://ntruprime.cr.yp.to/papers.html#divergence">more</a></span>
+<span class=firstdate>2017.12.12</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Divergence bounds for random fixed-weight vectors obtained by sorting."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="holographic" href="https://cr.yp.to/papers.html#holographic"><tt>holographic</tt></a></span>
+<span class=date>2018.03.12</span>
+<span class=pp>11pp</span>
+<span class=link><a href="https://sidechannels.cr.yp.to/qkd/holographic-20180312.pdf">PDF</a></span>
+<span class=linkold><a href="https://sidechannels.cr.yp.to/qkd/holographic-20160326.pdf">old PDF</a></span>
+<span class=firstdate>2016.03.26</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Is the security of quantum cryptography guaranteed by the laws of physics?"
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hila5" href="https://cr.yp.to/papers.html#hila5"><tt>hila5</tt></a></span>
+<span class=date>2018.03.08</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>14pp</span>
+<span class=link><a href="papers/hila5-20180308.pdf">PDF</a></span>
+<span class=linkold><a href="papers/hila5-20171218.pdf">old PDF</a></span>
+<span class=firstdate>2017.12.18</span>
+</span>
+<br>
+Daniel J. Bernstein, Leon Groot Bruinderink, Tanja Lange, Lorenz Panny.
+"HILA5 Pindakaas: On the CCA security of lattice-based encryption with error correction."
+Pages 203–216 in <i>Progress in cryptology, AFRICACRYPT 2018, 10th international conference on cryptology in Africa, Marrakesh, Morocco, May 7–9, 2018, proceedings</i> (edited by Antoine Joux, Abderrahmane Nitaj, Tajjeeddine Rachidi), Lecture Notes in Computer Science <b>10831</b>, Springer, 2018, ISBN 978-3-319-89338-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="groverxl" href="https://cr.yp.to/papers.html#groverxl"><tt>groverxl</tt></a></span>
+<span class=date>2017.12.15</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>21pp</span>
+<span class=link><a href="https://cr.yp.to/papers/groverxl-20171215.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Bo-Yin Yang.
+"Asymptotically faster quantum algorithms to solve multivariate quadratic equations."
+Pages 1–20 in <i>Post-quantum cryptography—9th international conference, PQCrypto 2018, Fort Lauderdale, FL, USA, April 9–11, 2018, proceedings</i> (edited by Tanja Lange, Rainer Steinwandt), Lecture Notes in Computer Science <b>10786</b>, Springer, 2018, ISBN 978-3-319-79062-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="groverrho" href="https://cr.yp.to/papers.html#groverrho"><tt>groverrho</tt></a></span>
+<span class=date>2017.08.18</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>11pp</span>
+<span class=link><a href="hash/groverrho-20170818.pdf">PDF</a></span>
+</span>
+<br>
+Gustavo Banegas, Daniel J. Bernstein.
+"Low-communication parallel quantum multi-target preimage search."
+Pages 325–335 in <i>Selected Areas in Cryptography—SAC 2017, 24th international conference, Ottawa, ON, Canada, August 16–18, 2017, revised selected papers</i> (edited by Carlisle Adams, Jan Camenisch), Lecture Notes in Computer Science <b>10719</b>, Springer, 2018, ISBN 978-3-319-72564-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ntruprime" href="https://cr.yp.to/papers.html#ntruprime"><tt>ntruprime</tt></a></span>
+<span class=date>2017.08.16</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>55pp</span>
+<span class=link><a href="https://ntruprime.cr.yp.to/ntruprime-20170816.pdf">PDF</a></span>
+<span class=link><a href="https://ntruprime.cr.yp.to/papers.html#ntruprime-paper">more</a></span>
+<span class=firstdate>2016.05.11</span>
+</span>
+<br>
+Daniel J. Bernstein, Chitchanok Chuengsatiansup, Tanja Lange, Christine van Vredendaal.
+"NTRU Prime: reducing attack surface at low cost."
+Pages 235–260 in <i>Selected Areas in Cryptography—SAC 2017, 24th international conference, Ottawa, ON, Canada, August 16–18, 2017, revised selected papers</i> (edited by Carlisle Adams, Jan Camenisch), Lecture Notes in Computer Science <b>10719</b>, Springer, 2018, ISBN 978-3-319-72564-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="slidingright" href="https://cr.yp.to/papers.html#slidingright"><tt>slidingright</tt></a></span>
+<span class=date>2017.06.28</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>21pp</span>
+<span class=link><a href="https://sidechannels.cr.yp.to/slidingright/slidingright-20170628.pdf">PDF</a></span>
+<span class=firstdate>2017.06.27</span>
+</span>
+<br>
+Daniel J. Bernstein, Joachim Breitner, Daniel Genkin, Leon Groot Bruinderink, Nadia Heninger, Tanja Lange, Christine van Vredendaal, Yuval Yarom.
+"Sliding right into disaster: Left-to-right sliding windows leak."
+Pages 555–576 in <i>Cryptographic hardware and embedded systems—CHES 2017—19th international conference, Taipei, Taiwan, September 25–28, 2017, proceedings</i> (edited by Wieland Fischer, Naofumi Homma), Lecture Notes in Computer Science <b>10529</b>, Springer, 2017, ISBN 978-3-319-66786-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gimli" href="https://cr.yp.to/papers.html#gimli"><tt>gimli</tt></a></span>
+<span class=date>2017.06.27</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>35pp</span>
+<span class=link><a href="https://gimli.cr.yp.to/gimli-20170627.pdf">PDF</a></span>
+<span class=link><a href="https://gimli.cr.yp.to">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Stefan Kölbl, Stefan Lucks, Pedro Maat Costa Massolino, Florian Mendel, Kashif Nawaz, Tobias Schneider, Peter Schwabe, François-Xavier Standaert, Yosuke Todo, Benoît Viguier.
+"Gimli: a cross-platform permutation."
+Pages 299–320 in <i>Cryptographic hardware and embedded systems—CHES 2017—19th international conference, Taipei, Taiwan, September 25–28, 2017, proceedings</i> (edited by Wieland Fischer, Naofumi Homma), Lecture Notes in Computer Science <b>10529</b>, Springer, 2017, ISBN 978-3-319-66786-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="multiquad" href="https://cr.yp.to/papers.html#multiquad"><tt>multiquad</tt></a></span>
+<span class=date>2017.05.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>55pp</span>
+<span class=link><a href="https://multiquad.cr.yp.to/multiquad-20170501.pdf">PDF</a></span>
+<span class=link><a href="https://multiquad.cr.yp.to">more</a></span>
+</span>
+<br>
+Jens Bauch, Daniel J. Bernstein, Henry de Valence, Tanja Lange, Christine van Vredendaal.
+"Short generators without quantum computers: the case of multiquadratics."
+Pages 27–59 in <i>Advances in cryptology—EUROCRYPT 2017—36th annual international conference on the theory and applications of cryptographic techniques, Paris, France, April 30–May 4, 2017, proceedings, part I</i> (edited by Jean-Sébastien Coron, Jesper Buus Nielsen), Lecture Notes in Computer Science <b>10210</b>, Springer, 2017, ISBN 978-3-319-56619-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pqrsa" href="https://cr.yp.to/papers.html#pqrsa"><tt>pqrsa</tt></a></span>
+<span class=date>2017.04.19</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="papers/pqrsa-20170419.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Nadia Heninger, Paul Lou, Luke Valenta.
+"Post-quantum RSA."
+Pages 311–329 in <i>Post-quantum cryptography—8th international workshop, PQCrypto 2017, Utrecht, the Netherlands, June 26–28, 2017, proceedings</i> (edited by Tanja Lange, Tsuyoshi Takagi), Lecture Notes in Computer Science <b>10346</b>, Springer, 2017, ISBN 978-3-319-59878-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="grovernfs" href="https://cr.yp.to/papers.html#grovernfs"><tt>grovernfs</tt></a></span>
+<span class=date>2017.04.19</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="papers/grovernfs-20170419.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Jean-François Biasse, Michele Mosca.
+"A low-resource quantum factoring algorithm."
+Pages 330–346 in <i>Post-quantum cryptography—8th international workshop, PQCrypto 2017, Utrecht, the Netherlands, June 26–28, 2017, proceedings</i> (edited by Tanja Lange, Tsuyoshi Takagi), Lecture Notes in Computer Science <b>10346</b>, Springer, 2017, ISBN 978-3-319-59878-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fallout" href="https://cr.yp.to/papers.html#fallout"><tt>fallout</tt></a></span>
+<span class=date>2017.04.09</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>20pp</span>
+<span class=link><a href="papers/fallout-20170409.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Post-quantum cryptography—dealing with the fallout of physics success."
+Nature <b>549</b> (2017), 188–194.
+Journal version has the title without the subtitle.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="montladder" href="https://cr.yp.to/papers.html#montladder"><tt>montladder</tt></a></span>
+<span class=date>2017.03.30</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>37pp</span>
+<span class=link><a href="papers/montladder-20170330.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Montgomery curves and the Montgomery ladder."
+Pages 82–115 in <i>Topics in computational number theory inspired by Peter L. Montgomery</i> (edited by Joppe W. Bos, Arjen K. Lenstra), Cambridge University Press, 2017, ISBN 978-1107109353.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dagger" href="https://cr.yp.to/papers.html#dagger"><tt>dagger</tt></a></span>
+<span class=date>2017.01.13</span>
+<span class=pp>38pp</span>
+<span class=link><a href="antiforgery/dagger-20170113.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#dagger">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Chitchanok Chuengsatiansup, Tanja Lange.
+"Double-base scalar multiplication revisited."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sect113r2" href="https://cr.yp.to/papers.html#sect113r2"><tt>sect113r2</tt></a></span>
+<span class=date>2016.08.06</span>
+<span class=pp>29pp</span>
+<span class=link><a href="dlog/sect113r2-20160806.pdf">PDF</a></span>
+<span class=linkold><a href="dlog/sect113r2-20160414.pdf">old PDF</a></span>
+<span class=firstdate>2016.04.14</span>
+</span>
+<br>
+Daniel J. Bernstein, Susanne Engels, Tanja Lange, Ruben Niederhagen, Christof Paar, Peter Schwabe, Ralf Zimmermann.
+"Faster elliptic-curve discrete logarithms on FPGAs."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="amac" href="https://cr.yp.to/papers.html#amac"><tt>amac</tt></a></span>
+<span class=date>2016.02.28</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>35pp</span>
+<span class=link><a href="antiforgery/amac-20160228.pdf">PDF</a></span>
+<span class=firstdate>2016.02.15</span>
+</span>
+<br>
+Mihir Bellare, Daniel J. Bernstein, Stefano Tessaro.
+"Hash-function based PRFs: AMAC and its multi-user security."
+Pages 566–595 in <i>Advances in cryptology—EUROCRYPT 2016—35th annual international conference on the theory and applications of cryptographic techniques, Vienna, Austria, May 8–12, 2016, proceedings, part I</i> (edited by Marc Fischlin, Jean-Sébastien Coron), Lecture Notes in Computer Science <b>9665</b>, Springer, 2016, ISBN 978-3-662-49889-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nistecc" href="https://cr.yp.to/papers.html#nistecc"><tt>nistecc</tt></a></span>
+<span class=date>2016.01.06</span>
+<span class=pp>27pp</span>
+<span class=link><a href="newelliptic/nistecc-20160106.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Failures in NIST's ECC standards."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="multischnorr" href="https://cr.yp.to/papers.html#multischnorr"><tt>multischnorr</tt></a></span>
+<span class=date>2015.10.12</span>
+<span class=pp>19pp</span>
+<span class=link><a href="https://ed25519.cr.yp.to/multischnorr-20151012.pdf">PDF</a></span>
+<span class=link><a href="https://ed25519.cr.yp.to/papers.html#multischnorr">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Multi-user Schnorr security, revisited."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="bada55" href="https://cr.yp.to/papers.html#bada55"><tt>bada55</tt></a></span>
+<span class=date>2015.09.27</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>44pp</span>
+<span class=link><a href="https://bada55.cr.yp.to/bada55-20150927.pdf">PDF</a></span>
+<span class=link><a href="https://bada55.cr.yp.to">more</a></span>
+<span class=firstdate>2014.07.22</span>
+</span>
+<br>
+Daniel J. Bernstein, Tung Chou, Chitchanok Chuengsatiansup, Andreas Hülsing, Eran Lambooij, Tanja Lange, Ruben Niederhagen, Christine van Vredendaal.
+"How to manipulate curve standards: a white paper for the black hat."
+Pages 109–139 in <i>Security standardisation research—second international conference, SSR 2015, Tokyo, Japan, December 15–16, 2015, proceedings</i> (edited by Liqun Chen, Shin'ichiro Matsuo), Lecture Notes in Computer Science <b>9497</b>, Springer, 2015, ISBN 978-3-319-27151-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hessian" href="https://cr.yp.to/papers.html#hessian"><tt>hessian</tt></a></span>
+<span class=date>2015.08.04</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>28pp</span>
+<span class=link><a href="newelliptic/hessian-20150804.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Chitchanok Chuengsatiansup, David Kohel, Tanja Lange.
+"Twisted Hessian curves."
+Pages 1–26 in <i>Progress in cryptology—LATINCRYPT 2015, 4th international conference on cryptology and information security in Latin America, Guadalajara, Mexico, August 23–26, 2015, proceedings</i> (edited by Kristin Lauter, Francisco Rodríguez-Henríquez), Lecture Notes in Computer Science <b>9230</b>, Springer, 2015, ISBN 978-3-319-22173-1.
+Erratum: At the end of the proof of Theorem 4.4,
+$27a^3X_1^9 = dX_1^3Y_1^3Z_1^3 = da^2X_1^3$
+should say
+$27a^3X_1^9 = d^3X_1^3Y_1^3Z_1^3 = d^3a^2X_1^3$.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dual-ec" href="https://cr.yp.to/papers.html#dual-ec"><tt>dual-ec</tt></a></span>
+<span class=date>2015.07.31</span>
+<span class=book>book</span>
+<span class=pp>25pp</span>
+<span class=link><a href="https://projectbullrun.org/dual-ec/documents/dual-ec-20150731.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Ruben Niederhagen.
+"Dual EC: a standardized back door."
+Pages 256–281 in <i>The new codebreakers: essays dedicated to David Kahn on the occasion of his 85th birthday</i> (edited by Peter Y. A. Ryan, David Naccache, Jean-Jacques Quisquater), Lecture Notes in Computer Science <b>9100</b>, Springer, 2015, ISBN 978-3-662-49300-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cpupuf" href="https://cr.yp.to/papers.html#cpupuf"><tt>cpupuf</tt></a></span>
+<span class=date>2015.07.29</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>25pp</span>
+<span class=link><a href="hardware/cpupuf-20150729.pdf">PDF</a></span>
+</span>
+<br>
+Pol Van Aubel, Daniel J. Bernstein, Ruben Niederhagen.
+"Investigating SRAM PUFs in large CPUs and GPUs."
+Pages 228–247 in <i>Security, privacy, and applied cryptography engineering—5th international conference, SPACE 2015, Jaipur, India, October 3–7, 2015, proceedings</i> (edited by Rajat Subhra Chakraborty, Peter Schwabe, Jon A. Solworth), Lecture Notes in Computer Science <b>9354</b>, Springer, 2015, ISBN 978-3-319-24125-8.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="eddsa" href="https://cr.yp.to/papers.html#eddsa"><tt>eddsa</tt></a></span>
+<span class=date>2015.07.04</span>
+<span class=pp>5pp</span>
+<span class=link><a href="https://ed25519.cr.yp.to/eddsa-20150704.pdf">PDF</a></span>
+<span class=link><a href="https://ed25519.cr.yp.to/papers.html#eddsa">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Simon Josefsson, Tanja Lange, Peter Schwabe, Bo-Yin Yang.
+"EdDSA for more curves."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pro" href="https://cr.yp.to/papers.html#pro"><tt>pro</tt></a></span>
+<span class=date>2015.03.08</span>
+<span class=pp>25pp</span>
+<span class=link><a href="https://sidechannels.cr.yp.to/pro/pro-20150308.pdf">PDF</a></span>
+<span class=link><a href="https://sidechannels.cr.yp.to/pro.html">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christine van Vredendaal.
+"Tighter, faster, simpler side-channel security evaluations beyond computing power."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="obviouscation" href="https://cr.yp.to/papers.html#obviouscation"><tt>obviouscation</tt></a></span>
+<span class=date>2015.02.23</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>27pp</span>
+<span class=link><a href="https://obviouscation.cr.yp.to/obviouscation-20150223.pdf">PDF</a></span>
+<span class=link><a href="https://obviouscation.cr.yp.to">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Andreas Hülsing, Tanja Lange, Ruben Niederhagen.
+"Bad directions in cryptographic hash functions."
+Pages 488–508 in <i>Information security and privacy—20th Australasian conference, ACISP 2015, Brisbane, QLD, Australia, June 29–July 1, 2015, proceedings</i> (edited by Ernest Foo, Douglas Stebila), Lecture Notes in Computer Science <b>9144</b>, Springer, 2015, ISBN 978-3-319-19961-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sphincs" href="https://cr.yp.to/papers.html#sphincs"><tt>sphincs</tt></a></span>
+<span class=date>2015.02.02</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>30pp</span>
+<span class=link><a href="https://sphincs.cr.yp.to/sphincs-20150202.pdf">PDF</a></span>
+<span class=link><a href="https://sphincs.cr.yp.to">more</a></span>
+<span class=firstdate>2014.10.01</span>
+</span>
+<br>
+Daniel J. Bernstein, Daira Hopwood, Andreas Hülsing, Tanja Lange, Ruben Niederhagen, Louiza Papachristodoulou, Michael Schneider, Peter Schwabe, Zooko Wilcox-O'Hearn.
+"SPHINCS: practical stateless hash-based signatures."
+Pages 368–397 in <i>Advances in cryptology—EUROCRYPT 2015—34th annual international conference on the theory and applications of cryptographic techniques, Sofia, Bulgaria, April 26–30, 2015, proceedings, part I</i> (edited by Elisabeth Oswald, Marc Fischlin), Lecture Notes in Computer Science <b>9056</b>, Springer, 2015, ISBN 978-3-662-46799-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="batchnfs" href="https://cr.yp.to/papers.html#batchnfs"><tt>batchnfs</tt></a></span>
+<span class=date>2014.11.09</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>24pp</span>
+<span class=link><a href="factorization/batchnfs-20141109.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#batchnfs">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Batch NFS."
+Pages 38–58 in <i>Selected areas in cryptography—SAC 2014—21st international conference, Montreal, QC, Canada, August 14–15, 2014, revised selected papers</i> (edited by Antoine Joux, Amr M. Youssef), Lecture Notes in Computer Science <b>8781</b>, Springer, 2014, ISBN 978-3-319-13050-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="kummer" href="https://cr.yp.to/papers.html#kummer"><tt>kummer</tt></a></span>
+<span class=date>2014.10.28</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>34pp</span>
+<span class=link><a href="hecdh/kummer-20141028.pdf">PDF</a></span>
+<span class=firstdate>2014.02.18</span>
+</span>
+<br>
+Daniel J. Bernstein, Chitchanok Chuengsatiansup, Tanja Lange, Peter Schwabe.
+"Kummer strikes back: new DH speed records."
+Pages 317–337 in <i>Advances in cryptology—ASIACRYPT 2014—20th international conference on the theory and application of cryptology and information security, Kaoshiung, Taiwan, December 7–11, 2014, proceedings, part 1</i> (edited by Palash Sarkar, Tetsu Iwata), Lecture Notes in Computer Science <b>8873</b>, Springer, 2014, ISBN 978-3-662-45610-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="auth256" href="https://cr.yp.to/papers.html#auth256"><tt>auth256</tt></a></span>
+<span class=date>2014.09.18</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="https://binary.cr.yp.to/auth256-20140918.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/auth256.html#auth256-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tung Chou.
+"Faster binary-field multiplication and faster binary-field MACs."
+Pages 92–111 in <i>Selected areas in cryptography—SAC 2014—21st international conference, Montreal, QC, Canada, August 14–15, 2014, revised selected papers</i> (edited by Antoine Joux, Amr M. Youssef), Lecture Notes in Computer Science <b>8781</b>, Springer, 2014, ISBN 978-3-319-13050-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="tweetnacl" href="https://cr.yp.to/papers.html#tweetnacl"><tt>tweetnacl</tt></a></span>
+<span class=date>2014.09.17</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="https://tweetnacl.cr.yp.to/tweetnacl-20140917.pdf">PDF</a></span>
+<span class=link><a href="https://tweetnacl.cr.yp.to">more</a></span>
+<span class=firstdate>2013.12.29</span>
+</span>
+<br>
+Daniel J. Bernstein, Bernard van Gastel, Wesley Janssen, Tanja Lange, Peter Schwabe, Sjaak Smetsers.
+"TweetNaCl: a crypto library in 100 tweets."
+Pages 64–83 in <i>Progress in cryptology—LATINCRYPT 2014—third international conference on cryptology and information security in Latin America, Florianópolis, Brazil, September 17–19, 2014, revised selected papers</i> (edited by Diego F. Aranha, Alfred Menezes), Lecture Notes in Computer Science <b>8895</b>, Springer, 2015, ISBN 978-3-319-16294-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="curve41417" href="https://cr.yp.to/papers.html#curve41417"><tt>curve41417</tt></a></span>
+<span class=date>2014.07.06</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="ecdh/curve41417-20140706.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Chitchanok Chuengsatiansup, Tanja Lange.
+"Curve41417: Karatsuba revisited."
+Pages 316–334 in <i>Cryptographic hardware and embedded systems—CHES 2014—16th international workshop, Busan, South Korea, September 23–26, 2014, proceedings</i> (edited by Lejla Batina, Matthew Robshaw), Lecture Notes in Computer Science <b>8731</b>, Springer, 2014, ISBN 978-3-662-44708-6.
+Typo: the displayed value of 2^411-ell is missing a final digit 9.
+See <a href="https://safecurves.cr.yp.to">safecurves.cr.yp.to</a> for computer-verified curve information.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dualectls" href="https://cr.yp.to/papers.html#dualectls"><tt>dualectls</tt></a></span>
+<span class=date>2014.06.06</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="https://projectbullrun.org/dual-ec/documents/dualectls-20140606.pdf">PDF</a></span>
+<span class=link><a href="https://projectbullrun.org/dual-ec/">more</a></span>
+<span class=firstdate>2014.04.07</span>
+</span>
+<br>
+Stephen Checkoway, Matt Fredrikson, Ruben Niederhagen, Adam Everspaugh, Matt Green, Tanja Lange, Tom Ristenpart, Daniel J. Bernstein, Jake Maskiewicz, Hovav Shacham.
+"On the practical exploitability of Dual EC in TLS implementations."
+Pages 319–335 in <i>Proceedings of the 23rd USENIX Security Symposium</i> (edited by Kevin Fu), USENIX Association, 2014.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hyperand" href="https://cr.yp.to/papers.html#hyperand"><tt>hyperand</tt></a></span>
+<span class=date>2014.05.27</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>21pp</span>
+<span class=link><a href="hecdh/hyperand-20140527.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Hyper-and-elliptic-curve cryptography."
+LMS Journal of Computation and Mathematics <b>17</b> (2014), 181–202.
+Special journal issue for proceedings of <i>Algorithmic number theory symposium</i>.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="minimalt" href="https://cr.yp.to/papers.html#minimalt"><tt>minimalt</tt></a></span>
+<span class=date>2013.10.31</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>13pp</span>
+<span class=link><a href="tcpip/minimalt-20131031.pdf">PDF</a></span>
+<span class=link><a href="tcpip.html#minimalt">more</a></span>
+<span class=firstdate>2013.05.22</span>
+</span>
+<br>
+W. Michael Petullo, Xu Zhang, Jon A. Solworth, Daniel J. Bernstein, Tanja Lange.
+"MinimaLT: Minimal-latency networking through better security."
+Pages 425–438 in <i>2013 ACM SIGSAC Conference on Computer and Communications Security, CCS'13, Berlin, Germany, November 4–8, 2013</i> (edited by Ahmad-Reza Sadeghi, Virgil D. Gligor, Moti Yung), ACM, 2013, ISBN 978-1-4503-2477-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="smartfacts" href="https://cr.yp.to/papers.html#smartfacts"><tt>smartfacts</tt></a></span>
+<span class=date>2013.09.16</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="https://smartfacts.cr.yp.to/smartfacts-20130916.pdf">PDF</a></span>
+<span class=link><a href="https://smartfacts.cr.yp.to/index.html#smartfacts">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Yun-An Chang, Chen-Mou Cheng, Li-Ping Chou, Nadia Heninger, Tanja Lange, Nicko van Someren.
+"Factoring RSA keys from certified smart cards: Coppersmith in the wild."
+Pages 341–360 in <i>Advances in cryptology—ASIACRYPT 2013—19th international conference on the theory and application of cryptology and information security, Bengaluru, India, December 1–5, 2013, proceedings, part II</i> (edited by Kazue Sako, Palash Sarkar), Lecture Notes in Computer Science <b>8270</b>, Springer, 2013, ISBN 978-3-642-42044-3.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nonuniform" href="https://cr.yp.to/papers.html#nonuniform"><tt>nonuniform</tt></a></span>
+<span class=date>2013.09.14</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>53pp</span>
+<span class=link><a href="nonuniform/nonuniform-20130914.pdf">PDF</a></span>
+<span class=link><a href="nonuniform.html">more</a></span>
+<span class=firstdate>2012.06.04</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Non-uniform cracks in the concrete: the power of free precomputation."
+Pages 321–340 in <i>Advances in cryptology—ASIACRYPT 2013—19th international conference on the theory and application of cryptology and information security, Bengaluru, India, December 1–5, 2013, proceedings, part II</i> (edited by Kazue Sako, Palash Sarkar), Lecture Notes in Computer Science <b>8270</b>, Springer, 2013, ISBN 978-3-642-42044-3.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="elligator" href="https://cr.yp.to/papers.html#elligator"><tt>elligator</tt></a></span>
+<span class=date>2013.08.28</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>13pp</span>
+<span class=link><a href="https://elligator.cr.yp.to/elligator-20130828.pdf">PDF</a></span>
+<span class=link><a href="https://elligator.cr.yp.to/papers.html#elligator">more</a></span>
+<span class=firstdate>2013.05.27</span>
+</span>
+<br>
+Daniel J. Bernstein, Mike Hamburg, Anna Krasnova, Tanja Lange.
+"Elligator: Elliptic-curve points indistinguishable from uniform random strings."
+Pages 967–979 in <i>2013 ACM SIGSAC Conference on Computer and Communications Security, CCS'13, Berlin, Germany, November 4–8, 2013</i> (edited by Ahmad-Reza Sadeghi, Virgil D. Gligor, Moti Yung), ACM, 2013, ISBN 978-1-4503-2477-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rc4biases" href="https://cr.yp.to/papers.html#rc4biases"><tt>rc4biases</tt></a></span>
+<span class=date>2013.07.08</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>31pp</span>
+<span class=link><a href="streamciphers/rc4biases-20130708.pdf">PDF</a></span>
+</span>
+<br>
+Nadhem J. AlFardan, Daniel J. Bernstein, Kenneth G. Paterson, Bertram Poettering, Jacob C. N. Schuldt.
+"On the security of RC4 in TLS and WPA."
+Pages 305–320 in <i>Proceedings of the 22nd USENIX Security Symposium, Washington, DC, USA, August 14–16, 2013</i> (edited by Samuel T. King), USENIX Association, 2013, ISBN 978-1-931971-03-4.
+Conference version is titled ``On the security of RC4 in TLS''
+and does not include WPA analysis.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mcbits" href="https://cr.yp.to/papers.html#mcbits"><tt>mcbits</tt></a></span>
+<span class=date>2013.06.16</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>26pp</span>
+<span class=link><a href="https://binary.cr.yp.to/mcbits-20130616.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/mcbits.html#mcbits-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tung Chou, Peter Schwabe.
+"McBits: fast constant-time code-based cryptography."
+Pages 250–272 in <i>Cryptographic hardware and embedded systems—CHES 2013—15th international workshop, Santa Barbara, CA, USA, August 20–23, 2013, proceedings</i> (edited by Guido Bertoni, Jean-Sébastien Coron), Lecture Notes in Computer Science <b>8086</b>, Springer, 2013, ISBN 978-3-642-40348-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="qsubsetsum" href="https://cr.yp.to/papers.html#qsubsetsum"><tt>qsubsetsum</tt></a></span>
+<span class=date>2013.04.07</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="qsubsetsum/qsubsetsum-20130407.pdf">PDF</a></span>
+<span class=link><a href="qsubsetsum.html">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Stacey Jeffery, Tanja Lange, Alexander Meurer.
+"Quantum algorithms for the subset-sum problem."
+Pages 16–33 in <i>Post-quantum cryptography—5th international workshop, PQCrypto 2013, Limoges, France, June 4–7, 2013, proceedings</i> (edited by Philippe Gaborit), Lecture Notes in Computer Science <b>7932</b>, Springer, 2013, ISBN 978-3-642-38615-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="badbatch" href="https://cr.yp.to/papers.html#badbatch"><tt>badbatch</tt></a></span>
+<span class=date>2012.09.19</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="badbatch/badbatch-20120919.pdf">PDF</a></span>
+<span class=link><a href="badbatch.html">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Jeroen Doumen, Tanja Lange, Jan-Jaap Oosterwijk.
+"Faster batch forgery identification."
+Pages 454–473 in <i>Progress in cryptology—INDOCRYPT 2012, 13th international conference on cryptology in India, Kolkata, India, December 9–12, 2012, proceedings</i> (edited by Steven D. Galbraith, Mridul Nandi), Lecture Notes in Computer Science <b>7668</b>, Springer, 2012, ISBN 978-3-642-34930-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cuberoot" href="https://cr.yp.to/papers.html#cuberoot"><tt>cuberoot</tt></a></span>
+<span class=date>2012.09.19</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>22pp</span>
+<span class=link><a href="dlog/cuberoot-20120919.pdf">PDF</a></span>
+<span class=link><a href="dlog/cuberoot.html">more</a></span>
+<span class=firstdate>2012.08.12</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Computing small discrete logarithms faster."
+Pages 317–338 in <i>Progress in cryptology—INDOCRYPT 2012, 13th international conference on cryptology in India, Kolkata, India, December 9–12, 2012, proceedings</i> (edited by Steven D. Galbraith, Mridul Nandi), Lecture Notes in Computer Science <b>7668</b>, Springer, 2012, ISBN 978-3-642-34930-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="siphash" href="https://cr.yp.to/papers.html#siphash"><tt>siphash</tt></a></span>
+<span class=date>2012.09.18</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="siphash/siphash-20120918.pdf">PDF</a></span>
+<span class=firstdate>2012.06.20</span>
+</span>
+<br>
+Jean-Philippe Aumasson, Daniel J. Bernstein.
+"SipHash: a fast short-input PRF."
+Pages 489–508 in <i>Progress in cryptology—INDOCRYPT 2012, 13th international conference on cryptology in India, Kolkata, India, December 9–12, 2012, proceedings</i> (edited by Steven D. Galbraith, Mridul Nandi), Lecture Notes in Computer Science <b>7668</b>, Springer, 2012, ISBN 978-3-642-34930-0.
+2012.06.20 version:
+Workshop Record of DIAC 2012: Directions in Authenticated Ciphers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="coolnacl" href="https://cr.yp.to/papers.html#coolnacl"><tt>coolnacl</tt></a></span>
+<span class=date>2012.07.25</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="highspeed/coolnacl-20120725.pdf">PDF</a></span>
+<span class=firstdate>2011.12.01</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Peter Schwabe.
+"The security impact of a new cryptographic library."
+Pages 159–176 in <i>Progress in cryptology—LATINCRYPT 2012—2nd international conference on cryptology and information security in Latin America, Santiago, Chile, October 7–10, 2012, proceedings</i> (edited by Alejandro Hevia, Gregory Neven), Lecture Notes in Computer Science <b>7533</b>, Springer, 2012, ISBN 978-3-642-33480-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="grumpy" href="https://cr.yp.to/papers.html#grumpy"><tt>grumpy</tt></a></span>
+<span class=date>2012.07.09</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="elliptic/grumpy-20120709.pdf">PDF</a></span>
+<span class=link><a href="dlog.html#grumpy">more</a></span>
+<span class=firstdate>2012.06.02</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Two grumpy giants and a baby."
+Pages 87–111 in <i>ANTS X: proceedings of the tenth algorithmic number theory symposium, San Diego 2012</i> (edited by Everett W. Howe, Kiran S. Kedlaya), Mathematical Sciences Publishers, 2013, ISBN 978-1-935107-01-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="bunny" href="https://cr.yp.to/papers.html#bunny"><tt>bunny</tt></a></span>
+<span class=date>2012.06.21</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>12pp</span>
+<span class=link><a href="antiforgery/bunny-20120621.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Never trust a bunny."
+Pages 137–148 in <i>Radio frequency identification. Security and privacy issues—8th international workshop, RFIDSec 2012, Nijmegen, The Netherlands, July 2–3, 2012, revised selected papers</i> (edited by Jaap-Henk Hoepman, Ingrid Verbauwhede), Lecture Notes in Computer Science <b>7739</b>, Springer, 2013, ISBN 978-3-642-36139-5.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="neoncrypto" href="https://cr.yp.to/papers.html#neoncrypto"><tt>neoncrypto</tt></a></span>
+<span class=date>2012.03.20</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>15pp</span>
+<span class=link><a href="highspeed/neoncrypto-20120320.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Schwabe.
+"NEON crypto."
+Pages 320–339 in <i>Cryptographic hardware and embedded systems, CHES 2012, 14th international workshop, Leuven, Belgium, September 9–12, 2012, proceedings</i> (edited by Emmanuel Prouff, Patrick Schaumont), Lecture Notes in Computer Science <b>7428</b>, Springer, 2012, ISBN 978-3-642-33026-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gpuasm" href="https://cr.yp.to/papers.html#gpuasm"><tt>gpuasm</tt></a></span>
+<span class=date>2012.03.13</span>
+<span class=refereed>refereed</span>
+<span class=pp>10pp</span>
+<span class=link><a href="https://binary.cr.yp.to/gpuasm-20120313.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Hsieh-Chung Chen, Chen-Mou Cheng, Tanja Lange, Ruben Niederhagen, Peter Schwabe, Bo-Yin Yang.
+"Usable assembly language for GPUs: a success story."
+Workshop Record of SHARCS 2012: Special-Purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="shootout" href="https://cr.yp.to/papers.html#shootout"><tt>shootout</tt></a></span>
+<span class=date>2012.02.19</span>
+<span class=refereed>refereed</span>
+<span class=pp>13pp</span>
+<span class=link><a href="https://bench.cr.yp.to/shootout-20120219.pdf">PDF</a></span>
+<span class=firstdate>2012.01.03</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"The new SHA-3 software shootout."
+Third SHA-3 Candidate Conference.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sha3opt" href="https://cr.yp.to/papers.html#sha3opt"><tt>sha3opt</tt></a></span>
+<span class=date>2012.01.04</span>
+<span class=pp>8pp</span>
+<span class=link><a href="hash/sha3opt-20120104.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Optimization failures in SHA-3 software."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gpuecc2k" href="https://cr.yp.to/papers.html#gpuecc2k"><tt>gpuecc2k</tt></a></span>
+<span class=date>2012.01.02</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="https://binary.cr.yp.to/gpuecc2k-20120102.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Hsieh-Chung Chen, Chen-Mou Cheng, Tanja Lange, Ruben Niederhagen, Peter Schwabe, Bo-Yin Yang.
+"ECC2K-130 on NVIDIA GPUs."
+Pages 328–346 in <i>Progress in cryptology—INDOCRYPT 2010—11th international conference on cryptology in India, Hyderabad, India, December 12–15, 2010, proceedings</i> (edited by Guang Gong, Kishan Chand Gupta), Lecture Notes in Computer Science <b>6498</b>, Springer, 2010, ISBN 978-3-642-17400-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="eecm" href="https://cr.yp.to/papers.html#eecm"><tt>eecm</tt></a></span>
+<span class=date>2011.10.08</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>41pp</span>
+<span class=link><a href="https://eecm.cr.yp.to/eecm-20111008.pdf">PDF</a></span>
+<span class=link><a href="https://eecm.cr.yp.to/index.html#eecm-paper">more</a></span>
+<span class=firstdate>2008.01.09</span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Birkner, Tanja Lange, Christiane Peters.
+"ECM using Edwards curves."
+Mathematics of Computation <b>82</b> (2013), 1139–1179.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ed25519" href="https://cr.yp.to/papers.html#ed25519"><tt>ed25519</tt></a></span>
+<span class=date>2011.09.26</span>
+<span class=refereed>refereed</span> <span class=book>book</span> <span class=journal>journal</span>
+<span class=pp>23pp</span>
+<span class=link><a href="https://ed25519.cr.yp.to/ed25519-20110926.pdf">PDF</a></span>
+<span class=link><a href="https://ed25519.cr.yp.to/papers.html#ed25519">more</a></span>
+<span class=firstdate>2011.07.05</span>
+</span>
+<br>
+Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, Bo-Yin Yang.
+"High-speed high-security signatures."
+Pages 124–142 in <i>Cryptographic hardware and embedded systems—CHES 2011, 13th international workshop, Nara, Japan, September 28–October 1, 2011, proceedings</i> (edited by Bart Preneel, Tsuyoshi Takagi), Lecture Notes in Computer Science <b>6917</b>, Springer, 2011, ISBN 978-3-642-23950-2.
+Journal version:
+Journal of Cryptographic Engineering <b>2</b> (2012), 77–89.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="wild2" href="https://cr.yp.to/papers.html#wild2"><tt>wild2</tt></a></span>
+<span class=date>2011.09.15</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>13pp</span>
+<span class=link><a href="codes/wild2-20110915.pdf">PDF</a></span>
+<span class=link><a href="codes.html#wild2">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters.
+"Wild McEliece incognito."
+Pages 244–254 in <i>Post-quantum cryptography—4th international workshop, PQCrypto 2011, Taipei, Taiwan, November 29–December 2, 2011, proceedings</i> (edited by Bo-Yin Yang), Lecture Notes in Computer Science <b>7071</b>, Springer, 2011, ISBN 978-3-642-25404-8.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="simplelist" href="https://cr.yp.to/papers.html#simplelist"><tt>simplelist</tt></a></span>
+<span class=date>2011.09.15</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="codes/simplelist-20110915.pdf">PDF</a></span>
+<span class=link><a href="codes.html#simplelist">more</a></span>
+<span class=firstdate>2011.03.20</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Simplified high-speed high-distance list decoding for alternant codes."
+Pages 200–216 in <i>Post-quantum cryptography—4th international workshop, PQCrypto 2011, Taipei, Taiwan, November 29–December 2, 2011, proceedings</i> (edited by Bo-Yin Yang), Lecture Notes in Computer Science <b>7071</b>, Springer, 2011, ISBN 978-3-642-25404-8.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rfsb" href="https://cr.yp.to/papers.html#rfsb"><tt>rfsb</tt></a></span>
+<span class=date>2011.05.08</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="codes/rfsb-20110508.pdf">PDF</a></span>
+<span class=link><a href="codes.html#rfsb">more</a></span>
+<span class=firstdate>2011.02.14</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters, Peter Schwabe.
+"Really fast syndrome-based hashing."
+Pages 134–152 in <i>Progress in cryptology—AFRICACRYPT 2011—4th international conference on cryptology in Africa, Dakar, Senegal, July 5–7, 2011, proceedings</i> (edited by Abderrahmane Nitaj, David Pointcheval), Lecture Notes in Computer Science <b>6737</b>, Springer, 2011, ISBN 978-3-642-21968-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="2reg" href="https://cr.yp.to/papers.html#2reg"><tt>2reg</tt></a></span>
+<span class=date>2011.03.09</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="codes/2reg-20110309.pdf">PDF</a></span>
+<span class=link><a href="codes.html#2reg">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters, Peter Schwabe.
+"Faster 2-regular information-set decoding."
+Pages 81–98 in <i>Coding and cryptology—third international workshop, IWCC 2011, Qingdao, China, May 30–June 3, 2011, proceedings</i> (edited by Yeow Meng Chee, Zhenbo Guo, San Ling, Fengjing Shao, Yuansheng Tang, Huaxiong Wang, Chaoping Xing), Lecture Notes in Computer Science <b>6639</b>, Springer, 2011, ISBN 978-3-642-20900-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ballcoll" href="https://cr.yp.to/papers.html#ballcoll"><tt>ballcoll</tt></a></span>
+<span class=date>2011.03.07</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>26pp</span>
+<span class=link><a href="codes/ballcoll-20110307.pdf">PDF</a></span>
+<span class=link><a href="ballcoll.html">more</a></span>
+<span class=firstdate>2010.11.17</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters.
+"Smaller decoding exponents: ball-collision decoding."
+Pages 743–760 in <i>Advances in cryptology—CRYPTO 2011—31st annual cryptology conference, Santa Barbara, CA, USA, August 14–18, 2011, proceedings</i> (edited by Phillip Rogaway), Lecture Notes in Computer Science <b>6841</b>, Springer, 2011, ISBN 978-3-642-22791-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="goppalist" href="https://cr.yp.to/papers.html#goppalist"><tt>goppalist</tt></a></span>
+<span class=date>2011.03.03</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="codes/goppalist-20110303.pdf">PDF</a></span>
+<span class=link><a href="codes.html#goppalist">more</a></span>
+<span class=firstdate>2008.07.06</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"List decoding for binary Goppa codes."
+Pages 62–80 in <i>Coding and cryptology—third international workshop, IWCC 2011, Qingdao, China, May 30–June 3, 2011, proceedings</i> (edited by Yeow Meng Chee, Zhenbo Guo, San Ling, Fengjing Shao, Yuansheng Tang, Huaxiong Wang, Chaoping Xing), Lecture Notes in Computer Science <b>6639</b>, Springer, 2011, ISBN 978-3-642-20900-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="xsalsa" href="https://cr.yp.to/papers.html#xsalsa"><tt>xsalsa</tt></a></span>
+<span class=date>2011.02.04</span>
+<span class=refereed>refereed</span>
+<span class=pp>14pp</span>
+<span class=link><a href="snuffle/xsalsa-20110204.pdf">PDF</a></span>
+<span class=link><a href="snuffle.html#xsalsa">more</a></span>
+<span class=firstdate>2008.11.28</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Extending the Salsa20 nonce."
+Workshop Record of Symmetric Key Encryption Workshop 2011.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="negation" href="https://cr.yp.to/papers.html#negation"><tt>negation</tt></a></span>
+<span class=date>2011.01.02</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>26pp</span>
+<span class=link><a href="elliptic/negation-20110102.pdf">PDF</a></span>
+<span class=link><a href="dlog.html#negation">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Peter Schwabe.
+"On the correct use of the negation map in the Pollard rho method."
+Pages 128–146 in <i>Public key cryptography—PKC 2011—14th international conference on practice and theory in public key cryptography, Taormina, Italy, March 6–9, 2011, proceedings</i> (edited by Dario Catalano, Nelly Fazio, Rosario Gennaro, Antonio Nicolosi), Lecture Notes in Computer Science <b>6571</b>, Springer, 2011, ISBN 978-3-642-19378-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="quantumsha3" href="https://cr.yp.to/papers.html#quantumsha3"><tt>quantumsha3</tt></a></span>
+<span class=date>2010.11.12</span>
+<span class=pp>7pp</span>
+<span class=link><a href="hash/quantumsha3-20101112.pdf">PDF</a></span>
+<span class=link><a href="hash.html#quantumsha3">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Quantum attacks against Blue Midnight Wish, ECHO, Fugue, Grøstl, Hamsi, JH, Keccak, Shabal, SHAvite-3, SIMD, and Skein."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="wild" href="https://cr.yp.to/papers.html#wild"><tt>wild</tt></a></span>
+<span class=date>2010.10.07</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="codes/wild-20101007.pdf">PDF</a></span>
+<span class=link><a href="codes.html#wild">more</a></span>
+<span class=firstdate>2010.07.21</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters.
+"Wild McEliece."
+Pages 143–158 in <i>Selected areas in cryptography—17th international workshop, SAC 2010, Waterloo, Ontario, Canada, August 12–13, 2010, revised selected papers</i> (edited by Alex Biryukov, Guang Gong, Douglas R. Stinson), Lecture Notes in Computer Science <b>6544</b>, Springer, 2011, ISBN 978-3-642-19573-0.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="completed" href="https://cr.yp.to/papers.html#completed"><tt>completed</tt></a></span>
+<span class=date>2010.10.06</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>15pp</span>
+<span class=link><a href="newelliptic/completed-20101006.pdf">PDF</a></span>
+<span class=firstdate>2009.11.25</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"A complete set of addition laws for incomplete Edwards curves."
+Journal of Number Theory <b>131</b> (2011), 858–872.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="interop" href="https://cr.yp.to/papers.html#interop"><tt>interop</tt></a></span>
+<span class=date>2010.09.15</span>
+<span class=pp>5pp</span>
+<span class=link><a href="hash/interop-20100915.pdf">PDF</a></span>
+<span class=link><a href="hash.html#bestat">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"SHA-3 interoperability."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="bestat" href="https://cr.yp.to/papers.html#bestat"><tt>bestat</tt></a></span>
+<span class=date>2010.09.06</span>
+<span class=pp>5pp</span>
+<span class=link><a href="hash/bestat-20100906.pdf">PDF</a></span>
+<span class=link><a href="hash.html#bestat">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Visualizing area-time tradeoffs for SHA-3."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="a1ecm" href="https://cr.yp.to/papers.html#a1ecm"><tt>a1ecm</tt></a></span>
+<span class=date>2010.06.14</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="https://eecm.cr.yp.to/a1ecm-20100614.pdf">PDF</a></span>
+<span class=link><a href="https://eecm.cr.yp.to/index.html#a1ecm-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Birkner, Tanja Lange.
+"Starfish on strike."
+Pages 61–80 in <i>Progress in cryptology—LATINCRYPT 2010, first international conference on cryptology and information security in Latin America, Puebla, Mexico, August 8–11, 2010, proceedings</i> (edited by Michel Abdalla, Paulo S. L. M. Barreto), Lecture Notes in Computer Science <b>6212</b>, Springer, 2010, ISBN 978-3-642-14711-1.
+Typo in the proof of Theorem 5.1: the displayed ...=d should be -...=d.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="opb" href="https://cr.yp.to/papers.html#opb"><tt>opb</tt></a></span>
+<span class=date>2010.04.13</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="https://binary.cr.yp.to/opb-20100413.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/type2.html#opb-paper">more</a></span>
+<span class=firstdate>2010.02.09</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Type-II optimal polynomial bases."
+Pages 41–61 in <i>Arithmetic of finite fields: third international workshop, WAIFI 2010, Istanbul, Turkey, June 27–30, 2010, proceedings</i> (edited by M. Anwar Hasan, Tor Helleseth), Lecture Notes in Computer Science <b>6087</b>, Springer, 2010, ISBN 978-3-642-13796-9.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="grovercode" href="https://cr.yp.to/papers.html#grovercode"><tt>grovercode</tt></a></span>
+<span class=date>2010.03.03</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>8pp</span>
+<span class=link><a href="codes/grovercode-20100303.pdf">PDF</a></span>
+<span class=link><a href="codes.html#grovercode">more</a></span>
+<span class=firstdate>2009.11.23</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Grover vs. McEliece."
+Pages 73–80 in <i>Post-quantum cryptography: third international workshop, PQCrypto 2010, Darmstadt, Germany, May 25–28, 2010, proceedings</i> (edited by Nicolas Sendrier), Lecture Notes in Computer Science <b>6061</b>, Springer, 2010, ISBN 978-3-642-12928-5.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ecc2k130" href="https://cr.yp.to/papers.html#ecc2k130"><tt>ecc2k130</tt></a></span>
+<span class=date>2009.11.18</span>
+<span class=pp>20pp</span>
+<span class=link><a href="https://binary.cr.yp.to/ecc2k130-20091118.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/challenges.html#ecc2k130-paper">more</a></span>
+<span class=firstdate>2009.11.05</span>
+</span>
+<br>
+Daniel V. Bailey, Lejla Batina, Daniel J. Bernstein, Peter Birkner, Joppe W. Bos, Hsieh-Chung Chen, Chen-Mou Cheng, Gauthier van Damme, Giacomo de Meulenaer, Luis Julian Dominguez Perez, Junfeng Fan, Tim Gueneysu, Frank Gurkaynak, Thorsten Kleinjung, Tanja Lange, Nele Mentens, Ruben Niederhagen, Christof Paar, Francesco Regazzoni, Peter Schwabe, Leif Uhsadel, Anthony Van Herrewege, Bo-Yin Yang.
+"Breaking ECC2K-130."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="linearmod2" href="https://cr.yp.to/papers.html#linearmod2"><tt>linearmod2</tt></a></span>
+<span class=date>2009.10.05</span>
+<span class=refereed>refereed</span>
+<span class=pp>16pp</span>
+<span class=link><a href="https://binary.cr.yp.to/linearmod2-20091005.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/linearmod2.html#linearmod2-paper">more</a></span>
+<span class=firstdate>2009.08.30</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Optimizing linear maps modulo 2."
+Workshop Record of SPEED-CC: Software Performance Enhancement for Encryption and Decryption
+and Cryptographic Compilers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fsbday" href="https://cr.yp.to/papers.html#fsbday"><tt>fsbday</tt></a></span>
+<span class=date>2009.10.03</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>21pp</span>
+<span class=link><a href="codes/fsbday-20091003.pdf">PDF</a></span>
+<span class=link><a href="codes.html#fsbday">more</a></span>
+<span class=firstdate>2009.06.17</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Ruben Niederhagen, Christiane Peters, Peter Schwabe.
+"FSBday: implementing Wagner's generalized birthday attack against the SHA-3 round-1 candidate FSB."
+Pages 18–38 in <i>Progress in cryptology—INDOCRYPT 2009, 10th international conference on cryptology in India, New Delhi, India, December 13–16, 2009, proceedings</i> (edited by Bimal Roy, Nicolas Sendrier), Lecture Notes in Computer Science <b>5922</b>, Springer, 2009, ISBN 978-3-642-10627-9.
+Previous version:
+Workshop Record of SHARCS'09: Special-purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pc109" href="https://cr.yp.to/papers.html#pc109"><tt>pc109</tt></a></span>
+<span class=date>2009.09.01</span>
+<span class=refereed>refereed</span>
+<span class=pp>14pp</span>
+<span class=link><a href="https://eecm.cr.yp.to/pc109-20090901.pdf">PDF</a></span>
+<span class=link><a href="https://eecm.cr.yp.to/index.html#pc109-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Hsueh-Chung Chen, Ming-Shing Chen, Chen-Mou Cheng, Chun-Hung Hsiao, Tanja Lange, Zong-Cing Lin, Bo-Yin Yang.
+"The billion-mulmod-per-second PC."
+Workshop Record of SHARCS'09: Special-purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="ecc2x" href="https://cr.yp.to/papers.html#ecc2x"><tt>ecc2x</tt></a></span>
+<span class=date>2009.09.01</span>
+<span class=refereed>refereed</span>
+<span class=pp>32pp</span>
+<span class=link><a href="https://binary.cr.yp.to/ecc2x-20090901.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/challenges.html#ecc2x-paper">more</a></span>
+</span>
+<br>
+Daniel V. Bailey, Brian Baldwin, Lejla Batina, Daniel J. Bernstein, Peter Birkner, Joppe W. Bos, Gauthier van Damme, Giacomo de Meulenaer, Junfeng Fan, Tim Gueneysu, Frank Gurkaynak, Thorsten Kleinjung, Tanja Lange, Nele Mentens, Christof Paar, Francesco Regazzoni, Peter Schwabe, Leif Uhsadel.
+"The Certicom challenges ECC2-X."
+Workshop Record of SHARCS'09: Special-purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="collisioncost" href="https://cr.yp.to/papers.html#collisioncost"><tt>collisioncost</tt></a></span>
+<span class=date>2009.08.23</span>
+<span class=refereed>refereed</span>
+<span class=pp>12pp</span>
+<span class=link><a href="hash/collisioncost-20090823.pdf">PDF</a></span>
+<span class=link><a href="hash.html#collisioncost">more</a></span>
+<span class=firstdate>2009.05.17</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?"
+Workshop Record of SHARCS'09: Special-purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="bbe" href="https://cr.yp.to/papers.html#bbe"><tt>bbe</tt></a></span>
+<span class=date>2009.06.04</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>21pp</span>
+<span class=link><a href="https://binary.cr.yp.to/bbe-20090604.pdf">PDF</a></span>
+<span class=link><a href="https://binary.cr.yp.to/edwards.html#bbe-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Batch binary Edwards."
+Pages 317–336 in <i>Advances in cryptology—Crypto 2009, 29th annual international cryptology conference, Santa Barbara, CA, USA, August 16–20, 2009, proceedings</i> (edited by Shai Halevi), Lecture Notes in Computer Science <b>5677</b>, Springer, 2009, ISBN 978-3-642-03355-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="naclcrypto" href="https://cr.yp.to/papers.html#naclcrypto"><tt>naclcrypto</tt></a></span>
+<span class=date>2009.03.10</span>
+<span class=pp>45pp</span>
+<span class=link><a href="highspeed/naclcrypto-20090310.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cryptography in NaCl."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gpuecm" href="https://cr.yp.to/papers.html#gpuecm"><tt>gpuecm</tt></a></span>
+<span class=date>2009.01.27</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="https://eecm.cr.yp.to/gpuecm-20090127.pdf">PDF</a></span>
+<span class=link><a href="https://eecm.cr.yp.to/index.html#gpuecm-paper">more</a></span>
+<span class=firstdate>2008.11.11</span>
+</span>
+<br>
+Daniel J. Bernstein, Tien-Ren Chen, Chen-Mou Cheng, Tanja Lange, Bo-Yin Yang.
+"ECM on graphics cards."
+Pages 483–501 in <i>Advances in cryptology—EUROCRYPT 2009, 28th annual international conference on the theory and applications of cryptographic techniques, Cologne, Germany, April 26–30, 2009, proceedings</i> (edited by Antoine Joux), Lecture Notes in Computer Science <b>5479</b>, Springer, 2009, ISBN 978-3-642-01000-2.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="decoco" href="https://cr.yp.to/papers.html#decoco"><tt>decoco</tt></a></span>
+<span class=date>2009</span>
+<span class=refereed>refereed</span>
+<span class=pp>13pp</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters, Henk van Tilborg.
+"Explicit bounds for generic decoding algorithms for code-based cryptography."
+Proceedings of WCC 2009.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="aesspeed" href="https://cr.yp.to/papers.html#aesspeed"><tt>aesspeed</tt></a></span>
+<span class=date>2008.09.26</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>15pp</span>
+<span class=link><a href="aes-speed/aesspeed-20080926.pdf">PDF</a></span>
+<span class=link><a href="aes-speed.html#aesspeed-paper">more</a></span>
+<span class=firstdate>2008.09.08</span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Schwabe.
+"New AES software speed records."
+Pages 322–336 in <i>Progress in cryptology—INDOCRYPT 2008, 9th international conference on cryptology in India, Kharagpur, India, December 14–17, 2008, proceedings</i> (edited by Dipanwita Roy Chowdhury, Vincent Rijmen, Abhijit Das), Lecture Notes in Computer Science <b>5365</b>, Springer, 2008, ISBN 978-3-540-89753-8.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mceliece" href="https://cr.yp.to/papers.html#mceliece"><tt>mceliece</tt></a></span>
+<span class=date>2008.08.07</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>16pp</span>
+<span class=link><a href="codes/mceliece-20080807.pdf">PDF</a></span>
+<span class=link><a href="codes.html#mceliece">more</a></span>
+<span class=firstdate>2008.07.22</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Christiane Peters.
+"Attacking and defending the McEliece cryptosystem."
+Pages 31–46 in <i>Post-quantum cryptography: second international workshop, PQCrypto 2008, Cincinnati, OH, USA, October 17–19, 2008, proceedings</i> (edited by Johannes Buchmann, Jintai Ding), Springer, 2008, ISBN 978-3-540-88402-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="edwards2" href="https://cr.yp.to/papers.html#edwards2"><tt>edwards2</tt></a></span>
+<span class=date>2008.06.11</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>23pp</span>
+<span class=link><a href="newelliptic/edwards2-20080611.pdf">PDF</a></span>
+<span class=link><a href="newelliptic.html#edwards2">more</a></span>
+<span class=firstdate>2008.04.15</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange, Reza Rezaeian Farashahi.
+"Binary Edwards curves."
+Pages 244–265 in <i>Cryptographic hardware and embedded systems—CHES 2008, 10th international workshop, Washington, D.C., USA, August 10–13, 2008, proceedings</i> (edited by Elisabeth Oswald, Pankaj Rohatgi), Lecture Notes in Computer Science <b>5154</b>, Springer, 2008, ISBN 978-3-540-85052-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="multapps" href="https://cr.yp.to/papers.html#multapps"><tt>multapps</tt></a></span>
+<span class=date>2008.05.15</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>60pp</span>
+<span class=link><a href="lineartime/multapps-20080515.pdf">PDF</a></span>
+<span class=link><a href="arith.html#multapps">more</a></span>
+<span class=firstdate>2003.01.19</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Fast multiplication and its applications."
+Pages 325–384 in <i>Algorithmic number theory: lattices, number fields, curves and cryptography</i> (edited by Joe Buhler, Peter Stevenhagen), Cambridge University Press, 2008, ISBN 978-0521808545.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="smallheight" href="https://cr.yp.to/papers.html#smallheight"><tt>smallheight</tt></a></span>
+<span class=date>2008.05.02</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>26pp</span>
+<span class=link><a href="ntheory/smallheight-20080502.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#smallheight">more</a></span>
+<span class=firstdate>2003.09.18</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Reducing lattice bases to find small-height values of univariate polynomials."
+Pages 421–446 in <i>Algorithmic number theory: lattices, number fields, curves and cryptography</i> (edited by Joe Buhler, Peter Stevenhagen), Cambridge University Press, 2008, ISBN 978-0521808545.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="forgery" href="https://cr.yp.to/papers.html#forgery"><tt>forgery</tt></a></span>
+<span class=date>2008.05.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>15pp</span>
+<span class=link><a href="antiforgery/forgery-20080501.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#forgery">more</a></span>
+<span class=firstdate>2001.07.31</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Protecting communications against forgery."
+Pages 535–549 in <i>Algorithmic number theory: lattices, number fields, curves and cryptography</i> (edited by Joe Buhler, Peter Stevenhagen), Cambridge University Press, 2008, ISBN 978-0521808545.
+Erratum: The conjecture on page 539 is quantitatively incorrect
+(as are many analogous conjectures in the literature)
+for the most obvious definition of "steps".
+There <i>exists</i> an attack algorithm with a considerably better tradeoff
+between success probability and number of steps,
+even though no feasible method is known to <i>find</i> that algorithm.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="phase3speed" href="https://cr.yp.to/papers.html#phase3speed"><tt>phase3speed</tt></a></span>
+<span class=date>2008.03.31</span>
+<span class=pp>13pp</span>
+<span class=link><a href="streamciphers/phase3speed-20080331.pdf">PDF</a></span>
+<span class=link><a href="streamciphers/timings.html#phase3speed">more</a></span>
+<span class=firstdate>2008.02.25</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Which phase-3 eSTREAM ciphers provide the best software speeds?"
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="broken" href="https://cr.yp.to/papers.html#broken"><tt>broken</tt></a></span>
+<span class=date>2008.03.30</span>
+<span class=pp>35pp</span>
+<span class=link><a href="streamciphers/broken-20080330.pdf">PDF</a></span>
+<span class=link><a href="streamciphers/attacks.html#broken-paper">more</a></span>
+<span class=firstdate>2008.02.21</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Which eSTREAM ciphers have been broken?"
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="twisted" href="https://cr.yp.to/papers.html#twisted"><tt>twisted</tt></a></span>
+<span class=date>2008.03.13</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="newelliptic/twisted-20080313.pdf">PDF</a></span>
+<span class=link><a href="newelliptic.html#twisted-paper">more</a></span>
+<span class=firstdate>2008.01.08</span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Birkner, Marc Joye, Tanja Lange, Christiane Peters.
+"Twisted Edwards curves."
+Pages 389–405 in <i>Progress in cryptology—AFRICACRYPT 2008, first international conference on cryptology in Africa, Casablanca, Morocco, June 11–14, 2008, proceedings</i> (edited by Serge Vaudenay), Lecture Notes in Computer Science <b>5023</b>, Springer, 2008, ISBN 978-3-540-68159-5.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rwtight" href="https://cr.yp.to/papers.html#rwtight"><tt>rwtight</tt></a></span>
+<span class=date>2008.02.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="sigs/rwtight-20080201.pdf">PDF</a></span>
+<span class=link><a href="sigs.html#rwtight">more</a></span>
+<span class=firstdate>2003.09.26</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Proving tight security for Rabin-Williams signatures."
+Pages 70–87 in <i>Advances in cryptology—EUROCRYPT 2008, 27th annual international conference on the theory and applications of cryptographic techniques, Istanbul, Turkey, April 13–17, 2008, proceedings</i> (edited by Nigel Smart), Lecture Notes in Computer Science <b>4965</b>, Springer, 2008, ISBN 978-3-540-78966-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rwsota" href="https://cr.yp.to/papers.html#rwsota"><tt>rwsota</tt></a></span>
+<span class=date>2008.01.31</span>
+<span class=pp>11pp</span>
+<span class=link><a href="sigs/rwsota-20080131.pdf">PDF</a></span>
+<span class=link><a href="sigs.html#rwsota">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"RSA signatures and Rabin-Williams signatures: the state of the art."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="chacha" href="https://cr.yp.to/papers.html#chacha"><tt>chacha</tt></a></span>
+<span class=date>2008.01.28</span>
+<span class=refereed>refereed</span>
+<span class=pp>6pp</span>
+<span class=link><a href="chacha/chacha-20080128.pdf">PDF</a></span>
+<span class=link><a href="chacha.html#chacha-paper">more</a></span>
+<span class=firstdate>2008.01.20</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"ChaCha, a variant of Salsa20."
+Workshop Record of SASC 2008: The State of the Art of Stream Ciphers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="salsafamily" href="https://cr.yp.to/papers.html#salsafamily"><tt>salsafamily</tt></a></span>
+<span class=date>2007.12.25</span>
+<span class=book>book</span>
+<span class=pp>15pp</span>
+<span class=link><a href="snuffle/salsafamily-20071225.pdf">PDF</a></span>
+<span class=link><a href="snuffle.html#salsafamily">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The Salsa20 family of stream ciphers."
+Pages 84–97 in <i>New stream cipher designs: the eSTREAM finalists</i> (edited by Matthew Robshaw, Olivier Billet), Lecture Notes in Computer Science <b>4986</b>, Springer, 2008, ISBN 978-3-540-68350-6.
+Paper invited by book editors.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="efd" href="https://cr.yp.to/papers.html#efd"><tt>efd</tt></a></span>
+<span class=date>2007.12.04</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="antiforgery/efd-20071204.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#efd">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Analysis and optimization of elliptic-curve single-scalar multiplication."
+Pages 1–19 in <i>Finite fields and applications: Eighth international conference on finite fields and applications, July 9–13, 2007, Melbourne, Australia</i> (edited by Gary L. Mullen, Daniel Panario, Igor E. Shparlinski), Contemporary Mathematics <b>461</b>, American Mathematical Society, 2008, ISBN 978-0-8218-4309-3.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="qmailsec" href="https://cr.yp.to/papers.html#qmailsec"><tt>qmailsec</tt></a></span>
+<span class=date>2007.11.01</span>
+<span class=book>book</span>
+<span class=pp>10pp</span>
+<span class=link><a href="qmail/qmailsec-20071101.pdf">PDF</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Some thoughts on security after ten years of qmail 1.0."
+<i>Proceedings of Computer Security Architecture Workshop (CSAW) 2007</i>.
+Paper invited by conference organizers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="doublebase" href="https://cr.yp.to/papers.html#doublebase"><tt>doublebase</tt></a></span>
+<span class=date>2007.10.28</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>16pp</span>
+<span class=link><a href="antiforgery/doublebase-20071028.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#doublebase">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Peter Birkner, Tanja Lange, Christiane Peters.
+"Optimizing double-base elliptic-curve single-scalar multiplication."
+Pages 167–182 in <i>Progress in cryptology—INDOCRYPT 2007, 8th international conference on cryptology in India, Chennai, India, December 9–13, 2007, proceedings</i> (edited by Kannan Srinathan, Chandrasekaran Pandu Rangan, Moti Yung), Lecture Notes in Computer Science <b>4859</b>, Springer, 2007, ISBN 978-3-540-77025-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pema" href="https://cr.yp.to/papers.html#pema"><tt>pema</tt></a></span>
+<span class=date>2007.10.22</span>
+<span class=pp>14pp</span>
+<span class=link><a href="antiforgery/pema-20071022.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#pema">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Polynomial evaluation and message authentication."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="inverted" href="https://cr.yp.to/papers.html#inverted"><tt>inverted</tt></a></span>
+<span class=date>2007.10.09</span>
+<span class=book>book</span>
+<span class=pp>8pp</span>
+<span class=link><a href="newelliptic/inverted-20071009.pdf">PDF</a></span>
+<span class=link><a href="newelliptic/newelliptic.html#inverted-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Inverted Edwards coordinates."
+Pages 20–27 in <i>Applied Algebra, Algebraic Algorithms and Error-Correcting Codes, 17th International Symposium, AAECC-17, Bangalore, India, December 16–20, 2007, Proceedings</i> (edited by Serdar Boztas, Hsiao-feng Lu), Lecture Notes in Computer Science <b>4851</b>, Springer, 2007, ISBN 978-3-540-77223-1.
+Paper invited from Lange by conference organizers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="tangentfft" href="https://cr.yp.to/papers.html#tangentfft"><tt>tangentfft</tt></a></span>
+<span class=date>2007.09.19</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>10pp</span>
+<span class=link><a href="arith/tangentfft-20070919.pdf">PDF</a></span>
+<span class=link><a href="arith.html#tangentfft">more</a></span>
+<span class=firstdate>2007.08.09</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The tangent FFT."
+Pages 291–300 in <i>Applied Algebra, Algebraic Algorithms and Error-Correcting Codes, 17th International Symposium, AAECC-17, Bangalore, India, December 16–20, 2007, Proceedings</i> (edited by Serdar Boztas, Hsiao-feng Lu), Lecture Notes in Computer Science <b>4851</b>, Springer, 2007, ISBN 978-3-540-77223-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="newelliptic" href="https://cr.yp.to/papers.html#newelliptic"><tt>newelliptic</tt></a></span>
+<span class=date>2007.09.06</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>20pp</span>
+<span class=link><a href="newelliptic/newelliptic-20070906.pdf">PDF</a></span>
+<span class=link><a href="newelliptic/newelliptic.html#newelliptic-paper">more</a></span>
+<span class=firstdate>2007.04.10</span>
+</span>
+<br>
+Daniel J. Bernstein, Tanja Lange.
+"Faster addition and doubling on elliptic curves."
+Pages 29–50 in <i>Advances in cryptology—ASIACRYPT 2007, 13th international conference on the theory and application of cryptology and information security, Kuching, Malaysia, December 2–6, 2007, proceedings</i> (edited by Kaoru Kurosawa), Lecture Notes in Computer Science <b>4833</b>, Springer, 2007, ISBN 978-3-540-76899-9.
+2022 IACR Test-of-Time Award.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="genbday" href="https://cr.yp.to/papers.html#genbday"><tt>genbday</tt></a></span>
+<span class=date>2007.09.04</span>
+<span class=refereed>refereed</span>
+<span class=pp>8pp</span>
+<span class=link><a href="rumba20/genbday-20070904.pdf">PDF</a></span>
+<span class=link><a href="rumba20.html#genbday-paper">more</a></span>
+<span class=firstdate>2007.07.19</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Better price-performance ratios for generalized birthday attacks."
+Workshop Record of SHARCS'07: Special-purpose Hardware for Attacking Cryptographic Systems.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="antiquad" href="https://cr.yp.to/papers.html#antiquad"><tt>antiquad</tt></a></span>
+<span class=date>2007.08.17</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>19pp</span>
+<span class=link><a href="streamciphers/antiquad-20070817.pdf">PDF</a></span>
+<span class=link><a href="hash.html#antiquad">more</a></span>
+<span class=firstdate>2007.03.03</span>
+</span>
+<br>
+Bo-Yin Yang, Owen Chia-Hsin Chen, Daniel J. Bernstein, Jiun-Ming Chen.
+"Analysis of QUAD."
+Pages 290–308 in <i>Fast software encryption: 14th international workshop, FSE 2007, Luxembourg, Luxembourg, March 26–28, 2007, revised selected papers</i> (edited by Alex Biryukov), Lecture Notes in Computer Science <b>4593</b>, Springer, 2007, ISBN 978-3-540-74617-1.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cipherdag" href="https://cr.yp.to/papers.html#cipherdag"><tt>cipherdag</tt></a></span>
+<span class=date>2007.06.30</span>
+<span class=refereed>refereed</span>
+<span class=pp>2pp</span>
+<span class=link><a href="cipherdag/cipherdag-20070630.pdf">PDF</a></span>
+<span class=link><a href="cipherdag.html#cipherdag-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cipher DAGs."
+Workshop Record of ECRYPT Workshop on Tools for Cryptanalysis 2007.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="expandxor" href="https://cr.yp.to/papers.html#expandxor"><tt>expandxor</tt></a></span>
+<span class=date>2007.05.03</span>
+<span class=refereed>refereed</span>
+<span class=pp>10pp</span>
+<span class=link><a href="rumba20/expandxor-20070503.pdf">PDF</a></span>
+<span class=link><a href="rumba20.html#expandxor">more</a></span>
+<span class=firstdate>2007.04.11</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"What output size resists collisions in a xor of independent expansions?"
+Workshop Record of ECRYPT Workshop on Hash Functions 2007.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="aecycles" href="https://cr.yp.to/papers.html#aecycles"><tt>aecycles</tt></a></span>
+<span class=date>2007.01.18</span>
+<span class=refereed>refereed</span>
+<span class=pp>13pp</span>
+<span class=link><a href="streamciphers/aecycles-20070118.pdf">PDF</a></span>
+<span class=link><a href="streamciphers/timings.html#aecycles-paper">more</a></span>
+<span class=firstdate>2007.01.11</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cycle counts for authenticated encryption."
+Workshop Record of SASC 2007: The State of the Art of Stream Ciphers.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="kdvseries" href="https://cr.yp.to/papers.html#kdvseries"><tt>kdvseries</tt></a></span>
+<span class=date>2006.10.19</span>
+<span class=pp>4pp</span>
+<span class=link><a href="arith/kdvseries-20061019.pdf">PDF</a></span>
+<span class=link><a href="arith.html#kdvseries">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Using fast power-series arithmetic in the Kedlaya-Denef-Vercauteren algorithm."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="powers2" href="https://cr.yp.to/papers.html#powers2"><tt>powers2</tt></a></span>
+<span class=date>2006.09.14</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>4pp</span>
+<span class=link><a href="lineartime/powers2-20060914-ams.pdf">PDF</a></span>
+<span class=link><a href="arith.html#powers2">more</a></span>
+<span class=firstdate>2004.06.30</span>
+</span>
+<br>
+Daniel J. Bernstein, Hendrik W. Lenstra, Jr., Jonathan Pila.
+"Detecting perfect powers by factoring into coprimes."
+Mathematics of Computation <b>76</b> (2007), 385–388.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="meecrt" href="https://cr.yp.to/papers.html#meecrt"><tt>meecrt</tt></a></span>
+<span class=date>2006.09.14</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>12pp</span>
+<span class=link><a href="antiforgery/meecrt-20060914-ams.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#meecrt">more</a></span>
+<span class=firstdate>2003.08.15</span>
+</span>
+<br>
+Daniel J. Bernstein, Jonathan P. Sorenson.
+"Modular exponentiation via the explicit Chinese remainder theorem."
+Mathematics of Computation <b>76</b> (2007), 443–454.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="quartic" href="https://cr.yp.to/papers.html#quartic"><tt>quartic</tt></a></span>
+<span class=date>2006.09.14</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>15pp</span>
+<span class=link><a href="primetests/quartic-20060914-ams.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#quartic">more</a></span>
+<span class=firstdate>2003.01.28</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Proving primality in essentially quartic random time."
+Mathematics of Computation <b>76</b> (2007), 389–403.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="curvezero" href="https://cr.yp.to/papers.html#curvezero"><tt>curvezero</tt></a></span>
+<span class=date>2006.07.26</span>
+<span class=pp>13pp</span>
+<span class=link><a href="ecdh/curvezero-20060726.pdf">PDF</a></span>
+<span class=link><a href="ecdh.html#curvezero-paper">more</a></span>
+<span class=firstdate>2006.07.21</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Can we avoid tests for zero in fast elliptic-curve arithmetic?"
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="zkcrypt" href="https://cr.yp.to/papers.html#zkcrypt"><tt>zkcrypt</tt></a></span>
+<span class=date>2006.03.02</span>
+<span class=pp>4pp</span>
+<span class=link><a href="streamciphers/zkcrypt-20060302.pdf">PDF</a></span>
+<span class=link><a href="streamciphers.html#zkcrypt-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Does ZK-Crypt version 1 flunk a repetition test?"
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="diffchain" href="https://cr.yp.to/papers.html#diffchain"><tt>diffchain</tt></a></span>
+<span class=date>2006.02.19</span>
+<span class=pp>16pp</span>
+<span class=link><a href="ecdh/diffchain-20060219.pdf">PDF</a></span>
+<span class=link><a href="ecdh.html#diffchain-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Differential addition chains."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="curve25519" href="https://cr.yp.to/papers.html#curve25519"><tt>curve25519</tt></a></span>
+<span class=date>2006.02.09</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>22pp</span>
+<span class=link><a href="ecdh/curve25519-20060209.pdf">PDF</a></span>
+<span class=link><a href="ecdh.html#curve25519-paper">more</a></span>
+<span class=firstdate>2005.11.15</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Curve25519: new Diffie-Hellman speed records."
+Pages 207–228 in <i>Public key cryptography—PKC 2006, 9th international conference on theory and practice in public-key cryptography, New York, NY, USA, April 24–26, 2006, proceedings</i> (edited by Moti Yung, Yevgeniy Dodis, Aggelos Kiayias, Tal Malkin), Lecture Notes in Computer Science <b>3958</b>, Springer, 2006, ISBN 3-540-33851-9.
+2022 PKC Test-of-Time Award.
+Erratum:
+The "produces reduced coefficients" statement in the paper is incorrect
+with the paper's definitions;
+thanks to Alexandra Erica Vidal Zhukova for pointing out the error.
+For techniques to automatically verify Curve25519 implementations,
+see, e.g.,
+<a href="https://gfverif.cryptojedi.org">gfverif</a> from 2015.
+The state of the art as of 2025 is the Curve25519 software in
+<a href="https://github.com/awslabs/s2n-bignum">s2n-bignum</a>.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="stream256" href="https://cr.yp.to/papers.html#stream256"><tt>stream256</tt></a></span>
+<span class=date>2006.01.23</span>
+<span class=refereed>refereed</span>
+<span class=pp>14pp</span>
+<span class=link><a href="streamciphers/stream256-20060123.pdf">PDF</a></span>
+<span class=link><a href="streamciphers.html#stream256-paper">more</a></span>
+<span class=firstdate>2005.12.23</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Comparison of 256-bit stream ciphers at the beginning of 2006."
+Workshop Record of SASC 2006: Stream Ciphers Revisited.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="abccong" href="https://cr.yp.to/papers.html#abccong"><tt>abccong</tt></a></span>
+<span class=date>2005.12.24</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>5pp</span>
+<span class=link><a href="ntheory/abccong-20051224.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#abccong">more</a></span>
+<span class=firstdate>2003.03.14</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Sharper ABC-based bounds for congruent polynomials."
+Journal de Théorie des Nombres de Bordeaux <b>17</b> (2005), 721–725.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="bruteforce" href="https://cr.yp.to/papers.html#bruteforce"><tt>bruteforce</tt></a></span>
+<span class=date>2005.04.25</span>
+<span class=refereed>refereed</span>
+<span class=pp>10pp</span>
+<span class=link><a href="snuffle/bruteforce-20050425.pdf">PDF</a></span>
+<span class=link><a href="snuffle.html#bruteforce">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Understanding brute force."
+ECRYPT STVL Workshop on Symmetric Key Encryption.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="cachetiming" href="https://cr.yp.to/papers.html#cachetiming"><tt>cachetiming</tt></a></span>
+<span class=date>2005.04.14</span>
+<span class=pp>37pp</span>
+<span class=link><a href="antiforgery/cachetiming-20050414.pdf">PDF</a></span>
+<span class=link><a href="mac.html#cachetiming">more</a></span>
+<span class=firstdate>2004.11.11</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Cache-timing attacks on AES."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="poly1305" href="https://cr.yp.to/papers.html#poly1305"><tt>poly1305</tt></a></span>
+<span class=date>2005.03.29</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="mac/poly1305-20050329.pdf">PDF</a></span>
+<span class=link><a href="mac.html#poly1305-paper">more</a></span>
+<span class=firstdate>2004.11.01</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The Poly1305-AES message-authentication code."
+Pages 32–49 in <i>Fast software encryption: 12th international workshop, FSE 2005, Paris, France, February 21–23, 2005, revised selected papers</i> (edited by Henri Gilbert, Helena Handschuh), Lecture Notes in Computer Science <b>3557</b>, Springer, 2005, ISBN 3-540-26541-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="permutations" href="https://cr.yp.to/papers.html#permutations"><tt>permutations</tt></a></span>
+<span class=date>2005.03.23</span>
+<span class=pp>10pp</span>
+<span class=link><a href="antiforgery/permutations-20050323.pdf">PDF</a></span>
+<span class=link><a href="mac.html#permutations">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Stronger security bounds for permutations."
+To be incorporated into author's
+<i>High-speed cryptography</i> book.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="securitywcs" href="https://cr.yp.to/papers.html#securitywcs"><tt>securitywcs</tt></a></span>
+<span class=date>2005.02.27</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>17pp</span>
+<span class=link><a href="antiforgery/securitywcs-20050227.pdf">PDF</a></span>
+<span class=link><a href="mac.html#securitywcs">more</a></span>
+<span class=firstdate>2004.10.19</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Stronger security bounds for Wegman-Carter-Shoup authenticators."
+Pages 164–180 in <i>Advances in Cryptology—EUROCRYPT 2005, 24th annual international conference on the theory and applications of cryptographic techniques, Aarhus, Denmark, May 22–26, 2005, proceedings</i> (edited by Ronald Cramer), Lecture Notes in Computer Science <b>3494</b>, Springer, 2005, ISBN 3-540-25910-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="easycbc" href="https://cr.yp.to/papers.html#easycbc"><tt>easycbc</tt></a></span>
+<span class=date>2005.01.09</span>
+<span class=pp>6pp</span>
+<span class=link><a href="antiforgery/easycbc-20050109.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#easycbc">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A short proof of the unpredictability of cipher block chaining."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dcba" href="https://cr.yp.to/papers.html#dcba"><tt>dcba</tt></a></span>
+<span class=date>2005.01</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>30pp</span>
+<span class=link><a href="lineartime/dcba-20040404.pdf">PDF</a></span>
+<span class=link><a href="coprimes.html#dcba">more</a></span>
+<span class=firstdate>1996.05.12</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Factoring into coprimes in essentially linear time."
+Journal of Algorithms <b>54</b> (2005), 1–30.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="prime2004" href="https://cr.yp.to/papers.html#prime2004"><tt>prime2004</tt></a></span>
+<span class=date>2004.12.23</span>
+<span class=pp>15pp</span>
+<span class=link><a href="primetests/prime2004-20041223.pdf">PDF</a></span>
+<span class=link><a href="primetests.html#prime2004">more</a></span>
+<span class=firstdate>2004.02.12</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Distinguishing prime numbers from composite numbers: the state of the art in 2004."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dcba2" href="https://cr.yp.to/papers.html#dcba2"><tt>dcba2</tt></a></span>
+<span class=date>2004.11.03</span>
+<span class=pp>4pp</span>
+<span class=link><a href="lineartime/dcba2-20041103.pdf">PDF</a></span>
+<span class=link><a href="coprimes.html#dcba2">more</a></span>
+<span class=firstdate>2004.10.09</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Research announcement: Faster factorization into coprimes."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hash127" href="https://cr.yp.to/papers.html#hash127"><tt>hash127</tt></a></span>
+<span class=date>2004.09.18</span>
+<span class=pp>21pp</span>
+<span class=link><a href="antiforgery/hash127-20040918.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#hash127">more</a></span>
+<span class=firstdate>1999.04.04</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Floating-point arithmetic and message authentication."
+To be incorporated into author's
+<i>High-speed cryptography</i> book.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="scaledmod" href="https://cr.yp.to/papers.html#scaledmod"><tt>scaledmod</tt></a></span>
+<span class=date>2004.08.20</span>
+<span class=pp>8pp</span>
+<span class=link><a href="arith/scaledmod-20040820.pdf">PDF</a></span>
+<span class=link><a href="arith.html#scaledmod">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Scaled remainder trees."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="focus" href="https://cr.yp.to/papers.html#focus"><tt>focus</tt></a></span>
+<span class=date>2004.06.10</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>8pp</span>
+<span class=link><a href="focus.html#focus-paper">more</a></span>
+<span class=firstdate>2001.12.31</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Doubly focused enumeration of locally square polynomial values."
+Pages 69–76 in <i>High primes and misdemeanours: lectures in honour of the 60th birthday of Hugh Cowie Williams</i> (edited by Alf van der Poorten, Andreas Stein), Fields Institute Communications <b>41</b>, American Mathematical Society, 2004, ISBN 0-8218-3353-7.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="smoothparts" href="https://cr.yp.to/papers.html#smoothparts"><tt>smoothparts</tt></a></span>
+<span class=date>2004.05.10</span>
+<span class=pp>7pp</span>
+<span class=link><a href="factorization/smoothparts-20040510.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#smoothparts">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"How to find smooth parts of integers."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="primesieves" href="https://cr.yp.to/papers.html#primesieves"><tt>primesieves</tt></a></span>
+<span class=date>2004.04</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>8pp</span>
+<span class=link><a href="papers/primesieves-20020329-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#primesieves">more</a></span>
+<span class=firstdate>1999.05.05</span>
+</span>
+<br>
+A. O. L. Atkin, Daniel J. Bernstein.
+"Prime sieves using binary quadratic forms."
+Mathematics of Computation <b>73</b> (2004), 1023–1030.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fastnewton" href="https://cr.yp.to/papers.html#fastnewton"><tt>fastnewton</tt></a></span>
+<span class=date>2004.03.09</span>
+<span class=pp>13pp</span>
+<span class=link><a href="fastnewton/fastnewton-20040309.pdf">PDF</a></span>
+<span class=link><a href="fastnewton.html#fastnewton-paper">more</a></span>
+<span class=firstdate>1998.06.27</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Removing redundancy in high-precision Newton iteration."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="logagm" href="https://cr.yp.to/papers.html#logagm"><tt>logagm</tt></a></span>
+<span class=date>2003.07.17</span>
+<span class=pp>8pp</span>
+<span class=link><a href="arith/logagm-20030717-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="arith.html#logagm">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Computing logarithm intervals with the arithmetic-geometric-mean iteration."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="logfloor" href="https://cr.yp.to/papers.html#logfloor"><tt>logfloor</tt></a></span>
+<span class=date>2003.06.30</span>
+<span class=pp>4pp</span>
+<span class=link><a href="lineartime/logfloor-20030630-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="arith.html#logfloor">more</a></span>
+<span class=firstdate>2003.06.29</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Computing logarithm floors in essentially linear time."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="aks" href="https://cr.yp.to/papers.html#aks"><tt>aks</tt></a></span>
+<span class=date>2003.01.25</span>
+<span class=pp>15pp</span>
+<span class=link><a href="papers/aks-20030125-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#aks">more</a></span>
+<span class=firstdate>2002.08.09</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Proving primality after Agrawal-Kayal-Saxena."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="psi" href="https://cr.yp.to/papers.html#psi"><tt>psi</tt></a></span>
+<span class=date>2002.10.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>18pp</span>
+<span class=link><a href="papers/psi-20010410-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#psi">more</a></span>
+<span class=firstdate>2000.11.03</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Arbitrarily tight bounds on the distribution of smooth integers."
+Pages 49–66 in <i>Number theory for the Millennium volume 1</i> (edited by Michael A. Bennett, Bruce C. Berndt, Nigel Boston, Harold G. Diamond, Adolf J. Hildebrand, Walter Philipp), A. K. Peters, 2002, ISBN 1-56881-126-8.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sf" href="https://cr.yp.to/papers.html#sf"><tt>sf</tt></a></span>
+<span class=date>2002.09.23</span>
+<span class=pp>15pp</span>
+<span class=link><a href="papers/sf-20020923-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#sf">more</a></span>
+<span class=firstdate>2000.06.22</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"How to find small factors of integers."
+Now being revamped in light of <tt>smoothparts</tt> results.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="pippenger" href="https://cr.yp.to/papers.html#pippenger"><tt>pippenger</tt></a></span>
+<span class=date>2002.01.18</span>
+<span class=pp>21pp</span>
+<span class=link><a href="papers/pippenger-20020118-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#pippenger">more</a></span>
+<span class=firstdate>2001.12.18</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Pippenger's exponentiation algorithm."
+To be incorporated into author's
+<i>High-speed cryptography</i> book.
+Error pointed out by Sam Hocevar: the example in Figure 4 needs 2 and is thus of length 18.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nonsquare" href="https://cr.yp.to/papers.html#nonsquare"><tt>nonsquare</tt></a></span>
+<span class=date>2001.12.20</span>
+<span class=pp>3pp</span>
+<span class=link><a href="papers/nonsquare-20011220-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#nonsquare">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Faster algorithms to find non-squares modulo worst-case integers."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sqroot" href="https://cr.yp.to/papers.html#sqroot"><tt>sqroot</tt></a></span>
+<span class=date>2001.11.23</span>
+<span class=pp>10pp</span>
+<span class=link><a href="papers/sqroot-20011123-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#sqroot">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Faster square roots in annoying finite fields."
+To be incorporated into author's
+<i>High-speed cryptography</i> book.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nfscircuit" href="https://cr.yp.to/papers.html#nfscircuit"><tt>nfscircuit</tt></a></span>
+<span class=date>2001.11.09</span>
+<span class=pp>11pp</span>
+<span class=link><a href="papers/nfscircuit-20011109-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#nfscircuit">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Circuits for integer factorization: a proposal."
+Excerpted from DMS-0140542 grant proposal.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="m3" href="https://cr.yp.to/papers.html#m3"><tt>m3</tt></a></span>
+<span class=date>2001.08.11</span>
+<span class=refereed>refereed</span>
+<span class=pp>19pp</span>
+<span class=link><a href="papers/m3-20010811-retypeset-20220327.pdf">PDF</a></span>
+<span class=link><a href="arith.html#m3">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Multidigit multiplication for mathematicians."
+Accepted to Advances in Applied Mathematics,
+but withdrawn by author to prevent irreparable mangling by Academic Press.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sortedsums" href="https://cr.yp.to/papers.html#sortedsums"><tt>sortedsums</tt></a></span>
+<span class=date>2001.01</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>6pp</span>
+<span class=link><a href="papers/sortedsums-19990928-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#sortedsums">more</a></span>
+<span class=firstdate>1998.06.29</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Enumerating solutions to p(a)+q(b)=r(c)+s(d)."
+Mathematics of Computation <b>70</b> (2001), 389–394.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="sigs" href="https://cr.yp.to/papers.html#sigs"><tt>sigs</tt></a></span>
+<span class=date>2000.08.09</span>
+<span class=refereed>refereed</span>
+<span class=pp>11pp</span>
+<span class=link><a href="papers/sigs-20000809-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="sigs.html#sigs-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A secure public-key signature system with extremely fast verification."
+Accepted to Journal of Cryptology,
+but withdrawn to be incorporated into author's
+<i>High-speed cryptography</i> book.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="unipat" href="https://cr.yp.to/papers.html#unipat"><tt>unipat</tt></a></span>
+<span class=date>2000.08.06</span>
+<span class=pp>6pp</span>
+<span class=link><a href="papers/unipat-20000806-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="mathmisc.html#unipat">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A simple universal pattern-matching automaton."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hash127-abs" href="https://cr.yp.to/papers.html#hash127-abs"><tt>hash127-abs</tt></a></span>
+<span class=date>1999.04.04</span>
+<span class=pp>2pp</span>
+<span class=link><a href="antiforgery/hash127-abs-19990404-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#hash127-abs">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Guaranteed message authentication faster than MD5 (abstract)."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="stretch" href="https://cr.yp.to/papers.html#stretch"><tt>stretch</tt></a></span>
+<span class=date>1999</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>8pp</span>
+<span class=link><a href="papers/stretch-19971230~retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#stretch">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"How to stretch random functions: the security of protected counter sums."
+Journal of Cryptology <b>12</b> (1999), 185–192.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="compose" href="https://cr.yp.to/papers.html#compose"><tt>compose</tt></a></span>
+<span class=date>1998.09</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>3pp</span>
+<span class=link><a href="papers/compose-19971007-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="arith.html#compose">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Composing power series over a finite ring in essentially linear time."
+Journal of Symbolic Computation <b>26</b> (1998), 339–341.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="psi-abs" href="https://cr.yp.to/papers.html#psi-abs"><tt>psi-abs</tt></a></span>
+<span class=date>1998.07.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>3pp</span>
+<span class=link><a href="papers/psi-abs-19980701-retypeset20220327.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#psi">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Bounding smooth integers (extended abstract)."
+Pages 128–130 in <i>Algorithmic number theory: third international symposium, ANTS-III, Portland, Oregon, USA, June 21–25, 1998, proceedings</i> (edited by Joe Buhler), Lecture Notes in Computer Science <b>1423</b>, Springer, 1998, ISBN 3-540-64657-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="powers" href="https://cr.yp.to/papers.html#powers"><tt>powers</tt></a></span>
+<span class=date>1998.07</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>31pp</span>
+<span class=link><a href="papers/powers-19971106-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="arith.html#powers">more</a></span>
+<span class=firstdate>1995.05</span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Detecting perfect powers in essentially linear time."
+Mathematics of Computation <b>67</b> (1998), 1253–1283.
+First version was Chapter 1 of Ph.D. dissertation.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="calculus" href="https://cr.yp.to/papers.html#calculus"><tt>calculus</tt></a></span>
+<span class=date>1997.04.03</span>
+<span class=pp>12pp</span>
+<span class=link><a href="papers/calculus-19970403-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="mathmisc.html#calculus">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Calculus for mathematicians."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fastgcd" href="https://cr.yp.to/papers.html#fastgcd"><tt>fastgcd</tt></a></span>
+<span class=date>1996.06.28</span>
+<span class=link><a href="arith.html#fastgcd">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Kronecker matrices and polynomial GCDs."
+Superseded by <tt>multapps</tt>.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fiall" href="https://cr.yp.to/papers.html#fiall"><tt>fiall</tt></a></span>
+<span class=date>1996.06.01</span>
+<span class=refereed>refereed</span> <span class=book>book</span>
+<span class=pp>8pp</span>
+<span class=link><a href="papers/fiall-19960601-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="ntheory.html#fiall">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Fast ideal arithmetic via lazy localization."
+Pages 27–34 in <i>Algorithmic number theory: second international symposium, ANTS-II, Talence, France, May 18–23, 1996, proceedings</i> (edited by Henri Cohen), Lecture Notes in Computer Science <b>1122</b>, Springer, 1996, ISBN 3-540-61581-4.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="3x1conjmap" href="https://cr.yp.to/papers.html#3x1conjmap"><tt>3x1conjmap</tt></a></span>
+<span class=date>1996.02.15</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>16pp</span>
+<span class=link><a href="papers/3x1conjmap-19960215-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="mathmisc.html#3x1conjmap">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Jeffrey C. Lagarias.
+"The 3x+1 conjugacy map."
+Canadian Journal of Mathematics <b>48</b> (1996), 1154–1169.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mmecrt" href="https://cr.yp.to/papers.html#mmecrt"><tt>mmecrt</tt></a></span>
+<span class=date>1995.05</span>
+<span class=book>book</span>
+<span class=pp>7pp</span>
+<span class=link><a href="papers/mmecrt-19950518-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="antiforgery.html#mmecrt">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Multidigit modular multiplication with the Explicit Chinese Remainder Theorem."
+Chapter 4 in <i>Detecting perfect powers in essentially linear time, and other studies in computational number theory</i>, Ph.D. dissertation, University of California at Berkeley, 1995.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mlnfs" href="https://cr.yp.to/papers.html#mlnfs"><tt>mlnfs</tt></a></span>
+<span class=date>1995.05</span>
+<span class=book>book</span>
+<span class=pp>5pp</span>
+<span class=link><a href="papers/mlnfs-19950518-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#mlnfs">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The multiple-lattice number field sieve."
+Chapter 3 in <i>Detecting perfect powers in essentially linear time, and other studies in computational number theory</i>, Ph.D. dissertation, University of California at Berkeley, 1995.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="epsi" href="https://cr.yp.to/papers.html#epsi"><tt>epsi</tt></a></span>
+<span class=date>1995.05</span>
+<span class=book>book</span>
+<span class=pp>4pp</span>
+<span class=link><a href="papers/epsi-19950518-retypeset20220326.pdf">PDF</a></span>
+<span class=link><a href="factorization.html#psi">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Enumerating and counting smooth integers."
+Chapter 2 in <i>Detecting perfect powers in essentially linear time, and other studies in computational number theory</i>, Ph.D. dissertation, University of California at Berkeley, 1995.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="231" href="https://cr.yp.to/papers.html#231"><tt>231</tt></a></span>
+<span class=date>1994.02</span>
+<span class=refereed>refereed</span> <span class=journal>journal</span>
+<span class=pp>4pp</span>
+<span class=link><a href="mathmisc.html#231">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A non-iterative 2-adic statement of the 3N+1 conjecture."
+Proceedings of the American Mathematical Society <b>121</b> (1994), 405–408.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nfsi" href="https://cr.yp.to/papers.html#nfsi"><tt>nfsi</tt></a></span>
+<span class=date>1993.01</span>
+<span class=book>book</span>
+<span class=pp>24pp</span>
+<span class=link><a href="factorization.html#nfsi">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Arjen K. Lenstra.
+"A general number field sieve implementation."
+Pages 103–126 in <i>The development of the number field sieve</i> (edited by Arjen K. Lenstra, Hendrik W. Lenstra, Jr), Lecture Notes in Mathematics <b>1554</b>, Springer, 1993, ISBN 3-540-57013-6.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="westinghouse" href="https://cr.yp.to/papers.html#westinghouse"><tt>westinghouse</tt></a></span>
+<span class=date>1987</span>
+<span class=pp>21pp</span>
+<span class=link><a href="bib/1987/bernstein.html">scanned</a></span>
+<span class=link><a href="arith.html#westinghouse">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"New fast algorithms for pi and e."
+Fifth-place paper for the nationwide 1987 Westinghouse Science Talent Search.
+Distributed widely at the Ramanujan Centenary Conference.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="dal" href="https://cr.yp.to/papers.html#dal"><tt>dal</tt></a></span>
+<span class=link><a href="mathmisc.html#dal">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The ubiquitous dal function."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="c3" href="https://cr.yp.to/papers.html#c3"><tt>c3</tt></a></span>
+<span class=link><a href="arith.html#c3">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"The complexity of complex convolution."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="abc" href="https://cr.yp.to/papers.html#abc"><tt>abc</tt></a></span>
+<span class=link><a href="mathmisc.html#abc">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein, Bruce E. Kaskel.
+"The ABC polygon."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="surf" href="https://cr.yp.to/papers.html#surf"><tt>surf</tt></a></span>
+<span class=link><a href="hash.html#surf">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"SURF: Simple Unpredictable Random Function."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="senfs" href="https://cr.yp.to/papers.html#senfs"><tt>senfs</tt></a></span>
+<span class=link><a href="factorization.html#senfs">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Superelliptic integrals and the number-field sieve."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="huptrie" href="https://cr.yp.to/papers.html#huptrie"><tt>huptrie</tt></a></span>
+<span class=link><a href="data.html#huptrie">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Saving space and time in hash tries."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="hblcs" href="https://cr.yp.to/papers.html#hblcs"><tt>hblcs</tt></a></span>
+<span class=link><a href="ntheory.html#hblcs">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Predicting a linear congruential sequence from its high bits."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="mimd" href="https://cr.yp.to/papers.html#mimd"><tt>mimd</tt></a></span>
+<span class=link><a href="factorization.html#gge">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Matrix inversion made difficult."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="fastgraeffe" href="https://cr.yp.to/papers.html#fastgraeffe"><tt>fastgraeffe</tt></a></span>
+<span class=link><a href="arith.html#fastgraeffe">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"High-precision roots of high-degree polynomials."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="gge" href="https://cr.yp.to/papers.html#gge"><tt>gge</tt></a></span>
+<span class=link><a href="factorization.html#gge">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Generalized Gaussian elimination."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="zmult" href="https://cr.yp.to/papers.html#zmult"><tt>zmult</tt></a></span>
+<span class=link><a href="arith.html#zmult">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Faster multiplication of integers."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nistp224" href="https://cr.yp.to/papers.html#nistp224"><tt>nistp224</tt></a></span>
+<span class=link><a href="ecdh.html#nistp224-paper">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Fast point multiplication on the NIST P-224 elliptic curve."
+To be incorporated into author's
+<i>High-speed cryptography</i> book.
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="smoothdep" href="https://cr.yp.to/papers.html#smoothdep"><tt>smoothdep</tt></a></span>
+<span class=link><a href="factorization.html#smoothdep">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Estimating the dependence time for smooth integers."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="decompress" href="https://cr.yp.to/papers.html#decompress"><tt>decompress</tt></a></span>
+<span class=link><a href="data.html#decompress">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Data decompression."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="nfspoly" href="https://cr.yp.to/papers.html#nfspoly"><tt>nfspoly</tt></a></span>
+<span class=link><a href="factorization.html#nfspoly">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Controlling three coefficients in number-field-sieve polynomials."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="rings" href="https://cr.yp.to/papers.html#rings"><tt>rings</tt></a></span>
+<span class=link><a href="mathmisc.html#rings">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"Commutative rings."
+</p><hr>
+<p>
+<span class=paperheading>
+<span class=tag><a name="zeroseek" href="https://cr.yp.to/papers.html#zeroseek"><tt>zeroseek</tt></a></span>
+<span class=link><a href="data.html#zeroseek">more</a></span>
+</span>
+<br>
+Daniel J. Bernstein.
+"A fast journaling filesystem."
+</p><hr>
+</body>
+</html>

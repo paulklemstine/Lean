@@ -1,0 +1,391 @@
+Lecture Notes in Computer Science                                    4833
+Commenced Publication in 1973
+Founding and Former Series Editors:
+Gerhard Goos, Juris Hartmanis, and Jan van Leeuwen
+
+
+Editorial Board
+David Hutchison
+   Lancaster University, UK
+Takeo Kanade
+   Carnegie Mellon University, Pittsburgh, PA, USA
+Josef Kittler
+   University of Surrey, Guildford, UK
+Jon M. Kleinberg
+   Cornell University, Ithaca, NY, USA
+Friedemann Mattern
+   ETH Zurich, Switzerland
+John C. Mitchell
+   Stanford University, CA, USA
+Moni Naor
+   Weizmann Institute of Science, Rehovot, Israel
+Oscar Nierstrasz
+   University of Bern, Switzerland
+C. Pandu Rangan
+   Indian Institute of Technology, Madras, India
+Bernhard Steffen
+   University of Dortmund, Germany
+Madhu Sudan
+   Massachusetts Institute of Technology, MA, USA
+Demetri Terzopoulos
+   University of California, Los Angeles, CA, USA
+Doug Tygar
+   University of California, Berkeley, CA, USA
+Moshe Y. Vardi
+   Rice University, Houston, TX, USA
+Gerhard Weikum
+   Max-Planck Institute of Computer Science, Saarbruecken, Germany
+Kaoru Kurosawa (Ed.)
+
+
+
+Advances in Cryptology –
+ASIACRYPT 2007
+
+13th International Conference on the Theory
+and Application of Cryptology and Information Security
+Kuching, Malaysia, December 2-6, 2007
+Proceedings
+
+
+
+
+13
+Volume Editor
+
+Kaoru Kurosawa
+Ibaraki University
+Department of Computer and Information Sciences
+4-12-1 Nakanarusawa
+Hitachi, Ibaraki 316-8511, Japan
+E-mail: kurosawa@mx.ibaraki.ac.jp
+
+
+
+
+Library of Congress Control Number: 2007939450
+
+
+CR Subject Classiﬁcation (1998): E.3, D.4.6, F.2.1-2, K.6.5, C.2, J.1, G.2
+
+LNCS Sublibrary: SL 4 – Security and Cryptology
+
+ISSN              0302-9743
+ISBN-10           3-540-76899-8 Springer Berlin Heidelberg New York
+ISBN-13           978-3-540-76899-9 Springer Berlin Heidelberg New York
+
+
+This work is subject to copyright. All rights are reserved, whether the whole or part of the material is
+concerned, speciﬁcally the rights of translation, reprinting, re-use of illustrations, recitation, broadcasting,
+reproduction on microﬁlms or in any other way, and storage in data banks. Duplication of this publication
+or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965,
+in its current version, and permission for use must always be obtained from Springer. Violations are liable
+to prosecution under the German Copyright Law.
+Springer is a part of Springer Science+Business Media
+springer.com
+©International Association for Cryptology Research 2007
+Printed in Germany
+Typesetting: Camera-ready by author, data conversion by Scientiﬁc Publishing Services, Chennai, India
+Printed on acid-free paper    SPIN: 12194407        06/3180       543210
+                                  Preface
+
+
+
+ASIACRYPT 2007 was held in Kuching, Sarawak, Malaysia, during December
+2–6, 2007. This was the 13th ASIACRYPT conference, and was sponsored by the
+International Association for Cryptologic Research (IACR), in cooperation with
+the Information Security Research (iSECURES) Lab of Swinburne University of
+Technology (Sarawak Campus) and the Sarawak Development Institute (SDI),
+and was financially supported by the Sarawak Government. The General Chair
+was Raphael Phan and I had the privilege of serving as the Program Chair.
+    The conference received 223 submissions (from which one submission was
+withdrawn). Each paper was reviewed by at least three members of the Program
+Committee, while submissions co-authored by a Program Committee member
+were reviewed by at least five members. (Each PC member could submit at
+most one paper.) Many high-quality papers were submitted, but due to the
+relatively small number which could be accepted, many very good papers had
+to be rejected. After 11 weeks of reviewing, the Program Committee selected 33
+papers for presentation (two papers were merged). The proceedings contain the
+revised versions of the accepted papers. These revised papers were not subject
+to editorial review and the authors bear full responsibility for their contents.
+    The Committee selected the following two papers as the best papers: “Crypt-
+analysis of Grindahl” by Thomas Peyrin; and “Faster Addition and Doubling on
+Elliptic Curves” by Daniel J. Bernstein and Tanja Lange. The authors of these
+two papers were invited to submit the full version of their paper to the Journal
+of Cryptology. The author of the first paper, Thomas Peyrin, received the Best
+Paper Award.
+    The conference featured invited lectures by Ran Canetti and Tatsuaki
+Okamoto. Ran Canetti’s paper “Treading the Impossible: A Tour of Set-Up
+Assumptions for Obtaining Universally Composable Security” and Tatsuaki
+Okamoto’s paper “Authenticated Key Exchange and Key Encapsulation in the
+Standard Model” have been included in this volume.
+    There are many people who contributed to the success of ASIACRYPT 2007.
+I would like to thank many authors from around the world for submitting their
+papers. I am deeply grateful to the Program Committee for their hard work to
+ensure that each paper received a thorough and fair review. I gratefully acknowl-
+edge the external reviewers listed on the following pages. I am also grateful to
+Arjen Lenstra, Bart Preneel, and Andy Clark for their advice as the directors
+of IACR. Finally, I would like to thank the General Chair, Raphael Phan, for
+organizing the conference and Shai Halevi for developing and maintaining his
+very nice Web Submission and Review System.
+
+
+September 2007                                                 Kaoru Kurosawa
+                         Asiacrypt 2007
+             December 2–6, 2007, Kuching, Sarawak, Malaysia
+
+
+                                Sponsored by
+       the International Association for Cryptologic Research (IACR)
+                            in cooperation with
+            the Information Security Research (iSECURES) Lab
+         of Swinburne University of Technology (Sarawak Campus)
+                                  and
+                 the Sarawak Development Institute (SDI)
+                                     and
+             financially supported by the Sarawak Government
+
+
+
+General Chair
+Raphael C.-W. Phan, EPFL, Switzerland
+
+
+Program Chair
+Kaoru Kurosawa, Ibaraki University, Japan
+
+
+Program Commitee
+Masayuki Abe             NTT, Japan
+Alex Biryukov            University of Luxembourg, Luxembourg
+Alexandra Boldyreva      Georgia Institute of Technology, USA
+Jung Hee Cheon           Seoul National University, Korea
+Jean-Sebastien Coron     University of Luxembourg, Luxembourg
+Joan Daemen              STMicroelectronics, Belgium
+Serge Fehr               CWI, Netherlands
+Steven Galbraith         Royal Holloway University of London, UK
+Craig Gentry             Stanford University, USA
+Henri Gilbert            France Telecom, France
+Shai Halevi              IBM T.J. Watson Research Center, USA
+Helena Handschuh         Spansion, France
+Tetsu Iwata              Nagoya University, Japan
+Thomas Johansson         Lund University, Sweden
+Marc Joye                Thomson R&D France, France
+Jonathan Katz            University of Maryland, USA
+Lars R. Knudsen          Technical University of Denmark, Denmark
+VIII   Organization
+
+Hugo Krawczyk             IBM T.J. Watson Research Center, USA
+Kaoru Kurosawa            Ibaraki University, Japan
+Xuejia Lai                Shanghai Jiaotong University, China
+Arjen K. Lenstra          EPFL IC LACAL, Switzerland
+Stefan Lucks              Bauhaus University Weimar, Germany
+Anna Lysyanskaya          Brown University, USA
+Alexander May             Technische Universität Darmstadt, Germany
+Jesper Buus Nielsen       University of Aarhus, Denmark
+Elisabeth Oswald          University of Bristol, UK
+Josef Pieprzyk            Macquarie University, Australia
+Bart Preneel              Katholieke Universiteit Leuven, Belgium
+Pandu Rangan              Indian Institute of Technology, India
+Palash Sarkar             Indian Statistical Institute, India
+Nigel Smart               Bristol University, UK
+Tsuyoshi Takagi           Future University-Hakodate, Japan
+Serge Vaudenay            EPFL, Switzerland
+Brent Waters              SRI International, USA
+Stefan Wolf               ETH Zurich, Switzerland
+
+
+External Reviewers
+Jesus Almansa             Claus Diem               Stuart Haber
+Frederik Armknecht        Yevgeniy Dodis           Sang Geun Hahn
+Gilles Van Assche         Orr Dunkelman            Safuat Hamdy
+Georges Baatz             Håkan Englund           Daewan Han
+Thomas Baignéres         Pooya Farshim            Wei Han
+Boaz Barak                Martin Feldhofer         Goichiro Hanaoka
+Mira Belenkiy             Marc Fischlin            Martin Hell
+Waldyr Benits             Matthias Fitzi           Dennis Hofheinz
+Kamel Bentahar            Ewan Fleischmann         Xuan Hong
+Come Berbain              Eiichiro Fujisaki        Nick Howgrave-Graham
+Dan Bernstein             Jun Furukawa             Jim Hughes
+Guido Bertoni             Philippe Gaborit         Sebastiaan Indesteeghe
+Olivier Billet            Nicolas Gama             Tetsuya Izu
+Andrey Bogdanov           Pierrick Gaudry          Markus Jakobsson
+Arnaud Boscher            Rosario Gennaro          Stas Jarecki
+Xavier Boyen              Ralf Gerkmann            Ellen Jochemsz
+Ran Canetti               Zheng Gong               Pascal Junod
+Christophe De Cannière   Vipul Goyal              Alexandre Karlov
+Zhenfu Cao                Rob Granger              Ulrich Kühn
+Chris Charnes             Johann Großchädl        Marcelo Kaihara
+Sanjit Chatterjee         Gaurav Gupta             Yael Kalai
+Scott Contini             Frank Gurkaynak          Alexandre Karlov
+Yang Cui                  Kil-Chan Ha              Dmitry Khovratovich
+Alexander Dent            Robbert de Haan          Eike Kiltz
+                                                     Organization    IX
+
+Vlastimal Klima        Dag Arne Osvik            Ron Steinfeld
+Markulf Kohlweiss      Khaled Ouafi              Marc Stevens
+Yuichi Komano          Dan Page                  Koutarou Suzuki
+Chiu-Yuen Koo          Pascal Paillier           Christophe Tartary
+Ranjit Kumaresan       Sylvain Pasini            Emin Islam Tatli
+Taekyoung Kwon         Rafael Pass               Isamu Teranishi
+Tanja Lange            Vijayakrishnan            Soren Thomsen
+Jooyoung Lee              Pasupathinathan        Stefan Tillich
+Mun-Kyu Lee            Kenny Paterson            Frederik Vercauteren
+Frédéric Lefèbvre   Maura Paterson            Martin Vuagnoux
+Hoon Wei Lim           Thomas Peyrin             Camille Vuillaume
+Yehuda Lindell         Duong Hieu Phan           Zhongmei Wan
+Joseph Liu             Krzysztof Pietrzak        Huaxiong Wang
+Yu Long                Norbert Pramstaller       Bogdan Warinschi
+Xianhui Lu             Deike Priemuth-Schmid     Hoeteck Wee
+Changshe Ma            Prashant Punya            Benne de Weger
+Subhamoy Maitra        Wenfeng Qi                Ralf-Philipp Weinmann
+Keith Martin           Tal Rabin                 Mi Wen
+Krystian Matusiewicz   Dominik Raub              William Whyte
+Florian Mendel         Christian Rechberger      Christopher Wolf
+Daniele Micciancio     Tom Ristenpart            Duncan Wong
+Wil Michiels           Maike Ritzenhofen         Hongjun Wu
+Lorenz Minder          Matthieu Rivain           Juerg Wullschleger
+Andrew Moss            Panagiotis Rizomiliotis   Go Yamamoto
+Siguna Mueller         Matthew Robshaw           Bo-Yin Yang
+Toru Nakanishi         Kazuo Sakiyama            Jin Yuan
+Arvind Narayanan       Joern-Marc Schmidt        Aaram Yun
+Gregory Neven          Yannick Seurin            Erik Zenner
+Phong Nguyen           Runting Shi               Xianmo Zhang
+Svetla Nikova          Masaaki Shirase           Yunlei Zhao
+Ryo Nishimaki          Igor Shparlinski          Jinmin Zhong
+Adam O’Neill           Tom Shrimpton
+Miyako Ohkubo          Ben Smith
+Katsuyuki Okeya        Martijn Stam
+                                          Table of Contents
+
+
+
+Number Theory and Elliptic Curve
+A Kilobit Special Number Field Sieve Factorization . . . . . . . . . . . . . . . . . .                                         1
+  Kazumaro Aoki, Jens Franke, Thorsten Kleinjung,
+  Arjen K. Lenstra, and Dag Arne Osvik
+When e-th Roots Become Easier Than Factoring . . . . . . . . . . . . . . . . . . . . .                                         13
+  Antoine Joux, David Naccache, and Emmanuel Thomé
+Faster Addition and Doubling on Elliptic Curves . . . . . . . . . . . . . . . . . . . . .                                      29
+   Daniel J. Bernstein and Tanja Lange
+
+
+Protocol
+A Non-interactive Shuﬄe with Pairing Based Veriﬁability . . . . . . . . . . . . .                                              51
+  Jens Groth and Steve Lu
+On Privacy Models for RFID . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                         68
+  Serge Vaudenay
+
+Invited Talk I
+Obtaining Universally Compoable Security: Towards the Bare Bones of
+Trust . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    88
+   Ran Canetti
+
+Hash Function Design
+A Simple Variant of the Merkle-Damgård Scheme with a
+Permutation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         113
+   Shoichi Hirose, Je Hong Park, and Aaram Yun
+Seven-Property-Preserving Iterated Hashing: ROX . . . . . . . . . . . . . . . . . . .                                         130
+   Elena Andreeva, Gregory Neven,
+   Bart Preneel, and Thomas Shrimpton
+How to Build a Hash Function from Any Collision-Resistant
+Function . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      147
+   Thomas Ristenpart and Thomas Shrimpton
+
+Group/Broadcast Cryptography
+Fully Anonymous Group Signatures Without Random Oracles . . . . . . . . .                                                     164
+   Jens Groth
+XII         Table of Contents
+
+Group Encryption . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          181
+  Aggelos Kiayias, Yiannis Tsiounis, and Moti Yung
+
+Identity-Based Broadcast Encryption with Constant Size Ciphertexts
+and Private Keys . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          200
+   Cécile Delerablée
+
+MAC and Implementation
+Boosting Merkle-Damgård Hashing for Message Authentication . . . . . . . .                                               216
+  Kan Yasuda
+
+On Eﬃcient Message Authentication Via Block Cipher Design
+Techniques . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    232
+   G. Jakimoski and K.P. Subbalakshmi
+
+Symmetric Key Cryptography on Modern Graphics Hardware . . . . . . . . .                                                  249
+  Jason Yang and James Goodman
+
+Multiparty Computation I
+Blind Identity-Based Encryption and Simulatable Oblivious Transfer . . .                                                  265
+   Matthew Green and Susan Hohenberger
+
+Multi-party Indirect Indexing and Applications . . . . . . . . . . . . . . . . . . . . . .                                283
+  Matthew Franklin, Mark Gondree, and Payman Mohassel
+
+Two-Party Computing with Encrypted Data . . . . . . . . . . . . . . . . . . . . . . . .                                   298
+  Seung Geol Choi, Ariel Elbaz, Ari Juels, Tal Malkin, and Moti Yung
+
+Block Ciphers
+Known-Key Distinguishers for Some Block Ciphers . . . . . . . . . . . . . . . . . . .                                     315
+  Lars R. Knudsen and Vincent Rijmen
+
+Generic Attacks on Unbalanced Feistel Schemes with Expanding
+Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   325
+   Jacques Patarin, Valérie Nachef, and Côme Berbain
+
+On Tweaking Luby-Rackoﬀ Blockciphers . . . . . . . . . . . . . . . . . . . . . . . . . . . .                              342
+  David Goldenberg, Susan Hohenberger, Moses Liskov,
+  Elizabeth Crump Schwartz, and Hakan Seyalioglu
+
+Multiparty Computation II
+Secure Protocols with Asymmetric Trust . . . . . . . . . . . . . . . . . . . . . . . . . . . .                            357
+   Ivan Damgård, Yvo Desmedt, Matthias Fitzi, and
+   Jesper Buus Nielsen
+                                                                                           Table of Contents                XIII
+
+Simple and Eﬃcient Perfectly-Secure Asynchronous MPC . . . . . . . . . . . .                                                376
+   Zuzana Beerliová-Trubı́niová and Martin Hirt
+Eﬃcient Byzantine Agreement with Faulty Minority . . . . . . . . . . . . . . . . .                                          393
+  Zuzana Beerliová-Trubı́niová, Martin Hirt, and Micha Riser
+Information-Theoretic Security Without an Honest Majority . . . . . . . . . .                                               410
+   Anne Broadbent and Alain Tapp
+
+Foundation
+Black-Box Extension Fields and the Inexistence of Field-Homomorphic
+One-Way Permutations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                  427
+   Ueli Maurer and Dominik Raub
+Concurrent Statistical Zero-Knowledge Arguments for NP from One
+Way Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           444
+  Vipul Goyal, Ryan Moriarty, Rafail Ostrovsky, and Amit Sahai
+Anonymous Quantum Communication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                 460
+  Gilles Brassard, Anne Broadbent, Joseph Fitzsimons,
+  Sébastien Gambs, and Alain Tapp
+
+Invited Talk II
+Authenticated Key Exchange and Key Encapsulation in the Standard
+Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   474
+  Tatsuaki Okamoto
+
+Public Key Encryption
+Miniature CCA2 PK Encryption: Tight Security Without
+Redundancy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        485
+  Xavier Boyen
+Bounded CCA2-Secure Encryption . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                            502
+  Ronald Cramer, Goichiro Hanaoka, Dennis Hofheinz, Hideki Imai,
+  Eike Kiltz, Rafael Pass, Abhi Shelat, and Vinod Vaikuntanathan
+Relations Among Notions of Non-malleability for Encryption . . . . . . . . . .                                              519
+   Rafael Pass, Abhi Shelat, and Vinod Vaikuntanathan
+
+Cryptanalysis
+Cryptanalysis of the Tiger Hash Function . . . . . . . . . . . . . . . . . . . . . . . . . . .                              536
+   Florian Mendel and Vincent Rijmen
+Cryptanalysis of Grindahl . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                     551
+   Thomas Peyrin
+XIV        Table of Contents
+
+A Key Recovery Attack on Edon80 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                  568
+  Martin Hell and Thomas Johansson
+
+
+Author Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   583
+

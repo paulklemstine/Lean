@@ -1,0 +1,413 @@
+18.783 Elliptic Curves                                                        Spring 2015
+Lecture #19                                                                   04/16/2015
+
+
+19     Riemann surfaces and modular curves
+Let O be an order in an imaginary quadratic field K and let D = disc(O). In the previous
+lecture we defined the Hilbert class polynomial
+                                            Y
+                             HD (X) =            (X − j(E))
+                                             j(E)∈EllO (C)
+
+where EllO (C) := {j(E) : E/C has End(E) = O}, and claimed that HD ∈ K[x] (in fact
+HD ∈ Z[x]), which implies that every elliptic curve E/C with complex multiplication is
+actually defined over a number field K(j(E)), where j(E) is an algebraic integer.
+    In order to prove this, and in order to develop efficient algorithms for explicitly com-
+puting HD (X), we need to temporarily divert our attention to the study of modular curves.
+These curves, and the modular functions that are defined on them, are a major topic in
+their own right, one to which entire courses (and even research careers) are devoted. We
+shall only scratch the surface of this subject, focusing on the specific results that we need.
+Our presentation is adapted from [1, V.1] and [2, I.2].
+
+19.1    The modular curves X (1) and Y (1)
+Recall the modular group Γ = SL2 (Z), which acts on the upper half plane H via linear
+fractional transformations. The quotient H/Γ (the Γ-orbits of H) is known as the modular
+curve Y (1), whose points may be identified with points in the fundamental region
+
+          F = {z ∈ H : re(z) ∈ [−1/2, 1/2) and |z| ≥ 1, with |z| > 1 if re(z) > 0}.
+
+You may be wondering why we call Y (1) a curve. Recall from Theorem 18.5 that the j-
+function gives a holomorphic bijection from F to C, and we shall prove that in fact Y (1) is
+isomorphic, as a complex manifold, to the complex plane C, which we may view as an affine
+curve: let f (X, Y ) = Y and note that the zero locus of f is just {(X, 0) : X ∈ C} ≃ C.
+    The fundamental region F is not a compact subset of H, since it is unbounded along the
+positive imaginary axis. To remedy this deficiency, we compactify it by adjoining a point
+at infinity to H and including it in F. But we also want SL2 (Z) to act on our extended
+upper half plane. Given that
+                                            aτ + b    a
+                                      lim          = ,
+                                    im τ →∞ cτ + d    c
+we need to include the set of rational numbers in our extended upper half plane in order
+for Γ to act continuously. So let
+
+                                  H∗ = H ∪ Q ∪ {∞} = H ∪ P1 (Q),
+
+and let Γ act on P1 (Q) via
+                                     
+                                  a b
+                                        (x : y) = (ax + by : cx + dy).
+                                  c d
+
+
+
+
+                                                                          Andrew V. Sutherland
+    The points in H∗ \H = P1 (Q) are called cusps; as shown in Problem Set 8, the cusps are
+all Γ-equivalent. Thus we may extend our fundamental region F for H to a fundamental
+region F ∗ for H∗ by including the cusp at infinity: the point ∞ = (1 : 0) ∈ P1 (Q), which
+we may view as lying infinitely far up the positive imaginary axis.
+    We can now define the modular curve X(1) = H∗ /Γ, which contains all the points
+in Y (1), plus the cusp at infinity. This is a projective curve, in fact it is the projective
+closure of Y (1). It is also a compact Riemann surface, a connected complex manifold of
+dimension 1. Before stating precisely what this means, our first goal is to prove that X(1)
+is a compact Hausdorff space.
+    To give the extended upper half plane H∗ a topology, we begin with the usual (open)
+neighborhoods about points τ ∈ H (all open disks about τ that lie in H). For cusps τ ∈ Q
+we take the union of {τ } with any open disk in H tangent to τ to be a neighborhood of τ .
+For the cusp at infinity, any set of the form {∞} ∪ {τ ∈ H : im τ > r} with r > 0 is a
+neighborhood of ∞.
+    With this topology it is clear that H∗ is a Hausdorff space (any two points can be
+separated by neighborhoods). It does not immediately follow that X(1) = H∗ /Γ is a
+Hausdorff space; a quotient of a Hausdorff space need not be Hausdorff. To prove that
+X(1) is Hausdorff we first derive two lemmas that will be useful in what follows.
+
+Lemma 19.1. For any compact sets A and B in H the set S = {γ : γA ∩ B 6= ∅} is finite.
+
+Proof. Let m = min{im τ : τ ∈ A} and M = max{| re τ | : τ ∈ A}, and define
+
+                        r = max{im τA / im τB : τA ∈ A, τB ∈ B}.
+
+Recall that for any γ = ac db ∈ Γ we have im γτ = im τ /|cτ + d|2 . If γ sends τA ∈ A to
+                             
+
+τB ∈ B, then |cτA + d|2 = im τA / im τB ≤ r. This implies (cm)2 ≤ r and (cM + d)2 ≤ r,
+which gives upper bounds on |c| and |d| for any γ ∈ S. Thus the number of pairs (c, d)
+arising among ac db ∈ S is finite. Let us now fix one such pair and define
+
+                         s = max{|τB ||cτA + d| : τA ∈ A, τB ∈ B}.
+                   
+For any γ = ac db ∈ Γ we have |γτ | = |aτ + b|/|cτ + d|. If γ sends τA ∈ A to τB ∈ B, then
+|aτA + b| = |τB ||cτA + d| ≤ s. As above, this gives
+                                                  upper bounds on |a| and |b|, proving that
+                                             a b
+the number of pairs (a, b) arising among c d ∈ S is finite. So S is finite.
+
+Lemma 19.2. For τ1 , τ2 ∈ H∗ there exist neighborhoods U1 of τ1 and U2 of τ2 such that
+
+                             γU1 ∩ U2 6= ∅    ⇐⇒     γτ1 = τ2 ,
+
+for all γ ∈ Γ. In particular, every τ ∈ H∗ has a neighborhood containing no points γτ 6= τ .
+
+Proof. We first note that if γτ1 = τ2 , then γU1 ∩ U2 6= ∅ for all neighborhoods U1 of τ1 and
+U2 of τ2 , so we only need to prove the forward implication in the statement of the lemma.
+    We first consider τ1 , τ2 ∈ H, with compact neighborhoods C1 and C2 , respectively,
+and let S = {γ : γC1 ∩ C2 6= ∅ and γτ1 6= τ2 }. If S is empty then let U1 ⊂ C1 be a
+neighborhood of τ1 and let U2 ⊂ C2 be a neighborhood of τ2 . Otherwise, pick γ ∈ S,
+pick a neighborhood U1 of τ1 such that τ2 6∈ γU1 , pick a neighborhood U2 of τ2 such that
+γU1 ∩ U2 = ∅, and replace C1 and C2 by the closures of U1 an U2 , respectively, yielding a
+smaller set S. Note that the existence of U1 and U2 is guaranteed by the continuity of the
+function f (τ ) = γτ = (aτ + b)/(cτ + d). By Lemma 19.1, S is finite, so we eventually have
+S = ∅ and neighborhoods U1 and U2 that satisfy the lemma.
+    We now consider τ1 ∈ H and τ2 = ∞. Let U1 be a neighborhood of τ1 with U 1 ⊂ H. The
+set {|cτ + d| : τ ∈ U1 , c, d ∈ Z not both0} is bounded below, and {im γτ : γ ∈ Γ, τ ∈ U1 } is
+bounded above, say by r, since im ac db τ = im τ /|cτ + d|2 . If we let U2 = {τ : im τ > r} be
+our neighborhood of τ2 = ∞, then γU1 ∩ U2 = ∅ for all γ ∈ Γ and the lemma holds. This
+argument extends to all the cusps in H∗ , since every cusp is Γ-equivalent to ∞, and we can
+easily reverse the roles of τ1 and τ2 , since if γU1 ∩ U2 = ∅ then U1 ∩ γ −1 U2 = ∅.
+    Finally, if τ1 = τ2 = ∞ we let U1 = U2 = {τ ∈ H : im τ > 1} ∪ {∞}: for im τ > 1 either
+im γτ = im τ , in which case γ = ( 10 ∗1 ) fixes ∞, or im γτ = im τ /|cτ + d|2 < 1.
+
+Theorem 19.3. X(1) is a connected compact Hausdorff space.
+
+Proof. It is clear that H is connected, hence its closure H∗ is connected, and the quotient
+of a connected space is connected. So X(1) is connected.
+    To show that X(1) is compact, we show that every open cover has a finite subcover.
+Let {Ui } be an open cover of X(1) and let π : H∗ → X(1) be the quotient map. Then
+{π −1 (Ui )} is an open cover of H∗ and it contains an open set V0 containing the point ∞.
+Let {V1 , . . . , Vn } be a finite subset of {π −1 (Ui )} covering the compact set F − V0 (note that
+V0 contains a neighborhood {z : im z > r} of ∞). Then {V0 , . . . , Vn } is a finite cover of F ∗ ,
+and {π(V0 ), . . . , π(Vn )} is a finite subcover of {Ui }.
+    To show that X(1) is Hausdorff, let x1 , x2 ∈ X(1) be distinct, and choose τ1 , τ2 so that
+π(τ1 ) = x1 and π(τ2 ) = x2 . Then τ2 6= γτ1 for all γ ∈ Γ (since x1 6= x2 ), so by Lemma 19.2,
+there are neighborhoods U1 and U2 of τ1 and τ2 respectively for which γU1 ∩ U2 = ∅ for all
+γ ∈ Γ. Thus π(U1 ) and π(U2 ) are disjoint neighborhoods of x1 and x2 .
+
+   We note that Lemmas 19.1 and 19.2 and Thoerem 19.3 all hold if we replace Γ by
+any finite-index subgroup of Γ; the proofs are essentially the same, the only change is an
+additional argument in the proof of Lemma 19.2 to handle inequivalent cusps.
+
+19.2       Riemann surfaces
+Definition 19.4. A complex structure on a topological space X is an open cover {Ui }
+of X together with a set of compatible homeomorphisms1 ψi : Ui → C with open images.
+Homeomorphisms ψi and ψj are compatible if the transition map
+
+                                 ψj ◦ ψi−1 : ψi (Ui ∩ Uj ) → ψj (Ui ∩ Uj )
+
+is holomorphic (vacuously true whenever Ui ∩ Uj = ∅).
+
+   The homeomorphisms ψi are called local parameters, or charts, and the set {ψi } is called
+an atlas. Each of the charts ψi allows us to view a local piece of X as a region of the complex
+plane; the transition maps allow us to move smoothly from one region to another. Note
+that the transition maps are necessarily homeomorphisms; the requirement that they also
+be holomorphic is the key feature that differentiates complex manifolds from real manifolds.
+  1
+      Recall that a homeomorphism is a bicontinuous function, a continuous function with a continuous inverse.
+Definition 19.5. A Riemann surface is a connected Hausdorff space with a complex struc-
+ture (equivalently, a connected complex manifold of dimension one).2
+
+Example 19.6. The torus C/L corresponding to an elliptic curve E/C is a Riemann
+surface. To give C/L a complex structure let π : C → C/L be the quotient map, let r > 0
+be less than half the length of the shortest vector in L, and for each z ∈ C in a fundamental
+region for L, let Uz ⊆ C be the open disc or radius r centered at z. The restriction of π
+to each Uz is injective (by our choice of r) and defines a homeomorphism. We may thus
+take {π(Uz )} as our open cover and the inverse maps π −1 : π(Uz ) → Uz as our charts. The
+transition maps are all the identity map, hence holomorphic.
+    It is clear that C/L is a connected Hausdorff space, hence a Riemann surface, in fact
+a compact Riemann surface. We can compute its genus by triangulating a fundamental
+parallelogram and computing its Euler characteristic. Recall Euler’s formula
+
+                                           V − E + F = 2 − 2g,
+
+where V counts vertices, E counts edges, F counts faces, and g is the genus. If L = [ω1 , ω2 ],
+we may triangulate the parallelogram F0 by drawing a diagonal from ω1 to ω2 . We then
+have V = 1 (every lattice point is equivalent to 0), E = 3 (edges on the opposite side of the
+parallelogram are equivalent, so 2 edges on the border plus the diagonal), and F = 2 (two
+triangles, one on each side of the diagonal). We thus have
+
+                                            1 − 3 + 2 = 2 − 2g,
+
+and g = 1, as expected.
+
+    In order to show that X(1) is a Riemann surface, we need to give it a complex structure.
+The only difficulty that arises when doing so occurs at points in H∗ that possess extra
+symmetries under the action of Γ. We may restrict our attention to the fundamental
+region F ∗ , and in this region there are only three points that we need to worry about, the
+points i, ρ := e2πi/3 , and ∞. We require the following lemma.
+
+Lemma 19.7. For τ ∈ F ∗ , let Gτ denote the stabilizer of τ in Γ = SL2 (Z). Let S = 01 −1
+                                                                                           
+                                                                                         0
+and T = ( 10 11 ). Then
+                               
+                               
+                               
+                                {±I} ≃ Z/2Z          if τ ∈
+                                                           / {i, ρ, ∞};
+                               
+                               hSi ≃ Z/4Z            if τ = i;
+                          Gτ =
+                               
+                               
+                                hST i ≃ Z/6Z         if τ = ρ
+                               
+                               h±T i ≃ Z             if τ = ∞.
+
+Proof. See Problem Set 8, or stare at Figure 1 and note −I acts trivially and T ∞ = ∞.
+
+   2
+    Strictly speaking, a Riemann surface is also required to be second-countable, meaning that it admits a
+countable basis of open sets. This is a technical condition that is easily satisfied by all the Riemann surfaces
+H∗ /G that we shall consider (to get a countable basis for H take open discs of rational radii centered at
+points with rational real and imaginary parts, for example).
+                            ∞                       ∞                    ∞
+
+
+
+
+                           T −1                     I                    T
+
+
+
+
+                            i                        i                   i
+                    ρ       i             ρ          i              ρ    i
+                                      ρ                        ρ             ρ
+                                          ρ                         ρ
+                          (ST )2                    S                   TS
+                                      i   i                     i   i
+                                   ST S       ST          (T S)2 T ST
+                                      ρ                         ρ
+                            ∞∞                     ∞∞∞                  ∞∞
+
+
+
+                  -3/2      -1        -1/2           0          1/2      1   3/2
+
+
+                                              Figure 1: H∗ /Γ
+
+19.3    The modular curve X(1) as a Riemann surface
+We now put a complex structure on X(1). Let π : H∗ → X(1) be the quotient map, and
+for each point x ∈ X(1) let τx be the unique point in the fundamental region F ∗ for which
+π(τx ) = x, and let Gx = Gτx be the stabilizer of τx . For each τx ∈ F ∗ , we can pick a
+neighborhood Ux such that γUx ∩ Ux = ∅ for all γ 6∈ Gx , by Lemma 19.2. The sets π(Ux )
+form an open cover of X(1). For x 6= ∞, we can map Ux to an open subset of the unit disk
+D = {z ∈ C : |z| < 1} via the homeomorphism δx : H → D defined by
+                                                         τ − τx
+                                          δx (τ ) :=            .                           (1)
+                                                         τ − τx
+To visualize the map δx , note that it sends τx to the origin, and if we extend its domain
+to H, it maps the real line to the unit circle minus the point 1 and sends ∞ to 1. Note that
+im τ > 0 and im τ x < 0, so the denominator is nonzero for all τ ∈ H.
+    To define ψx we need to map π(Ux ) into D. For τx 6= i, ρ, ∞ we have Gx = {±1}, which
+fixes every point in Ux , not just τx . In this case the restriction of π to Ux is injective, we
+have Ux /Γ = Ux /Gx = Ux , so we can simply define ψx := δx ◦ π −1 .
+    When |Gx | > 2, the restriction of π to Ux is no longer injective (it is at τx , but not at
+points near τx ), so we cannot use ψx = δx ◦ π −1 . We instead define ψx (z) = δx (π −1 (z))n ,
+where n = |Gx |/2 is the size of the Γ-orbits in Ux \{τx }. Note that when Gx = {±1} we
+have n = 1 and this is the same as defining ψx = δx ◦ π −1 . To prove that this actually
+works, we will need the following lemma.
+Lemma 19.8. Let τx ∈ H, with δx (τ ) as in (1), and let ϕ : H → H be a holomorphic
+function fixing τx whose n-fold composition with itself is the identity, with n minimal. Then
+for some primitive nth root of unity ζ, we have δx (ϕ(τ )) = ζδx (τ ) for all τ ∈ H.
+Proof. The map f = δx ◦ ϕ ◦ δx−1 is a holomorphic bijection (conformal map) from D to D
+that fixes 0. Every such function is a rotation f (z) = ζz with |ζ| = 1, by [3, Cor. 8.2.3].
+Since the n-fold composition of f with itself is the identity map, with n minimal, ζ must
+be a primitive nth root of unity.
+
+   What about x = ∞? We have G∞ = h±T i, so the intersection of the Γ-orbit of any
+point τ ∈ U∞ \{∞} with U∞ is the set {τ + m : m ∈ Z}. We now define
+                                       (
+                                        e2πiz if z 6= ∞,
+                             δ∞ (z) :=
+                                        0      if z = ∞,
+
+and let ψ∞ = δ∞ ◦ π −1 . Then δ∞ (τ + m) = δ∞ (τ ) for all τ ∈ U∞ \{∞} and m ∈ Z.
+
+   The following commutative diagrams summarize the charts ψx :
+
+                     Ux    π     Ux /Gx                       Ux      π         Ux /Gx
+
+                     δx             ψx                                     δx     ψx
+
+
+                     D      zn      D                                             D
+                                       −τx
+                  x 6= ∞, ψx (τ ) = ττ −τ x
+                                                             x = ∞, ψx (τ ) = e2πiτ
+                       n = |Gx |/2
+
+    We are now ready to prove that X(1) is a compact Riemann surface. Theorem 19.3
+states that X(1) is a connected compact Haussdorff space, so we just need to prove that
+we have a complex structure on X(1). This means verifying that the maps ψx : π(Ux ) → D
+are well-defined (we must have ψ(π(γτ )) = ψ(π(τ )) for all τ ∈ Ux and γ ∈ Gx ), that they
+are homeomorphisms, and that the transition maps are holomorphic.
+
+Theorem 19.9. The open cover {Ux } and atlas {ψx } define a complex structure on X(1).
+
+Proof. As above, let x = π(τx ) with τx ∈ F ∗ . We first verify that the maps ψx are well-
+defined and homeomorphisms.
+    We first consider x 6= ∞. By Lemma 19.7, the stabilizer Gx of τx is cyclic of order 2n,
+and γ n = ±1 acts trivially for all γ ∈ Gx . Applying Lemma 19.8 to the function ϕ(τ ) = γτ ,
+we have δx (γz) = ζδx (z) for all z ∈ Ux , where ζ is a primitive nth root of unity. Thus
+
+                   ψx (π(γz)) = δx (γz)n = ζ n δx (z)n = δx (z)n = ψx (π(z))
+
+for all z ∈ Ux . It follows that ψx is well defined on Ux /Gx . To show that ψx is a home-
+omorphism, it suffices to show that it is holomorphic and injective, by the open mapping
+theorem [3, Thm. 5.5.4]. It is clearly holomorphic, since δx (τ ) is a rational function with no
+poles in Ux . To prove injectivity, assume ψx (π(τ1 )) = ψx (π(τ2 )). Then for some integer k
+
+                                 δx (τ1 )n = δx (τ2 )n
+                                  δx (τ1 ) = ζ k δx (τ2 ) = δx (γ k τ2 )
+                                         τ1 = γ k τ2
+                                   π(τ1 ) = π(τ2 ).
+Thus ψx is an injective and therefore a homeomorphism.
+    For x = ∞, the point τ = ∞ ∈ H∗ is the unique point in U∞ for which π(τ ) = ∞, and
+ψx (τ ) = 0 if and only if τ = ∞. So ψ∞ is well defined at ∞. For τ ∈ U∞ \{∞}, we have
+            ψ∞ (π(τ + m)) = δ∞ (τ + m) = e2πi(τ +m) = e2πiτ = δ∞ (τ ) = ψ∞ (π(τ ))
+for all m ∈ Z, thus ψ∞ is well defined. The map ψ∞ is clearly continuous, and it has a
+continuous inverse                  (
+                                         1
+                                                  
+                           −1         π 2πi log z   if z 6= 0,
+                          ψ∞ (z) =
+                                      ∞             otherwise,
+thus it is a homeomorphism.
+   We now show that the transition maps are holomorphic. Let us first consider Ux , Uy
+with x, y 6= ∞. For any z ∈ ψx (π(Ux ) ∩ π(Uy )) ⊆ D we have
+                                                                                    n
+     ψy ◦ ψx−1 (z) = ψy ◦ π ◦ π −1 ◦ ψx−1 (z) = (ψy ◦ π) ◦ (ψx ◦ π)−1 (z) = δy y ◦ δx−1 (z 1/nx ),
+                                                      n
+where nx = |Gx |/2 and ny = |Gy |/2. The map δy y ◦δx−1 is holomorphic on D, so it suffices to
+                                                               n
+show that it is a power series in z nx ; this will imply that δy y ◦δx−1 (z 1/nz ) is defined by a power
+series in z, hence holomorphic. Let ζ be an nx th root of unity such that δx (γz) = ζδx (z),
+where γ generates Gx , as in Lemma 19.8. Note that π ◦ γ = π for any γ ∈ Γ, so we have
+            n                                                                   n
+           δy y ◦ δx−1 (ζz) = (ψy ◦ π) ◦ (γ ◦ δx−1 (z)) = ψy ◦ π ◦ δx−1 (z) = δy y ◦ δx−1 (z).
+                  n
+It follows that δy y ◦ δx−1 is a power series in z nx , since it maps ζz and z to the same point.
+    For x 6= ∞ and y = ∞ we have
+                ψ∞ ◦ ψx−1 (z) = ψy ◦ π ◦ π −1 ◦ ψx−1 (z) = (ψy ◦ π) ◦ (ψx ◦ π)−1 (z)
+                                                                           
+                              = δ∞ ◦ δx−1 (z 1/nx ) = exp 2πi δx−1 (z 1/nx ) ,
+
+where δ∞ ◦ δx−1 is holomorphic. and the same argument used above shows that it is actually
+a power series in z nx .
+   For the case x = ∞ and y 6= ∞, we have
+                          n                                             n
+                         δy y (z + 1) = ψy ◦ π ◦ T z = ψy ◦ π(z) = δy y (z),
+    n
+so δy y is a holomorphic function in the variable q = e2πiz (note z ∈ U∞ ∩ Uy is bounded).
+Thus the transition map                                      
+                                     −1        ny    1
+                               ψy ◦ ψ∞ (z) = δy         log z
+                                                    2πi
+                                                           −1 is the identity map.
+is holomorphic. The case x = y = ∞ is trivial, since ψ∞ ◦ ψ∞
+Theorem 19.10. The modular curve X(1) is a compact Riemann surface of genus 0.
+Proof. That X(1) is a compact Riemann surface follows immediately from Theorems 19.3
+and 19.9. To show that it has genus 0, we triangulate X(1) by connecting the points i, ρ,
+and ∞, partitioning the surface into two triangles. Applying Euler’s formula
+                                        V − E + F = 2 − 2g
+with V = 3,E = 3, and F = 2, we see that g = 0.
+    Theorem 19.10 implies that X(1) is homeomorphic to the Riemann sphere S = P1 (C),
+since, up to isomorphism, S is the unique compact Riemann surface of genus 0. The
+modular curve Y (1) is also a Riemann surface of genus 0, but it is not compact. As we saw
+in Lecture 17, Y (1) is homeomorphic to the complex plane C via the j-function.
+19.4    Modular curves
+We also wish to consider modular curves defined as quotients H∗ /Γ for various finite index
+subgroups Γ of SL2 (Z) that have desirable arithmetic properties.
+
+Definition 19.11. The principal congruence subgroup Γ(N ) is defined by
+                                               
+                  Γ(N ) = ac db ∈ SL2 (Z) : ac db ≡ ( 10 01 ) mod N .
+
+A congruence subgroup (of level N ) is any subgroup of SL2 (Z) that contains Γ(N ). A
+modular curve is a quotient of H∗ or H by a congruence subgroup.
+
+Remark 19.12. Every congruence subgroup is a finite index subgroup of SL2 (Z). The
+converse does not hold; in fact, most finite index subgroups of SL2 (Z) are not congruence
+subgroups, although it is surprisingly difficult to write down explicit examples (you will
+have the opportunity to explore this question in Problem Set 10).
+
+   There are two families of congruence subgroups of particular interest:
+
+                  Γ1 (N ) := ac db ∈ SL2 (Z) : ac db ≡ ( 10 ∗1 ) mod N ;
+                                                  
+
+                  Γ0 (N ) := ac db ∈ SL2 (Z) : ac db ≡ ( ∗0 ∗∗ ) mod N ;
+                                                  
+
+
+Note that Γ(1) = Γ1 (1) = Γ0 (1) = SL2 (Z). We now define the modular curves
+
+         X(N ) := H∗ /Γ(N ),      X1 (N ) := H∗ /Γ1 (N ),      X0 (N ) := H∗ /Γ0 (N ),
+
+and similarly define
+
+           Y (N ) := H/Γ(N ),      Y1 (N ) := H/Γ1 (N ),    Y0 (N ) := H/Γ0 (N ).
+
+Following the same strategy we used for X(1), one can show that these are all compact
+Riemann surfaces (things are slightly more complicated because there may be many in-
+equivalent cusps to consider).
+
+
+References
+[1] J.S. Milne, Elliptic curves, BookSurge Publishers, 2006.
+
+[2] J.H. Silverman, Advanced topics in the the arithmetic of elliptic curves, Springer, 1994.
+
+[3] E.M. Stein and R. Shakarchi, Complex analysis, Princeton University Press, 2003.
+

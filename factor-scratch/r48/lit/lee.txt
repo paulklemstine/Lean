@@ -1,0 +1,5167 @@
+Rigorous Analysis of a Randomised Number Field Sieve
+Jonathan D. Leea , Ramarathnam Venkatesanb
+a Mathematical Institute, University of Oxford, UK & Microsoft Research Redmond
+
+arXiv:1805.08873v1 [math.NT] 22 May 2018
+
+b Microsoft Research India & Redmond
+
+Abstract
+Factorisation of integers n is of number theoretic and cryptographic significance. The Number Field Sieve
+(NFS) introduced circa 1990, is still the state of the art algorithm, but no rigorous proof that it halts
+or generates relationships is known. We propose and analyse an explicitly randomised variant. For each
+n, we show that these randomised variants of the NFS and Coppersmith’s multiple polynomial sieve find
+congruences of squares in expected times matching the best-known heuristic estimates.
+Keywords: Factoring, Probabilistic Combinatorics, Additive Number Theory
+2010 MSC: 11Y05 (primary); 11-04, 05D40, 60C05 (secondary)
+
+Contents
+1 Introduction
+
+1
+
+2 Our Results
+
+5
+
+3 Preliminaries
+
+6
+
+4 The Randomised Number Field Sieve
+
+13
+
+5 Finding Many Relationships and the Proof of Theorem 2.5
+
+15
+
+6 Controlling Algebraic Obstructions to Squares and the Proof of Theorem 2.6
+
+25
+
+7 Non-trivial Factors from Found Congruences
+
+38
+
+8 Smooth Numbers in Progressions and the Proof of Lemma 5.21.
+
+39
+
+1. Introduction
+For real numbers a, b, x, we write
+
+
+a
+1−a
+.
+Lx (a, b) = exp b(log x) (log log x)
+
+To factor n, modern factoring algorithms first find a congruence of squares x2 = y 2 mod (n), which is
+hopefully not trivial in the sense x 6= ±y mod (n), and next compute gcd(x ± y, n) to obtain factors of n.
+Hence the runtime analysis is devoted to the first part and studied actively [6, 48, 10, 4, 47, 11, 58, 33, 49],
+Email addresses: jonathan.lee@merton.ox.ac.uk, jonatlee@microsoft.com (Jonathan D. Lee), venkie@microsoft.com
+(Ramarathnam Venkatesan)
+Preprint submitted to Elsevier
+
+June 27, 2017
+
+while the second part has been elusive and heuristic with the exception of variants of Dixons algorithm and
+the class group algorithm. In the subsequent, we introduce a randomised variant of the Number Field Sieve
+and provide an unconditional analysis on the first part, and provide evidence that the factors so obtained
+are non-trivial. In particular:
+Theorems 2.1 (p. 5) and 2.3 (p. 5). There is a randomised variant of the Number Field Sieve which for
+each n finds congruences of squares x2 = y 2 mod (n) in expected time:
+!
+r
+
+
+1 3 64
+1
+Ln
+,
++ o(1) ≃ Ln
+, 1.92299 . . . + o(1) .
+3
+9
+3
+These congruences of squares are not trivially of the form x = ±y: conditional on a mild character assumption (Conjecture 7.1 (p. 39)), for n the product of two primes congruent to 3 mod 4, the factors of n may
+be recovered in the same asymptotic run time.
+We use a probabilistic technique, which we term stochastic deepening, to avoid the need to show second
+moment bounds on the distribution of smooth numbers. These results can be shown to extend to Coppersmith’s multiple polynomial sieve of [9], a randomised variant of which finds congruences of squares modulo
+n in expected time:
+
+ s
+√
+
+
+1
+1 3 92 + 26 13
++ o(1) ≃ Ln
+, 1.90188 . . . + o(1) .
+Ln  ,
+3
+27
+3
+
+Part of the randomisation is similar to the polynomial selection algorithm of Kleinjung [26], which is
+popular in empirical studies, in that we add an (X − m)R(X) to the field polynomial where m is the root of
+that polynomial in Z/nZ. Kleinjung chooses m and R to minimise certain norms and improve smoothness,
+whilst our R is random.
+Integer factorisation is of fundamental importance both in algorithmic number theory and in cryptography. In the latter setting, it is especially important to have effective bounds on the run time of existing
+algorithms, as many existing systems depend on being able to produce integers whose factorisations will
+remain unknown for decades, even allowing for the rapid increases in the cost-effectiveness of computational
+hardware. For example, an understanding of the factoring of numbers n with log2 n ≈ 4096 is important in
+practice, while the public record for a factorisation of a general number stands at log2 n ≈ 768. A uniform
+and effective bound will be useful in understanding the run time as log2 n increases. While our methods
+apply to general composites, in applications there is particular interest in factoring semiprimes, integers
+with two prime factors of nearly equal size, which are considered to be the most challenging type of integer
+to factor.
+The Number Field Sieve (NFS) has been the state of the art algorithm for factorisation since its introduction nearly three decades ago [6]. Unfortunately,
+has been thus far entirely heuristic [49],
+ q its analysis
+
+
+1 3 64
+3,
+9 + o(1) . This became of practical importance in the
+
+1
+mid 1990s when it bettered the (also heuristic) Ln 2 , 1 + o(1) run time of the previous champion Quadratic
+
+with the claimed run time on an input n of Ln
+
+Sieve.
+It is a priori unclear how to argue that the NFS even halts [35]. Even assuming standard conjectures
+(e.g.; GRH), there is no analysis that any substantial part of the NFS will halt. In particular, the NFS and
+other algorithms critically depend on the existence of sufficient numbers of smooth elements among rational
+or algebraic integers on certain linear forms, which cannot be guaranteed in current algorithms. Similarly,
+in implementations the NFS cannot assure the reduction from smooth relations to a congruence of squares,
+because ideal factorisation is avoided in favour of Adleman’s approach based on characters. Our explicit
+randomisation allows us to get around these problems by analysing the average case as opposed to the worst
+case, influenced by the recent works on distribution of smooths on arithmetic progressions [53, 14, 15, 17] and
+the philosophy that sums of arithmetic functions are essentially determined by the part over smooths [16, 60].
+2
+
+In short, we make essential use and strengthening of these tools as well as probabilistic combinatorics, and
+it may explain why no analysis was available earlier.
+The fastest algorithms
+with known rigorous analysis are unfortunately much slower, with the best result
+
+being Ln 12 , 1 + o(1) [33], where the basic operations are performed in the class group on quadratic forms;
+they also show that hazarding new conjectures that seem necessary to formally analyse run times can be
+risky, as they may formally contradict earlier natural conjectures. In this paper, we will present and analyse
+an explicitly randomised version of the NFS. We will show bounds on the expectation of the time taken to
+produce congruences of squares
+(x, y) : x2 ≡ y 2 mod (n).
+These bounds will be of form
+Ln
+
+
+
+
+1
+, Θ(1) ,
+3
+
+and are the first time that bounds of this type have been obtained for any factorisation algorithm. To obtain
+sharper estimates for the Θ(1) term, we use randomness to remove dependence on second moment bounds
+for which proofs known to us use the Riemann Hypothesis. This is analogous to the situation between the
+Miller and Miller-Rabin primality tests.
+Historically, there has been a close link in the sieving aspects of integer factorisation and the discrete
+logarithm problems. The NFS, along with many other factorisation algorithms, has an identically named
+analogue for computing discrete logarithms. For the discrete logarithm in small characteristic, recent breakthrough results [24, 5] have suggested that much faster algorithms exist. We will not touch on an analysis
+of this algorithm for the discrete logarithm in this paper.
+We provide a conditional analysis of whether the congruences of squares will be fruitful, that is whether
+they yield a non-trivial factorisation of n. In the specific case that n = pq is semiprime with p ≡ q ≡ 3
+mod (4), and modulo a character decorrelation conjecture, we are able to show that the factors are non-trivial
+with probability 1/2. As the conjecture may indicate, the analysis of this fruitfulness seems involved and
+likely to require methods that are substantially different from the initial analysis of relationship formation.
+For example, the analysis of Pollard’s Rho algorithm for the discrete logarithm, the run time for forming
+√
+relationships was shown to be p log3 p [38] using characters and quadratic forms; this was later improved to
+be optimal up to constant factors by Kim, Montenegro, Peres and Tetali [25] using combinatorial methods.
+However, the known proof that the relations are fruitful [37] still uses analytic methods with a substantially
+more complex analysis. For the Number Field Sieve we expect that the analysis will be even more arduous.
+1.1. Combinations of Congruences
+All modern factoring algorithms have core similarities, and are referred to as combinations of congruences
+algorithms to draw attention to this fact. To present the main ideas involved, we will discuss Dixon’s random
+squares algorithm. The first observation, due to Fermat, is that
+x2 ≡ y 2 mod (n) ⇔ n | x2 − y 2 = (x + y)(x − y)
+and if we are lucky we may find that n does not divide x ± y; in this case gcd(n, x + y) is a non-trivial factor
+of n. We can generate pairs
+(xi , zi ) : x2i ≡ zi mod (n),
+
+by choosing xi at random to be an integer in [n] and setting zi = x2i mod (n). Then to produce a pair
+(x, y) it suffices to find a subset S of the zi whose product is a square in Z. We note that even the problem
+of finding how large a random subset of [n] must be to contain a subset S whose product is a square is of
+substantial independent interest [48, 10]. The main step is to search for B-smooth zi :
+Y e
+zi : p prime, p|zi ⇒ p < B
+⇔
+zi =
+pj i,j , pj prime.
+pj <B
+
+3
+
+If all the zi are B-smooth then a product zisi is square if and only if
+X
+si ei,j ⇔ s ∈ kerF2 (E)
+∀j, 2|
+i
+
+where E = (ei,j ) and s is a column vector of si , which can be found by standard means whenever it exists.
+This calculation with indices ei,j is what gives this class of algorithm its name. Once a relationship x2 ≡ y 2
+mod (n) has been found, we compute gcd(x ± y, n) and hope that at least one is a non-trivial factor of n; in
+this case we say that the congruence is fruitful.
+Hence to have a functional algorithm it suffices to have methods for finding B-smooth values of the
+zi . Analysis of the run time additionally requires some estimate of the probability that zi is B-smooth.
+At a high-level, we can see that as B is increased, the density of B-smooth integers increases, whilst the
+number of B-smooth zi we will need to find to guarantee that a vector si exists will also increase. These
+two effects are balanced when B = Ln 21 , Θ(1) . For Dixon’s algorithm, this choice results in a run time of
+√
+
+Ln 21 , 2 2 + o(1) (see Corollary 3.12 (p. 8) with b = 1 and a = 12 ).
+Various modifications of this core algorithm exist. One line of modifications is to keep track of zi which
+are almost B-smooth, in the sense of having few factors which are too large, hoping to combine them later
+to find B-smooth numbers lying under a square in Z [31]. Another approach is to attempt to make the
+numbers zi smaller, since heuristically the density of B-smooth numbers is decreasing in |zi |. This is the core
+
+p
+idea in Vallée’s algorithm [58], which can be rigorously shown to have a run time of Ln 21 , 4/3 + o(1) .
+√
+1
+The Quadratic Sieve reduces
+the size of the zi to be n 2 +o(1) by choosing xi ≃ n, and achieves a heuristic
+
+run time of Ln 12 , 1 + o(1) , though its analysis seems out of reach.
+Observe that in all of these algorithms, we use combinations of congruences to find a product of the zi
+which is a square y 2 , but ensure that the associated product of x2i is a square by ensuring that each relation
+x2i ≡ zi mod (n) has a square on the left-hand side. Further gains are made by relaxing this condition, so
+that we find both x and y as a result of combining congruences. For example, the Schorr-Seysen-Lenstra
+algorithm [33] shifts its attention from square integers to quadratic forms with one coefficient smooth and
+
+of discriminant −dn for small values of d, and is able to achieve an expected run time of Ln 21 , 1 + o(1) .
+1.2. The Number Field Sieve
+
+In the NFS, we instead observe that there are rings other than Z lying over Z/nZ. In particular, if we are
+given a monic polynomial f with a root modulo n at some integer m, we can form the following commuting
+diagram:
+Z[X]
+mod (f )
+
+x→m
+
+Z
+mod (n)
+
+◦
+
+Z[X]/(f )
+X → m, mod (n)
+
+Z/nZ
+If f is reducible, we may directly extract factors of n, and so we may assume f is irreducible. We can
+identify values of Z/nZ which are squares mod n either by virtue of each of them lying under a square in
+Z or a square in Z[X]/(f ). The second ring is then a subset of the ring of integers of the number field
+Q[X]/(f ); on the ring of integers we have a notion of divisibility into prime ideals, a notion of size via the
+field norm, and thus we can define a natural analogue of B-smoothness.
+
+In the NFS, we choose linear polynomials in Z[X] with coefficients of size at most Ln 31 , O(1) , and
+project them into both Z and Z[X]/(f ). We then hope to find many polynomials such that both projections
+are B-smooth. Then we use linear algebra to find a subset whose product is square in Z and also square
+4
+
+in Z[X]/(f ). Then we take square roots in both rings, and project the roots down to Z/nZ to produce a
+congruence of squares.
+In practice, the NFS is rather more complex, as factorisation in the ring of integers of Q[X]/(f ) is
+complicated to work with. Substantial extra bookkeeping needs to be done with characters of large conductor
+on the number field to guarantee that the square we find has a root in Z[X]/(f ) rather than in the larger
+ring of integers. However, the gains are substantial. With optimal choice of parameters, both m and
+the values that we need to be smooth are of size Ln 32 , O(1) . Assuming that all the numbers behave as
+
+independent uniformly random integers of this size and optimising B yields a run time of Ln 13 , Θ(1) ,
+which is much smaller asymptotically than the other algorithms provide. In practice, the NFS is the fastest
+known algorithm for factoring numbers in excess of 100 digits.
+In the NFS as usually implemented, there is a fixed choice of the polynomial f for each m. Additionally,
+the additional bookkeeping needed on the number field side is standardised. Both of these choices make
+the NFS very rigid, and a proper analysis would seem to require precisely understanding the distribution
+of smooth numbers on curves of high degree. Our modification, the Randomised NFS, carefully randomises
+the coefficients of f , and chooses the extra bookkeeping characters stochastically. This allows us to reduce
+the required analysis to an understanding of the average distribution of smooth numbers along arithmetic
+progressions.
+2. Our Results
+We introduce and analyse a variant we call the “Randomised NFS”, which provides more easily controllable behaviour on average. We heavily use a combination of methods of probabilistic combinatorics and
+analytic aspects of number theory, touching on a range of topics.
+Theorem 2.1. For any n, the Randomised NFS runs in expected time:
+!
+r
+1 3 64
+Ln
+,
++ o(1) ,
+3
+9
+and produces a pair x, y with x2 = y 2 mod n.
+Remark 2.2. We note the importance of the algorithm under discussion being a variant of the NFS. Whilst
+it is trivial to generate pairs (x, y) such that x2 = y 2 mod (n) by taking x = ±y mod (n), it is non-trivial
+to find sub-exponential algorithms that could in principle produce a congruence of squares where x 6= ±y
+mod (n). As in the standard NFS, the entirety of the run time is devoted to finding congruences of squares,
+as the recovery of a (potentially trivial) factor of n amounts to a trivial gcd calculation. By convention,
+these algorithms are run repeatedly until a non-trivial factor is found, using independent internal coinflips
+on each run. The general belief is that NFS type algorithms will not always output trivial factors of n (see
+Remark 2.4), and hereafter we refer to the dominant computation as finding the congruence without further
+comment.
+We also present a partial result on the fruitfulness of the congruences.
+Theorem 2.3. For a fixed n semiprime with both prime factors congruent to 3 mod (4), conditional on
+2
+2
+Conjecture 7.1 (p. 39) the Randomised
+NFS
+ q
+ finds a pair x, y such that x = y mod (n) and x 6= ±y
+
+mod (n) in expected time Ln
+
+1 3 64
+3,
+9 + o(1)
+
+.
+
+Remark 2.4. In this case the Randomised NFS is a probabilistic algorithm for factorisation in the style
+of the Miller-Rabin or Solovay-Strassen primality tests. If Conjecture 7.1 (p. 39) fails to hold for a given n
+and f , then any congruences of squares found by inspection of Z[α] and Z would be trivial. We note that
+since the NFS has been successfully run to found factors of numbers of this form, the conjecture is not false
+in general.
+5
+
+Our analysis splits along the same lines as the internal structure of NFS-type algorithms. We will first
+study how many smooth relationships exist and prove the following theorem:
+Theorem 2.5. Take δ, κ, σ, β, β ′ subject to the conditions of Equation 4.1 (p. 14) and 4.2 p
+(p. 14). For any
+n, the Randomised NFS can almost surely find an irreducible polynomial f of degree d = δ 3 log n/ log log n
+and height at most Ln 23 , κ , with α a root of f , n|f (m), and
+
+
+1
+′
+Ln
+, max(β, β ) + o(1)
+3
+distinct pairs a < |b| ≤ Ln (1/3, σ) such that (a − bm) is Ln (1/3, β)-smooth and (a − bα) is Ln (1/3, β ′ )smooth, in expected time at most Ln (1/3, λ) for any
+λ > max(β, β ′ ) +
+
+δ −1 (1 + o(1)) (σδ + κ)(1 + o(1))
+.
++
+3β
+3β ′
+
+In particular, the probability that the Randomised NFS fails to produce such a set is bounded above by
+−1+o(1)
+Ln 23 , κ − δ −1
+.
+
+We also show that we can reduce a collection of smooth relationships to a congruence of squares.
+p
+
+
+Theorem 2.6. Let B = Ln 13 , β and B ′ = Ln 13 , β ′ . Let f be irreducible of degree d = δ 3 log n/ log log n
+
+−1
+
+−1
+and height at most Ln 23 , κ , and let α be a root of f . Then for all but a Ln 23 , κ−δ2 (1 + o(1))
+fraction
+of the set of f , if we are given
+
+
+1
+′
+, max(β, β ) Ω(log log n)
+Ln
+3
+
+pairs a < b ≤ Ln 13 such that a − mb is B-smooth and a − bα is B ′ -smooth, we can find a congruence of
+squares modulo n in expected time at most
+Ln
+
+
+
+
+1+o(1)
+2δ
+1
+, 2 max
+, β, β ′
+.
+3
+3
+
+Remark 2.7. In the case of Coppersmith’s
+multiple polynomial Number Field Sieve [9], we instead
+
+have to find a single m and Ln 13 , η irreducible polynomials f (i) such that f (i) (m) = n, and a collection of
+
+Ln 31 , max(β, β ′ + η) pairs (a, b) such that a − mb is B-smooth and some f (i) (a, b) is B ′ -smooth. In this
+
+case the second constraint of equation 4.1 (p. 14) is replaced by 2σ + η > max(β, β ′ + η) + δ
+(σδ+κ)(1+o(1))
+3β ′
+
+−1
+
+(1+o(1))
++
+3β
+
+−1
+
++ (σδ+κ)(1+o(1))
+and λ > max(β, β ′ + η) + δ (1+o(1))
+. The reduction to a congruence of
+3β
+3β ′
+′
+′
+squares similarly has β replaced by β + η throughout.
+3. Preliminaries
+3.1. Notation and Definitions
+
+Definition 3.1. For any finite set S, we denote the uniform measure over S by Uniform(S).
+Definition 3.2. For any two measures µ, ν over an additive group G, we define their convolution to be:
+X
+(µ ⋆ ν)(x) :=
+µ(y)ν(x − y).
+y∈G
+
+6
+
+Definition 3.3. We define the centred interval of length L in Z to be
+
+
+1 1
+I(L) := − L, L ∩ Z.
+2 2
+We now turn to a collection of classical number theoretic results:
+Definition 3.4. The prime counting functions are given by
+π(x) := |{y < x : y ∈ N, y prime}|
+
+πr.s (x) := |{y < x : y ∈ N, y prime, y = s mod (r)}|,
+Definition 3.5. The logarithmic integral Li(x) is given by
+
+
+
+Z x
+1
+x
+dt
+1+O
+.
+Li(x) :=
+=
+log x
+log x
+2 log t
+Fact 3.6 (The Prime Number Theorem). There is a constant a > 0 such that:
+
+
+ p
+x
+x
+=
+exp −a log x
+(1 + o(1))
+π(x) = Li(x) + O
+log x
+log x
+Definition 3.7. We say n ∈ N is a semiprime if n = pq, with p, q distinct primes.
+Definition 3.8. We define a family of functions Ln (a, c) : N → R+ by:
+
+
+a
+1−a
+.
+Ln (a, c) = exp c(log n) (log log n)
+
+We note that a, c may be functions of n. In our applications, a(n) will always tend to a constant and
+c(n) = (log log n)o(1) , and we will say:
+f (n) = Ln (a) ⇔ ∃c(n) = (log log n)o(1) s.t. f (n) = Ln (a, c),
+We will often perform arithmetic directly with these functions. We note in particular that:
+Ln (a, c)Ln (a, c′ ) = Ln (a, c + c′ )
+and for d = δ
+
+
+
+log n
+log log n
+
+ǫ
+
+, with δ = (log log n)
+
+O(1)
+
+, ǫ = O(1) as functions of n:
+d
+
+Ln (a, c) = Ln (a + ǫ, cδ)
+Remark 3.9. We note that our definition coincides with the standard definition of Ln (a, c) when a is taken
+to be a constant function of n and c tends to some finite limit. Throughout, we will mention o(1) terms for
+the exponent c explicitly in our notation.
+Definition 3.10. For y ∈ N, we say x ∈ N is y-smooth if p prime ∧ p | x ⇒ p < y.
+For any x, y, r, a ∈ N and χ a multiplicative character, we define:
+Ψ(x, y) := |{z ∈ N : z < x, z is y-smooth}|
+
+Ψr (x, y) := |{z ∈ N : z < x, z is y-smooth, (z, r) = 1}|
+Ψ(x, y; r, a) := |{z ∈ N : z < x, z is y-smooth, z ≡ a mod (r)}|
+X
+Ψ(x, y; χ) :=
+1{z′ :z′ is y-smooth} (z)χ(z)
+z<x
+
+̺(x, y) := Ψ(x, y)x−1
+
+7
+
+Fact 3.11 (Canfield, Erdős and Pomerance [7, Corollary pp.15]). Let ǫ > 0 be arbitrary and let 3 ≤ u ≤
+(1 − ǫ) logloglogx x . Then:
+
+
+ 
+
+
+log log2 u
+log log u − 1
++Oǫ
+Ψ x, x1/u = x exp −u log u + log log u − 1 +
+log u
+log2 u
+Corollary 3.12. Fix 0 < a < b ≤ 1. Then uniformly in c, d > 0:
+
+−1+o(1)
+d(b − a)
+̺(Lx (b, d), Lx (a, c)) = Lx b − a,
+.
+c
+Proof. Define
+
+b−a
+log x
+log Lx (b, d)
+d
+u=
+=
+log Lx (a, c)
+c log log x
+Then u → ∞ and u = o
+
+
+
+log x
+log log x
+
+
+. Hence:
+
+̺(Lx (b, d), Lx (a, c)) = exp(−(1 + o(1))u log u)
+
+
+d(b − a)
+b−a
+1−(b−a)
+log
+x(log log x)
+= exp −(1 + o(1))
+c
+
+−1+o(1)
+d(b − a)
+= Lx b − a,
+c
+In the sequel, we will mainly take b = 23 and a = 31 in the above corollary, so that the probability of an
+Ln ( 23 ) sized number being Ln ( 31 )-smooth is Ln ( 13 )−1 .
+Being substantially more careful allows short intervals of integers to be effectively sieved for smooth
+numbers, yielding for example:
+Fact 3.13 (Hildebrand [20, Theorems 3 and 1]). Fix any ǫ > 0. For any x ≥ 3, log x ≥ log y ≥
+(log log x)5/3+ǫ , 1 ≤ z ≤ y 5/12 , the following estimate which holds uniformly:
+
+
+
+ 
+Ψ(x, y)
+log(u + 1)
+−1
+Ψ x 1+z
+, y − Ψ(x, y) =
+1+O
+.
+z
+log y
+
+Remark 3.14. We note that Theorem 3 of [20] provides a short interval estimate in terms of the Dickman
+function. Theorem 1 of [20] allows us to replace this with Ψ(x, y) over the same range and with multiplicative
+errors of the same order.
+x
+Fact 3.15 (Hildebrand and Tenenbaum [21, Theorem 3]). For any x, y, we set u := log
+log y . There exists an
+α = α(x, y), the so-called saddlepoint, such that for any 1 ≤ c ≤ y:
+
+
+
+1 log y
+Ψ(cx, y) = Ψ(x, y)cα(x,y) 1 + O
+, with
++
+u
+y
+
+
+
+
+log logy x + 1 
+log log(y + 1)
+1+O
+α(x, y) =
+log y
+log y
+
+Fact 3.16 (Tenenbaum [55, Main Theorem]). Take c > 0 an arbitrary constant. Denote the number of prime
+−1
+factors (without multiplicity) of q by ω(q). Let q be y-smooth, 2 ≤ y ≤ x and with ω(q) ≤ y c(log(1+u)) .
+Then:
+
+
+
+φ(q)
+log(1 + u) log(1 + ω(q))
+Ψq (x, y) =
+Ψ(x, y) 1 + Oc
+q
+log y
+We record the following easy corollary as observed by Tenenbaum:
+8
+
+Corollary 3.17. Take c > 0 an arbitrary constant, and retain ω as above. Let 2 ≤ y ≤ x and with
+−1
+ω(q) ≤ y c(log(1+u)) . Then:
+
+
+
+
+
+log(1 + u) log(1 + ω(q))
+ω(q)
+φ(q)
+1+O
+Ψ(x, y) 1 + Oc
+Ψq (x, y) =
+q
+log y
+y
+Proof. Let q = sr for s a y-smooth
+Q integer and r with no prime factor less than y. Then Ψs (x, y) = Ψr (x, y),
+φ(q) = φ(r)φ(s) and φ(r)r−1 = prime p|r (1 − p−1 ) = 1 + O ω(q)y −1 which implies the given bound.
+
+As mentioned earlier, a key ingredient in combination of congruence algorithms is the detection and
+factorisation of y-smooth numbers. The main difficulty here is that the algorithm must be polynomial time
+in the logarithm of the integer it is to factor, although it is permitted to be merely sub-exponential in the
+logarithm of the smoothness bound. That such an algorithm exists is by no means guaranteed.
+Typically, the algorithm used here will be the Elliptic Curve Method, due to Lenstra [32]. For technical
+reasons, we instead use the somewhat more complex Hyperelliptic Curve Method, which works on the
+Jacobian of a hyperelliptic curve in place of an elliptic curve.
+
+Fact 3.18 (Lenstra, Pila and Pomerance [36, Theorem 1.1]). There exists a constant c such that the
+hyperelliptic curve method finds a non-trivial factor of any x which has a prime factor less than y in
+2
+expected time bounded by Ly 23 , c (log x)
+
+Corollary 3.19. Suppose y = logω(1) x. Then the hyperelliptic curve method can factor any y-smooth
+3
+number below x in expected time at most Ly 32 , c (log x) = y o(1)
+
+Remark 3.20. Both the ECM and HECM are successful if the order of the Jacobian of the randomly
+chosen curve is smooth. In the HECM case, the Hasse-Weil interval is of the form [x − 4x3/4 , x + 4x3/4 ],
+and the density of smooth numbers in such intervals is unconditionally understood.
+3.2. Overview of NFS algorithms
+We now provide a detailed look at the function of the NFS and the Randomised NFS. From a number
+theoretic perspective, we fix some α ∈ C with minimal polynomial f over Z, with leading coefficient fd , such
+that f (m) ≡ 0 mod (n). Hence in particular fd α is an algebraic integer. We will summarise the following
+discussion with the following diagram:
+Z[X]
+mod (f )
+
+x→m
+
+Z
+mod (n)
+
+◦
+
+Z[X]/(f ) ≃ Z[α]
+
+X → m, mod (n)
+
+N
+
+χpi
+
+Z/nZ
+
+n
+
+r
+fds : r, s ∈ N
+
+o
+
+⊂Q
+
+poly(log n)
+
+F2
+
+Figure 1: Algebra underlying the Number Field Sieve.
+
+The key to finding a congruence of squares in Z/nZ is to suppose that some P ∈ Z[X] projects to two
+2
+squares, say u2 ∈ Z[X]/(f ) and v 2 ∈ Z. Since the diagram commutes u(m) ≡ v 2 mod (n), and so we have
+found a congruence of squares. We will find the squares in Z and Z[α] by combining congruences, and so
+first we present a notion of smoothness for both rings.
+We observe that both Z and Z[α] have norms, given by the absolute value and the field norm N respectively. Recall that the field norm N is given by the product of all projections of the number field into C. In
+particular, fd N(a − bα) = bd f (a/b) for d the degree of f . In general on the ring of integers OQ(α) the norm
+is integral. Hence we say that an element of OQ(α) is smooth if its norm is smooth in Z, and say that the
+9
+
+linear polynomial is smooth in Z[X]/(f ) if bd f (a/b) is smooth. Now, if an element of Z is smooth it can be
+factored into primes of small norm.
+In Z[α] this is not so straightforward. First, we may have Z[α] 6⊆ OQ(α) , as α need not be an algebraic
+integer. Hence the norm is a rational whose denominator is a power of fd , or more formally the direct limit
+lim{fd−i Z : i ∈ N}. In the case where f is monic this is simply the integers. Note that fd (a− bα) ∈ Z[fd α], so
+−→
+1
+that N (a − bα) ∈ f d−1
+Z. More generally Z[fd α] ⊆ OQ(α) . Second, prime ideals in Q(α) are not necessarily
+d
+
+contained in Z[α], but instead in OQ(α) . Hence we cannot deduce that an element is a square of an element
+of Z[fd α] from the multiplicity of each prime dividing it being even. Finally, we cannot guarantee that the
+ring of integers OQ(α) is a unique factorisation domain, and so irreducible factors need not be prime.
+To address these difficulties in Z[α], we only partially control the factorisation into ideals, and introduce
+a collection of additional multiplicative characters χpi on Z[α]. We will be able to guarantee that if these
+characters all evaluate to 1 on a subset product, then it is a square with reasonable probability; in particular
+the quotient group formed by taking these pseudo-squares and quotienting by the squares is of logarithmic
+size, and so we can guarantee that with only a small number of relationships we can find a pair whose
+product in OQ(α) is in fact square. To ensure that the root is in fact in Z[α], we then multiply throughout
+by an additional, carefully chosen square polynomial. In Z, the additional factors of fd that have been
+introduced are controlled by insisting that a product of an even number of relationships is taken.
+Hence we will search for P by finding linear factors which induce smooth elements of Z and Z[α], and
+then multiply these factors to obtain a suitable P . Since square roots in Z[fd α] and in Z can be taken in
+time polynomial in the degree and the logarithm of the coefficients, this allows us to recover the polynomial
+u and the integer v, and thus a congruence of squares.
+The above discussion holds for both the NFS (as observed in detail in [6]) and the Randomised NFS,
+but thus far we have not shown how we choose the parameters of the algorithm. As previously noted, the
+difference between the two algorithms lies entirely in the process by which f and the characters χpi are
+chosen.
+Computationally, the algorithm proceeds as follows. We choose a degree
+s
+log n
+.
+d∼ 3
+log log n
+In the Randomised NFS, we will additionally insist that d is odd, whilst the NFS does not make any such
+insistence. We then choose an m such that:
+md ≤ n < 2md .
+
+As a corollary, m = Ln 23 . We then choose an irreducible polynomial f such that n|f (m). We define a
+polynomial fˆn,m by expressing n in base m, taking the coefficients of the resulting expression and using
+them as the coefficients of fˆn,m . Note that by construction, fˆn,m is monic of degree d.
+In the NFS, we take f = fˆn,m .Inthe Randomised NFS, we will generally homogenise f for notational
+
+convenience, writing f (x, y) = y d f
+
+x
+y
+
+and set:
+
+f (x, y) := fˆ(x, y) + R(x, y),
+
+R(x, y) =
+
+d−1
+X
+i=0
+
+ci (x − ym)y i xd−i−1
+
+(3.1)
+
+
+where ci are uniform and independently chosen with |ci | ≤ Ln 23 . The key purpose of this randomisation
+is to cause the norm of the image of a − bX to become a random variable in Z. This allows us to show that
+in the Randomised NFS, for any fixed linear polynomial we consider, the smoothness of the images in Z and
+Z[α] are independent.
+Inboth the NFS and the Randomised NFS, we will search through linear terms a − bX with |a|, |b| ≤
+Ln 13 . We observe that N(a − bα) = f (a, b)fd−1 . Since f is of degree d and has coefficients which are at
+10
+
+
+
+most of size Ln 23 , both fd N(a − bα) and a − bm are integers of sizeLn 32 . Hence in both the NFS and
+the Randomised NFS, we take the smoothness bound B to be Ln 31 so that heuristically the likelihood
+−1
+that both numbers are B-smooth is Ln 31
+.
+The remaining ambiguity is in the selection of characters χpi . In the NFS these are canonically taken to
+be quadratic characters induced by finding a map from Z[α] into Fr for primes r which are just above B, and
+lifting the Legendre symbol modulo r. In the Randomised NFS, we follow a similar
+ pattern, but choose maps
+from Z[α] into Frk stochastically and close to uniformly across all k log r < Ln 13 . This exponential increase
+in the size of the fields used to induce characters is needed to guarantee that we get unconditional equidistribution of the characters. However, even on the GRH we require taking k log r ∼ log4/3 n(log log n)−1/3 ,
+which is substantially larger than the characters used in the NFS.
+To recognise and factor these smooth numbers in the Randomised NFS we use the hyperelliptic curve
+method of Lenstra, Pila and Pomerance [36] which provides a completely rigorous and efficient means to
+recognise and factor smooth numbers.
+Once a sufficiently large set of linear factors have been found with smooth images in both Z and Z[α],
+we combine congruences to find a subset with even multiplicity of each factor and with image 1 under the
+quadratic characters χpi . Whilst we could use general matrix inversion methods to find a non-trivial element
+of the kernel, we can exploit the structure of the matrix of exponents to find
+ such an element more quickly.
+In particular, since both fd N(a − bα) and |a − bm| are bounded by Ln 32 , they have at most a logarithmic
+number of factors and so the matrix of exponents is sparse. Hence we can use the faster algorithms of
+Wiedemann [56] or Montgomery [41], which are specialised to finding non-trivial elements of the kernel of
+sparse matrices over F2 .
+We also note that the selection of suitable m, f is challenging, as there is no guarantee that all pairs
+give similar densities of linear factors. We demonstrate a stochastic search method that allows us to to find
+suitable m, f and extract a congruence of squares with at most a logarithmic slowdown compared to the
+run time on the heuristic that linear factors with smooth images in Z and Z[α] have the same density for
+all m, f . In turn, this means that we do not need to show bounds on the second moments of the number of
+linear factors available as m, f vary, which allows us to obtain results without use of assumptions such as the
+Generalised Riemann Hypothesis. The situation as noted earlier may be compared to the analogous case of
+primality testing, where prior to the AKS results, the deterministic Miller primality test was known to work
+only under GRH, whilst the randomised Miller-Rabin test worked unconditionally but probabilistically.
+3.3. Concrete Specification of the Algorithm
+We define the Randomised NFS following Buhler, Lenstra and Pomerance [6]. In the subsequent analyses,
+we use IsSmooth and KernelVector, implicitly implemented via the Hyperelliptic Curve Method and
+the Wiedemann algorithm respectively. Furthermore, we assume that once IsSmooth has been called, the
+order of divisibility of each prime below the smoothness bound is known. We abuse notation slightly to
+write log−1 as the map from the multiplicative group {±1} to the additive group of F2 .
+functionq
+RandomNFS(n, β, β ′ , δ, σ, κ)
+3
+
+−1
+
+d ← δ log n(log log n)
+while true do
+for 0 ≤ i ≤ (2σ − τ ) log1/3 n log log n)2/3 do
+for 0 ≤ j ≤ 2i do
+ 1 1 
+k ← 0, m ← Uniform n2 d , n d
+Pd
+Pd
+n = i=0 c̄l ml
+fˆ(x, y) ← l=0 c̄l xl y d−l : c̄l ∈ N, c̄d = 1, c̄l < m,
+cl ← Uniform −Ln 32 , κ − δ −1 , Ln 23 , κ − δ −1
+Pd−1
+f (x, y) ← fˆ(x, y) + i=0 ci (x − my)xd−i−1 y i
+if f is reducible then
+ return FAIL end
+ if
+
+S ← p < Ln 31 , β : p prime , S ′ ← p < Ln 31 , β ′ : p prime
+11
+
+n
+
+
+4/3
+2
+n
+) random pairs (q, s) s.t. q ∈ [exp d4 , 2 exp d4 ],
+R ← 4d(δκ log2 (n) + 2δlogκ2 logloglog n1/3
+
+o
+
+(x,
+y)
+(s,
+1)
+q prime, q | f (s, 1), q ∤ ∂f
+∂x
+L ← Empty list of pairs ((a, 
+b), {0, 1}∗)
+
+−1
+−i
+′
+for 0 ≤ l ≤ 2 .4(B + B )Ln 13 , δ3β + κ+σδ
+. 34 log log n do
+3β ′
+
+ 
+
+1
+a, b ← Uniform (a, b) : a < |b| ∈ 2 Ln 13 , σ , Ln 13 , σ
+if IsSmooth(a − mb, S) ∧ IsSmooth(f (a, b), S ′ ) then
+E1 ← hordp (a − bm) ∈ F2 : p ∈ Sii
+p ∈ S ′ , r ∈ [p], p | f (1, r)
+E2 ← 1p|a+br
+ ordp(N (a − bα)) ∈ F2 :
+: (q, s) ∈ Qi
+E3 ← hlog−1 a+bs
+q
+
+L ← L ∪ {((a, b), hE1 , E2 , E3 i)}
+end if
+if |L| > 1 + |S| + d|S ′ | + |R| then
+M ← The matrix Mi. = hE1 (a, b), E2 (a, b), E3 (a, b), 1i for i ∈ Lk
+V ← KernelVector(M
+)
+Q
+uk ← (Q fd (a − bm) : (a, b) = L[i] and Vi = 1)
+vk ← ( fd (a − bX) : (a, b) = L[i] and Vi = 1) mod (f )
+k ←k+1
+L ← Empty list of pairs ((a, b), {0, 1}∗)
+end if
+if k = 43 log log n then
+4
+for S ⊂ [ Q
+3 log log n], 0 < |S| ≤ 2 do
+′2
+v is square in Z[X] mod (f ) then
+if f
+s∈S
+q s
+
+p Q
+2Q
+u ← f ′ (m)
+v←
+f ′2 s∈S vs (m)
+s∈S us ,
+return gcd(u + v, n)
+end if
+end for
+end if
+end for
+end for
+end for
+end while
+end function
+3.4. Heuristic Difficulties
+As one would expect, a significant portion of the analysis revolves around precise control over smooth
+numbers. Heuristically, one would expect that f (a, b) behaves as a uniformly random number below some
+bound. However, this turns out not to be the case. We are required to ensure that f (m, 1) = n; this is
+enforced by ensuring that the random polynomial R is a multiple of x − my. As a corollary (see Equation 3.1 (p. 10)), for a, b fixed our randomisation will constrain f (a, b) to lie on an arithmetic progression
+of common difference a − mb. We postpone the numerical details of the coefficients of f and fˆ to Equations 4.3 (p. 14) and 4.4 (p. 14).
+The heuristic analysis of the NFS assumes that fˆ is a “random” polynomial in some suitable sense.
+However, fˆ is in fact determined entirely by the fixed n and our chosen m. In applications, m is often chosen
+carefully to attempt to optimise fˆ so that when it is reduced modulo small primes, it has an unusually large
+number of roots [42]. This makes the NFS as used substantially more complicated to analyse, as no variables
+other than a and b can be considered to be random in a natural way.
+We note that even if the polynomial f was completely random, almost all of our analysis would still be
+required. In particular, we would still need to show that since a single f is fixed, the smoothness of the
+12
+
+values of f (a, b) for many pairs (a, b) are not too correlated. For example, if a small collection of f were
+responsible for the majority of smooth values of f (a, b), then we would have to examine a large number of
+different polynomials f before we found one for which we could generate many pairs (a, b) as required.
+In fact, our polynomial f = fˆ + R is not entirely random, which introduces a degree of additional
+complexity. However, we are able to show that
+its value distribution for small values of x, y is such that the
+
+1
+two numbers f (a, b) and (a − bm)
+are
+L
+smooth
+as often as needed when we choose (a, b) at random with
+n
+3
+
+their values bounded by Ln 31 . We also provide a rigorous analysis of the process of lifting a congruence
+of squares involving norms to a congruence involving elements in the number field. As is standard, this
+involves an analysis of the primes in Q(α), and a small collection of quadratic characters.
+We record the following summary of the computations involved in both the NFS and the Randomised
+NFS:
+
+1. Fix m an integer, f a homogeneous bivariate polynomial such that n|f (m, 1), f is irreducible of
+
+ 13 +o(1)
+and with coefficients which are not too large.
+degree logloglogn n
+
+2. Generate polynomials (a − bX) at random for a, b which are not too large
+3. Keep only those polynomials such that a − mb ∈ Z and a − bα ∈ Z[α] both being smooth. (Recall
+that a − bα is smooth iff f (a, b) is smooth)
+4. Find a subsets Si of pairs (a, b) such that
+Y
+Y
+Y
+fd (a − mb) and
+fd (a − bα) are square, and ∀χpj ,
+χpj (a − mb) = 1.
+Si
+
+Si
+
+Si
+
+5. Produce a polynomial whose projection into Z and Z[α] are both squares.
+6. Produce a congruence of squares in Z/nZ.
+
+Note that for Step 4 to be sure of success, we must find at least as many polynomials in Step 3 as the
+sum of the number of primes of small norm in Z and Z[α]. The success of Step 4 or Step 5 is not established
+in the NFS; in the Randomised NFS it is precisely controlled.
+Theorem 2.6 (p. 6) will give us broad conditions under which Step 4 and Step 5 can be completed in
+the Randomised NFS sufficiently quickly asymptotically almost surely. Primarily, this will correspond to
+ensuring that we can find a square root in Q(α), and will require working with a relatively small random
+collection of large quadratic characters.
+Our other theorems primarily concern themselves with characterising situations in which Step 3 can be
+achieved with sufficiently high probability. In particular, we will use the flexibility in the choice of f and
+m to make the events “a − bα is smooth” and “a − bm is smooth” almost independent and characterise
+the probability with which they occur. By bounding various correlations we are able to show that for a
+reasonably large fraction of the f we might choose, the probability with which a polynomial a − bX passes
+the conditions of Step 3 is reasonably large.
+4. The Randomised Number Field Sieve
+Recall that we add a large random multiple of (X − m) to our polynomial f . This will not substantially
+increase the coefficients, whilst ensuring that f (m, 1) = n and ensuring that values of the polynomial at
+small values of x are randomised usefully. Additionally, for technical reasons we will insist that the degree
+of our polynomial is odd (see the proof of Lemma
+6.10 (p. 32)).
+
+
+We fix smoothness bounds B = Ln 13 , β , B ′ = Ln 31 , β ′ , and parameters δ, κ, and σ to control the
+13
+
+degree, coefficients and points of evaluation of our polynomial. We insist that:
+κ > δ −1 ,
+
+2σ > max(β, β ′ ) +
+
+δ −1 (1 + o(1)) (σδ + κ)(1 + o(1))
++
+,
+3β
+3β ′
+
+κ + σδ
+2
+See Remark 4.2 (p. 14) for a discussion of these bounds.
+δ −1 <
+
+(4.1)
+(4.2)
+
+Definition 4.1. Let X be the set of tuples (f, n, m, a, b) such that the following four conditions hold:
+h 1
+
+i
+1. m is an integer, m ∈ 2− d Ln 23 , δ −1 , Ln 23 , δ −1 ,
+q
+2. f is a homogeneous polynomial of degree d = δ 3 logloglogn n , d odd, in two variables with integer coef
+ficients bounded by L 32 , κ (1 + o(1)), with f (m, 1) = n. In particular, we count such f such that
+that:
+
+
+
+2
+−1
+(Recall Definition 3.3 (p. 7)), and set
+,κ − δ
+ci ∈ I 2Ln
+3
+f (x, y) := fˆn,m (x, y) +
+
+d−1
+X
+i=0
+
+ci (x − my)xd−i−1 y i
+
+(4.3)
+
+P
+and fˆn,m (x, y) :=
+Ci xd−i y i , with Ci given by expressing n as a polynomial in m with coefficients
+in [0, m) (that is, by expressing n as an m-ary number). We recall that this is the major alteration in
+the Randomised NFS, as the NFS can be seen to take ci ≡ 0, whereas in the Randomised NFS the ci
+are chosen independently and uniformly randomly.
+
+
+
+3. a, b are integers, 0 ≤ a < |b| ∈ 12 Ln 31 , σ , Ln 13 , σ , with a − bm being B-smooth and f (a, b) being
+B ′ -smooth.
+We also define Xn,m,f be the set of pairs (a, b) such that (f, n, m, a, b) ∈ X .
+Recalling our earlier discussion of combination of congruence algorithms, it can be seen that the condition
+(a, b) ∈ Xn,m,f are almost those required for the factor (a − Xb) to be used in the combination of congruences.
+Hence showing that the number of such tuples is large will correspond to showing that we can find a large
+number of tuples quickly. The sole missing condition is that we do not require f to be irreducible; indeed, we
+will freely interchange between f considered as a homogeneous bivariate polynomial and the single variable
+non-homogeneous f usually discussed in the NFS.
+Remark 4.2. The constraints given in Equation 4.1 (p. 14). The first condition ensures
+that ci ≫ m.
+
+We will use this to show, speaking loosely, that for any fixed pair a < |b| < Ln 13 , σ , the event of f (a, b)
+being smooth is driven by the values of ci rather than by the inflexible interaction of n and m. The second
+constraint from Equation 4.1 (p. 14) will ensure that there are enough suitable pairs a, b that almost surely
+there will be a congruence of squares. Equation 4.2 (p. 14) will ensure that the distribution of smooth
+numbers f (a, b) modulo a − mb can be controlled by character methods. We further note that the value of
+f (a, b) lies on the arithmetic progression:
+
+
+ 
+2
+fˆn,m (a, b) + (a − mb)z : |z| ≤ dLn
+(4.4)
+, κ − δ −1 bd
+3
+Crucially, we will later show that as c is randomised, f (a, b) is B ′ -smooth as often as a uniformly random
+element of this progression is.
+Remark 4.3. Since ci ≫ m, the coefficients in f are somewhat larger than in fˆn,m . Thus the bounds on
+the discriminant ∆(f ) are weakened in the Randomised NFS by comparison to the standard NFS. This will
+14
+
+have an impact in the proof of Theorem 2.6 (p. 6), although we will see there that the bounds are still
+sufficiently tight. In particular, the squares of smooth-normed elements of Z[α] are still a comparatively
+large subset of the elements of Z[α] with smooth and square norms, and so a small collection of quadratic
+characters can be used to identify the squares amongst elements with smooth and square norms.
+We first reduce Theorem 2.1 (p. 5) to Theorems 2.5 (p. 6) and 2.6 (p. 6).
+Proof of Theorem 2.1 (p. 5). Fix n, β, β ′ , σ, δ, κ satisfying the conditions of Equation 4.1 (p. 14) and
+Equation 4.2 (p. 14). Then
+by Theorem 2.6 (p. 6) we can extract a congruence of squares mod n from
+
+Ln 31 , max(β, β ′ ) + o(1) pairs (a, b) ∈ Xn,m,f for a fixed (m, f ) in expected time
+
+
+
+
+1
+2δ
+′
+, 2 max
+, β, β (1 + o(1))
+Ln
+3
+3
+Theorem 2.5 (p. 6) tells us that a fixed (m, f ) and this many pairs (a, b) ∈ Xn,m,f will be found in
+expected time
+
+
+δ −1 (1 + o(1)) (σδ + κ)(1 + o(1))
+1
+.
+, max(β, β ′ ) +
++
+Ln
+3
+3β
+3β ′
+Hence we can run the Randomised NFS to obtain a congruence of squares mod n with the expected time
+bounded by
+
+
+
+ −1
+
+
+
+1
+δ
+κ + σδ
+2δ
+Ln
+, λ(1 + o(1)) , λ := max 2 max
+, β, β ′ , max(β, β ′ ) +
++
+3
+3
+3β
+3β ′
+Note that to obtain a concrete bound we must choose β, β ′ , δ, σ, κ subject to Equation 4.1 (p. 14) and 4.2 (p. 14),
+which we collect here for convenience:
+
+
+δ −1 (1 + o(1)) (σδ + κ)(1 + o(1))
+κ + σδ
+.
+, κ > δ −1 , 2σ > max(β, β ′ ) +
++
+min
+2
+3β
+3β ′
+We optimise the constants. Note that increasing the lesser of β, β ′ cannot increase λ or cause the
+conditions on the constants to be violated, so we can assume β = β ′ . We can compute the following bound
+on σ:
+!
+r
+√
+
+
+8σ + o(1)
+2δ −1 + σδ + o(1)
+4 8σ
+2σ ≥ λ ≥ min β +
+≥ min β +
+≥2
++ o(1)
+β,δ
+β
+3β
+3β
+9
+q
+√
+3
+3 8
+3−1 + ǫ, the above are all equalities
+Fix any ǫ > 0, ǫ = o(1). If we take β = β ′ = σ = 2δ
+3 =
+9 + ǫ, κ =
+(up to O(ǫ)
+q terms). Furthermore, all the conditions of Equation 4.1 (p. 14) and 4.2 (p. 14) are satisfied,
+
+and λ = 2 3 89 + o(1) matching the heuristic optima as claimed.
+
+Remark 4.4. The above argument, with the statement of Theorems 2.5 (p. 6) and 2.6 (p. 6) modified as
+in Remark 2.7 (p. 6), plainly establishes that a Randomised Coppersmith multiple polynomial NFS finds
+3β ′
+3δ
+a congruence of squares in the given time. Optimising the constants yields β = √13−1
+= σ = 4√13−10
+=
+q
+√
+√
+3
+3η
+13 1/3
+13
+√
+= ( 46+13
+) + o(1), κ = δ −1 + o(1), achieving λ = 92+26
++ o(1).
+108
+27
+4− 13
+5. Finding Many Relationships and the Proof of Theorem 2.5
+Given (f, n, m, a, b) ∈ X , let α ∈ C with f (α, 1) = 0. Then the map
+Z[α] ≃ Z[X]/(f (x, 1)) → Z/nZ defined by 1 → 1, α → m
+15
+
+and extended multiplicatively is a homomorphism of rings, since f (m, 1) → n ≡ 0 mod (n). We also have
+a multiplicative map from the ring of integers Q(α) → Q, the so-called field norm N = NQ(α)/Q . This
+norm can be defined by sending any element z of the number field to the product of all images of z under
+embeddings of the field into C.
+Note that on Z + αZ, such a product can be expressed as a sum of integer multiples of products of the
+symmetric polynomials evaluated at the roots of f . Since the elementary symmetric polynomials in the
+roots of f are the coefficients of f /fd ∈ f1d Z, the field norm is guaranteed to be in f1d Z on Z + αZ.
+Hence if f is irreducible, we are in the setting discussed earlier and so the established NFS strategy can
+be used to find a congruence of squares modulo n.
+
+−1
+−1
+Lemma 5.1. P(f is reducible) ≤ LN 23 , κ−δ 3+o(1)
+.
+
+
+Proof. Fix n, m, and let H = 2Ln 23 , κ − δ −1 be the range of each coefficient of the random part of our
+polynomial f . Note that if a polynomial over Z is reducible it is reducible modulo every prime. Hence if we
+bound the number of reducible polynomials modulo Fz for each prime z, and bound how often a polynomial
+is reducible modulo several primes z, we can get good bounds on the number of irreducible polynomials f .
+We count the reducible polynomials f with the Turán Sieve, as in [8, Section 4.3]. Let: A := {(cd−1 , . . . , c0 ) ∈
+Zd , |ci | < H} which we equate with the set of f as before as f (x, y) = fˆn,m (x, y) + (x − my)R(x, y) with
+f, fˆn,m both homogeneous of degree d and with (ci ) the coefficients of R. For any prime r, let Ar correspond
+to the subset of A corresponding to irreducible polynomials mod r. Note that for any f to correspond g
+mod (r) we must have (x − my)|fˆn,m − g ∈ Fr [X, Y ] or equivalently g(m, 1) ≡ n mod (r)
+We do not insist that g is monic, although any irreducible g must be a scalar multiple of a monic
+irreducible. To estimate the number of irreducibles, we follow the argument of [50, Chapter 2]:
+Claim 5.2. For any 0 < i < r, the number of monic irreducibles g of degree D such that g(m) ≡ i mod (r)
+r D−1
++ O(rD/2 ).
+is D(D−1)
+Proof. We work in Fr , and let |g| := rdeg(g) . We observe that for χ a non-trivial multiplicative character:
+ζFr [X] (s, χ) =
+
+X
+
+g∈Fr [X],
+g monic
+
+χ(g(m))
+= 1,
+rs deg(g)
+
+as for every degree d ≥ 1 the number of monic polynomials whose evaluation at m is any chosen i is exactly
+rd−1 . Let v = r−s , and let ad,i be the number of irreducibles g of degree d with g(m) = i. As is standard,
+we express the sum as an Euler product over the monic irreducibles and take the logarithmic derivative:
+1=
+
+Y
+d,i
+
+1 − χ(i)v d
+
+−ad,i
+
+, so 0 =
+
+X dad,i χ(i)v d−1
+d,i
+
+1 − χ(i)v d
+
+Expanding and comparing terms, we obtain that for every D:
+X
+X X
+aD,i χ(i) = −D−1
+ad,i χ(i)D/d , so ⇒
+d
+0=
+d|D
+
+i
+
+i
+
+X
+
+d|D,d<D
+
+d
+
+X
+
+ad,i χ(i)D/d
+
+i
+
+P
+P
+− 1, and d|D,d<D d i ad,i = O(rD/2 ). Hence by writing the indicator
+1x≡i mod (r) as a sum of characters, we obtain:
+
+Note that
+
+P
+
+d|D d
+
+P
+
+i6=0 ad,i = r
+
+D
+
+aD,i =
+
+
+
+rD − 1
++ O rD/2 .
+D(D − 1)
+
+16
+
+To
+√ continue the proof of Lemma 5.1 (p. 16), we note that for any g over Fr such that g(m) ≡ n with
+r ≪ H, there are:
+
+ d−1 !
+d  d
+H
+H
+H
++O
++ O(1) =
+r
+r
+r
+polynomials lying over g in A, and none if g(m) 6≡ n mod (r). Hence by a union bound over the irreducibles
+mod r:
+
+
+
+Hd
+Hd
++ O d/2−1 + O H d−1 r
+|Ar | ≤
+d(d − 1)
+r
+
+
+
+
+d
+
+H
+Hd
+Hd
+′
+|Ar ∩ Ar | ≤ 2
++ O H d−1 rr′
++ O d/2−1 + O
+d/2−1
+′
+d (d − 1)2
+r
+r
+√
+From the Turán Sieve [8, Theorem 4.3.1], considering all primes r ≤ z for any z ≪ H, the number of
+2
+1
+reducible polynomials f is ≪ H d z −1 log z + H d−1 z 2 , which for z ∼ H 1/3 log1/3 H is H d− 3 log 3 H. The
+number of potential f for this fixed n, m is H d , and so the probability that f is reducible is at most:
+−1
+
+2
+1
+2 κ − δ −1 + o(1)
+,
+.
+H − 3 log 3 H = Ln
+3
+3
+Remark 5.3.
+ We will assume a fortiori that if f is reducible then the algorithm fails. We will sample at
+most Ln 13 polynomials, and so the probability that any of them are reducible is o(1).
+
+For f irreducible, N(a − bα) = fd−1 f (a, b). We prove the following Theorem later; assuming it we can
+complete the proof of Theorem 2.5 (p. 6).
+Theorem 5.4. With β = β ′ , δ, σ, κ chosen subject to Equation 4.1 (p. 14) and 4.2:
+
+
+1
+σδ + κ
+δ −1
+Em,f (|Xn,m,f |) ≥ Ln
+(1 + o(1)) −
+, τ , with τ = 2σ −
+(1 + o(1))
+3
+3β ′
+3β
+
+Remark 5.5. The constant τ defined above is natural, and we will see the terms comprising it regularly in
+
+1
+1
+this work. Observe that m ∼ Ln 23 , δ −1 and that since a, b ∼ Ln ( 31 , σ) and d = δ log 3 n(log log n)− 3 , for
+all 0 ≤ i ≤ d, ai bd−i ∼ Ln 32 , σδ . We also note that the coefficients of f are of size Ln ( 32 , κ). Hence when
+terms of the form κ + σδ appear in the exponents of Ln , this should be thought of heuristically as taking a
+typical evaluation f (a, b), whilst terms of the form δ −1 denote a typical evaluation a − mb.
+The replacement of 23 by 31 as the first argument and division of the exponent by 3β or 3β ′ correspond
+exactly to considering the probability that an Ln ( 32 ) number is in fact B-smooth or B ′ -smooth.
+−1
+
+Proof of Theorem 2.5 (p. 6). Define τ = 2σ − δ3β ′ − σδ+κ
+3β , and note that:
+λ ≥ max(β, β ′ ) +
+
+δ −1 (1 + o(1)) (σδ + κ)(1 + o(1))
+= max(β, β ′ ) + 2σ − τ + o(1).
++
+3β
+3β ′
+
+For any fixed pair (m, f ), Corollary 3.19 (p. 9) that we can use the hyperelliptic curve method to examine
+o(1)
+any pair (a, b) for suitable smoothness of a − mb and f (a, b) in max(B, B ′ )
+time. Hence we can determine
+1
+whether a pair (a, b) is in Xn,m,f in time Ln ( 3 , o(1)).
+Lemma 5.1 (p. 16) implies that the probability that f is reducible is Ln ( 23 ), and we have an unconditional
+uniform bound |Xn,m,f | ≤ Ln ( 13 , 2σ). Hence from Theorem 5.4 (p. 17) we deduce
+
+
+1
+Em,f (|Xn,m,f ||f irreducible) ≥ Ln
+, τ + o(1)
+3
+We now introduce a method of searching large parameter spaces we term stochastic deepening to complete
+the proof. In particular, once m, f have been chosen the depth of the search for pairs (a, b) for is random,
+17
+
+with deeper searches being rarer. Suppose there is a reasonable probability that a normal depth search fails
+for random m, f . Then it must be that most |Xn,m,f | are small. Since the expectation is controlled, this
+means that in the remaining cases |Xn,m,f | must be large. In this case, a much shallower search will find
+enough pairs if |Xn,m,f | is large, so we can test many m, f less intensely. To make this intuition rigorous,
+we first note:
+Lemma 5.6. If a random variable X has E(X) = µ and there is a K ≥ 1 such that 0 ≤ X ≤ Kµ uniformly,
+then ∃i ∈ {0, . . . , ⌈log2 K⌉} such that:
+
+
+2i µ
+1
+P X≥
+≥ i+1
+1 + ⌈log2 K⌉
+2
+Proof. Suppose not. Then:
+E(X) <
+
+⌈log 2 K⌉
+
+X
+i=0
+
+1
+1
+−
+2i 2i+1
+
+
+
+2i µ
+Kµ
++
+≤µ
+1 + ⌈log2 K⌉ 21+⌈log2 K⌉
+
+Remark 5.7. Conceptually, this lemma states that for non negative variables which do not vary too much,
+there must be a reasonably large set where the value is large, whose contribution to the mean is large. This
+is the core observation that permits stochastic deepening to provide a search algorithm whose run times are
+shown to be near optimal without establishing accurate variance bounds.
+In our application, we consider |Xn,m,f | to be a random variable of (m, f ), with K ≤ Ln ( 31 , 2σ − τ ).
+Hence for some i∗ ≤ 1 + ⌈log2 K⌉ = O(log1/3 n(log log n)2/3 ), we have (absorbing logarithmic terms):
+
+
+
+∗
+1
+i∗
+Pm,f |Xn,m,f | ≥ 2 Ln
+, τ + o(1)
+> 2−i
+3
+To find a collection of pairs the algorithm iterates through each i ∈ {0, . . . , 1 + ⌈log2 K⌉}, and for each
+i generates 2i pairs (m, f ), and for each pair (m, f ) generates 2−i Ln ( 13 , max(β, β ′ ) + 2σ − τ + o(1)) pairs
+(a, b) and tests for smoothness of a − mb
+ and f (a, b).
+finds Ln ( 31 , max(β, β ′ ) +
+Then if |Xn,m,f | > 2i Ln 13 , τ + o(1) , with constant probability the algorithm
+
+1
+i
+o(1)) pairs as required. Furthermore, if Pm,f |Xn,m,f | ≥ 2 Ln 3 , τ + o(1) > 2−i then with constant
+probability at least one of the pairs (m, f ) satisfies this condition.
+
+Note that the total time taken to test a single i is Ln 31 , max(β, β ′ )) + 2σ − τ + o(1) , and so we can
+absorb the logarithmic number of iterations into the o(1) term. Since this algorithm succeeds with constant probability,
+ iterating it at most a logarithmic number of times reduces the probability of failure to
+Ln 23 , κ − δ −1 .
+Hence the expected time taken to complete the algorithm is:
+
+
+1
+′
+Ln
+, max(β, β ) + 2σ − τ + o(1)
+3
+as required.
+Remark 5.8. We can save the logarithmic factors lost by the stochastic deepening by noting
+that if for
+
+a particular m, f the search for pairs (a, b) is to succeed, it must find Ln 31 , max(β, β ′ ) of them. As a
+−1
+corollary, at some early stage of a planned search (say a ≪ (log n) fraction of the way through), one has
+reasonable estimates of the density of pairs (a, b) for this m, f . Aborting searches early can be shown to
+reduce the cost of searches that would fail to generate at least 1 − o(1) of the needed pairs by a factor
+≫ log n, whilst discarding almost no searches that would find enough pairs. Hence continuing any search
+that is not aborted to 1 + o(1) of its planned depth will find enough relationships.
+
+18
+
+Our goal is the proof of Theorem 5.4 (p. 17), which appears on page 25, and we proceed with preparatory
+lemmas. For each n and b, we determine how likely the pair (a, b) is to be in Xn,m,f as a, m, f vary. In
+particular, the distribution of f is well understood, whilst the resulting distribution of f (a, b) is not. We
+seek to show that this randomness of f causes f (a, b) to be as likely to be smooth as a typical number of the
+same size. An obstruction is that a − mb must be B-smooth, which is a rare event and hence heuristically
+derived “typical” behaviour does not have to hold at the points where we evaluate f . We will bound how
+far f (a, b) deviates from being uniformly random along any arithmetic progression of common difference
+(a − mb). Then we can show that f (a, b) is as likely to be smooth as a random integer.
+Recall from Equation 4.3 (p. 14) that for any n, m, we take f to be uniformly random by choosing:
+
+
+d !
+2
+(ci ) ∼ µ := Uniform I 2Ln
+(5.1)
+, κ − δ −1
+3
+and defining f according to definition of Equation 4.3 (p. 14). Note that fˆn,m is completely determined by
+n, m, but the random sum
+f (x, y) − fˆn,m (x, y) = R(x, y) =
+
+d−1
+X
+i=0
+
+ci (x − my)xd−i−1 y i
+d
+
+dominates fˆ as κ > δ −1 . For any a, b, f (a, b) ≡ fˆn,m (a, b) mod (a − mb). Clearly, gcd(a, b) divides f (a, b)
+d−1
+and fˆ(a, b). Hence R(a, b) has (a − mb) gcd(a, b)
+as a factor. We take b and a to be uniformly random
+in their ranges.
+Lemma 5.9. Fix b in its interval. If a, m are uniformly random, then:
+
+−1
+1 δ −1
+Pa,m (a − bm is B-smooth) = Ln
+,
+(1 + o(1))
+.
+3 3β
+Proof. We fix b. Note that a is uniformly random on an interval of length b, and m uniformly random over
+an interval of length comparable to its largest value. In particular:
+
+
+
+
+
+
+
+
+
+2 −1
+1
+2 −1
+− 2d
+Ln
+, −b 2
++1
+= Uniform −x(1 + z −1 ), −x)
+,δ
+,δ
+a − bm ∼ Uniform −bLn
+3
+3
+
+1
+for x = Ln 23 , δ −1 (1 + o(1)) and z ≈ 2 2d − 1 = O(d−1 ). Note that d = o(B 5/12 ), and that log log B =
+O(log log x). Hence from Fact 3.13 (p. 8) the number of smooth values of a − mb is:
+
+
+
+log(u + 1)
+Ψ(x, B)
+1+O
+z
+log B
+Since the range of values is of length x/z,
+
+
+
+log(u + 1)
+.
+Pa,m (a − bm is B-smooth) = ̺(x, B) 1 + O
+log B
+
+1+o(1)
+Recall that B = Ln 13 , β and x = Ln 32 , δ −1
+. Furthermore, note that log u < log log n = o(log B).
+Hence recalling Corollary 3.12 (p. 8):
+−1+o(1)
+
+1+o(1) !
+
+1 δ −1
+2 −1
+,δ
+,
+, B = Ln
+.
+̺ Ln
+3
+3 3β
+We can absorb the multiplicative 1 + o(1) error into the o(1) error in the exponent to obtain:
+−1
+
+1 δ −1
+,
+(1 + o(1))
+.
+Pa,m (a − bm is B-smooth) = Ln
+3 3β
+19
+
+Remark 5.10. To prove the analogous statement for Coppersmith’s multiple polynomial NFS, as modified
+by Remark 2.7 (p. 6), we use Lemma 5.6 twice, first to select an m and for each m to attempt to find many
+polynomials f (i) with many smooth pairs a, b. If we guess correctly the values of i correctly at both steps
+then with probability O(1) our sample of values of mPcontains a value, such that with probability O(1) the
+sample of f (j) chosen for this m has a large enough
+|Xn,m,f j | that with probability O(1) we find enough
+pairs (a, b) that are smooth for some f (j) .
+Remark 5.11. To prove Theorem 5.4 (p. 17), we will estimate the probability that f (a, b) is B-smooth.
+Note that for a pair (a, b) to be in Xn,m,f , it is required that a − mb to be B-smooth. As a corollary,
+we know that for all of these pairs the greatest common divisor of the pair (a, b) is B-smooth. Hence we
+can divide a and b by gcd(a, b) without changing the B-smoothness of f (a, b). In Lemma 5.13 (p. 20) to
+Lemma 5.20 (p. 23) we only seek to establish the B-smoothness of f (a, b). Hence for convenience we will
+take gcd(a, b) = 1 without loss of generality.
+We wish to show that f (a, b) is as likely to be B-smooth as a random number of the same size. To do
+this, we will show that
+1. f (a, b) is close to uniformly distributed along long progressions of common difference (a − mb) (proved
+in Lemma 5.13 (p. 20) to Lemma 5.18 (p. 22)).
+2. For most B-smooth moduli a − mb, the B ′ -smooth numbers are approximately uniformly distributed
+modulo a − mb.
+To show the first property, we fix the residue f (a, b) mod (a − mb), and consider the effect of our random
+choice of vector c in Equation 5.1 (p. 19). First, we show that there exist small changes to c that will alter
+f (a, b) by any small multiple of (a − mb) in Equation 5.4 (p. 21). To
+To show the second, we introduce a notion of goodness for moduli which is strong enough to allow us to
+control the NFS should the modulus a − mb turn out to be B ′ -good.
+
+
+
+Definition 5.12. Fix B = Ln 31 , F = Ln 32 and some ǫ(F, B, r, a) = on (1), ω = Ln 31 . We say a
+modulus r is B-good for F if uniformly over all (a, r) = 1:
+Ψ(F, B; r, a) =
+
+
+
+Ψr (F, B)
+φ(r)
+
+1+ǫ
+
+and B-bad for F otherwise. We will routinely suppress ǫ, as we only need that the error exponent is taken
+to be o(1).
+
+If F = Ln 32 and for all F ∈ [F ω −1 , F ], r is B-good for F then we say r is B-good near F . Often, we
+will suppress F and say r is B-good. Our results on the number of B-good moduli r will not be sensitive to
+the precise form of ω, and so we suppress it.
+Heuristically, a modulus is B-good when B-smooth numbers up to F ∈ F modulo r are close to uniformly
+distributed.
+Lemma 5.13. Given a < b, with gcd(a, b) = 1, define ϕ = ϕa,b : Zd → Z,
+ϕ((v0 , . . . , vd−1 )) :=
+
+d−1
+X
+
+vi ad−1−i bi .
+
+i=0
+
+There exists a set S ⊆ I 4Ln 13 , σ
+
+d
+
+
+such that ϕ bijects S and I bd−1 .
+
+Proof. For each i ≥ 0, we claim that for any |t| ≤ bi + ai+1 there exists a representation:
+t = ai x0 + ai−1 bx1 + . . . + bi xi
+
+20
+
+with |x0 |, . . . , |xi | ≤ a + b. We proceed inductively. Note that the number of terms in the sum is i + 1. The
+case i = 0 is trivial. If i > 0, we may choose y with |y| < a such that
+|t − yai | ≤ bi .
+We then fix z ∈ [b] such that zai ≡ t − yai mod (b). Note that |y| < a and |z| < b. We set x0 = y + z, so
+|x0 | ≤ a + b. Note that b | t − x0 ai and that:
+t − x0 ai
+(t − yai ) − zai
+=
+≤ bi−1 + ai
+b
+b
+We need (t − x0 ai )b−1 = ai−1 x1 + ai−2 bx2 + . . . + bi−1 xi , which we can guarantee inductively with
+|x1 |, . . . , |xi | ≤ a + b.
+
+We now directly show the existence of S. For any t ∈ I bd−1 , |t| ≤ bd−1 and so the conditions of
+Pd−1
+the above hold with i = d − 1. So there exist a sequence x0 , . . . xd−1 such that i=0 xi ad−1−i bi = t with
+d
+d
+|x0 |, . . . , |xd−1 | < a+b. Hence we have a vector vt given by (vt )i = xi , with vt ∈ I(2(a + b)) ⊂ I 4Ln 13 , σ
+and ϕ(vt ) = t.
+
+
+Hence take S = vt : t ∈ I bd−1 . For each t we have constructed a single vt , so function φ is injective
+and surjective on S as required.
+By definition of ϕ = ϕa,b , and making the dependence of f on c explicit as fc (with m, n held constant):
+fc (a, b) = fc′ (a, b) + (a − mb)ϕa,b (c − c′ ).
+
+(5.2)
+
+This motivates the following definition, which will give us an additive kernel whose support is bounded to
+a small cube and which makes a uniformly random small change to fc (a, b) when it is applied to c.
+Definition 5.14. We take S to be the set given from Lemma 5.13 (p. 20). For any l ≤ bd−1 , we define a
+set Sl and a measure νl as follows:
+Sl := {v ∈ S : ϕ(v) ∈ I(l)},
+
+νl := Uniform(Sl ).
+
+(5.3)
+
+In particular, νl gives a uniformly random element of S whose image under ϕ is in I(l).
+From the definition of Equation 5.2 (p. 21), if v ∼ νl ,
+fv (a, b) ∼ f0 (a, b) + (a − mb)Uniform(I(l)),
+
+(5.4)
+
+i.e. that measures νl , with support Sl , give us additive alterations that can be made to the vector c of
+coefficients which will alter f (a, b) additively by a − mb times a uniformly random value on I(l).
+Remark 5.15. The key observation is that S (and thus the sets Sℓ ), projected onto any axis, is much smaller
+than the range of any of the entries ci as c varies. As a corollary, we hope to show that the randomness
+implicit in c will in fact cause fc (a, b) to be almost uniformly random over short intervals, as 5.2 (p. 21)
+allows us to replace randomness of c over cosets of Sl with randomness of fc (a, b) over short arithmetic
+progressions.
++
+Definition 5.16. For µ̄ : X → RP
+a measure and F : X → Y a function, we define a measure F µ̄ : Y → R+
+µ̄
+µ̄
+−1
+is the output distribution of F when the input
+by: F (y) := µ̄ {F (y)} =
+x:F (x)=y µ̄(x) =⇒ F
+distribution is µ̄.
+
+Definition 5.17. In any context where a, b, d are fixed, we say
+Fmax := Ln
+
+
+
+
+d−1
+X
+2
+ai bd−1−i .
+, κ − δ −1 (a − mb)
+3
+i=0
+21
+
+We sketch the aims, methods and use of Lemma 5.18 (p.
+ 22) and Lemma 5.20 (p. 23). Recall that µ
+is a uniform distribution on a cube of side 2Ln 23 , κ − δ −1 . Furthermore, νl is uniform and has support
+bounded to a cube of side length 4Ln 31 , σ . We will show that for almost every v ∼ µ, µ|v+Sl is uniform
+1
+and equal to µ(v). Heuristically,
+ this
+ holds as v is at least 4Ln 3 , σ from the boundary of the support of
+µ. We will then deduce that f − fˆ (a, b) is close to uniform on short ranges of multiples of (a − mb).
+
+From this we will show that µ is not substantially altered (in the ℓ1 metric) by convolving it with the
+distributions νℓ . Furthermore, the linearity of ϕ implies that when it is applied to any “reasonably smooth”
+convolution involving νℓ the result is “reasonably close” to uniform on short intervals. Then in particular µ
+is close to µ ⋆ νℓ , the latter being close to uniform on short progressions of common difference (a − mb).
+We use this convolution to formally show the heuristically obvious claim that the large random sum
+contributing to f (a, b) does in fact make it close to uniformly random on short progressions. In fact, we
+will convolve with several distributions νℓi , with each convolution allowing us (heuristically) to treat each
+coefficient in f as if it were independent and uniformly random.
+We begin by showing that ϕµ is close to a convolution of uniform distributions on intervals. The proof of
+this claim is an exercise in checking that the required convolution can be constructed by an additive kernel
+whose support is bounded to a cube of size much smaller than the randomness in our choice of c, and is not
+core to the intuitions of the proof of Lemma 5.20 (p. 23). We place the proof here to collect the required
+results about ϕµ to a single place.
+Lemma 5.18. Fix a, b. There is a
+ distribution ϑ such that ϑ is the convolution of uniform distributions on
+intervals of lengths Ln 23 , κ − δ −1 ai bd−1−i for i = 0 to d − 1 with:
+µ
+
+||ϕ − ϑ||1 = O Ln
+
+
+
+−1 !
+2
+−1
+, (κ − δ )(1 + o(1))
+,
+3
+
+|E(ϑ)| ≤
+
+d−1
+X
+
+ai bd−1−i .
+
+i=0
+
+
+1
+
+Remark 5.19. In the Randomised NFS, we will consider at most Ln 3 polynomials f , and hence at most
+
+−1
+Ln 13 samples of ϕµ for any fixed a, b. Note that here we bound the total variation by Ln 32
+. As a
+−1
+µ
+corollary the total variation between our sample from ϕ and a sample from ϑ of the same length is Ln 23
+.
+
+−1
+, so establishing events occur with this probability for
+Our desired probabilities for smoothness are Ln 13
+ϑ guarantees that they occur with this probability for ϕµ .
+Proof. We denote the convolution of distributions by ⋆, and define:
+
+
+ν := µ ⋆ ⋆d−1
+i=0 νai bd−1−i .
+
+
+From Lemma 5.13 (p. 20), the support of νai bd−i is contained in a cube of side 4Ln 31 , σ . Hence the
+
+
+2
+1
+−1
+−
+support P of ⋆d−1
+i=0 νai bd−1−i is contained in a cube of side 4dLn 3 , σ . When ||x||∞ < Ln 3 , κ − δ
+4dLn 31 , σ and p ∈ P :
+µ(x − p) = µ(x) = | supp(µ)|−1 ,
+so ν(x) is a convex combination
+of values
+ν(x) = µ(x) on the l∞ ball
+
+ in {µ(x − p) : p ∈ P
+ } = {µ(x)}. Hence 
+of radius Ln 23 , κ − δ −1 − 4dLn 31 , σ . Then since Ln 13 , σ is Ln 23 , o κ − δ −1 :
+−1+o(1) !d
+2
+−1
+,κ− δ
+Px∼µ (ν(x) = µ(x)) ≥ 1 − 4dLn
+3
+
+
+−1+o(1)
+−1+o(1)
+2
+2
+2
+−1
+−1
+= 1 − Ln
+,
+≥ 1 − 4d Ln
+,κ− δ
+,κ− δ
+3
+3
+
+
+22
+
+In particular, we have a bound on the ℓ1 distance between µ and ν:
+X
+||µ − ν||1 =
+|ν(x) − µ(x)| ≤ Px∼µ (ν(x) 6= µ(x)).(||µ||∞ + ||ν||∞ )
+x∈Zd
+
+= O Ln
+
+
+
+2
+, (κ − δ −1 )(1 + o(1))
+3
+
+−1 !
+
+.
+
+Now for fixed a, b we apply the map ϕ to µ and ν to obtain:
+||φµ − φν ||1 ≤ ||µ − ν||1 ≤ O Ln
+
+
+
+2
+, (κ − δ −1 )(1 + o(1))
+3
+
+−1 !
+.
+
+and so the ℓ1 difference of the distributions φ(µ) and φ(ν) on Z is small.
+Recall from 5.3 (p. 21) that ϕνl = Uniform(I(l)). Since applying our map ϕ to a measure commutes
+with convolution of measures:
+
+
+i d−1−i
+.
+ϕν = ϕµ ⋆ ⋆d−1
+i=0 Uniform I a b
+
+are independent random variables:
+Since ci ∼ Uniform I Ln 23 , κ − δ −1
+
+
+(5.5)
+ci ai bd−1−i + Uniform I ai bd−1−i
+
+is uniformly distributed along an interval of length Ln 23 , κ − δ −1 ai bd−1−i . Note that c ∼ µ. Hence there
+is a constant C such that for all x ∈ Z:
+
+ 
+
+
+2
+d−1
+ν
+i d−1−i
+−1
+ϕ (x) ∼ ⋆i=0 Uniform I Ln
+(x − C)
+ab
+,κ− δ
+3
+The shift C accounts for the difference in expectation caused by the fact that the intervals associated
+with 5.5 (p. 23) are not centred (recall Definition 3.3 (p. 7)). However, the centre of each of these intervals
+Pd−1
+has modulus at most 21 ai bd−1−i + 21 , and so |C| ≤ i=0 ai bd−1−i . We take ϑ = ϕν to complete the proof of
+Lemma 5.18 (p. 22).
+The convolution ϑ allows us to replace R(a, b) = (a−mb)ϕa,b (c) by a−mb times a convolution of uniform
+measures on intervals. In Lemma 5.20 (p. 23), this will give us control over the distribution of R(a, b) on
+progressions of common difference a − mb.
+It remains to control f (a, b) mod (a − mb). In Section 8 (p. 39), we will characterise the moduli for
+which the smooth numbers are uniformly distributed across their residue classes, at which point the specific
+residue class of f (a, b) mod (a − mb) will not significantly affect its probability of being smooth as c varies.
+We now combine the previous claims to show that f (a, b) is B-smooth as often as random integers of
+the same size. Note that if gcd(a, b) had been greater than one, then throughout we could have divided it
+out, and the probability of smoothness would be increased.
+Lemma 5.20. Fix a, b, m, n in their intervals and let f be uniformly random as before. Then:
+′
+
+′
+
+Pf (f (a, b) is B -smooth | (a − mb) is B -good) = Ln
+
+
+
+−1
+1 κ + σδ
+(1 + o(1))
+,
+.
+3 3β ′
+
+In the subsequent, δ −1 − κ controls the exponent of the error terms in several uniformity claims: for this
+reason we imposed the condition κ > δ −1 in Equation 4.1 (p. 14).
+
+23
+
+Proof. Let a − mb = r. Recalling Lemma 5.18 (p. 22):
+
+
+Pn,f (fn,m (a, b) is B ′ -smooth) = Pn,c fˆn,m (a, b) + rφa,b (c) is B ′ -smooth
+
+
+−1 !
+
+
+2
+′
+−1
+= Pn,ϑ fˆn,m (a, b) + rϑ is B -smooth + O Ln
+, (κ − δ )(1 + o(1))
+3
+
+Pd−1
+Recall that ϑ has |E(ϑ)| ≤ i=0 ai bd−1−i and is sampled according to the convolution of uniform measures
+2
+on intervals of length Ln 3 , κ − δ −1 ai bd−1−i for i = 0, . . . , d − 1. Hence ϑ is unimodal with mode at some
+M satisfying
+
+
+d−1
+X
+2
+i d−1−i
+d−1
+ab
+< db
+= Ln
+|M | ≤
+, σδ(1 + o(1)) ,
+3
+i=0
+
+and the support of ϑ is contained in [M − Fmax |r|−1 , M + Fmax |r|−1 ]. We choose an ω = Ln 23 , o(1) , such
+that ω → ∞, and set
+
+
+
+
+2
+2
+Y := Ln
+, κ − δ −1 bd−1 ω −1 = Ln
+, κ − δ −1 + σδ − o(1) .
+3
+3
+Now, we define a measure ϑ′ to be
+′
+
+ϑ (x) :=
+
+(
+
+ϑ(max(x, Y ))
+ϑ(min(x, −Y ))
+
+x≥0
+x<0
+
+Later, we will see that using this measure allows us to control the density of smooth numbers only on
+progressions of length at least Y . Then:
+−1
+
+ 
+2
+, κ − δ −1 bd−1
+||ϑ′ − ϑ||1 ≤ Pz∼ϑ (|z| < Y ) ≤ 2Y Ln
+3
+= 2ω −1 ,
+
+from the definition of Y . Note that Y is much larger than M and so ϑ′ is monotone decreasing away from
+0; hence there are non-negative weights Wy for y ∈ Z, with Wy = 0 for |y| > Fmax |r|−1 such that:
+X
+ϑ′ =
+Wy Uniform([0, y]) + W−y Uniform([−y, 0))
+y≥Y
+
+and 1 −
+
+P
+
+y Wy
+
+≤ 2ω −1 . Hence we have:
+′
+
+Pf (fn,m (a, b) is B -smooth) = O ω
+
+−1
+
+
+
++
+
+Fmax |r|−1
+
+X
+
+y=Y
+
+
+
+Wy P fˆn,m (a, b) + rUniform([0, y]) is B ′ -smooth
+
+
+
++ W−y P fˆn,m (a, b) + rUniform([−y, 0)) is B ′ -smooth
+
+We note that O(ω −1 ) = Ln ( 23 , o(1))−1 terms can be absorbed into our o(1) terms, and so it suffices to
+show that for any fixed, B ′ -good r and any y ∈ [Y, Fmax |r|−1 ]:
+
+−1+o(1)
+
+
+1 κ + σδ
+P fˆn,m (a, b) + rUniform([0, y]) is B ′ -smooth = Ln
+,
+,
+3 3β ′
+
+−1+o(1)
+
+
+1 κ + σδ
+′
+ˆ
+P fn,m (a, b) + rUniform([−y, 0)) is B -smooth = Ln
+.
+,
+3 3β ′
+24
+
+−1
+Since |fˆn,m (a, b)| ≤ F̂max := Y Ln 32
+, we can absorb the probability that the value on the left is negative or
+positive (respectively) in the above two equations. From the definition of B ′ -good and Corollary 3.17 (p. 9),
+for any x ∈ [|r|Y − F̂max , Fmax + F̂max ]:
+
+
+
+
+Ψ(x, B ′ )
+1
+1
+Ψr (x, B ′ )
+′
+L , o(1) =
+L , o(1)
+Ψ(x, B , r, s) =
+φ(r)
+3
+r
+3
+and so to finish the estimate we observe that for any x ∈ [|r|Y − F̂max , Fmax + F̂max ]:
+
+
+−1+o(1)
+ 
+
+1 κ + σδ
+2
+.
+ρ(x, B ′ ) = ρ Ln
+, κ + σδ , B ′ = Ln
+,
+3
+3 3β ′
+We state the following Lemma that we will prove in Section 8 (p. 39).
+Lemma 5.21. Fix any b. Then
+Pa,m (a − mb is B ′ -good | a − mb is B-smooth) = 1 − o(1)
+We are now able to prove Theorem 5.4 (p. 17)
+Proof of Theorem 5.4 (p. 17). Lemma 5.9 (p. 19) and Lemma 5.21 (p. 25) randomise over a, m for any fixed
+b, and uniformly over n, f . Hence for any b, n, f :
+
+−1
+1 δ −1
+′
+Pa,m (a − bm is B-smooth and B -good) = Ln
+,
+(1 + o(1))
+3 3β
+Since Lemma 5.20 (p. 23) randomises over f for any fixed a, b, m, we have for each fixed b:
+Pa,m,f (a − bm is B-smooth and B ′ -good, f (a, b) is B ′ -smooth) = Ln
+
+
+
+κ + σδ
+1 δ −1
+,
++
+3 3β
+3β ′
+
+−1+o(1)
+
+
+as multiplicative factors of 1 + o(1) may be absorbed into the o(1) in the exponent of the Ln 13 terms.
+2
+Summing over the Ln 13 , σ choices for a fixed pair (a, b):s
+!
+
+X
+X
+(a − bm) is B-smooth
+1
+Em,f (|Xn,m,f |) =
+Pn,m,f ((f, n, m, a, b) ∈ X ) = Ln
+,σ
+Pn,m,f,a
+3
+∧f (a, b) is B ′ -smooth
+a,b
+b
+!
+X
+
+(a − bm) is B-smooth ∧ (a − bm) is B ′ -good
+1
+,σ
+Pn,m,f,a
+≥ Ln
+3
+∧f (a, b) is B ′ -smooth
+b
+
+
+
+
+ −1 
+1
+σδ + κ
+δ
+(1 + o(1)) +
+(1
++
+o(1))
+≥ Ln
+, 2σ −
+3
+3β
+3β ′
+6. Controlling Algebraic Obstructions to Squares and the Proof of Theorem 2.6
+We begin with some high-level discussion. At the end of Step 3 (p. 13) of the algorithm, we have a large
+collection of linear polynomials a − Xb which, when sent to Z[α] or Z by morphisms sending X to α or m
+respectively, are smooth normed in both rings. Recall that in Step 4 (p. 13), we seek to find a subset of
+these elements whose product is sent to the square of an element of Z[α] and a square in Z by these two
+morphisms.
+Now, if we are given an element z ∈ Z and asked whether it is square, we need only check that for
+any prime r dividing z, the multiplicity of r as a factor of z is even. In this situation, we can halve the
+order of every prime and take a product to yield another integer whose square will be z. Hence given the
+factorisations of the images a − mb in Z for 1 + B polynomials found in Step 3 (p. 13), we can find a subset
+25
+
+whose product is square by looking for a subset such that the total multiplicity of every prime less than B
+across the subset is even. We can send each a − mb to a vector over F2 of the orders of primes dividing
+a − mb; then the process of square formation is exactly finding an element in the kernel over F2 of a large
+matrix of exponents.
+We might naı̈vely hope that we can follow this algorithm in Z[α], by factoring the norms of a − bα to
+ensure that we find a subset whose product is square in both Z and Z[α]. However, over K := Q(α) and its
+ring of integers OK , this is more subtle, but the essential idea still works.
+Note that OK is a Dedekind domain, so non-zero prime ideal is maximal and so OK /p is a field, say Frk .
+Hence N (p) = rk , and p|(r) the ideal generated by r in OK . Such a prime p is said to be of k-th degree. The
+quotient map OK → OK /p ≃ Frk is determined entirely by its action on α. Hence we can identify the prime
+ideal p with an element of Frk , which is in turn identified with a minimal (and thus irreducible) polynomial
+pp over Fr of degree k. Note that we can apply the same map by recalling that OK is a subring of Q(α),
+which may be quotiented by (pp (α)), or more explicitly OK ∋ g(α) → (g mod pp )(α) which preserves the
+representation of any element as a ratio of polynomials in α.
+On the other hand, it remains to see which polynomials correspond to primes. Suppose we are given
+a polynomial p of degree k. It is plain that if the polynomial gcd(f, p) = 1 over Fr , then the quotient of
+OK ⊆ K by (p(α)) sends every element to 0, and hence the ideal is not prime. Since p is irreducible over
+Fr , a non-trivial gcd implies that p is one of the irreducible factors of f mod (r). Furthermore, the image
+of Z[α] under the quotient map is plainly surjective. So we can identify this polynomial with the quotient
+map, and hence with the associated prime ideal p.
+We can equate prime ideals p ⊂ OK with pairs of a prime r ∈ Z and an irreducible factor pp of f
+mod (r). The latter representation will be substantially more straightforward to handle computationally.
+Furthermore, we note the particular ease of use of the degree one primes, which correspond to simple roots
+of f mod (r). For these primes, the quotient map applied to a polynomial in Z[X] is mere evaluation at
+the root. In what follows, we will routinely abuse notation to equate the prime ideal p in OK and the
+irreducible polynomial divisor pp of f (x, 1) mod (r). We will also equate the ideal p with the pair (r, s),
+with r a modulus and s a root of p in Frk when r is prime.
+We note that, unlike the situation in Z, there may be multiple prime ideals of the same norm, since for
+a prime r ∈ Z the ideal (r) may lift to an ideal (r) ⊆ OK which is not a power of a single prime ideal.
+However, this is not a substantial problem, as the norm of the ideal (r) in OK is the greatest common divisor
+of the norm of each element of (r), and so divides N(r) = rd . Since the norm of a prime ideal is an integer
+exceeding 1, and norms are multiplicative, the number of prime ideals dividing (r) in the ring of integers is
+bounded above by d ≪ log2 n
+Of course more is known; it is a result of Landau [29] that the number of prime ideals in OQ(α) of norm
+less than x is:
+
+p
+
+x
+log x .
++ x exp −Oα
+log x
+As should be expected, the dependence on α in this bound in fact driven by the position of a (hypothetical)
+troublesome zero of the zeta function associated to the field extension K/Q; Montgomery and Vaughan [39]
+have a substantial discussion. We could use the fact that
+ we have taken f to be random to gain better
+control of the number of ideals, but as log n = Ln 13 , o(1) already we do not need the sharper bounds.
+More subtly, since OK need not be a unique factorisation domain as we have no guarantee that irreducible
+elements are in fact prime, and it might be the case that the number of irreducibles of small norm is much
+larger than the number of primes. It is also difficult to work directly with primes in the full number field,
+since they generally will not be in Z[α].
+This obstacle is standard in the family of NFS algorithms, and the methods first suggested by Adleman [1]
+and studied in detail by Buhler, Lenstra and Pomerance [6] allow us to avoid it. They remark that a complete
+analysis of these characters was out of reach, and suggest that much stronger versions of the Chebotarev
+Density Theorem might be required. We instead proceed to show that for our randomised field and with
+a stochastic collection of characters with large conductor, the number of ways in which an element might
+appear square and yet not be is small enough that we can apply the pigeonhole principle to find a square.
+26
+
+Our first task is to keep track of the ways in which a given prime r might come to divide fd N(a − bα).
+In particular we observe that:
+r | fd N(a − bα) = f (a, b)
+
+⇒r|b or f (ab
+
+−1
+
+, 1) = 0 mod (r)
+
+⇒f (a, b) = 0 mod (r)
+
+⇒r|b or ∃s : (r, s) = 1, f (s, 1) ≡ 0 mod (r)
+
+and that furthermore if r|b then r|fd N(a) = fd ad , and so r|fd a. In this situation we can note that fd (a − bα)
+is divisible by every prime ideal lying over (r), and so we can assume that r does not divide b. Hence we split
+each prime r < B ′ into a collection of “primes” (r, s), one for each 0 < s < r coprime to r with f (s, 1) ≡ 0
+mod (r).
+Number theoretically, these correspond to the first degree primes in OK :
+(r, s) : r prime, r | f (s, 1) are in correspondence with p | (r), N(p) = r
+These are particularly convenient, as the norm of the ideal generated by these prime ideals is a prime in Z;
+as a corollary, working modulo p entails mapping α into an element of Z/rZ rather than Frk . In particular,
+we define the following functions (after [6])
+er,s (a − bα) := ordr (f (a, b))1a≡bs mod (r)
+and note that this apportions the responsibility for the divisibility of f (a, b) by r to a specific solution s of
+f (s, 1) ≡ 0 mod (r).
+1
+Note that there are at most d solutions to f (s, 1) mod (r) and again d = log 3 +o(1) n which is much
+smaller than Ln 13 . As mentioned, that these er,s correspond to the splitting of first degree primes in Z[α]
+dividing (r), and so er,s extends to a linear map from the multiplicative semigroup of K × to Z [6, Lemma
+5.5].
+Hence given 1 + B + dB ′ polynomials from Step 3 (p. 13) we can use linear algebra over F2 to find a
+subset product P such that P (m) ∈ Z is square and P (α) ∈ Z[α] is such that 2 | er,s (P (α)). It remains to
+show that extending this linear algebra can force P (α) to be the square of an element of Z[α]
+We will first show that the number of ways that we can fail to produce a square in K is controlled by
+an F2 vector space (denoted H) of small dimension. We will then randomly construct a multiplicative map
+(denoted ΨF ) which almost surely distinguishes all of the elements of H. In particular this allows us to
+identify when a product is a square of an element of Q(α), once we know it to be an element of OK with
+square and smooth norm.
+This map ΨF will be multiplicative, it will be a linear function of the order of each prime dividing a− bα.
+As a corollary, we can use additional sieving to find a subset whose product maps to a square in Z and OK
+and such that ΨF shows the product in the number field to be a square of an element of Q(α). In particular,
+ΨF will be a collection of a logarithmic number of random quadratic characters on the number field. To
+force the square to in fact be a square of an element of Z[α] requires that we multiply by an additional
+constant.
+We note that whilst this general approach is standard, the details of our method will be somewhat
+different. In particular, the standard NFS produces the map ΨF by taking a collection of maps corresponding
+to first degree primes p lying over primes (p) in Z which are just above the smoothness bound B ′ . By contrast,
+we will
+ take arbitrary primes p of norm below a much larger bound, in general, we will have log(N(p)) being
+Ln 31 .
+To show this in detail, we will have to study various extensions of Q(α), corresponding precisely to
+adjoining roots of elements which fail to be square in the ring of integers. In particular, the standard bounds
+on the discriminant of Q(α) extends to similar bounds on the discriminant of the quadratic extensions of
+interest, and we use effective results of Stark [54] to show that the majority of such extensions have no
+Siegel zero. This allows us to show that for characters of suitably large conductor, the kernel of ΨF is small
+enough that it can be handled by brute force.
+We now begin the formal argument. We implicitly equate C2 and the additive group of F2 (via the map
+b
+(−1) → b). Recall that α has minimal polynomial f (x, 1), N is the field norm on Z[α] and K := Q(α). We
+27
+
+define a group:
+
+×
+
+H := {z ∈ K × : ∀s < r, er,s (z) ≡ 0 mod (2)}/{z 2 : z ∈ Q(α) }.
+Lemma 6.1. H is an F2 vector space of dimension at most
+(δκ + o(1)) log2 n +
+
+(log n)4/3
+δ2κ
+2 log 2 (log log n)1/3
+
+Remark 6.2. The log4/3+o(1) n term does not appear in the case that f is monic, and thus is not in the
+standard presentation of the NFS. More generally, the term is O(d2 log fd ), and is being driven by the
+increased coefficients in the minimal polynomial for an algebraic integer in Q(α).
+
+Proof. The coefficients of f are bounded by Ln 23 , κ (whereas in the standard NFS the bound is m =
+q
+
+Ln 23 , δ −1 ). Recall that the degree d of f is δ 3 logloglogn n .
+To bound |H|, we follow Buhler, Lenstra and Pomerance’s presentation of the NFS, using Lemma 3.3 and
+the argument of Theorem 6.7 from [6]. We differ firstly in that their claims are restricted to the case κ = δ −1 ,
+but the arguments are plainly seen to be more general. To implement the more general case, we keep the
+dependence on ∆ explicit. We observe that in [6] the argument is given for a univariate non-homogeneous
+polynomial, which in the notation of this paper is f (x, 1). Note also that in this paper, we cannot guarantee
+that α is an algebraic integer, although fd α is.
+Remark 6.3. We note that the result in [6, Lemma 3.3], claims a bound of form d2d n2 M −3 in the setting
+′
+δ = κ−1 . The argument presented there does not clearly hold as fd−1
+= (d − 1)fd−1 , but the ratio of the
+matching terms in the first column is d and so simply subtracting the first column from the second cannot
+cause all entries in the second column to be of order 1.
+
+Claim 6.4. If the coefficients of f are bounded by M = Ln 23 , κ then the discriminant ∆f of f is bounded
+by |∆f | ≤ d2d n2δκ M −2
+P
+d
+f (x, 1). Let fi′ = ifi . We
+Proof. For f (x, 1) = fi xi , we have that |fd ∆f | is the resultant of f (x, 1) and dx
+define the associated (2d − 1) × (2d − 1) Sylvester matrix:
+
+
+fd fd−1 · · ·
+···
+f1
+f0
+0 ··· 0
+.. 
+
+0
+.
+fd
+fd−1 · · ·
+···
+f1
+f0
+0
+
+
+
+ ..
+..
+..
+..
+..
+.
+.
+.
+.
+.
+0
+0
+
+
+0
+0
+fd
+fd−1 · · · · · · f1 f0 
+
+ ′ ·′· ·
+
+f2′
+f1′
+0
+··· ··· 0
+S = fd fd−1 · · ·
+,
+
+.. 
+′
+′
+′
+′
+0
+fd
+fd−1 · · ·
+f2
+f1
+0 ··· . 
+
+
+
+.. 
+.
+.
+..
+.
+.
+′
+′
+0
+.
+.
+. .
+0
+fd
+fd−1
+
+
+
+.
+..
+..
+..
+..
+..
+ ..
+.
+.
+.
+.
+. 0
+0
+
+···
+
+···
+
+fd′
+
+0
+
+′
+fd−1
+
+···
+
+f2′
+
+f1′
+
+′
+with |∆| = | det(S)|fd−1 . We modify S by subtracting fd−i
+/fd′ times the first column from each of the
+′
+later columns to obtain S . By construction det(S) = det(S ′ ). The first row of S ′ has non-zero entries
+(fd , d1 fd−1 , d2 fd−2 , . . . , f0 ), and so the euclidean norm of the first row of S ′ is bounded by:
+
+ 2  21 r
+ 21
+
+ 2  21
+
+9
+M d
+1
+1
+M d
+9
+2
+2 d(d + 1)(2d + 1)
+M +M
+=
+1
++
+≤
++
+exp
++
+6d2
+3
+2d 2d2
+3
+4d 4d2
+
+Similarly, the norm of rows 2 through d − 1 of S ′ are bounded by
+r
+ 
+ 12
+1
+1
+1
+1
+2
+2
+M + M d = M d 2 1 + ≤ M d 2 exp
+d
+2d
+28
+
+and the norm of rows d + 1 through 2d − 1 of S ′ are bounded by
+
+ 2 3  21 r
+ 21
+
+ 2 3  21
+
+3
+M d
+1
+1
+M d
+3
+2 2
+2 d(d − 1)(2d − 1)
+M d +M
+=
+1+ + 2 ≤
+exp
++ 2 .
+6
+3
+d 2d
+3
+2d 4d
+The dth row has only one non-zero entry and norm dfd . Now Hadamard’s bound provides that | det(S ′ )| is
+at most the product of the norms of the rows of S ′ , and so:
+
+
+d−1 d
+d−1 
+
+8d − 1
+d
+3/2
+−2
+′
+1/2
+3 exp
+| det(S )| ≤ M d
+dfd M d
++ 2
+4d
+4d
+ d
+
+− 2 2 −1
+2d−2 2d
+= fd M
+d 3 e d
+
+Note that since d ≥ 3, the product of the last three terms is bounded above by e2 3−5/2 < 1. We have
+M d = nδκ , and hence:
+|∆f | = | det(S ′ )|fd−1 ≤ d2d n2δκ M −2 .
+P
+Let g be the minimal polynomial of fd α. Then clearly g(x) = i (fi fdd−i−1 )xi , and so
+
+
+4 2
+d(d−1)
+|∆g | = |∆f |fd
+= Ln
+, δ κ + o(1) .
+3
+p
+[6, Theorem 6.7].
+Claim 6.5. |H| ≤ |∆g |(log n)O(d)
+
+Proof. We follow the presentation of [6, Theorem 6.7], differing only in that we track the dependence on ∆
+precisely. We define:
+V = {z ∈ K × : ∀s < r, er,s (z) ≡ 0 mod (2)},
+
+W = γ ∈ K × : γOK = a2 , a a fractional OK -ideal ,
+× ×
+Y = OK
+K
+
+2
+
+2
+
+2
+
+Note that V ⊃ W ⊃ Y ⊃ K × and |H| = [V : K × ]. Now, [6, Proposition 7.4] gives that:
+[V : W ] ≤ [OK : Z[fd α]].
+Additionally, if the order of the ideal class group of OK is h, then:
+[W : Y ] ≤ h,
+as (using the notation of the definition of W ) for any γ ∈ W the map sending γ to the ideal class of a has
+Y as its kernel. If K has 2s complex embeddings, then Dirichlet’s unit theorem implies that:
+2
+
+[Y : K × ] = 2d−s
+2
+
+2
+
+×
+×
+since Y /K × ≃ OK
+/OK
+. As in [6] we define the Minkowski constant MK :
+ s
+p
+d! 4 p
+MK := d
+|∆K | ≤ |∆K |
+d π
+
+with the inequality following from s ≤ ⌊ d2 ⌋ and Stirling’s approximation. From [30, Chapter III, Proposition
+p
+√
+8 and 14] and the definition of polynomial discriminants, it is immediate that ∆K [OK : Z[fd α]] = ∆g .
+Now, from [34, Theorem 6.5 and Remark]:
+h ≤ MK .
+
+(d − 1 + log MK )d−1
+(d − 1)!
+29
+
+Recall that log(|∆|) = O(log n) and d = o(log n). Hence:
+2
+
+|H| = [V : K × ] ≤ [OK : Z[fd α]]h2d−s
+p
+p
+(d − 1 + log |∆K |)d−1 d−s
+2
+≤ [OK : Z[fd α]] |∆K |
+(d − 1)!
+q
+q
+q
+O(d)
+.
+≤ |∆g |(d − 1 + log |∆g |)d−1 dO(d) ≤ |∆g |(log n)
+
+We now finish proving Lemma 6.1 (p. 28). Since (log n)O(d) = no(1) , we use the above two results:
+d(d−1)/2
+
+|H| ≤ nδκ+o(1) fd
+
+
+Note that fd ≤ Ln 23 , κ and that d = δ log1/3 n(log log n)−1/3 . Hence
+log2 |H| ≤ (δκ + o(1)) log2 n +
+
+δ2κ
+log4/3 n
+.
+2 log 2 log log n1/3
+
+Since K × is commutative, any element of H can be represented as a coset h.{z 2 : z ∈ K × }. Hence the square
+of any element of H is in fact the identity element, since it is equivalent to h2 {z 2 : z ∈ K} and h ∈ K × .
+Thus H is naturally an F2 vector space, and v ∈ (K × )2 equivalent to v → 0 under projection to H.
+6.1. Characters over the number field
+We now discuss the construction of our characters χp . Observe that quadratic characters on Z[α] are
+well defined as maps from H, as they are multiplicative and so are trivial on any square in Z[α]. We restrict
+our attention to characters induced by the quadratic character on some finite field. We recall our previous
+discussion of the prime ideals, which allow us to characterise all of the maps from OQ(α) to finite fields. In
+particular, on terms of the form (a − αb), such characters have the form:
+χp
+
+(a − αb) 7−→ (a − bX) 2 (r −1) ∈ Fr [X]/(pp ) ≃ Frk
+k
+
+1
+
+(6.1)
+
+where pp is an irreducible polynomial of degree k dividing f (x, 1) mod (r) exactly once. We note that as F×
+rk
+is cyclic, this map in fact sends every pair (a, b) to ±1 or 0, and is thus a quadratic character. Furthermore,
+we recall that p ≃ (r, pp (α)) is a prime ideal of degree k in OQ(α) dividing (r).
+We note that in fact this representation of the character is computationally challenging, as it requires
+exponentiation. Instead, it is more convenient to observe that the above is:
+
+
+χp
+a − bX
+(6.2)
+(a − αb) 7−→
+pp (X)
+where the right-hand side is the Legendre symbol over Fr [X].
+It is natural to think of searching for p by seeking to factorise f (x, 1) mod (r) and examining the
+irreducible divisors. Given a set F of these χp = χr,s , we define
+|F |
+
+Ψ F : H → F2 ,
+
+Ψ
+
+F
+(χr,s (x) : χr,s ∈ F ).
+x 7−→
+
+We will produce a random set F such that almost surely ker(ΨF ) is small.
+Lemma 6.6. There is a sampleable distribution Υ for pairs r, s, such that χr,s is a character following 6.1 (p. 30), such that for all but log log n of the h ∈ H, considering χr,s as a map from H to F2 :
+PΥ (χr,s (h) = −1) ≥
+
+1 + o(1)
+.
+2
+
+
+Sampling according to Υ takes at most Ln 13 , c time for c to be defined later. Furthermore, each character
+χr,s can be evaluated in time at most Ln 13 , 2c .
+30
+
+Remark 6.7. We will in fact achieve this unconditionally with c = 34 δ + o(1). Conditional on GRH these
+Ln ( 13 ) bounds become polynomial in log n. We observe that formal guarantees of this form are not present
+in the literature.
+The heuristic notion, dating from Adleman [1] is that we should be able to consider the various characters
+χp as uniformly distributed, independent samples of the dual space of H, and so a small collection should
+suffice to distinguish any two elements of H. We will not show this here, but instead show the weaker notion
+above. This will still suffice to ensure that a small collection of samples will distinguish almost all elements
+of H from being trivial.
+Proof. Following an idea of Adleman [1], we will carefully study the behaviour of quadratic characters
+induced by primes of large norm.
+Suppose we have K a finite extension of Q, and L/K Galois, with G = Gal(L/K). Let ∆L , ∆K be the
+absolute values of the discriminants of L and K respectively, and let dL , dK be the degrees of [L : Q]
+h andi
+
+[K : Q] respectively. Given any prime p in K which is unramified in L, we define the Artin Symbol L/K
+p
+to be the conjugacy class of the Frobenius automorphisms of L/K corresponding to primes in L dividing p.
+We define:
+
+
+
+
+L/K
+∈C ,
+πC (x) = p : p prime, NK (p) < x,
+p
+
+In the simplest case where K = Q and L = Q exp 2πi
+is a cyclotomic field, the Artin Symbol of any
+n
+prime p ∈ N, with p ∤ n would correspond to the residue of p modulo n.
+We note the following theorem, which strengthens the celebrated Density Theorem of Chebotarev, which
+is itself a generalisation of the prime number theorem for arithmetic progressions.
+
+Fact 6.8 (The Unconditional Effective Chebotarev density theorem [28, 52]). We have L/K/Q a sequence
+of extensions, with L/K Galois, and retain the notation above. Let C ⊆ G such that gCg −1 = C ∀g ∈ G,
+i.e. C is a union on conjugacy classes of G. Let |C̃| be the number of conjugacy classes contained in G.
+Let 1 − ν be the Siegel zero of ζL if it exists, and 0 otherwise. Then there exists c1 > 0 such that if
+log x ≥ 10dL log2 ∆L then:
+!!
+r
+
+|C|
+log x
+|C|
+1−ν
+.
+(6.3)
+Li(x) ≤
+Li x
++ O x|C̃| exp −c1
+πG′ (x) −
+|G|
+|G|
+dL
+For a hands on introduction to this topic, we recommend [43]. To continue the proof, we set K =Q(α),
+√ 
+and choose some h ∈ OK of minimal norm representing a non-trivial element of H. We let L = K
+h .
+h
+i
+Now G = C2 , dK = d, dL = 2d. We also note that in this case the value L/K
+corresponds exactly to the
+p
+action of the quadratic character χp induced by p on h.
+Now, we use Minkowski’s bound on the minimum norm of an integral ideal:
+NK/Q (h) ≤ MK/Q =
+
+  d2
+q
+d!
+4
+∆K/Q
+= nδκ(1+o(1)) .
+π
+dd
+
+The relative discriminant ∆L/K is the norm of the different δL/K of the extension. By construction, this
+ideal is generated by 2h, and so is an integral ideal [30, Chapter III, Proposition 2 and Corollary]. Hence
+we obtain:
+(6.4)
+∆L/Q ≤ NK/Q (2h)∆2K/Q ≤ n(5+o(1))δκ .
+We apply 6.3 (p. 31) to the extension L/K, noting that it is of degree 2. We obtain that for p chosen
+uniformly randomly with Np ≤ x:
+!!
+r
+log x
+1
+−ν(1+o(1))
+P(χp (h) = 1) −
+.
+(6.5)
+<x
++ O 2 log x exp −c1
+2
+dL
+31
+
+We wish to ensure that P(χp (h) = 1) = 12 + o(1), and so it suffices for us to insist that:
+
+
+log x = ω dL (log log x)2 , and additionally log x = ω ν −1 if ζL has a Siegel zero
+
+(6.6)
+
+Note that we do not sample from a uniform distribution over characters of bounded norm; we will sample
+from a distribution which is close enough to being uniform that we can extract useful bounds.
+
+Definition
+6.9. For a field K and h a minimal norm representative of an element of H, we define Lh =
+√ 
+K h . For ε > 0 we define the exceptional set :
+EK,ε =
+
+
+
+
+1
+,ε
+h.{z 2 : z ∈ K × } ∈ H s.t.∃ν s.t. ζLh (1 − ν) = 0, ν −1 > Ln
+3
+
+Note that the field Lh is independent of the choice of representative h for the element of H.
+The exceptional set is the subset 
+of H which cannot be reliably distinguished from 0 by characters
+induced by primes of size exp Ln 13 , ε ; if there is a Siegel zero of this form then it is possible that almost
+every prime of this size induces a character which vanishes on some element of H. We state the following
+Lemma which we will prove later.
+ˆ
+Lemma 6.10. Suppose that K = Q(α) is a number field
+ where α is a root of a irreducible f = f + (x − m)R
+1
+where R is uniformly random. Then for ε = 3 + o(1) δ,
+
+
+
+−1
+2 κ − δ −1
+4
+,
+(1 + o(1))
+Pf |EK,ε | > log log n ≤ Ln
+.
+3
+3
+3
+
+Remark 6.11. The proof of this lemma will be based on the sparseness of Siegel zeros of zeta functions
+associated to the extensions Lh /K. Then for most f , at most 43 log log n elements of H cannot be distinguished from 0, and so we can use brute force to find a pair of polynomials mapping to the same element in
+H without altering the Ln ( 31 ) run time. Then their product must be trivial in H and thus gives a congruence
+of squares. To obtain an Ln ( 13 ) run time it would suffice to prove the above statement with the log log n
+replaced by any Ln ( 13 , o(1)) and the Ln ( 32 ) with any Ln ( 13 , ω(1)).
+Given this claim, we have an x satisfying 6.6 (p. 32) for all but 43 log log n of the h ∈ H and with
+
+−1
+
+log x < Ln 13 , ε for all but a Ln 23
+fraction of our polynomials f . As we will only examine Ln 13
+polynomials f , we may simply choose to fail on this exceptional set of f and will still guarantee that we fail
+with probability o(1).
+√
+Any prime p with N(p) < x must divide a prime p with p < x, and if p is of degree k, then p < k x.
+Furthermore, each k th degree prime dividing p corresponds to a simple degree k divisor of f modulo p. We
+present an algorithm to sample Υ. This will output ideals, most of which are prime.
+IdealSampler(f )
+1. Uniformly randomly choose a degree bound k ∈ [d].
+i
+
+−1
+−1
+2. Choose a uniformly random integer r ∈ x(k+1) , xk .
+
+
+−2
+3. Use the Miller-Rabin primality test to discard composite r with probability
+1
+−
+O
+log
+x
+. This
+
+
+−1
+3
+it will occur that r is prime,
+takes time O log x log log x . With probability at least Ω (log x)
+
+
+−1
+. For the purposes of
+and so any r produced at this stage is prime with probability 1 − O d(log x)
+exposition of the algorithm, we
+ will assume
+ that all the r are prime.
+3
+
+4. Factor f mod (r) in time O (d log x) [59], and find the collection of irreducible and unrepeated
+factors si of degree at most k. Observe that the factors si correspond to primes in the number field of
+norm at most x dividing (r). For such an r, we have at most d primes si .
+32
+
+5. If we find j factors of degree at most k, we take s to be one of them uniformly at random with
+probability jd−1 . Otherwise return to step 1
+6. Output the pair r, s.
+Remark 6.12. To ultimately obtain the run time bounds which we need, we need the run time of IdealSampler to be at most O(log4 x). In particular, we will find that log x = L 13 . This prevents using
+AKS-style deterministic primality testers [2], and so we have to permit a small probability that r is not
+prime.
+Remark 6.13. Note that if r is not prime, then the factorisation of step 4 may fail; if this occurs we return
+to step 1. If we do obtain a character from a non-prime r, we observe that it is still quadratic and therefore
+vanishes on the squares as required. Since we obtain at most one character from each sampled r, and are
+guaranteed to find a character if k = d and r is chosen to be prime, the fraction of the characters which
+are not induced by primes is o(1). We will absorb this error term into our estimates of the probability that
+some h is distinguished from 0.
+To finish the proof of Lemma 6.6 (p. 30), we need to show that this algorithm is fast, the characters χr,s
+can be evaluated quickly and that they are sufficiently uniform that the bounds of Equation 6.5 (p. 31) give
+the bounds we need.
+
+Claim 6.14. The expected time taken to sample (r, s) ∼ Υ as above is at most Ln 31 , (4 + o(1))ε
+
+
+3
+Proof. We note that each attempt from the start of the algorithm takes time O (d log x) , with the fourth
+step being slowest.
+We are guaranteed to find a factor if our degree bound k is d (a probability 1/d event), the integer r is
+prime (a probability Ω(1/ log x) event), and we successfully take an ideal in step five (a probability Ω(1/d)
+event if k = d). Hence the number of attempts needed to output a prime is bounded in expectation by
+O d2 log x .
+
+Hence the time taken to find an ideal is bounded in expectation by O(d5 log4 x) = Ln 13 , (4 + o(1))ε .
+1
+(1 + o(1))
+Claim 6.15. For any fixed h, PΥ (χr,s (h) = −1) ≥ 2d
+
+i
+
+−1
+−1
+of degree at
+Proof. The distribution of primes p generated is uniform over p | (r) for r ∈ x(k+1) , xk
+most k. This property also trivially holds for a uniform distribution over primes of norm ≤ x. Thus the
+difference between Υ and a uniform distribution over primes of norm ≤ x is the distribution of the degree
+of these primes.
+The probability that Υ samples p with N(p) ≤ x and p | (r) for r in each of these intervals is d1 . Hence
+Υ pointwise dominates d−1 times the uniform distribution over all primes of norm below x.
+1
+(1 + o(1)).
+Then PΥ (χr,s (h) = −1) ≥ d1 PN (p)≤x (χp (h) = −1) = 2d
+Claim 6.16. Evaluating the character χr,s associated with the ideal p ≃ (r, s) sampled as above on a term
+a − bα takes time at most Ln 13 , (2 + o(1))ε .
+
+Remark 6.17. The following proof is somewhat technical in that the logarithms of the numbers of interest
+are large. Hence we have to quite precisely track which arithmetic operations are used. The reduction to
+Legendre symbols is of great use, as it allows us to avoid doing arithmetic in Fkr .
+
+Proof. We note that if r = 2, then the character is identically 1 as all elements of the field are squares. Hence
+we assume r > 2. For any polynomial P ∈ Fr [X], let |P | = rdeg(P ) . We recall from Equation 6.2 (p. 30)
+that:
+
+
+a − bX
+χr,s (a − bα) =
+s(X)
+
+33
+
+where the RHS is the Legendre symbol over Fr [T ]. We first note that for any constant c, we can reduce the
+calculation to finding a Legendre symbol mod r:
+c
+P
+
+=c
+
+|P |−1
+2
+
+=
+
+k −1
+ c  rr−1
+
+r
+
+=
+
+ c k
+
+(6.7)
+
+r
+
+We draw attention to the law of quadratic reciprocity in function fields, introduced initially in [3] and
+discussed at length in [50, Chapter 3]. For any two relatively prime monic irreducible polynomials over Fr :
+  
+|P |−1 |Q|−1
+P
+Q
+2
+,
+= (−1) 2
+Q
+P
+Hence:
+χr,s (a − bα) =
+
+
+
+−b
+r
+
+=
+
+
+
+−b
+r
+
+k 
+k
+
+X − ab−1
+s(X)
+
+
+
+=
+
+r−1 rdeg(s) −1
+2
+
+(−1) 2
+
+
+
+
+−b
+r
+
+k
+
+(−1)
+
+s(ab−1 )
+X − ab−1
+
+r−1 rdeg(s) −1
+2
+2
+
+
+
+=
+
+
+
+−b
+r
+
+k
+
+
+
+s(X)
+X − ab−1
+
+
+
+r−1 rdeg(s) −1
+2
+
+(−1) 2
+
+
+
+
+s(ab−1 )
+,
+r
+
+deg(s)
+
+r
+−1
+can be easily computed.
+with the last equality following from Equation 6.7. Parities of r−1
+2 and
+2
+−1
+Hence to compute χr,s (a − bα) it suffices to compute s(ab ) and two Legendre symbols modulo r. By use
+of reciprocity over Q, we can compute a Legendre symbol modulo r in O(log r) additions or subtractions of
+numbers of size at most r.
+To compute b−1 mod (r) requires the Extended Euclidean algorithm to be run, which requires O(log r)
+additions of numbers of size at most r. To compute ab−1 mod (r) requires one multiplication. To compute
+s(ab−1 ) mod (r) requires at most O(d) additions and multiplications modulo r.
+Addition or subtraction of numbers of size r (or modulo r) takes O(log r) steps. Multiplication modulo
+r takes O(log2 r) steps by iterative addition and doubling. Hence the computation in total requires time
+
+
+1
+2
+2
+−1
+O(d log r) = O(d log x) = Ln
+, (2 + o(1))ε .
+3
+
+Hence we can take c = (4 + o(1))ε to complete the proof of Lemma 6.6 (p. 30). We note that this is
+tight for both finding and evaluating the set of characters.
+Remark 6.18. Note that we do not show that the characters we sample are independent in the sense of [6,
+Lemma 8.2], in that we do not prove that the characters induce independent, uniformly distributed maps
+in the dual space of H. We have instead shown merely that there is a probability, uniformly bounded away
+from zero, that any element of H is not in the kernel of one of our sampled characters.
+Remark 6.19. Note that normally, the NFS takes characters from the smallest primes above B (i.e.
+log x = O(d
+ log d)). Even conditional on GRH, our methods require taking somewhat larger primes (log x =
+O d log2 d ), and unconditionally we require much larger primes to control their statistics. Furthermore,
+the standard NFS takes only primes of first degree, which are asymptotically guaranteed to be almost all
+of the primes of bounded norm as the bound tends to infinity for a fixed number field. Heuristically, it
+might seem reasonable that these primes, over a small range, would induce sufficiently random characters
+to yield the required reduction to squares, but as discussed in [6], proving this would require demonstrating
+exceptionally good equi-distribution properties for the Chebotarev Density theorem applied to the splitting
+field of f at bounded norm, and gaining sufficient control would require a better effective bound on the error
+term.
+Proof of Theorem 2.6 (p. 6). With the claims of the previous section, we are in a position to produce our
+linear ΨF with small kernel, and thus to produce a congruence of squares. We will need to track
+precisely
+
+the computational complexity of these operations, as some of the numbers involved have L 13 bits.
+34
+
+2
+
+4/3
+
+n
+First, we sample 4d(δκ log n+ 2δlogκ2 logloglog n1/3
+) pairs (ri , si ) independently from Υ as in Lemma 6.6 (p. 30).
+
+
+2
+Note that
+our sample is of size o log n = Ln 31 , o(1) . Recall that taking each sample takes atmost
+
+Ln 13 , c time in expectation, so we can produce the required
+sample in expected time Ln 13 , c + o(1) . We
+
+1+o(1)
+4/3
+2
+n
+= Ln 31 , max(β, β ′ )
+linear polynomials. For
+have M = 1 + B + dB ′ + 4d κδ log n + 2δlogκ2 logloglog n1/3
+1+o(1)
+each of these, we need to evaluate each of our characters, which takes time Ln 13 , 2c + max(β, β)
+.
+Fix some h ∈ H\{0} which is not in the exceptional set, which we recall is of size at most log log n. Each
+map χri ,si is independent and induces a map in Hom(H, F2 ) such that:
+
+P(h ∈
+/ ker(χri ,si )) ≥
+
+1 + o(1)
+.
+2d
+
+As a corollary:
+
+
+2κ
+log4/3 n
+4d κδ log n+ 2δlog
+
+2 log log n1/3
+1 + o(1)
+P(h ∈ ker(χF )) ≤ 1 −
+2d
+
+
+
+≤ |H|−2+o(1) .
+
+Hence by a union bound over the non-trivial elements of H the probability that any of these non-exceptional
+and non-zero elements is in the kernel is o(1). Hence with high probability the kernel of ΨF has size at most
+4
+3 log log n.
+With these additional random characters in Step 4 (p. 13), our existing matrix algebra allows us to
+reduce (concretely) M linear polynomials from Step 3 (p. 13) to a single polynomial P such that P (m) is
+square in Z and P (α) is a square in OQ(α) multiplied by one of at most 43 log log n elements of h. Hence after
+repeating the whole algorithm ℓ = 34 log log n times to generate some P1 , . . . , Pℓ , we are able to guarantee
+that for some i < j, Pi and Pj lie over the same element h, and hence Pi Pj is in fact a square in OQ(α) . In
+
+the sequel we will test all of these 2ℓ ∼ 89 (log log n)2 polynomials separately.
+We now provide some details to establish the required run time bounds. The matrix of exponents modulo
+2 and characters is sparse. As a result, we can use fast kernel finding algorithms such as the block-Wiedemann
+algorithm [56] to find a suitable subset Si to construct a Pi in time
+
+
+
+1
+O M 2 = Ln
+, 2 max(β, β ′ )(1 + o(1)) .
+3
+
+Now, if γ ∈ OQ(α) and γ 2 ∈ Z[α], then γ.f ′ (α) ∈ Z[α] [30, Chapter III, Proposition 2]. We take S = Si ∆Sj .
+We then fix the polynomial P to be
+
+2 Y
+
+Y
+∂f
+∂f
+2
+P =
+(a − mb)
+(a − bx), and so u =
+(x, 1)
+(x, y) (m, 1)2
+∂x
+∂x
+
+
+(a,b)∈S
+
+(a,b)∈S
+
+is a square in Z. Hence u can be found by taking the product modulo n over all r < B of r raised to half
+the total order of r in the terms (a − mb) for (a, b) ∈ S and multiplying by f ′ (m, 1). That we compute the
+square root in this fashion is important to ensure that our computation can be done in polynomial time; we
+have ensured that we only need to do M log n additions and divisions to find the exponents, and at most
+M log n modular multiplications to compute
+the u mod (n) from the exponents.
+
+Similarly, for at least one of the 2ℓ polynomials considered, there exists v ∈ Z[α] such that:
+
+
+Y
+∂f
+2
+2
+(a − αb).
+(x, y) (α, 1)
+v =
+∂x
+(a,b)∈S
+
+By Montgomery’s method [40, 57], we can compute square roots in the number field, and thus find v(m, 1)
+mod (n) in time O(M 2 ). We abuse notation slightly to write v(m) as the element of Z/nZ obtained by
+35
+
+substituting m for α. Then:
+2
+
+v(m)
+
+2
+
+mod (n) = v(m) mod (f (m, 1))
+
+
+
+
+Y
+∂f
+2
+(a − αb) mod (f (α, 1))(m)
+=
+(x, y) (α, 1)
+∂x
+(a,b)∈S
+
+
+Y
+∂f
+2
+=
+(a − mb) mod (f (m, 1)) = u2 mod (n)
+(x, y) (m, 1)
+∂x
+(a,b)∈S
+
+and so we have constructed a congruence of squares in time:
+1+o(1)
+
+c 
+1
+′
+′
+, max 2 max(β, β ), max(β, β ) + , c
+.
+Ln
+3
+2
+
+Hence, the run time bound is as claimed as c ≤ 34 + o(1) δ, we can insist that we have at most 34 log log n
+−1
+
+−1
+.
+exceptional values of h, and our f lies off a set of probability at most Ln 23 , κ−δ3 (1 + o(1))
+
+
+Remark 6.20. To prove the analogous statement for the multiple polynomial NFS, we sample and add
+these characters for each f (i) used. Then our algebra in each field finds a square in the number field whose
+matching image in Z is the product of a B-smooth number and a square, and such that the product of
+these B-smooth parts is itself square. Hence taking the product of these relationships yields a congruence
+of squares.
+We observe an immediate strengthening of Lemma 6.10 (p. 32) conditional on GRH:
+Claim 6.21. Conditional on GRH, for ε = log−1/4 n = o(δ),
+Pf (|EK,ε | > 0) = 0.
+1
+Proof. Under GRH, there are no zeros of any of our zeta
+ functions with real part greater than 2 . As a
+1
+−1
+corollary, ν ≤ 2 uniformly. Hence |EK,ε | = 0 if Ln 3 , ε > 2, which is entailed by our choice of ε.
+
+It remains to prove Lemma 6.10 (p. 32). We need the following result of Stark:
+
+Fact 6.22. (Stark [54, Lemma 8]) Let K be a field of finite degree, let c(K) = 4 if K/Q is normal and
+c(K) = 4([K : Q])! otherwise. Suppose there is a real 1 − ν in the range:
+1 − (c(K) log |∆K |)−1 ≤ 1 − ν < 1
+such that ζK (1 − ν) = 0. Then there is a quadratic field F ⊂ K such that ζF (1 − ν) = 0.
+We note that the following slightly stronger statement follows exactly from the proof provided in [54]:
+Corollary 6.23. Let K be a field of finite degree, and K ′ the normal closure of K. Then Fact 6.22 holds
+with c(K) = 4([K ′ : Q]).
+We record the following fact of Landau on the distribution of zeros of Dirichlet L-functions:
+Fact 6.24 (Landau [44], see [39, pp. 367]). There is a constant c such that given two characters χr , χ′r′
+of moduli r, r′ respectively, with χr χ′r′ non-principal, then L(s, χr )L(s, χ′r′ ) has at most one real zero in
+
+1 − logcrr′ , 1
+
+Proof of Lemma 6.10 (p. 32). We assume f is irreducible; by Lemma 5.1 (p. 16) the probability that f is
+reducible can be absorbed as our error term. Recall that K = Q(α) and h ∈ OK is a representative of an
+element of H.
+36
+
+√
+Claim 6.25. If L′h is the normal closure of Lh = K( h), [L′h : Q] ≤ 2d d!.
+Proof. Let K ′ be the splitting field of K. By construction, [K ′ : Q] ≤ d! and K ′ /Q is normal (indeed
+Galois). Given h ∈ K, let Oh be the orbit of h under the action of Gal(K ′ /Q). Then |Oh | ≤ d. We adjoin
+square roots of each element of Oh to K ′ to obtain a field L′ .
+Then [L′ : Q] ≤ 2d d!. Since degree 2 extensions are normal, the compositum of normal extensions is
+normal, and L′ /K ′ is a compositum of at most d degree 2 extensions, the extensions L′ /K ′ and K ′ /Q are
+normal. We note that any σ ∈ AutQ (K ′ ) can be extended to an element of AutQ (L′ ), as σ acts on Oh as a
+permutation. Hence in particular L′ /Q is normal, and so L′h ⊆ L′ . Hence [L′h : Q] ≤ 2d d!.
+Hence from Corollary
+6.23 (p. 36), if ν −1 > 2d+2 d! log ∆Lh /Q , then 1−ν must be a zero of some quadratic
+√ 
+subfield Fh = Q sh ⊆ Lh . Note that as [K : Q] is odd there are no quadratic subfields of K. Hence
+Fh ∩ K = Q and Fh is the only quadratic subfield of Lh .
+Furthermore, Lh is the minimal field containing Fh and K. Since the classes in H are not related by
+squares of elements of K, the field Lh does not contain a root of any h′ in a different class in H. Hence as h
+varies, the produced Lh are distinct fields and so the sh must all be distinct. We observe that by transitivity
+of the discriminant (eg. [27, Thm 1.46] or [45, Cor 2.10]) in the towers of fields Lh /Fh /Q and Lh /K/Q:
+
+
+∆dFh /Q NFh /Q ∆Lh /Fh = ∆2K/Q NK/Q ∆Lh /K
+(= ∆Lh /Q ).
+(6.8)
+
+Furthermore, as in Equation 6.4 (p. 31), ∆Lh /K is the norm of the different ideal (2h) and so from
+Minkowski’s bound:
+ d   q
+ q
+4
+d!
+NK/Q ∆Lh /K ≤ ∆K/Q
+≤ ∆K/Q .
+π
+dd
+
+
+
+Since ∆K/Q ≤ Ln 43 , 21 δ 2 κ and ∆Lh /Q ≤ Ln 43 , 45 δ 2 κ , ∆Fh /Q = O Ln 34 , 54 δκ . Now, since a prime p
+contributes a factor (1 − p−z )−1 to ζFh /Q (z) if p ∤ ∆Fh and (1 − p−z )−2 otherwise:
+
+
+
+∆Fh /Q
+ζFh /Q (z) = ζ(z)L z, j →
+j
+∆
+
+Fh /Q
+and by reciprocity j →
+is a character of modulus ∆Fh /Q . From Fact 6.24 (p. 36), if there are two
+j
+
+characters with moduli q, q ′ respectively, at most one has an L-function with a zero 1 − ν and ν −1 > c log qq ′
+for some effective constant c. As a corollary, there is at most one character with modulus in [q, q e ] with a
+zero at 1 − ν and ν −1 > (e + 1)c log q.
+ 
+Note that since ∆Fh /Q < Ln 43 , 45 + o(1) δκ and is an integer, the whole range of discriminants can be
+covered with only 43 log log n ranges of the form [x, xe ]. Hence there are at most 43 log log n characters (and
+hence, potential extensions Lh ) with exceptional zeros such that
+ 
+  
+
+
+4
+1
+4 5
+−1
+,
++ o(1) δκ
+= O δκ log 3 n(log log n)− 3
+ν > (e + 1)c log Ln
+3 4
+
+as required. Note that this bound on ν −1 is much weaker than the required ν −1 > 2d+2 d! log ∆Lh /Q , and
+so there are at most 43 log log n extensions Lh /Q with exceptional zeros and ν −1 > 2d+2 d! log ∆Lh /Q . We
+observe that:
+
+
+1 δ
+2d+2 d! log ∆Lh /Q ≤ dd(1+o(1)) logO(1) n = Ln
+, (1 + o(1)) .
+3 3
+Remark 6.26. The use of the relative discriminant both here and in the proof of Lemma 6.6 (p. 30) is,
+heuristically, to control the extent to which primes can ramify. In turn this allows tight control of the
+deviations of the behaviour of primes in the number fields from the behaviour over Z. In both cases the
+detailed numerics of the bounds are not especially important,
+beyond the fact that they provide upper
+
+bounds whose logarithms are much smaller than Ln 31 .
+37
+
+Remark 6.27. We note that we ∆Lh /Q is merely known to be the absolute discriminant of a “random” field
+(under mild assumptions about the nature of the field). If we were to heuristically take it to be a random
+integer of the correct size, modulo being (for example) only 0, 1 mod (4), we would obtain immediately that
+
+−1
+.
+the probability that ∆Lh /Q is divisible by the dth power of some integer exceeding L 13 is of order L 23
+If this held we would be able to remove the condition that d is odd.
+
+In fact, we can show that under this kind of heuristic, the reduction to squares can be done in Ln 13 , o(1)
+time. In particular, we show:
+√ 
+Claim 6.28. Set K = Q(α) and Lh = K
+h , for α the root of a random f and h any non-zero element
+of the ideal class group of K. Then Claim 6.10 (p. 32) holds (with ε → 0) if there is an ǫ > 0 and an ǫ′ → 0
+such that:
+
+
+ǫ′
+−1
+Pf ∃h ∈ H, k ≥ L(1/3) s.t. k d | ∆Lh /Q < L(1/3 + ǫ)
+
+Proof. Again, we need a result of Stark:
+
+Fact 6.29 ([54, Lemma 11] ). We assume f is irreducible; by Lemma 5.1 (p. 16) the probability that
+f is reducible is can be adsorbed into ε. Let F be a quadratic field, and 1 − ν a zero of ζF/Q . Then
+p
+ν −1 < O ∆F/Q .
+
+p
+We require log x = ω max ∆F/Q , 4(d − 1)! log ∆Lh /Q , 2d(log log x)2 , and define Fh as before, which
+
+
+o(1)
+<
+is bounded by Equation 6.8 (p. 37). Given the conditions of the claim, Pf ∆Fh /Q > L(1/3)
+−1
+
+−1
+
+L(1/3 + ǫ) , and so for all but an L(1/3 + ǫ)
+achieves the claimed bounds.
+
+fraction of f we can take log x = L(1/3, o(1)), which
+
+7. Non-trivial Factors from Found Congruences
+We now turn to some brief comments on the fruitfulness of the found congruences. We restrict to the
+situation where p ≡ q ≡ 3 mod (4). Then observe that characters χp , χq modulo p and q given by the
+respective Legendre symbols:
+ 
+ 
+x
+x
+, χq (x) =
+χp (x) :=
+p
+q
+are by definition multiplicative, of order two and degree one and with:
+χp (−1) = χq (−1) = −1.
+Consider the character χn := χp χq , which by construction is a character modulo n. We note that χn (±1) = 1,
+whilst for x2 ≡ 1 mod (n), x 6≡ ±1 mod (n), χn (x) = −1.
+Let the multiplicative map from Z[α] → Z/nZ given by 1 → 1, α → m be denoted φm,α . We define a
+multiplicative semigroup of polynomials P by:
+
+P := Pm,α = h ∈ Z[X] : (h(m), n) = 1, h(m) ∈ Z is square, h(α) = g 2 , g ∈ Z[α] .
+We say that the smooth part of P, PS is the set of h such that h ∈ P, h(m) is smooth, h(α) is smooth, and
+h splits as the product of linear factors of height Ln 13 , σ . We define a character χP on P by:
+p
+ 
+
+p
+h(m) χn φm,α
+h(α) .
+χP (h) = χn
+
+Note that since χn (−1) = 1, the definition of χP is not dependent on which square roots are taken. Since
+(h(m), n) = 1 for all h ∈ P, χP naturally extends to the group of fractions of P. Furthermore, χP (h2 ) = 1
+for any h ∈ Z[X] with (h(m), n) = 1. Hence χP may be extended to a degree one and order two character
+on Z[X]. Let GP be the set of these extensions. Then GP is closed under multiplication by any order two
+character which is trivial on P. Recall that all of the characters we define in section 6 (p. 25) are of this
+form. We choose a specific extension in GP and denote this by χP .
+38
+
+Conjecture 7.1. Let n, m, α and notation be as above. Then χP , restricted to PS , cannot be written as a
+product of the characters χp and the characters (−1)ordp(P (m)) , (−1)ordp (P (α)) .
+Remark 7.2. Note that for any β, β ′ , δ, κ, σ satisfying the conditions of Equations 4.1 (p. 14), we have
+that the dimension of PS exceeds the number of characters given by a multiplicative Ln 31 factor. As a
+corollary, almost every character on PS satisfies the conditions of the conjecture.
+Proof of Theorem 2.3 (p. 5). Finding a fruitful congruence is precisely finding a polynomial P ∈ P such
+that
+p
+
+p
+P (m) 6= φm,α
+P (α) mod (n) ⇔ χP (P ) = −1.
+
+If we consider χP to be an additional character on our linear terms, we now seek to solve a non-homogeneous
+system of equations; we require that each prime appears with even total degree, that each of the additional
+prime-based characters χp is 1, and that χP 6= −1.
+Now, since χP is not a product of these characters, on the kernel of these characters in PS we must have
+that χP = −1 for a subspace of codimension 1. Running the Randomised NFS for at most Ln 31 , 2σ + o(1)
+time guarantees to find every possible factor a − bX, and so finds every generator of PS . Then since we
+may uniformly sample the kernel of our linear operator by Weidemann’s algorithm, we can guarantee that
+the relationship we find is fruitful with probability 12 .
+
+Remark 7.3. Note that if the conjecture is false for some n, f , which implies choices of m, α, then the same
+argument entails that the NFS run with these parameters can never find a non-trivial congruence of squares.
+We note that since the NFS has been successfully run on a number of n with generic m and f = fˆn,m , it
+would be surprising if the conjecture was false for most f . We emphasise that there does not seem to be a
+natural reason for χP to be related to characters either of form χp as defined in section 6 (p. 25) or of form
+(−1)ordp (f (m)) or (−1)ordp (f (m)) for primes p or p of small norm.
+The situation where p, q are not both 3 mod (4) is more complex, as there is no single character which
+can be used to consistently define which branch of the square root has been taken modulo p and q. This
+is turn means that there is no multiplicative character which reveals whether a congruence is fruitful or
+not, and so it is unclear how (even notionally) one might show that the linear algebraic step may produce
+non-trivial congruences.
+Remark 7.4. In the case of the multiple polynomial NFS, the space P is the product of the semigroups
+defined for each f (i) , and the character χP is defined by taking a decomposition of any element of the
+product into squares in the number fields and taking roots in all places individually. The space PS is then
+the product of the smooth parts of the semigroups defined for each f (i) , and the statement of Conjecture 7.1
+and the analogous proof for Theorem 2.3 (p. 5) are unchanged.
+8. Smooth Numbers in Progressions and the Proof of Lemma 5.21.
+The core aim of this section will be to establish suitable bounds on the smoothness of numbers in
+arithmetic progressions, so that we can prove Lemma 5.21 (p. 25). In particular we seek equi-distribution
+results for the smooth numbers in arithmetic progressions. We will now discuss some of the context for this
+work, and related results which we build upon. To control π or πq,a , it is natural to work with the Von
+Mangoldt function Λ(n) = 1n is a prime power log n, as the sum of Λ(n) is more straightforwardly controlled.
+To pass from results of Λ back to results on π is essentially standard by partial summation. The deviation
+of Λ, given by
+X
+y
+Λ(y) −
+∆(x, q, a) =
+,
+φ(q)
+y<x,y≡a mod (q)
+
+can be effectively bounded with the GRH. The best unconditional bounds which are uniform in the moduli
+q are given by the Siegel-Walfisz theorem, which is famously ineffective and is too weak for our purposes.
+39
+
+However, we can look at the average case or seek to only
+√ obtain bounds√for most q. For example, the
+Bombieri-Vinogradov theorem states that for all A > 0, x/ logA x ≤ Q ≤ x,
+X
+√
+max max ∆(y, q, a) ≪ A xQ log5 x,
+q≤Q
+
+a
+
+y≤x
+
+and the related Barban-Davenport-Halberstam theorem states that
+X X
+∆(x, q, a)2 ≪A xQ log x.
+q≤Q (a,q)=1
+
+In both cases, the moral is that for most a and q, the deviation ∆(x, q, a) cannot be much larger than
+√
+x logO(1) x, and so in particular the error in the prime number theorem for arithmetic progressions similarly
+√
+cannot be much larger than x logO(1) x for most a and q.
+Analogous equi-distribution questions for y-smooth numbers over arithmetic progressions (counted by
+Ψ(x, y, q, a)) have been studied (See [22] for a survey of results). Granville [14, 15] and Soundararajan [53]
+Ψ (x,y)
+studied this question further. Soundararajan proved that Ψ(x, y, q, a) ∼ qφ(q) and an analogous statement
+∗
+of equidistribution on cosets of a subgroup of (Z/qZ) . Recently, Harper [18] expanded the range of y
+for which the result is applicable. Building on Soundararajan’s work further Harper [17] also provided
+Bombieri-Vinagradov and Barban-Davenport-Halberstam type bounds for the smooth counting function:
+Fact 8.1 (Harper [17, Theorem 1]). Letp
+c and K be fixed and effective constants. Then for any logK F <
+B < F , with u := log F/ log B, and Q ≤ Ψ(F, B):
+X
+
+r≤Q
+
+max Ψ(F, B; r, s) −
+
+(s,r)=1
+
+
+
+p
+Ψr (F, B)
+− cu
+≪ Ψ(F, B) e log2 u + B −c + Q Ψ(F, B) log7/2 F
+φ(r)
+
+with an implied effective constant C = C(c, K).
+Harper also provides a Barban-Davenport-Halberstam type theorem, which we do not need but which
+our methods also naturally provide.
+Fact 8.2 (Harper [17, Theorem 2]). There exist c and K fixed and effective constants such that for any
+logK F < B < F , with u := log F/ log B, and Q ≤ Ψ(F, B):
+X X
+
+r≤Q (s,r)=1
+
+Ψ(F, B; r, s) −
+
+Ψr (F, B)
+φ(r)
+
+2
+
+≪ Ψ(F, B)
+
+2
+
+
+
+e
+
+− logcu
+2u
+
+
++ B −c + QΨ(F, B)
+
+with an implied effective constant C = C(c, K).
+In our application we will bound these quantities when the common difference q = a − mb is known to
+be y-smooth: i.e. sums of form
+X
+
+q≤Q
+q is y−smooth
+
+max Ψ(x, y, q, a) −
+
+(a,q)=1
+
+Ψq (x, y)
+.
+φ(q)
+
+The essential difficulty is akin to that of computing the conditional expectation E(X | S) for a random
+variable X and a rare event S (i.e. q is smooth). We build on these works, and use lemmas and techniques
+of Harper. Drappeau [12] provides extensions of a similar flavour, bounding weighted sums
+X
+
+q≤Q
+
+λ(q) max Ψ(x, y, q, a) −
+(a,q)=1
+
+40
+
+Ψq (x, y)
+.
+φ(q)
+
+with the weighting function λ being sub-multiplicative and with λ(q) ≪ q 1−ǫ . Our results require a larger
+range of application; to appeal to Drappeau’s results directly seems to require the use of a weight λ with
+λ(q) ≥ 1{z:z is y-smooth} (q)Qψ −1 (Q, y), which is not submultiplicative.
+We will state and use Harper’s ideas to derive a sharper result for the restricted sum, as needed in our
+case.
+Remark 8.3. Using Harper’s result (Fact 8.1 (p. 40)) directly with our arguments allows one to prove that
+
+“almost all” moduli are in fact B-good and derive a weaker expected run time bound of Ln 13 , O(log log n) .
+
+Definition 8.4. We define:
+
+Qmax := max |am + b| = Ln
+a,m
+
+
+
+
+2 −1
+, δ (1 + o(1)) .
+3
+
+Hereafter will reuse the variables m, b to maintain commonality of notation with Harper.
+We seek to bound the probability that a B-smooth modulus less than Qmax is B ′ -bad. Naturally, we
+can show that this is small if we can show that the number of B ′ -bad moduli below Q is much smaller than
+Ψ(Qmax , B). We can certainly achieve this if we allow B to be sufficiently large, although it will increase
+the bounds on the expected run time which can be achieved. We state the following lemma, which we prove
+later.
+Lemma 8.5. Let ǫ > 0 be fixed. Then there
+that for any logK x < y <
+pexist effective constants K, c suchO(1)
+1/ log log x
+ǫ
+x
+, with u := log x/ log y, x ≤ Q ≤ Ψ(x, y) and ω = ω(1) with ω = y
+:
+X
+
+r∈[Qω −1 ,Q]
+r is y-smooth
+
+max Ψ(x, y; r, a) −
+
+(a,r)=1
+
+
+
+p
+Ψr (x, y)
+− cu
+≪ Ψ(x, y)̺(Q, y) e log2 u + y −c + Q Ψ(x, y) log7/2 x
+φ(r)
+
+for some effective implied constant C in the ≪.
+Remark 8.6. We first note that this does not appear to derive from Drappeau’s work [12, 13] on weighted
+sums of this style. In particular, Drappeau requires that the weights are multiplicative on the integers and
+bounded by some function tending to zero. In our case we have to cut out the small moduli and the weights
+do not decline; without the exclusion of the small r < Qω −1 , an analogue of Lemma 8.5 (p. 41) need not
+hold, as the smooth numbers become substantially more dense.
+Remark 8.7. Given Harper’s results and a general philosophy of cancellation up to square roots, we might
+expect that the range of y can be extended up to x and the range of Q decreased to 1. We do not need the
+additional strength here.
+
+The condition that ω = y O(1) ensures that ̺ Qω −1 , y is not much larger than ̺(Q, y), in a way which
+will be made precise in the proof of the Lemma.
+Proof of Lemma 5.21 (p. 25). We begin by bounding the number of moduli which are F -bad for some
+
+
+1 −1
+1 −1
+′
+′
+. Since
+F ∈ [F
+max Ln 3 , Fmax ]. We fix ω := B for concreteness. Observe that Ψ(F, B ) = F Ln 3
+
+Ln 23 = ω Ln 31 :
+
+−1
+p
+2 ǫ
+,
+.
+Q ≤ Ψ(F, B ′ )Ln
+3 4
+
+Furthermore, for any K fixed, ω(logK F ) = B ′ = o(F 1/ log log F ). Hence we can apply Lemma 8.5 (p. 41).
+Suppose that a modulus r is B-smooth and also B ′ -bad for F . Then for some residue a with (a, r) = 1, the
+contribution to the LHS of Lemma 8.5 (p. 41) for this r is at least:
+(1 + o(1))
+
+Ψ(F, B ′ )
+Ψ(F, B ′ )
+Ψr (F, B ′ )
+=
+≥
+φ(r)
+r
+Q
+41
+
+where for the first equality we use Corollary 3.17 (p. 9), noting that B ≤ B ′ so r is B ′ -smooth, u < log log n
+and the number of divisors of r is bounded by log r so that the multiplicative error is 1 + o(1). Now:
+X
+
+r∈[Qmax ω −1 ,Qmax ]
+r is y-smooth
+
+max Ψ(F, B ′ ; r, a) −
+
+(a,r)=1
+
+Ψr (F, B ′ )
+φ(r)
+
+
+
+p
+cu′
+− log
+′−c
+2 u′
+≤ CΨ(F, B )̺(Qmax , B ) e
++B
++ Qmax Ψ(F, B ′ ) log7/2 F
+
+
+′
+− logcu
+1/2
+′
+′
+′−c
+2 u′
+= CF ̺(F, B )̺(Qmax , B ) e
++ Qmax F 1/2 ̺(F c, B ′ ) log7/2 F
++B
+′
+
+′
+
+
+
+First, we observe that F and Qmax are Ln 23 , whilst B ′ is Ln 13 . Hence both densities ̺(Qmax , B ′ ) and
+−1
+. From Definitions 8.4 (p. 41) and 5.17 (p. 21) we have
+̺(F, B ′ ) are Ln 13
+
+
+
+
+2 −1
+2
+Qmax = Ln
+, δ (1 + o(1)) , F = Ln
+, (κ + σδ)(1 + o(1)) ,
+3
+3
+
+
+2
+2 o(1)
+and from Equation 4.2 (p. 14) 2δ −1 < κ + σδ. Hence F Q−2
+, the
+max = Ln 3 . Since, up to order Ln 3
+first term is F and the second is Qmax F 1/2 , we deduce that the first term dominates the second. If r is
+B ′ -bad for F it contributes at least (1 + o(1))Ψ(F, B ′ )Q−1
+max to the sum on the left-hand side.
+Hence the number of moduli which are in [Qmax ω −1 , Qmax ], are B-smooth and B ′ -bad for F is at most:
+
+
+
+
+′
+cu′
+Qmax
+− logcu
+− log
+′
+′
+′−c
+′−c
+′
+2 u′
+2 u′
+Ψ(F, B )̺(Qmax , B ) e
+(C + o(1))
++B
++B
+= (C + o(1))Ψ(Qmax , B ) e
+Ψ(F, B ′ )
+If a modulus is B ′ -bad near Fmax , it must be B ′ -bad for some
+) (
+"
+#)
+(
+ −1
+ −1
+1
+1
+i
+i
+, Fmax ∪ 2 : 2 ∈ Fmax Ln
+, Fmax ,
+F ∈ Fmax Ln
+3
+3
+a set of logarithmic size. We can absorb a logarithmic factor into the constants c, C, so the number of
+moduli which are in [Qmax ω −1 , Qmax ], are B-smooth and B ′ -bad is at most:
+
+
+cu′
+− 2 log
+′
+′− 2c
+2 u′
+= o(Ψ(Qmax , B ′ ))
+(C + o(1))Ψ(Qmax , B ) e
++B
+Hence even assuming that every B-smooth number below Qmax ω −1 is B ′ -bad:
+
+Ψ Qmax ω −1 , B ′ + o(Ψ(Qmax , B ′ ))
+′
+Pa,m (a − mb is B -good | a − mb is B-smooth) ≥ 1 −
+= 1 − o(1).
+Ψ(Qmax , B ′ )
+
+It remains to prove Lemma 8.5 (p. 41). We follow the proof strategy and notation of similar results by
+Harper [17]. At a high-level, we express the sum on the LHS as a sum over characters χr of modulus r, and
+then write this in terms of primitive characters χ∗r of conductor q. We split the primitive characters into
+three sets based on the size of their conductor, and for small and intermediate sized conductors we have
+to separately deal with characters whose L functions have zeros near 1. For more details of this general
+strategy see [23].
+Here, our primary extension over previous work is that that the modulus of each character is y-smooth.
+We are also able to restrict the range of summation to comparatively large moduli. If instead we were to
+42
+
+consider every y-smooth number less than Q, we would not be able to substantially reduce the contribution
+of characters with moduli very small by comparison to y. That these conditions are useful in practice and
+are tractable on the analytic side suggests a large collection of potentially fruitful new results, restricting
+sums of this type to a very sparse set instead of an interval.
+We study only moduli which are at least Qω −1 , where ω is not too large with respect to y. In particular,
+this ensures that the set of moduli we sum over is always sparse restricted to any reasonably large subinterval
+of [Qω −1 , Q]. This allows us to give a substantially stronger bound as the sum is reduced by at least a factor
+of ̺(Q, y), modulo a slight reduction in the constant c.
+Proof of Lemma 8.5 (p. 41). We will fix c, K depending on η > 0, with c small and K large. We will fix η
+to be small in terms of a constant b to be determined. We set
+
+
+√
+(8.1)
+m := min y η , eη log x , M := xη .
+
+The following five Facts are due to Harper [17], and concern the size of character sums over smooth numbers
+and density estimates using characters whose L functions have roots with real part near 1 and small imaginary
+part.
+We recall that the conductor q of a Dirichlet Character χr of modulus r is the least q > 0 such that
+χr (x) = χr (x + q) for all x. As an immediate corollary, q | r and so if the r is y-smooth then so are q and
+rq −1 . We also recall the saddlepoint α of Fact 3.15 (p. 8).
+Fact 8.8 ([17, Theorem 3]). There exist constants b, B > 0, such that if logB x ≤ y ≤ x and χq is a
+non-principal Dirichlet character with conductor r := cond(χq ) ≤ y b and modulus q ≤ x, with the largest
+real zero β = βχq of L(s, χq ) is ≤ 1 − B/ log y, then:
+
+
+√
+p
+−1
+|Ψ(x, y; χq )| ≪ Ψ(x, y) log x log y e−(b log x) min((log r) ,1−β ) log log x + e−b log x + y −b
+
+Fact 8.9 ([17, Proposition 1]). There exist constants d, C > 0 such that for log1.1 x ≤ y ≤ x , and χq a
+non-principal Dirichlet character with conductor r := cond(χq ) ≤ xd and modulus q ≤ x, with L(z, χq )
+having no zeros for ℜ(z) > 1 − ǫ, |ℑ(z)| < H, with
+−1
+
+C(log y)
+and either
+
+y ≥ (Hr)
+
+then:
+
+y 0.9 log2 x ≤ H ≤ xd ,
+
+< ǫ ≤ α(x, y)/2,
+C
+
+−1
+
+or ǫ ≥ 40 log log(qyH)(log y)
+
+|Ψ(x, y; χ)| ≪ Ψ(x, y)
+
+p
+
+log x log y x−0.3ǫ log H + H −0.02
+
+Fact 8.10 ([23], with [17, pp. 15] giving the precise form).
+X
+
+R<r≤2R
+
+X
+
+χ∗
+r mod (r)
+L(z,χ∗
+r )=0 for some
+299
+,|ℑ(z)|≤r 100
+ℜ(z)> 300
+
+1
+≪ R−1/10
+φ(r)
+
+√
+Fact 8.11 ([17, Proposition 2]). For any 0 < η < 1/80, y ≤ x9/10 , and xη ≤ Q ≤ x:
+
+
+X X X
+X
+p
+1
+|Ψ(x, y; χs )| ≪ log7/2 x Ψ(x, y) Q + x1/2−η log2 x
+φ(s)
+χs
+χ∗
+M≤r≤Q
+
+r
+
+s∈[M,Q]
+
+χ∗
+r induces χs
+
+Fact 8.12 ([17, pp. 16]). For any real and non-principal character χq of modulus at most Q and conductor
+at most y η :
+
+
+
+
+
+p
+
+u
+−0.02
+|Ψ(x, y; χq )| ≪ Ψ(x, y) log x log y log y exp −O
++O y
+log2 (u + 1)
+43
+
+The first step of the argument is to note that by the orthogonality of characters we can write the
+r-periodic function 1x≡a mod (r) for (a, r) = 1 as:
+1 X
+−1
+χr (x)χr (a)
+φ(r) χ
+r
+
+Note that the contribution of the principal character χ0 to the above formula is exactly φ−1 (r), and so:
+Ψ(x, y; r, a) −
+
+1
+Ψr (x, y)
+=
+φ(r)
+φ(r)
+
+X
+
+−1
+
+Ψ(x, y; χr )χr (a)
+
+χr mod (r)
+χr 6=χ0
+
+Taking the modulus of the left-hand side, and noting that for any (a, r) = 1 and any χr with |χr (a)| = 1:
+X
+
+r∈[Qω −1 ,Q]
+r is y-smooth
+
+max Ψ(x, y; r, a) −
+
+(a,r)=1
+
+Ψr (x, y)
+≤
+φ(r)
+
+X
+
+r∈[Qω −1 ,Q]
+r is y-smooth
+
+1
+φ(r)
+
+X
+
+χr mod (r)
+χr 6=χ0
+
+|Ψ(x, y; χr )| =: W
+
+(8.2)
+
+We split W into contributions from characters of small conductor r < m, of medium conductor m ≤ r < M ,
+or with large conductor M ≤ r. In the first two cases, we additionally split the characters between a small
+number of exceptional characters whose L functions have zeros near 1, and the generic case where the L
+function has no such zero. Let:
+
+[ 
+ηB
+∗
+∗
+,
+G1 :=
+χr mod (r) : L(z, χr ) 6= 0 for z ∈ R, z > 1 −
+log m
+1<r≤m
+
+[ 
+299
+100
+∗
+∗
+.
+, |ℑ(z)| ≤ r
+G2 :=
+χr mod (r) : L(z, χr ) 6= 0 for ℜ(z) >
+300
+m<r≤M
+
+We will control the contribution of characters in G1 and G2 with Facts 8.8 (p. 43) and 8.9 (p. 43) respectively.
+The number of characters of small conductor which are not in G1 is controlled by Page’s theorem, and their
+contribution is bounded trivially. The contribution of characters of medium conductor which are not in G2
+is controlled via Fact 8.10 (p. 43), and those with large modulus by Fact 8.11 (p. 43).
+ηB
+Remark 8.13. Suppose χr ∈ G1 with largest real root of L(z, χr ) at β. Then 1 − β > log
+m and log r ≤
+√
+log m ≤ η log x. In particular:
+
+
+ p
+−1
+(b log x) min (log r) , 1 − β > min η −1 , B b log x,
+
+with η taken to be small and B large. Hence√if Fact 8.8 (p. 43) is applied the exponent in the first error
+term can be taken to be much lower than −b log x, since b is small, and hence the second term dominates
+the first.
+For our application we require a few ancillary claims:
+Claim 8.14. For any S exceeding an absolute constant S0 , and any ω such that log ω ≤ 12 log2 S − log S − 32 :
+X
+
+S<s<Sω
+s is y-smooth
+
+1
+≤ 4̺(S, y) log ω log log S.
+φ(s)
+
+Remark 8.15. In applications, we have log ω = o(log2 S), which plainly suffices.
+
+44
+
+
+Q
+Proof. We obtain a uniform lower bound on φ(x)x−1 for x ≤ Sω. Note that φ(x)x−1 = p|x,p prime 1 − p−1 .
+Then any value of φ(x)x−1 attained for x ≤ Sω is attained for a square-free x in the same range. Suppose
+−1
+there are primes p < p′ such that p ∤ x and p′ | x. Let x′ = xpp′ < x. Then
+!
+
+
+−1
+−1
+1
+1
+p−1 − p′
+φ(x)
+φ(x)
+φ(x′ )
+φ(x)
+1−
+1− ′
+1−
+=
+=
+.
+<
+−1
+′
+′
+x
+x
+p
+p
+x
+x
+1−p
+Immediately, we deduce that for x ≤ Sω the minimal value of φ(x)x−1 is obtained for x =
+for some prime k. For such an x,
+Y
+φ(x)
+=
+(1 − p−1 ),
+x
+
+Q
+
+p≤k,p prime p
+
+p≤k,p prime
+
+which is a decreasing function of k. Hence the minimal value is obtained for k maximal such that x ≤ Sω.
+For all k ≥ 2 and x the product of the primes below k, we have [51, Theorems 4 and 7]:
+
+
+X
+Y
+k
+1
+φ(x)
+1
+log x =
+log p > − 1,
+≥
+=
+1−
+2
+x
+p
+2 log(k + 2)
+p≤k,p prime
+
+p≤k,p prime
+
+Note that k ≤ 2 log x + 1, and log x ≤ log S + log ω ≤ 21 log2 S − 32 . Then:
+1
+1
+φ(x)
+≥
+≥
+.
+x
+2 log(2 log x + 3)
+4 log log S
+−1
+
+Hence for all s ≤ Sω, φ(s) ≥ s(4 log log S)
+X
+
+S<s<Sω
+s is y-smooth
+
+1
+≤ 4 log log S
+φ(s)
+
+, and so:
+X
+
+S≤s≤Sω
+s is y-smooth
+
+s−1 ≤ 4 log log S
+
+⌈log2 ω⌉
+
+X
+i=0
+
+X
+
+s−1
+
+S2i ≤s≤S2i+1
+s is y-smooth
+
+⌈log 2 ω⌉
+
+
+
+X Ψ S2i+1 , y − Ψ S2i , y
+≤ 4 log log S
+S2i
+i=0
+≤ 4 log log S
+
+⌈log 2 ω⌉
+
+X
+i=0
+
+
+̺ S2i , y ≤ 4̺(S, y) log ω log log S
+
+To show the last two inequalities, we note that
+ Ψ(2x, y) ≤ 2Ψ(x, y), a result of Hildebrand [19, Theorem
+4]. Hence Ψ S2i+1 , y − Ψ S2i , y ≤ Ψ S2i , y which yields the first inequality; from ̺(2x, y) ≤ ̺(x, y), we
+obtain ̺ S2i , y ≤ ̺(S, y) as required for the second inequality.
+x
+c
+O(⌈c⌉)
+.
+Claim 8.16. Suppose that u = log
+log y → ∞. Then for any c ≥ 0. ̺(x, y) = ̺(xy , y)(log x)
+
+Proof. From Fact 3.15 (p. 8), for any 1 ≤ v ≤ y:
+
+Ψ(vx, y) = Ψ(x, y)v α(x,y) 1 + O u−1 + y −1 log y , where
+
+
+
+
+log logy x + 1 
+log log(y + 1)
+1+O
+α(x, y) =
+log y
+log y
+As a corollary, for any 0 ≤ z ≤ 1:
+̺(xy z , y)
+Ψ(xy z , y)
+1
+= z
+= z
+̺(x, y)
+y Ψ(x, y)
+y
+
+
+
+y
++1
+log x
+
+
+
+z(1+O( log log(y+1)
+)) 
+log y
+1 log y
+1+O
++
+u
+y
+45
+
+Note that log
+
+
+
+y
+log x + 1
+
+
+
+= O(log y), (log x)−1 + y −1 = (1 + o(1))(log x)−1 and log y = u−1 log x. Hence:
+
+
+z
+
+1 log y
+1
+1
+exp(O(log log(y + 1))) 1 + O
++
++
+log x y
+u
+y
+
+
+O(1) 
+log
+y
+1
+log x
+=
+1+ O 1+
+= log−z+O(1) x
+logz x
+u
+y
+
+̺(xy z , y)
+=
+̺(x, y)
+
+
+
+
+Since log xy i = (1 + i/u) log x = log1+ou (1) x for all 0 ≤ i ≤ c, we can apply the above bound ⌈c⌉ times
+with z = c⌈c⌉−1 to obtain the claimed bound.
+We first bound the contribution to W from characters in G1 via Fact 8.8 (p. 43) and Remark 8.13 (p. 44):
+X
+
+X
+
+χ∗ ∈G1 q∈[Qω −1 ,Q]
+q is y-smooth
+
+≪
+
+X
+
+X
+
+1
+φ(q)
+
+χ∗ ∈G1 q∈[Qω −1 ,Q]
+q is y-smooth
+
+X
+
+χq
+χ∗ induces χq
+
+1
+φ(q)
+
+X
+
+|Ψ(x, y; χq )|
+Ψ(x, y)
+
+χq
+χ∗ induces χq
+
+
+ √
+p
+log x log y e−b log x + y −b ,
+
+We write the smooth modulus as q = sr for r = cond(χ∗ ). Using the fact that φ(rs) ≥ φ(r)φ(s)∀r, s, and
+that the number of primitive characters of modulus r is at most φ(r), the above is:
+ √
+
+p
+= Ψ(x, y) log x log y e−b log x + y −b
+ √
+
+p
+≤ Ψ(x, y) log x log y e−b log x + y −b
+
+ √
+p
+≤ Ψ(x, y) log x log y e−b log x + y −b
+
+X
+
+X
+
+X
+
+X
+
+1
+φ(r)
+
+X
+
+1
+
+X
+
+r<m
+χ∗
+r ∈G1
+r is y-smooth
+
+r<m
+χ∗
+r ∈G1
+r is y-smooth
+
+r<m
+r is y-smooth
+
+X
+
+Q Q
+,r]
+s∈[ ωr
+s is y-smooth
+
+1
+φ(rs)
+
+X
+
+Q Q
+s∈[ ωr
+,r]
+s is y-smooth
+
+Q Q
+,r]
+s∈[ ωr
+s is y-smooth
+
+1
+φ(s)
+
+1
+φ(s)
+
+Note that ωr = y O(1) . We now use Claims 8.14 (p. 44) and 8.16 (p. 45)to bound the above as
+
+
+
+ √
+X
+p
+Q
+−b
+−b log x
+4̺
++y
+, y log ω log log Q
+≤ Ψ(x, y) log x log y e
+ωr
+r<m
+r is y-smooth
+
+ √
+i
+
+h p
+≤ Ψ(x, y) e−b log x + y −b ̺(Q, y) 4m log x log y log ω log log Q logO(1) x
+
+From Equation 8.1 (p. 43), m ≤ y η , and we can ensure η < 4b . So we obtain:
+ b√
+
+b
+≪ Ψ(x, y) e− 2 log x + y − 2 ̺(Q, y).
+This suffices for Lemma 8.5 (p. 41), as u log y(log u)−2 = log x(log u)−2 so:
+
+p
+
+log x .
+min log y, u log−2 u = o
+
+Hence the first term can be absorbed into c; the second can be absorbed if we choose c < 2b .
+46
+
+(8.3)
+
+We now bound the contribution to W from characters in G2 . Recall that these characters have modulus
+in (m, M ]. We take η small enough that M 2 log M < x1/1000 . Set:
+
+
+1 10 log r
+and H := r100
+,
+ǫ := min
+300 log y
+Proceeding similarly and using Fact 8.9 (p. 43):
+X
+
+X
+
+χ∗ ∈G2 q∈[Qω −1 ,Q]
+q is y-smooth
+
+≤
+
+≪
+
+X
+
+1
+φ(q)
+
+X
+
+m≤r<M
+r is y-smooth
+
+χq
+χ∗ induces χq
+
+X
+
+1
+φ(r)
+
+1
+
+X
+
+m≤r<M χ∗
+r ∈G2
+r is y-smooth
+
+X
+
+|Ψ(x, y; χq )|
+
+X
+
+Q Q
+ωr , r
+
+s∈[
+]
+s is y-smooth
+
+Q Q
+s∈[ ωr
+,r]
+s is y-smooth
+
+1
+φ(s)
+
+X
+
+χrs
+χ∗
+r induces χrs
+
+|Ψ(x, y; χrs )|
+
+
+
+p
+1
+log r
+−2
+Ψ(x, y) log x log y 0.001 + r
+φ(s)
+x
+
+Recalling that M 2 log M ≤ x0.001 and using Claim 8.14 (p. 44) we obtain:
+
+Note that ̺
+
+
+
+Q
+ωr , y
+
+X
+
+p
+≪ Ψ(x, y) log x log y
+
+m≤r<M
+r is y-smooth
+
+p
+≤ Ψ(x, y) log x log y
+
+X
+
+m≤r<M
+r is y-smooth
+
+X
+
+Q Q
+,r]
+s∈[ ωr
+s is y-smooth
+
+1
+r2 φ(s)
+
+
+
+Q
+4 log ω log log Q
+̺
+,
+y
+r2
+ωr
+
+
+
+
+Q
+ω
+r−1 = Q
+Ψ ωr
+, y , and so is decreasing in r. Hence by Claim 8.16 (p. 45), the above is:
+p
+≤ Ψ(x, y) log x log y 4 log ω log log Q̺
+
+
+
+
+Q
+, y m−1
+ωm
+
+X
+
+r−1
+
+m≤r<M
+r is y-smooth
+
+h
+i
+p
+≤ Ψ(x, y)m−1 ̺(Q, y) 4 logO(1) x log x log y log ω log log Q log M
+
+
+√
+≤ Ψ(x, y) e−η log x/2 + y −η/2 ̺(Q, y)
+as from Equation 8.1 (p. 43), m1/2 dominates the logarithmic terms. Again by Equation 8.3 (p. 46) this
+suffices for Lemma 8.5 (p. 41).
+We now bound the contribution to W from characters of small conductor which are not in G1 . By Page’s
+Theorem [46, Lemma 8], there is at most one character with conductor < m and not in G1 , if η is chosen
+small enough in terms of B. Furthermore, such a character must be real. If such a character χ∗e exists with
+conductor re , we proceed similarly and bound its contribution as:
+X
+
+re |q∈[Qω ,Q]
+q is y-smooth
+−1
+
+≪
+
+1
+φ(q)
+
+X
+
+χq
+χ∗
+e induces χq
+
+|Ψ(x, y; χq )| ≪
+
+1
+φ(re )
+
+4
+log ω log log Q(log x)O(1) ̺(Q, y)
+max
+χq :q<m
+φ(re )
+∗
+
+Q
+Q
+ωre , re
+
+s∈[
+]
+s is y-smooth
+
+χe induces χq
+
+47
+
+X
+
+1
+φ(s)
+
+|Ψ(x, y; χq )|
+
+max
+
+χq :q<m
+χ∗
+e induces χq
+
+|Ψ(x, y; χq )|
+
+Fact 8.12 (p. 43) bounds all of these |Ψ(x, y; χq )|, and we can absorb logarithmic terms into the constant in
+exp(O(u log−2 u)). Hence the contribution of characters lying over χ∗e is:
+
+
+
+
+
+u
+−O(1)
+≪ Ψ(x, y)̺(Q, y) exp −O
++y
+log2 (u + 1)
+which suffices for Lemma 8.5 (p. 41).
+We now bound the contribution to W from characters of medium conductor which are not in G2 . Similarly
+we get:
+X
+X
+X
+1
+|Ψ(x, y; χq )|
+φ(q)
+∗
+χq
+−1
+χ ∈G
+/ 2
+q∈[Qω ,Q]
+cond(χ∗ )∈[m,M) q is y-smooth
+
+≪
+
+X
+
+X
+
+m<r≤M χ∗
+/ 2
+r ∈G
+r is y-smooth
+
+1
+φ(r)
+
+χ∗ induces χq
+
+X
+
+Q Q
+,r]
+s∈[ ωr
+s is y-smooth
+
+1
+|Ψ(x, y, χr )|
+φ(s)
+
+Using the trivial bound |Ψ(x, y, χr )| ≤ Ψ(x, y) and Claim 8.14 (p. 44) the above is:
+X 1 Q 
+X
+̺
+,y
+≪ Ψ(x, y) log ω log log Q
+φ(r)
+ωr
+∗
+m<r≤M χr ∈G
+/ 2
+r is y-smooth
+
+≪ Ψ(x, y) log ω log log Q
+
+⌊log2 (M/m)⌋
+
+X
+i=0
+
+X
+
+X
+
+/ 2
+m2i <r≤m2i+1 χ∗
+r ∈G
+r is y-smooth
+
+
+
+Q
+1
+̺
+,y
+φ(r)
+ωr
+
+Note that Q/ωM = y ω(1) , so in Fact 3.15 (p. 8) the saddlepoint α → 0 and hence ̺
+
+
+
+Q
+ωr , y
+
+when r is doubled. Hence using Fact 8.10 (p. 43) and Claim 8.16 (p. 45) the above is:
+⌊log2 (M/m)⌋
+
+
+r−1/10 decreases
+
+
+
+
+−1/10
+Q
+,
+y
+m2i
+i
+ωm2
+i=0
+
+
+Q
+,y
+≪ Ψ(x, y) log ω log log Q log M m−1/10 ̺
+ωm
+
+≪ Ψ(x, y) log ω log log Q
+
+X
+
+̺
+
+≪ Ψ(x, y)̺(Q, y) logO(1) x log ω log log Q log M m−1/10
+
+
+√
+≪ Ψ(x, y)̺(Q, y) e−η log x/20 + y −η/20
+
+as we absorb the logarithmic terms into m1/20 ; this suffices for Lemma 8.5 (p. 41).
+We bound the contribution to W from large modulus characters using Fact 8.11 (p. 43). Now ̺(x, loga x) =
+−1/a+o(1)
+x
+for any constant a [39, Corollary 7.9] and y > logK x, and so
+p
+3
+̺(x, y)̺(Q, y) ≥ x− 2K +o(1)
+
+Hence if we set K > 3η we can absorb all the logarithmic terms to bound the contribution of large modulus
+characters as
+p
+≪ log7/2 x Ψ(x, y)Q + Ψ(x, y)̺(Q, y)x−η
+which suffices for Lemma 8.5 (p. 41) as x−η = y −o(1) .
+Acknowledgements
+
+We thank Enrico Bombieri, Sary Drappeau, Andrew Granville, Adam Harper, Kumar Murty and Kannan
+Soundararjan for their technical suggestions and discussions. We thank Paul Balister and Rob Morris for
+their extensive comments and suggestions.
+48
+
+References
+[1] Leonard M. Adleman. Factoring numbers using singular integers. In Proceedings of the Twenty-third Annual ACM
+Symposium on Theory of Computing, STOC ’91, pages 64–71, New York, NY, USA, 1991. ACM.
+[2] Manindra Agrawal, Neeraj Kayal, and Nitin Saxena. Primes is in P. Ann. of Math, 2:781–793, 2002.
+[3] E. Artin. Quadratische körper im gebiete der höheren kongruenzen. i, ii. (analytischer teil.). Mathematische Zeitschrift,
+19:153–246, 1924.
+[4] P. Balister, B. Bollobás, and R. Morris. The sharp threshold for making squares. ArXiv e-prints, August 2016.
+[5] Razvan Barbulescu, Pierrick Gaudry, Antoine Joux, and Emmanuel Thomé. A heuristic quasi-polynomial algorithm for
+discrete logarithm in finite fields of small characteristic. In Advances in Cryptology–Eurocrypt 2014, pages 1–16. Springer,
+2014.
+[6] Joe P. Buhler, Jr. Hendrik W. Lenstra, and Carl Pomerance. Factoring integers with the number field sieve. In A. K.
+Lenstra and H. W. Lenstra, Jr., editors, The development of the number field sieve, number 1554 in Lecture Notes in
+Mathematics, pages 50–94. Springer-Verlag, 1993.
+[7] E.R Canfield, Paul Erdős, and Carl Pomerance. On a problem of Oppenheim concerning “factorisatio numerorum”.
+Journal of Number Theory, 17(1):1–28, 1983.
+[8] A.C. Cojocaru, R. Murty, and London Mathematical Society. An Introduction to Sieve Methods and Their Applications.
+London Mathematical Society Student Texts. Cambridge University Press, 2006.
+[9] Don Coppersmith. Modifications to the number field sieve. Journal of Cryptology, 6(3):169–180, 1993.
+[10] Ernie Croot, Andrew Granville, Robin Pemantle, and Prasad Tetali. On sharp transitions in making squares. Ann. Math.
+(2), 175(3):1507–1550, 2012.
+[11] John D. Dixon. Asymptotically Fast Factorization of Integers. Mathematics of Computation, 36:255–260, 1981.
+[12] Sary Drappeau. Propriétés multiplicatives des entiers friables translatés. Colloq. Math, 137:149–164, 2014.
+[13] Sary Drappeau. Théorèmes de type Fouvry–Iwaniec pour les entiers friables. Compos. Math., forthcoming.
+[14] Andrew Granville. Integers, without large prime factors, in arithmetic progressions. I. Acta Mathematica, 170:255–273,
+1993.
+[15] Andrew Granville. Integers, without large prime factors, in arithmetic progressions. II. Philosophical Transactions of the
+Royal Society of London Series A, 345:349–362, 1993.
+[16] Andrew Granville and K. Soundararajan. Large character sums. J. Amer. Math. Soc., 14(2):365–397, 2001.
+[17] A. J. Harper. Bombieri–Vinogradov and Barban–Davenport–Halberstam type theorems for smooth numbers. ArXiv
+e-prints, August 2012.
+[18] Adam J. Harper. On a paper of K. Soundararajan on smooth numbers in arithmetic progressions. Journal of Number
+Theory, 132(1):182 – 199, 2012.
+[19] Adolf Hildebrand. Integers free of large prime divisors in short intervals. Quarterly Journal of Mathematics, 36:57–69,
+1985.
+[20] Adolf Hildebrand. On the number of positive integers ≤ x and free of prime factors > y. Journal of Number Theory,
+22(3):289 – 307, 1986.
+[21] Adolf Hildebrand and Gérald Tenenbaum. On integers free of large prime factors. Trans. Amer. Math. Soc., 296(1):265–
+290, 1986.
+[22] Adolf Hildebrand and Gerald Tenenbaum. Integers without large prime factors. Journal de thorie des nombres de
+Bordeaux, 5(2):411–484, 1993.
+[23] H. Iwaniec and E. Kowalski. Analytic Number Theory. Number v. 53 in American Mathematical Society colloquium
+publications. American Mathematical Society, 2004.
+[24] Antoine Joux. A New Index Calculus Algorithm with Complexity L(1/4 + o(1)) in Small Characteristic, pages 355–379.
+Springer Berlin Heidelberg, Berlin, Heidelberg, 2014.
+[25] Jeong Han Kim, Ravi Montenegro, Yuval Peres, and Prasad Tetali. A birthday paradox for Markov chains, with an
+optimal bound for collision in the Pollard rho algorithm for discrete logarithm. In Alfred J. van der Poorten and Andreas
+Stein, editors, ANTS, volume 5011 of Lecture Notes in Computer Science, pages 402–415. Springer, 2008.
+[26] Thorsten Kleinjung. On polynomial selection for the general number field sieve. Mathematics of Computation,
+75(256):2037–2047, 2006.
+[27] H. Koch and H. Koch. Algebraic Number Theory. Number v. 62 in Algebraic Number Theory. Springer Berlin Heidelberg,
+1997.
+[28] Jeffrey C. Lagarias and Andrew M. Odlyzko. Effective versions of the Chebotarev density theorem. In Algebraic number
+fields: L-functions and Galois properties (Proc. Sympos., Univ. Durham, Durham, 1975). Academic Press, London, 1977.
+[29] Edmund Landau. Neuer beweis des primzahlsatzes und beweis des primidealsatzes. Mathematische Annalen, 56(4):645–
+670, 1903.
+[30] S. Lang. Algebraic Number Theory. Applied Mathematical Sciences. Springer, 1994.
+[31] Arjen K Lenstra and Mark S Manasse. Factoring with two large primes. Mathematics of Computation, 63(208):785–798,
+1994.
+[32] Hendrik W. Lenstra. Factoring integers with elliptic curves. The Annals of Mathematics, 126(3):649–673, November 1987.
+[33] Hendrik W Lenstra and Carl Pomerance. A rigorous time bound for factoring integers. Journal of the American Mathematical Society, 5(3):483–516, 1992.
+[34] Hendrik W. Lenstra, Jr. Algorithms in algebraic number theory. Bull. Amer. Math. Soc., 26(2):211–244, 1992.
+[35] Hendrik W. Lenstra, Jr. Personal communication, n.d.
+
+49
+
+[36] Hendrik W. Lenstra, Jr., Jonathan Pila, and Carl Pomerance. A hyperelliptic smoothness test, I. Philosophical Transactions of the Royal Society of London Series A, 345:397–408, 1993.
+[37] Stephen D. Miller and Ramarathnam Venkatesan. Spectral analysis of Pollard rho collisions. In Florian Hess, Sebastian
+Pauli, and Michael Pohst, editors, Algorithmic Number Theory, volume 4076 of Lecture Notes in Computer Science, pages
+573–581. Springer Berlin Heidelberg, 2006.
+[38] Stephen D. Miller and Ramarathnam Venkatesan. Non-degeneracy of Pollard rho collisions. CoRR, abs/0808.0469, 2008.
+[39] H.L. Montgomery and R.C. Vaughan. Multiplicative Number Theory I: Classical Theory. Cambridge Studies in Advanced
+Mathematics. Cambridge University Press, 2006.
+[40] Peter L. Montgomery. Square roots of products of algebraic numbers. In Walter Gautschi, editor, Mathematics of Computation 1943–1993: a half-century of computational mathematics, pages 567–571, Providence, 1994. American Mathematical
+Society.
+[41] Peter L. Montgomery. A block Lanczos algorithm for finding dependencies over GF(2). In Louis C. Guillou and JeanJacques Quisquater, editors, Advances in cryptology—EUROCRYPT ’95 (Saint-Malo, 1995), volume 921 of Lecture Notes
+in Computer Science, pages 106–120, Berlin, 1995. Springer-Verlag.
+[42] Brian Antony Murphy. Polynomial selection for the number field sieve integer factorisation algorithm, 1999.
+[43] M.R. Murty and J.I. Esmonde. Problems in Algebraic Number Theory. Graduate Texts in Mathematics. Springer, 2005.
+[44] Trygve Nagel. Über die klassenzahl imaginär-quadratischer zahlkörper. Abhandlungen aus dem Mathematischen Seminar
+der Universitt Hamburg, 1(1):140–150, 1922.
+[45] J. Neukirch and N. Schappacher. Algebraic Number Theory. Grundlehren der mathematischen Wissenschaften. Springer
+Berlin Heidelberg, 2013.
+[46] A. Page. On the number of primes in an arithmetic progression. Proc. Lond. Math. Soc., II. Ser., 39:116–141, 1935.
+[47] Carl Pomerance. Analysis and comparison of some integer factoring algorithms. In Jr. Hendrik W. Lenstra and Robert
+Tijdeman, editors, Computational methods in number theory I, volume 154 of Mathematical Centre Tracts, pages 89–139,
+Amsterdam, 1982. Mathematisch Centrum.
+[48] Carl Pomerance. The role of smooth numbers in number theoretic algorithms. In In International Congress of Mathematicians, pages 411–422, 1994.
+[49] Carl Pomerance. A tale of two sieves. Notices of the American Mathematical Society, 43:1473–1485, 1996.
+[50] M. Rosen. Number Theory in Function Fields. Graduate Texts in Mathematics. Springer, 2002.
+[51] J. Barkley Rosser and Lowell Schoenfeld. Approximate formulas for some functions of prime numbers. Illinois Journal of
+Mathematics, 6:64–94, 1962.
+[52] Jean-Pierre Serre. Quelques applications du théorème de densité de Chebotarev. Publications Mathématiques de l’IHÉS,
+54:123–201, 1981.
+[53] Kannan Soundararajan. The distribution of smooth numbers in arithmetic progressions. In Anatomy of integers, volume 46
+of CRM Proc. Lecture Notes, pages 115–128. Amer. Math. Soc., Providence, RI, 2008.
+[54] H.M. Stark. Some effective cases of the Brauer-Siegel theorem. Inventiones mathematicae, 23(2):135–152, 1974.
+[55] G. Tenenbaum. Cribler les entiers sans grand facteur premier. Philosophical Transactions of the Royal Society of London
+A: Mathematical, Physical and Engineering Sciences, 345(1676):377–384, 1993.
+[56] Emmanuel Thomé. Subquadratic computation of vector generating polynomials and improvement of the block Wiedemann
+algorithm. Journal of Symbolic Computation, 33(5):757 – 775, 2002.
+[57] Emmanuel Thomé. Square root algorithms for the number field sieve. In Ferruh Özbudak and Francisco Rodrı́guezHenrı́quez, editors, Arithmetic of Finite Fields - 4th International Workshop, WAIFI 2012, Bochum, Germany, July
+16-19, 2012. Proceedings, volume 7369 of Lecture Notes in Computer Science, pages 208–224. Springer, 2012.
+[58] B. Vallée. Provably fast integer factoring with quasi-uniform small quadratic residues. In Proceedings of the Twenty-first
+Annual ACM Symposium on Theory of Computing, STOC ’89, pages 98–106, New York, NY, USA, 1989. ACM.
+[59] Joachim von zur Gathen and Daniel Panario. Factoring polynomials over finite fields: A survey. Journal of Symbolic
+Computation, 31(1 2):3 – 17, 2001.
+[60] Yitang Zhang. Bounded gaps between primes. Ann. of Math., 179(3):1121–1174, 2014.
+
+50
+
+

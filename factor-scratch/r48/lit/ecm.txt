@@ -1,0 +1,245 @@
+ECM and the Elliott–Halberstam conjecture for quadratic fields
+Razvan Barbulescu and Florent Jouve 1
+1
+
+Univ. Bordeaux, CNRS, Bordeaux INP, IMB, UMR 5251, F-33400, Talence, France,
+razvan.barbulescu@u-bordeaux.fr and florent.jouve@u-bordeaux.fr
+
+arXiv:2212.11724v2 [cs.CR] 17 Jan 2023
+
+January 2023
+Abstract
+The complexity of the elliptic curve method of factorization (ECM) is proven under a
+strong conjectural form of existence of friable numbers in short intervals. In the present
+work we use friability to tackle a different version of ECM which is much more studied and
+implemented, especially because it enables the use of ECM-friendly curves. In the case of
+curves with complex multiplication (CM) we replace heuristic arguments by rigorous results
+conditional on the Elliott–Halberstam (EH) conjecture. The proven results mirror recent
+work concerning the count of primes p such that p − 1 is friable. In the case of non CM
+curves, we explore consequences of a hypothetical statement that can be seen as an elliptic
+curve analogue of EH.
+
+1
+
+Introduction
+
+Let E/Q be an elliptic curve that has good reduction precisely at every prime number not
+dividing an integer ∆E . The main object of study of this paper is the prime counting function
+ψE (x, y) which is defined as the cardinality of
+ΨE (x, y) = {p ≤ x : p prime, p ∤ ∆E , |E(Fp )| is y-friable}.
+
+(1)
+
+Here we make the usual slight abuse of notation and write E(Fp ) for the set of Fp -points on
+the reduction of E modulo p and we also recall that an integer is y-friable (or y-smooth) if all
+its prime factors are less than y. For any integer n we shall denote by P − (n) (resp P + (n))
+the smallest (resp. the largest) prime factor of n. By convention P − (1) = ∞. The notation
+ψE (x, y) is reminiscent of ψ(x, y) which denotes the cardinality of
+Ψ(x, y) = {n ≤ x : P + (n) < y}.
+
+(2)
+
+Our main motivation for studying ΨE (x, y) comes from cryptography and more precisely from
+the method of factorization ECM. First recall the principle and purposes of ECM [Len87].
+Let P ∈ E(Q) be a rational point with homogeneous coordinates P = (xP : yP : zP ) ∈
+E(Q), relatively to a fixed projective embedding of E. Without loss of generality we can
+assume xP , yP , zP ∈ Z. Let N be a given positive integer for which one would like to find
+the prime factorization; set two parameters u = u(N ) and v = v(N ) in (0, 1) and define
+B = N 1/u , C = B 1/v . Note that if gcd(xP , yP , zP , N ) = 1 and gcd(N, ∆E ) = 1 then E has
+good reduction modulo any unknown prime factor p of N and P̄ := (xP : yP : zP ) mod p belongs
+to E(Fp ). Running ECM for E and N consists in computing the multiple Q = (xQ : yQ : zQ ) :=
+[M ]P mod N for M = (⌊C⌋!)⌊log N/ log 2⌋ , i.e. one uses the chord-and-tangent formulæ and
+reduces the coordinates modulo N (if two points have distinct coordinates modulo N then one
+uses the formula for adding two distinct points). We summarize this in Algorithm 1 below.
+1
+
+Algorithm 1: One curve subroutine of ECM
+Input: parameters u, v, an integer N , an elliptic curve E/Q and P ∈ E(Q).
+Output: a prime factor p of N such that p < B := ⌊N 1/u ⌋ or FAIL.
+1: C ← ⌊B 1/v ⌋
+2: M ← C!⌊log N/ log 2⌋
+3: Q : (xQ : yQ : zQ ) ← [M ]P mod N
+4: g ← gcd(zQ , N )
+5: if g 6= 1 then
+6:
+print g
+7: end if
+Claim 1. If |E(Fp )| is C-friable for some (unknown) prime factor p of N , then gN := gcd(zQ , N )
+is a multiple of p.
+Let us give the main ideas justifying the claim. If the points involved in the double-and-add
+method were all distinct not only modulo N but also modulo p, then Q would be the neutral
+element, so zQ ≡ 0 (mod p). If one used a wrong formula because two points were distinct
+modulo N but equal modulo p, then xQ ≡ yQ ≡ zQ ≡ 0 (mod p). In both cases ECM finds
+a multiple of p and a careful analysis shows that the probability that the result is exactly p
+is 1 − op→∞ (1) (see [Len87]). If gN is a prime factor of N we are done, otherwise we pick a
+different curve E and start over until a factor is found.
+The ECM algorithm consists in repeating Algorithm 1 either once, or a given number of
+times, or until success, depending on the application. ECM is primarily used to completely
+factorize N , which is done by finding some proper divisor and then iterating. If one takes u = 2
+so that we seek all prime factors less than B = N 1/2 , these prime factors are enough to find a
+possible
+√ the average running time:
+√ cofactor. Next the parameter v is chosen so as to minimize
+v = 2(log N )1/2 /(log log N )1/2 or equivalently C = ⌊LN (1/2, 1/ 2)⌋, where
+
+LN (α, c) = exp c(log N )α (log log N )1−α ,
+(3)
+
+and one runs Algorithm 1 with as many curves as needed in order to factorize N (note that
+there is no guarantee that the procedure terminates after testing finitely many curves). The
+expectation of the number of curves needed in this optimal choice of v is C 1+o(1) (see [Len87]).
+If one decides in advance to stop after B/ψ(B, C) curves, then one finds all primes less
+than B with constant probability (under the heuristics asserting independence relatively to the
+choice of the elliptic curve). This allows a second application of ECM : given an integer, decide
+whether it is B-friable with no false positive and with a constant proportion of false negatives.
+A third application is as follows : given a large number of integers less than a paremeter N
+and given a parameter B = N 1/u , find at least a prescribed proportion f of B-friable integers
+inside the set. This problem is solved by the Number Field Sieve (NFS) algorithm [LLJMP93],
+where ECM is used as a building block in the cofactorization step of the relation collection,
+also called sieving step, (see for example and [MBKL14, §3, page 337]) and in the splitting
+step of the discrete logarithm version of NFS (see for example [CS06, §4.1, point 1, page 181]).
+In the latter, one needs to find a single B-friable integer. To solve the problem, one uses a
+single elliptic curve or a finite number of them on a large number of integers. For example,
+the record factorizations of RSA moduli obtained with the CADO-NFS software [BGK+ ] use
+a dozen elliptic curves to test the friability of billions of integers. Also, in [MBKL14, Table 3,
+page 345] one uses 5 to 10 curves whereas the number of integers exceeds half a million per
+special-q and billions in total. The idea here is to set v so that one has ψ(B, B 1/v ) ≥ f and
+2
+
+then, in order to test B-friability, one is interested in how many primes up to B are found by
+Algorithm 1 with entries v and a particular elliptic curve E. We are hence interested in the
+quantity ψE (x, y) for (x, y) = (B 1/u , B 1/uv ).
+In particular, the heuristics underlying the use of ECM as a friability test states that the
+larger ψE (x, y) gets, the more y-friable integers will be found by ECM inside a given set. In
+other words, E is more ECM-friendly as ψE (x, y) increases. We formalize this idea in the
+following definition.
+Definition 1 (ECM-friendly curves). Let x > y be positive real numbers and let E1 /Q and
+E2 /Q be two elliptic curves. One says that E1 is more ECM-friendly than E2 with respect to
+(x, y) if
+ψE1 (x, y) > ψE2 (x, y) .
+One says that E1 is more ECM friendly than E2 if there exists x0 ≥ 2 and a positive valued
+increasing function ϑ such that the above inequality holds for all pairs (x, y) such that x ≥ x0
+and ϑ(x) ≤ y ≤ x.
+Our main result (Theorem 1.2) roughly states that the probability that the number of Fp points on a given elliptic curve is friable approaches asymptotically the probability for any
+integer to be friable. In the case of CM1 elliptic curves our result is conditional on the Elliott–
+Halberstam conjecture (EH), an important analytic number theoretic statement about uniformity aspects in the distribution of primes in residue classes.
+Conjecture 1.1 (Elliott–Halberstam, e.g. [Wan18, Hyp B] for Q, extended to K quadratic
+in [Pol16, Prop. 2.2]). Let K be either Q or an imaginary quadratic field of class number 1. Let
+k · k denote the field norm relative to K/Q. We define2
+ΠK (x) = {p ∈˙ OK , prime : k p k ≤ x} ,
+
+ΠK (x; c, a) = {p ∈ ΠK (x) : p ≡ a mod c},
+
+of cardinality denoted πK (x) and πK (x; c, a), respectively. Let δ > 0. Then for any fixed a ∈ OK
+and ω > 0 we have
+X
+
+k q k ≤ x1−δ
+(q, a) = 1
+
+πK (x; q, a) −
+
+x
+πK (x)
+≪ω
+,
+ϕ(q)
+(log x)ω
+
+for any x ≥ 2 and where q ∈ OK and ϕ(q) = |(OK /qOK )∗ |.
+The Elliott–Halberstam conjecture is standard in analytic number theory. It is a far reaching
+generalization of the celebrated Bombieri–Vinogradov Theorem where K = Q and the bound
+√
+on q in the index set of the summation cannot exceed x. EH would have countless important
+applications in number theory. Suffice it to mention the EH bounds contained in [May15] on
+gaps between consecutive primes (or more generally on the length of intervals containing ktuples of primes), as well as [Zha14] where, as a crucial step in the proof of the main result,
+√
+Zhang establishes a bound towards EH (i.e. going beyond the x threshold) under some extra
+restrictions on the prime factorization of the moduli involved.
+A quantitatively refined version of EH allows one to let δ depend on x as long as δ(x) → 0
+as x tends to infinity. Indeed, H. Montgomery suggested that one could take δ(x) → 0 in
+Conjecture 1.1. Friedlander and Granville [FG92] showed that the conjecture fails if δ(x) is less
+1
+
+For each number field K, there is a finite number of CM elliptic curves defined over K but there are overall
+infinitely many CM elliptic curves.
+2
+Here “p ∈˙ OK ” means that we count each prime ideal only once i.e. we identify elements that generate the
+same prime ideal of OK .
+
+3
+
+than a certain function of x. However Liu, Wu and Xi [LWX20] used the conjecture for δ(x)
+large enough not to contradict the necessary constraints observed by Friedlander and Granville
+(Conjecture 4.1 states this “parametrized” version of EH).
+In order to state our main result, we first recall some classical facts about the counting
+function of friable integers. With notation as in (2), one has the well known asymptotics due
+to Dickman:
+1
+ψ(x, x u )
+= ̺(u) ,
+lim
+x→∞
+x
+where ̺ is the unique continuous function on R≥0 that is differentiable on (1, ∞) and satisfies
+̺(u) ≡ 1 on [0, 1] and u̺′ (u) = −̺(u − 1) on (1, ∞). Asymptotics due to de Bruijn ([dB51,
+(1.8)], see also [HT93, Cor. 2.3]) describe the behaviour of ̺ as u grows:
+
+log2 (u + 2) 
+log ̺(u) = −u log u + log2 (u + 2) − 1 + O
+(u ≥ 1) .
+(4)
+log(u + 2)
+We now state our main result. From Conjecture 1.1, we draw an asymptotic equivalent for
+ψE (x, y). From a refined version of Conjecture 1.1 (Conjecture 4.1) we handle uniformity issues
+in these asymptotics, and finally, we state a non CM analogue (conjectural on Hypothesis 1) of
+our estimates.
+x
+Theorem 1.2. Let x ≥ 2 and let y satisfy 2 ≤ y ≤ x. Set u := log
+log y .
+
+• Let E/Q be a CM elliptic curve.
+1. (Theorem 3.4) Assume Conjecture 1.1. If u is upper bounded by an absolute constant
+then one has
+x
+(x → ∞) ,
+ψE (x, y) ∼ ̺(u)
+log x
+2. (Corollary 4.3) Assume Conjecture 4.1. If δ(x) is a function satisfying for some
+η > 0 and β > 0:
+log2 x
+1
+≤ δ(x) ≪
+η log x
+(log2 x)1+β
+3x
+and u ≤ log
+log x then we have
+4
+
+ψE (x, y) = ̺(u)
+
+x
+(1 + O(δ(x)u/̺(u))).
+log x
+
+• Let E/Q be a non CM elliptic curve.
+3. (Theorem 6.2) Assume Hypothesis 1. If u is upper bounded by an absolute constant
+then one has
+x
+,
+(x → ∞) .
+ψE (x, y) ∼ ̺(u)
+log x
+Note that the same asymptotics hold for ψE (x, y) disregarding the endomorphism ring of E,
+provided the relevant assumption is made on E (Conjecture 1.1 if E has CM, and Hypothesis 1
+otherwise). This uniform asymptotic behaviour of elliptic curves over Q suggests that ECMfriendliness is determined by the implicit error terms in Theorem 1.2. In Section 4.2, we discuss
+in detail these error terms. In particular, for CM elliptic curves, we show the relevance of
+introducing as in [BS21, Def. 5.1], the quantity
+γK = L′ (1, χ)/L(1, χ),
+where χ is the Kronecker character of the quadratic field K associated to E.
+We conclude by stating a strong form of Theorem 1.2(2) which is directly related to questions
+in cryptography, as we will discuss in Section 2.
+4
+
+

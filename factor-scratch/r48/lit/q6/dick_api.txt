@@ -1,0 +1,761 @@
+In analytic number theory, the Dickman function or Dickman–de Bruijn function ρ is a special function used to estimate the proportion of smooth numbers up to a given bound.
+It was first studied by actuary Karl Dickman, who defined it in his only mathematical publication.  It was later studied by the Dutch mathematician Nicolaas Govert de Bruijn.
+
+
+== Definition ==
+The Dickman–de Bruijn function 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+      
+    
+    {\displaystyle \rho (u)}
+  
+ is a continuous function that satisfies the delay differential equation
+
+  
+    
+      
+        u
+        
+          ρ
+          ′
+        
+        (
+        u
+        )
+        +
+        ρ
+        (
+        u
+        −
+        1
+        )
+        =
+        0
+        
+      
+    
+    {\displaystyle u\rho '(u)+\rho (u-1)=0\,}
+  
+
+with initial conditions 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        =
+        1
+      
+    
+    {\displaystyle \rho (u)=1}
+  
+ for 0 ≤ u ≤ 1.
+
+
+== Properties ==
+Dickman proved that, when 
+  
+    
+      
+        a
+      
+    
+    {\displaystyle a}
+  
+ is fixed, we have
+
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            a
+          
+        
+        )
+        ∼
+        x
+        ρ
+        (
+        a
+        )
+        
+      
+    
+    {\displaystyle \Psi (x,x^{1/a})\sim x\rho (a)\,}
+  
+
+where 
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        y
+        )
+      
+    
+    {\displaystyle \Psi (x,y)}
+  
+ is the number of y-smooth (or y-friable) integers below x. Equivalently, the number of 
+  
+    
+      
+        B
+      
+    
+    {\displaystyle B}
+  
+-smooth numbers less than 
+  
+    
+      
+        N
+      
+    
+    {\displaystyle N}
+  
+ is about
+
+  
+    
+      
+        Ψ
+        (
+        N
+        ,
+        B
+        )
+        ≈
+        N
+        ρ
+        
+          (
+          
+            
+              
+                log
+                ⁡
+                N
+              
+              
+                log
+                ⁡
+                B
+              
+            
+          
+          )
+        
+        .
+      
+    
+    {\displaystyle \Psi (N,B)\approx N\rho \left({\frac {\log N}{\log B}}\right).}
+  
+
+Ramaswami later gave a rigorous proof that for fixed a, 
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            a
+          
+        
+        )
+      
+    
+    {\displaystyle \Psi (x,x^{1/a})}
+  
+ was asymptotic to 
+  
+    
+      
+        x
+        ρ
+        (
+        a
+        )
+      
+    
+    {\displaystyle x\rho (a)}
+  
+, with the error bound
+
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            a
+          
+        
+        )
+        =
+        x
+        ρ
+        (
+        a
+        )
+        +
+        O
+        (
+        x
+        
+          /
+        
+        log
+        ⁡
+        x
+        )
+      
+    
+    {\displaystyle \Psi (x,x^{1/a})=x\rho (a)+O(x/\log x)}
+  
+
+in big O notation.
+Knuth gives a proof for a narrowed bound:
+
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            a
+          
+        
+        )
+        =
+        x
+        ρ
+        (
+        a
+        )
+        +
+        (
+        1
+        −
+        γ
+        )
+        ρ
+        (
+        a
+        −
+        1
+        )
+        (
+        x
+        
+          /
+        
+        log
+        ⁡
+        x
+        )
+        +
+        O
+        (
+        x
+        
+          /
+        
+        
+          
+            (
+            log
+            ⁡
+            x
+            )
+          
+          
+            2
+          
+        
+        )
+      
+    
+    {\displaystyle \Psi (x,x^{1/a})=x\rho (a)+(1-\gamma )\rho (a-1)(x/\log x)+O(x/{(\log x)}^{2})}
+  
+
+where γ is Euler's constant.
+
+
+== Applications ==
+
+The main purpose of the Dickman–de Bruijn function is to estimate the frequency of smooth numbers at a given size. This can be used to optimize various number-theoretical algorithms such as P–1 factoring and can be useful of its own right.
+It can be shown that
+
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        y
+        )
+        =
+        x
+        
+          u
+          
+            O
+            (
+            −
+            u
+            )
+          
+        
+      
+    
+    {\displaystyle \Psi (x,y)=xu^{O(-u)}}
+  
+
+which is related to the estimate 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        ≈
+        
+          u
+          
+            −
+            u
+          
+        
+      
+    
+    {\displaystyle \rho (u)\approx u^{-u}}
+  
+ below.
+The Golomb–Dickman constant has an alternate definition in terms of the Dickman–de Bruijn function.
+
+
+== Estimation ==
+A first approximation might be 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        ≈
+        
+          u
+          
+            −
+            u
+          
+        
+        .
+        
+      
+    
+    {\displaystyle \rho (u)\approx u^{-u}.\,}
+  
+ A better estimate is
+
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        ∼
+        
+          
+            1
+            
+              ξ
+              
+                
+                  2
+                  π
+                  u
+                
+              
+            
+          
+        
+        ⋅
+        exp
+        ⁡
+        (
+        −
+        u
+        ξ
+        +
+        Ei
+        ⁡
+        (
+        ξ
+        )
+        )
+      
+    
+    {\displaystyle \rho (u)\sim {\frac {1}{\xi {\sqrt {2\pi u}}}}\cdot \exp(-u\xi +\operatorname {Ei} (\xi ))}
+  
+
+where Ei is the exponential integral and ξ is the positive root of
+
+  
+    
+      
+        
+          e
+          
+            ξ
+          
+        
+        −
+        1
+        =
+        u
+        ξ
+        .
+        
+      
+    
+    {\displaystyle e^{\xi }-1=u\xi .\,}
+  
+
+A simple upper bound is 
+  
+    
+      
+        ρ
+        (
+        x
+        )
+        ≤
+        1
+        
+          /
+        
+        x
+        !
+        .
+      
+    
+    {\displaystyle \rho (x)\leq 1/x!.}
+  
+
+
+== Computation ==
+For each interval [n − 1, n] with n an integer, there is an analytic function 
+  
+    
+      
+        
+          ρ
+          
+            n
+          
+        
+      
+    
+    {\displaystyle \rho _{n}}
+  
+ such that 
+  
+    
+      
+        
+          ρ
+          
+            n
+          
+        
+        (
+        u
+        )
+        =
+        ρ
+        (
+        u
+        )
+      
+    
+    {\displaystyle \rho _{n}(u)=\rho (u)}
+  
+.  For 0 ≤ u ≤ 1, 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        =
+        1
+      
+    
+    {\displaystyle \rho (u)=1}
+  
+. For 1 ≤ u ≤ 2, 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        =
+        1
+        −
+        log
+        ⁡
+        u
+      
+    
+    {\displaystyle \rho (u)=1-\log u}
+  
+. For 2 ≤ u ≤ 3,
+
+  
+    
+      
+        ρ
+        (
+        u
+        )
+        =
+        1
+        −
+        (
+        1
+        −
+        log
+        ⁡
+        (
+        u
+        −
+        1
+        )
+        )
+        log
+        ⁡
+        (
+        u
+        )
+        +
+        
+          Li
+          
+            2
+          
+        
+        ⁡
+        (
+        1
+        −
+        u
+        )
+        +
+        
+          
+            
+              π
+              
+                2
+              
+            
+            12
+          
+        
+        .
+      
+    
+    {\displaystyle \rho (u)=1-(1-\log(u-1))\log(u)+\operatorname {Li} _{2}(1-u)+{\frac {\pi ^{2}}{12}}.}
+  
+
+with Li2 the dilogarithm. Other 
+  
+    
+      
+        
+          ρ
+          
+            n
+          
+        
+      
+    
+    {\displaystyle \rho _{n}}
+  
+ can be calculated using infinite series.
+An alternate method is computing lower and upper bounds with the trapezoidal rule; a mesh of progressively finer sizes allows for arbitrary accuracy. For high precision calculations (hundreds of digits), a recursive series expansion about the midpoints of the intervals is superior. Values for u ≤ 7 can be usefully computed via numerical integration in ordinary double-precision floating-point.
+
+
+== Extension ==
+Friedlander defines a two-dimensional analog 
+  
+    
+      
+        σ
+        (
+        u
+        ,
+        v
+        )
+      
+    
+    {\displaystyle \sigma (u,v)}
+  
+ of 
+  
+    
+      
+        ρ
+        (
+        u
+        )
+      
+    
+    {\displaystyle \rho (u)}
+  
+. This function is used to estimate a function 
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        y
+        ,
+        z
+        )
+      
+    
+    {\displaystyle \Psi (x,y,z)}
+  
+ similar to de Bruijn's, but counting the number of y-smooth integers with at most one prime factor greater than z.  Then
+
+  
+    
+      
+        Ψ
+        (
+        x
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            a
+          
+        
+        ,
+        
+          x
+          
+            1
+            
+              /
+            
+            b
+          
+        
+        )
+        ∼
+        x
+        σ
+        (
+        b
+        ,
+        a
+        )
+        .
+        
+      
+    
+    {\displaystyle \Psi (x,x^{1/a},x^{1/b})\sim x\sigma (b,a).\,}
+  
+
+This class of numbers may be encountered in the two-stage variant of P-1 factoring. However, Kruppa's estimate of the probability of finding a factor by P-1 does not make use of this result.
+
+
+== See also ==
+Buchstab function, a function used similarly to estimate the number of rough numbers, whose convergence to 
+  
+    
+      
+        
+          e
+          
+            −
+            γ
+          
+        
+      
+    
+    {\displaystyle e^{-\gamma }}
+  
+ is controlled by the Dickman function
+Golomb–Dickman constant
+Poisson-Dirichlet distribution
+
+
+== References ==
+
+
+== Further reading ==
+Broadhurst, David (2010). "Dickman polylogarithms and their constants". arXiv:1004.0519 [math-ph].
+Soundararajan, Kannan (2012). "An asymptotic expansion related to the Dickman function". Ramanujan Journal. 29 (1–3): 25–30. arXiv:1005.3494. doi:10.1007/s11139-011-9304-3. MR 2994087. S2CID 119564455.
+Weisstein, Eric W. "Dickman function". MathWorld.

@@ -1,0 +1,864 @@
+                                          Determination of the strong-coupling constant from the Z-boson
+                                          transverse-momentum distribution
+                                          Stefano Camarda1 , Giancarlo Ferrera2 , and Matthias Schott3
+                                          1
+                                            CERN, CH-1211 Geneva, Switzerland
+                                          2
+                                            Dipartimento di Fisica, Università di Milano and
+                                            INFN, Sezione di Milano, I-20133 Milan, Italy
+                                          3
+                                            Johannes Gutenberg-Universitat Mainz (JGU),
+arXiv:2203.05394v2 [hep-ph] 19 Feb 2024
+
+
+
+
+                                            Saarstr. 21, 55122 Mainz, Germany
+
+
+
+                                                    Abstract The strong-coupling constant is determined from the low-momentum region of the transverse-
+                                                    momentum distribution of Z bosons produced through the Drell-Yan process, using predictions at third
+                                                    order in perturbative QCD. The
+                                                                                 √ analysis employs a measurement performed in proton-antiproton collisions
+                                                    at a centre-of-mass energy of s = 1.96 TeV with the CDF experiment. The determined value of the strong
+                                                    coupling at the reference scale corresponding to the Z-boson mass is αS (mZ ) = 0.1191+0.0013
+                                                                                                                                          −0.0016 .
+
+
+
+
+                                          Introduction                                                    those with jets in the final state, allow probing the strong
+                                                                                                          coupling at high values of momentum transfer.
+                                          The coupling constant of the strong interaction is one of
+                                          the fundamental parameters of the standard model, and               In this context, it is highly desirable to perform al-
+                                          is the least precisely known among the fundamental coup-        ternative determinations of αS (mZ ) based on new ob-
+                                          lings in nature. The most recent world average of the           servables and high-order theory predictions, which can
+                                          strong-coupling constant at the scale of the Z-boson mass       help improving the precision in the determination of the
+                                          yields αS (mZ ) = 0.1179 ± 0.0009, with a relative uncer-       strong coupling and resolving existing tensions. This paper
+                                          tainty of 0.8% [1]. Various different determinations con-       presents a new methodology for a precise determination of
+                                          tribute to the world average, and are categorised accord-       αS (mZ ) at hadron colliders from a semi-inclusive (i.e. ra-
+                                          ing to their methodological approach [2]. The most precise      diation inhibited) observable, namely the low-momentum
+                                          determinations of αS (mZ ) are from lattice QCD, with a         Sudakov [28] region of the transverse-momentum distri-
+                                          result of αS (mZ ) = 0.1184 ± 0.0008 [3], and hadronic tau      bution of Z bosons produced through the Drell-Yan pro-
+                                          decays, with a result of αS (mZ ) = 0.1177 ± 0.0019 [1].        cess [29]. The strong force is responsible for the recoil
+                                          Tensions exist between some of the most precise determ-         of the Z bosons, which acquire non-zero transverse mo-
+                                          inations of αS (mZ ). For instance, several determinations      mentum from QCD radiation off the initial-state partons,
+                                          from deep inelastic lepton-nucleon scattering [4–6] and         and from non-perturbative intrinsic kT effects. The hard-
+                                          from hadronic final states of electron-positron annihila-       ness of the transverse-momentum distribution is a meas-
+                                          tion [7–9] are significantly lower than the lattice QCD de-     ure of the strength of the recoil of the Z bosons, which in
+                                          termination. Some of these determinations are performed         turn is proportional to the strong coupling. Compared to
+                                          at next-to-next-to-next-to-leading order (N3 LO) in QCD,        other determinations of αS (mZ ) at hadron colliders based
+                                          namely from hadronic tau decays and low Q2 continu-             on either exclusive or inclusive observables, this determin-
+                                          um [10], from non-singlet structure functions in deep in-       ation gathers all desirable features for a precise determin-
+                                          elastic scattering [4], from heavy quarkonia decays [11, 12],   ation: large observable sensitivity to αS (mZ ) compared
+                                          and from the global fit of the electroweak observables [13,     to the experimental precision, high perturbative accur-
+                                          14]. At hadron colliders, the strong-coupling constant has      acy of the theoretical prediction [30–34], and in-situ con-
+                                          been determined in final states with jets [15, 16] from in-     trollable non-perturbative QCD effects [35–45]. The pro-
+                                          clusive top quark pairs production [17–19], and more re-        posed methodology can be applied to proton-antiproton
+                                          cently from inclusive W and Z bosons production [20].           and proton-proton colliders. In this paper we consider
+                                          The high-momentum region of the Z-boson transverse-             proton-antiproton collisions data from the Tevatron col-
+                                          momentum (pT ) distribution measured at the LHC [21–            lider, because the Drell-Yan process has reduced contri-
+                                          23] was included in parton distribution function (PDF)          bution from heavy-flavour-initiated production, compared
+                                          determinations [24], and contributed to the simultaneous        to the proton-proton collisions of the LHC. The applica-
+                                          determination of PDFs and strong-coupling constant in           tion to proton-proton collisions can profit from the large
+                                          Refs. [25–27]. Some of these determinations, in particular      high-quality datasets already collected at the LHC ex-
+2                                      Stefano Camarda et al.: αS (mZ ) from Z-boson pT
+
+
+periments, which will be further increased in the future,            The function HV [52, 53] includes the hard-collinear
+but could require a more careful study of heavy-flavour-          contributions and it can be expanded in powers of αS as
+initiated production, and is left to future work.
+                                                                         αS (1)  αS 2 (2)  αS 3 (3)
+                                                                  HV (αS ) = 1+
+                                                                             H +             HV +              HV +. . . .
+                                                                          π V         π                  π
+                                                                                                                      (3)
+Methodology                                                   The universal (process independent) form factor exp{G}
+                                                          contains all the terms that order-by-order in αS are log-
+The experimental data used in the analysis is the Z-boson arithmically divergent as pT → 0. The resummed logar-
+transverse-momentum distribution measured
+                                      √      with the CDF ithmic expansion of G reads
+detector at a centre-of-mass energy of s = 1.96 TeV with
+2.1 fb−1 of integrated luminosity [46]. The measurement                 G(αS , L) = L g (1) (αS L) + g (2) (αS L)
+was performed in the electron decay channel, and extra-           αS (3)            α 2
+                                                                                       S
+polated to a kinematic region without requirements on           +      g (αS L) +             g (4) (αS L) + . . . ,  (4)
+the transverse-momentum and pseudorapidity of the elec-            π                  π
+trons. The extrapolation to full-lepton phase space, which        where L is the logarithmic expansion parameter, the func-
+was based on the measured decay lepton angular distri-            tions g (n) control and resum the αSk Lk (with k ≥ 1) log-
+butions [47] to avoid significant theoretical uncertainties,      arithmic terms in the exponent of Eq. (2) due to soft and
+enables the usage of fast analytic predictions. In the low-       collinear radiation.
+momentum region below 25 GeV, the measurement was                      The function G is singular in the region of transverse-
+performed in bins of Z-boson transverse momentum of               momenta of the order of the scale of the QCD coupling
+0.5 GeV. The electron resolution for electrons of trans-          ΛQCD . This signals that a truly non-perturbative region
+verse momentum of 45 GeV was approximately 1 GeV in               is approached and perturbative results are not reliable.
+the central region |ηe | < 1.05, and 1.5 GeV in the for-          The singular behaviour of the perturbative form factor is
+ward region 1.2 < |ηe | < 2.8, enabling small bin-to-bin          removed by using the so-called b∗ [35, 54] regularisation
+correlations at the level of 30% for neighbouring bins.           procedure, in which the dependence of exp{G} on the im-
+    The theoretical predictions are computed with the pub-        pact parameter b, that is the Fourier-conjugate variable
+lic numerical program DYTurbo [48], which implements the          to pT , is frozen before reaching the singular point by per-
+resummation of logarithmically-enhanced contributions in          forming the replacement b2 → b2∗ = b2 b2lim /(b2 + b2lim ). In
+the small-pT region of the leptons pairs at next-to-next-to-      the calculation the default value of blim = 3 GeV−1 is
+-next-to-leading-logarithmic (N3 LL) accuracy, combined           used. The minimal prescription [41, 55, 56] is considered
+with the hard-collinear contributions at N3 LO in powers          as alternative regularisation procedure.
+of the QCD coupling [30]. We briefly review the resumma-               Concerning non-perturbative corrections of the type
+tion formalism implemented in DYTurbo and developed in            Λp /M p , where Λ is the non-perturbative scale of QCD and
+Refs. [49–51]. The transverse-momentum resummed cross             M is the order of magnitude of the momentum transfer
+section for Z-boson1 production can be written as                 in the process, we note that the dominant power correc-
+                                                                  tions are linear, for instance, in the case of hadronic final
+               dσ V = dσ res − dσ asy + dσ f.o. ,          (1)    states of electron-positron annihilation, whereas they are
+                                                                  expected to be quadratic for the Drell-Yan pT distribution
+where dσ res is the resummed component of the cross-              at large pT [57, 58], or, equivalently, in the limit of small
+section, dσ asy is the asymptotic term that represents the        b [59]. In the small pT region, the non-perturbative correc-
+fixed-order expansion of dσ res , and dσ f.o. is the Z+jet        tions are expected to become linear below some scale [44,
+finite-order cross section integrated over final-state QCD        60], which is estimated of the order O(1 GeV) in Ref. [61].
+radiation. All the cross sections are differential in p2T . The   Determinations of non-perturbative TMD functions from
+resummed component dσ res is the most important term at           fits to Drell-Yan and semi-inclusive deep inelastic scatter-
+small pT (i.e. pT ≪ mZ ). The finite-order term dσ f.o. gives     ing (SIDIS) data further confirm a transition from quad-
+the larger net contribution at large pT (i.e. pT ∼ mZ ). The      ratic to linear behaviour below a scale which is of or-
+fixed-order expansion of the resummed component dσ asy            der O(1.5 GeV) for Z-boson production at the Tevat-
+embodies the singular behaviour of the finite-order term,         ron [62]. The Z-boson pT distribution has negligible sens-
+providing a smooth behaviour of Eq. (1) as pT approaches          itivity to non-perturbative corrections below such a small
+zero. The resummed component is given by2                         scale. Accordingly, non-perturbative QCD effects are in-
+                                                                  cluded in this analysis in the form of a Gaussian form
+          dσ res = dσ̂LO
+                      V
+                         × HV × exp{G} × SNP .             (2)    factor SNP = exp{−g b2 }, which corresponds to a quad-
+            V                                                     ratic ansatz for the non-perturbative corrections.
+The term dσ̂LO is the leading-order (LO) cross section.                At N3 LL+O(αS3 ) accuracy in the small-pT region (i.e.
+    The contribution from γ ∗ and its interference with the Z
+    1                                                             including all the O(αS3 ) terms) we have included in the cal-
+                                                                                                       (3)
+boson are included throughout the calculation.                    culation the functions g (4) and HV in Eqs. (3) and (4).
+                                                                                               asy
+  2
+    The convolution with PDFs and the sum over different          The asymptotic term dσ           and the Z+jet finite-order
+initial-state partonic contributions are implied in the short-    cross section dσ f.o. are evaluated at O(αS3 ). The O(αS3 )
+hand notation of Eq. (2).                                         term of the Z+jet cross section predictions was computed
+                                          Stefano Camarda et al.: αS (mZ ) from Z-boson pT                                   3
+
+
+with MCFM [34, 63], using a lower cutoff of pT = 5 GeV,            The index i runs over all Ndata data points, whereas the
+and the corresponding dσ f.o. − dσ asy matching correction,        index j (k) corresponds to the experimental (theoretical)
+which is as large as −1% in the Sudakov region, was extra-         uncertainty nuisance parameters. The measurements and
+polated down to pT = 0 by interpolating the corrections            the uncorrelated experimental uncertainties are given by
+with their expected quadratic dependence on pT /mZ [64],           σiexp and ∆i , respectively, and the theory predictions are
+i.e. with the function (pT /mZ )2 i ci logi (pT /mZ ) includ-      σith . At each value of αS (mZ ), the PDF uncertainties are
+                                    P
+ing a set of free parameters ci (see also Refs. [33, 65] for       Hessian profiled according to Eq. (5) [71]. The parameter
+similar parametrisations).                                         g of the Gaussian non-perturbative form factor is left free
+     The running of the strong coupling is evaluated at            in the fit by adding g variations in Eq. (5) as an uncon-
+four loops [66, 67] consistently in all parts of the calcu-        strained nuisance parameter. The region of Z-boson trans-
+lation. The PDFs are interpolated with LHAPDF [68]                 verse momentum pT < 30 GeV is considered in the fit.
+at the factorisation scale µF , and evolved backward us-           Initial-state radiation of photons (QED ISR) is estimated
+ing the next-to-next-to-leading order (NNLO) solution of           at leading-logarithmic accuracy with Pythia8 [72] and
+the evolution equation, as implemented in Ref. [69], and           the AZ tune of parton shower parameters [21], and the
+four-loops running of the strong coupling. As shown in             predictions are corrected with a bin-by-bin multiplicative
+Appendix A of Ref. [49], such a procedure consistently             factor. The effect on αS (mZ ) of including these correc-
+resums the N3 LL contributions to the form factor. The             tions is δαS (mZ ) = −0.0006. Uncertainties are estimated
+number of active flavours is set to five in all the coeffi-        with initial-state photon radiation at next-to-leading log-
+cients entering the calculation, and in the evolution of the       arithmic accuracy [73].
+PDFs. In order to assess the impact of charm and bot-
+tom thresholds in the PDF evolution, an alternative for-
+ward PDF evolution with variable-flavour number scheme             Results
+is used, and the difference with respect to the nominal
+five-flavour backward evolution is considered as an uncer-         The determination of αS (mZ ) with the Hessian conver-
+tainty. The predicted cross sections depend on three un-           sion [74] of the NNLO PDF set NNPDF4.0 [75] yields
+physical scales: the renormalisation scale µR , the factorisa-     αS (mZ ) = 0.1192, with a statistical uncertainty of ±0.0007,
+tion scale µF , and the resummation scale Q, which para-           a systematic experimental uncertainty of ±0.0001, and a
+metrises the arbitrariness in the resummation procedure.           PDF uncertainty of ±0.0004. The value of g determined
+The central value of the scales is set to the invariant mass       in the fit is g = 0.66 ± 0.05 GeV2 , with a correlation to
+of the lepton pair mℓℓ . We note that within the transverse-       αS (mZ ) of −0.8. When performing a fit with fixed value
+momentum resummation formalism of Refs [49–51] the                 of g, the uncertainties on αS (mZ ) are reduced by 30%,
+µR , µF , and Q scales have to be set of the order of the          yielding an estimate for the uncertainty contribution from
+hard scale of the process mℓℓ and do not depend on the             non-perturbative QCD effects of ±0.0006. The value of
+transverse momentum of the Z boson. The electroweak                the χ2 function at minimum is 41 per 53 degrees of free-
+parameters are set according to the Gµ scheme, in which            dom. The pre- and post-fit predictions are compared to the
+the Fermi coupling constant GF , the W -boson mass mW ,            measured Z-boson transverse-momentum distribution in
+and the Z-boson mass mZ are set to the input values                Fig. 1. Various alternative NNLO PDF sets are considered:
+GF = 1.1663787 · 10−5 GeV−2 , mW = 80.385 GeV, mZ =                CT18 [26], CT18Z, MSHT20 [76], HERAPDF2.0 [77], and
+91.1876 GeV [1], whereas the weak-mixing angle and the             ABMP16 [6]. The determined values of αS (mZ ) range
+QED coupling are calculated at tree level.                         from a minimum of 0.1185 with the MSHT20 PDF set to
+     The statistical analysis for the determination of αS (mZ )    a maximum of 0.1198 with the CT18Z PDF set. The mid-
+is performed with the xFitter framework [70]. The depend-          point value in this range of αS (mZ ) = 0.1191 is considered
+ence of PDFs on the value of αS (mZ ) is accounted for by          as nominal result, and the PDF envelope of ±0.0007 as
+using corresponding αS -series of PDF sets. The value of           an additional source of uncertainty. The determination
+αS (mZ ) is determined by minimising a χ2 function which           of αS (mZ ) from the various different NNLO PDF sets is
+includes both the experimental uncertainties and the the-          shown in Fig. 2. The approximate N3 LO MSHT20 PDF
+oretical uncertainties arising from PDF variations:                set [78] is also considered, using predictions at approx-
+                                                                   imate next-to-next-to-next-to-next-to-leading-logarithmic
+  χ2 (βexp , βth ) =                                               (N4 LL) accuracy [79], yielding a value of αS (mZ ) = 0.1184.
+                                                        2        Determinations of αS (mZ ) at hadron colliders are exposed
+            σiexp + j Γijexp βj,exp − σith − k Γik
+                     P                      P th
+   N                                               βk,th
+    Xdata
+                                                                   to possible biases unless the PDFs are determined simul-
+                                    ∆2i                            taneously along with αS (mZ ) [80]. Nonetheless, αS (mZ )
+    i=1
+       X              X                                            determinations from single or limited hadron collider data-
+   +        2
+           βj,exp +        2
+                          βk,th .                            (5)   sets based on existing PDF sets, are interesting to study in
+       j              k                                            detail the sensitivity to αS (mZ ) of a particular observable
+                                                                   and the associated theoretical uncertainties. The Hessian
+The correlated experimental and theoretical uncertainties          profiling employed in this analysis provides an approxima-
+are included using the nuisance parameter vectors βexp             tion to a PDF determination which relies on the accuracy
+and βth , respectively. Their influence on the data and the-       of the quadratic approximation around the minimum [81]
+ory predictions is described by the Γijexp and Γik
+                                                th
+                                                   matrices.       (see Appendix B for details). In all the cases considered in
+4                                                           Stefano Camarda et al.: αS (mZ ) from Z-boson pT
+
+
+                                                                                     fit is 0.1184 ± 0.0006, where the quoted uncertainty is the
+dσ/dp [pb / GeV]
+
+
+
+
+                                pp → Z; s = 1.96 TeV; L = 2.1 fb-1                   uncertainty from the fit, which includes experimental and
+                          25                                                         PDF uncertainties. The value of αS (mZ ) is in agreement
+                          20                                                         with the determinations based on the Hessian profiling
+                                                                                     approach.
+               T
+
+
+
+
+                          15                                                              The alternative fits with different PDF sets and the
+                                                                                     simultaneous fit of PDFs and αS (mZ ) are summarised in
+                          10                                                         Table 1.
+                           5                                                              Missing higher order uncertainties are estimated through
+                                                                                     independent variations of µR , µF and Q in the range
+                           0                                                         mℓℓ /2 ≤ {µR , µF , Q} ≤ 2mℓℓ with the constraints 0.5 ≤
+                                    CDF Data             DYTurbo
+                                    δ uncorrelated       Post-fit                    {µF /µR , Q/µR , Q/µF } ≤ 2, leading to 14 variations. The
+                          −5
+                                    δ total              Pre-fit                     determined values of αS (mZ ) range from a minimum of
+                                                                                     0.1183 to a maximum of 0.1196 with respect to the value
+      Ratio to Post-fit
+
+
+
+
+                                0             10           20            30
+                          1.4                                                        at the central scale choice of αS (mZ ) = 0.1192, yielding
+                          1.2                                                        a scale-variation envelope of +0.0004
+                                                                                                                     −0.0009 . The alternative fits
+                            1                                                        with different choices of the QCD scales are summarised
+                                                                                     in Table 2.
+                                0             10           20             30
+                                                                     p [GeV]              Fits without the O(αS3 ) matching corrections yield a
+                                                                     T
+                                                                                     central value which is 0.0005 lower, and an increase in the
+                                3                    3
+Figure 1. Comparison of N LL+O(αS ) DYTurbo predictions                              half envelope of scale variations from 0.0007 to 0.0009,
+to the measured Z-boson transverse-momentum distribution.                            which is consistent with the observed shift. Systematic
+The settings of the pre- and post-fit predictions are αS (mZ ) =                     uncertainties in the O(αS3 ) matching corrections are es-
+0.118, g = 0 GeV2 , and αS (mZ ) = 0.1190, g = 0.66 GeV2 ,                           timated by raising the lower cutoff from pT = 5 GeV to
+respectively. The dashed bands represent the PDF uncertainty                         pT = 10 GeV. The difference of 0.0001 with respect to the
+of the NNPDF4.0 PDF set.                                                             nominal fit is considered as a source of uncertainty. Stat-
+                                                                                     istical uncertainties in the O(αS3 ) matching corrections
+                                                                                     are estimated with a set of 1000 replicas of the match-
+this analysis, pulls and constraints of the nuisance para-
+                                                                                     ing corrections generated by fluctuating them within their
+meters associated to the PDF uncertainties are below 20%
+                                                                                     numerical uncertainties. The upper and lower limits of
+and 10%, respectively, indicating that the new minimum
+                                                                                     the 68% confidence level envelope of interpolations to the
+of the profiled PDFs is very close to the original minimum,
+                                                                                     replicas are used for the estimate of the statistical un-
+which gives confidence in the validity of the quadratic ap-
+                                                                                     certainty, yielding less than ±0.0001. Further details are
+proximation.
+                                                                                     provided in Appendix A.
+    With the aim of further testing the validity of the Hes-
+                                                                                          Uncertainties in the modelling of the non-perturbative
+sian profiling approximation, a simultaneous fit of PDFs,
+                                                                                     form factor are estimated by performing four alternative
+αS (mZ ), and the non-perturbative parameter g is per-
+                                                                                     fits with: a value of blim = 2 GeV−1 in the b∗ regularisation
+formed. The combined neutral and charged current deep
+                                                                                     procedure; the minimal prescription, which corresponds
+inelastic scattering (DIS) cross-section data from the H1
+                                                                                     to the limit blim → ∞; using an additional quartic term
+and ZEUS experiments at the HERA collider [77] are in-
+                                                                                     exp{−q b4 } with q = 0.1 GeV4 ; using     the additional   term
+cluded in the fit, with a minimum squared four-momentum
+                                                                                     exp{−gk } with gk = g0 1 − exp − πgC0 bF2
+                                                                                                                                   
+transfer Q2 of 3.5 GeV2 , together with the Z-boson trans-                                                                             log(m2ℓℓ /Q20 )
+                                                                                                      lim
+verse-momentum distribution measured by CDF. The light- with g0 = 0.3, Q0 = 1 GeV, and blim = 2 GeV−1 [44],
+quark coefficient functions of the DIS cross sections are where CF is the colour-factor associated with gluon emis-
+calculated in the M S scheme [82], and with the renorm- sion from a quark. The alternative fits yield variations
+alisation and factorisation scales set to the squared four- of αS (mZ ) in the range of ±0.0007, which is considered
+momentum transfer Q2 . The heavy quarks c and b are as an uncertainty. In the alternative fits, the parameter
+dynamically generated, and the corresponding coefficient of the Gaussian non-perturbative form factor ranges from
+functions for the neutral-current processes with γ ∗ ex- g = 0.42 GeV2 in the case of the minimal prescription
+change are calculated in the general-mass variable-flavour- to g = 0.83 GeV2 in the case of the fit with blim =
+number (VFN) scheme [83–85], with up to five active quark 2 GeV−1 , in agreement with values obtained by global
+flavours. The charm mass is set to mc = 1.43 GeV, and fits [42, 86, 87], and corresponding to values of average
+the bottom mass to mb = 4.50 GeV [77]. For the charged- primordial kT2 of the partons, ⟨kT2 ⟩ = 2g [88, 89], in the
+current processes the heavy quarks are treated as mass- range 0.8 to 1.7 GeV2 . Such values are generally large for
+less. The PDFs for the gluon, u-valence, d-valence, ū, non-perturbative effects within a bound state with a mass
+d¯ quark densities are parameterised at the input scale of 1 GeV as the proton. However the fitted values of g
+Q20 = 1.9 GeV2 with the parametrisation of Ref. [77]. The also accounts for power corrections related to the regular-
+contribution of the s-quark density is taken to be propor- isation procedure of the perturbative form factor, to the
+               ¯
+tional to the d-quark                                   ¯
+                        density by setting xs̄(x) = rs xd(x), perturbative evolution of the non-perturbative form factor
+with rs = 0.67. The determined value of αS (mZ ) from this from low scales to mZ , and to yet uncalculated higher-
+                                       Stefano Camarda et al.: αS (mZ ) from Z-boson pT                                     5
+
+
+                                Table 1. Alternative fits of αS (mZ ) with different PDF sets.
+
+                                                            αS (mZ )        g [GeV2 ]        χ2 /dof
+                                  NNPDF4.0               0.1192 ± 0.0008   0.66 ± 0.05       41/53
+                                    CT18                 0.1189 ± 0.0010   0.67 ± 0.05       40/53
+                                    CT18Z                0.1198 ± 0.0009   0.62 ± 0.05       41/53
+                                   MSHT20                0.1185 ± 0.0009   0.72 ± 0.05       40/53
+                                 HERAPDF2.0              0.1188 ± 0.0008   0.69 ± 0.05       40/53
+                                   ABMP16                0.1185 ± 0.0007   0.62 ± 0.05       42/53
+                             MSHT20an3lo (N4 LL)         0.1184 ± 0.0009   0.73 ± 0.05       40/53
+                                      PDF fit            0.1184 ± 0.0006   0.71 ± 0.05   1405/1184
+
+
+Table 2. Alternative fits of αS (mZ ) with different choices of the renormalisation (µR ), factorisation (µF ) and resummation
+(Q) scales.
+
+                            µR /mℓℓ     µF /mℓℓ   Q/mℓℓ         αS (mZ )        g [GeV2 ]      χ2 /dof
+                               1           1        1        0.1192 ± 0.0008   0.66 ± 0.05      41/53
+                               1           1        2        0.1183 ± 0.0007   0.77 ± 0.05      40/53
+                               1           1       0.5       0.1196 ± 0.0008   0.57 ± 0.05      42/53
+                               1           2        1        0.1194 ± 0.0008   0.66 ± 0.05      41/53
+                               1           2        2        0.1183 ± 0.0007   0.77 ± 0.05      41/53
+                               1          0.5       1        0.1193 ± 0.0008   0.68 ± 0.05      42/53
+                               1          0.5      0.5       0.1196 ± 0.0008   0.59 ± 0.05      42/53
+                               2           1        1        0.1193 ± 0.0008   0.67 ± 0.05      42/53
+                               2           1        2        0.1194 ± 0.0008   0.70 ± 0.05      41/53
+                               2           2        1        0.1192 ± 0.0008   0.65 ± 0.05      42/53
+                               2           2        2        0.1192 ± 0.0008   0.67 ± 0.05      41/53
+                              0.5          1        1        0.1184 ± 0.0007   0.75 ± 0.05      42/53
+                              0.5          1       0.5       0.1192 ± 0.0007   0.64 ± 0.05      41/53
+                              0.5         0.5       1        0.1183 ± 0.0007   0.75 ± 0.05      42/53
+                              0.5         0.5      0.5       0.1192 ± 0.0007   0.64 ± 0.05      42/53
+
+
+
+order corrections. A fit in which the NNPDF4.0 PDF set            up to 4 < pT < 30 GeV, with a spread in the values of
+is evolved with a variable-flavour number scheme yields           αS (mZ ) at the level of ±0.0002, and an increase in the
+δαS (mZ ) = −0.0003, which is considered as an additional         uncertainty of the fit from ±0.0008 to ±0.0016. For the
+source of uncertainty. The alternative fits with different        fit in the range 4 < pT < 30 GeV the value of g is de-
+non-perturbative and heavy flavour models are summar-             termined as 0.3 ± 0.3 GeV2 and the correlation between
+ised in Table 3.                                                  αS (mZ ) and g is reduced from −0.8 to −0.4. Since the low
+    A fit with NLL initial-state radiation of photons yields      transverse-momentum region is the most sensitive to the
+a difference on αS (mZ )with respect to the Pythia8 mod-          non-perturbative QCD effects, this test provides a valid-
+elling of less than 0.0001, which is considered as an addi-       ation of the model for the non-perturbative form factor.
+tional source of uncertainty.                                     The spread of ±0.0002 from variations of the lower limit
+                                                                  of the fit range is considered as an additional source of
+    The stability of the results upon variations of the fit       uncertainty.
+range is tested by performing fits in the regions of Z-boson
+transverse momentum pT < 20 GeV and pT < 40 GeV.                      A consistency check of the αS (mZ ) determination was
+The spread in the determined values of αS (mZ ) is at the         performed using cross sections measured with the D0 de-
+level of ±0.0001 and the uncertainty of the fit increases         tector [90]. The fit to the D0 data in the Z-boson rapidity
+from ±0.0007 to ±0.0008. Since the region 20 < pT <               range |y| < 1 yields value of αS (mZ ) = 0.1190 ± 0.0013 in
+40 GeV is sensitive to the matching of the resummed cross         the electron decay channel and αS (mZ ) = 0.1192 ± 0.0013
+section to the fixed order prediction, this test provides a       in the muon decay channel, where the quoted uncertain-
+confirmation that the result is largely independent from          ties include experimental and PDF uncertainties. The D0
+the matching corrections in this region. Uncertainties as-        measurement, which was performed on the variable ϕ∗η ,
+sociated to the stability of the fit results with respect to      is extrapolated to the transverse-momentum pT . The ex-
+variations of the upper limit of the fit range are considered     trapolation procedure has associated uncertainties which
+negligible. The fit range is also varied by excluding the         were not estimated in the analysis. The determined values
+low transverse-momentum region. The range is reduced              of αS (mZ ) are compatible with the CDF result within ex-
+6                                                                  Stefano Camarda et al.: αS (mZ ) from Z-boson pT
+
+
+                                Table 3. Alternative fits of αS (mZ ) with different non-perturbative and heavy flavour models.
+
+                                                                                              αS (mZ )                                   g [GeV2 ]           χ2 /dof
+                                                                blim = 2 GeV−1             0.1187 ± 0.0007                           0.83 ± 0.05             43/53
+                                                                    blim → ∞               0.1199 ± 0.0008                           0.42 ± 0.05             41/53
+                                                                        gk                 0.1186 ± 0.0008                           0.65 ± 0.05             46/53
+                                                                 q = 0.1 GeV4              0.1197 ± 0.0008                           0.51 ± 0.05             41/53
+                                                           VFN PDF evolution               0.1190 ± 0.0007                           0.71 ± 0.05             59/53
+
+
+
+
+                    Z → ee                                                                                            τ decay
+                    DZero Φ*               Measurement                                                                [Particle Data Group 2021]
+                                                                                                                                                                                           0.9
+    DZero
+
+
+
+
+                    Z → µµ
+                    DZero Φ*               PDF Unc.                                                                   DIS and PDFs                                                         0.8
+
+                    0-20 GeV                                                                                          [Particle Data Group 2021]
+
+
+
+
+                                                                                                    Experiments
+                    Fit-Range              PDF(+)Exp. Unc.
+                    0-30 GeV                                                                                          Had. final states e e-
+                                                                                                                                            +
+                    Fit-Range                                                                                                                                                              0.7
+
+                                           Total Unc.                                                                 [Particle Data Group 2021]
+    Fit-Range
+
+
+
+
+                    0-40 GeV
+                    Fit-Range
+                                           Our Measurement
+
+
+
+
+                                                                                                     EWKFit Lattice
+                    4-30 GeV                                                                                          Lattice                                                              0.6
+
+
+
+                    Fit-Range                                                                                         FLAG Average
+
+                    NNPDF40
+                    PDF-Set                                                                                           Electroweak Fit                                                      0.5
+
+
+
+
+                    CT18                                                                                              arXiv:1803.01853
+                    PDF-Set
+                    CT18Z                                                                                             Inclusive W/Z
+                                                                                                                                                                                           0.4
+
+
+
+                    PDF-Set                                                                                           arXiv:1912.11733
+                    MSHT20                                                                                                                                               Measurement
+                    PDF-Set                                                                                                                                                                0.3
+
+                                                                                                                      CMS (Jet production)
+    Full PDF-Sets
+
+
+
+
+                    HERAPDF20                                                                                                                                            Total Unc.
+                                                                                                     LHC
+
+
+
+
+                                                                                                                      arXiv:2111.10431
+                    PDF-Set
+                    ABMP16                                                                                                                                               World Average     0.2
+
+
+                    PDF-Set                                                                                           p (Z)
+                                                                                                                       T
+                                                                                                     New
+
+
+
+
+                    p (Z)                                                                                             This Work                                          Relative Unc.
+                     T
+                    This Work                                                                                                                                                              0.1
+
+
+
+                                   0.116                0.118        0.12        0.122                                                               0.115        0.12   0.125                    1     2
+                                                                                 α s (m )                                                                                        α s (m )        Rel. Unc. [%]
+                                                                                       Z                                                                                               Z
+
+
+
+Figure 2. Comparison of the αS (mZ ) determination from the                                        Figure 3. Comparison of the αS (mZ ) determination from the
+Z-boson transverse-momentum distribution with varying fit                                          Z-boson transverse-momentum distribution to other determ-
+range, with various different PDF sets, and with measurements                                      inations and to the world-average value.
+performed with the D0 detector.
+
+                                                                                                   a semi-inclusive observable at hadron-hadron colliders3 .
+perimental uncertainties. Determinations of αS (mZ ) with                                          The PDF uncertainties are estimated with a conservative
+varying fit range and with cross sections measured with                                            approach, including the envelope of six different PDF sets,
+the D0 detector are shown in Fig. 2.                                                               and with a Hessian profiling procedure, which avoids pos-
+    A summary of the uncertainties in the determination                                            sible biases in the treatment of PDF uncertainties. Missing
+of αS (mZ ) is shown in Table 4.                                                                   higher order uncertainties are estimated with the stand-
+                                                                                                   ard approach of computing an envelope of scale variations.
+                                                                                                   The measured value of αS (mZ ) has a relative uncertainty
+Conclusions                                                                                        of 1.2%, and is compatible with other determinations and
+                                                                                                   with the world-average value, as illustrated in Fig. 3.
+In summary, the value of the strong-coupling constant                                                  Among hadron colliders determination, this is the most
+determined in this analysis is αS (mZ ) = 0.1191+0.0013
+                                                      −0.0016 ,                                    precise to date and the first based on N3 LL+O(αS3 ) pre-
+with a statistical uncertainty of ±0.0007, an experimental                                         dictions in perturbative QCD.
+systematic uncertainty of ±0.0001, a PDF uncertainty of
+                                                 +0.0004
+±0.0008, missing higher order uncertainties of −0.0009   , and
+additional theory uncertainties (non-perturbative model,                                           Acknowledgements
+flavour scheme, matching corrections, photon initial-state
+radiation) of ±0.0008. The strong-coupling constant is also                                        We gratefully acknowledge Willis Sakumoto for providing
+determined in a simultaneous PDF-fit determination in-                                             the correlation matrix of the CDF Z-boson transverse-
+cluding DIS cross-section data from the H1 and ZEUS ex-                                            momentum measurement, Tobias Neumann for provid-
+periments at the HERA collider. When considering the fit                                           ing the MCFM NNLO Z+jet predictions, Pier Monni for
+uncertainties of ±0.0006 and all the other relevant uncer-                                         suggesting to include variations of the lower edge of the
+tainties listed in Table 4, the result of this determination                                       fit range, Dave Soper for fruitful discussions, and Sasha
+                     +0.0013
+is αS (mZ ) = 0.1184−0.0015  .                                                                     Glazov and Stefano Catani for useful comments on the
+    We have performed a determination of αS (mZ ) from                                             manuscript. This research used resources of the National
+the Z-boson transverse-momentum distribution measured
+at the Tevatron collider, in the low-momentum region of                                              3
+                                                                                                       Analogous QCD resummed theory predictions in electron-
+pT < 30 GeV. This analysis represents the first determin-                                          positron collisions were used to determine αS (mZ ) at LEP [7–
+ation using QCD resummed theory predictions based on                                               9, 91–93].
+                                   Stefano Camarda et al.: αS (mZ ) from Z-boson pT                                 7
+
+
+               Table 4. Summary of the uncertainties for the determination of αS (mZ ), in units of 10−3 .
+
+                                          Statistical uncertainty            ±0.7
+                                   Experimental systematic uncertainty       ±0.1
+                                     PDF uncertainty (NNPDF4.0)              ±0.4
+                                   PDF uncertainty (envelope of PDFs)        ±0.7
+                                      Scale variations uncertainties      +0.4 -0.9
+                                                             3
+                                           Matching at O(αS    )             ±0.1
+                                         Non-perturbative model              ±0.7
+                                              Flavour model                0     -0.3
+                                                 QED ISR                   < ±0.1
+                                         Lower limit of fit range            ±0.2
+                                                  Total                   +1.3    -1.6
+
+
+
+Energy Research Scientific Computing Center (NERSC),             C-parameter distribution,” Phys. Rev. D 91 no. 9,
+a U.S. Department of Energy Office of Science User Fa-           (2015) 094018, arXiv:1501.04111 [hep-ph].
+cility located at Lawrence Berkeley National Laboratory,     10. P. A. Baikov, K. G. Chetyrkin, and J. H. Kuhn,
+operated under Contract No. DE-AC02-05CH11231 using              “Order alpha**4(s) QCD Corrections to Z and tau
+NERSC award HEP-ERCAP0021890.                                    Decays,” Phys. Rev. Lett. 101 (2008) 012002,
+                                                                 arXiv:0801.1821 [hep-ph].
+                                                             11. V. Mateu and P. G. Ortega, “Bottom and Charm
+                                                                 Mass determinations from global fits to QQ̄ bound
+References                                                       states at N3 LO,” JHEP 01 (2018) 122,
+                                                                 arXiv:1711.05755 [hep-ph].
+ 1. Particle Data Group Collaboration, P. A. Zyla            12. C. Peset, A. Pineda, and J. Segovia, “The
+    et al., “Review of Particle Physics,” PTEP 2020              charm/bottom quark mass from heavy quarkonium
+    no. 8, (2020) 083C01.                                        at N3 LO,” JHEP 09 (2018) 167, arXiv:1806.05197
+ 2. G. P. Salam, The strong coupling: a theoretical              [hep-ph].
+    perspective, pp. 101–121. 2019. arXiv:1712.05165         13. J. Haller, A. Hoecker, R. Kogler, K. Mönig,
+    [hep-ph].                                                    T. Peiffer, and J. Stelzer, “Update of the global
+ 3. Flavour Lattice Averaging Group (FLAG)                       electroweak fit and constraints on two-Higgs-doublet
+    Collaboration, Y. Aoki et al., “FLAG Review 2021,”           models,” Eur. Phys. J. C 78 no. 8, (2018) 675,
+    Eur. Phys. J. C 82 no. 10, (2022) 869,                       arXiv:1803.01853 [hep-ph].
+    arXiv:2111.09849 [hep-lat].                              14. D. d’Enterria and V. Jacobsen, “Improved strong
+ 4. J. Blumlein, H. Bottcher, and A. Guffanti,                   coupling determinations from hadronic decays of
+    “Non-singlet QCD analysis of deep inelastic world            electroweak bosons at N3 LO accuracy,”
+    data at O(alpha(s)**3),” Nucl. Phys. B 774 (2007)            arXiv:2005.04545 [hep-ph].
+    182–207, arXiv:hep-ph/0607200.                           15. CMS Collaboration, A. Tumasyan et al.,
+ 5. P. Jimenez-Delgado and E. Reya, “Delineating                 “Measurement and QCD analysis of
+    parton distributions and the strong coupling,” Phys.         double-differential inclusive√jet cross sections in
+    Rev. D 89 no. 7, (2014) 074049, arXiv:1403.1852              proton-proton collisions at s = 13 TeV,” JHEP 02
+    [hep-ph].                                                    (2022) 142, arXiv:2111.10431 [hep-ex].
+ 6. S. Alekhin, J. Blümlein, S. Moch, and R. Placakyte,         [Addendum: JHEP 12, 035 (2022)].
+    “Parton distribution functions, αs , and heavy-quark     16. ATLAS Collaboration, M. Aaboud et al.,
+    masses for LHC Run II,” Phys. Rev. D 96 no. 1,               “Determination of the strong coupling constant αs
+    (2017) 014011, arXiv:1701.05838 [hep-ph].                    from transverse energy–energy
+                                                                                    √              correlations in
+ 7. R. Abbate, M. Fickinger, A. H. Hoang, V. Mateu,              multijet events at s = 8 TeV using the ATLAS
+    and I. W. Stewart, “Thrust at N 3 LL with Power              detector,” Eur. Phys. J. C 77 no. 12, (2017) 872,
+    Corrections and a Precision Global Fit for αs (mZ),”         arXiv:1707.02562 [hep-ex].
+    Phys. Rev. D 83 (2011) 074021, arXiv:1006.3080           17. CMS Collaboration, A. M. Sirunyan et al.,
+    [hep-ph].                                                    “Measurement of the tt production cross section, the
+ 8. T. Gehrmann, G. Luisoni, and P. F. Monni, “Power             top quark mass, and the strong coupling√constant
+    corrections in the dispersive model for a                    using dilepton events in pp collisions at s = 13
+    determination of the strong coupling constant from           TeV,” Eur. Phys. J. C 79 no. 5, (2019) 368,
+    the thrust distribution,” Eur. Phys. J. C 73 no. 1,          arXiv:1812.10505 [hep-ex].
+    (2013) 2265, arXiv:1210.6945 [hep-ph].                   18. CMS Collaboration, S. Chatrchyan et al.,
+ 9. A. H. Hoang, D. W. Kolodrubetz, V. Mateu, and                “Determination of the Top-Quark Pole Mass and
+    I. W. Stewart, “Precise determination of αs from the         Strong Coupling Constant from the tt̄ Production
+8                                  Stefano Camarda et al.: αS (mZ ) from Z-boson pT
+
+                                      √
+    Cross Section in pp Collisions at s = 7 TeV,” Phys.          Rev. D 104 no. 11, (2021) L111503,
+    Lett. B 728 (2014) 496–517, arXiv:1307.1907                  arXiv:2103.04974 [hep-ph].
+    [hep-ex]. [Erratum: Phys.Lett.B 738, 526–528             31. E. Re, L. Rottoli, and P. Torrielli, “Fiducial Higgs
+    (2014)].                                                     and Drell-Yan distributions at N3 LL′ +NNLO with
+19. T. Klijnsma, S. Bethke, G. Dissertori, and G. P.             RadISH,” arXiv:2104.07509 [hep-ph].
+    Salam, “Determination of the strong coupling             32. W.-L. Ju and M. Schönherr, “The qT and ∆ϕ
+    constant αs (mZ ) from measurements of the total             spectra in W and Z production at the LHC at
+    cross section for top-antitop quark production,” Eur.        N3 LL’+N2 LO,” JHEP 10 (2021) 088,
+    Phys. J. C 77 no. 11, (2017) 778, arXiv:1708.07495           arXiv:2106.11260 [hep-ph].
+    [hep-ph].                                                33. X. Chen, T. Gehrmann, E. W. N. Glover, A. Huss,
+20. D. d’Enterria and A. Poldaru, “Extraction of the             P. F. Monni, E. Re, L. Rottoli, and P. Torrielli,
+    strong coupling αs (mZ ) from a combined NNLO                “Third-Order Fiducial Predictions for Drell-Yan
+    analysis of inclusive electroweak boson cross sections       Production at the LHC,” Phys. Rev. Lett. 128
+    at hadron colliders,” JHEP 06 (2020) 016,                    no. 25, (2022) 252001, arXiv:2203.01565 [hep-ph].
+    arXiv:1912.11733 [hep-ph].                               34. T. Neumann and J. Campbell, “Fiducial Drell-Yan
+21. ATLAS Collaboration, G. Aad et al.,                          production at the LHC improved by
+    “Measurement of the Z/γ ∗ boson transverse  √                transverse-momentum resummation at
+    momentum distribution in pp collisions at s = 7              N4LLp+N3LO,” Phys. Rev. D 107 no. 1, (2023)
+    TeV with the ATLAS detector,” JHEP 09 (2014)                 L011506, arXiv:2207.07056 [hep-ph].
+    145, arXiv:1406.3660 [hep-ex].                           35. J. C. Collins, D. E. Soper, and G. F. Sterman,
+22. ATLAS Collaboration, G. Aad et al.,                          “Transverse Momentum Distribution in Drell-Yan
+    “Measurement of the transverse momentum and ϕ∗η              Pair and W and Z Boson Production,” Nucl. Phys.
+    distributions of Drell–Yan lepton
+                                 √     pairs in                  B 250 (1985) 199–224.
+    proton–proton collisions at s = 8 TeV with the           36. C. T. H. Davies, B. R. Webber, and W. J. Stirling,
+    ATLAS detector,” Eur. Phys. J. C 76 no. 5, (2016)            “Drell-Yan Cross-Sections at Small Transverse
+    291, arXiv:1512.02192 [hep-ex].                              Momentum,”.
+23. CMS Collaboration, V. Khachatryan et al.,                37. G. A. Ladinsky and C. P. Yuan, “The
+    “Measurement of the Z boson differential cross               Nonperturbative regime in QCD resummation for
+    section in transverse momentum and rapidity in               gauge boson production at hadron colliders,” Phys.
+    proton–proton collisions at 8 TeV,” Phys. Lett. B            Rev. D 50 (1994) R4239, arXiv:hep-ph/9311341.
+    749 (2015) 187–209, arXiv:1504.03511 [hep-ex].           38. R. K. Ellis, D. A. Ross, and S. Veseli, “Vector boson
+24. R. Boughezal, A. Guffanti, F. Petriello, and                 production in hadronic collisions,” Nucl. Phys. B
+    M. Ubiali, “The impact of the LHC Z-boson                    503 (1997) 309–338, arXiv:hep-ph/9704239.
+    transverse momentum data on PDF determinations,”         39. F. Landry, R. Brock, G. Ladinsky, and C. P. Yuan,
+    JHEP 07 (2017) 130, arXiv:1705.00343 [hep-ph].               “New fits for the nonperturbative parameters in the
+25. NNPDF Collaboration, R. D. Ball, S. Carrazza,                CSS resummation formalism,” Phys. Rev. D 63
+    L. Del Debbio, S. Forte, Z. Kassabov, J. Rojo,               (2000) 013004, arXiv:hep-ph/9905391.
+    E. Slade, and M. Ubiali, “Precision determination of     40. J.-w. Qiu and X.-f. Zhang, “Role of the
+    the strong coupling constant within a global PDF             nonperturbative input in QCD resummed Drell-Yan
+    analysis,” Eur. Phys. J. C 78 no. 5, (2018) 408,             QT distributions,” Phys. Rev. D 63 (2001) 114011,
+    arXiv:1802.03398 [hep-ph].                                   arXiv:hep-ph/0012348.
+26. T.-J. Hou et al., “New CTEQ global analysis of           41. A. Kulesza, G. F. Sterman, and W. Vogelsang,
+    quantum chromodynamics with high-precision data              “Joint resummation in electroweak boson
+    from the LHC,” Phys. Rev. D 103 no. 1, (2021)                production,” Phys. Rev. D 66 (2002) 014011,
+    014013, arXiv:1912.10053 [hep-ph].                           arXiv:hep-ph/0202251.
+27. T. Cridge, L. A. Harland-Lang, A. D. Martin, and         42. A. V. Konychev and P. M. Nadolsky, “Universality
+    R. S. Thorne, “An investigation of the αS and heavy          of the Collins-Soper-Sterman nonperturbative
+    quark mass dependence in the MSHT20 global PDF               function in gauge boson production,” Phys. Lett. B
+    analysis,” Eur. Phys. J. C 81 no. 8, (2021) 744,             633 (2006) 710–714, arXiv:hep-ph/0506225.
+    arXiv:2106.10289 [hep-ph].                               43. M. Guzzi, P. M. Nadolsky, and B. Wang,
+28. V. V. Sudakov, “Vertex parts at very high-energies           “Nonperturbative contributions to a resummed
+    in quantum electrodynamics,” Sov. Phys. JETP 3               leptonic angular distribution in inclusive neutral
+    (1956) 65–71.                                                vector boson production,” Phys. Rev. D 90 no. 1,
+29. S. D. Drell and T.-M. Yan, “Massive lepton-pair              (2014) 014030, arXiv:1309.1393 [hep-ph].
+    production in hadron-hadron collisions at high           44. J. Collins and T. Rogers, “Understanding the
+    energies,” Phys. Rev. Lett. 25 (Sep, 1970) 902–902.          large-distance behavior of
+30. S. Camarda, L. Cieri, and G. Ferrera, “Drell–Yan             transverse-momentum-dependent parton densities
+    lepton-pair production: qT resummation at N3LL               and the Collins-Soper evolution kernel,” Phys. Rev.
+    accuracy and fiducial cross sections at N3LO,” Phys.         D 91 no. 7, (2015) 074020, arXiv:1412.3820
+                                   Stefano Camarda et al.: αS (mZ ) from Z-boson pT                                9
+
+
+    [hep-ph].                                               58. F. Caola, S. Ferrario Ravasio, G. Limatola,
+45. S.-y. Wei, “Exploring the non-perturbative Sudakov          K. Melnikov, and P. Nason, “On linear power
+    factor via Z 0 -boson production in pp collisions,”         corrections in certain collider observables,” JHEP 01
+    Phys. Lett. B 817 (2021) 136356, arXiv:2009.06514           (2022) 093, arXiv:2108.08897 [hep-ph].
+    [hep-ph].                                               59. S. Tafat, “Nonperturbative corrections to the
+46. CDF Collaboration, T. Aaltonen et al., “Transverse          Drell-Yan transverse momentum distribution,”
+    momentum cross section of e+ e− pairs √ in the              JHEP 05 (2001) 004, arXiv:hep-ph/0102237.
+    Z-boson region from pp̄ collisions at s = 1.96          60. A. A. Vladimirov, “Self-contained definition of the
+    TeV,” Phys. Rev. D 86 (2012) 052010,                        Collins-Soper kernel,” Phys. Rev. Lett. 125 no. 19,
+    arXiv:1207.7138 [hep-ex].                                   (2020) 192002, arXiv:2003.02288 [hep-ph].
+47. CDF Collaboration, T. Aaltonen et al., “First           61. P. Schweitzer, M. Strikman, and C. Weiss, “Intrinsic
+    Measurement of the Angular Coefficients of                  transverse momentum and parton correlations from
+    Drell-Yan e+ e√− pairs in the Z Mass Region from pp̄        dynamical chiral symmetry breaking,” JHEP 01
+    Collisions at s = 1.96 TeV,” Phys. Rev. Lett. 106           (2013) 163, arXiv:1210.1267 [hep-ph].
+    (2011) 241801, arXiv:1103.5699 [hep-ex].                62. I. Scimemi and A. Vladimirov, “Non-perturbative
+48. S. Camarda et al., “DYTurbo: Fast predictions for           structure of semi-inclusive deep-inelastic and
+    Drell-Yan processes,” Eur. Phys. J. C 80 no. 3,             Drell-Yan scattering at small transverse momentum,”
+    (2020) 251, arXiv:1910.07049 [hep-ph]. [Erratum:            JHEP 06 (2020) 137, arXiv:1912.06532 [hep-ph].
+    Eur.Phys.J.C 80, 440 (2020)].                           63. R. Boughezal, J. M. Campbell, R. K. Ellis, C. Focke,
+49. G. Bozzi, S. Catani, D. de Florian, and M. Grazzini,        W. T. Giele, X. Liu, and F. Petriello, “Z-boson
+    “Transverse-momentum resummation and the                    production in association with a jet at
+    spectrum of the Higgs boson at the LHC,” Nucl.              next-to-next-to-leading order in perturbative QCD,”
+    Phys. B 737 (2006) 73–120, arXiv:hep-ph/0508068.            Phys. Rev. Lett. 116 no. 15, (2016) 152001,
+50. G. Bozzi, S. Catani, G. Ferrera, D. de Florian, and         arXiv:1512.01291 [hep-ph].
+    M. Grazzini, “Production of Drell-Yan lepton pairs      64. S. Camarda, L. Cieri, and G. Ferrera, “Fiducial
+    in hadron collisions: Transverse-momentum                   perturbative power corrections within the qT
+    resummation at next-to-next-to-leading logarithmic          subtraction formalism,” Eur. Phys. J. C 82 no. 6,
+    accuracy,” Phys. Lett. B 696 (2011) 207–213,                (2022) 575, arXiv:2111.14509 [hep-ph].
+    arXiv:1007.2351 [hep-ph].                               65. G. Billis, B. Dehnadi, M. A. Ebert, J. K. L. Michel,
+51. S. Catani, D. de Florian, G. Ferrera, and                   and F. J. Tackmann, “Higgs pT Spectrum and Total
+    M. Grazzini, “Vector boson production at hadron             Cross Section with Fiducial Cuts at Third
+    colliders: transverse-momentum resummation and              Resummed and Fixed Order in QCD,” Phys. Rev.
+    leptonic decay,” JHEP 12 (2015) 047,                        Lett. 127 no. 7, (2021) 072001, arXiv:2102.08039
+    arXiv:1507.06937 [hep-ph].                                  [hep-ph].
+52. S. Catani, D. de Florian, and M. Grazzini,              66. T. van Ritbergen, J. A. M. Vermaseren, and S. A.
+    “Universality of nonleading logarithmic contributions       Larin, “The Four loop beta function in quantum
+    in transverse momentum distributions,” Nucl. Phys.          chromodynamics,” Phys. Lett. B 400 (1997)
+    B 596 (2001) 299–312, arXiv:hep-ph/0008184.                 379–384, arXiv:hep-ph/9701390.
+53. S. Catani, L. Cieri, D. de Florian, G. Ferrera, and     67. M. Czakon, “The Four-loop QCD beta-function and
+    M. Grazzini, “Universality of transverse-momentum           anomalous dimensions,” Nucl. Phys. B 710 (2005)
+    resummation and hard factors at the NNLO,” Nucl.            485–498, arXiv:hep-ph/0411261.
+    Phys. B 881 (2014) 414–443, arXiv:1311.1654             68. A. Buckley, J. Ferrando, S. Lloyd, K. Nordström,
+    [hep-ph].                                                   B. Page, M. Rüfenacht, M. Schönherr, and G. Watt,
+54. J. C. Collins and D. E. Soper, “Back-To-Back Jets:          “LHAPDF6: parton density access in the LHC
+    Fourier Transform from B to K-Transverse,” Nucl.            precision era,” Eur. Phys. J. C 75 (2015) 132,
+    Phys. B 197 (1982) 446–476.                                 arXiv:1412.7420 [hep-ph].
+55. S. Catani, M. L. Mangano, P. Nason, and                 69. A. Vogt, “Efficient evolution of unpolarized and
+    L. Trentadue, “The Resummation of soft gluons in            polarized parton distributions with
+    hadronic collisions,” Nucl. Phys. B 478 (1996)              QCD-PEGASUS,” Comput. Phys. Commun. 170
+    273–310, arXiv:hep-ph/9604351.                              (2005) 65–92, arXiv:hep-ph/0408244.
+56. E. Laenen, G. F. Sterman, and W. Vogelsang,             70. S. Alekhin et al., “HERAFitter,” Eur. Phys. J. C 75
+    “Higher order QCD corrections in prompt photon              no. 7, (2015) 304, arXiv:1410.4412 [hep-ph].
+    production,” Phys. Rev. Lett. 84 (2000) 4296–4299,      71. HERAFitter developers’ Team Collaboration,
+    arXiv:hep-ph/0002078.                                       S. Camarda et al., “QCD analysis of W - and
+57. S. Ferrario Ravasio, G. Limatola, and P. Nason,             Z-boson production at Tevatron,” Eur. Phys. J. C
+    “Infrared renormalons in kinematic distributions for        75 no. 9, (2015) 458, arXiv:1503.05221 [hep-ph].
+    hadron collider processes,” JHEP 06 (2021) 018,         72. T. Sjöstrand, S. Ask, J. R. Christiansen, R. Corke,
+    arXiv:2011.14114 [hep-ph].                                  N. Desai, P. Ilten, S. Mrenna, S. Prestel, C. O.
+                                                                Rasmussen, and P. Z. Skands, “An introduction to
+10                                 Stefano Camarda et al.: αS (mZ ) from Z-boson pT
+
+
+    PYTHIA 8.2” Comput. Phys. Commun. 191 (2015)                 JHEP 07 (2020) 117, arXiv:1912.07550 [hep-ph].
+    159–177, arXiv:1410.3012 [hep-ph].                       87. P. Sun, J. Isaacson, C. P. Yuan, and F. Yuan,
+73. L. Cieri, G. Ferrera, and G. F. R. Sborlini,                 “Nonperturbative functions for SIDIS and Drell–Yan
+    “Combining QED and QCD transverse-momentum                   processes,” Int. J. Mod. Phys. A 33 no. 11, (2018)
+    resummation for Z boson production at hadron                 1841006, arXiv:1406.3073 [hep-ph].
+    colliders,” JHEP 08 (2018) 165, arXiv:1805.11948         88. G. Parisi and R. Petronzio, “Small Transverse
+    [hep-ph].                                                    Momentum Distributions in Hard Processes,” Nucl.
+74. S. Carrazza, S. Forte, Z. Kassabov, J. I. Latorre, and       Phys. B 154 (1979) 427–440.
+    J. Rojo, “An Unbiased Hessian Representation for         89. M. Hirai, H. Kawamura, and K. Tanaka, “New
+    Monte Carlo PDFs,” Eur. Phys. J. C 75 no. 8,                 determination of the nonperturbative form factor in
+    (2015) 369, arXiv:1505.06736 [hep-ph].                       QCD transverse-momentum resummation for vector
+75. NNPDF Collaboration, R. D. Ball et al., “The path            boson production,” in 20th International Workshop
+    to proton structure at 1% accuracy,” Eur. Phys. J. C         on Deep-Inelastic Scattering and Related Subjects,
+    82 no. 5, (2022) 428, arXiv:2109.02653 [hep-ph].             pp. 535–538. 2012.
+76. S. Bailey, T. Cridge, L. A. Harland-Lang, A. D.          90. D0 Collaboration, V. M. Abazov et al., “Precise
+    Martin, and R. S. Thorne, “Parton distributions              Study of the Z/γ ∗ Boson Transverse Momentum
+    from LHC, HERA, Tevatron and fixed target data:              Distribution in pp̄ Collisions using a Novel
+    MSHT20 PDFs,” Eur. Phys. J. C 81 no. 4, (2021)               Technique,” Phys. Rev. Lett. 106 (2011) 122001,
+    341, arXiv:2012.04684 [hep-ph].                              arXiv:1010.0262 [hep-ex].
+77. H1, ZEUS Collaboration, H. Abramowicz et al.,            91. S. Bethke and S. Catani, “A Summary of alpha-s
+    “Combination of measurements of inclusive deep               measurements,” in 27th Rencontres de Moriond:
+    inelastic e± p scattering cross sections and QCD             QCD and High-energy Hadronic Interactions,
+    analysis of HERA data,” Eur. Phys. J. C 75 no. 12,           pp. 203–208. 1992.
+    (2015) 580, arXiv:1506.06042 [hep-ex].                   92. S. Catani, L. Trentadue, G. Turnock, and B. R.
+78. J. McGowan, T. Cridge, L. A. Harland-Lang, and               Webber, “Resummation of large logarithms in e+ e-
+    R. S. Thorne, “Approximate N3 LO parton                      event shape distributions,” Nucl. Phys. B 407 (1993)
+    distribution functions with theoretical uncertainties:       3–42.
+    MSHT20aN3 LO PDFs,” Eur. Phys. J. C 83 no. 3,            93. A. Verbytskyi, A. Banfi, A. Kardos, P. F. Monni,
+    (2023) 185, arXiv:2207.04739 [hep-ph]. [Erratum:             S. Kluth, G. Somogyi, Z. Szőr, Z. Trócsányi,
+    Eur.Phys.J.C 83, 302 (2023)].                                Z. Tulipánt, and G. Zanderighi, “High precision
+79. S. Camarda, L. Cieri, and G. Ferrera, “Drell-Yan             determination of αs from a global fit of jet rates,”
+    lepton-pair production: qT resummation at                    JHEP 08 (2019) 129, arXiv:1902.08158 [hep-ph].
+    approximate N4 LL+N4 LO accuracy,”
+    arXiv:2303.12781 [hep-ph].
+80. S. Forte and Z. Kassabov, “Why αs cannot be
+    determined from hadronic processes without
+    simultaneously determining the parton
+    distributions,” Eur. Phys. J. C 80 no. 3, (2020) 182,
+    arXiv:2001.04986 [hep-ph].
+81. H. Paukkunen and P. Zurita, “PDF reweighting in
+    the Hessian matrix approach,” JHEP 12 (2014) 100,
+    arXiv:1402.6623 [hep-ph].
+82. S. Weinberg, “New approach to the renormalization
+    group,” Phys. Rev. D 8 (1973) 3497–3509.
+83. R. S. Thorne and R. G. Roberts, “Ordered analysis
+    of heavy flavor production in deep-inelastic
+    scattering,” Phys. Rev. D 57 (1998) 6871–6898,
+    arXiv:hep-ph/9709442.
+84. R. S. Thorne, “Variable-flavor number scheme for
+    next-to-next-to-leading order,” Phys. Rev. D 73
+    (2006) 054019, arXiv:hep-ph/0601245.
+85. R. S. Thorne, “Effect of changes of variable flavor
+    number scheme on parton distribution functions and
+    predicted cross sections,” Phys. Rev. D 86 (2012)
+    074017, arXiv:1201.6180 [hep-ph].
+86. A. Bacchetta, V. Bertone, C. Bissolotti, G. Bozzi,
+    F. Delcarro, F. Piacenza, and M. Radici,
+    “Transverse-momentum-dependent parton
+    distributions up to N3 LL from Drell-Yan data,”
+                                                                     Stefano Camarda et al.: αS (mZ ) from Z-boson pT                                         11
+
+
+                                                                                                B Simultaneous PDF and αS (mZ ) fit
+     O(as ) Matching correction [fb]
+
+
+
+
+                                         50                                                     The Hessian profiling employed in this analysis provides
+                                         0                                                      an approximation to a PDF determination which relies on
+                                        −50                                                     the accuracy of the quadratic approximation around the
+                                       −100
+                                                                                                minimum [81]. The validity of the Hessian profiling ap-
+                                                                                                proximation, is verified by performing a simultaneous fit
+     3
+
+
+
+
+                                       −150
+                                                                                                of PDFs, αS (mZ ), and the the parameter g of the Gaus-
+                                       −200                            Matching correction
+                                                                       Fits to MC replicas
+                                                                                                sian non-perturbative form factor, with a setup similar
+                                       −250                            68% CL of MC replicas    to the one employed for the HERAPDF2.0 [77] PDF de-
+                                       −300                                                     termination. In this Appendix we provide further quantit-
+                                       −350                                                     ative details of the comparison of the Hessian profiling of
+                                                                                                HERAPDF2.0 with such a PDF fit. The PDF fit includes
+                                          0     10      20      30            40           50
+                                                                                      p [GeV]
+                                                                                        T
+                                                                                                the combined neutral and charged current deep inelastic
+                                                                                                scattering (DIS) cross-section data from the H1 and ZEUS
+                                                        3                                       experiments at the HERA collider [77]. Table 5 shows the
+                                       Figure 4. The O(αS ) matching corrections
+                                                                                                contribution to the total χ2 of the various datasets used
+                                                                                                in the fit, compared to the χ2 of the Hessian profiling, and
+                                                                                                a comparison of the determined values of αS (mZ ) and g.
+A Matching corrections
+
+In this Appendix we discuss the interpolation of the dσ f.o. −                                  Table 5.         Comparison of the Hessian profiling of
+dσ asy matching corrections of Eq. (1) at O(αS3 ) with their                                    HERAPDF2.0 with the PDF fit, including the contribution
+expected quadratic dependence on pT /mZ using the func-                                         to the total χ2 at minimum of the various datasets used in the
+tion                                                                                            fit.
+
+                  p2T X
+                                    
+                              i   pT
+                         ci ln         .                  (6)                                                                  PDF fit            Hessian
+                 m2Z i            mZ
+                                                                                                                                                  profiling
+    Fits are performed in the region of pT < 50 GeV, with                                        αS (mZ )                  0.1188 ± 0.0008    0.1184 ± 0.0006
+10 logarithmically spaced bins. The p-values for fits of the                                     g [GeV2 ]                   0.69 ± 0.05        0.71 ± 0.05
+matching corrections with different choices of the renorm-                                       Dataset                      χ2 /points         χ2 /points
+alisation, factorisation, and resummation scales are in the
+range from 0.3 to 0.9.                                                                           NC DIS H1-ZEUS e+ p           955/905
+                                                                                                 CC DIS H1-ZEUS e+ p            46/39
+    We have considered two sources of uncertainties ad-
+                                                                                                 NC DIS H1-ZEUS e− p           219/159
+dressing the statistical and systematic uncertainties of the
+                                                                                                 CC DIS H1-ZEUS e− p            53/42
+matching corrections. We have varied the lower cutoff from
+                                                                                                 H1-ZEUS correlated χ2            91
+pT = 5 GeV to pT = 10 GeV. The difference in αS (mZ )
+of 0.0001 is considered as an additional systematic uncer-                                       CDF Z pT                       41/55              40/55
+tainty. In order to estimate the statistical uncertainty, we                                     Total                       1405 / 1184
+have generated a set of 1000 Monte Carlo replicas of the
+matching corrections, by fluctuating them within their nu-
+merical uncertainties. The upper and lower limits of the
+68% confidence level envelope of the extrapolation fits to
+the 1000 replicas are used for the estimate of the statistical
+uncertainty, yielding ±0.00002 on αS (mZ ).
+    The difference between the NNLO Z+jet predictions
+and the expansion of the resummed calculation, showing
+the numerical accuracy in the matching procedure at αS3
+order, is presented in Fig. 4, which also shows the replicas
+and their 68% confidence level uncertainty band.
+    Comparable figures showing the difference of the asymp-
+totic term dσ asy and the Z+jet finite-order cross section
+dσ f.o. at O(αS3 ) can be found in Refs. [30, 33, 34, 64]
+    The studies of statistical and systematic uncertainties
+discussed above confirm that the O(αS3 ) matching correc-
+tions are associated with small uncertainties, which are
+accounted for in the final result. The estimated uncertain-
+ties of ±0.0001 are consistent with the overall small impact
+of such corrections, which is estimated as +0.0005.
+

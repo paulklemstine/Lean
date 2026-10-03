@@ -1,0 +1,811 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/K11DPdcnPIBr5ixmM4iA0s/h9dY</id>
+  <title>arXiv Query: search_query=abs:"factoring" AND abs:"post-processing" AND cat:quant-ph&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:43:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factoring%22+AND+(abs:%22post-processing%22+AND+cat:quant-ph)&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>63</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2311.05545v2</id>
+    <title>Extending Regev's factoring algorithm to compute discrete logarithms</title>
+    <updated>2024-01-30T12:29:52Z</updated>
+    <link href="https://arxiv.org/abs/2311.05545v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.05545v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Regev recently introduced a quantum factoring algorithm that may be perceived as a $d$-dimensional variation of Shor's factoring algorithm. In this work, we extend Regev's factoring algorithm to an algorithm for computing discrete logarithms in a natural way. Furthermore, we discuss natural extensions of Regev's factoring algorithm to order finding, and to factoring completely via order finding. For all of these algorithms, we discuss various practical implementation considerations, including in particular the robustness of the post-processing.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-09T17:45:28Z</published>
+    <arxiv:comment>A number of improvements have been made, and further details on the robustness of the post-processing and other practical implementation considerations added</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>In: PQCrypto 2024, Springer LNCS 14772, 211-242 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <author>
+      <name>Joel Gärtner</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-031-62746-0_10</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-031-62746-0_10" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.05047v2</id>
+    <title>Large-Scale Simulation of Shor's Quantum Factoring Algorithm</title>
+    <updated>2023-10-09T16:10:56Z</updated>
+    <link href="https://arxiv.org/abs/2308.05047v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.05047v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm is one of the most anticipated applications of quantum computing. However, the limited capabilities of today's quantum computers only permit a study of Shor's algorithm for very small numbers. Here we show how large GPU-based supercomputers can be used to assess the performance of Shor's algorithm for numbers that are out of reach for current and near-term quantum hardware. First, we study Shor's original factoring algorithm. While theoretical bounds suggest success probabilities of only 3-4 %, we find average success probabilities above 50 %, due to a high frequency of "lucky" cases, defined as successful factorizations despite unmet sufficient conditions. Second, we investigate a powerful post-processing procedure, by which the success probability can be brought arbitrarily close to one, with only a single run of Shor's quantum algorithm. Finally, we study the effectiveness of this post-processing procedure in the presence of typical errors in quantum processing hardware. We find that the quantum factoring algorithm exhibits a particular form of universality and resilience against the different types of errors. The largest semiprime that we have factored by executing Shor's algorithm on a GPU-based supercomputer, without exploiting prior knowledge of the solution, is 549755813701 = 712321 * 771781. We put forward the challenge of factoring, without oversimplification, a non-trivial semiprime larger than this number on any quantum computing device.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-09T16:19:52Z</published>
+    <arxiv:comment>differs from the published version in formatting and style; open source code available at https://jugit.fz-juelich.de/qip/shorgpu</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Mathematics 11, 4222 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Dennis Willsch</name>
+    </author>
+    <author>
+      <name>Madita Willsch</name>
+    </author>
+    <author>
+      <name>Fengping Jin</name>
+    </author>
+    <author>
+      <name>Hans De Raedt</name>
+    </author>
+    <author>
+      <name>Kristel Michielsen</name>
+    </author>
+    <arxiv:doi>10.3390/math11194222</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/math11194222" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.10044v2</id>
+    <title>On completely factoring any integer efficiently in a single run of an order finding algorithm</title>
+    <updated>2020-12-09T18:47:50Z</updated>
+    <link href="https://arxiv.org/abs/2007.10044v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.10044v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that given the order of a single element selected uniformly at random from $\mathbb Z_N^*$, we can with very high probability, and for any integer $N$, efficiently find the complete factorization of $N$ in polynomial time. This implies that a single run of the quantum part of Shor's factoring algorithm is usually sufficient. All prime factors of $N$ can then be recovered with negligible computational cost in a classical post-processing step. The classical algorithm required for this step is essentially due to Miller.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-20T12:32:34Z</published>
+    <arxiv:comment>A minor issue in the proof of Lemma 2 has been corrected. Two references have furthermore been added, the introduction has been improved, and a number of other minor improvements have been made. No results are affected by this revision</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Inf. Process. 20:205 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <arxiv:doi>10.1007/s11128-021-03069-1</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11128-021-03069-1" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0408081v5</id>
+    <title>Robustness of Shor's algorithm</title>
+    <updated>2006-01-10T01:07:42Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0408081v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0408081v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's factorisation algorithm is a combination of classical pre- and post-processing and a quantum period finding (QPF) subroutine which allows an exponential speed up over classical factoring algorithms. We consider the stability of this subroutine when exposed to a discrete error model that acts to perturb the computational trajectory of a quantum computer. Through detailed state vector simulations of an appropriate quantum circuit, we show that the error locations within the circuit itself heavily influences the probability of success of the QPF subroutine. The results also indicate that the naive estimate of required component precision is too conservative.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-08-12T04:43:43Z</published>
+    <arxiv:comment>14 Pages, 14 Figures (LaTeX):</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quant. Inf. Comp. 6, 616-629 (2006)</arxiv:journal_ref>
+    <author>
+      <name>Simon J. Devitt</name>
+    </author>
+    <author>
+      <name>Austin G. Fowler</name>
+    </author>
+    <author>
+      <name>Lloyd C. L. Hollenberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.18198v1</id>
+    <title>Space-Optimized and Experimental Implementations of Regev's Quantum Factoring Algorithm</title>
+    <updated>2025-11-22T21:57:22Z</updated>
+    <link href="https://arxiv.org/abs/2511.18198v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.18198v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The integer factorization problem (IFP) underpins the security of RSA, yet becomes efficiently solvable on a quantum computer through Shor's algorithm. Regev's recent high-dimensional variant reduces the circuit size through lattice-based post-processing, but introduces substantial space overhead and lacks practical implementations. Here, we propose a qubit reuse method by intermediate-uncomputation that significantly reduces the space complexity of Regev's algorithm, inspired by reversible computing. Our basic strategy lowers the cost from \( O(n^{3/2}) \) to \( O(n^{5/4}) \), and refined strategies achieve \( O(n \log n) \)which is a space lower bound within this model. Simulations demonstrate the resulting time-space trade-offs and resource scaling. Moreover, we construct and compile quantum circuits that factor \( N = 35 \), verifying the effectiveness of our method through noisy simulations. A more simplified experimental circuit for Regev's algorithm is executed on a superconducting quantum computer, with lattice-based post-processing successfully retrieving the factors. These results advance the practical feasibility of Regev-style quantum factoring and provide guidance for future theoretical and experimental developments.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-22T21:57:22Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Wentao Yang</name>
+    </author>
+    <author>
+      <name>Bao Yan</name>
+    </author>
+    <author>
+      <name>Muxi Zheng</name>
+    </author>
+    <author>
+      <name>Quanfeng Lu</name>
+    </author>
+    <author>
+      <name>Shijie Wei</name>
+    </author>
+    <author>
+      <name>Gui-Lu Long</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.06102v1</id>
+    <title>The Present and Future of Discrete Logarithm Problems on Noisy Quantum Computers</title>
+    <updated>2021-11-11T08:49:16Z</updated>
+    <link href="https://arxiv.org/abs/2111.06102v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.06102v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The discrete logarithm problem (DLP) is the basis for several cryptographic primitives. Since Shor's work, it has been known that the DLP can be solved by combining a polynomial-size quantum circuit and a polynomial-time classical post-processing algorithm. Evaluating and predicting the instance size that quantum devices can solve is an emerging research topic. In this paper, we propose a quantitative measure based on the success probability of the post-processing algorithm to determine whether an experiment on a quantum device (or a classical simulator) succeeded. We also propose a procedure to modify bit strings observed from a Shor circuit to increase the success probability of a lattice-based post-processing algorithm. We report preliminary experiments conducted on IBM-Quantum quantum computers and near-future predictions based on noisy-device simulations. We conducted our experiments with the ibm_kawasaki device and discovered that the simplest circuit (7 qubits) from a 2-bit DLP instance achieves a sufficiently high success probability to proclaim the experiment successful. Experiments on another circuit from a slightly harder 2-bit DLP instance, on the other hand, did not succeed, and we determined that reducing the noise level by half is required to achieve a successful experiment. Finally, we give a near-term prediction based on required noise levels to solve some selected small DLP and integer factoring instances.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-11T08:49:16Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>IEEE Transactions on Quantum Engineering, vol. 3, pp. 1-21, 2022</arxiv:journal_ref>
+    <author>
+      <name>Yoshinori Aono</name>
+    </author>
+    <author>
+      <name>Sitong Liu</name>
+    </author>
+    <author>
+      <name>Tomoki Tanaka</name>
+    </author>
+    <author>
+      <name>Shumpei Uno</name>
+    </author>
+    <author>
+      <name>Rodney Van Meter</name>
+    </author>
+    <author>
+      <name>Naoyuki Shinohara</name>
+    </author>
+    <author>
+      <name>Ryo Nojima</name>
+    </author>
+    <arxiv:doi>10.1109/TQE.2022.3183385</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TQE.2022.3183385" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.01754v4</id>
+    <title>On the success probability of the quantum algorithm for the short DLP</title>
+    <updated>2026-04-06T18:44:45Z</updated>
+    <link href="https://arxiv.org/abs/2309.01754v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.01754v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Ekerå and Håstad have introduced a variation of Shor's algorithm for the discrete logarithm problem (DLP). Unlike Shor's original algorithm, Ekerå-Håstad's algorithm solves the short DLP in groups of unknown order. In this work, we prove a lower bound on the probability of Ekerå-Håstad's algorithm recovering the short logarithm $d$ in a single run. By our bound, the success probability can easily be pushed as high as $1 - 10^{-10}$ for any short $d$. A key to achieving such a high success probability is to efficiently perform a limited search in the classical post-processing by leveraging meet-in-the-middle or random-walk techniques. These techniques may be generalized to speed up other related classical post-processing algorithms. Asymptotically, in the limit as the bit length $m$ of $d$ tends to infinity, the success probability tends to one if the limits on the search space are parameterized in $m$. Our results are directly applicable to Diffie-Hellman in safe-prime groups with short exponents, and to RSA via a reduction from the RSA integer factoring problem (IFP) to the short DLP.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-04T18:26:45Z</published>
+    <arxiv:comment>This revision adds material on using random-walk techniques to perform the limited search, and a number of minor corrections and improvements</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>IACR Commun. Cryptol. 3(1):10 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <arxiv:doi>10.62056/an2isgsfg</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.62056/an2isgsfg" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.07791v2</id>
+    <title>On the success probability of quantum order finding</title>
+    <updated>2022-11-28T12:31:12Z</updated>
+    <link href="https://arxiv.org/abs/2201.07791v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.07791v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a lower bound on the probability of Shor's order-finding algorithm successfully recovering the order $r$ in a single run. The bound implies that by performing two limited searches in the classical post-processing part of the algorithm, a high success probability can be guaranteed, for any $r$, without re-running the quantum part or increasing the exponent length compared to Shor. Asymptotically, in the limit as $r$ tends to infinity, the probability of successfully recovering $r$ in a single run tends to one. Already for moderate $r$, a high success probability exceeding e.g. $1 - 10^{-4}$ can be guaranteed. As corollaries, we prove analogous results for the probability of completely factoring any integer $N$ in a single run of the order-finding algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-19T18:58:18Z</published>
+    <arxiv:comment>This revision resolves a minor issue in Alg. 4, and addresses a number of other minor issues. It furthermore adds a number of extensions and clarifications, in particular with respect to potential optimizations. No key results or findings in the original version of the manuscript are affected by this revision</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>ACM Trans. Quantum Comput. 5(2):11 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Martin Ekerå</name>
+    </author>
+    <arxiv:doi>10.1145/3655026</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3655026" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.0741v1</id>
+    <title>Faster Phase Estimation</title>
+    <updated>2013-04-02T19:13:00Z</updated>
+    <link href="https://arxiv.org/abs/1304.0741v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.0741v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop several algorithms for performing quantum phase estimation based on basic measurements and classical post-processing. We present a pedagogical review of quantum phase estimation and simulate the algorithm to numerically determine its scaling in circuit depth and width. We show that the use of purely random measurements requires a number of measurements that is optimal up to constant factors, albeit at the cost of exponential classical post-processing; the method can also be used to improve classical signal processing. We then develop a quantum algorithm for phase estimation that yields an asymptotic improvement in runtime, coming within a factor of log* of the minimum number of measurements required while still requiring only minimal classical post-processing. The corresponding quantum circuit requires asymptotically lower depth and width (number of qubits) than quantum phase estimation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-02T19:13:00Z</published>
+    <arxiv:comment>14 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quant. Inf. Comp. Vol. 14, No. 3&amp;4, pp. 306-328 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Krysta M. Svore</name>
+    </author>
+    <author>
+      <name>Matthew B. Hastings</name>
+    </author>
+    <author>
+      <name>Michael Freedman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0006004v1</id>
+    <title>Fast parallel circuits for the quantum Fourier transform</title>
+    <updated>2000-06-01T18:45:53Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0006004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0006004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We give new bounds on the circuit complexity of the quantum Fourier transform (QFT). We give an upper bound of O(log n + log log (1/epsilon)) on the circuit depth for computing an approximation of the QFT with respect to the modulus 2^n with error bounded by epsilon. Thus, even for exponentially small error, our circuits have depth O(log n). The best previous depth bound was O(n), even for approximations with constant error. Moreover, our circuits have size O(n log (n/epsilon)). We also give an upper bound of O(n (log n)^2 log log n) on the circuit size of the exact QFT modulo 2^n, for which the best previous bound was O(n^2).
+  As an application of the above depth bound, we show that Shor's factoring algorithm may be based on quantum circuits with depth only O(log n) and polynomial-size, in combination with classical polynomial-time pre- and post-processing. In the language of computational complexity, this implies that factoring is in the complexity class ZPP^BQNC, where BQNC is the class of problems computable with bounded-error probability by quantum circuits with poly-logarithmic depth and polynomial size.
+  Finally, we prove an Omega(log n) lower bound on the depth complexity of approximations of the QFT with constant error. This implies that the above upper bound is asymptotically optimal (for a reasonable range of values of epsilon).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-06-01T18:45:53Z</published>
+    <arxiv:comment>22 pages, LaTeX2e, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Richard Cleve</name>
+      <arxiv:affiliation>University of Calgary</arxiv:affiliation>
+    </author>
+    <author>
+      <name>John Watrous</name>
+      <arxiv:affiliation>University of Calgary</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16998v2</id>
+    <title>$\mathcal{O}(n)$ alternative to Quantum Fourier Transform with efficient neural net classical post-processing</title>
+    <updated>2026-09-15T06:23:04Z</updated>
+    <link href="https://arxiv.org/abs/2605.16998v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16998v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Quantum Fourier Transform (QFT) is employed by hidden subgroup problem (HSP) algorithms, including Shor's algorithm for factoring. The circuit depth of the QFT remains challenging for near-term hardware. To find shallower alternatives we identify two properties that are exploited by the QFT to enable HSP. Firstly, the shift invariance of the QFT allows for the removal of a random overall shift. Secondly, the QFT retains information about the hidden subgroup generator accessible in the measurement outcomes. We quantify that information via the discrete Fisher information. We construct a family of shallow circuits using Hadamards and controlled-Phase gates, HP-$L$ circuits, that we prove preserve shift invariance. Numerical analysis shows these circuits retain exponentially growing Fisher information. The $\mathcal{O}(n)$ HP-$1$ is employed in place of the $\mathcal{O}(n^2)$ QFT in our numerical implementation of Shor's algorithm. An efficient neural network is used for the corresponding classical post-processing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-16T13:47:11Z</published>
+    <arxiv:comment>Added evidence for efficient scaling of neural-network decoding; strengthened the numerical support through full Shor factoring simulations at larger system sizes; and improved the presentation for clarity and accessibility</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Kaiming Bian</name>
+    </author>
+    <author>
+      <name>Zujin Wen</name>
+    </author>
+    <author>
+      <name>Oscar Dahlsten</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.06572v3</id>
+    <title>An Efficient Quantum Factoring Algorithm</title>
+    <updated>2024-01-07T12:57:45Z</updated>
+    <link href="https://arxiv.org/abs/2308.06572v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.06572v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that $n$-bit integers can be factorized by independently running a quantum circuit with $\tilde{O}(n^{3/2})$ gates for $\sqrt{n}+4$ times, and then using polynomial-time classical post-processing. The correctness of the algorithm relies on a number-theoretic heuristic assumption reminiscent of those used in subexponential classical factorization algorithms. It is currently not clear if the algorithm can lead to improved physical implementations in practice.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-12T13:57:38Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Oded Regev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.06031v1</id>
+    <title>Blockwise Post-processing in Satellite-based Quantum Key Distribution</title>
+    <updated>2025-03-08T03:06:04Z</updated>
+    <link href="https://arxiv.org/abs/2503.06031v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.06031v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Free-space satellite communication has significantly lower photon loss than terrestrial communication via optical fibers. Satellite-based quantum key distribution (QKD) leverages this advantage and provides a promising direction in achieving long-distance QKD. While the technological feasibility of satellite-based QKD has been demonstrated experimentally, optimizing the key rate remains a significant challenge. In this paper, we argue that improving classical post-processing is an important direction in increasing key rate in satellite-based QKD, while it can also be easily incorporated in existing satellite systems. In particular, we explore one direction, blockwise post-processing, to address highly dynamic satellite channel conditions due to various environmental factors. This blockwise strategy divides the raw key bits into individual blocks that have similar noise characteristics, and processes them independently, in contrast to traditional non-blockwise strategy that treats all the raw key bits as a whole. Using a case study, we discuss the choice of blocks in blockwise strategy, and show that blockwise strategy can significantly outperform non-blockwise strategy. Our study demonstrates the importance of post-processing in satellite QKD systems, and presents several open problems in this direction.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-08T03:06:04Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minu J. Bae</name>
+    </author>
+    <author>
+      <name>Nitish K. Panigrahy</name>
+    </author>
+    <author>
+      <name>Prajit Dhara</name>
+    </author>
+    <author>
+      <name>Md Zakir Hossain</name>
+    </author>
+    <author>
+      <name>Walter O. Krawec</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+    <author>
+      <name>Don Towsley</name>
+    </author>
+    <author>
+      <name>Bing Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.40266v1</id>
+    <title>Compatibility of quantum instruments</title>
+    <updated>2026-09-30T17:43:32Z</updated>
+    <link href="https://arxiv.org/abs/2609.40266v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.40266v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Measurement compatibility asks whether a family of quantum measurements can be simulated by one parent measurement followed by classical post-processing. We extend this measurement compatibility to the notion of \emph{$d$-compatibility} for measurements, channels, and instruments whose parent passes a $d$-dimensional quantum system and unlimited classical information to the post-processing. We formulate $d$-compatibility as a common linear factorization of operator spaces and operator systems and show that $d$-compatible families form a closed set, even with infinitely many settings and a separable infinite-dimensional input. To certify $d$-incompatibility, we define the compatibility functional as the smallest product of completely bounded norms over common factorizations through a $d$-dimensional register. Using factorization theory of operator spaces, we show that measure-and-prepare channels defined in terms of mutually unbiased bases and pinching channels defined in terms of Heisenberg-Weyl operators are $d$-incompatible in certain regimes of $d$. We also link $d$-compatibility of multi-instruments to the preparability of Choi assemblages using channel-state duality, and use this connection to show that for bipartite states the (in)compatibility of instruments can be used to certify Schmidt numbers and the implementability of the instrument using one-way LOCC protocols. Finally, our compatibility functional also bounds the generalized robustness of compatibility, which we interpret through a memory-bounded nontransient preparation game.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-30T17:43:32Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chloe Kim</name>
+    </author>
+    <author>
+      <name>Yujie Zhang</name>
+    </author>
+    <author>
+      <name>Eric Chitambar</name>
+    </author>
+    <author>
+      <name>Marius Junge</name>
+    </author>
+    <author>
+      <name>Felix Leditzky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.00219v2</id>
+    <title>Quantum noise extraction from the interference of laser pulses in optical quantum random number generator</title>
+    <updated>2020-05-04T17:38:10Z</updated>
+    <link href="https://arxiv.org/abs/1910.00219v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.00219v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a method for quantum noise extraction from the interference of laser pulses with random phase. Our technique is based on the calculation of a parameter, which we called the quantum reduction factor, and which allows determining the contributions of quantum and classical noises in the assumption that classical fluctuations exhibit Gaussian distribution. To the best of our knowledge, the concept of the quantum reduction factor is introduced for the first time. We use such an approach to implement the post-processing-free optical quantum random number generator with the random bit generation rate of 2 Gbps.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-01T06:47:15Z</published>
+    <arxiv:comment>to be published in Optics Express</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Opt. Express 28, 6209 (2020)</arxiv:journal_ref>
+    <author>
+      <name>Roman Shakhovoy</name>
+    </author>
+    <author>
+      <name>Denis Sych</name>
+    </author>
+    <author>
+      <name>Violetta Sharoglazova</name>
+    </author>
+    <author>
+      <name>Alexander Udaltsov</name>
+    </author>
+    <author>
+      <name>Aleksey Fedorov</name>
+    </author>
+    <author>
+      <name>Yury Kurochkin</name>
+    </author>
+    <arxiv:doi>10.1364/OE.380156</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1364/OE.380156" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12994v2</id>
+    <title>Fixed-Boost Wigner Noise: Strict Trace-Distance Contraction without Quantum Degradability</title>
+    <updated>2026-08-05T09:52:40Z</updated>
+    <link href="https://arxiv.org/abs/2607.12994v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12994v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A Lorentz boost acts on the canonical spin of a massive particle through a momentum-dependent Wigner rotation. We show that, for one fixed observer boost, reducing over an uncertain momentum can strictly contract every pairwise spin-state trace distance without producing a channel that is degradable from the less contracted one. For spin $1/2$, we first characterize the exact inversion-symmetric channel cone generated by a fixed Wigner angle and transverse momentum directions. Inside this cone lies the Pauli family $M_α=\operatorname{diag}(1-α,1-α,1-2α)$, $0\leqα&lt;1/2$. For $0&lt;α&lt;β&lt;1/2$, all trace distances between distinct spin states are strictly smaller after $M_β$ than after $M_α$, yet the unique linear post-processing factor has a negative normalized Choi eigenvalue. We solve the optimization over all physical converters exactly: $\frac{1}{2}\inf_{Λ\in\mathrm{CPTP}}\|Φ_β-Λ\circΦ_α\|_\diamond=\frac{α(β-α)}{2-3α}$, whereas the reverse deficiency is $β-α$. Thus the identity dominates the family, while all positive-noise members are pairwise incomparable under CPTP post-processing. The ideal construction is realized as the narrow-packet limit of pure, normalizable five-component momentum states, and explicit perturbation and finite-shot tomography bounds certify an open set of examples. Separately, every nonidentity member fails embedding in a time-homogeneous Pauli-diagonal Lindblad semigroup. Hence ordering all unassisted spin distinguishabilities does not determine the quantum statistical post-processing order.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T17:46:52Z</published>
+    <arxiv:comment>10 pages, 3 figures. Ancillary verification code included</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Maxim V. Churilov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.16116v2</id>
+    <title>Experimental prime factorization via the feedback quantum control</title>
+    <updated>2026-01-23T11:27:47Z</updated>
+    <link href="https://arxiv.org/abs/2601.16116v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.16116v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Prime factorization on quantum processors is typically implemented either via circuit-based approaches such as Shor's algorithm or through Hamiltonian optimization methods based on adiabatic, annealing, or variational techniques. While Shor's algorithm demands high-fidelity quantum gates, Hamiltonian optimization schemes, with prime factors encoded as degenerate ground states of a problem Hamiltonian, generally require substantial classical post-processing to determine control parameters. We propose an all-quantum, measurement-based feedback approach that iteratively steers a quantum system toward the target ground state, eliminating the need for classical computation of drive parameters once the problem Hamiltonian is determined and realized. As a proof of principle, we experimentally factor the biprime 551 using a three-qubit NMR quantum register and numerically analyze the robustness of the method against control field-errors. We further demonstrate scalability by numerically implementing the FALQON factorization of larger biprimes, 9,167 and 2,106,287, using 5 and 9 qubits, respectively.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-22T17:09:29Z</published>
+    <arxiv:comment>8 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>K. B. Hari Krishnan</name>
+    </author>
+    <author>
+      <name>Vishal Varma</name>
+    </author>
+    <author>
+      <name>T. S. Mahesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.06453v1</id>
+    <title>Experimental quantum annealing: case study involving the graph isomorphism problem</title>
+    <updated>2015-03-22T18:24:37Z</updated>
+    <link href="https://arxiv.org/abs/1503.06453v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.06453v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum annealing is a proposed combinatorial optimization technique meant to exploit quantum mechanical effects such as tunneling and entanglement. Real-world quantum annealing-based solvers require a combination of annealing and classical pre- and post-processing; at this early stage, little is known about how to partition and optimize the processing. This article presents an experimental case study of quantum annealing and some of the factors involved in real-world solvers, using a 504-qubit D-Wave Two machine and the graph isomorphism problem. To illustrate the role of classical pre-processing, a compact Hamiltonian is presented that enables a reduced Ising model for each problem instance. On random N-vertex graphs, the median number of variables is reduced from N^2 to fewer than N lg N and solvable graph sizes increase from N = 5 to N = 13. Additionally, a type of classical post-processing error correction is evaluated. While the solution times are not competitive with classical approaches to graph isomorphism, the enhanced solver ultimately classified correctly every problem that was mapped to the processor and demonstrated clear advantages over the baseline approach. The results shed some light on the nature of real-world quantum annealing and the associated hybrid classical-quantum solvers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-22T18:24:37Z</published>
+    <arxiv:comment>15 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Sci. Rep. 5, 11168 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Kenneth M. Zick</name>
+    </author>
+    <author>
+      <name>Omar Shehab</name>
+    </author>
+    <author>
+      <name>Matthew French</name>
+    </author>
+    <arxiv:doi>10.1038/srep11168</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/srep11168" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.11973v1</id>
+    <title>Gain-switched vcsel as a quantum entropy source: the problem of quantum and classical noise</title>
+    <updated>2023-01-27T20:09:00Z</updated>
+    <link href="https://arxiv.org/abs/2301.11973v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.11973v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of quantum noise extraction from polarization swapping in a gain-switched VCSEL. The principle of operation of a quantum random number generator is based on the generation of laser pulses with one of two orthogonal polarization states, followed by digitization of polarization-resolved pulses with a comparator. At intensity values of laser pulses close to the threshold value of the comparator, the contribution of the classical noise of the photodetector will have a crucial role in making a decision on the choice of a logical zero or one. We show how to evaluate the contribution of classical noise and how to calculate the quantum reduction factor required for post-processing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-27T20:09:00Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>St. Petersburg State Polytechnical University Journal. Physics and Mathematics. 15 (3.2), 201-205, 2022</arxiv:journal_ref>
+    <author>
+      <name>Roman Shakhovoy</name>
+    </author>
+    <author>
+      <name>Elizaveta Maksimova</name>
+    </author>
+    <arxiv:doi>10.18721/JPM.153.237</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.18721/JPM.153.237" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.06103v4</id>
+    <title>Real-time adaptive estimation of decoherence timescales for a single qubit</title>
+    <updated>2024-01-24T10:40:22Z</updated>
+    <link href="https://arxiv.org/abs/2210.06103v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.06103v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Characterising the time over which quantum coherence survives is critical for any implementation of quantum bits, memories and sensors. The usual method for determining a quantum system's decoherence rate involves a suite of experiments probing the entire expected range of this parameter, and extracting the resulting estimation in post-processing. Here we present an adaptive multi-parameter Bayesian approach, based on a simple analytical update rule, to estimate the key decoherence timescales ($T_1$, $T_2^*$ and $T_2$) and the corresponding decay exponent of a quantum system in real time, using information gained in preceding experiments. This approach reduces the time required to reach a given uncertainty by a factor up to an order of magnitude, depending on the specific experiment, compared to the standard protocol of curve fitting. A further speed-up of a factor $\sim 2$ can be realised by performing our optimisation with respect to sensitivity as opposed to variance.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-12T11:28:23Z</published>
+    <arxiv:comment>made a change of word in the title ("Online" to "Real-time") and rearranged figures and text to improve the readability of the manuscript</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Junaid Arshad</name>
+    </author>
+    <author>
+      <name>Christiaan Bekker</name>
+    </author>
+    <author>
+      <name>Ben Haylock</name>
+    </author>
+    <author>
+      <name>Krzysztof Skrzypczak</name>
+    </author>
+    <author>
+      <name>Daniel White</name>
+    </author>
+    <author>
+      <name>Benjamin Griffiths</name>
+    </author>
+    <author>
+      <name>Joe Gore</name>
+    </author>
+    <author>
+      <name>Gavin W. Morley</name>
+    </author>
+    <author>
+      <name>Patrick Salter</name>
+    </author>
+    <author>
+      <name>Jason Smith</name>
+    </author>
+    <author>
+      <name>Inbar Zohar</name>
+    </author>
+    <author>
+      <name>Amit Finkler</name>
+    </author>
+    <author>
+      <name>Yoann Altmann</name>
+    </author>
+    <author>
+      <name>Erik M. Gauger</name>
+    </author>
+    <author>
+      <name>Cristian Bonato</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevApplied.21.024026</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevApplied.21.024026" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.07192v2</id>
+    <title>Multi-step two-copy distillation of squeezed states via two photon subtraction</title>
+    <updated>2022-04-22T06:05:46Z</updated>
+    <link href="https://arxiv.org/abs/2204.07192v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.07192v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Squeezed states of light have been improving the sensitivity of gravitational-wave observatories and are nonclassical resources of quantum cryptography and envisioned photonic quantum computers. The higher the squeeze factor is, the higher is the quantum advantage. Almost all applications of squeezed light require multi-path optical interference, whose unavoidable imperfections introduce optical loss, degrade the squeeze factor, as well as the quantum advantage. Here, for the first time, we experimentally demonstrate the distillation of Gaussian squeezed states that suffered from Gaussian photon loss. Our demonstration already involves two distillation steps. The first step improved the squeeze factor from 2.4 dB to 2.8 dB by the subtraction of two photons. The second step improved the value from 2.8 dB to 3.4 dB by a Gaussification protocol. It was realised on data measured at different times via an 8-port balanced homodyne detector and via data post-processing. The number of distillation steps can be increased by longer data sampling times, without additional hardware. We propose and discuss the application to quantum cryptography and photonic quantum computers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-14T18:57:23Z</published>
+    <arxiv:comment>References in the introduction as well as supplementary material added</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Stephan Grebien</name>
+    </author>
+    <author>
+      <name>Julian Goettsch</name>
+    </author>
+    <author>
+      <name>Boris Hage</name>
+    </author>
+    <author>
+      <name>Jaromir Fiurasek</name>
+    </author>
+    <author>
+      <name>Roman Schnabel</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.129.273604</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.129.273604" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.08108v2</id>
+    <title>Many-body entropies and entanglement from polynomially-many local measurements</title>
+    <updated>2024-06-28T07:21:02Z</updated>
+    <link href="https://arxiv.org/abs/2311.08108v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.08108v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Estimating global properties of many-body quantum systems such as entropy or bipartite entanglement is a notoriously difficult task, typically requiring a number of measurements or classical post-processing resources growing exponentially in the system size. In this work, we address the problem of estimating global entropies and mixed-state entanglement via partial-transposed (PT) moments, and show that efficient estimation strategies exist under the assumption that all the spatial correlation lengths are finite. Focusing on one-dimensional systems, we identify a set of approximate factorization conditions (AFCs) on the system density matrix which allow us to reconstruct entropies and PT moments from information on local subsystems. This yields a simple and efficient strategy for entropy and entanglement estimation. Our method could be implemented in different ways, depending on how information on local subsystems is extracted. Focusing on randomized measurements (RMs), providing a practical and common measurement scheme, we prove that our protocol only requires polynomially-many measurements and post-processing operations, assuming that the state to be measured satisfies the AFCs. We prove that the AFCs hold for finite-depth quantum-circuit states and translation-invariant matrix-product density operators, and provide numerical evidence that they are satisfied in more general, physically-interesting cases, including thermal states of local Hamiltonians. We argue that our method could be practically useful to detect bipartite mixed-state entanglement for large numbers of qubits available in today's quantum platforms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-14T12:13:15Z</published>
+    <arxiv:comment>30 pages, 10 figures; v2: references added and general revision</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. X 14, 031035 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Benoît Vermersch</name>
+    </author>
+    <author>
+      <name>Marko Ljubotina</name>
+    </author>
+    <author>
+      <name>J. Ignacio Cirac</name>
+    </author>
+    <author>
+      <name>Peter Zoller</name>
+    </author>
+    <author>
+      <name>Maksym Serbyn</name>
+    </author>
+    <author>
+      <name>Lorenzo Piroli</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevX.14.031035</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevX.14.031035" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.00231v1</id>
+    <title>Unbiased quantum phase estimation</title>
+    <updated>2022-10-01T09:38:20Z</updated>
+    <link href="https://arxiv.org/abs/2210.00231v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.00231v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum phase estimation algorithm (PEA) is one of the most important algorithms in early studies of quantum computation. It is also a key for many other quantum algorithms, such as the quantum counting algorithm and the Shor's integer factorization algorithm. However, we find that the PEA is not an unbiased estimation, which prevents the estimation error from achieving an arbitrarily small level. In this paper, we propose an unbiased phase estimation algorithm (UPEA) based on the original PEA, and study its application in quantum counting. We also show that a maximum likelihood post-processing step can further improve its robustness. In the end, we apply UPEA to quantum counting, and use an additional correction step to make the quantum counting algorithm unbiased.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-01T09:38:20Z</published>
+    <arxiv:comment>7 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Xi Lu</name>
+    </author>
+    <author>
+      <name>Hongwei Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.08817v1</id>
+    <title>QCardEst/QCardCorr: Quantum Cardinality Estimation and Correction</title>
+    <updated>2025-09-10T17:49:06Z</updated>
+    <link href="https://arxiv.org/abs/2509.08817v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.08817v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cardinality estimation is an important part of query optimization in DBMS. We develop a Quantum Cardinality Estimation (QCardEst) approach using Quantum Machine Learning with a Hybrid Quantum-Classical Network. We define a compact encoding for turning SQL queries into a quantum state, which requires only qubits equal to the number of tables in the query. This allows the processing of a complete query with a single variational quantum circuit (VQC) on current hardware. In addition, we compare multiple classical post-processing layers to turn the probability vector output of VQC into a cardinality value. We introduce Quantum Cardinality Correction QCardCorr, which improves classical cardinality estimators by multiplying the output with a factor generated by a VQC to improve the cardinality estimation. With QCardCorr, we have an improvement over the standard PostgreSQL optimizer of 6.37 times for JOB-light and 8.66 times for STATS. For JOB-light we even outperform MSCN by a factor of 3.47.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-10T17:49:06Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Tobias Winker</name>
+    </author>
+    <author>
+      <name>Jinghua Groppe</name>
+    </author>
+    <author>
+      <name>Sven Groppe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1210.3003v2</id>
+    <title>Recovering the Period in Shor's Algorithm with Gauss' Algorithm for Lattice Basis Reduction</title>
+    <updated>2013-01-30T20:44:06Z</updated>
+    <link href="https://arxiv.org/abs/1210.3003v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1210.3003v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm contains a classical post-processing part for which we aim to create an efficient, understandable method aside from continued fractions.
+  Let r be an unknown positive integer. Assume that with some constant probability we obtain random positive integers of the form x=[ N k/r ] where [.] is either the floor or ceiling of the rational number, k is selected uniformly at random from {0,1,...,r-1}, and N is a parameter that can be chosen. The problem of recovering r from such samples occurs precisely in the classical post-processing part of Shor's algorithm. The quantum part (quantum phase estimation) makes it possible to obtain such samples where r is the order of some element a of the unit group of Z_n and n is the number to be factored.
+  Shor showed that the continued fraction algorithm can be used to efficiently recover r, since if N&gt;2r^2 then k/r appears in lowest terms as one of the convergents of x/N due to a standard result on continued fractions. We present here an alternative method for recovering r based on the Gauss algorithm for lattice basis reduction, allowing us to efficiently find the shortest nonzero vector of a lattice generated by two vectors. Our method is about as efficient as the method based on continued fractions, yet it is much easier to understand all the details of why it works.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-10-10T18:52:16Z</published>
+    <arxiv:comment>corrected minor mistakes</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Allison Koenecke</name>
+    </author>
+    <author>
+      <name>Pawel Wocjan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.07338v1</id>
+    <title>Comparison of Dielectric Loss in Titanium Nitride and Aluminum Superconducting Resonators</title>
+    <updated>2020-07-14T20:20:22Z</updated>
+    <link href="https://arxiv.org/abs/2007.07338v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.07338v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lossy dielectrics are a significant source of decoherence in superconducting quantum circuits. In this report, we model and compare the dielectric loss in bulk and interfacial dielectrics in titanium nitride (TiN) and aluminum (Al) superconducting coplanar waveguide (CPW) resonators. We fabricate isotropically trenched resonators to produce a series of device geometries that accentuate a specific dielectric region's contribution to resonator quality factor. While each dielectric region contributes significantly to loss in TiN devices, the metal-air interface dominates the loss in the Al devices. Furthermore, we evaluate the quality factor of each TiN resonator geometry with and without a post-process hydrofluoric (HF) etch, and find that it reduced losses from the substrate-air interface, thereby improving the quality factor.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-14T20:20:22Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Alexander Melville</name>
+    </author>
+    <author>
+      <name>Greg Calusine</name>
+    </author>
+    <author>
+      <name>Wayne Woods</name>
+    </author>
+    <author>
+      <name>Kyle Serniak</name>
+    </author>
+    <author>
+      <name>Evan Golden</name>
+    </author>
+    <author>
+      <name>Bethany M. Niedzielski</name>
+    </author>
+    <author>
+      <name>David K. Kim</name>
+    </author>
+    <author>
+      <name>Arjan Sevi</name>
+    </author>
+    <author>
+      <name>Jonilyn L. Yoder</name>
+    </author>
+    <author>
+      <name>Eric A. Dauler</name>
+    </author>
+    <author>
+      <name>William D. Oliver</name>
+    </author>
+    <arxiv:doi>10.1063/5.0021950</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/5.0021950" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.12703v2</id>
+    <title>Randomized Benchmarking Beyond Groups</title>
+    <updated>2022-12-20T20:51:15Z</updated>
+    <link href="https://arxiv.org/abs/2203.12703v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.12703v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Randomized benchmarking (RB) is the gold standard for experimentally evaluating the quality of quantum operations. The current framework for RB is centered on groups and their representations, but this can be problematic. For example, Clifford circuits need up to $O(n^2)$ gates, and thus Clifford RB cannot scale to larger devices. Attempts to remedy this include new schemes such as linear cross-entropy benchmarking (XEB), cycle benchmarking, and non-uniform RB, but they do not fall within the group-based RB framework. In this work, we formulate the \emph{universal randomized benchmarking (URB) framework} which does away with the group structure and also replaces the recovery gate plus measurement component with a general ``post-processing'' POVM. Not only does this framework cover most of the existing benchmarking schemes, but it also gives the language for and helps inspire the formulation of new schemes. We specifically consider a class of URB schemes called \emph{twirling schemes}. For twirling schemes, the post-processing POVM approximately factorizes into an intermediate channel, inverting maps, and a final measurement. This leads us to study the twirling map corresponding to the gate ensemble specified by the scheme. We prove that if this twirling map is strictly within unit distance of the Haar twirling map in induced diamond norm, the probability of measurement as a function of gate length is a single exponential decay up to small error terms. The core technical tool we use is the matrix perturbation theory of linear operators on quantum channels.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-23T19:54:45Z</published>
+    <arxiv:comment>36 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>PRX Quantum 3, 030320 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Jianxin Chen</name>
+    </author>
+    <author>
+      <name>Dawei Ding</name>
+    </author>
+    <author>
+      <name>Cupjin Huang</name>
+    </author>
+    <arxiv:doi>10.1103/PRXQuantum.3.030320</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PRXQuantum.3.030320" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.21765v1</id>
+    <title>Markov Constraints Enhance Identifiability in Quantum Shadow Inversion</title>
+    <updated>2026-08-22T04:15:37Z</updated>
+    <link href="https://arxiv.org/abs/2608.21765v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.21765v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study quantum shadow inversion under Markovian locality constraints for four-partite systems arranged along the chain $A$--$B$--$C$--$D$. The goal is to reproduce the expectation value of a fixed endpoint observable $O_{AD}$ after an unknown global unitary, without requiring full unitary inversion. We formulate the task using Markov-admissible supermaps and introduce the Markov-implementable centralizer to describe the remaining endpoint gauge freedom. We show that unrestricted endpoint post-processing is too broad, and impose an endpoint-local refinement. Under this condition, every implementable endpoint unitary must factorize across $A|D$, so the Markov constraint strictly reduces the centralizer-induced shadow ambiguity whenever the full centralizer contains non-product unitaries. This provides a structural mechanism by which Markov locality enhances identifiability in quantum shadow inversion.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-22T04:15:37Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Zhixing Chen</name>
+    </author>
+    <author>
+      <name>Lin Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1109.4595v1</id>
+    <title>One- and two-dimensional photonic crystal micro-cavities in single crystal diamond</title>
+    <updated>2011-09-21T17:34:15Z</updated>
+    <link href="https://arxiv.org/abs/1109.4595v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1109.4595v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The development of solid-state photonic quantum technologies is of great interest for fundamental studies of light-matter interactions and quantum information science. Diamond has turned out to be an attractive material for integrated quantum information processing due to the extraordinary properties of its colour centres enabling e.g. bright single photon emission and spin quantum bits. To control emitted photons and to interconnect distant quantum bits, micro-cavities directly fabricated in the diamond material are desired. However, the production of photonic devices in high-quality diamond has been a challenge so far. Here we present a method to fabricate one- and two-dimensional photonic crystal micro-cavities in single-crystal diamond, yielding quality factors up to 700. Using a post-processing etching technique, we tune the cavity modes into resonance with the zero phonon line of an ensemble of silicon-vacancy centres and measure an intensity enhancement by a factor of 2.8. The controlled coupling to small mode volume photonic crystal cavities paves the way to larger scale photonic quantum devices based on single-crystal diamond.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-09-21T17:34:15Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Nature Nanotechnology 7, 69-74 (2012)</arxiv:journal_ref>
+    <author>
+      <name>Janine Riedrich-Möller</name>
+    </author>
+    <author>
+      <name>Laura Kipfstuhl</name>
+    </author>
+    <author>
+      <name>Christian Hepp</name>
+    </author>
+    <author>
+      <name>Elke Neu</name>
+    </author>
+    <author>
+      <name>Christoph Pauly</name>
+    </author>
+    <author>
+      <name>Frank Mücklich</name>
+    </author>
+    <author>
+      <name>Armin Baur</name>
+    </author>
+    <author>
+      <name>Michael Wandt</name>
+    </author>
+    <author>
+      <name>Sandra Wolff</name>
+    </author>
+    <author>
+      <name>Martin Fischer</name>
+    </author>
+    <author>
+      <name>Stefan Gsell</name>
+    </author>
+    <author>
+      <name>Matthias Schreck</name>
+    </author>
+    <author>
+      <name>Christoph Becher</name>
+    </author>
+    <arxiv:doi>10.1038/nnano.2011.190</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/nnano.2011.190" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.22785v2</id>
+    <title>Orders of magnitude sampling overhead reduction in quantum error mitigation</title>
+    <updated>2026-03-03T15:16:22Z</updated>
+    <link href="https://arxiv.org/abs/2601.22785v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.22785v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum error mitigation (QEM) infers noiseless expectation values from noisy variants of a target quantum circuit. Unlike quantum error correction, QEM requires no additional hardware resources and is therefore routinely employed in experiments on contemporary quantum processors. QEM strategies based on agnostic noise amplification (ANA) are intrinsically resilient to temporal noise drift during the execution of the experiment, but their sampling cost (runtime overhead) remains a major practical bottleneck. In this work, we introduce the virtual noise scaling framework and combine it with layered mitigation to further enhance performance. While virtual noise scaling consistently reduces sampling overhead, we identify a specific noise threshold for the layered mitigation approach. When the noise level is above this threshold, layered mitigation decreases the sampling overhead; conversely, when below it, the overhead increases. Notably, this threshold is circuit-independent and depends solely on the number of layers. For strong noise, the combination of virtual noise scaling and layered mitigation yields several orders of magnitude reduction in sampling overhead compared with conventional zero-noise extrapolation post-processing. As a result, mitigation tasks that once seemed unrealistic are now challenging but achievable. The proposed approach is compatible with dynamic circuits and can be seamlessly integrated with error detection and quantum error correction schemes. In addition, it is also applicable to ANA-based mitigation of mid-circuit measurements and preparation errors. Our findings extend to any constant-step amplification factors and therefore also apply to probabilistic error amplification (PEA) QEM. We validate our post-processing approach by applying it to previously reported experimental data, where we observe a substantial improvement in mitigation efficiency and accuracy.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-30T10:07:31Z</published>
+    <arxiv:comment>Added a new section relevant to PEA. A few typos in equations were fixed</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Raam Uzdin</name>
+    </author>
+  </entry>
+</feed>

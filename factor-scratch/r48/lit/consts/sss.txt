@@ -1,0 +1,1178 @@
+                                                          SMOOTH SUBSUM SEARCH
+                                             A HEURISTIC FOR PRACTICAL INTEGER FACTORIZATION
+
+
+                                                                                MARKUS HITTMEIR
+arXiv:2301.10529v2 [math.NT] 11 Jul 2023
+
+
+
+
+                                                    Abstract. The two currently fastest general-purpose integer factorization al-
+                                                    gorithms are the Quadratic Sieve and the Number Field Sieve. Both techniques
+                                                    are used to find so-called smooth values of certain polynomials, i.e., values that
+                                                    factor completely over a set of small primes (the factor base). As the names
+                                                    of the methods suggest, a sieving procedure is used for the task of quickly
+                                                    identifying smooth values among the candidates in a certain range. While the
+                                                    Number Field Sieve is asymptotically faster, the Quadratic Sieve is still con-
+                                                    sidered the most efficient factorization technique for numbers up to around 100
+                                                    digits. In this paper, we challenge the Quadratic Sieve by presenting a novel
+                                                    approach based on representing smoothness candidates as sums that are al-
+                                                    ways divisible by several of the primes in the factor base. The resulting values
+                                                    are generally smaller than those considered in the Quadratic Sieve, increasing
+                                                    the likelihood of them being smooth. Using the fastest implementations of the
+                                                    Self-initializing Quadratic Sieve in Python as benchmarks, a Python imple-
+                                                    mentation of our approach runs consistently 5 to 7 times faster for numbers
+                                                    with 45-100 digits, and around 10 times faster for numbers with 30-40 digits.
+                                                    We discuss several avenues for further improvements and applications of the
+                                                    technique.
+
+
+
+
+                                                                                 1. Introduction
+                                              Integer factorization is the task of computing the divisors of natural numbers.
+                                           It is a problem with a long and fascinating history, and it is certainly among the
+                                           most influential in algorithmic number theory. While there is a variety of algorithms
+                                           significantly faster than the brute-force search for divisors, it is still an open problem
+                                           to construct a technique that efficiently factors general numbers with hundreds to
+                                           thousands of digits. The hardness of this problem is fundamental for the security
+                                           of widely used cryptographical schemes, most prominently the RSA cryptosystem.
+                                           Nevertheless, there is no proof for its hardness besides the fact that decades of
+                                           efforts have failed to construct a more efficient technique.
+                                              Quite regularly, there are set new records1 concerning the factorization of num-
+                                           bers of certain size, mostly due to improved implementations of the best available
+                                           algorithms and advances in the hardware and computing power. In addition, the
+                                           bound for the deterministic integer factorization problem has been improved mul-
+                                           tiple times in recent years ([11], [12], [10], [14]). On the other hand, there has
+                                           only been little progress in the development of new techniques for practical integer
+
+                                              2010 Mathematics Subject Classification. 11A51,11Y05.
+                                              SBA Research (SBA-K1) is a COMET Centre within the framework of COMET – Competence
+                                           Centers for Excellent Technologies Programme and funded by BMK, BMDW, and the federal state
+                                           of Vienna. The COMET Programme is managed by FFG.
+                                              1
+                                                A recent record was the factorization of a 250 decimal digit number in February 2020 by
+                                           Boudot et al., see https://en.wikipedia.org/wiki/RSA_Factoring_Challenge
+                                                                                            1
+2                                      M. HITTMEIR
+
+
+factorization since the invention of the Number Field Sieve ([19]) in the 1990s. One
+of the earlier algorithms with sub-exponential runtime was by Dixon ([7]) in 1981.
+From today’s perspective, it may be considered as a prototype for several other
+algorithms. To this group belong the Continued Fraction factorization method
+(CFRAC) described and implemented by Morrison and Brillhart ([24]) in 1975, the
+Linear Sieve by Schroeppel and the Quadratic Sieve by Pomerance. The latter
+author analyzed and compared these algorithms in 1982 in [25]. In general, there
+is an extensive amount of literature on practical integer factorization algorithms.
+The reader may find information on the mentioned methods and other factorization
+techniques in the survey [18] and in the monographs [27] and [30]. These sources
+also discuss a variety of factorization algorithms for numbers N that satisfy cer-
+tain properties, or that have prime factors of certain shape. For example, Fermat’s
+factorization method runs particularly fast if N has co-divisors that are very close,
+while Pollard’s P − 1 technique and the Elliptic Curve Method (ECM) work par-
+ticularly well for numbers with small prime factors. In the present paper, we are
+interested in so-called general-purpose factorization algorithms, which means that
+the runtime complexity estimate of the procedure only depends on the size of the
+input number N . Both the Quadratic Sieve and the Number Field Sieve belong
+to this group. From a practical point of view, the Quadratic Sieve (and its modi-
+fications) is considered the best general-purpose factorization algorithm for N up
+to around 100 digits, whereas the Number Field Sieve is faster for inputs beyond
+that. While methods such as CFRAC and ECM stay somewhat competitive up to
+a small input length (see [23]), factorization tools usually use ECM to rule out the
+existence of relatively small prime factors, but then switch either to the Number
+Field Sieve or to the Self-initializing Quadratic Sieve (SIQS), which is the fastest
+modification of the original Quadratic Sieve algorithm.2
+   Our contribution is the presentation and evaluation of a novel approach, Smooth
+Subsum Search (SSS). Just like CFRAC, the Linear Sieve and the Quadratic Sieve,
+SSS belongs to the group of Dixon-type algorithms. The core idea is based on
+constructing smoothness candidates in a way that guarantees divisibility by many
+primes, while keeping their values as small as possible. This is achieved by find-
+ing collisions of affine transformations of the roots of the considered polynomial
+modulo the primes in the factor base. The construction allows to quickly generate
+values that have a high likelihood of being smooth without sieving the complete
+interval for each prime of the factor base. In addition to a detailed explanation of
+our algorithm, a discussion of its advantages compared to the Quadratic Sieve and
+theoretical arguments for the runtime improvement, we will consider our current
+implementation in Python and several experiments on the runtime complexity of
+SSS. Our results demonstrate that SSS outperforms SIQS on semiprime3 numbers
+with 30 to 100 decimal digits, finding smooth numbers around 5 to 7 times faster.
+While these findings need to be corroborated in experiments with different imple-
+mentations of SIQS in other programming languages, they indicate that SSS is the
+fastest available factorization algorithm for general numbers in this range.
+   2In its standard settings, the tool Msieve (https://sourceforge.net/projects/msieve/) uses
+ECM for searching for small prime factors with up to 15 digits. Similarly, for numbers with 31
+digits or more, the calculator of Dario Alpern (https://www.alpertron.com.ar) switches to SIQS
+after a quick search for small factors via ECM.
+   3
+     Throughout the paper, we will use this term for numbers composed of two distinct prime
+factors. Under certain conditions, such numbers are the most difficult to factorize.
+                               SMOOTH SUBSUM SEARCH                                      3
+
+
+   The remainder of the paper is structured as follows: In Section 2, we discuss the
+Quadratic Sieve and its modifications in greater detail, together with an important
+subroutine of our own algorithm. Section 3 presents the full algorithm SSS as it is
+currently implemented. The results of our experiments can be found in Section 4,
+where SSS is compared to the fastest implementations of the Quadratic Sieve in
+Python. Section 5 explores three speculative ideas on how to construct further
+variants and improvements of SSS. Finally, we summarize and give concluding
+remarks in Section 6.
+
+                                  2. Related Work
+  Let N be the number we want to factorize. We will always assume that N is
+odd, composite and not a perfect power of another number. The currently fastest
+general-purpose factorization algorithm is the General Number Field Sieve with a
+heuristic asymptotic runtime complexity of
+                       p                                        
+                  exp ( 3 64/9 + o(1))(log N )1/3 (log log N )2/3 .
+For comparison, the heuristic asymptotic runtime complexity of the Quadratic Sieve
+is exp (1 + o(1))(log N )1/2 (log log N )1/2 ([26]). The Number Field Sieve is signif-
+icantly more complicated and harder to implement than the Quadratic Sieve. As
+mentioned, the latter technique is also still faster in practice for factoring numbers
+up to around 100 digits. We now restrict our attention to the technical details
+of the Quadratic Sieve, as it is a suitable representative for the other Dixon-type
+methods. In addition, it will be used as a benchmark for our own algorithm in the
+experiments in Section 4.
+   The ultimate goal of the Quadratic Sieve and the other Dixon-type algorithms
+is to find two numbers X and Y such that X 2 ≡ Y 2 mod N . For such pairs, one
+can easily show that there is a high chance that gcd(X − Y, N ) gives a nontrivial
+divisor.
+√           However, perfect squares are a rare occurrence. Since there are roughly
+   N square numbers below N , simply picking random values for X and hoping for
+X 2 (mod N ) to be square will take too long. So in order to find such X and Y ,
+the first phase of all these algorithms tries to collect so-called smooth relations.
+Such a relation is a congruence x2 ≡ y mod N such that the prime factorization
+of y only consists of primes up to a certain bound B. In this case, the number y
+is called B-smooth (or just smooth). Let p1 , . . . , pm be the primes up to B. The
+set {p1 , . . . , pm } of these primes is referred to as factor base. The smooth relations
+may then be written as x2 ≡ y = pe11 · · · pemm mod N for certain exponents ei ∈ N0 ,
+i = 1, . . . , m. The first phase proceeds until enough of these relations are found,
+which usually means a bit more than the number m of primes in the factor base.
+As soon as this is the case, the second phase starts. Here, we want to find linear
+dependencies in the exponent vectors (e1 , . . . , em ) of the smooth relations, i.e., a
+subset of these vectors that sum to the 0-vector. We can use well-known methods
+from linear algebra to identify such subsets and thereby find smooth relations that
+can be multiplied to obtain a new congruence of the form
+                                               m
+                                                  e +e +···+ei,k
+                                               Y
+                           x21 x22 · · · x2k ≡   pi i,1 i,2      mod N,
+                                    i=1
+where ei,1 + ei,2 + · · · + ei,k ≡ 0 mod 2 for all i. As a consequence, there exists
+                                  Qm e +e +···+ei,k
+a number Y such that Y 2 = i=1 pi i,1 i,2             . Clearly, there also exists X
+4                                     M. HITTMEIR
+
+
+such that X 2 = x21 x22 · · · x2k , and we have found what we were looking for. One
+important parameter of these factorization techniques is the smoothness bound B.
+If B is very large, then it is easier to find smooth relations. On the other hand,
+we need to find much more of them for the second phase to work. In addition, the
+matrix in the linear algebra step will be very large. If B is rather small, then we
+will most likely not be able to find enough smooth relations.
+   The main difference between Dixon’s method, CFRAC, the Quadratic Sieve and
+our algorithm SSS is in how the smooth relations are collected in the first phase.
+Dixon’s algorithm chooses random values x and checks if x2 (mod N ) is√B-smooth.
+CFRAC uses the convergents in the continued fraction expansion of N . While
+the value of x2 (mod N ) in Dixon’s method is bounded by N , the main advantage
+                                                                       2
+of CFRAC over √ Dixon is that it generates congruences of the form x ≡ y mod N
+with |y| ≤ 2 N , which increases the chances for y being smooth. In√the basic
+version of the Quadratic Sieve, the values of the polynomial f (x) = (x+⌈ N ⌉)2 −N
+are used as candidates for possibly smooth y. Note that
+                                             √        √
+(2.1)                y = f (x) = x2 + 2x⌈ N ⌉ + (⌈ N ⌉)2 − N,
+which for small x gives a bound similar to the one obtained in CFRAC. The main
+advantage of the Quadratic Sieve compared to CFRAC is in how we check the
+smoothness of the candidates y. While CFRAC applies trial division or techniques
+for smoothness detection of batches of numbers (see [1]), the Quadratic Sieve uses
+sieving. The basic idea is as follows: Let again {p1 , . . . , pm } be the factor base F.
+Our goal is to find arguments x such that f (x) is divisible by many primes in F.
+We first remove all primes p from F for which Legendre’s symbol (N |p) = −1, since
+N is a quadratic non-residue modulo such p and, thus, p cannot divide f (x) for any
+value of x. Next, we use the well-known Tonelli-Shanks algorithm to compute the
+solutions of f (x) ≡ 0 mod p for each remaining prime p in F. Note that
+                              f (x + kp) ≡ f (x)    mod p
+for every k ∈ Z. Hence, if f (x0 ) is divisible by p, so is f (x0 +kp) for every k ∈ Z. We
+start the sieve by initializing an indexed array of pre-defined length L containing
+zeros, where each index corresponds to an argument x. For each p ∈ F and each
+x0 with f (x0 ) ≡ 0 mod p, we then raise the entries in the array at the indices
+x0 + kp for k ∈ Z by ⌈log p⌉. At the end of the sieving, we check the array for
+entries that are larger than a certain threshold, as for these it follows that f (x) is
+divisible by a lot of primes in the factor base and thus likely to be smooth. Since
+the information about the actual divisors of such f (x) is lost, we still need to apply
+either trial division or some other factorization algorithm suitable for finding small
+prime factors. However, the sieving procedure greatly reduces the total number of
+such applications compared to what is needed in CFRAC.
+   If we have not found enough smooth relations by applying the sieving procedure
+above, we may continue by increasing the length L of the sieving array. However,
+this will lead to the expression (2.1) getting quite large, which decreases the chances
+of f (x) being smooth. The Multiple Polynomial Quadratic Sieve (MPQS) ([29]),
+an improvement of the basic version of the quadratic sieve, makes use of multiple
+polynomials fa,b (x) = (ax + b)2 − N with a, b ∈ Z. While switching to another
+polynomial allows the use of a new array and thus solves the problem of increasing
+values of the smoothness candidates, it is also somewhat expensive to initialize new
+polynomials and compute the solutions of fa,b (x) ≡ 0 mod p for all the primes p in
+                              SMOOTH SUBSUM SEARCH                                    5
+
+
+the factor base. A remedy for this problem has been found in another improvement,
+the already mentioned Self-initializing Quadratic Sieve (SIQS) [3]. The idea is to
+choose a as a product of primes in the factor base, and b such that b2 − N = ac
+for some c ∈ Z. Then fa,b (x) = a(ax2 + bx + c), so fa,b (x) is smooth if and only
+if ax2 + bx + c is smooth. In addition, there are several different possible choices b
+for each choice of a that may be computed via the Chinese Remainder Theorem.
+The corresponding solutions to fa,b (x) ≡ 0 mod p for each prime p are related in
+a way that allows to change to a new polynomial much more easily. In particular,
+the expensive inversion of elements modulo the primes p only needs to be done once
+for every choice of a.
+    One further improvement that may be applied to all Dixon-type algorithms is
+the so-called large prime variant ([2]). If we have found a relation x2 ≡ y mod N
+where y is partially smooth, meaning that the divisor r in its factorization that
+is not smooth is comparably small, then we may also save this so-called partial
+relation. As soon as we find two partial relations of the form
+                                 x21 ≡ y1 · r   mod N
+                                 x22 ≡ y2 · r   mod N
+where y1 and y2 are smooth, we may combine them to get a full relation, namely
+(r−1 )2 x21 x22 ≡ y1 y2 mod N . This improvement can speed up the search for smooth
+relations by about a factor of 2.
+   Finally, let us briefly discuss the smoothness detection algorithm by Bernstein
+that has already been mentioned in the context of CFRAC. For cases where siev-
+ing the values of a polynomial in the described sense is not an option, Bernstein
+describes another way to find smooth and partially smooth numbers in a given set.
+As mentioned in the abstract, SSS is not based on sieving. In Section 3, we will
+use the following procedure ([1, Algorithm 2.1]) instead. Let F = {p1 , . . . , pm } be
+the factor base and C = {x1 , . . . , xn } be a set of positive integers.
+
+smooth batch(F, C)
+ 1: Compute z = p1 · · · pm using a product tree.
+ 2: Compute z (mod x1 ), . . . , z (mod xm ) using a remainder tree.
+                                                    e
+ 3: For k = 1, . . . , n, compute yk = (z (mod xk ))2(mod xk ) using repeated squar-
+                                                                  e
+    ing. Here, e is the smallest nonnegative integer such that 22 ≥ xk .
+ 4: For k = 1, . . . , n, print xk / gcd(xk , yk ).
+
+
+   The algorithm outputs the part of the factorization of each xk that is not smooth.
+For more information on smooth detection as well as on product and remainder
+trees, see [6, Section 3.3]. We now move on to the presentation of SSS.
+
+                           3. Smooth Subsum Search
+   Let us consider an integer polynomial f : Z → Z and a factor base F of primes
+smaller than some bound B. The task is to find x ∈ Z such that f (x) is B-smooth.
+In Section 2, we have discussed
+                         √       the Quadratic Sieve for solving this problem for the
+polynomial f (x) = (x+⌈ N ⌉)2 −N in order to factor the number N . The algorithm
+presented in this section solves the same problem on the same polynomial, but uses
+a heuristic search approach instead of sieving.
+6                                                M. HITTMEIR
+
+
+3.1. The core idea. We start by discussing a suitable representation of the possi-
+ble solutions x. We will see that this representation already restricts our attention to
+values x with increased likelihood of f (x) being smooth. We are looking for prefer-
+ably small values x such that f (x) is divisible by several (powers of) the primes
+in F. Let p1 , p2 , . . . , pm be the odd primes in F, and assume that (N |pi ) = 1 for
+i = 1, . . . , m. Then, the congruence f (x) ≡ 0 mod pi has two solutions si,1 , si,2 .
+Using the Chinese Remainder Theorem, we may easily compute those x for which
+f (x) is divisible by specific primes in F in form of sums (see get x below). Namely,
+with xi ∈ {0, 1, 2}, we represent the candidates x via vectors
+                                        x=
+                                         b (x1 , x2 , . . . , xm ).
+If xi > 0, we fix the value of x (mod pi ) = si,xi and thereby make sure that
+f (x) ≡ 0 mod pi holds. If xi = 0, we leave the value of x (mod pi ) undefined, and
+it will ultimately be determined by the other values in the vector that we did fix.
+Of course we would like f (x) to be divisible by as many primes in F as possible.
+However, if we run the Chinese Remainder Theorem on vectors (x1 , x2 , . . . , xm )
+where most of the xi are nonzero, then the modulus M , i.e. the product of the
+primes pi for which x (mod pi ) is fixed, will be very large, and so will be the
+average values of the resulting sums x. The chances for f (x) being smooth are then
+rather small. From this observation, it becomes quite clear that we would like to
+keep |x|/M as small as possible in order to increase our chances for finding smooth
+numbers. What we are looking for are sparse solution vectors leading to small
+subsums x. We therefore restrict our attention to a subset S of the smaller primes
+in F and, for generating a random solution, select only a few primes in S for which
+the corresponding value xi is nonzero. We call S the small factor base. Assume
+that there are n primes in S, i.e., let S = {p1 , . . . , pn }. Then xi = 0 for i > n
+in all considered representations (x1 , x2 , . . . , xm ), and we may just denote them by
+(x1 , x2 , . . . , xn ). Here is our function for retrieving the value x that corresponds to
+the representations (x1 , x2 , . . . , xn ) by applying the Chinese Remainder Theorem.
+
+get x(x1 , x2 , . . . , xn )
+                         Q
+ 1: Compute M =              i: xi ̸=0 pi .
+ 2: Return
+                                            X M ci
+                                 x :=              · si,xi     (mod M ),
+                                               pi
+                                     i: xi ̸=0
+    where ci = (M/pi )−1 (mod pi ).
+
+   Assume that we have constructed a pair (x, M ) as above. We may choose x in
+the range {−⌈M/2⌉, . . . , ⌊M/2⌋} to keep |x|/M as small as possible. Then we have
+                                                                           √
+                     2
+                             √        √      2              M      √      2 N +1
+(3.1) |f (x)|/M = |(x + 2x⌈ N ⌉ + (⌈ N ⌉) − N )|/M ≪            + ⌈ N⌉ +
+                                                             4               M
+as the worst-case upper bound for our smoothness candidates. That is quite good
+and, assuming a reasonable size of M , on average quite a bit smaller than the
+smoothness candidates obtained in the Quadratic Sieve     √ (see (2.1)). In practice,
+many of these candidates will actually be slightly below N . However, the average
+number of different pairs (x, M ) we would have to test for smoothness until find-
+ing a smooth relation is still substantial, particularly for inputs with 60 digits or
+                              SMOOTH SUBSUM SEARCH                                    7
+
+
+more. We may apply the smooth batch procedure (see Section 2) to test a lot of
+candidates at once. Still, for large enough numbers, the advantage of fast sieving
+will outweigh the advantage of slightly smaller smoothness candidates.
+   Luckily, we can do better than that. Again, what we want is to efficiently
+construct pairs (x, M ) such that M divides f (x) and |x|/M is as small as possible.
+Let us start with a random pair (x, M ) as constructed above. We now consider the
+values xj = x + jM for small values j ∈ Z. It is clear that M | f (xj ) for all j.
+What we are looking for are values j for which we know that f (xj ) will be divisible
+not only by M , but also by larger primes in the factor base, i.e., primes in F\S. In
+order to find such values, we compute
+(3.2)   r1 := (si,1 − x) · M −1   (mod pi ) and r2 := (si,2 − x) · M −1   (mod pi )
+for all pi ∈ F \S. It is easy to see that r1 and r2 are the residues of those values
+j ∈ Z for which pi | f (xj ). We also compute r1 − pi and r2 − pi , and store these
+values in a list. Having finished the computation of these lists for all primes in
+F\S, the next step is to search for collisions, i.e., values that occur in more than
+one list, for different primes. Assume that α occurs in the lists of the primes p,
+q and r, then M pqr | f (xα ). We hence define a new candidate pair (xα , M pqr).
+Assume that r is the largest of the three primes. Then |α| < r, and we have
+                                                √          √
+ |f (xα )|/(M pqr) = |((x + M α)2 + 2(x + M α)⌈ N ⌉ + (⌈ N ⌉)2 − N )|/(M pqr)
+                                                    √          √
+                   < |((M (α + 1))2 + 2(M (α + 1))⌈ N ⌉ + (⌈ N ⌉)2 − N )|/(M pqr)
+                               √        √
+                      M r 2⌈ N ⌉ 2 N + 1
+                   ≪       +         +           .
+                       pq      pq        M pqr
+Compared to (2.1) and (3.1), this value is significantly smaller, improving the chance
+for it to factorize completely over the remaining primes in S. In addition, it may
+also still be divisible by smaller primes in F\S whose residues in the computed lists
+are not equal, but congruent to α. The current implementation of SSS is built for
+the task of quickly generating candidate pairs (x, M ) of the described form. M is
+composed of the product M of several small primes in S and at least three large
+primes in F\S, and x is of the form x + M α for suitable α ∈ Z. Having collected
+a certain number of these pairs, we apply the smooth batch procedure with a
+substantially increased chance of finding smooth relations.
+    The core idea of SSS is the search for suitable smoothness candidates by looking
+for collisions instead of sieving. In Section 3.2, we discuss our current implemen-
+tation in greater detail. There are a few things that we do differently than in the
+explanation above. For example, we do not really need to keep track of the large
+primes in F\S that divide f (x). It is enough to know that they exist. So we may
+simply store the residues r1 , r1 − pi , r2 , r2 − pi in a hash table or dictionary and
+count them directly as they are computed. All we need are the resulting values α
+and their counts, since we are only interested in those values whose count exceed a
+certain threshold, e.g. 3. The information about which primes divide the resulting
+f (xα ) is lost, but we do not need it until the linear algebra step.
+    Another implementation detail concerns the computation of the residues r1 and
+r2 , particularly the inversion of M modulo the primes in F\S. This is a quite
+expensive step and similar to switching to another polynomial in MPQS or SIQS.
+However, we have found a remedy for this problem that will also be explained in
+the course of the following subsection.
+8                                         M. HITTMEIR
+
+
+                     Table 1. Choice of factor base sizes m and n
+
+                                    Digits      m        n
+                                       ≤ 18     60       12
+                                    19 − 25     150      30
+                                    26 − 34     200      40
+                                    35 − 36     300      60
+                                    37 − 38     400      80
+                                    39 − 40     500      100
+                                    41 − 42     600      120
+                                    43 − 44     700      140
+                                    45 − 48     1000     200
+                                    49 − 52     1200     240
+                                    53 − 56     2000     400
+                                    57 − 60     4000     800
+                                    61 − 66     6000     1200
+                                    67 − 74     10000    2000
+                                    78 − 80     30000    6000
+                                    81 − 88     50000    10000
+                                    89 − 94     60000    12000
+                                    95 − 100    100000   20000
+
+
+
+
+3.2. Current implementation. Let us now discuss our implementation4 and the
+used parameters. For the sizes m and n of the factor base F and the small factor
+base S, we aim5 at the values given in Table 1. Here, m is chosen similarly as for
+SIQS in various factorization tools. In particular, the choices for m between 26 and
+100 digits are taken from the source code of the primefac package in Python, which
+uses similar parameters as Msieve v1.52 and is one of the implementations used in
+our experiments in Section 4. In order to find a good choice for n, which is a new
+parameter in our algorithm, we conducted a number of experiments. In the end,
+n = m/5 showed satisfying results.
+   Let us start by discussing the precomputations that we conduct prior to our
+main loop for finding smooth relations.
+      (i) Compute the factor base F and small factor base S.
+     (ii) Compute the roots of f modulo pi for the odd primes pi in F.
+    (iii) Compute a product tree of F as preparation for smooth batch6 (see Sec-
+          tion 2).
+    (iv) We want to avoid the inversion in the coefficients ci = (M/pi )−1 (mod pi )
+          used in Step 2 of the function get x. Let µ be the product of all primes in
+          S and let γi := (µ/pi )−1 (mod pi ). Then it is easy to check that, for every
+          M | µ and every i = 1, . . . , n, we have
+                                    µγi   M ci
+                                        ≡            mod M.
+                                     pi    pi
+         We hence precompute the global coefficients Λi := (µγi )/pi for i = 1, . . . , n
+         once and may then use them in the main loop, even though the modulus
+         M is constantly changing.
+
+    4Repository: https://github.com/sbaresearch/smoothsubsumsearch
+   5Our implementation considers the first 2m primes for F and then removes those p with
+(N |p) = −1 from the factor bases. Since N is a quadratic non-residue for about half of these
+primes, this leads to slightly varying, but overall similar cardinalities as those given in Table 1.
+   6We modified the code from https://facthacks.cr.yp.to for our implementation.
+                                       SMOOTH SUBSUM SEARCH                                                   9
+
+
+     (v) In Step (ii), we computed the roots {si,1 , si,2 } of f modulo the odd primes
+         in the small factor base S. In addition, we also compute the differences
+                                        ∆i := Λi · (si,2 − si,1 ).
+        If we then want to switch from a solution x =              b (x1 , . . . , xi−1 , 1, xi+1 , . . . , xn )
+        to the solution (x1 , . . . , xi−1 , 2, xi+1 , . . . , xn ) or vice versa, we may easily do
+        that by computing (x + ∆i ) (mod M ) or (x − ∆i ) (mod M ), respectively.
+Equipped with the quantities Λi and ∆i , we may now move on to the core of the
+SSS algorithm, which is the search function. This function runs in a repeated loop
+until we have found enough smooth relations. Let R and P be the sets in which
+we save full and partial relations, respectively.
+
+search(k, R, P)
+ 1: Choose k random indices in {1, . . . , n} and store them in a set I.
+ 2: Compute the list M of all primes pi ∈ S with i ∈ I, and their product M .
+ 3: Compute the inverses µp := M −1 (mod p) for all p ∈ F\S.
+ 4: For i = 1, . . . , n, let xi = 1 if i ∈ I, and set xi = 0 otherwise.     Compute
+    x := get x(x1 , x2 , . . . , xn ).
+ 5: for i ∈ I do
+ 6:    Update x ← (x + ∆i ) (mod M ) and initialize a list B.
+ 7:    for p ∈ F\S do
+ 8:        Compute rk := (sk − x) · µp (mod p) for the roots s1 , s2 of f (mod p).
+ 9:        Add (p, r1 , r2 ) to B.
+10:    Initialize a set of candidates C = ∅.
+11:    for each prime q ∈ M do
+12:        If q = pi , continue
+13:        Compute m := M/q and initialize a list K.
+14:        for p ∈ F\S do
+15:            Compute αk := q · rk (mod p) for k = 1, 2, where (p, r1 , r2 ) ∈ B.
+16:            Add α1 , α1 − p, α2 , α2 − p to K.
+17:        for each α ∈ K that occurs at least three times do
+18:            Compute x := x + αm and add f (x)/m to C.
+19:    Run smooth batch(F, C). Let g1 , . . . , gℓ be the returned values.
+20:    for i = 1, . . . , ℓ do
+21:        If gi = 1, add the corresponding x to R.
+22:        If 1 < gi < 128 · pm , add (x, gi ) with the corresponding x to P.
+
+
+   The parameter k in the search function and the size n of the small factor base
+together have a direct impact on the average magnitude of the values M . Similarly
+to our approach for choosing n, we have conducted a number of experiments to
+derive a suitable choice for k. In the current implementation, we are using k = 6.
+In Step 3, we then compute all inverses of M modulo the primes in F\S. As already
+mentioned in the end of the last subsection, we have found a way to only have to
+do this once for every full loop of search. In the application of get x in Step 4, we
+use the precomputed values Λi . Here, we are starting with the solution (x1 , . . . , xn )
+that consists of only 0’s and 1’s. The remainder of the algorithm is a large for-loop.
+In Step 6, we make sure that we are considering a different value for x in each run.
+10                                       M. HITTMEIR
+
+
+By adding ∆i to the previously used x, we exchange the corresponding 1 in the
+solution vector by a 2, which avoids redundancies in the found relations. The Steps
+6 to 9 compute the transformations r1 and r2 (see (3.2)) of the roots of f (mod p)
+for p ∈ F\S. Instead of checking for collisions7 as discussed in Section 3.1 and
+moving on to the next i ∈ I, we save the values for later usage in the inner loop,
+starting at Step 11. In this loop, we are performing the search for collisions not for
+our initial candidate pair (x, M ), but for the candidate pairs (x, M/q) for all primes
+q dividing M . Using the values in the precomputed list B, Step 15 computes the
+respective transformation of the roots of f (mod p) much more efficiently. Namely,
+we have
+                (sk − x) · (M/q)−1 ≡ (sk − x) · µp · q ≡ q · rk mod p.
+So the values for the list K that we want to check for collisions may be computed
+by simple multiplications of two small numbers q and rk modulo p. This makes
+the method much more efficient than if we would have to compute inverses in the
+innermost loop.
+    Step 12 removes a redundancy in the computation, as the change applied to x
+in Step 6 does not affect the values of x (mod M/q) in the case where q = pi . In
+Step 17, we need to find those α that occur more than three times in K. There are
+many different ways to achieve this, from counting the values on the fly in Step 15
+to hash tables and dictionaries8. Finally, we apply smooth batch to C and check
+if the resulting non-smooth parts of any of the candidates equals 1, in which case
+we have found a full relation, or is smaller than 128 · pm , in which case we have
+found a partial relation (see Section 2).
+    The Steps 1 to 4 may be considered as a global search, in which we end up with
+an initial candidate pair (x, M ). The large for-loop spanning from Step 5 to Step
+22 may be considered as a local search, in which we refine the initial candidate pair
+and obtain arguments x with a higher probability of leading to smooth values f (x).
+We note that, after the random choice of indices in the global search in Step 1, the
+local search and the remainder of the algorithm are fully deterministic. We have
+to repeat the function search(k, R, P) until we have found enough full and partial
+relations. As soon as this is the case, we proceed to the linear algebra stage of the
+algorithm, which is the same as for other Dixon-type algorithms. In addition to
+the potential optimizations that will be described in Section 5.4, there are minor
+tweaks and variations of the algorithm that make it run a bit faster. Let us discuss
+two of them:
+                                                          √
+     (1) Using a different polynomial than f (x) = (x+⌈ N ⌉)2 −N . While SSS does
+         not really gain anything by changing polynomials during the algorithm like
+         in SIQS, the search seems to run faster for certain√ polynomials compared
+         to others. In particular, consider fγ (x) = (x + ⌈ γN ⌉)2 − γN for small
+         choices of γ ∈ N. A well-known approach for finding a good choice of γ is
+         the Knuth-Schroeppel function ([29, p.335]). However, we have not used
+         this improvement in the experiments in Section 4.
+     (2) Let η be the product of all primes in F, which is computed in the product
+         tree during the initialization (see Step (iii) of the precomputation steps).
+   7In our actual implementation, we also use r and r from Step 8 for finding collisions. We have
+                                               1     2
+omitted it here because it would have made the description of search unnecessarily complicated.
+   8In Python, we may use the Counter method from the Python Standard Library collections
+(https://docs.python.org/3/library/collections.html#collections.Counter).
+                              SMOOTH SUBSUM SEARCH                                   11
+
+
+        Before starting the search loop, we multiply η by powers of the primes in
+        the factor base until each prime power dividing η is larger than 215 . This
+        allows to reduce the exponent e in Step 3 of smooth batch. In fact, our
+        implementation does not run Step 3 at all. We might miss a few smooth
+        relations, but the runtime savings due to the omitted repeated squarings
+        make up for that. In slightly different form, this improvement is already
+        mentioned in Bernstein’s original paper on the smooth-batch algorithm. In
+        fact, a long list of other ideas for speedups of the procedure can be found
+        in [1, Section 3], so we suspect that there is room for further improvement.
+3.3. Comparison to SIQS. Let us now compare SSS to the Quadratic Sieve,
+and in particular to the self-initializing version SIQS that has been described in
+Section 2. In the experiments in Section 4, we will see that SSS is consistently
+faster than SIQS by a factor between 5 and 7. While it does not appear feasible
+to rigorously prove a runtime improvement by a constant between such complex
+procedures, we will consider some arguments that provide theoretical and heuristical
+plausibility for the improvement by the observed factor.
+   Starting with the similarities, the Steps 1 to 9 in search are rather close to
+what happens in SIQS when a new polynomial fa,b is chosen. Our choices of M
+and x resemble the choices of a and b, and the computation of the values rk in
+Step 8 corresponds to the computation of the roots of fa,b modulo the primes in
+F\S. While SIQS conducts these computations modulo the complete factor base
+F, we restrict our attention to F\S. There are also differences in how we choose
+M compared to how a is typically chosen. Nevertheless, the setup and preparations
+for what happens later in both algorithms are somewhat similar, and it seems fair
+to assume that there are no major deviations in the runtimes of these parts of the
+techniques. The main structural difference is in the Steps 10 to 22 of search. In
+particular, we find our smoothness candidates by searching for collisions in the list
+K, while SIQS uses a sieving procedure on an interval of certain length 2L. We
+will now compare the two approaches for finding suitable candidates x + αM with
+|α| bounded by pn , the largest prime in the small factor base S. For the sake of
+simplicity, let us consider just the positive interval [0, pn ]. In SIQS, we sieve this
+interval in the manner described in Section 2, which takes around
+                         X                    X
+                      2·    ⌈pn /p⌉ ≥ 2 · (pn    1/p + |F| − |S|)
+                        p∈F                  p∈S
+
+operations. The factor 2 comes from the fact that we have to do this two times,
+once for each root modulo each prime. In SSS, we have to compute the values αk in
+Step 15, which are two operations (one for each root) per prime in F\S. Overall,
+this makes
+                                  2 · (|F| − |S|)
+operations. One can now compare these two terms asymptotically and numerically.
+Asymptotically, the Prime Number Theorem implies that the SIQS term is around
+O(pn log log pn ) and that the SSS term is around O(pm / log pm ), where pm is the
+largest prime in the factor base. So one would expect that, numerically, the differ-
+ence between the two quantities grows larger. We verified this by computing the
+terms for a few examples. For inputs with around 30-70 digits, the SIQS term was
+usually about 3 to 8 times larger than the SSS term. For inputs with 75-100 digits,
+it was usually about 8 to 13 times larger.
+12                                      M. HITTMEIR
+
+
+   Of course, this is not the complete picture. One might argue that the sieving
+operations in SIQS are fixed-precision additions, whereas the main operations in
+SSS are multiplications modulo the primes in F\S. While that is true, we point
+out that SIQS has to compute new roots of the polynomials every time it starts
+with a new interval, and this happens also by performing multiplications modulo
+the primes in the factor base. SIQS then proceeds with the sieving step. SSS, on
+the other hand, does nothing else but computing the multiplications. It basically
+omits the sieving step.
+   Another objection might be that SIQS finds (almost) all candidates of the form
+x + αM with α < pn that lead to smooth relations, while SSS only finds those for
+which the corresponding y-value has at least three prime factors in F\S. However,
+it appears that the number of relations satisfying this condition is quite large. If
+anything, it may make sense to further strengthen the condition, not weaken it.
+Depending on the set threshold in the sieving process, the resulting candidates in
+SIQS will have a high likelihood of leading to either full or partial relations. The
+condition of having at least three large prime divisors in SSS leads to more “false
+positives” that have to be tested and rejected in the smooth-batch procedure. This
+fact becomes more important for larger inputs with 70 digits or more (see Figure 2
+in Section 4), where the higher cost of the smooth-batch procedure in SSS partially
+compensates the growing amount of operations in SIQS mentioned above.
+   We now want to stress a few additional aspects that work to the favor of SSS.
+     (1) Working modulo M/q for the different prime factors q of M in the inner-
+         most loop allows us to switch to a new search domain with essentially zero
+         cost. SSS focuses on relatively small values for α, particularly those in
+         the interval [−pn , pn ]. SIQS has to sieve a larger interval of length 2L for
+         each polynomial to reduce the cost resulting from switching between poly-
+         nomials9. The probability of finding smooth relations decreases sharply for
+         growing values of α.
+     (2) Quite regularly, SSS will find smooth relations from α’s with absolute value
+         larger than pn . If three or more of the larger primes in F\S divide a
+         candidate value, and the corresponding residue is larger than pn , this will
+         also be detected.
+     (3) SSS is arguably simpler than SIQS. Its core functions can be implemented
+         in around 100 lines of code, and the results on smaller numbers show that
+         there appears to be a lower amount of computational overhead.
+With all this in mind, the results of our experiments (an improvement by a factor
+of around 10 for 30-40 digits, and by a factor of 5 to 7 for 45-100 digits) might
+be explained as follows: For smaller numbers (30-70 digits), the improvement is
+a combination of a reduced amount of overhead together with a reduced factor of
+around 3 to 8 of main SSS operations compared to main SIQS operations. For
+larger numbers, the improvement is a result of a smaller average size of α and a
+reduced factor of around 8 to 13 of main SSS operations compared to main SIQS
+operations. With increased input size, the smooth-batch procedure for detecting
+false positives becomes a bottleneck in SSS, which compensates these effects to
+some extent. Overall, this leads to a consistent improvement by a factor of around
+5 to 7.
+    9For instance, consider inputs with 60 digits. Then p is around 14000, while a usual choice
+                                                         n
+for L for inputs of this size is 196608.
+                                SMOOTH SUBSUM SEARCH                                13
+
+
+   As initially mentioned, this subsection is not considered to be a rigorous proof of
+the observed runtime reduction. There are several factors that cannot be considered
+in full detail here, such as particular nuances of the implementations. However, we
+hope to have made a convincing case for the plausibility of the improvement.
+3.4. SSSf: A filter for smoothness candidates. We have said that the smooth-
+batch procedure gets more expensive as the input number grows and smooth rela-
+tions become rare. In practical terms, this becomes noticeable on inputs N with
+about 70 digits or more. Before presenting our experiments, we propose an improve-
+ment that works like a filter for the candidates in C in Step 19 of search. Prior
+to applying smooth batch with the complete factor base F, we apply it with a
+subset of its smallest primes. To be more concrete, we split up F into two disjoint
+subsets F1 and F2 . F1 contains the smallest primes in F such that ρ = |F|/|F1 | for
+some preset proportion ρ, and F2 contains all remaining primes. We then replace
+Step 19 in search by the following procedure.
+
+smooth filter(F1 , F2 , C, δ)
+ 1: Initialize Cf = ∅
+ 2: Run smooth batch(F1 , C). Let g1 , . . . , gℓ be the returned values.
+ 3: for i = 1, . . . , ℓ do
+ 4:     If gi < 10d/2−δ for the number d of decimal digits of N , add gi to Cf .
+ 5: Run smooth batch(F2 , Cf ) and proceed with Step 20 of search.
+
+
+   The main goal of smooth filter is to reduce the number of candidates that have
+to be checked in the smooth-batch procedure for divisibility by the complete factor
+base. In order to achieve that, we first apply smooth batch(F1 , C) to check for
+divisibility by the smallest √
+                             primes. If the resulting non-smooth part of a gi is not
+significantly smaller than ⌈ N ⌉ in Step 4, we directly discard this candidate.
+   We denote SSS applied with this modification by SSSf. While SSSf is in fact
+slower than SSS for inputs N with up to around 70 digits, it shows an improved
+performance on inputs with 75-100 digits. Besides the already discussed parameters
+m, n and k, SSSf comes with two additional parameters ρ and δ. In our current
+implementation, we are using ρ = 10 and δ = 5. In addition, we are using k = 7
+instead of the choice of k = 6 we have used in SSS. However, these values may not be
+optimal, and it certainly makes sense to conduct more experiments for fine-tuning
+them with regards to the size of the input number.
+
+                                  4. Experiments
+   The approach described in Section 3 has been implemented in the program-
+ming language Python, a freely available high-level language that emphasizes code
+readability. The reader may therefore easily reproduce all experimental results pre-
+sented in this section. On the other hand, Python is considerably slower than other
+programming languages (e.g. C), which restricted the size of the input numbers N
+we could factorize in our experiments. In the range from 30 to 70 decimal digits, it
+was possible to perform full factorization tests on random semiprimes. For larger
+inputs ranging from 75 to 100 digits, this would have taken too much time. For
+such numbers, we stopped the algorithms after one hour and compared the amount
+of smooth relations that have been found during this time. Due to this limitation,
+14                                     M. HITTMEIR
+
+
+there is a factor of randomness involved, particularly for the results on inputs with
+90 to 100 digits. However, it allows us to observe a general tendency of the runtime
+of the algorithms and their development for growing input numbers.
+   In order to compare SSS to SIQS, we have used currently available implemen-
+tations of SIQS in Python libraries. The first we found is a recent implementa-
+tion in sympy 10, a well-known and widely used library for symbolic mathematics.
+The second implementation we found is part of primefac 11, a package focused on
+primality tests and integer factorization. It is noted in the documentation that
+their SIQS implementation is taken mostly verbatim from another package, Py-
+Factorise 12. While we have found other implementations of the (Self-initializing)
+Quadratic Sieve in Python, these two were most refined and competitive in our
+experiments. Throughout the section, we will denote sympy’s implementation by
+sSIQS and the implementation by primefac/PyFactorise by pSIQS. With regards
+to the comparability of the approaches, we point out the following.
+      • We have applied all three implementations with the same code for the sec-
+         ond phase (the linear algebra stage13) to make sure that any runtime dif-
+         ferences only result from the performance in the first phase, where smooth
+         relations are collected. We utilized a Gaussian elimination algorithm over
+         F2 as it is implemented in primefac. The approach is based on [17].
+      • For all approaches, we used a factor base size m of F close to the values in
+         Table 1. For the length L of the sieved intervals in the SIQS implementa-
+         tions, we used the standard settings given in the source code of pSIQS.
+      • Both sSIQS and pSIQS do not use the Knuth-Schroeppel function to find a
+         suitable multiplier γ for N . As already discussed at the end of Section 3.2,
+         we also did not make use of this improvement.
+      • In pSIQS, the large prime variant (see end of Section 2) is not implemented.
+         This has to be kept in mind when considering the results, and is also the
+         reason why we did not run pSIQS on inputs with 55 digits or more.
+      • We used SSS with the bound 128 · pm for saving partial relations (see Step
+         22 of search). The same bound is used in sSIQS.
+Let us now discuss our experimental setup. We consider input numbers N with
+d = 30, 35, 40, . . . , 95, 100 digits. For each of these input sizes, we did the following.
+    (1) Generate a random semiprime N with d digits, such that its two prime
+         factors are about the same size.
+    (2) Apply sSIQS to factorize N . If d ≤ 50, apply pSIQS to factorize N .
+    (3) If d ≤ 70, apply SSS to N . For d = 75, 80, 85, 90, 95, 100, apply SSSf to N .
+Let us start with the results14 for 30 ≤ d ≤ 70. Due to the increase in general time
+complexity, we consider 20 different inputs N for d ∈ {30, 35, 40}, 10 different N
+for d ∈ {45, 50, 55}, five different N for d = 60 and three different N for d = 65, 70.
+After we have finished all runs for a certain d, we computed the mean and the
+standard deviation of the runtimes of all methods. The results can be found in
+Table 2, and the mean runtimes are visualized in Figure 1 in form of line plots.
+     10https://docs.sympy.org/latest/modules/ntheory.html
+     11
+     https://pypi.org/project/primefac/
+     12
+     https://github.com/skollmann/PyFactorise
+   13In general, this stage contributes only a tiny fraction to the complete runtime.
+   14All computations have been conducted on a standard laptop with AMD Ryzen 7 5800H
+processor (8-core 3.2 GHz) and 16GB RAM.
+                               SMOOTH SUBSUM SEARCH                               15
+
+
+            Table 2. Runtime complexity in seconds: Mean ± STD
+         Last column displays improvement factor of SSS over the fastest
+                                 SIQS method
+
+         #Digits SSS                sSIQS               pSIQS
+         30        0.17±0.06        3.54±2.51           2.25±1.33       13.2
+         35        0.67±0.27        5.72±2.24           10.95±6.98      8.5
+         40        2.01±0.64        20.41±5.72          24.19±12.26     10.2
+         45        7.16±2.85        40.20±17.21         61.71±40.66   5.6
+         50        31.76±13.04      172.35±55.96        505.34±282.97 5.4
+         55        81.64±32.94      451.13±162.42       –             5.5
+         60        208.35±32.67   1352.57±176.28   –                    6.5
+         65        740.12±120.89 4456.17±984.49    –                    6.0
+         70        3157.13±252.08 16578.18±1532.10 –                    5.3
+
+
+
+
+           (a) 30 to 40 digits                          (b) 45 to 55 digits
+
+
+
+
+                                  (c) 60 to 70 digits
+
+        Figure 1. Mean runtime complexity results as shown in Table 2
+
+   For inputs with 30 − 40 digits, SSS is between 8.5 and 13.2 times faster than the
+SIQS approaches. For inputs with 45 − 70 digits, the improvement factor is in the
+range between 5.3 and 6.5. sSIQS and pSIQS behave somewhat similar for integers
+with 30 to 45 digits. For inputs with 50 digits and higher, it becomes increasingly
+noticeable that pSIQS does not make use of the large prime variant. Hence, we did
+not consider it in our experiments on numbers with 55 to 70 digits.
+16                                  M. HITTMEIR
+
+
+   Let us now discuss the results for inputs with 75 to 100 digits. For each d in
+this range, we conducted experiments on two different numbers N . For each N ,
+we applied SSSf (see Section 3.4) and sSIQS and let them run for one hour each.
+Finally, we compared the number of found relations during this time. The results
+are in Table 3.
+
+           Table 3. Found relations after 3600 seconds: Mean ± STD
+           Last column displays improvement factor of SSSf over sSIQS
+
+                    #Digits SSSf               sSIQS
+                    75        12737.5±2677.5 1880.0±363.0 6.8
+                    80        5544.5±1102.5 920.5±146.5 6.0
+                    85        1790.5±539.5   350.0±100.0 5.1
+                    90        538.5±36.5       86.0±16.0      6.3
+                    95        356.0±4.0        64.5±5.5       5.5
+                    100       139.0±51.0       25.0±5.0       5.6
+
+
+   We can see that SSSf finds between 5.1 and 6.8 times as many smooth relations
+as sSIQS in the same time. As already mentioned, these are by no means large
+scale experiments, and there is a certain amount of variance involved in the specific
+numbers of the table. Looking at general tendencies, however, we point out that
+the factors in the last column are astonishingly similar to the results we got for
+numbers with 45 to 70 digits in Table 2. In particular, there appears to be no
+substantial decrease of the advantage of SSSf over sSIQS for larger inputs.
+   With regards to the setup of this experiment, one should mention that the num-
+ber of found relations in SSS, SSSf and SIQS is not uniformly distributed over time.
+In the later stages of the process, the methods are more likely to connect two par-
+tial relations to a full relation and thereby, on average, find more smooth numbers
+compared to the beginning of the process. However, this is something that affects
+both SSSf and sSIQS in the same manner. As a consequence, it seems reasonable
+to conclude from these results that SSSf would finish the factorization of numbers
+with 75-100 digits around 5 to 7 times faster than sSIQS.
+
+   Finally, let us consider the cardinality of the candidate set C to which we apply
+smooth batch in Step 19 of search. In Section 3.3, we have already talked about
+the number of false positives in SSS. While this number is rather small for inputs
+with 55 digits or less, it starts to increase for inputs with more than 65-70 digits.
+In Figure 2, a histogram shows the average size of C for inputs with 60, 70, 80 and
+90 digits. We can see that the cardinality of C is between 1000 and 2000 for inputs
+with 80 to 90 digits. This is still a very small amount compared to the length of the
+search domain, but it constitutes an additional amount of work in smooth batch
+that, in this form, is not necessary in SIQS. There, the number of elements that
+survive the sieving is comparably small, and so is the cost for processing them, i.e.,
+checking whether they lead to full or partial relations.
+   One solution for mitigating the additional cost is to change our condition for
+including elements in C. For example, we could increase the number of large primes
+in F\S that have to divide our candidates from 3 to 4. Indeed, this tends to
+drastically reduce the size of C to a two-digit number. However, it also reduces
+                              SMOOTH SUBSUM SEARCH                                    17
+
+
+
+
+        Figure 2. Number of average elements in C in Step 19 of search.
+        We compare the size of C in SSS with the size of the filtered set Cf
+        of candidates in in smooth filter of SSSf.
+
+the number of found relations and appears to lead to an overall slower algorithm.
+A much better solution is the application of SSSf as presented in Section 3.4. We
+first apply the smooth-batch procedure to all candidates in C, but only modulo a
+fraction (e.g. 1/10) of the factor base. This is far less expensive and allows us
+to discard a lot of less-promising candidates that are not small enough afterwards.
+Figure 2 shows that this filter is very effective in reducing the number of elements
+to which we have to apply the smooth-batch procedure modulo the complete factor
+base. While these steps are still more work compared to what we have to do in
+SIQS, it only appears to equalize the growing factor of increased main operations
+(see Section 3.3) in SIQS compared to the main operations in SSS(f) for inputs
+with 75-100 digits, and we still achieve an improvement by a factor of 5 to 7.
+
+                             5. Other Ideas for SSS
+   Our chances of finding smooth numbers with SSS depend on the ratio of the
+solution x and considered modulus M . The size of x directly affects the size of the
+considered candidate f (x), while M divides f (x) by definition and is a factor that
+is always smooth for all considered candidates. As a result, we would like to make
+x as small and M as large as possible. For a moment, let us forget about what we
+are doing in our current implementation, and consider the following three possible
+approaches for solving this problem:
+     (1) For a fixed modulus M , try to find a related representation (x1 , . . . , xn )
+         such that the value x returned by get x(x1 , x2 , . . . , xn ) is minimized.
+     (2) For a fixed value x, try to find divisors m dividing M such that the ratio
+         (x (mod m))/m is minimized.
+     (3) Use a different search technique to optimize both parameters at once by
+         minimizing the objective function
+                                      ψ = |x|/M.
+18                                     M. HITTMEIR
+
+
+Section 5.1, Section 5.2 and Section 5.3 refer to these approaches respectively. Be-
+sides some proof-of-concept experiments, the described ideas have not been imple-
+mented yet. Testing their applicability to possibly improve SSS is a subject for
+future research. Section 5.4 discusses some minor speedups of our current code.
+
+5.1. Lattice Reduction. We start with the approach of fixing M and finding
+a suitable subsum, i.e., a corresponding representation (x1 , . . . , xn ) such that x
+returned by get x(x1 , x2 , . . . , xn ) is minimized. Let M = ρ1 . . . ρk , where the ρi are
+primes in our factor base or powers of such primes. For γi := (M/ρi )−1 (mod ρi )
+and Mi := M γi /ρi , we may write the possible values x returned by get x as
+(5.1)               s1,j1 M1 + s2,j2 M2 + . . . + sk,jk Mk     (mod M ),
+where si,ji are solutions of f (x) ≡ 0 (mod ρi ). Our ultimate goal is to find the
+choice of (s1,j1 , . . . , sk,jk ) for which the value of (5.1) is minimized.
+   In principle, this problem is a modular version of the multiple choice subset-sum
+problem (MCSS), which is discussed in [16, Sec. 11.10.1]. We consider k classes
+Ni := {si,ji Mi (mod M ) : f (si,ji ) ≡ 0 (mod ρi )}, and the elements of the classes
+are called weights. Denoting our weights as ωi,ji := si,ji Mi (mod M ), our goal is
+to minimize the sum ω1,j1 + · · · + ωk,jk (mod M ). While MCSS is NP-complete,
+there are multiple ways to approach this problem and solve it efficiently for certain
+sizes of k or cardinalities of the classes Ni . For example, a time-space tradeoff is
+discussed in [13, Section 6], where a similar MCSS occurs in a more theoretical
+approach to integer factorization. There, the solution of the MCSS corresponds to
+the sum S := p+q of the two prime factors of semiprime numbers N = pq. While it
+would be enough to solve one MCSS instance in order to find S (and thereby factor
+N ), the problem of the approach in [13] in terms of efficiency is that both k and
+the classes Ni become quite large (around the size of log N ). In our present setting,
+however, we are basically free to choose k and may also control the cardinalities
+of the Ni by deciding in advance which prime powers to include as factors of M .
+We may hence choose from the large variety of available techniques for minimizing
+(5.1), one of which is based on lattice reduction.
+   It is well known that the LLL-algorithm ([20]) for lattice reduction can be used
+to solve a certain class of knapsack and subset-sum problems in polynomial-time
+([28]). In particular, consider the standard subset-sum problem
+(5.2)                             a1 x1 + · · · + aℓ xℓ = s,
+where the ai and s are integers. The task is to find (x1 , . . . , xℓ ) ∈ {0, 1}ℓ such that
+(5.2) is satisfied. An important quantity is the density d := ℓ/ log2 (maxi ai ). In [5]
+it is shown that an oracle for finding the shortest vector in a special lattice can be
+used to solve almost all subset-sum problems with d < 0.9408. In practice, this
+oracle is replaced by an√application of the LLL-algorithm. The procedure works
+as follows: For n := ⌈ 21 ℓ⌉, we define the lattice L ⊆ Zℓ+1 generated by the rows
+r1 , . . . , rℓ+1 of the matrix
+                                                     
+                                  1 0 · · · 0 na1
+                                 0 1 · · · 0 na2 
+                                                     
+                                 .. .. . .    ..  ..  .
+                                . .
+                                           . .     . 
+                                                      
+                                 0 0 · · · 1 nan 
+                                  1  1
+                                  2  2  · · · 12 ns
+                                     SMOOTH SUBSUM SEARCH                                         19
+
+                                                             Pℓ
+If (x1 , . . . , xℓ ) is a solution to (5.2), the vector v = i=1 xi ri −rℓ+1√ = (y1 , . . . , yℓ , 0)
+is an element of L, where yi ∈ {− 21 , 12 } and, hence, ∥v∥2 ≤ 12 ℓ. Knowing v, it
+is easy to retrieve a solution to the subset-sum problem. Therefore, the hope of
+applying the LLL-algorithm is that v will occur in the reduced basis of L.
+    If we apply the approach of lattice reduction for standard subset-sum directly to
+MCSS, the multiple-choice restriction (choosing exactly one element from each class
+Ni ) is not accounted for in the definition of the lattice L, hence too many vectors
+representing invalid solutions will be in the reduced basis. We now discuss an idea
+for solving this problem. As mentioned, we consider the classes N1 , N2 , . . . , Nk , and
+each class contains the weights ωi,1 , . . . , ωi,κi , where i = 1, . . . , k and κi := |Ni |.
+Moreover, let α ∈ N be a natural number which will be specified later. Our idea
+is to introduce a set of dummy subset-sum problems in the last few columns of
+the matrix by which the lattice is defined. The purpose is to force the lattice
+reduction algorithms into favoring vectors that correspond to choosing exactly one
+weight from each class. For example, assume that κi√= 2 for every i and that s is
+the target sum of our MCSS. Moreover, let n := ⌈ 21 k⌉. In this case, the matrix
+defining the lattice is of the shape
+                                                                            
+                         1 0 0 0 · · · 0 0 α 0 · · · 0 nω1,1
+                       0 1 0 0 · · · 0 0 α 0 · · · 0 nω1,2 
+                                                                            
+                       0 0 1 0 · · · 0 0 0 α · · · 0 nω2,1 
+                                                                            
+                       0 0 0 1 · · · 0 0 0 α · · · 0 nω2,2 
+(5.3)                                                                    ..  .
+                                                                            
+                       .. .. .. .. . .         .. .. .. .. . .   ..
+                      . . . .
+                                            .   .  .  .   .    .  .      .  
+                                                                             
+                       0 0 0 0 · · · 1 0 0 0 · · · α nωk,1 
+                                                                            
+                       0 0 0 0 · · · 0 1 0 0 · · · α nωk,2 
+                         1   1   1   1
+                         2   2   2   2   · · · 21 12 α α · · · α        ns
+So in addition to what we have seen in the matrix for the standard subset-sum
+problem, we add one additional column for each class, namely
+                        (α, α, 0, 0, . . . , 0, α)T , (0, 0, α, α, . . . , 0, α)T
+and so on. It is clear how the definition of this matrix may be generalized to classes
+withPmore than two weights in them. Let us consider this general case, and set
+ℓ = i κi . If (x1 , . . . , xℓ ) is a binary vector encoding a solution to the MCSS (in
+the same way as described above for standard subset-sum), then the vector
+                            ℓ
+                            X
+                       v=          xi ri − rℓ+1 = (y1 , . . . , yℓ , 0, · · · , 0, 0)
+                             i=1
+                                                                                     √
+with yi ∈ {− 21 , 12 } will be in the lattice L ⊆ Zℓ+k+1 , and satisfies ∥v∥2 = 21 k.
+   Besides searching for a short vector in the lattice L, we may also reduce MCSS
+to a specific Closest Vector Problem (CVP). This can be achieved by considering
+the lattice L′ defined by the matrix in (5.3) without the last row, and then defining
+the target vector t := (0, . . . , 0, α, α, . . . α, N s)T . We already know that the vector
+in L′ corresponding to the solution (x1 , . . . , xℓ ) is very close to t. In the context
+of our research on the idea in [13], we conducted proof-of-concept experiments
+and noticed that this CVP approach works much better in practice than the SVP
+approach discussed above. One apparent  √            reason is that there can be vectors in L
+that are still much shorter than 12 k in the euclidean norm. Most of these vectors
+20                                     M. HITTMEIR
+
+
+relate to some combination of the weights in the last column of (5.3) that sums to
+0 and omit the last row. The formulation of the CVP prevents this behavior.
+   We may transform our modular MCSS into an ordinary MCSS by defining the
+class N0 := {0, M, 2M, . . . (k − 1)M } and setting the approximative target sum
+s = (k − 1)M . In addition, note that the LLL approach described above only works
+for an exact target sum. However, [15, Section 6] shows how one may reduce any
+approximate MCSS instance to an exact one by dividing all weights by the approx-
+imate bound. Of course, there are several other aspects and details to consider,
+and we will elaborate on this approach in future work. One goal would be to prove
+an analogue of the standard subset-sum density result in [5] for our adaptation to
+MCSS. Such a result would also inform the choice of M in our SSS setting. As
+already mentioned, we want to take M as large as possible. Using lattice reduction
+for subsequently finding a relatively small value x in the related subsum has the
+potential of increasing our chances of finding smooth values of polynomials f .
+5.2. Small modular roots of linear polynomials. Let us now assume that we
+fix the value x (with regards to a certain modulus M ) and try to find divisors m
+of M such that the ratio (x (mod m))/m is minimized. One technique that might
+allow us to use larger values of M is Coppersmith’s method ([4]). In particular,
+consider the following result ([22, Theorem 3]).
+Theorem 5.1. Let M be an integer which has an unknown divisor m ≥ M β ,
+where 0 < β ≤ 1. Let 0 < ε < 17 β. Furthermore, let g(X) be a univariate monic
+polynomial of degree δ. Then we can find all solutions x0 for g(X) ≡ 0 mod m
+with
+                                        1 β2
+                                |x0 | ≤ M δ −ε .
+                                        2
+The running time is polynomial in ε−1 , δ and log M .
+   Assume that there is some divisor m ≥ M β of M such that the residue x0 of x
+                                  2
+modulo m satisfies |x0 | ≤ 12 M β −ε . Then we can find x0 by running Theorem 5.1
+with the polynomial g(X) = X − x. Having found x0 , it is easy to determine the
+corresponding divisor m and, thus, a suitable pair (x0 , m) with low ratio. Solving
+linear equations modulo unknown divisors has also been studied in [9] and [21].
+While this idea appears interesting in theory, it is not yet clear whether it is actually
+applicable to our problem. The main question is how to choose M and β to ensure
+the existence of pairs (x0 , m) that satisfy the bounds.
+5.3. A genetic algorithm. Finally, we assume an unrestricted search approach
+that chooses x and M together in an attempt to minimize the objective function
+ψ = |x|/M . For example, we could comb through different choices of x and M ,
+save all pairs (x, M ) for which ψ is below a certain bound in a set of candidates
+C, and regularly apply the smooth-batch procedure to C to find smooth values of
+f (x). This idea was our starting point for the SSS implementation before applying
+the more refined collision-based approach. In any case, there may be other, more
+elaborated approaches to quickly generate (and identify) suitable pairs (x, M ). One
+such possibility is a genetic algorithm ([8]). In general, genetic algorithms solve an
+optimization problem by representing the search space by a number of individuals
+(the “population”) that represent possible solutions. Each individual is represented
+by a so-called “chromosome” that reflects its properties. In our case, we may just
+use the representation vectors (x1 , . . . , xn ) as discussed in the beginning of Section 3.
+                                   SMOOTH SUBSUM SEARCH                                           21
+
+
+The next step is to find the best individuals in the population with regards to a
+fitness function. Here, we could use a version of our objective function ψ = |x|/M .
+Finally, the best n individuals are selected as “parents” for the next generation,
+which is obtained by applying certain changes (the “crossovers” and “mutations”) to
+the chromosomes. For example, we could change a random value in a chromosome
+(mutation), or we could take the chromosomes from two parents (say, (x1 , . . . , xn )
+and (y1 , . . . , yn )) and generate a child chromosome as (x1 , . . . , xi−1 , yi , . . . , yn ) for
+some random index i (crossover). As soon as we have obtained enough chromosomes
+for the next generation, the whole process starts again, i.e., we choose the best
+individuals and apply mutation and crossover.
+   Using the chromosomes and the fitness function as discussed above, we could
+immediately apply a genetic algorithm to solve the SSS problem. However, the main
+difficulty in improving the current implementation is in finding suitable mutation
+and crossover operations. Ideally, they would incorporate our current strategy and
+have a tendency of generating individuals with a smaller ratio of x and M than
+their parents. It may also make sense to combine the genetic algorithm with the
+ideas discussed in the previous subsections.
+
+5.4. Further speedups. In addition to the Knuth-Schroeppel multiplier and Bern-
+stein’s optimizations for the smooth-batch procedure discussed at the end of Sec-
+tion 3.2, there are other possible ways for improving SSS. Here are four examples.
+      • There are certain details of the algorithm that could be changed and played
+        with. For example, we could use more than the |I| different values for x in
+        Step 6 of search, prolonging the time before having to initialize a new run
+        of the function. We could also use other divisors of M as elements in M in
+        the for-loop in Step 11, not only its prime factors.
+      • We may control the batch size (i.e., the cardinality of C) in smooth batch.
+        At the moment, we just apply the smooth-batch procedure at the end of
+        each run of the main loop in search. It might be better to collect more
+        candidates until we have reached a certain number in C or Cf .
+      • One can certainly fine-tune the currently used parameters. For example,
+        our current choices of ρ and δ in SSSf are most likely not optimal for larger
+        numbers. It may also make sense to try other values for m and n.
+      • Due to the simplicity of SSS, the whole procedure is cut out for paralleliza-
+        tion. Different runs of search are independent from one another, so we may
+        easily use more than one processor for the collection of smooth relations.
+        In addition, the main loop in search is also parallelizable.
+
+
+                                          6. Summary
+   This paper presented Smooth Subsum Search, a new heuristic search approach
+for finding smooth values of polynomials. We have applied SSS as part of an integer
+factorization algorithm. For inputs between 30 and 100 digits, we compared SSS
+to the Self-initializing Quadratic Sieve. Our results show that SSS runs around 10
+times faster for inputs with 30 to 40 digits, and 5 to 7 times faster for inputs with 45
+to 70 digits. SSSf, an improved version of the original procedure for the application
+on larger numbers, is also 5 to 7 times faster in finding relations for inputs with 75
+to 100 digits. In addition, we have presented three ideas for possible variants and
+22                                        M. HITTMEIR
+
+
+further speedups in Section 5. Our future research will concern a detailed investiga-
+tion of these approaches. In particular, the lattice-based approach in Section 5.1 for
+solving MCSS problems could have other applications besides integer factorization.
+We will also work on the optimizations of the current implementation discussed
+in Section 5.4. Finally, we intend to explore further applications of SSS in other
+algorithms that also depend on finding smooth values of polynomials, such as the
+Number Field Sieve.
+
+Implementation. The reader may find our implementations of SSS and SSSf, the
+code for the runtime experiments conducted in Section 4, the inputs N used in the
+experiments, as well as the individual results for each N here: https://github.
+com/sbaresearch/smoothsubsumsearch.
+
+
+                                         References
+  [1] D. J. Bernstein, How to find smooth parts of integers, https://cr.yp.to/factorization/
+      smoothparts-20040510.pdf, 2004.
+  [2] H. Boender, H. J. J. te Riele, Factoring Integers with Large-Prime Variations of the Qua-
+      dratic Sieve, Exp. Math., 5: 257–273, 1996.
+  [3] S. Contini, Factoring integers with the self-initializing quadratic sieve, Masters Thesis, U.
+      Georgia, 1997.
+  [4] D. Coppersmith, Finding a Small Root of a Univariate Modular Equation, Lecture Notes
+      in Computer Science, 1070: 155–165, 1996.
+  [5] M. J. Coster et al., Improved low-density subset sum algorithms, Computational Complexity,
+      2: 111–128, 1992.
+  [6] R. Crandall, C. Pomerance, Prime Numbers, A Computational Perspective, Second Edition,
+      Springer Science+Business Media Inc., New York, 2005.
+  [7] J. D. Dixon, Asymptotically Fast Factorization of Integers, Math. Comp., 36 (153): 255–260,
+      1981.
+  [8] D. E. Goldberg, J. H. Holland, Genetic Algorithms and Machine Learning, Machine Learn-
+      ing, 3: 95–99, 1988.
+  [9] M. Herrmann, A. May, Solving Linear Equations Modulo Divisors: On Factoring Given Any
+      Bits, In: Pieprzyk, J. (eds) Advances in Cryptology - ASIACRYPT 2008, Lecture Notes in
+      Computer Science 5350, Springer, Berlin, Heidelberg, 2008.
+ [10] D. Harvey, An exponent one-fifth algorithm for deterministic integer factorisation, Math.
+      Comp., 90 (332), 2937–2950, 2021.
+ [11] M. Hittmeir, A babystep-giantstep method for faster deterministic integer factorization,
+      Math. Comp., 87 (314): 2915–2935, 2018.
+ [12] M. Hittmeir, A time-space tradeoff for Lehman’s deterministic integer factorization method,
+      Math. Comp., 90 (330): 1999–2010, 2021.
+ [13] M. Hittmeir, Integer factorization as subset-sum problem, J. Number Theory, 249: 93–118,
+      2023.
+ [14] D. Harvey, M. Hittmeir, A log-log speedup for exponent one-fifth deterministic integer fac-
+      torisation, Math. Comp., 91 (335): 1367–1379, 2021.
+ [15] N. Howgrave-Graham, A. Joux, New generic algorithms for hard knapsacks, EUROCRYPT
+      2010, 235–256, 2010.
+ [16] H. Kellerer, U. Pferschy, D. Pisinger, Knapsack Problems, Springer, Berlin, 2004.
+ [17] Ç. K. Koç and S. N. Arachchige, A fast algorithm for gaussian elimination over GF(2) and
+      its implementation on the GAPP, Journal of Parallel and Distributed Computing, 13 (1):
+      118–122, 1991.
+ [18] A. K. Lenstra, Integer Factoring, Designs, Codes and Cryptography, 19: 101-128, 2000.
+ [19] A. K. Lenstra, H. W. Lenstra (eds.), The development of the number field sieve, Lecture
+      Notes in Math. 1554, Springer, Berlin, Heidelberg, 1993.
+ [20] A. K. Lenstra, H. W. Lenstra, L. Lovász, Factoring Polynomials with Rational Coefficients,
+      Ann. of Math., 261(4): 515–534, 1982.
+                                SMOOTH SUBSUM SEARCH                                       23
+
+
+[21] Y. Lu, R. Zhang, L. Peng, D. Lin, Solving Linear Equations Modulo Unknown Divisors:
+     Revisited., In: Iwata, T., Cheon, J. (eds) Advances in Cryptology – ASIACRYPT 2015,
+     Lecture Notes in Computer Science 9452, Springer, Berlin, Heidelberg, 2015.
+[22] A. May, Using LLL-Reduction for Solving RSA and Factorization Problems, In: Nguyen,
+     P., Vallée, B. (eds) The LLL Algorithm. Information Security and Cryptography. Springer,
+     Berlin, Heidelberg, 2009.
+[23] J. Milan, Factoring Small to Medium Size Integers: An Experimental Comparison, inria-
+     0018864v2, 2010.
+[24] M. A. Morrison, J. Brillhart, A Method of Factoring and the Factorization of F7, Math.
+     Comp., 29 (129): 183–205, 1975.
+[25] C. Pomerance, Analysis and Comparison of Some Integer Factoring Algorithms, In: H. W.
+     Lenstra and R. Tijdeman, Eds., Computational Methods in Number Theory, Math Centre
+     Tracts—Part 1, Math Centrum, Amsterdam, 89–139, 1982.
+[26] C. Pomerance, A Tale of Two Sieves, Notices of the AMS, 43 (12): 1473–1485, 1996.
+[27] H. Riesel, Prime Numbers and Computer Methods for Factorization, Progress in Mathe-
+     matics (Volume 126), 2nd Edition, Birkhäuser Boston, 1994.
+[28] C. Schnorr, M. Euchner, Lattice Basis Reduction: Improved Practical Algorithms and Solv-
+     ing Subset Sum Problems, Mathematical Programming, 66: 181–199, 1994.
+[29] R. D. Silverman, The Multiple Polynomial Quadratic Sieve, Math. Comp., 48 (177): 329–
+     339, 1987.
+[30] S.S. Wagstaff Jr., The Joy of Factoring, American Math. Society, Providence, RI, 2013.
+
+  SBA Research, Floragasse 7, 1040 Vienna, Austria
+  Email address: mhittmeir@sba-research.org
+

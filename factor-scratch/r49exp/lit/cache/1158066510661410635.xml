@@ -1,0 +1,700 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/CNyr0rUCQd5wRhDjT5e3FItv4i4</id>
+  <title>arXiv Query: search_query=abs:"number field sieve"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:06:46Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22number+field+sieve%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>34</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1910.09592v1</id>
+    <title>On speeding up factoring with quantum SAT solvers</title>
+    <updated>2019-10-21T18:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1910.09592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.09592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There have been several efforts to apply quantum SAT solving methods to factor large integers. While these methods may provide insight into quantum SAT solving, to date they have not led to a convincing path to integer factorization that is competitive with the best known classical method, the Number Field Sieve. Many of the techniques tried involved directly encoding multiplication to SAT or an equivalent NP-hard problem and looking for satisfying assignments of the variables representing the prime factors. The main challenge in these cases is that, to compete with the Number Field Sieve, the quantum SAT solver would need to be superpolynomially faster than classical SAT solvers. In this paper the use of SAT solvers is restricted to a smaller task related to factoring: finding smooth numbers, which is an essential step of the Number Field Sieve. We present a SAT circuit that can be given to quantum SAT solvers such as annealers in order to perform this step of factoring. If quantum SAT solvers achieve any speedup over classical brute-force search, then our factoring algorithm is faster than the classical NFS.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-21T18:33:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+    <author>
+      <name>João Marcos Vensi Basso</name>
+    </author>
+    <author>
+      <name>Sebastian R. Verschoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.02874v2</id>
+    <title>A kilobit hidden SNFS discrete logarithm computation</title>
+    <updated>2017-07-18T06:49:46Z</updated>
+    <link href="https://arxiv.org/abs/1610.02874v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.02874v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We perform a special number field sieve discrete logarithm computation in a 1024-bit prime field. To our knowledge, this is the first kilobit-sized discrete logarithm computation ever reported for prime fields. This computation took a little over two months of calendar time on an academic cluster using the open-source CADO-NFS software. Our chosen prime $p$ looks random, and $p--1$ has a 160-bit prime factor, in line with recommended parameters for the Digital Signature Algorithm. However, our p has been trapdoored in such a way that the special number field sieve can be used to compute discrete logarithms in $\mathbb{F}\_p^*$ , yet detecting that p has this trapdoor seems out of reach. Twenty-five years ago, there was considerable controversy around the possibility of back-doored parameters for DSA. Our computations show that trapdoored primes are entirely feasible with current computing technology. We also describe special number field sieve discrete log computations carried out for multiple weak primes found in use in the wild. As can be expected from a trapdoor mechanism which we say is hard to detect, our research did not reveal any trapdoored prime in wide use. The only way for a user to defend against a hypothetical trapdoor of  this kind is to require verifiably random primes.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-10T12:03:40Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Jean-S{é}bastien Coron, Jesper Buus Nielsen. Eurocrypt 2017, Apr 2017, Paris, France. Springer, 10210, 2017, Lecture Notes in Computer Science</arxiv:journal_ref>
+    <author>
+      <name>Joshua Fried</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-319-56620-7_8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-319-56620-7_8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1003.2165v2</id>
+    <title>Coarse-grained integers - Smooth? Rough? Both!</title>
+    <updated>2012-02-17T13:52:07Z</updated>
+    <link href="https://arxiv.org/abs/1003.2165v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1003.2165v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We count ]B, C]-grained, k-factor integers which are simultaneously B-rough and C-smooth and have a fixed number k of prime factors. Our aim is to exploit explicit versions of the prime number theorem as much as possible to get good explicit bounds for the count of such integers. This analysis was inspired by certain inner procedures in the general number field sieve. The result should at least provide some insight in what happens there.
+  We estimate the given count in terms of some recursively defined functions. Since they are still difficult to handle, only another approximation step reveals their orders.
+  Finally, we use the obtained bounds to perform numerical experiments that show how good the desired count can be approximated for the parameters of the general number field sieve in the mentioned inspiring application.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-03-10T17:56:27Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Daniel Loebenberger</name>
+    </author>
+    <author>
+      <name>Michael Nüsken</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.10860v1</id>
+    <title>A New Angle on Lattice Sieving for the Number Field Sieve</title>
+    <updated>2020-01-29T14:24:09Z</updated>
+    <link href="https://arxiv.org/abs/2001.10860v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.10860v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lattice sieving in two or more dimensions has proven to be an indispensable practical aid in integer factorization and discrete log computations involving the number field sieve. The main contribution of this article is to show that a different method of lattice enumeration in three dimensions will provide a significant speedup. We use the successive minima and shortest vectors of the lattice instead of transition vectors to iterate through lattice points. We showcase the new method by a record computation in a 133-bit subgroup of $\mathbb{F}_{p^6}$, with $p^6$ having 423 bits. Our overall timing nearly $3$ times faster than the previous record of a 132-bit subgroup in a 422-bit field. The approach generalizes to dimensions 4 or more, overcoming a key obstruction to the implementation of the tower number field sieve.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-29T14:24:09Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gary McGuire</name>
+    </author>
+    <author>
+      <name>Oisin Robinson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1103.1493v1</id>
+    <title>An Improvement to the Number Field Sieve</title>
+    <updated>2011-03-08T11:11:31Z</updated>
+    <link href="https://arxiv.org/abs/1103.1493v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1103.1493v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We improve the "sieve" part of the number field sieve used in factoring integer and computing discrete logarithm. The runtime of our method is shorter than that of existing methods. Under some reasonable assumptions, we prove that it is less than two-thirds of the running time of the algorithm used before asymptotically with probability gr</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-03-08T11:11:31Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Qizhi Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.6011v1</id>
+    <title>Montgomery's method of polynomial selection for the number field sieve</title>
+    <updated>2014-12-18T19:13:03Z</updated>
+    <link href="https://arxiv.org/abs/1412.6011v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.6011v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The number field sieve is the most efficient known algorithm for factoring large integers that are free of small prime factors. For the polynomial selection stage of the algorithm, Montgomery proposed a method of generating polynomials which relies on the construction of small modular geometric progressions. Montgomery's method is analysed in this paper and the existence of suitable geometric progressions is considered.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-18T19:13:03Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nicholas Coxon</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.1958v1</id>
+    <title>Root optimization of polynomials in the number field sieve</title>
+    <updated>2012-12-10T03:05:08Z</updated>
+    <link href="https://arxiv.org/abs/1212.1958v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.1958v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The general number field sieve (GNFS) is the most efficient algorithm known for factoring large integers. It consists of several stages, the first one being polynomial selection. The quality of the chosen polynomials in polynomial selection can be modelled in terms of size and root properties. In this paper, we describe some algorithms for selecting polynomials with very good root properties.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-10T03:05:08Z</published>
+    <arxiv:comment>16 pages, 18 references</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Mathematics of Computation 84 (2015), 2447-2457</arxiv:journal_ref>
+    <author>
+      <name>Shi Bai</name>
+    </author>
+    <author>
+      <name>Richard P. Brent</name>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-2015-02926-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-2015-02926-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.02689v2</id>
+    <title>Number Field Sieve with Provable Complexity</title>
+    <updated>2020-07-11T07:49:12Z</updated>
+    <link href="https://arxiv.org/abs/2007.02689v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.02689v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this thesis we give an in-depth introduction to the General Number Field Sieve, as it was used by Buhler, Lenstra, and Pomerance, before looking at one of the modern developments of this algorithm: A randomized version with provable complexity. This version was posited in 2017 by Lee and Venkatesan and will be preceded by ample material from both algebraic and analytic number theory, Galois theory, and probability theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-02T08:39:08Z</published>
+    <arxiv:comment>MSc Thesis, 113 pages, 1 table</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Barry van Leeuwen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1109.6398v2</id>
+    <title>On nonlinear polynomial selection for the number field sieve</title>
+    <updated>2013-06-28T05:33:23Z</updated>
+    <link href="https://arxiv.org/abs/1109.6398v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1109.6398v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nonlinear polynomial selection algorithms for the number field sieve address the problem of constructing polynomials with small coefficients by reducing to instances of the well-studied problem of finding short vectors in lattices. The reduction rests upon the construction of modular geometric progressions with small terms. In this paper, the methods used to construct the geometric progressions are extended, resulting in the development of two nonlinear polynomial selection algorithms.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-09-29T04:58:06Z</published>
+    <arxiv:comment>26 pages, substantially revised</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Nicholas Coxon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.10529v2</id>
+    <title>Smooth Subsum Search: A heuristic for practical integer factorization</title>
+    <updated>2023-07-11T11:58:43Z</updated>
+    <link href="https://arxiv.org/abs/2301.10529v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.10529v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two currently fastest general-purpose integer factorization algorithms are the Quadratic Sieve and the Number Field Sieve. Both techniques are used to find so-called smooth values of certain polynomials, i.e., values that factor completely over a set of small primes (the factor base). As the names of the methods suggest, a sieving procedure is used for the task of quickly identifying smooth values among the candidates in a certain range. While the Number Field Sieve is asymptotically faster, the Quadratic Sieve is still considered the most efficient factorization technique for numbers up to around 100 digits. In this paper, we challenge the Quadratic Sieve by presenting a novel approach based on representing smoothness candidates as sums that are always divisible by several of the primes in the factor base. The resulting values are generally smaller than those considered in the Quadratic Sieve, increasing the likelihood of them being smooth. Using the fastest implementations of the Self-initializing Quadratic Sieve in Python as benchmarks, a Python implementation of our approach runs consistently 5 to 7 times faster for numbers with 45-100 digits, and around 10 times faster for numbers with 30-40 digits. We discuss several avenues for further improvements and applications of the technique.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-25T11:34:15Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/s0129054123500296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/s0129054123500296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.08873v1</id>
+    <title>Rigorous Analysis of a Randomised Number Field Sieve</title>
+    <updated>2018-05-22T21:36:24Z</updated>
+    <link href="https://arxiv.org/abs/1805.08873v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.08873v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorisation of integers $n$ is of number theoretic and cryptographic significance. The Number Field Sieve (NFS) introduced circa 1990, is still the state of the art algorithm, but no rigorous proof that it halts or generates relationships is known. We propose and analyse an explicitly randomised variant. For each $n$, we show that these randomised variants of the NFS and Coppersmith's multiple polynomial sieve find congruences of squares in expected times matching the best-known heuristic estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-22T21:36:24Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. of Number Theory Vol. 187 (2018) 92-159</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Lee</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2017.10.019</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2017.10.019" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.04999v3</id>
+    <title>An Implementation of the Extended Tower Number Field Sieve using 4d Sieving in a Box and a Record Computation in Fp4</title>
+    <updated>2024-02-06T22:05:42Z</updated>
+    <link href="https://arxiv.org/abs/2212.04999v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.04999v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report on an implementation of the Extended Tower Number Field Sieve (ExTNFS) and record computation in a medium characteristic finite field $\mathbb{F}_{p^4}$ of 512 bits size. Empirically, we show that sieving in a 4-dimensional box (orthotope) for collecting relations for ExTNFS in $\mathbb{F}_{p^4}$ is faster than sieving in a 4-dimensional hypersphere. We also give a new intermediate descent method, `descent using random vectors', without which the descent stage in our ExTNFS computation would have been difficult/impossible, and analyze its complexity.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-09T17:36:41Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Oisin Robinson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.2177v2</id>
+    <title>An $L (1/3)$ Discrete Logarithm Algorithm for Low Degree Curves</title>
+    <updated>2009-12-20T17:24:45Z</updated>
+    <link href="https://arxiv.org/abs/0905.2177v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.2177v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an algorithm for solving the discrete logarithm problem in Jacobians of families of plane curves whose degrees in $X$ and $Y$ are low with respect to their genera. The finite base fields $\FF_q$ are arbitrary, but their sizes should not grow too fast compared to the genus. For such families, the group structure and discrete logarithms can be computed in subexponential time of $L_{q^g}(1/3, O(1))$. The runtime bounds rely on heuristics similar to the ones used in the number field sieve or the function field sieve.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-13T19:43:15Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Andreas Enge</name>
+      <arxiv:affiliation>INRIA Bordeaux - Sud-Ouest</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>INRIA Lorraine - LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>INRIA Lorraine - LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.1294v1</id>
+    <title>New techniques for computing the ideal class group and a system of fundamental units in number fields</title>
+    <updated>2012-04-05T18:17:30Z</updated>
+    <link href="https://arxiv.org/abs/1204.1294v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.1294v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe a new algorithm for computing the ideal class group, the regulator and a system of fundamental units in number fields under the generalized Riemann hypothesis. We use sieving techniques adapted from the number field sieve algorithm to derive relations between elements of the ideal class group, and $p$-adic approximations to manage the loss of precision during the computation of units. This new algorithm is particularily efficient for number fields of small degree for which a speed-up of an order of magnitude is achieved with respect to the standard methods.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-05T18:17:30Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jean-François Biasse</name>
+    </author>
+    <author>
+      <name>Claus Fieker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1408.0718v4</id>
+    <title>Improvements to the number field sieve for non-prime finite fields</title>
+    <updated>2022-08-25T09:45:36Z</updated>
+    <link href="https://arxiv.org/abs/1408.0718v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.0718v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose various strategies for improving the computation of discrete logarithms in non-prime fields of medium to large characteristic using the Number Field Sieve. This includes new methods for selecting the polynomials; the use of explicit automorphisms; explicit computations in the number fields; and prediction that some units have a zero virtual logarithm. On the theoretical side, we obtain a new complexity bound of $L_{p^n}(1/3,\sqrt[3]{96/9})$ in the medium characteristic case. On the practical side, we computed discrete logarithms in $F_{p^2}$ for a prime number $p$ with $80$ decimal digits.Warning: This unpublished version contains some inexact statements.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-08-04T15:54:42Z</published>
+    <arxiv:comment>This unpublished version contains some inexact statements. Please refer to the version published at Eurocrypt 2015 also available at https://hal.inria.fr/hal-01112879v2</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>CARAMEL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMEL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>GRACE, LIX</arxiv:affiliation>
+    </author>
+    <author>
+      <name>François Morain</name>
+      <arxiv:affiliation>LIX</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1403.0184v2</id>
+    <title>Some mathematical remarks on the polynomial selection in NFS</title>
+    <updated>2014-03-12T16:34:21Z</updated>
+    <link href="https://arxiv.org/abs/1403.0184v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1403.0184v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we consider the proportion of smooth (free of large prime factors) values of a binary form $F(X_1,X_2)\in\Z[X_1,X_2]$. In a particular case, we give an asymptotic equivalent for this proportion which depends on $F$. This is related to Murphy's $α$ function, which is known in the cryptographic community, but which has not been studied before from a mathematical point of view. Our result proves that, when $α(F)$ is small, $F$ has a high proportion of smooth values. This has consequences on the first step, called polynomial selection, of the Number Field Sieve, the fastest algorithm of integer factorization.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-03-02T10:28:03Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Armand Lachand</name>
+      <arxiv:affiliation>IECL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.02277v1</id>
+    <title>A modified block Lanczos algorithm with fewer vectors</title>
+    <updated>2016-04-08T08:49:24Z</updated>
+    <link href="https://arxiv.org/abs/1604.02277v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.02277v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The block Lanczos algorithm proposed by Peter Montgomery is an efficient means to tackle the sparse linear algebra problem which arises in the context of the number field sieve factoring algorithm and its predecessors. We present here a modified version of the algorithm, which incorporates several improvements: we discuss how to efficiently handle homogeneous systems and how to reduce the number of vectors stored in the course of the computation. We also provide heuristic justification for the success probability of our modified algorithm. While the overall complexity and expected number of steps of the block Lanczos is not changed by the modifications presented in this article, we expect these to be useful for implementations of the block Lanczos algorithm where the storage of auxiliary vectors sometimes has a non-negligible cost. 1 Linear systems for integer factoring For factoring a composite integer N, algorithms based on the technique of combination of congruences look for several pairs of integers (x, y) such that x 2 $\not\equiv$ y 2 mod N. This equality is hoped to be non trivial for at least one of the obtained pairs, letting gcd(x -- y, N) unveil a factor of the integer N. Several algorithms use this strategy: the CFRAC algorithm, the quadratic sieve and its variants, and the number field sieve. Pairs (x, y) as above are obtained by combining relations which have been collected as a step of these algorithms. Relations are written multiplicatively as a set of valuations. All the algorithms considered seek a multiplicative combination of these relations which can be rewritten as an equality of squares. This is achieved by solving a system of linear equations defined over F 2, where equations are parity constraints on</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-08T08:49:24Z</published>
+    <arxiv:comment>Topics in Computational Number Theory inspired by Peter L. Montgomery, Cambridge University Press, 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.17425v2</id>
+    <title>Computing $e$-th roots in number fields</title>
+    <updated>2023-05-30T10:45:23Z</updated>
+    <link href="https://arxiv.org/abs/2305.17425v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.17425v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe several algorithms for computing $e$-th roots of elements in a number field $K$, where $e$ is an odd prime-power integer. In particular we generalize Couveignes' and Thomé's algorithms originally designed to compute square-roots in the Number Field Sieve algorithm for integer factorization. Our algorithms cover most cases of $e$ and $K$ and allow to obtain reasonable timings even for large degree number fields and large exponents $e$. The complexity of our algorithms is better than general root finding algorithms and our implementation compared well in performance to these algorithms implemented in well-known computer algebra softwares. One important application of our algorithms is to compute the saturation phase in the Twisted-PHS algorithm for computing the Ideal-SVP problem over cyclotomic fields in post-quantum cryptography.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-27T09:19:29Z</published>
+    <arxiv:comment>9 pages, 4 figures. Associated experimental code provided at https://github.com/ob3rnard/eth-roots</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Olivier Bernard</name>
+    </author>
+    <author>
+      <name>Pierre-Alain Fouque</name>
+    </author>
+    <author>
+      <name>Andrea Lesavourey</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1301.5293v2</id>
+    <title>Approximately counting semismooth integers</title>
+    <updated>2013-04-24T16:51:25Z</updated>
+    <link href="https://arxiv.org/abs/1301.5293v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1301.5293v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An integer $n$ is $(y,z)$-semismooth if $n=pm$ where $m$ is an integer with all prime divisors $\le y$ and $p$ is 1 or a prime $\le z$. arge quantities of semismooth integers are utilized in modern integer factoring algorithms, such as the number field sieve, that incorporate the so-called large prime variant. Thus, it is useful for factoring practitioners to be able to estimate the value of $Ψ(x,y,z)$, the number of $(y,z)$-semismooth integers up to $x$, so that they can better set algorithm parameters and minimize running times, which could be weeks or months on a cluster supercomputer. In this paper, we explore several algorithms to approximate $Ψ(x,y,z)$ using a generalization of Buchstab's identity with numeric integration.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-01-22T19:44:57Z</published>
+    <arxiv:comment>To appear in ISSAC 2013, Boston MA</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Eric Bach</name>
+    </author>
+    <author>
+      <name>Jonathan Sorenson</name>
+    </author>
+    <arxiv:doi>10.1145/2465506.2465933</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/2465506.2465933" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.06821v2</id>
+    <title>Factoring using multiplicative relations modulo $n$: a subexponential algorithm inspired by the index calculus</title>
+    <updated>2023-07-16T14:20:32Z</updated>
+    <link href="https://arxiv.org/abs/2211.06821v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.06821v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We demonstrate that a modification of the classical index calculus algorithm can be used to factor integers. More generally, we reduce the factoring problem to finding an overdetermined system of multiplicative relations in any factor base modulo $n$, where $n$ is the integer whose factorization is sought. The algorithm has subexponential runtime $\exp(O(\sqrt{\log n \log \log n}))$ (or $\exp(O( (\log n)^{1/3} (\log \log n)^{2/3} ))$ with the addition of a number field sieve), but requires a rational linear algebra phase, which is more intensive than the linear algebra phase of the classical index calculus algorithm. The algorithm is certainly slower than the best known factoring algorithms, but is perhaps somewhat notable for its simplicity and its similarity to the index calculus.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-13T05:28:04Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Katherine E. Stange</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.03938v1</id>
+    <title>A Method for Application of a Quantum Search Algorithm to Classical Databases</title>
+    <updated>2022-06-08T14:56:55Z</updated>
+    <link href="https://arxiv.org/abs/2206.03938v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.03938v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Grover's algorithm is normally presented as a method of searching a database, however it would be more accurately described as a method of identifying elements of an interval of the integers which satisfy some logical clause - an example might be identifying binary strings which correspond to the solutions of a Sudoku problem. In this paper we present the first method of performing a true database search using Grover's search algorithm, by first creating a mapping from a set of indices in the range 0:2^n-1 to a set of database elements, then applying the clause to these elements. We then demonstrate the feasibility of an attack against the Diffie-Hellman cryptosystem based on a Grover's search of a database of candidate solutions generated via the number field sieve algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-08T14:56:55Z</published>
+    <arxiv:comment>17 pages, 9 figures, comments welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>David Jones</name>
+    </author>
+    <author>
+      <name>Benjamin Varcoe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0703032v1</id>
+    <title>An $L (1/3 + ε)$ Algorithm for the Discrete Logarithm Problem for Low Degree Curves</title>
+    <updated>2007-03-07T14:00:52Z</updated>
+    <link href="https://arxiv.org/abs/cs/0703032v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cs/0703032v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The discrete logarithm problem in Jacobians of curves of high genus $g$ over finite fields $\FF_q$ is known to be computable with subexponential complexity $L_{q^g}(1/2, O(1))$. We present an algorithm for a family of plane curves whose degrees in $X$ and $Y$ are low with respect to the curve genus, and suitably unbalanced. The finite base fields are arbitrary, but their sizes should not grow too fast compared to the genus. For this family, the group structure can be computed in subexponential time of $L_{q^g}(1/3, O(1))$, and a discrete logarithm computation takes subexponential time of $L_{q^g}(1/3+ε, o(1))$ for any positive $ε$. These runtime bounds rely on heuristics similar to the ones used in the number field sieve or the function field sieve algorithms.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-03-07T14:00:52Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Dans Eurocrypt 2007 (2007)</arxiv:journal_ref>
+    <author>
+      <name>Andreas Enge</name>
+      <arxiv:affiliation>INRIA FUTURS, INRIA Futurs</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>INRIA Lorraine - LORIA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-540-72540-4_22</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-540-72540-4_22" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.04514v1</id>
+    <title>Black Box Linear Algebra: Extending Wiedemann's Analysis of a Sparse Matrix Preconditioner for Computations over Small Fields</title>
+    <updated>2016-07-15T14:03:49Z</updated>
+    <link href="https://arxiv.org/abs/1607.04514v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.04514v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Wiedemann's paper, introducing his algorithm for sparse and structured matrix computations over arbitrary fields, also presented a pair of matrix preconditioners for computations over small fields. The analysis of the second of these is extended in order to provide more explicit statements of the expected number of nonzero entries in the matrices obtained as well as bounds on the probability that such matrices have maximal rank.
+  This is part of ongoing work to establish that this matrix preconditioner can also be used to bound the number of nontrivial nilpotent blocks in the Jordan normal form of a preconditioned matrix, in such a way that one can also sample uniformly from the null space of the originally given matrix. If successful this will result in a black box algorithm for the type of matrix computation required when using the number field sieve for integer factorization that is provably reliable and - by a small factor - asymptotically more efficient than alternative techniques that make use of other matrix preconditioners or require computations over field extensions.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-15T14:03:49Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Wayne Eberly</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.5520v4</id>
+    <title>Accelerating Iterative SpMV for Discrete Logarithm Problem Using GPUs</title>
+    <updated>2014-12-04T19:23:53Z</updated>
+    <link href="https://arxiv.org/abs/1209.5520v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.5520v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the context of cryptanalysis, computing discrete logarithms in large cyclic groups using index-calculus-based methods, such as the number field sieve or the function field sieve, requires solving large sparse systems of linear equations modulo the group order. Most of the fast algorithms used to solve such systems --- e.g., the conjugate gradient or the Lanczos and Wiedemann algorithms --- iterate a product of the corresponding sparse matrix with a vector (SpMV). This central operation can be accelerated on GPUs using specific computing models and addressing patterns, which increase the arithmetic intensity while reducing irregular memory accesses. In this work, we investigate the implementation of SpMV kernels on NVIDIA GPUs, for several representations of the sparse matrix in memory. We explore the use of Residue Number System (RNS) arithmetic to accelerate modular operations. We target linear systems arising when attacking the discrete logarithm problem on groups of size 100 to 1000 bits, which includes the relevant range for current cryptanalytic computations. The proposed SpMV implementation contributed to solving the discrete logarithm problem in GF($2^{619}$) and GF($2^{809}$) using the FFS algorithm.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-25T07:37:11Z</published>
+    <arxiv:comment>International Workshop on the Arithmetic of Finite Fields WAIFI 2014, Sep 2014, Gebze, Turkey. \&amp;lt;http://waifi.org/\&amp;gt;</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hamza Jeljeli</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12498v1</id>
+    <title>Machine Learning Algorithms for Active Monitoring of High Performance Computing as a Service (HPCaaS) Cloud Environments</title>
+    <updated>2020-09-26T01:29:19Z</updated>
+    <link href="https://arxiv.org/abs/2009.12498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cloud computing provides ubiquitous and on-demand access to vast reconfigurable resources that can meet any computational need. Many service models are available, but the Infrastructure as a Service (IaaS) model is particularly suited to operate as a high performance computing (HPC) platform, by networking large numbers of cloud computing nodes. We used the Pacific Northwest National Laboratory (PNNL) cloud computing environment to perform our experiments. A number of cloud computing providers such as Amazon Web Services, Microsoft Azure, or IBM Cloud, offer flexible and scalable computing resources. This paper explores the viability identifying types of engineering applications running on a cloud infrastructure configured as an HPC platform using privacy preserving features as input to statistical models. The engineering applications considered in this work include MCNP6, a radiation transport code developed by Los Alamos National Laboratory, OpenFOAM, an open source computational fluid dynamics code, and CADO-NFS, a numerical implementation of the general number field sieve algorithm used for prime number factorization. Our experiments use the OpenStack cloud management tool to create a cloud HPC environment and the privacy preserving Ceilometer billing meters as classification features to demonstrate identification of these applications.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-26T01:29:19Z</published>
+    <arxiv:comment>9 pages, 13 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Gianluca Longoni</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ryan LaMothe</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jeremy Teuton</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Greaves</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nicole Nichols</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>William Smith</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.04693v1</id>
+    <title>Security Analysis of Pairing-based Cryptography</title>
+    <updated>2023-09-09T06:14:10Z</updated>
+    <link href="https://arxiv.org/abs/2309.04693v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.04693v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent progress in number field sieve (NFS) has shaken the security of Pairing-based Cryptography. For the discrete logarithm problem (DLP) in finite field, we present the first systematic review of the NFS algorithms from three perspectives: the degree $α$, constant $c$, and hidden constant $o(1)$ in the asymptotic complexity $L_Q\left(α,c\right)$ and indicate that further research is required to optimize the hidden constant. Using the special extended tower NFS algorithm, we conduct a thorough security evaluation for all the existing standardized PF curves as well as several commonly utilized curves, which reveals that the BN256 curves recommended by the SM9 and the previous ISO/IEC standard exhibit only 99.92 bits of security, significantly lower than the intended 128-bit level. In addition, we comprehensively analyze the security and efficiency of BN, BLS, and KSS curves for different security levels. Our analysis suggests that the BN curve exhibits superior efficiency for security strength below approximately 105 bit. For a 128-bit security level, BLS12 and BLS24 curves are the optimal choices, while the BLS24 curve offers the best efficiency for security levels of 160bit, 192bit, and 256bit.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-09T06:14:10Z</published>
+    <arxiv:comment>8 figures, 8 tables, 5121 words</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xiaofeng Wang</name>
+    </author>
+    <author>
+      <name>Peng Zheng</name>
+    </author>
+    <author>
+      <name>Qianqian Xing</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.01855v1</id>
+    <title>Pairing-Friendly Elliptic Curves: Revisited Taxonomy, Attacks and Security Concern</title>
+    <updated>2022-12-04T15:45:09Z</updated>
+    <link href="https://arxiv.org/abs/2212.01855v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.01855v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Major families of pairing-friendly elliptic curves, including BN, BLS12, BLS24, KSS16, and KSS18 have recently been vulnerable to number field sieve (NFS) attacks. Due to the recent attacks on discrete logs in F_(q^k ), selecting such curves became relevant again. This paper revisited the topic of selecting pairing-friendly curves at different security levels. First, we expanded the classification given by Freeman et al. [1] by identifying new families that were not previously mentioned, such as a complete family with variable differentiation and new sparse families of curves. We discussed individual curves and a comprehensive framework for constructing parametric families. We estimated the security and assessed families of the pairing-friendly curve to discover families of curves better than BN, KSS, and BLS in terms of the required key size. We also evaluated the complexity of the optimal ate pairing that has never been discussed before, except by Barbulescu et al. [2]. We demonstrated that the recent attack (TNFS) on pairing needs to increase the key size. We compared families of curves in the context of key size and selected a suitable alternative to an elliptic curve.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-04T15:45:09Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mahender Kumar</name>
+    </author>
+    <author>
+      <name>Satish Chand</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.08198v1</id>
+    <title>Scaling up prime factorization with self-organizing gates: A memcomputing approach</title>
+    <updated>2023-09-15T07:02:54Z</updated>
+    <link href="https://arxiv.org/abs/2309.08198v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.08198v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report preliminary results on using the MEMCPU\texttrademark{} Platform to compute the prime factorization of large biprimes. The first approach, the direct model, directly returns the factors of a given biprime. The second approach, the congruence model, returns smooth congruences to address the bottleneck of standard sieve methods. The models have size-dependent structure, and the MEMCPU Platform requires structure-dependent tuning for optimal performance. Therefore, for both models, we tuned the platform on sample problems up to a given size according to available resources. Then we generated RSA-like benchmark biprimes to perform rigorous scaling analysis. The MEMCPU timings over the tuned range followed low degree polynomials in the number of bits, markedly different than other tested methods including general number field sieve. MEMCPU's congruence model was the most promising, which was scaled up to 300-bit factorization problems while following a $2^{nd}$ degree polynomial fit. We also discuss the approach to tuning the MEMCPU Platform for problems beyond the reach of today's most advanced methods. Finally, basic analysis of the acceleration expected from an ASIC implementation is provided and suggests the possibility of real time factorization of large biprimes.</summary>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.AO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-15T07:02:54Z</published>
+    <arxiv:primary_category term="cs.ET"/>
+    <author>
+      <name>Tristan Sharp</name>
+    </author>
+    <author>
+      <name>Rishabh Khare</name>
+    </author>
+    <author>
+      <name>Erick Pederson</name>
+    </author>
+    <author>
+      <name>Fabio Lorenzo Traversa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1608.03857v1</id>
+    <title>The sharp threshold for making squares</title>
+    <updated>2016-08-12T17:43:02Z</updated>
+    <link href="https://arxiv.org/abs/1608.03857v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1608.03857v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a random sequence of $N$ integers, each chosen uniformly and independently from the set $\{1,\dots,x\}$. Motivated by applications to factorisation algorithms such as Dixon's algorithm, the quadratic sieve, and the number field sieve, Pomerance in 1994 posed the following problem: how large should $N$ be so that, with high probability, this sequence contains a subsequence, the product of whose elements is a perfect square? Pomerance determined asymptotically the logarithm of the threshold for this event, and conjectured that it in fact exhibits a sharp threshold in $N$. More recently, Croot, Granville, Pemantle and Tetali determined the threshold up to a factor of $4/π+ o(1)$ as $x \to \infty$, and made a conjecture regarding the location of the sharp threshold.
+  In this paper we prove both of these conjectures, by determining the sharp threshold for making squares. Our proof combines techniques from combinatorics, probability and analytic number theory; in particular, we use the so-called method of self-correcting martingales in order to control the size of the 2-core of the random hypergraph that encodes the prime factors of our random numbers. Our method also gives a new (and completely different) proof of the upper bound in the main theorem of Croot, Granville, Pemantle and Tetali.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-08-12T17:43:02Z</published>
+    <arxiv:comment>83 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Paul Balister</name>
+    </author>
+    <author>
+      <name>Béla Bollobás</name>
+    </author>
+    <author>
+      <name>Robert Morris</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.02730v2</id>
+    <title>Refined Analysis of the Asymptotic Complexity of the Number Field Sieve</title>
+    <updated>2021-06-22T13:32:28Z</updated>
+    <link href="https://arxiv.org/abs/2007.02730v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.02730v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The classical heuristic complexity of the Number Field Sieve (NFS) is the solution of an optimization problem that involves an unknown function, usually noted $o(1)$ and called $ξ(N)$ throughout this paper, which tends to zero as the entry $N$ grows. The aim of this paper is to find optimal asymptotic choices of the parameters of NFS as $N$ grows, in order to minimize its heuristic asymptotic computational cost. This amounts to minimizing a function of the parameters of NFS bound together by a non-linear constraint. We provide precise asymptotic estimates of the minimizers of this optimization problem, which yield refined formulas for the asymptotic complexity of NFS. One of the main outcomes of this analysis is that $ξ(N)$ has a very slow rate of convergence: We prove that it is equivalent to $4{\log}{\log}{\log}\,N/(3{\log}{\log}\,N)$. Moreover, $ξ(N)$ has an unpredictable behavior for practical estimates of the complexity. Indeed, we provide an asymptotic series expansion of $ξ$ and numerical experiments indicate that this series starts converging only for $N&gt;\exp(\exp(25))$, far beyond the practical range of NFS. This raises doubts on the relevance of NFS running time estimates that are based on setting $ξ=0$ in the asymptotic formula.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-06T13:10:01Z</published>
+    <arxiv:comment>Accepted for publication in Mathematical Cryptology</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aude Le Gluher</name>
+    </author>
+    <author>
+      <name>Pierre-Jean Spaenlehauer</name>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.06135v1</id>
+    <title>Faster individual discrete logarithms in finite fields of composite extension degree</title>
+    <updated>2018-09-17T11:26:25Z</updated>
+    <link href="https://arxiv.org/abs/1809.06135v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.06135v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Computing discrete logarithms in finite fields is a main concern in cryptography. The best algorithms in large and medium characteristic fields (e.g., {GF}$(p^2)$, {GF}$(p^{12})$) are the Number Field Sieve and its variants (special, high-degree, tower). The best algorithms in small characteristic finite fields (e.g., {GF}$(3^{6 \cdot 509})$) are the Function Field Sieve, Joux's algorithm, and the quasipolynomial-time algorithm. The last step of this family of algorithms is the individual logarithm computation. It computes a smooth decomposition of a given target in two phases: an initial splitting, then a descent tree. While new improvements have been made to reduce the complexity of the dominating relation collection and linear algebra steps, resulting in a smaller factor basis (database of known logarithms of small elements), the last step remains at the same level of difficulty. Indeed, we have to find a smooth decomposition of a typically large element in the finite field. This work improves the initial splitting phase and applies to any nonprime finite field. It is very efficient when the extension degree is composite. It exploits the proper subfields, resulting in a much more smooth decomposition of the target. This leads to a new trade-off between the initial splitting step and the descent step in small characteristic. Moreover it reduces the width and the height of the subsequent descent tree.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-17T11:26:25Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Mathematics of Computation, American Mathematical Society, 2018, pp.29. http://www.ams.org/journals/mcom/</arxiv:journal_ref>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1090/mcom/3376</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3376" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.13048v1</id>
+    <title>Individual Discrete Logarithm with Sublattice Reduction</title>
+    <updated>2023-09-05T07:35:22Z</updated>
+    <link href="https://arxiv.org/abs/2309.13048v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.13048v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Number Field Sieve and its numerous variants is the best algorithm to compute discrete logarithms in medium and large characteristic finite fields. When the extension degree n is composite and the characteristic p is of medium size, the Tower variant (TNFS) is asymptotically the most efficient one. Our work deals with the last main step, namely the individual logarithm step, that computes a smooth decomposition of a given target T in the finite field thanks to two distinct phases: an initial splitting step, and a descent tree. In this article, we improve on the current state-of-the-art Guillevic's algorithm dedicated to the initial splitting step for composite n. While still exploiting the proper subfields of the target finite field, we modify the lattice reduction subroutine that creates a lift in a number field of the target T. Our algorithm returns lifted elements with lower degrees and coefficients, resulting in lower norms in the number field. The lifted elements are not only much likely to be smooth because they have smaller norms, but it permits to set a smaller smoothness bound for the descent tree. Asymptotically, our algorithm is faster and works for a larger area of finite fields than Guillevic's algorithm, being now relevant even when the medium characteristic p is such that Lpn (1/3) $\le$ p &lt; Lpn (1/2). In practice, we conduct experiments on 500-bit and 700-bit composite finite fields: Our method becomes more efficient as the largest non trivial divisor of n grows, being thus particularly adapted to even extension degrees.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-05T07:35:22Z</published>
+    <arxiv:comment>Designs, Codes and Cryptography, 2023</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Haetham Al Aswad</name>
+      <arxiv:affiliation>UL, CNRS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Cécile Pierrot</name>
+      <arxiv:affiliation>UL, CNRS</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/s10623-023-01282-w</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10623-023-01282-w" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.07553v3</id>
+    <title>Computing Individual Discrete Logarithms Faster in GF$(p^n)$ with the NFS-DL Algorithm</title>
+    <updated>2016-05-27T08:04:13Z</updated>
+    <link href="https://arxiv.org/abs/1505.07553v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.07553v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Number Field Sieve (NFS) algorithm is the best known method to compute discrete logarithms (DL) in finite fields $\mathbb{F}\_{p^n}$, with $p$ medium to large and $n \geq 1$ small. This algorithm comprises four steps: polynomial selection, relation collection, linear algebra and finally, individual logarithm computation. The first step outputs two polynomials defining two number fields, and a map from the polynomial ring over the integers modulo each of these polynomials to $\mathbb{F}\_{p^n}$. After the relation collection and linear algebra phases, the (virtual) logarithm of a subset of elements in each number field is known. Given the target element in $\mathbb{F}\_{p^n}$, the fourth step computes a preimage in one number field. If one can write the target preimage as a product of elements of known (virtual) logarithm, then one can deduce the discrete logarithm of the target. As recently shown by the Logjam attack, this final step can be critical when it can be computed very quickly. But we realized that computing an individual DL is much slower in medium-and large-characteristic non-prime fields $\mathbb{F}\_{p^n}$ with $n \geq 3$, compared to prime fields and quadratic fields $\mathbb{F}\_{p^2}$. We optimize the first part of individual DL: the \emph{booting step}, by reducing dramatically the size of the preimage norm. Its smoothness probability is higher, hence the running-time of the booting step is much improved. Our method is very efficient for small extension fields with $2 \leq n \leq 6$ and applies to any $n \textgreater{} 1$, in medium and large characteristic.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-28T06:12:59Z</published>
+    <arxiv:comment>Tetsu Iwata; Jung Hee Cheon. Asiacrypt 2015, Nov 2015, Auckland, New Zealand. Springer, Asiacrypt 2015, 21st Annual International Conference on the Theory and Application of Cryptology and Information Security, 9452, pp 149-173, 2015, Lecture Notes in Computer Science</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>GRACE, LIX</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-662-48797-6_7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-662-48797-6_7" title="doi"/>
+  </entry>
+</feed>

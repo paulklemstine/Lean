@@ -1,0 +1,144 @@
+{{Short description|Mathematical function}}
+[[Image:Mplwp Dickman function log.svg|thumb|right|400px|The Dickman–de Bruijn function ''ρ''(''u'') plotted on a logarithmic scale. The horizontal axis is the argument ''u'', and the vertical axis is the value of the function.  The graph nearly makes a downward line on the logarithmic scale, demonstrating that the logarithm of the function is [[Linearithmic function|quasilinear]].]]
+In [[analytic number theory]], the '''Dickman function''' or '''Dickman–de Bruijn function''' ''ρ'' is a [[special function]] used to estimate the proportion of [[smooth number]]s up to a given bound.
+It was first studied by actuary {{ill|Karl Dickman|sv}}, who defined it in his only mathematical publication.<ref>{{cite journal |first=K. |last=Dickman |title=On the frequency of numbers containing prime factors of a certain relative magnitude |journal=[[Arkiv för Matematik, Astronomi och Fysik]] |volume=22A |issue=10 |year=1930 |pages=1–14 |bibcode=1930ArMAF..22A..10D |url=https://zbmath.org/56.0178.04 |access-date=2026-09-02 }}</ref>  It was later studied by the Dutch mathematician [[Nicolaas Govert de Bruijn]].<ref>{{cite journal |first=N. G. |last=de Bruijn |url=http://alexandria.tue.nl/repository/freearticles/597499.pdf |title=On the number of positive integers ≤ ''x'' and free of prime factors > ''y'' |journal=Indagationes Mathematicae |volume=13 |year=1951 |pages=50–60 }}</ref><ref>{{cite journal |first=N. G. |last=de Bruijn |url=http://alexandria.tue.nl/repository/freearticles/597534.pdf |title=On the number of positive integers ≤ ''x'' and free of prime factors&nbsp;>&nbsp;''y'', II |journal=Indagationes Mathematicae |volume=28 |year=1966 |pages=239–247 }}</ref>
+
+==Definition==
+The Dickman–de Bruijn function <math>\rho(u)</math> is a [[continuous function]] that satisfies the [[delay differential equation]]
+
+:<math>u\rho'(u) + \rho(u-1) = 0\,</math>
+
+with initial conditions <math>\rho(u) = 1</math> for 0&nbsp;≤&nbsp;''u''&nbsp;≤&nbsp;1.
+
+== Properties ==
+Dickman proved that, when <math> a </math> is fixed, we have
+
+:<math>\Psi(x, x^{1/a})\sim x\rho(a)\,</math>
+
+where <math>\Psi(x,y)</math> is the number of ''y''-[[Smooth number|smooth]] (or ''y''-[[Friable number|friable]]) integers below&nbsp;''x''. Equivalently, the number of <math>B</math>-smooth numbers less than <math>N</math> is about
+<math display="block">\Psi(N,B) \approx N \rho\left(\frac{\log N}{\log B}\right).</math>
+
+Ramaswami later gave a rigorous proof that for fixed ''a'', <math>\Psi(x,x^{1/a})</math> was asymptotic to <math>x \rho(a)</math>, with the [[error bound]]
+
+:<math>\Psi(x,x^{1/a})=x\rho(a)+O(x/\log x)</math>
+
+in [[big O notation]].<ref>{{cite journal |first=V. |last=Ramaswami |url=https://www.ams.org/bull/1949-55-12/S0002-9904-1949-09337-0/S0002-9904-1949-09337-0.pdf |title=On the number of positive integers less than <math>x</math> and free of prime divisors greater than&nbsp;''x''<sup>''c''</sup> |journal=Bulletin of the American Mathematical Society |volume=55 |issue=12 |year=1949 |pages=1122–1127 |doi= 10.1090/s0002-9904-1949-09337-0 | mr=0031958|doi-access=free }}</ref>
+
+Knuth gives a proof for a narrowed bound:
+
+:<math>\Psi(x,x^{1/a})=x\rho(a)+(1-\gamma)\rho(a-1)(x/\log x)+O(x/{(\log x)}^2)</math>
+
+where &gamma; is [[Euler's constant]].<ref name=Kruppa/>{{rp|98}}
+
+==Applications==
+
+[[Image:Dickman_prob_factor_size.svg|thumb|right|400px|The Dickman–de Bruijn used to calculate the probability that the largest and 2nd largest factor of x is less than x^a]]
+
+The main purpose of the Dickman–de Bruijn function is to estimate the frequency of smooth numbers at a given size. This can be used to optimize various number-theoretical algorithms such as [[Pollard_P-1#How_to_choose_B?|P–1 factoring]] and can be useful of its own right.<ref name=Kruppa/>
+
+It can be shown that<ref>{{cite journal |first1=A. |last1=Hildebrand |first2=G. |last2=Tenenbaum |url=http://archive.numdam.org/article/JTNB_1993__5_2_411_0.pdf |title=Integers without large prime factors |journal=[[Journal de théorie des nombres de Bordeaux]] |volume=5 |issue=2 |year=1993 |pages=411–484 |doi=10.5802/jtnb.101|doi-access=free }}</ref>
+
+:<math>\Psi(x,y)=xu^{O(-u)}</math>
+
+which is related to the estimate <math>\rho(u)\approx u^{-u}</math> below.
+
+The [[Golomb–Dickman constant]] has an alternate definition in terms of the Dickman–de Bruijn function.
+
+==Estimation==
+A first approximation might be <math>\rho(u)\approx u^{-u}.\,</math> A better estimate is<ref name="vandeLuneWattel" />
+
+:<math>\rho(u)\sim \frac 1 {\xi\sqrt{2\pi u}} \cdot \exp(-u\xi+\operatorname{Ei}(\xi)) </math>
+
+where Ei is the [[exponential integral]] and ''ξ'' is the positive root of
+
+:<math>e^\xi-1=u\xi.\,</math>
+
+A simple upper bound is <math>\rho(x)\le1/x!.</math>
+
+{| class="wikitable" style="float:right"
+|-
+! <math>u</math>
+! <math>\rho(u)</math>
+|-
+| 1
+| 1
+|-
+| 2
+| 3.0685282{{e|-1}}
+|-
+| 3
+| 4.8608388{{e|-2}}
+|-
+| 4
+| 4.9109256{{e|-3}}
+|-
+| 5
+| 3.5472470{{e|-4}}
+|-
+| 6
+| 1.9649696{{e|-5}}
+|-
+| 7
+| 8.7456700{{e|-7}}
+|-
+| 8
+| 3.2320693{{e|-8}}
+|-
+| 9
+| 1.0162483{{e|-9}}
+|-
+| 10
+| 2.7701718{{e|-11}}
+|}
+
+==Computation==
+For each interval [''n''&nbsp;−&nbsp;1,&nbsp;''n''] with ''n'' an [[integer]], there is an [[analytic function]] <math>\rho_n</math> such that <math>\rho_n(u)=\rho(u)</math>.  For 0&nbsp;≤&nbsp;''u''&nbsp;≤&nbsp;1, <math>\rho(u) = 1</math>. For 1&nbsp;≤&nbsp;''u''&nbsp;≤&nbsp;2, <math>\rho(u) = 1-\log u</math>. For 2&nbsp;≤&nbsp;''u''&nbsp;≤&nbsp;3,
+
+:<math>\rho(u) = 1-(1-\log(u-1))\log(u) + \operatorname{Li}_2(1 - u) + \frac{\pi^2}{12}. </math>
+
+with Li<sub>2</sub> the [[Polylogarithm#Dilogarithm|dilogarithm]]. Other <math>\rho_n</math> can be calculated using infinite series.<ref name="BachPeralta">{{cite journal |first1=Eric |last1=Bach |first2=René |last2=Peralta |url=http://cr.yp.to/bib/1996/bach-semismooth.pdf |title=Asymptotic Semismoothness Probabilities |journal=Mathematics of Computation |volume=65 |issue=216 |pages=1701–1715 |year=1996 |doi=10.1090/S0025-5718-96-00775-2 |bibcode=1996MaCom..65.1701B |doi-access=free }}</ref>
+
+An alternate method is computing lower and upper bounds with the [[trapezoidal rule]];<ref name="vandeLuneWattel">{{cite journal |first1=J. |last1=van de Lune |first2=E. |last2=Wattel |title=On the Numerical Solution of a Differential-Difference Equation Arising in Analytic Number Theory |journal=[[Mathematics of Computation]] |volume=23 |issue=106 |year=1969 |pages=417–421 |doi=10.1090/S0025-5718-1969-0247789-3 |doi-access=free }}</ref> a mesh of progressively finer sizes allows for arbitrary accuracy. For high precision calculations (hundreds of digits), a recursive series expansion about the midpoints of the intervals is superior.<ref>{{cite journal |first1=George |last1=Marsaglia |first2=Arif |last2=Zaman |first3=John C. W. |last3=Marsaglia |title=Numerical Solution of Some Classical Differential-Difference Equations |journal=Mathematics of Computation |volume=53 |issue=187 |year=1989 |pages=191–201 |doi=10.1090/S0025-5718-1989-0969490-3 |doi-access=free }}</ref> Values for ''u''&nbsp;≤&nbsp;7 can be usefully computed via [[numerical integration]] in ordinary double-precision floating-point.<ref name=Kruppa>{{cite thesis|url=https://docnum.univ-lorraine.fr/public/SCD_T_2010_0054_KRUPPA.pdf|date=2010|title=Speeding up Integer Multiplication and Factorization|last=Kruppa|first=Alexander|degree=PhD|publisher=Henri Poincaré University}} &ndash; Work describes algorithms that Kruppa had contributed to GMP-ECM and other factoring programs. Some chapters have been published elsewhere.</ref>{{rp|99}}
+
+==Extension==
+Friedlander defines a two-dimensional analog <math>\sigma(u,v)</math> of <math>\rho(u)</math>.<ref name="Friedlander">{{cite journal |first=John B. |last=Friedlander |title=Integers free from large and small primes |journal=Proc. London Math. Soc. |volume=33 |issue=3 |pages=565–576 |year=1976 |doi=10.1112/plms/s3-33.3.565 }}</ref> This function is used to estimate a function <math>\Psi(x,y,z)</math> similar to de Bruijn's, but counting the number of ''y''-smooth integers with at most one prime factor greater than ''z''.  Then
+:<math>\Psi(x,x^{1/a},x^{1/b})\sim x\sigma(b,a).\,</math>
+
+This class of numbers may be encountered in the two-stage variant of P-1 factoring. However, Kruppa's estimate of the probability of finding a factor by P-1 does not make use of this result.<ref name=Kruppa/>{{rp|100}}
+
+==See also==
+*[[Buchstab function]], a function used similarly to estimate the number of [[rough number]]s, whose convergence to <math>e^{-\gamma}</math> is controlled by the Dickman function
+*[[Golomb–Dickman constant]]
+*[[Poisson-Dirichlet distribution]]
+
+==References==
+<references/>
+
+==Further reading==
+* {{Cite arXiv
+|first1=David
+|last1=Broadhurst
+|title=Dickman polylogarithms and their constants
+|eprint=1004.0519
+|year=2010
+|class=math-ph
+}}
+* {{cite journal
+|first1=Kannan
+|last1=Soundararajan
+|title=An asymptotic expansion related to the Dickman function
+|arxiv=1005.3494
+|year=2012
+|journal=[[Ramanujan Journal]]
+|volume=29
+|issue=1–3
+|doi=10.1007/s11139-011-9304-3
+|mr=2994087
+|pages=25–30
+|s2cid=119564455
+}}
+* {{mathworld|urlname=DickmanFunction|title=Dickman function}}
+
+{{DEFAULTSORT:Dickman Function}}
+[[Category:Analytic number theory]]
+[[Category:Special functions]]

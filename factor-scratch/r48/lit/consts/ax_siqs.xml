@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/tQ2cRQ4TodE4RSsrkFfoCaZQB50</id>
+  <title>arXiv Query: search_query=all:"self-initializing quadratic sieve"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-03T18:59:25Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22self-initializing+quadratic+sieve%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2301.10529v2</id>
+    <title>Smooth Subsum Search: A heuristic for practical integer factorization</title>
+    <updated>2023-07-11T11:58:43Z</updated>
+    <link href="https://arxiv.org/abs/2301.10529v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.10529v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two currently fastest general-purpose integer factorization algorithms are the Quadratic Sieve and the Number Field Sieve. Both techniques are used to find so-called smooth values of certain polynomials, i.e., values that factor completely over a set of small primes (the factor base). As the names of the methods suggest, a sieving procedure is used for the task of quickly identifying smooth values among the candidates in a certain range. While the Number Field Sieve is asymptotically faster, the Quadratic Sieve is still considered the most efficient factorization technique for numbers up to around 100 digits. In this paper, we challenge the Quadratic Sieve by presenting a novel approach based on representing smoothness candidates as sums that are always divisible by several of the primes in the factor base. The resulting values are generally smaller than those considered in the Quadratic Sieve, increasing the likelihood of them being smooth. Using the fastest implementations of the Self-initializing Quadratic Sieve in Python as benchmarks, a Python implementation of our approach runs consistently 5 to 7 times faster for numbers with 45-100 digits, and around 10 times faster for numbers with 30-40 digits. We discuss several avenues for further improvements and applications of the technique.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-25T11:34:15Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/s0129054123500296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/s0129054123500296" title="doi"/>
+  </entry>
+</feed>

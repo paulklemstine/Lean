@@ -1,0 +1,1058 @@
+      Solving Linear Equations Modulo Divisors:
+            On Factoring Given Any Bits
+
+                        Mathias Herrmann and Alexander May
+
+                         Horst Görtz Institute for IT-Security
+                               Faculty of Mathematics
+                         Ruhr Universität Bochum, Germany
+                     mathias.herrmann@rub.de, alex.may@rub.de
+
+
+
+        Abstract. We study the problem of ﬁnding solutions to linear equations
+        modulo an unknown divisor p of a known composite integer N . An im-
+        portant application of this problem is factorization of N with given bits
+        of p. It is well-known that this problem is polynomial-time solvable if at
+        most half of the bits of p are unknown and if the unknown bits are lo-
+        cated in one consecutive block. We introduce an heuristic algorithm that
+        extends factoring with known bits to an arbitrary number n of blocks.
+        Surprisingly, we are able to show that ln(2) ≈ 70% of the bits are suﬃ-
+        cient for any n in order to ﬁnd the factorization. The algorithm’s running
+        time is however exponential in the parameter n. Thus, our algorithm is
+        polynomial time only for n = O(log log N ) blocks.
+
+        Keywords: Lattices, small roots, factoring with known bits.
+
+
+1     Introduction
+
+Finding solutions to polynomial modular equations is a central mathematical
+problem and lies at the heart of almost any cryptanalytic approach. For in-
+stance, most symmetric encryption functions can be interpreted as polynomial
+transformations from plaintexts to ciphertexts. Solving the corresponding poly-
+nomial equations yields the secret key.
+   Among all polynomial equations the linear equations f (x1 , . . . , xn ) = a1 x1 +
+a2 x2 + · · · + an xn play a special role, since they are often easier to solve. Many
+problems already admit a linear structure. For instance, the subset sum problem
+for ﬁnding a subset of s1 , . . . , sn that sums to t asks for a 0,1-solution (y1 , . . . , yn )
+of the linear equation s1 x1 + · · · + sn xn − t = 0. Special instances of this problem
+can be solved by lattice techniques [CJL+ 92].
+   Although many problems are inherently of non-linear type, solution strategies
+for these problems commonly involve some linearization step. In this work, we ad-
+dress the problem of solving modular linear equations f (x1 , . . . , xn ) = 0 mod N
+for some N with unknown factorization. Note that modular equations usually
+
+    This research was supported by the German Research Foundation (DFG) as part of
+    the project MA 2536/3-1.
+
+J. Pieprzyk (Ed.): ASIACRYPT 2008, LNCS 5350, pp. 406–424, 2008.
+c International Association for Cryptologic Research 2008
+    Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits          407
+
+have many solutions (y1 , . . . , yn ) ∈ ZnN . An easy counting argument however
+shows that one can expect a unique solution whenever the product of the un-
+knowns is smaller than the modulus - provided the coeﬃcients ai are uniformly
+distributed in ZN . More precisely, let Xi be upper bounds such that |yi | ≤ Xi
+for i = 1 .  . . n. Then one can roughly expect a unique solution whenever the
+condition i Xi ≤ N holds.                                        
+    It is folklore knowledge that under the same condition i Xi ≤ N the unique
+solution (y1 , . . . , yn ) can heuristically be recovered by computing a shortest vec-
+tor in an n-dimensional lattice. In fact, this approach lies at the heart of many
+cryptanalytic
+                  results (see e.g. [GM97, NS01, Ngu04, BM06]). If in turn we have
+   i Xi ≥ N
+              1+
+                    then the linear equation usually has N  many solutions, which is
+exponential in the bit-size of N . So there is no hope to ﬁnd eﬃcient algorithms
+that in general improve on this bound, since one cannot even output all roots in
+polynomial time.
+    In the late 80’s, Hastad [Has88] and Toﬃn, Girault, Vallée [GTV88] extended
+the lattice-based approach for linear equations to modular univariate monic poly-
+nomials f (x) = a0 + a1 x + · · · + aδ−1 xδ−1 + xδ . In 1996, Coppersmith [Cop96b]
+                                                                    1
+further improved the bounds of [Has88, GTV88] to |x0 | ≤ N δ for lattice-based
+solutions that ﬁnd small roots of f (x). For modular univariate polynomials f (x)
+there are again counting arguments that show that this bound cannot be im-
+proved in general. Even more astonishing than the improved bound is the fact
+that Coppersmith’s method does neither rely on a heuristic nor on the computa-
+tion of a shortest vector, but provably provides all roots smaller than this bound
+and runs in polynomial time using the L3 algorithm [LLL82].
+    In the same year, Coppersmith [Cop96a] formulated another rigorous method
+for bivariate polynomials f (x, y), see also [Cor07]. This method has several nice
+applications, most notably the problem of factoring with high bits known and
+also an algorithm that shows the deterministic polynomial time equivalence of
+factoring and computing the RSA secret key [May04, CM07]. In the factoring
+with high bits known problem, one is given an RSA modulus N = pq and an
+approximation p̃ of p. This enables to compute an approximation q̃ of q, which
+leads to the bivariate polynomial equation f (x, y) = (p̃ + x)(q̃ + y) − N . Finding
+the unique solution in turn enables to factor. Coppersmith showed that this can
+be done in polynomial time given 50% of the bits of p and thereby improved
+upon a result from Rivest and Shamir [RS85], who required 60% of the bits of
+p. Using an oracle that answers arbitrary questions instead of returning bits of
+the prime factor, Maurer [Mau95] presented a probabilistic algorithm based on
+elliptic curves, that factors an integer N in polynomial time making at most
+ log N oracle queries for any  > 0.
+    In 2001, Howgrave-Graham [HG01] gave a reformulation of the factoring with
+high bits known problem, showing that the remaining bits of p can be recovered
+if gcd(p̃ + x, N ) is suﬃciently large. This can also be stated as ﬁnding the root
+of the linear monic polynomial f (x) = p̃ + x mod p where p ≥ N β for some
+0 < β ≤ 1. Later, this was generalized by May [May03] to arbitrary monic
+408     M. Herrmann and A. May
+
+                                                                             β2
+modular polynomials of degree δ which results in the bound |x0 | ≤ N δ . The
+result for factoring with high bits known follows for the choice β = 12 , δ = 1.
+   Notice that in the factoring with high bits known problem, the unknown bits
+have to be in one consecutive block of bits. This variant of the factorization
+problem is strongly motivated by side-channel attacks that in most cases enable
+an attacker to recover some of the bits of the secret key. The attacker is then left
+with the problem of reconstructing the whole secret out of the obtained partial
+information. Unfortunately, the unknown part is in general not located in one
+consecutive bit block but widely spread over the whole bit string. This raises the
+question whether we can sharpen our tools to this general scenario.
+
+Our contribution: We study the problem of ﬁnding small roots of linear mod-
+ular polynomials f (x1 , . . . , xn ) = a1 x1 + a2 x2 + · · · + an xn + an+1 mod p for
+some unknown p ≥ N β that divides the known modulus N . This enables us
+to model the problem of factoring with high bits known to an arbitrary number
+n of unknown blocks. Namely, if the k-th unknown block starts in the -th bit
+position we choose ak = 2 .                                        
+    We are able to show an explicit bound for the product i Xi = N γ , where
+γ is a function in β and n. For the special case in which p = N , i.e. β = 1
+and the  modulus p is in fact known, we obtain the previously mentioned folklore
+bound i Xi ≤ N      . Naturally, the larger the number n of blocks, the smaller
+is the bound for i Xi and the larger is the running time of our algorithm. In
+other words, the larger the number of blocks, the more bits of p we do have to
+know in the factoring with known bits problem. What is really surprising about
+our lattice-based method is that even for an arbitrary number n of blocks, our
+algorithm still requires only a constant fraction of the bits of p. More precisely,
+a fraction of ln(2) ≈ 70% of p is always suﬃcient to recover p.
+    Unfortunately, the running time for our algorithm heavily depends on n.
+Namely, the dimension of the lattice basis that we have to L3 -reduce grows expo-
+nentially in n. Thus, our algorithm is polynomial time only if n = O(log log N ).
+For larger values of n, our algorithm gets super-polynomial. To the best of
+our knowledge state-of-the-art general purpose factorization algorithms like the
+GNFS cannot take advantage of extra information like given bits of one of the
+prime factors. Thus, our algorithm still outperforms the GNFS for the factoring
+                                                       1            2
+with known bits problem provided that n = o(log 3 N log log 3 N ).
+ We would      like to notice that our analysis for arbitrary n yields a bound
+   i X i ≤ N γ
+               that holds no matter how the size of the unknowns are distributed
+among the Xi . In case the Xi are of strongly diﬀerent sizes, one might even
+improve on the bound N γ . For our starting point n = 2, we sketch such a general
+analysis for arbitrary sizes of X1 , X2 . The analysis shows that the bound for the
+product X1 X2 is minimal when X1 = X2 and that it converges to the known
+                        1
+Coppersmith result N 4 in the extreme case, where one of the Xi is set to Xi = 1.
+    Notice that if one of the upper bounds is set to Xi = 1 then the bivariate
+linear equation essentially collapses to a univariate equation. In this case, we
+                            1
+also obtain the bound N 4 for the factoring with known bits problem. Thus, our
+    Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits                409
+
+algorithm does not only include the folklore bound as a special case but also the
+Coppersmith bound for univariate linear modular equations.
+   As our lattice-based algorithm eventually outputs multivariate polynomials
+over the integers, we are using a well-established heuristic [Cop97, BD00] for
+extracting the roots. We show experimentally that this heuristic works well in
+practice and always yielded the desired factorization. In addition to previous
+papers that proposed to use resultant or Gröbner basis computations, we use
+the multidimensional Newton method from numerical mathematics to eﬃciently
+extract the roots.
+   The paper is organized as follows. Section 2 recalls basic lattice theory. In
+Section 3 we give the analysis of bivariate linear equations modulo an unknown
+divisor. As noticed before, we prove a general bound that holds for all distribu-
+tions of X1 , X2 as well as sketch an optimized analysis for strongly unbalanced
+X1 , X2 . Section 4 generalizes the analysis to an arbitrary number n of variables.
+Here, we also establish the ln(2) ≈ 70% result for factoring with known bits. We
+experimentally verify the underlying heuristic in Section 5.
+
+
+2    Preliminaries
+
+Let b1 , . . . , bk be linearly independent vectors in Rn . Then the lattice spanned
+by b1 , . . . , bk is the set of all integer linear combinations of b1 , . . . , bk . We call
+b1 , . . . , bk a basis of L. The integer k is called the dimension or rank of the lattice
+and we say that the lattice has full rank if k = n.
+    Every nontrivial lattice in Rn has inﬁnitely many bases, therefore we seek
+for good ones. The most important quality measure is the length of the basis
+vectors which corresponds to the basis vectors’ orthogonality. A famous theorem
+of Minkowski [Min10] relates the length of the shortest vector in a lattice to the
+determinant:
+Theorem 1 (Minkowski). In an ω-dimensional lattice, there exists a non-zero
+vector v with
+                              √         1
+                        v ≤ ω det(L) ω .                              (1)
+In lattices with ﬁxed dimension we can eﬃciently ﬁnd a shortest vector, but for
+arbitrary dimensions, the problem of computing a shortest vector is known to
+be NP-hard under randomized reductions [Ajt98]. The L3 algorithm, however,
+computes in polynomial time an approximation of the shortest vector, which is
+suﬃcient for many applications. The basis vectors of an L3 -reduced basis fulﬁll
+the following property (for a proof see e.g. [May03]).
+Theorem 2 (L3 ). Let L be an integer lattice of dimension ω. The L3 algorithm
+outputs a reduced basis spanned by {v1 . . . , vω } with
+                                            ω(ω−i)            1
+         v1  ≤ v2  ≤ . . . ≤ vi  ≤ 2 4(ω+1−i) det(L) ω+1−i ,    i = 1, . . . , ω   (2)
+
+in polynomial time.
+410      M. Herrmann and A. May
+
+The underlying idea of Coppersmith’s method for ﬁnding small roots of polyno-
+mial equations is to reduce the problem of ﬁnding roots of f (x1 , . . . , xn ) mod p
+to ﬁnding roots over the integers. Therefore, one constructs a collection of poly-
+nomials that share a common root modulo pm for some well-chosen integer m.
+Then one ﬁnds an integer linear combination which has a suﬃciently small norm.
+The search for such a small norm linear combination is done by deﬁning a lattice
+basis via the polynomials’ coeﬃcient vectors. An application of L3 yields a small
+norm coeﬃcient vector that corresponds to a small norm polynomial.
+   The following lemma due to Howgrave-Graham [HG97] gives a suﬃcient con-
+dition under which modular roots are also roots over Z and quantiﬁes the term
+suﬃciently small.
+Lemma 1. Let g(x1 , . . . , xn ) ∈ Z[x1 , . . . , xn ] be an integer polynomial with at
+most ω monomials. Suppose that
+ 1. g(y1 , . . . , yn ) = 0 mod pm for |y1 | ≤ X1 , . . . , |yn | ≤ Xn and
+                                  pm
+ 2. g(x1 X1 , . . . , xn Xn ) < √ω
+
+Then g(y1 , . . . , yn ) = 0 holds over the integers.
+Our approach relies on heuristic assumptions for computations with multivariate
+polynomials.
+Assumption 1. Our lattice-based construction yields algebraically independent
+polynomials. The common roots of these polynomials can be eﬃciently computed
+using numerical methods.
+The ﬁrst part of Assumption 1 assures that the constructed polynomials allow
+for extracting the common roots, while the second part assures that we are able
+to compute these common roots eﬃciently. We would like to point out that
+our subsequent complexity considerations solely refer to our lattice-based con-
+struction, that turns a linear polynomial f (x1 , . . . , xn ) mod p into n polynomials
+over the integers. We assume that the running time for extracting the desired
+root out of these n polynomials is negligible compared to the time complexity
+of the lattice construction. We verify this experimentally in Section 5. Usually,
+our method yields more than n polynomials, so one can make use of additional
+polynomials as well.
+
+
+3     Bivariate Linear Equations
+The starting point of our analysis are bivariate linear modular equations
+f (x1 , x2 ) = a1 x1 + a2 x2 + a3 mod p. The parameter p is unknown, we only
+know a multiple N of p, and the parameter β that quantiﬁes the size relation
+p ≥ N β . Let X1 , X2 be upper bounds on the desired solution y1 , y2 , respectively.
+Moreover, we require that our linear polynomial is monic with respect to one of
+the variables, i.e. either a1 = 1 or a2 = 1. This is usually not a restriction, since
+we could e.g. multiply f (x1 , x2 ) by a−1
+                                        1 mod N . If this inverse does not exist, we
+can factorize N .
+      Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits       411
+
+   In the following theorem, we give an explicit bound on X1 X2 under which
+we can ﬁnd two polynomials g1 (x1 , x2 ) and g2 (x1 , x2 ) that evaluate to zero at
+all small points (y1 , y2 ) with |y1 y2 | ≤ X1 X2 . Under the heuristic that g1 and g2
+are algebraically independent, all roots smaller than X1 X2 can be recovered by
+standard methods over the integers.
+
+Theorem 3. Let  > 0 and let N be a suﬃciently large composite integer with
+a divisor p ≥ N β . Furthermore, let f (x1 , x2 ) ∈ Z[x1 , x2 ] be a linear polynomial
+in two variables. Under Assumption 1, we can ﬁnd all solutions (y1 , y2 ) of the
+equation f (x1 , x2 ) = 0 mod p with |y1 | ≤ N γ and |y2 | ≤ N δ if
+                                                           3
+                          γ + δ ≤ 3β − 2 + 2(1 − β) 2 −                          (3)
+
+The algorithm’s time and space complexity is polynomial in log N and −1 .
+
+Before we provide a proof for Theorem 3, we would like to interpret its im-
+plications. Notice that Theorem 3 yields in the special case β = 1 the bound
+X1 X2 ≤ N 1− that corresponds to the folklore bound for linear equations. Since
+we are unaware of a good reference for the folklore method in the cryptographic
+literature, we brieﬂy sketch the derivation of this bound in Appendix A. Thus,
+our result generalizes the folklore method to more general moduli.
+   On the other hand, we would like to compare our result with the one of
+Coppersmith for factoring with high bits known when p, q are of equal bit-size,
+i.e. β = 12 . Coppersmith’s result allows a maximal size of N 0.25 for one unknown
+block. Our result states a bound of N 0.207 for the product of two blocks. The
+best that we could hope for was to obtain a total of N 0.25 for two blocks as well.
+However, it seems quite natural that the bound decreases with the number n of
+blocks. On the other hand, we are able to show that if the unknown blocks are
+signiﬁcantly unbalanced in size, then one can improve on the bound N 0.207 . It
+turns out that the more unbalanced X1 , X2 are, the better. In the extreme case,
+we obtain X1 = N 0.25 , X2 = 1. Notice that in this case, the variable x2 vanishes
+and we indeed obtain the univariate result N 0.25 of Coppersmith. Hence, our
+method contains the Coppersmith-bound as a special case as well. We give more
+details after the following proof of Theorem 3.
+                                                                √      
+                                        3
+                            3β−2+2(1−β) 2 −               3β (1+ 1−β )
+Proof. Deﬁne X1 X2 := N                      and ﬁx m =                  .
+     We deﬁne a collection of polynomials which share a common root modulo pt
+by
+                      gk,i (x1 , x2 ) := xi2 f k (x1 , x2 )N max{t−k,0}           (4)
+for k = 0, ..., m; i = 0, ..., m − k and some t = τ m, that will be optimized later.
+   We can deﬁne the following polynomial ordering for our collection. Let gk,i , gl,j
+be two polynomials. If k < l then gk,i < gl,j , if k = l then gk,i < gl,j ⇔ i < j. If
+we sort the polynomials according to that ordering, every subsequent polynomial
+in the ordering introduces exactly one new monomial. Thus, the corresponding
+coeﬃcient vectors deﬁne a lower triangular lattice basis, like in Figure 1.
+412        M. Herrmann and A. May
+
+
+⎛                                                                                                                                                   ⎞
+    Nτm
+⎜         Y Nτm                                                                                                                                     ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜                 .                                                                                                                                 ⎟
+⎜                     .                                                                                                                             ⎟
+⎜                         .                                                                                                                         ⎟
+⎜                                                                                                                                                   ⎟
+⎜                             Y mN τm                                                                                                               ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜    ∗      ∗                           XN τ m−1                                                                                                    ⎟
+⎜                                                                                                                                                   ⎟
+⎜           ∗                                                                                                                                       ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                  .                                                                                                ⎟
+⎜                                                      .                                                                                            ⎟
+⎜                                                          .                                                                                        ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                ∗                             XY m−1 N τ m−1                                                                       ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜    ∗      ∗                              ∗                                      X 2 N τ m−2                                                       ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                               .                                                   ⎟
+⎜                                                                                                   .                                               ⎟
+⎜                                                                                                       .                                           ⎟
+⎜                                                                                                                                                   ⎟
+⎜    ∗      ∗                              ∗                                          ∗                     Xτ m                                    ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                                                   ⎟
+⎜                                                                                                                  .                                ⎟
+⎜                                                                                                                      .                            ⎟
+⎜                                                                                                                          .                        ⎟
+⎜                                                                                                                                                   ⎟
+⎜    ∗      ∗                              ∗                                          ∗                      ∗                 X m−1                ⎟
+⎜                                                                                                                                                   ⎟
+⎝           ∗                                                                                                                          X m−1 Y      ⎠
+     ∗      ∗                    ∗         ∗                         ∗                ∗                      ∗                   ∗        ∗    Xm
+
+
+
+                                        Fig. 1. Basis Matrix in Triangular Form
+
+
+   From the basis matrix we can easily compute the determinant as the product
+of the entries on the diagonal as det(L) = X sx Y sy N sN , where
+                                                                                      τm
+                                     1 3
+            sx = sy =                  (m + 3m2 + 2m),                       sN =           (m + 1 − i)(τ m − i)                               (5)
+                                     6                                                i=0
+
+Now we apply L3 basis reduction to the lattice basis. Our goal is to ﬁnd two
+coeﬃcient vectors whose corresponding polynomials contain all small roots over
+the integer. Theorem 2 gives us an upper bound on the norm of a second-to-
+shortest vector in the L3 -reduced basis. If this bound is in turn smaller than
+the bound in Howgrave-Graham’s lemma (Lemma 1), we obtain the desired two
+polynomials. I.e., we have to satisfy the condition
+                                               d(d−1)
+                                           2 4(d−1) det(L) d−1 < d− 2 N βτ m,
+                                                                         1            1
+                                                                                                                                               (6)
+where d is the dimension of the lattice L, which in our case is d = 12 (m2 +3m+2).
+If we plug in the value for the determinant and use the fact that sx = md    3 , we
+obtain the condition
+                                                           3(d−1)        3(d−1)     3βτ m(d−1)  3sN
+                                     X1 X2 < 2− 4m d− 2md N
+                                                         .                              md     − md
+                                                                                                                                               (7)
+               √
+Setting τ = 1 − 1 − β, the exponent of N can be lower bounded by
+                                               √
+                                   3    3β 1 + 1 − β
+                  3β − 2 + 2(1 − β) −
+                                   2                   .                                                                                       (8)
+                                              m
+[Details can be found in Appendix B.]
+  Comparing this with the value of X1 X2 , which we deﬁned in the beginning,
+we can express how m depends on the error term :
+                                         √
+                                  3β 1 + 1 − β
+                             m≥                   .                           (9)
+                                         
+which holds for our choice of m. Therefore, the required condition is fulﬁlled.
+    Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits          413
+
+   It remains to show that the algorithm’s complexity is polynomial in log(N )
+and −1 . The running time is dominated by L3 reduction, which is polynomial
+in the dimension of the lattice and in the bitsize of the entries. Recall that our
+lattice’s dimension is O(m2 ) and therefore polynomial in −1 . For the matrix
+entries we notice that the power f k in the gk,i ’s can be reduced modulo N k , since
+we are looking for roots modulo N k . Thus, the coeﬃcients of f k N max(τ m−k,0)
+have bitsize O(m log(N )). Powers of X2 appear only with exponents up to m
+and therefore their bitsize can also be upper bounded by O(m log(N )). Thus,
+the coeﬃcients’ bitsize is O(−1 log(N )).
+Remark: We also analyzed the bivariate modular instance as a trivariate equation
+over the integers, which is modelled by
+
+                           (a1 x1 + a2 x2 + a3 )y − N = 0,                        (10)
+
+where y stands for Np . It turns out that we obtain the same bounds as in the
+modular case.
+   Theorem 3 holds for any bounds X1 , X2 within the proven bound for the
+product X1 X2 . As pointed out before, the analysis can be improved if one of
+the bounds is signiﬁcantly smaller than the other one, say X1          X2 . Then one
+should employ additional extra shifts in the smaller variable, which intuitively
+means that the smaller variable gets stronger weight since it causes smaller costs.
+   We do not give the exact formulas for this optimization process. Instead, we
+show in Figure 2 the resulting graph that demonstrates how the result converges
+to the known bound N 0.25 for unbalanced block-sizes.
+   Notice that the result from Theorem 3 is indeed optimal not only for equal
+block-sizes X1 = X2 but for most of the possible splittings of block-sizes. Only
+in extreme cases a better result can be achieved. In the subsequent chapter, we
+generalize Theorem 3 to an arbitrary number n of blocks. In the generalization
+however, we will not consider the improvement that can be achieved for strongly
+unbalanced block-sizes.
+   Naturally, the bounds N 0.25 for n = 1 and              Δ
+  0.207                                               0.25
+N        for n = 2 get worse for arbitrary n. But
+surprisingly, we will show that for n → ∞ the 0.20
+bound does not converge to N 0 as one might ex-
+pect, but instead to N 0.153 . To illustrate this re- 0.15
+sult: If N is a 1000-bit modulus and p, q are 500
+                                                      0.10
+bit each. Then 153 bit can be recovered given the
+remaining 347 bits, or 69.4% of p, in any known 0.05
+positions. However as we will see in the next sec-
+tion, the complexity heavily depends on the num-                                      Γ
+                                                             0.05 0.10 0.15 0.20 0.25
+ber of unknown blocks.
+                                                          Fig. 2. Optimized Result
+
+4    Extension to More Variables
+In this section, we generalize the result of Section 3 from bivariate linear equa-
+tions with n = 2 to an arbitrary number n of variables x1 , . . . , xn .
+414      M. Herrmann and A. May
+
+   Let X1 , X2 , . . . , Xn be upper bounds for the variables x1 , x2 , . . . , xn . As in
+Theorem 3, we will focus on proving a general upper bound for the product
+X1 X2 . . . Xn that is valid for any X1 , X2 , . . . , Xn . Similar to the reasoning in
+Section 3 it is possible to achieve better results for strongly unbalanced Xi by
+giving more weight to variables xi with small upper bounds. Although we did not
+analyze it, we strongly expect that in the case X1 = N 0.25 , X2 = · · · = Xn = 1
+everything boils down to the univariate case analyzed by Coppersmith/Howgrave-
+Graham – except that we obtain an unnecessarily large lattice dimension.
+   Naturally, we achieve an inferior bound than N 0.25 . But in contrast, our bound
+holds no matter how the sizes of the unknowns are distributed among the upper
+bounds Xi . Let us state our main theorem.
+
+Theorem 4. Let  > 0 and let N be a suﬃciently large composite integer with
+a divisor p ≥ N β . Furthermore, let f (x1 , . . . , xn ) ∈ Z[x1 , . . . , xn ] be a monic
+linear polynomial in n variables. Under Assumption 1, we can ﬁnd all solutions
+(y1 , . . . , yn ) of the equation f (x1 , . . . , xn ) = 0 mod p with |y1 | ≤ N γ1 , . . . , |yn | ≤
+N γn if
+               n
+                                   n+1              
+                   γi ≤ 1 − (1 − β) n − (n + 1)(1 − n 1 − β)(1 − β) −                         (11)
+               i
+
+The time and space complexity of the algorithm is polynomial in log N and ( e )n ,
+where e is Euler’s constant.
+
+We will prove Theorem 4 at the end of this section. Let us ﬁrst discuss the
+implications of the result and the consequences for the factoring with known bits
+problem. First of all, the algorithm’s running time is exponential in the number
+n of blocks. Thus in order to obtain a polynomial complexity one has to restrict
+                                                     
+                                         log log N
+                               n=O                      .
+                                        1 + log( 1 )
+
+This implies that for any constant error term , our algorithm is polynomial time
+whenever n = O(log log N ).
+  The proof of the following theorem shows that the bound for X1 . . . Xn in
+Theorem 4 converges for n → ∞ to N β+(1−β) ln(1−β) . For the factoring with
+                                                         1
+known bits problem with β = 12 this yields the bound N 2 (1−ln(2)) ≈ N 0.153 . This
+means that we can recover a (1 − ln(2)) ≈ 0.306-fraction of the bits of p, or in
+other words an ln(2) ≈ 0.694-fraction of the bits of p has to be known.
+
+Theorem 5. Let  > 0. Suppose N is a suﬃciently large composite integer with
+a divisor p ≥ N β . Further, suppose we are given an
+                               
+                              1
+                         1−       · ln(1 − β) +  fraction              (12)
+                              β
+of the bits of p. Then, under Assumption 1, we can compute the unknown bits
+of p in time polynomial in log N and ( e )n , where e is Euler’s constant.
+   Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits         415
+
+Proof. From Theorem 4 we know, that we can compute a solution to the equation
+
+                   a1 x1 + a2 x2 + . . . + an xn + an+1 = 0 mod p
+                                                                      n
+as long as the product of the unknowns is smaller than N γ , where γ = i γi
+is upper-bounded as in Inequality (11). As noticed already, the bound for γ
+actually converges for n → ∞ to a value diﬀerent from zero. Namely,
+                  n+1                             
+  lim 1 − (1 − β) n − (n + 1)(1 − n 1 − β)(1 − β) = β + (1 − β) ln(1 − β)
+ n→∞
+                                                                               (13)
+Hence, this is the portion of p we can at least compute, no matter how many
+unknowns we have.
+  Conversely, once we have ((β − 1) ln(1 − β) + ) log(N ) bits of p given together
+with their positions, we are able to compute the missing ones. Since log N ≤ logβ p ,
+we need at most an ((1 − β1 ) ln(1 − β) + )-fraction of the bits of p.
+Theorem 5 implies a polynomial-time algorithm for the factoring with known
+bits problem whenever the number of unknown bit-blocks is n = O(log log N ).
+However, the algorithm can be applied for larger n as well. As long as n is sub-
+polynomial in the bit-size of N , the resulting complexity will be sub-exponential
+in the bit-size of N .
+   It remains to prove our main theorem.
+
+Proof of Theorem 4
+      n                  n+1           √
+Deﬁne i=1 Xi := N 1−(1−β) n −(n+1)(1− 1−β)(1−β)− . Let us ﬁx
+                                        n
+
+
+
+                     1                                    
+                      n( π (1 − β)−0.278465 − β ln(1 − β))
+               m=                                                               (14)
+                                        
+We deﬁne the following collection of polynomials which share a common root
+modulo pt
+                        gi2 ,...,in ,k = xi22 . . . xinn f k N max{t−k,0}        (15)
+                                          n
+where ij ∈ {0, . . . , m} such that            j=2 ij ≤ m − k. The parameter t = τ m
+has to be optimized. Notice that the set of monomials of gi2 ,...,in ,k deﬁnes an
+n-dimensional simplex.
+   It is not hard to see that there is an ordering of the polynomials in such a
+way that each new polynomial introduces exactly one new monomial. Therefore
+the lattice basis constructed from the coeﬃcient vectors of the gi2 ,...,in ,k ’s has
+triangular form, if they are sorted according to the order. The determinant det(L)
+of the corresponding lattice L is then simply the product of the entries on the
+diagonal:
+                                                n
+                                                         sx
+                                   det(L) =          Xi i N sN ,                 (16)
+                                        i=1
+
+           m−1 and sN = mdτ − m−1 + m(1−τ )−1 , where d =
+                                    m(1−τ )+n
+with sxi = m+n                m+n                                       m+n
+                                                                         m     is the
+dimension of the lattice.
+416         M. Herrmann and A. May
+
+  Now we ensure that the vectors from L3 are suﬃciently small, so that we can
+apply the Lemma of Howgrave-Graham (Lemma 1) to obtain a solution over Z.
+We have to satisfy the condition
+                                    d(d−1)
+                                  2 4(d−n+1) det(L) d−n+1 < d− 2 N βτ m
+                                                          1          1
+
+
+
+                                                                   md
+Using the value of the determinant in (16) and the fact that sxi = n+1 we obtain
+
+    
+    n
+                                                                             m+n    m(1−τ )+n
+                                                      N (βmτ (d−n+1)−dmτ +(m−1 )−( m(1−τ )−1 )) md .
+                     (d−1)(n+1)        (n+1)(d−n+1)                                             n+1
+          Xi ≤ 2 −      4m        d−       2md
+
+    i=1
+
+  In Appendix C we show how to derive a lower bound on the right-hand side for
+                                  1
+the optimal value τ = 1 − (1 − β) n . Using Xi = N γi the condition reduces to
+ n
+                n+1                       n 1 (1 − β)−0.278465           n
+    γi ≤ 1−(1−β) n −(n+1)(1− n 1 − β)(1−β)− π                   +β ln(1−β) .
+i=1
+                                                    m                     m
+                                                           n
+Comparing this to the initial deﬁnition of                    i=1 Xi , we obtain for the error term 
+
+                       n π1 (1 − β)−0.278465                 n
+                         −                    + β ln(1 − β) ≥ −
+                                   m                         m
+                            n( π1 (1 − β)−0.278465 − β ln(1 − β))     n
+                     ⇔m≥                                          = O( )
+                                                                     
+which holds for our choice of m.
+   To conclude the proof, we notice that the dimension of the lattice is d =
+     n          n n             n
+O( mn! ) = O( nn nen ) = O( en ). For the bitsize of the entries in the basis matrix
+we observe that we can reduce the coeﬃcients of f i in g modulo N i . Thus the
+product f k N max{τ m−k,0} is upper bounded by B = m log(N ). Further       n notice
+that the bitsize of X2i2 . . . Xni2 is also upper bounded by m log(N ) since i=2 ij ≤
+m and Xi ≤ N .
+   The running time is dominated by the time to run L3 -lattice reduction on a
+basis matrix of dimension d and bit-size B. Thus, the time and space complexity
+of our algorithm is polynomial in log N and ( e )n .                               
+
+
+5     Experimental Results
+We implemented our lattice-based algorithm using the L2 -algorithm from
+Nguyen, Stehlé [NS05]. We tested the algorithm for instances of the factoring
+with known bits problem with n = 2, 3 and 4 blocks of unknown bits. Table 1
+shows the experimental results for an 512-bit RSA modulus N with divisor p of
+           1
+size p ≥ N 2 .
+   For given parameters m, t we computed the number of bits that one should
+theoretically be able to recover from p (column pred of Table 1). For each bound
+we made two experiments (column exp). The ﬁrst experiment splits the bound
+into n equally sized pieces, whereas the second experiment unbalancedly splits
+   Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits          417
+
+
+                           Table 1. Experimental Results
+
+                    n m t dim(L) pred (bit) exp (bit) time (min)
+                    2 15 4 136      90        45/45       25
+                    2 15 4 136      90        87/5        15
+                    3 7 1 120       56      19/19/19     0.3
+                    3 7 1 120       56       52/5/5      0.3
+                    3 10 2 286      69      23/23/23     450
+                    3 10 2 286      69       57/6/6      580
+                    4 5 1 126       22       7/6/6/6      3
+                    4 5 1 126       22      22/2/2/2     4.5
+
+
+the bound in one large piece and n − 1 small ones. In the unbalanced case, we
+were able to recover a larger number of bits than theoretically predicted. This
+is consistent with the reasoning in Section 3 and 4.
+   In all of our experiments, we successfully recovered the desired small root,
+thereby deriving the factorization of N . We were able to extract the root both by
+Gröbner basis reduction as well as by numerical methods in a fraction of a second.
+   For Gröbner basis computations, it turns out to be useful that our algorithm
+actually outputs more suﬃciently small norm polynomials than predicted by the
+L3 -bounds. This in turn helps to speed up the computation a lot.
+   As a numerical method, we used multidimensional Newton iteration on the
+starting point 12 (X1 , . . . , Xn ). Usually this did already work. If not, we were
+successful with the vector of upper-bounds (X1 , . . . , Xn ) as a starting point. Al-
+though this approach worked well and highly eﬃcient in practice, we are unaware
+of a starting point that provably lets the Newton method converge to the desired
+root.
+   Though Assumption 1 worked perfectly for the described experiments, we also
+considered two pathological cases, where one has to take special care.
+   First, a problem arises when we have a prediction of k bits that can be re-
+covered, but we use a much smaller sum of bits in our n blocks. In this case,
+the smallest vector lies in a sublattice of small dimension. As a consequence,
+we discovered that then usually all of our small norm polynomials shared f (x)
+as a common divisor. When we removed the gcd, the polynomials were again
+algebraically independent and we were able to retrieve the root. Notice that re-
+moving f (x) does not eliminate the desired root, since f (x) does not contain the
+root over the integers (but mod p).
+   A second problem may arise in the case of two closely adjacent unknown
+blocks, e.g. two blocks that are separated by one known bit only. Since in com-
+parison with the n-block case the case of n − 1 blocks gives a superior bound,
+it turns out to be better in some cases to merge two closely adjacent blocks
+into one variable. That is what implicitly seems to happen in our approach.
+The computations then yield the desired root only in those variables which
+are suﬃciently separated. The others have to be merged before re-running the
+algorithm in order to obtain all the unknown bits. Alternatively, we conﬁrmed
+418       M. Herrmann and A. May
+
+experimentally that merging the nearby blocks from the beginning immediately
+yields the desired root.
+   Both pathological cases are no failure of Assumption 1, since one can still
+easily extract the desired root. All that one has to do is to either remove a gcd
+or to merge variables.
+
+
+6     Conclusion and Open Problems
+We proposed a heuristic lattice-based algorithm for ﬁnding small solutions of
+linear equations a1 x1 + · · · + an xn + an+1 = 0 mod p, where p is an unknown
+divisor of some known N . Our algorithm gives a solution for the factoring with
+known bits problem given ln(2) ≈ 70% of the bits of p in any locations.
+   Since the time and space complexity of our algorithm is polynomial in log N
+but exponential in the number n of variables, we obtain a polynomial time al-
+gorithm for n = O(log log N ) and a subexponential time algorithm for n =
+o(log N ). This naturally raises the question whether there exists some algorithm
+with the same bound having complexity polynomial in n. This would immedi-
+ately yield a polynomial time algorithm for factoring with 70% bits given, inde-
+pendently of the given bit locations and the number of consecutive bit blocks.
+We do not know whether such an algorithm can be achieved for polynomial
+equations with unknown divisor. On the other hand, we feel that the complexity
+gap between the folklore method for known divisors with complexity linear in n
+and our method is quite large, even though the folklore method relies on much
+stronger assumptions.
+   Notice that in the factoring with known bits problem, an attacker is given the
+location of the given bits of p and he has to ﬁll in the missing bits. Let us give a
+crude analogy for this from coding theory, where one is given the codeword p with
+erasures in some locations. Notice that our algorithm is able to correct the erasures
+with the help of the redundancy given by N . Now a challenging question is whether
+there exist similar algorithms for error-correction of codewords p. I.e., one is given p
+with a certain percentage of the bits ﬂipped. Having an algorithm for this problem
+would be highly interesting in situations with error-prone side-channels.
+   We would like to thank the anonymous reviewers and especially Robert Israel
+for helpful comments and ideas.
+
+
+References
+[Ajt98]   Ajtai, M.: The Shortest Vector Problem in L2 is NP-hard for Randomized
+          Reductions (Extended Abstract). In: STOC, pp. 10–19 (1998)
+[BD00]    Boneh, D., Durfee, G.: Cryptanalysis of RSA with private key d less than
+          N 0.292 . IEEE Transactions on Information Theory 46(4), 1339 (2000)
+[BM06]    Bleichenbacher, D., May, A.: New Attacks on RSA with Small Secret CRT-
+          Exponents. In: Public Key Cryptography, pp. 1–13 (2006)
+[CJL+ 92] Coster, M.J., Joux, A., LaMacchia, B.A., Odlyzko, A.M., Schnorr, C.-P.,
+          Stern, J.: Improved Low-Density Subset Sum Algorithms. Computational
+          Complexity 2, 111–128 (1992)
+   Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits         419
+
+[CM07]     Coron, J.-S., May, A.: Deterministic Polynomial-Time Equivalence of Com-
+           puting the RSA Secret Key and Factoring. J. Cryptology 20(1), 39–50
+           (2007)
+[Cop96a]   Coppersmith, D.: Finding a Small Root of a Bivariate Integer Equation;
+           Factoring with High Bits Known. In: Maurer, U.M. (ed.) EUROCRYPT
+           1996. LNCS, vol. 1070, pp. 178–189. Springer, Heidelberg (1996)
+[Cop96b]   Coppersmith, D.: Finding a Small Root of a Univariate Modular Equation.
+           In: Maurer, U.M. (ed.) EUROCRYPT 1996. LNCS, vol. 1070, pp. 155–165.
+           Springer, Heidelberg (1996)
+[Cop97]    Coppersmith, D.: Small Solutions to Polynomial Equations, and Low Ex-
+           ponent RSA Vulnerabilities. J. Cryptology 10(4), 233–260 (1997)
+[Cor07]    Coron, J.-S.: Finding Small Roots of Bivariate Integer Polynomial Equa-
+           tions: A Direct Approach. In: Menezes, A. (ed.) CRYPTO 2007. LNCS,
+           vol. 4622, pp. 379–394. Springer, Heidelberg (2007)
+[GM97]     Girault, M., Misarsky, J.-F.: Selective Forgery of RSA Signatures Using
+           Redundancy. In: Fumy, W. (ed.) EUROCRYPT 1997. LNCS, vol. 1233, pp.
+           495–507. Springer, Heidelberg (1997)
+[GTV88]    Girault, M., Toﬃn, P., Vallée, B.: Computation of approximate L-th
+           roots modulo n and application to cryptography. In: Goldwasser, S. (ed.)
+           CRYPTO 1988. LNCS, vol. 403, pp. 100–117. Springer, Heidelberg (1990)
+[Has88]    Hastad, J.: Solving Simultaneous Modular Equations of Low Degree. SIAM
+           Journal on Computing 17(2), 336–341 (1988)
+[HG97]     Howgrave-Graham, N.: Finding Small Roots of Univariate Modular Equa-
+           tions Revisited. In: Proceedings of the 6th IMA International Conference
+           on Cryptography and Coding, pp. 131–142 (1997)
+[HG01]     Howgrave-Graham, N.: Approximate Integer Common Divisors. In:
+           Silverman, J.H. (ed.) CaLC 2001. LNCS, vol. 2146, pp. 51–66. Springer,
+           Heidelberg (2001)
+[LLL82]    Lenstra, A.K., Lenstra, H.W., Lovász, L.: Factoring Polynomials with Ra-
+           tional Coeﬃcients. Mathematische Annalen 261(4), 515–534 (1982)
+[Mau95]    Maurer, U.M.: On the Oracle Complexity of Factoring Integers. Computa-
+           tional Complexity 5(3/4), 237–247 (1995)
+[May03]    May, A.: New RSA Vulnerabilities Using Lattice Reduction Methods. PhD
+           thesis, University of Paderborn (2003)
+[May04]    May, A.: Computing the RSA Secret Key Is Deterministic Polynomial Time
+           Equivalent to Factoring. In: Franklin, M. (ed.) CRYPTO 2004. LNCS,
+           vol. 3152, pp. 213–219. Springer, Heidelberg (2004)
+[Min10]    Minkowski, H.: Geometrie der Zahlen. Teubner (1910)
+[Ngu04]    Nguyen, P.Q.: Can We Trust Cryptographic Software? Cryptographic Flaws
+           in GNU Privacy Guard v1.2.3. In: Cachin, C., Camenisch, J.L. (eds.)
+           EUROCRYPT 2004. LNCS, vol. 3027, pp. 555–570. Springer, Heidelberg
+           (2004)
+[NS01]     Nguyen, P.Q., Stern, J.: The Two Faces of Lattices in Cryptology. In: Sil-
+           verman, J.H. (ed.) CaLC 2001. LNCS, vol. 2146, pp. 146–180. Springer,
+           Heidelberg (2001)
+[NS05]     Nguyen, P.Q., Stehlé, D.: Floating-Point LLL Revisited. In: Cramer, R.
+           (ed.) EUROCRYPT 2005. LNCS, vol. 3494, pp. 215–233. Springer, Heidel-
+           berg (2005)
+[RS85]     Rivest, R.L., Shamir, A.: Eﬃcient Factoring Based on Partial Informa-
+           tion. In: Pichler, F. (ed.) EUROCRYPT 1985. LNCS, vol. 219, pp. 31–34.
+           Springer, Heidelberg (1986)
+420     M. Herrmann and A. May
+
+A     Linear Equations with Known Modulus
+We brieﬂy sketch the folklore method for ﬁnding small roots of linear modular
+equations a1 x1 + · · · + an xn = 0 mod N with known modulus N . Further, we
+assume that gcd(ai , N ) = 1 for some i, wlog gcd(an , N ) = 1. Let Xi be upper
+bounds on |yi |. We can handle inhomogeneous modular equations by introducing
+a term an+1 xn+1 , where |yn+1 | ≤ Xn+1 = 1.
+   We would like to point out that the heuristic for the folklore method is quite
+diﬀerent compared to the one taken in our approach. First of all, the method
+requires to solve a shortest vector problem in a certain lattice. This problem is
+known to be NP-hard for general lattices. Second, one assumes that there is only
+one linear independent vector that fulﬁlls the Minkowski bound (Theorem 1) for
+the shortest vector.
+   We will show under this heuristic assumption that the shortest vector yields
+the unique solution (y1 , . . . , yn ) whenever
+                                        
+                                        n
+                                              Xi ≤ N.
+                                        i=1
+
+We multiply our linear equation with −a−1
+                                       n and obtain
+
+         b1 x1 + b2 x2 + . . . + bn−1 xn−1 = xn mod N ,where bi = a−1   n ai     (17)
+                                                  n−1
+For a solution (y1 , . . . , yn ) of (17) we know i=1 bi yi = yn − yN for some y ∈ Z.
+Consider the lattice L generated by the row vectors of the following matrix
+                                   ⎛                           ⎞
+                                      Y1 0 0 . . . 0    Yn b1
+                                   ⎜ 0 Y2 0         0   Yn b2 ⎟
+                                   ⎜                           ⎟
+                                   ⎜ ..    .        .      .. ⎟
+                             B=⎜ . ⎜         . .    .
+                                                    .       . ⎟⎟
+                                   ⎜.                          ⎟
+                                   ⎝ ..           Yn−1 Yn bn−1 ⎠
+                                      0 0 0 ... 0       Yn N
+          N
+with Yi = Xi
+             . By construction,
+                   v = (y1 , . . . , yn−1 , y) · B = (Y1 y1 , . . . , Yn yn )
+is a vector of L. We show, that this is a short vector which fulﬁlls the Minkowski
+bound from Theorem 1. If we assume that v is actually the shortest vector, then
+we can solve an SVP instance.                √
+   Since Yi yi = Xyi
+                   i
+                     N ≤ N we have v ≤ nN . Further, the determinant of the
+lattice L is
+                              n           n
+                                               N          n
+                                                               1
+                   det(L) = N     Yi = N          = N n+1        .
+                              i=1          i=1
+                                               Xi         i=1
+                                                              Xi
+The vector v thus fulﬁlls the Minkowski bound, if
+                     √    √         1
+                                                           
+                                                           n
+                      nN ≤ n det(L) n               ⇔            Xi ≤ N.
+                                                           i=1
+     Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits                               421
+
+B        Lower Bound in Theorem 2
+Starting with
+                                            3(d−1)      3(d−1)       3βτ m(d−1)  3sN
+                              X1 X2 < 2− 4m d− 2md N                     md     − md
+
+we wish to derive a lower bound of the right-hand side. First we notice that
+for suﬃciently large N the powers of 2 and d are negligible. Thus, we only
+examine
+τ m      the exponent of N . We use the values d = 12 (m2 + 3m + 2) and sN =
+   i=0 (m + 1 − i)(τ m − i) and get
+
+                                          −τ − 6βτ + τ 3   2 τ − 3βτ − 3τ 2 + 2τ 3
+                   τ 3β − 3τ + τ 2 +                     −                         .
+                                             1+m                   2+m
+                                 
+For τ we choose 1 −               (1 − β), resulting in
+                      
+− 2 + 2 1 − β + 3β − 2β 1 − β
+        √         √           √          √
+       3 1−β     6 1−β     7β 1 − β   10β 1 − β   6(−1 + 2β)   3(−1 + 3β)
+    −         +          +          −           +            −            .
+        1+m       2+m        1+m        2+m         2+m          1+m
+Now we combine the terms that change their sign in the possible β-range, such
+that we obtain a term which is either positive or negative for all β ∈ (0, 1)
+     √                     √             √               √
+    3 1−β   3(−1 + 3β)   7β 1 − β   3 − 3 1 − β − 9β + 7β 1 − β
+−         −            +          =                              <0
+     1+m      1+m          1+m                 1+m
+                           √               √
+             6(−1 + 2β)   6 1−β     6 −1 + 1 − β + 2β
+                        +         =                      > 0 for all β ∈ (0, 1).
+               2+m         2+m             2+m
+                                               ∗                          ∗
+Finally, we approximate the positive terms by 2m and the negative ones by m
+and obtain
+                                                                                             √
+         3(d−1)      3(d−1)      3βτ m(d−1)  3sN                 √              √      3β (1+ 1−β )
+    2−     4m     d− 2md N           md     − md
+                                                   ≥ N −2+2 1−β+3β−2β 1−β−                   m        . (18)
+
+
+C        Lower Bound in Theorem 3
+We derive a lower bound of
+                                                                            m+n     m(1−τ )+n
+                                                N (βmτ (d−n+1)−dmτ +(m−1 )−( m(1−τ )−1 )) md .
+               (d−1)(n+1)        (n+1)(d−n+1)                                                   n+1
+          2−      4m        d−       2md
+
+
+
+For suﬃciently large N , the powers of 2 and d are negligible and thus we consider
+in the following only the exponent of N
+                                                  
+                                                                    
+                                           m+n          m(1 − τ ) + n    n+1
+              βmτ (d − n + 1) − dmτ +               −
+                                           m−1          m(1 − τ ) − 1     md
+                                                             n
+                          βτ (n − 1)(n + 1)                         (m(1 − τ ) + k)
+           = βτ (n + 1) −                   − τ (n + 1) + 1 − k=0                   .
+                                  d                                   n!md
+                                          n
+                                            k=1 (m+k)
+With d =           m+n
+                    m    = (m+n)!
+                            m!n! =                n!     we have
+                                                                           n
+                                                 βτ (n − 1)(n + 1)!              (m(1 − τ ) + k)
+           βτ (n + 1) − τ (n + 1) + 1 −            n               −         n
+                                                                             k=0
+                                                                                                 .
+                                                     k=1 (m + k)                 k=0 (m + k)
+422       M. Herrmann and A. May
+
+We now analyze the last two terms separately. For the ﬁrst one, if we choose
+τ = 1 − n (1 − β) we obtain
+                                   √                               √
+        βτ (n − 1)(n + 1)!   β(1 − n 1 − β)(n − 1)(n + 1)!   β(1 − n 1 − β)n2
+          n               ≤               n              ≤                  .
+            k=1 (m + k)            (m + 1) k=2 k                    m
+
+
+Fact 1                              
+                              n(1 − n 1 − β) ≤ − ln(1 − β)                                            (19)
+Using this approximation, we obtain
+                            βτ (n − 1)(n + 1)!               n
+                              n               ≤ − ln(1 − β)β .
+                                k=1 (m + k)                  m
+                                        n
+                                     n         (m(1−τ )+k)
+The analysis of the second term k=0              is a bit more involved. We use
+                                      k=0 (m+k)
+its partial fraction expansion to show an upper bound.
+                                       1
+Lemma 2. For τ = 1 − (1 − β) n we have
+       n
+             (m(1 − τ ) + k)              1                n
+                             ≤ (1 − β) n + (1 − β)−0.278465 .
+                                      n+1
+          n
+         k=0
+                                                                                                      (20)
+             k=0 (m + k)                  π                m
+
+Proof. First notice that
+n                                         n                               n+1  n
+  k=0 (m(1 − τ ) + k)                        k=0 (m(1 − τ ) + k) − (1 − τ )       k=0 (m + k)
+   n                 = (1 − τ )n+1 +                        n                               .
+      k=0 (m + k)                                              k=0 (m + k)
+
+  We analyze the second part of this sum. Its partial fraction expansion is
+ n                                    
+      k=0 (m(1 − τ ) +k) − (1 − τ )n+1 nk=0 (m + k)   c0    c1            cn
+                        n                            =    +       + ... +      .                       (21)
+                        k=0 (m + k)                    m    m + 1         m +n
+                                                                                             n
+Our goal is to determine the values ci . Start by multiplying with                             k=0 (m + k):
+
+            
+            n                                     
+                                                  n                     n         
+                                                                                  n
+                (m(1 − τ ) + k) − (1 − τ )n+1         (m + k) =              ci          (m + k).
+            k=0                                   k=0                  i=0        k=0
+                                                                                  k=i
+
+
+Now we successively set m equal to the roots of the denominator and solve for
+ci . For the i-th root m = −i we obtain
+                       
+                       n                            
+                                                    n
+                           (−i(1 − τ ) + k) = ci           (k − i)
+                      k=0                           k=0
+                                                    k=i
+                                                  n
+                                                        (−i(1 − τ ) + k)
+                                           ci =       n
+                                                    k=0
+                                                                         .
+                                                            k=0    (k − i)
+                                                            k=i
+
+
+We can rewrite this in terms of the Gamma function as
+                                          Γ (−i(1 − τ ) + n + 1)
+                      ci = (−1)i                                        .
+                                   Γ (i + 1)Γ (n − i + 1)Γ (−i(1 − τ ))
+   Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits                         423
+
+Using the identity Γ (−z) = − sin(πz)Γ
+                                    π
+                                       (z+1) , we obtain
+
+                           Γ (−i(1 − τ ) + n + 1)Γ (i(1 − τ ) + 1) sin(πi(1 − τ ))
+            ci = (−1)i+1                                                           .
+                                   Γ (i + 1)Γ (n − i + 1)                π
+
+In the following we use Q := Γ (−i(1−τ  )+n+1)Γ (i(1−τ )+1)
+                                    Γ (i+1)Γ (n−i+1)        .
+   We now give√an upper bound on the absolute value of ci . Start by using the
+value τ = 1 − n 1 − β and let 1 − β = e−c for some c > 0. Consider
+          c                                                          i−ie− nc
+    Γ (ie− n + 1)             c
+ ln               = ln(Γ (ie− n + 1)) − ln(Γ (i + 1)) = −                        Ψ (1 + i − t)dt and
+      Γ (i + 1)                                                      0
+
+
+
+           c                                           i−ie− nc
+   Γ (−ie−n +n+1)              c
+                              −n
+ln                 = ln(Γ (−ie +n+1))−ln(Γ (n−i+1)) =            Ψ (n−i+1+t)dt.
+     Γ (n − i + 1)                                     0
+
+Therefore
+                                i−ie− nc
+                     ln Q =                 Ψ (n − i + 1 + t) − Ψ (1 + i − t)dt.
+                                0
+
+The Digamma function Ψ is increasing and thus the integrand is increasing and
+we get the approximation
+                                       c                    c                    c
+                    ln Q ≤ (i − ie− n )(Ψ (n + 1 − ie− n ) − Ψ (1 + ie− n )).
+
+Let i = tn. Then for ﬁxed t the expression on the right-hand side converges for
+n → ∞ to
+                           c                       c                c                1
+              lim (i − ie− n )(Ψ (n + 1 − ie− n ) − Ψ (1 + ie− n )) = ct ln(           − 1).
+            n→∞                                                                      t
+
+By numeric computation, the maximum of t ln( 1t − 1) in the range 0 < t < 1 is
+0.278465. Thus,
+
+                                      ln Q ≤ 0.278465c
+                                           Q ≤ (1 − β)−0.278465 .
+
+Putting things together, we have
+                                                 sin(πi(1 − τ ))  1
+              ci ≤ (−1)i+1 (1 − β)−0.278465                      ≤ (1 − β)−0.278465 .
+                                                       π          π
+The initial problem of estimating the partial fraction expansion from equa-
+tion (21) now states
+   n                                          n
+      k=0 (m(1 − τ ) + k) − (1 − τ )
+                                     n+1
+                                                  k=0 (m + k)     c0      c1              cn
+                      n                                        =    +         +... +
+                        k=0 (m + k)                               m      m+1             m+n
+                                                                  
+                                                                     ci
+                                                                ≤
+                                                                   m
+                                                                  n 1 (1 − β)−0.278465
+                                                                ≤ π                    .
+                                                                           m
+424     M. Herrmann and A. May
+
+  Now that we have bounds on the individual terms, we can give a bound on
+the complete expression
+                                                                            m+n     m(1−τ )+n
+                                              N (βmτ (d−n+1)−dmτ +(m−1 )−( m(1−τ )−1 )) md
+             (d−1)(n+1)        (n+1)(d−n+1)                                                     n+1
+        2−      4m        d−       2md
+
+                                                        n 1 (1−β)−0.278465
+                                              n+1
+                                                    −     π                          n
+      ≥ N βτ (n+1)−τ (n+1)+1−(1−τ )                             m          +ln(1−β)β m
+                                                                                         .
+

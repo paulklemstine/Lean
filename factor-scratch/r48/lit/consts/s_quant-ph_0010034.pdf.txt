@@ -1,0 +1,1150 @@
+                                                                A
+                                                            LECTURE
+                                                               ON
+                                              SHOR’S QUANTUM FACTORING ALGORITHM
+                                                           VERSION 1.1
+arXiv:quant-ph/0010034v1 9 Oct 2000
+
+
+
+
+                                                                  SAMUEL J. LOMONACO, JR.
+
+
+
+
+                                              Abstract. This paper is a written version of a one hour lecture given
+                                              on Peter Shor’s quantum factoring algorithm. It is based on [4], [6], [7],
+                                              [9], and [15] .
+
+
+                                                                            Contents
+                                        1. Preamble to Shor’s algorithm                                                     1
+                                        2. Number theoretic preliminaries                                                   2
+                                        3. Overview of Shor’s algorithm                                                     3
+                                        4. Preparations for the quantum part of Shor’s algorithm                            5
+                                        5. The quantum part of Shor’s algorithm                                             6
+                                        6. Peter Shor’s stochastic source S                                                 8
+                                        7. A momentary digression: Continued fractions                                     10
+                                        8. Preparation for the final part of Shor’s algorithm                              11
+                                        9. The final part of Shor’s algorithm                                              16
+                                        10. An example of Shor’s algorithm                                                 17
+
+                                        References                                                                         21
+
+
+
+                                                           1. Preamble to Shor’s algorithm
+
+
+                                         Date: September 20, 2000.
+                                         2000 Mathematics Subject Classification. Primary: 81-01, 81P68.
+                                         Key words and phrases. Shor’s algorithm, factoring, quantum computation, quantum
+                                      algorithms.
+                                         This work was partially supported by ARO Grant #P-38804-PH-QC and the L-O-O-P
+                                      Fund. The author gratefully acknowledges the hospitality of the University of Cambridge
+                                      Isaac Newton Institute for Mathematical Sciences, Cambridge, England, where some of
+                                      this work was completed.      I would also like to thank the other AMS Short Course
+                                      lecturers, Howard Brandt, Dan Gottesman, Lou Kauffman, Alexei Kitaev, Peter Shor,
+                                      Umesh Vazirani and the many Short Course participants for their support. (Copyright
+                                      2000.)
+                                                                                  1
+2                          SAMUEL J. LOMONACO, JR.
+
+  There are cryptographic systems (such as RSA1 ) that are extensively
+used today (e.g., in the banking industry) which are based on the following
+questionable assumption, i.e., conjecture:
+
+Conjecture(Assumption). Integer factoring is computationally much
+harder than integer multiplication. In other words, while there are obviously
+many polynomial time algorithms for integer multiplication, there are no
+polynomial time algorithms for integer factoring. I.e., integer factoring
+computationally requires super-polynomial time.
+
+   This assumption is based on the fact that, in spite of the intensive efforts
+over many centuries of the best minds to find a polynomial time factoring
+algorithm, no one has succeeded so far. As of this writing, the most asymp-
+totically efficient classical algorithm isthe number
+                                               h      theoretic sievei[10], [11],
+which factors an integer N in time O exp (lg N ) (lg lg N )2/3 . Thus,
+                                                     1/3
+
+this is a super-polynomial time algorithm in the number O (lg N ) of digits
+in N .
+
+
+
+    However, ... Peter Shor suddenly changed the rules of the game.
+
+   Hidden in the above conjecture is the unstated, but implicitly understood,
+assumption that all algorithms run on computers based on the principles of
+classical mechanics, i.e., on classical computers. But what if a computer
+could be built that is based not only on classical mechanics, but on quantum
+mechanics as well? I.e., what if we could build a quantum computer?
+
+  Shor, starting from the works of Benioff, Bennett, Deutsch , Feynman,
+Simon, and others, created an algorithm to be run on a quantum com-
+puter, i.e., a quantum algorithm, that 
+                                       factors integers in polynomial    time!
+                                               2
+Shor’s algorithm takes asymptotically O (lg N ) (lg lg N ) (lg lg lg N ) steps
+on a quantum computer, which is polynomial time in the number of digits
+O (lg N ) of N .
+
+
+
+
+                  2. Number theoretic preliminaries
+
+
+  Since the time of Euclid, it has been known that every positive integer N
+can be uniquely (up to order) factored into the product of primes. Moreover,
+    1
+   RSA is a public key cryptographic system invented by Rivest, Shamir, Adleman.
+Hence the name. For more information, please refer to [17].
+               A LECTURE ON SHOR’S FACTORING ALGORITHM                         3
+
+it is a computationally easy (polynomial time) task to determine whether or
+not N is a prime or composite number. For the primality testing algorithm
+of Miller-Rabin[14] makes such a determination at the cost of O (s lg N )
+arithmetic operations [O s lg3 N bit operations] with probability of error
+P robError ≤ 2−s .
+
+   However, once an odd positive integer N is known to be composite, it does
+not appear to be an easy (polynomial time) task on a classical computer to
+determine its prime factors. As mentioned earlier, so far the most asymptot-
+ically efficient classical algorithm known isthe number
+                                                  h       theoretic sievei[10],
+[11], which factors an integer N in time O exp (lg N ) (lg lg N )2/3 .
+                                                         1/3
+
+
+
+Prime Factorization Problem. Given a composite odd positive integer
+N , find its prime factors.
+
+  It is well known[14] that factoring N can be reduced to the task of choosing
+at random an integer m relatively prime to N , and then determining its
+modulo N multiplicative order P , i.e., to finding the smallest positive integer
+P such that
+                               mP = 1 mod N .
+It was precisely this approach to factoring that enabled Shor to construct
+his factoring algorithm.
+
+
+
+
+                   3. Overview of Shor’s algorithm
+
+
+
+  But what is Shor’s quantum factoring algorithm?
+
+
+
+  Let N = {0, 1, 2, 3, . . . } denote the set of natural numbers.
+
+
+
+   Shor’s algorithm provides a solution to the above problem. His algorithm
+consists of the five steps (steps 1 through 5), with only STEP 2 requiring
+the use of a quantum computer. The remaining four other steps of the
+algorithm are to be performed on a classical computer.
+
+   We begin by briefly describing all five steps. After that, we will then
+focus in on the quantum part of the algorithm, i.e., STEP 2.
+    4                           SAMUEL J. LOMONACO, JR.
+
+
+Step 1. Choose a random positive integer m. Use the polynomial time Eu-
+        clidean algorithm2 to compute the greatest common divisor gcd (m, N )
+        of m and N . If the greatest common divisor gcd (m, N ) 6= 1, then we
+        have found a non-trivial factor of N , and we are done. If, on the other
+        hand, gcd (m, N ) = 1, then proceed to STEP 2.
+
+STEP 2. Use a quantum computer to determine the unknown period P of
+        the function
+                                       Nf
+                                   N −→     N
+                                   a 7−→ ma mod N
+
+
+Step 3. If P is an odd integer, then goto Step 1. [The probability of P being
+        odd is ( 21 )k , where k is the number of distinct prime factors of N .] If
+        P is even, then proceed to Step 4.
+
+
+Step 4. Since P is even,
+                                
+                  mP/2 − 1 mP/2 + 1 = mP − 1 = 0 mod N .
+
+            If mP/2 + 1 = 0 mod N , then goto Step 1. If mP/2 + 1 6= 0 mod N ,
+            then proceed to Step 5. It can be shown that the probability that
+            mP/2 + 1 = 0 mod N is less than ( 12 )k−1 , where k denotes the number
+            of distinct prime factors of N .
+                                                                  
+Step 5. Use the Euclidean algorithm to compute d = gcd mP/2 − 1, N . Since
+            mP/2 +1 6= 0 mod N , it can easily be shown that d is a non-trivial factor
+            of N . Exit with the answer d.
+
+
+
+       Thus, the task of factoring an odd positive integer N reduces to the
+    following problem:
+
+    Problem. Given a periodic function
+                                       f : N −→ N ,
+    find the period P of f .
+
+
+
+        2
+                                          
+        The Euclidean algorithm is O lg2 N . For a description of the Euclidean algorithm,
+    see for example [3] or [2].
+                A LECTURE ON SHOR’S FACTORING ALGORITHM                               5
+
+  4. Preparations for the quantum part of Shor’s algorithm
+
+
+
+  Choose a power of 2
+                                       Q = 2L
+such that
+                              N 2 ≤ Q = 2L < 2N 2 ,
+and consider f restricted to the set
+                              SQ = {0, 1, . . . , Q − 1}
+which we also denote by f , i.e.,
+                                  f : SQ −→ SQ .
+
+
+   In preparation for a discussion of STEP 2 of Shor’s algorithm, we con-
+struct two L-qubit quantum registers, Register1 and Register2 to hold
+respectively the arguments and the values of the function f , i.e.,
+    |Reg1i |Reg2i = |ai |f (a)i = |ai |bi = |a0 a1 · · · aL−1 i |b0 b1 · · · bL−1 i
+   In doing so, we have adopted the following convention for representing
+integers in these registers:
+
+Notation Convention. In a quantum computer, we represent an integer
+a with radix 2 representation
+                                        L−1
+                                        X
+                                  a=          aj 2j ,
+                                        j=0
+
+as a quantum register consisting of the 2n qubits
+                                                        L−1
+                                                        O
+                         |ai = |a0 a1 · · · aL−1 i =          |aj i
+                                                        j=0
+
+
+  For example, the integer 23 is represented in our quantum computer as n
+qubits in the state:
+                              |23i = |10111000 · · · 0i
+
+
+
+
+  Before continuing, we remind the reader of the classical definition of the
+Q-point Fourier transform.
+      6                             SAMUEL J. LOMONACO, JR.
+
+      Definition 1. Let ω be a primitive Q-th root of unity, e.g., ω = e2πi/Q .
+      Then the Q-point Fourier transform is the map
+                                                   F
+                                 M ap(SQ , C) −→ M ap(SQ , C)
+                                                h             i
+                              [f : SQ −→ C] 7−→ fb : SQ −→ C
+      where
+                                             1 X
+                                    fb(y) = √    f (x)ω xy
+                                              Q
+                                                    x∈SQ
+
+
+         We implement the Fourier transform F as a unitary transformation, which
+      in the standard basis
+                                       |0i , |1i , . . . , |Q − 1i
+      is given by the Q × Q unitary matrix
+                                        1
+                                   F = √ (ω xy ) .
+                                         Q
+                                                                             
+      This unitary transformation can be factored into the product of O lg2 Q =
+              
+      O lg2 N sufficiently local unitary transformations. (See [15], [6].)
+
+
+
+
+                     5. The quantum part of Shor’s algorithm
+
+
+          The quantum part of Shor’s algorithm, i.e., STEP 2, is the following:
+
+STEP 2.0 Initialize registers 1 and 2, i.e.,
+                     |ψ0 i = |Reg1i |Reg2i = |0i |0i = |00 · · · 0i |0 · · · 0i
+STEP 2.1    3 Apply the Q-point Fourier transform F to Register1.
+
+                                              Q−1                 Q−1
+                              F⊗I          1 X 0·x             1 X
+              |ψ0 i = |0i |0i 7−→ |ψ1 i = √       ω |xi |0i = √       |xi |0i
+                                            Q x=0               Q x=0
+
+      Remark 1. Hence, Register1 now holds all the integers
+                                         0, 1, 2, . . . , Q − 1
+      in superposition.
+
+         3
+           In this step we could have instead applied the Hadamard transform to Register1
+      with the same result, but at the computational cost of O (lg N ) sufficiently local unitary
+      transformations. The term sufficiently local unitary transformationis defined in the last
+      part of section 7.7 of [13].
+                        A LECTURE ON SHOR’S FACTORING ALGORITHM                                   7
+
+
+STEP 2.2 Let Uf be the unitary transformation that takes |xi |0i to |xi |f (x)i.
+         Apply the linear transformation Uf to the two registers. The result
+         is:
+                               Q−1                         Q−1
+                            1 X              Uf         1 X
+                   |ψ1 i = √       |xi |0i 7−→ |ψ2 i = √       |xi |f (x)i
+                             Q x=0                       Q x=0
+
+
+      Remark 2. The state of the two registers is now more than a superposition
+      of states. In this step, we have quantum entangled the two registers.
+
+
+
+STEP 2.3. Apply the Q-point Fourier transform F to Reg1. The resulting state
+          is:
+                        Q−1
+                        X                                       Q−1
+                                                                X Q−1
+                                                                    X
+                                          F⊗I
+          |ψ2 i = √1Q                                 1
+                              |xi |f (x)i 7−→ |ψ3 i = Q                   ω xy |yi |f (x)i
+                        x=0                                     x=0 y=0
+
+                                                                Q−1
+                                                                X
+                                                            1                         |Υ(y)i
+                                                           =Q         k|Υ(y)ik · |yi k|Υ(y)ik ,
+                                                                y=0
+
+           where
+                                                  Q−1
+                                                  X
+                                    |Υ(y)i =            ω xy |f (x)i .
+                                                  x=0
+
+
+
+STEP 2.4. Measure Reg1, i.e., perform a measurement with respect to the or-
+          thogonal projections
+             |0i h0| ⊗ I, |1i h1| ⊗ I, |2i h2| ⊗ I, . . . , |Q − 1i hQ − 1| ⊗ I ,
+           where I denotes the identity operator on the Hilbert space of the second
+           register Reg2.
+
+        As a result of this measurement, we have, with probability
+                                                     k|Υ(y0 )ik2
+                                    P rob (y0 ) =                ,
+                                                        Q2
+      moved to the state
+                                                   |Υ(y0 )i
+                                          |y0 i
+                                                  k|Υ(y0 )ik
+      and measured the value
+                                   y0 ∈ {0, 1, 2, . . . , Q − 1} .
+8                              SAMUEL J. LOMONACO, JR.
+
+   If after this computation, we ignore the two registers Reg1 and Reg2, we
+see that what we have created is nothing more than a classical probability
+distribution S on the sample space
+
+                                     {0, 1, 2, . . . , Q − 1} .
+
+In other words, the sole purpose of executing STEPS 2.1 to 2.4 is to create
+a classical finite memoryless stochastic source S which outputs a symbol
+y0 ∈ {0, 1, 2, . . . , Q − 1} with the probability
+
+                                                  k|Υ(y0 )ik2
+                                P rob(y0 ) =                  .
+                                                     Q2
+
+(For more details, please refer to section 8.1 of [13].)
+
+
+
+   As we shall see, the objective of the remander of Shor’s algorithm is to
+glean information about the period P of f from the just created stochastic
+source S. The stochastic source was created exactly for that reason.
+
+
+
+
+                     6. Peter Shor’s stochastic source S
+
+
+
+
+  Before continuing to the final part of Shor’s algorithm, we need to analyze
+the probability distribution P rob (y) a little more carefully.
+
+
+
+
+Proposition 1. Let q and r be the unique non-negative integers such that
+Q = P q + r , where 0 ≤ r < P ; and let Q0 = P q. Then
+                               
+                                   Q
+                                                  
+                                                        y Q0
+                                                             
+                   r sin2 πP y
+                                · P0 +1 +(P −r) sin2 πP  · P
+                  
+                  
+                            Q
+                                                    Q
+                                                                  if P y 6= 0 mod Q
+                                     2   2 πP y
+                                      Q sin     Q
+    P rob (y) =
+                  
+                  
+                  
+                   r(Q0 +P )2 +(P −r)Q20
+                            Q2 P 2
+                                                                  if P y = 0 mod Q
+                A LECTURE ON SHOR’S FACTORING ALGORITHM                                                                            9
+
+Proof. We begin by deriving a more usable expression for |Υ(y)i.
+              Q−1
+              X                               QX
+                                               0 −1                        Q−1
+                                                                           X
+ |Υ(y)i =           ω xy |f (x)i =                    ω xy |f (x)i +               ω xy |f (x)i
+              x=0                             x=0                          x=Q0
+
+                      Q
+                    0 −1
+              P −1 P                                                          r−1         h      i
+              X    X                                                          X               Q
+                                                                                           P P0 +x0 y
+          =                 ω (P x1 +x0 )y |f (P x1 + x0 )i +                         ω                                   |f (P x1 + x0 )i
+              x0 =0 x1 =0                                                    x0 =0
+                            Q        
+                               0 −1
+              P −1                                  r−1                  
+              X              X P yx1 
+                              P                     X                   Q
+                                                                   P y P0
+          =        ω x   y ·      ω                      x   y
+                       0
+                                       |f (x0 )i +     ω   0   ·ω          |f (x0 )i
+              x0 =0               x1 =0                                     x0 =0
+
+                              Q                                  Q        
+                                0                                     0 −1
+              r−1
+              X                                      P −1
+                              X P yx1              X              X P yx1 
+                               P                                     P
+
+          =         ω x0 y ·     ω     |f (x0 )i +      ω x0 y ·       ω   |f (x0 )i
+              x0 =0              x1 =0                                     x0 =r                     x1 =0
+
+where we have used the fact that f is periodic of period P .
+
+  Since f is one-to-one when restricted to its period 0, 1, 2, . . . , P − 1, all
+the kets
+                  |f (0)i , |f (1)i , |f (2)i , . . . , |f (P − 1)i ,
+are mutually orthogonal. Hence,
+                                           Q0                  2                 Q0                          2
+                                                                                    −1
+                                          X
+                                          P                                      P X
+          hΥ(y) | Υ(y)i = r                      ω P yx1           + (P − r)                ω P yx1               .
+                                          x1 =0                                    x1 =0
+
+
+
+  If P y = 0 mod Q, then since ω is a Q-th root of unity, we have
+                                      2             2
+                                 Q0                    Q0
+             hΥ(y) | Υ(y)i = r      + 1 + (P − r)             .
+                                 P                      P
+
+   On the other hand, if P y 6= 0 mod Q, then we can sum the geometric
+series to obtain
+                                                         2                                                        2
+                                         Q0                                                     Q0
+                              P y·          +1                                       P y·
+                          ω              P
+                                                    −1                           ω         −1   P
+   hΥ(y) | Υ(y)i = r                                           + (P − r))
+                                 ωP y − 1                                              P y
+                                                                                      ω −1
+
+                                                                 2                                                         2
+                              2πi             Q0                                          2πi                Q0
+                                  ·P y·          +1                                           ·P y·
+                          e    Q              P
+                                                          −1                          e    Q                 P
+                                                                                                                          −1
+                  =r                 2πi                               + (P − r))                2πi
+                                 e Q ·P y − 1                                                   e Q ·P y − 1
+10                         SAMUEL J. LOMONACO, JR.
+
+where we have used the fact that ω is the primitive Q-th root of unity given
+by
+                                  ω = e2πi/Q .
+
+
+  The remaining part of the proposition is a consequence of the trigono-
+metric identity
+                                          
+                               2           θ
+                        eiθ − 1 = 4 sin2       .
+                                           2
+
+
+
+
+     As a corollary, we have
+
+
+Corollary 1. If P is an exact divisor of Q, then
+                             
+                              0 if P y 6= 0 mod Q
+                 P rob (y) =
+                              1
+                                P   if P y = 0 mod Q
+
+
+
+           7. A momentary digression: Continued fractions
+
+
+
+   We digress for a moment to review the theory of continued fractions. (For
+a more in-depth explanation of the theory of continued fractions, please refer
+to [5] and [12].)
+
+   Every positive rational number ξ can be written as an expression in the
+form
+                                        1
+                        ξ = a0 +                  ,
+                                          1
+                                 a1 +       1
+                                           a2 +
+                                                            1
+                                                  a3 +
+                                                                1
+                                                         ···+
+                                                                aN
+
+
+where a0 is a non-negative integer, and where a1 , . . . , aN are positive inte-
+gers. Such an expression is called a (finite, simple) continued fraction,
+and is uniquely determined by ξ provided we impose the condition aN > 1.
+For typographical simplicity, we denote the above continued fraction by
+                               [a0 , a1 , . . . , aN ] .
+                  A LECTURE ON SHOR’S FACTORING ALGORITHM                                  11
+
+   The continued fraction expansion of ξ can be computed with the following
+recurrence relation, which always terminates if ξ is rational:
+                                                                  
+              a0 = ⌊ξ⌋                                             an+1 = ⌊1/ξn ⌋
+                             , and if ξn 6= 0, then
+                                                                   ξ          1
+             ξ0 = ξ − a0                                                 n+1 = ξn − an+1
+
+
+
+
+  The n-th convergent (0 ≤ n ≤ N ) of the above continued fraction is
+defined as the rational number ξn given by
+                                   ξn = [a0 , a1 , . . . , an ] .
+Each convergent ξn can be written in the form, ξn = pqnn , where pn and qn
+are relatively prime integers ( gcd (pn , qn ) = 1). The integers pn and qn are
+determined by the recurrence relation
+
+                 p0 = a0 , p1 = a1 a0 + 1, pn = an pn−1 + pn−2 ,
+
+                 q0 = 1,      q1 = a1 ,               qn = an qn−1 + qn−2 .
+
+
+
+
+        8. Preparation for the final part of Shor’s algorithm
+
+
+
+
+Definition 2. 4 For each integer a, let {a}Q denote the residue of a
+modulo Q of smallest magnitude. In other words, {a}Q is the unique
+integer such that
+                       
+                        a = {a}Q mod Q
+                                                .
+                       
+                          −Q/2 < {a}Q ≤ Q/2
+
+
+
+Proposition 2. Let y be an integer lying in SQ . Then
+                                                               
+                  4    1       1 2
+                
+                 π2 · P · 1 − N     if 0 < {P y}Q ≤ P2 · 1 − N1
+    P rob (y) ≥
+                
+                 1          
+                           1 2
+                  P · 1− N           if {P y}Q = 0
+
+                                            j            k
+  4                           a                   a
+      {a}Q = a − Q · round    Q
+                                   = a−Q·         Q
+                                                    + 12       .
+12                           SAMUEL J. LOMONACO, JR.
+
+Proof. We begin by noting that
+  π{P y}Q
+                                     Q0 +P  π            Q+P 
+              Q0        π P        1                      1
+    Q     ·   P  + 1  ≤   ·
+                        Q 2  · 1 − N  ·    P    ≤ 2 · 1 − N ·    Q
+
+                                                                     
+                          ≤ π2 · 1 − N1 · 1 + Q
+                                              P
+                                                  ≤ π2 · 1 − N1 · 1 + NN2 < π2 ,
+where we have made use of the inequalities
+                      N 2 ≤ Q < 2N 2 and 0 < P ≤ N .
+It immediately follows that
+                                    π {P y}Q Q0   π
+                                            ·   <   .
+                                       Q      P   2
+
+   As a result, we can legitimately use the inequality
+                        4 2                            π
+                       π2
+                          θ ≤ sin2 θ ≤ θ 2 , for |θ| <
+                                                       2
+to simplify the expression for P rob (y).
+
+     Thus,
+                                                                                                   
+                                        π{P y}Q         Q0                                π{P y}Q Q
+                          r sin2           Q
+                                                ·       P
+                                                           +1        +(P −r) sin2            Q
+                                                                                                 · P0
+          P rob (y) =                                                    
+                                                                       πP y
+                                                          Q2 sin2       Q
+
+                                                              2                                    2
+                                        π{P y}Q         Q0                                π{P y}Q Q
+                          r· 42 ·          Q
+                                                ·       P
+                                                           +1         +(P −r)· 42 ·          Q
+                                                                                                 · P0
+                            π                                                 π
+                     ≥                                         
+                                                                   π{P y}Q
+                                                                           2
+                                                          Q2          Q
+
+
+                                             2
+                                   P·
+                                         Q0                                     2
+                          4                                                Q−r
+                     ≥    π2
+                             ·            P
+                                         Q2
+                                                    = π42 · P1 ·            Q
+
+                                                   2                     2
+                          4
+                     =      · 1 ·
+                          π2 P
+                                             1 − Qr    ≥ π42 · P1 · 1 − N1
+
+
+     The remaining case, {P y}Q = 0 is left to the reader.
+
+
+Lemma 1. Let
+                         
+                        P
+  Y = y ∈ SQ | {P y}Q ≤                                 and        SP = {d ∈ SQ | 0 ≤ d < P } .
+                        2
+Then the map
+                      Y     −→ SP                                                    
+                                                                               P
+                      y     7−→ d = d(y) = round                               Q ·y
+                   A LECTURE ON SHOR’S FACTORING ALGORITHM              13
+
+is a bijection with inverse
+                                                       
+                                                    Q
+                             y = y(d) = round         ·d .
+                                                    P
+Hence, Y and SP are in one-to-one correspondence. Moreover,
+                              {P y}Q = P · y − Q · d(y) .
+
+
+Remark 3. Moreover, the following two sets of rationals are in one-to-one
+correspondence
+                                                 
+                 y                   d
+                    | y ∈ Y ←→         |0≤d<P
+                 Q                   P
+
+  As a result of the measurement performed in STEP 2.4, we have in our
+possession an integer y ∈ Y . We now show how y can be use to determine
+the unknown period P .
+
+   We now need the following theorem5 from the theory of continued frac-
+tions:
+
+Theorem 1. Let ξ be a real number, and let a and b be integers with b > 0.
+If
+                                  a     1
+                              ξ−    ≤ 2 ,
+                                  b    2b
+then the rational number a/b is a convergent of the continued fraction ex-
+pansion of ξ.
+
+  As a corollary, we have:
+
+
+Corollary 2. If {P y}Q ≤ P2 , then the rational number d(y)
+                                                        P is a convergent
+                                       y
+of the continued fraction expansion of Q .
+Proof. Since
+                                P y − Qd(y) = {P y}Q ,
+we know that
+                                                    P
+                                  |P y − Qd(y)| ≤     ,
+                                                    2
+which can be rewritten as
+                                    y   d(y)    1
+                                      −      ≤    .
+                                    Q    P     2Q
+  5
+      See [5, Theorem 184, Section 10.15].
+14                        SAMUEL J. LOMONACO, JR.
+
+But, since Q ≥ N 2 , it follows that
+                              y   d(y)    1
+                                −      ≤      .
+                              Q    P     2N 2
+Finally, since P ≤ N (and hence 2N1 2 ≤ 2P1 2 ), the above theorem can be
+applied. Thus, d(y)
+                P is a convergent of the continued fraction expansion of
+    y
+ξ = Q.
+
+
+   Since d(y)                                                      y
+          P is a convergent of the continued fraction expansion of Q , it
+follows that, for some n,
+                                 d(y)   pn
+                                      =    ,
+                                  P     qn
+where pn and qn are relatively prime positive integers given by a recurrence
+relation found in the previous subsection. So it would seem that we have
+found a way of deducing the period P from the output y of STEP 2.4, and
+so we are done.
+
+     Not quite!
+
+     We can determine P from the measured y produced by STEP 2.4, only if
+                              
+                               pn = d(y)
+                                            ,
+                              
+                                 qn = P
+which is true only when d(y) and P are relatively prime.
+
+  So what is the probability that the y ∈ Y produced by STEP 2.4 satisfies
+the additional condition that
+                              gcd (P, d(y)) = 1 ?
+
+
+Proposition 3. The probability that the random y produced by STEP 2.4 is
+such that d(y) and P are relatively prime is bounded below by the following
+expression
+                                                             
+                                            4 φ(P )         1 2
+        P rob {y ∈ Y | gcd(d(y), P ) = 1} ≥ 2 ·      · 1−         ,
+                                           π     P          N
+where φ(P ) denotes Euler’s totient function, i.e., φ(P ) is the number of
+positive integers less than P which are relatively prime to P .
+
+
+     The following theorem can be found in [5, Theorem 328, Section 18.4]:
+               A LECTURE ON SHOR’S FACTORING ALGORITHM                      15
+
+Theorem 2.
+                                     φ(N )
+                          lim inf              = e−γ ,
+                                    N/ ln ln N
+where γ denotes Euler’s constant γ = 0.57721566490153286061 . . . , and
+where e−γ = 0.5614594836 . . . .
+
+
+
+  As a corollary, we have:
+
+
+
+Corollary 3.
+                                                                 
+                                        4     e−γ − ǫ (P )      1 2
+  P rob {y ∈ Y | gcd(d(y), P ) = 1} ≥ 2     ·              · 1−     ,
+                                     π ln 2     lg lg N         N
+
+where ǫ (P ) is a monotone decreasing sequence converging to zero. In terms
+of asymptotic notation,
+                                                             
+                                                          1
+              P rob {y ∈ Y | gcd(d(y), P ) = 1} = Ω             .
+                                                      lg lg N
+
+Thus, if STEP 2.4 is repeated O(lg lg N ) times, then the probability of suc-
+cess is Ω (1).
+
+Proof. From the above theorem, we know that
+                           φ(P )
+                                    ≥ e−γ − ǫ (P ) .
+                         P/ ln ln P
+
+where ǫ (P ) is a monotone decreasing sequence of positive reals converging
+to zero. Thus,
+
+φ(P )   e−γ − ǫ (P )   e−γ − ǫ (P )     e−γ − ǫ (P )      e−γ − ǫ (P )       1
+      ≥              ≥              =                   ≥              ·
+ P        ln ln P        ln ln N      ln ln 2 + ln lg N       ln 2       lg lg N
+
+
+
+
+Remark 4. Ω( lg lg1 N ) denotes an asymptotic lower bound. Readers not
+familiar with the big-oh O(∗) and big-omega Ω (∗) notation should refer to
+[2, Chapter 2] or [1, Chapter 2].
+     16                         SAMUEL J. LOMONACO, JR.
+
+     Remark 5. For the curious reader, lower bounds LB(P ) of e−γ − ǫ (P ) for
+     3 ≤ P ≤ 841 are given in the following table:
+                                      P     LB(P )
+                                      3     0.062
+                                      4     0.163
+                                      5     0.194
+                                      7     0.303
+                                      13    0.326
+                                      31    0.375
+                                      61    0.383
+                                      211   0.411
+                                      421   0.425
+                                      631   0.435
+                                      841   0.468
+     Thus, if one wants a reasonable bound on the P rob {y ∈ Y | gcd(d(y), P ) = 1}
+     before continuing with Shor’s algorithm, it would pay to first use a classical
+     algorithm to verify that the period P of the randomly chosen integer m is
+     not too small.
+
+
+                      9. The final part of Shor’s algorithm
+
+
+       We are now prepared to give the last step in Shor’s algorithm. This step
+     can be performed on a classical computer.
+
+Step 2.5 Compute the period P from the integer y produced by STEP 2.4.
+
+          •       Loop for each n from n = 1 Until ξn = 0.
+
+          •   –      Use the recurrence relations given in subsection 13.7, to com-
+                     pute the pn and qn of the n-th convergent pqnn of Q
+                                                                       y
+                                                                         .
+
+          •   –      Test to see if qn = P by computing6
+                                       Y  i qn,i
+                               mq n =      m2      mod N ,
+                                       i
+                                P
+                     where qn = i qn,i 2i is the binary expansion of qn .
+                     If mqn = 1 mod N , then exit with the answer P = qn , and
+                     proceed to Step 3. If not, then continue the loop.
+
+         The indicated algorithm for computing mqn mod N requires O(lg qn ) arithmetic
+          6
+
+     operations.
+                     A LECTURE ON SHOR’S FACTORING ALGORITHM                      17
+
+         •      End of Loop
+
+         •      If you happen to reach this point, you are a very unlucky quantum
+                computer scientist. You must start over by returning to STEP
+                2.0. But don’t give up hope! The probability that the integer y
+                produced by STEP 2.4 will lead to a successful completion of Step
+                2.5 is bounded below by
+                                                                  
+                   4       e−γ − ǫ (P )      1 2      0.232        1 2
+                         ·              · 1−      >          · 1−        ,
+                π 2 ln 2     lg lg N         N       lg lg N       N
+                provided the period P is greater than 3.         [ γ denotes Euler’s
+                constant.]
+
+
+
+                       10. An example of Shor’s algorithm
+
+
+
+
+         Let us now show how N = 91 (= 7 · 13) can be factored using Shor’s
+      algorithm.
+
+         We choose Q = 214 = 16384 so that N 2 ≤ Q < 2N 2 .
+
+  Step 1 Choose a random positive integer m, say m = 3. Since gcd(91, 3) = 1,
+         we proceed to STEP 2 to find the period of the function f given by
+                                    f (a) = 3a mod 91
+
+      Remark 6. Unknown to us, f has period P = 6. For,
+                         a       0 1 2     3    4       5   6 7 ···
+
+                        f (a)    1 3 9 27 81 61 1 3 · · ·
+                                ∴ Unknown period P = 6
+
+
+
+
+STEP 2.0 Initialize registers 1 and 2. Thus, the state of the two registers becomes:
+                                      |ψ0 i = |0i |0i
+     18                           SAMUEL J. LOMONACO, JR.
+
+
+STEP 2.1 Apply the Q-point Fourier transform F to register #1, where
+                                               X   16383
+                                          1
+                               F |ki = √           ω 0·x |xi ,
+                                         16384 x=0
+                                                                                2πi
+          and where ω is a primitive Q-th root of unity, e.g., ω = e 16384 . Thus
+          the state of the two registers becomes:
+                                                    16383
+                                                    X
+                                               1
+                                  |ψ1 i = √             |xi |0i
+                                              16384 x=0
+
+
+
+
+STEP 2.2 Apply the unitary transformation Uf to registers #1 and #2, where
+                             Uf |xi |ℓi = |xi | f (x) − ℓ mod 91i .
+           (Please note that Uf2 = I.) Thus, the state of the two registers becomes:
+                    1     P16383       x
+      |ψ2 i = √16384         x=0 |xi |3 mod 91i
+
+
+            =   √ 1    (        | 0i |1i + | 1i |3i + | 2i |9i + | 3i |27i + | 4i |81i + | 5i |61i
+                 16384
+
+                             + | 6i |1i + | 7i |3i + | 8i |9i + | 9i |27i + |10i |81i + |11i |61i
+
+                             + |12i |1i + |13i |3i + |14i |9i + |15i |27i + |16i |81i + |17i |61i
+
+                             + ...
+
+                             + |16380i |1i + |16381i |3i + |16382i |9i + |16383i |27i
+                         )
+
+
+     Remark 7. The state of the two registers is now more than a superposition
+     of states. We have in the above step quantum entangled the two registers.
+
+
+
+
+STEP 2.3 Apply the Q-point F again to register #1. Thus, the state of the
+         system becomes:
+                         1  P16383 1 P16383 xy
+             |ψ3 i = √16384  x=0
+                                  √
+                                    16384  y=0 ω   |yi |3x mod 91i
+
+                               1 P16383    P16383 xy x
+                     =       16384 x=0 |yi  x=0 ω |3 mod 91i
+
+                               1 P16383
+                     =       16384 x=0 |yi |Υ (y)i ,
+                     A LECTURE ON SHOR’S FACTORING ALGORITHM                          19
+
+          where
+                                          16383
+                                           X
+                              |Υ (y)i =           ω xy |3x mod 91i
+                                          x=0
+          Thus,
+      |Υ (y)i =           |1i + ω y |3i + ω 2y |9i + ω 3y |27i + ω 4y |81i + ω 5y |61i
+
+                  + ω 6y |1i + ω 7y |3i + ω 8y |9i + ω 9y |27i + ω 10y |81i + ω 11y |61i
+
+                  + ω 12y |1i + ω 13y |3i + ω 14y |9i + ω 15y |27i + ω 16y |81i + ω 17y |61i
+
+                  + ...
+
+                  + ω 16380y |1i + ω 16381y |3i + ω 16382y |9i + ω 16383y |27i
+
+
+
+
+STEP 2.4 Measure Reg1. The result of our measurement just happens to turn
+         out to be
+                                          y = 13453
+
+       Unknown to us, the probability of obtaining this particular y is:
+                                 0.3189335551 × 10−6 .
+     Moreover, unknown to us, we’re lucky!            The corresponding d is relatively
+     prime to P , i.e.,
+                                                      P
+                              d = d(y) = round(         · y) = 5
+                                                      Q
+
+        However, we do know that the probability of d(y) being relatively prime
+     to P is greater than
+                                  
+                     0.232       1 2
+                            · 1−     ≈ 8.4% (provided P > 3),
+                    lg lg N      N
+     and we also know that
+                                         d(y)
+                                          P
+     is a convergent of the continued fraction expansion of
+                                        y    13453
+                                   ξ=      =
+                                        Q    16384
+        So with a reasonable amount of confidence, we proceed to Step 2.5.
+     20                          SAMUEL J. LOMONACO, JR.
+
+
+Step 2.5 Using the recurrence relations found in subsection 13.7 of this paper,
+         we successively compute (beginning with n = 0) the an ’s and qn ’s for
+         the continued fraction expansion of
+                                      y    13453
+                                 ξ=     =         .
+                                      Q    16384
+         For each non-trivial n in succession, we check to see if
+                                     3qn = 1 mod 91.
+            If this is the case, then we know qn = P , and we immediately exit from
+            Step 2.5 and proceed to Step 3.
+
+          • In this example, n = 0 and n = 1 are trivial cases.
+
+          • For n = 2, a2 = 4 and q2 = 5 . We test q2 by computing
+                              0 1  1 0  0 1
+                 3q2 = 35 = 32     · 32    · 32     = 61 6= 1 mod 91 .
+            Hence, q2 6= P .
+
+          • We proceed to n = 3, and compute
+                                   a3 = 1 and q3 = 6.
+            We then test q3 by computing
+                                0 0  1 1  0 1
+                   3q3 = 36 = 32     · 32   · 32    = 1 mod 91 .
+            Hence, q3 = P . Since we now know the period P , there is no need
+            to continue to compute the remaining an ’s and qn ’s. We proceed
+            immediately to Step 3.
+
+       To satisfy the reader’s curiosity we have listed in the table below all the
+     values of an , pn , and qn for n = 0, 1, . . . , 14. But it should be mentioned
+     again that we need only to compute an and qn for n = 0, 1, 2, 3, as indicated
+     above.
+      n 0 1 2 3 4 5 6                    7         8     9 10      11    12    13    14
+      an 0 1 4 1 1 2 3                   1         1     3   1      1     1     1     3
+      pn 0 1 4 5 9 23 78 101 179 638 817 1455 2272 3727 13453
+      qn 1 1 5 6 11 28 95 123 218 777 995 1772 2767 4539 16384
+
+
+ Step 3. Since P = 6 is even, we proceed to Step 4.
+
+ Step 4. Since
+                               3P/2 = 33 = 27 6= −1 mod 91,
+            we goto Step 5.
+                     A LECTURE ON SHOR’S FACTORING ALGORITHM                            21
+
+
+Step 5. With the Euclidean algorithm, we compute
+                                             
+              gcd 3P/2 − 1, 91 = gcd 33 − 1, 91 = gcd (26, 91) = 13 .
+
+          We have succeeded in finding a non-trivial factor of N = 91, namely
+          13. We exit Shor’s algorithm, and proceed to celebrate!
+
+
+
+
+                                       References
+     [1] Brassard, Gilles, and Paul Bratley, “Algorithmics: Theory and Practice,”
+         Printice-Hall, (1988).
+     [2] Cormen, Thomas H., Charles E. Leiserson, and Ronald L. Rivest, “Introduction to
+         Algorithms,” McGraw-Hill, (1990).
+     [3] Cox, David, John Little, and Donal O’Shea, “Ideals, Varieties, and Algorithms,”
+         (second edition), Springer-Verlag, (1996).
+     [4] Ekert, Artur K.and Richard Jozsa, Quantum computation and Shor’s factoring
+         algorithm, Rev. Mod. Phys., 68,(1996), pp 733-753.
+     [5] Hardy, G.H., and E.M. Wright, “An Introduction to the Theory of Numbers,”
+         Oxford Press, (1965).
+     [6] Hoyer, Peter, Efficient quantum transforms, quant-ph/9702028.
+     [7] Jozsa, Richard, Quantum algorithms and the Fourier transform, quant-ph
+         preprint archive 9707033 17 Jul 1997.
+     [8] Jozsa, Richard, Proc. Roy. Soc. London Soc., Ser. A, 454, (1998), 323 - 337.
+     [9] Kitaev, A., Quantum measurement and the abelian stabiliser problem,
+         (1995), quant-ph preprint archive 9511026.
+    [10] Lenstra, A.K., and H.W. Lenstra, Jr., eds., “The Development of the Number
+         Field Sieve,” Lecture Notes in Mathematics, Vol. 1554, Springer-Velag, (1993).
+    [11] Lenstra, A.K., H.W. Lenstra, Jr., M.S. Manasse, and J.M. Pollard, The number
+         field sieve. Proc. 22nd Annual ACM Symposium on Theory of ComputingACM,
+         New York, (1990), pp 564 - 572. (See exanded version in Lenstra & Lenstra, (1993),
+         pp 11 - 42.)
+    [12] LeVeque, William Judson, “Topics in Number Theory: Volume I,” Addison-
+         Wesley, (1958).
+    [13] Lomonaco, Samuel J., Jr., A Rosetta Stone for quantum mechanics with an
+         introduction to quantum computation: Lecture Notes for the AMS Short
+         Course on Quantum Computation, Washington, DC, January 2000, in
+         “Quantum Computation,” edited by S.J. Lomonaco, Jr., AMS PSAPM Series.
+         (to appear)
+    [14] Miller, G. L., Riemann’s hypothesis and tests for primality, J. Comput. System
+         Sci., 13, (1976), pp 300 - 317.
+    [15] Shor, Peter W., Polynomial time algorithms for prime factorization and
+         discrete logarithms on a quantum computer, SIAM J. on Computing, 26(5)
+         (1997), pp 1484 - 1509. (quant-ph/9508027)
+    [16] Shor, Peter W., Introduction to quantum algorithms, Lecture Notes for the
+         AMS Short Course on Quantum Computation, Washington, DC, January
+         2000,” to appear in “Quantum Computation,” edited by S.J. Lomonaco, AMS
+         PSAPM Series. (To appear) (quant-ph/0005003)
+    [17] Stinson, Douglas R., “Cryptography: Theory and Practice,” CRC Press, Boca
+         Raton, (1995).
+22                     SAMUEL J. LOMONACO, JR.
+
+  Dept. of Comp. Sci. & Elect. Engr., University of Maryland Baltimore
+County, 1000 Hilltop Circle, Baltimore, MD 21250
+  E-mail address: E-Mail: Lomonaco@UMBC.EDU
+  URL: WebPage: http://www.csee.umbc.edu/~lomonaco
+

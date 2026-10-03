@@ -1,0 +1,664 @@
+                                            On quantum factoring using noisy intermediate scale
+                                            quantum computers
+                                            Vivian Phan, Arttu Pönni, Matti Raasakka, and Ilkka Tittonen
+
+                                            Micro and Quantum Systems group
+                                            Department of Electronics and Nanoengineering
+                                            Aalto University
+
+
+                                              We study the performance and resource                  lic key cryptosystems in use today. However,
+                                            usage of the variational quantum factor-                 such a computer will not exist in the near fu-
+                                            ing (VQF) algorithm for different instance               ture because it is estimated that tens of millions
+arXiv:2208.07085v1 [quant-ph] 15 Aug 2022
+
+
+
+
+                                            sizes and optimization algorithms. Our                   of qubits would be needed to factor cryptograph-
+                                            simulations show better chance of finding                ically relevant integers with Shor’s algorithm [2].
+                                            the ground state when using VQE rather                   It is estimated that around ten thousand qubits
+                                            than QAOA for optimization. In gradient-                 would be enough to factor 2048-bit RSA integers
+                                            based optimization we find that the time                 if quantum memory was available for the com-
+                                            required for quantum circuit gradient esti-              putation [3]. The large qubit requirement is due
+                                            mation is a significant problem if VQF is to             to the noise in current quantum computers. This
+                                            become competitive with classical factor-                noise can be dealt with by using quantum error
+                                            ing algorithms. Further, we compare en-                  correcting codes but unfortunately this requires
+                                            tangled and non-entangled circuits in VQE                too many qubits to be practically used in the near
+                                            optimization and fail to see significant evi-            future.
+                                            dence in favour of including entanglement                   Currently, the largest number factored with
+                                            in the VQE circuit.                                      Shor’s algorithm is 21 and even there the com-
+                                                                                                     putation was simplified with prior knowledge of
+                                                                                                     the Solution [4, 5]. Here, we study the per-
+                                            1 Introduction                                           formance of a heuristic alternative to Shor’s al-
+                                                                                                     gorithm suitable for Noisy Intermediate Scale
+                                            Factoring large composite integers is a textbook
+                                                                                                     Quantum (NISQ) computers, the so-called Vari-
+                                            example of a computational problem that is hard
+                                                                                                     ational Quantum Factoring (VQF) algorithm
+                                            to solve on a classical computer, the best known
+                                                                                                     [6]. This suggested approach maps the factor-
+                                            algorithms run in super-polynomial time. It is
+                                                                                                     ing problem into the problem of finding a ground
+                                            an immensely important problem since the RSA
+                                                                                                     state of an Ising Hamiltonian and uses a quantum
+                                            cryptosystem and therefore much of the informa-
+                                                                                                     algorithm for finding this ground state.
+                                            tion security of the modern world relies on its
+                                            hardness.                                                   Variational quantum algorithms (VQAs) are
+                                               One of the most famous applications of quan-          hybrid algorithms where a classical algorithm
+                                            tum computing is Shor’s algorithm for integer            uses the quantum processor as a specialized hard-
+                                            factoring and computing discrete logarithms. It          ware device to execute quantum circuits designed
+                                            is one of the first known examples of superpolyno-       by the classical algorithm. This variational ap-
+                                            mial advantage of quantum computers over clas-           proach has been popular in recent years due to its
+                                            sical computers [1]. When a sufficiently power-          ability to use noisy qubits more effectively: often
+                                            ful quantum computer is built, that computer             only short quantum circuits with small numbers
+                                            can be used to crack the security of most pub-           of qubits are needed and the effect of noise is
+                                                                                                     therefore more manageable. They are also capa-
+                                            Vivian Phan: vivian.phan@aalto.fi                        ble of mitigating some effects of noise and are
+                                            Arttu Pönni: arttu.ponni@aalto.fi                       flexible enough to match native quantum pro-
+                                            Matti Raasakka: matti.raasakka@aalto.fi                  cessor architectures and gate sets. There have
+                                            Ilkka Tittonen: ilkka.tittonen@aalto.fi
+                                                                                                     been many proposed applications for VQAs, such
+
+                                                                                                 1
+as finding ground/excited states, simulation of                            m = pq. Therefore, factoring is reduced to the
+quantum dynamics, combinatorial optimization,                              problem of finding the ground state of Ĥ.
+solving systems of equations, and machine learn-
+ing algorithms [7]. The downside of VQAs is that
+in general, the classical optimization of circuit                          3 Preprocessing
+parameters is NP-hard [8].
+                                                                           Typically however, an additional simplification
+   We study the performance of different op-
+                                                                           step is performed on (2), where the “obvious”
+timization algorithms in VQF and make re-
+                                                                           equations are immediately solved. For exam-
+source estimates to see if we can find evidence
+                                                                           ple, one could deduce that xy = 1 is equiva-
+of favourable scaling properties with increasing
+                                                                           lent to x = y = 1, which can eliminate some
+problem size. Currently, only the Quantum Ap-
+                                                                           of the binary variables. This preprocessing can
+proximate Optimization Algorithm has been ap-
+                                                                           be carried out in different ways and to different
+plied to this problem. We find performance ad-
+                                                                           degrees resulting in a final system of equations
+vantages in using a Variational Quantum Eigen-
+                                                                           which depends on all of those details in addition
+solver instead. Additionally, we study the role of
+                                                                           to the plain equation m = pq. Some factoring in-
+entanglement in the quantum circuit ansatz used
+                                                                           stances get significantly simplified with this pro-
+in VQF.
+                                                                           cess, sometimes instances might even get com-
+                                                                           pletely solved. The constraint this preprocessing
+2 Variational quantum factoring                                            step needs to satisfy is that it must run in poly-
+                                                                           nomial time. More details on preprocessing can
+Variational quantum factoring (VQF) is a pro-                              be found in [6].
+posed variational approach to integer factoring
+[6]. It works by encoding the factoring problem
+to the ground state of an Ising Hamiltonian. This                          4 Variational quantum eigensolver
+ground state is then found with a VQA. Con-
+                                                                           The variational quantum eigensolver (VQE) is a
+sider factoring m = pq where p and q are as-
+                                                                           generic method for approximating ground states
+sumed to be prime. In a binary representation,
+                                                                           of Hamiltonians with parametrized quantum cir-
+mnm . . . m1 m0 = pnp . . . p1 p0 · qnq . . . q1 q0 . This
+                                                                           cuits (PQCs) [9, 10]. Since the factoring instance
+equation implies a system of equations over the
+                                                                           has been converted to a ground state problem,
+unknown binary variables {pi } and {qi }. The
+                                                                           we can use VQE to solve factoring. The primary
+equations are
+                                                                           decisions to be made are the choice of the PQC
+            i
+            X                 i
+                              X              nc
+                                             X                             that produces |ψ(θ)i and the classical optimiza-
+     mi =         qj pi−j +         zj,i −         2j zi,i+j     (1)       tion method for θ. For the classical optimization,
+            j=0               j=0            j=1
+                                                                           we use BFGS algorithm which is a gradient-based
+            i                 i                      nc
+            X                 X                      X                     optimization method where we compute the gra-
+ → Ci :=          qj pi−j +         zj,i − mi −            2j zi,i+j
+                                                                           dients with the parameter shift rule [11, 12].
+            j=0               j=0                    j=1
+                                                                              We will compare two variational circuits in
+         =0                                                      (2)
+                                                                           VQE. First we use a circuit with layers of Ry (θ)-
+where i = 0, . . . , nc and zi,j are the carry bits                        rotations separated by layers of controlled-X op-
+originating from the binary multiplication. These                          erations. The size of the ansatz is controlled by
+equations are quantized to a Hamiltonian by the                            the number of qubits n and the number of CX-
+replacement                                                                layers L.
+                                                                              The second type of circuit we study is the
+                         1
+                    bk 7→ (1 − Zb,k ) ,                          (3)       first type of circuit with controlled-X operations
+                         2                                                 replaced by T gates. This circuit clearly pro-
+where Z is the Pauli-Z operator, b = {p, q, z},                            duces only product states and therefore can be
+and k is the bit index. This replacement quan-                             efficiently simulated classically. The motivation
+tizes the clauses Ci 7→ Ĉi and produces a Hamil-                          for this is to study the role of entanglement in
+               P 2
+tonian Ĥ =       i Ĉi over qubits whose ground                           the experimental performance of VQE in integer
+state (with zero energy) is in one-to-one cor-                             factoring. It has been observed that at least in
+respondence with bit assignments which satisfy                             some cases, non-entangled circuits can perform
+
+                                                                       2
+similarly in some variational optimization tasks           6 Resource requirements
+[13]. Without adding T -gates in between Ry -
+gates the rotations could simply be combined into          In the theory of computational complexity and
+one Ry -gate which would introduce redundancies            analysis of algorithms, two fundamental re-
+in the set of variational parameters. Now since            sources are of concern: time and space. The time
+[Ry (θ), T ] 6= 0 when θ is not a multiple of 2π,          required by an algorithm is measured in the num-
+the different variational parameters acting on the         ber of elementary operations it needs to produce
+same quantum wire still have non-trivial effects.          a result. Space requirement is measured as the
+If no performance difference is observed between           minimum number of bits required to execute the
+CX- and T -circuits, then the experiment shows             algorithm. In order to measure the performance
+no signs of quantum advantage. The circuits have           of VQF, we need to decide what we consider an
+a repeating layered structure. The performance             elementary quantum operation in the algorithm.
+of VQF is controlled by changing the number of             In this work, we will consider both the number of
+these layers. More layers means a more flexible            quantum circuit shots and quantum gates. These
+state |ψ(θ)i so finding the ground state is eas-           numbers are related as can be seen by noticing
+ier, but it also takes more time because there are         that each of our circuits contain O(Ln) gates.
+more parameters to optimize. These circuits are            We’ll also ignore all other time consuming parts
+shown in Fig. 1.                                           in the quantum algorithm, including all related to
+                                                           classical processing. All these simplifications tip
+                                                           the scales in the quantum algorithm’s favour. We
+                                                           are also ignoring that quantum gates are orders of
+5 Quantum approximate optimization                         magnitude slower than classical operations [16].
+                                                           This motivates the choice to ignore classical oper-
+algorithm
+                                                           ations, the runtime of realizing this algorithm is
+                                                           expected to be dominated by the quantum part.
+The quantum approximate optimization algo-                    For the optimization part of the algorithm, we
+rithm (QAOA) is an algorithm inspired by a                 will use BFGS which is a gradient-based opti-
+Trotterized version of quantum adiabatic opti-             mizer. Unfortunately, such optimization meth-
+mization intended to solve combinatorial opti-             ods do not have runtime guarantees for finding
+mization problems [14]. The circuit is a so-called         the minimum. In fact, there are no guarantees
+quantum alternating operator ansatz                        to find the global minimum at all. Therefore,
+                                                           we will start by analysing the time requirements
+                  p                                        of only one gradient evaluation because this is
+                      e−iβj HM e−iγj H |+i⊗n ,
+                  Y
+    |ψ(γ, β)i =                                  (4)       deterministic and the number of gradient evalu-
+                  j
+                                                           ations needed to converge is not known ahead of
+                                                           time. Later we will run experiments to estimate
+                  Pn
+where HM =         i Xi is the mixing Hamilto-             how many steps one needs to converge in BFGS.
+nian. The initial state |+i⊗n is an eigenstate             Now, we will relate the parameters n and L to
+of HM , which is supposed to be transformed                the number of shots Nshots and the number of
+to a ground state of the problem Hamiltonian               gates Ngates required in one gradient evaluation.
+H by a good choice of parameters β and γ,                     The number of qubits is an important bottle-
+analogously to quantum adiabatic optimization.             neck for NISQ devices. Factoring larger numbers
+The quantum processor is used for computing                often requires more qubits in the VQF algorithm
+E = hψ(γ, β)|H|ψ(γ, β)i and the parameters β               so the number of qubits places a practical bound
+and γ are optimized classically. The algorithm             on the size of numbers to be factored. If pre-
+gives increasingly better results for increasing the       processing of the equation system is used, the
+number of parameters p. QAOA unitaries are                 relationship between input number size nm and
+shown to be universal for quantum computing                the number of qubits required n is complicated,
+[15]. The downside is that the circuit length is           but the rule still holds that often a larger num-
+linear in the number of terms in H resulting in            ber requires more qubits in VQF. In addition, in
+circuits that quickly become too long for reliable         [6] prior knowledge of np and nq was assumed,
+evaluation on NISQ processors.                             which obviously is not possible in real factoring
+
+                                                       3
+|0i         Ry                             Ry                                    |0i     Ry         T        Ry
+
+
+|0i         Ry                             Ry         |ψ(θ)i                     |0i     Ry         T        Ry       |ψ(θ)i
+
+
+|0i         Ry                             Ry                                    |0i     Ry         T        Ry
+
+Figure 1: The two variational circuits we use in our experiments. Left: One layer of the CX-circuit. Each Ry -gate
+is parametrized by an independent real number in the range [0, 2π) representing the rotation angle. Right: One
+layer of the T -circuit. The difference to the CX-circuit is that the entangling CX-gates are removed in favour of
+single qubit T -gates. These circuits for L = 0 mean including only the initial Ry -gates, in which case the CX and
+T -circuits are equivalent.
+
+
+      140
+                 preprocessing, prior                                    tion value E(θ) = hψ(θ)|H|ψ(θ)i depends on the
+      120
+                 no preprocessing, prior                                 parameters θ, but for simplicity we’ll drop the
+                 preprocessing, no prior                                 θ-dependence by averaging over the states |ψi
+      100
+                 no preprocessing, no prior                              w.r.t. the Haar measure on the Hilbert space.
+      80
+  n
+
+
+
+
+                                                                         Thus,
+      60
+                                                                                                    Z
+      40
+                                                                         E( hψ(θ)|H|ψ(θ)i) ≈             h0| U † HU |0i dU      (6)
+      20
+       0                                                                    tr H
+                                                                          =        and                                          (7)
+             10          100        1000        104
+                                                           10  5
+                                                                             2n
+                                    m                                    Var( hψ(θ)|H|ψ(θ)i)                                    (8)
+                                                                              Z                2
+Figure 2: The number of required qubits to factor                         ≈      h0| U † HU |0i dU − E( hψ(θ)|H|ψ(θ)i)2
+biprimes of different sizes. Different points corre-
+spond to qubit numbers with/without preprocessing and                                                                           (9)
+with/without prior knowledge of np and nq .                                   2n tr H 2 − (tr H)2
+                                                                          =                          .                         (10)
+                                                                                 22n (2n + 1)
+challenges. This prior knowledge substantially
+                                                                         These formulas are for estimating the values of
+reduces qubit requirements.
+                                                                         the energy itself. However, we are also interested
+   In Fig. 2 we show the dependence of the re-
+                                                                         in the gradient of energy because this is needed
+quired number of qubits n on whether or not
+                                                                         for optimization. For the kth component of the
+preprocessing or prior knowledge of np and nq
+                                                                         gradient of E = hψ(θ)|H|ψ(θ)i we have
+is used. It can be seen that these choices have
+a significant effect on n. The realistic case is                                        E(∂k E) = 0                            (11)
+where one uses preprocessing without unfair prior
+knowledge. In both preprocessed cases, we ob-                                                              tr H 2
+                                                                                        Var(∂k E) =               ,            (12)
+serve approximately linear dependence of the                                                               23n−2
+qubit number on nm = dlog me. If we extrap-                              assuming that the parametrized gates are gen-
+olate under the linear assumption, we find that                          erated by Pauli matrices, which is the case in
+in the case with no prior knowledge we would                             our circuits [17]. Under these assumptions the
+need around 9300 qubits to represent a factoring                         derivatives w.r.t. any parameter in the quantum
+instance of a 2048-bit integer.                                          circuit have the same statistical properties as can
+   Since the Hamiltonian is diagonal, we can mea-                        be seen by noting the absence of k on the right
+sure all Pauli terms simultaneously. In order to                         hand side of (11) and (12). Fig. 3 shows this
+estimate one expectation value to precision , we                        variance experimentally as a function of the in-
+need to run                                                              put integer m. Variances are computed with pre-
+        Nshots = V ar( hψ(θ)|H|ψ(θ)i)/2 ,                     (5)       processing but without prior knowledge about np
+                                                                         and nq . Given that Fig. 2 shows approximately
+shots on the quantum processor. The expecta-                             linear dependence between n and log m = nm ,
+
+                                                                     4
+       0.1                                                         1011
+
+                                                                    109
+     10-11
+                                                                    107                                                     N shots
+
+                                                                    105                                                     N gates
+                  Var(E)
+     10-21
+                  Var(∂k E)                                       1000                                                                m
+
+                                                                    10
+     10-31
+                 100          1000         104     105                         100        1000        104         105
+                                m                                                            m
+
+Figure 3: The variance of H for factoring instances of         Figure 4: The number of shots Nshots and the number of
+various integers m. All instances are preprocessed with-       gates Ngates one needs to execute to estimate one gradi-
+out prior information.                                         ent of E(θ), from eqs. (13) and (14) for different factor-
+                                                               ing instances m. We consider CX-circuits
+                                                                                                     p with L = n.
+                                                               The precision parameter is set to  = Var(∂k E)/100,
+implies that the variances in Fig. 3 decay expo-               this way most circuits are estimated to precision better
+nentially in nm .                                              than
+                                                               √ one standard deviation. The dashed line denotes
+  We will use gradient based optimization in                     m, the maximum number of trial divisions needed to
+VQE. Both CX and T -circuits have (L + 1)n pa-                 factor m.
+rameters. Then for each energy gradient evalu-
+ation, we need to estimate (L + 1)n individual
+derivatives of an expectation value. This means,               is the number of divisions needed to factor m
+that we need to run                                            deterministically, in the worst case. The VQF
+                                                               algorithm on the other hand will need to evaluate
+                                     Var(∂k E)                 many gradients in order to optimize parameters
+             Nshots = (L + 1)n                     (13)
+                                        2                     so that the ground state, and equivalently, p and
+shots to estimate one gradient to precision .                 q are found.
+Counting the number of quantum gates we need
+for each gradient, we obtain
+                              Var(∂k E)
+                                                               7 Solution manifold
+   Ngates = (L + 1)(2L + 1)n2           ,          (14)
+                                 2                            Typically in VQF one is interested in finding the
+since the VQE circuit contains (L + 1)n single                 ground state of the problem Hamiltonian. The
+qubit rotations and Ln controlled NOT-gates.                   ground state after all corresponds to the factors
+   We want to compare the performance with                     p and q by construction. This is what our opti-
+classical factoring algorithms. We choose to test              mization is trying to do as well, but one could ob-
+against the simplest possible algorithm, trial di-             ject that finding the exact ground state is an un-
+vision. The algorithm starts at p = 2, checks if               necessarily strict requirement in practice. What
+p divides m, and increments p until a divisor is               actually suffices is to find either p or q during op-
+                                           √
+found. At the worst case, this requires b mc − 1               timization while ignoring the values of the carry
+                                     √
+divisions since we must have p ≤ m. We will                    bits z. Optimization algorithms could be seen
+not consider space requirements since the classi-              as a fancy version of trial division where can-
+cal bottleneck is the available time, not the mem-             didate divisors are sampled from a probability
+ory.                                                           distribution defined by the ansatz state |ψ(θ)i.
+   It is interesting to study how Nshots and Ngates            One could imagine periodically estimating the
+behave for different factoring instances m. We                 energy E(θ) during optimization. That estimate
+plot these quantities for various m in Fig. 4. We              would require sampling |ψ(θ)i and those samples
+see that for factoring instances m, trial division             could be checked classically. The “solution man-
+uses orders of magnitude less divisions comparing              ifold” was defined in [6] to describe the part of
+to the number of circuit shots or quantum gates                the state space which corresponds to correct as-
+needed to estimate a single circuit gradient. Note             signment for pi and qi but excludes the zi,j -bits.
+that the dashed curve representing trial division              We will consider a more relaxed version of this
+
+                                                           5
+      0.500                                                    is not that much larger. Therefore we do not
+                                                               expect the solution manifold to help much with
+                                                               practical performance. If the optimizer happens
+      0.100
+                                                               to find the ground state, then the probability of
+      0.050
+  p
+
+
+
+
+                                                               observing a solution manifold state will approach
+                                                               1. However, if the optimizer gets stuck in a local
+      0.010
+                                                               suboptimal minimum, then the probability likely
+      0.005
+                                                               tends to zero.
+                  100       1000        104        105
+
+                               m
+
+Figure 5: The fraction of all computational basis states       8 Results
+that belong to the solution manifold, for various m.
+Each instance is preprocessed without prior knowledge.         8.1 Optimization algorithm
+The solution manifold size decreases exponentially in
+log m.                                                         The algorithm for finding the ground state of
+                                                               H is of vital importance for the performance of
+                                                               VQF. The popular choice in the literature for
+concept: in this paper, the solution manifold is               VQF and more generally for combinatorial opti-
+the set of computational basis states which cor-               mization problems is QAOA. Therefore we chose
+responds to the correct assignments of either pi               to compare the performance between QAOA and
+or qi -bits. If energy is sampled during optimiza-             VQE. One immediate advantage of VQE is that it
+tion, we could finish at the moment when any bit               typically uses considerably shorter circuits than
+string in the solution manifold is sampled and                 QAOA. The QAOA ansatz circuit length strongly
+classically checked to divide m. Therefore the                 depends on H, and in our experiments the Hamil-
+size of this solution manifold is clearly of inter-            tonian can have hundreds of Pauli terms. This
+est.                                                           makes the QAOA circuits too deep to practically
+   Fig. 5 shows the relative size of the solution              evaluate on the noisy quantum devices of the near
+manifold to the number of computational basis                  future. The advantage of QAOA is that it is
+states. One can see that the solution manifold                 theoretically understood to find the ground state
+contains a large fraction of the computational                 when the number of parameters becomes large.
+basis states for small m but this fraction dimin-                 We find that VQE performs considerably bet-
+ishes quickly as m increases. The problem with                 ter than QAOA in factoring problems. The final
+the usefulness of the solution manifold is that the            energies of QAOA and VQE are shown in Figs. 6
+algorithm is optimizing the energy of the ansatz               and 7, respectively. Both algorithms are run 100
+state, not the overlap with the solution manifold.             times with random initializations of their param-
+The result is that often the optimizer reduces the             eters for the classical BFGS optimizer. The fac-
+probability of observing a solution manifold state             toring instance in question is m = 91 which corre-
+when sampling |ψ(θ)i at least until the ground                 sponds to 10 qubits with preprocessing but with-
+state is found, if it is found. This can be un-                out prior knowledge of np or nq . It is clear that
+derstood by remembering that the optimization                  VQE reaches lower energies than QAOA and does
+process is trying to increase the amplitude of low             it consistently with shorter circuits. The trade-
+energy states, but these low energy states often               off is that the VQE circuits have considerably
+do not lie in the solution manifold. For example,              more free parameters to optimize than QAOA.
+a state with only two incorrect bits is not in the                For either algorithm, the number of layers does
+solution manifold if one of those bits appears in pi           not seem to have a radical effect on the final ener-
+and the other in qi . The average energy of solu-              gies. Both QAOA and VQE become more expres-
+tion manifold states is also only marginally lower             sive when the number of parameters increases.
+than states outside of the manifold. For exam-                 The error bar gets slightly lower for QAOA when
+ple, in the case of m = 91 the average solution                L increases. For VQE, there is no significant dif-
+manifold state energy is 15.9. The average en-                 ference in performance after the first couple of
+ergy of states outside the manifold is 17.8, which             layers are added.
+
+                                                           6
+      20                                                             5
+                                                                                                                   CX
+
+                                                                     4                                             T
+      15
+
+                                                                     3
+  E
+
+
+
+
+      10
+
+
+
+
+                                                                 E
+                                                                     2
+
+      5
+                                                                     1
+
+      0                                                              0
+       0         2         4          6         8                        0       2         4         6         8
+                               L                                                               L
+
+Figure 6: Final energies for L layers of the QAOA ansatz       Figure 7: Average final energy for m = 91 (10 qubits)
+optimized with BFGS. Average energies and error bars           when using VQE optimized with BFGS. Average energies
+(5% and 95% quantiles) are computed over 100 random            and error bars (5% and 95% quantiles) are computed
+initializations. The factoring instances for different m       over 100 random initializations. This factoring instance
+use classical preprocessing without prior knowledge.           uses preprocessing but does not use prior knowledge. We
+                                                               see that there is no significant difference in performance
+                                                               between CX and T -circuits.
+8.2 Entanglement
+
+Since we have reformulated the factoring problem               to have a slightly better chance of finding lower
+as a combinatorial optimization problem, it is not             energy states as can be seen from the lower error
+clear that entanglement is required in the ansatz              bars in Fig. 7 but this effect seems quite weak.
+state. That is, the ground state is by construc-               Also the entangled circuits have lower average fi-
+tion a computational basis state which is unen-                nal energies but the difference to the unentangled
+tangled and easy to produce with a parametrized                circuit is small. It would be interesting to see sim-
+circuit without connections between qubits. This               ilar experiments in larger instances or other op-
+follows from the classicality of the computational             timization problems since at least here we do not
+problem, entanglement would obviously be a ne-                 see any strong evidence of quantum advantage
+cessity in any optimization problem where the                  in this kind of optimization problem. Also one
+ground state is expected to be entangled. How-                 could ask whether a different choice of quantum
+ever, it seems possible that introducing entangle-             circuit would change these results. For example,
+ment might speed up convergence to the ground                  one could ask whether adding Rx -rotations would
+state or increase the probability of finding the               make a difference.
+ground state. An entangled circuit might of-
+fer these speedups by being able to move from
+                                                               8.3 Instance size
+the initial state to the ground state via entan-
+gled states of the Hilbert space. An unentan-                  The scaling of performance with respect to the
+gled circuit would have to move in the state                   problem size is an important piece of information
+space along more constrained trajectories, only                when comparing algorithms. Since we cannot an-
+passing through product states. Also if there is               alytically study the asymptotic scaling proper-
+no performance improvement in using entangle-                  ties of VQF, we must resort to numerical experi-
+ment, then there is also no quantum advantage:                 ments. This is however also somewhat unsatisfy-
+product states on n qubits can be represented                  ing because we are restricted to very small factor-
+and computed with polynomial amount of classi-                 ing instances when simulating the algorithm on
+cal resources. It is experimentally known that at              a classical computer. Our simulation results are
+least in some cases entangled circuits do not seem             shown in Fig. 8. We are restricted to studying
+to offer performance advantages [13]. This is also             the biprimes 25, 49, 91, and 247. These corre-
+the case in our experiments. Fig. 7 shows the                  spond to 6, 8, 10, and 13 qubits, respectively. In
+final optimization energy of 100 random BFGS                   all instances, for optimization we use VQE with
+initializations for both entangled CX and unen-                L = n layers for each type of ansatz circuit. It
+tangled T -circuits. The entangled circuits seem               is interesting to see that the performance of the
+
+                                                           7
+      20                                                                  500
+                 CX                                                                     CX
+                                                                          400
+      15         T                                                                      T
+
+                                                                          300
+
+
+
+
+                                                                  steps
+  E
+
+
+
+
+      10
+                                                                          200
+
+      5                                                                   100
+
+
+      0                                                                     0
+             1           2          3           4                                   1           2           3           4
+
+                              m                                                                         m
+
+
+Figure 8: Final optimization energies for m = 25, 49, 91,       Figure 9: The number of gradient steps needed for con-
+and 247. Average energies and 5%/95% quantiles are              vergence in BFGS optimization of VQE for different m.
+once again computed over 100 random initializations in          The VQE circuit has as many layers as qubits in each in-
+BFGS. We are using both CX and T -circuits with N =             stance. That is, there are 6, 8, 10, and 13 qubits/layers,
+n layers for each instance. These instances use classical       respectively.
+preprocessing but do not use any prior knowledge.
+                                                                          350
+
+                                                                          300           CX
+non-entangled T -circuit doesn’t suffer nearly as                                       T
+                                                                          250
+much as the CX-circuit’s performance as m in-
+creases. Both circuits can achieve the same min-                          200
+                                                                  steps
+
+
+
+
+imum energies but there is a lot more variance                            150
+with the entangled circuit signalling a higher dif-                       100
+ficulty in traversing through the energy landscape
+                                                                           50
+successfully.
+                                                                            0
+                                                                                0           2       4           6   8
+
+8.4 Steps until convergence                                                                             L
+
+
+Previously we made estimates for the number of                  Figure 10: The number of gradient steps until BFGS
+quantum circuit shots and quantum gate exe-                     convergence, this time we fix m = 91 and vary both the
+                                                                number of layers L and the type of the VQE circuit.
+cutions needed to compute one gradient in the
+parametrized quantum circuit of VQE. When
+studying an optimization algorithm’s perfor-                    ber of gradients to evaluate increases when the
+mance, an equally important quantity is the num-                instance size increases, as well as for increasing
+ber of steps needed to converge. Again, this is                 number of layers in the case of the CX-circuit.
+not something we can derive analytically so we                  The T -circuit on the other hand does not see a
+must resort to numerical simulations. In Fig. 9                 similar increase in the number of gradient steps
+we show the typical number of gradients needed                  when L increases, even though the average energy
+to evaluate before BFGS converges. We can see                   reached is not significantly different from those
+that the number of gradients increases as a func-               achieved by the CX-circuit.
+tion of m for the CX-circuit. The required num-
+ber of gradients increases also for T -circuits but
+much more slowly. It seems that in this opti-                   9 Conclusions
+mization problem, T -circuits perform at least as
+well as CX-circuits and are also faster in two                  In this paper we studied the performance of the
+ways: they need less gradient steps to achieve                  variational quantum factoring algorithm. Since
+convergence and are efficient to simulate classi-               the algorithm is heuristic, performance has to be
+cally. The number of gradient steps as a function               characterized experimentally. The algorithm has
+of the number of layers L in the ansatz is shown                two major moving parts: the process which en-
+in Fig. 10 for the case of m = 91 for both CX and               codes the factoring problem to a ground state of
+T -circuits. It can be seen that the needed num-                a Hamiltonian and the quantum optimization al-
+
+                                                            8
+gorithm used for extracting that ground state.               sium on Foundations of Computer Scien-
+We found that the number of qubits the Hamil-                cePages 124–134 (1994).
+tonian needs to act on depends quite strongly             [2] Craig Gidney and Martin Ekerå. “How to
+on whether or not classical preprocessing is used             factor 2048 bit rsa integers in 8 hours us-
+on the initial clauses. Also the effect of prior              ing 20 million noisy qubits”. Quantum 5,
+information is significant. This prior information            433 (2021). arXiv:1905.09749.
+about the factors of m has been used in some pre-
+vious papers in order to reduce the qubit require-        [3] Élie Gouzien and Nicolas Sangouard. “Fac-
+ments of the algorithm so simulations are easier              toring 2048-bit rsa integers in 177 days
+to run on classical hardware. We also produced                with 13436 qubits and a multimode mem-
+estimates for the number of shots/gates needed to             ory.”.   Physical review letters 127 14,
+evaluate one gradient in any gradient-based opti-             140503 (2021). arXiv:2103.06159.
+mization algorithm and found that gradient eval-          [4] Erik Lucero, Rami Barends, Yu Chen, Ju-
+uation is quite resource intensive. Therefore the             lian Kelly, Matteo Mariantoni, Anthony
+time required for quantum circuit gradient evalu-             Megrant, P. J. J. O’Malley, Daniel Thomas
+ation overwhelms the time required for complete               Sank, Amit Vainsencher, J. Wenner,
+classical factoring for the range of m we stud-               Theodore White, Yi Yin, Andrew N Cle-
+ied. We compared two quantum algorithms for                   land, and John M. Martinis. “Computing
+ground state finding in VQF and found that VQE                prime factors with a josephson phase qubit
+consistently achieves lower energies than QAOA                quantum processor”. Nature Physics 8, 719–
+for our factoring instances. Further, we studied              723 (2012). arXiv:1202.5707.
+two different parametrized circuits in VQE, one           [5] John A. Smolin, Graeme Smith, and Alexan-
+with entanglement and one without. We found                   der Vargo. “Oversimplifying quantum fac-
+that the entangled circuit found similar final en-            toring”.   Nature 499, 163–165 (2013).
+ergies as the unentangled circuit on average for              arXiv:1301.7007.
+m = 91. On the other hand, the unentangled
+                                                          [6] Eric Anschuetz, Jonathan Olson, Alán
+circuits seem to have better average performance
+                                                              Aspuru-Guzik, and Yudong Cao. “Vari-
+as m increases. However, the unentangled cir-
+                                                              ational quantum factoring”.      In Quan-
+cuits converged substantially faster than the en-
+                                                              tum Technology and Optimization Prob-
+tangled circuits when their parameters were op-
+                                                              lems. Pages 74–85. Cham (2019). Springer
+timized with BFGS. We take this as an indica-
+                                                              International Publishing. arXiv:1808.08927.
+tion for the need to go beyond problem-agnostic
+hardware-efficient ansatz circuits in quantum op-         [7] M. Cerezo et al. “Variational quantum
+timization and taking advantage of the structure              algorithms”. Nature Rev. Phys. 3, 625–
+of the specific problem under consideration.                  644 (2021). arXiv:2012.09265.
+                                                          [8] Lennart Bittel and Martin Kliesch. “Train-
+10 Acknowledgements                                           ing variational quantum algorithms is np-
+                                                              hard.”. Physical review letters 127 12,
+This research was supported by the Post-                      120502 (2021). arXiv:2101.07267.
+Quantum Cryptography project funded by Busi-              [9] Alberto Peruzzo, Jarrod R. McClean, Pe-
+ness Finland’s Digital Trust program, the Flag-               ter J Shadbolt, Man-Hong Yung, Xiaoqi
+ship on Photonics Research and Innovation                     Zhou, Peter J. Love, Alán Aspuru-Guzik,
+(PREIN) programme managed by the Academy                      and Jeremy Lloyd O’Brien.       “A vari-
+of Finland, and the Finnish Quantum Institute                 ational eigenvalue solver on a photonic
+(InstituteQ).                                                 quantum processor”. Nature Communica-
+                                                              tions5 (2014). arXiv:1304.3061.
+  References                                             [10] Jules Tilly, Hongxiang Chen, Shuxiang Cao,
+                                                              Dario Picozzi, Kanav Setia, Ying Li, Ed-
+ [1] Peter W. Shor. “Algorithms for quantum                   ward Grant, Leonard Wossnig, Ivan Rung-
+     computation: discrete logarithms and fac-                ger, George H. Booth, and Jonathan Ten-
+     toring”. Proceedings 35th Annual Sympo-                  nyson. “The variational quantum eigen-
+
+                                                     9
+    solver: a review of methods and best prac-
+    tices” (2021). arXiv:2111.05176.
+[11] Gian Giacomo Guerreschi and Mikhail
+     Smelyanskiy. “Practical optimization for hy-
+     brid quantum-classical algorithms” (2017).
+     arXiv:1701.01450.
+[12] Kosuke Mitarai, Makoto Negoro, Masahiro
+     Kitagawa, and Keisuke Fujii. “Quantum cir-
+     cuit learning”. Physical Review A (2018).
+     arXiv:1803.00745.
+[13] Giacomo Nannicini. “Performance of hybrid
+     quantum-classical variational heuristics for
+     combinatorial optimization”. Phys. Rev. E
+     99, 013304 (2019). arXiv:1805.12037.
+[14] Edward Farhi, Jeffrey Goldstone, and
+     Sam Gutmann.      “A quantum approx-
+     imate optimization algorithm” (2014).
+     arXiv:1411.4028.
+[15] Mauro E. S. Morales, Jacob D. Biamonte,
+     and Zolt’an Zimbor’as. “On the universal-
+     ity of the quantum approximate optimiza-
+     tion algorithm”. Quantum Inf. Process. 19,
+     291 (2020). arXiv:1909.03123.
+[16] Ryan Babbush, Jarrod R. McClean, Michael
+     Newman, Craig Gidney, Sergio Boixo, and
+     Hartmut Neven. “Focus beyond quadratic
+     speedups for error-corrected quantum ad-
+     vantage” (2020). arXiv:2011.04149.
+[17] Jarrod R. McClean, Sergio Boixo, Vadim N.
+     Smelyanskiy, Ryan Babbush, and Hartmut
+     Neven. “Barren plateaus in quantum neural
+     network training landscapes”. Nature Com-
+     munications9 (2018). arXiv:1803.11173.
+
+
+
+
+                                                    10
+

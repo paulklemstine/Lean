@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/KRFrNPNZTSVm8RHLi4GjC0EctW8</id>
+  <title>arXiv Query: search_query=all:"Jacobi symbol" AND all:degree&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:13:27Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Jacobi+symbol%22+AND+all:degree&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/0803.2834v1</id>
+    <title>A prime sensitive Hankel determinant of Jacobi symbol enumerators</title>
+    <updated>2008-03-19T16:34:18Z</updated>
+    <link href="https://arxiv.org/abs/0803.2834v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.2834v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that the determinant of a Hankel matrix of odd dimension n whose entries are the enumerators of the Jacobi symbols which depend on the row and the column indices vanishes iff n is composite. If the dimension is a prime p, then the determinant evaluates to a polynomial of degree p-1 which is the product of a power of p and the generating polynomial of the partial sums of Legendre symbols. The sign of the determinant is determined by the quadratic character of -1 modulo p. The proof of the evaluation makes use of elementary properties of Legendre symbols, quadratic Gauss sums and orthogonality of trigonometric functions.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-19T16:34:18Z</published>
+    <arxiv:comment>13 pages, to appear in Annals of Combinatorics</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Omer Egecioglu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1105.5180v2</id>
+    <title>The L_4 norm of Littlewood polynomials derived from the Jacobi symbol</title>
+    <updated>2012-07-02T15:08:12Z</updated>
+    <link href="https://arxiv.org/abs/1105.5180v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1105.5180v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Littlewood raised the question of how slowly the L_4 norm ||f||_4 of a Littlewood polynomial f (having all coefficients in {-1,+1}) of degree n-1 can grow with n. We consider such polynomials for odd square-free n, where φ(n) coefficients are determined by the Jacobi symbol, but the remaining coefficients can be freely chosen. When n is prime, these polynomials have the smallest known asymptotic value of the normalised L_4 norm ||f||_4/||f||_2 among all Littlewood polynomials, namely (7/6)^{1/4}. When n is not prime, our results show that the normalised L_4 norm varies considerably according to the free choices of the coefficients and can even grow without bound. However, by suitably choosing these coefficients, the limit of the normalised L_4 norm can be made as small as the best known value (7/6)^{1/4}.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-05-26T00:55:25Z</published>
+    <arxiv:comment>minor revisions</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Pac. J. Math., vol. 257, no. 2, pp. 395-418, 2012</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Jedwab</name>
+    </author>
+    <author>
+      <name>Kai-Uwe Schmidt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.05002v2</id>
+    <title>Average liar count for degree-2 Frobenius pseudoprimes</title>
+    <updated>2020-04-03T21:02:23Z</updated>
+    <link href="https://arxiv.org/abs/1707.05002v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.05002v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we obtain lower and upper bounds on the average number of liars for the Quadratic Frobenius Pseudoprime Test of Grantham, generalizing arguments of Erdős and Pomerance, and Monier. These bounds are provided for both Jacobi symbol plus and minus cases, providing evidence for the existence of several challenge pseudoprimes.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-17T04:51:23Z</published>
+    <arxiv:comment>19 pages, published in Mathematics of Computation, revised version fixes typos and made a minor correction to the proof of Lemma 18 (result remains unchanged)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Math Comp, Vol 89 (321), January 2020, pg 493-514</arxiv:journal_ref>
+    <author>
+      <name>Andrew Fiori</name>
+    </author>
+    <author>
+      <name>Andrew Shallue</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3452</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3452" title="doi"/>
+  </entry>
+</feed>

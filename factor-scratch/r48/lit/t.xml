@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/JwiueED7dxQBRLN8YuaFMtYrEiA</id>
+  <title>arXiv Query: search_query=ti:"isogenies" AND abs:"elliptic" AND abs:"division"&amp;id_list=&amp;start=0&amp;max_results=12</title>
+  <updated>2026-10-03T18:27:08Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22isogenies%22+AND+(abs:%22elliptic%22+AND+abs:%22division%22)&amp;start=0&amp;max_results=12&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>12</opensearch:itemsPerPage>
+  <opensearch:totalResults>10</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2503.15428v3</id>
+    <title>Division polynomials for arbitrary isogenies</title>
+    <updated>2026-04-17T09:14:49Z</updated>
+    <link href="https://arxiv.org/abs/2503.15428v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.15428v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Following work of Mazur-Tate and Satoh, we extend the definition of division polynomials to arbitrary isogenies of elliptic curves, including those whose kernels do not sum to the identity. In analogy to the classical case of division polynomials for multiplication-by-n, we demonstrate recurrence relations, identities relating to classical elliptic functions, the chain rule describing relationships between division polynomials on source and target curve, and generalizations to higher dimension (i.e., elliptic nets).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-19T17:10:31Z</published>
+    <arxiv:comment>19 pages, v2: some additional exposition and corrections; v3: corrections and many new examples</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Katherine E. Stange</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1104.0119v1</id>
+    <title>p-jets Of p-isogenies</title>
+    <updated>2011-04-01T09:40:00Z</updated>
+    <link href="https://arxiv.org/abs/1104.0119v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1104.0119v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>p-jets of finite flat maps of schemes are generally neither finite nor flat. This phenomenon can be seen already in the case of p-isogenies of group schemes. However, for p-divisible groups, this pathology tends to disappear mod p "in the limit". We illustrate this in the case of the p-divisible groups of elliptic curves and of formal groups of finite height; in the case of ordinary elliptic curves the structure in the limit depends on the Serre-Tate parameter.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-04-01T09:40:00Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexandru Buium</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.03419v1</id>
+    <title>Tamagawa Numbers of Elliptic Curves with an $\ell$-isogeny</title>
+    <updated>2024-08-06T19:43:13Z</updated>
+    <link href="https://arxiv.org/abs/2408.03419v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.03419v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\ell$ be an odd prime, and suppose $E$ is an elliptic curve defined over the rational numbers $\mathbb{Q}$. If $E$ has an $\ell$-torsion point, then there has been significant work done on characterizing the $\ell$-divisibility of the global Tamagawa number of $E$. In this paper, we consider elliptic curves that are $\ell$-isogenous to elliptic curves with an $\ell$-torsion point and study the $\ell$-divisibility of their global Tamagawa numbers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-06T19:43:13Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexander Barrios</name>
+    </author>
+    <author>
+      <name>John Cullinan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.04834v2</id>
+    <title>Tamagawa numbers of elliptic curves with prescribed torsion subgroup or isogeny</title>
+    <updated>2021-06-08T08:03:50Z</updated>
+    <link href="https://arxiv.org/abs/2102.04834v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.04834v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study Tamagawa numbers of elliptic curves with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over cubic fields and of elliptic curves with an $n-$isogeny over $\mathbb{Q}$, for $n\in\{6,8,10,12,14,16,17,18,19,37,43,67,163\}$. Bruin and Najman proved that every elliptic curve with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over a cubic field is a base change of an elliptic curve defined over $\mathbb{Q}$. We find that Tamagawa numbers of elliptic curves defined over $\mathbb{Q}$ with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over a cubic field are always divisible by $14^2$, with each factor $14$ coming from a rational prime with split multiplicative reduction of type $I_{14k},$ one of which is always $p=2.$ The only exception is the curve 1922.e2, with $c_E=c_2=14.$ The same curves defined over cubic fields over which they have torsion subgroup $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ turn out to have the Tamagawa number divisible by $14^3$. As for $n-$isogenies, Tamagawa numbers of elliptic curves with an $18-$isogeny must be divisible by 4, while elliptic curves with an $n-$isogeny for the remaining $n$ from the mentioned set must have Tamagawa numbers divisible by 2, except for finite sets of specified curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-09T14:13:04Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Antonela Trbović</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1009.0807v3</id>
+    <title>On the pre-image of a point under an isogeny and Siegel's theorem</title>
+    <updated>2010-11-01T08:30:22Z</updated>
+    <link href="https://arxiv.org/abs/1009.0807v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1009.0807v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a rational point on an elliptic curve under an isogeny. Suppose that the action of Galois partitions the set of its pre-images into n orbits. It is shown that all such points above a certain height have their denominator divisible by at least n distinct primes. This generalizes Siegel's theorem and more recent results of Everest et al. For multiplication by a prime l, it is shown that if n&gt;1 then either the point is l times a rational point or the elliptic curve emits a rational l-isogeny.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-09-04T06:13:21Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jonathan Reynolds</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.00351v1</id>
+    <title>Cryptanalysis of Isogeny-Based Quantum Money with Rational Points</title>
+    <updated>2025-08-01T06:35:26Z</updated>
+    <link href="https://arxiv.org/abs/2508.00351v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.00351v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum money is the cryptographic application of the quantum no-cloning theorem. It has recently been instantiated by Montgomery and Sharif (Asiacrypt '24) from class group actions on elliptic curves. In this work, we propose a concrete cryptanalysis by leveraging the efficiency of evaluating division polynomials with the coordinates of rational points, offering a speedup of O(log^4p) compared to the brute-force attack. Since our attack still requires exponential time, it remains impractical to forge a quantum banknote. Interestingly, due to the inherent properties of quantum money, our attack method also results in a more efficient verification procedure. Our algorithm leverages the properties of quadratic twists to utilize rational points in verifying the cardinality of the superposition of elliptic curves. We expect this approach to contribute to future research on elliptic-curve-based quantum cryptography.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-01T06:35:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hyeonhak Kim</name>
+    </author>
+    <author>
+      <name>Donghoe Heo</name>
+    </author>
+    <author>
+      <name>Seokhie Hong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.05603v1</id>
+    <title>Explicit classification of isogeny graphs of rational elliptic curves</title>
+    <updated>2022-08-11T01:47:52Z</updated>
+    <link href="https://arxiv.org/abs/2208.05603v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.05603v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $n&gt;1$ be an integer such that $X_{0}\!\left( n\right) $ has genus $0$, and let $K$ be a field of characteristic $0$ or relatively prime to $6n$. In this article, we explicitly classify the isogeny graphs of all rational elliptic curves that admit a non-trivial isogeny over $\mathbb{Q}$. We achieve this by introducing $56$ parameterized families of elliptic curves $\mathcal{C}_{n,i}(t,d)$ defined over $K(t,d)$, which have the following two properties for a fixed $n$: the elliptic curves $\mathcal{C}_{n,i}(t,d)$ are isogenous over $K(t,d)$, and there are integers $k_{1}$ and $k_{2}$ such that the $j$-invariants of $\mathcal{C}_{n,k_{1}}(t,d)$ and $\mathcal{C}_{n,k_{2}}(t,d)$ are given by the Fricke parameterizations. As a consequence, we show that if $E$ is an elliptic curve over a number field $K$ with isogeny class degree divisible by $n\in\left\{4,6,9\right\} $, then there is a quadratic twist of $E$ that is semistable at all primes $\mathfrak{p}$ of $K$ such that $\mathfrak{p}\nmid n$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-11T01:47:52Z</published>
+    <arxiv:comment>22 pages; incorporates referee's suggestions; final version to appear in International Journal of Number Theory</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexander J. Barrios</name>
+    </author>
+    <arxiv:doi>10.1142/S179304212350046X</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S179304212350046X" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0002232v3</id>
+    <title>Isogeny classes of abelian varieties with no principal polarizations</title>
+    <updated>2022-12-10T21:14:24Z</updated>
+    <link href="https://arxiv.org/abs/math/0002232v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0002232v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a simple method of constructing isogeny classes of abelian varieties over certain fields $k$ such that no variety in the isogeny class has a principal polarization. In particular, given a field $k$, a Galois extension $\ell$ of $k$ of odd prime degree $p$, and an elliptic curve $E$ over $k$ that has no complex multiplication over $k$ and that has no $k$-defined $p$-isogenies to another elliptic curve, we construct a simple $(p-1)$-dimensional abelian variety $X$ over $k$ such that every polarization of every abelian variety isogenous to $X$ has degree divisible by $p^2$. We note that for every odd prime $p$ and every number field $k$, there exist $\ell$ and $E$ as above. We also provide a general framework for determining which finite group schemes occur as kernels of polarizations of abelian varieties in a given isogeny class.
+  Our construction was inspired by a similar construction of Silverberg and Zarhin; their construction requires that the base field $k$ have positive characteristic and that there be a Galois extension of $k$ with a certain non-abelian Galois group.
+  Note: Theorem 3.2 in this paper is incorrect. The current version of the paper includes comments explaining the mistake.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-02-28T07:04:38Z</published>
+    <arxiv:comment>This version highlights an error in the paper, and includes marginal notes pointing out the incorrect result and the error in the proof</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>pp. 203--216 in: Moduli of Abelian Varieties (Carel Faber, Gerard van der Geer, and Frans Oort, eds.), Progr. Math 195, Birkhäuser, Basel, 2001</arxiv:journal_ref>
+    <author>
+      <name>Everett W. Howe</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-0348-8303-0_7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-0348-8303-0_7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.14372v3</id>
+    <title>Filtrations of the Chow group of zero-cycles on abelian varieties and behavior under isogeny</title>
+    <updated>2024-05-29T00:08:57Z</updated>
+    <link href="https://arxiv.org/abs/2210.14372v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.14372v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an abelian variety $A$ over a field $k$ the author defined in \cite{Gazaki2015} a Bloch-Beilinson type filtration $\{F^r(A)\}_{r\geq 0}$ of the Chow group of zero-cycles, $\text{CH}_0(A)$, with successive quotients related to a Somekawa $K$-group. In this article we show that this filtration behaves well with respect to isogeny, and in particular if $n:A\to A$ is the multiplication by $n$ map on $A$, then its push-forward $n_\star$ is given on the quotient $F^r/F^{r+1}$ by multiplication by $n^r$. In the special case when $A=E_1\times\cdots\times E_d$ is a product of elliptic curves, we show that this filtration agrees with a filtration defined by Raskind and Spiess and with the Pontryagin filtration previously considered by Beauville and Bloch. We also obtain some results in the more general case when $A$ is isogenous to a product of elliptic curves. When $k$ is a finite extension of $\mathbb{Q}_p$, using Jacobians of curves isogenous to products of elliptic curves, we give new evidence for a conjecture of Raskind and Spiess and Colliot-Thélène, which predicts that the kernel of the Albanese map is the direct sum of a divisible group and a finite group.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-25T22:41:34Z</published>
+    <arxiv:comment>This is the final accepted version. 20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Evangelia Gazaki</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0412367v3</id>
+    <title>Endomorphism Rings and Isogenies Classes for Drinfeld Modules of Rank 2 Over Finite Fields</title>
+    <updated>2005-03-31T20:20:40Z</updated>
+    <link href="https://arxiv.org/abs/math/0412367v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0412367v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let $Φ$ be a Drinfeld $\mathbf{F}_{q}[T]$-module of rank 2, over a finite field $L$, a finite extension of $n$ degrees of a finite field with $q$ elements $\mathbf{F}_{q}$. Let $m$ be the extension degrees of $ L$ over the field $\mathbf{F}_{q}[T]/P$, $P$ is the $\mathbf{F}%_{q}[T]$-characteristic of $L$, and $d$ the degree of the polynomial $P$. We will discuss about a many analogies points with elliptic curves. We start by the endomorphism ring of a Drinfeld $\mathbf{F}_{q}[T]$-module of rank 2, End$_{L}Φ$, and we specify the maximality conditions and non maximality conditions as a $\mathbf{F}_{q}[T]$-order in the ring of division End$_{L}Φ\otimes _{\mathbf{F}_{q}[T]}% \mathbf{F}_{q}(T)$, in the next point we will interested to the characteristic polynomial of a Drinfeld module of rank 2 and used it to calculate the number of isogeny classes for such module, at last we will interested to the Characteristic of Euler-Poincare $χ_Φ$ and we will calculated the cardinal of this ideals.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-12-18T19:02:34Z</published>
+    <arxiv:comment>19</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Mohamed Ahmed Mohamed Saadbouh</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8QFxSFaU091yRZZZPhwLwlmEd9k</id>
+  <title>arXiv Query: search_query=abs:"Strassen" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:33Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Strassen%22+AND+abs:factoring&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>16</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1608.08766v6</id>
+    <title>A babystep-giantstep method for faster deterministic integer factorization</title>
+    <updated>2017-07-06T22:23:54Z</updated>
+    <link href="https://arxiv.org/abs/1608.08766v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1608.08766v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1977, Strassen presented a deterministic and rigorous algorithm for solving the problem of computing the prime factorization of natural numbers $N$. His method is based on fast polynomial arithmetic techniques and runs in time $\widetilde{O}(N^{1/4})$, which has been state of the art for the last forty years. In this paper, we will combine Strassen's approach with a babystep-giantstep method to improve the currently best known bound by a superpolynomial factor. The runtime complexity of our algorithm is of the form \[ \widetilde{O}\left(N^{1/4}\exp(-C\log N/\log\log N)\right). \]</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-08-31T08:32:44Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3313</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3313" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.2116v1</id>
+    <title>Faster deterministic integer factorization</title>
+    <updated>2012-01-10T17:19:03Z</updated>
+    <link href="https://arxiv.org/abs/1201.2116v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.2116v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The best known unconditional deterministic complexity bound for computing the prime factorization of an integer N is O(M_int(N^(1/4) log N)), where M_int(k) denotes the cost of multiplying k-bit integers. This result is due to Bostan--Gaudry--Schost, following the Pollard--Strassen approach. We show that this bound can be improved by a factor of (log log N)^(1/2).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-01-10T17:19:03Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Edgar Costa</name>
+    </author>
+    <author>
+      <name>David Harvey</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.10063v1</id>
+    <title>Strassen Multisystolic Array Hardware Architectures</title>
+    <updated>2025-02-14T10:40:32Z</updated>
+    <link href="https://arxiv.org/abs/2502.10063v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.10063v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Strassen's matrix multiplication algorithm reduces the complexity of naive matrix multiplication, general-purpose hardware is not suitable for achieving the algorithm's promised theoretical speedups. This leaves the question of if it could be better exploited in custom hardware architectures designed specifically for executing the algorithm. However, there is limited prior work on this and it is not immediately clear how to derive such architectures or if they can ultimately lead to real improvements. We bridge this gap, presenting and evaluating new systolic array architectures that efficiently translate the theoretical complexity reductions of Strassen's algorithm directly into hardware resource savings. Furthermore, the architectures are multisystolic array designs that can multiply smaller matrices with higher utilization than single-systolic array designs. The proposed designs implemented on FPGA reduce DSP requirements by a factor of $1.14^r$ for $r$ implemented Strassen recursion levels, and otherwise require overall similar soft logic resources when instantiated to support matrix sizes down to 32x32 and 24x24 at 1-2 levels of Strassen recursion, respectively. We evaluate the proposed designs both in isolation and in an end-to-end machine learning accelerator compared to baseline designs and prior works, achieving state-of-the-art performance.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-14T10:40:32Z</published>
+    <arxiv:comment>Accepted for publication in IEEE Transactions on Very Large Scale Integration (VLSI) Systems; Associated source code available on GitHub at https://github.com/trevorpogue/algebraic-nnhw</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Trevor E. Pogue</name>
+    </author>
+    <author>
+      <name>Nicola Nicolici</name>
+    </author>
+    <arxiv:doi>10.1109/TVLSI.2025.3530785</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TVLSI.2025.3530785" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.03078v4</id>
+    <title>Digit Polynomials and their application to integer factorization</title>
+    <updated>2015-12-20T20:51:42Z</updated>
+    <link href="https://arxiv.org/abs/1501.03078v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.03078v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents the concept of digit polynomials, which leads to a deterministic and unconditional integer factorization algorithm with the runtime complexity $\mathcal{O}(N^{1/4+ε})$. Strassen's well known factoring approach is a special case of our method. We will also consider a possibility to improve upon the complexity bound.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-13T17:05:13Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.12732v1</id>
+    <title>Strassen's Matrix Multiplication Algorithm Is Still Faster</title>
+    <updated>2023-12-20T03:09:50Z</updated>
+    <link href="https://arxiv.org/abs/2312.12732v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.12732v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, reinforcement algorithms discovered new algorithms that really jump-started a wave of excitements and a flourishing of publications. However, there is little on implementations, applications, and, especially, no absolute performance and, we show here they are not here to replace Strassen's original fast matrix multiplication yet. We present Matrix Flow, this is a simple Python project for the automatic formulation, design, implementation, code generation, and execution of fast matrix multiplication algorithms for CPUs, using BLAS interface GPUs, and in the future other accelerators. We shall not play with module-2 (Z2) algorithms and, for simplicity, we present only square double-precision matrices. By means of factorizing the operand matrices we can express many algorithms and prove them correct. These algorithms are represented by Data Flows and matrix data partitions: a Directed Acyclic Graph. We show that Strassen's original algorithm is still the top choice even for modern GPUs. We also address error analysis in double precision, because integer computations are correct, always</summary>
+    <category term="cs.MS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-20T03:09:50Z</published>
+    <arxiv:comment>8 pages, 2 images, mathematical software</arxiv:comment>
+    <arxiv:primary_category term="cs.MS"/>
+    <author>
+      <name>Paolo D'Alberto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.04643v1</id>
+    <title>Faster Walsh-Hadamard Transform and Matrix Multiplication over Finite Fields using Lookup Tables</title>
+    <updated>2022-11-09T02:15:40Z</updated>
+    <link href="https://arxiv.org/abs/2211.04643v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.04643v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We use lookup tables to design faster algorithms for important algebraic problems over finite fields. These faster algorithms, which only use arithmetic operations and lookup table operations, may help to explain the difficulty of determining the complexities of these important problems. Our results over a constant-sized finite field are as follows.
+  The Walsh-Hadamard transform of a vector of length $N$ can be computed using $O(N \log N / \log \log N)$ bit operations. This generalizes to any transform defined as a Kronecker power of a fixed matrix. By comparison, the Fast Walsh-Hadamard transform (similar to the Fast Fourier transform) uses $O(N \log N)$ arithmetic operations, which is believed to be optimal up to constant factors.
+  Any algebraic algorithm for multiplying two $N \times N$ matrices using $O(N^ω)$ operations can be converted into an algorithm using $O(N^ω/ (\log N)^{ω/2 - 1})$ bit operations. For example, Strassen's algorithm can be converted into an algorithm using $O(N^{2.81} / (\log N)^{0.4})$ bit operations. It remains an open problem with practical implications to determine the smallest constant $c$ such that Strassen's algorithm can be implemented to use $c \cdot N^{2.81} + o(N^{2.81})$ arithmetic operations; using a lookup table allows one to save a super-constant factor in bit operations.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-09T02:15:40Z</published>
+    <arxiv:comment>10 pages, to appear in the 6th Symposium on Simplicity in Algorithms (SOSA 2023)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Josh Alman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1312.1655v2</id>
+    <title>On the Complexity of the F5 Gröbner basis Algorithm</title>
+    <updated>2014-07-17T12:04:45Z</updated>
+    <link href="https://arxiv.org/abs/1312.1655v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1312.1655v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the complexity of Gröbner bases computation, in particular in the generic situation where the variables are in simultaneous Noether position with respect to the system.
+  We give a bound on the number of polynomials of degree $d$ in a Gröbner basis computed by Faugère's $F_5$ algorithm~(Fau02) in this generic case for the grevlex ordering (which is also a bound on the number of polynomials for a reduced Gröbner basis, independently of the algorithm used). Next, we analyse more precisely the structure of the polynomials in the Gröbner bases with signatures that $F_5$ computes and use it to bound the complexity of the algorithm.
+  Our estimates show that the version of~$F_5$ we analyse, which uses only standard Gaussian elimination techniques, outperforms row reduction of the Macaulay matrix with the best known algorithms for moderate degrees, and even for degrees up to the thousands if Strassen's multiplication is used. The degree being fixed, the factor of improvement grows exponentially with the number of variables.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-12-05T19:47:02Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Magali Bardet</name>
+    </author>
+    <author>
+      <name>Jean-Charles Faugère</name>
+    </author>
+    <author>
+      <name>Bruno Salvy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.05630v2</id>
+    <title>Strassen's algorithm is not optimally accurate</title>
+    <updated>2024-06-28T08:31:46Z</updated>
+    <link href="https://arxiv.org/abs/2402.05630v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.05630v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a non-commutative algorithm for multiplying 2x2 matrices using 7 coefficient products. This algorithm reaches simultaneously a better accuracy in practice compared to previously known such fast algorithms, and a time complexity bound with the best currently known leading term (obtained via alternate basis sparsification). To build this algorithm, we consider matrix and tensor norms bounds governing the stability and accuracy of numerical matrix multiplication. First, we reduce those bounds by minimizing a growth factor along the unique orbit of Strassen's 2x2-matrix multiplication tensor decomposition. Second, we develop heuristics for minimizing the number of operations required to realize a given bilinear formula, while further improving its accuracy. Third, we perform an alternate basis sparsification that improves on the time complexity constant and mostly preserves the overall accuracy.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-08T12:36:35Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Jean-Guillaume Dumas</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Clément Pernet</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Alexandre Sedoglavic</name>
+      <arxiv:affiliation>CRIStAL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.04822v1</id>
+    <title>Backward and Forward Wasserstein Projections in Stochastic Order</title>
+    <updated>2021-10-10T15:24:39Z</updated>
+    <link href="https://arxiv.org/abs/2110.04822v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.04822v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study metric projections onto cones in the Wasserstein space of probability measures, defined by stochastic orders. Dualities for backward and forward projections are established under general conditions. Dual optimal solutions and their characterizations require study on a case-by-case basis. Particular attention is given to convex order and subharmonic order. While backward and forward cones possess distinct geometric properties, strong connections between backward and forward projections can be obtained in the convex order case. Compared with convex order, the study of subharmonic order is subtler. In all cases, Brenier-Strassen type polar factorization theorems are proved, thus providing a full picture of the decomposition of optimal couplings between probability measures given by deterministic contractions (resp. expansions) and stochastic couplings. Our results extend to the forward convex order case the decomposition obtained by Gozlan and Juillet, which builds a connection with Caffarelli's contraction theorem. A further noteworthy addition to the early results is the decomposition in the subharmonic order case where the optimal mappings are characterized by volume distortion properties. To our knowledge, this is the first time in this occasion such results are available in the literature.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-10T15:24:39Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Young-Heon Kim</name>
+    </author>
+    <author>
+      <name>Yuan Long Ruan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.10569v1</id>
+    <title>WOODELF-HD: Efficient Background SHAP for High-Depth Decision Trees</title>
+    <updated>2026-04-12T10:32:48Z</updated>
+    <link href="https://arxiv.org/abs/2604.10569v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.10569v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Decision-tree ensembles are a cornerstone of predictive modeling, and SHAP is a standard framework for interpreting their predictions. Among its variants, Background SHAP offers high accuracy by modeling missing features using a background dataset. Historically, this approach did not scale well, as the time complexity for explaining n instances using m background samples included an O(mn) component. Recent methods such as Woodelf and PLTreeSHAP reduce this to O(m+n), but introduce a preprocessing bottleneck that grows as 3^D with tree depth D, making them impractical for deep trees. We address this limitation with WoodelfHD, a Woodelf extension that reduces the 3^D factor to 2^D. The key idea is a Strassen-like multiplication scheme that exploits the structure of Woodelf matrices, reducing matrix-vector multiplication from O(k^2) to O(k*log(k)) via a fully vectorized, non-recursive implementation. In addition, we merge path nodes with identical features, reducing cache size and memory usage. When running on standard environments, WoodelfHD enables exact Background SHAP computation for trees with depths up to 21, where previous methods fail due to excessive memory usage. For ensembles of depths 12 and 15, it achieves speedups of 33x and 162x, respectively, over the state-of-the-art.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-12T10:32:48Z</published>
+    <arxiv:comment>15 pages (including 6-page appendix), 9 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ron Wettenstein</name>
+    </author>
+    <author>
+      <name>Alexander Nadel</name>
+    </author>
+    <author>
+      <name>Udi Boker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.19405v1</id>
+    <title>Towards automated generation of fast and accurate algorithms for recursive matrix multiplication</title>
+    <updated>2025-06-24T08:17:42Z</updated>
+    <link href="https://arxiv.org/abs/2506.19405v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.19405v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a strategy for the generation of fast and accurate versions of non-commutative recursive matrix multiplication algorithms. To generate these algorithms, we consider matrix and tensor norm bounds governing the stability and accuracy of numerical matrix multiplication. We start by a unification on known max-norm bounds on matrix multiplication stability and then extend them to further norms and more generally to recursive bilinear algorithms and the alternative basis matrix multiplication algorithms. Then our strategy has three phases. First, we reduce those bounds by minimizing a growth factor along the orbits of the associated matrix multiplication tensor decomposition. Second, we develop heuristics that minimize the number of operations required to realize a bilinear formula, while further improving its accuracy. Third, we perform an alternative basis sparsification that improves on the time complexity constant and mostly preserves the overall accuracy. For instance this strategy allows us to propose a non-commutative algorithm for multiplying 2x2-matrices using 7 coefficient products. This algorithm reaches simultaneously a better accuracy in practice compared to previously known such fast ___2x2x2:7___ Strassen-like algorithms and a time complexity bound with the best currently known leading term (obtained via alternative basis sparsification). We also present detailed results of our technique on other recursive matrix multiplication algorithms, such as Smirnov's ___3x3x6:40___ family of algorithms.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-24T08:17:42Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:2402.05630</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Jean-Guillaume Dumas</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Clément Pernet</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Alexandre Sedoglavic</name>
+      <arxiv:affiliation>CRIStAL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.12211v3</id>
+    <title>Changing Base Without Losing Pace: A GPU-Efficient Alternative to MatMul in DNNs</title>
+    <updated>2025-10-21T08:15:14Z</updated>
+    <link href="https://arxiv.org/abs/2503.12211v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.12211v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern AI relies on huge matrix multiplications (MatMuls), whose computation poses a scalability problem for inference and training. We propose an alternative, GPU native bilinear operator to MatMuls in neural networks, which offers a three-way tradeoff between: speed, accuracy and parameter count. In particular, this operator requires substantially fewer FLOPs to evaluate ($\ll n^3$), yet increases the parameter count compared to MatMul ($\gg n^2$). We call this operator Strassen-Tile (STL). The key idea behind STL is a local learnable change-of-basis, applied on tiles of the weight and activation matrices, followed by an element-wise product between the tiles, implemented simultaneously via MatMul. The key technical question we study is how to optimize the change-of-basis of a given layer, which is a highly non-convex problem. We show that theory-backed initializations (inspired by fast matrix and polynomial multiplication) lead to substantially better accuracy than random SGD initialization. This phenomenon motivates further algorithmic study of STL optimization in DNNs. Our experiments demonstrate that STL can approximate 4x4 MatMul of tiles while reducing FLOPs by a factor of 2.66, and can improve Imagenet-1K accuracy of SoTA T2T-ViT-7 (4.3M parameters) while lowering FLOPs. Even with non-CUDA optimized PyTorch code, STL achieves wall-clock speedups in the compute-bound regime. These results, together with its theoretical grounds, suggest STL as a promising building block for scalable and cost-efficient AI.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-15T17:31:36Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Nir Ailon</name>
+    </author>
+    <author>
+      <name>Akhiad Bercovich</name>
+    </author>
+    <author>
+      <name>Yahel Uffenheimer</name>
+    </author>
+    <author>
+      <name>Omri Weinstein</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.08473v2</id>
+    <title>Elliptic Curve Fast Fourier Transform (ECFFT) Part I: Fast Polynomial Algorithms over all Finite Fields</title>
+    <updated>2021-10-12T12:52:28Z</updated>
+    <link href="https://arxiv.org/abs/2107.08473v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.08473v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For smooth finite fields $F_q$ (i.e., when $q-1$ factors into small primes) the Fast Fourier Transform (FFT) leads to the fastest known algebraic algorithms for many basic polynomial operations, such as multiplication, division, interpolation and multi-point evaluation. However, the same operations over fields with no smooth order root of unity suffer from an asymptotic slowdown. The classical algorithm of Schonhage and Strassen incurred a multiplicative slowdown factor of $\log \log n$ on top of the smooth case. Recent remarkable results of Harvey, van der Hoeven and Lecerf dramatically reduced this multiplicative overhead to $\exp(\log^* (n))$.
+  We introduce a new approach to fast algorithms for polynomial operations over all large finite fields. The key idea is to replace the group of roots of unity with a set of points $L \subset F$ suitably related to a well-chosen elliptic curve group (the set $L$ itself is not a group). The key advantage of this approach is that elliptic curve groups can be of any size in the Hasse-Weil interval $[q+1 \pm 2\sqrt{q}]$ and thus can have subgroups of large, smooth order, which an FFT-like divide and conquer algorithm can exploit. Compare this with multiplicative subgroups over whose order must divide $q-1$.
+  For polynomials represented by their evaluation over subsets of $L$, we show that multiplication, division, degree-computation, interpolation, evaluation and Reed-Solomon encoding (also known as low-degree extension) with fixed evaluation points can all be computed with arithmetic circuits of size similar to what is achievable with the classical FFTs when the field size is special. For several problems, this yields the asymptotically smallest known arithmetic circuits even in the standard monomial representation of polynomials.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-18T15:27:37Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Eli Ben-Sasson</name>
+    </author>
+    <author>
+      <name>Dan Carmon</name>
+    </author>
+    <author>
+      <name>Swastik Kopparty</name>
+    </author>
+    <author>
+      <name>David Levit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.3501v1</id>
+    <title>Parallel computation of echelon forms</title>
+    <updated>2014-02-14T15:35:37Z</updated>
+    <link href="https://arxiv.org/abs/1402.3501v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.3501v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose efficient parallel algorithms and implementations on shared memory architectures of LU factorization over a finite field. Compared to the corresponding numerical routines, we have identified three main difficulties specific to linear algebra over finite fields. First, the arithmetic complexity could be dominated by modular reductions. Therefore, it is mandatory to delay as much as possible these reductions while mixing fine-grain parallelizations of tiled iterative and recursive algorithms. Second, fast linear algebra variants, e.g., using Strassen-Winograd algorithm, never suffer from instability and can thus be widely used in cascade with the classical algorithms. There, trade-offs are to be made between size of blocks well suited to those fast variants or to load and communication balancing. Third, many applications over finite fields require the rank profile of the matrix (quite often rank deficient) rather than the solution to a linear system. It is thus important to design parallel algorithms that preserve and compute this rank profile. Moreover, as the rank profile is only discovered during the algorithm, block size has then to be dynamic. We propose and compare several block decomposition: tile iterative with left-looking, right-looking and Crout variants, slab and tile recursive. Experiments demonstrate that the tile recursive variant performs better and matches the performance of reference numerical software when no rank deficiency occur. Furthermore, even in the most heterogeneous case, namely when all pivot blocks are rank deficient, we show that it is possbile to maintain a high efficiency.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-14T15:35:37Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Jean-Guillaume Dumas</name>
+      <arxiv:affiliation>LJK</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Thierry Gautier</name>
+      <arxiv:affiliation>INRIA Grenoble Rhône-Alpes / LIG Laboratoire d'Informatique de Grenoble</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Clément Pernet</name>
+      <arxiv:affiliation>INRIA Grenoble Rhône-Alpes / LIG Laboratoire d'Informatique de Grenoble</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ziad Sultan</name>
+      <arxiv:affiliation>LJK, INRIA Grenoble Rhône-Alpes / LIG Laboratoire d'Informatique de Grenoble</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.02425v1</id>
+    <title>Matrices with displacement structure: a deterministic approach for linear systems and nullspace bases</title>
+    <updated>2026-03-02T22:10:45Z</updated>
+    <link href="https://arxiv.org/abs/2603.02425v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.02425v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The fastest known algorithms for dealing with structured matrices, in the sense of the displacement rank measure, are randomized. For handling classical displacement structures, they achieve the complexity bounds $\tilde{O}(α^{ω-1} n)$ for solving linear systems and $\tilde{O}(α^2 n)$ for computing the nullspace. Here $n \times n$ is the size of the square matrix, $α$ is its displacement rank, $ω&gt; 2$ is a feasible exponent for matrix multiplication, and the notation $\tilde{O}(\cdot)$ counts arithmetic operations in the base field while hiding logarithmic factors. These algorithms rely on an adaptation of Strassen's divide and conquer Gaussian elimination to the context of structured matrices. This approach requires the input matrix to have generic rank profile; this constraint is lifted via pre- and post-multiplications by special matrices generated from random coefficients chosen in a sufficiently large subset of the base field.
+  This work introduces a fast and deterministic approach, which solves both problems within $\tilde{O}(α^{ω-1} (m+n))$ operations in the base field for an arbitrary rectangular $m \times n$ input matrix. We provide explicit algorithms that instantiate this approach for Toeplitz-like, Vandermonde-like, and Cauchy-like structures. The starting point of the approach is to reformulate a structured linear system as a modular equation on univariate polynomials. Then, a description of all solutions to this equation is found in three steps, all using fast and deterministic operations on polynomial matrices. Specifically, one first computes a basis of solutions to a vector M-Padé approximation problem; then one performs linear system solving over the polynomials to isolate away unwanted unknowns and restrict to those that are actually sought; and finally the latter are found by simultaneous M-Padé approximation.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-02T22:10:45Z</published>
+    <arxiv:comment>27 pages, 5 algorithms</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Sara Khichane</name>
+    </author>
+    <author>
+      <name>Vincent Neiger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.19125v1</id>
+    <title>Highly efficient Gauss's law-preserving spectral algorithms for Maxwell's double-curl source and eigenvalue problems based on eigen-decomposition</title>
+    <updated>2024-02-29T13:01:47Z</updated>
+    <link href="https://arxiv.org/abs/2402.19125v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.19125v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we present Gauss's law-preserving spectral methods and their efficient solution algorithms for curl-curl source and eigenvalue problems in two and three dimensions arising from Maxwell's equations. Arbitrary order $H(curl)$-conforming spectral basis functions in two and three dimensions are firstly proposed using compact combination of Legendre polynomials. A mixed formulation involving a Lagrange multiplier is then adopted to preserve the Gauss's law in the weak sense. To overcome the bottleneck of computational efficiency caused by the saddle-point nature of the mixed scheme, we present highly efficient solution algorithms based on reordering and decoupling of the resultant linear algebraic system and numerical eigen-decomposition of one dimensional mass matrix. The proposed solution algorithms are direct methods requiring only several matrix-matrix or matrix-tensor products of $N$-by-$N$ matrices, where $N$ is the highest polynomial order in each direction. Compared with other direct methods, the computational complexities are reduced from $O(N^6)$ and $O(N^9)$ to $O(N^3)$ and $O(N^4)$ with small and constant pre-factors for 2D and 3D cases, respectively, and can further be accelerated to $O(N^{2.807})$ and $O(N^{3.807})$, when boosted with the Strassen's matrix multiplication algorithm. Moreover, these algorithms strictly obey the Helmholtz-Hodge decomposition, thus totally eliminate the spurious eigen-modes of non-physical zero eigenvalues. Extensions of the proposed methods and algorithms to problems in complex geometries with variable coefficients and inhomogeneous boundary conditions are discussed to deal with more general situations. Ample numerical examples for solving Maxwell's source and eigenvalue problems are presented to demonstrate the accuracy and efficiency of the proposed methods.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-29T13:01:47Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Sen Lin</name>
+    </author>
+    <author>
+      <name>Huiyuan Li</name>
+    </author>
+    <author>
+      <name>Zhiguo Yang</name>
+    </author>
+  </entry>
+</feed>

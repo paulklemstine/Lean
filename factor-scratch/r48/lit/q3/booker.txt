@@ -1,0 +1,3947 @@
+DETECTING SQUAREFREE NUMBERS
+ANDREW R. BOOKER, GHAITH A. HIARY, AND JON P. KEATING
+
+arXiv:1304.6937v2 [math.NT] 5 Jan 2015
+
+Abstract. We present an algorithm, based on the explicit formula for L-functions and
+conditional on GRH, for proving that a given integer is squarefree with little or no knowledge
+of its factorization. We analyze the algorithm both theoretically and practically, and use it
+to prove that several RSA challenge numbers are not squarefull.
+
+1. Introduction
+Let k be a finite field and f a non-zero element of k[x]. Then it is well known that f is
+squarefree if and only if gcd(f, f 0 ) = 1, and the latter condition may be checked quickly (in
+deterministic polynomial time) by the Euclidean algorithm. It is a long-standing question
+in algorithmic number theory whether there is a correspondingly simple procedure to test if
+a given integer is squarefree; in particular, can one determine whether N ∈ Z is squarefree
+more rapidly than by factoring it?
+In this paper, we describe an algorithm, conditional on the Generalized Riemann Hypothesis (GRH), for proving an integer squarefree with little or no knowledge of its factorization, and analyze the complexity of the algorithm both theoretically and practically.
+In particular, we present some heuristic evidence based on random matrix theory and
+other probabilistic calculations
+that our algorithm runs in deterministic subexponential time
+
+2/3+o(1)
+O exp[(log N )
+] . Although this is poorer than the performance expected of the current best known factoring algorithms, our method is able to give partial results that one
+does not obtain from a failed attempt at factoring. In particular, we show the following (see
+§3.2).
+Theorem 1.1. Assume GRH for quadratic Dirichlet L-functions. Then the RSA challenge
+numbers RSA-210, RSA-220, RSA-230 and RSA-232 are not squarefull, i.e. each has at least
+one prime factor of multiplicity 1.
+The challenge numbers mentioned in the theorem, ranging in size from 210 to 232 digits,
+are significant because they are the smallest that have yet to be factored.1 Certainly the
+technology to factor them exists (in fact the comparably sized2 RSA-704 and RSA-768 were
+successfully factored in 2012 and 2009, respectively), but it remains prohibitively expensive
+to perform such factorizations routinely. In contrast, the proof of Theorem 1.1 for RSA-210
+A. R. B. was supported by EPSRC Fellowship EP/H005188/1. J. P. K. was sponsored by the Air Force
+Office of Scientific Research, Air Force Material Command, USAF, under grant number FA8655-10-1-3088.
+The US Government is authorized to reproduce and distribute reprints for Governmental purpose notwithstanding any copyright notation thereon. J. P. K. and G. A. H. also gratefully acknowledge support from
+the Leverhulme Trust.
+1RSA-210 was factored in September 2013, after this paper was submitted but before publication.
+2RSA-704 and RSA-768 are named for their sizes in binary; in decimal they have 212 and 232 digits,
+respectively.
+1
+
+could be carried out with a desktop PC in a few months. To our knowledge, Theorem 1.1 is
+the first statement of its kind to be proven without exhibiting any factors of the number in
+question.
+Acknowledgements. We thank Paul Bourgade, Peter Sarnak and Akshay Venkatesh for
+helpful conversations.
+1.1. Background. We begin with some background on the problem of squarefree testing,
+before describing our main√algorithm in §2. Given an integer N > 1, we first note that if
+N has no prime factors ≤ 3 N then it is squarefree if and only if it is not a perfect square.
+Thus, since it is easy to detect squares, in order to prove a number squarefree it suffices to
+find all of its prime factors up to the cube root. On the other hand, the Pollard–Strassen
+√ 
+algorithm [25, 30] finds all prime factors of N up to a given bound B in time Oε N ε B .
+This immediately yields an algorithm for squarefree testing in time Oε N 1/6+ε . We remark
+that with some modifications to the Pollard–Strassen algorithm, along the lines of [5] but
+
+1
+c
+specific to this problem, one can improve the running time very slightly to O N 6 − log log N
+for some c > 0.
+Although Pollard–Strassen is often regarded as a purely theoretical result, with modern
+computers it is possible to implement it and realize some improvement in speed over trial
+division. However, the gains do not occur until B is of size 109 at least. As a result, even
+the modified algorithm mentioned above is only practical for N up to 1070 or so. On the
+other hand, the Quadratic Sieve algorithm running on a PC will, in practice, almost surely
+factor a given N ≤ 1070 within a few minutes; thus, at least with present algorithms and
+technology, it is always better to try to factor the given integer.
+1.2. Fundamental discriminants. Our approach rests on a way of characterizing the
+squarefree integers that does not directly refer to their factorization. Precisely, if d ∈ Z,
+d ≡ 1 (mod 4), then d is squarefree if and only if it is a fundamental discriminant. (Note
+N −1
+that if N ∈ Z is odd then d = (−1) 2 N satisfies d ≡ 1 (mod 4), so this restriction entails
+no loss of generality.) The advantage of this criterion is that whether or not a given discrim
+inant d isfundamental can be detected from values of the quadratic character χd (n) = nd ,
+where
+denotes the Kronecker symbol. In turn, χd (n) is easy to compute for a given n,
+thanks to quadratic reciprocity; in particular, if n is a prime then the Kronecker symbol nd
+reduces to the Legendre symbol, which can be evaluated, e.g., by Euler’s criterion.
+Let F denote the set of fundamental discriminants. To see how one might use the above
+to prove quickly that a given d is squarefree, note first that we have in general that d = ∆`2 ,
+where ∆ ∈ F and ` ∈ Z>0 . Here |∆| is an invariant of the character χd (its conductor),
+which we aim to show equals, or is as least close to, |d|. By testing whether d is a square,
+we may assume without loss of generality that ∆ 6= 1.
+For any x > 0, consider the series
+∞
+ n (1−χ∆ (−1))/2
+1 X
+2
+χ∆ (n)
+e−π(n/x) ,
+(1)
+S∆ (x) = √
+x
+x n=1
+which is essentially the twisted θ-function. Note here that we may calculate χ∆ (n) for any
+given n, even without knowledge of ∆; in fact, we have χ∆ (n) = χd (n) unless n has a common
+2
+
+factor with `. We may assume without loss of generality that we never come across such an
+n, since otherwise we will have found a square factor of d, answering the original question.
+If one thinks of the character values χ∆ (n) as “random” ±1 then, thanks to the decay of
+the Gaussian, the series in (1) is the
+√result of a random walk of length about x, which will
+typically have size on the order of x; thus, one might expect S∆ (x) to oscillate, without
+growing p
+very large or decaying, as x → ∞. This turns out to be an accurate description for
+x up to |∆|, but for larger x, S∆ (x) is constrained by the symmetry
+(2)
+
+S∆ (x) = S∆ (|∆|/x),
+
+following from the Poisson summation formula (see [6, pp. 13, 68, 70]).
+The point of symmetry of (2) gives an indication of |∆|, and thus we can rule out small
+values of |∆| essentially by drawing the graph of S∆ (x).√ More
+ precisely, for any given B > 0,
+3
+ε
+one can decide whether or not |∆| ≤ B in time Oε N B , which matches the running time
+of Pollard–Strassen for the same task. Moreover, if one could find a method of computing
+the θ-function S∆ (x) substantially more quickly than by direct in-order summation,
+say in
+
+ε 1−δ
+ε 21 (1−δ)
+time Oε N x
+for some δ ∈ (0, 1), then this improves to Oε N B
+; in particular,
+p
+1
+taking B = N 3−2δ and falling back on Pollard–Strassen to rule out ` ≤ N/B, we would
+
+1
+δ
+get an algorithm to certify N squarefree in time Oε N 6 (1− 3−2δ )+ε .
+2. The explicit formula
+Our main interest, however, is in algorithms that work in subexponential time. This is
+difficult to attain in the above approach because we used sums over integers n. It is wellunderstood in problems of this type that one can do better by considering sums over primes,
+at the expense of having to assume
+P GRH.
+−s
+be the Dirichlet L-function corresponding
+To be precise, let L(s, χ∆ ) = ∞
+n=1 χ∆ (n)n
+to ∆ 6= 1. Assuming GRH, the non-trivial zeros of L(s, χ∆ ) may be written as 12 ± iγj (∆),
+j = 1, 2, 3, . . ., where 0 ≤ γ1 (∆) ≤ γ2 (∆) ≤ . . ., and each ordinate is repeated with the
+appropriate multiplicity.4 Further, let g : [0, ∞) → C be a test function which
+R ∞ is continuous
+of compact support, piecewise smooth, and has cosine transform h(t) = 2 0 g(x) cos(tx) dx.
+Then the “explicit formula” for L(s, χ∆ ) reads
+∞
+X
+
+(3)
+
+∞
+X
+
+Λ(n)χ∆ (n)
+√
+g(0) log |∆| = 2
+h γj (∆) + 2
+g(log n)
+n
+n=1
+j=1
+Z ∞
+Z ∞
+g(0) − g(x)
+g(x)
+γ
++ g(0) log(8πe ) −
+dx + χ∆ (−1)
+dx,
+2 sinh(x/2)
+2 cosh(x/2)
+0
+0
+
+where Λ is the von Mangoldt function.
+If not for the sum over zeros γj (∆), this would be exactly what we seek, i.e. a formula for
+the conductor |∆| in terms of character values. Without knowledge of the zeros, we do not
+3We omit the proof of this, but the main point is the fact that S
+
+x
+∆ (e ) is the Fourier transform of the
+1
+complete L-function Λ( 2 + it, χ∆ ), so it is essentially band-limited.
+4If L(s, χ ) has a zero at s = 1 of multiplicity m, then m is necessarily even, and we take m copies of
+∆
+2
+2
+m
+this zero, i.e. γj (∆) = 0 for j ≤ m
+2 and γ 2 +1 (∆) > 0.
+
+3
+
+get such an exact identity, but we can at least get an inequality in one direction if the test
+function is chosen so that h is non-negative, i.e.
+
+(4)
+
+∞
+X
+Λ(n)χ∆ (n)
+√
+g(log n) + log(8πeγ )
+log |∆| ≥ 2
+n
+n=1
+Z ∞
+Z ∞
+1 − g(x)
+g(x)
+−
+dx + χ∆ (−1)
+dx,
+2 sinh(x/2)
+2 cosh(x/2)
+0
+0
+
+for any g : [0, ∞) → R which is continuous of compact support, satisfies g(0) = 1, and has
+non-negative cosine transform.5
+In the next few subsections we explore some strategies for exploiting (4) to prove that our
+given d is squarefree. The proofs of Propositions 2.1–2.3 below are given in the appendix.
+2.1. Varying the test function. Our first, and simplest, strategy is to search for a test
+function such that the right-hand
+for
+P∞ side of (4) is close to log |∆|. Naturally, we pay a price
+2Z
+ignoring the zero sum Z = j=1 h(γj (∆)), in that our estimate for |∆| is a factor of e too
+small. We can still use this to prove that d is squarefree by ruling out values of ` ≤ eZ using
+Pollard–Strassen or otherwise, but this takes exponential time  eZ/2 in the size of Z.
+On the other hand, note that the sum over prime powers in (4) is exponentially long, i.e.
+if g has support [0, X] then we need to compute the right-hand side of (4) for n up to eX .
+Thus, we would like X not to be very large. However, if we choose X too small then, by the
+uncertainty principle, the cosine transform h will be relatively “wide”, so that the zero sum
+will typically be large.
+Our first result shows that there is an optimal choice of test function for each fixed X,
+and thus an optimal tradeoff between these two exponential penalties.
+Proposition 2.1. Let C(X) be the class of functions g : [0, ∞) → R that are continuous,
+supported on [0, X], have non-negative cosine transform, and satisfy g(0) = 1. For g ∈ C(X),
+let l(g) denote the right-hand side of (4). Then for every X > 0 there exists gX ∈ C(X)
+such that l(gX ) ≥ l(g) for all g ∈ C(X).
+We remark further that if g ∈ C(X) then its cosine transform h is band-limited, and so,
+by Jensen’s formula, h has at most OX (T ) zeros in the interval [−T, T ] for large T (see [19,
+p. 16]). Since it is known that L(s, χ∆ ) has  T log T distinct zeros with imaginary part in
+[−T, T ], under GRH the zero sum in (3) cannot vanish, so that (4) is a strict inequality for
+any fixed X, i.e. log |∆| > l(gX ). However, it is easy to see that l(gX ) tends continuously
+and monotonically to log |∆| as X → ∞.
+Although Prop. 2.1 is an existence result only, one can try to solve for the optimal test
+function gX by approximating C(X) using a sufficiently rich, finite-dimensional space of
+functions. For instance, let M be a non-negative integer, and consider step functions f of
+5A function g satisfying these conditions need not be piecewise smooth, and in fact
+
+R∞
+0
+
+1−g(x)
+2 sinh(x/2) dx may
+
+1−g(x)
+be divergent. However, since g has non-negative cosine transform, 2 sinh(x/2)
+is non-negative, so we may
+interpret the right-hand side of (4) as −∞ whenever the integral diverges. With that convention, a standard
+approximation argument shows that (4) holds for all g as indicated.
+
+4
+
+the form
+(5)
+
+f (x) =
+
+M
+X
+
+
+an 1(−1/2,1/2)
+
+n=−M
+
+2M + 1
+x−n
+X
+
+
+for x ∈ R,
+
+for arbitrary real coefficients an . If we take g to be the autocorrelation of f , i.e. g(x) =
+R
+2
+f (y)f (x + y) dy, then g has cosine transform fˆ(t) ≥ 0, the right-hand side of (4) is
+R
+a quadratic form in the an , and the condition g(0) = 1 amounts to an L2 -normalization.
+Thus, we can find the optimal lower bound for this family of test functions by computing the
+matrix of the form and finding its largest eigenvalue.6 It is not hard to see that this family
+comes arbitrarily close to the optimal gX as M → ∞, although it may be the case that gX
+is highly oscillatory, meaning that we would need to take M very large before finding a close
+approximation to it.
+2.2. Twisting. A second strategy, which performs well in practice, is to “twist” our given
+quadratic character χd by other characters χq , and look for a q for which the lower bound in
+(4) is favorable. This is related to the first strategy since, by Fourier analysis, varying the
+test function amounts to considering combinations of the twists by nit for various t. Twists
+by quadratic characters have the added advantage of zero repulsion around the central point,
+as we explain in detail in §3.1.
+In other words, if we run out of luck with our given value of d then we can multiply it
+by q ∈ F relatively prime to d and ask if the product is a fundamental discriminant. This
+operation also introduces a penalty, since (4) becomes a lower bound for log |q∆|, so we have
+to subtract log |q|:
+∞
+X
+Λ(n)χq∆ (n)
+√
+g(log n) + log(8πeγ )
+n
+n=1
+Z ∞
+Z ∞
+1 − g(x)
+g(x)
+−
+dx + χq∆ (−1)
+dx.
+2 sinh(x/2)
+2 cosh(x/2)
+0
+0
+
+log |∆| ≥ − log |q| + 2
+(6)
+
+What we gain by this strategy is the hope of finding a twistPχq∆ such that the low-lying
+zeros of L(s, χq∆ ) are unusually sparse, so that the zero sum ∞
+j=1 h(γj (q∆)) can be made
+small even with a relatively simple choice of g. For instance, we might hope that L(s, χq∆ )
+has a large zero gap around the central point. In that case, we have the following.
+Proposition 2.2. Suppose that L(s, χq∆ ) satisfies GRH and has no non-trivial zeros with
+imaginary part in (−δ, δ). Set X = 2δ −1 (A + log log |q∆|) for some A ≥ 0. Then there is an
+explicit g ∈ C(X) whose cosine transform h satisfies
+(7)
+
+∞
+X
+
+h(γj (q∆)) 
+
+j=1
+
+e−A X
+,
+(log log |q∆|)3/2
+
+with an absolute and effective implied constant.
+6If A is the matrix associated with the quadratic form and c := (2M + 1)/X, then max
+
+t
+|a|2 =c a Aa = cλ1 ,
+
+where λ1 is the largest eigenvalue of A, a := (a−M , . . . , aM ), and the condition |a|2 = c is equivalent to
+g(0) = 1.
+5
+
+In other words, there is a test function g with support of size inversely proportional to the
+size of the zero gap for which the zero sum is relatively small. Thus, ruling out small values
+of ` to complete the proof that d is squarefree is fast compared to evaluating the explicit
+formula.7
+Although it is difficult to ascertain directly for a given q whether L(s, χq∆ ) has a large
+zero gap, we can simply try computing the lower bound (6) using the test function given
+by Prop. 2.2 for a particular desired value of δ. We may repeat this procedure for many q
+until we find one which is good enough, and then use the quadratic form approach with a
+relatively small matrix to refine the choice of test function.
+The crucial question is thus how large of a zero gap can one expect to find by searching
+through various q. On average, one expects the first zero gap around the central point to
+be about 2π/ log |q∆|,8 which is of no use in Prop. 2.2. On the
+pother hand, if we found q of
+modest size for which the first zero gap was on the order of 1/ log |q∆|, say, then we would
+have a fast algorithm for proving that d is squarefree.9
+To make this
+ more precise, anticipating a subexponential running time on the order of
+θ
+exp (log |∆|) , for θ > 0 we define
+n
+o
+M∆ (θ) = max γ1 (q∆) : q ∈ F, (q, ∆) = 1, |q| ≤ exp (log |∆|)θ ,
+η∆ (θ) = −
+
+log M∆ (θ)
+,
+log log |∆|
+
+η∞ (θ) = lim sup η∆ (θ),
+
+θ∗ = inf{θ > 0 : η∞ (θ) ≤ θ}.
+
+∆∈F
+|∆|→∞
+
+Thus, η∆ is a logarithmic measure of the largest gap size that we encounter among the
+twists by q ∈ F with |q| ≤ exp (log |∆|)θ , with η∆ = 1 corresponding to an average gap,
+and η∆ < 1 corresponding to larger gaps. Since, a priori, we have no information about
+our given discriminant, we take the worst case, η∞ , over all large values of ∆. Finally, θ∗
+measures the point at which the size of the twisting set matches the expected length of the
+prime sum that we need to evaluate in Prop. 2.2. Combining this with a brute-force search
+strategy, we obtain the following.
+Proposition 2.3. Assume GRH for quadratic Dirichlet L-functions. There is an algorithm
+that takes as input a positive integer N and outputs either a non-trivial square factor of
+N or a proof that N is squarefree. If N is squarefree then the algorithm runs in time
+∗
+O exp[(log N )θ +o(1) ] .
+Note that the assumption of GRH in the proposition applies to the certificates generated
+by the algorithm as well as its running time analysis.
+7In fact, as a by-product of evaluating the explicit formula, we will test d for divisibility by all primes
+
+P
+p < eX . Thus, if j h(γj (q∆)) < X then no additional work is necessary to prove that d is squarefree.
+8 More precisely, the Random Matrix model for the family of L-functions in question suggests that the
+mean of the first zero gap should be this quantity multiplied by a constant whose value is approximately
+0.78, see [14, 26]
+9If there is a constant ε > 0 such that one can always find a γ (q∆) ≥ (log log |∆|)1+ε / log |∆|, then
+1
+Prop. 2.2 already allows one to certify that an integer is squarefree in subexponential time (on the GRH).
+It would be interesting to see if one could push this line of thought to an improvement of the O(N 1/6+o(1) )
+time bound of Pollard–Strassen, but we do not do so here.
+6
+
+●
+
+0.0
+
+0.5
+
+1.0
+
+1.5
+
+h(x)
+
+2.0
+
+2.5
+
+3.0
+
+3.5
+
+2.3. Examples. In Figure 1, we give a basic illustration of the favorable situation of a large
+gap around the central point. We chose L(s, χd ), where d = 1548889 is a fundamental
+discriminant, because it has a gap size ≈ 1.747424 there, which is about 4.5 times the
+average 0.78 × 2π/ log(d/(2π)). Therefore, we expect the lower bound√(4) to be quite good
+even with a simple choice of g. For instance, if M = 0 and a0 = 1/ X in (5), we obtain
+2
+2
+g(x)
+P = max(0, 1 − |x|/X) and h(t) = X sin (Xt/2)/(Xt/2) . Choosing X = 7/2, we have
+2 j≥1 h(γj (d)) ≈ 6.73 (by computing the zeros explicitly using lcalc), and so the lower
+bound (4) would be log d − 6.73 ≈ 7.5. This would have sufficed to prove that d is squarefree,
+since in computing the prime sum of the explicit formula we would have checked that d has
+no factor ≤ e7/2 , and so certainly no factor ≤ e6.73/2 . In particular, (4) allows one to certify
+that d is squarefree from the primes ≤ e7/2 ≈ 33 only, which is is already better than trial
+division. Thus, our strategy can lead to a gain even for small d.
+
+●●
+
+●
+
+● ●
+
+●● ● ●
+
+−4
+
+● ●
+
+● ●●
+
+●● ●
+
+−2
+
+0
+
+● ●
+
+● ● ●●
+
+2
+
+● ●
+
+●
+
+●●
+
+4
+
+x
+
+Figure 1. Large zero gap around the central point of L(s, χ1548889 ), together with the test
+function on the zero side h(t) = 8 sin2 (7t/4)/(7t2 ) resulting from M = 0 and X = 7/2.
+
+The behavior of the lower bound as X increases is worth noting. We illustrate it for
+L(s, χd ), Figure 2 (left plot), using the same simple choice of g as before. The overall shape
+of the plot is typical for the case of a large gap, in that there is an initial (good) region where
+the lower bound increases steeply, followed by an inevitable, unless L(1/2, χd ) = 0, region
+of small oscillations. If the gap about the center is not particularly large, however, then the
+initial good region will be much smaller. This is illustrated in Figure 2 (right plot) using
+the L-function of a randomly chosen fundamental discriminant, L(s, χ2000005 ), which has an
+average-sized gap of ≈ 0.515984 about the center. Notice that there is a wide good region
+later on in the plot, but it comes in too late to be useful in our algorithm. The main point is
+that the absence of zeros near s = 1/2 allows the sum over prime powers to capture the bulk
+of the r.h.s. of the explicit formula (3) with a smaller choice of X (i.e. a more compactly
+supported g, and slower decay for h on the zeros sum).
+3. Complexity
+By computing the 1-level density of the family of twists by χq , q ∈ F, one can see
+that η∞ (θ) ≤ 1 for θ > 1, so that θ∗ ∈ [0, 1]. However, the algorithm of Prop. 2.3 is
+subexponential only if θ∗ < 1, which unfortunately seems beyond the current technology to
+prove, even under GRH. We can, however, make a reasonable conjecture of the value of θ∗ by
+7
+
+L(s, χ2000005)
+
+15
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+● ●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+0
+
+0
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+●
+●
+
+●
+
+0
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+10
+
+lower bound for log(2000005)
+
+10
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+5
+
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+
+5
+
+lower bound for log(1548889)
+
+15
+
+L(s, χ1548889)
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+35
+
+40
+
+0
+
+5
+
+10
+
+15
+
+X
+
+20
+
+25
+
+30
+
+35
+
+40
+
+X
+
+Figure 2. Behavior of the lower bound (4) as X increases: The case of a large gap (left)
+compared with the case of an average gap.
+
+answering the analogous question for a suitable random matrix model, where the calculation
+is more tractable:
+Conjecture 3.1. We have
+η∞ (θ) =
+
+(
+1 − 2θ
+1
+2
+
+if 0 < θ < 1,
+if θ ≥ 1.
+
+In particular, θ∗ = 23 .
+Thus, by Prop. 2.3, we conjecture
+that our algorithm is capable of certifying N squarefree
+
+in time O exp[(log N )2/3+o(1) ] .
+We give a detailed justification for the conjecture in §3.1 below. First, however, it turns
+out that one can arrive at the same conclusion for the running time without any consideration
+of the zero sum in (3), by analyzing the lower bound (4) using a simple model of the χq∆ (p)
+as independent random variables assuming the values 1 and −1 with equal probability (this
+is not always a good model [27] but suffices for our purposes). We make this more precise
+in the following proposition, which is a consequence of [21, Theorem 1].
+Proposition 3.2. Let Y1 , Y2 , . . . be independent random variables such that P(Yj = 1) =
+P
+log p
+Y log p
+P(Yj = −1) = 12 , and put Y := 2 pj ≤eX j√pj j 1 − X j , where pj denotes the jth prime
+number. Then, for each n satisfying 3 ≤ n < eX , we have
+
+
+
+
+30vn2
+u2n
+−22
+P(Y ≥ vn ) ≥ 2 exp −
+,
+P(Y ≥ un ) ≤ exp −
+,
+cn
+32cn
+
+
+
+2
+P
+P
+log p
+log p
+log2 p
+log p
+where vn := pj ≤n √pjj 1 − X j , un := 4vn , and cn := n<pj ≤eX pj j 1 − X j .
+√
+1
+In particular, as n, X → ∞ with n = eo(X) , so that vn ∼ 2 n and cn ∼ 12
+X 2 , we get
+√
+2
+P(Y ≥ 2 n) ≥ exp(−(1440 + o(1))n/X ). Therefore, after bexp Xc independent samples
+of Y , we expect to occasion Y & 6√110 X 3/2 at least once. In the opposite direction, we
+8
+
+√
+have P(Y ≥ 8 n) ≤ exp(−(24 + o(1))n/X 2 ), and so after bexp Xc independent samples,
+we expect at most one instance of Y & √46 X 3/2 . Together, these estimates are consistent
+with θ∗ = 2/3. Of course, Prop. 3.2 simplifies the situation by ignoring the higher prime
+powers, but that is not important since they contribute only O(X), and so do not impact
+the X 3/2 term. It is worth noting, however, that the contribution of the higher prime powers
+in numerical computations is still noticeable because χq (p2 ) = 1 whenever (q, p) = 1, and
+so the bulk of their contribution is guaranteed to help our lower bound, regardless of the
+number of samples.
+3.1. A conjecture for θ∗ via random matrix theory. The random matrix philosophy
+suggests (e.g. by comparing the 1-level densities) that the relevant symmetry for a family of
+primitive quadratic twists is symplectic. The symplectic group U Sp(2N ) is a compact group
+consisting of 2N × 2N unitary matrices A satisfying At JA = J, where
+
+
+0
+IN
+J :=
+.
+−IN 0
+The eigenvalues of A lie on the unit circle, come in conjugate pairs, and can be written
+uniquely as
+e±iθ1 (A) , . . . , e±iθN (A) ,
+0 ≤ θ1 (A) ≤ · · · ≤ θN (A) ≤ π.
+Making the identification 2N = log |∆|,10 we expect that statistics of the lowest eigenphase
+θ1 (A) as A varies in U Sp(2N ) coincide to leading order, and modulo arithmetic effects, with
+statistics of the lowest zero γ1 (q∆) as q varies in F but still sufficiently small compared
+to |∆|. Thus, by computing statistics of θ1 (A), we arrive at conjectures for γ1 (q∆). In
+particular, since the complexity of our algorithm depends on the frequency of large values
+of γ1 (q∆), we are led to consider the tail distribution of θ1 (A).
+To this end, and to facilitate comparison with other symmetry groups later on, let U (N )
+denote the (compact) group of N × N unitary matrices, and SO(2N ) ⊂ U (2N ) the group of
+orthogonal matrices of determinant 1. The eigenphases of A ∈ U (N ) can be written uniquely
+as 0 ≤ θ1 (A) ≤ · · · ≤ θN (A) < 2π, while those of A ∈ SO(2N ), which come in pairs ±θj (A),
+can be written uniquely as 0 ≤ θ1 (A) ≤ . . . ≤ θN (A) ≤ π. Let PG(N ) denote the unique Haar
+measure on G(N ) ∈ {U (N ), SO(2N ), U Sp(2N )}, normalized to be a probability measure.
+The random matrix philosophy suggests, for example, that the relevant symmetry group for
+averages over a family of twists by nit is unitary, while for averages over a family of elliptic
+curves it is orthogonal (even or odd, depending on the sign of the functional equation in the
+family).
+M
+Let P×M
+G(N ) = PG(N ) ×· · ·×PG(N ) , repeated M times, be the product measure on G(N ) . For
+each Borel-measurable set J ⊂ [0, σπ], where σ = 2 if G(N ) = U (N ) and σ = 1 otherwise,
+define S(J) := {(A1 , . . . , AM ) ∈ G(N )M : max1≤m≤M θ1 (Am ) ∈ J}. For short-hand, we write
+PG(N ) (max1≤m≤M θ1 (m) ∈ J) in place of P×M
+G(N ) (S(J)), PG(N ) (max1≤m≤M θ1(m) > s) in place
+×M
+of PG(N ) (S((s, ∞))), and so on. The distribution function PG(N ) θ1 > s is known as the
+gap probability. The proofs of Propositions 3.3–3.4 below are given in the appendix.
+10This identification is obtained by equating the mean spacing of eigenphases of A ∈ U Sp(2N ), which is
+π/N , and the mean spacing of zeros of L(s, χq∆ ) at a fixed height, which is ∼ 2π/ log |q∆| ∼ 2π/ log |∆| as
+|∆| → ∞, ∆ ∈ F.
+
+9
+
+Proposition 3.3. Fix β ∈ (0, 2), and define
+
+
+β/2−1
+Mβ (N ) := exp((2N )β ) , s±
+.
+ε,β (N ) := (4 ± ε)(2N )
+Then, for each fixed ε > 0, as N → ∞ we have
+
+PU Sp(2N ) s−
+max
+ε,β (N ) <
+
+1≤m≤Mβ (N )
+
+
+
+θ1 (m) ≤ s+
+ε,β (N )
+
+→ 1.
+
+In other words, (2N )1−β/2 max1≤m≤Mβ (N ) θ1 (m) converges in distribution to 4.
+Therefore, if we choose A1 , . . . , AM (N ) ∈ U Sp(2N ), independently and uniformly with
+respect PU Sp(2N ) , then in the limit as N → ∞, we have max1≤m≤M (N ) θ1 (Am ) > s−
+ε,β (N )
+with probability approaching 1. For√instance, if β = 1, then we expect to find at least one
+lowest eigenphase of size & (4 − ε)/ 2N . Since the eigenvalues of symplectic
+p come
+√ matrices
+in conjugate
+√ pairs, this corresponds to an eigenphase spacing ≥ 2(4 − ε)/ 2N ≈ 32/N ,
+4
+which is π 2N times the average spacing.
+In contrast, the eigenvalues of unitary matrices do not necessarily come in conjugate pairs,
+so the point 1 on the unit circle is no longer distinguished, and actually PU (N ) is rotationally
+invariant. Thus, it is more natural to consider the nearest-neighbor distribution function,
+PU (N ) (θ2 − θ1 > u) := PU (N ) ({A ∈ U (N ) : θ2 (A) − θ1 (A) > u}), which is related to the gap
+probability by differentiation; see (23) in the appendix. In fact, log PU (N ) (θ2 − θ1 > u) ∼
+log PU (N ) (θ1 > u) as N → ∞ over a wide range of u. To facilitate comparison with the
+symplectic case, we consider the half-spacings 12 [θ2 − θ1 ] in the following.
+Proposition 3.4. Fix β ∈ (0, 2), and define
+√
+
+
+Mβ (N ) := exp(N β ) , u±
+8 ± εN β/2−1 .
+ε,β (N ) :=
+Then, for each fixed ε ∈ (0, 8], as N → ∞ we have
+
+
+−
++
+1
+PU (N ) uε,β (N ) <
+max
+[θ (m) − θ1 (m)] ≤ uε,β (N ) → 1.
+2 2
+1≤m≤Mβ (N )
+
+√
+In other words, N 1−β/2 max1≤m≤Mβ (N ) 21 [θ2 (m) − θ1 (m)] converges in distribution to 8. The
+same is true if, in addition, one maximizes over the spacings of each matrix, replacing
+1
+[θ (m) − θ1 (m)] by max1≤j≤N 12 [θj+1 (m) − θj (m)], where θN +1 := 2π + θ1 .
+2 2
+In light of Prop. 3.4, we see that sampling from U (2N ) does not do as well as sampling
+from U Sp(2N ). For if we choose bexp((2N )β )c matrices from U (2N ), independently
+and
+√
+β/2−1
+uniformly with respect to PU (2N ) , then we expect that half
+,
+√ the max spacing is ≈ 8(2N )
+which is worse than the symplectic case by a factor of 2. Note that we could have compared
+U Sp(2N ) and U (N ) instead, but to do so meaningfully the eigenphases in the two ensembles
+should be√re-normalized to have the same mean spacing, so that U (N ) still does worse by a
+factor of 2.
+This suggests that our algorithm should do better if it searches through quadratic twists
+rather than twists by nit , i.e. γ1 (q∆) as opposed to 12 [γj+1 (∆)−γj (∆)], for q and j in a suitable
+range.11 This agrees with our observations in practice. An additional reason for it might be
+that the assumption of independent samples is less applicable to the gaps γj+1 (∆) − γj (∆),
+11To clarify the analogy with U (N ) a little more, we expect max
+
+1
+t≤γj (∆)<t+2π 2 [γj+1 (∆) − γj (∆)], for
+
+t = |∆|o(1) , to be modelled by max1≤j≤N 12 [θj+1 (m) − θj (m)], where N ≈ log |∆|.
+10
+
+since they come from a single L-function, and are thus constrained by its analytic properties,
+in contrast to the γ1 (q∆), which come from different L-functions. For example, we intuitively
+expect γj+1 (∆) − γj (∆) to have negative correlations over short ranges (and also some longrange correlations due to the primes; see [22] for a numerical discussion of this in the case
+of zeta). While such negative correlations do not affect the 2/3 in the analogue of Conj. 3.1
+for the t-aspect, they likely make the implied asymptotic constants worse.
+In order to make a conjecture for θ∗ based on our U Sp(2N ) calculation, we identify 2N
+with log |q∆|, as usual, and the lowest eigenphase with γ1 (q∆). If θ < 1 then twisting by
+χq does not affect the density of zeros appreciably, so we may interpret Prop. 3.3 for fixed
+2N ≈ log |∆| as sampling γ1 (q∆) for q from {q ∈ F : (q, ∆) = 1, |q| ≤ exp((log |∆|)θ )}. The
+conclusion of the proposition thus suggests that M∆ (θ)  (log |∆|)θ/2−1 ; in particular, we
+expect η∞ (θ) = 1 − θ/2, and so θ∗ = 2/3. On the other hand, if θ > 1 then q becomes the
+dominating factor in the zero density; thus, we expect the maximum of γ1 (q∆) to be attained
+for a relatively small choice of q, meaning we do not derive any benefit from increasing θ
+further, and η∞ (θ) is constant. Note that similar conclusions are reached if we sample twists
+by nit instead.
+Finally, we remark that Conj. 3.1 is of independent interest and may warrant further
+study. One can try to confirm it directly (i.e. by computing the first zero of many twists),
+but this requires taking |∆| fairly large before one can hope to discern a clear pattern. Basic
+experiments suggest taking |∆| & 1015 , say, which is prohibitively time-consuming using
+the standard approximate functional equation, as one would need to compute γ1 (q∆) for
+millions of q. It would perhaps be better to formulate a precise conjecture for M∆ (θ) itself,
+including lower order terms, and check the numerics for that. One could also try to confirm
+the conjecture for other families.
+3.2. Numerical results. We applied our method to several RSA-numbers, but our main
+test case was RSA-210, which is the following 210-digit number:
+RSA-210 = 2452466449002782119765176635730880184670267876783327
+5974341445171506160083003858721695220839933207154910
+3626827191679864079776723243005600592035631246561218
+465817904100131859299619933817012149335034875870551067.
+We searched for candidate twists (i.e. twists that are expected to make the prime sum
+large) essentially by brute force, with some modest refinements described in §4.2.1. We first
+used a simple weighting function, such as a triangle wave, to evaluate a short prime sum
+(typically with p ≤ 104 ) for all twists within a given range, then incrementally increased the
+length of the sum as we filtered the results. The candidates found this way were then fed
+into the lower bound (4), this time using a much longer prime sum and the test function
+produced by the quadratic form method outlined in §2.1.12 Our best-performing twist was
+12Note that the integral in (3) can be computed to high precision using standard numerical integration
+
+methods. Moreover, in our final, long prime sum, we used approximations of the test function by Chebyshev
+polynomials, which allows most of the summation to be carried out in integer arithmetic. In this way we can
+effectively control the round-off error in the computation. On the other hand, since the longest sum that
+we computed was over the primes ≤ 2.5 × 1016 , standard double-precision arithmetic would also suffice to
+control the round-off errors effectively for many choices of g, e.g. by using pairwise summation.
+11
+
+−9334602088654580277283 = −568391 × 2345033 × 7003250461, which yielded the lower
+bound log |∆| ≥ 137.5158 using X = log(1.3 × 1015 ) and M = 312 in (5).
+Proof of Theorem 1.1. We illustrate the proof for the case of N = RSA-210; the parameter
+choices that we used to complete the proof for the other challenge numbers are summarized
+in Table 1.
+Suppose, to the contrary, that all prime factors of N have multiplicity > 1. Then N =
+s2 |∆|3 , where |∆| is the conductor of χ−N . We verified that N is not a perfect cube, and
+our computation showed that log |∆| > 137.515, so that 1 < s < 1.3 × 1015 . This leads to a
+contradiction since, as a by-product of computing the prime sum in the explicit formula, we
+checked that N has no non-trivial factor < 1.3 × 1015 .
+
+N
+q
+eX
+RSA-210 −9334602088654580277283 1.3 × 1015
+RSA-220
+970064118336081477109 1.8 × 1015
+2298170792729446843801 2.5 × 1016
+RSA-230
+RSA-232 −2779263460367695431079
+1016
+
+M
+312
+312
+312
+312
+
+log |∆| ≥
+137.5158
+145.2599
+150.8289
+152.7847
+
+Table 1. Parameters used in the proof of Theorem 1.1
+
+Remark. We do not need the full strength of the bound log |∆| > 137.515 to prove the
+theorem, as we separately ruled out factors ≤ 1020 using the implementation of Pollard’s
+p − 1 method13 in GMP-ECM [10], which takes less than a day on a computer with 80GB of
+memory. Therefore, the bound log |∆| > 130.02 suffices to prove the theorem, which reduces
+the size of the prime sum needed to p ≤ 2.66 × 1014 . A similar improvement was noted for
+the other challenge numbers.
+In Figure 3, we present data about the practical efficiency of our algorithm, providing further evidence for the 2/3 exponent. To clarify the situation, recall that θ∗ is chosen to balance
+the number of terms in the prime sum versus the number of twists we need to try so that,
+with high probability, the zero contribution is small for at least one twist. We accomplish
+this by taking g with support inversely proportional to the largest gap that we anticipate
+after trying exp((log |∆|)θ ) twists, and so our prime sum has length ≤ exp (c1 (log |∆|)η∆ (θ) )
+for some suitable constant c1 > 0. The 2/3 arises as Prop. 3.3 suggests that η∆ (θ) ≈ 1 − θ/2,
+and on solving 1 − θ/2 = θ. More precisely, it arises since if we sample γ1 (q∆) over q ∈ F,
+|q| < exp X, with X much
+√ smaller than log |∆|, then Prop. 3.3 suggests we should encounter
+at least one γ1 (q∆) ≥ 4 X/ log |∆|. Therefore, looking back at Prop. 2.2, we expect to oblog log |∆|
+√
+tain a lower bound very close to log |∆| in time . exp(X + c2 log |∆|
+), where c2 > 0 is
+4 X
+c2
+a constant implied by the proposition. Optimizing, we choose X = ( 4 log |∆| log log |∆|)2/3 .
+This reasoning on its own does not fully explain what we observe in Figure 3, which is that
+by sampling exp X twists and using a prime sum of length exp X, we seem to obtain a lower
+bound like X 3/2 , even for intermediate values of X much smaller than (log |∆|)2/3 . This
+13Like Pollard–Strassen, this method can be used to rule out small factors, with comparable complexity.
+
+Pollard–Strassen has a theoretical advantage, in that the p − 1 method produces an inconclusive result if a
+randomly-chosen residue happens to have exactly the same order modulo every prime factor of N ; however,
+the chance of that occurring is vanishingly small, so this is irrelevant in practice.
+12
+
+140
+
+Trial division
+
+120
+
+Pollard−Strassen
+X X 2
+
+80
+60
+0
+
+20
+
+40
+
+Lower bound
+
+100
+
+Our method
+
+0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+35
+
+X
+
+Figure 3. The lower bound (under GRH) produced by our method when applied to
+RSA-210 using the primes ≤ eX . The ∗s mark the places where the best performing twist
+available so far changes. The slope increases noticeably at each ∗, except towards
+the end,
+√
+where it is likely that we are not finding the best twists. Also note that the 2 in our fitted
+curve is likely not an absolute constant, but varies as a small power of log log |∆|.
+
+behavior is expected if one treats the prime sum as a sum of independent random variables,
+as in Prop. 3.2, but it would be reassuring to see it from the zeros directly. The difficulty
+towards this is that if h does not have sufficient decay outside the large gap, then we cannot
+bound the contribution of the zeros effectively (cf. Prop. 2.2). Nevertheless, one can obtain
+a heuristic explanation, as follows.
+We choose h with 0 ≤ h(t) ≤ 1, say, and mostly concentrated within the interval
+[−1/X, 1/X], roughly speaking. We let Nχ (t) := #{0 ≤ γ(χ)
+zero-counting
+R∞
+P < t} denote the
+function, and assume L(1/2, χ) 6= 0 for simplicity. Then γ(χ) h(γ(χ)) = 2 0 h(t) dNχ (t).
+The contribution of the smooth part of Nχ (t) to the integral is ∼ g(0) log |∆|, which is precisely the left-hand side of (3). RTherefore, the prime sum contribution, which is basically our
+∞
+lower bound, should be ≈ −2 0 h(t) dSχ (t), where Sχ (t) is the fluctuating part of Nχ (t).
+This last integral is typically very small due to the random nature of Sχ , except we purposefully introduced
+√ a bias in it via our choice of twist, resulting in a large gap around the
+center of size like X/ log
+|∆|. The contribution of this bias to the prime sum is essentially,
+√
+R √X/ log |∆|
+for a reasonable h, −2 0
+h(t) dSχ (t)  X. Since we expect the contribution from
+√
+14
+the interval [ X/
+lower bound like
+√ log |∆|, ∞) to wash out in comparison, we should get a3/2
+g(0) log |∆|  X. Finally, since g(0)  1/X, we should get log |∆|  X .
+14This is the part of the heuristic that we cannot prove, even under the GRH, unless h has sufficient decay
+
+outside the zero gap.
+13
+
+This heuristic indicates how the running time of our algorithm is controlled by extreme
+(negative) values of Sχ (t). If Sχ (t) t (log |∆|)1/2+o(1) , for example, then we cannot expect
+a running time better than exp((log |∆|)1/2+o(1) ), even if we allow for an oracle supplying the
+algorithm with the best twist in any requested range. (This is in agreement with Conj. 3.1.)
+On the other hand, if Sχ (t) can get much larger (without violating the GRH, so our method
+can still apply!), then there is no such barrier.
+4. Refinements
+In this section, we describe a few refinements of our basic method and indicate some
+directions for future research.
+4.1. Linear programming. A natural question is whether one can make better use of the
+zero sum in (3) than simply ignoring it by positivity, as in (4), especially since it typically
+dominates the right-hand side when X is small. One idea is to apply the explicit formula (3)
+with various choices of test function, setting up a system of inequalities, and try to obtain a
+non-trivial lower bound for the sum over zeros. Since log |∆| also appears in (3) and remains
+unknown to us, the logic of this may seem circular at first glance, but we gain some additional
+information coming from the fact that the zeros occur discretely, as we elaborate below.
+An immediate practical problem is that the system involves infinitely many variables,
+since the zero sum is infinite, and h cannot be compactly supported (it has to be analytic).
+Nevertheless, one can reduce to aPfinite number ofR variables, without too much loss, using
+∞
+an explicit estimate of the form | |γ|≥T h(γ)| = |2 T h(t) dNχ (t)| ≤ E(h, T ), T > 0, simply
+bounding the conductor by the modulus, and using known estimates for Sχ (t). Hence
+X
+X
+X
+h(γ) ≤
+h(γ) + E(h, T ).
+(8)
+h(γ) − E(h, T ) ≤
+|γ|<T
+
+γ
+
+|γ|<T
+
+A more serious problem is that the system is not linear in the zero ordinates, and therefore
+is likely very unstable. We linearize the system, at the cost of having more variables or
+extra solutions, by subdividing the interval [0, T ) into bins of size δ, so that the variables
+become the count of zeros in each bin rather than the zeros themselves. Specifically, for
+each integer V > 0, and each integer v ∈ [0, V ), let δ := T /V , I(v) := [vδ, (v + 1)δ),
+m(v) := 21 #{γ : |γ| ∈ I(v)}, h+ (v) := supt∈I(v) h(t), and h− (v) := inf t∈I(v) h(t). Then we
+have
+X
+X
+X
+(9)
+2
+m(v)h− (v) ≤
+h(γ) ≤ 2
+m(v)h+ (v) .
+0≤v<V
+
+0≤v<V
+
+|γ|<T
+
+Applying (8) and (9) with a set of test functions {(gk , hk ) : 1 ≤ k ≤ K} of our choice, we
+obtain a linear system
+X
+2
+m(v)h−
+k (v) − E(hk , T ) ≤ gk (0) log |∆|+gk (0) log q − P (gk , q)
+(10)
+
+0≤v<V
+
+≤2
+
+X
+
+m(v)h+
+k (v) + E(hk , T )
+
+0≤v<V
+
+for k = 1, . . . , K, where χq is the twist used, and P (gk , q) denotes the contribution from
+the prime sum and integral terms in (3). Note that V controls the size of each bin, and T
+controls the point where we truncate the zero sum. Finally, we let logd denote the unknown
+14
+
+value of log |∆|, and feed the system (10) into a linear programming solver, such as GLPK
+[11], with logd as the objective function to be minimized.
+We experimented with this approach for RSA-210 using various choices of q, T , V , and
+{(gk , hk ) : 1 ≤ k ≤ K}. For example, one of the better performing twists found, as in §3.2,
+was q = −65123121667. Using this twist, we set up the system (10) with T = 4 and V = 500
+(so that δ = 0.008, which is smaller than the mean zero spacing ≈ 0.013), and
+
+2k
+sin(Xt/2k)
+hk (t) =
+,
+k = 1, . . . , 7,
+X = 7 log 10,
+(Xt/2k)
+so that gk (x), k = 1, . . . , 7, are supported on |x| ≤ X.15 We imposed an integer variable
+constraint on m(v), v = 0, . . . , 44, with the rest being real variables. The integer variables are
+located at the beginning, covering the interval [0, 0.36), which is reasonable since hk (t) is not
+too small there and so detected zeros have more weight. Solving this system, we obtained
+the lower bound log |∆| ≥ 47.153, of which 2.494 came from the zeros. This represents
+an improvement of about 5.5% over using max1≤k≤7 [P (gk , q) − gk (0) log q] alone, which is
+comparable to the improvement that we obtained from using the Pollard p − 1 algorithm
+to rule out small values of `, as remarked after the proof of Thm. 1.1. Although this is a
+modest improvement on a logarithmic scale, it makes a substantial difference in the length
+of the final prime sum.
+In general, further gains are possible by using more integer variables, a smaller grid spacing
+(smaller δ), or additional test functions, in that order of importance. In reality, adding more
+test functions of compact support of size X loses impact quickly, which is not surprising
+because such functions cannot resolve zeros to better than O(1/X). Most of the gains, in
+fact, come from imposing integer constraints. If no integer constraints are imposed, the
+improvement in the above example goes down significantly, to around 1%. Also, if all the
+variables are real, then the linear programming approach is closely related to the approach
+of varying the test function, described in §2.1, and so cannot be expected to do significantly
+better.16
+However, one has to weigh the extra time it takes to set up and solve the mixed integer
+programming problem against the time it takes to simply compute a longer prime sum. In
+the above example, it took about 15 minutes to solve the problem, but it can take much
+longer if more integer constraints are imposed. It is tempting to think that if one could
+allow the number of integer variables to grow very large without significant time penalty
+then there would be no limit to the improvement that could be obtained. We offer the
+following theoretical evidence in favor of that belief.
+Definition 4.1. Let S = {z ∈ C : |=(z)| < 1/2}. A divisor on S is a function m : S → Z
+which is supported on a discrete subset of S. A divisorP
+m is admissible if m(−γ) = m(γ) ≥ 0
+A
+for all γ ∈ S and there is a number A ≥ 0 such that
+for all T ≥ 1.
+γ∈S m(γ)  T
+|γ|≤T
+
+15The inequalities in (10) were imposed in both directions except for h , where only the lower bound was
+1
+
+used.
+16In the real variable case one can obtain an easily verifiable certificate that the solution is indeed correct
+by solving the dual problem. This is not available if one imposes integer constraints, and so one has to trust
+the linear programming software in that case.
+15
+
+Proposition 4.2. Let m : S → Z≥0 be an admissible divisor, d ∈ R× , and {cn }∞
+n=2 a
+sequence of complex numbers satisfying cn  n−δ for some δ > 0. Suppose that for every
+smooth, even function g : R → C of compact support and cosine transform h we have the
+equality
+g(0) log |d| =
+
+X
+
+m(γ)h(γ) + 2
+
+∞
+X
+
+cn g(log n)
+
+n=2
+
+γ∈S
+γ
+
+Z ∞
+
++ g(0) log(8πe ) −
+0
+
+g(0) − g(x)
+dx + (sgn d)
+2 sinh(x/2)
+
+Then d is a fundamental discriminant, cn =
+ords=1/2+iγ L(s, χd ) for all γ ∈ S.
+
+Λ(n)χd (n)
+√
+n
+
+Z ∞
+0
+
+g(x)
+dx.
+2 cosh(x/2)
+
+for every n ≥ 2, and m(γ) =
+
+Thus, the explicit formula is rigid in the sense that the only identities of the shape (3) that
+can hold for all test functions are the ones arising from quadratic character L-functions. We
+remark that the key to this proposition, whose full proof is given in the appendix, is that m is
+integer valued and supported on a discrete set. Unfortunately, the proposition is ineffective,
+in that it does not predict how many or how complicated we must choose the test functions
+before finding a system that yields a good lower bound for log |d|. However, note that under
+GRH, the ∆ ∈ F with |∆| ≤ x are distinguished from one another by the values of χ∆ (p)
+at primes p ≤ O(log2 x) [17]. This statement alone does not offer any indication of how
+to find ∆ given a list of its initial character values, but together with Prop. 4.2 it suggests
+that a given ∆ might be captured by the system (10) using test functions supported up to
+X ≈ 2 log log |∆|, provided that we are allowed to take V and K arbitrarily large. However,
+our numerical experiments so far, which were limited to at most a few hundred integer
+variables, have not corroborated this speculation, even allowing for larger values of X.
+4.2. Finding correlating characters.
+4.2.1. Lining up the initial primes. In order to improve the efficiency of the brute force
+search, we chose q so as to line up the values of the prime sum for small n, i.e. so that
+χq∆ (p) = 1 for small primes p. Of course there is no guarantee that doing so is optimal, and
+indeed it is likely that the best choices of q of a given size adhere to this principle only loosely,
+i.e. they may sacrifice a few small values of p in order to line up many more. However, if we
+have the resources to evaluate the prime sum for a fixed number of q, regardless of size (a
+reasonable assumption, since the only operation performed on q itself is reduction mod p),
+then it makes sense to line up the small primes in attempt to skew the distribution of values
+in our favor.
+To be more precise, consider an idealized form of the lower bound (6) with h a δ-function
+√
+and g ≡ 1. Then for a prime power n = pk , the corresponding term of (6) is 2χq∆ (n)Λ(n)/ n.
+The expected value of this term, that is its average value over all q ∈ F, is easily seen to
+p Λ(n)
+√
+be 0 if k is odd and 2 p+1
+if k is even.17 Thus, if we force q to satisfy χq∆ (p) = 1, this
+n
+17E(χ
+
+q∆ (p
+
+2k
+
+2
+
+)
+p
+)) = E(χq∆ (p2 )) = φ(p
+p2 −1 = p+1 , where the second equality holds because q ∈ F, so that q 6≡ 0
+
+(mod p2 ).
+16
+
+introduces a positive bias in the prime sum of
+(
+
+
+∞
+1
+X
+if 2 | k,
+2 log p √
+1
+Λ(pk ) p+1
+=
+p+
+.
+2 k/2
+p
+p
+−
+1
+p
++
+1
+1
+if
+2
+k
+k=1
+However, it also comes with a price, in that we expect such a q to be about 2(p + 1)/p
+times larger than a fundamental discriminant chosen randomly without regard to the value
+of χq (p). Thus, our expected net improvement is
+
+
+2 log p √
+1
+2(p + 1)
+(11)
+p+
+− log
+.
+p−1
+p+1
+p
+(A similar argument applies to forcing χq∆ (−1) = 1, from which we expect a net improvement
+of π2 − log 2.) It turns out that (11) is positive for p ≤ 251 but negative for larger primes.
+4.2.2. The shortest lattice vector problem. It is plausible that there is a better strategy
+for finding good twists than a brute-force search, meaning a strategy that can find the
+same quality twist as√brute force but using much less sampling. If one could be assured
+of finding γ1 (q∆)  X/ log |∆| in a subset of {q ∈ F : (q, ∆) = 1, |q| ≤ exp X} of size
+∗
+, 2τ2τ+1 }, where
+ exp(X τ ), 0 ≤ τ < 1, then one could improve the 2/3 exponent to max{θmin
+∗
+θmin
+:= inf θ>0 η∞ (θ), provided the subset can be determined easily. An obvious candidate is
+the subset of smooth fundamental discriminants. For example, one could search for a product
+of real primitive characters χq = χq1 · · · χqm , |qj | < Q, qj 6= qk , that correlates strongly with
+χd , so as to make
+X log p
+X χq (p)χd (p) log p
+(12)
+2
++ log |q|
+√ −2
+√
+p
+p
+p<P
+p<P
+small, in the hope that it will lead to an unusually large prime sum in the explicit formula.
+The question of finding a good choice of χq can be framed in terms of finding a short vector
+in the lattice generated by the rows of the following (n + m + 1) × (n + m + 1) matrix,
+as we explain next. (This idea was applied in [23] in the t-aspect to disprove the Mertens
+conjecture.)
+
+M
+i(d, p1 )
+ i(q1 , p1 )
+
+ i(q2 , p1 )
+
+..
+
+.
+
+i(d, p2 )
+i(q1 , p2 )
+i(q2 , p2 )
+..
+.
+
+
+i(q , p ) i(q , p )
+m 2
+ m 1
+ 2w(p1 )
+0
+
+ 0
+2w(p2 )
+
+..
+..
+
+.
+.
+0
+
+0
+
+···
+···
+···
+..
+.
+
+i(d, pn )
+i(q1 , pn )
+i(q2 , pn )
+..
+.
+
+···
+···
+···
+..
+.
+
+i(qm , pn )
+0
+0
+..
+.
+
+···
+
+2w(pn )
+
+
+ M +1 √
+log p
+2
+,
+w(p) :=
+p1/4
+
+b2M
+
+0
+···
+p0
+log |q1 |c
+···
+p0
+0
+b2M log |q2 |c · · ·
+..
+..
+..
+.
+.
+.
+0
+0
+···
+0
+0
+···
+0
+0
+···
+..
+..
+..
+.
+.
+.
+0
+
+(
+q∗ =
+
+b2M
+
+···
+
+0
+
+1
+i(q, p) := (1 + χq∗ (p)) w(p),
+2
+
+0
+0
+0
+..
+.
+
+p
+log |qm |c
+0
+0
+..
+.
+0
+
+q−1
+
+(−1) 2 q
+q
+
+2
+0 
+
+0 
+.. 
+. 
+
+
+
+0 
+
+0 
+
+0 
+
+.. 
+.
+0
+
+if q odd prime,
+if q ∈ {−4, 8, −8}.
+
+Here, M is a large integer of our choice (in our application it was a random integer in
+[75, 150)). The weight w(p) comes from (12), and indicates that it is more important to
+17
+
+p
+correlate smaller primes. The weight log |qj | in the (n+1)st to (n+m)th columns indicates
+that using χqj∗ will incur a penalty imposed according to the explicit formula. The bottom n
+rows indicate that the kth entry in each row, 1 ≤ k ≤ n, should be treated modulo 2w(pk ).
+Here, it is helpful to note that i(qj , pk ) is either 0 or 1 times w(pk ), and so working modulo
+2w(pk ) essentially means that only one multiple of each row is needed. Therefore, a vector
+in the lattice with a non-zero (n + m + 1)-st entry, can be written in the form
+
+
+p
+p
+M
+(13)
+y1 w(p1 ), . . . , yn w(pn ), u1 log |q1 |, . . . , um log |qm |, 2
+,
+Q
+where yk , uj ∈ {0, 1}. The character generated by this vector is χqJ := j∈J χqj∗ , where
+Q
+J := {1 ≤ j ≤ m, uj = 1}, and it has discriminant qJ = j∈J qj∗ . The yk are 0 or 1
+according to whether χJ (pk ) = χd (pk ) or not. Hence, in order for the vector (13) to be
+short, it means that
+
+
+X
+χqJ (pk )6=χd (pk )
+
+2
+
+w(pk ) +
+
+X
+j∈J
+
+2
+q
+
+
+log |qj | + 22M ≈ 22M 4
+2
+
+M
+
+X
+χqJ (pk )6=
+χd (pk )
+
+
+log pk X
+
++
+log
+|q
+|
++
+1
+
+√
+j
+pk
+
+j∈J
+
+has to be small. This expression is essentially the same as (12), which we wish to minimize,
+but with χq = χqJ and q = qJ . Thus, it is seen that one can find a good choice of χq if one
+can find a short vector in the lattice.
+Finding the shortest vector in a lattice is conjectured to be N P -hard in the l2 -norm and
+the corresponding decision problem is conjectured to be N P -complete (see [1]). However,
+one can find relatively short vectors in polynomial time using the LLL algorithm of Lenstra,
+Lenstra, and Lovás [18], which produces a basis that is nearly orthogonal. The LLL algorithm
+was first used to factor a primitive univariate polynomial in polynomial time. It does not
+necessarily find the shortest vector, and it usually does not, but it can find relatively short
+vectors quickly.
+We applied LLL to our lattice with P and Q ranging between 100 to over 1000. While
+it did yield above-average choices of χq , such as q = −73147, our best-performing twists
+ultimately came from the brute-force approach described in §4.2.1.
+4.3. More general twists. If π is a cuspidal automorphic representation of GLr (AQ ) with
+conductor q relatively prime to ∆, then the twist π ⊗ χ∆ has conductor q|∆|r . Assuming
+GRH for the associated L-function L(s, π ⊗ χ∆ ), we get a lower bound for log |∆| via the
+explicit formula. Thus, the idea of using twists as in §2.2 admits a vast generalization.
+For any natural family of twists, one can expect a more general version of Prop. 2.1 to
+hold, i.e. for each X > 0 there will be some optimal choice of input data (π, g), where π is
+an element of the family and g ∈ C(X) is a test function to use in the explicit formula. For
+instance, considering the family of quadratic twists as in §2.2, it is easy to see that the righthand side of (6) is bounded above by OX (1) − log |q|, uniformly for g ∈ C(X). Thus, only
+finitely many q are relevant, so it follows from Prop. 2.1 that there is a pair (q, g) ∈ F ×C(X)
+which maximizes the lower bound (6).
+18
+
+Similarly, one can expect an analogue of Prop. 2.3 to hold for any given family. It would
+be of interest to study other families to see which yield the best performance. We conclude by listing a few families of L-functions that would make good candidates for future
+investigations.
+• Elliptic curve L-functions. Can one make use of the BSD conjecture and the existence
+of high-order zeros at the central point to force zero repulsion?
+• Dedekind ζ-functions. Can one make use of the existence of towers of number fields
+of bounded root discriminant?
+• Rankin–Selberg products. Can one make use of the algebraic structure of the coefficients of L-functions to find correlating twists quickly?
+Appendix A. Proofs
+A.1. Proof of Prop. 2.1. Let gn ∈ C(X), n = 1, 2, 3, . . ., be a maximizing sequence for l(g),
+with corresponding cosine transforms hn . Since each hn is non-negative, we have |gn (x)| ≤
+gn (0) = 1. Therefore, for j ∈ Z≥0 ,
+Z X
+X 2j+1
+(2j)
+j
+,
+(14)
+hn (0) = 2(−1)
+x2j gn (x) dx ≤
+j + 12
+0
+(2j)
+
+so that hn (0) varies within a compact set for each fixed j. Applying Cantor’s diagonal ar (2j)
+∞
+gument, we may assume without loss of generality that the sequence hn (0) n=1 converges
+P
+(2j)
+cj 2j
+for every j. Put cj = limn→∞ hn (0) and h∞ (t) = ∞
+j=0 (2j)! t . Then from (14) it follows
+that h∞ is an entire function and hn (t) converges uniformly to h∞ (t) on compact subsets of
+C. In particular, h∞ (t) ≥ 0 for all t ∈ R.
+Next, for any g ∈ C(X) with cosine transform h, we have
+Z ∞
+Z ∞
+1 − g(x)
+g(x)
+γ
+log(8πe ) −
+dx + χ∆ (−1)
+dx
+2 sinh(x/2)
+2 cosh(x/2)
+0
+0
+
+
+Z
+1
+Γ0R 1
+=−
+<
++ a + it h(t) dt,
+π R ΓR 2
+where ΓR (s) = π −s/2 Γ(s/2) and a ∈ {0, 1} is such that (−1)a = χ∆ (−1). By Stirling’s
+
+Γ0
+formula we have < ΓRR 12 + a + it = 12 log(1 + |t|) + O(1), so that
+
+
+Z
+Z
+1
+Γ0R 1
+1 ∞
+<
++ a + it h(t) dt =
+log(1 + t)h(t) dt + O(1).
+π R ΓR 2
+π 0
+Moreover, since |g(x)| ≤ 1 for all x, we have
+2
+
+∞
+X
+Λ(n)χ∆ (n)
+√
+g(log n)  1,
+n
+n=1
+
+where the implied constant depends only on X.
+Returning to our construction, since gn is a maximizing sequence, we may assume without
+loss of generality that l(gn ) is bounded below. Together with the above observations, we
+19
+
+thus have that π1
+have
+
+R∞
+
+1
+π
+
+Z T
+
+0
+
+log(1 + t)hn (t) dt ≤ C for some constant C. Hence, for any T > 0, we
+
+0
+
+1
+log(1 + t)h∞ (t) dt = lim
+n→∞ π
+
+Z T
+log(1 + t)hn (t) dt ≤ C.
+0
+
+Since T is arbitrary and log(1 + t)h∞ (t) is non-negative, we see that
+1
+π
+
+(15)
+
+Z ∞
+log(1 + t)h∞ (t) dt ≤ C.
+0
+
+In particular, h∞ ∈ L1 ([0, ∞)), so its cosine transform g∞ (x) = π1
+well-defined and continuous. Moreover, by (15) we have
+1
+π
+and similarly π1
+
+R∞
+T
+
+Z ∞
+T
+
+1
+h∞ (t) dt ≤
+π
+
+Z ∞
+0
+
+R∞
+0
+
+h∞ (t) cos(xt) dt is
+
+C
+log(1 + t)
+h∞ (t) dt ≤
+,
+log(1 + T )
+log(1 + T )
+
+C
+hn (t) dt ≤ log(1+T
+for all T > 0. Therefore,
+)
+
+1
+gn (x) −
+π
+
+Z T
+
+1
+g∞ (x) −
+π
+
+Z T
+
+hn (t) cos(xt) dt ≤
+
+C
+log(1 + T )
+
+h∞ (t) cos(xt) dt ≤
+
+C
+.
+log(1 + T )
+
+0
+
+and
+
+0
+
+C
+Now, let ε > 0 be given, and choose T > 0 large enough that log(1+T
+≤ 3ε . Further, let
+)
+π
+N ∈ Z≥0 be such that n > N implies that |hn (t) − h∞ (t)| < 3T
+ε for all t ∈ [0, T ]. Then the
+above inequalities yield
+
+2C
+1
+gn (x) − g∞ (x) ≤
++
+log(1 + T )
+π
+
+Z T
+
+
+hn (t) − h∞ (t) cos(xt) dt < ε
+
+0
+
+for all n > N and x ≥ 0. Thus, gn (x) converges uniformly to g∞ (x). In particular, g∞ is
+supported on [0, X] and satisfies g∞ (0) = 1, so it is an element of C(X).
+Finally, let δ > 0 be given. By Stirling’s formula, there is a number T0 > 0 such that
+
+Γ0R 1
+< ΓR 2 + a + it ≥ 0 whenever |t| ≥ T0 . Moreover, it follows from (15) that the function
+
+Γ0
+< ΓRR 12 + a + it h∞ (t) is absolutely integrable, so there exists T ≥ T0 such that
+1
+0≤
+π
+
+
+
+Γ0R 1
+<
++ a + it h∞ (t) dt < δ.
+ΓR 2
+R\[−T,T ]
+
+Z
+
+20
+
+Therefore,
+
+
+Z
+∞
+X
+1 T Γ0R 1
+Λ(n)χ∆ (n)
+√
+g∞ (log n) −
+l(g∞ ) + δ > 2
+<
++ a + it h∞ (t) dt
+π
+Γ
+2
+n
+R
+−T
+n=1
+!
+
+
+Z T
+∞
+0
+X
+Γ 1
+1
+Λ(n)χ∆ (n)
+√
+< R
++ a + it hm (t) dt
+gm (log n) −
+= lim 2
+m→∞
+π −T ΓR 2
+n
+n=1
+!
+
+
+Z
+∞
+X
+Λ(n)χ∆ (n)
+1
+Γ0R 1
+√
+≥ lim 2
+gm (log n) −
++ a + it hm (t) dt
+<
+m→∞
+π R ΓR 2
+n
+n=1
+= sup l(g) ≥ l(g∞ ).
+g∈C(X)
+
+Since δ is arbitrary, we have l(g∞ ) = supg∈C(X) l(g).
+
+
+
+A.2. Proof of Prop. 2.2. We begin with some lemmas.
+Lemma A.1. For ν > 0, define
+(
+fν (x) =
+
+1 − x2
+0
+
+ν
+
+if |x| < 1,
+otherwise,
+
+
+
+Z
+Γ( 23 + 2ν)
+2x
+gν,X (x) = √
+fν (y)fν
+− y dy for x ≥ 0,
+X
+πΓ(1 + 2ν) R
+R∞
+and hν,X (t) = 2 0 gν,X (x) cos(tx) dx. Then gν,X (0) = 1, gν,X is supported on [0, X], hν,X is
+non-negative and satisfies
+hν,X (t) ε ν
+
+−1/2 −2ν
+
+e
+
+4ν
+X
+Xt
+
+2ν+2
+
+uniformly for
+
+Xt
+≥ ν ≥ ε,
+4
+
+for any fixed ε > 0.
+Proof. Using the Poisson representation for the J-Bessel function, we derive
+Z
+ν
+2
+itx
+,
+fν (x)e dx = 2Γ(1 + ν)jν (|t|)
+t
+R
+pπ
+where jν (u) = 2u
+Jν+1/2 (u) is the spherical Bessel function with parameter ν. From this
+√
+and the limit jν (u)( u2 )ν → 2Γ( 3π+ν) as u → 0+ , we derive
+2
+√
+Z
+Z
+πΓ(1 + 2ν)
+2
+fν (x) dx =
+f2ν (x) dx =
+,
+Γ( 32 + 2ν)
+R
+R
+so that gν,X (0) = 1. Therefore, we have
+
+2
+2ν
+X|t|
+4
+2X Γ( 23 + 2ν)Γ(1 + ν)2
+jν
+.
+hν,X (t) = √
+Γ(1 + 2ν)
+2
+Xt
+π
+It follows from [15, Thm. 2] that the function ujν (u) is bounded in the region {(ν, u) : u ≥
+2ν ≥ 0}. This combined with Stirling’s formula gives the estimate.
+
+21
+
+Lemma A.2. For α > 0, set
+ 
+
+
+
+
+
+α
+α
+2 αt
+2 αt − π
+2 αt + π
++
+sinc
++ sinc
+Hα (t) = sinc
+2
+2
+4
+2
+2
+R
+∞
+and Gα (x) = π1 0 Hα (t) cos(tx) dt for x ≥ 0. Then Gα is supported on [0, α], Gα (0) = 1,
+2α
+and Hα (t) ≥ max((αt)
+2 ,π 2 /3) for t ∈ R.
+Proof. A straightforward calculation gives
+
+x  2  πx 
+cos
+,
+(16)
+Gα (x) = max 0, 1 −
+α
+2α
+which yields the stated properties of Gα . As for Hα , by rescaling, it suffices to prove the
+bound for α = 1. A calculation shows that
+
+2
+2
+π cos(t/2)
+H1 (t) = 2 + 2
+(3t2 − π 2 ),
+t
+t(t2 − π 2 )
+√
+so that H1 (t) ≥ 2t−2 for |t|
+≥
+π/
+3. On the other hand, graphing the function verifies that
+√
+2
+H1 (t) ≥ 6/π for |t| ≤ π/ 3.
+
+Now, turning to Prop. 2.2, first note that |q∆| ≥ 3. We take h(t) = hν,X (t), where
+≥ 21 log log 3 > 0. Applying Lemma A.1 with ε = 12 log log 3 and Lemma A.2 with
+ν = δX
+4
+α = 2 log log |q∆|, for t ≥ δ we have
+
+
+ 2ν+2
+2
+4ν
+−1/2 −δX/2 −1
+2 π
+−1/2 −2ν
+≤ X(δX)
+e
+α max (αδ) ,
+Hα (t)
+h(t)  ν
+e X
+Xt
+3
+e−A X
+max((2δ log log |q∆|)2 , π 2 /3)
+≤
+Hα (t).
+(2 log log |q∆|)3/2
+log |q∆|
+Since γj (q∆) ≥ δ for every j, this yields
+∞
+X
+
+∞
+max((2δ log log |q∆|)2 , π 2 /3) X
+e−A X
+h(γj (q∆)) 
+Hα (γj (q∆)).
+(log log |q∆|)3/2
+log |q∆|
+j=1
+j=1
+
+We estimate the latter sum by plugging back into the explicit formula (3), with ∆ replaced
+by q∆. A calculation with the prime number theorem using (16) shows that
+∞
+X
+Λ(n)
+eα/2
+√ Gα (log n)  3 ,
+α
+n
+n=1
+
+and it is not hard to see that
+Z ∞
+Z ∞
+1 − Gα (x)
+Gα (x)
+γ
+log(8πe ) −
+dx + χq∆ (−1)
+dx = O(1)
+2 sinh(x/2)
+2 cosh(x/2)
+0
+0
+P
+uniformly for α ≥ 2 log log 3. Thus, ∞
+j=1 Hα (γj (q∆))  log |q∆|.
+Finally, by [24, Thm. 11], under GRH we have δ  1/ log log |q∆|. This yields (7).
+22
+
+
+
+A.3. Proof of Prop. 2.3. We may assume without loss of generality that N is odd, not
+a perfect square, and satisfies N ≥ exp(exp(C 2/3 )), where C > 0 is the implied constant in
+N −1
+(7).18 Thus, if we set d = (−1) 2 N then d = ∆`2 for some 1 6= ∆ ∈ F and ` ∈ Z>0 .
+Let Q ≥ 3 be an integer parameter to be specified later. Set ν = 12 log log N + 12 log1log N ,
+X = 4ν log Q, and let T be an integer in the interval [eX − 1, eX + 1). (Note that to find such
+a T , it suffices to compute eX to within ± 12 .) We let q run through all elements of F with
+|q| ≤ Q and evaluate the lower bound (6) using the test function g = gν,X , in the notation
+of Lemma A.1.
+Since gν,X (log n) = 0 for n > T , it is enough to consider the terms of the sum for n ≤ T .
+As described in §1.2, since ∆ is unknown to us, we compute χd (n) in place of χ∆ (n). If for
+any prime value of n we find a zero value of χd (n), we check to see if n2 |N and exit with this
+square factor if so; otherwise χ∆ (n) = χd (n). In particular, while computing (6) for q = 1,
+we evaluate χ∆ (n) for all primes n ≤ T . If (T + 1)3 > N then this alone yields enough
+information to determine whether N is squarefree. Hence, we may assume without loss of
+N
+generality that X ≤ 31 log N , so that log Q ≤ log
+.
+12ν
+Note that if we set A = 2ν − log log |q∆| and δ = log1 Q then gν,X is precisely the test
+1
+
+function exhibited in the proof of Prop. 2.2. Using the bound |q∆| ≤ QN ≤ N 1+ 12ν , we
+1
+derive the inequality 1 − e−A > 72
+(log log N )−2 > 0. Thus, Prop. 2.2 shows that if |∆| = N
+(which holds when N is squarefree) and γ1 (q∆) ≥ log1 Q then
+
+
+
+
+∞
+X
+1
+1
+CX
+≤ 1−
+hν,X (γj (q∆)) < 1 −
+X.
+72(log log N )2 (log log(qN ))3/2
+72(log log N )2
+j=1
+Therefore, if we evaluate (6) to within ± 72(logXlog N )2 , we will have proven that |∆| > N e−2X ,
+so that ` ≤ T . Having already determined all prime factors of N up to T , we will thus have
+found a proof that N is squarefree.
+Now, since the value of θ∗ is unknown to us, we cannot say in advance what value of Q will
+suffice. In our algorithm, we therefore apply the above procedure iteratively with Q = 2k
+for k = 2, 3, 4, . . . until we find either a square factor or a proof that N is squarefree. As
+noted above, the algorithm must eventually terminate. If it turns out that θ∗ = 1 or if N
+has a square factor then the algorithm becomes a rather inefficient version of trial division,
+which nevertheless runs in polynomial time in N ; in particular, the O(exp[(log N )1+o(1) ])
+running time estimate holds. Henceforth we will assume that θ∗ < 1 and that the input N
+is squarefree.
+Fix ε ∈ (0, 1 − θ∗ ). From the definition of θ∗ it follows that η∞ (θ∗ + ε) ≤ θ∗ . Thus, there
+exists N0 (ε) ∈ Z>0 such that η∆ (θ∗ + ε) < θ∗ + ε whenever |∆| = N ≥ N0 (ε). Let us assume
+log log Q
+that N ≥ N0 (ε). Then once log
+≥ θ∗ + ε, there must be a q with (q, ∆) = 1 and |q| ≤ Q
+log N
+such that γ1 (q∆) > log1 Q .
+It is straightforward to see that all of the floating point operations required to compute (6)
+for every |q| ≤ Q to the precision described above may be carried out in time O(Q1+4ν logc N )
+for some c > 0. Since we choose values of Q from a geometric progression, the total running
+18If C is at all large then this rules out every N of practical size; we could deal with this instead by
+
+increasing A in Prop. 2.2 by a constant, but as we are only interested in the theoretical result, we make this
+assumption for convenience.
+23
+
+time is dominated by that of the final iteration. In the worst case, it might be that the
+log log Q
+≥ θ∗ + ε is 2k + 1 for some k, and thus our final choice of
+smallest Q for which log
+log N
+∗
+Q = 2k+1 would be too large
+by roughly a factor
+of 2. Thus, log Q ≤ (log N )θ +ε + log 2, so
+
+
+∗
+that Q1+4ν logc N  exp (log N )θ +ε (1 + 4ν) (log N )c+log 4 . Since 1 + 4ν  log log N and ε
+may be chosen arbitrarily
+small (assuming only that N ≥ N0 (ε)), the running time is thus
+
+∗
+O exp (log N )θ +o(1) , as required.
+
+A.4. Proof of Prop. 3.3.
+Lemma A.3. For each N ≥ 1, and each s ∈ (0, π), we have
+(17)
+
+2N +1
+2N +1
+
+
+
+
+PU Sp(2N ) θ1 > s
+1
+Ns
+sin(s/2)
+sin(s/2)
+1
++
+≤ exp √
+.
+1+ √
+1− √
+1≤
+≤
+cos(s/2)N (2N +1)
+2
+2
+2
+2
+2
+In particular, we have
+ 
+
+log PU Sp(2N ) θ1 > s = 2 + O (N s)−1 N 2 log cos(s/2),
+
+(18)
+
+uniformly for s ∈ (0, π).
+Proof. The Weyl integration formula on U Sp(2N ) gives
+Z
+
+PU Sp(2N ) θ1 > s =
+1θ1 >s dPU Sp(2N )
+U Sp(2N )
+2
+
+2N
+= N
+π N!
+
+Z
+
+Y
+
+(cos φk − cos φj )2
+
+(s,π]N 1≤j<k≤N
+
+Y
+
+(sin2 φj ) dφ1 · · · dφN .
+
+1≤j≤N
+
+We proceed along the lines of the proof of [13, proposition 6.10.1].19 Applying the change
+of variable φj = 2τj , the trig identities sin(2τj ) = 2 sin τj cos τj and cos(2τj ) = 2 cos2 τj − 1,
+and, last, the substitution wj = cos2 τj , we obtain PU Sp(2N ) θ1 > s = IN (cos2 (s/2)), where
+Z
+Y
+Y q
+C(N )
+IN (λ) :=
+(wk − wj )2
+wj (1 − wj ) dw1 · · · dwN ,
+N ! [0,λ)N 1≤j<k≤N
+1≤j≤N
+2
+
+and C(N ) := 22N +N /π N . The change of variable wj = λxj thus yields
+Z
+Y
+Y q
+N 2 +N/2 C(N )
+2
+(19)
+IN (λ) = λ
+(xk − xj )
+xj (1 − λxj ) dx1 · · · dxN .
+N ! [0,1)N 1≤j<k≤N
+1≤j≤N
+p
+p
+2
+Since 1 − λxj ≥ 1 − xj for 0 ≤ λ ≤ 1, we haveIN (λ) ≥ λN +N/2 IN (1). The lower bound
+follows on observing that IN (1) = PU Sp(2N ) θ1 > 0 = 1.
+By comparing the joint probability density functions of eigenphases
+in U Sp(2N ) and
+
+
+SO(2N ), one easily obtains the rough upper bound PU Sp(2N ) θ1 > s ≤ 4N PSO(2N ) θ1 > s .
+
+2
+Combined with the estimate PSO(2N ) θ1 > s ≤ cos(s/2)2N −N from [13, proposition 6.10.1]
+2
+and the lower bound IN (λ) ≥ λN +N/2 , this yields the asymptotic (18) in the range β ∈ (1, 2).
+19P
+
+G(N )
+
+
+θ1 > s is eigen(0, s, G(N )) in the notation of [13].
+24
+
+To derive the upper bound, and consequently the asymptotic, in the full range, we apply the
+first-order inequality
+s
+
+
+p
+p
+p
+(1 − λ)xj
+(1 − λ)xj
+1 − λxj = 1 − xj 1 +
+≤ 1 − xj 1 +
+1 − xj
+2(1 − xj )
+
+
+1−λ 1
+1 + λp
+1 − xj 1 +
+,
+=
+2
+1 + λ 1 − xj
+to get
+
+N Y
+N
+N
+Y
+p
+p
+1+λ
+1 − λxj ≤
+1 − xj ·
+2
+j=1
+j=1
+
+=
+
+1+λ
+2
+
+X
+J⊂{1,...,N }
+
+N Y
+N
+
+1−λ
+1+λ
+
+#J Y
+(1 − xj )−1
+
+
+
+#J
+
+
+
+X
+1
+p
+·
+1 − xj J⊂{1,...,N }
+j=1
+
+1−λ
+1+λ
+
+j∈J
+
+Y
+
+(1 − xj ),
+
+j∈{1,...,N }\J
+
+where J runs through all subsets of {1, . . . , N }. We insert this into (19) and permute the
+variables so that {1, . . . , N } \ J is mapped to {1, . . . , N − #J}. Collecting the terms with a
+common value of #J, we have
+
+N X
+m
+N  
+IN (λ)
+C(N ) 1 + λ
+N
+1−λ
+≤
+N!
+2
+m
+1+λ
+λN 2 +N/2
+m=0
+Z
+N r
+N −m
+Y
+Y
+xj Y
+2
+·
+(xk − xj )
+(1 − xj ) dx1 · · · dxN .
+1 − xj j=1
+[0,1)N 1≤j<k≤N
+j=1
+By Aomoto’s formula [20, (17.1.6)], the integral may be written in the form
+NY
+−m 1
++N −j
+2
+
+Γ(N + 12 ) Γ(1 + N + m)
+= KN
+,
+KN
+1 + 2N − j
+Γ(m + 12 ) Γ(1 + 2N )
+j=1
+where KN (a Selberg integral, see [20, (17.1.3)]) is independent of m. When m = 0, the
+integral is easily recognized as the one occurring in (19) with λ = 1, so that
+1 = IN (1) =
+
+C(N )KN Γ(N + 12 ) Γ(1 + N )
+.
+N!
+Γ( 12 ) Γ(1 + 2N )
+
+Solving for C(N )KN /N ! and substituting back into the above, we have
+
+N X
+m
+N  
+Γ( 12 ) Γ(1 + N + m)
+IN (λ)
+1+λ
+N
+1−λ
+≤
+2
+m
+1+λ
+λN 2 +N/2
+Γ(m + 12 ) Γ(1 + N )
+m=0
+
+N X
+
+m
+N 
+1+λ
+N +m
+1−λ
+=
+4
+.
+2
+2m
+1
++
+λ
+m=0
+The last sum is known as a Morgan-Voyce polynomial; it is closely related to the Chebyshev
+q
+2
+polynomials, and may be evaluated in closed form. Precisely, if t is such that cosh t = 1+λ
+,
+25
+
+then it follows from [31, (11b)] that the last line is
+!2N +1
+r
+1
+cosh((2N + 1)t)
+1−λ
+1
+=
+1+
++
+2N +1
+2
+2
+2
+cosh
+t
+
+r
+1−
+
+1−λ
+2
+
+!2N +1
+.
+
+The upper bound follows on putting λ = cos2 (s/2) and noting that
+
+
+2N +1
+2N +1
+
+
+sin(s/2)
+sin(s/2)
+1
+1
+Ns
+1+ √
+1− √
++
+≤ exp √
+.
+2
+2
+2
+2
+2
+Combining this with the lower bound and the inequality | log cos(s/2)| ≥ s2 /8, we get the
+estimate
+
+
+log PU Sp(2N ) (θ1 > s) = N (2N + 1) log cos(s/2) + O(N s) = 2 + O (N s)−1 N 2 log cos(s/2).
+
+Turning to the proof of Prop. 3.3, by definition of PU Sp(2N ) (max1≤m≤M θ1 (m) ≤ s), we
+have, for each s ∈ [0, π],
+
+M
+(20)
+PU Sp(2N ) max θ1 (m) ≤ s = PU Sp(2N ) θ1 ≤ s .
+1≤m≤M
+
++
+Suppose ε < 4 and s ∈ [s−
+ε,β (N ), sε,β (N )]. Then s → 0 as N → ∞ (since β < 2 by
+assumption). Further, by Lemma A.3 we have PU Sp(2N ) (θ1 > s) → 0 as N → ∞ (since β > 0
+by assumption). Using (20), and Lemma A.3 again, yields
+
+(21)
+log PU Sp(2N )
+
+
+
+max θ1 (m) ≤ s = M log 1 − PU Sp(2N ) (θ1 > s)
+1≤m≤M
+
+= −M PU Sp(2N ) θ1 > s (1 + o(1))
+
+= − exp (2N )β + [2 + O((N s)−1 )]N 2 log cos(s/2) + o(1)
+
+= − exp (2N )β − (1 + o(1))(N s/2)2 + o(1) ,
+
+β/2−1
+where we used that log cos(s/2) ∼ −s2 /8 in the last line. So if s = s−
+,
+ε,β (N ) = (4−ε)(2N )
+then
+
+
+log PU Sp(2N ) max θ1 (m) ≤ s = − exp (2N )β − (1 + o(1))(1 − ε/4)2 (2N )β + o(1)
+1≤m≤M
+(22)
+
+= − exp (1 + o(1))(2N )β (8ε − ε2 )/16 + o(1) → −∞,
+
+as N → ∞, provided that 0 < ε < 4, which ensures that (2N )β (8ε − ε2 )/16 → ∞. If ε ≥ 4
+then clearly the result still holds. Therefore, for each ε > 0, we have PU Sp(2N ) s−
+ε,β (N ) <
+
+max1≤m≤M θ1 (m) → 1, as claimed.
+β/2−1
+Similarly, if s = s+
+, then
+ε,β (N ) = (4 + ε)(2N )
+
+
+log PU Sp(2N ) max θ1 (m) ≤ s = − exp (2N )β − (1 + o(1))(1 + ε/4)2 (2N )β + o(1)
+1≤m≤M
+
+= − exp −(1 + o(1))(2N )β (8ε + ε2 )/16 + o(1) ,
+
+which tends to 0 with N . Therefore, PU Sp(2N ) max1≤m≤M θ1 (m) ≤ s+
+
+ε,β (N ) → 1.
+26
+
+A.5. Proof of Prop. 3.4. We make use of the main results in [7] and [16], formulated in
+Lemma A.4 here.
+Lemma A.4. For δ > 0 fixed, there exists a (large) positive constant s0 such that
+
+1
+log PU (N ) θ1 > 2s = N 2 log cos(s/2) − log (N sin(s/2)) + c0 + O (1/(N sin(s/2)))
+4
+
+N2
+1
+d
+log PU (N ) θ1 > 2s = −
+tan(s/2) − cot(s/2) + O(1/(N sin2 (s/2))),
+ds
+2
+8
+for all n > s0 and 2s0 /N ≤ s ≤ π − δ, where c0 is an explicit constant.
+ R
+Proof. Clearly, PU (N ) θ1 > 2s = U (N ) 1θ1 >2s dPU (N ) . By the rotational invariance of PU (N ) ,
+R
+this is the same as U (N ) 1θ1 ,...,θN 6∈[0,s]∪[2π−s,2π] dPU (N ) . Further, by [4, Lemma 2] and the Weyl
+R 2π−s i(j−k)θ
+integration formula on U (N ), this is the Toeplitz determinant detN ×N ( s
+e
+dθ/(2π)),
+for which the relevant asymptotics are supplied by formulas (8) and (12) in [7].
+
+Remark. Lemma 6.8.3 in [13] furnishes the following
+of the gap
+ interesting factorization
+
+probabilities: PU (2N +1) θ1 > 2s = PSO(2N +2) θ1 > s PU Sp(2N ) θ1 > s . So, as a direct consequence of Lemmas A.3 and A.4, we obtain log PSO(2N ) θ1 > s = (2 + o(1))N 2 log cos(s/2),
+provided that N s → ∞ as N → ∞. Note that the machinery of orthogonal polynomials
+supplies general, but involved, methods to derive precise asymptotics for determinant expressions of gap probabilities like those in (23); e.g. see [3] and [8]. In the case of U Sp(2N ),
+for example, the gap probability can be expressed as Toeplitz+Hankel determinant, or by
+appealing to (19), as a Hankel determinant.
+To prove the proposition, first note20
+
+N
+1 d
+PU (N ) (θ2 − θ1 > u) = −
+PU (N ) θ1 > 2s
+.
+2π
+2 ds
+s=u/2
+
+(23)
+Therefore,
+(24)
+
+π
+PU (N ) (θ2 − θ1 > u) = −
+N
+
+
+
+
+d
+log PU (N ) θ1 > 2s
+ds
+
+
+
+
+PU (N ) θ1 > u .
+s=u/2
+
+It follows from Lemma A.4 that as N → ∞, and uniformly for N ν1 −1 ≤ u ≤ 2π − δ
+(for any small constant ν1 > 0 we wish), that the term controlling the behavior in (24) is
+PU (N ) θ1 > u . Explicitly,
+PU (N ) (θ2 − θ1 > u) = exp((1 + o(1))N 2 log cos(u/4)) .
+If we further require u ≤ N −ν2 (for any small constant ν2 > 0 we wish), then u → 0 as
+N → ∞ and log cos(u/4) ∼ −u2 /32. Therefore,
+(25)
+
+PU (N ) ( 21 [θ2 − θ1 ] > u) = exp(−(1 + o(1))N 2 u2 /8)
+
+uniformly for N ν1 −1 ≤ 2u ≤ N −ν2 . Thus, by a similar calculation to (21), we obtain the
+result for max1≤j≤Mβ (N ) 21 [θ2 (m)−θ1 (m)]. If, in addition, one maximizes over all the spacings
+20See Lemma 3.1 in [2], but note it is missing a factor of 2π.
+
+27
+
+in each matrix, thus replacing 12 [θ2 (m) − θ1 (m)] by max1≤j≤N 21 [θj+1 (m) − θj (m)], then the
+same result holds. For clearly
+
+
+−
+1
+1
+[θ
+−θ
+]
+≤
+P
+u
+(N
+)
+<
+max
+max
+[θ
+(m)−θ
+(m)]
+.
+PU (N ) u−
+(N
+)
+<
+max
+2
+1
+j+1
+j
+U
+(N
+)
+ε,β
+ε,β
+2
+2
+1≤m≤Mβ (N ) 1≤j≤N
+
+1≤m≤Mβ (N )
+
+Hence, if the left-hand tends to 1 then the right-hand side does as well. In the opposite
+direction, we have
+
+N PU (N ) 21 [θ2 − θ1 ] > u+
+ε,β (N ) = o(1),
+as N → ∞, by virtue of (25). Thus,
+log PU (N )
+
+max
+
+
+max 21 [θj+1 (m) − θj (m)] ≤ u+
+(N
+)
+ε,β
+
+1≤m≤Mβ (N ) 1≤j≤N
+
+= M log PU (N ) max 12 [θj+1 (m) − θj (m)] ≤ u+
+ε,β (N )
+1≤j≤N
+
+(N
+)
+≥ M log 1 − N PU (N ) 12 [θ2 − θ1 ] > u+
+ε,β
+
++
+1
+= −M N PU (N ) 2 [θ2 − θ1 ] > uε,β (N ) (1 + o(1)),
+
+
+
+where we used the rotational invariance of PU (N ) in the third line. Hence maximizing over
+1 ≤ j ≤ N does not change our previous calculation more than does increasing the number of samples by a factor of N, which affects lower order terms only. Thus, as before,
+1
+−M N PU (N ) 21 [θ2 − θ1 ] > u+
+ε,β (N ) → 0, and so PU (N ) max1≤m≤Mβ (N ) max1≤j≤N 2 [θj+1 (m) −
+
+θj (m)] ≤ u+
+
+ε,β (N ) → 1.
+A.6. Proof of Prop. 4.2. By the growth estimate for the divisor m, there is a Hadamard
+product F (z) which is entire of finite order, even, satisfies ordz=γ F (z) = m(γ) for all γ ∈
+0
+S and does not vanish outside of S. Moreover, FF (z) has at most polynomial growth in
+0
+horizontal strips outside of S, so that FF (z)h(z) decays rapidly in such strips for any h as in
+the statement of the proposition. By the argument principle, for any c > 1/2 we have
+Z
+Z
+X
+F0
+F0
+1
+1
+m(γ)h(γ) =
+(z)h(z) dz −
+(z)h(z) dz
+2πi =(z)=−c F
+2πi =(z)=c F
+γ∈S
+Z
+F0
+1
+=
+(z)h(z) dz.
+πi =(z)=−c F
+Next, let a ∈ {0, 1} be such that (−1)a = sgn d, and define
+!
+∞
+X
+1
+c
+1
+n
+Λ(s) = |d|s/2 ΓR (s + a) exp
+n 2 −s
+and Φ(z) = Λ( + iz).
+log n
+2
+n=2
+By the estimate for cn , Φ is analytic for =(z) < −1, where it satisfies
+
+ X
+∞
+Φ0
+1
+Γ0R 1
+−i (z) = log |d| +
++ a + iz −
+cn n−iz .
+Φ
+2
+ΓR 2
+n=2
+28
+
+Thus, for any c > 1 we have
+Z
+1
+Φ0
+(z)h(z) dz
+πi =(z)=−c Φ
+
+
+Z
+∞
+X
+1 ∞ Γ0R 1
++ a + it h(t) dt − 2
+cn g(log n)
+= g(0) log |d| +
+π −∞ ΓR 2
+n=2
+Z
+X
+1
+F0
+=
+m(γ)h(γ) =
+(z)h(z) dz.
+πi =(z)=−c F
+γ∈S
+0
+
+0
+
+Let us now set f (z) = FF (z) − ΦΦ (z) for =(z) < −1. By the above, we see that
+R
+1
+f (z)h(z) dz = 0 for every c > 1 and every suitable choice of test function h.
+π =(z)=−c
+Fix one choice of h and consider the Fourier transform
+Z
+1
+u(x) =
+f (z)h(z)e−ixz dz.
+2π =(z)=−c
+Note that since f (z)h(z) is holomorphic for =(z) < −1 and of rapid decay in horizontal
+strips, u(x) does not depend on c. Further, for any fixed x ∈ R, h(z) cos(xz) is also a
+suitable test function, so we have
+Z
+1
+f (z)h(z) cos(xz) dz = 0,
+u(x) + u(−x) =
+π =(z)=−c
+i.e. u is an odd function of x. Combining this with the trivial estimate u(x) c,h e−cx , we
+get u(x) c,h e−c|x| .
+Using this estimate for some c > 1 together with the Fourier inversion formula
+Z ∞
+f (z)h(z) =
+u(x)eixz dx,
+−∞
+
+we see that f (z)h(z) continues to an entire function and is odd. Since h is arbitrary, it follows
+from a suitable approximation argument that f continues to an odd entire function with at
+most polynomial growth in horizontal strips. Recalling the definition of f and integrating,
+we see that Φ(z) continues to an entire function of finite order satisfying Φ(z) = Φ(−z) for
+some  ∈ {±1}, ordz=γ Φ(z) = m(γ) for every γ ∈ S, and Φ(z) 6= 0 for z 6∈ S.
+The remaining statements now essentially follow from the converse theorem for degree 1
+elements of the Selberg class [12], except that the proof
+P given there
+assumes that the Dirichlet
+P∞
+1
+∞
+cn
+−s
+2
+converges absolutely for
+series L(s) = n=1 an n−s defined by L(s) = exp
+n=2 log n n
+<(s) > 1, which we only know to be true for <(s) > 32 . That assumption is not necessary,
+however, and for the sake of completeness we sketch a simplified proof following the method
+of [29].
+First note that the symmetry of Φ is equivalent to the functional equation Λ(s) = Λ(1−s).
+Next, for any α, y > 0 we have
+Z
+∞
+X
+1
+−2πny
+L(s)ΓC (s)(y − iα)−s ds
+2
+an e(nα)e
+=
+2πi
+<(s)=2
+n=1
+Z
+p
+−s
+1
+=
+Λ(s)ΓR (s + 1 − a) |d|(y − iα)
+ds,
+2πi <(s)=2
+29
+
+where for any z with positive real part we define z −s = exp(−s log z) using the principal
+branch of the logarithm.
+By the Phragmén–Lindelöf theorem, the integrand decays rapidly in vertical strips, so we
+may shift the contour to <(s) = −3/4 and apply the functional equation to obtain
+2
+
+∞
+X
+
+an e(nα)e−2πny − (1 − (−1)a )Λ(0)
+
+n=1
+
+Z
+p
+−s
+1
+Λ(s)ΓR (s + 1 − a) |d|(y − iα)
+ds
+=
+2πi <(s)=−3/4
+Z
+s−1
+p
+
+=
+ds.
+Λ(s)ΓR (2 − a − s) |d|(y − iα)
+2πi <(s)=7/4
+Expanding Λ(s) as |d|s/2 ΓR (s + a)
+csc(πs/2), we get
+2
+
+∞
+X
+
+P∞
+
+n=1 an n
+
+−s
+
+and using the identity ΓR (s)ΓR (2 − s) =
+
+an e(nα)e−2πny − (1 − (−1)a )Λ(0)
+
+n=1
+
+
+
+Z
+∞
+p X
+s−1
+an
+π(s + a) 
+−s
+=  |d|
+n csc
+|d|(y − iα)
+ds
+2πi <(s)=7/4
+2
+n=1
+a
+
+|d|(α+iy)
+∞
+p X an
+n
+2
+= ia+1 |d|
+.
+n
+π
+n |d|(α+iy) −
+n=1
+|d|(α+iy)
+
+n
+
+If α|d| is not an integer then the last line is Oα (1) uniformly for y ∈ (0, 1), while if α|d| = n
+a
+is an integer then we get i√an +Oα (1). Since the left-hand side is periodic in α, we conclude
+π
+
+|d|y
+
+that d is an integer and an = an+|d| , i.e. the coefficients an are periodic. Moreover, since Λ(s)
+does not vanish for <(s) > 1, it follows from [28, Thm. 4] that there is a positive integer
+q dividing d and
+Dirichlet character χ (mod q) such that L(s) = D(s)L(s, χ),
+P a primitive
+−s
+b
+n
+for
+certain coefficients bn , with b1 = 1.
+where D(s) =
+|d| n
+n q
+s/2
+
+Let Λ(s, χ) = q
+(26)
+
+ΓR (s + a0 )L(s, χ) be the associated complete L-function. Then we have
+Λ(s)
+=
+Λ(s, χ)
+
+
+
+|d|
+q
+
+s/2
+
+ΓR (s + a)
+D(s).
+ΓR (s + a0 )
+
+Moreover, it is easy to see that D(s)Λ(s, χ) does not vanish in some left half plane. Thus,
+to avoid concluding from (26) that Λ(s) has poles at negative integers, it must be the case
+that and a0 = a, so that χ(−1) = sgn d. From this and the functional equations for Λ(s)
+Λ(s,χ) D(s)
+and Λ(s, χ), it follows that Λ(s,χ)
+is an entire function. Note that for large T > 0,
+D(1−s)
+D(s)/D(1 − s) has O(T ) zeros and poles with imaginary part in [−T, T ]. On the other hand,
+work of Fujii [9] shows that if χ1 and χ2 are distinct, primitive Dirichlet characters then
+Λ(s, χ1 )/Λ(s, χ2 ) has  T log T zeros and poles in that region. Thus, we must have χ = χ,
+i.e. χ is quadratic and q sgn d is a fundamental discriminant.
+30
+
+Therefore, by (26) and the functional equations for Λ(s) and Λ(s, χ), D(s) satisfies the
+functional equation
+  12 −s
+|d|
+(27)
+D(s) = 
+D(1 − s).
+q
+Next, from the formula for L(s), we have
+D0
+(s) =
+D
+
+
+
+X
+n
+
+n≥2
+|d|
+q
+
+
+1
+Λ(n)χ(n)
+√
+− cn n 2 −s ,
+n
+
+∞
+
+|d| ∞
+means that n is composed only of primes dividing |d|/q.
+q
+0
+√
+Now, from (27) and the estimate Λ(n)χ(n)
+− cn = O(n−δ ) it follows that DD (s) is entire, and
+n
+
+where the notation n
+
+thus D(s) = 1 identically. Finally, invoking (27) once more, we have |d| = q and  = 1.
+
+
+
+References
+1. M. Ajtai, The shortest vector problem in L2 is N P -hard for randomized reductions (extended abstract),
+Proceeding STOC ’98 Proceedings of the thirtieth annual ACM symposium on Theory of computing,
+1998.
+2. Gérard Ben Arous and Paul Bourgade, Extreme gaps between eigenvalues of random matrices,
+arXiv:1010.1294, 2011.
+3. Estelle L. Basor and Torsten Ehrhardt, Asymptotic formulas for determinants of a sum of finite Toeplitz
+and Hankel matrices, Math. Nachr. 228 (2001), 5–45. MR 1845906 (2002d:47041)
+4. Brian Conrey, Notes on eigenvalue distributions for the classical compact groups, Recent perspectives in
+random matrix theory and number theory, London Math. Soc. Lecture Note Ser., vol. 322, Cambridge
+Univ. Press, Cambridge, 2005, pp. 111–145. MR 2166460 (2006g:11177)
+5. Edgar Costa and David Harvey, Faster deterministic integer factorization, arXiv:1201.2116, 2011.
+6. Harold Davenport, Multiplicative number theory, third ed., Graduate Texts in Mathematics, vol. 74,
+Springer-Verlag, New York, 2000, Revised and with a preface by Hugh L. Montgomery. MR 1790423
+(2001f:11001)
+7. P. Deift, A. Its, I. Krasovsky, and X. Zhou, The Widom-Dyson constant for the gap probability in random
+matrix theory, J. Comput. Appl. Math. 202 (2007), no. 1, 26–47. MR 2301810 (2008e:82027)
+8. Percy Deift, Alexander Its, and Igor Krasovsky, Asymptotics of Toeplitz, Hankel, and Toeplitz+Hankel
+determinants with Fisher-Hartwig singularities, Ann. of Math. (2) 174 (2011), no. 2, 1243–1299.
+MR 2831118 (2012h:47063)
+9. Akio Fujii, On the zeros of Dirichlet L-functions. V, Acta Arith. 28 (1975/76), no. 4, 395–403.
+MR 411182 (81g:10057a)
+10. GMP-ECM, http://ecm.gforge.inria.fr/.
+11. GNU Linear Programming Kit, http://www.gnu.org/software/glpk/.
+12. Jerzy Kaczorowski and Alberto Perelli, On the structure of the Selberg class. I. 0 ≤ d ≤ 1, Acta Math.
+182 (1999), no. 2, 207–241. MR 1710182 (2000h:11097)
+13. Nicholas M. Katz and Peter Sarnak, Random matrices, Frobenius eigenvalues, and monodromy, American Mathematical Society Colloquium Publications, vol. 45, American Mathematical Society, Providence,
+RI, 1999. MR 1659828 (2000b:11070)
+, Zeroes of zeta functions and symmetry, Bull. Amer. Math. Soc. (N.S.) 36 (1999), no. 1, 1–26.
+14.
+MR 1640151 (2000f:11114)
+15. I. Krasikov, Uniform bounds for Bessel functions, J. Appl. Anal. 12 (2006), no. 1, 83–91. MR 2243854
+(2008c:33002)
+31
+
+16. I. V. Krasovsky, Gap probability in the spectrum of random matrices and asymptotics of polynomials
+orthogonal on an arc of the unit circle, Int. Math. Res. Not. (2004), no. 25, 1249–1272. MR 2047176
+(2005d:60086)
+17. Youness Lamzouri, Xiannan Li, and Kannan Soundararajan, The least quadratic non-residue, values of
+L-functions at s = 1, and related problems, arXiv:1309.3595 (2013).
+18. A. K. Lenstra, H. W. Lenstra, Jr., and L. Lovász, Factoring polynomials with rational coefficients, Math.
+Ann. 261 (1982), no. 4, 515–534. MR 682664 (84a:12002)
+19. Robert Martin, Bandlimited functions, curved manifolds, and self-adjoint extensions of symmetric
+operators, ProQuest LLC, Ann Arbor, MI, 2008, Thesis (Ph.D.)–University of Waterloo (Canada).
+MR 2712567
+20. Madan Lal Mehta, Random matrices, third ed., Pure and Applied Mathematics (Amsterdam), vol. 142,
+Elsevier/Academic Press, Amsterdam, 2004. MR 2129906 (2006b:82001)
+21. Hugh L. Montgomery and Andrew M. Odlyzko, Large deviations of sums of independent random variables, Acta Arith. 49 (1988), no. 4, 427–434. MR 937937 (89m:11075)
+22. A. M. Odlyzko, On the distribution of spacings between zeros of the zeta function, Math. Comp. 48
+(1987), no. 177, 273–308. MR 866115 (88d:11082)
+23. A. M. Odlyzko and H. J. J. te Riele, Disproof of the Mertens conjecture, J. Reine Angew. Math. 357
+(1985), 138–160. MR 783538 (86m:11070)
+24. Sami Omar, Non-vanishing of Dirichlet L-functions at the central point, Algorithmic number theory,
+Lecture Notes in Comput. Sci., vol. 5011, Springer, Berlin, 2008, pp. 443–453. MR 2467864 (2009k:11133)
+25. J. M. Pollard, Theorems on factorization and primality testing, Proc. Cambridge Philos. Soc. 76 (1974),
+521–528. MR 0354514 (50 #6992)
+26. Michael Rubinstein, Low-lying zeros of L-functions and random matrix theory, Duke Math. J. 109
+(2001), no. 1, 147–181. MR 1844208 (2002f:11114)
+27. Michael Rubinstein and Peter Sarnak, Chebyshev’s bias, Experiment. Math. 3 (1994), no. 3, 173–197.
+MR 1329368 (96d:11099)
+28. Eric Saias and Andreas Weingartner, Zeros of Dirichlet series with periodic coefficients, Acta Arith. 140
+(2009), no. 4, 335–344. MR 2570109 (2010m:11107)
+29. K. Soundararajan, Degree 1 elements of the Selberg class, Expo. Math. 23 (2005), no. 1, 65–70.
+MR 2133337 (2006c:11104)
+30. Volker Strassen, Einige Resultate über Berechnungskomplexität, Jber. Deutsch. Math.-Verein. 78
+(1976/77), no. 1, 1–8. MR 0438807 (55 #11713)
+31. M. N. S. Swamy, Further properties of Morgan-Voyce polynomials, Fibonacci Quart. 6 (1968), no. 2,
+167–175. MR 0237470 (38 #5752)
+A. R. B. and J. P. K.: School of Mathematics, University of Bristol, University Walk,
+Bristol, BS8 1TW, United Kingdom
+G. A. H.: Department of Mathematics, The Ohio State University, 231 West 18th Ave,
+Columbus, OH 43210, United States
+
+32
+
+

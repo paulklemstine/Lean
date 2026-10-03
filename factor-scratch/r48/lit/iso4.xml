@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/AI3QnJcR69Jt1c9wW2/b3+88sD0</id>
+  <title>arXiv Query: search_query=au:"Elkies" AND abs:"isogeny"&amp;id_list=&amp;start=0&amp;max_results=15</title>
+  <updated>2026-10-03T18:24:29Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Elkies%22+AND+abs:%22isogeny%22&amp;start=0&amp;max_results=15&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>15</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/math/0409020v2</id>
+    <title>Shimura curves for level-3 subgroups of the (2,3,7) triangle group, and some other examples</title>
+    <updated>2006-12-25T02:07:19Z</updated>
+    <link href="https://arxiv.org/abs/math/0409020v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0409020v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We determine the Shimura modular curve X_0(3) and the Jacobian of the Shimura modular curve X_1(3) associated with the congruence subgroups Gamma_0(3), Gamma_1(3) of the (2,3,7) triangle group. This group is known to be arithmetic and associated with a quaternion algebra A/K ramified at two of the three real places of K=Q(\cos 2π/7) and at no finite primes of K. Since the rational prime 3 is inert in K, the covering X_0(3)/X(1) has degree 28 and Galois group PSL_2(F_27). We determine X_0(3) by computing this cover. We find that X_0(3) is an elliptic curve of conductor 147=3*7^2 over Q, as is the Jacobian J_1(3) of X_1(3); that these curves are related by an isogeny of degree (27-1)/2=13; and that the kernel of the 13-isogeny from J_1(3) to X_0(3) consists of K-rational points. We explain these properties, use X_0(3) to locate some complex multiplication (CM) points on X(1), and describe analogous behavior of a few Shimura curves associated with quaternion algebras over other cyclic cubic fields.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-09-01T20:02:45Z</published>
+    <arxiv:comment>15 pages. This is the published version, considerably improved by the suggestions of the referees, one of whom identified himself as John Voight. Several sentences and formulas that were removed to bring the paper under the 15-page limit for contributed ANTS papers can still be seen as %-commented lines in the TeX source</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Lecture Notes in Computer Science 4076 (proceedings of ANTS-7, Berlin 2006; F.Hess, S.Pauli, and M.Pohst, ed.), 302--316</arxiv:journal_ref>
+    <author>
+      <name>Noam D. Elkies</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0403116v1</id>
+    <title>Elliptic Curves x^3 + y^3 = k of High Rank</title>
+    <updated>2004-03-06T16:56:49Z</updated>
+    <link href="https://arxiv.org/abs/math/0403116v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0403116v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We use rational parametrizations of certain cubic surfaces and an explicit formula for descent via 3-isogeny to construct the first examples of elliptic curves E_k: x^3 + y^3 = k of ranks 8, 9, 10, and 11 over Q. As a corollary we produce examples of elliptic curves xy(x+y)=k over Q with a rational 3-torsion point and rank as high as 11. We also discuss the problem of finding the minimal curve E_k of a given rank, in the sense of both |k| and the conductor of E_k, and we give some new results in this direction. We include descriptions of the relevant algorithms and heuristics, as well as numerical data.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-03-06T16:56:49Z</published>
+    <arxiv:comment>10 pages; to appear in the Proceedings of ANTS-VI (Algorithmic Number Theory Symposium, 2004)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Noam D. Elkies</name>
+    </author>
+    <author>
+      <name>Nicholas F. Rogers</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.07857v4</id>
+    <title>The constructive inverse Galois problem via Hilbert modular forms: realizing the transitive group 17T7</title>
+    <updated>2026-06-01T01:49:13Z</updated>
+    <link href="https://arxiv.org/abs/2411.07857v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.07857v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show how Hilbert modular forms can be used in the constructive inverse Galois problem over the rationals. In particular, we prove that the transitive permutation group 17T7, isomorphic to a split extension of C_2 by PSL_2(FF_16), is a Galois group over the rationals and exhibit an explicit degree 17 polynomial with this Galois group. The group arises from the field of definition of the 2-torsion on an abelian fourfold with real multiplication defined over a real quadratic field; we find such a fourfold attached to a Hilbert modular form. Building upon work of Dembele, we describe a method for reconstructing a period matrix attached to a Hilbert modular form, and we use it to construct the 2-isogeny polynomial. We also rigorously identify the relevant fourfold as the Jacobian of a genus 4 Shimura curve and compute explicit equations for this curve.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-12T15:15:11Z</published>
+    <arxiv:comment>v3, 29 pages, many thanks for referee feedback</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Raymond van Bommel</name>
+    </author>
+    <author>
+      <name>Edgar Costa</name>
+    </author>
+    <author>
+      <name>Noam D. Elkies</name>
+    </author>
+    <author>
+      <name>Timo Keller</name>
+    </author>
+    <author>
+      <name>Sam Schiavone</name>
+    </author>
+    <author>
+      <name>John Voight</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.05759v1</id>
+    <title>The average size of the 3-isogeny Selmer groups of elliptic curves $y^2 = x^3 + k$</title>
+    <updated>2016-10-18T19:48:33Z</updated>
+    <link href="https://arxiv.org/abs/1610.05759v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.05759v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The elliptic curve $E_k \colon y^2 = x^3 + k$ admits a natural 3-isogeny $φ_k \colon E_k \to E_{-27k}$. We compute the average size of the $φ_k$-Selmer group as $k$ varies over the integers. Unlike previous results of Bhargava and Shankar on $n$-Selmer groups of elliptic curves, we show that this average can be very sensitive to congruence conditions on $k$; this sensitivity can be precisely controlled by the Tamagawa numbers of $E_k$ and $E_{-27k}$. As consequences, we prove that the average rank of the curves $E_k$, $k\in\mathbb Z$, is less than 1.21 and over $23\%$ (resp. $41\%$) of the curves in this family have rank 0 (resp. 3-Selmer rank 1).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-18T19:48:33Z</published>
+    <arxiv:comment>25 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Manjul Bhargava</name>
+    </author>
+    <author>
+      <name>Noam Elkies</name>
+    </author>
+    <author>
+      <name>Ari Shnidman</name>
+    </author>
+    <arxiv:doi>10.1112/jlms.12271</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/jlms.12271" title="doi"/>
+  </entry>
+</feed>

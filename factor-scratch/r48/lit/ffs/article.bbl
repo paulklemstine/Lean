@@ -1,0 +1,169 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\def\noopsort#1{}\ifx\bibfrench\undefined\def\biling#1#2{#1}\else\def\biling#1#2{#2}\fi\def\Inpreparation{\biling{In
+  preparation}{en
+  pr{\'e}paration}}\def\Preprint{\biling{Preprint}{pr{\'e}version}}\def\Draft{\biling{Draft}{Manuscrit}}\def\Toappear{\biling{To
+  appear}{\`A para\^\i tre}}\def\Inpress{\biling{In press}{Sous
+  presse}}\def\Seealso{\biling{See also}{Voir
+  {\'e}galement}}\def\Editor{\biling{Ed.}{R{\'e}d.}}
+\begin{thebibliography}{HSW{\etalchar{+}}10}
+
+\bibitem[Adl94]{Ad94}
+L.~Adleman.
+\newblock The function field sieve.
+\newblock In {\em Algorithmic number theory-ANTS I}, volume 877 of {\em Lecture
+  Notes in Computer Science}, pages 108--121. Springer, 1994.
+
+\bibitem[AH99]{AdHu99}
+L.M. Adleman and M.D.A. Huang.
+\newblock Function field sieve method for discrete logarithms over finite
+  fields.
+\newblock {\em Information and Computation}, 151(1):5--16, 1999.
+
+\bibitem[Apo90]{Ap90}
+T.M. Apostol.
+\newblock {\em Modular functions and Dirichlet series in number theory},
+  volume~41 of {\em Graduate texts in mathematics}.
+\newblock Springer-Verlag, 1990.
+
+\bibitem[Bai11]{Bai11}
+S.~Bai.
+\newblock {\em Polynomial selection for the number field sieve}.
+\newblock PhD thesis, Australian National University, 2011.
+
+\bibitem[BBD{\etalchar{+}}12]{BBDGJTVZ12}
+R.~Barbulescu, C.~Bouvier, J.~Detrey, P.~Gaudry, H.~Jeljeli, E.~Thom\'e,
+  M.~Videau, and P.~Zimmermann.
+\newblock The relationship between some guy and cryptography, 2012.
+\newblock Rump session of ECC, \url{http://ecc.2012.rump.cr.yp.to/}.
+
+\bibitem[BCP97]{MR1484478}
+W.~Bosma, J.~Cannon, and C.~Playoust.
+\newblock The {M}agma algebra system. {I}. {T}he user language.
+\newblock {\em Journal of Symbolic Computation}, 24(3-4):235--265, 1997.
+\newblock Computational algebra and number theory (London, 1993).
+
+\bibitem[BFG{\etalchar{+}}]{cadonfs}
+S.~Bai, A.~Filbois, P.~Gaudry, A.~Kruppa, F.~Morain, E~Thomé, P.~Zimmermann,
+  and alter.
+\newblock Crible algébrique: Distribution, optimisation - number field sieve.
+\newblock \url{http://cado-nfs.gforge.inria.fr/}.
+
+\bibitem[Cop84]{Cop84}
+D.~Coppersmith.
+\newblock Fast evaluation of logarithms in fields of characteristic two.
+\newblock {\em Information Theory, IEEE Transactions on}, 30(4):587--594, 1984.
+
+\bibitem[DGV13]{DeGaVi12}
+J.~Detrey, P.~Gaudry, and M.~Videau.
+\newblock Relation collection for the function field sieve.
+\newblock In {\em IEEE Symposium on Computer Arithmetic (ARITH 21)}, 2013.
+
+\bibitem[Ful69]{Ful69}
+W.~Fulton.
+\newblock {\em Algebraic curves. An introduction to algebraic geometry. Notes
+  written with the collaboration of Richard Weiss}.
+\newblock Benjamin-Cummings Publishing Co.,Subs. of Addison Wesley Longman,US,
+  1969.
+
+\bibitem[GGMZ13]{GGMZ13}
+F.~Göloglu, R.~Granger, G.~McGuire, and J.~Zumbrägel.
+\newblock On the function field sieve and the impact of higher splitting
+  probabilities: Application to discrete logarithms in $f_{2^{1971}}$.
+\newblock Cryptology ePrint Archive, Report 2013/074, 2013.
+\newblock \url{http://eprint.iacr.org/}.
+
+\bibitem[HSST12]{Japanese2012}
+T.~Hayashi, T.~Shimoyama, N.~Shinohara, and T.~Takagi.
+\newblock Breaking pairing-based cryptosystems using $\eta_t$ pairing over
+  {{GF}}($3^{97}$).
+\newblock In {\em Advances in Cryptology – ASIACRYPT 2012}, volume 7658 of
+  {\em Lecture Notes in Computer Science}, pages 43--60, 2012.
+
+\bibitem[HSW{\etalchar{+}}10]{Japanese2010}
+T.~Hayashi, N.~Shinohara, L.~Wang, S.~Matsuo, M.~Shirase, and T.~Takagi.
+\newblock Solving a 676-bit discrete logarithm problem in {{GF}}($3^{6n}$).
+\newblock In {\em Public Key Cryptography--PKC 2010}, pages 351--367. Springer,
+  2010.
+
+\bibitem[JL02]{JoLe02}
+A.~Joux and R.~Lercier.
+\newblock {The function field sieve is quite special}.
+\newblock In {\em Algorithmic Number Theory-ANTS V}, volume 2369 of {\em
+  Lecture Notes in Computer Science}, pages 431--445. Springer, 2002.
+
+\bibitem[JL03]{JoLe03}
+A.~Joux and R.~Lercier.
+\newblock Improvements to the general number field for discrete logarithms in
+  prime fields.
+\newblock {\em Mathematics of Computation}, 72(242):953--967, 2003.
+
+\bibitem[JL06]{JoLe06}
+A.~Joux and R.~Lercier.
+\newblock {The function field sieve in the medium prime case}.
+\newblock In {\em Advances in Cryptology-EUROCRYPT 2006}, volume 4005 of {\em
+  Lecture Notes in Computer Science}, pages 254--270. Springer, 2006.
+
+\bibitem[JL07]{JoLe07}
+A.~Joux and R.~Lercier.
+\newblock Algorithmes pour r{\'e}soudre le probl{\`e}me du logarithme discret
+  dans les corps finis.
+\newblock {\em Nouvelles M{\'e}thodes Math{\'e}matiques en Cryptographie,
+  volume Fascicule Journ{\'e}es Annuelles}, page~23, 2007.
+
+\bibitem[Jou12]{Jo12}
+A.~Joux.
+\newblock Faster index calculus for the medium prime case. application to
+  1175-bit and 1425-bit finite fields.
+\newblock Cryptology ePrint Archive, Report 2012/720, 2012.
+\newblock \url{http://eprint.iacr.org/}.
+
+\bibitem[Jou13]{Jo13}
+A.~Joux.
+\newblock A new index calculus algorithm with complexity {{L}}$(1/4+o(1))$ in
+  very small characteristic.
+\newblock Cryptology ePrint Archive, Report 2013/095, 2013.
+\newblock \url{http://eprint.iacr.org/}.
+
+\bibitem[Lor96]{Lorenzini}
+D.~Lorenzini.
+\newblock {\em An invitation to arithmetic geometry}, volume~9 of {\em Graduate
+  Studies in Mathematics}.
+\newblock The American Mathematical Society, 1996.
+
+\bibitem[Mat99]{Mat99}
+R.~Matsumoto.
+\newblock Using {{C}}ab curves in the function field sieve.
+\newblock {\em IEICE Transactions on Fundamentals of Electronics,
+  Communications and Computer Sciences}, 82(3):551--552, 1999.
+
+\bibitem[Mon06]{Montgomery}
+P.L. Montgomery.
+\newblock Searching for higher-degree polynomials for the general number field
+  sieve, 2006.
+\newblock \url{http://www.ipam.ucla.edu/publications/scws1/scws1_6223.ppt}.
+
+\bibitem[Mur99]{Mur99}
+B.A. Murphy.
+\newblock {\em Polynomial selection for the number field sieve integer
+  factorisation algorithm}.
+\newblock PhD thesis, Australian National University, 1999.
+
+\bibitem[Neu99]{Neu99}
+J.~Neukirch.
+\newblock {\em Algebraic number theory}, volume 322 of {\em A series of
+  Comprehensive Studies in Mathematics}.
+\newblock Springer Berlin, 1999.
+\newblock Translated by Schappacher, N.
+
+\bibitem[PZ11]{PrZi11}
+T.~Prest and P.~Zimmermann.
+\newblock Non-linear polynomial selection for the number field sieve.
+\newblock {\em Journal of Symbolic Computation}, 47(4):401--409, 2011.
+
+\bibitem[Tho03]{Tho03}
+E.~Thomé.
+\newblock {\em Algorithmes de calcul des logarithmes discrets dans les corps
+  finis}.
+\newblock PhD thesis, École polytechnique, Palaiseau, France, 2003.
+
+\end{thebibliography}

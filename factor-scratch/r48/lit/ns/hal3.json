@@ -1,0 +1,16 @@
+{
+  "response":{
+    "numFound":1,
+    "start":0,
+    "maxScore":36.56946,
+    "numFoundExact":true,
+    "docs":[{
+      "label_s":"Aude Le Gluher, Pierre-Jean Spaenlehauer, Emmanuel Thomé. Refined Analysis of the Asymptotic Complexity of the Number Field Sieve. Mathematical Cryptology, 2021, 1 (1), pp.71-88. &#x27E8;10.48550/arXiv.2007.02730&#x27E9;. &#x27E8;hal-02934273&#x27E9;",
+      "title_s":["Refined Analysis of the Asymptotic Complexity of the Number Field Sieve"],
+      "authFullName_s":["Aude Le Gluher","Pierre-Jean Spaenlehauer","Emmanuel Thomé"],
+      "uri_s":"https://inria.hal.science/hal-02934273v1",
+      "doiId_s":"10.48550/arXiv.2007.02730",
+      "producedDate_s":"2021"
+    }]
+  }
+}

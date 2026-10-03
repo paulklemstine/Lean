@@ -1,0 +1,1442 @@
+Finding ECM-friendly curves through a study of Galois
+properties
+Razvan Barbulescu, Joppe W. Bos, Cyril Bouvier, Thorsten Kleinjung, Peter L.
+Montgomery
+
+To cite this version:
+Razvan Barbulescu, Joppe W. Bos, Cyril Bouvier, Thorsten Kleinjung, Peter L. Montgomery. Finding ECMfriendly curves through a study of Galois properties. Algorithmic Number Theory Symposium, University of
+California, Jul 2012, San Diego, United States. ⟨hal-00671948v1⟩
+
+HAL Id: hal-00671948
+https://inria.hal.science/hal-00671948v1
+Submitted on 20 Feb 2012 (v1), last revised 3 Sep 2012 (v2)
+
+HAL is a multi-disciplinary open access archive
+for the deposit and dissemination of scientific research documents, whether they are published or not.
+The documents may come from teaching and research
+institutions in France or abroad, or from public or private research centers.
+
+L’archive ouverte pluridisciplinaire HAL, est destinée au dépôt et à la diffusion de documents scientifiques de niveau recherche, publiés ou non, émanant
+des établissements d’enseignement et de recherche
+français ou étrangers, des laboratoires publics ou
+privés.
+
+HAL Authorization
+
+FINDING ECM-FRIENDLY CURVES
+THROUGH A STUDY OF GALOIS PROPERTIES
+RAZVAN BARBULESCU, JOPPE W. BOS, CYRIL BOUVIER, THORSTEN KLEINJUNG,
+AND PETER L. MONTGOMERY
+Abstract. In this paper we prove some divisibility properties of the cardinality of elliptic curves modulo primes. These proofs explain the good behavior
+of certain parameters when using Montgomery or Edwards curves in the setting of the elliptic curve method (ECM) for integer factorization. The ideas
+of the proofs help us to find new families of elliptic curves with good division
+properties which increase the success probability of ECM.
+
+1. Introduction
+The elliptic curve method (ECM) for integer factorization [16] is the asymptotically fastest method for finding relatively small factors p of large integers N . In
+practice, ECM is used, on the one hand, to factor large integers. For instance, the
+current ECM-record is a 241-bit factor of 21181 − 1 [9]. On the other hand, ECM
+is used to factor many small (100 to 200 bits) integers as part of the number field
+sieve [19, 15, 2], the most efficient general purpose integer factorization method.
+Traditionally, the elliptic curve arithmetic used in ECM is implemented using
+Montgomery curves [17] (e.g., in the widely-used GMP-ECM software [25]). Generalizing the work of Euler and Gauss, Edwards introduced a new normal form
+for elliptic curves [12] which results in a fast realization of the elliptic curve group
+operation in practice. These Edwards curves have been generalized by Bernstein
+and Lange [7] for usage in cryptography. Bernstein et al. explored the possibility
+to use these curves in the ECM setting [6]. After Hisil et al. [13] published a coordinate system which results in the fastest known realization of curve arithmetic, a
+follow-up paper by Bernstein et al. discusses the usage of the so-called “a = −1”
+twisted Edwards curves [5] in ECM.
+It is common to construct or search for curves which have favorable properties.
+The success of ECM depends on the smoothness of the cardinality of the curve considered modulo the unknown prime divisor p of N . This usually means constructing
+curves with large torsion group over Q or finding curves such that the order of the
+elliptic curve, when considered modulo a family of primes, is always divisible by an
+additional factor. Examples are the Suyama construction [23], the curves proposed
+by Atkin and Morain [1], a translation of these techniques to Edwards curves [6, 5],
+and a family of curves suitable for Cunningham numbers [10].
+
+Key words and phrases. Elliptic Curve Method (ECM), Edwards curves, Montgomery curves,
+torsion properties, Galois groups.
+This work was supported by the Swiss National Science Foundation under grant number
+200020-132160 and by a PHC Germaine de Staël grant.
+1
+
+2
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+In this paper we study and prove divisibility properties of the cardinality of
+elliptic curves over prime fields. We do this by studying properties of Galois groups
+of torsion points using Chebotarëv’s theorem [18]. Furthermore, we investigate
+some elliptic curve parameters for which ECM finds exceptionally many primes in
+practice, but which do not fit in any of the known cases of good torsion properties.
+We prove this behavior and provide parametrizations for families of elliptic curves
+with these properties.
+2. Galois properties of torsion points of elliptic curves
+In this section we give a systematic way to compute the probability that the order
+of a given elliptic curve reduced by an arbitrary prime is divisible by a certain prime
+power.
+2.1. Torsion Properties of Elliptic Curves.
+Definition 2.1. Let K be a finite Galois extension of Q, p a prime and p a prime
+ideal above p with residue field kp . The decomposition group Dec(p) of p is the
+subgroup of Gal(K) which stabilizes p. Call α(p) the canonical morphism from
+Dec(p) to Gal(kp /Fp ) and let φp be the Frobenius automorphism on the field kp .
+S
+We define Frobenius(p) = p|p (α(p) )−1 (φp ).
+
+In order to state Chebotarëv’s theorem we say that a set S of
+T primes admits a
+Π(N ))
+exists and
+natural density equal to δ and write P(S) = δ if limN →∞ #(S#Π(N
+)
+equals δ, where Π(N ) is the set of primes up to N . If event(p) is a property which
+can be defined for all primes except a finite set (thus of null density), when we note
+P(event(p)) we tacitly exclude the primes where event(p) cannot be defined.
+
+Theorem 2.2 (Chebotarëv, [18]). Let K be a finite Galois extension of Q. Let
+H ⊂ Gal(K) be a conjugacy class. Then
+#H
+P(Frobenius(p) = H) =
+.
+# Gal(K)
+Before applying Chebotarëv’s theorem to the case of elliptic curves, we introduce
+some notation. For every elliptic curve E over a field F and all m ∈ N, m ≥ 2,
+we consider the field F (E[m]) which is the smallest extension of F containing all
+the m-torsion of E. The next result is classical, but we present its proof for the
+intuition it brings.
+Proposition 2.3. For every integer m ≥ 2 and any elliptic curve E over some
+field F , the following holds:
+(1) F (E[m])/F is a Galois extension;
+(2) there is an injective morphism ιm : Gal(F (E[m])/F ) ֒→ Aut(E(F )[m]).
+Proof. (1) Since the addition law of E can be expressed by rational functions over
+F , there exist polynomials fm , gm ∈ F [X, Y ] such that the coordinates of the points
+in E(F )[m] are the solutions of the system (fm = 0, gm = 0). Therefore F (E[m])
+is the splitting field of ResX (fm , gm ) and ResY (fm , gm ) and in particular is Galois.
+(2) For each σ ∈ Gal(F (E[m])/F ) we call ιm (σ) the application which sends (x, y) ∈
+E(F )[m] into (σ(x), σ(y)). Thanks to the discussion above, ιm (σ) sends points of
+E(F )[m] in E(F )[m]. Since the addition law can be expressed by rational functions
+over F , for each σ, ιm (σ) ∈ Aut(E(F )[m]). One easily checks that ιm is a group
+morphism and its kernel is the identity.
+
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+3
+
+Notation 2.4. We fix generators for E(Q)[m], thereby inducing an isomorphism
+ψm : Aut(E(Q)[m]) → GL2 (Z/mZ). Let ιm be the injection given by Proposition 2.3. We call ρm : Gal(F (E[m])/F ) → GL2 (Z/mZ) the injective morphism
+ψm ◦ ι m .
+(p)
+Let p be a prime such that E has good reduction at p and p ∤ m. Let ιm be
+the injection of Gal(Fp (E[m])/Fp ) into Aut(E(Fp )[m]) given by Proposition 2.3.
+(p)
+By [21, Prop. VII.3.1] there is a canonical isomorphism rm from Aut(E(Q)[m]) to
+Aut(E(Fp )[m]) for each prime ideal p over p.
+Remark 2.5. Note that # Gal(Q(E[m])/Q) is bounded by # GL2 (Z/mZ). For every
+prime π, we have # GL2 (Z/πZ) = (π − 1)2 (π + 1)π, and for every integer k ≥ 1,
+# GL2 (Z/π k+1 Z) = π 4 # GL2 (Z/π k Z).
+Notation 2.6. For all g ∈ GL2 (Z/mZ) we put Fix(g) = {v ∈ (Z/mZ)2 | g(v) = v}.
+Conjugation of g gives an isomorphic group of fixed elements. If we are interested
+only in the isomorphism class we use the notation Fix(C) where C is a set of conjugated elements. We use analogous notations for Aut(E(Q)[m]) and Aut(E(Fp )[m]).
+Theorem 2.7. Let E be an elliptic curve over Q and m ≥ 2 be an integer. Put
+K = Q(E[m]). Let T be a subgroup of Z/mZ × Z/mZ. Then,
+#{g ∈ ρm (Gal(K/Q)) | Fix(g) ≃ T }
+(1) P(E(Fp )[m] ≃ T ) =
+.
+# Gal(K/Q)
+(2) Let a, n ∈ N such that a ≤ n and gcd(a, n) = 1 and let ζn be a primitive
+nth root of unity. Put Ga = {σ ∈ Gal(K(ζn )/Q) | σ(ζn ) = ζna }. Then:
+P(E(Fp )[m] ≃ T | p ≡ a mod n) =
+
+#{σ ∈ Ga | Fix(ρm (σ|K )) ≃ T }
+.
+#Ga
+
+Proof. (1) Let p ∤ m be a prime for which E has good reduction and let p be a prime
+ideal of K over p. We abbreviate H = {σ ∈ Gal(K/Q) | Fix(ιm (σ)) ≃ T }. First
+(p)
+note that E(Fp )[m] = Fix(ιm (φp )) where φp is the Frobenius in Gal(Fp (E[m])/Fp ).
+Since the diagram
+
+  ιm /
+/
+Dec p
+
+Gal(Q(E[m])/Q)
+
+Aut(E(Q)[m])
+(p)
+
+α(p)
+
+rm
+
+
+Gal(kp /Fp )
+
+∼
+
+/ Gal(Fp (E[m])/Fp ) 
+
+
+
+(p)
+ιm
+
+
+/ Aut(E(Fp )[m])
+
+is commutative and since Frobenius(p) ⊂ Gal(K/Q) is the conjugacy class generated by (α(p) )−1 (φp ) we have E(Fp )[m] ≃ Fix(ιm (Frobenius(p))).
+Decompose H into a disjoint union of conjugacy classes C1 , . . . , CN . Then
+Fix(ιm (Frobenius(p))) ≃ T is equivalent to Frobenius(p) being one of the Ci .
+Thanks to Theorem 2.2 we obtain:
+N
+N
+X
+X
+#H
+#Ci
+P(Frobenius(p) = Ci ) =
+=
+.
+P(E(Fp )[m] ≃ T ) =
+#
+Gal(K/Q)
+#
+Gal(K/Q)
+i=1
+i=1
+(2) Using similar arguments as in (1) we have to evaluate
+
+P(Frobenius(p) ∈ {C1 , . . . , CN }, p ≡ a mod n)
+.
+P(p ≡ a mod n)
+Let p be a prime and p a prime ideal as in the first part of the proof, and let
+P be a prime ideal of K(ζn ) lying over p. Furthermore let C̃1 , . . . , C̃Ñ be the
+
+4
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+conjugacy classes of Gal(K(ζn )/Q) that are in the pre-images of C1 , . . . , CN and
+whose elements σ satisfy σ(ζn ) = ζna . Since Gal(K(ζn )/Q) maps ζn to primitive
+nth roots of unity we have for σ ∈ (α(P) )−1 (φP ) that σ(ζn ) = ζnb holds for some
+b. Together with σ(x) ≡ xp mod P we get ζnb ≡ ζnp mod P. If we exclude the
+finitely many primes dividing the norms of ζnc − 1 for c = 1, . . . , n − 1 we obtain
+b ≡ p mod n. Since Frobenius(K(ζn ), p), the Frobenius conjugacy class for K(ζn ),
+is the pre-image of Frobenius(p), we get with the argument above P(Frobenius(p) ∈
+{C1 , . . . , CN }, p ≡ a mod n) = P(Frobenius(K(ζn ), p) ∈ {C̃1 , . . . , C̃Ñ }). A similar
+consideration for the denominator P(p ≡ a mod n) completes the proof.
+
+Remark 2.8. Put K = Q(E[m]). If [K(ζn ) : Q(ζn )] = [K : Q], then one has
+P(E(Fp )[m] ≃ T | p ≡ a mod n) = P(E(Fp )[m] ≃ T ) for a coprime to n. Indeed,
+according to Galois theory, Gal(K(ζn )/Q)/ Gal(K(ζn )/K) ≃ Gal(K/Q) through
+σ 7→ σ|K . Since [K(ζn ) : Q(ζn )] = [K : Q], we have [K(ζn ) : K] = ϕ(n) and
+therefore each element σ of Gal(K/Q) extends in exactly one way to an element of
+Gal(K(ζn )/Q) which satisfies σ(ζn ) = ζna . Note that for n ∈ {3, 4} the condition is
+equivalent to ζn 6∈ K.
+The families constructed by Brier and Clavier [10], which are dedicated to integers N such that the nth cyclotomic polynomial has roots modulo N , modify
+[K(ζn ) : Q(ζn )] by imposing a large torsion subgroup over Q(ζn ).
+An important particular case of Theorem 2.7 is as follows:
+Corollary 2.9. Let E be an elliptic curve and π be a prime number. Then,
+#{g ∈ ρπ (Gal(Q(E[π])/Q)) | det(g − Id) = 0, g 6= Id}
+P(E(Fp )[π] ≃ Z/πZ) =
+,
+# Gal(Q(E[π])/Q)
+1
+.
+P(E(Fp )[π] ≃ Z/πZ × Z/πZ) =
+# Gal(Q(E[π])/Q)
+Example 2.10. Let us compute these probabilities for the curves E1 : y 2 =
+x3 + 5x + 7 and E2 : y 2 = x3 − 11x + 14 and the primes π = 3 and π = 5.
+Here E1 illustrates the generic case, whereas E2 has special Galois groups. One
+checks with Sage [22] that [Q(E1 [3]) : Q] = 48 and # GL2 (Z/3Z) = 48. By Proposition 2.3 we deduce that ρ3 (Gal(Q(E1 [3])/Q)) = GL2 (Z/3Z). A simple computation
+shows that GL2 (Z/3Z) contains 21 elements having 1 as eigenvalue, one of which
+is Id. Corollary 2.9 gives the following probabilities: P(E(Fp )[3] ≃ Z/3Z) = 20
+48
+1
+and P(E(Fp )[3] ≃ Z/3Z × Z/3Z) = 48
+. We used the same method for all the
+probabilities of Table 1, where we compare them to experimental values.
+Note that the relative difference between theoretical and experimental values
+never exceeds 0.4%. It is interesting to observe that reducing the Galois group does
+not necessarily increase the probabilities, as it is shown for π = 3.
+2.2. Effective Computations of Q(E[m]) and ρm (Gal(Q(E[m])/Q)). The main
+tools are the division polynomials as defined below.
+Definition 2.11. Let E : y 2 = x3 +ax+b be an elliptic curve over Q and m ≥ 2 an
+integer. The m-division polynomial Pm is defined as the monic polynomial whose
+new
+roots are the x-coordinates of all the m-torsion affine points. Pm
+is defined as the
+monic polynomial whose roots are the x-coordinates of the affine points of order
+exactly m.
+Proposition 2.12. For all m ≥ 2 we have:
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+E1
+# GL2 (Z/3Z)
+# Gal(Q(E[3])/Q)
+P(E(Fp )[3] ≃ Z/3Z × Z/3Z)
+P(E(Fp )[3] ≃ Z/3Z)
+
+5
+
+E2
+48
+
+48
+Th.
+Exp.
+Th.
+Exp
+
+16
+
+1
+48 ≈ 0.02083
+
+1
+16 = 0.0625
+
+20
+48 ≈ 0.4167
+
+4
+16 = 0.2500
+
+0.02082
+
+0.06245
+
+0.4165
+0.2501
+480
+480
+32
+1
+1
+Th.
+480 ≈ 0.002083
+32 = 0.03125
+P(E(Fp )[5] ≃ Z/5Z × Z/5Z)
+0.002091
+0.03123
+Exp.
+114
+10
+Th.
+=
+0.2375
+=
+0.3125
+480
+32
+P(E(Fp )[5] ≃ Z/5Z)
+0.2373
+0.3125
+Exp.
+Table 1. Comparison of the theoretical values (Th) of Corollary
+2.9 to the experimental results of all primes below 225 (Exp).
+# GL2 (Z/5Z)
+# Gal(Q(E[5])/Q)
+
+new
+(1) Pm , Pm
+∈ Q[X];
+2
+, where η is the remainder of m modulo 2.
+(2) deg(Pm ) = (m +2−3η)
+2
+
+Proof. For a proof we refer to [8].
+
+
+
+Note that one obtains different division polynomials for other shapes of elliptic
+curves (Weierstrass, Montgomery, Edwards, etc.). Nevertheless, the Galois group
+Gal(Q(E[m])/Q) is model independent and can be computed with the division
+polynomials of Definition 2.11 as, in characteristic different from 2 and 3, every
+curve can be written in short Weierstrass form.
+One can compute Q(E[π]) for any prime π ≥ 3 using the following method:
+1. Make a first extension of Q through an irreducible factor of Pπ and obtain a
+number field F1 where Pπ has a root α1 .
+2. Let f2 (y) = y 2 −(α13 +aα1 +b) ∈ F1 [y] and F2 be the extension of F1 through f2 .
+F2 contains a π-torsion point M1 . In F2 , Pπ has π−1
+2 trivial roots representing
+the x coordinates of the multiples of M1 .
+3. Call F3 the extension of F2 through an irreducible factor of Pπ ∈ F2 [x] other
+than those corresponding to the trivial roots.
+4. Let α2 be the new root of Pπ in F3 . Let f4 (y) = y 2 − (α23 + aα2 + b) ∈ F3 [y] and
+F4 be the extension of F3 through f4 . F4 contains all the π-torsion.
+(F )
+In practice we observe that in general Pπ , f2 , Pπ 2 and f4 are irreducible, where
+(F2 )
+Pπ
+is Pπ divided by the factors corresponding to the trivial roots. If this is the
+2
+2
+case, as deg(Pπ ) = π 2−1 (Proposition 2.12), the absolute degree of F4 is π 2−1 ·
+2
+2 · π 2−π · 2 = (π − 1)2 (π + 1)π. According to Remark 2.5, # GL2 (Z/πZ) = (π −
+1)2 (π + 1)π, thus ρπ (Gal(Q(E[π])/Q)) = GL2 (Z/πZ). The case of composite m
+new
+can be handled in a similar way by replacing Pπ by Pm
+in the method above, and
+
+experiments show that in general ρm (Gal(Q(E[m])/Q)) = GL2 (Z/mZ).
+Serre [20] proved that the observation above is almost always true. The next
+theorem is a restatement of items (1) and (6) in the introduction of [20].
+
+6
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+Theorem 2.13 (Serre). Let E be an elliptic curve without complex multiplication.
+(1) For all primes π and k ≥ 1 the index [GL2 (Z/π k Z) : ρπk (Gal(Q(E[π k ])/Q))]
+is non-decreasing and bounded by a constant depending on E and π.
+(2) For all primes π outside a finite set depending on E and for all k ≥ 1,
+ρπk (Gal(Q(E[π k ])/Q) = GL2 (Z/π k Z).
+Definition 2.14. Put I(E, π, k) = [GL2 (Z/π k Z) : ρπk (Gal(Q(E[π k ])/Q))]. If
+E does not admit complex multiplication, we call Serre’s exponent the integer
+n(E, π) = min{n ∈ N∗ | ∀k ≥ n, I(E, π, k + 1) = I(E, π, k)}.
+The method described above allows us to compute Q(E[m]) as an extension
+tower. Then it is easy to obtain its absolute degree and a primitive element. Identifying ρπ (Gal(Q(E[m])/Q)) (up to conjugacy) is easy when there is only one subgroup (up to conjugacy) of GL2 (Z/mZ) with the right order. In the other case
+we check for each g ∈ GL2 (Z/mZ) using the fixed generators of E(Q)[m] whether
+g gives rise to an automorphism on Q(E[m]). In practice, the bottleneck of this
+method is the factorization of polynomials with coefficients over number fields.
+2.3. Divisibility by a prime power. It is a common fact that, for a given prime
+π, the cardinality of an arbitrary elliptic curve over Fp has a larger probability to
+be divisible by π than an arbitrary integer of size p. In this subsection we shall
+rigorously compute those probabilities under some hypothesis of generality.
+Notation 2.15. Let π be a prime and i, j, k ∈ N such that i ≤ j. We put:
+pπ,k (i, j) = P(E(Fp )[π k ] ≃ Z/π i Z × Z/π j Z).
+
+Let ℓ ≤ m be integers. When it is defined we denote:
+
+pπ,k (ℓ, m|i, j) = P(E(Fp )[π k+1 ] ≃ Z/π ℓ Z × Z/π m Z | Ep [π k ] ≃ Z/π i Z × Z/π j Z).
+
+When it is clear from the context, π is omitted.
+Remark 2.16. Since for every natural number m and every prime p coprime to m,
+E(Fp )[m] ⊂ Z/mZ × Z/mZ, we have pπ,k (i, j) = 0 for j > k. In the case j < k, if
+pπ,k (ℓ, m | i, j) is defined, it equals 1 if (ℓ, m) = (i, j) and equals 0 if (ℓ, m) 6= (i, j).
+Finally, for j = k, there are only three conditional probabilities which can be nonzero: pπ,k (i, k | i, k), pπ,k (i, k + 1 | i, k), and pπ,k (k + 1, k + 1 | k, k).
+Theorem 2.17. Let π be a prime and E an elliptic curve over Q. If k is an integer
+such that I(E, π, k+1) = I(E, π, k), in particular if E has no complex multiplication
+and k ≥ n(E, π), then for all 0 ≤ i < k we have:
+(1) pπ,k (k + 1, k + 1 | k, k) = π14 ;
+2
+
+(2) pπ,k (k, k + 1 | k, k) = (π−1)(π+1)
+;
+π4
+(3) pπ,k (i, k + 1 | i, k) = π1 .
+
+Proof. Let M = (Z/π k Z)2 . For all g ∈ GL2 (πM ), we consider the set Lift(g) =
+{h ∈ GL2 (M ) | h|πM = g} = {g + π k−1 ac db | a, b, c, d ∈ Z/πZ}, whose cardinality
+k
+
+k
+
+Gal(Q(E[π ])/Q)
+# GL2 (Z/π Z)
+is π 4 . Since I(E, π, k+1) = I(E, π, k), we have ##Gal(Q(E[π
+k+1 ])/Q) = # GL (Z/π k+1 Z) ,
+2
+which equals π14 by Remark 2.5. So for all g ∈ ρπk (Gal(Q(E[π k ])/Q)), Lift(g) ⊂
+ρπk+1 (Gal(Q(E[π k+1 ])/Q)). Thanks to Theorem 2.7, the proof will follow if we
+count for each g the number of extensions with a given fixed group.
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+7
+
+(1) For g = Id ∈ ρπk (Gal(Q(E[π k ])/Q), there is only one element of Lift(g)
+fixing (Z/π k+1 Z)2 , so pπ,k (k + 1, k + 1 | k, k) = π14 .
+(2) The element g = Id ∈ ρπk (Gal(Q(E[π k ])/Q), can be extended in exactly π 4 − 1 − # GL2 (Z/πZ) ways to elements in GL2 (Z/π k+1 Z) which
+fix the π k -torsion, a point of order π k+1 , but not all the π k+1 -torsion. So
+2
+pπ,k (k, k + 1 | k, k) = (π−1)(π+1)
+.
+π4
+(3) Every element of GL2 (Z/π k Z) which fixes a line, but is not the identity,
+can be extended in exactly π 3 ways to an element of GL2 (Z/π k+1 Z) which
+3
+fixes a line of (Z/π k+1 Z)2 . So pπ,k (i, k + 1 | i, k) = ππ4 = π1 .
+
+The theorem below uses the information on Gal(Q(E[π n(E,π) ])/Q) for a given
+prime π in order to compute the probabilities of divisibility by any power of π.
+Notation 2.18. Let π be a prime and γn (h) = π n
+
+h
+X
+
+π ℓ pn (ℓ, n). We also define
+
+ℓ=0
+
+δ(k) =
+
+(
+
+pi+1 (i + 1, i + 1)
+0
+
+ k
+
+⌊2⌋
+X
+if k = 2i + 1
+pk−ℓ (ℓ, k − ℓ) + δ(k) .
+, Sk (h) = π k 
+otherwise
+ℓ=h
+
+Theorem 2.19. Let π be a prime, E an elliptic curve over Q without complex
+multiplication and n ≥ n(E, π). Then, for any k ≥ 1,
+ S (0)
+k
+
+ πk
+k
+1
+P(π | #E(Fp )) = πk (γn (k − n − 1) + Sk (k − n))
+
+4n−1
+1
+pn (n,n)
+(γn (n) + pn (n, n)π 2n−1 − π
+)
+πk
+πk
+
+if 1 ≤ k ≤ n,
+if n < k ≤ 2n,
+
+if k > 2n.
+
+Let vπ be the average valuation of π of #E(Fp ) for an arbitrary prime p. Then,
+vπ = 2
+
+n−1
+X
+ℓ=1
+
+pℓ (ℓ, ℓ) +
+
+n−1
+
+n−2 n−1
+
+ℓ=0
+
+ℓ=0 i=ℓ+1
+
+X X
+π X
+π(2π + 1)
+pn (n, n).
+pn (ℓ, n) +
+pi (ℓ, i) +
+π−1
+(π − 1)(π + 1)
+
+Proof. Let k be a positive integer. Using Figure 1, one checks that
+k
+
+(1)
+
+k
+
+P(π | #E(Fp )) =
+2
+
+⌊2⌋
+X
+ℓ=0
+
+pk−ℓ (ℓ, k − ℓ) + δ(k).
+
+Let c1 = π14 , c2 = (π−1)(π+1)
+, and c3 = π1 . With these notations, the hypothesis
+π4
+can be illustrated by Figure 1. For j > n and ℓ < n, the probability pj (ℓ, j) is
+the product of the conditional probabilities of the unique path from (ℓ, j) to (ℓ, n)
+in the graph of Figure 1 times the probability pn (ℓ, n). For j > n and ℓ ≥ n, the
+probability pj (ℓ, j) is the product of the conditional probabilities of the unique path
+from (ℓ, j) to (n, n) in the graph of Figure 1 times the probability pn (n, n).
+There are 3 cases that have to be treated separately: 1 ≤ k ≤ n, n < k ≤ 2n
+and k > 2n. For 1 ≤ k ≤ n, the result follows from Equation (1). Let us explain
+
+8
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+c1
+c1
+
+c2
+
+c1
+
+c2
+
+c3
+
+2, 2
+
+c2
+
+c3
+
+c3
+
+1, 1
+
+1, 2
+
+c3
+
+c3
+
+c3
+
+0, 1
+
+0, 2
+
+c3
+
+c3
+
+c3
+
+π 2i+1 | #E(Fp)
+π 2i | #E(Fp)
+n=2
+
+0, 0
+
+Figure 1. Each node of coordinates (i, j) represents the event
+Ep [π j ] ≃ Z/π i Z × Z/π j Z . The arrows represent the conditional
+probabilities of Theorem 2.17.
+the case for k > 2n, with k = 2i:
+P(π 2i | #E(Fp )) =
+=
+
+i
+X
+ℓ=0
+
+n−1
+X
+ℓ=0
+
+=
+
+n−1
+X
+ℓ=0
+
+p2i−ℓ (ℓ, 2i − ℓ) + δ(2i) =
+p2i−ℓ (ℓ, 2i − ℓ) +
+c32i−l−n pn (ℓ, n) +
+
+i−1
+X
+ℓ=n
+
+i−1
+X
+
+i
+X
+ℓ=0
+
+p2i−ℓ (ℓ, 2i − ℓ)
+
+p2i−ℓ (ℓ, 2i − ℓ) + pi (i, i)
+i−n
+c2i−2l−1
+c2 cl−n
+pn (n, n).
+3
+1 pn (n, n) + c1
+
+ℓ=n
+
+After computations, one obtains the desired formula. The cases k > 2n odd,
+and nP< k ≤ 2n are treated similarly. The formula for vπ is obtained using
+vπ = k≥1 P(π k | #Ep ).
+
+Remark 2.20. The theorem proves in particular that there exists a bound B such
+that for primes π > B, P(π 2 | #E(Fp )) < π22 , so the probability that the cardinality
+is divisible by the square of a prime greater than B is at most B2 . This confirms the
+experimental result that an elliptic curve is close to a cyclic group when reduced
+modulo an arbitrary prime, regardless on its rank over Q.
+Example 2.21. Let us compare the theoretical and experimental average valuation
+of π = 2, π = 3 and π = 5 for the curves E1 : y 2 = x3 + 5x + 7 and E2 : y 2 =
+x3 −11x+14. For E1 , we apply Theorem 2.19 with n = 1 and compute the necessary
+probabilities with Corollary 2.9 knowing that the Galois groups are isomorphic to
+GL2 (Z/πZ). For E2 , we apply Theorem 2.19 with n = 5 for π = 2, n = 2 for π = 3
+and n = 1 for π = 5 and compute the necessary probabilities with Corollary 2.9
+(when n = 1) and Theorem 2.7 when n ≥ 2. The results are shown in Table 2.
+In order to apply Theorem 2.19, we need n ≥ n(E, π). But since we do not
+know any algorithm to compute n(E, π), we have to assume that our guesses for
+n(Ei , π), i = 1, 2, are true. The relative error for E2 and π = 5 is large compared
+to others cases, which can be explained by the fact that we were unable to compute
+Gal(Q(E2 [25])/Q) and cannot be sure that n(E2 , 5) = 1.
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+Average valuation of 2
+
+E1
+E2
+
+Average valuation of 3
+
+9
+
+Average valuation of 5
+
+n
+Th.
+Exp. n
+Th.
+Exp. n
+Th.
+Exp.
+14
+87
+695
+1
+1.555 1 128 ≈ 0.680 0.679 1 2304 ≈ 0.302 0.301
+9 ≈ 1.556
+5 1351
+≈
+3.518
+3.499 2 199
+1 355
+0.469
+384
+384 ≈ 0.518 0.516
+768 ≈ 0.462
+Table 2. Experimental values (Exp.) are obtained with all primes
+below 225 . Theoretical values (Th.) come from Theorem 2.19.
+
+3. Applications to some Families of Elliptic Curves
+As shown in the preceding section, changing the torsion properties is equivalent
+to modifying the Galois group. One can see the fact of imposing rational torsion
+points as a way of modifying the Galois group. In this section we change the Galois
+group either by splitting the division polynomials or by imposing some equations
+that directly modify the Galois group. With these ideas, we find new infinite ECMfriendly families and we explain the properties of some known curves.
+3.1. Preliminaries on Montgomery and Twisted Edwards Curves. Let K
+be a field whose characteristic is neither 2 nor 3.
+3.1.1. Edwards curves. For a, d ∈ K, with ad(a − d) 6= 0, the twisted Edwards
+curve ax2 + y 2 = 1 + dx2 y 2 is denoted by Ea,d . The “a = −1” twisted Edwards
+curves are denoted by Ed . In [6] completed twisted Edwards curves are defined by
+E a,d = {((X : Z), (Y : T )) ∈ P1 × P1 | aX 2 T 2 + Y 2 Z 2 = Z 2 T 2 + dX 2 Y 2 }.
+
+The completed points are the affine (x, y) embedded into P1 × P1 by (x, y) 7→
+((x : 1), (y : 1)) (see [6] for more information). We denote (1 : 0) by ∞.
+We give an overview of all the 2- and 4-torsion and some 8-torsion points on
+E a,d , as specified in [6], in Figure 2.
+3.1.2. Montgomery curves and Suyama family. Let A, B ∈ K be such that B(A2 −
+4) 6= 0. The Montgomery curve By 2 = x3 + Ax2 + x associated to (A, B) is denoted
+by MA,B (see [17]) and its completion in P2 by M A,B .
+A+2
+Remark 3.1. If a, d, A, B ∈ K are such that d = A−2
+B and a = B , then there is
+a birational map between E a,d and M A,B given by ((x : z), (y : t)) 7→ ((t + y)x :
+(t+y)z : (t−y)x) (see [4]). Therefore M A,B and E a,d have the same group structure
+over any field where defined and in particular the same torsion properties. Any
+statement in twisted Edwards language can be easily translated into Montgomery
+coordinates and vice versa.
+
+A Montgomery curve for which there exist x3 , y3 , k, x∞ , y∞ ∈ Q such that
+
+By32 = x33 + Ax23 + x3
+(3-torsion point)
+P3 (x3 ) = 0,
+
+
+
+
+3
+2
+x + Ax3 + x3
+y3
+(2)
+,
+k2 = 3 3
+(non-torsion point)
+k=
+2
+
+y
+x
+∞
+
+∞ + Ax∞ + x∞
+
+
+x∞ = x33 .
+(Suyama equation)
+
+is called a Suyama curve. As described in [23, 24], the solutions of (2) can be
+parametrized by a rational value denoted σ. For all σ ∈ Q\{0, ±1, ±3, ±5, ± 53 },
+the associated Suyama curve has positive rank and a rational point of order 3.
+
+10
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+1-torsion
+(0, 1)
+(0, −1)
+√
+(± a−1 , 0)
+
+(∞,
+
+pa
+
+d)
+
+√
+√
+p
+p
+(± d−1 , ∞) (± −a−1 4 ad , ± 4 ad )
+
+8-torsion
+√
+√
+(x8 , ± ax8 ) (x̂8 , ± d−1 x̂−1
+8 )
+
+(∞, −
+
+2-torsion
+pa
+d)
+
+4-torsion
+√
+p
+p
+(± a−1 4 ad , ±i 4 ad )
+
+Figure 2. An overview of all 1-, 2- and 4-torsion and some 8torsion points on twisted Edwards curves. The x8 and x̂8 in the
+8-torsion points are such that adx48 − 2ax28 + 1 = 0 and adx̂48 −
+2dx̂28 + 1 = 0.
+Remark 3.2. In the following, when we say that an elliptic curve Ea,d has good
+reduction modulo a prime p, we also suppose that we have vp (a) = vp (d) = vp (a −
+d) = 0 (resp. vp (A − 2) = vp (A + 2) = vp (B) = 0 for a Montgomery curve). In
+this case the reduction map is simply given by reducing the coefficients modulo p.
+The results below are also true for primes of good reduction which do not satisfy
+these conditions, by slightly modifying the statements and the proofs. Moreover,
+in ECM, if the conditions are not satisfied, we immediately find the factor p.
+3.2. Study of the 2k -Torsion of Montgomery/Twisted Edwards Curves.
+The rational torsion of a Montgomery/twisted Edwards curve is Z/2Z but it is
+known that 4 divides the order of the curve when reduced modulo any prime p [23].
+The following theorem gives more detail on the 2k -torsion.
+Theorem 3.3. Let E = Ea,d be a twisted Edwards curve (resp. a Montgomery
+curve MA,B ) over Q. Let p be a prime such that E has good reduction at p.
+(1) If p ≡ 3 (mod 4) and ad (resp. A2 − 4) is a quadratic residue modulo p, then
+E(Fp )[4] ≃ Z/2Z × Z/4Z;
+(2) If p ≡ 1 (mod 4), a (resp. A+2
+B ) is a quadratic residue modulo p (in particular a = ±1) and ad (resp. A2 − 4) is a quadratic residue modulo p, then
+Z/2Z × Z/4Z ⊂ E(Fp )[4];
+(3) If p ≡ 1 (mod 4), ad (resp. A2 − 4) is a quadratic non-residue modulo p and
+a − d (resp. B) is a quadratic residue modulo p, then E(Fp )[8] ≃ Z/8Z.
+Proof. Using Remark 3.1, it is enough to prove the results in the Edwards language,
+which follow by some calculations using Figure 2.
+
+Theorem 3.3 suggests that by imposing equations on the parameters a and d we
+can improve the torsion properties. The case where ad is a square has been studied
+in [6] and [5] for the family of Edwards curves having Z/2Z × Z/8Z (when a = 1)
+respectively Z/2Z × Z/4Z (when a = −1) rational torsion. Here we focus on two
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+11
+
+other equations:
+(3)
+(4)
+
+∃c ∈ Q, a = −c2
+
+∃c ∈ Q, a − d = c2
+
+(A + 2 = −Bc2 for Montgomery curves),
+(B = c2 for Montgomery curves).
+
+We were not able to compute the generic Galois group of the m-torsion for a
+family of curves, i.e., a group that is isomorphic to the Galois group for “most” of
+the curves of the family (here “most” is meant in the sense that most polynomials
+of degree d have Galois group Sd ). But we can compute this Galois group for every
+elliptic curve. So when we talk about the Galois group of a family of curves, we
+mean that we computed the Galois group for some curves of this family and that
+the Galois group was always the same (up to conjugacy), so the curves have the
+same probabilities.
+The cardinality of the Galois group of the 4-torsion for generic Montgomery
+curves is 16 and this is reduced to 8 for the family of curves satisfying (3). Using
+Theorem 2.7, we can compute the changes of probabilities due to this new Galois
+group. For all curves satisfying (3) and all primes p ≡ 1 (mod 4), the probability
+of having Z/2Z × Z/2Z as the 4-torsion group becomes 0 (instead of 14 ); the probabilities of having Z/2Z × Z/4Z and Z/4Z × Z/4Z as the 4-torsion group become
+1
+1
+4 (instead of 8 ).
+The Galois group of the 8-torsion of the family of curves satisfying (4) has
+cardinality 128 instead of 256 for generic Montgomery curves. Using Theorem 2.7,
+one can see that the probabilities of having an 8-torsion point are improved.
+Using Theorem 2.19, one can show that both families of curves, the family satisfying (3) and the one satisfying (4), increase the probability of having the cardinality
+11
+divisible by 8 from 62.5% to 75% and the average valuation of 2 from 10
+3 to 3 .
+3.3. Better Twisted Edwards Curves with Torsion Z/2Z × Z/4Z using Division Polynomials. In this section we search for curves such that some of the
+factors of the division polynomials split and by doing so we try to change the Galois
+groups. As an example we consider the family of a = −1 twisted Edwards curves Ed
+with Z/2Z × Z/4Z-torsion, these curves are exactly the ones with d = −e4 (see [5]).
+The technique might be used in any context.
+3.3.1. Looking for subfamilies. For a generic d, P8new splits into three irreducible
+factors: two of degree 4 and one of degree 16. If one takes d = −e4 , the polynomial
+of degree 16 splits into three factors: two of degree 4, called P8,0 and P8,1 , and one
+of degree 8, called P8,2 . By trying to force one of these three polynomials to split,
+we found four families, as shown in Table 3.
+In all these families the generic average valuation of 2 is increased by 16 ( 29
+6
+g− 1
+
+g
+instead of 14
+for which it is increased by 23 , bringing
+3 ), except the family e =
+2
+it to the same valuation as for the family of twisted Edwards curves with a = 1
+and torsion isomorphic to Z/2Z × Z/8Z. Note that these four families cover all the
+curves presented in the first three columns of [5, Table 3.1], except the two curves
+19
+with e = 26
+7 and e = 8 , which have a generic Galois group for the 8-torsion.
+
+3.3.2. The family e =
+g− 1
+e = 2g .
+
+g− g1
+2 .
+
+In this section, we study in more details the family
+
+Theorem 2.7 proofs that the group order modulo all primes is divisible
+by 16. In order to gain more intuition, we give an alternative proof. We need the
+
+12
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+d = −e4
+generic e
+e = g2
+2
++2g+1
+e = 2g 2g+1
+
+P8,0
+4
+4
+4
+
+P8,1
+4
+4
+4
+
+P8,2
+8
+4, 4
+4, 4
+
+e = g2
+
+2, 2
+
+4
+
+8
+
+2
+
+g− 1
+e = 2g
+
+2, 2 2, 2
+8
+Table 3. Subfamilies of twisted Edwards curves with torsion
+group isomorphic to Z/2Z × Z/4Z and the degrees of the irreducible factors of P8,0 , P8,1 and P8,2 .
+
+following theorem
+which
+√
+√ computes the 8-torsion points that double to the 4-torsion
+points (± 4 −d−1 , ± 4 −d−1 ).
+g− 1
+
+Theorem 3.4. Let Ed be a twisted Edwards curve over Q with d = −e4 , e = 2 g
+and g ∈ Q \ {−1, 0, 1}. Let p > 3 be a prime of good reduction. If t ∈ {1, −1} such
+that tg(g − 1)(g + 1) is a quadratic residue modulo p then the points (x, y) ∈ Ed (Fp ),
+with w ∈ {1, −1}, and
+s
+4tg 2−w
+(5)
+x = ±g w y,
+y=±
+(g − tw)3 (g + tw)
+have order eight and double to (±e−1 , te−1 ).
+Proof. Note that all points (x, y) of order eight satisfy ∞ =
+6 x 6= 0 6= y 6= ∞. Following [6, Theorem 2.10] a point (x, y) doubles to ((2xy : 1 + dx2 y 2 ), (x2 + y 2 :
+1 − dx2 y 2 )) = ((2xy : −x2 + y 2 ), (x2 + y 2 : 2 − (−x2 + y 2 ))). Let s, t ∈ {1, −1} such
+that (x, y) doubles to (se−1 , te−1 ), hence
+x2 + y 2
+t
+= .
+2 − (−x2 + y 2 )
+e
+ 2
+2
+2
+From the terms in the first equation we obtain xy + 2exs
+y + e = 1 + e . Write
+
+2
+ g+ 1 2
+n
+o
+g− 1
+g
+x
+1
+e = 2 g such that xy + se =
+.
+Hence
+∈
+±g,
+±
+depending on
+2
+y
+g
+2xy
+s
+=
+−x2 + y 2
+e
+
+and
+
+the sign s and the sign after taking the square root. This gives x2 = G2 y 2 with
+G2 ∈ {g 2 , g −2 }.
+From the second equation we obtain (e − t)x2 + (e + t)y 2 = 2t and substi2
+2
+tuting x2 results in (e
+ − t)G + (e + t) y = 2t. This can be solved for y when
+2
+2t (e − t)G + (e + t) is a quadratic residue modulo p. This is equivalent to checking if any of
+
+t(g − 1)3 (g + 1)
+(6)
+,
+2t (e − 1)g 2 + (e + 1) =
+g
+
+t(g − 1)(g + 1)3
+=
+(7)
+2t (e − 1) + (e + 1)g 2
+g
+
+is a quadratic residue modulo p. By assumption tg(g − 1)(g + 1) is a quadratic
+residue modulo p. Hence, both expression (6) and (7) are quadratic residues modulo
+p. Solving for y and keeping track of all the signs results in the formulae in (5). 
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+13
+
+A direct consequence of this theorem is as follows.
+ g− 1 4
+g
+Corollary 3.5. Let E = Ed be a twisted Edwards curve over Q with d = −
+,
+2
+g ∈ Q \ {−1, 0, 1} and p > 3 a prime of good reduction. Then E(Q) has torsion
+group isomorphic to Z/2Z × Z/4Z and the group order of E(Fp ) is divisible by 16.
+Proof. We consider two cases.
+(1) If p ≡ 1 (mod 4) then −1 is a quadratic residue modulo p. Hence, the 4-torsion
+points (±i, 0) exist (see Figure 2) and 16 | #E(Fp ).
+(2) If p ≡ 3 (mod 4) then −1 is a quadratic non-residue modulo p. Then exactly
+one of {g(g − 1)(g + 1), −g(g − 1)(g + 1)} is a quadratic residue modulo p. Using
+Thm. 3.4 it follows that the curve E(Fp ) has eight 8-torsion points and hence
+16 | #E(Fp ).
+
+4
+Corollary 3.5 explains the good behavior of the curve with d = −( 77
+36 ) and
+torsion group isomorphic to Z/2Z × Z/4Z found in [5]. This parameter can be
+ g− 1 4
+g
+4
+)
+=
+−
+for g = 92 and, therefore, the group order is
+expressed as d = −( 77
+36
+2
+divisible by an additional factor two.
+ g− 1 4
+g
+Corollary 3.6. Let g ∈ Q \ {−1, 0, 1}, d = −
+and p ≡ 1 (mod 4) be a
+2
+
+prime of good reduction. If g(g − 1)(g + 1) is a quadratic residue modulo p then the
+group order of Ed (Fp ) is divisible by 32.
+
+Proof. All 16 4-torsion points are in Ed (Fp ) (see Figure 2). By Thm. 3.4 we have
+at least one 8-torsion point. Hence, 32 | #Ed (Fp ).
+
+We generated different values g ∈ Q by setting g = ji with 1 ≤ i < j ≤ 200 such
+that gcd(i, j) = 1. This resulted in 12 231 possible values for g and Sage [22] found
+614 non-torsion points. As expected, we observed that they behave similarly as the
+good curve found in [5].
+3.3.3. Parametrization. In [5] a “generating curve” is specified which parametrizes
+d and the coordinates of the non-torsion points. Arithmetic on this curve can be
+used to generate an infinite family of twisted Edwards curves with torsion group
+isomorphic to Z/2Z × Z/4Z and a non-torsion point. Using ideas from [10] we
+found a parametrization which does not involve a generating curve and hence no
+curve arithmetic.
+2
+
+Theorem 3.7. Let t ∈ Q \ {0, ±1} and d = −e4 , e = 3(t8t−1) , x∞ = (4e3 + 3e)−1
+4
+2
++9
+and y∞ = 9t 9t−2t
+. Then the twisted Edwards curve −x2 + y 2 = 1 + dx2 y 2 has
+4 −9
+torsion group Z/2Z × Z/4Z and (x∞ , y∞ ) is a non-torsion point.
+Proof. The twisted Edwards curve has torsion group Z/2Z × Z/4Z because d = −e4
+and e is not equal to 0 and ±1. The point (x∞ , y∞ ) is on the curve and since
+x∞ ∈
+/ {0, ∞, e−1 , −e−1 } this is a non-torsion point.
+
+This rational parametrization allowed us to impose additional conditions on the
+parameter e. For the four families, except e = g 2 which is treated below, the
+parameter e is given by an elliptic curve of rank 0 over Q.
+
+14
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+Corollary 3.8. Let P = (x, y) be a non-torsion point on the elliptic curve y 2 =
+x+6
+x3 − 36x having rank 1. Let t = x−6
+, using notations of Theorem 3.7, the curve
+2
+E−e4 belongs to the family e = g and has positive rank over Q.
+3.4. Better Suyama Curves by a Direct Change of the Galois Group. In
+this section we will present two families that change the Galois group of the 4and 8-torsion without modifying the factorization pattern of the 4- and 8-division
+polynomial.
+3.4.1. Suyama-11. Kruppa observed in [14] that among the Suyama curves, the one
+corresponding to σ = 11 finds exceptionally many primes. Barbulescu [3] extended
+it to an infinite family that we present in detail here.
+Experiments show that the σ = 11 curve differs from other Suyama curves only
+by its probabilities to have a given 2k -torsion when reduced modulo primes p ≡ 1
+(mod 4). The reason is that the σ = 11 curve satisfies Equation (3). Section 3.2
+illustrates the changes in probabilities of the σ = 11 curve when compared to curves
+which do not satisfy Equation (3) and shows that Equation (3) improves the average
+11
+valuation of 2 from 10
+3 to 3 .
+Let us call Suyama-11 the set of Suyama curves which satisfy Equation (3).
+When solving the system formed by Suyama’s system plus Equation (3), we obtain
+an elliptic parametrization for σ. Given a point (u, v) on Eσ11 : v 2 = u3 − u2 −
+120
+120u + 432, σ is obtained as σ = u−24
++ 5. The group Eσ11 (Q) is generated by
+the points P∞ = (−6, 30), P2 = (−12, 0) and Q2 = (4, 0) of orders ∞, 2 and 2
+respectively. We exclude 0, ±P∞ , P2 , Q2 , P2 + Q2 , and Q2 ± P∞ , which are the
+points producing non-valid values of σ. The points ±R, Q2 ± R lead to isomorphic
+curves. Note that the σ = 11 curve corresponds to the point (44, 280) = P∞ + P2 .
+3.4.2. Edwards Z/6Z: Suyama-11 in disguise. In [5, Sec. 5] it is shown that the a =
+−1 twisted Edwards curves with Z/6Z-torsion over Q are precisely the curves Ed
+3
+(u2 −u+1)
+1
+with d = −16u
+(u−1)6 (u+1)2 where u is a rational parameter. In particular, according
+to [5, Sec. 5.3] one can translate any Suyama curve in Edwards language and then
+impose the condition that −a is a square to obtain curves of the a = −1 type.
+Finally, [5, Sec. 5.5] points out that this family has exceptional torsion properties.
+In order to understand the properties of this family, we translate it back to
+Montgomery language using Remark 3.1. Thus, we are interested in Suyama curves
+which satisfy equation A + 2 = −Bc2 (the Montgomery equivalent for −a being a
+square). This is the Suyama-11 family, so its torsion properties were explained in
+Section 3.4.1. These two families have been discovered independently in [3] and [5].
+3.4.3. Suyama- 94 . In experiments by Zimmermann, new Suyama curves with exceptional torsion properties were discovered, such as σ = 94 . Further experiments show
+that their special properties are related to the 2k -torsion and concern exclusively
+primes p ≡ 1 (mod 4). Indeed, the σ = 94 curve satisfies Equation (4). Section
+3.2 illustrates the changes in probabilities of the σ = 94 curve when compared to
+curves which do not satisfy Equation (4) and shows that Equation (4) improves the
+11
+average valuation of 2 from 10
+3 to 3 .
+9
+Let us call Suyama- 4 the set of Suyama curves which satisfy Equation (4). When
+solving the system formed by Suyama’s system plus Equation (4), we obtain an
+1There is a typo in the proof of [5, Thm. 5.1]; the 16u3 (u2 −u+1) misses a minus sign.
+(u−1)6 (u+1)2
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+Families
+
+Curves
+
+Average valuation of 2
+
+Suyama
+Suyama-11
+Suyama- 94
+
+σ = 12
+σ = 11
+σ = 94
+
+n
+2
+2
+3
+
+Z/2Z × Z/4Z
+
+E−114
+
+3
+
+e=
+
+g− g1
+2
+
+e = g2
+2
+
+e = g2
+
+2
++2g+1
+e = 2g 2g+1
+
+E−( 77 )4
+
+3
+
+E−94
+
+3
+
+36
+
+E−( 81 )4
+
+3
+
+8
+
+E− ( 5 ) 4
+3
+
+3
+
+Th.
+Exp.
+10
+3 ≈ 3.333 3.331
+11
+3 ≈ 3.667 3.669
+11
+3 ≈ 3.667 3.664
+14
+3 ≈ 4.667
+16
+3 ≈ 5.333
+29
+6 ≈ 4.833
+29
+6 ≈ 4.833
+29
+6 ≈ 4.833
+
+Average valuation of 3
+
+n
+1
+1
+1
+
+4.666
+
+1∗
+
+5.332
+
+1
+
+∗
+
+4.833
+
+1∗
+
+4.831
+
+∗
+
+4.833
+
+15
+
+1
+
+1∗
+
+Th.
+27
+16 ≈ 1.688
+27
+16 ≈ 1.688
+27
+16 ≈ 1.688
+87
+128 ≈ 0.680
+87
+128 ≈ 0.680
+87
+128 ≈ 0.680
+87
+128 ≈ 0.680
+87
+128 ≈ 0.680
+
+Exp.
+1.689
+1.687
+1.687
+0.679
+0.679
+0.680
+0.679
+0.679
+
+Table 4. Experimental values (Exp.) are obtained with all primes
+below 225 . The case n = 1∗ means that the Galois group is isomorphic to GL2 (Z/πZ).
+
+elliptic parametrization for σ. Given a point (u, v) on Eσ94 : v 2 = u3 − 5u, σ is
+obtained as σ = u. The group Eσ94 (Q) is generated by the points P∞ = (−1, 2)
+and P2 = (0, 0) of orders ∞ and 2 respectively. We exclude the points 0, ±P∞ , P2
+and P2 ± P∞ which produce non-valid values of σ. If two points in Eσ94 (Q) differ
+by P2 they correspond to isomorphic curves. We recognize the curve associated to
+σ = 94 when considering the point ( 94 , − 38 ) = [2]P∞ .
+3.5. Comparison. Table 4 gives a summary of all the families found in this article.
+The theoretical average valuations were computed with Theorem 2.19, Theorem 2.7
+and Corollary 2.9 under some assumptions on Serre’s exponent (see Example 2.21
+for more information).
+Note that, when we impose torsion points over Q, the average valuation does
+not simply increase by 1, as can be seen in Table 4 for the average valuation of 3.
+4. Conclusion and further work
+We have used Galois theory in order to analyze the torsion properties of elliptic
+curves. We have determined the behavior of generic elliptic curves and explained the
+exceptional properties of some known curves (Edwards curves of torsion Z/2Z ×
+Z/4Z and Z/6Z). The new techniques suggested by the theoretical study have
+helped us to find infinite families of curves having exceptional torsion properties.
+We list below some questions which were not addressed in this work:
+• Can one effectively compute Serre’s exponent?
+• How does Serre’s work relate to the independence of the m- and m′ -torsion
+probabilities for coprime numbers m and m′ ?
+• Is there a model predicting the success probability of ECM from the probabilities given in Theorem 2.19?
+• Is it possible to effectively use the Resolvent Method [11] in order to compute equations which improve the torsion properties?
+
+16
+
+BARBULESCU, BOS, BOUVIER, KLEINJUNG, AND MONTGOMERY
+
+References
+[1] A. O. L. Atkin and F. Morain. Finding suitable curves for the elliptic curve method of
+factorization. Mathematics of Computation, 60(201):399–405, 1993.
+[2] S. Bai, P. Gaudry, A. Kruppa, F. Morain, E. Thomé, and P. Zimmermann. Crible algébrique: distribution, optimisation (CADO-NFS). http://cado-nfs.gforge.inria.fr/.
+[3] R. Barbulescu. Familles de courbes adaptées à la factorisation des entiers. Research report,
+http://hal.inria.fr/inria-00419218/en/, 2009.
+[4] D. J. Bernstein, P. Birkner, M. Joye, T. Lange, and C. Peters. Twisted Edwards curves. In
+S. Vaudenay, editor, Africacrypt, volume 5023 of Lecture Notes in Computer Science, pages
+389–405. Springer, Heidelberg, 2008.
+[5] D. J. Bernstein, P. Birkner, and T. Lange. Starfish on strike. In M. Abdalla and P. S. L. M.
+Barreto, editors, Latincrypt, volume 6212 of Lecture Notes in Computer Science, pages 61–80.
+Springer, Heidelberg, 2010.
+[6] D. J. Bernstein, P. Birkner, T. Lange, and C. Peters. ECM using Edwards curves. Cryptology
+ePrint Archive, Report 2008/016, 2008. http://eprint.iacr.org/.
+[7] D. J. Bernstein and T. Lange. Faster addition and doubling on elliptic curves. In K. Kurosawa,
+editor, Asiacrypt, volume 4833 of Lecture Notes in Computer Science, pages 29–50. Springer,
+Heidelberg, 2007.
+[8] I. Blake, G. Seroussi, and N. Smart. Elliptic curves in cryptography, volume 265. Cambridge
+Univ Pr, 1999.
+[9] J. W. Bos, T. Kleinjung, A. K. Lenstra, and P. L. Montgomery. Efficient SIMD arithmetic
+modulo a Mersenne number. In IEEE Symposium on Computer Arithmetic – ARITH-20,
+pages 213–221. IEEE Computer Society, 2011.
+[10] E. Brier and C. Clavier. New families of ECM curves for Cunningham numbers. In G. Hanrot,
+F. Morain, and E. Thomé, editors, Algorithmic Number Theory – ANTS-IX, volume 6197 of
+Lecture Notes in Computer Science, pages 96–109. Springer, 2010.
+[11] H. Cohen. A course in computational algebraic number theory, volume 138. Springer Verlag,
+1993.
+[12] H. M. Edwards. A normal form for elliptic curves. Bulletin of the American Mathematical
+Society, 44:393–422, July 2007.
+[13] H. Hisil, K. K.-H. Wong, G. Carter, and E. Dawson. Twisted Edwards curves revisited. In
+J. Pieprzyk, editor, Asiacrypt 2008, volume 5350 of Lecture Notes in Computer Science,
+pages 326–343. Springer, Heidelberg, 2008.
+[14] A. Kruppa. Speeding up Integer Multiplication and Factorization. PhD thesis, Université
+Henri Poincaré - Nancy I, January 2010.
+[15] A. K. Lenstra and H. W. Lenstra, Jr. The Development of the Number Field Sieve, volume
+1554 of Lecture Notes in Mathematics. Springer-Verslag, 1993.
+[16] H. W. Lenstra Jr. Factoring integers with elliptic curves. Annals of Mathematics, 126(3):649–
+673, 1987.
+[17] P. L. Montgomery. Speeding the Pollard and elliptic curve methods of factorization. Mathematics of Computation, 48(177):243–264, 1987.
+[18] J. Neukirch. Class field theory, volume 280. Springer-Verlag, 1986.
+[19] J. M. Pollard. The lattice sieve. pages 43–49 in [15].
+[20] J. Serre. Propriétés galoisiennes des points d’ordre fini des courbes elliptiques. Inventiones
+mathematicae, 15(4):259–331, 1971.
+[21] J. Silverman. The arithmetic of elliptic curves, volume 106. Springer Verlag, 2009.
+[22] W. Stein et al. Sage Mathematics Software (Version 4.7). The Sage Development Team,
+2011. http://www.sagemath.org.
+[23] H. Suyama. Informal preliminary report (8), October 1985.
+[24] P. Zimmermann and B. Dodson. 20 years of ECM. In F. Hess, S. Pauli, and M. E. Pohst,
+editors, Algorithmic Number Theory – ANTS-VII, volume 4076 of Lecture Notes in Computer
+Science, pages 525–542. Springer, Heidelberg, 2006.
+[25] P. Zimmermann et al. GMP-ECM (elliptic curve method for integer factorization). https:
+//gforge.inria.fr/projects/ecm/, 2010.
+
+FINDING ECM-FRIENDLY CURVES THROUGH A STUDY OF GALOIS PROPERTIES
+
+Université de Lorraine, CNRS, INRIA, France
+Laboratory for Cryptologic Algorithms, EPFL, Lausanne, Switzerland
+ENS Paris, Université de Lorraine, CNRS, INRIA, France
+Laboratory for Cryptologic Algorithms, EPFL, Lausanne, Switzerland
+Microsoft Research, One Microsoft Way, Redmond, WA 98052, USA
+
+17
+
+

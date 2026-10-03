@@ -1,0 +1,474 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/XVuBvkmD5jSsMpOc5K2N5Ou44ZI</id>
+  <title>arXiv Query: search_query=abs:"nonlinear" AND abs:"modulus" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22nonlinear%22+AND+(abs:%22modulus%22+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>21</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1212.5831v1</id>
+    <title>Spinflation with backreaction</title>
+    <updated>2012-12-23T20:06:40Z</updated>
+    <link href="https://arxiv.org/abs/1212.5831v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.5831v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study brane inflation in flux compactifications at the nonlinear level, solving the D3-brane DBI-equations of motion including backreaction from the D3-D7 brane potential and from perturbations of the warp factor. We first numerically compute the exact functional form of the Kaehler modulus valid on the entire supergravity background and obtain a two-field potential along radial and harmonic directions. We find that a valid perturbative expansion on the entire supergravity background with the Kaehler modulus integrated out adiabatically in DBI inflation requires hierarchies of scales that determine compactification parameters different from those typical in slow-roll models. Our numerical results then show that the DBI inflationary solutions are quite robust against these nonlinear corrections.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-23T20:06:40Z</published>
+    <arxiv:comment>28 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>International Journal of Modern Physics D Vol. 22, No. 9 (2013) 1350062</arxiv:journal_ref>
+    <author>
+      <name>Dariush Kaviani</name>
+    </author>
+    <arxiv:doi>10.1142/S0218271813500624</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S0218271813500624" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.03120v2</id>
+    <title>Effective integration of ultra-elliptic solutions of the focusing nonlinear Schrödinger equation</title>
+    <updated>2015-05-26T19:41:05Z</updated>
+    <link href="https://arxiv.org/abs/1505.03120v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.03120v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An effective integration method based on the classical solution to the Jacobi inversion problem, using Kleinian ultra-elliptic functions, is presented for quasi-periodic two-phase solutions of the focusing nonlinear Schrödinger equation. The two-phase solutions with real quasi-periods are known to form a two-dimensional torus, modulo a circle of complex phase factors, that can be expressed as a ratio of theta functions. In this paper, the two-phase solutions are explicitly parametrized in terms of the branch points on the genus-two Riemann surface of the theta functions. Simple formulas, in terms of the imaginary parts of the branch points, are obtained for the maximum modulus and the minimum modulus of the two-phase solution.</summary>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-12T18:59:47Z</published>
+    <arxiv:comment>46 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="nlin.SI"/>
+    <author>
+      <name>O. C. Wright</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.06083v4</id>
+    <title>Universal dynamics for the defocusing logarithmic Schrodinger equation</title>
+    <updated>2018-01-26T09:15:47Z</updated>
+    <link href="https://arxiv.org/abs/1611.06083v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.06083v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary> We consider the nonlinear Schrodinger equation with a logarithmic nonlinearity in a dispersive regime. We show that the presence of the nonlinearity affects the large time behavior of the solution:  the dispersion is faster than usual by a logarithmic factor in time and the positive Sobolev norms of  the solution  grow logarithmically in time. Moreover, after rescaling in space by the dispersion   rate, the modulus of the solution converges to a universal Gaussian profile. These properties are suggested by explicit computations in the case of Gaussian initial data, and remain when  an extra power-like nonlinearity is present in the equation. One of the key steps of the proof consists in using the  Madelung transform to reduce the equation to a variant of  the isothermal compressible Euler equation, whose large time behavior turns out to be governed by a parabolic equation involving a Fokker-Planck operator.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-18T14:03:31Z</published>
+    <arxiv:comment>Final version</arxiv:comment>
+    <arxiv:primary_category term="math.AP"/>
+    <arxiv:journal_ref>Duke Math. J. 167, no. 9 (2018), 1761-1801</arxiv:journal_ref>
+    <author>
+      <name>Rémi Carles</name>
+      <arxiv:affiliation>IMAG</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Isabelle Gallagher</name>
+      <arxiv:affiliation>IMJ, DMA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1215/00127094-2018-0006</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1215/00127094-2018-0006" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.05353v1</id>
+    <title>Controlling Grokking with Nonlinearity and Data Symmetry</title>
+    <updated>2024-11-08T06:19:29Z</updated>
+    <link href="https://arxiv.org/abs/2411.05353v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.05353v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper demonstrates that grokking behavior in modular arithmetic with a modulus P in a neural network can be controlled by modifying the profile of the activation function as well as the depth and width of the model. Plotting the even PCA projections of the weights of the last NN layer against their odd projections further yields patterns which become significantly more uniform when the nonlinearity is increased by incrementing the number of layers. These patterns can be employed to factor P when P is nonprime. Finally, a metric for the generalization ability of the network is inferred from the entropy of the layer weights while the degree of nonlinearity is related to correlations between the local entropy of the weights of the neurons in the final layer.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-08T06:19:29Z</published>
+    <arxiv:comment>15 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ahmed Salah</name>
+    </author>
+    <author>
+      <name>David Yevick</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.01586v2</id>
+    <title>A minimal-length approach unifies rigidity in under-constrained materials</title>
+    <updated>2019-01-24T19:56:42Z</updated>
+    <link href="https://arxiv.org/abs/1809.01586v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.01586v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a novel approach to understand geometric-incompatibility-induced rigidity in under-constrained materials, including sub-isostatic 2D spring networks and 2D and 3D vertex models for dense biological tissues. We show that in all these models a geometric criterion, represented by a minimal length $\bar\ell_\mathrm{min}$, determines the onset of prestresses and rigidity. This allows us to predict not only the correct scalings for the elastic material properties, but also the precise {\em magnitudes} for bulk modulus and shear modulus discontinuities at the rigidity transition as well as the magnitude of the Poynting effect. We also predict from first principles that the ratio of the excess shear modulus to the shear stress should be inversely proportional to the critical strain with a prefactor of three, and propose that this factor of three is a general hallmark of geometrically induced rigidity in under-constrained materials and could be used to distinguish this effect from nonlinear mechanics of single components in experiments. Lastly, our results may lay important foundations for ways to estimate $\bar\ell_\mathrm{min}$ from measurements of local geometric structure, and thus help develop methods to characterize large-scale mechanical properties from imaging data.</summary>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.bio-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.TO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-05T15:48:25Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.soft"/>
+    <arxiv:journal_ref>PNAS 116(14), p. 6560 (2019)</arxiv:journal_ref>
+    <author>
+      <name>Matthias Merkel</name>
+    </author>
+    <author>
+      <name>Karsten Baumgarten</name>
+    </author>
+    <author>
+      <name>Brian P. Tighe</name>
+    </author>
+    <author>
+      <name>M. Lisa Manning</name>
+    </author>
+    <arxiv:doi>10.1073/pnas.1815436116</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1073/pnas.1815436116" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.28313v1</id>
+    <title>Cryptanalysis of a Lightweight RFID Authentication Protocol Based on a Variable Matrix Encryption Algorithm</title>
+    <updated>2026-03-30T11:35:40Z</updated>
+    <link href="https://arxiv.org/abs/2603.28313v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.28313v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, a two-way RFID authentication protocol based on the AM-SUEO-DBLTKM variable matrix encryption algorithm was proposed for low-cost mobile RFID systems. Its design combines adaptive modulus selection, self-updating matrix ordering, and transpose/block-based matrix generation. In this paper, we show that the protocol has structural weaknesses. First, the underlying primitive remains a linear transformation modulo a session modulus, with no nonlinear confusion layer and no ciphertext chaining. Second, in the lightweight setting emphasized by the original paper, the update space is very small: there are only a few modulus choices, only four matrix-order choices when two secret matrices are used, and only a limited family of DBLTKM-generated matrices. Third, the correctness requirements of the protocol impose nontrivial constraints on the sizes of the modulus and plaintext coordinates, weakening the claimed entropy of the secret quantities.
+  Building on these observations, we describe a multi-session algebraic attack path. Under repeated reuse of the same matrix and modulus -- an event plausible because of the small update space -- ciphertexts corresponding to $N_t$, $N_t+1$, $N_r$, and $N_r+1$ reveal a full column of the matrix. Across sessions, transpose-based matrix generation helps recover additional entries of the secret matrices, while the remaining entries can be obtained later from ordinary ciphertext equations. We then show that candidate factors of the session moduli can be tested by solving reduced equations for secret $S$ across many sessions and checking for mutually consistent solutions. This, in turn, enables recovery of candidate 64-bit moduli and the remaining protocol secrets. Taken together, our results indicate that the protocol is structurally insecure and admits a realistic route to full compromise in the lightweight parameter regime advocated for deployment.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-30T11:35:40Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hongjun Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0410380v2</id>
+    <title>Theory of disordered flux-line liquids</title>
+    <updated>2005-07-11T17:12:09Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0410380v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0410380v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the equilibrium statics and nonequilibrium driven dynamics of flux line liquids in presence of a random pinning potential. Under the assumption of replica symmetry, we find in the static case using a replica Gaussian variational method that the only effect of disorder is to increase the tilt modulus and the confining "mass" of the internal modes of the flux lines, thus decreasing their thermal wandering. In the nonequilibrium, driven case, we derive the long scale, coarse-grained equation of motion of the vortices in presence of disorder, which apart from new Kardar-Parisi-Zhang nonlinearities, has the same form as the equation of motion for unpinned vortices, with renormalized coefficients. This implies, in particular, that the structure factor of a disordered vortex liquid has the same functional form as in the absence of pinning, in disagreement with the results of previous hydrodynamic methods. The expression of the static structure factor derived within our approach is consistent both with experimental data and with the standard theory of elasticity of vortex lattices.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.supr-con" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-10-15T01:46:21Z</published>
+    <arxiv:comment>27 pages, 1 figure; added a new Appendix; accepted for publication in Phys. Rev. B</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>Phys. Rev. B 72, 144502 (2005)</arxiv:journal_ref>
+    <author>
+      <name>A. M. Ettouhami</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.72.144502</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.72.144502" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.06579v1</id>
+    <title>Rogue periodic waves of the focusing NLS equation</title>
+    <updated>2017-11-17T15:05:01Z</updated>
+    <link href="https://arxiv.org/abs/1711.06579v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.06579v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rogue waves on the periodic background are considered for the nonlinear Schrodinger (NLS) equation in the focusing case. The two periodic wave solutions are expressed by the Jacobian elliptic functions dn and cn. Both periodic waves are modulationally unstable with respect to long-wave perturbations. Exact solutions for the rogue waves on the periodic background are constructed by using the explicit expressions for the periodic eigenfunctions of the Zakharov-Shabat spectral problem and the Darboux transformations. These exact solutions labeled as rogue periodic waves generalize the classical rogue wave (the so-called Peregrine's breather). The magnification factor of the rogue periodic waves is computed as a function of the wave amplitude (the elliptic modulus). Rogue periodic waves constructed here are compared with the rogue wave patterns obtained numerically in recent publications.</summary>
+    <category term="nlin.PS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-17T15:05:01Z</published>
+    <arxiv:comment>20 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="nlin.PS"/>
+    <author>
+      <name>Jinbing Chen</name>
+    </author>
+    <author>
+      <name>Dmitry E. Pelinovsky</name>
+    </author>
+    <arxiv:doi>10.1098/rspa.2017.0814</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1098/rspa.2017.0814" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.02203v3</id>
+    <title>Geometry of logarithmic strain measures in solid mechanics</title>
+    <updated>2016-10-31T17:54:52Z</updated>
+    <link href="https://arxiv.org/abs/1505.02203v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.02203v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the two logarithmic strain measures\[ω_{\rm iso}=\|\mathrm{dev}_n\log U\|=\|\mathrm{dev}_n\log \sqrt{F^TF}\|\quad\text{ and }\quad ω_{\rm vol}=|\mathrm{tr}(\log U)|=|\mathrm{tr}(\log\sqrt{F^TF})|\,,\]which are isotropic invariants of the Hencky strain tensor $\log U$, and show that they can be uniquely characterized by purely geometric methods based on the geodesic distance on the general linear group $\mathrm{GL}(n)$. Here, $F$ is the deformation gradient, $U=\sqrt{F^TF}$ is the right Biot-stretch tensor, $\log$ denotes the principal matrix logarithm, $\|.\|$ is the Frobenius matrix norm, $\mathrm{tr}$ is the trace operator and $\mathrm{dev}_n X$ is the $n$-dimensional deviator of $X\in\mathbb{R}^{n\times n}$. This characterization identifies the Hencky (or true) strain tensor as the natural nonlinear extension of the linear (infinitesimal) strain tensor $\varepsilon=\mathrm{sym}\nabla u$, which is the symmetric part of the displacement gradient $\nabla u$, and reveals a close geometric relation between the classical quadratic isotropic energy potential \[μ\,\|\mathrm{dev}_n\mathrm{sym}\nabla u\|^2+\fracκ{2}\,[\mathrm{tr}(\mathrm{sym}\nabla u)]^2=μ\,\|\mathrm{dev}_n\varepsilon\|^2+\fracκ{2}\,[\mathrm{tr}(\varepsilon)]^2\]in linear elasticity and the geometrically nonlinear quadratic isotropic Hencky energy\[μ\,\|\mathrm{dev}_n\log U\|^2+\fracκ{2}\,[\mathrm{tr}(\log U)]^2=μ\,ω_{\rm iso}^2+\frac\kappa2\,ω_{\rm vol}^2\,,\]where $μ$ is the shear modulus and $κ$ denotes the bulk modulus. Our deduction involves a new fundamental logarithmic minimization property of the orthogonal polar factor $R$, where $F=R\,U$ is the polar decomposition of $F$. We also contrast our approach with prior attempts to establish the logarithmic Hencky strain tensor directly as the preferred strain tensor in nonlinear isotropic elasticity.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-08T22:38:46Z</published>
+    <arxiv:primary_category term="math.DG"/>
+    <arxiv:journal_ref>Archive for Rational Mechanics and Analysis, November 2016, Volume 222, Issue 2, pp 507-572</arxiv:journal_ref>
+    <author>
+      <name>Patrizio Neff</name>
+    </author>
+    <author>
+      <name>Bernhard Eidel</name>
+    </author>
+    <author>
+      <name>Robert J. Martin</name>
+    </author>
+    <arxiv:doi>10.1007/s00205-016-1007-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00205-016-1007-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.04605v1</id>
+    <title>Tunable phonon cavity coupling in graphene membranes</title>
+    <updated>2016-04-15T19:23:32Z</updated>
+    <link href="https://arxiv.org/abs/1604.04605v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.04605v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A major achievement of the past decade has been the realization of macroscopic quantum systems by exploiting interactions between optical cavities and mechanical resonators. In these systems, phonons are coherently annihilated or created in exchange for photons. Similar phenomena have recently been observed through "phonon cavity" coupling -- energy exchange between modes of a single system as mediated by intrinsic material nonlinearity. To date, this has been demonstrated primarily for bulk crystalline, high-quality-factor (Q&gt;100,000) mechanical systems operated at cryogenic temperatures. Here we propose graphene as an ideal candidate for the study of such nonlinear mechanics. The large elastic modulus of this material and capability for spatial symmetry breaking via electrostatic forces is expected to generate a wealth of nonlinear phenomena, including tunable inter-modal coupling. We have fabricated circular graphene membranes and report strong phonon cavity effects at room temperature, despite the modest Q (~100) of this system. We observe both amplification into parametric instability ("mechanical lasing") and cooling of Brownian motion in the fundamental mode through excitation of cavity sidebands. Furthermore, we characterize quenching of these parametric effects at large vibrational amplitudes, offering a window on the all-mechanical analogue of cavity optomechanics, where observation of such effects has proven elusive.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-15T19:23:32Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>R. De Alba</name>
+    </author>
+    <author>
+      <name>F. Massel</name>
+    </author>
+    <author>
+      <name>I. R. Storch</name>
+    </author>
+    <author>
+      <name>T. S. Abhilash</name>
+    </author>
+    <author>
+      <name>A. Hui</name>
+    </author>
+    <author>
+      <name>P. L. McEuen</name>
+    </author>
+    <author>
+      <name>H. G. Craighead</name>
+    </author>
+    <author>
+      <name>J. M. Parpia</name>
+    </author>
+    <arxiv:doi>10.1038/nnano.2016.86</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/nnano.2016.86" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.09427v2</id>
+    <title>An Eulerian nonlinear elastic model for compressible and fluidic tissue with radially symmetric growth</title>
+    <updated>2021-12-05T05:26:47Z</updated>
+    <link href="https://arxiv.org/abs/2103.09427v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.09427v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cell proliferation, apoptosis, and myosin-dependent contraction can generate elastic stress and strain in living tissues, which may be dissipated by internal rearrangement through cell topological transition and cytoskeletal reorganization. Moreover, cells and tissues can change their sizes in response to mechanical cues. The present work demonstrates the role of tissue compressibility and internal rearranging activities on its size and mechanics regulation in the context of differential growth induced by a field of growth-promoting chemical factors. We develop a mathematical model based on finite elasticity and growth theory and the reference map techniques to describe the coupled tissue growth and mechanics in the Eulerian frame. We incorporate the tissue rearrangement by introducing a rearranging rate to the reference map evolution, leading to elastic-energy dissipation when tissue growth and deformation are in radial symmetry. By linearizing the model, we show that the stress follows the Maxwell-type viscoelastic relaxation. The rearrangement rate, which we call tissue fluidity, sets the stress relaxation time, and the ratio between the shear modulus and the fluidity sets the tissue viscosity. By nonlinear simulation of growing tissue spheroids and discs with graded growth rates along the radius, we find that the tissue compressibility and fluidity influence their equilibrium size. By comparing the nonlinear simulations with the linear analytical solutions, we show the size change as a nonlinear effect due to the advection of the tissue density flow, which only occurs when both tissue compressibility and fluidity are small. We apply the model to study tumor spheroid growth and epithelial disc growth when a reaction-diffusion process determines the growth-promoting factor field.</summary>
+    <category term="physics.bio-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.TO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-17T04:00:46Z</published>
+    <arxiv:comment>21 pages, 7 figures, Supplement</arxiv:comment>
+    <arxiv:primary_category term="physics.bio-ph"/>
+    <author>
+      <name>Chaozhen Wei</name>
+    </author>
+    <author>
+      <name>Min Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.08503v2</id>
+    <title>The action of Volterra integral operators with highly singular kernels on Hölder continuous, Lebesgue and Sobolev functions</title>
+    <updated>2017-05-23T16:01:47Z</updated>
+    <link href="https://arxiv.org/abs/1611.08503v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.08503v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For kernels $ν$ which are positive and integrable we show that the operator $g\mapsto J_νg=\int_0^x ν(x-s)g(s)ds$ on a finite time interval enjoys a regularizing effect when applied to Hölder continuous and Lebesgue functions and a "contractive" effect when applied to Sobolev functions. For Hölder continuous functions, we establish that the improvement of the regularity of the modulus of continuity is given by the integral of the kernel, namely by the factor $N(x)=\int_0^x ν(s)ds$. For functions in Lebesgue spaces, we prove that an improvement always exists, and it can be expressed in terms of Orlicz integrability. Finally, for functions in Sobolev spaces, we show that the operator $J_ν$ "shrinks" the norm of the argument by a factor that, as in the Hölder case, depends on the function $N$ (whereas no regularization result can be obtained). These results can be applied, for instance, to Abel kernels and to the Volterra function $\mathcal{I}(x) = μ(x,0,-1) = \int_{0}^{\infty}x^{s-1}/Γ(s)\,ds$, the latter being relevant for instance in the analysis of the Schrödinger equation with concentrated nonlinearities in $\mathbb{R}^{2}$.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-25T16:06:22Z</published>
+    <arxiv:comment>27 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="math.AP"/>
+    <arxiv:journal_ref>J. Funct. Anal. 273 (2017), no. 3, 1258-1294</arxiv:journal_ref>
+    <author>
+      <name>Raffaele Carlone</name>
+    </author>
+    <author>
+      <name>Alberto Fiorenza</name>
+    </author>
+    <author>
+      <name>Lorenzo Tentarelli</name>
+    </author>
+    <arxiv:doi>10.1016/j.jfa.2017.04.013</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jfa.2017.04.013" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.29766v1</id>
+    <title>Fisher Information Limits of Satellite RF Fingerprint Identifiability for Authentication</title>
+    <updated>2026-03-31T14:07:19Z</updated>
+    <link href="https://arxiv.org/abs/2603.29766v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.29766v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>RF fingerprinting authenticates satellite transmitters by exploiting hardware-specific signal impairments, yet existing methods operate without theoretical performance guarantees. We derive the Fisher information matrix (FIM) for joint estimation of in-phase/quadrature (IQ) imbalance and power amplifier (PA) nonlinearity parameters, establishing Cramér-Rao bounds (CRBs) whose structure depends on constellation moments. A necessary condition for full IQ identifiability is that the identifiability factor~$β$ exceeds zero; for binary phase-shift keying (BPSK), $β= 0$ yields a rank-deficient FIM, rendering IQ parameters unidentifiable. This provides a plausible theoretical explanation for OrbID's near-random performance (area under the ROC curve, AUC~$= 0.53$) on Orbcomm. From the FIM, we define a discrimination metric that predicts which hardware parameters dominate authentication for a given modulation. For constant-modulus PSK signals, PA nonlinearity features are predicted to dominate while IQ features are ineffective. We validate the framework on 24~Iridium satellites using two recording campaigns, achieving cross-file PA fingerprint correlation $r = 0.999$ and confirming all four CRB predictions. A discrimination-ratio-weighted (DR-weighted) authentication test achieves AUC~$= 0.934$ from six features versus $0.807$ with equal weighting, outperforming machine-learning classifiers (AUC~$\leq 0.69$) on the same data.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-31T14:07:19Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Haofan Dong</name>
+    </author>
+    <author>
+      <name>Ozgur B. Akan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0910.0591v3</id>
+    <title>Strain-Rate Frequency Superposition in Large-Amplitude Oscillatory Shear</title>
+    <updated>2010-02-12T12:36:03Z</updated>
+    <link href="https://arxiv.org/abs/0910.0591v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0910.0591v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In a recent work, Wyss, {\it et.al.} [Phys. Rev. Lett., {\bf 98}, 238303 (2007)] have noted a property of `soft solids' under oscillatory shear, the so-called strain-rate frequency superposition (SRFS). We extend this study to the case of soft solids under large-amplitude oscillatory shear (LAOS). We show results from LAOS studies in a monodisperse hydrogel suspension, an aqueous gel, and a biopolymer suspension, and show that constant strain-rate frequency sweep measurements with soft solids can be superimposed onto master curves for higher harmonic moduli, with the {\it same} shift factors as for the linear viscoelastic moduli. We show that the behavior of higher harmonic moduli at low frequencies in constant strain-rate frequency sweep measurements is similar to that at large strain amplitudes in strain-amplitude sweep tests. We show surface plots of the harmonic moduli and the energy dissipation rate per unit volume in LAOS for soft solids, and show experimentally that the energy dissipated per unit volume depends on the first harmonic loss modulus alone, in both the linear and the nonlinear viscoelastic regime.</summary>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.flu-dyn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-10-04T08:46:35Z</published>
+    <arxiv:comment>10 pages, 25 figures, accepted for publication in Physical Review E. Incorporates referee comments</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.soft"/>
+    <author>
+      <name>Chirag Kalelkar</name>
+    </author>
+    <author>
+      <name>Ashish Lele</name>
+    </author>
+    <author>
+      <name>Samruddhi Kamble</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevE.81.031401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevE.81.031401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1309.2638v1</id>
+    <title>Spectral Sum Rules and Magneto-Roton as Emergent Graviton in Fractional Quantum Hall Effect</title>
+    <updated>2013-09-10T20:00:04Z</updated>
+    <link href="https://arxiv.org/abs/1309.2638v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1309.2638v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider gapped fractional quantum Hall states on the lowest Landau level when the Coulomb energy is much smaller than the cyclotron energy. We introduce two spectral densities, ρ_T(ω) and \bar ρ_T(ω), which are proportional to the probabilities of absorption of circularly polarized gravitons by the quantum Hall system. We prove three sum rules relating these spectral densities with the shift S, the q^4 coefficient of the static structure factor S_4, and the high-frequency shear modulus of the ground state μ_\infty, which is precisely defined. We confirm an inequality, first suggested by Haldane, that S_4 is bounded from below by |S-1|/8. The Laughlin wavefunction saturates this bound, which we argue to imply that systems with ground state wavefunctions close to Laughlin's absorb gravitons of predominantly one circular polarization. We consider a nonlinear model where the sum rules are saturated by a single magneto-roton mode. In this model, the magneto-roton arises from the mixing between oscillations of an internal metric and the hydrodynamic motion. Implications for experiments are briefly discussed.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-09-10T20:00:04Z</published>
+    <arxiv:comment>17 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>JHEP 01 (2016) 021</arxiv:journal_ref>
+    <author>
+      <name>Siavash Golkar</name>
+    </author>
+    <author>
+      <name>Dung X. Nguyen</name>
+    </author>
+    <author>
+      <name>Dam T. Son</name>
+    </author>
+    <arxiv:doi>10.1007/JHEP01(2016)021</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/JHEP01(2016)021" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.03179v1</id>
+    <title>Robust Packaged Fiber-Microcavity Device with over One Billion Q-factor</title>
+    <updated>2023-03-19T07:42:58Z</updated>
+    <link href="https://arxiv.org/abs/2304.03179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.03179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Whispering gallery mode (WGM) microcavities can confine photons within a microscale volume for long periods of time, strongly enhancing light-matter interactions, and making it a crucial platform in optical science and applications. Current research on microcavity coupling system relays on precise mechanical coupling with microscope monitoring, and its resonance properties are extremely sensitive to external interference, which greatly limits the practical application of microcavities. Therefore, a novel packaged fiber-microcavity device with air/water tightness and stable temperature characteristics is proposed in this paper. A variety of fixatives with different Young's modulus gradients and low coefficients of thermal expansion are used to design a package structure with overall vibration isolation and buffering effect, in order to ensure the stability of the transmission spectrum and improve the robustness of the microcavity module. Through the performance characterization test of the device, it is proved that the packaged microcavities can maintain a quality factor as high as 10^9, and has the advantages of compact size, strong robustness, and versatility. This research work is of great significance to promote the large-scale application of WGMs in high-speed optical communication, nonlinear optics, narrow linewidth lasers, and ultra-high sensitivity sensing.</summary>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-19T07:42:58Z</published>
+    <arxiv:primary_category term="physics.app-ph"/>
+    <author>
+      <name>Fangxing Zhang</name>
+    </author>
+    <author>
+      <name>Shengnan HuangFu</name>
+    </author>
+    <author>
+      <name>Jialve Sun</name>
+    </author>
+    <author>
+      <name>Shengqiang Ji</name>
+    </author>
+    <author>
+      <name>Yanjie Bai</name>
+    </author>
+    <author>
+      <name>Yunfeng Xiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.03247v2</id>
+    <title>Local Inversion of maps: Black box Cryptanalysis</title>
+    <updated>2022-07-24T04:54:25Z</updated>
+    <link href="https://arxiv.org/abs/2207.03247v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.03247v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper is a short summery of results announced in a previous paper on a new universal method for Cryptanalysis which uses a Black Box linear algebra approach to computation of local inversion of nonlinear maps in finite fields. It is shown that one local inverse $x$ of the map equation $y=F(x)$ can be computed by using the minimal polynomial of the sequence $y(k)$ defined by iterates (or recursion) $y(k+1)=F(y(k))$ with $y(0)=y$ when the sequence is periodic. This is the only solution in the periodic orbit of the map $F$. Further, when the degree of the minimal polynomial is of polynomial order in number of bits of the input of $F$ (called low complexity case), the solution can be computed in polynomial time. The method of computation only uses the forward computations $F(y)$ for given $y$ which is why this is called a Black Box approach. Application of this approach is then shown for cryptanalysis of several maps arising in cryptographic primitives. It is shown how in the low complexity cases maps defined by block and stream ciphers can be inverted to find the symmetric key under known plaintext attack. Then it is shown how RSA map can be inverted to find the plaintext as well as an equivalent private key to break the RSA algorithm without factoring the modulus. Finally it is shown that the discrete log computation in finite field and elliptic curves can be formulated as a local inversion problem and the low complexity cases can be solved in polynomial time.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-07T11:58:32Z</published>
+    <arxiv:comment>13 pages. Summery and comprehension of a previous paper arxiv.org/abs/2202.06584v2</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Virendra Sule</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.12266v1</id>
+    <title>Joint Trajectory and Resource Optimization for Dual-aerial ARIS-assisted NOMA-TNT Networks</title>
+    <updated>2026-04-14T04:30:49Z</updated>
+    <link href="https://arxiv.org/abs/2604.12266v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.12266v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integrated terrestrial and non-terrestrial networks (ITNTNs) are envisioned as a key paradigm for sixth-generation (6G) wireless systems, enabling seamless global connectivity. In this paper, we investigate a dual-aerial active reconfigurable intelligent surface (ARIS)-assisted non-orthogonal multiple access (NOMA)-based ITNTN, where a terrestrial base station (TBS) and a satellite (SAT) simultaneously serve terrestrial and satellite users with the aid of a UAV-mounted ARIS and a HAP-mounted ARIS. Users are multiplexed via power-domain NOMA with a predefined SIC decoding order. We formulate an average sum-rate maximization problem by jointly optimizing transmit beamforming, ARIS coefficients, and the 3D trajectories of the UAV and HAP, subject to power, unit-modulus, ARIS power, and mobility constraints. The problem is highly non-convex due to coupled variables, nonlinear SINR expressions, ARIS amplification, and trajectory-dependent channels. To address this, a block coordinate descent (BCD)-based framework is proposed. Specifically, beamforming is optimized via WMMSE, ARIS phase shifts via a manifold-based RCG method, amplification factors via SCA, and trajectories via first-order approximations. The proposed algorithm is guaranteed to converge to a stationary point. Simulation results demonstrate that the proposed design achieves significant performance gains over benchmark schemes. In particular, it provides an average sum-rate improvement of approximately $8.44\%$ over passive RIS under given power constraints, highlighting the benefits of dual-aerial ARIS and joint communication-mobility optimization.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-14T04:30:49Z</published>
+    <arxiv:comment>This work has been submitted to IEEE Transactions on Communications for possible publication</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Vangara Saiprudhvi</name>
+    </author>
+    <author>
+      <name>Keshav Singh</name>
+    </author>
+    <author>
+      <name>Hariharan Subramaniyam</name>
+    </author>
+    <author>
+      <name>Chih-Peng Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.02534v1</id>
+    <title>Exact self similar solutions for nonlinear coupled heat elastic wave systems with temperature dependent material properties</title>
+    <updated>2026-06-17T05:43:39Z</updated>
+    <link href="https://arxiv.org/abs/2607.02534v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.02534v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we study a coupled nonlinear thermoelastic system in which the heat capacity, thermal conductivity, and elastic modulus are all temperature-dependent. The thermal conduction equation is formulated in a generalized radial geometry governed by a parameter $ν$, which encompasses planar, cylindrical, and spherical configurations as special cases. A complete Lie symmetry classification of the admissible constitutive functions is carried out, yielding three principal classes: exponential laws, power laws, and a unified class that contains both as limiting cases. For each class, the admitted symmetry algebras are determined, optimal systems of one-dimensional subalgebras are constructed, and the governing partial differential equations are reduced to coupled ordinary differential equation systems via similarity transformations. Exact closed-form solutions are obtained for each class using a combination of integrating factor methods, flux-variable substitutions, and power-law and logarithmic ansätze. For the exponential class, the thermal field exhibits a logarithmic similarity profile while the displacement field decays algebraically, with the geometry parameter absorbed into the leading-order transformation. For the power-law class, the thermal field follows a self-similar power-law profile and the displacement field decomposes into distinct elastic, self-similar, and thermoelastically driven modes. Travelling-wave solutions are also constructed, with elementary forms recovered in limiting cases. The influence of geometry, particularly the structural distinction between cylindrical and other configurations, is identified and physically interpreted. All solutions are discussed in terms of the interplay between thermal diffusion, elastic stiffness, and thermoelastic coupling.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-17T05:43:39Z</published>
+    <arxiv:primary_category term="math.AP"/>
+    <author>
+      <name>Manjit Singh</name>
+    </author>
+    <author>
+      <name> Radhika</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05720v2</id>
+    <title>On Decay of the Local Mean Oscillations of the Vorticity Direction in Critical Navier-Stokes Flows</title>
+    <updated>2026-09-09T17:27:53Z</updated>
+    <link href="https://arxiv.org/abs/2609.05720v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05720v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We isolate and analyze the geometric PDE governing the evolution of the vorticity direction in the 3D incompressible (unforced) Navier-Stokes equations (NSE), restricted to the case of a critical spatial point singularity where the vorticity magnitude concentrates as $O(|x|^{-2})$, inhabiting the critical Lorentz space $L^{3/2, \infty}$. The PDE consists of the Harmonic Map Heat Flow (HMHF) into the sphere supplemented with the fluid transport, cross-diffusion and tangential strain. The question is whether the NSE mechanics can propagate logarithmic decay of the local mean oscillations of the direction -- the condition $\xiVec \in \bmo_{1/|\log r|}$ which (in this setting) was shown in the companion paper to prevent finite time blow-up. The key observations are that the $O(|x|^{-2})$ concentration, factored out of the viscous cross-diffusion, generates an outward radial drift $4ν\, x/|x|^2$ at the core and that the HMHF nonlinearity is harmless for the quantity $\frac12|\xiVec - e|^2$, which is a subsolution on any hemisphere. This yields a transfer theorem: the $\bmo_{1/|\log r|}$ regularity of the direction at the core, uniformly up to the singular time, is controlled by a logarithmic modulus in time of the direction at the inner scale, together with the physical strain. Crucially, the strain enters the direction equation only through its tangential component $P_{\xiVec^\perp} S\xiVec$, which vanishes precisely when the direction is an eigenvector of the strain tensor. Since this includes the eigenvector carrying the maximal stretching, the result is in contrast to the classical geometric regularity criteria which are built on depleting the full vortex-stretching term and thus confined to configurations of weak stretching.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T21:01:50Z</published>
+    <arxiv:comment>cross-referencing a companion paper arXiv:2607.08866 plus a couple of clarifications</arxiv:comment>
+    <arxiv:primary_category term="math.AP"/>
+    <author>
+      <name>Zoran Grujic</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.07506v1</id>
+    <title>Slow dynamics and time-composition superposition in gels of cellulose nanocrystals</title>
+    <updated>2022-01-19T10:16:54Z</updated>
+    <link href="https://arxiv.org/abs/2201.07506v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.07506v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cellulose nanocrystals (CNCs) are rodlike biosourced colloidal particles used as key building blocks in a growing number of materials with innovative mechanical or optical properties. While CNCs form stable suspensions at low volume fractions in pure water, they aggregate in the presence of salt and form colloidal gels with time-dependent properties. Here, we study the impact of salt concentration on the slow aging dynamics of CNC gels following the cessation of a high-shear flow that fully fluidizes the sample. We show that the higher the salt content, the faster the recovery of elasticity upon flow cessation. Most remarkably, the elastic modulus $G'$ obeys a time-composition superposition principle: the temporal evolution of $G'$ can be rescaled onto a universal sigmoidal master curve spanning 13 orders of magnitude in time for a wide range of salt concentrations. Such a rescaling is obtained through a time-shift factor that follows a steep power-law decay with increasing salt concentration, until it saturates at large salt content. These findings are robust to changes in the type of salt and in the CNC content. We further show that both linear and nonlinear rheological properties of CNC gels of various compositions, including, e.g., the frequency-dependence of viscoelastic spectra and the yield strain, can be rescaled based on the sample age along the general master curve. Our results provide strong evidence for universality in the aging dynamics of CNC gels, and call for microstructural investigations during recovery as well as theoretical modelling of time-composition superposition in rodlike colloids.</summary>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-19T10:16:54Z</published>
+    <arxiv:comment>11 pages, 5 figures and 6 supplemental figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.soft"/>
+    <arxiv:journal_ref>J. Chem. Phys. 156, 214901 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Lise Morlet-Decarnin</name>
+    </author>
+    <author>
+      <name>Thibaut Divoux</name>
+    </author>
+    <author>
+      <name>Sebastien Manneville</name>
+    </author>
+    <arxiv:doi>10.1063/5.0085660</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/5.0085660" title="doi"/>
+  </entry>
+</feed>

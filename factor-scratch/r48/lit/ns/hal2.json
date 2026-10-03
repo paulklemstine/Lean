@@ -1,0 +1,158 @@
+{
+  "response":{
+    "numFound":26,
+    "start":0,
+    "maxScore":17.095154,
+    "numFoundExact":true,
+    "docs":[{
+      "title_s":["Number Field Sieve for DLP"],
+      "authFullName_s":["Antoine Joux","Reynald Lercier"],
+      "uri_s":"https://hal.science/hal-00665015v1",
+      "producedDate_s":"2011"
+    },{
+      "title_s":["The Tower Number Field Sieve"],
+      "authFullName_s":["Razvan Barbulescu","Pierrick Gaudry","Thorsten Kleinjung"],
+      "uri_s":"https://hal.science/hal-01155635v1",
+      "producedDate_s":"2015-11-29",
+      "fileMain_s":"https://hal.science/hal-01155635/document"
+    },{
+      "title_s":["Square root algorithms for the number field sieve"],
+      "authFullName_s":["Emmanuel Thomé"],
+      "uri_s":"https://inria.hal.science/hal-00756838v1",
+      "producedDate_s":"2012-07-16",
+      "fileMain_s":"https://inria.hal.science/hal-00756838/document"
+    },{
+      "title_s":["The Number Field Sieve in the Medium Prime Case"],
+      "authFullName_s":["Antoine Joux","Reynald Lercier","Nigel Smart","Frederik Vercauteren"],
+      "uri_s":"https://hal.science/hal-01102034v1",
+      "producedDate_s":"2006-08-20"
+    },{
+      "title_s":["Root optimization of polynomials in the number field sieve"],
+      "authFullName_s":["Shi Bai","Richard Brent","Emmanuel Thomé"],
+      "uri_s":"https://inria.hal.science/hal-00919367v1",
+      "producedDate_s":"2015",
+      "fileMain_s":"https://inria.hal.science/hal-00919367/document"
+    },{
+      "title_s":["Computing a square root for the number field sieve"],
+      "authFullName_s":["Jean-Marc Couveignes"],
+      "uri_s":"https://hal.science/hal-04526543v1",
+      "producedDate_s":"1993-10-04",
+      "fileMain_s":"https://hal.science/hal-04526543/document"
+    },{
+      "title_s":["Higher dimensional sieving for the number field sieve algorithms"],
+      "authFullName_s":["Laurent Grémy"],
+      "uri_s":"https://inria.hal.science/hal-01890731v1",
+      "producedDate_s":"2018-07-16",
+      "fileMain_s":"https://inria.hal.science/hal-01890731/document"
+    },{
+      "title_s":["Montgomery's method of polynomial selection for the number field sieve"],
+      "authFullName_s":["Nicholas Coxon"],
+      "uri_s":"https://inria.hal.science/hal-01097069v1",
+      "producedDate_s":"2014-12-18",
+      "fileMain_s":"https://inria.hal.science/hal-01097069/document"
+    },{
+      "title_s":["Parallel Structured Gaussian Elimination for the Number Field Sieve"],
+      "authFullName_s":["Charles Bouillaguet","Paul Zimmermann"],
+      "uri_s":"https://inria.hal.science/hal-02098114v2",
+      "producedDate_s":"2021-01-08",
+      "fileMain_s":"https://inria.hal.science/hal-02098114/document"
+    },{
+      "title_s":["Factorization of RSA-140 using the Number Field Sieve"],
+      "authFullName_s":["Stefania Cavallar","Bruce Dodson","Arjen-K. Lenstra","Paul Leyland","Walter M. Lioen","Peter L. Montgomery","Brian Murphy","Herman Te Riele","Paul Zimmermann"],
+      "uri_s":"https://inria.hal.science/inria-00108061v1",
+      "producedDate_s":"1999-11-14"
+    },{
+      "title_s":["Extended Tower Number Field Sieve"],
+      "authFullName_s":["Taechan Kim","Razvan Barbulescu"],
+      "uri_s":"https://hal.science/hal-01281966v1",
+      "producedDate_s":"2016-08-14",
+      "fileMain_s":"https://hal.science/hal-01281966/document"
+    },{
+      "title_s":["Size Optimization of Sextic Polynomials in the Number Field Sieve"],
+      "authFullName_s":["Shi Bai","Paul Zimmermann"],
+      "uri_s":"https://inria.hal.science/hal-00760331v1",
+      "producedDate_s":"2012",
+      "fileMain_s":"https://inria.hal.science/hal-00760331/document"
+    },{
+      "title_s":["CADO-NFS, An Implementation of the Number Field Sieve Algorithm"],
+      "authFullName_s":["The Cado-Nfs Development Team"],
+      "uri_s":"https://inria.hal.science/hal-02099620v1",
+      "producedDate_s":"2019-04-15"
+    },{
+      "title_s":["Non-Linear Polynomial Selection for the Number Field Sieve"],
+      "authFullName_s":["Thomas Prest","Paul Zimmermann"],
+      "uri_s":"https://inria.hal.science/inria-00540483v1",
+      "producedDate_s":"2012",
+      "fileMain_s":"https://inria.hal.science/inria-00540483/document"
+    },{
+      "title_s":["Refined Analysis of the Asymptotic Complexity of the Number Field Sieve"],
+      "authFullName_s":["Aude Le Gluher","Pierre-Jean Spaenlehauer","Emmanuel Thomé"],
+      "uri_s":"https://inria.hal.science/hal-02934273v1",
+      "producedDate_s":"2021"
+    },{
+      "title_s":["The Multiple Number Field Sieve for Medium and High Characteristic Finite Fields"],
+      "authFullName_s":["Razvan Barbulescu","Cécile Pierrot"],
+      "uri_s":"https://inria.hal.science/hal-00952610v2",
+      "producedDate_s":"2014",
+      "fileMain_s":"https://inria.hal.science/hal-00952610/document"
+    },{
+      "title_s":["Collecting relations for the number field sieve in $GF(p^6)$"],
+      "authFullName_s":["Pierrick Gaudry","Laurent Grémy","Marion Videau"],
+      "uri_s":"https://inria.hal.science/hal-01273045v2",
+      "producedDate_s":"2016",
+      "fileMain_s":"https://inria.hal.science/hal-01273045/document"
+    },{
+      "title_s":["Improvements to the number field sieve for non-prime finite fields"],
+      "authFullName_s":["Razvan Barbulescu","Pierrick Gaudry","Aurore Guillevic","François Morain"],
+      "uri_s":"https://inria.hal.science/hal-01052449v5",
+      "producedDate_s":"2022-08-24",
+      "fileMain_s":"https://inria.hal.science/hal-01052449/document"
+    },{
+      "title_s":["The Multiple Number Field Sieve with Conjugation and Generalized Joux-Lercier Methods"],
+      "authFullName_s":["Cécile Pierrot"],
+      "uri_s":"https://inria.hal.science/hal-01056205v2",
+      "producedDate_s":"2015-04-26",
+      "fileMain_s":"https://inria.hal.science/hal-01056205/document"
+    },{
+      "title_s":["On the Alpha Value of Polynomials in the Tower Number Field Sieve Algorithm"],
+      "authFullName_s":["Aurore Guillevic","Shashank Singh"],
+      "uri_s":"https://inria.hal.science/hal-02263098v2",
+      "producedDate_s":"2021-02-19",
+      "fileMain_s":"https://inria.hal.science/hal-02263098/document"
+    },{
+      "title_s":["A New Ranking Function for Polynomial Selection in the Number Field Sieve"],
+      "authFullName_s":["Nicolas David","Paul Zimmermann"],
+      "uri_s":"https://inria.hal.science/hal-02151093v4",
+      "producedDate_s":"2020",
+      "fileMain_s":"https://inria.hal.science/hal-02151093/document"
+    },{
+      "title_s":["We are on the same side. Alternative sieving strategies for the number field sieve"],
+      "authFullName_s":["Charles Bouillaguet","Ambroise Fleury","Pierre-Alain Fouque","Paul Kirchner"],
+      "uri_s":"https://inria.hal.science/hal-04112671v1",
+      "producedDate_s":"2023-12-04",
+      "fileMain_s":"https://inria.hal.science/hal-04112671/document"
+    },{
+      "title_s":["The Special Number Field Sieve in $\\F _{p^{n}}$, Application to Pairing-Friendly Constructions"],
+      "authFullName_s":["Antoine Joux","Cécile Pierrot"],
+      "uri_s":"https://hal.science/hal-01213666v1",
+      "producedDate_s":"2013-11"
+    },{
+      "title_s":["Improvements to the general number field sieve for discrete logarithms in prime fields"],
+      "authFullName_s":["Antoine Joux","Reynald Lercier"],
+      "uri_s":"https://hal.science/hal-01102016v1",
+      "producedDate_s":"2003-04"
+    },{
+      "title_s":["Discrete Logarithm Cryptanalyses : Number Field Sieve and Lattice Tools for Side-Channel Attacks","Cryptanalyses de logarithmes discrets : crible algébrique et réseaux pour canaux auxiliaires"],
+      "authFullName_s":["Gabrielle de Micheli"],
+      "uri_s":"https://hal.univ-lorraine.fr/tel-03335360v1",
+      "producedDate_s":"2021-05-25",
+      "fileMain_s":"https://hal.univ-lorraine.fr/tel-03335360/document"
+    },{
+      "title_s":["TNFS-alpha documentation"],
+      "authFullName_s":["Aurore Guillevic"],
+      "uri_s":"https://inria.hal.science/hal-05583657v1",
+      "producedDate_s":"2026-04-08",
+      "fileMain_s":"https://inria.hal.science/hal-05583657/document"
+    }]
+  }
+}

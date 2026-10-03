@@ -1,0 +1,1343 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/uHoNVg6ipZbG++Xv4HCs8wCNeOs</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"record" AND abs:"bits"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:47Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22record%22+AND+abs:%22bits%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>46</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2006.06197v1</id>
+    <title>Comparing the difficulty of factorization and discrete logarithm: a 240-digit experiment</title>
+    <updated>2020-06-11T05:17:58Z</updated>
+    <link href="https://arxiv.org/abs/2006.06197v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.06197v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report on two new records: the factorization of RSA-240, a 795-bit number, and a discrete logarithm computation over a 795-bit prime field. Previous records were the factorization of RSA-768 in 2009 and a 768-bit discrete logarithm computation in 2016. Our two computations at the 795-bit level were done using the same hardware and software, and show that computing a discrete logarithm is not much harder than a factorization of the same size. Moreover, thanks to algorithmic variants and well-chosen parameters, our computations were significantly less expensive than anticipated based on previous records.The last page of this paper also reports on the factorization of RSA-250.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-11T05:17:58Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>The 40th Annual International Cryptology Conference (Crypto 2020), Aug 2020, Santa Barbara, USA, United States</arxiv:journal_ref>
+    <author>
+      <name>Fabrice Boudot</name>
+      <arxiv:affiliation>XLIM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+      <arxiv:affiliation>UC San Diego</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Paul Zimmermann</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.10860v1</id>
+    <title>A New Angle on Lattice Sieving for the Number Field Sieve</title>
+    <updated>2020-01-29T14:24:09Z</updated>
+    <link href="https://arxiv.org/abs/2001.10860v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.10860v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lattice sieving in two or more dimensions has proven to be an indispensable practical aid in integer factorization and discrete log computations involving the number field sieve. The main contribution of this article is to show that a different method of lattice enumeration in three dimensions will provide a significant speedup. We use the successive minima and shortest vectors of the lattice instead of transition vectors to iterate through lattice points. We showcase the new method by a record computation in a 133-bit subgroup of $\mathbb{F}_{p^6}$, with $p^6$ having 423 bits. Our overall timing nearly $3$ times faster than the previous record of a 132-bit subgroup in a 422-bit field. The approach generalizes to dimensions 4 or more, overcoming a key obstruction to the implementation of the tower number field sieve.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-29T14:24:09Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gary McGuire</name>
+    </author>
+    <author>
+      <name>Oisin Robinson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1806.10367v1</id>
+    <title>400 Gbps Dual-polarisation Non-linear Frequency-division Multiplexed Transmission with b-Modulation</title>
+    <updated>2018-06-27T09:33:26Z</updated>
+    <link href="https://arxiv.org/abs/1806.10367v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1806.10367v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We demonstrate, for the first time, a b-modulated dual-polarisation NFDM transmission in simulation, achieving a record net data rate of 400 Gbps (SE of 7.2 bit/s/Hz) over 960 km. The proposed scheme shows 1 dB Q-factor improvement over qc-modulation scheme.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-06-27T09:33:26Z</published>
+    <arxiv:comment>Accepted by ECOC 2018</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Xianhe Yangzhang</name>
+    </author>
+    <author>
+      <name>Vahid Aref</name>
+    </author>
+    <author>
+      <name>Son T. Le</name>
+    </author>
+    <author>
+      <name>Henning Buelow</name>
+    </author>
+    <author>
+      <name>Polina Bayvel</name>
+    </author>
+    <arxiv:doi>10.1109/JLT.2019.2902961</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/JLT.2019.2902961" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1310.3809v1</id>
+    <title>Efficient Modular Arithmetic for SIMD Devices</title>
+    <updated>2013-10-10T11:02:13Z</updated>
+    <link href="https://arxiv.org/abs/1310.3809v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1310.3809v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper describes several new improvements of modular arithmetic and how to exploit them in order to gain more efficient implementations of commonly used algorithms, especially in cryptographic applications. We further present a new record for modular multiplications per second on a single desktop computer as well as a new record for the ECM factoring algorithm. This new results allow building personal computers which can handle more than 3 billion modular multiplications per second for a 192 bit module at moderate costs using modern graphic cards.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-10-10T11:02:13Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Wilke Trei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.11110v3</id>
+    <title>Fixed-Threshold One-Bit Toeplitz Covariance Estimation under Sparse-Ruler Sampling</title>
+    <updated>2026-06-30T17:32:40Z</updated>
+    <link href="https://arxiv.org/abs/2606.11110v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.11110v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We estimate the Toeplitz covariance matrix of a centered Gaussian distribution from data that are both coarsely quantized and sparsely sampled. Only the coordinates of a sparse ruler are recorded, and each recorded value is kept as a single bit: the sign of its comparison with a fixed threshold. Such data arise in low-precision sensing front ends and sparse sensor arrays. Because the threshold is nonzero, every bit has a common mean. Each bit is also reused across many of the products that build the covariance, so one bit's error enters many of them. Centering removes the shared error. We prove a Gaussian variance contraction theorem for products of a centered, bounded nonlinearity of a Gaussian vector, the non-smooth one-bit sign included; it sets each lag's variance by how well the ruler covers that lag. The resulting estimator needs neither the signal scale nor the bit mean in advance, since the nonzero threshold makes both identifiable from the marginal bits. A matching minimax lower bound shows the resulting coverage rate is optimal up to constants over a neighborhood of white noise; the bound holds even for the unquantized real-valued samples, so one-bit quantization costs only a constant factor.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-09T17:06:10Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Zhiyong Cheng</name>
+    </author>
+    <author>
+      <name>Shengyao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.0524v2</id>
+    <title>Thermally induced error: density limit for magnetic data storage</title>
+    <updated>2012-03-11T20:20:25Z</updated>
+    <link href="https://arxiv.org/abs/1111.0524v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.0524v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Magnetic data storage is pervasive in the preservation of digital information and the rapid pace of computer development requires ever more capacity. Increasing the storage density for magnetic hard disk drives requires a reduced bit size, previously thought to be limited by the thermal stability of the constituent magnetic grains. The limiting storage density in magnetic recording is investigated treating the writing of bits as a thermodynamic process. A 'thermal writability' factor is introduced and it is shown that storage densities will be limited to 15 to 20 TBit/in^2 unless technology can move beyond the currently available write field magnitudes.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-02T15:08:18Z</published>
+    <arxiv:comment>Improved manuscript for readability</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>R. F. L. Evans</name>
+    </author>
+    <author>
+      <name>R. W. Chantrell</name>
+    </author>
+    <author>
+      <name>U. Nowak</name>
+    </author>
+    <author>
+      <name>A. Lyberatos</name>
+    </author>
+    <author>
+      <name>H-J. Richter</name>
+    </author>
+    <arxiv:doi>10.1063/1.3691196</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.3691196" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1401.4767v2</id>
+    <title>Hilbert-space factorization is a limited and expensive information-processing resource</title>
+    <updated>2014-02-05T19:30:33Z</updated>
+    <link href="https://arxiv.org/abs/1401.4767v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1401.4767v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>By taking the need for quantum reference frames into account, it is shown that Hilbert-space factorization is a dissipative process requiring on the order of kT to reduce by one bit an observer's uncertainty in the provenance of a classically-recorded observational outcome. This cost is neglected in standard treatments of decoherence that assume that observational outcomes are obtained by interacting with a collection of degrees of freedom identified a priori. Treating this cost explicitly leads to a natural measure of the probability of any particular quantum reference frame.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-01-20T01:48:04Z</published>
+    <arxiv:comment>8 pages; Comment on M. Tegmark, "Consciousness as a state of matter" (arXiv:1401.1219); v2: 12 pages, cleaned up notation, added a figure, expanded discussion of quantum Darwinism and related factorization entropy to the measure problem</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chris Fields</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.6171v1</id>
+    <title>Fast Purcell-enhanced single photon source in 1,550-nm telecom band from a resonant quantum dot-cavity coupling</title>
+    <updated>2012-03-28T06:05:26Z</updated>
+    <link href="https://arxiv.org/abs/1203.6171v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.6171v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-bit-rate nanocavity-based single photon sources in the 1,550-nm telecom band are challenges facing the development of fibre-based long-haul quantum communication networks. Here we report a very fast single photon source in the 1,550-nm telecom band, which is achieved by a large Purcell enhancement that results from the coupling of a single InAs quantum dot and an InP photonic crystal nanocavity. At a resonance, the spontaneous emission rate was enhanced by a factor of 5 resulting a record fast emission lifetime of 0.2 ns at 1,550 nm. We also demonstrate that this emission exhibits an enhanced anti-bunching dip. This is the first realization of nanocavity-enhanced single photon emitters in the 1,550-nm telecom band. This coupled quantum dot cavity system in the telecom band thus provides a bright high-bit-rate non-classical single photon source that offers appealing novel opportunities for the development of a long-haul quantum telecommunication system via optical fibres.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-28T06:05:26Z</published>
+    <arxiv:comment>16 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <arxiv:journal_ref>Sci. Rep. 2 (2012) 321</arxiv:journal_ref>
+    <author>
+      <name>M. D. Birowosuto</name>
+    </author>
+    <author>
+      <name>H. Sumikura</name>
+    </author>
+    <author>
+      <name>S. Matsuo</name>
+    </author>
+    <author>
+      <name>H. Taniyama</name>
+    </author>
+    <author>
+      <name>P. J. van Veldhoven</name>
+    </author>
+    <author>
+      <name>R. Nötzel</name>
+    </author>
+    <author>
+      <name>M. Notomi</name>
+    </author>
+    <arxiv:doi>10.1038/srep00321</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/srep00321" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00926v5</id>
+    <title>Edge-Private Matching Kernels Through Local Decoding</title>
+    <updated>2026-09-25T18:54:41Z</updated>
+    <link href="https://arxiv.org/abs/2501.00926v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00926v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A matching is a set of edges with no shared endpoints. We study how participants can retain useful matching structure when each knows its own relationships but those relationships are sensitive to outside observers. Our protocols publish a pure edge-differentially-private record of coordination messages. Each participant combines that record with its private neighbor list to obtain a shortlist of relationships; the two endpoints agree on every selected relationship. For a graph with $n$ vertices, the main protocol uses $O(n)$ communication rounds, and its completed public record can be stored in $O(n\log n)$ bits. Let $0&lt;\varepsilon\le1$ be the privacy budget, $0&lt;ρ&lt;1/4$ the allowed failure probability, and $2+η$, with $0&lt;η\le1$, the approximation factor. For a universal constant $c_0$, a per-vertex capacity of at least $c_0\log(n/ρ)/(η\varepsilon)$ suffices for two guarantees to hold together with probability at least $1-ρ$: the selected graph retains a $1/(2+η)$ fraction of the best edge count under the same capacity, and it contains an ordinary matching of at least that fraction of the original maximum. The key property is that every omitted edge touches a vertex whose shortlist is nearly full. We also prove lower bounds explaining why local decoding and a probabilistic capacity guarantee are needed, characterize a class of consistent local decoders, and give parallel and insertion-only streaming extensions. The released public messages satisfy differential privacy; the selected relationships remain a secret at their endpoints.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-01T18:52:05Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Michael Dinitz</name>
+    </author>
+    <author>
+      <name>George Z. Li</name>
+    </author>
+    <author>
+      <name>Quanquan C. Liu</name>
+    </author>
+    <author>
+      <name>Felix Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1104.4954v1</id>
+    <title>On the Complexity of Solving a Bivariate Polynomial System</title>
+    <updated>2011-04-26T15:57:43Z</updated>
+    <link href="https://arxiv.org/abs/1104.4954v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1104.4954v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the complexity of computing the real solutions of a bivariate polynomial system using the recently proposed algorithm BISOLVE. BISOLVE is a classical elimination method which first projects the solutions of a system onto the $x$- and $y$-axes and, then, selects the actual solutions from the so induced candidate set. However, unlike similar algorithms, BISOLVE requires no genericity assumption on the input nor it needs any change of the coordinate system. Furthermore, extensive benchmarks from \cite{bes-bisolve-2011} confirm that the algorithm outperforms state of the art approaches by a large factor. In this work, we show that, for two polynomials $f,g\in\mathbb{Z}[x,y]$ of total degree at most $n$ with integer coefficients bounded by $2^τ$, BISOLVE computes isolating boxes for all real solutions of the system $f=g=0$ using $\Otilde(n^8τ^{2})$ bit operations, thereby improving the previous record bound by a factor of at least $n^{2}$.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-04-26T15:57:43Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Pavel Emeliyanenko</name>
+    </author>
+    <author>
+      <name>Michael Sagraloff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1904.06599v1</id>
+    <title>TDMR Detection System with Local Area Influence Probabilistic a Priori Detector</title>
+    <updated>2019-04-13T22:50:47Z</updated>
+    <link href="https://arxiv.org/abs/1904.06599v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1904.06599v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a three-track detection system for two dimensional magnetic recording (TDMR) in which a local area influence probabilistic (LAIP) detector works with a trellis-based Bahl-Cocke-Jelinek-Raviv (BCJR) detector to remove intersymbol interference (ISI) and intertrack interference (ITI) among coded data bits as well as media noise due to magnetic grain-bit interactions. Two minimum mean-squared error (MMSE) linear equalizers with different response targets are employed before the LAIP and BCJR detectors. The LAIP detector considers local grain-bit interactions and passes coded bit log-likelihood ratios (LLRs) to the channel decoder, whose output LLRs serve as a priori information to the BCJR detector, which is followed by a second channel decoding pass. Simulation results under 1-shot decoding on a grain-flipping-probability (GFP) media model show that the proposed LAIP/BCJR detection system achieves density gains of 6.8% for center-track detection and 1.2% for three-track detection compared to a standard BCJR/1D-PDNP. The proposed system's BCJR detector bit error rates (BERs) are lower than those of a recently proposed two-track BCJR/2D-PDNP system by factors of (0.55, 0.08) for tracks 1 and 2 respectively.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-04-13T22:50:47Z</published>
+    <arxiv:comment>Accepted to the 2019 IEEE International Conference on Communications (ICC-2019)</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Jinlu Shen</name>
+    </author>
+    <author>
+      <name>Xueliang Sun</name>
+    </author>
+    <author>
+      <name>Krishnamoorthy Sivakumar</name>
+    </author>
+    <author>
+      <name>Benjamin J. Belzer</name>
+    </author>
+    <author>
+      <name>Kheong Sann Chan</name>
+    </author>
+    <author>
+      <name>Ashish James</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.00608v2</id>
+    <title>Data Acquisition for the New Muon $g$-$2$ Experiment at Fermilab</title>
+    <updated>2015-11-02T17:07:41Z</updated>
+    <link href="https://arxiv.org/abs/1506.00608v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.00608v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new measurement of the anomalous magnetic moment of the muon, $a_μ \equiv (g-2)/2$, will be performed at the Fermi National Accelerator Laboratory. The most recent measurement, performed at Brookhaven National Laboratory and completed in 2001, shows a 3.3-3.6 standard deviation discrepancy with the Standard Model predictions for $a_μ$. The new measurement will accumulate 21 times those statistics, measuring $a_μ$ to 140 ppb and reducing the uncertainty by a factor of 4.
+  The data acquisition system for this experiment must have the ability to record deadtime-free records from 700 $μ$s muon spills at a raw data rate of 18 GB per second. Data will be collected using 1296 channels of $μ$TCA-based 800 MSPS, 12 bit waveform digitizers and processed in a layered array of networked commodity processors with 24 GPUs working in parallel to perform a fast recording and processing of detector signals during the spill. The system will be controlled using the MIDAS data acquisition software package. The described data acquisition system is currently being constructed, and will be fully operational before the start of the experiment in 2017.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-01T19:00:40Z</published>
+    <arxiv:comment>Proceedings of CHEP2015</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Wesley Gohn</name>
+    </author>
+    <arxiv:doi>10.1088/1742-6596/664/8/082014</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1742-6596/664/8/082014" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.01062v1</id>
+    <title>A highly efficient single photon-single quantum dot interface</title>
+    <updated>2015-02-03T22:59:36Z</updated>
+    <link href="https://arxiv.org/abs/1502.01062v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.01062v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Semiconductor quantum dots are a promising system to build a solid state quantum network. A critical step in this area is to build an efficient interface between a stationary quantum bit and a flying one. In this chapter, we show how cavity quantum electrodynamics allows us to efficiently interface a single quantum dot with a propagating electromagnetic field. Beyond the well known Purcell factor, we discuss the various parameters that need to be optimized to build such an interface. We then review our recent progresses in terms of fabrication of bright sources of indistinguishable single photons, where a record brightness of 79% is obtained as well as a high degree of indistinguishability of the emitted photons. Symmetrically, optical nonlinearities at the very few photon level are demonstrated, by sending few photon pulses at a quantum dot-cavity device operating in the strong coupling regime. Perspectives and future challenges are briefly discussed.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-03T22:59:36Z</published>
+    <arxiv:comment>to appear as a book chapter in a compilation "Engineering the Atom-Photon Interaction" published by Springer in 2015, edited by A. Predojevic and M. W. Mitchell</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Loic Lanco</name>
+    </author>
+    <author>
+      <name>Pascale Senellart</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.0420v1</id>
+    <title>Single Magnetic Atom on a Surface: Anisotropy Energy and Spin Density</title>
+    <updated>2012-03-02T11:15:53Z</updated>
+    <link href="https://arxiv.org/abs/1203.0420v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.0420v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Studying single-atom magnetic anisotropy on surfaces enables the exploration of the smallest magnetic storage bit that can be built. In this work, magnetic anisotropy of a single rare-earth atom on a surface is studied computationally for the first time. The single adatom and its substrate surface are chosen to be a Dysprosium (Dy) atom and a copper-nitrite surface, respectively, where single transition-metal magnetic atoms on the same surface were previously studied one atom at a time by scanning tunneling microscopes. We propose unconventional f and d subshell symmetries so that following the first-principles calculations, simple pictorial analyses of the spin-density distribution can be performed for the first time, independently for both a rare-earth atom Dy and a transition-metal Fe. The magnetic anisotropy energy of Dy on the surface is calculated to be a factor of five larger than the previous highest one, reaching a record-high value of 31 meV.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-02T11:15:53Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Jing-Neng Yao</name>
+    </author>
+    <author>
+      <name>Chiung-Yuan Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.13760v1</id>
+    <title>Reverse-Mode Automatic Differentiation of Compiled Programs</title>
+    <updated>2022-12-28T09:27:02Z</updated>
+    <link href="https://arxiv.org/abs/2212.13760v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.13760v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tools for algorithmic differentiation (AD) provide accurate derivatives of computer-implemented functions for use in, e. g., optimization and machine learning (ML). However, they often require the source code of the function to be available in a restricted set of programming languages. As a step towards making AD accessible for code bases with cross-language or closed-source components, we recently presented the forward-mode AD tool Derivgrind. It inserts forward-mode AD logic into the machine code of a compiled program using the Valgrind dynamic binary instrumentation framework. This work extends Derivgrind, adding the capability to record the real-arithmetic evaluation tree, and thus enabling operator overloading style reverse-mode AD for compiled programs. We maintain the high level of correctness reported for Derivgrind's forward mode, failing the same few testcases in an extensive test suite for the same well-understood reasons. Runtime-wise, the recording slows down the execution of a compiled 64-bit benchmark program by a factor of about 180.</summary>
+    <category term="cs.MS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-28T09:27:02Z</published>
+    <arxiv:comment>17 pages, 5 figures, 1 listing</arxiv:comment>
+    <arxiv:primary_category term="cs.MS"/>
+    <author>
+      <name>Max Aehle</name>
+    </author>
+    <author>
+      <name>Johannes Blühdorn</name>
+    </author>
+    <author>
+      <name>Max Sagebaum</name>
+    </author>
+    <author>
+      <name>Nicolas R. Gauger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.15463v2</id>
+    <title>Effect of Signal Quantization on Performance Measures of a 1st Order One Dimensional Differential Microphone Array</title>
+    <updated>2025-07-03T11:18:46Z</updated>
+    <link href="https://arxiv.org/abs/2506.15463v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.15463v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In practical systems, recorded analog signals must be digitized for processing, introducing quantization as a critical aspect of data acquisition. While prior studies have examined quantization effects in various signal processing contexts, its impact on differential microphone arrays (DMAs), particularly in one-dimensional (1D) first-order configurations, remains unexplored. This paper investigates the influence of signal quantization on the performance of first-order 1D-DMAs across various beampatterns. An analytical expression for quantized beamformed output for a first-order 1D-DMA has been formulated. The effect of signal quantization has been studied on array performance measures such as the Beampattern, Directivity Factor (DF), Front-to-Back Ratio (FBR), and suppression depth at null points (SDN). Simulation results reveal that the beampattern shape remains structurally invariant across quantization bit depths, with quantization primarily affecting SDN. DF and FBR remain constant with the varying number of quantization bits. Additionally, SDN is shown to be frequency-independent, however, it increases with increasing quantization bit depths, enhancing interference suppression. The study also examines the effect of steering nulls across the azimuthal range, showing that SDN degrades as the null moves closer to the source look direction (0 degree), indicating reduced interference suppression.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-18T13:55:01Z</published>
+    <arxiv:comment>5 Pages with 6 figures and 1 table</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Shweta Pal</name>
+    </author>
+    <author>
+      <name>Arun Kumar</name>
+    </author>
+    <author>
+      <name>Monika Agrawal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.09335v1</id>
+    <title>Factors affecting ASR performance: A study using state of the art ASR models in Indic Languages</title>
+    <updated>2026-06-08T11:03:25Z</updated>
+    <link href="https://arxiv.org/abs/2606.09335v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.09335v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>ASR performance varies across languages, speakers, and recording conditions, yet systematic analysis for Indic languages remain limited. We present a large-scale study of decoded outputs from multiple open-source ASR models evaluated on diverse Indian speech datasets in zero-shot settings. We analyze linguistic, speaker-level, and acoustic factors across Hindi, Bengali, Kannada, Telugu, and Marathi. We examine correlations between WER and speaker traits such as average word length, speaking rate, and utterance duration across multiple model dataset pairs. For Hindi, we further analyze audio factors including telephone codecs, bit depth, resampling, and background noise. Results reveal both cross lingual patterns and language-specific sensitivities, showing how speaker behavior and signal processing choices affect ASR robustness in real world Indic scenarios.</summary>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-08T11:03:25Z</published>
+    <arxiv:primary_category term="eess.AS"/>
+    <author>
+      <name>Agneedh Basu</name>
+    </author>
+    <author>
+      <name>Pavan Kumar J</name>
+    </author>
+    <author>
+      <name>Pranav Bhat</name>
+    </author>
+    <author>
+      <name>Sujith Pulikodan</name>
+    </author>
+    <author>
+      <name>Visruth Sanka</name>
+    </author>
+    <author>
+      <name>Nihar Desai</name>
+    </author>
+    <author>
+      <name>Prasanta Kumar Ghosh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.19248v1</id>
+    <title>Demons on a Budget: Adaptive Measurement Placement at the Entanglement Phase Transition</title>
+    <updated>2026-08-16T04:08:30Z</updated>
+    <link href="https://arxiv.org/abs/2608.19248v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.19248v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Monitored quantum circuits exhibit a measurement-induced phase transition between volume-law and area-law entanglement as a function of the measurement rate $p$. Prior work places measurements at random locations and treats the rate as the control parameter. We instead fix the measurement budget and vary the placement process, comparing random placement against hand-designed and learned policies in brickwork random Clifford circuits at matched budget. First, placement geometry matters more than placement information. A deterministic contiguous sweep cuts the half-cut entropy by a factor of 3.4 relative to random placement, while equal-coverage unstructured placement and a greedy policy with full state access do far worse. The effect is carried by spatial order alone: measuring the $k$ least recently measured sites gives $4.14 \pm 0.06$ bits with random tie-breaking and $1.29 \pm 0.04$ bits with position-ordered tie-breaking. Second, the sweep eliminates the transition rather than shifting it. Tripartite mutual information crossings recede as $p^* \propto 1/L$, the steady-state entropy saturates at an $L$-independent ceiling near $0.46/p$, and data for $64 \le L \le 512$ collapse onto the form $S = p^{-1} f(pL)$ predicted by a ballistic regrowth argument. Third, in stabilizer dynamics every outcome is deterministic or a fair coin flip, so the record's Shannon entropy is exactly countable; the sweep dominates the entropy-versus-record-cost frontier while paying the same roughly one bit per measurement as random placement. Policies trained by cross-entropy and proximal policy optimization do not find the sweep: score-based policies parameterize which sites to measure, not the order in which degenerate scores are resolved, and the effect lives in that order. The phase diagram of monitored dynamics is a property of the placement process, not only of the measurement rate.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-16T04:08:30Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Rohan Pandey</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.01912v1</id>
+    <title>Broadband energy-efficient optical modulation by hybrid integration of silicon nanophotonics and organic electro-optic polymer</title>
+    <updated>2015-03-06T11:03:58Z</updated>
+    <link href="https://arxiv.org/abs/1503.01912v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.01912v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Silicon-organic hybrid integrated devices have emerging applications ranging from high-speed optical interconnects to photonic electromagnetic-field sensors. Silicon slot photonic crystal waveguides (PCWs) filled with electro-optic (EO) polymers combine the slow-light effect in PCWs with the high polarizability of EO polymers, which promises the realization of high-performance optical modulators. In this paper, a broadband, power-efficient, low-dispersion, and compact optical modulator based on an EO polymer filled silicon slot PCW is presented. A small voltage-length product of Vπ*L=0.282Vmm is achieved, corresponding to an unprecedented record-high effective in-device EO coefficient (r33) of 1230pm/V. Assisted by a backside gate voltage, the modulation response up to 50GHz is observed, with a 3-dB bandwidth of 15GHz, and the estimated energy consumption is 94.4fJ/bit at 10Gbit/s. Furthermore, lattice-shifted PCWs are utilized to enhance the optical bandwidth by a factor of ~10X over other modulators based on non-band-engineered PCWs and ring-resonators.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-06T11:03:58Z</published>
+    <arxiv:comment>12 pages, 4 figures, SPIE Photonics West Conference 2015</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Xingyu Zhang</name>
+    </author>
+    <author>
+      <name>Amir Hosseini</name>
+    </author>
+    <author>
+      <name>Harish Subbaraman</name>
+    </author>
+    <author>
+      <name>Jingdong Luo</name>
+    </author>
+    <author>
+      <name>Alex K. -Y Jen</name>
+    </author>
+    <author>
+      <name>Chi-jui Chung</name>
+    </author>
+    <author>
+      <name>Hai Yan</name>
+    </author>
+    <author>
+      <name>Zeyu Pan</name>
+    </author>
+    <author>
+      <name>Robert L. Nelson</name>
+    </author>
+    <author>
+      <name>Ray T. Chen</name>
+    </author>
+    <arxiv:doi>10.1117/12.2079686</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1117/12.2079686" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25289v1</id>
+    <title>Combining Self-Embedding Audio Watermarking with Ultra-Low-Bitrate Neural Codecs</title>
+    <updated>2026-08-26T01:55:15Z</updated>
+    <link href="https://arxiv.org/abs/2608.25289v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25289v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Partial manipulation of speech recordings, where only localized segments of an utterance are altered, poses a significant challenge for content integrity verification, as reliable detection and localization of such edits becomes harder as the manipulated proportion decreases. Watermarking offers a proactive defense alternative by embedding auxiliary information prior to distribution; classical hash-based schemes achieve near-perfect detection and localization under ideal conditions, but the original content cannot be recovered once a segment is manipulated. Building on a prior self-embedding audio steganography framework, this work presents an initial exploration of proactive defense performance under ideal conditions, extending the investigation along three axes: frame-level localization, multi-bit least significant bit variants, and evaluation across multiple ultra-low-bitrate neural codec representations. By embedding a compact neural codec representation rather than a cryptographic hash, the framework additionally enables recovery of the manipulated regions, while supporting training-free detection and localization without spoofed examples. Experiments across four controlled manipulation types under ideal channel conditions show that the embedded payload, and hence an approximate reconstruction of the authentic content, is always fully recovered without bit errors. The results also indicate that the choice of neural codec is the dominant factor for detection and localization performance.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T01:55:15Z</published>
+    <arxiv:comment>6 pages; 1 figure; 2 tables; submitted to WIFS 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Yigitcan Özer</name>
+    </author>
+    <author>
+      <name>Xin Wang</name>
+    </author>
+    <author>
+      <name>Zhe Zhang</name>
+    </author>
+    <author>
+      <name>Junichi Yamagishi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.24027v1</id>
+    <title>Numerical field optimization for enhanced efficiency in time-reversible gradient computation of open-source GPU-accelerated FDTD simulations</title>
+    <updated>2026-03-25T07:41:39Z</updated>
+    <link href="https://arxiv.org/abs/2603.24027v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.24027v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Finite-difference time-domain (FDTD) simulations often involve physical quantities spanning multiple orders of magnitude, such as the speed of light or electromagnetic field amplitudes. The standard practice for maintaining numerical accuracy in many FDTD implementations is to use 32-bit or 64-bit floating-point values to represent the electric and magnetic fields. However, this approach is not always optimal when recording field values, particularly during time-reversible gradient computation where electric and magnetic field values need to be saved at the boundary of the simulation domain. Since this memory bottleneck is often the limiting factor in time-reversible inverse design for nanophotonics, we present two field optimizations for enhancing memory efficiency in FDTD simulations. Using a smaller bit-width representation of field values as well as interpolation, we achieve similar accuracy at lower memory cost. This approach is particularly beneficial for GPU-accelerated computing, where reduced-precision data types are increasingly preferred due to their computational efficiency and prevalence in machine learning frameworks. We integrate our approach into FDTDX, an open-source, differentiable FDTD solver that natively supports time-reversible gradient computation. Our approach is especially important for future developments towards large-scale open-source simulations, which are critical for advancing computational nanophotonic applications.</summary>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-25T07:41:39Z</published>
+    <arxiv:primary_category term="physics.comp-ph"/>
+    <author>
+      <name>Yannik Mahlau</name>
+    </author>
+    <author>
+      <name>Lukas Berg</name>
+    </author>
+    <author>
+      <name>Bodo Rosenhahn</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.09901v1</id>
+    <title>Dynamic Predictive Sampling Analog to Digital Converter for Sparse Signal Sensing</title>
+    <updated>2022-11-17T21:33:51Z</updated>
+    <link href="https://arxiv.org/abs/2211.09901v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.09901v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a dynamic predictive sampling (DPS) based analog-to-digital converter (ADC) that provides a non-uniform sampling of input analog continuous-time signals. The processing unit generates a dynamic prediction of the input signal using two prior-quantized samplings to compute digital values of an upper threshold and a lower threshold. The digital threshold values are converted to analog thresholds to form a tracking window. A comparator compares the input analog signal with the tracking window to determine if the prediction is successful. A counter records timestamps between the unsuccessful predictions, which are the selected sampling points for quantization. No quantization is performed for successfully predicted sampling points so that the data throughput and power can be saved. The proposed circuits were designed as a 10-bit ADC using 0.18 micro CMOS process sampling at 1 kHz. The results show that the proposed system can achieve a data compression factor of 6.17 and a power saving factor of 31% compared to a Nyquist rate SAR ADC for ECG monitoring.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-17T21:33:51Z</published>
+    <arxiv:comment>5 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Xiaochen Tang</name>
+    </author>
+    <author>
+      <name>Mario Renteria-Pinon</name>
+    </author>
+    <author>
+      <name>Wei Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.14011v2</id>
+    <title>Brace for impact: ECDLP challenges for quantum cryptanalysis</title>
+    <updated>2026-03-25T19:59:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.14011v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.14011v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Precise suites of benchmarks are required to assess the progress of early fault-tolerant quantum computers at economically impactful applications such as cryptanalysis. Appropriate challenges exist for factoring but those for elliptic curve cryptography are either too sparse or inadequate for standard applications of Shor's algorithm. We introduce a difficulty-graded suite of elliptic curve discrete logarithm (ECDLP) challenges that use Bitcoin's curve y^2=x^3+7 mod p while incrementally lowering the prime field from 256 down to 6 bits. For each bit-length, we provide the prime, the prime group order, and two deterministic nothing-up-my-sleeve (NUMS) points in compressed SEC1 form. All challenges are generated by a deterministic, reproducible procedure, and no private challenge scalar is chosen in advance. We calibrate classical cost against Pollard's rho records and quantum cost against resource estimation results for Shor's algorithm. We compile Shor's ECDLP circuit to logical counts and map them to physical resources for various parameters of the surface code, the repetition cat code and the LDPC cat codes. Under explicit and testable assumptions on physical error rates, code distances, and non-Clifford supply, our scenarios place the full 256-bit instance within a 2027--2033 window. The challenge ladder thus offers a transparent ruler to track fault-tolerant progress on a cryptanalytic target of immediate relevance, and it motivates proactive migration of digital assets to post-quantum signatures.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-19T17:16:31Z</published>
+    <arxiv:comment>39 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Pierre-Luc Dallaire-Demers</name>
+    </author>
+    <author>
+      <name>William Doyle</name>
+    </author>
+    <author>
+      <name>Timothy Foo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.07619v1</id>
+    <title>Dual-polarisation Non-linear Frequency-division Multiplexed Transmission with b-Modulation</title>
+    <updated>2019-02-20T16:09:30Z</updated>
+    <link href="https://arxiv.org/abs/1902.07619v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.07619v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There has been much interest in the non-linear frequency-division multiplexing (NFDM) transmission scheme in the optical fibre communication system. Up to date, most of the demonstrated NFDM schemes have employed only single polarisation for data transmission. Employing both polarisations can potentially double the data rate of NFDM systems. We investigate in simulation a dual-polarisation NFDM transmission with data modulation on the $b$-coefficient. First, a transformation that facilitates the dual-polarisation $b$-modulation was built upon an existing transformation. Second, the $q_c$- and $b$-modulation for dual-polarisation were compared in terms of Q-factor, spectral efficiency (SE), and correlation of sub-carriers. The correlation is quantified via information theoretic metrics, joint and individual entropy. The polarisation-multiplexed $b$-modulation system shows 1 dB Q-factor improvement over $q_c$-modulation system due to a weaker correlation of sub-carriers and less effective noise. Finally, the $b$-modulation system was optimised for high data rate, achieving a record net data rate of 400 Gbps (SE of 7.2 bit/s/Hz) over $12\times 80$ km of standard single-mode fibre (SSMF) with erbium-doped fibre amplifiers (EDFAs). Based on the above simulation results, we further point out the drawbacks of our current system and quantify the error introduced by the transceiver algorithms and non-integrability of the channel.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-20T16:09:30Z</published>
+    <arxiv:comment>submitted to Journal of Lightwave Technology</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Xianhe Yangzhang</name>
+    </author>
+    <author>
+      <name>Vahid Aref</name>
+    </author>
+    <author>
+      <name>Son Thai Le</name>
+    </author>
+    <author>
+      <name>Henning Buelow</name>
+    </author>
+    <author>
+      <name>Domanic Lavery</name>
+    </author>
+    <author>
+      <name>Polina Bayvel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.1017v1</id>
+    <title>On the asymptotic and practical complexity of solving bivariate systems over the reals</title>
+    <updated>2012-03-05T19:39:05Z</updated>
+    <link href="https://arxiv.org/abs/1203.1017v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.1017v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper is concerned with exact real solving of well-constrained, bivariate polynomial systems. The main problem is to isolate all common real roots in rational rectangles, and to determine their intersection multiplicities. We present three algorithms and analyze their asymptotic bit complexity, obtaining a bound of $\sOB(N^{14})$ for the purely projection-based method, and $\sOB(N^{12})$ for two subresultant-based methods: this notation ignores polylogarithmic factors, where $N$ bounds the degree and the bitsize of the polynomials. The previous record bound was $\sOB(N^{14})$.
+  Our main tool is signed subresultant sequences. We exploit recent advances on the complexity of univariate root isolation, and extend them to sign evaluation of bivariate polynomials over two algebraic numbers, and real root counting for polynomials over an extension field. Our algorithms apply to the problem of simultaneous inequalities; they also compute the topology of real plane algebraic curves in $\sOB(N^{12})$, whereas the previous bound was $\sOB(N^{14})$.
+  All algorithms have been implemented in MAPLE, in conjunction with numeric filtering. We compare them against FGB/RS, system solvers from SYNAPS, and MAPLE libraries INSULATE and TOP, which compute curve topology. Our software is among the most robust, and its runtimes are comparable, or within a small constant factor, with respect to the C/C++ libraries.
+  Key words: real solving, polynomial systems, complexity, MAPLE software</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-05T19:39:05Z</published>
+    <arxiv:comment>17 pages, 4 algorithms, 1 table, and 1 figure with 2 sub-figures</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <arxiv:journal_ref>J. Symb. Comput. 44(7): 818-835 (2009)</arxiv:journal_ref>
+    <author>
+      <name>Dimitrios I. Diochnos</name>
+    </author>
+    <author>
+      <name>Ioannis Z. Emiris</name>
+    </author>
+    <author>
+      <name>Elias P. Tsigaridas</name>
+    </author>
+    <arxiv:doi>10.1016/j.jsc.2008.04.009</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jsc.2008.04.009" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.21008v1</id>
+    <title>Linear Image Generation by Synthesizing Exposure Brackets</title>
+    <updated>2026-04-22T18:55:35Z</updated>
+    <link href="https://arxiv.org/abs/2604.21008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.21008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The life of a photo begins with photons striking the sensor, whose signals are passed through a sophisticated image signal processing (ISP) pipeline to produce a display-referred image. However, such images are no longer faithful to the incident light, being compressed in dynamic range and stylized by subjective preferences. In contrast, RAW images record direct sensor signals before non-linear tone mapping. After camera response curve correction and demosaicing, they can be converted into linear images, which are scene-referred representations that directly reflect true irradiance and are invariant to sensor-specific factors. Since image sensors have better dynamic range and bit depth, linear images contain richer information than display-referred ones, leaving users more room for editing during post-processing. Despite this advantage, current generative models mainly synthesize display-referred images, which inherently limits downstream editing. In this paper, we address the task of text-to-linear-image generation: synthesizing a high-quality, scene-referred linear image that preserves full dynamic range, conditioned on a text prompt, for professional post-processing. Generating linear images is challenging, as pre-trained VAEs in latent diffusion models struggle to simultaneously preserve extreme highlights and shadows due to the higher dynamic range and bit depth. To this end, we represent a linear image as a sequence of exposure brackets, each capturing a specific portion of the dynamic range, and propose a DiT-based flow-matching architecture for text-conditioned exposure bracket generation. We further demonstrate downstream applications including text-guided linear image editing and structure-conditioned generation via ControlNet.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T18:55:35Z</published>
+    <arxiv:comment>accepted by CVPR2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuekun Dai</name>
+    </author>
+    <author>
+      <name>Zhoutong Zhang</name>
+    </author>
+    <author>
+      <name>Shangchen Zhou</name>
+    </author>
+    <author>
+      <name>Nanxuan Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1104.4552v1</id>
+    <title>Polynomial Estimators for High Frequency Moments</title>
+    <updated>2011-04-23T12:32:22Z</updated>
+    <link href="https://arxiv.org/abs/1104.4552v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1104.4552v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an algorithm for computing $F_p$, the $p$th moment of an $n$-dimensional frequency vector of a data stream, for $2 &lt; p &lt; \log (n) $, to within $1\pm ε$ factors, $ε\in [n^{-1/p},1]$ with high constant probability. Let $m$ be the number of stream records and $M$ be the largest magnitude of a stream update.
+  The algorithm uses space in bits $$ O(p^2ε^{-2}n^{1-2/p}E(p,n) \log (n) \log (nmM)/\min(\log (n),ε^{4/p-2}))$$ where, $E(p,n) = (1-2/p)^{-1}(1-n^{-4(1-2/p})$. Here $E(p,n)$ is $ O(1)$ for $p = 2+Ω(1)$ and $ O(\log n)$ for $p = 2 + O(1/\log (n)$. This improves upon the space required by current algorithms \cite{iw:stoc05,bgks:soda06,ako:arxiv10,bo:arxiv10} by a factor of at least $Ω(ε^{-4/p} \min(\log (n), ε^{4/p-2}))$. The update time is $O(\log (n))$. We use a new technique for designing estimators for functions of the form $ψ(\expect{X})$, where, $X$ is a random variable and $ψ$ is a smooth function, based on a low-degree Taylor polynomial expansion of $ψ(\expect{X})$ around an estimate of $\expect{X}$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-04-23T12:32:22Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Sumit Ganguly</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.08989v1</id>
+    <title>Detecting silent data corruptions in the wild</title>
+    <updated>2022-03-16T23:29:09Z</updated>
+    <link href="https://arxiv.org/abs/2203.08989v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.08989v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Silent Errors within hardware devices occur when an internal defect manifests in a part of the circuit which does not have check logic to detect the incorrect circuit operation. The results of such a defect can range from flipping a single bit in a single data value, up to causing the software to execute the wrong instructions. Silent data corruptions (SDC) in hardware impact computational integrity for large-scale applications. Manifestations of silent errors are accelerated by datapath variations, temperature variance, and age, among other silicon factors. These errors do not leave any record or trace in system logs. As a result, silent errors stay undetected within workloads, and their effects can propagate across several services, causing problems to appear in systems far removed from the original defect. In this paper, we describe testing strategies to detect silent data corruptions within a large scale infrastructure. Given the challenging nature of the problem, we experimented with different methods for detection and mitigation. We compare and contrast two such approaches - 1. Fleetscanner (out-of-production testing) and 2. Ripple (in-production testing).We evaluate the infrastructure tradeoffs associated with the silicon testing funnel across 3+ years of production experience.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-16T23:29:09Z</published>
+    <arxiv:comment>7 pages, 4 figures, 1 table, 31 references</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Harish Dattatraya Dixit</name>
+    </author>
+    <author>
+      <name>Laura Boyle</name>
+    </author>
+    <author>
+      <name>Gautham Vunnam</name>
+    </author>
+    <author>
+      <name>Sneha Pendharkar</name>
+    </author>
+    <author>
+      <name>Matt Beadon</name>
+    </author>
+    <author>
+      <name>Sriram Sankar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0705.2243v2</id>
+    <title>Secure sharing of random bits over the Internet</title>
+    <updated>2007-05-17T11:45:40Z</updated>
+    <link href="https://arxiv.org/abs/0705.2243v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0705.2243v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Although one-time pad encrypted files can be sent through Internet channels, the need for renewing shared secret keys have made this method unpractical. This work presents a scheme to turn practical the fast sharing of random keys over arbitrary Internet channels. Starting with a shared secret key sequence of length K_0 the users end up with a secure new sequence K &gt;&gt; K_0. Using these sequences for posteriori message encryption the legitimate users have absolute security control without the need for third parties. Additionally, the security level does not depend on the unproven difficulty of factoring numbers in primes. In the proposed scheme a fast optical random source generates random bits and noise for key renewals. The transmitted signals are recorded signals that carries both the random binary signals to be exchanged and physical noise that cannot be eliminated by the attacker. These signals allow amplification over the Internet network without degrading security. The proposed system is also secure against a-posteriori known-plaintext attack on the key. Information-theoretic analysis is presented and bounds for secure operation are quantitatively determined.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-05-15T20:48:22Z</published>
+    <arxiv:comment>7 pages, 3 figures. A single typo was corrected at the end of the manuscript: (K0/d)!-&gt; K0!/d</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Geraldo A. Barbosa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1803.04600v2</id>
+    <title>LAB4D: A Low Power, Multi-GSa/s, Transient Digitizer with Sampling Timebase Trimming Capabilities</title>
+    <updated>2019-02-21T01:48:01Z</updated>
+    <link href="https://arxiv.org/abs/1803.04600v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1803.04600v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The LAB4D is a new application-specific integrated circuit (ASIC) of the Large Analog Bandwidth Recorder and Digitizer with Ordered Readout (LABRADOR) family, for use in direct wideband radio frequency digitization such as is used in ultrahigh energy neutrino and cosmic ray astrophysics. The LAB4D is a single channel switched-capacitor array (SCA) 12-bit sampler with integrated analog-to-digital converters (ADC), developed in the TSMC 0.25um process. The LAB4D, operating at 3.2GSa/s, contains 4096 total samples arranged in 32 windows, for a total record length of 1280ns. The 3dB bandwidth is approximately 1.3GHz, with a directly-coupled 50ohm input. This represents a factor of 16 increase in the sample depth and an increase in analog bandwidth and sampling depth in comparison to the previous generation LAB3 digitizer. Individually addressable windows allow for sampling and digitization to occur simultaneously, leading to nearly deadtime-free readout for kHz readout rates. All biases and current references are generated via internal digital-to-analog converters (DACs), resulting in a stand-alone digitizer with no additional support circuitry. In addition, the LAB4D contains sample cell timebase trimming capabilities, reducing the intrinsic sample-to-sample time variance to less than 5ps; an improvement of about 80%. This allows the LAB4D to be used in precision timing applications with minimal post-hoc calibration.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-03-13T02:39:09Z</published>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Jarred M. Roberts</name>
+    </author>
+    <author>
+      <name>Eric Oberla</name>
+    </author>
+    <author>
+      <name>Patrick Allison</name>
+    </author>
+    <author>
+      <name>Gary S. Varner</name>
+    </author>
+    <author>
+      <name>Stefan Spack</name>
+    </author>
+    <author>
+      <name>Brendan Fox</name>
+    </author>
+    <author>
+      <name>Ben Rotter</name>
+    </author>
+    <arxiv:doi>10.1016/j.nima.2019.01.091</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nima.2019.01.091" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17701v1</id>
+    <title>Metasurface-assisted balanced-injection synchronization for turbulence-resilient long-haul chaotic free-space link</title>
+    <updated>2026-01-25T05:22:20Z</updated>
+    <link href="https://arxiv.org/abs/2601.17701v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17701v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Optical chaotic synchronization between coupled nonlinear lasers underpins most chaos-based applications, including complex laser network dynamics, secure communication, key distribution, and reinforcement learning. In free-space links, however, chaotic synchronization is highly vulnerable to stochastic fluctuation induced by atmospheric turbulence, which results in temporal injection imbalances at symmetric receivers and triggers intermittent desynchronization. Here, we introduce a full Poincaré vector beam-enabled balanced-injection synchronization (BIS) mechanism, which passively mitigates coupling fluctuations and preserves injection symmetry through a complementary metasurface pair, without requiring any channel estimation or active control. Over a 3.2 km urban link under moderately strong turbulence, BIS suppresses coupling power fluctuations by a factor of 4.6 (from 0.4511 to 0.0975). It eliminates desynchronization events and increases the high-quality synchronization probability from 58.6% to 91.0%. This enables a record-high bit rate-distance product of 720 Gbps \cdot km, reducing communication interruption probability by up to 77% compared to Gaussian beam transmission. Our innovative strategy bridges the gap between nanophotonics and engineering optics, offering a new insight into advancing next-generation LiDAR, secure communication, and integrated sensing and communication systems in turbulent environments.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-25T05:22:20Z</published>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Yiqun Zhang</name>
+    </author>
+    <author>
+      <name>Mingfeng Xu</name>
+    </author>
+    <author>
+      <name>Ning Jiang</name>
+    </author>
+    <author>
+      <name>Mengjie Zhou</name>
+    </author>
+    <author>
+      <name>Yuhan Zheng</name>
+    </author>
+    <author>
+      <name>Sichao Chen</name>
+    </author>
+    <author>
+      <name>Jiazheng Ding</name>
+    </author>
+    <author>
+      <name>Shuangcheng Chen</name>
+    </author>
+    <author>
+      <name>Yong Yu</name>
+    </author>
+    <author>
+      <name>Xianglei Yan</name>
+    </author>
+    <author>
+      <name>Fei Zhang</name>
+    </author>
+    <author>
+      <name>Yinghui Guo</name>
+    </author>
+    <author>
+      <name>Mingbo Pu</name>
+    </author>
+    <author>
+      <name>Kun Qiu</name>
+    </author>
+    <author>
+      <name>Xiangang Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.11377v1</id>
+    <title>Causal Customer Churn Analysis with Low-rank Tensor Block Hazard Model</title>
+    <updated>2024-05-18T19:54:14Z</updated>
+    <link href="https://arxiv.org/abs/2405.11377v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.11377v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study introduces an innovative method for analyzing the impact of various interventions on customer churn, using the potential outcomes framework. We present a new causal model, the tensorized latent factor block hazard model, which incorporates tensor completion methods for a principled causal analysis of customer churn. A crucial element of our approach is the formulation of a 1-bit tensor completion for the parameter tensor. This captures hidden customer characteristics and temporal elements from churn records, effectively addressing the binary nature of churn data and its time-monotonic trends. Our model also uniquely categorizes interventions by their similar impacts, enhancing the precision and practicality of implementing customer retention strategies. For computational efficiency, we apply a projected gradient descent algorithm combined with spectral clustering. We lay down the theoretical groundwork for our model, including its non-asymptotic properties. The efficacy and superiority of our model are further validated through comprehensive experiments on both simulated and real-world applications.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-18T19:54:14Z</published>
+    <arxiv:comment>Accepted for publication in ICML, 2024</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Chenyin Gao</name>
+    </author>
+    <author>
+      <name>Zhiming Zhang</name>
+    </author>
+    <author>
+      <name>Shu Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0302439v2</id>
+    <title>Transport phenomena and microscopic structure in partially miscible binary fluids: A simulation study of the symmetrical Lennard-Jones mixture</title>
+    <updated>2003-02-25T10:06:58Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0302439v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0302439v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Static and dynamic structure factors and various transport coefficients are computed for a Lennard-Jones model of a binary fluid (A,B) with a symmetrical miscibility gap, varying both temperature and relative concentration of the mixture. The model is first equilibrated by a semi-grandcanonical Monte Carlo method, choosing the temperature and chemical potential difference $Δμ$ between the two species as the given independent variables. Varying for $Δμ=0$ the temperature and particle number $N$ over a wide range, the location of the coexistence curve in the thermodynamic limit is estimated. Well-equilibrated configurations from these Monte Carlo runs are used as initial states for microcanonical Molecular Dynamics runs, in order to study the microscopic structure and the behavior of transport coefficients as well as dynamic correlation functions along the coexistence curve. Dynamic structure factors $S_{αβ} (q,t)$ (and the corresponding static functions $S_{αβ} (q)$) are recorded ($α, β, \in$ A,B), $q$ being the wavenumber and $t$ the time, as well as the mean square displacements of the particles (to obtain the self-diffusion constants $D_{\rm A}$, $D_{\rm B}$) and transport coefficients describing collective transport, such as the interdiffusion constant and the shear viscosity. The minority species is found to diffuse a bit faster than the majority species. Despite the presence of strong concentration fluctuations in the system the Stokes-Einstein relation is a reasonable approximation.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.dis-nn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-02-21T13:18:20Z</published>
+    <arxiv:comment>33 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <author>
+      <name>Subir K. Das</name>
+    </author>
+    <author>
+      <name>Jürgen Horbach</name>
+    </author>
+    <author>
+      <name>Kurt Binder</name>
+    </author>
+    <arxiv:doi>10.1063/1.1580106</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.1580106" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.06095v1</id>
+    <title>Between Pure and Approximate Differential Privacy</title>
+    <updated>2015-01-24T23:26:21Z</updated>
+    <link href="https://arxiv.org/abs/1501.06095v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.06095v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show a new lower bound on the sample complexity of $(\varepsilon, δ)$-differentially private algorithms that accurately answer statistical queries on high-dimensional databases. The novelty of our bound is that it depends optimally on the parameter $δ$, which loosely corresponds to the probability that the algorithm fails to be private, and is the first to smoothly interpolate between approximate differential privacy ($δ&gt; 0$) and pure differential privacy ($δ= 0$).
+  Specifically, we consider a database $D \in \{\pm1\}^{n \times d}$ and its \emph{one-way marginals}, which are the $d$ queries of the form "What fraction of individual records have the $i$-th bit set to $+1$?" We show that in order to answer all of these queries to within error $\pm α$ (on average) while satisfying $(\varepsilon, δ)$-differential privacy, it is necessary that $$ n \geq Ω\left( \frac{\sqrt{d \log(1/δ)}}{α\varepsilon} \right), $$ which is optimal up to constant factors. To prove our lower bound, we build on the connection between \emph{fingerprinting codes} and lower bounds in differential privacy (Bun, Ullman, and Vadhan, STOC'14).
+  In addition to our lower bound, we give new purely and approximately differentially private algorithms for answering arbitrary statistical queries that improve on the sample complexity of the standard Laplace and Gaussian mechanisms for achieving worst-case accuracy guarantees by a logarithmic factor.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-24T23:26:21Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Thomas Steinke</name>
+    </author>
+    <author>
+      <name>Jonathan Ullman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.01769v2</id>
+    <title>Statistical Inference for Noisy Incomplete Binary Matrix</title>
+    <updated>2023-01-19T17:35:17Z</updated>
+    <link href="https://arxiv.org/abs/2105.01769v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.01769v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the statistical inference for noisy incomplete binary (or 1-bit) matrix. Despite the importance of uncertainty quantification to matrix completion, most of the categorical matrix completion literature focuses on point estimation and prediction. This paper moves one step further toward the statistical inference for binary matrix completion. Under a popular nonlinear factor analysis model, we obtain a point estimator and derive its asymptotic normality. Moreover, our analysis adopts a flexible missing-entry design that does not require a random sampling scheme as required by most of the existing asymptotic results for matrix completion. Under reasonable conditions, the proposed estimator is statistically efficient and optimal in the sense that the Cramer-Rao lower bound is achieved asymptotically for the model parameters. Two applications are considered, including (1) linking two forms of an educational test and (2) linking the roll call voting records from multiple years in the United States Senate. The first application enables the comparison between examinees who took different test forms, and the second application allows us to compare the liberal-conservativeness of senators who did not serve in the Senate at the same time.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-04T21:23:54Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Yunxiao Chen</name>
+    </author>
+    <author>
+      <name>Chengcheng Li</name>
+    </author>
+    <author>
+      <name>Jing Ouyang</name>
+    </author>
+    <author>
+      <name>Gongjun Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.15642v2</id>
+    <title>Protected tails and polynomial-time enumeration of permutations avoiding a direct sum of an increasing pattern and 231</title>
+    <updated>2026-10-01T14:35:42Z</updated>
+    <link href="https://arxiv.org/abs/2609.15642v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.15642v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give an algorithm counting the permutations that avoid a fixed pattern of the following form: the direct sum of an increasing pattern and 231. The first members of the family are 1342 and 12453. For each member the algorithm uses polynomially many operations and stored integers, with degrees that grow linearly in the length of the pattern. It comes from a recurrence that reads a permutation from left to right and records the constraints that the letters read so far impose on those still unread. This recurrence has exponentially many states, but part of each state is protected: later steps carry it along unchanged and do not depend on it, and factoring the protected part out leaves a dynamic program of polynomial size. For 12453 a translation symmetry sharpens the bounds to degree seven for the operations and degree four for the storage. We also compute the number of 12453-avoiding permutations of every length up to 150. The previously published series, due to Biers-Ariel (2019), reached length 38. We also give a sampler of uniformly random avoiders. A floating-point implementation of it, proved to be within total variation distance $3.5\cdot10^{-5}$ of uniform for ideal random bits, draws the one million 12453-avoiding permutations of length 300 shown in a heatmap. The literal and kernel recurrences for 1342 and 12453 are verified in the Lean 4 proof assistant.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-14T14:30:11Z</published>
+    <arxiv:comment>36 pages, 4 figures, 1 table. v2: revised and shortened exposition, corrected account of prior work, the first 151 terms tabulated, a proved error bound for the floating-point sampler (Appendix A), the Lean 4 development described (Appendix B), and Conjecture 10.1 with the exponent left unspecified. Code, data and Lean 4 development: https://github.com/ulfarsson/public-12453</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Henning Arnór Skeggi Úlfarsson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.07596v1</id>
+    <title>NARAD: Non-colluding Aggregator-oblivious Record-And-Decrypt</title>
+    <updated>2026-07-08T16:13:56Z</updated>
+    <link href="https://arxiv.org/abs/2607.07596v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.07596v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electronic voting must keep individual ballots private while letting anyone verify the final tally. This paper presents an architecture that meets both goals without a trusted key dealer: each voter encrypts a ballot in the browser with a self-generated secret key under the Paillier additive homomorphic cryptosystem, and no party ever holds every key. Two server roles divide the tally. A collector combines the voters' per-ballot auxiliary values into a single group element; an aggregator uses that element to cancel the voters' random masks inside the homomorphic product and recover the exact vote sum, learning the result but no individual ballot. The Solana blockchain records every ciphertext immutably and enforces the election lifecycle, while a native C library (libtommath) performs the heavy modular arithmetic. We state six assumptions under which the protocol is correct and prove product homomorphism, mask cancellation, and sum recovery; privacy rests on the Decisional Composite Residuosity (DCR) assumption for the additive layer together with a Diffie-Hellman-style assumption on the masking base. A bit-packing scheme places an entire multi-candidate ballot in one ciphertext, cutting client work, on-chain transactions, storage, and tally cost by a factor of k (the candidate count); the slot width b is free, with only k*b bounded by log_2(N). With b = 25 and a 255-bit modulus the scheme supports ten candidates and up to 2^25 - 1 = 33,554,431 votes per candidate, about 335 million ballots, and tallies 50,000 ballots in under one second. Finally, running the collector and aggregator inside attested secure enclaves makes the tally tamper-resistant and prevents cross-role collusion to deanonymize voters. The proof-of-concept implementation is open-source; a worked numerical example in the appendix reproduces the full pipeline.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-08T16:13:56Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Akshit Vakati Venkata</name>
+    </author>
+    <author>
+      <name>Rajat Dugar</name>
+    </author>
+    <author>
+      <name>Ayush Adarsh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.10284v1</id>
+    <title>MorpheusNet: Resource efficient sleep stage classifier for embedded on-line systems</title>
+    <updated>2024-01-14T17:52:08Z</updated>
+    <link href="https://arxiv.org/abs/2401.10284v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.10284v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Sleep Stage Classification (SSC) is a labor-intensive task, requiring experts to examine hours of electrophysiological recordings for manual classification. This is a limiting factor when it comes to leveraging sleep stages for therapeutic purposes. With increasing affordability and expansion of wearable devices, automating SSC may enable deployment of sleep-based therapies at scale. Deep Learning has gained increasing attention as a potential method to automate this process. Previous research has shown accuracy comparable to manual expert scores. However, previous approaches require sizable amount of memory and computational resources. This constrains the ability to classify in real time and deploy models on the edge. To address this gap, we aim to provide a model capable of predicting sleep stages in real-time, without requiring access to external computational sources (e.g., mobile phone, cloud). The algorithm is power efficient to enable use on embedded battery powered systems. Our compact sleep stage classifier can be deployed on most off-the-shelf microcontrollers (MCU) with constrained hardware settings. This is due to the memory footprint of our approach requiring significantly fewer operations. The model was tested on three publicly available data bases and achieved performance comparable to the state of the art, whilst reducing model complexity by orders of magnitude (up to 280 times smaller compared to state of the art). We further optimized the model with quantization of parameters to 8 bits with only an average drop of 0.95% in accuracy. When implemented in firmware, the quantized model achieves a latency of 1.6 seconds on an Arm CortexM4 processor, allowing its use for on-line SSC-based therapies.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-14T17:52:08Z</published>
+    <arxiv:comment>This paper was presented at the 2023 IEEE conference on Systems, Man, and Cybernetics (SMC)</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Ali Kavoosi</name>
+    </author>
+    <author>
+      <name>Morgan P. Mitchell</name>
+    </author>
+    <author>
+      <name>Raveen Kariyawasam</name>
+    </author>
+    <author>
+      <name>John E. Fleming</name>
+    </author>
+    <author>
+      <name>Penny Lewis</name>
+    </author>
+    <author>
+      <name>Heidi Johansen-Berg</name>
+    </author>
+    <author>
+      <name>Hayriye Cagnan</name>
+    </author>
+    <author>
+      <name>Timothy Denison</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.01925v2</id>
+    <title>PTOPO: Computing the Geometry and the Topology of Parametric Curves</title>
+    <updated>2022-02-17T17:26:42Z</updated>
+    <link href="https://arxiv.org/abs/2101.01925v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.01925v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of computing the topology and describing the geometry of a parametric curve in $\mathbb{R}^n$. We present an algorithm, PTOPO, that constructs an abstract graph that is isotopic to the curve in the embedding space. Our method exploits the benefits of the parametric representation and does not resort to implicitization.
+  Most importantly, we perform all computations in the parameter space and not in the implicit space. When the parametrization involves polynomials of degree at most $d$ and maximum bitsize of coefficients $τ$, then the worst case bit complexity of PTOPO is $ \tilde{\mathcal{O}}_B(nd^6+nd^5τ+d^4(n^2+nτ)+d^3(n^2τ+ n^3)+n^3d^2τ)$. This bound matches the current record bound $\tilde{\mathcal{O}}_B(d^6+d^5τ)$ for the problem of computing the topology of a plane algebraic curve given in implicit form. For plane and space curves, if $N = \max\{d, τ\}$, the complexity of PTOPO becomes $\tilde{\mathcal{O}}_B(N^6)$, which improves the state-of-the-art result, due to Alcázar and Díaz-Toca [CAGD'10], by a factor of $N^{10}$. In the same time complexity, we obtain a graph whose straight-line embedding is isotopic to the curve. However, visualizing the curve on top of the abstract graph construction, increases the bound to $\tilde{\mathcal{O}}_B(N^7)$. For curves of general dimension, we can also distinguish between ordinary and non-ordinary real singularities and determine their multiplicities in the same expected complexity of PTOPO by employing the algorithm of Blasco and Pérez-Díaz [CAGD'19]. We have implemented PTOPO in Maple for the case of plane and space curves. Our experiments illustrate its practical nature.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-06T08:48:25Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Christina Katsamaki</name>
+    </author>
+    <author>
+      <name>Fabrice Rouillier</name>
+    </author>
+    <author>
+      <name>Elias Tsigaridas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.15056v1</id>
+    <title>A Consumer-tier based Visual-Brain Machine Interface for Augmented Reality Glasses Interactions</title>
+    <updated>2023-08-29T06:33:13Z</updated>
+    <link href="https://arxiv.org/abs/2308.15056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.15056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Objective.Visual-Brain Machine Interface(V-BMI) has provide a novel interaction technique for Augmented Reality (AR) industries. Several state-of-arts work has demonstates its high accuracy and real-time interaction capbilities. However, most of the studies employ EEGs devices that are rigid and difficult to apply in real-life AR glasseses application sceniraros. Here we develop a consumer-tier Visual-Brain Machine Inteface(V-BMI) system specialized for Augmented Reality(AR) glasses interactions. Approach. The developed system consists of a wearable hardware which takes advantages of fast set-up, reliable recording and comfortable wearable experience that specificized for AR glasses applications. Complementing this hardware, we have devised a software framework that facilitates real-time interactions within the system while accommodating a modular configuration to enhance scalability. Main results. The developed hardware is only 110g and 120x85x23 mm, which with 1 Tohm and peak to peak voltage is less than 1.5 uV, and a V-BMI based angry bird game and an Internet of Thing (IoT) AR applications are deisgned, we demonstrated such technology merits of intuitive experience and efficiency interaction. The real-time interaction accuracy is between 85 and 96 percentages in a commercial AR glasses (DTI is 2.24s and ITR 65 bits-min ). Significance. Our study indicates the developed system can provide an essential hardware-software framework for consumer based V-BMI AR glasses. Also, we derive several pivotal design factors for a consumer-grade V-BMI-based AR system: 1) Dynamic adaptation of stimulation patterns-classification methods via computer vision algorithms is necessary for AR glasses applications; and 2) Algorithmic localization to foster system stability and latency reduction.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-29T06:33:13Z</published>
+    <arxiv:comment>15 pages,10 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuying Jiang</name>
+    </author>
+    <author>
+      <name>Fan Bai</name>
+    </author>
+    <author>
+      <name>Zicheng Zhang</name>
+    </author>
+    <author>
+      <name>Xiaochen Ye</name>
+    </author>
+    <author>
+      <name>Zheng Liu</name>
+    </author>
+    <author>
+      <name>Zhiping Shi</name>
+    </author>
+    <author>
+      <name>Jianwei Yao</name>
+    </author>
+    <author>
+      <name>Xiaojun Liu</name>
+    </author>
+    <author>
+      <name>Fangkun Zhu</name>
+    </author>
+    <author>
+      <name>Junling Li Qian Guo</name>
+    </author>
+    <author>
+      <name>Xiaoan Wang</name>
+    </author>
+    <author>
+      <name>Junwen Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.04721v1</id>
+    <title>Toward Low-Latency End-to-End Voice Agents for Telecommunications Using Streaming ASR, Quantized LLMs, and Real-Time TTS</title>
+    <updated>2025-08-05T07:39:35Z</updated>
+    <link href="https://arxiv.org/abs/2508.04721v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.04721v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a low-latency telecom AI voice agent pipeline for real-time, interactive telecommunications use, enabling advanced voice AI for call center automation, intelligent IVR (Interactive Voice Response), and AI-driven customer support. The solution is built for telecom, combining four specialized models by NetoAI: TSLAM, a 4-bit quantized Telecom-Specific Large Language Model (LLM); T-VEC, a Telecom-Specific Embedding Model; TTE, a Telecom-Specific Automatic Speech Recognition (ASR) model; and T-Synth, a Telecom-Specific Text-to-Speech (TTS) model. These models enable highly responsive, domain-adapted voice AI agents supporting knowledge-grounded spoken interactions with low latency. The pipeline integrates streaming ASR (TTE), conversational intelligence (TSLAM), retrieval augmented generation (RAG) over telecom documents, and real-time TTS (T-Synth), setting a new benchmark for telecom voice assistants. To evaluate the system, we built a dataset of 500 human-recorded telecom questions from RFCs, simulating real telecom agent queries. This framework allows analysis of latency, domain relevance, and real-time performance across the stack. Results show that TSLAM, TTE, and T-Synth deliver real-time factors (RTF) below 1.0, supporting enterprise, low-latency telecom deployments. These AI agents -- powered by TSLAM, TTE, and T-Synth -- provide a foundation for next-generation telecom AI, enabling automated customer support, diagnostics, and more.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-05T07:39:35Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Vignesh Ethiraj</name>
+    </author>
+    <author>
+      <name>Ashwath David</name>
+    </author>
+    <author>
+      <name>Sidhanth Menon</name>
+    </author>
+    <author>
+      <name>Divya Vijay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.01137v2</id>
+    <title>A Memory Bandwidth-Efficient Hybrid Radix Sort on GPUs</title>
+    <updated>2017-05-19T12:22:16Z</updated>
+    <link href="https://arxiv.org/abs/1611.01137v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.01137v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Sorting is at the core of many database operations, such as index creation, sort-merge joins, and user-requested output sorting. As GPUs are emerging as a promising platform to accelerate various operations, sorting on GPUs becomes a viable endeavour. Over the past few years, several improvements have been proposed for sorting on GPUs, leading to the first radix sort implementations that achieve a sorting rate of over one billion 32-bit keys per second. Yet, state-of-the-art approaches are heavily memory bandwidth-bound, as they require substantially more memory transfers than their CPU-based counterparts.
+  Our work proposes a novel approach that almost halves the amount of memory transfers and, therefore, considerably lifts the memory bandwidth limitation. Being able to sort two gigabytes of eight-byte records in as little as 50 milliseconds, our approach achieves a 2.32-fold improvement over the state-of-the-art GPU-based radix sort for uniform distributions, sustaining a minimum speed-up of no less than a factor of 1.66 for skewed distributions.
+  To address inputs that either do not reside on the GPU or exceed the available device memory, we build on our efficient GPU sorting approach with a pipelined heterogeneous sorting algorithm that mitigates the overhead associated with PCIe data transfers. Comparing the end-to-end sorting performance to the state-of-the-art CPU-based radix sort running 16 threads, our heterogeneous approach achieves a 2.06-fold and a 1.53-fold improvement for sorting 64 GB key-value pairs with a skewed and a uniform distribution, respectively.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-03T19:33:06Z</published>
+    <arxiv:comment>16 pages, accepted at SIGMOD 2017</arxiv:comment>
+    <arxiv:primary_category term="cs.DB"/>
+    <arxiv:journal_ref>SIGMOD (2017) 417-432</arxiv:journal_ref>
+    <author>
+      <name>Elias Stehle</name>
+    </author>
+    <author>
+      <name>Hans-Arno Jacobsen</name>
+    </author>
+    <arxiv:doi>10.1145/3035918.3064043</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3035918.3064043" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.13003v1</id>
+    <title>Watermark Forensics for Generative Models: An Information-Theoretic Perspective</title>
+    <updated>2026-07-14T17:49:52Z</updated>
+    <link href="https://arxiv.org/abs/2607.13003v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.13003v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A watermark in a generative model's output is usually asked only whether a text is machine-made. The same mark can do more: attribute it to the user who produced it, extract a hidden payload, or localize the part that survives editing. These form a forensic ladder, and we ask what each rung costs in the sample length $n$.
+  One object organizes the answers. Let $S$ be the secret the mark carries (a user's identity or payload), and let the information profile $ν(t)=I(S;X_t\mid X_{&lt;t})$ record how much the $t$-th token reveals about $S$ given the earlier ones. Its total mass pays for attribution and extraction; how that mass is spread pays for localization; and detection alone is paid for not by information but by presence, the distance from the marked to the unmarked distribution. The literature's two quality models, a mark subtle on every token and one that stamps a few tokens loudly, are two incomparable ways of capping this profile.
+  Our main theorem settles the ladder's entropy column. For statistically distortion-free schemes, attributing a text to one of $N$ users costs $Θ(\log N/h)$ tokens over every stationary-ergodic source of entropy rate $h$, sharp to a $(1+o(1))$ factor: to our knowledge the first tight entropy-rate law for multi-user attribution (via exact alignment). The natural collision-counting analysis overcharges without bound; only a decoder thresholding each candidate by its own realized surprisal attains the rate while almost never implicating an innocent user. A matching converse makes the law two-sided, and extraction of an $\ell$-bit payload costs $Θ(\ell/h)$. Two gaps are real, not modeling artifacts: a $Θ(\log N)$-token window in which a text is provably machine-made yet unattributable, and a footprint-resolution uncertainty principle. Experiments on GPT-2, Pythia-410M, and Qwen2.5 recover the predicted constants.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T17:49:52Z</published>
+    <arxiv:comment>The abstract has been shortened to comply with arXiv's length limit</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xiaoyu Li</name>
+    </author>
+    <author>
+      <name>Zheng Gao</name>
+    </author>
+    <author>
+      <name>Xiaoyan Feng</name>
+    </author>
+    <author>
+      <name>Jiaojiao Jiang</name>
+    </author>
+    <author>
+      <name>Yulei Sui</name>
+    </author>
+    <author>
+      <name>Jiankun Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.28691v1</id>
+    <title>Lossless Hardness Condensation in Deterministic Communication Complexity</title>
+    <updated>2026-09-23T18:30:47Z</updated>
+    <link href="https://arxiv.org/abs/2609.28691v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.28691v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A communication problem can have far more possible inputs than its communication cost would suggest. Must its difficulty already be present on a much smaller set of inputs? We prove that every finite total Boolean matrix of deterministic communication complexity $c\ge4$ has a submatrix on $2^k$ of its original rows and $2^k$ of its original columns, with $k=Θ_\varepsilon(c)$ and complexity at least $(1-\varepsilon)(k+1)$, for every fixed $0&lt;\varepsilon&lt;1$. Since $k+1$ is the maximum possible cost on such a square, the retained problem can be arbitrarily close to maximally hard. This answers affirmatively the lossless condensation question of Hamed Hatami; Göös, Newman, Riazanov, and Sokolov (STOC 2024), who recorded it as Open Problem 2, conjectured a negative answer. Hrubeš previously guaranteed input length $Ω(\sqrt c)$. The same argument gives an original $2^{c-2}$-by-$2^{c-2}$ square retaining at least $c/3-O(\log c)$ bits of communication complexity.
+  The proof builds on Hrubeš's counting and covering argument. We count submatrices equipped with short communication protocols: a player names a covering submatrix, then the players run its protocol. This avoids the loss from converting rectangle partitions into protocols. A recursion on rectangles makes the argument constructive. For fixed rational $\varepsilon$ and any target depth $d\ge4$, a deterministic algorithm returns either a protocol of depth below $d$, or a square of original inputs at input length $Θ_\varepsilon(d)$ with the same near-maximal guarantee. Its running time is $2^{O(2^d)}$ times a polynomial in the table size. If the original complexity is at least $d$, the algorithm necessarily returns the square. An extension gives constant-factor condensation for any fixed number of number-in-hand players, with bounds independent of the finite output alphabet.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-23T18:30:47Z</published>
+    <arxiv:comment>33 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Simon Mackenzie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.05425v3</id>
+    <title>Commissioning and Operation of the Readout System for the SoLid Neutrino Detector</title>
+    <updated>2019-08-31T19:29:11Z</updated>
+    <link href="https://arxiv.org/abs/1812.05425v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.05425v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The SoLid experiment aims to measure neutrino oscillation at a baseline of 6.4 m from the BR2 nuclear reactor in Belgium. Anti-neutrinos interact via inverse beta decay (IBD), resulting in a positron and neutron signal that are correlated in time and space. The detector operates in a surface building, with modest shielding, and relies on extremely efficient online rejection of backgrounds in order to identify these interactions. A novel detector design has been developed using 12800 5 cm cubes for high segmentation. Each cube is formed of a sandwich of two scintillators, PVT and 6LiF:ZnS(Ag), allowing the detection and identification of positrons and neutrons respectively. The active volume of the detector is an array of cubes measuring 80x80x250 cm (corresponding to a fiducial mass of 1.6 T), which is read out in layers using two dimensional arrays of wavelength shifting fibres and silicon photomultipliers, for a total of 3200 readout channels. Signals are recorded with 14 bit resolution, and at 40 MHz sampling frequency, for a total raw data rate of over 2 Tbit/s. In this paper, we describe a novel readout and trigger system built for the experiment, that satisfies requirements on: compactness, low power, high performance, and very low cost per channel. The system uses a combination of high price-performance FPGAs with a gigabit Ethernet based readout system, and its total power consumption is under 1 kW. The use of zero suppression techniques, combined with pulse shape discrimination trigger algorithms to detect neutrons, results in an online data reduction factor of around 10000. The neutron trigger is combined with a large per-channel history time buffer, allowing for unbiased positron detection. The system was commissioned in late 2017, with successful physics data taking established in early 2018.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-13T13:43:57Z</published>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <arxiv:journal_ref>JINST 14 (2019) no.11, P11003</arxiv:journal_ref>
+    <author>
+      <name>Y. Abreu</name>
+    </author>
+    <author>
+      <name>Y. Amhis</name>
+    </author>
+    <author>
+      <name>G. Ban</name>
+    </author>
+    <author>
+      <name>W. Beaumont</name>
+    </author>
+    <author>
+      <name>S. Binet</name>
+    </author>
+    <author>
+      <name>M. Bongrand</name>
+    </author>
+    <author>
+      <name>D. Boursette</name>
+    </author>
+    <author>
+      <name>B. C. Castle</name>
+    </author>
+    <author>
+      <name>H. Chanal</name>
+    </author>
+    <author>
+      <name>K. Clark</name>
+    </author>
+    <author>
+      <name>B. Coupé</name>
+    </author>
+    <author>
+      <name>P. Crochet</name>
+    </author>
+    <author>
+      <name>D. Cussans</name>
+    </author>
+    <author>
+      <name>A. De Roeck</name>
+    </author>
+    <author>
+      <name>D. Durand</name>
+    </author>
+    <author>
+      <name>M. Fallot</name>
+    </author>
+    <author>
+      <name>L. Ghys</name>
+    </author>
+    <author>
+      <name>L. Giot</name>
+    </author>
+    <author>
+      <name>K. Graves</name>
+    </author>
+    <author>
+      <name>B. Guillon</name>
+    </author>
+    <author>
+      <name>D. Henaff</name>
+    </author>
+    <author>
+      <name>B. Hosseini</name>
+    </author>
+    <author>
+      <name>S. Ihantola</name>
+    </author>
+    <author>
+      <name>S. Jenzer</name>
+    </author>
+    <author>
+      <name>S. Kalcheva</name>
+    </author>
+    <author>
+      <name>L. N. Kalousis</name>
+    </author>
+    <author>
+      <name>M. Labare</name>
+    </author>
+    <author>
+      <name>G. Lehaut</name>
+    </author>
+    <author>
+      <name>S. Manley</name>
+    </author>
+    <author>
+      <name>L. Manzanillas</name>
+    </author>
+    <author>
+      <name>J. Mermans</name>
+    </author>
+    <author>
+      <name>I. Michiels</name>
+    </author>
+    <author>
+      <name>S. Monteil</name>
+    </author>
+    <author>
+      <name>C. Moortgat</name>
+    </author>
+    <author>
+      <name>D. Newbold</name>
+    </author>
+    <author>
+      <name>J. Park</name>
+    </author>
+    <author>
+      <name>V. Pestel</name>
+    </author>
+    <author>
+      <name>K. Petridis</name>
+    </author>
+    <author>
+      <name>I. Piñera</name>
+    </author>
+    <author>
+      <name>L. Popescu</name>
+    </author>
+    <author>
+      <name>D. Ryckbosch</name>
+    </author>
+    <author>
+      <name>N. Ryder</name>
+    </author>
+    <author>
+      <name>D. Saunders</name>
+    </author>
+    <author>
+      <name>M. -H. Schune</name>
+    </author>
+    <author>
+      <name>M. Settimo</name>
+    </author>
+    <author>
+      <name>L. Simard</name>
+    </author>
+    <author>
+      <name>A. Vacheret</name>
+    </author>
+    <author>
+      <name>G. Vandierendonck</name>
+    </author>
+    <author>
+      <name>S. Van Dyck</name>
+    </author>
+    <author>
+      <name>P. Van Mulders</name>
+    </author>
+    <author>
+      <name>N. van Remortel</name>
+    </author>
+    <author>
+      <name>S. Vercaemer</name>
+    </author>
+    <author>
+      <name>M. Verstraeten</name>
+    </author>
+    <author>
+      <name>B. Viaud</name>
+    </author>
+    <author>
+      <name>A. Weber</name>
+    </author>
+    <author>
+      <name>F. Yermia</name>
+    </author>
+    <arxiv:doi>10.1088/1748-0221/14/11/P11003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1748-0221/14/11/P11003" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.08911v1</id>
+    <title>A diagrammatic field theory of quantum error correction</title>
+    <updated>2026-07-09T20:10:13Z</updated>
+    <link href="https://arxiv.org/abs/2607.08911v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.08911v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a field-theoretic framework for quantum error correction centred on fusion-space codes in unitary fusion categories. Admissible clusters determine total-charge sectors and orthogonal footprint projectors recording locally visible data left by error histories. The central distinction is between diagnostic footprint algebras and syndrome-admissible commuting algebras: the latter can be measured without revealing logical information and resolve chosen error representatives into measured sectors. For such algebras, exact correctability is equivalent to fibrewise Knill--Laflamme conditions, yielding a measure-then-recover factorization. Under a contractible-vacuum locality hypothesis, closed neutral composites give a categorical sufficient criterion for scalar action on the code. In the Ising theory, four $σ$ punctures show that pair-charge footprints can be complementary logical diagnostics and realize an exact one-qubit Clifford shadow. A proper six-$σ$ code instead admits a syndrome-admissible pair-charge measurement and exact recovery from an explicit Majorana bilinear error. A second bilinear has the same measured footprint but differs by a logical bit flip, producing a concrete nontrivial footprint fibre and genuine decoding ambiguity. We also formulate conformal-block likelihood data and compute geometry-dependent Ising four-point weights. For growing code families, we prove a conditional Peierls-type threshold theorem: bounded connected-region growth, local stochastic noise, local neutralizability of small residual components, and componentwise decoder balance imply $\Pr_L(\mathrm{fail})\le C|Ω_L|e^{-cL}$ below a nonzero constant error rate. We conclude with representation-theoretic and algebro-geometric directions involving tube and Hopf algebras, Yangian-type structures, Higgs bundles, spectral curves, Jacobians, and abelian varieties.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-09T20:10:13Z</published>
+    <arxiv:comment>69 pages, 6 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Steven Rayan</name>
+    </author>
+  </entry>
+</feed>

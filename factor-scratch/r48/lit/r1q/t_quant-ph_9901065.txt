@@ -1,0 +1,275 @@
+                                                     On the importance of the Bohmian approach for
+
+                                                             interpreting CP-violation experiments
+
+
+                                                                                 Dipankar Home1
+
+                                                                      Bose Institute, Calcutta 700009, India
+arXiv:quant-ph/9901065v1 25 Jan 1999
+
+
+
+
+                                                                                  A.S.Majumdar2
+
+                                                                   S.N.Bose National Centre for Basic Sciences
+                                                            Block-JD, Sector III, Salt Lake, Calcutta 700091, India.
+
+
+
+
+                                                                                     Abstract
+                                                 We argue that the inference of CP violation in experiments involving the K 0 − K̄ 0
+                                             system in weak interactions of particle physics is facilitated by the assumption of particle
+                                             trajectories for the decaying particles and the decay products. A consistent explanation
+                                             in terms of such trajectories is naturally incorporated within the Bohmian interpretation
+                                             of quantum mechanics.
+
+                                       1
+                                           e-mail:dhom@boseinst.ernet.in
+                                       2
+                                           e-mail:archan@boson.bose.res.in
+
+
+
+
+                                                                                          1
+I. Introduction
+    The Bohm model is able to provide a causal interpretation of quantum mechanics in a
+consistent manner [1]. At the same time, the predictions of Bohmian mechanics are in exact
+agreement with the standard quantum mechanical predictions for observable probabilities in all
+usual experimental situations. In this paper we shall be concerned with examining the possible
+importance of the Bohmian approach in interpreting certain experiments whose understanding
+in terms of the standard interpretation is rather ambiguous.
+    For the purpose of reinterpreting the standard quantum formalism using the Bohmian
+scheme, a wave function ψ is not taken to provide a complete specification of the state of
+an individual system; an additional ontological “position” coordinate (an objectively real “po-
+sition” existing irrespective of any external observation) is ascribed to an individual particle.
+The “position” coordinate of the particle evolves with time obeying an equation which can be
+derived from the Schrodinger equation (considering the one dimensional case)
+
+                                   ∂ψ          h̄2 ∂ 2 ψ
+                             ih̄      = Hψ ≡ −           + V (x)ψ                            (1)
+                                   ∂t          2m ∂x2
+by writing
+
+                                           ψ = ReiS/h̄                                       (2)
+
+and using the continuity equation
+                                         ∂         ∂ρ
+                                            (ρv) +    =0                                     (3)
+                                         ∂x        ∂t
+for the probability distribution ρ(x, t) given by
+
+                                              ρ = |ψ|2 .                                     (4)
+
+It is important to note that ρ is ascribed an ontological significance by regarding it as repre-
+senting the probability density of “particles” occupying actual positions. In contrast, in the
+standard formulation ρ is interpreted as the probability density of finding a particle around a
+certain position. Setting (ρv) equal to the quantum probability current leads naturally to the
+Bohmian interpretation whrere the particle velocity v(x, t) is given by
+
+                                              dx   1 ∂S
+                                         v≡      =                                           (5)
+                                              dt   m ∂x
+The particle “trajectory” is completely deterministic and is obtained by integrating (5) with
+the appropriate initial conditions. The essential significance of Bohm’s model lies in providing
+an elegant solution to the measurement problem (which has been described by Weinberg [2] as
+
+                                                    2
+“the most important puzzle in the interpretation of quantum mechanics”) without requiring
+wave function collapse, since according to the Bohmian interpretation, in any measurement a
+definite outcome is singled out by the relevant ontological position coordinate.
+     In view of the importance of the Bohm model in providing not only an internally consistent
+alternative interpretation of the standard quantum formalism, but also perhaps the neatest
+solution to the measurement problem [1], it should be worthwhile to look for specific situations
+where the conceptual superiority of Bohm’s model over the standard interpretation may become
+easily transparent. To this end, we now proceed to examine the analysis of a fundamentally
+important experiment of particle physics, namely, the discovery of CP-violation [3].
+II. The CP-violation experiment
+     C(charge conjugation) and P(parity) are two of the fundamental discrete symmetries of
+nature, the violations of which have not been empirically detected in phenomena other than
+weak interactions. If a third discrete symmetry T(time reversal) is taken into account, there
+exists a fundamental theorem of quantum field theory, viz., the CPT theorem which states that
+all physical processes are invariant under the combined operation of CPT. Nevertheless, there
+is no theorem forbidding the violation of CP symmetry, and indeed, there have been several
+experiments to date [4], starting from the pioneering observation of Christenson, Cronin, Fitch
+and Turlay [3], that have revealed the occurrence of CP violation through weak interactions of
+particle physics involving the particles K 0 and K̄ 0 . The eigenstates of strangeness K 0 (s = +1)
+and its CP conjugate K̄ 0 (s = −1) are produced in strong interactions, for example, the decay
+of Φ particles. Weak interactions do not conserve strangeness, whereby K 0 and K̄ 0 can mix
+through intermediate states like 2π, 3π, πµν, πeν, etc. The observable particles, which are the
+long lived K-meson KL , and the short lived one KS , are linear superpositions of K 0 and K̄ 0 ,
+i.e.,
+                                                           q
+                            |KL i = (p|K 0 i − q|K̄ 0 i)/ |p|2 + |q|2                          (6)
+                                                           q
+                            |KS i = (p|K 0 i + q|K̄ 0 i)/ |p|2 + |q|2                          (7)
+
+which obey the exponential decay law |KL i → |KL iexp(−ΓL t/2)exp(−imL t) and analogously
+for |KS i, where ΓL and mL are the decay width and mass respectively of the KL particle. It
+follows from (6) and (7) that
+                                                 |p|2 − |q|2
+                                   hKL |KS i =                                                 (8)
+                                                 |p|2 + |q|2
+     CP violation takes place if the states |KL i and |KS i are not orthogonal. Through weak
+interactions the KS particle decays rapidly into channels such as KS → π + π − and KS → 2π 0
+with a mean lifetime of 10−10 s, whereas, the predominant decay modes of KL are KL →
+π ± e± ν (with branching ratio ∼ 39%), KL → π ± µ± ν(∼ 27%), and KL → 3π(∼ 33%) [4].
+The CP violating decay mode KL → 2π is extremely rare (with branching ratio ∼ 10−3 ) in
+
+                                                 3
+the background of the other large decay modes. Considering the Schrodinger evolution, if
+the analysis of the term corresponding to Ks in the relevant initial wave function shows that
+it cannot contribute significantly to the emission of two pions with suitable momenta and
+locations, then one can infer the occurrence of CP violation in this particular situation. In
+other words such 2π can only arise through the KL decay mode. The momenta and locations
+of the emitted pions are important since the key experimental issue is to detect the 2π particles
+coming from the decay of KL and identify them as coming from KL and not KS .
+    In a typical experiment to detect CP violation, an initial state of the type
+
+                                  |ψi i = (a|KL i + b|KS i)                                  (9)
+
+is used which is a coherent superposition of the KL and KS states. Such a state has been
+produced by the technique of ‘regeneration’ [5] which has been used in a large number of
+experiments [6]. The common feature of all these experiments is the measurement of the vector
+            →
+momenta pi of the charged decay products π + π − or 2π 0 from the decaying pions. It is only
+the type of instrument used for actually measuring the momenta that varies from experiment
+to experiment.
+III. Bohmian trajectories
+    To see how the Bohmian interpretation helps in drawing the relevant inference from this
+experiment, we concentrate on the analysis of a single event in which the two emitted pions
+from a decaying kaon are detected by two detectors respectively along two different directions.
+                                 →       →
+From the measured momenta p1 and p2 , the “trajectories” followed by the individual pions
+are retrodictively inferred assuming that they have followed linear “trajectories”. The point of
+intersection of these retrodicted “trajectories” is inferred to be the point from which the decay
+products have emanated from the decaying system; in other words, what is technically known
+as the “decay vertex” is determined in this way. The value of the momentum of the decaying
+                      → →      →
+kaon is obtained by pk =p1 + p2 . Once the decay vertex and the kaon momentum is known, one
+estimates the time taken by the kaon to reach the decay vertex from the source, again using at
+this stage the idea of a linear “trajectory”. If this time turns out to be much larger than the
+KS mean lifetime (∼ 10−10 s), one infers that the detected 2π pair must have come from KL ,
+which, as already mentioned, is the signature of CP violation.
+    It is thus evident from the above discussion that the assumption of a linear “trajectory”
+of a freely evolving particle (kaon or pion) provides a consistent explanation in support of CP
+violation in such an experiment. Within the standard interpretationm of quantum mechanics,
+there is no way one can justify assigning a “trajectory” to a freely evolving particle. Moreover,
+assuming such a “trajectory” to be linear is an additional ad hoc input. One possible argument
+could be to assign localized wave packets to emitted pions and kaons, and to use the fact
+that their peaks follow classical trajectories in the case of a free evolution. However, in the
+standard quantum mechanical description of decay processes, the decay products are regarded
+as asymptotically free, and hence should be represented by plane wave states. Moreover, even
+
+                                               4
+if they are approximated in some sense by localized wave packets, there would be inevitable
+spreading of the wave packets. Even if this spreading is regarded as negligible within the time
+interval concerned, a ‘literal identification’ of the wave packet with the particle is conceptually
+impermissible without an additional input at the fundamental level in the form of the notion
+of a “particle” with a definite position even when unobserved (“particle” ontology).
+    On the other hand, the assumption of linear “trajectories” followed by the decaying particles
+and the decay products is amenable to a natural explanation within the Bohmian framework.
+The decaying kaons as well as the asymptotically free decay products are represented by plane
+waves
+
+                                          ψ ∼ eikx .                                          (10)
+
+Hence it follows that in the Bohmian scheme the velocity equation (5) is in this case given by
+                                          dx   h̄k
+                                             =                                                (11)
+                                          dt   m
+which when integrated provides the linear “trajectories” of the particles. These trajectories are
+ontological and deterministic. Therefore, in this interpretation, the exact position coordinates
+of the “decay vertex” can be assigned in a natural way by retrodicting the pion “trajectories”
+without any inconsistencies of the type inherent in the standard interpretation. Hence, it seems
+necessary that the standard formalism of quantum mechanics needs to be supplemented with
+the Bohmian interpretation of ontological particle “trajectory” (in the sense that the particle
+has traversed a well defined path even when unobserved) to enable for the consistent inference
+of the observation of CP violation in the actual experiments involving kaon decays.
+IV. Concluding remarks
+    The main reasons for choosing, in particular, the CP violation experiment for this purpose
+are the following. First, unlike other common high energy experiments this particular experi-
+ment involves not merely the measurement of some physical quantities but inferring from the
+measured quantities the violation of a fundamental symmetry property of the pertinent physi-
+cal interactions. Secondly, again unlike other common high energy experiments, the effects of
+particle creation and annihilation are not relevant for the important part of the experiment
+involved with the prediction of CP violation, and no second quantized treatment is required
+for the theoretical framework. The crucial phenomena of particle decays which this experiment
+is concerned with, is appropriately described in terms of the Schrodinger equation (see [4] and
+references therein) for which there exists a consistent Bohmian interpretation. Note that ignor-
+ing interpretational nuances, if one tries to follow a very pragmatic approach and approximates
+the plane wave states of the decay products by wave packets whose peaks follow classical tra-
+jectories with finite speeds, careful estimates need to be done to quantify the resulting errors
+or fluctuations due to spreading of wave packets by taking into account the actual distances
+involved in the performed experiments. (Of course, the estimates of these distances related to
+
+                                                5
+the particle trajectories are fundamental from the Bohmian perspective.) This is important
+because the CP violation effect is exceedingly small; the branching ratio of the CP violating
+decay mode KL → 2π is 10−3. In none of the CP violation experiments performed to date has
+this point been considered in the relevant analysis.
+    We conclude by noting that this analysis suggests that it should be worthwhile to look for
+more such appropriate examples where the inadequacy or ambiguity of the standard formalism
+in comprehending the results of the concerned experiments can be avoided by using the Bohmian
+interpretation. It should be appreciated that since there is no measurement problem in the
+Bohmian interpretation, a Bohmian analysis is useful for all experiments in quantum mechanics,
+and in particular scattering experiments where it is required to know why particles are detected
+where they are at the end of the experiment. The answer to this is clear from the Bohmian
+perspective—the particles are detected where they actually are. However, from the viewpoint of
+the standard interpretation the explanation is rather obscure, as long as the Schrodinger wave
+function is regarded as the complete description of the physical system. In this context it has
+been recently argued [7] that the concept of quantum probability current, a full understanding
+of which is provided by Bohmian mechanics, is fundamental for a genuine understanding of
+scattering phenomena. Apart from this, it has been claimed [8] that a special significance of
+Bohmian mechanics lies in experiments related to the measurement of time of flight of particles,
+and tunelling time in particular for which it is difficult to find a consistent or unambiguous
+definition within the standard framework of quantum mechanics. All this is of course different
+from empirically verifying a new consequence, if any exists, of the Bohmian interpretation which
+is not obtainable from the standard interpretation. Nevertheless, such investigations like the
+one reported in this paper could be helpful in understanding more clearly the relative merits
+of the standard and Bohmian interpretations.
+
+
+
+   This work was supported by the Department of Science and Technology, India.
+
+
+
+
+                                               6
+   REFERENCES
+
+
+
+[1 ] P.R.Holland, “The Quantum Theory of Motion”, (Cambridge University Press, London,
+      1993); D.Bohm, Phys. Rev. 85 (1952) 166; D.Bohm and B.J.Hiley, “The Undivided
+      Universe”, (Routledge, London, 1993); J.T.Cushing, “Quantum Mechanics - Historical
+      Contingency and the Copenhagen Hegemony”, (University of Chicago Press, Chicago,
+      1994).
+
+[2 ] S.Weinberg, “Dreams of a final theory”, (Vintage, London, 1993) p. 64.
+
+[3 ] J.H.Christenson, J.W.Cronin, V.L.Fitch and R.Turlay, Phys. Rev. Lett. 13 (1964) 138.
+
+[4 ] For a review, see for instance, K.Kleinknecht, in “CP violation”, edited by C.Jarlskog,
+      (World Scientific, Singapore, 1989) pp. 41 -104.
+
+[5 ] A.Pais and O.Piccioni, Phys. Rev. 100 (1955) 1487.
+
+[6 ] For eample, see, C.Geweniger et al., Phys. Lett. B 48 (1974) 487; V.Chaloupka et al.,
+      Phys. Lett. B 50 (1974) 1; W.C.Carithers et al., Phys. Rev. Lett. 34 (1975) 1244;
+      N.Grossmann, et al., Phys. Rev. Lett., 59 (1987) 18.
+
+[7 ] M.Daumer, D.Duerr, S.Goldstein and N.Zanghi, J. Stat. Phys. 88 (1997) 967.
+
+[8 ] C.R.Leavens, Phys Lett. A197 (1995) 88; in “Bohmian Mechanics and Quantum Theory:
+      An Appraisal”, eds. J.T.Cushing, A.Fine and S.Goldstein (Kluwer, Dordrecht, 1996).
+
+
+
+
+                                             7
+

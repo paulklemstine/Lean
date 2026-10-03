@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/AjGQLTiEPBxY36tWywTPGU1RxjM</id>
+  <title>arXiv Query: search_query=abs:"side-channel" AND abs:"RSA" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:25Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22side-channel%22+AND+(abs:%22RSA%22+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2406.20071v1</id>
+    <title>SAT and Lattice Reduction for Integer Factorization</title>
+    <updated>2024-06-28T17:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2406.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The difficulty of factoring large integers into primes is the basis for cryptosystems such as RSA. Due to the widespread popularity of RSA, there have been many proposed attacks on the factorization problem such as side-channel attacks where some bits of the prime factors are available. When enough bits of the prime factors are known, two methods that are effective at solving the factorization problem are satisfiability (SAT) solvers and Coppersmith's method. The SAT approach reduces the factorization problem to a Boolean satisfiability problem, while Coppersmith's approach uses lattice basis reduction. Both methods have their advantages, but they also have their limitations: Coppersmith's method does not apply when the known bit positions are randomized, while SAT-based methods can take advantage of known bits in arbitrary locations, but have no knowledge of the algebraic structure exploited by Coppersmith's method. In this paper we describe a new hybrid SAT and computer algebra approach to efficiently solve random leaked-bit factorization problems. Specifically, Coppersmith's method is invoked by a SAT solver to determine whether a partial bit assignment can be extended to a complete assignment. Our hybrid implementation solves random leaked-bit factorization problems significantly faster than either a pure SAT or pure computer algebra approach.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T17:30:20Z</published>
+    <arxiv:comment>To appear in the 2024 Proceedings of the International Symposium on Symbolic and Algebraic Computation</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yameen Ajani</name>
+    </author>
+    <author>
+      <name>Curtis Bright</name>
+    </author>
+    <arxiv:doi>10.1145/3666000.3669712</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3666000.3669712" title="doi"/>
+  </entry>
+</feed>

@@ -1,0 +1,1151 @@
+arXiv:1505.01700v1 [cs.DM] 7 May 2015
+
+An Improvement on the Hasse-Weil Bound and
+applications to Character Sums, Cryptography and
+Coding
+Ronald Cramer∗
+
+Chaoping Xing†
+
+Abstract
+The Hasse-Weil bound is a deep result in mathematics and has found wide applications in
+mathematics, theoretical computer science, information theory etc. In general, the bound is
+tight and cannot be improved. However, for some special families of curves the bound could be
+improved substantially. In this paper, we focus on the Hasse-Weil bound for the curve defined
+by y p − y = f (x) over the finite field Fq , where p is the characteristic of Fq . Recently, Kaufman
+and Lovett [5, FOCS2011] showed that the Hasse-Weil bound can be improved for this family of
+√
+curves with f (x) = g(x) + h(x), where g(x) is a polynomial of degree ≪ q and h(x) is a sparse
+polynomial of arbitrary degree but bounded weight degree. The other recent improvement by
+√
+Rojas-Leon and Wan [8, Math. Ann. 2011] shows that an extra p can be removed for this
+family of curves if p is very large compared with polynomial degree of f (x) and logp q.
+In this paper, we show that the Hasse-Weil bound for this special family of curves can be
+improved if q = pn with odd n which is the same case where Serre [10] improved the Hasse-Weil
+bound. However, our improvement is greater than Serre’s one for this special family of curves.
+Furthermore, our improvement works for small p as well compared with the requirement of
+large p by Rojas-Leon and Wan. In addition, our improvement finds interesting applications to
+character sums, cryptography and coding theory. The key idea behind is that this curve has the
+Hasse-Witt invariant 0 and we show that the Hasse-Weil bound can be improved for any curves
+with the Hasse-Witt invariant 0. The main tool used in our proof involves Newton polygon and
+some results in algebraic geometry.
+
+∗
+
+CWI, Amsterdam & Mathematical Institute, Leiden University, The Netherlands. ronald.cramer@cwi.nl
+Division of Mathematical Sciences, School of Physical & Mathematical Sciences, Nanyang Technological University, Singapore. xingcp@ntu.edu.sg
+†
+
+1
+
+Introduction
+
+Let χ be a nontrivial additive character from Fq to the nonzero complex C∗ . The Weil bound
+for character sums states that, when the degree m of a polynomial f (x) is co-prime with q, then
+√
+|E(χ(f (x)))| ⩽ (m−1)/ q. The Weil bound for character sums can be derived from the Hasse-Weil
+bound of a special family of algebraic curves, i.e., y p − y = f (x), where p is the characteristic of Fq .
+Therefore, any improvement on the Hasse-Weil bound of this family could lead to an improvement
+on the Weil bound for character sums. The Hasse-Weil bound is a deep result in mathematics
+and has found wide applications in mathematics, theoretical computer science, information theory
+etc. In general, the bound is tight and cannot be improved. However, in some special cases the
+bound could be improved substantially. For instance, when the ground filed size q is small, the
+bound could be improved up to half of it. There have been various improvements on the Hasse-Weil
+bound. One of the most famous improvements is the Weil-Serre bound [10]. Recently, Kaufman
+and Lovett [5, FOCS2011] showed that the Weil bound for character sums can be improved for
+√
+f (x) = g(x) + h(x), where g(x) is a polynomial of degree ≪ q and h(x) is a sparse polynomial
+of arbitrary degree but bounded weight degree. The other recent improvement by Rojas-Leon and
+√
+Wan [8, Math. Ann. 2011] shows that an extra p can be removed if p is very large compared
+with polynomial degree m of f (x) and logp q.
+
+1.1
+
+Our result
+
+From now on in this paper, we assume that q = pnPfor a prime p and an odd integer n ⩾ 3. Consider
+n−1 pi
+pt
+t
+the trace map Tr from Fq to Fp defined by α 7→ i=0
+α . It is easy to see that Tr(α
+Pm ) =i Tr(α ).
+This implies that, for a polynomial f (x) ∈ Fq [x], one can find a polynomial g(x) = i=0 gi x ∈ Fq [x]
+such that gi are zero whenever i ≡ 0 mod p and Tr(f (α)) = Tr(g(α)). Thus, we only consider those
+polynomials with nonzero term xi , where gcd(i, p) = 1.
+Now let f (x) be a polynomial of degree m ⩾ 1 over Fq . Without loss of generality, we may
+assume that gcd(m, p) = 1. We consider the cardinality of the set
+Zf := {α ∈ Fq : Tr(f (α)) = 0}.
+
+(1)
+
+√
+(p − 1)(m − 1) q
+q
+.
+⩽
+|Zf | −
+p
+p
+
+(2)
+
+Then the Weil bound shows that
+
+The main result of this paper is given below.
+Theorem 1.1 (MAIN RESULT). Let g = (m − 1)(p − 1)/2, then one has
+
+j √ k
+q⌋
+ p⌈n/g⌉−1 g⌊2
+if g > 1
+q
+⌈n/g⌉
+p
+j √ k
+⩽
+|Zf | −
+q⌋
+⌊2
+ p(n−1)/2 (n+1)/2
+p
+if g = 1.
+p
+
+(3)
+
+One could not see how largely the bound (2) is improved in Theorem 1.1. In fact, the improvement could be substantial. We refer this to Example 2.2 and Sections 2.3 and 2.4 for numerical
+illustration.
+1
+
+1.2
+
+Our technique
+
+Our technique for the improvement is through an improvement of the Hasse-Weil bound for the
+algebraic curve. More precisely speaking, we show the improvement through three steps: (i) show
+that the Weil bound for character sums is derived from the Hasse-Weil bound of an algebraic curve;
+(ii) prove that the Hasse-Weil bound for the algebraic curve with the Hasse-Witt invariant 0 can
+be improved; (iii) show by the Deuring-Shafarevich Theorem that the curve y p − y = f (x) has the
+Hasse-Witt invariant 0. Consequently, we obtain an improvement on the Weil bound for character
+sums.
+Among the above three steps, the critical one is to show an improvement on the Hasse-Weil
+bound for the algebraic curve with the Hasse-Witt invariant 0. In order to achieve this, we analyze
+the Newton polygon of the characteristic polynomial of an abelian verity with Hasse-Witt invariant
+0. Then we employ some fundamental results on factorization of the characteristic polynomial to
+obtain the desired result.
+
+1.3
+
+Comparison
+
+We mainly compare our improvement with those by Serre [10], Kaufman-Lovett [5, FOCS2011] and
+Rojas-Leon-Wan [8, Math. Ann. 2011].
+The improvement by Serre applies to arbitrary algebraic curve over Fpn with odd n, while our
+improvement only applies to the curve y p − y = f (x) over Fpn with odd n. On the other hand, our
+improvement is even greater than the one by Serre for this special family of curves.. The method
+by Serre mainly employs some properties of algebraic numbers.
+The improvement by Kaufman and Lovett works for those polynomial with degree bigger than
+q. Thus, the scenario is different. The main idea by Kaufman-Lovett uses Deligne Theorem on
+multivariate polynomials.
+√
+The improvement by Rojas-Leon and Wan shows that an extra p can be removed if p is very
+large compared with polynomial degree m of f (x) and logp q. However, our improvement works for
+any characteristic p including p = 2 (see numerical examples of Section 2). The idea of Rojas-Leon
+and Wan involves moment L-functions and Katz’s work on ℓ-adic monodromy calculations.
+
+√
+
+1.4
+
+Organization
+
+Section 2 presents the main result and some applications to character sum, cryptography and coding
+theory. We also show that the Weil bound for character sums can be derived from the Hasse-Weil
+bound of y p − y = f (x) in Section 2. We outline the proof of the main result in Section 3 without
+requirement on knowledge of algebraic geometry. In Appendix, we show the detailed proof of the
+main result with requirement on knowledge of algebraic geometry.
+
+2
+
+2
+
+Main result and applications
+
+2.1
+
+Main result
+
+The Hasse-Weil bound [14] provides an upper bound on the number of points of an algebraic curve
+over a finite field Fq in terms of its genus and the ground field size q. The bound was improved by
+Serre [10] when q is not a square. The refined bound by Serre is now called the Weil-Serre bound.
+In this section, we show that the Weil-Serre bound can be further improved for a class of curves
+arising from trace when q is not a square. Furthermore, several applications are provided for this
+improvement.
+It is a well-known fact that the cardinality of Zf in (1) is equal to (Nf − 1)/p, where Nf stands
+for the number of the Fq -rational points on the Artin-Schreier type curve defined by
+Xf :
+
+y p − y = f (x).
+
+(4)
+
+Note that the set of the Fq -rational points on Xf is {P∞ } ∪ {(α, β) ∈ F2q : β p − β = f (α)}, where
+P∞ stands for the “points at infinity”.
+To see this, we note that P∞ can be discarded towards counting the cardinality of Zf . Furthermore, an element α belongs to Zf if and only if there are p elements β ∈ Fq such that (α, β) are
+solutions of the equation (4).
+When applying the Weil bound [14] to the curve Xf , we have
+√
+|Nf − q − 1| ⩽ 2g q,
+
+(5)
+
+where g = (m − 1)(p − 1)/2 is the genus of Xf . Serre [10] improved the above bound to the following
+Weil-Serre bound
+√
+(6)
+|Nf − q − 1| ⩽ g⌊2 q⌋.
+
+It seems that the bound (6) is just a small improvement on the Weil bound. However, the improvement could be substantial if m is big. For instance, q = 32 and m = 2001, then the Weil bound
+gives |Nf − q − 1| ⩽ 11, 313, while the Weil-Serre bound gives |Nf − q − 1| ⩽ 11, 000.
+Applying the Weil-Serre bound, we get the following bound on the cardinality |Zf |
+
+√ 
+g⌊2 q⌋
+q
+|Zf | −
+⩽
+.
+p
+p
+
+(7)
+
+In this paper, we show that the bound (7) can be further improved. We repeat the main result of
+this paper is that improves the above bound (7) as follows.
+Theorem 2.1 (MAIN RESULT). Let g = (m − 1)(p − 1)/2, then one has
+
+j √ k
+⌈n/g⌉−1 g⌊2 q⌋
+
+if g > 1
+p
+q
+k
+j p⌈n/g⌉
+√
+⩽
+|Zf | −
+q⌋
+⌊2
+ p(n−1)/2 (n+1)/2
+p
+if g = 1.
+
+(8)
+
+p
+
+The proof of Theorem 2.1 involves algebraic geometry and algebraic number theory. We will
+outline the proof in the next section in a more elementary way and provide some details in Appendix.
+From the formula of (8), one cannot see the big difference between the Weil-Serre bound (7)
+and our bound (8). Let us use some examples to illustrate improvement.
+3
+
+Example 2.2. (i) Let q = 27 = 128 and m = deg(f ) = 5, then the Weil-Serre bound (7) gives
+||Zf | − 64| ⩽ 22, while the bound (8) gives ||Zf | − 64| ⩽ 16.
+(ii) Let q = 35 = 243 and m = deg(f ) = 5, then the Weil-Serre bound (7) gives ||Zf | − 81| ⩽ 20,
+while the bound (8) gives ||Zf | − 81| ⩽ 18.
+(iii) Finally, we look at an example of relatively large parameters. Let q = 221 and m =
+deg(f ) = 5, then the Weil-Serre bound (7) gives |Zf | − 220 ⩽ 2896, while the bound (8)
+gives |Zf | − 220 ⩽ 2048.
+From Example 2.2(iii), we can see that, for some parameters, there could be a big difference
+between the Weil-Serre bound (7) and our bound (8).
+
+2.2
+
+Improvement on the Weil bound for character sum
+
+It is well-known that every nontrivial additive character from Fq to C∗ can be represented by
+χβ (x) := exp(2πiTr(βx)/p) for some β ∈ F∗q (see [4]). Let f (x) be a polynomial of degree m over
+F with gcd(m, p) = 1 and put g = (m − 1)(p − 1)/2. Then χβ (f (x)) is uniformly distributed when
+√q
+q ≫ m. More precisely speaking, the Weil bound gives
+|E(χ(f (x)))| ⩽
+
+m−1
+√ .
+q
+
+(9)
+
+Furthermore, applying the Weil-Serre bound (7) gives
+
+√ 
+1 g⌊2 q⌋
+,
+|Ex∈Fq (χβ (f (x)))| ⩽
+q
+p
+
+(10)
+
+where Ex∈Fq (χβ (f (x))) is the expectation of χβ (f (x)) defined by
+Ex∈Fq (χβ (f (x))) =
+
+X Mβf (a)
+1 X
+χβ (f (α)) =
+exp(2πai/p)
+q
+q
+
+(11)
+
+a∈Fp
+
+α∈Fq
+
+with Mβf (a) being the cardinality of the set {α ∈ Fq : Tr(βf (α)) = a}. Note that Mβf (0) = |Zβf |.
+Now we apply the bound (8) to get an improvement to the bound (10).
+Theorem 2.3. Let g = (m − 1)(p − 1)/2, then one has
+
+j √ k
+q⌋
+ p⌈n/g⌉−n g⌊2
+if g > 1,
+pj⌈n/g⌉√
+k
+|Eα∈Fq (χβ (f (α)))| ⩽
+q⌋
+⌊2
+ p(n+1)/2−n (n+1)/2
+if g = 1
+p
+
+(12)
+
+for any nonzero element β ∈ Fq .
+
+Proof. For each a ∈ Fp , choose γa ∈ Fq such that Tr(γa ) = a. Then we have Tr(βf (α)) = a if and
+only if Tr(βf (α) − γa ) = 0. This implies that Mβf (a) = Mβf −γa (0) = |Zβf −γa |. Thus, Mβf (a) also
+
+4
+
+satisfies the bound (8). Hence,
+|Eα∈Fq (χβ (f (α)))| =
+⩽
+
+
+
+q
+1 X
+exp(2πai/p) =
+exp(2πai/p)
+Mβf (a) −
+q
+q
+p
+a∈Fp
+a∈Fp
+
+
+q
+q
+1 X
+1 X
+|Zβf −γa | − .
+Mβf (a) −
+exp(2πai/p) =
+q
+p
+q
+p
+X Mβf (a)
+a∈Fp
+
+a∈Fp
+
+The desired result follows from Theorem 2.1.
+We illustrate our improvement by consider some small examples.
+Example 2.4. Let us consider character sums for polynomials of degree 3 and 5, respectively.
+(i) Let q = 2n with odd n and let f (x) be a polynomial of degree 3. By Theorem 2.3, for any
+P
+(n+1)/2 . The Weil
+nontrivial additive character χ from F2n to C∗ , one has
+α∈Fq χ(f (α)) ⩽ 2
+
+bound (9) gives an upper bound 2(n+2)/2 , while the Weil-Serre bound (10) gives an upper
+bound between 2(n+1)/2 and 2(n+2)/2 .
+
+(ii) Let q = 2n with odd n and let f (x) be a polynomial of degree 5. By Theorem 2.3, for any
+P
+(n+3)/2 . The Weil
+nontrivial additive character χ from F2n to C∗ , one has
+α∈Fq χ(f (α)) ⩽ 2
+
+bound (9) gives an upper bound 2(n+4)/2 , while the Weil-Serre bound (10) gives an upper
+bound between 2(n+3)/2 and 2(n+4)/2 .
+
+2.3
+
+Application to cryptography
+
+In streamcipher, nonlinearity of a function f (x) from F2n to F2n is an important measure [1]. The
+nonlinearity of a function f (x) is defined as follows.
+The Walsh transfer Wf of f (x) is defined by
+Wf :
+
+F2n × F2n → C;
+
+(a, b) 7→
+
+X
+
+(−1)af (x)+bx .
+
+(13)
+
+x∈F2n
+
+Then the Walsh spectrum of f is the image set {Wf (a, b) : a ∈ F∗2n , b ∈ F2n }. The nonlinearity,
+denoted by NL(f ), of f (x) is defined by
+NL(f ) := 2n−1 −
+
+1
+max
+|Wf (a, b)|.
+2 (a,b)∈F∗2n ×F2n
+
+(14)
+
+In fact, the Walsh transformation Wf (a, b) is nothing but 2 times the expectation of χ1 (af (x)+bx),
+i.e., Wf (a, b) = 2Ex∈F2n (χ1 (af (x) + bx)). Thus, The nonlinearity NL(f ) of f (x) can be expressed
+in terms of the expectation of χ1 (af (x) + bx), i.e.,
+NL(f ) = 2n−1 −
+
+max
+
+(a,b)∈F∗2n ×F2n
+
+5
+
+|Ex∈F2n (χ1 (af (x) + bx))|.
+
+(15)
+
+For an odd n, it can be proved that NL(f ) is upper-bounded by 2n−1 − 2(n−1)/2 [1]. Thus, if
+deg(f ) = 3, i.e., the curves defined in (4) is an elliptic curve, then by Theorem 2.1 one has
+NL(f ) = 2n−1 −
+
+max
+$
+
+|Ex∈F2n (χ1 (af (x) + bx))|
+%
+⌊2(n+2)/2 ⌋
+= 2n−1 − 2(n−1)/2 .
+2(n+1)/2
+
+(a,b)∈F∗2n ×F2n
+
+⩾ 2n−1 − 2(n−1)/2
+
+Hence, by the upper bound, we have NL(f ) = 2n−1 − 2(n−1)/2 for polynomials f of degree 3, i.e.,
+polynomials of degree 3 produce the highest nonlinearity. Previously, polynomials of degree 3 are
+usual candidates for functions with highest nonlinearity. Now let us look a polynomial f of degree
+5 and by the bound (12)
+NL(f ) = 2n−1 −
+
+|Ex∈F2n (χ1 (af (x) + bx))|
+%
+$
+(n+2)/2 ⌋
+2⌊2
+= 2n−1 − 2(n−1)/2 .
+⩾ 2n−1 − 2(n−1)/2−1
+2(n+1)/2
+max
+
+(a,b)∈F∗2n ×F2n
+
+Thus, polynomials of degree 5 also produce functions with the highest nonlinearity. This enlarges
+the pool of functions with the highest nonlinearity when people search for functions with the
+highest nonlinearity together with other cryptographic properties such as algebraic degree, algebraic
+immunity, etc. [1].
+
+2.4
+
+Application to coding
+
+Many codes such as BCH codes, classical Goppa codes and Reed-Muller codes can be realized as
+trace codes. In fact, every cyclic code can be represented as a trace code in a natural way [16].
+Let P := {α1 , α2 , . . . , αN } be a subset of Fq of cardinality N . For a polynomial f (x) ∈ Fq [x],
+we denote by TrP (f ) the vector (Tr(f (α1 )), Tr(f (α2 )), . . . , Tr(f (αN ))). For an Fp -subspace V of
+Fq [x], we denote by TrP (V ) the trace code {TrP (f ) : f ∈ V }. Let us warm up by looking at a
+small example first.
+Example 2.5. Consider the binary code TrP (V ), where P consists of all elements in F128 , and
+V = {f (x) ∈ F128 [x] : deg(f ) ⩽ 5}. note that TrP (x) = TrP (x2 ) = TrP (x4 ). Then it is easy to
+see that TrP (V ) has a basis {(1, 1, . . . , 1)} ∪ {TrP (αi xj )}1⩽i⩽7,j=1,3,5 , where {α1 , α2 , . . . , α7 } is an
+F2 -basis of F128 . Thus, TrP (V ) is a binary [128, 22]-linear code. To see the minimum distance, let
+f be a nonzero polynomial of degree m with m ⩽ 5 and gcd(m, 2) = 1. By the Weil-Serre bound
+(7), we know that the number of zeros of TrP (f ) can be at most 64 + 22 = 86, thus we get a lower
+bound on minimum distance, i.e., d ⩾ 128 − 86 = 42. However, by our bound in Theorem 2.1, we
+get a lower bound d ⩾ 128 − (64 + 16) = 48. This achieves the best-known bound [2]. In fact,
+the software Magma verifies that this code indeed has minimum distance 48. In other words, our
+bound (8) is tight in this case.
+Next we study dual codes of primitive BCH codes.
+Example 2.6. Let α be a primitive element of Fq and let BCH(t) be a t-error correcting p-ary
+BCH code of length N = q − 1 = pn − 1. Then by Delsarte’s Theorem [6], the dual BCH(t)⊥ can be
+6
+
+represented as the trace code TrP (V ) [12], where P consists of all q−1 nonzero elements of Fq , and V
+is the Fq -vector space generated by {1, x, x2 , . . . , xt }. If i is divisible by p, then TrP (xi ) = TrP (xi/p ).
+Thus, BCH(t)⊥ is generated by {(1, 1, . . . , 1)} ∪ {TrP (αi xj ) : 1 ⩽ j ⩽ t, p ∤ j, 1 ⩽ i ⩽ n}, where
+{α1 , α2 , . . . , αn } is an Fp -basis of Fq . Hence, the dimension of BCH(t)⊥ is at most 1 + n(t − ⌊t/p⌋).
+√
+On the other hand, if t < q/(p − 1), then by the Weil-Serre bound (7), TrP (f ) 6= 0 for any
+f ∈ V \ {0} with gcd(deg(f ), p) = 1. This implies that the dimension of BCH(t)⊥ is exactly
+√
+1 + n(t − ⌊t/p⌋) for t < q/(p − 1). By the bound (8), we obtain a lower bound on minimum
+distance of BCH(t)⊥ , namely
+
+j √ k
+q⌋
+  pn − 1 − pn−1 − p⌈n/g⌉−1 g⌊2
+
+if g > 1
+p⌈n/g⌉
+⊥
+k
+j
+√
+(16)
+⩾
+d BCH(t)
+q⌋
+⌊2
+n
+n−1
+⌈(n−1)/2⌉
+ p −1−p
+if
+g
+=
+1,
+−p
+(n+1)/2
+p
+where g = (p − 1)(t − 1)/2 if p ∤ t and g = (p − 1)(t − 2)/2 if p|t
+
+Now we add all-one vector 1 to BCH(t)⊥ , then we get a code Cp (t, n) generated by 1 and
+{TrP (xi ) : 0 ⩽ i ⩽ 2t, p 6 |i}. The dimension of C increases by 1, i.e., 1 + n(t − ⌊t/p⌋) for
+√
+t < q/(p − 1) and the lower bound (16) on the minimum distance still holds for Cp (t, n).
+
+Let us illustrate the parameters of our code C by looking at some numerical results. Taking
+p = 2, t = 4 and n = 5, we get a binary [31, 11, ⩾ 11]-linear code C2 (4, 5). This is a best possible
+code in the sense that for given length 31 and dimension 11, the minimum distance can not be
+improved [2].
+If p = 3, t = 3 and n = 3, then C3 (3, 3) is a ternary [26, 7, ⩾ 14]-linear code. It is also an
+optimal code [2].
+Example 2.7. In this example, we consider the duals of classical Goppa codes. Let q = pn and let
+L = Fq = {α1 , α2 , . . . , αq }. Let g(x) be a polynomial of degree t with gcd(t, p) = 1 and g(αi ) 6= 0
+for all i = 1, 2, . . . , q. Then the classical Goppa code Γ(L, g) defined by
+)
+(
+q
+X
+ci
+n
+≡ 0 mod g(x) .
+Γ(L, g) = (c1 , c2 , . . . , cq ) ∈ Fp :
+x − αi
+i=1
+
+is a p-ary linear code of length q = pn . By Delsarte’s Theorem [6], the dual Γ(L, g)⊥ can be
+represented as the trace code {(Tr(v1 f (α1 )), (Tr(v1 f (α1 )), . . . , (Tr(v1 f (αq ))) : f ∈ Fq [x], deg(f ) ⩽
+t − 1}, where vi = g(αi ) [12]. It is clear that Γ(L, g)⊥ is equivalent to TrP (V ), where P consists
+of all q elements of Fq , and V is the Fq -vector space generated by {1, x, x2 , . . . , xt−1 }. In the same
+√
+way, we have that the dimension of Γ(L, g)⊥ is exactly 1 + n(t − ⌊(t − 1)/p⌋) for t < q/(p − 1).
+By the bound (8), we obtain a lower bound on minimum distance of Γ(L, g)⊥ , namely
+
+j √ k
+q⌋
+  pn − pn−1 − p⌈n/g⌉−1 g⌊2
+
+if g > 1
+p⌈n/g⌉
+⊥
+k
+j
+√
+⩾
+(17)
+d Γ(L, g)
+q⌋
+⌊2
+n
+n−1
+⌈(n−1)/2⌉
+ p −p
+if
+g
+=
+1,
+−p
+(n+1)/2
+p
+where g = (p − 1)(t − 2)/2 if p ∤ (t − 1) and g = (p − 1)(t − 3)/2 if p|(t − 1)
+
+Taking p = 5, t = 2 and n = 3, we get a 5-ary [125, 7, ⩾ 95]-linear code. This is a best possible
+code in the sense that for given length 125 and dimension 17, the minimum distance can not be
+improved [2].
+7
+
+3
+
+Outline of the proof of the main result
+
+The main objective of this section is to outline the proof of our Main Theorem 2.1 in more elementary way.
+
+3.1
+
+L-polynomial
+
+The Artin-Schreier type curve Xf defined in (4) is just an example of general algebraic curves. The
+curve Xf is defined over Fq and of course it can be regarded as a curve over arbitrary extension
+Fqi for every i ⩾ 1. Let Nf (i) denote the number of Fqi -rational points on Xf , i.e., Nf (i) stands
+for the size of the set of Fqi -rational points {P∞ } ∪ {(α, β) ∈ Fqi : β p − β = f (α)}. Then one
+P∞ Nf (i)
+can define the zeta function of Xf by ζf (T ) := exp
+. It was proved by Weil [14] that
+i=1 T i
+L (T )
+
+ζf (T ) is a rational function of the form (1−T f)(1−qT ) , where Lf (T ) ∈ Z[T ] is a polynomial of degree
+2g = (m − 1)(p − 1). Furthermore, Lf (0) = 1 and every reciprocity root of Lf (T ) has absolute
+√
+value q.
+P
+i
+i
+If we write Lf (T ) = 2g
+i=0 ai T , then a0 = Lf (0) = 1 and ai+g = q ai for every all 0 ⩽ i ⩽ g. In
+particular, the leading coefficient a2g = q g .
+P
+i
+Definition 3.1. Let Lf (T ) = 2g
+i=0 ai T be the L-polynomial of Xf . Then the Hasse-Witt invariant
+of Xf , denoted by iXf , is defined to be the maximal j such that aj 6≡ 0 mod p, i.e.,
+iXf = max{0 ⩽ j ⩽ g : aj 6≡ 0 mod p}.
+
+(18)
+
+Since a0 = 1, we have iXf ⩾ 0. On the other hand, we clearly have iXf ⩽ g.
+Lemma 3.2. The Hasse-Witt invariant iXf for the curve Xf defined in (18) is 0.
+We refer to Lemma A.4 for the proof of Lemma 3.2.
+
+3.2
+
+Newton polygon
+
+Denote by Qp the p-adic field. It is the completion field of the rational field Q at prime p. The unique
+discrete valuation in Qp is again denoted by νp . The Newton polygon of a polynomial u(x) ∈ Qp [x]
+over the local field Qp provides information on factorization of u(x) over Qp . We briefly describe
+the Newton polygon method in this subsection. The reader may refer to [15, Section 3.1] for the
+details.
+Let u(x) = u0 + u1 x + · · · + um xm be a polynomial over Qp with u0 um 6= 0. For each 0 ⩽ i ⩽ m,
+we assign a point in R2 as follows: (i) if ui 6= 0, take the point (i, νp (ui )); (ii) if ui = 0, we ignore the
+point (i, ∞). In this way, we form an envelope for the set of points {(i, νp (ui )) : i = 0, 1, 2, . . . , m}.
+The polygon thus determined is called the Newton polygon.
+Lemma 3.3. Suppose (r, νp (ur )) ↔ (s, νp (us )) with s > r is a segment of the Newton polygon of
+u(x) with slope −k. Then u(x) has exactly s − r roots
+α1 , α2 , . . . , αs−r with νp (α1 ) = νp (α2 ) =
+Qs−r
+· · · = νp (αs−r ) = k. Moreover, the polynomial a(x) := i=1
+(x − αi ) belongs to Qp [x].
+
+Now if h(x) ∈ Qp [x] is an irreducible factor of a(x) in the above lemma, then νp (h(0)) =
+k deg(h(x)) ⩽ k deg(a(x)) = k(s − r).
+8
+
+3.3
+
+Weil number
+
+Definition 3.4. (i) An algebraic number ω is called a q-Weil number if ω and all Q-conjugates of
+√
+ω have absolute value q (by a Q-conjugate of ω, we mean a root of the minimal polynomial
+of ω over Q).
+(ii) A monic polynomial Φ(T ) over Z[T ] is called a q-Weil polynomial if it has an even degree and
+all its roots are q-Weil numbers.
+P
+i
+(iii) The Hasse-Witt invariant of a q-Weil polynomial Φ(T ) = 2g
+i=0 c2g−i T ∈ Z[t] is defined to be
+the maximal j ∈ [0, g] such that cj 6≡ 0 mod p.
+Lemma 3.5. A q-Weil polynomial Φ(t) must have the form
+2g
+X
+i=0
+
+c2g−i ti ∈ Z[t] with c2g = q g and c2g−i = q i ci for all i = 0, 1, . . . , g.
+
+(19)
+
+Proof. First, note that the product of two polynomials of the form (19) still has the form (19).
+Hence, it is sufficient to show that an irreducible q-Weil polynomial Φ(T ) over Z has the form
+√
+√
+(19). Let ω be a root of Φ(T ). If ω is a real number, we must have ω = q or − q. Thus,
+√
+√
+Φ(T ) = (T − q)(T + q) = T 2 − q. In this case, Φ(T ) has the form (19).
+
+If ω is not a real number, we may assume that all Q-conjugates of ω are {ω1 , ω̄1 , . . . , ωg , ω̄g },
+where
+ω̄i are complex conjugate of ωi . By definition of a q-Weil polynomial, we have Φ(T ) =
+Qg
+√
+q for all 1 ⩽ i ⩽ g. The desired result follows from the
+i=1 (T − ωi )(T − ω̄i ) and |ωi | = |ω̄i | =
+following identity
+
+
+g 
+g
+ q
+ Y
+q
+q
+T 2g  q  T 2g Y  q
+= g
+Φ
+− ωi
+− ω̄i =
+T−
+T−
+= Φ(T ).
+qg
+T
+q
+T
+T
+ωi
+ω̄i
+i=1
+
+i=1
+
+Note that we use the fact that ωqi = ω̄i in the above identity.
+Lemma 3.6. Let Φ(T ) is a q-Weil polynomial with Hasse-Witt invariant equal to 0 and let Ψ(T )
+be a divisor of Φ(T ) which is also a q-Weil polynomial. Then Ψ(T ) has Hasse-Witt invariant equal
+to 0 as well.
+P2r
+P
+i
+i
+Proof. Let Φ(T ) = 2g
+i=0 a2r−i T ∈ Z[T ]. Put Φ(T )/Ψ(T ) =
+i=0 c2g−i T ∈ Z[t] and let Ψ(T ) =
+P
+2s
+i
+i=0 b2s−i T ∈ Z[T ]. Then r + s = g.
+
+Suppose that Ψ(T ) has Hasse-Witt invariant bigger than 0. Let i be the largest index such that
+νp (ai ) = 0. Then 1 ⩽ i ⩽ r. Let j be the largest index such that νp (bj ) = 0 for some 0 ⩽ j ⩽ s.
+Consider
+X
+X
+ci+j =
+ak bℓ = ai bj +
+ak bℓ .
+(20)
+k+ℓ=i+j
+
+k+ℓ=i+j,(k,ℓ)6=(i,j)
+
+Every term in the summation of the above equation (20) is divisible by p, while ai bj is not divisible
+by p. Thus, ci+j is not divisible by p. This is a contradiction to our condition.
+
+9
+
+3.4
+
+Characteristic polynomial
+
+P
+Let Lf (T ) = 2g
+ai T i be the L-polynomial of Xf . By abuse of notation, the reciprocal polynomial
+P2g i=0
+2g−i
+L̃f (T ) = i=0 T
+of Lf (T ) is called the characteristic polynomial of Xf (in fact, L̃f (T ) is the
+characteristic polynomial of the Jacobian of the curve Xf (see Appendix)). Then it is clear that
+every root of L̃f (T ) is a Weil number and L̃f (T ) is a q-Weil Polynomial.
+LemmaQ3.7. If the characteristic polynomial L̃f (T ) of Xf is canonically factorized into product
+L̃(T ) = r(T )e of powers of irreducible polynomials over Q, then the power e is the least common
+denominator of νp (h(0))/n, where h(T ) runs through all irreducible factors of r(T ) in Qp [x].
+We refer Lemma 3.7 to Theorem B.3.
+Theorem 3.8. Assume that the characteristic polynomial L̃f (T ) of Xf is canonically factorized
+Q
+P
+i
+into product L̃(T ) = r(T )e over Q. Write r(T )e = 2g
+i=0 b2g−i T ∈ Z[T ]. Then νp (b1 ) ⩾ n/g if g
+is bigger than 1.
+Proof. We outline the proof here. We refer to Theorem C.2 for the detailed proof.
+P
+i
+Let r(T ) = 2r
+i=0 a2g−i T ∈ Z[T ]. Since e is the least common denominators of νp (h(0))/n for
+all irreducible factors h(T ) of r(T ) over Qp , we consider the Newton polygon of the polynomial
+r(T ). By identifying one particular segment (2r − i, νp (ai )) ↔ (2r, 0) for some 1 ⩽ i ⩽ r and its
+slope −νp (ai )/i, one obtains a lower bound on νp (ai ) for some 1 ⩽ i ⩽ g. Furthermore, the slope
+−νp (a1 ) of the segment (2r − 1, νp (a1 )) ↔ (2r, 0) is at most the slope −νp (ai )/i. This gives a lower
+bound on νp (a1 ). The desired result follows from this lower bound on νp (a1 ).
+P
+i
+Theorem 3.9. Let L̃f (T ) = 2g
+i=0 a2g−i T ∈ Z[T ] be the characteristic polynomial of the curve Xf
+defined in (??) with g = (m − 1)(p − 1)/2. Then we have
+( l m
+n
+if g > 1
+g
+νp (a1 ) ⩾
+n+1
+if g = 1
+2
+Proof. By Lemma 3.2, we know that L̃f (T ) is a q-Weil polynomial with Hasse-Witt invariant
+equal to 0. If g = 1, then we must have p = 2 or 3. In this case, the desired Q
+result follows
+from [13, Theorem 4.1]. Now assume that g ⩾ 2. Factorize L̃f (T ) into a product ki=1 Φi (T ) of
+co-prime q-Weil polynomials
+such that every Φi (T ) is a power of an irreducible polynomial over
+P2gi
+j
+Q. Let Φi (T ) =
+a
+we have νp (ai,1 ) ⩾ min{n/gi , (n + 1)/2} ⩾ n/g for all
+j=0 i,2gi −j T . Then 
+
+Pk
+⩾ min1⩽i⩽k {νp (ai,1 )} ⩾ n/g.
+i = 1, 2, . . . , k. Thus, we have νp (a1 ) = νp
+a
+i,1
+i=1
+
+P2g
+i
+Proof of the Main Result (Theorem 2.1): Let L̃f (t) =
+i=0 a2g−i T ∈ Z[T ] be the
+characteristic polynomial of Xf with g = (m − 1)(p − 1)/2. First we note that |Nf − q − 1| = |a1 |.
+Combining Theorem 3.9 and the Weil-Serre bound, we get
+
+j √ k
+q⌋
+ p⌈n/g⌉ g⌊2
+if g > 1
+pj⌈n/g⌉√ k
+|Ng − q − 1| ⩽
+q⌋
+ p(n+1)/2 g⌊2
+if g = 1.
+p(n+1)/2
+
+The desired result follows from the fact that |Zf | = (Nf − 1)/p.
+10
+
+
+
+References
+[1] C. Carlet, Boolean Functions for Cryptography and Error-Correcting Codes, Book Chapter in
+Boolean Models and Methods in Mathematics, Computer Science and Engneering, pp.257–397,
+2010.
+[2] M. Grassl, “Code Tables: Bounds on the parameters of various types of codes,”
+http://www.codetables.de/, March, 2015.
+[3] J. W. P. Hirschfeld, G. Korchmáros and F. Torres Algebraic Curves of Finite Fields, Princeton
+Series in Applied Mathematics, 2008.
+[4] R. Lidl and H. Niederreiter, Finite Fields, Addison-Wesley, Reading, MA, 1983; now distributed
+by Cambridge University Press.
+[5] Tali Kaufman and Shachar Lovett, New Extension of the Weil Bound for Character Sums
+with Applications to Coding, 2011 IEEE 52nd Annual Symposium on Foundations of Computer
+Science (FOCS),2011, pp. 788-796.
+[6] F. I. MacWilliams and N. I. A. Sloane, The Theory ofError-Correcting Codes, Amsterdam, The
+Netherlands: North-Holland, 1977.
+[7] D. Mumford, Abelian Varieties, Mumbai, 2008.
+[8] A. Rojas-Leon and D. Wan, Improvements of the Weil bound for Artin-Schreier curves, Math.
+Ann., 351(2011), 417-442.
+[9] I. R. Shafarevich Basic Algebraic Geometry I, Second Edition, Springer, 1995.
+[10] J.-P. Serre, Rational Points on Curves over Finite Fields, Lecture Notes, Harvard University,
+1985.
+[11] H. Stichtenoth, Die Hasse-Witt-Invariante eines Kongruenzfunktionenkörpers, Arch. Math,
+33(1979), 357-360.
+[12] H. Stichtenoth and C. Voss, Generalized Hamming Weights of Trace Codes, IEEE Trans. on
+Information Theory, 40(1994), 554-558.
+[13] W. Waterhouse, Abelian varieties over finite fields, Ann. Sci. Ecole Norm. Sup. (4)2(1969),
+521-560.
+[14] A. Weil, Sur les courbes algebriques et les varietes qui s’en deduisent, Actualities Sci. et Ind.
+no. 1041. Hermann, Paris, 1948.
+[15] E. Weiss, Algebraic Number Theory, McGaw-Hill, New York, 1963.
+[16] J. Wolfmann, New bounds on cyclic codes from algebraic curves, in Lecrrire Notes in Compurer
+Science, 388, New York: Springer- Verlag, 1988, pp. 47-62.
+
+11
+
+Appendix
+
+A
+
+Algebraic curves and Hasse-Witt invariants
+
+Throughout the Appendix, we assume that X is an absolutely irreducible, projective and smooth
+algebraic curve over Fq of genus g. Then it can be regarded as a curve over Fqi for any i ⩾ 1.
+Denote by NX (i) the number of Fqi -rational points. Then one can define the zeta function of X by
+!
+∞
+X
+NX (i)
+ζX (T ) := exp
+.
+(21)
+Ti
+i=1
+
+LX (T )
+It was proved by Weil [14] that ζX (T ) is a rational function of the form (1−T
+)(1−qT ) , where LX (T ) ∈
+Z[T ] is a polynomial of degree 2g. Furthermore, LX (0) = 1 and every reciprocity root of Lf (T ) has
+√
+absolute value q.
+P
+i
+i
+If we write LX (T ) = 2g
+i=0 ai T , then a0 = Lf (0) = 1 and ai+g = q ai for every all 0 ⩽ i ⩽ g.
+In particular, the leading coefficient a2g = q g .
+
+We need some preliminaries and background on algebraic geometry, in particular, abelian varieties in this Appendix. The reader may refer to [9, 13, 7] for some basic results on curves and
+abelian varieties.
+
+In Section 3.1, we defined the Hasse-Witt invariant of X through the L-polynomial of X .
+Actually, it is more proper to define it in terms of p-torsion points of its Jacobian. For an algebraic
+curve X over Fq of genus g, we denote by JX the Jacobian of X . Then JX is an abelian variety over
+Fq of dimension g. Let JX (Fq ) and JX (Fq ) be the groups of the Fq -rational points and Fq -rational
+points on X , respectively.
+Definition A.1. Denote by JX [p] the subgroup of the p-torsion points of JX (Fq ), then one has
+|JX [p]| = pr for some integer r with 0 ⩽ r ⩽ g. The integer r is called the Hasse-Witt invariant of
+X , denoted by iX .
+For each abelian variety A over Fq , we can consider the Frobenius morphism πA which sends
+every coordinate of a point on this variety to its qth power. The characteristic polynomial ΦA
+of πA over the local field Qp is called the characteristic polynomial of A (see [13, 7]). It is, in
+fact, a polynomial over Z. Furthermore, if A is the Jacobian of an algebraic curve X /Fq , then the
+characteristic polynomial of A is in fact the reciprocal polynomial of the L-polynomial of X .
+The following result given in [11] characterizes iX in terms of the characteristic polynomial of
+JX .
+P
+i
+Proposition A.2. Let ΦX (t) = 2g
+i=0 a2g−i t be the characteristic polynomial of JX . Then iX is
+the maximal j such that aj 6≡ 0 mod p, i.e.,
+iX = max{0 ⩽ j ⩽ g : aj 6≡ 0 mod p}.
+Theorem A.3 (Deuring-Shafarevich (see e.g. [3])). Let E, F be the function fields of two curves
+X /Fq and Y/Fq , respectively. Assume that E/F is a Galois extension of function fields and the
+12
+
+Galois group of this extension is a p-group. Then
+iX − 1 = [E : F ](iY − 1) +
+
+X X
+
+P ∈Y Q∈X
+Q|P
+
+(e(Q|P ) − 1).
+
+Lemma A.4. The Hasse-Witt invariant iXf for the curve Xf defined in (4) is 0.
+Proof. Let F be the rational function field Fq (x) of the projective line and let E be the function field
+Fq (Xf ) of Xf . The only ramified point is the unique point ∞ lying over the pole of x. Moreover,
+the ramification index is p. Thus, by the Deuring-Shafarevich Theorem, we have
+iXf − 1 = [E : F ](0 − 1) + p − 1 = p × (0 − 1) + p − 1 = −1,
+i.e., iXf = 0.
+
+B
+
+Abelian varieties
+
+We introduce a few definitions now.
+Definition B.1.
+
+(i) An abelian variety is called elementary or simple if it has no subvarieties.
+
+(ii) Two abelian varieties over Fq are said isogenous if they have the same characteristic polynomial.
+The characteristic polynomial of an abelian variety over Fq is a q-Weil polynomial. Thus, by
+Lemma 3.5 the characteristic polynomial of an abelian variety over Fq of dimension g has the form
+P2g
+i
+g−i a for i = 0, 1, . . . , g. The following well-known
+i
+i=0 a2g−i T ∈ Z[T ] with a0 = 1 and a2g−i = q
+result (see [13]) provides information on factorization of characteristic polynomials of an abelian
+varieties.
+Theorem B.2. Every abelian variety is isogenous to a product of elementary abelian varieties,
+i.e., the characteristic polynomial of every abelian variety is a product of characteristic polynomials
+of elementary abelian varieties.
+In view of the above theorem, it is sufficient to consider elementary abelian varieties in our case
+(see [13]).
+Theorem B.3 (Tate-Honda). There is one-to-one correspondence between isogeny classes of elementary abelian varieties over Fq and conjugacy classes of q-Weil numbers. More precisely, a
+polynomial Φ(T ) is the characteristic polynomial of an elementary abelian variety over Fq if and
+only if Φ(T ) = r(T )e for some irreducible polynomial r(T ) ∈ Z[T ] with all roots being q-Weil numbers and e is the least common denominators of νp (h(0))/n, where h(T ) runs through all irreducible
+factors over Qp .
+
+13
+
+Abelian varieties with Hasse-Witt invariants 0
+
+C
+
+The following result plays a crucial role.
+P
+i
+Theorem C.1. Let ΦA (T ) = 2g
+i=0 b2g−i T ∈ Z[T ] be the characteristic polynomial of an elementary abelian variety A with Hasse-Witt invariant equal to 0. If the dimension g of A is bigger than
+1, then νp (b1 ) ⩾ n/g.
+Proof. By Theorem B.3, we know that every elementary abelian variety A has the characteristic
+polynomial of the form ΦA (T ) = r(T )e for an integer e ⩾ 1 and a monic irreducible polynomial
+r(T ) over Z.
+√
+If r(T ) has a real root, then this root must be ± q. In this case, we have that r(T ) =
+√
+√
+(T − q)(T + q) = T 2 − q. Hence, b1 = 0 and the desired result follows.
+
+Now we assume
+of r(T ) are not real. Then it is clear that the degree of r(T ) is
+Pthat all roots
+i with g = er. To analyze ν (a ), we look at the Newton polygon of
+even. Let r(T ) = 2r
+a
+T
+p i
+i=0 2r−i
+r(T ). By our assumption, we know that νp (ai ) > 0 for all 1 ⩽ i ⩽ r.
+Define the set
+
+I := {1 ⩽ i ⩽ r : νp (ai ) ⩾ in/2}
+and
+J := {1 ⩽ j ⩽ r : νp (aj ) < jn/2}.
+If 1 ∈ I, then νp (a1 ) ⩾ n/2 ⩾ n/g. Hence, νp (b1 ) = νP (e) + νp (a1 ) ⩾ n/g.
+Now assume that 1 ∈ J. We claim the following.
+There exists 1 ⩽ i ⩽ r such that
+νp (ai )
+< min
+r+1⩽ℓ⩽2r
+i
+
+
+
+νp (aℓ )
+ℓ
+
+
+
+.
+
+(22)
+
+First of all, νp (a1 ) < n/2 = νp (q r )/2r = νp (a2r )/2r. Hence, to prove the inequality (22), it
+is sufficient to prove that for every ℓ ∈ {r + 1, r + 2, . . . , 2r − 1}, there exists j ∈ J such that
+νp (aℓ )/ℓ > νp (aj )/j. Note that, since I ∪ J = {1, 2, . . . , r}, thus ℓ = 2r − k with k in I \ {r} or in J.
+Then for every i ∈ I \ {r} and j ∈ J, we have
+
+νp (a2r−j )
+νp (aj ) + (r − j)n
+νp (aj )
+=
+>
+2r − j
+2r − j
+j
+and
+
+Our claim follows.
+
+νp (a2r−i )
+νp (ai ) + (r − i)n
+n
+νp (aj )
+=
+⩾ >
+.
+2r − i
+2r − i
+2
+j
+
+Now let 0 ⩽ i ⩽ r be the largest index such that
+
+
+νp (aj )
+νp (ai )
+= min
+,
+1⩽j⩽2r
+i
+j
+14
+
+then (2r−i, νp (ai )) ←→ (2r, 0) forms a segment in the Newton Polygon of r(T ) with slope −νp (ai )/i.
+Assume that h(t) is an irreducible factor of r(T ) in Qp [t] corresponding to this segment. Then we
+ν (h(0))
+ν (a )
+= kℓ with gcd(k, ℓ) = 1. Then
+have νp (h(0)) ⩽ p i i × (2r − (2r − i)) = νp (ai ). Assume that p n
+we have e ⩾ ℓ and
+kn
+kn
+n
+νp (h(0))
+=
+⩾
+⩾ .
+(23)
+νp (ai ) ⩾ νp (h(0)) = n ×
+n
+ℓ
+e
+e
+Since (2r − i, νp (ai )) ←→ (2r, 0) forms a segment in the Newton Polygon of h(t), the slope −νp (a1 )
+of the segment (2r − 1, νp (a1 )) ←→ (2r, 0) is at most the slope −νp (ai )/i of the segment (2r −
+i, νp (ai )) ←→ (2r, 0), i.e.,
+n
+n
+n
+νp (ai )
+⩾
+⩾
+= .
+νp (a1 ) ⩾
+i
+ie
+re
+g
+Hence, νp (b1 ) ⩾ νp (e) + νp (a1 ) ⩾ ng . This completes the proof.
+Corollary C.2. Assume that L̃(T ) is the reciprocal polynomial of the L-polynomial
+of an algebraic
+Q
+curve X over Fq . Let L̃(T ) have the canonical factorization into product r(T )e . If the Hasse-Witt
+P
+i
+invariant of X is 0, then νP (a1 ) ⩾ n/g, where r(T )e = 2g
+i=0 a2g−i T with g > 1.
+
+15
+
+

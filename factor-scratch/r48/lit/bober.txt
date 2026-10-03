@@ -1,0 +1,953 @@
+arXiv:1710.01970v1 [math.NT] 5 Oct 2017
+
+SMOOTH VALUES OF POLYNOMIALS
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+Abstract. Given f ∈ Z[t] of positive degree, we investigate the existence
+of auxiliary polynomials g ∈ Z[t] for which f (g(t)) factors as a product of
+polynomials of small relative degree. One consequence of this work shows
+that for any quadratic polynomial f ∈ Z[t] and any ε > 0, there are infinitely
+many n ∈ N for which the largest prime factor of f (n) is no larger than nε .
+
+1. Introduction
+In this paper we study the smoothness of polynomials. Recall that an integer
+is called y-smooth (or y-friable) when each of its prime divisors is less than
+or equal to y. Given a polynomial f ∈ Z[t] of positive degree, and a nonnegative number θ, we say that f admits smoothness θ when there are infinitely
+many integers n for which the polynomial value N = |f (n)| is N θ-smooth.
+Similarly, we say that f admits polysmoothness θ when there exists a nonconstant polynomial g ∈ Z[t] having the property that each irreducible factor
+of f (g(t)) has degree at most θ(deg f )(deg g). In the latter circumstances,
+by inspecting the values f (g(m)) for large integers m, it is apparent that
+when f admits polysmoothness θ, then it admits smoothness η for any η > θ.
+Motivated by the widely held conjecture that for each ε > 0, every f ∈ Z[t] of
+positive degree should admit smoothness ε, the latter considerations prompt
+the following question.
+Question. Given f ∈ Z[t] of positive degree d, is it the case that f admits
+polysmoothness ε for every ε > 0? In other words, for each ε > 0, does there
+exist g ∈ Z[t] of some degree k = k(ε) ⩾ 1 having the property that each
+irreducible factor of f (g(t)) has degree at most εkd?
+If the answer to this question is in the affirmative, then the aforementioned
+smoothness conjecture on polynomial values would follow at once. Regrettably,
+with the exception of polynomials of special shape, an affirmative answer has
+been available only in the case d = 1. Our primary goal in this paper is to
+answer this question in the affirmative in the case d = 2.
+Theorem 1.1. Let f ∈ Z[t] be quadratic. Then for some c > 0 there are
+polynomials g ∈ Z[t] of arbitrarily large odd degree √
+k for which f (g(t)) factors
+as a product of polynomials of degree at most ck/ log log k. Thus f admits
+polysmoothness ε for any ε > 0.
+2010 Mathematics Subject Classification. 11N32, 11N25, 12E05.
+Key words and phrases. Smooth numbers, polynomials, small degree irreducible factors.
+1
+
+2
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+Corollary 1.2. When ε > 0 and f ∈ Z[t] is quadratic, there are infinitely
+many n ∈ N for which f (n) is nε -smooth. Thus f admits smoothness ε.
+The sharpest conclusion available for quadratic polynomials hitherto is due
+to Schinzel [9, Theorem 15]. This work, half a century old, shows that when
+f ∈ Z[t] is quadratic, then it admits smoothness θ, where
+
+
+
+
+
+1
+1
+1
+1
+1
+θ=
+1−
+1−
+1−
+1−
+· · · = 0.27950849 . . . .
+2
+3
+7
+47
+2207
+For certain classes of quadratic polynomials one can do better. For example,
+Schinzel [9, Theorem 14] shows that if f (t) = a(rt + s)2 ± b, with a, r, s ∈ Z,
+ar 6= 0 and b ∈ {1, 2, 4}, then f admits smoothness ε for any ε > 0. However,
+as is implict in the concluding remarks of Schinzel [9], polynomials such as
+4t2 + 4t + 9 = (2t + 1)2 + 8 remain inaccessible to these methods. It is for
+awkward polynomials of this type that Corollary 1.2 for the first time confirms
+the longstanding smoothness conjecture.
+The state of knowledge for polynomials of degree exceeding 2 is in general
+far less satisfactory. Discussion here requires that we return to the topic of
+well-factorable polynomial compositions. Consider a polynomial f ∈ Z[t] of
+degree d ⩾ 2. Then the simplest approach generally applicable stems from
+the trivial identity f (t) ≡ 0 (mod f (t)), which yields the only slightly less
+trivial relation f (t + f (t)) ≡ 0 (mod f (t)). The latter is of course merely
+another means of expressing the factorisation f (t + f (t)) = f (t)h(t), where
+h ∈ Z[t] is some polynomial of degree d2 − d. This instantly shows that f
+admits polysmoothness 1 − 1/d, but more can be extracted by iterating this
+construction. Thus, in the next step, one substitutes t = x + h(x) into the
+polynomial f (t + f (t)), and so on. In this way one sees that a polynomial
+g ∈ Z[t] may be found having the property that f (g(t)) has as many irreducible
+factors as desired, and moreover that f admits polysmoothness θ(d), with
+ 
+1
+1
+θ(d) = 1 −
++O
+.
+d−1
+d3
+Schinzel [9, Lemma 10] offers a more elaborate construction, which we will
+revisit in §3, showing that for a degree d polynomial f ∈ Z[t], there exists a
+degree d − 1 polynomial g ∈ Z[t] having the property that f (g(t)) has a degree
+d factor. This construction may also be iterated. In order to describe the
+limit of Schinzel’s circle of ideas, we introduce some notation. When d ⩾ 2, we
+2
+define the sequence (ui )∞
+i=1 by putting u1 = d−1, and then setting ui+1 = ui −2
+(i ⩾ 1). We may now define the exponent θ(d) by taking
+(
+1
+P (2d), when d = 2, 3,
+θ(d) = 2
+P (d),
+when d > 3,
+where
+P (d) =
+
+∞
+Y
+(1 − 1/ui ).
+i=1
+
+(1.1)
+
+SMOOTH VALUES OF POLYNOMIALS
+
+3
+
+Then Schinzel [9, Theorem 15] shows that every polynomial f ∈ Z[t] of degree
+d admits polysmoothness θ(d). A modest computation reveals that
+θ(2) = 0.27950849 . . . ,
+
+θ(3) = 0.38188130 . . . ,
+
+θ(4) = 0.55901699 . . . ,
+
+and that for large d one has
+
+ 
+1
+1
+θ(d) = 1 −
+.
++O
+d−2
+d3
+Although the conclusion of Theorem 1.1 supercedes this result in the case
+d = 2, further progress for larger degrees remains elusive. This absence of
+progress for larger degrees motivates the exploration of families of polynomials
+f admitting sharper smoothness than attained via Schinzel’s construction. In
+§3 we reinterpret Schinzel’s method in terms of field structures associated with
+the splitting field for f over Q. Thereby, we obtain some enhancements applicable for special families of polynomials summarised in the following result.
+Theorem 1.3. Let f ∈ Z[t] be irreducible, and let α be a root of f lying in its
+splitting field. Suppose that for some γ ∈ Q(α) and g ∈ Z[t] of degree k ⩾ 2,
+one has α = g(γ). Then f (g(t)) is divisible by the minimal polynomial of γ
+over Q, and hence f admits polysmoothness 1 − 1/k.
+Suppose that f ∈ Z[t] is irreducible of degree d, and that α is a root of f
+lying in its splitting field. Then given any γ ∈ Q(α) with Q(γ) = Q(α), since
+α ∈ Q(γ), we find that there exists a polynomial g ∈ Q[t] of degree at most
+d − 1 with α = g(γ). Thus, save for establishing that deg(g) > 1 and further
+that the coefficients of g may be taken to be integers, Theorem 1.3 recovers
+the conclusion of Schinzel. It is apparent, moreover, that there is the potential
+for this polynomial g to have degree significantly smaller than that of f , and
+in such circumstances one does better than Schinzel.
+Corollary 1.4. Suppose that f ∈ Z[t] is irreducible, and let α be a root of
+f lying in its splitting field. Suppose that f (t) = g(h(t)) − t, with g, h ∈ Z[t]
+of degree exceeding 1. Then f (g(t)) is divisible by the minimal polynomial of
+h(α) over Q, and hence f admits polysmoothness 1 − 1/deg(g).
+The point here is that, since f (α) = 0, one has α = g(h(α)), and so one
+can apply Theorem 1.3 with γ = h(α). Thus, for example, the polynomial
+f (t) = t4 + 4t2 − t + 1 satisfies the relation
+f (t) = (t2 + 1)2 + 2(t2 + 1) − t − 2 = g(h(t)) − t,
+
+with g(t) = t2 + 2t − 2 and h(t) = t2 + 1. One may verify that f is irreducible
+over Q. Hence, if α is a root of f lying in its splitting field, one deduces from
+the corollary that f (t2 + 2t − 2) is divisible by the minimal polynomial of h(α)
+over Q. Note that since α = g(h(α)), it is not possible that h(α) lies in a
+proper subfield of Q(α), and hence its minimal polynomial has degree 4. In
+this way, one finds that f (t2 + 2t − 2) = m1 (t)m2 (t), for polynomials mi ∈ Z[t]
+each having degree 4. Indeed, one has
+f (t2 + 2t − 2) = (t4 + 4t3 − 9t + 5)(t4 + 4t3 − 7t + 7).
+
+4
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+Thus f admits polysmoothness 21 , which is already sharper than the conclusion
+of Schinzel, which shows f to admit polysmoothness at most 0.559 . . .. From
+here, one can continue by iterating Schinzel’s construction on m1 m2 , thereby
+showing that f admits polysmoothness 21 P (8), where P (8) is defined as in (1.1).
+In this way, one may verify that f admits polysmoothness 0.41926274 . . ..
+The method underlying the proof of Theorem 1.1 may be seen as a hybrid of
+the cyclotomic construction of §2 with the field theoretic approach described
+in §3. This we describe in §4. Another class of polynomials is susceptible to
+a decomposition in some ways reminiscent of the Aurifeuillian factorisations
+discussed by Granville and Pleasants in [5]. We illustrate our ideas in §5 with
+the simplest classes of trinomials.
+Theorem 1.5. Suppose that k is a natural number with k ⩾ 2.
+(i) Let f (t) = tk + atk−1 − b, with a, b ∈ Z and b 6= 0. Then f admits
+polysmoothness φ(k − 1)/(k − 1).
+(ii) Let f (t) = atk − t + b, with a, b ∈ Z and ab 6= 0. Then f admits
+polysmoothness φ(k)/k.
+To illustrate the potential effectiveness of this theorem, consider the polynomial fk (t) = tk −t−1. It was shown by Selmer [11] that fk is irreducible over Q
+for each k ⩾ 2. Meanwhile, Theorem 1.5 shows that f admits polysmoothness
+φ(k)/k, and this can be made arbitrarily close to 0 by taking a sequence of
+exponents k equal to the product of the first n prime numbers, and letting
+n → ∞. In this special case, the method of proof is simple to describe. We
+take a polynomial g of large degree, and put t = g(x)k − 1. Thus we find that
+fk (g(x)k − 1) = (g(x)k − 1)k − g(x)k ,
+
+and so, as a difference of two k-th powers, we may employ a decomposition
+via cyclotomic polynomials to factorise fk (g(x)k − 1).
+In our discussion of smooth values of polynomials, we have emphasised the
+application of polysmoothness to establish smoothness. An alternative approach to the problem of showing that polynomials take smooth values at
+integral arguments is via sieve theory. Typical of the kind of result that may
+be established is a conclusion of Dartyge, Tenenbaum, and the third author
+[4]. Let f ∈ Z[t] be a polynomial of degree d ⩾ 1, and let ε > 0. Then, in
+particular, these authors show that for a positive proportion of integers n, the
+integer N = |f (n)| is N 1−1/d+ε -smooth. Thus f admits smoothness 1 −1/d + ε.
+Although weaker than the conclusions described above, this smoothness result
+has the merit that it applies for a positive proportion of the values represented
+by f . In the same vein, subject to the truth of a certain uniform quantitative
+form of the Schinzel–Sierpiński Hypothesis, the third author [8] has obtained
+an asympotic formula for the number of integers n with 1 ⩽ n ⩽ x for which
+N = |f (n)| is N 1−1/(d−1)+ε -smooth when f is irreducible.
+Acknowledgements: The first, third and fourth authors are grateful to the
+Heilbronn Institute for Mathematical Research for funding a visit of the third
+author to the University of Bristol in 2014 that laid the foundations for the
+
+SMOOTH VALUES OF POLYNOMIALS
+
+5
+
+work reported here. The third author’s work is partially supported by a National Sciences and Engineering Research Council of Canada Discovery Grant.
+The fourth author’s work is supported by a European Research Council Advanced Grant under the European Union’s Horizon 2020 research and innovation programme via grant agreement No. 695223. The authors are grateful to
+Michael Stoll for providing the sextic example concluding §6.
+2. A cyclotomic construction
+The polysmoothness question described in the introduction can be answered
+for polynomials f ∈ Z[t] equal to any product of binomials. Consider then
+integers aj , bj , kj with kj ⩾ 1 (1 ⩽ j ⩽ l), and the polynomial
+l
+Y
+(aj tkj − bj ).
+f (t) =
+
+(2.1)
+
+j=1
+
+The argument employed by Balog and the fourth author in their proof of [1,
+Lemma 2.2] is easily modified to confirm that f admits polysmoothness ε for
+any ε > 0, as we now show.
+Theorem 2.1. Let f ∈ Z[t] be a polynomial of the shape (2.1) with a1 · · · al 6=
+0. Then for some c = c(k) > 0, there are polynomials g ∈ Z[t] of arbitrarily
+large degree d for which f (g(t)) factors as a product of polynomials of degree
+at most cd/(log log d)1/l . Thus f admits polysmoothness ε for any ε > 0.
+Proof. Write k = k1 · · · kl , and let y be a natural number sufficiently large in
+terms of k. Then it follows from [1, Lemma 2.1] that the prime numbers not
+exceeding y and coprime to k can be partitioned into l sets P1 , . . . , Pl with the
+property that for each i, one has
+
+1/l
+Y
+Y
+k
+(1 − 1/p) < 2
+and
+p < y 2e5y/(4l) .
+(2.2)
+φ(k)
+log
+y
+p∈P
+p∈P
+i
+
+i
+
+Put
+
+γi =
+
+Y
+
+p and Γi =
+
+p∈Pi
+
+Y
+
+γj ,
+
+1⩽j⩽l
+j6=i
+
+and write Γ = γ1 · · · γl . It follows from standard prime number estimates that
+k −1 e3y/4 < Γ < e5y/4 . Since (kj Γj , γj ) = 1 (1 ⩽ j ⩽ l), we find that for each
+ej , µ
+index j there exist integers e
+λj , µ
+ej with 1 ⩽ λ
+ej < γj , and satisfying
+ej ≡ −1 (mod γj ) and kj Γj µ
+k j Γj λ
+ej ≡ 1 (mod γj ).
+
+We put λj = Γj e
+λj and µj = Γj µ
+ej (1 ⩽ j ⩽ l). Also, when 1 ⩽ i, j ⩽ l and
+i 6= j, we define the integers Λij and Mij via the relations
+Λij = kj λi /γj
+
+and Mij = kj µi /γj ,
+
+and
+Λjj = (kj λj + 1)/γj
+
+and Mjj = (kj µj − 1)/γj .
+
+6
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+We are now equipped to define the auxiliary polynomial
+g(t) = tΓ
+
+l
+Y
+λ µ
+aj j bj j .
+j=1
+
+This polynomial has degree Γ satisfying k −1 e3y/4 < Γ < e5y/4 , whence
+y ≍ log Γ.
+
+(2.3)
+γ
+
+Moreover, when 1 ⩽ j ⩽ l, one has aj g(t)kj − bj = bj (zj j − 1), where
+zj = tkj Γj
+
+l
+Y
+Λ
+M
+ai ij bi ij .
+i=1
+
+Q
+γ
+But zj j − 1 = e|γj Φe (zj ), where Φe denotes the e-th cyclotomic polynomial.
+It therefore follows that
+
+f (g(t)) =
+
+l
+Y
+j=1
+
+γ
+
+bj (zj j − 1)
+
+factors as a product of polynomials of degree at most
+kj φ(γj )
+.
+1⩽j⩽l
+γj
+
+max max φ(e)deg(zj ) = max kj Γj φ(γj ) = Γ max
+
+1⩽j⩽l e|γj
+
+1⩽j⩽l
+
+But in view of (2.2) and (2.3), one has
+1/l
+
+Y
+kj φ(γj )
+k
+≪ (log log Γ)−1/l .
+= kj
+(1 − 1/p) < 2kj
+γj
+φ(k) log y
+p∈P
+j
+
+Then we are forced to conclude that there is a number c = c(k) > 0 for which
+f (g(t)) factors as a product of polynomials of degree at most cΓ/(log log Γ)1/l ,
+where Γ = deg(g). This completes the proof of the theorem.
+
+The special case of Theorem 2.1 corresponding to the polynomial
+f (t) = (a1 t − b1 )(a2 t − b2 ),
+with l = 2, k1 = k2 = 1, confirms the conclusion of Theorem 1.1 in the special
+case of quadratic polynomials that factor as a product of two linear factors.
+We may consequently restrict attention in our proof of Theorem 1.1 in §4 to
+irreducible quadratic polynomials.
+3. Field theoretic constructions
+We begin in this section by describing the proof of Theorem 1.3. This
+permits an abstract explanation of the construction of Schinzel described in
+the introduction, though for the sake of simplicity we restrict ourselves in such
+matters to monic polynomials.
+
+SMOOTH VALUES OF POLYNOMIALS
+
+7
+
+The proof of Theorem 1.3. Let f ∈ Z[t] be irreducible of degree d ⩾ 2, and let
+α be a root of f lying in its splitting field. Suppose that γ ∈ Q(α), and that for
+some g ∈ Z[t] of degree k ⩾ 2, one has α = g(γ). Since f (g(γ)) = f (α) = 0,
+it follows that the minimal polynomial m of γ over Q divides f (g). By Gauss’
+Lemma, we infer that f (g) is divisible by an integral multiple m
+e of m lying in
+Z[t]. One has
+Q(γ) ⊆ Q(α) = Q(g(γ)) ⊆ Q(γ),
+and hence
+
+deg(m)
+e = [Q(γ) : Q] = [Q(α) : Q] = deg(f ) = d.
+
+Then for some polynomial h ∈ Z[t], one has f (g) = mh,
+e with deg(m)
+e = d,
+deg(f (g)) = kd and deg(h) = kd − d. We thus conclude that every polynomial
+factor of f (g) has degree at most d(k − 1), whence f admits polysmoothness
+1 − 1/k. This completes the proof of Theorem 1.3.
+
+The factorisation of f (g(x)) is in general closely related to the factorisation
+of g(x) − α, as various authors have noticed. The conclusion of Theorem 1.3
+is closely related to the following proposition, which Schinzel [10, Theorem 22]
+attributes to Capelli. (This proposition also appears, in a slightly infelicitous
+form, as [5, Lemma 1].)
+Proposition 3.1. Let f ∈ Q[t] be monic and irreducible, let α be any root
+of f in its splitting field, and put K = Q(α). Then, for any g ∈ Q[t], if the
+factorisation of g(t) − α as a product of irreducibles over K[t] is
+g(t) − α = a1 (t; α)r1 · · · ak (t; α)rk ,
+
+then the factorisation of f (g(t)) as a product of irreducibles over Q[t] is
+f (g(t)) = A1 (t)r1 · · · Ak (t)rk ,
+with
+Aj (t) =
+
+Y
+
+aj (t; β) (1 ⩽ j ⩽ k).
+
+f (β)=0
+
+Theorem 1.3 follows from Proposition 3.1 as the special case in which one
+of the irreducible factors ai (t; α) is linear. It is apparent that, in the setting of Proposition 3.1, the wider generality that it has the potential to offer
+may be exploited to improve polysmoothness bounds for f whenever one has
+corresponding polysmoothness bounds for polynomials g(t) − α over Q(α).
+The idea underlying the construction of Schinzel described in [9, Lemma 10]
+can be interpreted in the guise of Theorem 1.3 as follows. We restrict attention
+to monic irreducible polynomials
+f (t) = td + ad−1 td−1 + . . . + a1 t + a0 .
+Let α be a root of f lying in its splitting field, and put β = 1/α. Then since
+f (α) = 0, it follows that
+α = −(ad−1 + ad−2 β + . . . + a0 β d−1 ).
+
+8
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+We take g(t) = −(a0 td−1 + . . . + ad−1 ). Then α = g(β) with g ∈ Z[t] a
+polynomial of degree d − 1. Theorem 1.3 consequently delivers the conclusion
+that f admits polysmoothness 1 − 1/(d − 1).
+Two comments are in order here. First, the restriction that f be irreducible
+is easily negotiated away with a little careful thought. Second, the condition
+that f be monic in the above argument can be surmounted with the application
+of carefully chosen shifts, as Schinzel demonstrates. This is a little delicate,
+and we have chosen to avoid such technical issues with the hope that the
+underlying ideas may be more clearly visible from our simplified discussion.
+Incidentally, the strategy employed in the above argument is relevant to the
+question raised by Granville and Pleasants following [5, Corollary 1]:
+Question (Granville and Pleasants). Suppose that f (t) ∈ Q[t] is irreducible.
+Can one find infinitely many g(y) ∈ Q[y] with deg(g) < deg(f ) for which
+f (g(y)) is reducible in Q[y], where the g(y) are distinct under transformations
+replacing y by a polynomial in y?
+When f ∈ Q[t] is irreducible of degree 2, and g ∈ Q[y] has degree smaller
+than that of f , it is apparent that g is linear, and hence the answer to this
+question is negative. Suppose then that f has degree d ⩾ 3, and let α be a root
+of f in its splitting field. Thus [Q(α) : Q] = d. We take β to be any element
+of Q(α) not lying in spanQ {1, α} with [Q(β) : Q] = d. There are infinitely
+many such elements β. Then since Q(β) ⊆ Q(α) and [Q(β) : Q] = [Q(α) : Q],
+one has Q(β) = Q(α). But α ∈ Q(β), so there exists a polynomial g ∈ Q[y]
+of degree at most d − 1 with the property that α = g(β). Furthermore, since
+β 6∈ spanQ {1, α}, one sees that deg(g) > 1. We have f (g(β)) = f (α) = 0,
+so that f (g(y)) is divisible by the minimal polynomial of β over Q. Since the
+latter has degree [Q(β) : Q] = d, it follows that f (g(y)) is reducible, and yet
+deg(g) ⩽ d − 1 < deg(f ). What is unclear is whether or not the polynomials
+g generated by this process are distinct under polynomial transformations,
+although it seems unlikely that all of these polynomials could be generated by
+a finite set by such substitutions. In the cubic case, however, we are able to
+resolve this issue.
+Theorem 3.2. Suppose that f (t) ∈ Q[t] is irreducible of degree 3. Then there
+are infinitely many quadratic polynomials g(y) ∈ Q[y] for which f (g(y)) is
+reducible in Q[y], where the g(y) are distinct under transformations replacing
+y by a polynomial in y.
+Proof. We follow the construction described above, employing the same notation, and initially seek a more detailed description of the factorisations of
+the compositions in question. Thus, for a quadratic polynomial g ∈ Q[y], one
+finds that f (g(y)) is divisible by the minimal polynomial mβ of β over Q, and
+deg(mβ ) = 3. Thus f (g(y)) = mβ (y)l(y), for some polynomial l ∈ Q[y] of degree 3. Note that β ∈ Q(α) is one root of the quadratic polynomial g(y) − α.
+The second root γ must also lie in Q(α). We observe that γ cannot be a root
+of mβ , for then one would have that g(y) − α divides mβ (y). The quotient q(y)
+here is linear, and cannot lie in Q[y], since mβ (y) is irreducible over Q[y]. But
+
+SMOOTH VALUES OF POLYNOMIALS
+
+9
+
+the leading coefficient of q(y) is rational, so the coefficient of y 2 in mβ (y) cannot be rational, leading to a contradiction. Thus, indeed, we have mβ (γ) 6= 0,
+confirming our earlier assertion.
+The polynomial l cannot have linear or quadratic factors over Q[y], for any
+root θ of such a factor would supply a root g(θ) of f lying in a field extension
+of Q of degree 1 or 2, contradicting the irreducibility of f . Then l(y) is a scalar
+multiple of a cubic polynomial irreducible over Q[y]. But γ is a root of this
+polynomial, so that l is a scalar multiple of its minimal polynomial mγ , and
+we have f (g) = κmβ mγ , for some non-zero rational number κ. Moreover, since
+g ∈ Q[y] and both β and γ are roots of the quadratic polynomial g(y) − α,
+then an examination of the coefficient of y in the latter polynomial reveals that
+β + γ ∈ Q. There is therefore a rational number r for which γ = r − β, and
+we have f (g(y)) = κmβ (y)mr−β (y).
+We next attend to the matter of confirming that infinitely many of these
+polynomials g are distinct under transformations replacing y by a polynomial
+in y. It is apparent that the only possibility for such a transformation is a
+linear one taking y to ay + b for some rational numbers a and b with a 6= 0.
+Motivated by this observation, when F, G ∈ Q[y], we write F ∼ G when there
+exist a, b ∈ Q with a 6= 0 for which F (y) = G(ay + b). It is readily confirmed
+that this relation defines an equivalence relation on elements of Q[y]. Returning
+now to the discussion of the previous paragraph, one may check that
+ 
+
+y−b
+f g
+= κmaβ+b (y)ma(r−β)+b (y).
+a
+Hence, whenever G ∼ g, then f (G(y)) = κh1 (y)h2(y) for some monic polynomials h1 , h2 ∈ Q[y] with hi ∼ mβ (i = 1, 2).
+Suppose that β = Aα2 +Bα+C and β ′ = A′ α2 +B ′ α+C ′ , with A, B, C ∈ Q
+satisfying A 6= 0, and likewise for the decorated analogues of these coefficients.
+Consider the composition factorisations
+f (g(y)) = κmβ (y)mr−β (y) and f (g ′(y)) = κ′ mβ ′ (y)mr′−β ′ (y)
+induced from these elements by the process described above. If g ∼ g ′ , then
+the conclusion of the previous paragraph shows that one must have mβ ′ ∼ mβ .
+It is possible that β is the only root of mβ lying in Q(α), in which case we see
+that for some a, b ∈ Q with a 6= 0, one must have β ′ = aβ + b. Thus, since
+[Q(α) : Q] = 3, it follows that A′ = aA and B ′ = aB, whence B ′ /A′ = B/A.
+In such circumstances, it follows that the equivalence classes for g are classified
+by distinct ratios B/A, of which there are infinitely many, and the conclusion
+of the theorem follows. It is possible, meanwhile, that mβ splits over Q(α)[y].
+One then has mβ (y) = (y − β1 )(y − β2 )(y − β3 ), with βi = Ai α2 + Bi α + Ci ,
+for suitable rational coefficients Ai , Bi , Ci . In such circumstances, a similar
+argument to that just employed reveals that for suitable rational numbers a
+and b with a 6= 0, and for some i ∈ {1, 2, 3}, one has β ′ = aβi +b. In particular,
+one sees that Ai 6= 0 and B ′ /A′ = Bi /Ai . Consequently, were there to be at
+most N distinct equivalence classes for the polynomials g generated by choices
+for β = Aα2 + Bα + C, then the number of possible ratios Bi /Ai occurring
+
+10
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+amongst the associated roots βi = Ai α2 + Bi α + Ci would be at most 3N . Since
+there are infinitely many such ratios available to us, we derive a contradiction
+to the hypothesis that the number of equivalence classes is finite. Once again,
+therefore, we obtain the conclusion of the theorem.
+
+We are confident that a somewhat more elaborate argument would establish
+the quartic analogue of this theorem. Degrees exceeding 4, on the other hand,
+would appear to be substantially more challenging. We finish this section by
+establishing Corollary 1.4.
+The proof of Corollary 1.4. Assume the hypotheses of the statement of Corollary 1.4, so that f (t) = g(h(t)) − t. Let α be a root of f lying in its splitting
+field. Then α = g(h(α)), so one can apply Theorem 1.3 with γ = h(α). All
+that remains is to observe that the minimal polynomial of γ over Q must have
+degree deg(f ) = [Q(α) : Q], since Q(α) = Q(g(γ)) ⊆ Q(γ).
+
+4. Smoothness of quadratic polynomials
+Our goal in this section is the proof of Theorem 1.1 in the situation that
+f ∈ Z[t] is quadratic and irreducible. As we have commented already at the
+end of §2, this special case is all that we must now address in order to complete
+the proof of Theorem 1.1. Our argument can be construed as a hybrid of the
+methods discussed in §§2 and 3. We begin with an auxiliary lemma, the utility
+of which will become apparent in due course.
+Lemma 4.1. Let f (t) = at2 + bt + c ∈ Z[t] be irreducible with a 6= 0. Denote
+by α a root of f in its splitting field. Then for any k ∈ N, there exist integers
+m, n, A and B with A 6= 0 and (A, B) = 1 such that (maα + n)k = Aα + B.
+Proof. There exists some rational prime p not dividing a which splits in K =
+Q(α), so (p) = p1 p2 with p1 and p2 contained in the order Z[aα]. Denoting the
+h(K)
+class number of K by h(K), one has that p1
+is principal and hence generated
+by maα + n for some m, n ∈ Z with m 6= 0. Since maα + n is an algebraic
+integer of K, it follows that for any k ∈ N, one has (maα + n)k = Aα + B
+for some A, B ∈ Z with A 6= 0 and a|A. It remains now only to confirm that
+h(K)
+(A, B) = 1. But since maα + n generates p1
+and
+NormK/Q ((maα + n)k ) = NormK/Q (Aα + B) = a−1 (aB 2 − bAB + cA2 ),
+
+we find that (A/a)Ac−(A/a)Bb+B 2 is a power of p. Any prime which divides
+both A and B must divide this norm, and thus must be equal to p. However,
+one cannot have both p|A and p|B, for then the ideal (Aα + B) = (maα + n)k
+would be divisible by the ideal (p) = p1 p2 , contradicting our assumption that
+h(K)
+p1
+is generated by maα + n. Thus we conclude that (A, B) = 1.
+
+The proof of Theorem 1.1. Let f (t) = at2 + bt + c ∈ Z[t] be irreducible, and let
+α and α′ be the roots of f in its splitting field. We have in mind the application
+of Lemma 4.1 to seek a relation of the shape α = (β k − B)/A that we hope to
+apply in a manner not dissimilar to Theorem 1.3. First we describe the powers
+
+SMOOTH VALUES OF POLYNOMIALS
+
+11
+
+k in play. We take X to be large, and choose k to be the product of all the
+primes less than X not dividing 2aφ(a). Since we are omitting only a finite
+set of primes, it follows that
+Y
+(1 − 1/p) ≍ 1/ log X ≍ 1/ log log k.
+(4.1)
+p|k
+
+By applying Lemma 4.1, one finds that there exist integers m, n, A, B with
+A 6= 0 and (A, B) = 1 for which (maα + n)k = Aα + B. We put β = Aα + B,
+and note that f ((β − B)/A) = f (α) = 0. Denote by Ωd the set of primitive
+d-th roots of unity. Put G(t) = (tk − B)/A, and let ζ ∈ Ωd for some d|k. Then
+we see that
+f (G((maα + n)ζ)) = f (((maα + n)k − B)/A) = f (α) = 0
+and
+f (G((maα′ + n)ζ)) = f (((maα′ + n)k − B)/A) = f (α′ ) = 0.
+
+Note here that when ζ and ζ ′ are distinct k-th roots of unity, then
+(maα + n)ζ 6= (maα + n)ζ ′
+
+and (maα + n)ζ 6= (maα′ + n)ζ ′ .
+
+The first relation is self-evident, whilst the second follows by taking k-th powers
+and observing that Aα + B 6= Aα′ + B. It therefore follows that all of the roots
+′
+of f (G(t)) are accounted for by (maα + n)ζ and
+Q (maα + n)ζ with ζ ∈ Ωd for
+some d|k. Thus, one may write f (G(t)) = C d|k hd (t) for a suitable rational
+number C, where
+Y
+(t − (maα + n)ζ) (t − (maα′ + n)ζ) .
+hd (t) =
+ζ∈Ωd
+
+Note here that, by considering conjugation in the field extension Q(α, ζ)/Q, for
+ζ ∈ Ωd , it is apparent that hd ∈ Q[t] whenever d|k. Moreover, the polynomial
+hd has degree 2φ(d).
+The possibility remains of an obstruction to selecting a polynomial g having
+integral coefficients for which f (g) is well-factorable. In order to address this
+complication, we consider the polynomial g(t) = G(At + z), and seek to select
+z in such a manner that g ∈ Z[t]. Put K = Q(α) and consider the norm of
+the algebraic integer Aα + B, namely
+k
+NormK/Q (Aα + B) = a−1 (aB 2 − bAB + cA2 ) = NormK/Q (maα + n) .
+
+By construction, we have a|A, and thus we see that B 2 is a k-th power modulo
+A/a. Since k is odd, this observation implies that B is also a k-th power
+modulo d for every divisor d of A/a. Let a′ be the divisor of A given by
+a′ = limN →∞ (A, aN ). Then, in particular, we find that B is a k-th power
+modulo A/a′ . But k is coprime to both a and φ(a), and hence to the order
+of (Z/a′ Z)× , and thus all integers coprime to a′ are necessarily k-th powers
+modulo a′ . We may therefore conclude that B is a k-th power modulo A/a′
+and modulo a′ . Since A/a′ and a′ are coprime, we discern that B is a k-th
+power modulo A, say B ≡ z k (mod A).
+
+12
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+We may now put
+g(t) = G(At + z) = ((At + z)k − B)/A ∈ Z[t],
+Q
+and we deduce that f (g(t)) = C d|k hd (At + z). Thus, on recalling (4.1), we
+infer that f (g(t)) factors as a product of polynomials of degree at most
+Y
+max deg(hd ) = max 2φ(d) = 2k (1 − 1/p) ≍ 2k/ log log k.
+d|k
+
+d|k
+
+p|k
+
+By Gauss’ Lemma, moreover, there is no loss in supposing that these polynomial factors lie in Z[t]. In particular, the polynomial f exhibits polysmoothness
+ε for any ε > 0. By construction, moreover, the polynomial g has odd degree
+k, and so the proof of Theorem 1.1 is complete.
+
+Unfortunately, the construction applied here in the proof of Theorem 1.1 is
+less successful for higher degree polynomials. When f = at3 +bt2 +ct+d ∈ Z[t]
+is cubic, for example, and α is a root of f in its splitting field, then one cannot
+expect that there is an integer k > 1 for which
+(maα + n)k = Aα + B,
+for appropriate integers m, n, A and B with A 6= 0. Instead, one can find
+integers A, B and C for which
+(maα + n)k = Aα2 + Bα + C.
+A plausible plan is then to obtain a relation of the type
+λ(maα + n)2k + µ(maα + n)k = Aα + B,
+for suitable integers A, B, λ, µ. At best, such an approach would deliver a
+polynomial g of the shape
+g(t) = (λ(At + z)2k + µ(At + z)k − B)/A ∈ Z[t]
+having the property that f (g(t)) factors as a product of the shape
+Y
+Ch0 (At + z)
+hd (At + z),
+d|k
+
+wherein h0 has degree 3k. A priori, this might ensure polysmoothness 21 at
+best, and so is not inherently stronger than the approach of Schinzel.
+5. Relatives of Aurifeuillian factorisations
+We next describe the proof of Theorem 1.5. This will not detain us for long.
+Suppose in the first instance that f (t) = tk + atk−1 − b, with a, b ∈ Z and
+b 6= 0. We rearrange f in order to engineer a cyclotomic construction, writing
+f (t) = (t + a)tk−1 − b. Thus, if we set g(t) = bk tk−1 − a, we find that
+
+
+Y
+k−1
+f (g(t)) = b (btg(t))
+−1 =b
+Φd (btg(t)).
+d|(k−1)
+
+SMOOTH VALUES OF POLYNOMIALS
+
+13
+
+The polynomial f (g) has degree K = k(k − 1), whilst each irreducible factor
+of f (g) has degree at most
+max φ(d)k ⩽ Kφ(k − 1)/(k − 1).
+
+d|(k−1)
+
+Then f admits polysmoothness φ(k − 1)/(k − 1). This establishes part (i) of
+Theorem 1.5.
+Suppose next that f (t) = atk − t + b, with a, b ∈ Z and ab 6= 0. With the
+same plan in mind as above, we set g(t) = ak+1 tk + b, and arrive at the relation
+Y
+
+f (g(t)) = a g(t)k − (at)k = a (at)φ(d) Φd (g(t)/(at)).
+d|k
+
+The term in the product here indexed by d is a polynomial of degree kφ(d).
+Thus, the polynomial f (g) has degree K = k 2 , whilst each irreducible factor of
+f (g) has degree at most maxd|k φ(d)k ⩽ Kφ(k)/k. Then f admits polysmoothness φ(k)/k. This establishes part (ii) of Theorem 1.5, and completes the proof
+of the theorem.
+We remark that Harrington [6, Theorem 1] has investigated the irreducibility
+of polynomials f (t) of the shape tn ±ctn−1 ±d over Z[t]. Thus, such polynomials
+are irreducible when n, c, d ∈ N satisfy
+n ⩾ 3,
+
+d 6= c,
+
+d ⩽ 2(c − 1),
+
+(n, c) 6= (3, 3) and f (±1) 6= 0.
+
+Moreover, Ljunggren [7, Theorem 3] has shown that all of the polynomials
+t3n ± t ± 1,
+
+t3n+1 ± t ± 1,
+
+t6n+5 − t ± 1 and t6n+2 ± t − 1
+
+are irreducible for all natural numbers n.
+
+6. Polynomials resisting polysmoothness
+We finish with an account of some examples demonstrating limitations to
+the most ambitious results one might imagine concerning polysmoothness. We
+concentrate on irreducible polynomials fd ∈ Z[t] of degree d. In view of the
+conclusion of Theorem 1.1, it makes sense to restrict attention to degrees d
+exceeding 2. One might optimistically hope that for each such polynomial,
+there should exist a quadratic polynomial g ∈ Z[t] having the property that
+fd (g(t)) = h1 (t)h2 (t), for some polynomials hi ∈ Z[t] irreducible of degree d.
+Note here that fd (g(t)) cannot be divisible by a polynomial h ∈ Z[t] of degree
+smaller than d, for then a root β of this polynomial in its splitting field would
+supply a root g(β) of fd with [Q(g(β)) : Q] < d, contradicting the irreducibility
+of fd . Thus, if the polynomial fd (g(t)) is reducible, then necessarily it factors
+in precisely the shape h1 (t)h2 (t) asserted.
+As we have already discussed in the introduction, the construction of Schinzel
+[9, Lemma 10] shows that in the cubic case d = 3, quadratic polynomials
+g ∈ Z[x] can be found for which f3 (g(x)) = h1 (x)h2 (x), with h1 and h2 both
+cubic. The corresponding situation for quartic polynomials is rather less clear.
+Consider, for example, the irreducible quartic polynomial
+f4 (t) = t4 + t2 + 2t + 3.
+
+14
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+One may computationally confirm that for every non-trivial integral choice
+of coefficients a, b, c ∈ Z with absolute value at most 1000, the polynomial
+f4 (ax2 + bx + c) is irreducible, so that no decomposition of the form sought
+is available in this range. This does not rule out the possibility, of course,
+that there might be a quadratic with very large coefficients that does deliver
+the sought after polysmoothness. On the other hand, if instead one works
+over Q[t] instead of Z[t], then obstructions are possible only for biquadratic
+quartics. Indeed, one has
+ 2
+
+x +x+3
+1
+f4 −
+= (x4 + 2x3 + 7x2 + 2x + 9)(x4 + 2x3 + 7x2 + 10x + 13).
+2
+16
+This example shows that the problem of finding integral polynomial substitutions delivering well-factorability is in general very much more challenging
+than finding corresponding rational polynomial substitutions.
+More generally, by completing the fourth power in the usual manner, it
+is apparent that decompositions similar to that of the last paragraph may
+be obtained for arbitrary quartic polynomials provided such is the case for
+irreducible quartics of the shape f4 (t) = At4 + Bt2 + Ct + D. If, in addition,
+one has C 6= 0, then we may put
+g(x) = −
+
+Ax2 + Bx + D
+,
+C
+
+and we deduce that
+f4 (g(x)) = h1 (x)h2 (x),
+for suitable quartic irreducible polynomials h1 , h2 ∈ Q[x]. The point here
+is that, if α is a root of f in its splitting field, then α = g(α2), and so α2
+is a root of f4 (g(x)). Thus the minimal polynomial of α2 over Q divides
+f4 (g(x)). A straightforward exercise confirms that this minimal polynomial is
+not quadratic, whence [Q(α2 ) : Q] = [Q(α) : Q] = 4 and the assertion that h1
+and h2 are quartic follows.
+For degrees d exceeding 4, obstructions to these quadratic-based decompositions appear, as can be seen from the following criterion.
+Theorem 6.1. Let fd ∈ Z[t] be an irreducible polynomial of degree d with
+lead coefficient A, and define φd (x, y) = y d fd (x/y). Suppose that there exists
+a quadratic polynomial g ∈ Q[t] having the property that fd (g(t)) is reducible.
+Then the equation Az 2 = φd (x, y) possesses a solution (x, y, z) ∈ Q3 with
+yz 6= 0.
+Proof. By a now familiar argument, it is apparent that if fd (g(t)) = h1 (t)h2 (t)
+is a factorisation of fd (g(t)) with hi ∈ Q[t] and deg(hi ) ⩾ 1 (i = 1, 2), then
+one must have deg(hi ) ⩾ d. It follows, in particular, that h1 and h2 are both
+constant multiples of irreducible polynomials of degree d. Let α be a root
+of fd in its splitting field, and let β be a root of the polynomial g(t) − α
+in its splitting field. Then since f (g(β)) = 0, one must have hi (β) = 0 for
+either i = 1 or i = 2. Also, one has Q(α) = Q(g(β)) ⊆ Q(β), and yet
+[Q(β) : Q] = deg(hi ) = d = [Q(α) : Q], so that Q(β) = Q(α).
+
+SMOOTH VALUES OF POLYNOMIALS
+
+15
+
+We may write g(t) = at2 + bt + c for some a, b, c ∈ Q with a 6= 0. Thus, we
+have
+(2aβ + b)2 = 4ag(β) + b2 − 4ac = b2 − 4ac + 4aα.
+
+Writing K = Q(α), and putting m = 4a and n = b2 − 4ac, we obtain the
+relation
+2
+NormK/Q (2aβ + b) = NormK/Q (mα + n) = A−1 φd (n, −m).
+
+Thus, on recalling that β ∈ Q(α), we find that the equation Az 2 = φd (x, y)
+has the rational solution
+z = NormK/Q (2aβ + b),
+
+x = n,
+
+y = −m 6= 0.
+
+This completes the proof of the theorem.
+
+
+
+Note that since A = φd (1, 0), the equation Az 2 = φd (x, y) has the trivial
+solution (x, y, z) = (1, 0, 1), and hence is automatically locally soluble everywhere. Of importance for the discussion of this section is the connection with
+hyperelliptic curves. When d is even, say d = 2k, any solution (x, y, z) ∈ Q3
+of this equation with yz 6= 0 gives a rational point on the hyperelliptic curve
+defined by the equation AY 2 = φ2k (X, 1), namely
+
+
+x z
+(X, Y ) =
+,
+.
+y yk
+However, as has been shown by Bhargava (see [2], and also [3] for subsequent
+developments), most hyperelliptic curves over Q have no rational points. Thus,
+we must expect that for most irreducible polynomials fd ∈ Q[x] of even degree
+d ⩾ 6, the composition fd (g(x)) should be irreducible for all quadratic polynomials g ∈ Q[x]. Specific examples can be obtained with some computational
+effort. For example, one may check that the polynomials
+F1 (x) = x6 − x4 − 21x2 − 31 and F2 (x) = x6 + x4 − 18x2 − 43
+are irreducible over Q[x]. We verified this assertion ourselves by applying
+the PARI/GP software package. Next, by reference to the tables of elliptic
+curves provided by the L-functions and Modular Forms Database (available at
+www.lmfdb.org), one finds that the elliptic curves with Weierstrass forms
+y 2 = x3 − x2 − 21x − 31 and y 2 = x3 + x2 − 18x − 43,
+
+(6.1)
+
+with respective Cremona labels 76a1 and 92a2, both have rank 0 and trivial
+torsion. These elliptic curves consequently have only the single rational point
+at infinity. In particular, it follows that there is no rational solution to either
+of the equations obtained by substituting (x, y) = (X 2 , Y ) into the equations
+(6.1), namely
+Y 2 = X 6 − X 4 − 21X 2 − 31 and Y 2 = X 6 + X 4 − 18X 2 − 43.
+Thus, the above discussion shows that for i = 1 and 2, the polynomial Fi (g(x))
+is irreducible for all quadratic polynomials g ∈ Q[x]. One might complain that
+these two examples are rather special, since the Galois group associated with
+
+16
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+these polynomials is not the full symmetric group S6 . We are grateful to
+Michael Stoll for supplying the additional example
+F3 (X) = X 6 − 3X 5 − 4X 4 + X 3 − 2X 2 − 2.
+
+This polynomial is “generic”, in the sense that it is irreducible with Galois
+group S6 , and moreover the equation Y 2 = F3 (X) has no rational solutions.
+Thus we may conclude as above that for all quadratic polynomials g ∈ Q[x],
+the polynomial F3 (g(x)) is irreducible.
+References
+[1] A. Balog and T. D. Wooley, On strings of consecutive integers with no large prime
+factors, J. Austral. Math. Soc. Ser. A 64 (1998), no. 2, 266–276.
+[2] M. Bhargava, Most hyperelliptic curves over Q have no rational points, available as
+arXiv:1308.0395.
+[3] M. Bhargava, B. H. Gross and X. Wang, A positive proportion of locally soluble hyperelliptic curves over Q have no point over any odd degree extension (with an appendix
+by T. Dokchitser and V. Dokchitser), J. Amer. Math. Soc. 30 (2017), no. 2, 451–493.
+[4] C. Dartyge, G. Martin and G. Tenenbaum, Polynomial values free of large prime factors,
+Periodica Math. Hungarica 43 (2001), no. 1-2, 111–119.
+[5] A. Granville and P. Pleasants, Aurifeuillian factorization, Math. Comp. 75 (2006), no.
+253, 497–508.
+[6] J. Harrington, On the factorization of the trinomials xn + cxn−1 + d, Int. J. Number
+Theory 8 (2012), no. 6, 1513–1518.
+[7] W. Ljunggren, On the irreducibility of certain trinomials and quadrinomials, Math.
+Scand. 8 (1960), 65–70.
+[8] G. Martin, An asymptotic formula for the number of smooth values of a polynomial, J.
+Number Theory 93 (2002), no. 2, 108–182.
+[9] A. Schinzel, On two theorems of Gelfond and some of their applications, Acta Arith.
+13 (1967), 177–236.
+[10] A. Schinzel, Polynomials with special regard to reducibility, in: Encyclopedia of mathematics and its applications, vol. 77, Cambridge University Press, Cambridge, 2000.
+[11] E. S. Selmer, On the irreducibility of certain trinomials, Math. Scand. 4 (1956), 287–
+302.
+JWB and DF: School of Mathematics, University of Bristol, University
+Walk, Clifton, Bristol BS8 1TW, United Kingdom, and the Heilbronn Institute for Mathematical Research, Bristol, United Kingdom
+E-mail address: j.bober@bristol.ac.uk, daniel.fretwell@bristol.ac.uk
+GM: Department of Mathematics, University of British Columbia, Room
+121, 1984 Mathematics Road, Vancouver, BC, Canada V6T 1Z2
+E-mail address: gerg@math.ubc.ca
+TDW: School of Mathematics, University of Bristol, University Walk,
+Clifton, Bristol BS8 1TW, United Kingdom
+E-mail address: matdw@bristol.ac.uk
+
+

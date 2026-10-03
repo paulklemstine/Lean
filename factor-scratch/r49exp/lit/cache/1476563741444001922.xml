@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/LG80jaeM+Vr/w3u6yb8InvtQISY</id>
+  <title>arXiv Query: search_query=abs:"relation" AND abs:"modular" AND abs:"hyperbola" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:46Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22relation%22+AND+(abs:%22modular%22+AND+(abs:%22hyperbola%22+AND+abs:factoring))&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2001.09814v2</id>
+    <title>Canonical form of modular hyperbolas with an application to integer factorization</title>
+    <updated>2020-04-15T20:14:48Z</updated>
+    <link href="https://arxiv.org/abs/2001.09814v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.09814v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a composite $n$ and an odd $c$ with $c$ not dividing $n$, the number of solutions to the equation $n+a\equiv b\mod c$ with $a,b$ quadratic residues modulus $c$ is calculated. We establish a direct relation with those modular solutions and the distances between points of a modular hyperbola. Furthermore, for certain composite moduli $c$, an asymptotic formula for quotients between the number of solutions and $c$ is provided. Finally, an algorithm for integer factorization using such solutions is presented.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-23T14:41:53Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Juan Di Mauro</name>
+    </author>
+  </entry>
+</feed>

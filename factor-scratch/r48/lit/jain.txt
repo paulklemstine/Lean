@@ -1,0 +1,538 @@
+SMOOTH NUMBERS IN SHORT INTERVALS
+
+arXiv:2502.10530v1 [math.NT] 14 Feb 2025
+
+SARVAGYA JAIN
+
+X
+Abstract. Let X ≥ y ≥ 2, and let u = log
+log y . We say a number is y-smooth if all of its
+prime factors are less than or equal to y. In this paper, we study the distribution
+of y
+smooth numbers in short intervals. In particular, for y ≥ exp (log X)2/3+ε , we show that
+the interval [x, x + h] contains a y-smooth
+number for almost all x ∈ [X, 2X], provided h ≥
+
+u
+log
+u
++
+4
+log
+log
+X
+,
+and
+X
+is suﬃciently large depending on ε. This result
+exp (1 + ε) 11
+8
+improves upon an earlier result by Matomäki. Additionally, we provide the corresponding
+“all intervals” type result.
+
+1. Introduction
+Let P (n) denote the largest prime factor of n. A number n is said to be y-smooth if P (n) ≤ y.
+We denote the set of all y-smooth numbers by S(y). Let Ψ (x, y) denote the number of ysmooth numbers up to x, that is, |S(y) ∩ [1, x]|. It is known that Ψ (x, y) ∼ ρ(u)x holds for a
+x
+wide range of the smoothness parameter y, where u = log
+and ρ(u) is the Dickman function
+log y
+(see (3.1) below for its deﬁnition). Despite this, our understanding of the distribution of
+smooth numbers in short intervals is still far from complete.
+One would expect a result like Ψ (x + h, y) − Ψ (x, y) ∼ ρ(u)h to hold for a wide range of
+parameters h and y. Let ψ(x) → ∞ as x → ∞, and let u > 0 be ﬁxed. In a breakthrough
+paper, Matomäki and Radziwill showed that such a result holds for almost all x ∈ [X, 2X],
+at least when y = X 1/u and h = ψ(X) (see [9, Corollary 6]). In the same paper, they also
+showed that, for every ε > 0, there exists a suﬃciently large constant
+√ Cε > 0 such that every
+interval [x, x + h] contains an xε -smooth number, provided h ≥ Cε x (see [9, Corollary 1]).
+It is natural to ask whether Ψ (x + h, y) − Ψ (x, y) ≥ 1 holds for a wider range of parameters
+1
+h and y. Since ρ(u) = uu+o(u)
+, based on probabilistic heuristics, one expects this to hold for
+almost all short intervals of size h ≥ exp ((1 + ε)u log u). However, this kind of result seems
+far out of reach.
+In this paper, we apply the ideas introduced by Matomäki and Radziwill to make progress
+in this direction.
+Theorem 1.1. For any ε > 0, there exists a positive constant C = C(ε) such that the
+following holds. Let X ≥ 2 be large enough depending on ε. If
+
+1
+exp C(log X)2/3 (log log X)4/3 ≤ y ≤ X C
+and
+
+
+
+
+11
+h ≥ exp (1 + ε)
+u log u + 4 log log X
+,
+8
+1
+
+2
+
+SARVAGYA JAIN
+
+X
+for u = log
+, then the interval [x, x + h] contains a y-smooth number for almost all x ∈
+log y
+[X, 2X].
+
+In particular, we improve upon an earlier result of Matomäki [8, Theorem 1.3]. She showed
+such a result for
+
+y ≥ exp (log X)2/3 (log log X)4/3+ε
+and
+
+h ≥ exp
+
+
+
+
+
+14
++ ε (4u log u + log log X) .
+3
+
+We also prove a result about the existence of a y-smooth number in all intervals of the form
+[x, x + x1/2+o(1) ] for suﬃciently large x.
+Theorem 1.2. For any ε > 0, there exists a positive constant C = C(ε) such that the
+following holds. If x is large in terms of ε,
+
+1
+exp C(log x)2/3 (log log x)4/3 ≤ y ≤ x C ,
+
+and
+
+h≥
+
+√
+
+
+
+
+11
+u
+e log u
+e + 2 log log x
+,
+x exp (1 + ε)
+16
+
+x
+, then the interval [x, x + h] contains a y-smooth number.
+where u
+e = log
+log y
+
+The above result can be contrasted with Theorem 1.1 in [8]. Matomäki proved in this
+theorem that, for suﬃciently large x, one could take
+
+
+
+√
+7
+h ≥ x exp
++ ε (4e
+u log u
+e + log log x) ,
+3
+
+provided that y ≥ exp (log x)2/3 (log log x)4/3+ε .
+
+There have been various other results concerning the distribution of smooth numbers in short
+intervals. For example, Hildebrand and Tenenbaum [6] proved an asymptotic formula for the
+number of smooth numbers in almost all short intervals. However, the intervals they consider
+are signiﬁcantly longer than those considered here. Building on their work, Granville and
+Friedlander [2] obtained the corresponding “all intervals” type result. We refer the reader to
+[3, 6] for more detailed surveys of results on smooth numbers and their applications to other
+problems in analytic number theory and cryptography.
+1.1. Sketch of the Argument. We will give a brief outline of the proof of Theorem 1.1 to
+orient the reader. In this sketch, we use the imprecise notion of inequality . and & to hide
+the ρ(u)ε and log X factors.
+Suppose that we want to show for some h ≥ 2, the intervals [x, x + h] contains a y-smooth
+number for almost all x ∈ [X, 2X]. Choose weights {wn }n such that wn ≥ 0 if n ∈ S(y) and
+
+SMOOTH NUMBERS IN SHORT INTERVALS
+
+3
+
+P
+0 otherwise. Let H be such that x≤n≤x+H wn > 0 for all x ∈ [X, 2X]. It turns out that,
+for our choice of weights, we can take H = Xy −3/8 (see Lemma 4.2 below). If we show that
+!
+1 X
+1 X
+1 X
+wn −
+wn = o
+wn
+h
+H x≤n≤x+H
+H x≤n≤x+H
+x≤n≤x+h
+
+for almost all x ∈ [X, 2X], then we will have our result. By a routine Chebyshev-style
+argument (see Section 7 below), we can reduce it further to showing that
+
+!2 
+2
+Z 2X
+X
+X
+X
+1
+1
+1
+1
+wn −
+wn dx = o 
+wn  .
+X X h x≤n≤x+h
+H x≤n≤x+H
+X X≤n≤2X
+
+2
+With our choice of wP
+n , this reduces to essentially showing that the left-hand side is o(ρ(u) ).
+Now, letting F (s) = n wn /ns , we bound the second moment on the left-hand side by using
+a Parseval-style bound (see Section 5 below). Doing this, we essentially get the bound
+
+1
+X
+
+Z 2X
+X
+
+Z X
+h
+1 X
+1 X
+wn −
+|F (1 + it)|2 dt.
+wn dx .
+h x≤n≤x+h
+H x≤n≤x+H
+1/8
+y
+2
+
+P
+We choose our weights so that F (s) has the form P1 (s)P2 (s)P3 (s)J M(s) for Pj (s) = pj ∼Pj 1/ps
+P
+and M(s) = m∈M 1/ms for some M ⊆ S(y) and P1 ≤ P2 ≤ P3 ≤ y. If we choose parameters P1 , P2 , P3 , J and the set M carefully, we may exploit the factorisation of our polynomial
+to get non-trivial savings for its mean value estimate using the ideas introduced in [9]. Our
+goal is to get enough savings so that we have the bound
+Z X
+h
+
+|F (1 + it)|2 dt = o ρ(u)2 .
+y 1/8
+
+The details of how one can get such a saving are given in Section 6. Here we content ourselves
+with a very informal sketch. We begin by choosing 0 < α1 < α2 < 1/4 with α1 , α2 ≈ 1/4 and
+then partitioning the interval [y 1/8 , X/h] into T1 ∪ T2 ∪ T3 , where t ∈ T1 if |P1 (1 + it)| ≤ P1−α1 ,
+t ∈ T2 if |P1 (1 + it)| > P1−α1 , |P2 (1 + it)| ≤ P2−α2 and T3 contains the remaining values of t.
+
+To bound the integral over T1 , we note that
+Z X/h
+Z
+−2α1
+2
+|F (1 + it)| dt . P1
+|P2 (1 + it)P3 (1 + it)J M(1 + it)|2 dt.
+T1
+
+−X/h
+
+At this point, it may seem tempting to use the standard mean value theorem (see Lemma
+2.1 below) to bound the integral above. But the approach mentioned above turns out to be
+lossy as it does not incorporate the sparsity of the coeﬃcients of the Dirichlet polynomial
+P2 (s)P3 (s)J M(s), say {an }n , that comes from being supported on y-smooth numbers. To
+exploit this sparsity better, one instead uses a variant of the standard mean value theorem
+that preserves some non-diagonal terms (see Lemma
+2.2 below). This naturally leads us
+P
+to upper bounding sums essentially of the form n∼N 1S(y) (n)1S(y) (n + k) (see Lemma 6.2
+below). These kinds of sums have been considered in earlier works, and bounds of the form
+O(ρ(u)ϕ N) for some 1 < ϕ < 2 are known. We use the best existing bound, i.e., the largest
+
+4
+
+SARVAGYA JAIN
+
+available ϕ (see Lemma 3.3 below). This essentially results in an upper bound of the form
+Z
+1/2
+P1 ρ(u) ρ(u)ϕ
+2
+|F (1 + it)| .
++ 1/2 .
+h
+T1
+P1
+To bound the integral over T2 , we note that
+Z X/h
+Z
+−2α2
+2
+|F (1 + it)| dt . P2
+|P1 (1 + it)P3 (1 + it)J M(1 + it)|2 dt.
+−X/h
+
+T2
+
+To bound the integral above, we exploit |P1α1 P1 (1+it)| ≥ 1 to increase the length of Dirichlet
+polynomial |P1 (1 + it)P3 (1l+ it)JmM(1 + it)|2 by multiplying it with |P1α1 P1 (1 + it)|2ℓ for some
+log P2
+appropriately chosen ℓ = log
+(see Lemma 6.3 below). This results in an upper bound of
+P1
+the form
+Z X/h
+Z
+−2(α2 −α1 )
+2
+|F (1 + it)| dt . P2
+|P1 (1 + it)ℓ+1 P3 (1 + it)J M(1 + it)|2 dt.
+−X/h
+
+T2
+
+The motivation behind these manipulations is the well-known fact that the standard mean
+value theorem is the most eﬃcient when the length of the Dirichlet polynomial involved
+and the range of integration are of similar order (see [7, Chapter 9] for further discussion).
+Applying the standard mean value theorem and choosing P2 appropriately in terms of P1 ,
+we have that
+Z
+1/2
+P ρ(u) ρ(u)ϕ
++ 1/2 .
+|F (1 + it)|2 . 1
+h
+P1
+T2
+Finally, for bounding the integral over T3 , we begin by noting the bound |P3 (1 + it)| . P3−σ0 ,
+where σ0 ≍ (log X)−2/3 (log log X)−1/3 as y 1/8 ≤ t ≤ X for all t ∈ T . This is nothing but
+the upper bound that one gets from using Perron’s formula and the Vinogradov-Korobov
+zero-free region (see Lemma 2.6 below). To maximise this saving, it is natural to choose P3 as
+
+large as possible, i.e., P3 ≈ y. So, to have a non-trivial saving, we must have y ≥ exp σ0−1 .
+Further bookkeeping results in a bound for y slightly larger than this. Substituting the
+bound for P3 (s), we arrive at the bound
+Z
+Z
+2
+−2Jσ0
+|P1 (1 + it)P2 (1 + it)M(1 + it)|2 dt.
+|F (1 + it)| dt . y
+T3
+
+T3
+
+Now we can ﬁnd a well-spaced set T ⊆ T3 so that we have the bound
+Z
+X
+|F (1 + it)|2 dt . y −2Jσ0
+|P1 (1 + it)P2 (1 + it)M(1 + it)|2 .
+T3
+
+t∈T
+
+By using Halász-Montgomery inequality (see Lemma 2.5 below), we can bound the above by
+
+
+Z
+|T |y J
+2
+−2Jσ0
+|F (1 + it)| dt . y
+ρ(u) 1 + √
+.
+X
+T3
+It turns out that one can use |P2 (1 + it)| > P2−α2 for all t ∈ T to show that |T |y J . X 1/2−δ
+for some δ > 0 (using Lemma 2.4 below). This step is the primary reason for choosing
+
+SMOOTH NUMBERS IN SHORT INTERVALS
+
+5
+
+α2 < 1/4. Additionally, by choosing J appropriately, we have the bound y −2Jσ0 . ρ(u)24 .
+Thus, we have the bound
+Z
+T3
+
+|F (1 + it)|2 dt . ρ(u)25 .
+
+In conclusion, we have the bound
+Z X/h
+1/2
+P1 ρ(u) ρ(u)ϕ
+2
+|F (1 + it)| dt .
++ 1/2 + ρ(u)25 .
+h
+y 1/8
+P1
+
+Since we want the right-hand side to be o(ρ(u))2 , we are forced to choose P1 & ρ(u)2ϕ−4 .
+1/2
+Finally, if we set h & P1 ρ(u)−1 & ρ(u)ϕ−3 , the right-hand side will be o(ρ(u)2 ). By our
+earlier remarks, we will have a y-smooth number in almost all short intervals of size & ρ(u)ϕ−3
+(the additional log X factors arise from careful bookkeeping).
+Remark. As can be seen from the above sketch, improvements in Lemmas 2.6 and 3.3
+are expected to lead to reﬁnements in the smoothness parameter and short interval length,
+respectively.
+1.2. Acknowledgements. The author would like to thank his advisor, Kaisa Matomäki,
+for suggesting the problem and for her guidance throughout the project. Her insights not
+only led to a clearer exposition but also contributed to improving the quality of both the
+smoothness parameter and the short interval length. The author was supported by the
+Academy of Finland, Centre of Excellence (Grant No. 346307), and the University of Turku
+Graduate School Exactus fellowship while working on this project.
+2. Dirichlet Polynomial Estimates
+In this section, we recall various estimates from the literature for Dirichlet polynomials that
+we will need. Throughout this section, we let X ≥ 1 and T > 0. Additionally, for an ∈ C,
+we deﬁne the Dirichlet polynomial
+X an
+G(s) :=
+.
+ns
+n∼X
+The following result is a standard mean value estimate that provides bounds for the second
+moment of a Dirichlet polynomial.
+Lemma 2.1. One has the estimate
+Z T
+X
+|G(it)|2 dt ≪ (T + X)
+|an |2 .
+−T
+
+Proof. For a proof, see [7, Theorem 9.1].
+
+n∼X
+
+
+
+The mean value estimate from Lemma 2.1 loses
+Psome of the information about the sparsity
+of the Dirichlet polynomial due to the term X n |an |2 . In our proof, we will use a Dirichlet
+polynomial whose coeﬃcients are supported on a subset of S(y) and are therefore quite
+
+6
+
+SARVAGYA JAIN
+
+sparse. The following variant of the mean value theorem will allow us to exploit the sparsity
+of the Dirichlet polynomial to some extent. This variant has been used in works on almost
+primes in short intervals [10, 12].
+Lemma 2.2. One has the estimate
+Z T
+X
+|G(it)|2 dt ≪ T
+|an |2 + T
+−T
+
+n∼X
+
+X X
+
+n∼X
+1≤k≤ 2X
+T
+
+|an ||an+k |.
+
+Proof. For a proof, see [7, Lemma 7.1]. See also [12, Lemma 4].
+
+
+
+Later, we will also amplify the length of a Dirichlet polynomial by introducing a moment of
+a prime-supported polynomial. The following lemma will allow us to control the mean value
+with these augmentations.
+log P2
+Lemma 2.3. Let X ≥ P2 ≥ P1 ≥ 2 be parameters and set ℓ = ⌈ log
+⌉. For
+P1
+X 1
+X an
+P (s) =
+and
+A(s)
+=
+,
+s
+s
+p
+n
+X
+p∼P
+n∼ P
+
+1
+
+we have
+
+Z T
+
+−T
+
+ℓ
+
+2
+
+|P (1 + it) A(1 + it)| dt ≪
+
+
+
+2
+
+
+T
+ℓ
++ 2 P1 (ℓ + 1)!2 max |an |2 .
+n
+X
+
+Proof. This follows immediately from [9, Lemma 13].
+
+
+
+A set T ⊆ R is said to be well-spaced if for all t, u ∈ T with t 6= u, we have |t − u| ≥ 1. At
+some point in our argument, we will encounter a prime-supported Dirichlet polynomial that
+is large on a well-spaced set. The following lemma will allow us to use this information to
+obtain a power-saving bound for the size of the well-spaced set.
+Lemma 2.4. Let
+P (s) =
+
+X ap
+
+p∼P
+
+ps
+
+with |ap | ≤ 1.
+
+Let T ⊂ [−T, T ] be a sequence of well-spaced points such that |P (1 + it)| ≥ V −1 for every
+t ∈ T . Then
+
+
+V
+log
+T
+2 log
+2
+|T | ≪ T log P V exp 2
+log log T .
+log P
+Proof. For a proof, see [9, Lemma 8].
+
+
+
+Having produced a relatively small well-spaced set, the following discrete mean value theorem, also known as the Halász-Montgomery inequality, will allow us to upper bound the
+mean square of a Dirichlet polynomial over such sets.
+
+

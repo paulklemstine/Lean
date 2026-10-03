@@ -1,0 +1,174 @@
+                                                A Summation-Based Algorithm For Integer
+arXiv:2504.21168v1 [math.NA] 29 Apr 2025
+
+
+
+
+                                                            Factorization
+
+                                                                          Justin Friedlander
+
+                                                                              March 2025
+
+
+                                           1     Introduction
+                                           Numerous methods have been considered to create a fast integer factorization
+                                           algorithm. Despite its apparent simplicity, the difficulty to find such an algo-
+                                           rithm plays a crucial role in modern cryptography, notably, in the security of
+                                           RSA encryption. Some approaches to factoring integers quickly include the Trial
+                                           Division method, Pollard’s Rho and p-1 methods, and various Sieve algorithms
+                                           [1].
+
+                                           This paper introduces a new method that converts an integer into a sum in
+                                           base-2. By combining a √ base-10 and base-2 representation of the integer, an al-
+                                           gorithm on the order of n time complexity can convert that sum to a product
+                                           of two integers, thus factoring the original number.
+
+
+                                           2     Method
+                                           Step One: Iterating Through j and i
+                                           Let n = pq for integers n, p, and q. Note that p and q can be written in base-
+                                           2. Consider, however, the highest power of p and q. That is, ⌊log2 (p)⌋ and
+                                           ⌊log2 (q)⌋. WLOG, let p ≥ q. Let j = ⌊log2 (p)⌋ and i = ⌊log2 (q)⌋. Note that
+                                           p = 2j + ci and q = 2i + cj for some integers ci < 2j and cj < 2i .
+
+                                           Note that now n = pq = (2j + ci )(2i + cj ) = 2j+i + cj 2j + ci 2i + cj ci .
+
+                                           We can also represent n in base-2, however, it may or may not be identical
+                                           to our representation of pq.
+                                                 Theorem 1:
+                                                      Let n = 2k + ck for k = ⌊log2 (n)⌋ and ck < 2k .
+                                                      Claim: k = j + i or k = j + i + 1 for all n, p, and q.
+
+
+
+                                                                                     1
+           Proof:
+           Lower Bound - n = 2k + ck = (2j + ci )(2i + cj ). Let
+           cj = ci = 0. Now, n = 2k + ck = 2j+i . Since k is the
+           largest power of 2 before increasing above n, j + i = k.
+           Thus j + i ≤ k for any arbitrary cj and ci .
+
+           Upper Bound - cj < 2i and ci < 2j . Thus,
+
+                          n = 2 k + ck
+                            = (2j + ci )(2i + cj )
+                            = 2j+i + cj 2j + ci 2i + cj ci
+                            < 2j+i + 2i 2j + 2j 2i + 2i 2j
+                            = 4 ∗ 2j+i
+
+           Since 2k + ck < 4 ∗ 2j+i , then 2k + ck < 2j+i+2 . Thus, to
+           get the left-hand-side and right-hand-side to be equal, we
+           must decrement the right hand side by at least one. This
+           leaves 2k + ck = 2j+i+1 + cdecrement . Again, since 2k is the
+           largest power of 2 before increasing above n, k = j + i + 1.
+
+
+
+           Thus, k ≤ j + i + 1, so j + i ≤ k ≤ j + i + 1 for all n, p,
+           and q.
+The implications of Theorem 1 are that the algorithm will have to run once to
+check the case where k = j + i, and a second time to check if k = j + i + 1 in
+the worst case scenario.
+
+Additionally, when given a power k, the numbers j and i are unknown. Thus,
+the algorihtm must search through all combinations of j and i such that k = j +i
+or k = j + i + 1.
+
+Step Two: Iterating Through cJ
+Since we are iterating over all combinations of j and i, for this next part of the
+the algorithm, we can assume our choices of j and i are the correct choices that
+correspond with p and q. That is, j = ⌊log2 (p)⌋ and i = ⌊log2 (q)⌋. Since the
+following argument is nearly identical for k = j + i and k = j + i + 1, we will
+assume k = j + i for simplicity.
+
+We know n = 2k + ck = 2j+i + cj 2j + ci 2i + cj ci and 2k = 2j+i . Thus,
+ck = cj 2j + ci 2i + cj ci . We can represent ck in this form by reducing it in
+base-2. Here is an example of such a process:
+
+
+
+                                         2
+      ck = 61, j = 4, i = 2.
+      ck = 2 5 + 2 4 + 2 3 + 2 2 + 2 0 = 2 ∗ 2 4 + 2 4 + 2 ∗ 2 2 + 2 2 + 2 0 =
+      3 ∗ 24 + 3 ∗ 22 + 1 = 3 ∗ 2j + 3 ∗ 2i + 1
+We can define cJ and cI to equal the respective coefficients of 2j and 2i , and
+B to equal the coefficient of 20 after reducing ck to this form. Notice that
+cJ 2j + cI 2i + B = (cJ − e)2j + (cI + e2j−i )2i + B = cJ 2j + (cI − d)2i + (B + d2i )
+for some integers e and d. From the above example, we can write:
+      3 ∗ 24 + 3 ∗ 22 + 1 = (3 − 2) ∗ 24 + (3 + 2 ∗ 24−2 )22 + 1 = 24 + (11 −
+      2)22 + (1 + 2 ∗ 22 ) = 24 + 9 ∗ 22 + 9
+Now, if we re-introduce the 2k term, we get
+      2k + ck = 24+2 + 24 + 9 ∗ 22 + 9 = (24 + 9)(22 + 1) = 25 ∗ 5 = pq
+Notice that we will know we have achieved the correct coefficients for cj and ci
+when cj ci = b where b is our 20 coefficient.
+
+The algorithm I have found that converts from cJ , cI , and B to cj , ci , and
+b must consider, in the worst case, all the iterations of the 2j coefficient from cJ
+to 1. Since we are iterating through all values of this coefficient, we can assume
+that this coefficient is cj .
+
+Step Three: Finding ci
+Let e = cJ − cj and c′I = cI + e ∗ 2j−i . We can use the equation below to find
+the difference d between c′I and ci :
+                    (cJ −e)c′I +B
+      Equation 1:     cJ −e+2i    =d
+From this, we can compute ci from c′I − d and cj from cJ − e. Since we know
+our cj and ci , and we know j and i, we know the term (2j + ci )(2i + cj ) = n, so
+we can deduce our p and q.
+
+
+3     Time Complexity
+In the first part of the algorithm, we are iterating through all the combinations
+of j and i such that k = j + i or k = j + i + 1. Since k is approximately
+log(n), this step requires approximately log(n) iterations. In the second step of
+the algorithm, we must iterate through all the coefficients
+                                                       √    of the 2j term. Since
+       i
+cj < 2 , and j√≥ i, in the worst case we have cJ ≤ n. This means that this
+step can take n iterations. In the third step, we compute ci from cj , which is
+a constant time computation.
+                                                √
+Thus, the algorithm as a whole seems to take O( nlog(n)) time to run. Closer
+inspection, however, reveals one minor improvement to this number. When
+j ≈ k, then i ≈ 0 because k − j = i. In this case, cJ is much closer to 0 than
+
+
+                                          3
+√
+  n. More generally, each iteration of j and i increases the possible values of cJ
+by approximately a factor of 2. Thus, the√total number of operations performed
+                                  Plog (n) n      √
+                               2 ∗ k=02
+in this algorithm is closer to √           2k ≈ 4 n. Thus, the run-time of this
+algorithm is on the order of n.
+
+
+4    Discussion
+This algorithm falls short of improving upon the time complexity of the Gen-
+eral Number Field Sieve [2], but it does introduce a new method to factoring
+integers that, as far as I am aware, has not previously been considered. After an
+analysis beyond the scope of this paper, I do not believe it is possible to signifi-
+cantly reduce the time complexity of this algorithm without changing to a new
+algorithm entirely. Thus, I am now exploring quantum computing options that
+may open the door to further optimizations, and I encourage others interested
+in this approach to do the same.
+A Python implementation of the classical algorithm can be found here.
+
+
+
+
+                                         4
+References
+[1] Samuel S. Wagstaff Jr.,       The Joy of Factoring,        Chap-
+    ter  3:     Classical Factorization Methods,    2002,     Online,
+    https://www.cs.purdue.edu/homes/ssw/chapter3.pdf.
+[2] Hendrik W. Lenstra Jr., Algorithms in Number Theory, Proceed-
+    ings of the International Congress of Mathematicians, 1993, pp. 897-908,
+    https://pub.math.leidenuniv.nl/~lenstrahw/PUBLICATIONS/1993e/art.pdf.
+
+
+
+
+                                 5
+

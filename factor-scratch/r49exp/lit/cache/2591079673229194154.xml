@@ -1,0 +1,1299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/4sOP6vTsu5/Yh5OyyTjjF18Iu4Q</id>
+  <title>arXiv Query: search_query=abs:"CADO" OR abs:"factor"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:53Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22CADO%22+OR+abs:%22factor%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>185247</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1607.02561v3</id>
+    <title>Database-Backed Web Applications in the Wild: How Well Do They Work?</title>
+    <updated>2016-11-22T21:15:15Z</updated>
+    <link href="https://arxiv.org/abs/1607.02561v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.02561v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most modern database-backed web applications are built upon Object Relational Mapping (ORM) frameworks. While ORM frameworks ease application development by abstracting persistent data as objects, such convenience often comes with a performance cost. In this paper, we present CADO, a tool that analyzes the application logic and its interaction with databases using the Ruby on Rails ORM framework. CADO includes a static program analyzer, a profiler and a synthetic data generator to extract and understand application's performance characteristics. We used CADO to analyze the performance problems of 27 real-world open-source Rails applications, covering domains such as online forums, e-commerce, project management, blogs, etc. Based on the results, we uncovered a number of issues that lead to sub-optimal application performance, ranging from issuing queries, how result sets are used, and physical design. We suggest possible remedies for each issue, and highlight new research opportunities that arise from them.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-09T02:40:37Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DB"/>
+    <author>
+      <name>Cong Yan</name>
+    </author>
+    <author>
+      <name>Alvin Cheung</name>
+    </author>
+    <author>
+      <name>Shan Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.08210v2</id>
+    <title>CADO: From Imitation to Cost Minimization for Heatmap-based Solvers in Combinatorial Optimization</title>
+    <updated>2026-06-15T05:33:23Z</updated>
+    <link href="https://arxiv.org/abs/2602.08210v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.08210v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Heatmap-based solvers have emerged as a promising paradigm for Combinatorial Optimization (CO). However, we argue that the dominant Supervised Learning (SL) training paradigm suffers from a fundamental objective mismatch: minimizing imitation loss (e.g., cross-entropy) does not guarantee solution cost minimization. We dissect this mismatch into two deficiencies: Decoder-Blindness (being oblivious to the non-differentiable decoding process) and Cost-Blindness (prioritizing structural imitation over solution quality). We empirically demonstrate that these intrinsic flaws impose a hard performance ceiling. To overcome this limitation, we propose CADO (Cost-Aware Diffusion models for Optimization), a streamlined Reinforcement Learning fine-tuning framework that formulates the diffusion denoising process as an MDP to directly optimize the post-decoded solution cost. We introduce Label-Centered Reward, which repurposes ground-truth labels as unbiased baselines rather than imitation targets, and Hybrid Fine-Tuning for parameter-efficient adaptation. CADO achieves state-of-the-art performance across diverse benchmarks, validating that objective alignment is essential for unlocking the full potential of heatmap-based solvers.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-09T02:19:30Z</published>
+    <arxiv:comment>22 pages, 4 figures. Accepted for publication in Transactions on Machine Learning Research (TMLR), 2026. OpenReview: https://openreview.net/forum?id=fvxx5FOED6</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hyungseok Song</name>
+    </author>
+    <author>
+      <name>Deunsol Yoon</name>
+    </author>
+    <author>
+      <name>Kanghoon Lee</name>
+    </author>
+    <author>
+      <name>Han-Seul Jeong</name>
+    </author>
+    <author>
+      <name>Soonyoung Lee</name>
+    </author>
+    <author>
+      <name>Woohyung Lim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12498v1</id>
+    <title>Machine Learning Algorithms for Active Monitoring of High Performance Computing as a Service (HPCaaS) Cloud Environments</title>
+    <updated>2020-09-26T01:29:19Z</updated>
+    <link href="https://arxiv.org/abs/2009.12498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cloud computing provides ubiquitous and on-demand access to vast reconfigurable resources that can meet any computational need. Many service models are available, but the Infrastructure as a Service (IaaS) model is particularly suited to operate as a high performance computing (HPC) platform, by networking large numbers of cloud computing nodes. We used the Pacific Northwest National Laboratory (PNNL) cloud computing environment to perform our experiments. A number of cloud computing providers such as Amazon Web Services, Microsoft Azure, or IBM Cloud, offer flexible and scalable computing resources. This paper explores the viability identifying types of engineering applications running on a cloud infrastructure configured as an HPC platform using privacy preserving features as input to statistical models. The engineering applications considered in this work include MCNP6, a radiation transport code developed by Los Alamos National Laboratory, OpenFOAM, an open source computational fluid dynamics code, and CADO-NFS, a numerical implementation of the general number field sieve algorithm used for prime number factorization. Our experiments use the OpenStack cloud management tool to create a cloud HPC environment and the privacy preserving Ceilometer billing meters as classification features to demonstrate identification of these applications.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-26T01:29:19Z</published>
+    <arxiv:comment>9 pages, 13 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Gianluca Longoni</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ryan LaMothe</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jeremy Teuton</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Greaves</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nicole Nichols</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>William Smith</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.02874v2</id>
+    <title>A kilobit hidden SNFS discrete logarithm computation</title>
+    <updated>2017-07-18T06:49:46Z</updated>
+    <link href="https://arxiv.org/abs/1610.02874v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.02874v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We perform a special number field sieve discrete logarithm computation in a 1024-bit prime field. To our knowledge, this is the first kilobit-sized discrete logarithm computation ever reported for prime fields. This computation took a little over two months of calendar time on an academic cluster using the open-source CADO-NFS software. Our chosen prime $p$ looks random, and $p--1$ has a 160-bit prime factor, in line with recommended parameters for the Digital Signature Algorithm. However, our p has been trapdoored in such a way that the special number field sieve can be used to compute discrete logarithms in $\mathbb{F}\_p^*$ , yet detecting that p has this trapdoor seems out of reach. Twenty-five years ago, there was considerable controversy around the possibility of back-doored parameters for DSA. Our computations show that trapdoored primes are entirely feasible with current computing technology. We also describe special number field sieve discrete log computations carried out for multiple weak primes found in use in the wild. As can be expected from a trapdoor mechanism which we say is hard to detect, our research did not reveal any trapdoored prime in wide use. The only way for a user to defend against a hypothetical trapdoor of  this kind is to require verifiably random primes.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-10T12:03:40Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Jean-S{é}bastien Coron, Jesper Buus Nielsen. Eurocrypt 2017, Apr 2017, Paris, France. Springer, 10210, 2017, Lecture Notes in Computer Science</arxiv:journal_ref>
+    <author>
+      <name>Joshua Fried</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-319-56620-7_8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-319-56620-7_8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.07157v1</id>
+    <title>The trade-off between factor score determinacy and the preservation of inter-factor correlations</title>
+    <updated>2023-01-17T20:04:39Z</updated>
+    <link href="https://arxiv.org/abs/2301.07157v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.07157v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Regression factor score predictors have the maximum factor score determinacy, i.e., the maximum correlation with the corresponding factor, but they do not have the same inter-correlations as the factors. As it might be useful to compute factor score predictors that have the same inter-correlations as the factors, correlation-preserving factor score predictors have been proposed. However, correlation-preserving factor score predictors have smaller correlations with the corresponding factors (factor score determinacy) than regression factor score predictors. Thus, higher factor score determinacy goes along with bias of the inter-correlations and unbiased inter-correlations go along with lower factor score determinacy. The aim of the present study was therefore to investigate the size of the trade-off between factor score determinacy and bias of inter-correlations by means of a simulation study. It turns out that under several conditions very small gains of factor score determinacy of the regression factor score predictor go along with a large bias of inter-correlations. Instead of using the regression factor score predictor by default, it is proposed to check whether substantial bias of inter-correlations can be avoided without substantial loss of factor score determinacy by using a correlation-preserving factor score predictor. A syntax that allows to compute correlation-preserving factor score predictors from regression factor score predictors and to compare factor score determinacy and inter-correlations of the factor score predictors is given in the Appendix.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-17T20:04:39Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+    <author>
+      <name>Norbert Hilger</name>
+    </author>
+    <author>
+      <name>Tobias Kuhl</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.06742v1</id>
+    <title>How to improve the regression factor score predictor when individuals have different factor loadings</title>
+    <updated>2025-03-09T19:53:27Z</updated>
+    <link href="https://arxiv.org/abs/2503.06742v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.06742v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Previous research has shown that ignoring individual differences of factor loadings in conventional factor models may reduce the determinacy of factor score predictors. Therefore, the aim of the present study is to propose a heterogeneous regression factor score with larger determinacy than the conventional regression factor score when individuals have different factor loadings. First, a method for the estimation of individual loadings is proposed. The individual loading estimates are used to compute the heterogeneity-based regression factor score predictor. Then, a binomial test for loading heterogeneity of a factor is recommended to compute the heterogeneity-based regression factor score predictor only when the test is significant. Otherwise, the conventional regression factor score predictor should be used. A simulation study reveals that the heterogeneity-based regression factor score predictor has larger determinacy than the conventional regression factor score predictor in populations with substantial loading heterogeneity. An empirical example based on subsamples drawn randomly from a large sample of Big Five Markers indicates that the determinacy can be improved for the factor emotional stability when the heterogeneity-based regression factor score is computed.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-09T19:53:27Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+    <author>
+      <name>Norbert Hilger</name>
+    </author>
+    <author>
+      <name>Anneke C. Weide</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1903.07401v1</id>
+    <title>Score predictor factor analysis: Reproducing observed covariances by means of factor score predictors</title>
+    <updated>2019-03-18T12:54:10Z</updated>
+    <link href="https://arxiv.org/abs/1903.07401v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1903.07401v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The model implied by factor score predictors does not reproduce the non-diagonal elements of the observed covariance matrix as well as the factor loadings. It is therefore investigated whether it is possible to estimate factor loadings for which the model implied by the factor score predictors optimally reproduces the non-diagonal elements of the observed covariance matrix. Accordingly, loading estimates are proposed for which the model implied by the factor score predictors allows for a least-squares approximation of the non-diagonal elements of the observed covariance matrix. This estimation method is termed Score predictor factor analysis and algebraically compared with Minres factor analysis as well as principal component analysis. A population based and a sample based simulation study was performed in order to compare Score predictor factor analysis, Minres factor analysis, and principal component analysis. It turns out that the non-diagonal elements of the observed covariance matrix can more exactly be reproduced from the factor score predictors computed from Score predictor factor analysis than from the factor score predictors computed from Minres factor analysis and from principal components. Moreover, Score predictor factor analysis can be helpful to identify factors when the factor model does not perfectly fit to the data because of model error.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-03-18T12:54:10Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <arxiv:journal_ref>Front. Psychol. 10:1895 (2019)</arxiv:journal_ref>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+    <author>
+      <name>Norbert Hilger</name>
+    </author>
+    <arxiv:doi>10.3389/fpsyg.2019.01895</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3389/fpsyg.2019.01895" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.15611v1</id>
+    <title>Sequential Confirmatory Factor Analysis: A Novel Approach to Latent Variable Measurement</title>
+    <updated>2025-08-21T14:36:43Z</updated>
+    <link href="https://arxiv.org/abs/2508.15611v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.15611v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factor score estimation in small sample sizes often encounters parameter bias and convergence failures when constructing hierarchical national/sub-national indices. This paper proposes a novel method for hierarchical factor analysis called "sequential Confirmatory Factor Analysis". Instead of estimating multiple levels of factors at the same time, this approach calculates factor scores sequentially from the lowest to highest levels. This sequential estimation keeps the original sample size in each step and also removes cross-level covariance estimation. Using a series of Monte Carlo simulations, we isolate the difference between sequential Confirmatory Factor Analysis and traditional Confirmatory Factor Analysis by comparing their resulting factor scores to the true latent variables under varying conditions. We also estimate the WJP Rule of Law Index using traditional Confirmatory Factor Analysis, Bayesian Confirmatory Factor Analysis, and sequential Confirmatory Factor Analysis to test performance. Our findings demonstrate that sequential Confirmatory Factor Analysis significantly outperforms the traditional model for indices with simple/moderate complexity. Traditional Confirmatory Factor Analysis performs better where the data are skewed. Where the hierarchical model becomes complex, the two methods perform similarly. Finally, sequential Confirmatory Factor Analysis can provide valid estimates where traditional or Bayesian Confirmatory Factor Analysis fail to converge.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-21T14:36:43Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Zachary Esses Johnson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.00178v3</id>
+    <title>Disentangling Structural Breaks in Factor Models for Macroeconomic Data</title>
+    <updated>2025-11-07T23:25:13Z</updated>
+    <link href="https://arxiv.org/abs/2303.00178v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.00178v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a projection-based decomposition to disentangle structural breaks in the factor variance and factor loadings. Our approach yields test statistics that can be compared against standard distributions commonly used in the structural break literature. Because standard methods for estimating factor models in macroeconomics normalize the factor variance, they do not distinguish between breaks of the factor variance and factor loadings. Applying our procedure to U.S. macroeconomic data, we find that the Great Moderation is more naturally accommodated as a break in the factor variance as opposed to a break in the factor loadings, in contrast to extant procedures which do not tell the two apart and thus interpret the Great Moderation as a structural break in the factor loadings. Through our projection-based decomposition, we estimate that the Great Moderation is associated with an over 70\% reduction in the total factor variance, highlighting the relevance of disentangling breaks in the factor structure.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-01T02:10:52Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Bonsoo Koo</name>
+    </author>
+    <author>
+      <name>Benjamin Wong</name>
+    </author>
+    <author>
+      <name>Ze-Yu Zhong</name>
+    </author>
+    <arxiv:doi>10.1080/07350015.2025.2583205</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/07350015.2025.2583205" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.14350v1</id>
+    <title>How does the elimination of group mean-differences affect factor score determinacy?</title>
+    <updated>2023-11-24T08:49:43Z</updated>
+    <link href="https://arxiv.org/abs/2311.14350v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.14350v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The present study investigates to what degree the common variance of the factor score predictor with the original factor, i.e., the determinacy coefficient or the validity of the factor score predictor, depends on the mean-difference between groups. When mean-differences between groups in the factor score predictor are eliminated by means of covariance analysis, regression, or group specific norms, this may reduce the covariance of the factor score predictor with the common factor. It is shown that in a one-factor model with the same group mean-difference on all observed variables, the common factor cannot be distinguished from a common factor representing the group mean-difference. It is also shown that for common factor loadings equal or larger than .60, the elimination of a d = .50 mean-difference between two groups in the factor score predictor leads to only small decreases of the determinacy coefficient. A compensation-factor k is proposed allowing for the estimation of the number of additional observed variables necessary to recover the size of the determinacy coefficient before elimination of a group mean-difference. It turns out that for factor loadings equal or larger than .60 only a few additional items are needed in order to recover the initial determinacy coefficient after the elimination of moderate or large group mean-differences.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-24T08:49:43Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+    <author>
+      <name>Norbert Hilger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.09356v1</id>
+    <title>Model Dependence of the Pion Form Factor Extracted from Pion Electro-production</title>
+    <updated>2018-11-23T04:22:44Z</updated>
+    <link href="https://arxiv.org/abs/1811.09356v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.09356v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 2008 the Jefferson Laboratory $F_π$ Collaboration released results for the pion electromagnetic form factor, which they extracted from pion electro-production data. The measured values for the pion form factor are model dependent, and require the use of the Vanderhaeghen, Guidal and Laget Regge Model for their extraction. While agreement between this model and data is impressive, the theoretical implementation of gauge invariance is less satisfying. We would like to establish how well the extracted form factor corresponds to the true form factor. To do this, we use a simple toy model, which imposes gauge invariance in a more theoretically satisfying way. The model form factor is extracted from our model cross section using the method employed by the $F_π$ Collaboration to extract the experimental pion form factor. We conclude that the reconstructed model form factor is a reasonable representation of the true model form factor for the kinematics chosen, although we note that the extracted form factor is smaller than the true form factor. This suggests that current extracted values of pion form factor may be overestimated.</summary>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-23T04:22:44Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="nucl-th"/>
+    <arxiv:journal_ref>Phys. Rev. C 100, 025206 (2019)</arxiv:journal_ref>
+    <author>
+      <name>Robert J. Perry</name>
+    </author>
+    <author>
+      <name>Ayse Kızılersu</name>
+    </author>
+    <author>
+      <name>Anthony W. Thomas</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevC.100.025206</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevC.100.025206" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.00679v2</id>
+    <title>Exact Exploratory Bi-factor Analysis: A Constraint-based Optimisation Approach</title>
+    <updated>2025-04-11T23:56:24Z</updated>
+    <link href="https://arxiv.org/abs/2409.00679v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.00679v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Bi-factor analysis is a form of confirmatory factor analysis widely used in psychological and educational measurement. The use of a bi-factor model requires the specification of an explicit bi-factor structure on the relationship between the observed variables and the group factors. In practice, the bi-factor structure is sometimes unknown, in which case an exploratory form of bi-factor analysis is needed to find the bi-factor structure. Unfortunately, there are few methods for exploratory bi-factor analysis, with the exception of a rotation-based method proposed in Jennrich and Bentler (2011, 2012). However, this method only finds approximate bi-factor structures, as it does not yield an exact bi-factor loading structure, even after applying hard thresholding. In this paper, we propose a constraint-based optimisation method that learns an exact bi-factor loading structure from data, overcoming the issue with the rotation-based method. The key to the proposed method is a mathematical characterisation of the bi-factor loading structure as a set of equality constraints, which allows us to formulate the exploratory bi-factor analysis problem as a constrained optimisation problem in a continuous domain and solve the optimisation problem with an augmented Lagrangian method. The power of the proposed method is shown via simulation studies and a real data example. Extending the proposed method to exploratory hierarchical factor analysis is also discussed. The codes are available on ``https://anonymous.4open.science/r/Bifactor-ALM-method-757D".</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-01T09:44:37Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Jiawei Qiao</name>
+    </author>
+    <author>
+      <name>Yunxiao Chen</name>
+    </author>
+    <author>
+      <name>Zhiliang Ying</name>
+    </author>
+    <arxiv:doi>10.1017/psy.2025.17</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1017/psy.2025.17" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.15549v1</id>
+    <title>Mean equicontinuous factor maps</title>
+    <updated>2024-11-23T13:08:11Z</updated>
+    <link href="https://arxiv.org/abs/2411.15549v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.15549v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mean equicontinity is a well studied notion for actions. We propose a definition of mean equicontinuous factor maps that generalizes mean equicontinuity to the relative context. For this we work in the context of countable amenable groups. We show that a factor map is equicontinuous, if and only if it is mean equicontinuous and distal. Furthermore, we show that a factor map is topo-isomorphic, if and only if it is mean equicontinuous and proximal. We present that the notions of topo-isomorphy and Banach proximality coincide for all factor maps. In the second part of the paper we turn our attention to decomposition and composition properties. It is well known that a mean equicontinuous action is a topo-isomorphic extension of an equicontinuous action. In the context of minimal and the context of weakly mean equicontinuous actions, respectively, we show that any mean equicontinuous factor map can be decomposed into an equicontinuous factor map after a topo-isomorphic factor map. Furthermore, for factor maps between weakly mean equicontinuous actions we show that a factor map is mean equicontinuous, if and only if it is the composition of an equicontinuous factor map after a topo-isomorphic factor map. We will see that this decomposition is always unique up to conjugacy.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-23T13:08:11Z</published>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Till Hauser</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.18040v2</id>
+    <title>Relative topological entropy and relative mean dimension of induced factors</title>
+    <updated>2026-07-29T02:05:46Z</updated>
+    <link href="https://arxiv.org/abs/2511.18040v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.18040v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the relation of relative topological entropy and relative mean dimension between a factor map and its induced factor map for amenable group actions. On the one hand, we prove that a factor map has zero relative topological entropy if and only if so does the induced factor map. On the other hand, we prove that a factor map has positive relative topological entropy if and only if the induced factor map has infinite relative mean dimension.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-22T12:33:51Z</published>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Kairan Liu</name>
+    </author>
+    <author>
+      <name>Yixiao Qiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.11556v2</id>
+    <title>The Factor Width Rank of a Matrix</title>
+    <updated>2025-04-02T02:19:33Z</updated>
+    <link href="https://arxiv.org/abs/2405.11556v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.11556v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A matrix is said to have factor width at most $k$ if it can be written as a sum of positive semidefinite matrices that are non-zero only in a single $k \times k$ principal submatrix. We explore the ``factor-width-$k$ rank'' of a matrix, which is the minimum number of rank-$1$ matrices that can be used in such a factor-width-at-most-$k$ decomposition. We show that the factor width rank of a banded or arrowhead matrix equals its usual rank, but for other matrices they can differ. We also establish several bounds on the factor width rank of a matrix, including a tight connection between factor-width-$k$ rank and the $k$-clique covering number of a graph, and we discuss how the factor width and factor width rank change when taking Hadamard products and Hadamard powers.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-19T14:14:28Z</published>
+    <arxiv:comment>23 pages, newly added Theorem 2</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Linear Algebra and its Applications, 716:32-59, 2025</arxiv:journal_ref>
+    <author>
+      <name>Nathaniel Johnston</name>
+    </author>
+    <author>
+      <name>Shirin Moein</name>
+    </author>
+    <author>
+      <name>Sarah Plosker</name>
+    </author>
+    <arxiv:doi>10.1016/j.laa.2025.03.016</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.laa.2025.03.016" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.18148v3</id>
+    <title>Two sufficient conditions for graphs to admit path factors</title>
+    <updated>2024-02-22T05:18:20Z</updated>
+    <link href="https://arxiv.org/abs/2305.18148v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.18148v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{A}$ be a set of connected graphs. Then a spanning subgraph $A$ of $G$ is called an $\mathcal{A}$-factor if each component of $A$ is isomorphic to some member of $\mathcal{A}$. Especially, when every graph in $\mathcal{A}$ is a path, $A$ is a path factor. For a positive integer $d\geq2$, we write $\mathcal{P}_{\geq d}=\{P_i|i\geq d\}$. Then a $\mathcal{P}_{\geq d}$-factor means a path factor in which every component admits at least $d$ vertices. A graph $G$ is called a $(\mathcal{P}_{\geq d},m)$-factor deleted graph if $G-E'$ admits a $\mathcal{P}_{\geq d}$-factor for any $E'\subseteq E(G)$ with $|E'|=m$. A graph $G$ is called a $(\mathcal{P}_{\geq d},k)$-factor critical graph if $G-Q$ has a $\mathcal{P}_{\geq d}$-factor for any $Q\subseteq V(G)$ with $|Q|=k$. In this paper, we present two degree conditions for graphs to be $(\mathcal{P}_{\geq3},m)$-factor deleted graphs and $(\mathcal{P}_{\geq3},k)$-factor critical graphs. Furthermore, we show that the two results are best possible in some sense.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-29T15:21:25Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Fundamenta Informaticae, Volume 191, Issue 1 (March 30, 2024) fi:12212</arxiv:journal_ref>
+    <author>
+      <name>Sizhong Zhou</name>
+    </author>
+    <author>
+      <name>Jiancheng Wu</name>
+    </author>
+    <arxiv:doi>10.46298/fi.12212</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.46298/fi.12212" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.0406v1</id>
+    <title>A Graph Invariant and 2-factorizations of a graph</title>
+    <updated>2011-11-02T07:11:16Z</updated>
+    <link href="https://arxiv.org/abs/1111.0406v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.0406v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A spanning subgraph of a graph G is called a [0,2]-factor of G, if for . is a union of some disjoint cycles, paths and isolate vertices, that span the graph G. It is easy to get a [0,2]-factor of G and there would be many of [0,2]-factors for a G.A characteristic number for a [0,2]-factor, which reflect the number of the paths and isolate vertices in it,is defineted. The [0,2]-factor of G is called maximum if its characteristic number is minimum, and is called characteristic number of G.It to be proved that characteristic number of graph is a graph invariant and a polynomial time algorithm for computing a maximum [0,2]-factor of a graph G has been given in this paper.
+  A [0,2]-factor is Called a 2-factor, if its characteristic number is zero. That is, a 2-factor is a set of some disjoint cycles, that span G.We propose a A polynomial time algorism for computing 2-factor from a [0,2]-factor,which can be got easily.
+  A HAMILTON Cycle is a 2-factor, therefore a necessary condition of a HAMILTON Graph is that, the graph have a 2-factor or the characteristic number of the graph is zero. The algorism, given in this paper, make it possible to examine the condition in polynomial time.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-02T07:11:16Z</published>
+    <arxiv:comment>8 pages,1 figure,1 Algorism</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Yingtai Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1404.5416v2</id>
+    <title>A Note on Near-factor-critical Graphs</title>
+    <updated>2014-05-16T04:56:26Z</updated>
+    <link href="https://arxiv.org/abs/1404.5416v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1404.5416v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A near-factor of a finite simple graph $G$ is a matching that saturates all vertices except one. A graph $G$ is said to be near-factor-critical if the deletion of any vertex from $G$ results in a subgraph that has a near-factor. We prove that a connected graph $G$ is near-factor-critical if and only if it has a perfect matching. We also characterize disconnected near-factor-critical graphs.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-04-22T08:22:58Z</published>
+    <arxiv:comment>4 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Kuo-Ching Huang</name>
+    </author>
+    <author>
+      <name>Ko-Wei Lih</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.06359v1</id>
+    <title>Component factors in $K_{1,r}$-free graphs</title>
+    <updated>2020-12-11T14:01:22Z</updated>
+    <link href="https://arxiv.org/abs/2012.06359v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.06359v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A graph is said to be $K_{1,r}$-free if it does not contain an induced subgraph isomorphic to $K_{1,r}$. An $\mathcal{F}$-factor is a spanning subgraph $H$ such that each connected component of $H$ is isomorphic to some graph in $\mathcal{F}$. In particular, $H$ is called an $\{P_2,P_3\}$-factor of $G$ if $\mathcal{F}=\{P_2,P_3\}$; $H$ is called an $\mathcal{S}_n$-factor of $G$ if $\mathcal{F}=\{K_{1,1},K_{1,2},K_{1,3},...,K_{1,n}\}$, where $n\geq2$. A spanning subgraph of a graph $G$ is called a $\mathcal{P}_{\geq k}$-factor of $G$ if its each component is isomorphic to a path of order at least $k$, where $k\geq2$. A graph $G$ is called a $\mathcal{F}$-factor covered graph if there is a $\mathcal{F}$-factor of $G$ including $e$ for any $e\in E(G)$. In this paper, we give a minimum degree condition for a $K_{1,r}$-free graph to have an $\mathcal{S}_n$-factor and a $\mathcal{P}_{\geq 3}$-factor, respectively. Further, we obtain sufficient conditions for $K_{1,r}$-free graphs to be $\mathcal{P}_{\geq 2}$-factor, $\mathcal{P}_{\geq 3}$-factor or $\{P_2,P_3\}$-factor covered graphs. In addition, examples show that our results are sharp.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-11T14:01:22Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Guowei Dai</name>
+    </author>
+    <author>
+      <name>Zan-Bo Zhang</name>
+    </author>
+    <author>
+      <name>Xiaoyan Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.14487v1</id>
+    <title>High-dimensional factor copula models with estimation of latent variables</title>
+    <updated>2022-05-28T17:01:59Z</updated>
+    <link href="https://arxiv.org/abs/2205.14487v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.14487v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factor models are a parsimonious way to explain the dependence of variables using several latent variables. In Gaussian 1-factor and structural factor models (such as bi-factor, oblique factor) and their factor copula counterparts, factor scores or proxies are defined as conditional expectations of latent variables given the observed variables. With mild assumptions, the proxies are consistent for corresponding latent variables as the sample size and the number of observed variables linked to each latent variable go to infinity. When the bivariate copulas linking observed variables to latent variables are not assumed in advance, sequential procedures are used for latent variables estimation, copula family selection and parameter estimation. The use of proxy variables for factor copulas means that approximate log-likelihoods can be used to estimate copula parameters with less computational effort for numerical integration.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-28T17:01:59Z</published>
+    <arxiv:comment>29pages 1 figure</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Xinyao Fan</name>
+    </author>
+    <author>
+      <name>Harry Joe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.04713v2</id>
+    <title>Sufficient conditions for the existence of path-factors with given properties</title>
+    <updated>2023-05-09T15:07:42Z</updated>
+    <link href="https://arxiv.org/abs/2305.04713v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.04713v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A spanning subgraph $H$ of a graph $G$ is called a $P_{\geq k}$-factor of $G$ if every component of $H$ is isomorphic to a path of order at least $k$, where $k\geq2$ is an integer. A graph $G$ is called a $(P_{\geq k},l)$-factor critical graph if $G-V'$ contains a $P_{\geq k}$-factor for any $V'\subseteq V(G)$ with $|V'|=l$. A graph $G$ is called a $(P_{\geq k},m)$-factor deleted graph if $G-E'$ has a $P_{\geq k}$-factor for any $E'\subseteq E(G)$ with $|E'|=m$. Intuitively, if a graph is dense enough, it will have a $P_{\geq 3}$-factor. In this paper, we give some sufficient conditions for a graph to be a $(P_{\geq 3},l)$-factor critical graph or a $(P_{\geq 3},m)$-factor deleted graph. In this paper, we demonstrate that (i) $G$ is a $(P_{\geq 3},l)$-factor critical graph if its sun toughness $s(G)&gt;\frac{l+1}{3}$ and $κ(G)\geq l+2$. (ii) $G$ is a $(P_{\geq 3},l)$-factor critical graph if its degree sum $σ_3(G)\geq n+2l$ and $κ(G)\geq l+1$. (iii) $G$ is a $(P_{\geq 3},m)$-factor deleted graph if its sun toughness $s(G)\geq \frac{m+1}{m+2}$ and $κ(G)\geq 2m+1$. (iv) $G$ is a $(P_{\geq 3},m)$-factor deleted graph if its degree sum $σ_3(G)\geq n+2m$ and $κ(G)\geq 2m+1$.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-08T13:55:36Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Hui Qin</name>
+    </author>
+    <author>
+      <name>Guowei Dai</name>
+    </author>
+    <author>
+      <name>Yuan Chen</name>
+    </author>
+    <author>
+      <name>Ting Jin</name>
+    </author>
+    <author>
+      <name>Yuan Yuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.11973v4</id>
+    <title>R-factor analysis of data generated by a combination of R- and Q-factors leads to biased loading estimates</title>
+    <updated>2022-07-15T10:28:47Z</updated>
+    <link href="https://arxiv.org/abs/2201.11973v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.11973v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Effects of performing R-factor analysis of observed variables based on population models comprising R- and Q-factors were investigated. It was noted that estimating a model comprising R- and Q-factors has to face loading indeterminacy beyond rotational indeterminacy. Although R-factor analysis of data based on a population model comprising R- and Q-factors is nevertheless possible, this may lead to model error. Accordingly, even in the population, the resulting R-factor loadings are not necessarily close estimates of the original population R-factor loadings. It was shown in a simulation study that large Q-factor variance induces an increase of the variation of R-factor loading estimates beyond chance level. The results indicate that performing R-factor analysis with data based on a population model comprising R- and Q-factors may result in substantial loading bias. Tests of the multivariate kurtosis of observed variables are proposed as an indicator of possible Q-factor variance in observed variables as a prerequisite for R-factor analysis.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-28T07:47:28Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.05210v3</id>
+    <title>Regression and Forecasting of U.S. Stock Returns Based on LSTM</title>
+    <updated>2025-05-28T19:42:17Z</updated>
+    <link href="https://arxiv.org/abs/2502.05210v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.05210v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper analyses the investment returns of three stock sectors, Manuf, Hitec, and Other, in the U.S. stock market, based on the Fama-French three-factor model, the Carhart four-factor model, and the Fama-French five-factor model, in order to test the validity of the Fama-French three-factor model, the Carhart four-factor model, and the Fama-French five-factor model for the three sectors of the market. French five-factor model for the three sectors of the market. Also, the LSTM model is used to explore the additional factors affecting stock returns. The empirical results show that the Fama-French five-factor model has better validity for the three segments of the market under study, and the LSTM model has the ability to capture the factors affecting the returns of certain industries, and can better regress and predict the stock returns of the relevant industries. Keywords- Fama-French model; Carhart model; Factor model; LSTM model.</summary>
+    <category term="q-fin.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-03T19:26:44Z</published>
+    <arxiv:comment>5pages</arxiv:comment>
+    <arxiv:primary_category term="q-fin.ST"/>
+    <author>
+      <name>Shicheng Zhou</name>
+    </author>
+    <author>
+      <name>Zizhou Zhang</name>
+    </author>
+    <author>
+      <name>Rong Zhang</name>
+    </author>
+    <author>
+      <name>Yuchen Yin</name>
+    </author>
+    <author>
+      <name>Chia Hong Chang</name>
+    </author>
+    <author>
+      <name>Qinyan Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.06036v1</id>
+    <title>On Pinsker factors for Rokhlin entropy</title>
+    <updated>2015-02-20T23:22:01Z</updated>
+    <link href="https://arxiv.org/abs/1502.06036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.06036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we will prove that any dynamical system posess the unique maximal factor of zero Rokhlin entropy, so-called Pinsker factor. It is proven also, that if the system is ergodic and this factor has no atoms then system is relatively weakly mixing extension of its Pinsker factor.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-20T23:22:01Z</published>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Andrei Alpeev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.06291v1</id>
+    <title>A Characterization for the Existence of Connected $f$-Factors of $\textit{ Large}$ Minimum Degree</title>
+    <updated>2016-01-23T17:14:24Z</updated>
+    <link href="https://arxiv.org/abs/1601.06291v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.06291v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well known that when $f(v)$ is a constant for each vertex $v$, the connected $f$-factor problem is NP-Complete. In this note we consider the case when $f(v) \geq \lceil \frac{n}{2.5}\rceil$ for each vertex $v$, where $n$ is the number of vertices. We present a diameter based characterization of graphs having a connected $f$-factor (for such $f$). We show that if a graph $G$ has a connected $f$-factor and an $f$-factor with 2 connected components, then it has a connected $f$-factor of diameter at least 3. This result yields a polynomial time algorithm which first executes the Tutte's $f$-factor algorithm, and if the output has 2 connected components, our algorithm searches for a connected $f$-factor of diameter at least 3.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-23T17:14:24Z</published>
+    <arxiv:comment>10 pages, Presented in 9th International colloquium on graph theory and combinatorics, 2014</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>N S Narayanaswamy</name>
+    </author>
+    <author>
+      <name>C S Rahul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.6484v1</id>
+    <title>Universal Factor Graphs</title>
+    <updated>2012-04-29T15:05:40Z</updated>
+    <link href="https://arxiv.org/abs/1204.6484v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.6484v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The factor graph of an instance of a symmetric constraint satisfaction problem on n Boolean variables and m constraints (CSPs such as k-SAT, k-AND, k-LIN) is a bipartite graph describing which variables appear in which constraints. The factor graph describes the instance up to the polarity of the variables, and hence there are up to 2km instances of the CSP that share the same factor graph. It is well known that factor graphs with certain structural properties make the underlying CSP easier to either solve exactly (e.g., for tree structures) or approximately (e.g., for planar structures). We are interested in the following question: is there a factor graph for which if one can solve every instance of the CSP with this particular factor graph, then one can solve every instance of the CSP regardless of the factor graph (and similarly, for approximation)? We call such a factor graph universal. As one needs different factor graphs for different values of n and m, this gives rise to the notion of a family of universal factor graphs. We initiate a systematic study of universal factor graphs, and present some results for max-kSAT. Our work has connections with the notion of preprocessing as previously studied for closest codeword and closest lattice-vector problems, with proofs for the PCP theorem, and with tests for the long code. Many questions remain open.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-29T15:05:40Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Uriel Feige</name>
+    </author>
+    <author>
+      <name>Shlomo Jozeph</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.08022v1</id>
+    <title>Rotational Uniqueness Conditions Under Oblique Factor Correlation Metric</title>
+    <updated>2019-09-17T18:46:39Z</updated>
+    <link href="https://arxiv.org/abs/1909.08022v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.08022v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In an addendum to his seminal 1969 article Jöreskog stated two sets of conditions for rotational identification of the oblique factor solution under utilization of fixed zero elements in the factor loadings matrix. These condition sets, formulated under factor correlation and factor covariance metrics, respectively, were claimed to be equivalent and to lead to global rotational uniqueness of the factor solution. It is shown here that the conditions for the oblique factor correlation structure need to be amended for global rotational uniqueness, and hence, that the condition sets are not equivalent in terms of unicity of the solution.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-17T18:46:39Z</published>
+    <arxiv:comment>Postprint, 5 pages</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <arxiv:journal_ref>Psychometrika 77 (2012) 288-292</arxiv:journal_ref>
+    <author>
+      <name>Carel F. W. Peeters</name>
+    </author>
+    <arxiv:doi>10.1007/s11336-012-9259-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11336-012-9259-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1511.00298v1</id>
+    <title>A Schmid-Leiman based transformation resulting in perfect inter-correlations of three types of factor score predictors</title>
+    <updated>2015-11-01T19:18:04Z</updated>
+    <link href="https://arxiv.org/abs/1511.00298v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1511.00298v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factor score predictors are to be computed when the individual scores on the factors are of interest. Conditions for a perfect inter-correlation of the regression/best linear factor score predictor, the best linear conditionally unbiased predictor, and the determinant best linear correlation-preserving predictor are presented. When these three types of factor score predictors are perfectly correlated for corresponding factors, the factor score predictors computed from one method will have the virtues of the factor score predictors computed from the other methods. A Schmid-Leiman based transformation for which the three types of factor score predictors are perfectly correlated for corresponding orthogonal factors is proposed.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-11-01T19:18:04Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.00937v1</id>
+    <title>Some existence theorems on path-factor critical avoidable graphs</title>
+    <updated>2023-04-03T12:50:56Z</updated>
+    <link href="https://arxiv.org/abs/2304.00937v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.00937v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A spanning subgraph $F$ of $G$ is called a path factor if every component of $F$ is a path of order at least 2. Let $k\geq2$ be an integer. A $P_{\geq k}$-factor of $G$ means a path factor in which every component has at least $k$ vertices. A graph $G$ is called a $P_{\geq k}$-factor avoidable graph if for any $e\in E(G)$, $G$ has a $P_{\geq k}$-factor avoiding $e$. A graph $G$ is called a $(P_{\geq k},n)$-factor critical avoidable graph if for any $W\subseteq V(G)$ with $|W|=n$, $G-W$ is a $P_{\geq k}$-factor avoidable graph. In other words, $G$ is $(P_{\geq k},n)$-factor critical avoidable if for any $W\subseteq V(G)$ with $|W|=n$ and any $e\in E(G-W)$, $G-W-e$ admits a $P_{\geq k}$-factor. In this article, we verify that (\romannumeral1) an $(n+r+2)$-connected graph $G$ is $(P_{\geq2},n)$-factor critical avoidable if $I(G)&gt;\frac{n+r+3}{2(r+2)}$; (\romannumeral2) an $(n+r+2)$-connected graph $G$ is $(P_{\geq3},n)$-factor critical avoidable if $t(G)&gt;\frac{n+r+2}{2(r+2)}$; (\romannumeral3) an $(n+r+2)$-connected graph $G$ is $(P_{\geq3},n)$-factor critical avoidable if $I(G)&gt;\frac{n+3(r+2)}{2(r+2)}$; where $n$ and $r$ are two nonnegative integers.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-03T12:50:56Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Sizhong Zhou</name>
+    </author>
+    <author>
+      <name>Hongxia Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.03746v1</id>
+    <title>Factor-balancedness, linear recurrence, and factor complexity</title>
+    <updated>2026-02-03T17:06:26Z</updated>
+    <link href="https://arxiv.org/abs/2602.03746v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.03746v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the study of infinite words, various notions of balancedness provide quantitative measures for how regularly letters or factors occur, and they find applications in several areas of mathematics and theoretical computer science. In this paper, we study factor-balancedness and uniform factor-balancedness, making two main contributions. First, we establish general sufficient conditions for an infinite word to be (uniformly) factor-balanced, applicable in particular to any given linearly recurrent word. These conditions are formulated in terms of $\mathcal{S}$-adic representations and generalize results of Adamczewski on primitive substitutive words, which show that balancedness of length-2 factors already implies uniform factor-balancedness. As an application of our criteria, we characterize the Sturmian words and ternary Arnoux--Rauzy words that are uniformly factor-balanced as precisely those with bounded weak partial quotients. Our second main contribution is a study of the relationship between factor-balancedness and factor complexity. In particular, we analyze the non-primitive substitutive case and construct an example of a factor-balanced word with exponential factor complexity, thereby making progress on a question raised in 2025 by Arnoux, Berthé, Minervino, Steiner, and Thuswaldner on the relation between balancedness and discrete spectrum.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-03T17:06:26Z</published>
+    <arxiv:comment>43 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Bastiàn Espinoza</name>
+    </author>
+    <author>
+      <name>Pierre Popoli</name>
+    </author>
+    <author>
+      <name>Manon Stipulanti</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.02449v1</id>
+    <title>Score Predictor Factor Analysis as model for the identification of single-item indicators</title>
+    <updated>2020-04-06T07:46:36Z</updated>
+    <link href="https://arxiv.org/abs/2004.02449v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.02449v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Score Predictor Factor Analysis (SPFA) was introduced as a method that allows to compute factor score predictors that are -- under some conditions -- more highly correlated with the common factors resulting from factor analysis than the factor score predictors computed from the common factor model. In the present study, we investigate SPFA as a model in its own rights. In order to provide a basis for this, the properties and the utility of SPFA factor score predictors and the possibility to identify single-item indicators in SPFA loading matrices were investigated. Regarding the factor score predictors, the main result is that the best linear predictor of the score predictor factor analysis has not only perfect determinacy but is also correlation preserving. Regarding the SPFA loadings it was found in a simulation study that five or more population factors that are represented by only one variable with a rather substantial loading can more accurately be identified by means of SPFA than with conventional factor analysis. Moreover, the percentage of correctly identified single-item indicators was substantially larger for SPFA than for the common factor model. It is therefore argued that SPFA is a tool that can be especially helpful when very short scales or single-item indicators are to be identified.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-06T07:46:36Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>André Beauducel</name>
+    </author>
+    <author>
+      <name>Norbert Hilger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.21740v3</id>
+    <title>Beyond Spectral Decomposition: Bayesian Contrastive Learning and its Non-negative Formulation via Factor Analysis</title>
+    <updated>2026-06-27T05:20:41Z</updated>
+    <link href="https://arxiv.org/abs/2407.21740v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.21740v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factor analysis, often regarded as a Bayesian variant of matrix factorization, offers superior capabilities in capturing uncertainty, modeling complex dependencies, and ensuring robustness. As the deep learning era arrives, factor analysis is receiving less and less attention due to their limited expressive ability. On the contrary, contrastive learning has emerged as a potent technique with demonstrated efficacy in unsupervised representational learning. While the two methods are different paradigms, recent theoretical analysis has revealed the mathematical equivalence between contrastive learning and matrix factorization, providing a potential possibility for factor analysis combined with contrastive learning. Motivated by the interconnectedness of contrastive learning, matrix factorization, and factor analysis, this paper introduces a novel Contrastive Factor Analysis framework, aiming to leverage factor analysis's advantageous properties within the realm of contrastive learning. To further leverage the interpretability properties of non-negative factor analysis, which can learn disentangled representations, contrastive factor analysis is extended to a non-negative version. Finally, extensive experimental validation showcases the efficacy of the proposed contrastive (non-negative) factor analysis methodology across multiple key properties, including expressiveness, robustness, interpretability, and accurate uncertainty estimation.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-31T16:52:00Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zhibin Duan</name>
+    </author>
+    <author>
+      <name>Tiansheng Wen</name>
+    </author>
+    <author>
+      <name>Yifei Wang</name>
+    </author>
+    <author>
+      <name>Chen Zhu</name>
+    </author>
+    <author>
+      <name>Bo Chen</name>
+    </author>
+    <author>
+      <name>Mingyuan Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.24563v1</id>
+    <title>X-MULTI: VLM-based Imaging Factor Disentanglement for Factor-Aware Image Synthesis</title>
+    <updated>2026-08-25T13:45:30Z</updated>
+    <link href="https://arxiv.org/abs/2608.24563v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.24563v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Imaging factor disentanglement in text-to-image generation aims to independently control image acquisition properties such as types of camera lenses, sensor types, viewpoints, and domains to enable combinatorial generalization. This should let the model synthesize novel factor combinations unobserved in the training data, such as pairing a fisheye lens with an event sensor never observed in training data. Recent work, MULTI, introduced learnable, factor-specific embeddings to disentangle imaging factors, along with the Factor Alignment Accuracy (FAA) metric to evaluate disentanglement quality. We identify and address two independent limitations. First, MULTI's pixel-level reconstruction objective supervises the model only on observed imaging factor combinations, providing no direct training signal for novel combinations. We therefore propose X-MULTI, which uses a pretrained vision-language model (VLM) to supervise novel factor combinations synthesized during training. Second, we show the FAA metric exhibits severe cross-factor correlation leakage, misrepresenting true disentanglement quality. We therefore propose Improved-FAA (I-FAA), which employs factor-specific augmentation strategies to break these correlations and enables more rigorous evaluation. Experiments demonstrate that X-MULTI achieves improved factor alignment on novel combinations compared to MULTI. Moreover, we show that correlation leakage in FAA distorts the evaluation of true factor disentanglement and I-FAA reduces this leakage and therefore provides a more robust assessment of factor alignment.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-25T13:45:30Z</published>
+    <arxiv:comment>Accepted to the MUCG Workshop at ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sonali Godavarthy</name>
+    </author>
+    <author>
+      <name>Matthias Neuwirth-Trapp</name>
+    </author>
+    <author>
+      <name>Tim-Felix Faasch</name>
+    </author>
+    <author>
+      <name>Maarten Bieshaar</name>
+    </author>
+    <author>
+      <name>Michael Moeller</name>
+    </author>
+    <author>
+      <name>Kristof Van Laerhoven</name>
+    </author>
+    <author>
+      <name>Danda Pani Paudel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.6260v1</id>
+    <title>Tuning the electrically evaluated electron Lande g factor in GaAs quantum dots and quantum wells of different well widths</title>
+    <updated>2014-12-19T09:33:16Z</updated>
+    <link href="https://arxiv.org/abs/1412.6260v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.6260v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We evaluate the Lande g factor of electrons in quantum dots (QDs) fabricated from GaAs quantum well (QW) structures of different well width. We first determine the Lande electron g factor of the QWs through resistive detection of electron spin resonance and compare it to the enhanced electron g factor determined from analysis of the magneto-transport. Next, we form laterally defined quantum dots using these quantum wells and extract the electron g factor from analysis of the cotunneling and Kondo effect within the quantum dots. We conclude that the Lande electron g factor of the quantum dot is primarily governed by the electron g factor of the quantum well suggesting that well width is an ideal design parameter for g-factor engineering QDs.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-19T09:33:16Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Physical Review B, 90, 235310 (2014)</arxiv:journal_ref>
+    <author>
+      <name>G. Allison</name>
+    </author>
+    <author>
+      <name>T. Fujita</name>
+    </author>
+    <author>
+      <name>K. Morimoto</name>
+    </author>
+    <author>
+      <name>S. Teraoka</name>
+    </author>
+    <author>
+      <name>M. Larsson</name>
+    </author>
+    <author>
+      <name>H. Kiyama</name>
+    </author>
+    <author>
+      <name>A. Oiwa</name>
+    </author>
+    <author>
+      <name>S. Haffouz</name>
+    </author>
+    <author>
+      <name>D. G. Austing</name>
+    </author>
+    <author>
+      <name>A. Ludwig</name>
+    </author>
+    <author>
+      <name>A. D. Wieck</name>
+    </author>
+    <author>
+      <name>S. Tarucha</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.90.235310</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.90.235310" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.24762v1</id>
+    <title>Beyond Uniform Local Isometry and Topology: FactoMap for Disentangled Representations</title>
+    <updated>2026-08-25T15:59:59Z</updated>
+    <link href="https://arxiv.org/abs/2608.24762v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.24762v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many disentanglement methods represent generative factors using Euclidean product coordinates, although the underlying factor spaces may wrap, collapse, or have position-dependent geometry. We introduce factor-space structure, combining factor domains, generator-induced identifications, and position-dependent scales to distinguish topologically equivalent spaces with different factor geometries. We show that statistically independent factors need not be geometrically separable: hue and scale produce effects that grow at different rates, yielding anisotropy that no fixed rescaling removes. We propose the Factor-Space Topographic Map (FactoMap), which learns interpretable prototypes indexed by a factor-space lattice. Topographic learning transfers the lattice's periodicity, collapses, and non-uniform extent to the representation. Experiments show that matching this structure preserves factor continuity and enables disentanglement of the underlying factors.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-25T15:59:59Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sohini Gupta</name>
+    </author>
+    <author>
+      <name>Bahareh Tolooshams</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1903.07677v3</id>
+    <title>Deep Fundamental Factor Models</title>
+    <updated>2020-08-27T17:22:04Z</updated>
+    <link href="https://arxiv.org/abs/1903.07677v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1903.07677v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep fundamental factor models are developed to automatically capture non-linearity and interaction effects in factor modeling. Uncertainty quantification provides interpretability with interval estimation, ranking of factor importances and estimation of interaction effects. With no hidden layers we recover a linear factor model and for one or more hidden layers, uncertainty bands for the sensitivity to each input naturally arise from the network weights. Using 3290 assets in the Russell 1000 index over a period of December 1989 to January 2018, we assess a 49 factor model and generate information ratios that are approximately 1.5x greater than the OLS factor model. Furthermore, we compare our deep fundamental factor model with a quadratic LASSO model and demonstrate the superior performance and robustness to outliers. The Python source code and the data used for this study are provided.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-03-18T19:10:09Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <arxiv:journal_ref>Forthcoming in SIAM J. Financial Mathematics, 2020</arxiv:journal_ref>
+    <author>
+      <name>Matthew F. Dixon</name>
+    </author>
+    <author>
+      <name>Nicholas G. Polson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.03375v2</id>
+    <title>Unidimensional factor models imply weaker partial correlations than zero-order correlations</title>
+    <updated>2016-10-12T12:02:35Z</updated>
+    <link href="https://arxiv.org/abs/1610.03375v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.03375v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a unidimensional factor model it is assumed that the set of indicators that loads on this factor are conditionally independent given the latent factor. Two indicators are, however, never conditionally independent given (a set of) other indicators that load on this factor, as this would require one of the indicators that is conditioned on to correlate one with the latent factor. Although partial correlations between two indicators given the other indicators can thus never equal zero (Holland and Rosenbaum, 1986), we show in this paper that the partial correlations do need to be always weaker than the zero-order correlations. More precisely, we prove that the partial correlation between two observed variables that load on one factor given all other observed variables that load on this factor, is always closer to zero than the zero-order correlation between these two variables.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-11T14:51:58Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <arxiv:journal_ref>Psychometrika 83 (2018) 443-452</arxiv:journal_ref>
+    <author>
+      <name>Riet van Bork</name>
+    </author>
+    <author>
+      <name>Raoul P. P. P. Grasman</name>
+    </author>
+    <author>
+      <name>Lourens J. Waldorp</name>
+    </author>
+    <arxiv:doi>10.1007/s11336-018-9607-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11336-018-9607-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.2004v2</id>
+    <title>Refinement of Two-Factor Factorizations of a Linear Partial Differential Operator of Arbitrary Order and Dimension</title>
+    <updated>2010-10-12T15:42:26Z</updated>
+    <link href="https://arxiv.org/abs/1001.2004v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.2004v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a right factor and a left factor of a Linear Partial Differential Operator (LPDO), under which conditions we can refine these two-factor factorizations into one three-factor factorization? This problem is solved for LPDOs of arbitrary order and number of variables. A more general result for the incomplete factorizations of LPDOs is proved as well.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-12T21:39:01Z</published>
+    <arxiv:comment>The final publication is available at http://www.springerlink.com</arxiv:comment>
+    <arxiv:primary_category term="math.AP"/>
+    <author>
+      <name>Ekaterina Shemyakova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.13913v1</id>
+    <title>AlphaSeek: Trajectory-Level Self-Iterative Factor Mining Framework for Multi-Source Financial Data</title>
+    <updated>2026-08-14T03:34:36Z</updated>
+    <link href="https://arxiv.org/abs/2608.13913v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.13913v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the rapid rise of large language models, LLM-driven quantitative factor mining has become an increasingly active research area. However, existing methods still suffer from subjective direction design, limited integration of up-to-date multi-source information, semantic drift, factor redundancy, and the absence of an end-to-end feedback loop from factor discovery to portfolio backtesting. To address these limitations, we propose AlphaSeek, an end-to-end factor mining framework for quantitative investment that integrates automated direction discovery, trajectory-level factor evolution mining and self-iterative portfolio optimization. AlphaSeek first collects and summarizes multi-source financial information to identify promising mining directions. It then performs trajectory-level factor mining by extending the optimization unit from a single factor expression to a complete research trajectory covering hypothesis generation, factor construction, validation, backtesting, and feedback. Based on this design, we introduce evolution operators - parallel direction expansion, mutation and crossover - to improve search diversity, refinement quality and factor robustness. Finally, AlphaSeek constructs a self-iterative factor portfolio, allowing newly discovered factors to interact with an existing state-of-the-art(SOTA) factor library under redundancy-aware constraints. Experiments on CSI300 show that AlphaSeek achieves the strongest overall strategy-level performance on CSI300 with ARR of 8.28%, IR of 1.29 and MDD of 6.28%, while remaining competitive on factor predictive metrics with IC of 0.0454, while factors mined on CSI300 also achieve strong time-series return performance on CSI500 than other models, suggesting promising cross-market transferability under a zero-shot setting.</summary>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T03:34:36Z</published>
+    <arxiv:primary_category term="cs.CE"/>
+    <author>
+      <name>Qilu Zhu</name>
+    </author>
+    <author>
+      <name>Zijun Lu</name>
+    </author>
+    <author>
+      <name>Jianmin Zhu</name>
+    </author>
+    <author>
+      <name>Ning Chen</name>
+    </author>
+    <author>
+      <name>Shuo Yin</name>
+    </author>
+    <author>
+      <name>Simon Fong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1002.1033v1</id>
+    <title>Pseudo and Strongly Pseudo 2--Factor Isomorphic Regular Graphs</title>
+    <updated>2010-02-04T16:26:48Z</updated>
+    <link href="https://arxiv.org/abs/1002.1033v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1002.1033v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A graph $G$ is pseudo 2--factor isomorphic if the parity of the number of cycles in a 2--factor is the same for all 2--factors of $G$. In \cite{ADJLS} we proved that pseudo 2--factor isomorphic $k$--regular bipartite graphs exist only for $k \le 3$. In this paper we generalize this result for regular graphs which are not necessarily bipartite. We also introduce strongly pseudo 2--factor isomorphic graphs and we prove that pseudo and strongly pseudo 2--factor isomorphic 2k--regular graphs and $k$--regular digraphs do not exist for $k\geq 4$. Moreover, we present constructions of infinite families of regular graphs in these classes. In particular we show that the family of Flower snarks is strongly pseudo 2--factor isomorphic but not 2--factor isomorphic and we conjecture that, together with the Petersen and the Blanuša2 graphs, they are the only cyclically 4--edge--connected snarks for which each 2--factor contains only cycles of odd length.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-02-04T16:26:48Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Eur. J. Combin. 33(8) (2012) 1847--1856</arxiv:journal_ref>
+    <author>
+      <name>M. Abreu</name>
+    </author>
+    <author>
+      <name>D. Labbate</name>
+    </author>
+    <author>
+      <name>J. Sheehan</name>
+    </author>
+    <arxiv:doi>10.1016/j.ejc.2012.05.002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ejc.2012.05.002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.12990v1</id>
+    <title>A Review of Bayesian Methods for Infinite Factorisations</title>
+    <updated>2023-09-22T16:42:08Z</updated>
+    <link href="https://arxiv.org/abs/2309.12990v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.12990v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Defining the number of latent factors has been one of the most challenging problems in factor analysis. Infinite factor models offer a solution to this problem by applying increasing shrinkage on the columns of factor loading matrices, thus penalising increasing factor dimensionality. The adaptive MCMC algorithms used for inference in such models allow to defer the dimension of the latent factor space automatically based on the data. This paper presents an overview of Bayesian models for infinite factorisations with some discussion on the properties of such models as well as their comparative advantages and drawbacks.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-22T16:42:08Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Margarita Grushanina</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.02002v3</id>
+    <title>Factor Augmented Sparse Throughput Deep ReLU Neural Networks for High Dimensional Regression</title>
+    <updated>2023-10-11T21:14:07Z</updated>
+    <link href="https://arxiv.org/abs/2210.02002v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.02002v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces a Factor Augmented Sparse Throughput (FAST) model that utilizes both latent factors and sparse idiosyncratic components for nonparametric regression. The FAST model bridges factor models on one end and sparse nonparametric models on the other end. It encompasses structured nonparametric models such as factor augmented additive models and sparse low-dimensional nonparametric interaction models and covers the cases where the covariates do not admit factor structures. Via diversified projections as estimation of latent factor space, we employ truncated deep ReLU networks to nonparametric factor regression without regularization and to a more general FAST model using nonconvex regularization, resulting in factor augmented regression using neural network (FAR-NN) and FAST-NN estimators respectively. We show that FAR-NN and FAST-NN estimators adapt to the unknown low-dimensional structure using hierarchical composition models in nonasymptotic minimax rates. We also study statistical learning for the factor augmented sparse additive model using a more specific neural network architecture. Our results are applicable to the weak dependent cases without factor structures. In proving the main technical result for FAST-NN, we establish a new deep ReLU network approximation result that contributes to the foundation of neural network theory. Our theory and methods are further supported by simulation studies and an application to macroeconomic data.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-05T03:26:02Z</published>
+    <arxiv:comment>JASA, 81 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Jianqing Fan</name>
+    </author>
+    <author>
+      <name>Yihong Gu</name>
+    </author>
+    <arxiv:doi>10.1080/01621459.2023.2271605</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/01621459.2023.2271605" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.10352v4</id>
+    <title>On the dimensional indeterminacy of one-wave factor analysis under causal effects</title>
+    <updated>2022-04-15T00:56:49Z</updated>
+    <link href="https://arxiv.org/abs/2001.10352v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.10352v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is shown, with two sets of indicators that separately load on two distinct factors, independent of one another conditional on the past, that if it is the case that at least one of the factors causally affects the other, then, in many settings, the process will converge to a factor model in which a single factor will suffice to capture the covariance structure among the indicators. Factor analysis with one wave of data can then not distinguish between factor models with a single factor versus those with two factors that are causally related. Therefore, unless causal relations between factors can be ruled out a priori, alleged empirical evidence from one-wave factor analysis for a single factor still leaves open the possibilities of a single factor or of two factors that causally affect one another. The implications for interpreting the factor structure of psychological scales, such as self-report scales for anxiety and depression, or for happiness and purpose, are discussed. The results are further illustrated through simulations to gain insight into the practical implications of the results in more realistic settings prior to the convergence of the processes. Some further generalizations to an arbitrary number of underlying factors are noted.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-28T14:27:02Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Tyler J. VanderWeele</name>
+    </author>
+    <author>
+      <name>Charles J. K. Batty</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.02384v2</id>
+    <title>Class-closing factor codes and constant-class-to-one factor codes from shifts of finite type</title>
+    <updated>2015-01-29T13:12:40Z</updated>
+    <link href="https://arxiv.org/abs/1501.02384v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.02384v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We define class-closing factor codes from shifts of finite type and show that they are continuing if their images are of finite type. We establish several relations between class-closing factor codes, continuing factor codes and constant-class-to-one factor codes. In particular it is shown that a factor code between irreducible shifts of finite type is constant-class-to-one if and only if it is bi-class-closing, generalizing a result of Nasu.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-10T19:03:07Z</published>
+    <arxiv:comment>submitted</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Mahsa Allahbakhshi</name>
+    </author>
+    <author>
+      <name>Soonjo Hong</name>
+    </author>
+    <author>
+      <name>Uijin Jung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.06459v1</id>
+    <title>Sparse Bayesian factor analysis when the number of factors is unknown</title>
+    <updated>2023-01-16T15:02:31Z</updated>
+    <link href="https://arxiv.org/abs/2301.06459v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.06459v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There has been increased research interest in the subfield of sparse Bayesian factor analysis with shrinkage priors, which achieve additional sparsity beyond the natural parsimonity of factor models. In this spirit, we estimate the number of common factors in the highly implemented sparse latent factor model with spike-and-slab priors on the factor loadings matrix. Our framework leads to a natural, efficient and simultaneous coupling of model estimation and selection on one hand and model identification and rank estimation (number of factors) on the other hand. More precisely, by embedding the unordered generalized lower triangular loadings representation into overfitting sparse factor modelling, we obtain posterior summaries regarding factor loadings, common factors as well as the factor dimension via postprocessing draws from our efficient and customized Markov chain Monte Carlo scheme.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-16T15:02:31Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1804.04231</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Sylvia Frühwirth-Schnatter</name>
+    </author>
+    <author>
+      <name>Darjus Hosszejni</name>
+    </author>
+    <author>
+      <name>Hedibert Freitas Lopes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1510.01298v1</id>
+    <title>A note on structured means analysis for a single group</title>
+    <updated>2015-10-05T19:37:21Z</updated>
+    <link href="https://arxiv.org/abs/1510.01298v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1510.01298v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The calculation of common factor means in structured means analysis (SMM) is considered. The SMM equations imply that the unique factors are defined as having zero means. It was shown within the one factor solution that this definition implies larger absolute common factor loadings to co-occur with larger absolute expectations of the observed variables in the single group case. This result was illustrated by means of a small simulation study. It is argued that the proportionality of factor loadings and observed means should be critically examined in the context of SMM. It is recommended that researchers should freely estimate the observed expectations, whenever, the proportionality of loadings and observed means does not make sense. It was also shown that for a given size of observed expectations, smaller common factor loadings result in larger common factor mean estimates. It should therefore be checked whether variables with very small factor loadings occur when SMM results in very large absolute common factor means.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-05T19:37:21Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Andre Beauducel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.06667v1</id>
+    <title>Structured risk model</title>
+    <updated>2023-11-11T21:18:33Z</updated>
+    <link href="https://arxiv.org/abs/2311.06667v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.06667v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Income and risk coexist, yet investors are often so focused on chasing high returns that they overlook the potential risks that can lead to high losses. Therefore, risk forecasting and risk control is the cornerstone of investment. To address the challenge, we construct a multi-factor risk model on the basis of the classical multi-factor modeling framework. For the common factors, inspired by Barra Model's factor classification. we adjust the outliers and missing values of factor exposure data, normalize and finally orthogonalize them, before computing factor returns and making further analysis. Factor return covariance matrix and idiosyncratic return variance matrix are essential tools to express stock returns in the multi-factor risk model. Firstly, we calculate the factor return covariance matrix with EWMA. To tackle the time-series autocorrelation of factor returns, we apply Newey-West adjustment. Then we estimate the idiosyncratic return variance matrix in a similar way and make Newey-West adjustment again to solve the time-series autocorrelation problem. Since the return of a single share is sensitive to missing values and outliers, we introduce structural adjustment to improve the matrix.Eventually, we obtain the return covariance matrix among stocks and compute the risk of investment portfolio based on it. Furthermore, we search for optimal portfolio with respect to minimizing risk or maximizing risk-adjusted return with our model. They provide good Sharpe ratio and information ratio for considering both absolute risk and active risk. Hence, the multi-factor risk model is efficient.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-11T21:18:33Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Xinyuan Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0704.2065v1</id>
+    <title>Comment on "NMR Experiment Factors Numbers with Gauss Sums"</title>
+    <updated>2007-04-16T20:00:42Z</updated>
+    <link href="https://arxiv.org/abs/0704.2065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0704.2065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Mehring et al. have recently described an elegant nuclear magnetic resonance (NMR) experiment implementing an algorithm to factor numbers based on the properties of Gauss sums. Similar experiments have also been described by Mahesh et al. In fact these algorithms do not factor numbers directly, but rather check whether a trial integer $\ell$ is a factor of a given integer $N$. Here I show that these NMR schemes cannot be used for factor checking without first implicitly determining whether or not $\ell$ is a factor of $N$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-04-16T20:00:42Z</published>
+    <arxiv:comment>1 page RevTex4; submitted to PRL</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>J. A. Jones</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/9506103v1</id>
+    <title>The Metallicity Dependence of the CO-to-H$_2$ Conversion Factor from Observations of Local Group Galaxies</title>
+    <updated>1995-06-20T13:27:12Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/9506103v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/9506103v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  High-resolution CO maps of 9 molecular clouds in IC 10 are combined with the new measurement of the distance to this nearby metal poor galaxy to measure accurately the CO-to-H2 conversion factor. The result for IC 10 is combined with published data for four other Local Group galaxies (M31, M33, NGC 6822, the SMC) to trace the dependence of the CO-to-H2 conversion factor on oxygen abundance. These data show conclusively that the CO-to-H$_2$ conversion factor increases as the metallicity of the host galaxy decreases, with the conversion factor increasing by a factor of 4.6 for a factor of 10 decrease in metallicity.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1995-06-20T13:27:12Z</published>
+    <arxiv:comment>16 pages (including 2 figures), uuencoded compressed postscript file. Accepted in ApJ Letters</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <arxiv:journal_ref>Astrophys.J.448:L97,1995</arxiv:journal_ref>
+    <author>
+      <name>C. D. Wilson</name>
+    </author>
+    <arxiv:doi>10.1086/309615</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1086/309615" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.07369v1</id>
+    <title>The hyperfinite II$_1$-factor is Ulam stable</title>
+    <updated>2026-06-05T15:11:13Z</updated>
+    <link href="https://arxiv.org/abs/2606.07369v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.07369v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove Ulam stability of the hyperfinite II$_1$-factor with respect to the trace norm on the operator-norm unit ball. More precisely, every sufficiently additive, multiplicative, unital, $*$-preserving map from the hyperfinite II$_1$-factor-factor into a II$_1$-factor-factor von Neumann algebra is uniformly close, after passing to a small amplification of the target, to a genuine unital $*$-homomorphism. As a key finite-dimensional ingredient, we establish a dimension-free stability theorem for matrix algebras in the same trace-norm setting.
+  As an application, we show that the hyperfinite II$_1$-factor is isolated among II$_1$-factors with respect to sufficiently accurate approximate $*$-isomorphisms.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-05T15:11:13Z</published>
+    <arxiv:comment>32 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <author>
+      <name>Vadim Alekseev</name>
+    </author>
+    <author>
+      <name>Andreas Thom</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.00794v1</id>
+    <title>On The Study Of D-Optimal Saturated Designs For Mean, Main Effects and $F_1$-Two-Factor Interactions For $2^k$-Factorial Experiments</title>
+    <updated>2019-11-02T22:30:01Z</updated>
+    <link href="https://arxiv.org/abs/1911.00794v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.00794v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The goal of this paper is to develop methods for the construction of saturated designs that include the mean, main effects and the two-factor interactions of one factor with a subset of the remaining factors. If one factor is interacting with all the remaining factors give a method for the construction of a d-optimal saturated design. If one factor is interacting with a proper subset of the remaining factor we discuss the saturated d-optimal design for specific cases.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-02T22:30:01Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Francois K Domagni</name>
+    </author>
+    <author>
+      <name>A. S. Hedayat</name>
+    </author>
+    <author>
+      <name>Bikas Kumar Sinha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.01844v1</id>
+    <title>Mortality Forecasting using Factor Models: Time-varying or Time-invariant Factor Loadings?</title>
+    <updated>2021-02-03T02:28:16Z</updated>
+    <link href="https://arxiv.org/abs/2102.01844v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.01844v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many existing mortality models follow the framework of classical factor models, such as the Lee-Carter model and its variants. Latent common factors in factor models are defined as time-related mortality indices (such as $κ_t$ in the Lee-Carter model). Factor loadings, which capture the linear relationship between age variables and latent common factors (such as $β_x$ in the Lee-Carter model), are assumed to be time-invariant in the classical framework. This assumption is usually too restrictive in reality as mortality datasets typically span a long period of time. Driving forces such as medical improvement of certain diseases, environmental changes and technological progress may significantly influence the relationship of different variables. In this paper, we first develop a factor model with time-varying factor loadings (time-varying factor model) as an extension of the classical factor model for mortality modelling. Two forecasting methods to extrapolate the factor loadings, the local regression method and the naive method, are proposed for the time-varying factor model. From the empirical data analysis, we find that the new model can capture the empirical feature of time-varying factor loadings and improve mortality forecasting over different horizons and countries. Further, we propose a novel approach based on change point analysis to estimate the optimal `boundary' between short-term and long-term forecasting, which is favoured by the local linear regression and naive method, respectively. Additionally, simulation studies are provided to show the performance of the time-varying factor model under various scenarios.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-03T02:28:16Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Lingyu He</name>
+    </author>
+    <author>
+      <name>Fei Huang</name>
+    </author>
+    <author>
+      <name>Jianjie Shi</name>
+    </author>
+    <author>
+      <name>Yanrong Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.08475v1</id>
+    <title>Factor risk measures</title>
+    <updated>2024-04-12T13:49:07Z</updated>
+    <link href="https://arxiv.org/abs/2404.08475v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.08475v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces and studies factor risk measures. While risk measures only rely on the distribution of a loss random variable, in many cases risk needs to be measured relative to some major factors. In this paper, we introduce a double-argument mapping as a risk measure to assess the risk relative to a vector of factors, called factor risk measure. The factor risk measure only depends on the joint distribution of the risk and the factors. A set of natural axioms are discussed, and particularly distortion, quantile, linear and coherent factor risk measures are introduced and characterized. Moreover, we introduce a large set of concrete factor risk measures and many of them are new to the literature, which are interpreted in the context of regulatory capital requirement. Finally, the distortion factor risk measures are applied in the risk-sharing problem and some numerical examples are presented to show the difference between the Value-at-Risk and the quantile factor risk measures.</summary>
+    <category term="q-fin.MF" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-12T13:49:07Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="q-fin.MF"/>
+    <author>
+      <name>Hirbod Assa</name>
+    </author>
+    <author>
+      <name>Peng Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.07294v1</id>
+    <title>Factor Strength Estimation in Vector and Matrix Time Series Factor Models</title>
+    <updated>2024-05-12T14:27:42Z</updated>
+    <link href="https://arxiv.org/abs/2405.07294v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.07294v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most factor modelling research in vector or matrix-valued time series assume all factors are pervasive/strong and leave weaker factors and their corresponding series to the noise. Weaker factors can in fact be important to a group of observed variables, for instance a sector factor in a large portfolio of stocks may only affect particular sectors, but can be important both in interpretations and predictions for those stocks. While more recent factor modelling researches do consider ``local'' factors which are weak factors with sparse corresponding factor loadings, there are real data examples in the literature where factors are weak because of weak influence on most/all observed variables, so that the corresponding factor loadings are not sparse (non-local). As a first in the literature, we propose estimators of factor strengths for both local and non-local weak factors, and prove their consistency with rates of convergence spelt out for both vector and matrix-valued time series factor models. Factor strength has an important indication in what estimation procedure of factor models to follow, as well as the estimation accuracy of various estimators (Chen and Lam, 2024). Simulation results show that our estimators have good performance in recovering the true factor strengths, and an analysis on the NYC taxi traffic data indicates the existence of weak factors in the data which may not be localized.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-12T14:27:42Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Weilin Chen</name>
+    </author>
+    <author>
+      <name>Clifford Lam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.07734v2</id>
+    <title>The stability of the greybody factor of Hayward black hole</title>
+    <updated>2025-02-06T03:11:01Z</updated>
+    <link href="https://arxiv.org/abs/2411.07734v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.07734v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this study, we investigate the stability of the greybody factor of Hayward black holes by adding a small bump to the effective potential. Since the greybody factor depends on frequency, we introduce the $\mathcal{G}$-factor and $\mathcal{H}$-factor to quantitatively characterize its stability. We study the stability of the greybody factor within the equal amplitude method and the equal energy method, respectively. Here, the equal amplitude method can be directly imposed by fixing the amplitude of the bump, while the equal energy method requires a physical definition of the energy of the bump with the assistance of hyperboloidal framework. For both methods, when the location of the bump is close to the event horizon of the black hole, and the closer it is to the peak of the original potential, the larger are $\mathcal{G}$-factor and $\mathcal{H}$-factor, and they are bounded by the magnitude of the amplitude or the energy. More importantly, for the equal amplitude method, two factors tend to a specific value as the location of the bump increases. In contrast, for the equal energy method, two factors converge to zero as the location of the bump increases. Notably, the $\mathcal{G}$-factor and the $\mathcal{H}$-factor are insensitive to the regular parameter of Hayward black hole. Therefore, our results indicate that the greybody factor is stable under specific perturbations.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-12T11:47:24Z</published>
+    <arxiv:comment>17 pages, 10 figures and 1 table. Typos are corrected, discussion is improved. This manuscript has been accepted for publication as a regular article in PRD</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Liang-Bi Wu</name>
+    </author>
+    <author>
+      <name>Rong-Gen Cai</name>
+    </author>
+    <author>
+      <name>Libo Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.14186v1</id>
+    <title>Improved, Extended, and Total Impact Factor of a Journal</title>
+    <updated>2021-05-27T00:11:12Z</updated>
+    <link href="https://arxiv.org/abs/2105.14186v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.14186v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this short paper we recall the (Garfield) Impact Factor of a Journal, we improve and extend it, and eventually we present the Total Impact Factor that reflects the most accurate impact factor.</summary>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-27T00:11:12Z</published>
+    <arxiv:comment>5 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DL"/>
+    <author>
+      <name>Florentin Smarandache</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.00589v3</id>
+    <title>Observation of gigantic spin conversion anisotropy in bismuth</title>
+    <updated>2022-08-15T04:32:34Z</updated>
+    <link href="https://arxiv.org/abs/2208.00589v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.00589v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Whilst the g-factor can be anisotropic due to the spin-orbit interaction (SOI), its existence in solids cannot be simply asserted from a band structure, which hinders progress on studies from such the viewpoints. The g-factor in bismuth (Bi) is largely anisotropic; especially for holes at T-point, the g-factor perpendicular to the trigonal axis is negligibly small (&lt; 0.112), whereas the g-factor along the trigonal axis is very large (62.7). We clarified in this work that the large g- factor anisotropy gives rise to the gigantic spin conversion anisotropy in Bi from experimental and theoretical approaches. Spin-torque ferromagnetic resonance was applied to estimate the spin conversion efficiency in rhombohedral (110) Bi to be 17%, which is unlike the negligibly small efficiency in Bi(111). Harmonic Hall measurements supports the large spin conversion efficiency in Bi(110). This is the first observation of gigantic spin conversion anisotropy as the clear manifestation of the g-factor anisotropy. Beyond the emblematic case of Bi, our study unveiled the significance of the g-factor anisotropy in condensed-matter physics and can pave a pathway toward establishing novel spin physics under g-factor control.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-01T03:25:49Z</published>
+    <arxiv:comment>28 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <arxiv:journal_ref>PNAS 120, e2215030120 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Naoki Fukumoto</name>
+    </author>
+    <author>
+      <name>Ryo Ohshima</name>
+    </author>
+    <author>
+      <name>Motomi Aoki</name>
+    </author>
+    <author>
+      <name>Yuki Fuseya</name>
+    </author>
+    <author>
+      <name>Masayuki Matsushima</name>
+    </author>
+    <author>
+      <name>Ei Shigematsu</name>
+    </author>
+    <author>
+      <name>Teruya Shinjo</name>
+    </author>
+    <author>
+      <name>Yuichiro Ando</name>
+    </author>
+    <author>
+      <name>Shoya Sakamoto</name>
+    </author>
+    <author>
+      <name>Masanobu Shiga</name>
+    </author>
+    <author>
+      <name>Shinji Miwa</name>
+    </author>
+    <author>
+      <name>Masashi Shiraishi</name>
+    </author>
+    <arxiv:doi>10.1073/pnas.2215030120</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1073/pnas.2215030120" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.00448v2</id>
+    <title>Decomposition of infinite-to-one factor codes and uniqueness of relative equilibrium states</title>
+    <updated>2018-02-01T13:44:02Z</updated>
+    <link href="https://arxiv.org/abs/1705.00448v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.00448v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that an arbitrary factor map $π:X \to Y$ on an irreducible subshift of finite type is a composition of a finite-to-one factor code and a class degree one factor code. Using this structure theorem on infinite-to-one factor codes, we then prove that any equilibrium state $ν$ on $Y$ for a potential function of sufficient regularity lifts to a unique measure of maximal relative entropy on $X$. This answers a question raised by Boyle and Petersen (for lifts of Markov measures) and generalizes the earlier known special case of finite-to-one factor codes.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-01T08:57:20Z</published>
+    <arxiv:comment>to be published in Journal of Modern Dynamics. inclusion of acknowledgements</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Jisang Yoo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.3940v1</id>
+    <title>3-Factor-criticality of vertex-transitive graphs</title>
+    <updated>2012-12-17T09:17:37Z</updated>
+    <link href="https://arxiv.org/abs/1212.3940v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.3940v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A graph of order $n$ is $p$-factor-critical, where $p$ is an integer of the same parity as $n$, if the removal of any set of $p$ vertices results in a graph with a perfect matching. 1-Factor-critical graphs and 2-factor-critical graphs are factor-critical graphs and bicritical graphs, respectively. It is well known that every connected vertex-transitive graph of odd order is factor-critical and every connected non-bipartite vertex-transitive graph of even order is bicritical. In this paper, we show that a simple connected vertex-transitive graph of odd order at least 5 is 3-factor-critical if and only if it is not a cycle.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-17T09:17:37Z</published>
+    <arxiv:comment>15 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Heping Zhang</name>
+    </author>
+    <author>
+      <name>Wuyang Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.12067v1</id>
+    <title>Evolution of safety factor profiles in sawteeth</title>
+    <updated>2020-04-25T06:35:49Z</updated>
+    <link href="https://arxiv.org/abs/2004.12067v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.12067v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Two different definitions of the safety factor are applied to investigate the evolution of the safety factor profile during normal sawteeth, the stationary state, and the incomplete reconnection. It is found that the safety factor profiles from the old definition are sometimes inconsistent with the Poincare plots of the magnetic field during sawteeth. The old safety factor always indicates that the safety factor around the magnetic axis is flattened and equal to 1.0 with the development of the kink instability. However, the Poincare plots of the magnetic field lines indicate that the topology of the magnetic field around the magnetic axis has not been changed. To solve the inconsistency, we propose a new definition of the safety factor, in which the poloidal angle relative to the new twisted magnetic axis is used instead of the poloidal angle to the original axis. With the new definition, the safety factor profiles are consistent with Poincare plots of the magnetic field. We also find that the safety factor profiles are significantly different from the two different q definitions. With the new q definition, the safety factor at the magnetic axis q0 remains unchanged in almost the entire period of a sawtooth and jumps up to 1.0 near the end during normal sawteeth; in the non-axisymmetric equilibrium, q0 is still far below 1.0; q0 remains its initial value throughout the incomplete reconnection.</summary>
+    <category term="physics.plasm-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-25T06:35:49Z</published>
+    <arxiv:comment>18 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.plasm-ph"/>
+    <author>
+      <name>W. Zhang</name>
+    </author>
+    <author>
+      <name>Z. W. Ma</name>
+    </author>
+    <author>
+      <name>H. W. Zhang</name>
+    </author>
+  </entry>
+</feed>

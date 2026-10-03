@@ -1,0 +1,655 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/vEKhH/kyLlVNGi4XR9kcUi/t/us</id>
+  <title>arXiv Query: search_query=abs:"post-quantum" AND abs:factoring AND abs:"classical"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:26Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22post-quantum%22+AND+(abs:factoring+AND+abs:%22classical%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>30</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2602.16922v1</id>
+    <title>A Conceptual Hybrid Framework for Post-Quantum Security: Integrating BB84 QKD, AES, and Bio-inspired Mechanisms</title>
+    <updated>2026-01-31T19:40:01Z</updated>
+    <link href="https://arxiv.org/abs/2602.16922v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.16922v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing is a significant risk to classical cryptographic, especially RSA, which depends on the difficulty of factoring large numbers. Classical factorization methods, such as Trial Division and Pollard's Rho, are inefficient for large keys, while Shor's quantum algorithm can break RSA efficiently in polynomial time. This research studies RSA's vulnerabilities under both classical and quantum attacks and designs a hybrid security framework to ensure data protection in the post-quantum era. The conceptual framework combines AES encryption for classical security, BB84 Quantum Key Distribution (QKD) for secure key exchange with eavesdropping detection, quantum state comparison for lightweight authentication, and a bio-inspired immune system for adaptive threat detection. RSA is vulnerable to Shor's algorithm, BB84 achieves full key agreement in ideal conditions, and it detects eavesdropping with high accuracy. The conceptual model includes both classical and quantum security methods, providing a scalable and adaptive solution for Post-Quantum encryption data protection. This work primarily proposes a conceptual framework. Detailed implementation, security proofs, and extensive experimental validation are considered future work.</summary>
+    <category term="cs.OH" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-31T19:40:01Z</published>
+    <arxiv:primary_category term="cs.OH"/>
+    <author>
+      <name>Md. Ismiel Hossen Abir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.02826v1</id>
+    <title>Post Quantum Cryptography: Techniques, Challenges, Standardization, and Directions for Future Research</title>
+    <updated>2022-02-06T18:12:54Z</updated>
+    <link href="https://arxiv.org/abs/2202.02826v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.02826v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The development of large quantum computers will have dire consequences for cryptography. Most of the symmetric and asymmetric cryptographic algorithms are vulnerable to quantum algorithms. Grover's search algorithm gives a square root time boost for the searching of the key in symmetric schemes like AES and 3DES. The security of asymmetric algorithms like RSA, Diffie Hellman, and ECC is based on the mathematical hardness of prime factorization and discrete logarithm. The best classical algorithms available take exponential time. Shor's factoring algorithm can solve the problems in polynomial time. Major breakthroughs in quantum computing will render all the present-day widely used asymmetric cryptosystems insecure. This paper analyzes the vulnerability of the classical cryptosystems in the context of quantum computers discusses various post-quantum cryptosystem families, discusses the status of the NIST post-quantum cryptography standardization process, and finally provides a couple of future research directions in this field.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-06T18:12:54Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ritik Bavdekar</name>
+    </author>
+    <author>
+      <name>Eashan Jayant Chopde</name>
+    </author>
+    <author>
+      <name>Ashutosh Bhatia</name>
+    </author>
+    <author>
+      <name>Kamlesh Tiwari</name>
+    </author>
+    <author>
+      <name>Sandeep Joshua Daniel</name>
+    </author>
+    <author>
+      <name> Atul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1409.2187v1</id>
+    <title>A Note on Quantum Security for Post-Quantum Cryptography</title>
+    <updated>2014-09-08T02:01:07Z</updated>
+    <link href="https://arxiv.org/abs/1409.2187v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1409.2187v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's quantum factoring algorithm and a few other efficient quantum algorithms break many classical crypto-systems. In response, people proposed post-quantum cryptography based on computational problems that are believed hard even for quantum computers. However, security of these schemes against \emph{quantum} attacks is elusive. This is because existing security analysis (almost) only deals with classical attackers and arguing security in the presence of quantum adversaries is challenging due to unique quantum features such as no-cloning.
+  This work proposes a general framework to study which classical security proofs can be restored in the quantum setting. Basically, we split a security proof into (a sequence of) classical security reductions, and investigate what security reductions are "quantum-friendly". We characterize sufficient conditions such that a classical reduction can be "lifted" to the quantum setting. We then apply our lifting theorems to post-quantum signature schemes. We are able to show that the classical generic construction of hash-tree based signatures from one-way functions and and a more efficient variant proposed in~\cite{BDH11} carry over to the quantum setting. Namely, assuming existence of (classical) one-way functions that are resistant to efficient quantum inversion algorithms, there exists a quantum-secure signature scheme. We note that the scheme in~\cite{BDH11} is a promising (post-quantum) candidate to be implemented in practice and our result further justifies it. Finally we demonstrate the generality of our framework by showing that several existing works (Full-Domain hash in the quantum random-oracle model~\cite{Zha12ibe} and the simple hybrid arguments framework in~\cite{HSS11}) can be reformulated under our unified framework.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-09-08T02:01:07Z</published>
+    <arxiv:comment>To appear in PQCrypto2014. Same content with different formatting</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Fang Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.01026v3</id>
+    <title>Generalized Uncertainty Principles for Quantum Cryptography</title>
+    <updated>2023-02-19T13:33:42Z</updated>
+    <link href="https://arxiv.org/abs/2302.01026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.01026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We know the classical public cryptographic algorithms are based on certain NP-hard problems such as the integer factoring in RSA and the discrete logarithm in Diffie-Hellman. They are going to be vulnerable with fault-tolerant quantum computers. We also know that the uncertainty principle for quantum bits or qubits such as quantum key distribution or QKD based on the quantum uncertainty principle offers the information theoretical security. The interesting implication with the paradigm shifts from classical computing to quantum computing is that the NP-hardness used for classical cryptography may shift to the uncertainty principles for quantum cryptography including quantum symmetric encryption, post-quantum cryptography, as well as quantum encryption in phase space for coherent optical communications. This paper would like to explore those so-called generalized uncertainty principles and explain what their implications are for quantum security. We identified three generalized uncertainty principles offering quantum security: non-commutability between permutation gates, non-commutability between the displacement and phase shift operators for coherent states, and the modular Diophantine Equation Problem in general linear algebra for post-quantum cryptography.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-02T11:40:32Z</published>
+    <arxiv:comment>7 pages, 5 figures, conference invited speech at ICCCAS, then to be published by JCM</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Randy Kuang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16355v3</id>
+    <title>Integer Factorization via Tensor Network Schnorr's Sieving</title>
+    <updated>2026-01-26T21:21:04Z</updated>
+    <link href="https://arxiv.org/abs/2410.16355v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16355v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical public-key cryptography standards rely on the Rivest-Shamir-Adleman (RSA) encryption protocol. The security of this protocol is based on the exponential computational complexity of the most efficient classical algorithms for factoring large semiprime numbers into their two prime components. Here, we address RSA factorization building on Schnorr's mathematical framework where factorization translates into a combinatorial optimization problem. We solve the optimization task via tensor network methods, a quantum-inspired classical numerical technique. This tensor network Schnorr's sieving algorithm displays numerical evidence of polynomial scaling of resources with the bit-length of the semiprime. We factorize RSA numbers up to 100 bits and assess how computational resources scale through numerical simulations up to 130 bits, encoding the optimization problem in quantum systems with up to 256 qubits. Only the high-order polynomial scaling of the required resources limits the factorization of larger numbers. Although these results do not currently undermine the security of the present communication infrastructure, they strongly highlight the urgency of implementing post-quantum cryptography or quantum key distribution.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T18:00:00Z</published>
+    <arxiv:comment>Accepted version. Change title, implement review suggestions and comment, and improve statistical analysis of the resource scaling</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Phys. Rev. A 113, 032418 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Marco Tesoro</name>
+    </author>
+    <author>
+      <name>Ilaria Siloi</name>
+    </author>
+    <author>
+      <name>Daniel Jaschke</name>
+    </author>
+    <author>
+      <name>Giuseppe Magnifico</name>
+    </author>
+    <author>
+      <name>Simone Montangero</name>
+    </author>
+    <arxiv:doi>10.1103/d9dl-ctt4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/d9dl-ctt4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.01586v3</id>
+    <title>Post-Quantum Key Agreement Protocol based on Non-Square Integer Matrices</title>
+    <updated>2023-01-22T14:56:44Z</updated>
+    <link href="https://arxiv.org/abs/2301.01586v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.01586v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present in this paper an algorithm for exchanging session keys, coupled with a hashing encryption module. We show schemes designed for their potential invulnerability to classical and quantum attacks. In turn, if the parameters included were appropriate, brute-force attacks exceed the (five) security levels used in the NIST competition of new post-quantum standards. The original idea consists of products of rectangular matrices in Zp as public values and whose factorization is proved to be an NP-complete problem. We present running times as a function of the explored parameters and their link with operational safety. To our knowledge there are no classical and quantum attacks of polynomial complexity available at hand, remaining only the systematic exploration of the private-key space.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-04T13:03:15Z</published>
+    <arxiv:comment>12 pages, 2 tables, 29 references</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hugo Daniel Scolnik</name>
+    </author>
+    <author>
+      <name>Juan Pedro Hecht</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.13138v1</id>
+    <title>A Commitment-Based Hybrid Post-Quantum Cryptographic Model for Multi-File Cloud Storage</title>
+    <updated>2026-08-13T12:14:54Z</updated>
+    <link href="https://arxiv.org/abs/2608.13138v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.13138v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cloud storage clients increasingly require authentication that remains secure against future quantum-capable adversaries, motivating hybrid constructions that combine classical primitives with standardized post-quantum alternatives. Extended naively to multi-file upload, such constructions incur a per-file lattice signing cost that dominates authentication time and becomes prohibitive at realistic batch sizes. This paper presents a commitment-based hybrid post-quantum model that addresses this bottleneck. It comprises AES-256-GCM bulk encryption, a hybrid X25519 with ML-KEM-768 key encapsulation mechanism, and a hybrid Ed25519 with ML-DSA-65 dual signature, computed over a SHA3-256 batch commitment. The commitment binds all ciphertexts in a batch to a single fixed-size digest that is signed once, reducing the number of post-quantum signature invocations per batch from n to one, independent of batch size; the remaining encryption and hashing is bounded by fast symmetric throughput. On a commodity client platform, averaged over 20 repetitions, this holds signing-phase time near-constant as the batch grows while the per-file baseline scales linearly. At n = 1000, the model reduces signing-phase time by factors of 629, 606, and 725 for 100 KB, 1 MB, and 10 MB files respectively, against a per-file dual-signing baseline sharing every other primitive.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T12:14:54Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Lemdi Frank Prikutse</name>
+    </author>
+    <author>
+      <name>Regina Esi Turkson</name>
+    </author>
+    <author>
+      <name>Alimatu-Saadia Yussiff</name>
+    </author>
+    <author>
+      <name>Abdul-Lateef Yussiff</name>
+    </author>
+    <author>
+      <name>Maame G. Asante-Mensah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.22644v1</id>
+    <title>On the Intractability of Chaotic Symbolic Walks: Toward a Non-Algebraic Post-Quantum Hardness Assumption</title>
+    <updated>2025-05-28T17:56:00Z</updated>
+    <link href="https://arxiv.org/abs/2505.22644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.22644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most classical and post-quantum cryptographic assumptions, including integer factorization, discrete logarithms, and Learning with Errors (LWE), rely on algebraic structures such as rings or vector spaces. While mathematically powerful, these structures can be exploited by quantum algorithms or advanced algebraic attacks, raising a pressing need for structure-free alternatives. To address this gap, we introduce the Symbolic Path Inversion Problem (SPIP), a new computational hardness assumption based on symbolic trajectories generated by contractive affine maps with bounded noise over Z2. Unlike traditional systems, SPIP is inherently non-algebraic and relies on chaotic symbolic evolution and rounding-induced non-injectivity to render inversion computationally infeasible. We prove that SPIP is PSPACE-hard and #P-hard, and demonstrate through empirical simulation that even short symbolic sequences (e.g., n = 3, m = 2) can produce over 500 valid trajectories for a single endpoint, with exponential growth reaching 2256 paths for moderate parameters. A quantum security analysis further shows that Grover-style search offers no practical advantage due to oracle ambiguity and verification instability. These results position SPIP as a viable foundation for post-quantum cryptography that avoids the vulnerabilities of algebraic symmetry while offering scalability, unpredictability, and resistance to both classical and quantum inversion.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-28T17:56:00Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mohamed Aly Bouke</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.01358v1</id>
+    <title>A Survey and Comparison of Post-quantum and Quantum Blockchains</title>
+    <updated>2024-09-02T16:20:22Z</updated>
+    <link href="https://arxiv.org/abs/2409.01358v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.01358v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Blockchains have gained substantial attention from academia and industry for their ability to facilitate decentralized trust and communications. However, the rapid progress of quantum computing poses a significant threat to the security of existing blockchain technologies. Notably, the emergence of Shor's and Grover's algorithms raises concerns regarding the compromise of the cryptographic systems underlying blockchains. Consequently, it is essential to develop methods that reinforce blockchain technology against quantum attacks. In response to this challenge, two distinct approaches have been proposed. The first approach involves post-quantum blockchains, which aim to utilize classical cryptographic algorithms resilient to quantum attacks. The second approach explores quantum blockchains, which leverage the power of quantum computers and networks to rebuild the foundations of blockchains. This paper aims to provide a comprehensive overview and comparison of post-quantum and quantum blockchains while exploring open questions and remaining challenges in these domains. It offers an in-depth introduction, examines differences in blockchain structure, security, privacy, and other key factors, and concludes by discussing current research trends.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-02T16:20:22Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>IEEE Communications Surveys &amp; Tutorials, vol. 26, no. 2, pp. 967-1002, Secondquarter 2024</arxiv:journal_ref>
+    <author>
+      <name>Zebo Yang</name>
+    </author>
+    <author>
+      <name>Haneen Alfauri</name>
+    </author>
+    <author>
+      <name>Behrooz Farkiani</name>
+    </author>
+    <author>
+      <name>Raj Jain</name>
+    </author>
+    <author>
+      <name>Roberto Di Pietro</name>
+    </author>
+    <author>
+      <name>Aiman Erbad</name>
+    </author>
+    <arxiv:doi>10.1109/COMST.2023.3325761</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/COMST.2023.3325761" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.17202v1</id>
+    <title>Quantum-Safe integration of TLS in SDN networks</title>
+    <updated>2025-02-24T14:35:56Z</updated>
+    <link href="https://arxiv.org/abs/2502.17202v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.17202v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm efficiently solves factoring and discrete logarithm problems using quantum computers, compromising all public key schemes used today. These schemes rely on assumptions on their computational complexity, which quantum computers can easily bypass. The solutions have to come from new algorithms - called Post-Quantum Cryptography (PQC) - or from new methods, such as Quantum Key Distribution (QKD). The former replicate the computational security ideas of classical public key algorithms, while the latter recurs to use the quantum properties of nature, which also brings a mathematical security proof, potentially offering Information-Theoretic Security. To secure data in the future, we must adopt these paradigms. With the speed of quantum computing advancements, the transition to quantum-safe cryptography within the next decade is critical. Delays could expose long-lived confidential data, as current encryption may be broken before its value expires. However, the shift must balance the adoption of new technologies with maintaining proven systems to protect against present and future threats. In this work, we have selected Transport Layer Security, one of the most widely used protocols, as the foundation to hybridize classical, quantum, and post-quantum cryptography in a way suitable for broad adoption in Software-Defined Networking, the most flexible networking paradigm that has been used to deploy integrated quantum-classical networks. To this end, we use standards for QKD key extraction and SDN integration. The purposed implementation is based on the latest version of TLS and demonstrates advanced capabilities such as rekeying and key transport across a large QKD network, while supporting crypto-agility and maintaining backward compatibility through the use of ciphersuites. The performance of this approach has been demonstrated using a deployed production infrastructure.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-24T14:35:56Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jaime S. Buruaga</name>
+    </author>
+    <author>
+      <name>Ruben B. Méndez</name>
+    </author>
+    <author>
+      <name>Juan P. Brito</name>
+    </author>
+    <author>
+      <name>Vicente Martin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.21353v1</id>
+    <title>The Qey: Implementation and performance study of post quantum cryptography in FIDO2</title>
+    <updated>2025-10-24T11:30:15Z</updated>
+    <link href="https://arxiv.org/abs/2510.21353v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.21353v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Authentication systems have evolved a lot since the 1960s when Fernando Corbato first proposed the password-based authentication. In 2013, the FIDO Alliance proposed using secure hardware for authentication, thus marking a milestone in the passwordless authentication era [1]. Passwordless authentication with a possession-based factor often relied on hardware-backed cryptographic methods. FIDO2 being one an amalgamation of the W3C Web Authentication and FIDO Alliance Client to Authenticator Protocol is an industry standard for secure passwordless authentication with rising adoption for the same [2]. However, the current FIDO2 standards use ECDSA with SHA-256 (ES256), RSA with SHA-256 (RS256) and similar classical cryptographic signature algorithms. This makes it insecure against attacks involving large-scale quantum computers [3]. This study aims at exploring the usability of Module Lattice based Digital Signature Algorithm (ML-DSA), based on Crystals Dilithium as a post quantum cryptographic signature standard for FIDO2. The paper highlights the performance and security in comparison to keys with classical algorithms.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-24T11:30:15Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aditya Mitra</name>
+    </author>
+    <author>
+      <name>Sibi Chakkaravarthy Sethuraman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1008.2390v2</id>
+    <title>The McEliece Cryptosystem Resists Quantum Fourier Sampling Attacks</title>
+    <updated>2010-10-15T21:14:21Z</updated>
+    <link href="https://arxiv.org/abs/1008.2390v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1008.2390v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers can break the RSA and El Gamal public-key cryptosystems, since they can factor integers and extract discrete logarithms. If we believe that quantum computers will someday become a reality, we would like to have \emph{post-quantum} cryptosystems which can be implemented today with classical computers, but which will remain secure even in the presence of quantum attacks.
+  In this article we show that the McEliece cryptosystem over \emph{well-permuted, well-scrambled} linear codes resists precisely the attacks to which the RSA and El Gamal cryptosystems are vulnerable---namely, those based on generating and measuring coset states. This eliminates the approach of strong Fourier sampling on which almost all known exponential speedups by quantum algorithms are based. Specifically, we show that the natural case of the Hidden Subgroup Problem to which the McEliece cryptosystem reduces cannot be solved by strong Fourier sampling, or by any measurement of a coset state. We start with recent negative results on quantum algorithms for Graph Isomorphism, which are based on particular subgroups of size two, and extend them to subgroups of arbitrary structure, including the automorphism groups of linear codes. This allows us to obtain the first rigorous results on the security of the McEliece cryptosystem in the face of quantum adversaries, strengthening its candidacy for post-quantum cryptography.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-08-13T20:21:29Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Hang Dinh</name>
+    </author>
+    <author>
+      <name>Cristopher Moore</name>
+    </author>
+    <author>
+      <name>Alexander Russell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.14845v1</id>
+    <title>Lightweight Public Key Encryption in Post-Quantum Computing Era</title>
+    <updated>2023-11-24T21:06:42Z</updated>
+    <link href="https://arxiv.org/abs/2311.14845v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.14845v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Confidentiality in our digital world is based on the security of cryptographic algorithms. These are usually executed transparently in the background, with people often relying on them without further knowledge. In the course of technological progress with quantum computers, the protective function of common encryption algorithms is threatened. This particularly affects public-key methods such as RSA and DH based on discrete logarithms and prime factorization. Our concept describes the transformation of a classical asymmetric encryption method to a modern complexity class. Thereby the approach of Cramer-Shoup is put on the new basis of elliptic curves. The system is provable cryptographically strong, especially against adaptive chosen-ciphertext attacks. In addition, the new method features small key lengths, making it suitable for Internet-of-Things. It represents an intermediate step towards an encryption scheme based on isogeny elliptic curves. This approach shows a way to a secure encryption scheme for the post-quantum computing era.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-24T21:06:42Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Peter Hillmann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.17878v2</id>
+    <title>Crypto-ncRNA: a bio-inspired post-quantum cryptographic primitive exploiting RNA folding complexity</title>
+    <updated>2026-02-02T17:17:03Z</updated>
+    <link href="https://arxiv.org/abs/2504.17878v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.17878v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The imminent realization of fault-tolerant quantum computing precipitates a systemic collapse of classical public-key infrastructure and necessitates an urgent transition to post-quantum cryptography. However, current standardization efforts predominantly rely on structured mathematical problems that may remain vulnerable to unforeseen algorithmic breakthroughs, highlighting a critical need for fundamentally orthogonal security paradigms. Here, we introduce \emph{Crypto-ncRNA} as a biophysically inspired cryptographic primitive that exploits the thermodynamic complexity of non-coding RNA folding as a computational work-factor amplifier. By leveraging the rugged energy landscape inherent to RNA secondary structure prediction, a problem intractable to rapid inversion, we establish a security foundation independent of conventional number-theoretic assumptions. We validate this approach by mapping the folding problem to a Quadratic Unconstrained Binary Optimization model and demonstrate theoretical resilience against quantum optimization attacks including the Quantum Approximate Optimization Algorithm. Functioning as a symmetric key encapsulation and derivation primitive dependent on pre-shared seeds, Crypto-ncRNA achieves throughputs competitive with software-based Advanced Encryption Standard implementations. By utilizing the generated high-entropy keys within a standard stream cipher framework, it exhibits ciphertext entropy that satisfies rigorous NIST SP 800-22 statistical standards. These findings not only articulate a novel bio-computational pathway for cryptographic defense but also provide a rigorous algorithmic blueprint for future physical realization, demonstrating that the thermodynamic complexity of biological systems offers a robust and physically grounded frontier for securing digital infrastructure in the post-quantum era.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-24T18:30:35Z</published>
+    <arxiv:comment>Accepted at the AI4NA workshop at ICLR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Xu Wang</name>
+    </author>
+    <author>
+      <name>Yiquan Wang</name>
+    </author>
+    <author>
+      <name>Tin-yeh Huang</name>
+    </author>
+    <author>
+      <name>Zhaorui Jiang</name>
+    </author>
+    <author>
+      <name>Kai Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.09122v3</id>
+    <title>Shor's Factoring Algorithm and Modular Exponentiation Operators</title>
+    <updated>2023-09-18T13:18:53Z</updated>
+    <link href="https://arxiv.org/abs/2306.09122v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.09122v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>These are pedagogical notes on Shor's factoring algorithm, which is a quantum algorithm for factoring very large numbers (of order of hundreds to thousands of bits) in polynomial time. In contrast, all known classical algorithms for the factoring problem take an exponential time to factor large numbers. In these notes, we assume no prior knowledge of Shor's algorithm beyond a basic familiarity with the circuit model of quantum computing. The literature is thick with derivations and expositions of Shor's algorithm, but most of them seem to be lacking in essential details, and none of them provide a pedagogical presentation. We develop the theory of modular exponentiation (ME) operators in some detail, one of the fundamental components of Shor's algorithm, and the place where most of the quantum resources are deployed. We also discuss the post-quantum processing and the method of continued fractions, which is used to extract the exact period of the modular exponential function from the approximately measured phase angles of the ME operator. The manuscript then moves on to a series of examples. We first verify the formalism by factoring N=15, the smallest number accessible to Shor's algorithm. We then proceed to factor larger numbers, developing a systematic procedure that will find the ME operators for any semi-prime $N = p \times q$ (where $q$ and~$p$ are prime). Finally, we factor the numbers N=21, 33, 35, 143, 247 using the Qiskit simulator. It is observed that the ME operators are somewhat forgiving, and truncated approximate forms are able to extract factors just as well as the exact operators. This is because the method of continued fractions only requires an approximate phase value for its input, which suggests that implementing Shor's algorithm might not be as difficult as first suspected.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-15T13:29:20Z</published>
+    <arxiv:comment>108 pages, 63 figures. Published version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quanta 2023; 12: 41-130</arxiv:journal_ref>
+    <author>
+      <name>Robert L Singleton</name>
+    </author>
+    <arxiv:doi>10.12743/quanta.v12i1.235</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.12743/quanta.v12i1.235" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.21548v1</id>
+    <title>Quantum Leap in Finance: Economic Advantages, Security, and Post-Quantum Readiness</title>
+    <updated>2025-08-29T12:04:08Z</updated>
+    <link href="https://arxiv.org/abs/2508.21548v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.21548v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper provides an in-depth review of the evolving role of quantum computing in the financial sector, emphasizing both its computational potential and cybersecurity implications. Distinguishing itself from existing surveys, this work integrates classical quantum computing applications - such as portfolio optimization, risk analysis, derivative pricing, and Monte Carlo simulations with a thorough examination of blockchain technologies and post-quantum cryptography (PQC), which are crucial for maintaining secure financial operations in the emerging quantum era. We propose a structured four-step framework to assess the feasibility and expected benefits of implementing quantum solutions in finance, considering factors such as computational scalability, error tolerance, data complexity, and practical implementability. This framework is applied to a series of representative financial scenarios to identify domains where quantum approaches can surpass classical techniques. Furthermore, the paper explores the vulnerabilities quantum computing introduces to digital finance-related applications and blockchain security, including risks to digital signatures, hash functions, and randomness generation, and discusses mitigation strategies through PQC and quantum-resilient alternatives of classical digital finance tools and blockchain architectures. By addressing both quantum blockchain, quantum key distribution (QKD) as well as quantum communication networks, his review presents a more holistic perspective than prior studies, offering actionable insights for researchers, financial practitioners, and policymakers navigating the intersection of quantum computing, blockchain, and secure financial systems.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-29T12:04:08Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gerhard Hellstern</name>
+    </author>
+    <author>
+      <name>Esra Yeniaras</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.14539v1</id>
+    <title>When Security Meets Usability: An Empirical Investigation of Post-Quantum Cryptography APIs</title>
+    <updated>2026-02-16T07:59:46Z</updated>
+    <link href="https://arxiv.org/abs/2602.14539v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.14539v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Advances in quantum computing increasingly threaten the security and privacy of data protected by current cryptosystems, particularly those relying on public-key cryptography. In response, the international cybersecurity community has prioritized the implementation of Post-Quantum Cryptography (PQC), a new cryptographic standard designed to resist quantum attacks while operating on classical computers. The National Institute of Standards and Technology (NIST) has already standardized several PQC algorithms and plans to deprecate classical asymmetric schemes, such as RSA and ECDSA, by 2035. Despite this urgency, PQC adoption remains slow, often due to limited developer expertise. Application Programming Interfaces (APIs) are intended to bridge this gap, yet prior research on classical security APIs demonstrates that poor usability of cryptographic APIs can lead developers to introduce vulnerabilities during implementation of the applications, a risk amplified by the novelty and complexity of PQC. To date, the usability of PQC APIs has not been systematically studied. This research presents an empirical evaluation of the usability of the PQC APIs, observing how developers interact with APIs and documentation during software development tasks. The study identifies cognitive factors that influence the developer's performance when working with PQC primitives with minimal onboarding. The findings highlight opportunities across the PQC ecosystem to improve developer-facing guidance, terminology alignment, and workflow examples to better support non-specialists.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-16T07:59:46Z</published>
+    <arxiv:comment>Accepted at the NDSS Symposium on Usable Security and Privacy (USEC) 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Symposium on Usable Security and Privacy (USEC) 2026, San Diego, CA, USA</arxiv:journal_ref>
+    <author>
+      <name>Marthin Toruan</name>
+    </author>
+    <author>
+      <name>R. D. N. Shakya</name>
+    </author>
+    <author>
+      <name>Samuel Tseitkin</name>
+    </author>
+    <author>
+      <name>Raymond K. Zhao</name>
+    </author>
+    <author>
+      <name>Nalin Arachchilage</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.05321v1</id>
+    <title>Quantum solutions to possible challenges of Blockchain technology</title>
+    <updated>2021-10-11T14:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2110.05321v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.05321v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Technological advancements of Blockchain and other Distributed Ledger Techniques (DLTs) promise to provide significant advantages to applications seeking transparency, redundancy, and accountability. Actual adoption of these emerging technologies requires incorporating cost-effective, fast, QoS-enabled, secure, and scalable design. With the recent advent of quantum computing, the security of current blockchain cryptosystems can be compromised to a greater extent. Quantum algorithms like Shor's large integer factorization algorithm and Grover's unstructured database search algorithm can provide exponential and quadratic speedup, respectively, in contrast to their classical counterpart. This can put threats on both public-key cryptosystems and hash functions, which necessarily demands to migrate from classical cryptography to quantum-secure cryptography. Moreover, the computational latency of blockchain platforms causes slow transaction speed, so quantum computing principles might provide significant speedup and scalability in transaction processing and accelerating the mining process. For such purpose, this article first studies current and future classical state-of-the-art blockchain scalability and security primitives. The relevant quantum-safe blockchain cryptosystem initiatives which have been taken by Bitcoin, Ethereum, Corda, etc. are stated and compared with respect to key sizes, hash length, execution time, computational overhead, and energy efficiency. Post Quantum Cryptographic algorithms like Code-based, Lattice-based, Multivariate-based, and other schemes are not well suited for classical blockchain technology due to several disadvantages in practical implementation. Decryption latency, massive consumption of computational resources, and increased key size are few challenges that can hinder blockchain performance.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-11T14:41:04Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nivedita Dey</name>
+    </author>
+    <author>
+      <name>Mrityunjay Ghosh</name>
+    </author>
+    <author>
+      <name>Amlan Chakrabarti</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.05959v1</id>
+    <title>Towards Quantum Resilience: Data-Driven Migration Strategy Design</title>
+    <updated>2025-05-09T11:12:09Z</updated>
+    <link href="https://arxiv.org/abs/2505.05959v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.05959v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advancements in quantum computing are a threat to classical cryptographic systems. The traditional cryptographic methods that utilize factorization-based or discrete-logarithm-based algorithms, such as RSA and ECC, are some of these. This paper thoroughly investigates the vulnerabilities of traditional cryptographic methods against quantum attacks and provides a decision-support framework to help organizations in recommending mitigation plans and determining appropriate transition strategies to post-quantum cryptography. A semi-synthetic dataset, consisting of key features such as key size, network complexity, and sensitivity levels, is crafted, with each configuration labeled according to its recommended mitigation plan. Using decision tree and random forest models, a classifier is trained to recommend appropriate mitigation/transition plans such as continuous monitoring, scheduled transitions, and immediate hybrid implementation. The proposed approach introduces a data-driven and dynamic solution for organizations to assess the scale of the migration, specifying a structured roadmap toward quantum resilience. The results highlight important features that influence strategy decisions and support actionable recommendations for cryptographic modernization based on system context.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-09T11:12:09Z</published>
+    <arxiv:comment>10 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nahid Aliyev</name>
+    </author>
+    <author>
+      <name>Ozan Cetin</name>
+    </author>
+    <author>
+      <name>Emil Huseynov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.15515v1</id>
+    <title>High Memory Masked Convolutional Codes for PQC</title>
+    <updated>2025-10-17T10:39:20Z</updated>
+    <link href="https://arxiv.org/abs/2510.15515v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.15515v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a novel post-quantum cryptosystem based on high-memory masked convolutional codes. Unlike conventional code-based schemes that rely on block codes with fixed dimensions and limited error-correction capability, our construction offers both stronger cryptographic security and greater flexibility. It supports arbitrary plaintext lengths with linear-time decryption and uniform per-bit computational cost, enabling seamless scalability to long messages. Security is reinforced through a higher-rate injection of random errors than in block-code approaches, along with additional noise introduced via polynomial division, which substantially obfuscates the underlying code structure. Semi-invertible transformations generate dense, random-like generator matrices that conceal algebraic properties and resist known structural attacks. Consequently, the scheme achieves cryptanalytic security margins exceeding those of the classic McEliece system by factors greater than 2100. Finally, decryption at the recipient employs an array of parallel Viterbi decoders, enabling efficient hardware and software implementation and positioning the scheme as a strong candidate for deployment in practical quantum-resistant public-key cryptosystems.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-17T10:39:20Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>CS &amp; IT Conference Proceedings 15 (17) 2025</arxiv:journal_ref>
+    <author>
+      <name>Meir Ariel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.02822v2</id>
+    <title>Decryption Through Polynomial Ambiguity: Noise-Enhanced High-Memory Convolutional Codes for Post-Quantum Cryptography</title>
+    <updated>2025-12-03T10:43:18Z</updated>
+    <link href="https://arxiv.org/abs/2512.02822v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.02822v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a novel approach to post-quantum cryptography that employs directed-graph decryption of noise-enhanced high-memory convolutional codes. The proposed construction generates random-like generator matrices that effectively conceal algebraic structure and resist known structural attacks. Security is further reinforced by the deliberate injection of strong noise during decryption, arising from polynomial division: while legitimate recipients retain polynomial-time decoding, adversaries face exponential-time complexity. As a result, the scheme achieves cryptanalytic security margins surpassing those of Classic McEliece by factors exceeding 2^(200). Beyond its enhanced security, the method offers greater design flexibility, supporting arbitrary plaintext lengths with linear-time decryption and uniform per-bit computational cost, enabling seamless scalability to long messages. Practical deployment is facilitated by parallel arrays of directed-graph decoders, which identify the correct plaintext through polynomial ambiguity while allowing efficient hardware and software implementations. Altogether, the scheme represents a compelling candidate for robust, scalable, and quantum-resistant public-key cryptography.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-02T14:30:03Z</published>
+    <arxiv:comment>23 pages, 3 figures. arXiv admin note: substantial text overlap with arXiv:2510.15515</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>International Journal on Cryptography and Information Security (IJCIS), Vol. 15, No.1/2/3/4, December 2025</arxiv:journal_ref>
+    <author>
+      <name>Meir Ariel</name>
+    </author>
+    <arxiv:doi>10.5121/ijcis.2025.15401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5121/ijcis.2025.15401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.05534v3</id>
+    <title>BloQBench: A Blockchain Benchmarking Framework for Quantum Supremacy</title>
+    <updated>2026-07-31T21:41:34Z</updated>
+    <link href="https://arxiv.org/abs/2601.05534v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.05534v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As quantum computing matures, characterizing its practical workloads and verifying quantum supremacy presents a significant challenge. Current benchmarking and claims rely on trust-based verification methods that lack public auditability. We propose a decentralized benchmarking framework implemented via an Ethereum smart contract to provide verifiable assurance in these claims. This framework generates classically intractable puzzles that, crucially, require absolutely no pre-computed secrets. By utilizing the blockchain as an immutable public ledger, independent observers can mathematically verify that any provided solution to the puzzle must have been computationally derived via quantum hardware rather than classically spoofed. Furthermore, we demonstrate how this verifiable benchmarking metric can be utilized as an automation trigger. As a practical example of such a trigger, we focus on the ability for blockchains to automatically switch to quantum-secure signature schemes upon the successful demonstration of cryptographic quantum supremacy. We demonstrate these principles with BloQBench, which implements the concept using integer factorization as the generated puzzle and Lamport signatures as the trigger-based effect. This approach demonstrates a novel use of distributed ledgers for quantum workload characterization, providing a transparent, automated metric for measuring quantum supremacy while managing the performance and complexity trade-offs of post-quantum technology transitions.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-09T05:20:02Z</published>
+    <arxiv:comment>14 pages, 3 figures, 1 table, accepted to IISWC 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nicholas J. C. Papadopoulos</name>
+    </author>
+    <author>
+      <name>Ramin Ayanzadeh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.19038v3</id>
+    <title>Explicit Factorization of $x^{p+1}-1$ over $\mathbb{Z}_{p^e}$: A Structural Approach via Dickson Polynomials</title>
+    <updated>2026-08-30T02:23:52Z</updated>
+    <link href="https://arxiv.org/abs/2604.19038v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.19038v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p$ be an odd prime. The factorization of the polynomial $x^{p+1}-1$ over the integer residue ring $\mathbb{Z}_{p^e}$ is pivotal for constructing cyclic codes with Hermitian symmetry, a critical resource for Linear Complementary Dual (LCD) codes and Entanglement-Assisted Quantum Error-Correcting Codes (EAQECC). Traditionally, lifting factorizations relies on the generic Hensel's Lemma, masking the underlying algebraic structure. In this paper, we establish a structural isomorphism between the lifting process and the roots of a special auxiliary polynomial $V(x)$, unveiling a deterministic link to Dickson polynomials. Based on this theory, we develop \texttt{Dickson-Engine}, a linear-time algorithm ($O(ep)$) that outperforms standard libraries by orders of magnitude. Applying this engine to $\mathbb{Z}_{169}$, we explicitly construct a family of classical LCD codes of length $n=182$ via the isometric Gray map. Our search reveals codes with parameters (e.g., $[182, 1, 168]_{13}$ and $[182, 2, 144]_{13}$) that are \textbf{near-optimal} with respect to the theoretical Griesmer Bound. Notably, we discover a ``robustness plateau'' starting from non-trivial dimensions ($k=4$), where the minimum distance remains stable ($d=120$) even as the dimension triples ($k=4 \rightarrow 12$). These codes provide exceptional resources for post-quantum cryptography and quantum error correction without entanglement consumption ($c=0$).</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-21T03:44:12Z</published>
+    <arxiv:comment>Full and extended version of the ISIT 2026 accepted paper. Updates in this version: numerical examples have been thoroughly revised to strictly align with the 'single-seed lifting' architecture, demonstrating its minimal space complexity by omitting redundant multivariate computations; corrected minor algebraic typos in the explicit lifting steps</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Yongchao Wang</name>
+    </author>
+    <author>
+      <name>Yang Ding</name>
+    </author>
+    <author>
+      <name>Jiansheng Yang</name>
+    </author>
+    <author>
+      <name>Zhiqiu Huang</name>
+    </author>
+    <arxiv:doi>10.1109/ISIT62367.2026.11653781</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ISIT62367.2026.11653781" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.12394v2</id>
+    <title>Beyond Ground States: Physics-Inspired Optimization of Excited States of Classical Hamiltonians</title>
+    <updated>2026-07-31T15:40:06Z</updated>
+    <link href="https://arxiv.org/abs/2507.12394v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.12394v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce excited local quantum annealing (ExcLQA), a classical, physics-inspired algorithm that extends local quantum annealing (LQA) to identify excited states of classical Ising Hamiltonians. LQA simulates quantum annealing while constraining the quantum state to remain in a product state and uses a gradient-based approach to find approximate solutions to large-scale quadratic unconstrained binary optimization problems. ExcLQA extends this framework by adding a penalty term in the cost function to target excited states, with a single hyperparameter that can be tuned via binary search to set the desired penalization level. We benchmark ExcLQA on fully connected Ising models with random interactions and on the shortest vector problem (SVP). The latter is a fundamental lattice problem underlying the security of many post-quantum cryptographic schemes, and its solution can be mapped to the first excited state of an Ising Hamiltonian. For the fully connected Ising models, we show that, on the tested instances, ExcLQA outperforms both a matrix-product-state-based method and simulated annealing. Notably, even when only a lower bound on the ground-state energy is provided, rather than the exact ground-state information required by these competing methods, ExcLQA still achieves superior performance. For the SVP, ExcLQA finds exact solutions for instances up to rank 46, and outperforms the Metropolis-Hastings algorithm in terms of solved ratio, number of shots, and approximation factor on the tested instances.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-16T16:40:49Z</published>
+    <arxiv:comment>15 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. Applied 26, 014093 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Erik Altelarrea-Ferré</name>
+    </author>
+    <author>
+      <name>Júlia Barberà-Rodríguez</name>
+    </author>
+    <author>
+      <name>David Jansen</name>
+    </author>
+    <author>
+      <name>Antonio Acín</name>
+    </author>
+    <arxiv:doi>10.1103/ltys-tnj3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/ltys-tnj3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1508.01893v1</id>
+    <title>Unconditionally Secure Quantum Signatures</title>
+    <updated>2015-08-08T12:25:24Z</updated>
+    <link href="https://arxiv.org/abs/1508.01893v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1508.01893v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Signature schemes, proposed in 1976 by Diffie and Hellman, have become ubiquitous across modern communications. They allow for the exchange of messages from one sender to multiple recipients, with the guarantees that messages cannot be forged or tampered with and that messages also can be forwarded from one recipient to another without compromising their validity. Signatures are different from, but no less important than encryption, which ensures the privacy of a message. Commonly used signature protocols - signatures based on the Rivest-Adleman-Shamir (RSA) algorithm, the digital signature algorithm (DSA), and the elliptic curve digital signature algorithm (ECDSA) - are only computationally secure, similar to public key encryption methods. In fact, since these rely on the difficulty of finding discrete logarithms or factoring large primes, it is known that they will become completely insecure with the emergence of quantum computers. We may therefore see a shift towards signature protocols that will remain secure even in a post-quantum world. Ideally, such schemes would provide unconditional or information-theoretic security. In this paper, we aim to provide an accessible and comprehensive review of existing unconditionally secure signature schemes for signing classical messages, with a focus on unconditionally secure quantum signature schemes.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-08-08T12:25:24Z</published>
+    <arxiv:comment>16 pages; an accessible short review paper in a special issue on Quantum Cryptography</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Entropy 2015, 17(8), 5635-5659</arxiv:journal_ref>
+    <author>
+      <name>Ryan Amiri</name>
+    </author>
+    <author>
+      <name>Erika Andersson</name>
+    </author>
+    <arxiv:doi>10.3390/e17085635</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/e17085635" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.08983v2</id>
+    <title>PQC: Triple Decomposition Problem Applied To GL(d, Fp) - A Secure Framework For Canonical Non-Commutative Cryptography</title>
+    <updated>2018-10-25T10:42:56Z</updated>
+    <link href="https://arxiv.org/abs/1810.08983v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.08983v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Post-Quantum Cryptography (PQC) attempts to find cryptographic protocols resistant to attacks using Shor polynomial time algorithm for numerical field problems or Grover search algorithm. A mostly overlooked but valuable line of solutions is provided by non-commutative algebraic structures, specifically canonical protocols that rely on one-way trapdoor functions (OWTF). Here we develop an algebraic framework who could be applied to different asymmetric protocols like D-H KE (Diffie-Hellman key exchange), Public Key Encryption, Digital Signature, ZKP (zero-knowledge proof) authentication, Oblivious Transfer, Multi-Party Computing, and so on. The trapdoor one-way functions selected are (a) Triple decomposition Problem (TDP) developed by Kurt, where a known element is factored into a product of three unknown factors and (b) a new version of conjugacy search that we refer from now on as Blind Conjugacy Search Problem (BCSP). Our platform structure is the general linear group GL(d,F_p) d-square non-singular matrices of prime field values. We give support to the fact that this framework is cryptographically secure against classical attacks like linear algebra attacks, length-based attacks, side-channel attacks against square (or duplicate) and multiply (or sum) algorithm, high sensitivity to pseudo random deterministic generators, etc. At same time it is immune against quantum attacks (using Grover and Shor), if the size parameters are carefully selected. Semantic security and IND-CCA2 compliance for this framework is discussed.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-21T15:57:22Z</published>
+    <arxiv:comment>9 pages, 1 Appendix included, 8 Tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Pedro Hecht</name>
+    </author>
+    <arxiv:doi>10.13140/RG.2.2.23240.78082</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.13140/RG.2.2.23240.78082" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.01211v1</id>
+    <title>GPU Acceleration of Learning With Errors KEMs Using OpenACC for Post-Quantum Cryptography</title>
+    <updated>2026-05-31T13:01:18Z</updated>
+    <link href="https://arxiv.org/abs/2606.01211v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.01211v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm proved that asymmetric cryptographic protocols based on the integer factorization and discrete logarithm problems are no longer safe in a world with large-scale quantum computers. As a result, Post-Quantum Cryptography (PQC) has been developed over the last few years, seeking cryptographic primitives resistant to quantum attacks. One of the main hard problems underlying PQC schemes is the Learning with Errors (LWE) problem, which is significantly more computationally intensive than its classical predecessors. In this work, we present a Key Encapsulation Mechanism (KEM) based on plain LWE and develop a GPU-oriented implementation using OpenACC. We evaluate the performance of our accelerated application in terms of both time-to-solution and energy-to-solution, considering bare-metal and containerized executions across multiple NVIDIA GPU models and generations. Our implementation achieves significant acceleration across all tested GPU platforms. In particular, on the NVIDIA Grace Hopper Superchip, it attains up to a $208\times$ speedup over a multithreaded CPU baseline and enables the execution of problem sizes that are impractical on CPU architectures due to memory and synchronization constraints. Energy consumption analysis also shows $\approx 2\times$ better efficiency when using the Superchip compared to systems equipped with x86-based CPUs and NVIDIA H100 GPUs. These results highlight the effectiveness of GPU acceleration for computationally demanding LWE-based cryptographic workloads.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-31T13:01:18Z</published>
+    <arxiv:comment>Pre-print version of the manuscript submitted to NUMTA2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Tiziana Liberati</name>
+    </author>
+    <author>
+      <name>Nitin Shukla</name>
+    </author>
+    <author>
+      <name>Matteo Barbieri</name>
+    </author>
+    <author>
+      <name>Gabriella Bettonte</name>
+    </author>
+    <author>
+      <name>Elisabetta Boella</name>
+    </author>
+    <author>
+      <name>Simone Rizzo</name>
+    </author>
+    <author>
+      <name>Daniele Gregori</name>
+    </author>
+    <author>
+      <name>Marco Pedicini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.04383v1</id>
+    <title>The Hashed Fractal Key Recovery (HFKR) Problem: From Symbolic Path Inversion to Post-Quantum Cryptographic Keys</title>
+    <updated>2025-06-04T18:54:33Z</updated>
+    <link href="https://arxiv.org/abs/2506.04383v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.04383v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical cryptographic systems rely heavily on structured algebraic problems, such as factorization, discrete logarithms, or lattice-based assumptions, which are increasingly vulnerable to quantum attacks and structural cryptanalysis. In response, this work introduces the Hashed Fractal Key Recovery (HFKR) problem, a non-algebraic cryptographic construction grounded in symbolic dynamics and chaotic perturbations. HFKR builds on the Symbolic Path Inversion Problem (SPIP), leveraging symbolic trajectories generated via contractive affine maps over $\mathbb{Z}^2$, and compressing them into fixed-length cryptographic keys using hash-based obfuscation. A key contribution of this paper is the empirical confirmation that these symbolic paths exhibit fractal behavior, quantified via box counting dimension, path geometry, and spatial density measures. The observed fractal dimension increases with trajectory length and stabilizes near 1.06, indicating symbolic self-similarity and space-filling complexity, both of which reinforce the entropy foundation of the scheme. Experimental results across 250 perturbation trials show that SHA3-512 and SHAKE256 amplify symbolic divergence effectively, achieving mean Hamming distances near 255, ideal bit-flip rates, and negligible entropy deviation. In contrast, BLAKE3 exhibits statistically uniform but weaker diffusion. These findings confirm that HFKR post-quantum security arises from the synergy between symbolic fractality and hash-based entropy amplification. The resulting construction offers a lightweight, structure-free foundation for secure key generation in adversarial settings without relying on algebraic hardness assumptions.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-04T18:54:33Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mohamed Aly Bouke</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.03398v1</id>
+    <title>Zero-Knowledge Federated Learning with Lattice-Based Hybrid Encryption for Quantum-Resilient Medical AI</title>
+    <updated>2026-03-03T12:43:44Z</updated>
+    <link href="https://arxiv.org/abs/2603.03398v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.03398v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Federated Learning (FL) enables collaborative training of medical AI models across hospitals without centralizing patient data. However, the exchange of model updates exposes critical vulnerabilities: gradient inversion attacks can reconstruct patient information, Byzantine clients can poison the global model, and the \emph{Harvest Now, Decrypt Later} (HNDL) threat renders today's encrypted traffic vulnerable to future quantum adversaries.We introduce \textbf{ZKFL-PQ} (\emph{Zero-Knowledge Federated Learning, Post-Quantum}), a three-tiered cryptographic protocol that hybridizes (i) ML-KEM (FIPS~203) for quantum-resistant key encapsulation, (ii) lattice-based Zero-Knowledge Proofs for verifiable \emph{norm-constrained} gradient integrity, and (iii) BFV homomorphic encryption for privacy-preserving aggregation. We formalize the security model and prove correctness and zero-knowledge properties under the Module-LWE, Ring-LWE, and SIS assumptions \emph{in the classical random oracle model}. We evaluate ZKFL-PQ on synthetic medical imaging data across 5 federated clients over 10 training rounds. Our protocol achieves \textbf{100\% rejection of norm-violating updates} while maintaining model accuracy at 100\%, compared to a catastrophic drop to 23\% under standard FL. The computational overhead (factor $\sim$20$\times$) is analyzed and shown to be compatible with clinical research workflows operating on daily or weekly training cycles. We emphasize that the current defense guarantees rejection of large-norm malicious updates; robustness against subtle low-norm or directional poisoning remains future work.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-03T12:43:44Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Edouard Lansiaux</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.14011v2</id>
+    <title>Brace for impact: ECDLP challenges for quantum cryptanalysis</title>
+    <updated>2026-03-25T19:59:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.14011v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.14011v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Precise suites of benchmarks are required to assess the progress of early fault-tolerant quantum computers at economically impactful applications such as cryptanalysis. Appropriate challenges exist for factoring but those for elliptic curve cryptography are either too sparse or inadequate for standard applications of Shor's algorithm. We introduce a difficulty-graded suite of elliptic curve discrete logarithm (ECDLP) challenges that use Bitcoin's curve y^2=x^3+7 mod p while incrementally lowering the prime field from 256 down to 6 bits. For each bit-length, we provide the prime, the prime group order, and two deterministic nothing-up-my-sleeve (NUMS) points in compressed SEC1 form. All challenges are generated by a deterministic, reproducible procedure, and no private challenge scalar is chosen in advance. We calibrate classical cost against Pollard's rho records and quantum cost against resource estimation results for Shor's algorithm. We compile Shor's ECDLP circuit to logical counts and map them to physical resources for various parameters of the surface code, the repetition cat code and the LDPC cat codes. Under explicit and testable assumptions on physical error rates, code distances, and non-Clifford supply, our scenarios place the full 256-bit instance within a 2027--2033 window. The challenge ladder thus offers a transparent ruler to track fault-tolerant progress on a cryptanalytic target of immediate relevance, and it motivates proactive migration of digital assets to post-quantum signatures.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-19T17:16:31Z</published>
+    <arxiv:comment>39 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Pierre-Luc Dallaire-Demers</name>
+    </author>
+    <author>
+      <name>William Doyle</name>
+    </author>
+    <author>
+      <name>Timothy Foo</name>
+    </author>
+  </entry>
+</feed>

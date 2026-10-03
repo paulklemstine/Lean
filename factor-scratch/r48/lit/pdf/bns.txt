@@ -1,0 +1,2229 @@
+arXiv:1109.6398v2 [math.NT] 28 Jun 2013
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE
+NUMBER FIELD SIEVE
+NICHOLAS COXON
+Abstract. Nonlinear polynomial selection algorithms for the number field
+sieve address the problem of constructing polynomials with small coefficients
+by reducing to instances of the well-studied problem of finding short vectors
+in lattices. The reduction rests upon the construction of modular geometric
+progressions with small terms. In this paper, the methods used to construct
+the geometric progressions are extended, resulting in the development of two
+nonlinear polynomial selection algorithms.
+
+1. Introduction
+To factor an integer N , the number field sieve [26] begins with the selection of
+two low-degree coprime irreducible polynomials f1 , f2 ∈ Z[x] with a common root
+modulo N . If Fi ∈ Z[x, y] is the homogenisation of fi , for i = 1, 2, then the time
+taken to factor N depends on the supply of coprime integer pairs (a, b) for which
+F1 (a, b) and F2 (a, b) are free of prime factors greater than a preselected bound.
+Pairs with this property, called relations, are identified by sieving. The polynomial
+selection problem is to determine a choice of polynomials that help minimise the
+time taken by the sieve stage of the number field sieve.
+The size of the values taken by the polynomials F1 and F2 is a key factor in determining the supply of relations [35, 36]. Polynomial selection algorithms address
+this factor by endeavouring to generate polynomials with small coefficients. The
+efforts of research into this problem are divided between two different approaches:
+so-called linear and nonlinear algorithms. Linear algorithms were introduced during
+the development of the number field sieve [8] and subsequently improved by Montgomery and Murphy [36], and Kleinjung [19, 20]. They have been used in a series
+of record-setting factorisations, culminating in the factorisation of a 768-bit RSA
+modulus [21]. The designation as “linear” is on account of the algorithms producing polynomial pairs such that one polynomial is linear. This property results in a
+disparity in their degrees, and thus a disparity in the size of the values F1 (a, b) and
+F2 (a, b), reducing their yield of relations [12, Section 6.2.7]. In contrast to linear
+algorithms, nonlinear algorithms produce pairs of nonlinear polynomials with equal
+or almost equal degrees. Nevertheless, they have received little practical attention
+since until recently nonlinear algorithms were only capable of producing pairs of
+quadratic polynomials, which limited the range for which they were competitive
+with linear algorithms to numbers of at most 110–120 digits [36, Section 2.3.1].
+Consequently, the development of nonlinear algorithms has fallen behind that of
+linear algorithms.
+Date: June 28, 2013.
+Key words and phrases. Integer factorisation, number field sieve, polynomial selection.
+1
+
+2
+
+NICHOLAS COXON
+
+Nonlinear polynomial selection algorithms for the number field sieve use geometric progressions with small terms modulo N to generate pairs of nonlinear polynomials. Montgomery introduced the approach with the two quadratics algorithm
+(see [13, Section 5] and [36, Section 2.3.1]), which produces pairs of quadratic polynomials with coefficients of optimal size. In addition, Montgomery [33, 34] outlined
+a generalisation of the quadratic algorithm to higher degrees. However, the problem of how to construct the geometric progressions required by the generalisation
+remains open for higher degrees. Recent developments in geometric progression
+construction and relaxations of the requirements of Montgomery’s approach have
+lead to a succession of new nonlinear algorithms [46, 43, 22]. Building upon these
+developments, this paper presents two nonlinear polynomial generation algorithms.
+The paper is organised as follows. In the next section, polynomial coefficient
+norms used throughout the paper are introduced, and generalities on real lattices are
+discussed. Section 3 recalls the overall approach of nonlinear polynomial generation,
+introduces some properties of orthogonal lattices, then reviews nonlinear generation
+and existing algorithms in detail. Finally, new nonlinear generation algorithms are
+presented and analysed in Section 4 and Section 5.
+2. Preliminaries
+2.1. Skewed coefficient norms and the resultant bound. Coefficient norms
+used to measure the coefficient size of number field sieve polynomials are introduced.
+Then a lower bound on the coefficient size of polynomial pairs with a common root
+modulo N is derived.
+2.1.1. Skewed coefficient norms. After polynomial selection, the number field sieve
+uses sieving to identify relations in some region A ⊂ R2 . The form of sieve region
+is determined by the methods of sieving used, but may be approximated by a
+rectangular region of the form A = [−A, A] × [0, B]. The area of the sieve region is
+approximately determined by the size of the input N . Therefore, by assuming that
+the region’s area is fixed, it follows that a rectangular sieve region A is determined
+by the parameter s = A/B, called the skew of the region.
+Given two polynomials f1 and f2 , the size properties of their respective homogenisations F1 and F2 over A are quantified by the integral
+Z 1Z 1 Y
+Z
+2
+deg f1 +deg f2 +2
+√
+√ 
+2
+Fi x s, y/ s dxdy.
+·
+|F1 (x, y)F2 (x, y)| dxdy = (AB)
+0
+
+A
+
+−1 i=1
+
+Polynomials that minimise this integral are expected to yield more relations in A
+than others. The integrand on the right motivates the following choice of norm:
+Pd
+Definition 2.1. Let f = i=0 ai xi ∈ R[x] be a degree d polynomial. For a given
+skew s > 0, the skewed 2-norm of f is defined to be
+! 21
+d
+X
+d 2
+.
+ai si− 2
+kf k2,s =
+i=0
+
+If s = 1, then kf k2,s is the 2-norm of f , which is denoted kf k2 .
+
+A skew of a polynomial f ∈ R[x] is any value s > 0 for which kf k2,s is minimal.
+A number field sieve polynomial f has good root properties if the homogenised polynomial F (x, y) has many roots modulo small primes, where a root (r1 , r2 ) modulo
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+3
+
+p is considered as a point (r1 : r2 ) on the projective line P1 (Fp ). Boender, Brent,
+Montgomery and Murphy [6, 37, 35, 36] provide heuristic evidence which suggests
+good root properties increase a polynomial’s yield. The method of improving root
+properties by rotation [36, 15, 5] is more effective for polynomials with large skew,
+since large rotations may be used without impinging on their size properties. Additionally, highly skewed polynomials are often better suited to sieving over a region
+with large skew, which may permit sieving to be performed more efficiently [20].
+Thus, polynomial selection algorithms aim to generate highly skewed polynomials.
+2.1.2. The resultant bound. For nonzero coprime polynomials f1 , f2 ∈ Z[x] with a
+common root modulo N , the resultant bound provides a lower bound on the 2-norms
+of f1 and f2 :
+(2.1)
+
+deg f2
+
+kf1 k2
+
+deg f1
+
+· kf2 k2
+
+≥ N.
+
+The 2-norm may greatly over estimate the coefficient size of highly skewed polynomials. To provide tighter bounds, a generalisation of inequality (2.1) to the skewed
+2-norm is derived in this section. To begin, the definition and some properties of
+the resultant of two polynomials are introduced.
+Pm
+Pn
+Let A be a commutative ring (with unity). Let f = i=0 ai xi and g = i=0 bi xi
+be non-constant polynomials in A[x] such that deg f = m and deg g = n. The
+Sylvester matrix of f and g, denoted Syl(f, g), is the (m + n) × (m + n) matrix
+
+
+am am−1
+...
+...
+a0
+
+
+am
+am−1 . . .
+...
+a0
+
+
+
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+
+
+
+a
+a
+.
+.
+.
+.
+.
+.
+a
+m
+m−1
+0
+
+Syl(f, g) = 
+
+b
+b
+.
+.
+.
+.
+.
+.
+b
+n−1
+0
+ n
+
+
+
+b
+b
+.
+.
+.
+.
+.
+.
+b
+n
+n−1
+0
+
+
+
+
+...
+...
+...
+... ...
+bn bn−1 . . . . . . b0
+where there are n rows containing the ai , m rows containing the bi , and all empty
+entries are 0. The resultant of f and g, denoted Res(f, g), is equal to the determinant of the Sylvester matrix Syl(f, g). The resultant Res(f, g) has the following
+well-known properties (see [25, Chapter IV, §8]):
+• If A = C, α1 , . . . , αm are the roots of f and β1 , . . . , βn the roots of g, then
+Y
+(2.2)
+Res(f, g) = anm bm
+(αi − βj ).
+n
+i,j
+
+• There exist polynomials u, v ∈ A[x] such that uf + vg = Res(f, g).
+
+For coprime non-constant polynomials f1 , f2 ∈ Z[x] with a common root modulo
+N , the second property implies that N divides their resultant, which is nonzero by
+the first property. Thus, N ≤ |Res(f1 , f2 )| and inequality (2.1) is obtained by using
+Hadamard’s determinant theorem [17] to obtain an upper bound on | det Syl(f1 , f2 )|.
+Hadamard’s theorem is generalised by a result of Fischer [14], which states that the
+determinant of a positive definite Hermitian matrix H, partitioned in the form
+
+
+H1 X
+H=
+X ∗ H2
+
+4
+
+NICHOLAS COXON
+
+such that H1 and H2 are square matrices, satisfies det H ≤ det H1 · det H2 with
+equality if and only if X = 0. In the following, Fischer’s inequality is used to
+generalise the resultant bound.
+P
+Pn
+i
+i
+Lemma 2.2. Let f = m
+i=0 ai x and g =
+i=0 bi x be non-constant polynomials
+with real coefficients such that am 6= 0 and bn 6= 0. For s > 0, define θs = θs (f, g) to
+be the angle between the vectors (ai si )0≤i≤max{m,n} and (bi si )0≤i≤max{m,n} , where
+ai = 0 if i > m, and bi = 0 if i > n. Then
+(2.3)
+
+|Res(f, g)| ≤ |sin θs |min{m,n} · kf kn2,s kgkm
+2,s ,
+
+for all s > 0.
+
+If m 6= n, then the inequality is strict for all s > 0.
+Proof. Without loss of generality, since (2.3) is unaltered by interchanging f and
+g, assume that m ≤ n. For all s > 0, the right-hand side of the inequality in (2.3)
+is nonnegative if m = n, and positive if m 6= n. Consequently, the lemma holds if
+Res(f, g) = 0. Therefore, assume that Res(f, g) is nonzero.
+If α1 , . . . , αm ∈ C are the roots of f and β1 , . . . , βn ∈ C the roots of g, then
+
+Y
+Y  αi
+m n
+n m
+βj
+n m
+2
+2
+(αi − βj ) = am s
+Res(f, g) = am bn
+bn s
+−
+s
+s
+(2.4)
+i,j
+i,j
+
+n
+m
+= Res s− 2 f (sx), s− 2 g(sx) , for all s > 0.
+
+Set S = Syl s−m/2 f (sx), s−n/2 g(sx) for some s > 0, and define 2 × (m + n)
+submatrices A1 , . . . , Am of S as follows: the first and second rows of Ai are equal
+to the (n − m + i)th and (n + i)th rows of S, respectively. Define the 2m × 2m block
+matrix Q1 = (Ai Atj )1≤i,j≤m . If m = n, then there exists a 2m × 2m permutation
+matrix P1 such that Q1 = P1 SS t P1t . Consequently, (2.4) implies that
+(2.5)
+
+det Q1 = det(P1 )2 · det(S)2 = Res(f, g)2 ,
+
+if m = n.
+
+The assumption that Res(f, g) is nonzero and (2.4) imply that the rows of
+S are linearly independent. Thus, the matrix Q1 and its submatrices Qk =
+(Ai Atj )k≤i,j≤m , for 2 ≤ k ≤ m, are positive definite Hermitian. Consequently,
+Fischer’s inequality implies that det Qi ≤ det Ai Ati · det Qi+1 , for 1 ≤ i ≤ m − 1.
+The construction of A1 , . . . , Am implies that the matrices Ai Ati are equal, with
+!
+2
+kf k2,s
+kf k2,s kgk2,s cos θs
+t
+Ai Ai =
+, for 1 ≤ i ≤ m.
+2
+kf k2,s kgk2,s cos θs
+kgk2,s
+Hence,
+(2.6)
+
+det Q1 ≤
+
+m
+Y
+
+i=1
+
+
+2
+m
+m
+m
+det Ai Ati = (sin θs ) · kf k2,s kgk2,s .
+
+As s was arbitrary, combining (2.5) and (2.6) shows that (2.3) holds if m = n.
+Therefore, assume that m 6= n, and let A0 be the (n − m) × (m + n) submatrix of
+S consisting of its first n − m rows. Define the (m + n) × (m + n) block matrix
+Q0 = (Ai Atj )0≤i,j≤m . Then there exists a (m + n) × (m + n) permutation matrix
+P0 such that Q0 = P0 SS t P0t . Thus, (2.4) implies that
+det Q0 = det(P0 )2 · det(S)2 = Res(f, g)2 6= 0.
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+5
+
+Therefore, Q0 is positive definite Hermitian and, by using Fischer’s inequality to
+bound the determinant of Q0 , it follows that
+(2.7)
+
+Res(f, g)2 ≤ det A0 At0 · det Q1
+
+with equality if and only if A0 Atj = 0, for 1 ≤ j ≤ m. Hadamard’s determinant
+theorem (alternatively, Fischer’s inequality) implies that
+(2.8)
+
+det A0 At0 ≤ kf k2(n−m)
+2,s
+
+with equality if and only if the rows of A0 are pairwise orthogonal. Therefore, as s
+was arbitrary, combining inequalities (2.6), (2.7) and (2.8) yields (2.3) if m 6= n.
+Suppose for contradiction that m 6= n and equality holds in (2.3). Then equality
+must hold in (2.7) and (2.8). Thus, the rows of A0 are pairwise orthogonal and
+A0 Atj = 0, for 1 ≤ j ≤ m. It follows that the first row of S is orthogonal to rows
+2, . . . , m + 1 and n + 1. Therefore,
+k
+X
+i=0
+
+ai am−k+i s2i−k = 0, for 0 ≤ k ≤ m − 1; and
+
+m
+X
+
+ai bn−m+i s2i+
+
+n−3m
+2
+
+= 0.
+
+i=0
+
+By using the assumption that am and s are nonzero to successively eliminate coefficients, it follows that a0 , . . . , am−1 and thus bn are all zero. This is a contradiction
+since bn 6= 0. Hence, if m 6= n, then the inequality (2.3) is strict for all s > 0. 
+Corollary 2.3. Let f1 , f2 ∈ Z[x] be non-constant coprime polynomials with a common root modulo a positive integer N . Then
+deg f2
+deg f1
+N ≤ |sin θs |min{deg f1 ,deg f2 } · kf1 k2,s
+kf2 k2,s
+,
+
+for all s > 0.
+
+If m 6= n, then the inequality is strict for all s > 0.
+
+Remark 2.4. For non-constant polynomials f, g ∈ R[x] such that g = cf for some
+c ∈ R, the bound in Lemma 2.2 is attained for all s > 0: Res(f, g) = 0 and
+θs (f, g) = 0, for all s > 0. The bound in Lemma 2.2 is attained for s > 0 and d ≥ 1
+by polynomials f1 = xd −sd and f2 = xd +sd : the product formula (2.2) implies that
+√
+d
+d
+Res(f1 , f2 ) = (2sd )d , θs (f1 , f2 ) = π/2 and kf1 k2,s · kf2 k2,s = (sd/2 2)2d = (2sd )d .
+If d = 1 and s is an integer, then the lower bound in Corollary 2.3 is also attained,
+since x − s and x + s have a common root modulo 2s.
+For integers currently within reach of factorisation by the number field sieve, the
+optimal choice of degree sum deg f1 + deg f2 , the main complexity parameter of the
+algorithm [8, Section 11], remains small [36, Section 3.1]. For example, the factorisation of a 768-bit RSA modulus by Kleinjung et al. [21] and the special number
+field sieve [28] factorisation of 21039 −1 by Aoki et al. [2] both used polynomial pairs
+with a degree sum of 7. Corollary 2.3 shows that the restriction to small degree
+sums implies that a pair of number field sieve polynomials will necessarily have
+large coefficients. For large N without special form, how to find polynomials that
+are close to attaining the lower bound in Corollary 2.3 remains an open problem.
+2.2. Lattices in Rn . This section presents necessary background on lattices and
+lattice reduction. For further background, see [10, 30, 29, 41].
+A lattice in Rn is a subgroup Λ of Rn with the following property: there exists
+Pk
+R-linearly independent vectors b1 , . . . , bk ∈ Rn such that Λ =
+i=1 Zbi . The
+vectors b1 , . . . , bk are said to form a basis of Λ, denoted throughout by a k-tuple
+B = (b1 , . . . , bk ), and k is called the dimension or rank of Λ. When written with
+
+6
+
+NICHOLAS COXON
+
+respect to the canonical orthonormal basis of Rn , if bi = (bi,1 , . . . , bi,n ) for 1 ≤ i ≤ k,
+then the k ×n matrix B = (bi,j )1≤i≤k,1≤j≤n is called a basis matrix of Λ. The Gram
+matrix of B is the k × k symmetric matrix BB t . Let B1 and B2 be bases of Λ with
+respective basis matrices B1 and B2 . Then there exists a matrix U ∈ GLk (Z) such
+that U B1 = B2 . Thus, the Gram matrix of B2 is Q2 = U Q1 U t , where Q1 is the
+Gram matrix of B1 . Therefore, the determinant of the Gram matrix √
+is independent
+of the choice of basis. The determinant of Λ is defined to be det Λ = det Q, where
+Q is the Gram matrix of one of its bases. The zero lattice {0} is 0-dimensional and
+has determinant 1.
+The sublattices of a lattice are its subgroups. If Λ′ is a sublattice of Λ such
+that its dimension is equal to that of Λ, then Λ′ is called a full-rank sublattice.
+A sublattice Λ′ of Λ is full-rank if and only if [Λ : Λ′ ] is finite, in which case
+det Λ′ = [Λ : Λ′ ] · det Λ. Let hx, yi 7→ x · y denote the usual inner product on Rn .
+The dual lattice of Λ is
+Λ× = {x ∈ span(Λ) | hx, yi ∈ Z, for all y ∈ Λ}.
+
+For any basis B of Λ, the dual basis B × of span(Λ) is a basis of Λ× . A lattice with
+Λ× = Λ is called unimodular. The lattice Zn is unimodular.
+Let k.k2 be the Euclidean norm on Rn . For a k-dimensional lattice Λ the ith
+successive minimum λi (Λ) of Λ, for 1 ≤ i ≤ k, is defined to be the minimum
+of max1≤j≤i kv j k2 over all linearly independent lattice vectors v 1 , . . . , v i ∈ Λ.
+Minkowski’s second theorem (see [41, p. 35]) states that the geometric mean of
+1
+√
+the first t successive minima is at most γk det(Λ) k , for 1 ≤ t ≤ k, where γk is
+Hermite’s constant (see [41, p. 20]).
+An LLL-reduced basis (b1 , . . . , bk ) of a lattice Λ has the property that kbi k2
+approximates the ith successive minimum λi (Λ) for 1 ≤ i ≤ k:
+Theorem 2.5. Let (b1 , . . . , bk ) be an LLL-reduced basis of a k-dimensional lattice
+Λ ⊂ Rn . Then
+(1) kbi k2 ≤ 2(k−1)/2 λi (Λ) for 1 ≤ i ≤ k; and
+k(k−1)
+
+1
+
+(2) if Λ ⊆ Zn , then kbi k2 ≤ 2 4(k−i+1) det Λ k−i+1 for 1 ≤ i ≤ k.
+
+Property (1) of Theorem 2.5 is due to Lenstra, Lenstra and Lovás [27], and
+property (2) is due to May [31, Theorem 4]. The L2 algorithm [39, 38] transforms
+an arbitrary basis (b1 , . . . , bk ) of a k-dimensional lattice Λ ⊆ Zn into an LLLreduced basis in O(k 4 n(k + log β) log β) bit operations, where β = max1≤i≤k kbi k2 .
+3. Nonlinear polynomial selection
+Nonlinear polynomial generation algorithms are based on the observation that
+bounded degree integer polynomials with a prescribed root modulo N are characterised by an orthogonality condition on their coefficient vectors: an integer polyPd
+nomial f = i=0 ai xi of degree at most d has m as a root modulo N if and only if
+the coefficient vector (a0 , . . . , ad ) is orthogonal to (1, m, . . . , md ) modulo N . The
+set of all such coefficient vectors, denoted Lm,d , forms a lattice in Zd+1 [8, Section 12.2]. Nonlinear algorithms employ LLL-reduction to search for short vectors
+in sublattices of Lm,d. Theorem 2.5 suggests that this approach yields polynomials
+with small coefficients whenever the sublattices have small determinants.
+Using an approach introduced by Montgomery (see [13, Section 5] and [36, Section 2.3.1]), and since applied by several authors [33, 34, 46, 43, 22], nonlinear
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+7
+
+algorithms construct sublattices of Lm,d with small determinants from “small” geometric progressions modulo N . A geometric progression (GP) of length ℓ and ratio
+r modulo N , denoted throughout by a vector [c0 , . . . , cℓ−1 ], is an integer sequence
+with the property that ci ≡ c0 ri (mod N ), for 0 ≤ i < ℓ. Central to the construction of lattices for nonlinear algorithms is the observation that
+)
+(
+d
+X
+ai ci ≡ 0 mod N ,
+Lm,d = (a0 , . . . , ad ) ∈ Zd+1 |
+i=0
+
+for any length d + 1 GP [c0 , . . . , cd ] with ratio m modulo N , nonzero terms and
+gcd(c0 , N ) = 1. Given such a GP, nonlinear algorithms consider a sublattice of
+Lm,d contained in the Q-vector space orthogonal to [c0 , . . . , cd ]. The role of N in the
+definition of the sublattice is therefore made implicit, resulting in its determinant
+being dependent on the terms of the GP and not on N itself. Consequently, a
+GP with terms that are small when compared to N is expected to give rise to a
+sublattice of Lm,d with small determinant. More generally, lattices contained in the
+Q-vector space orthogonal to multiple linearly independent geometric progressions
+are considered.
+There are two main problems that immediately arise from this approach: firstly,
+establishing a relationship between the size of terms in the geometric progressions
+and the determinant of the resulting lattices; and secondly, constructing geometric
+progressions with small terms. To help address the first problem, some properties
+of orthogonal lattices are introduced in the next section. Section 3.2 takes a closer
+look at nonlinear polynomial generation and, based on the results of Section 3.1,
+provides criteria for the selection of geometric progressions. In Section 3.3, existing
+solutions to the second problem are reviewed.
+In this paper, big-O estimates may have implied constants depending on the
+degree parameter d, and N denotes a positive integer condemned to factorisation.
+
+3.1. The orthogonal lattice. For a lattice Λ ⊆ Zn , denote by EΛ the unique Qvector subspace of Qn that is generated by any of its bases. The dimension of EΛ
+over Q is equal to the dimension of Λ. Let EΛ⊥ denote the orthogonal complement of
+EΛ with respect to h , i. The orthogonal lattice of Λ is defined to be Λ⊥ = Zn ∩EΛ⊥ .
+A result of Martinet [30, Proposition 1.3.4] implies that dim Λ⊥ = dim EΛ⊥ if and
+only if dim(Zn )× ∩EΛ⊥⊥ = dim EΛ . The latter holds since (Zn )× ∩EΛ⊥⊥ = Zn ∩EΛ is
+a lattice (see [30, Proposition 1.1.3]) which contains Λ. Hence, dim Λ + dim Λ⊥ = n.
+For a lattice Λ ⊆ Zn , denote
+by Λ the lattice Zn ∩ EΛ . Nguyen and Stern [40,
+
+p. 200] show that det Λ = Λ : Λ · det Λ⊥ . A lattice Λ ⊆ Zn is called primitive
+if Λ = Λ. A k-dimensional lattice Λ ⊆ Zn with basis matrix B is primitive if and
+only if the greatest common divisor of all k × k minors
+of B is 1 (see [44, Corollary
+
+4.1c]). The following lemma determines the index Λ : Λ in general:
+Lemma 3.1. Let Λ ⊆ Zn be a k-dimensional lattice with basis
+matrix
+B. If Ω is
+
+
+the greatest common divisor of all k × k minors of B, then Λ : Λ = Ω.
+
+Proof. Let B be a basis matrix of Λ. The lattice Λ is a full-rank sublattice
+
+ of
+Λ, thus there exists a k × k integer matrix U such that | det U | = Λ : Λ and
+B = U · B. Hence, the lemma will follow by showing that Ω = | det U |.
+For indices 1 ≤ i1 < . . . < ik ≤ n, let Bi1 ,...,ik denote the k × k submatrix
+B formed by columns i1 , . . . , ik . Similarly, let B i1 ,...,ik denote the submatrix of
+
+8
+
+NICHOLAS COXON
+
+B formed by distinct columns i1 , . . . , ik . Then Bi1 ,...,ik = U · B i1 ,...,ik , for all
+1 ≤ i1 < . . . < ik ≤ n. Therefore, Ω = | det U | · Ω, where Ω is the greatest common
+divisor of all k × k minors of B. However, Ω = 1 as the lattice Λ is primitive. 
+3.1.1. The determinant under transformation. For a k-dimensional lattice Λ ⊆ Zn
+and S ∈ GLn (R), define ΛS = {x · S | x ∈ Λ}. Given a basis (b1 , . . . , bk ) of Λ,
+define (b1 , . . . , bk )S = (b1 S, . . . , bk S). Then ΛS is a k-dimensional lattice in Rn
+with basis (b1 , . . . , bk )S .
+Lemma 3.2. Let Λ be a lattice in Zn and S ∈ GLn (R). Then
+det Λ⊥
+S = |det S| · det ΛS −t ,
+
+where S −t = (S −1 )t denotes the inverse transpose of S.
+Proof. Fix a basis (b1 , . . . , bk ) of Λ. The lattice Λ is primitive, thus (b1 , . . . , bk )
+can be extended to a basis (b1 , . . . , bn ) of Zn [9, Lemma 2, Chapter 1]. Since Zn is
+×
+n
+n
+unimodular, the dual basis (b×
+1 , . . . , bn ) of R forms a basis of Z . The dual basis
+×
+is characterised by the equalities hbi , bj i = δi,j , for 1 ≤ i, j ≤ n, where δi,j is the
+×
+Kronecker delta. Therefore, (b×
+k+1 , . . . , bn ) forms a basis of the orthogonal lattice
+Λ⊥ . Hence, (b1 , . . . , bn )S −t forms a basis of ZnS −t , (b1 , . . . , bk )S −t forms a basis of
+×
+⊥
+ΛS −t and (b×
+k+1 , . . . , bn )S forms a basis of ΛS .
+For all 1 ≤ i, j ≤ n,
+×
+−t
+−1 t
+hb×
+bj = hb×
+i , bj i = δi,j .
+i S, bj S i = bi SS
+
+×
+Thus (b×
+1 , . . . , bn )S is a dual basis of (b1 , . . . , bn )S −t . Therefore, by applying a
+result of Martinet [30, Corollary 1.3.5], with E = Rn and F equal to the subspace
+of Rn generated by (b1 , . . . , bk )S −t , it follows that
+−1
+
+−1
+.
+
+|det S| = det ZnS −t = det ΛS −t · det Λ⊥
+S
+
+Given a basis of a lattice Λ ⊆ Zn and a diagonal matrix S ∈ GLn (R), the
+following theorem provides a method for computing the determinant of Λ⊥
+S:
+
+Theorem 3.3. Let Λ ⊆ Zn be a k-dimensional lattice with basis matrix B. For
+all indices 1 ≤ i1 < . . . < ik ≤ n, denote by Bi1 ,...,ik the k × k submatrix of
+B formed by columns i1 , . . . , ik . Suppose S = diag(S1 , . . . , Sn ) for nonzero real
+numbers S1 , . . . , Sn . Then
+v
+u
+
+2
+X
+u
+|S
+·
+·
+·
+S
+|
+det Bi1 ,...,ik
+1
+n
+⊥
+t
+det ΛS =
+,
+·
+Ω
+Si1 · · · Sik
+1≤i1 <...<ik ≤n
+
+where Ω is the greatest common divisor of all k × k minors of B.
+
+−1
+Proof. The index
+  of Λ in Λ is invariant under scaling by the matrix S , i.e.,
+ΛS −1 : ΛS −1 = Λ : Λ . Therefore, Lemma 3.1 and Lemma 3.2 imply that
+−1
+det Λ⊥
+· det ΛS −1 .
+S = |det S| · det ΛS −1 = |S1 · · · Sn | · Ω
+
+The matrix P = BS −1 forms a basis matrix of ΛS −1 . Therefore, by using the
+Cauchy–Binet formula (see [1, p. 86]) to compute det P P t , it follows that
+s
+X
+det ΛS −1 =
+det (Pi1 ,...,ik )2 ,
+1≤i1 <...<ik ≤n
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+9
+
+where Pi1 ,...,ik = Bi1 ,...,ik · diag(Si1 , . . . , Sik )−1 is the k × k submatrix of P formed
+by columns i1 , . . . , ik , for all 1 ≤ i1 < . . . < ik ≤ n.
+
+3.1.2. Computing a basis of the orthogonal lattice. Let Λ be a k-dimensional lattice
+in Zn and B = (bi,j )1≤i≤k,1≤j≤n be one of its basis matrices. A basis of the orthogonal lattice Λ⊥ is found by using Algorithm 2.4.10 or Algorithm 2.7.2 of Cohen [10]
+to compute a basis of the integer kernel of B. The former algorithm is based on
+Hermite normal form computation (see [10, Section 2.4.2]) and the latter algorithm
+on the MLLL algorithm of Pohst [42]. In practice, the MLLL based algorithm is
+preferable, since it is more likely to avoid large integer arithmetic [10, Section 2.4.3].
+Similarly, the LLL HNF algorithm of Havas, Majewski and Matthews [18, Sec2
+tion 6] can be used. If β = maxj k(b1,j , . . . , bk,j )k2 , then the algorithm performs
+O((n + k)4 log(nβ)) operation on integers of size O(n log(nβ)) [45]. The algorithm
+of Nguyen and Stern [40, Algorithm 5] computes an LLL-reduced basis of Λ⊥ .
+The algorithm of Nguyen and Stern is readily modified to produce an LLLreduced basis of Λ⊥
+the lattice
+S for any nonsingular n×n integer matrix S. Consider
+
+t
+∆ with basis given by the n × (n + k) block matrix D = S XB , where X is a
+positive integer. A vector of norm less than X in ∆ is of the form yD = (yS, 0) for
+some y ∈ Λ⊥ . Thus, an LLL-reduced basis of Λ⊥
+S is obtained by first computing an
+LLL-reduced basis (x1 , . . . , xn ) of ∆ for a sufficiently large value of X, and then
+projecting the basis vectors x1 , . . . , xn−k onto their first n consecutive entries. The
+existence of an LLL-reduced basis for Λ⊥
+S and property 2 of Theorem 2.5 imply that
+∆ contains linearly independent vectors y 1 , . . . , y n−k such that
+max ky i k2 ≤ 2
+
+(n−k)(n−k−1)
+4
+
+1≤i≤n−k
+
+det Λ⊥
+S.
+
+Thus, property 1 of Theorem 2.5 implies that it is sufficient to choose X such that
+n−1
+
+X>2 2 +
+
+(n−k)(n−k−1)
+4
+
+det Λ⊥
+S.
+
+Nguyen and Stern observe that theoretical bounds on LLL-reduced bases such as
+those in Theorem 2.5 are “quite pessimistic” in practical circumstances. Consequently, a smaller value of X may often be used in practice.
+3.2. Nonlinear polynomial generation. Nonlinear algorithms first construct k,
+1 ≤ k < d, linearly independent geometric progressions
+c1 = [c1,0 , . . . , c1,d ], c2 = [c2,0 , . . . , c2,d ], . . . , ck = [ck,0 , . . . , ck,d ]
+with ratio m modulo N , then use lattice reduction to search for polynomials with coefficient vectors that are short vectors in the lattice L⊥
+S , where L is the k-dimensional
+lattice with basis (c1 , . . . , ck ) and S = diag(1, s, . . . , sd ) for some positive skew s. In
+particular, a pair of polynomials is usually obtained from the first two basis vectors
+⊥
+of an LLL-reduced basis of L⊥
+is required to be a sublattice of
+S . The lattice L
+Lm,d, so that each vector in the lattice corresponds to a polynomial that admits
+m as a root modulo N . This requirement fails in general, but is satisfied whenever
+at least one ci has nonzero terms and gcd(ci,0 , N ) = 1. Furthermore, no ci should
+be a rational GP, otherwise each polynomial that corresponds to a vector in L⊥ is
+reducible.
+A vector a = (a0 , a1 s . . . , ad sd ) in the lattice L⊥
+S corresponds to an integer
+Pd
+i
+−(deg f )/2
+kak2 . Therefore, if the
+polynomial f = i=0 ai x such that kf k2,s = s
+
+10
+
+NICHOLAS COXON
+
+first two basis vectors of an LLL-reduced basis of L⊥
+S correspond to coprime degree
+d polynomials f1 , f2 ∈ Z[x], then Corollary 2.3 and Theorem 2.5 imply that
+1
+
+(3.1)
+
+2
+2d−k γd−k+1
+Nd
+d−k+1 ,
+· det(L⊥
+≤ kf1 k2,s · kf2 k2,s ≤
+S)
+| sin θs (f1 , f2 )|
+sd
+
+where θs is defined as in Lemma 2.2 and γn ≤ 1 + n/4, for all n ≥ 1 [32, p. 17].
+Furthermore, it follows p
+from the definition of an LLL-reduced basis [27, Section 1]
+2/3. Consequently, for the purpose of generating two
+that | sin θs (f1 , f2 )| ≥
+degree d polynomials, the determinant of L⊥
+S is considered to have optimal size
+−d(d−k+1)/2
+⊥
+(d−k+1)/2d
+whenever s
+det LS is O(N
+).
+Nonlinear algorithms attempt to construct geometric progressions such that the
+d+1
+determinant of L⊥
+and
+S is small by constructing “small” progressions. For x ∈ R
+−d/2
+any real number s > 0, define kxk2,s = s
+kxΣk2 , where Σ = diag(1, s, . . . , sd ).
+Then the following theorem shows that the determinant of L⊥
+S is small for geometric
+progressions c1 , . . . , ck such that kc1 k2,s−1 , . . . , kck k2,s−1 are small:
+Theorem 3.4. Let d and k be integers such that 1 ≤ k ≤ d, and suppose that
+c1 = [c1,0 , . . . , c1,d ], c2 = [c2,0 , . . . , c2,d ], . . . , ck = [ck,0 , . . . , ck,d ],
+are linearly independent geometric progressions, each with ratio m modulo N , such
+that gcd(c1,0 , N ) = 1. Let L ⊆ Zd+1 be the lattice with basis (c1 , . . . , ck ) and
+S = diag(1, s, . . . , sd ) for some positive real number s. Then the lattice L⊥
+S is
+(d − k + 1)-dimensional and
+det L⊥
+S ≤ s
+
+(3.2)
+
+d(d−k+1)
+2
+
+· N 1−k ·
+
+k
+Y
+
+i=1
+
+kci k2,s−1 .
+
+Proof. If k ≥ 2, then ci − (ci,0 /c1,0 )c1 ≡ 0 (mod N ), for 2 ≤ i ≤ k. Thus, N k−1
+divides each k × k minor of the basis matrix C = (ci,j )1≤i≤k,0≤j≤d of L. Hence,
+Lemma 3.1 and Lemma 3.2 imply that L⊥
+S is a (d − k + 1)-dimensional lattice and
+(3.3)
+
+d+1
+
+1−k
+det L⊥
+· det LS −1 = s( 2 ) · N 1−k · det LS −1 .
+S ≤ |det S| · N
+
+The matrix CS −1 is a basis matrix of LS −1 . Thus, by applying Hadamard’s determinant theorem, it follows that
+det LS −1 ≤
+
+k
+Y
+
+i=1
+
+ci S −1 2 =
+
+k
+Y
+
+i=1
+
+d
+
+dk
+
+s− 2 · kci k2,s−1 = s− 2 ·
+
+Combining this inequality with (3.3) yields (3.2).
+
+k
+Y
+
+i=1
+
+kci k2,s−1 .
+
+
+To construct multiple geometric progressions with a common ratio modulo N ,
+Montgomery [33, 34] suggests constructing an initial GP of length 2d−1 from which
+d − 1 geometric progressions of length d + 1 are obtained by taking subsequences
+of successive terms. More generally, Koo, Jo and Kwon [22, Section 3] suggest
+constructing an initial GP c = [c0 , . . . , cℓ−1 ] of length ℓ, where d < ℓ < 2d, from
+which ℓ − d geometric progressions of length d + 1 are obtained:
+c1 = [c0 , . . . , cd ], c2 = [c1 , . . . , cd+1 ], . . . , cℓ−d = [cℓ−d−1 , . . . , cℓ−1 ].
+If the vectors c1 , . . . , cℓ−d do not form a basis for an (ℓ − d)-dimensional sublattice
+of Lm,d, then c is rejected. For s > 0, the product of the norms kci k2,s−1 is bounded
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+11
+
+in terms of the norm of the initial GP:
+ℓ−d
+Y
+i=1
+
+kci k2,s−1 =
+
+ℓ−d
+Y
+i=1
+
+s
+
+ℓ−d−1
+−(i−1)
+2
+
+ℓ−d
+
+· kci k2,s−1 ≤ kck2,s−1 .
+
+Therefore, to generate two degree d polynomials of optimal size, (3.1) and Theorem 3.4 suggest constructing an initial GP c such that
+ (2d−1)(ℓ−d)−(d−1) 
+2d(ℓ−d)
+,
+(3.4)
+kck2,s−1 = O N
+
+for some s > 0. For fixed d, the weakest size requirements on c occur when ℓ = 2d−
+1, corresponding to Montgomery’s algorithm. For this case, the orthogonal lattice
+is 2-dimensional. Thus, rather than computing an LLL-reduced basis of L⊥
+S , a basis
+⊥
+(b1 , b2 ) such that kb1 k2 = λ1 (L⊥
+)
+and
+kb
+k
+=
+λ
+(L
+)
+is
+computed
+in
+polynomial
+2
+2
+S
+S
+2
+time with Lagrange’s algorithm [23] (see also [41, p. 41]). The polynomials
+f1
+√
+and f2 corresponding to the basis vectors then satisfy | sin θs (f1 , f2 )| ≥ 3/2 (see
+[41, p. 41]). For large N , the problem of how to efficiently constructing geometric
+progressions that satisfy (3.4) remains open for all parameters (d, ℓ) 6= (2, 3).
+Koo, Jo and Kwon [22, Section 3] observe that a length ℓ GP can be used to
+generate at least one degree d polynomial for all ℓ/2 ≤ d < ℓ. Consequently, distinct
+degree polynomial pairs with a common root modulo N are obtained by varying the
+parameter d. This observation provides a method of producing polynomial pairs
+with odd degree sum, allowing nonlinear algorithms to be applied to N of any size.
+3.3. Existing algorithms. The development of nonlinear generation algorithms
+has been, for the most part, evolutionary, with successive algorithms building on
+their predecessors. The progression of improvements and generalisations in existing
+nonlinear algorithms is reviewed in this section.
+3.3.1. Montgomery’s two quadratics algorithm. Montgomery’s two quadratics algorithm (see [13, Section 5] and [36, Section 2.3.1]) uses a length d+1 = 3 GP construction. The construction begins with the selection of an integer p ≥ 2, which is usually
+chosen to be prime, such that gcd(p, N ) = 1 and N is quadratic residue modulo p.
+Then one of the values m ∈ Z such that m2 ≡ N (mod p) and |m − N 1/2 | ≤ p/2
+is chosen. Finally, the GP is taken to be [c0 , c1 , c2 ] = [p, m, (m2 − N )/p], which
+has ratio m/p modulo N . For a positive integer skew s and an integer t ≡ c2 /c1
+(mod c0 ), LLL-reduction is performed on the row vectors of the matrix
+
+
+c1
+−c0 s 0
+,
+c1 t−c2
+−ts s2
+c0
+⊥
+2
+which is a basis matrix of the lattice ([c0 , c1 , c2 ]Z)
+S , where S = diag(1, s, s ).
+√
+−1
+For a given skew s > 0, choosing p = O(s
+N ) guarantees that (3.4) holds.
+As a result, Montgomery’s algorithm is capable of producing polynomials with
+optimal coefficient size. However, the restriction to quadratic polynomials means
+that the algorithm is not suitable for N containing more than 110–120 digits [36,
+Section 2.3.1]. Examples of polynomials generated by Montgomery’s two quadratics
+algorithm are provided by Elkenbracht-Huizing [13, Section 10].
+
+12
+
+NICHOLAS COXON
+
+3.3.2. The Williams and Prest–Zimmermann algorithms. Williams [46, Chapter 4]
+introduces an additional length 3 GP construction for producing pairs of quadratic polynomials. Roughly speaking, Williams’ construction is the specialisation
+of Montgomery’s construction obtained by setting p = 1. Williams additionally
+provides a length 4 GP construction for producing pairs of cubic polynomials. In
+both of Williams’ algorithms, the skew parameter is restricted to s = 1. Prest
+and Zimmermann [43] extended Williams’ algorithms to skews s 6= 1, leading to a
+reduction in coefficient norms for the cubic algorithm. In addition, they generalised
+their algorithm to arbitrary degrees.
+In the algorithms of Williams and Prest–Zimmermann, geometric progressions
+of length d + 1 are constructed by first selecting an integer m such that |md − N | =
+O(N 1−1/d ). Then the GP is taken to be
+[c0 , . . . , cd ] = [1, m, . . . , md−1 , md − N ],
+which has ratio m modulo N . For a positive integer skew s, taken equal to one in
+Williams’ algorithm, LLL-reduction is performed on the row vectors of the matrix
+
+
+−c1 s 0 . . . 0
+ −c2 0 s2 . . . 0 
+
+
+ ..
+.. .. . .
+..  ,
+ .
+. . 
+. .
+−cd 0 0 . . . sd
+⊥
+
+which is a basis matrix of the lattice ([c0 , . . . , cd ]Z)S , where S = diag(1, s, . . . , sd ).
+Examples of polynomials generated by the Williams and Prest–Zimmermann
+algorithms are found in [46, Chapter 5] and [43].
+
+3.3.3. The Koo–Jo–Kwon algorithms. Koo, Jo and Kwon [22, Section 4.1] generalise Montgomery’s GP construction to arbitrary degrees. They construct geometric
+progressions of length d + 1 by first selecting positive integers p = O((kN )1/d ) and
+k = O(1) such that xd ≡ kN (mod √
+p) has a nonzero solution. An integer m satisfying md ≡ kN (mod p) and |m − d kN | ≤ p/2 is chosen. Then the GP is taken
+to be
+
+
+md − kN
+[c0 , . . . , cd ] = pd−1 , pd−2 m, . . . , md−1 ,
+,
+p
+
+which has ratio m/p modulo N . Koo, Jo and Kwon use the modified Nguyen–Stern
+algorithm described in Section 3.1.2 to compute an LLL-reduced basis of the lattice
+⊥
+([c0 , . . . , cd ]Z)S , with S = diag(1, s, . . . , sd ) for a positive integer skew s.
+The Koo–Jo–Kwon GP construction reduces to Montgomery’s construction for
+parameters d = 2, k = 1, and the constructions of Williams and Prest–Zimmerman
+for p = k = 1. The Koo–Jo–Kwon and Prest–Zimmermann algorithms produce
+polynomials which satisfy the same theoretical bounds on coefficient norms (see
+Section 4.1). However, the additional parameters p and k in the Koo–Jo–Kwon
+construction permit a greater number of geometric progressions to be constructed
+for any given N , which may be leveraged in practical circumstances to find polynomials with smaller coefficients.
+By extending their length d + 1 GP construction, Koo, Jo and Kwon [22, Section 4.2] obtain a length d + 2 construction. The construction begins with the
+selection of positive integers p = Θ((kN )1/d ) and k = O(1) such that xd ≡ kN
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+13
+
+(mod p2 ) has a nonzero solution m = Θ(p). Then the GP is taken to be
+
+
+d
+d
+d−1 d−2
+d−1 m − kN m(m − kN )
+,
+,
+[c0 , . . . , cd+1 ] = p , p m, . . . , m ,
+p
+p2
+
+which has ratio m/p modulo N . Koo, Jo and Kwon do not analyse their algorithm
+for skews s 6= 1. This analysis is undertaken in Section 5, where it is shown that
+the algorithm improves upon previous algorithms for d ≥ 3, with polynomials of
+optimal size produced when d = 3. However, this improvement is offset in part by
+the additional complexity of determining suitable parameters m, p and k.
+4. Length d + 1 construction revisited
+Each of the length d + 1 GP constructions discussed in Section 3.3 gave rise to
+geometric progressions [c0 , . . . , cd ] such that [c0 , . . . , cd−1 ] forms a rational GP. The
+following theorem determines all geometric progressions with this property that, in
+addition, satisfy the properties necessary for polynomial generation:
+Theorem 4.1. For d ≥ 2, [c0 , . . . , cd ] is a GP modulo N such that
+(1) c0 , . . . , cd are nonzero,
+(2) gcd(c0 , N ) = 1,
+(3) [c0 , . . . , cd−1 ] is a rational GP, and
+(4) [c0 , . . . , cd−1 , cd ] is not a rational GP
+if and only if there exist nonzero integers a, p, m and k such that gcd(m, p) = 1
+and gcd(ap, N ) = 1, (amd − kN )/p is a nonzero integer, and
+
+
+d
+d−1
+d−2
+d−1 am − kN
+(4.1)
+[c0 , . . . , cd ] = ap , ap m, . . . , am ,
+.
+p
+Proof. Suppose that d ≥ 2 and [c0 , . . . , cd ] is a GP modulo N that satisfies properties (1)–(4) of the theorem. Then properties (1) and (3) imply that there exist
+nonzero integers a, p, and m such that gcd(m, p) = 1 and ci = apd−i−1 mi , for
+0 ≤ i ≤ d − 1. Consequently, gcd(ap, N ) = 1 as a result of the second property.
+As [c0 , . . . , cd ] is a GP modulo N , it follows that c1 cd−1 − c0 cd ≡ 0 (mod N ). If
+c1 cd−1 − c0 cd = 0, then cd = amd /p and [c0 , . . . , cd ] is a rational GP, violating the
+fourth property. Therefore, there exists a nonzero integer u such that
+
+uN = c1 cd−1 − c0 cd = apd−2 amd − pcd .
+Thus, amd − pcd = kN for some nonzero integer k, since gcd(ap, N ) = 1. Hence,
+(amd − kN )/p is a nonzero integer and (4.1) holds. The converse is readily established.
+
+
+The GP construction provided by Theorem 4.1 encompasses each of the length
+d+1 constructions discussed in Section 3.3. The inclusion of the parameter a, which
+is not present in previous constructions, permits a greater number of geometric progressions to be constructed for any given N . Parameters for the construction may be
+obtained by the Chinese remainder theorem based methodology of Kleinjung [19],
+and Koo, Jo and Kwon [22, Section 4.1]. Heuristically, axd − kN has on average
+one root modulo each prime, when the average is computed over all primes (see [24,
+Chapter VIII, Section 4]). Furthermore, roots may be lifted (see [10, Section 3.5.3])
+to higher powers for primes which do not divide
+
+Res axd − kN, adxd−1 = (ad)d (−kN )d−1 .
+
+14
+
+NICHOLAS COXON
+
+Thus, for any choice of a and k, there is an abundant supply of values for p and m
+that may be used in the construction.
+For a GP c of the form (4.1), the following lemma provides an efficient method
+for computing a basis of the lattice (cZ)⊥ :
+Lemma 4.2. Let c = [c0 , . . . , cd ] be a GP of the form (4.1), where d ≥ 2 and a, p,
+m and k are nonzero integers such that gcd(m, p) = 1, gcd(ap, N ) = 1 and (amd −
+kN )/p is a nonzero integer. Define ã = a/ gcd(a, cd ) and k̃ = k/ gcd(a, cd ). Then
+for any degree d polynomial f˜ ∈ Z[x] with leading coefficient ã and f˜(m/p)pd = k̃N ,
+a vector (a0 , . . . , ad ) ∈ Zd+1 is orthogonal to c if and only if there exist integers
+r0 , . . . , rd−1 such that
+(4.2)
+
+d
+X
+i=0
+
+ai xi = rd−1 f˜(x) + (px − m) ·
+
+d−2
+X
+
+ri xi .
+
+i=0
+
+Moreover, such a polynomial f˜ exists and can be computed with Algorithm 4.3.
+Proof. By construction, amd − kN = cd p and gcd(a, N ) = 1. Thus, k̃ is an integer
+and ãmd − k̃N ≡ 0 (mod p). Therefore, by modifying arguments of Kleinjung [19,
+Lemma 2.1], it is shown that applying Algorithm 4.3 (which appears below) with
+n = j = d and an = ã returns a degree d polynomial f˜ ∈ Z[x] with leading
+coefficient ã and f˜(m/p)pd = k̃N . Fix such a polynomial f˜ and let (a0 , . . . , ad ) ∈
+Zd+1 be orthogonal to c. Then
+!
+ i
+ 
+d
+d
+X
+m
+1 pX
+ad k
+ad ˜ m
+ad k̃
+ai
+= d
+ai ci +
+− f
+N−
+N = 0,
+p
+ã
+p
+p
+a i=0
+a
+ã
+i=0
+Pd−1
+where ad /ã is an integer, since a divides each term of the sum i=0 ai ci = −ad cd
+and cd 6= 0. Therefore, the assumption that gcd(m, p) = 1 and Gauss’ lemma imply
+that there exists a polynomial r ∈ Z[x] such that
+d
+X
+i=0
+
+ai xi −
+
+ad ˜
+f (x) = r(x) · (px − m).
+ã
+
+Moreover, since the polynomial on the left-hand side has degree less than d, the
+degree of r is at most d − 2. Thus, if a vector (a0 , . . . , ad ) ∈ Zd+1 is orthogonal to
+c, then there exist integers r0 , . . . , rd−1 such that (4.2) holds. Conversely, suppose
+that (a0 , . . . , ad ) ∈ Zd+1 and (4.2) holds for integers r0 , . . . , rd−1 . Then
+ d−2
+  
+ 
+d
+X
+X
+m
+m
+rd−1
+d
+˜
+ri ci = 0,
+af
+p − ãkN + p − m ·
+ai ci =
+p
+p
+p
+i=0
+i=0
+since f˜(m/p)pd = ãkN/a. Thus, the vector (a0 , . . . , ad ) is orthogonal to c.
+
+
+
+The following algorithm, which is used to prove the existence of the polynomial
+˜
+f in Lemma 4.2, is based on the CADO-NFS [4] implementation of a number field
+sieve polynomial construction of Kleinjung [19, Lemma 2.1]:
+Algorithm 4.3.
+Input: Nonzero integers m, p, k̃ and N such that gcd(m, p) = 1; and integers
+Pn
+aj , . . . , an such that 1 ≤ j ≤ n and pn−j+1 divides k̃N − i=j ai mi pn−i .
+Pn
+Output: An integer polynomial f˜ = i=0 ai xi such that f˜(m/p)pn = k̃N .
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+15
+
+1. If j = n, set rj = k̃N ; otherwise, set
+P
+k̃N − ni=j+1 ai mi pn−i
+rj =
+.
+pn−j
+2. For i = j − 1, . . . , 0, compute
+ri =
+
+ri+1 − ai+1 mi+1
+p
+
+and ai =
+
+ri + ti p
+,
+mi
+
+where ti ∈ [−mi /2, mi /2) ∩ Z such that ti ≡ −ri /p (mod mi ).
+Pn
+3. Compute and return the polynomial f˜ = i=0 ai xi .
+
+Suppose that c = [c0 , . . . , cd ] is a GP of the form (4.1), and set ã = a/ gcd(a, cd )
+and k̃ = k/ gcd(a, cd ). Then gcd(ã, k̃) = gcd(k̃, p), since amd − kN = cd p and
+gcd(m, p) = 1. Thus, if g = gcd(ã, k̃) is not equal to 1, then the vector c∗ =
+[c0 /g d , c1 /g d−1, . . . , cd ] has integer entries, is a GP with ratio gm/p modulo N , and
+has smaller terms than c: for all s > 0,
+kc∗ k2,s−1 < kck2,s−1
+
+and
+
+d
+
+kc∗ k2,(sg)−1 = g − 2 kck2,s−1 .
+
+From Lemma 4.2 it follows that a degree d polynomial f generated using c has
+leading coefficient divisible by ã, and k̃N divides f (m/p)pd. Thus, the selection of
+the parameters a, p and k may be used to positively influence root properties. For
+example, if a = 1, then Koo, Jo and Kwon [22, Remark 5] suggest using values of k
+that contain a product of small primes, ensuring there is a root modulo each prime
+in the product. However, care must be taken to ensure that the selection of a, p
+and k does not preclude the existence of polynomial pairs with small coefficients:
+Corollary 4.4. With notation as in Lemma 4.2, if coprime degree d polynomials
+f1 , f2 ∈ Z[x] have coefficient vectors that belong to the lattice (cZ)⊥ , then
+(4.3)
+
+ãk̃N
+
+1/d
+
+≤ |sin θs (f1 , f2 )| · kf1 k2,s kf2 k2,s ,
+
+for all s > 0.
+
+Proof. Suppose that polynomials f1 and f2 satisfy the conditions of the corollary.
+Then Lemma 4.4 implies that there exist integers r1,0 , . . . , r1,d−1 , r2,0 , . . . , r2,d−1
+and a degree d polynomial f˜ ∈ Z[x] with leading coefficient ã and f˜(m/p)pd = k̃N
+P
+j
+such that fi = ri,d−1 f˜ + (px − m) · d−2
+j=0 ri,j x , for i = 1, 2. Let A = Z[y0 , . . . , yd ]
+for algebraically independent indeterminates y0 , . . . , yd and define the following
+Pd
+polynomials in A[x]: g̃ = j=0 yj xj ; and gi = fi + ri,d−1 (g̃ − f˜), for i = 1, 2.
+Let ϕ : A → C be a ring homomorphism such that ϕ(g̃(m/p)pd ) = 0 and
+ϕ̃ : A[x] → C[x] be the natural extension of ϕ. If ϕ̃(g1 ) = 0 or ϕ̃(g2 ) = 0, then
+ϕ(Res(g1 , g2 )) = 0, since Res(g1 , g2 ) is homogeneous of degree d in the coefficients
+of gi , for i = 1, 2. If ϕ̃(g1 ) and ϕ̃(g2 ) are nonzero, then they are non-constant
+and have common root m/p. Thus, Res (ϕ̃(g1 ), ϕ̃(g2 )) = 0, and by replacing each
+entry of Syl(g1 , g2 ) by its image under ϕ and permuting the rows of the resulting matrix so that Syl (ϕ̃(g1 ), ϕ̃(g2 )) appears in the lower right corner, it follows
+that ϕ (Res(g1 , g2 )) = 0. Therefore, for every ring homomorphism ϕ : A → C,
+if ϕ(g̃(m/p)pd ) = 0 then ϕ (Res(g1 , g2 )) = 0. The polynomial g̃(m/p)pd ∈ A is
+irreducible, since it is linear and gcd(m, p) = 1. Thus, Hilbert’s Nullstellensatz
+(see [25, p. 380]) and Gauss’ lemma imply that g̃(m/p)pd divides Res(g1 , g2 ) in
+A. Moreover, since yd is coprime to g̃(m/p)pd and divides each entry in the first
+column of Syl(g1 , g2 ), it follows that yd g̃(m/p)pd divides Res(g1 , g2 ) in A.
+
+16
+
+NICHOLAS COXON
+
+Pd
+Let σ : A → Z be the ring homomorphism such that f˜ = j=0 σ(yj )xj and
+σ̃ : A[x] → Z[x] be the natural extension of σ. Then σ̃(g1 ) = f1 and σ̃(g2 ) = f2 .
+Consequently, replacing each entry of Syl(g1 , g2 ) by its image under σ shows that
+σ(Res(g1 , g2 )) = Res (σ̃(g1 ), σ̃(g2 )) = Res(f1 , f2 ).
+Moreover, σ(yd g̃(m/p)pd ) = ãf˜(m/p)pd . Therefore, ãk̃N divides Res(f1 , f2 ), which
+is nonzero since f1 and f2 are coprime. Hence, |ãk̃N | ≤ |Res(f1 , f2 )| and the proof
+is completed by applying Lemma 2.2.
+
+Theorem 4.1 and Lemma 4.2 suggest the following algorithm for nonlinear polynomial generation:
+Algorithm 4.5.
+Input: An integer d ≥ 2; nonzero integers a, p, m, k and N such that gcd(m, p) = 1,
+gcd(ap, N ) = 1 and (amd − kN )/p is a nonzero integer; and a positive integer s.
+Output: Integer polynomials f1 and f2 of degree at most d with common root
+m/p modulo N .
+1. Compute g = gcd(a, (amd − kN )/p) and apply Algorithm 4.3 with n = j = d,
+Pd
+an = a/g and k̃ = k/g to obtain an integer polynomial f˜ = i=0 ai xi such that
+f˜(m/p)pd = k̃N .
+2. Compute an LLL-reduced basis (b1 , . . . , bd ) of the lattice with d × (d + 1) basis
+matrix BS, where S = diag(1, s, . . . , sd ) and
+
+
+a0 . . . . . . ad−1 ad
+ 0
+. . . −m
+p
+0
+
+
+B= .
+.
+..  .
+.
+.
+.
+.
+.
+ ..
+.
+.
+.
+.
+−m p
+...
+0
+0
+3. Let bi = (bi,0 , . . . , bi,d ) · S, for i = 1, 2. Compute and return the polynomials
+P
+P
+f1 = dj=0 b1,j xj and f2 = dj=0 b2,j xj .
+
+Parameter selection for Algorithm 4.5 is considered in the next section. To
+guide the selection of parameters, an upper bound on the size of the polynomials
+returned by the algorithm, expressed as a function of the algorithm’s parameters,
+is now established:
+Theorem 4.6. For inputs d, a, p, m, k, N and s, Algorithm 4.5 returns polynomials f1 and f2 such that
+1
+ d(d−1) d2
+ d−i+1
+deg fi
+kfi k2,s ≤ s− 2
+2 4 s 2 (ã/a) kck2,s−1
+, for i = 1, 2,
+where c = [c0 , . . . , cd ] is the GP defined in (4.1) and ã = a/ gcd(a, cd ).
+
+Proof. Suppose that polynomials f1 , f2 ∈ Z[x] are obtained by applying Algorithm 4.5 with parameters d, a, p, m, k, N and s. Then kfi k2,s = s−(deg fi )/2 kbi k2
+for i = 1, 2, where b1 and b2 belong to the basis (b1 , . . . , bd ) computed in Step 2
+of the algorithm. Let c = [c0 , . . . , cd ] be the GP defined in (4.1), L be the 1dimensional lattice cZ and S = diag(1, s, . . . , sd ). Then Lemma 4.2 implies that
+(b1 , . . . , bd ) is a basis of the lattice L⊥
+S . Moreover, since (b1 , . . . , bd ) is LLL-reduced,
+it follows from property 2 of Theorem 2.5 that
+(4.4)
+
+d(d−1)
+
+kfi k2,s ≤ 2 4(d−i+1) s−
+
+deg fi
+2
+
+1
+
+d−i+1 ,
+det(L⊥
+S)
+
+for i = 1, 2.
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+17
+
+As m and p are coprime, gcd(c0 , . . . , cd−1 ) = a and thus gcd(c0 , . . . , cd ) = gcd(a, cd ).
+Therefore, Theorem 3.3 implies that the determinant of L⊥
+S is
+r
+2
+2
+2
+ã (d+1
+2 + c1 + . . . + cd = ã s d2 kck
+2 )
+s
+c
+(4.5)
+det L⊥
+=
+S
+0
+2,s−1 ,
+2
+2d
+a
+s
+s
+a
+where ã = a/ gcd(a, cd ). Combining (4.4) and (4.5) completes the proof.
+
+
+
+4.1. Parameter selection for Algorithm 4.5. In this section, it is shown that
+for sufficiently large N , Algorithm 4.5 can be used to find degree d polynomials
+f1 , f2 ∈ Z[x] with a common root modulo N and
+
+
+2
+2
+(4.6)
+kfi k2,s = O N (1/d)(d −2d+2)/(d −d+2) , for i = 1, 2.
+
+Thus, polynomials of size O(N 1/4 ) are obtained for d = 2; O(N 5/24 ), for d = 3; and
+O(N 5/28 ), for d = 4. Corollary 2.3 implies that the exponent for d = 2 is optimal.
+The bound (4.6) is obtained without any assumptions on the size of vectors in
+LLL-reduced bases, which is in contrast to the previous analyses of [43, 22].
+Theorem 4.6 suggests that the input parameters a, p, m, k and s of Algorithm 4.5
+should be selected so that kck2,s is minimised, where c = [c0 , . . . , cd ] is the corresponding GP defined in (4.1). Assume that a, p and k are positive, and define
+m̃ = (kN/a)1/d . Then the contribution of cd to kck2,s−1 is minimised by selecting m such that |m − m̃| is small. Therefore, assume that m is chosen such that
+amd ≡ kN (mod p) and 0 ≤ m − m̃ ≤ ps/d. Then
+ d−1
+a(md − m̃d )
+da(m − m̃)md−1
+cd
+m
+d−1 d
+2
+.
+=
+<
+≤
+ap
+s
+d
+d
+d
+ps
+s2
+ps 2
+ps 2
+The remaining terms of the GP satisfy
+ i
+ci
+m
+d−1 d
+2
+,
+=
+ap
+s
+d
+i−
+ps
+s 2
+
+for 0 ≤ i ≤ d − 1.
+
+Therefore, assume that ps ≤ m. Then
+√
+d
+(4.7)
+kck2,s−1 < d + 1 as1− 2 md−1 .
+This bound on kck2,s−1 is minimalised by taking the skew parameter s as large as
+possible. However, if s is too large, then the basis (b1 , . . . , bd ) computed in Step 2
+of Algorithm 4.5 has b1 = ±(−m, ps, 0, . . . , 0), resulting in the algorithm returning
+f1 = ±(px−m). Following the approach of Prest and Zimmermann [43, Section 3.2],
+the problem of the algorithm returning polynomials such that deg f1 < d is avoided
+by restricting the size of s.
+If Algorithm 4.5 returns a polynomial f of degree less than d, then Lemma 4.2
+implies that m divides the coefficient of the term of least degree in f , from which
+it follows that kf k2,s > s−(deg f )/2 m, for all s > 0. Therefore, Theorem 4.6 and
+inequality (4.7) imply that for s such that
+√
+ d1
+d−1
+d
+d
+d + 1 ãs1− 2 md−1
+≤ m,
+(4.8)
+2 4 s2
+Algorithm 4.5 returns polynomials f1 and f2 such that deg f1 = d. Furthermore,
+the basis vector b1 corresponding to f1 and the vector b = (−m, sp, 0, . . . , 0) are
+
+18
+
+NICHOLAS COXON
+
+linearly independent and kb1 k2 ≤ m < kbk2 . Thus, property 1 of Theorem 2.5
+implies that
+kf2 k2,s = s−
+
+deg f2
+2
+
+kb2 k2 ≤ s−
+
+deg f2
+2
+
+d−1
+
+2 2 kbk2 ≤ s−
+
+deg f2
+2
+
+d
+
+2 2 m.
+
+Hence, for positive a, p and k, if m and s are chosen such that
+
+! 22 
+r
+
+
+d −d+2
+ 1
+
+m
+2
+ps
+
+ and ps ≤ m,
+(4.9)
+0 ≤ m − m̃ ≤ , s = √
+d
+2 ã d + 1
+then Algorithm 4.5 returns polynomials f1 and f2 such that deg f1 = d and
+
+
+
+fi
+
+ d1 1− deg
+deg fi
+d2 −d+2
+kN
+ , for i = 1, 2.
+kfi k2,s = O ã d2 −d+2
+a
+
+Setting a = O(1) and k = O(1) leads to f1 satisfying the bound in (4.6). Then
+(4.6) holds, if the degree of f2 is equal to d. Otherwise, replacing f2 with f1 + f2
+provides a pair of degree d polynomials that satisfy (4.6).
+p In the latter case, it is
+no longer guaranteed that polynomials with | sin θs | ≥ 2/3 are obtained.
+For m ≥ m̃, the choice of s in (4.9) satisfies s/d ≥ 1 whenever
+
+(4.10)
+
+m̃ ≥ 2
+
+d(d−1)
+4
+
+a(d + 1)
+
+d2 −d+3
+2
+
+.
+
+Moreover, if m is positive and s is given by (4.9), then
+ 22
+d(d−1)
+m  d(d−1) √
+d −d+2
+> 1.
+≥ 2 4 ã d + 1 m 2
+s
+
+
+Thus, for sufficiently large N , setting a = k = p = 1 and m = N 1/d proves the
+existence of parameters for Algorithm 4.5 that satisfy (4.9).
+Example 4.7. Let N be the 91-digit composite number
+c91 =4567176039894108704358752160655628192034927306
+969828397739074346628988327155475222843793393.
+
+
+For parameters d = 3, a = k = p = 1, m = N 1/3 and s = 23271635, Algorithm 4.5
+returns the following cubic polynomials:
+f1 = 10363104x3
+
+f2 = 66955475x3
+
+− 23437957x2
+
+− 151431419x2
+
+− 21147168576512214234486x
+− 109084939899748327411476171840
+
++ 23469760045042762614639x
+− 754597461912921474902918473271
+
+Their norms are kf1 k2,s ≈ N 0.206 and kf2 k2,s ≈ N 0.210 , for s = 23271635.
+For positive a, p and k such that (4.10) holds, if
+ d(d−1) √
+ 22
+d(d−1)
+d −d+2
+p≤ 2 4
+,
+d + 1 m̃ 2
+
+then each solution r ∈ Z/pZ of axd ≡ kN (mod p) yields at least one value of
+m ∈ Z such that m ≡ r (mod p), 0 ≤ m − m̃ ≤ ps/d and ps ≤ m for the choice of
+s in (4.9). Therefore, additional parameters that satisfy (4.9) may be constructed
+by the Chinese remainder theorem based methodology referenced in Section 4.
+These parameters yield the same theoretical bounds on coefficient size. However,
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+19
+
+the ability to construct a large number of small geometric progressions may be
+leveraged to find polynomials with smaller coefficients in practice:
+Example 4.8. Let N = c91, the 91-digit number from Example 4.7. For parameters d = 3, a = 1, k = 5, s = 26611809,
+p = 934237167355490922 and m = 2837086552973239856241381969109,
+which satisfy (4.9), Algorithm 4.5 returns the following cubic polynomials:
+g1 = 21545x3
+
+g2 = 1356640x3
+
++ 3349054x2
+
++ 210882368x2
+
+− 10356871479051937193x
++ 1263295294354066431546642250
+
+− 652118673869097609994x
+− 11972068980454909092333428939
+
+The product kg1 k2,s · kg2 k2,s is approximately N 0.368 , for s = 26611809.
+The condition (4.8) on the skew parameter s, used to guarantee that Algorithm 4.5 returns at least one degree d polynomial, is rather pessimistic in practical
+circumstances, with the condition being sufficient, but frequently far from necessary. Consequently, in practice, it may prove worthwhile to use skews that are
+larger than the value suggested in (4.9).
+Example 4.9. Let N = c91, the 91-digit number from Example 4.7. For parameters d = 3, a = 1, k = 1, s = 23271635,
+p = 310502797375403107200 and m = 1659138281393456348393832527057,
+which satisfy (4.9), Algorithm 4.5 returns a pair of cubic polynomials whose product
+of coefficient norms is approximately N 0.396 for s = 23271635, and approximately
+
+N 0.370 for s = 5001852224. If, instead, any skew s ∈ 109.37 , 109.55 is used, the
+algorithm returns the following cubic polynomials:
+h1 = 2x3
+
+h2 = 2x3
+
+− 46088505322x2
++ 130858683603618028497x
+
+− 46088505322x2
++ 441361480979021135697x
+
++ 616682434763766331165127093132
+
+− 1042455846629690017228705433925
+
+The product kh1 k2,s · kh2 k2,s is approximately N 0.347 , for s = 6425664302.
+
+For parameters d = 3, a = 1, k = 1, any skew s ∈ 109.25 , 109.46 ,
+
+p = 633983687139 and m = 1659138281147271980652828686480,
+
+Algorithm 4.5 returns the following cubic polynomials:
+k1 = 8x3
+
+k2 = 8x3
+
+− 55x2
++ 157979116111722504146x
+
+− 55x2
++ 157979116745706191285x
+
++ 78672185263313067882594467256
+
+− 1580466095883958912770234219224
+
+The product kk1 k2,s · kk2 k2,s is approximately N 0.345 , for s = 4898436262.
+
+20
+
+NICHOLAS COXON
+
+5. The Koo–Jo–Kwon length d + 2 construction revisited
+By utilising their length d + 2 GP construction, Koo, Jo and Kwon obtained
+an algorithm for producing nonlinear polynomials of degree at most d such that
+the coefficient of xd−1 in each polynomial is equal to zero [22, Corollary 4]. With
+the aim of producing polynomials with very large skews, the generation of number
+field sieve polynomials with this property had previously been considered for linear
+algorithms by Kleinjung [20]. In this section, it is shown that larger skews than
+those obtained in Section 4.1 are able to be used in the Koo–Jo–Kwon algorithm.
+As a result, nonlinear polynomial pairs with smaller coefficient norms are found.
+Theorem 4.1 suggests the following extension of the length d+2 GP construction
+of Koo, Jo and Kwon [22, Section 4.2]: if a, p, k, and m are nonzero integers such
+that gcd(ap, N ) = 1, gcd(m, p) = 1 and (amd − kN )/p2 is a nonzero integer, then
+
+
+amd − kN m(amd − kN )
+,
+,
+(5.1) [c0 , . . . , cd+1 ] = apd−1 , apd−2 m, . . . , amd−1 ,
+p
+p2
+is a GP with ratio m/p modulo N . The Koo–Jo–Kwon construction then corresponds to the case where a = 1. If [c0 , . . . , cd+1 ] is a GP defined by (5.1), then
+m[c0 , . . . , cd ] − p[c1 , . . . , cd+1 ] = [0, . . . , 0, kN, 0].
+
+Thus, a vector (a0 , . . . , ad ) ∈ Zd+1 is orthogonal to [c0 , . . . , cd ] and [c1 , . . . , cd+1 ] if
+and only if ad−1 = 0 and (a0 , . . . , ad ) is orthogonal to (c0 , . . . , cd−2 , 0, cd )/p ∈ Zd+1 .
+Consequently, the proof of Lemma 4.2 is readily modified to obtain the following
+analogous result:
+Lemma 5.1. Let [c0 , . . . , cd+1 ] be a GP of the form (5.1), where d ≥ 3 and a, p,
+m and k are nonzero integers such that gcd(m, p) = 1, gcd(ap, N ) = 1 and (amd −
+kN )/p2 is a nonzero integer. Define ã = a/ gcd(a, cd /p) and k̃ = k/ gcd(a, cd /p).
+Pd
+Then for any degree d integer polynomial f˜ = i=0 ãi xi with ãd = ã, ãd−1 = 0
+and f˜(m/p)pd = k̃N , a vector (a0 , . . . , ad ) ∈ Zd+1 is orthogonal to [c0 , . . . , cd ] and
+[c1 , . . . , cd+1 ] if and only if there exist integers r0 , . . . , rd−2 such that
+d
+X
+i=0
+
+ai xi = rd−2 f˜(x) + (px − m) ·
+
+d−3
+X
+
+ri xi .
+
+i=0
+
+Moreover, such a polynomial f˜ exists and can be computed with Algorithm 4.3.
+It follows from Lemma 5.1 that an analogue of Corollary 4.4 holds: coprime
+degree d polynomials f1 and f2 with coefficients vectors that are orthogonal to
+[c0 , . . . , cd ] and [c1 , . . . , cd+1 ] satisfy the bound (4.3) with the left-hand side of the
+inequality replaced by |ã2 k̃N |, where ã = a/ gcd(a, cd /p) and k̃ = k/ gcd(a, cd /p).
+In addition, Lemma 5.1 suggests the following algorithm:
+Algorithm 5.2.
+Input: An integer d ≥ 3; nonzero integers a, p, m and k such that gcd(m, p) = 1,
+gcd(ap, N ) = 1 and (amd − kN )/p2 is a nonzero integer; and a positive integer s.
+Output: Integer polynomials f1 and f2 of degree at most d with common root
+m/p modulo N .
+1. Compute g = gcd(a, (amd − kN )/p2 ) and apply Algorithm 4.3 with n = d,
+j = d − 1, an = a/g, an−1 = 0 and k̃ = k/g to obtain an integer polynomial
+Pd
+f˜ = i=0 ai xi such that f˜(m/p)pd = k̃N .
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+21
+
+2. Compute an LLL-reduced basis (b1 , . . . , bd−1 )of the lattice with (d − 1) × d basis
+matrix BS, where S = diag 1, s, . . . , sd−2 , sd and
+
+
+a0 . . . . . . ad−2 ad
+ 0
+. . . −m
+p
+0
+
+
+B= .
+.
+..  .
+.
+.
+.
+.
+.
+ ..
+.
+.
+.
+.
+−m p
+...
+0
+0
+3. Let bi = (bi,0 , . . . , bi,d−1 ) · S, for i = 1, 2. Compute and return the polynomials
+P
+Pd−2
+j
+d
+j
+f1 = b1,d−1 xd + d−2
+j=0 b1,j x and f2 = b2,d−1 x +
+j=0 b2,j x .
+
+In the next section, parameter selection for Algorithm 5.2 is considered.
+Koo, Jo and Kwon [22, Section 3] observe that a single GP may be used to
+generate several polynomials of various degrees that share a common root modulo
+N . In particular, for a GP c of the form (5.1), it is possible to generate degree d
+and d + 1 polynomials. In the former case, Algorithm 4.5 or Algorithm 5.2 may be
+used. In the latter case, the necessary computation of a basis for (cZ)⊥ is aided by
+the following analogue of Lemma 4.2:
+
+Lemma 5.3. Let c = [c0 , . . . , cd+1 ] be a GP of the form (5.1), where d ≥ 1 and a, p,
+m and k are nonzero integers such that gcd(m, p) = 1, gcd(ap, N ) = 1 and (amd −
+kN )/p2 is a nonzero integer. Define ã = a/ gcd(a, cd /p) and k̃ = k/ gcd(a, cd /p).
+Pd
+Then for any degree d + 1 integer polynomial f˜ = i=0 ãi xi with ãd+1 m + ãd p = ã
+and f˜(m/p)pd+1 = k̃N , a vector (a0 , . . . , ad+1 ) ∈ Zd+2 is orthogonal to c if and
+only if there exist integers r0 , . . . , rd such that
+!
+d−2
+d+1
+X
+X
+i
+d
+i
+˜
+ri x .
+ai x = rd f (x) + (px − m) · rd−1 x +
+(5.2)
+i=0
+
+i=0
+
+Moreover, such a polynomial f˜ exists and can be computed with Algorithm 4.3.
+To establish the existence of f˜ in Lemma 5.3, observe that integers ãd and ãd+1
+such that ãd+1 6= 0 and ãd+1 m + ãd p = ã exist, since gcd(m, p) = 1. For any such
+ãd and ãd+1 , a polynomial f˜ that satisfies the conditions of the lemma is obtained
+by applying Algorithm 4.3 with n = d + 1, j = d, an = ãd+1 and an−1 = ãd :
+k̃N − ãd+1 md+1 − ãd md p ≡ k̃N − ãmd ≡ 0
+
+(mod p2 ),
+
+since amd − kN = (cd /p)p2 and gcd(a, N ) = 1. Additionally, setting rd = p and
+rd−1 = −ãd+1 in (5.2) proves the existence of a degree d polynomial f ∈ Z[x] with
+coefficient vector that is orthogonal to [c0 , . . . , cd ] and f (m/p) 6= 0. Consequently,
+to avoid finding polynomials of degree less than d + 1, it is not sufficient to avoid
+finding polynomials that have m/p as a root in a manner analogous to Section 4.1.
+5.1. Parameter selection for Algorithm 5.2. By modifying the proof of Theorem 4.6, it is shown that for input parameters a, p, m, k and s, Algorithm 5.2
+returns polynomials f1 and f2 such that
+1
+
+ d−1
+s
+2
+2
+2
+2
+deg f1
+c
+d−2
+d2 −2d+2
+c
+c
+ã
+c
+0
+1
+,
++ 2−d
++ . . . + d−2
++ dd 
+kf1 k2,s ≤ s− 2 2 4 s 2
+a|p| s−d
+s
+sd−4
+s
+
+where [c0 , . . . , cd+1 ] is the GP defined in (5.1) and ã = a/ gcd(a, cd /p). Furthermore,
+if deg f1 < d, then Lemma 5.1 implies that kf1 k2,s > s−(deg f1 )/2 m, for all s > 0.
+
+22
+
+NICHOLAS COXON
+
+Therefore, repeating arguments from Section 4.1 shows that for positive a, p and
+k, if m and s are chosen such that
+
+
+2
+r ! d2 −3d+4
+
+
+ d1
+
+
+
+p 2
+1
+ps
+kN
+
+ and ps ≤ m,
+√
+(5.3) 0 ≤ m −
+≤ , s=
+a
+d
+2 ã d
+then Algorithm 5.2 returns polynomials f1 and f2 such that deg f1 = d and
+
+ d1 !
+deg fi
+deg fi
+kN
+−
+kfi k2,s = O ã d2 −3d+4 p d2 +3d+4
+, for i = 1, 2.
+a
+
+This bound is minimised and the skew parameter maximised by selecting the parameter p as large as possible. In particular, if the constraints in (5.3) are satisfied
+2
+and p = Θ(m/s), then s = Θ((m/ã)2/(d −3d+6) ), which is larger than the skew in
+(4.9), and Algorithm 5.2 returns polynomials f1 and f2 such that deg f1 = d and
+
+
+
+
+ d1 1− 2deg fi
+deg fi
+d
+−3d+6
+kN
+ , for i = 1, 2.
+(5.4)
+kfi k2,s = O ã d2 −3d+6
+a
+
+Similar to Section 4.1, if the degree of f2 is not equal to d, then a second degree d
+polynomial that satisfies the bound (5.4) is found by taking a linear combination of
+the polynomials f1 and f2 . Therefore, if a = O(1) and k = O(1), then it is possible
+to find a pair of degree d polynomials f1 and f2 such that
+
+
+2
+2
+kfi k2,s = O N (1/d)(d −4d+6)/(d −3d+6) , for i = 1, 2.
+
+Thus, polynomials of size O(N 1/6 ) are obtained for d = 3, and size O(N 3/20 ) for
+d = 4. Corollary 2.3 implies that the exponent for d = 3 is optimal.
+In Section 4.1, the observation that each solution r ∈ Z/pZ of axd ≡ kN (mod p)
+yields a value m ≡ r (mod p) such that 0 ≤ m − m̃ < p, where m̃ = (kN/a)1/d , was
+used to assert the existence of many parameters that satisfy the conditions leading
+2
+to the bound (4.6). However, for parameters that satisfy (5.3), ps < p1+2/(d −3d+4) .
+In particular, ps is less than p3/2 for d = 3, and less than p5/4 for d = 4. Therefore,
+it may occur that axd ≡ kN (mod p2 ) has a solution r ∈ Z/p2 Z, but there is no
+integer m ≡ r (mod p2 ) such that 0 ≤ m − m̃ ≤ ps/d, as required by (5.3). This
+problem is compounded by the requirement that p is taken as large as possible
+in order to obtain (5.4). Thus, finding parameters for Algorithm 5.2 that satisfy
+the conditions leading to (5.4) is difficult. This problem is addressed in the next
+section, where methods for generating parameters for Algorithm 5.2 are discussed.
+5.2. Parameter generation for Algorithm 5.2. Motivated by the discussion
+of the previous section, methods of generating parameters for Algorithm 5.2 such
+that p ∈ [B, 2B] and |m − m̃| = O(p1+ε ), where B is large, m̃ is a real number and
+0 ≤ ε < 1, are discussed in this section.
+Koo, Jo and Kwon [22, Proposition 2] propose using Hensel lifting for prime
+values of p to compute corresponding values of m such that |m − m̃| is small. For
+example, after selecting a, p and k such that p ∈ [B, 2B] is prime and does not
+divide adkN , suppose there exists a solution r ∈ [−p/2, p/2) ∩ Z of
+(5.5)
+
+a(m̃0 + x)d ≡ kN
+
+(mod p),
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+23
+
+where m̃0 = ⌊m̃ + 1/2⌋, and there exists an integer t = O(pε ) such that
+ad(m̃0 + r)d−1 t ≡ −
+
+a(m̃0 + r)d − kN
+p
+
+(mod p).
+
+Then r∗ = r + tp satisfies r∗ = O(p1+ε ) and Hensel’s lemma implies that
+(5.6)
+
+d
+
+a (m̃0 + r∗ ) ≡ kN
+
+(mod p2 ).
+
+Therefore, parameters a, k, p and m = m̃0 + r∗ may be used in Algorithm 5.2 and
+|m − m̃| = O(p1+ε ). Arguments used by Bai [3, Section 4.2] are now adapted to
+provide heuristic evidence of the existence of solutions r∗ of (5.6) with r∗ = O(p1+ε ).
+Heuristically, when a and k are fixed, (5.5) has on average about one solution
+for each prime p ∈ [B, 2B]. Thus, for fixed a and k, assuming the solutions lift to
+solutions r∗ of (5.6) that are uniformly distributed in the interval [−2B 2 , 2B 2 ), it
+follows that the total number of pairs (p, r∗ ) with p ∈ [B, 2B] and r∗ = O(p1+ε )
+that satisfy (5.6) is about
+Z 2B
+Z 2B
+X 2B 1+ε
+Bε
+1
+1 + log x
+1+ε
+1+ε
+dx ≈
+≈
+2B
+dx
+≈
+2B
+.
+2
+2
+2
+p
+x log x
+log B
+(x
+log
+x)
+B
+B
+p∈[B,2B]
+p prime
+
+Therefore, it is expected that solutions r∗ of (5.6) with r∗ = O(p1+ε ) exist for large
+B. However, to find such a solution it may be necessary to compute and lift the
+solutions of (5.5) for many values of a, k and p. This heuristic evidence agrees with
+numerical evidence provided by Koo, Jo and Kwon [22, Section 4.2], which suggests
+that good parameters for Algorithm 5.2 with p prime exist with high probability
+for each N , albeit in very small quantities.
+A method proposed by Kleinjung [20] in the setting of linear algorithms, but
+which may be used to generate parameters for Algorithm 5.2, reduces the size of
+the primes p for which (5.6) is solved and relaxes the size requirements on the
+solutions by exploiting a special case of the Chinese remainder theorem. Suppose
+that, for fixed values of a and k, a solution r∗ of (5.6) is found for two distinct
+prime values of p, say p1 and p2 . Then
+a (m̃0 + r∗ )d ≡ kN
+
+(mod p21 p22 ).
+
+Therefore, parameters a, k, p = p1 p2 and m = m̃0 +r∗ may be used in Algorithm 5.2.
+Such a value of r∗ is called a collision. Searching for collisions √
+offers√the advantage
+that the two primes p1 and p2 need only belong to the interval [ B, 2B], reducing
+the time spent computing solutions of (5.6) for each pi . Moreover, if r∗ = O(B 1+ε ),
+then |m − m̃| = O(p1+ε ). Thus, for each pi , solutions of (5.6) with r∗ = O(p2i ) are
+computed, which exist with high probability. However, collisions occur with low
+probability for large B, balancing these benefits. For an analysis of the method and
+a description of some modifications aimed at improving efficiency, see Kleinjung [20]
+and Bai [3, Section 4.2].
+A third method of parameter generation for Algorithm 5.2, which appears to
+have limited practical value, once again uses the Chinese remainder theorem to
+construct parameters for Algorithm 5.2, but eliminates the need to find collisions.
+Suppose that distinct primes p1 , . . . , pn , integers r1∗ , . . . , rn∗ , and positive integers
+e1 , . . . , en are found such that
+a(ri∗ + m̃0 )d ≡ kN
+
+i
+(mod p2e
+i ),
+
+for 1 ≤ i ≤ n.
+
+24
+
+NICHOLAS COXON
+
+Then, for positive integers M , z and ℓ, existing list decoding algorithms for Chinese
+remainder codes [16, 7, 11] are able to find all r∗ ∈ [−M, M ] ∩ Z such that
+z+1
+! 2(ℓ+1)
+n
+n
+1
+ ℓ√
+ 2z
+Y
+Y
+ℓ
+χi (r ∗ )
+pei i
+> 2 4 ℓ + 1M 2
+pi
+(5.7)
+,
+i=1
+
+i=1
+
+where χi : Z → {0, . . . , ei } maps r∗ to the maximum value χ ∈ {0, . . . , ei } such
+Qn
+χi (r ∗ )
+∗
+that r∗ ≡ ri∗ (mod p2χ
+i ). For any such r , parameters a, k, p =
+i=1 pi
+and m = m̃0 + r∗ may be used in Algorithm 5.2 and |m − m̃| = O(M ). Thus,
+M ≈ B 1+ε should be used and the remaining parameters chosen such that the
+right-hand side of (5.7) approximates B. This method of parameter generation has
+not been considered previously in the literature, but offers the advantages that the
+primes pi may be taken much smaller than in previous methods and that there
+are no size requirements on the roots ri∗ . However, list decoding algorithms are
+computationally expensive: to compute all solutions of (5.7), existing algorithms
+perform lattice reduction on an (ℓ + 1)-dimensional lattice and compute the integer
+roots of an integer polynomial of degree at most ℓ, with arithmetic P
+operations for
+n
+both steps performed on integers of size polynomial in ℓ, z, log M and i=1 ei log pi .
+Consequently, a search for parameters for Algorithm 5.2 should avoid the extensive
+application of current list decoding algorithms.
+Acknowledgements
+The author would like to thank Dr Victor Scharaschkin for many helpful discussions and suggestions throughout the preparation of this paper.
+References
+
+1. A. C. Aitken, Determinants and matrices, ninth ed., Oliver and Boyd, Edinburgh, 1956.
+2. K. Aoki, J. Franke, T. Kleinjung, A. K. Lenstra, and D. A. Osvik, A kilobit special number field
+sieve factorization, Advances in cryptology—ASIACRYPT 2007, Lecture Notes in Comput.
+Sci., vol. 4833, Springer, Berlin, 2007, pp. 1–12.
+3. S. Bai, Polynomial selection for the number field sieve, Ph.D. thesis, The Australian National
+University, 2011.
+4. S. Bai, C. Bouvier, A. Filbois, P. Gaudry, A. Kruppa, F. Morain, E. Thomé, and P. Zimmermann, CADO-NFS, an implementation of the number field sieve, 2013, http://cadonfs.gforge.inria.fr.
+5. S. Bai, R. P. Brent, and E. Thomé, Root optimization of polynomials in the number field
+sieve, ArXiv e-Print archive, arXiv:1212.1958, 2012, http://arxiv.org/abs/1212.1958.
+6. H. Boender, Factoring large integers with the quadratic sieve, Ph.D. thesis, Leiden University,
+1997.
+7. D. Boneh, Finding smooth integers in short intervals using CRT decoding, J. Comput. System
+Sci. 64 (2002), no. 4, 768–784.
+8. J. P. Buhler, H. W. Lenstra, Jr., and C. Pomerance, Factoring integers with the number field
+sieve, in Lenstra and Lenstra [26], pp. 50–94.
+9. J. W. S. Cassels, An introduction to the geometry of numbers, Springer-Verlag, Berlin, 1971.
+10. H. Cohen, A course in computational algebraic number theory, Grad. Texts in Math, vol. 138,
+Springer-Verlag, Berlin, 1993.
+11. N. Coxon, List decoding of number field codes, Des. Codes Cryptogr., to appear, published
+online with doi:10.1007/s10623-013-9803-x.
+12. R. Crandall and C. Pomerance, Prime numbers: a computational perspective, second ed.,
+Springer, New York, 2005.
+13. M. Elkenbracht-Huizing, An implementation of the number field sieve, Experiment. Math. 5
+(1996), no. 3, 231–253.
+
+ON NONLINEAR POLYNOMIAL SELECTION FOR THE NUMBER FIELD SIEVE
+
+25
+
+14. E. Fischer, Über den Hadamardschen Determinantensatz, Arch. Math. Phys. 13 (1908), no. 3,
+32–40.
+15. J. E. Gower, Rotations and translations of number field sieve polynomials, Advances in
+cryptology—ASIACRYPT 2003, Lecture Notes in Comput. Sci., vol. 2894, Springer, Berlin,
+2003, pp. 302–310.
+16. V. Guruswami, A. Sahai, and M. Sudan, “Soft-decision” decoding of Chinese remainder codes,
+Proceedings of the 41st Annual Symposium on Foundations of Computer Science, IEEE Comput. Soc. Press, Los Alamitos, CA, 2000, pp. 159–168.
+17. J. Hadamard, Résolution dune question relative aux déterminants, Bull. des Sci. Math. 17
+(1893), 240–246.
+18. G. Havas, B. S. Majewski, and K. R. Matthews, Extended GCD and Hermite normal form
+algorithms via lattice basis reduction, Experiment. Math. 7 (1998), no. 2, 125–136.
+19. T. Kleinjung, On polynomial selection for the general number field sieve, Math. Comp. 75
+(2006), no. 256, 2037–2047.
+20.
+, Polynomial selection, Slides presented at the CADO workshop on integer factorization, Nancy, France, 2008, http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+21. T. Kleinjung, K. Aoki, J. Franke, A. Lenstra, E. Thomé, J. Bos, P. Gaudry, A. Kruppa,
+P. Montgomery, D. A. Osvik, H. J. J. te Riele, A. Timofeev, and P. Zimmermann, Factorization of a 768-bit RSA modulus, Advances in cryptology—CRYPTO 2010, Lecture Notes in
+Comput. Sci., vol. 6223, Springer, Berlin, 2010, pp. 333–350.
+22. N. Koo, G. H. Jo, and S. Kwon, On nonlinear polynomial selection and geometric progression (mod N) for number field sieve, Cryptology ePrint Archive, Report 2011/292, 2011,
+http://eprint.iacr.org/2011/292.pdf.
+23. J. L. Lagrange, Recherches d’arithmétique, Nouv. Mém. Acad., Berlin, 1773.
+24. S. Lang, Algebraic number theory, Addison-Wesley Publishing Co., Inc., Reading, Mass.London-Don Mills, Ont., 1970.
+, Algebra, third ed., Grad. Texts in Math, vol. 211, Springer-Verlag, New York, 2002.
+25.
+26. A. K. Lenstra and H. W. Lenstra, Jr. (eds.), The development of the number field sieve,
+Lecture Notes in Math., vol. 1554, Springer-Verlag, Berlin, 1993.
+27. A. K. Lenstra, H. W. Lenstra, Jr., and L. Lovász, Factoring polynomials with rational coefficients, Math. Ann. 261 (1982), no. 4, 515–534.
+28. A. K. Lenstra, H. W. Lenstra, Jr., M. S. Manasse, and J. M. Pollard, The number field sieve,
+in Lenstra and Lenstra [26], pp. 11–42.
+29. H. W. Lenstra, Jr., Lattices, Algorithmic number theory: lattices, number fields, curves and
+cryptography, Math. Sci. Res. Inst. Publ., vol. 44, Cambridge Univ. Press, Cambridge, 2008,
+pp. 127–181.
+30. J. Martinet, Perfect lattices in Euclidean spaces, Grundlehren der Mathematischen Wissenschaften, vol. 327, Springer-Verlag, Berlin, 2003.
+31. A. May, New RSA vulnerabilities using lattice reduction methods, Ph.D. thesis, University of
+Paderborn, 2003.
+32. J. Milnor and D. Husemoller, Symmetric bilinear forms, Springer-Verlag, New York, 1973.
+33. P. L. Montgomery, Small geometric progressions modulo n, Unpublished note of 2 pages,
+December 1993.
+34.
+, Searching for higher-degree polynomials for the general number field sieve, PowerPoint presentation, 2006, http://www.ipam.ucla.edu/publications/scws1/scws1 6223.ppt.
+35. B. A. Murphy, Modelling the yield of number field sieve polynomials, Algorithmic number
+theory, Lecture Notes in Comput. Sci., vol. 1423, Springer, Berlin, 1998, pp. 137–150.
+, Polynomial selection for the number field sieve integer factorisation algorithm, Ph.D.
+36.
+thesis, The Australian National University, July 1999.
+37. B. A. Murphy and R. P. Brent, On quadratic polynomials for the number field sieve, Computing theory ’98, Aust. Comput. Sci. Commun., vol. 20, Springer, Singapore, 1998, pp. 199–213.
+38. P. Q. Nguyen and D. Stehlé, Floating-point LLL revisited, Advances in cryptology—
+EUROCRYPT 2005, Lecture Notes in Comput. Sci., vol. 3494, Springer, Berlin, 2005, pp. 215–
+233.
+39.
+, An LLL algorithm with quadratic complexity, SIAM J. Comput. 39 (2009), no. 3,
+874–903.
+
+26
+
+NICHOLAS COXON
+
+40. P. Q. Nguyen and J. Stern, Merkle-Hellman revisited: a cryptanalysis of the Qu–Vanstone
+cryptosystem based on group factorizations, Advances in cryptology—CRYPTO ’97, Lecture
+Notes in Comput. Sci., vol. 1294, Springer, Berlin, 1997, pp. 198–212.
+41. P. Q. Nguyen and B. Vallée (eds.), The LLL algorithm: Survey and applications, Information
+Security and Cryptography, Springer-Verlag, Berlin, 2010.
+42. M. E. Pohst, A modification of the LLL reduction algorithm, J. Symbolic Comput. 4 (1987),
+no. 1, 123–127.
+43. T. Prest and P. Zimmermann, Non-linear polynomial selection for the number field sieve, J.
+Symbolic Comput. 47 (2012), no. 4, 401–409.
+44. A. Schrijver, Theory of linear and integer programming, Wiley-Interscience Series in Discrete
+Mathematics, John Wiley & Sons Ltd., Chichester, 1986.
+45. W. van der Kallen, Complexity of the Havas, Majewski, Matthews LLL Hermite normal form
+algorithm, J. Symbolic Comput. 30 (2000), no. 3, 329–337.
+46. R. S. Williams, Jr., Cubic polynomials in the number field sieve, Master’s thesis, Texas Tech
+University, May 2010.
+School of Mathematics and Physics, The University of Queensland, Brisbane, QLD
+4072, Australia
+E-mail address: ncoxon@maths.uq.edu.au
+
+

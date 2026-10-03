@@ -1,0 +1,1482 @@
+                                                      SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS
+
+                                                                          HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+
+                                                  Abstract. Let E be an elliptic curve without complex multiplication deﬁned over the rationals. The purpose
+                                                  of this article is to deﬁne a positive integer A(E), that we call the Serre’s constant associated to E, that gives
+                                                  necessary conditions to conclude that ρE,m , the mod m Galois representation associated to E, is non-surjective. In
+                                                  particular, if there exists a prime factor p of m satisfying valp (m) ≥ valp (A(E)) > 0 then ρE,m is non-surjective.
+                                                  Conditionally under Serre’s Uniformity Conjecture, we determine all the Serre’s constants of elliptic curves without
+arXiv:1812.04133v4 [math.NT] 22 Oct 2019
+
+
+
+
+                                                  complex multiplication over the rationals that occur inﬁnitely often. Moreover, we give all the possible combination
+                                                  of mod p Galois representations that occur for inﬁnitely many non-isomorphic classes of non-CM elliptic curves
+                                                  over Q, and the known cases that appear only ﬁnitely. We obtain similar results for the possible combination of
+                                                  maximal non-surjective subgroups of GL2 (Zp ). Finally, we conjecture all the possibilities of these combinations
+                                                  and in particular all the possibilities of these Serre’s constants.
+
+
+
+
+                                                                                                1. Introduction
+                                             Let E/Q be an elliptic curve and n a positive integer. We denote by E[n] the n-torsion subgroup of E(Q),
+                                           where Q is a fixed algebraic closure of Q. The absolute Galois group Gal(Q/Q) acts on E[n] by its action on
+                                           the coordinates of the points, inducing a Galois representation
+                                                                                        ρE,n : Gal(Q/Q) −→ Aut(E[n]),
+                                           called the mod n Galois representation associated to E. Notice that since E[n] is a free Z/nZ-module of rank 2,
+                                           fixing a Z-basis of E[n], we identify Aut(E[n]) with GL2 (Z/nZ). Then we rewrite the above Galois representation
+                                           as
+                                                                                    ρE,n : Gal(Q/Q) −→ GL2 (Z/nZ).
+                                           Therefore we can view ρE,n (Gal(Q/Q)) as a subgroup of GL2 (Z/nZ), determined uniquely up to conjugacy, and
+                                           denoted by GE (n) in the sequel.
+                                             Fixing a prime p and choosing compatible bases for E[pk ] for all k, one can take the inverse limit of these mod
+                                           pk Galois representations and construct a new map
+                                                                                         ρE,p∞ : Gal(Q/Q) → GL2 (Zp ),
+                                           called the p-adic Galois representation associated to E. Let us denote by G∞     E (p) the image of ρE,p∞ , which
+                                           is determined uniquely up to conjugacy. In certain instances we will say that GE (n) = G or G∞      E (p) = G for
+                                           some group G; this will always mean that we have fixed a basis so that we remove ambiguity of working up to
+                                           conjugacy.
+                                              Suppose that E does not have complex multiplication (CM in the sequel). One of the first major results about
+                                           the images of Galois representations associated to an elliptic curve is a renowned theorem of Serre [37, Théorème
+                                           2] that asserts that ρE,p is not surjective for a finite number of primes p, called exceptional primes (Duke [21]
+                                           showed that almost all non-CM elliptic curves have no exceptional primes). In other words, there exists a positive
+                                           integer CE , depending on E, such that ρE,p is surjective for any prime p > CE . After proving this theorem,
+                                           Serre immediately asked [37, §4.3] if it was possible to make the constant CE independent of E. Moreover, Serre
+                                           in [38, page 399] asked if CE < 41 always holds. That is, he asked the following question:
+
+                                           Serre’s Uniformity Question. If E/Q is a non-CM elliptic curve, then must it be that ρE,p is surjective for
+                                           any prime p ≥ 41?
+
+                                              Nowadays, an affirmative answer to the above question has received the name of Serre’s Uniformity Conjecture
+                                           (or sometimes just Uniformity Conjecture) despite the fact that Serre himself never conjectured it to be true.
+                                             Date: October 23, 2019.
+                                             2010 Mathematics Subject Classiﬁcation. Primary: 11G05; Secondary: 11F80.
+                                             Key words and phrases. Elliptic curves, rationals, Galois representation.
+                                             The second author was partially supported by the grant PGC2018–095392–B–I00.
+                                                                                                           1
+2                                   HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+Since Serre first asked the question there has been much progress towards to proving it. A summary of these
+results can be found in the following theorem (see [3, 7, 8, 34, 37, 42] for more details):
+Theorem 1. Let E/Q be a non-CM elliptic curve and p a prime. Then one the following possibilities occurs:
+      (i) GE (p) = GL2 (Fp ).
+     (ii) p ∈ {2, 3, 5, 7, 11, 13, 17, 37}, and GE (p) is conjugate in GL2 (Fp ) to one of the groups in Tables 1 and 2.
+    (iii) p ≥ 17: GE (p) is conjugate to a subgroup of the normalizer of a non-split Cartan subgroup of level p.
+   Beside the above theorem, Lemos ([29, Theorem 1.1], [30, Theorem 1.4]) has recently obtained partial results
+in the direction of a complete proof of the Serre’s Uniformity Conjecture:
+Theorem 2. Let E/Q be a non-CM elliptic curve. Suppose that one the following possibilities occurs:
+     (i) E admits a non-trivial cyclic isogeny defined over Q.
+    (ii) There exists a prime q for which GE (q) is contained in the normalizer of a split Cartan subgroup of
+         GL2 (Fq ).
+Then ρE,p is surjective for any prime p > 37.
+  Zywina conjectures [42, Conjecture 1.12] that Theorem 1 (iii) is not possible. This is what we call the Strong
+Uniformity Conjecture.
+
+Strong Uniformity Conjecture. Let E be a non-CM elliptic curve defined over Q and jE its j-invariant. If
+p ≥ 17 is a prime such that
+                       
+            (p, jE ) 6∈ (17, −17 · 3733 /217 ), (17, −172 · 1013 /2), (37, −7 · 113 ), (37, −7 · 1373 · 20833 ) ,
+then GE (p) = GL2 (Fp ).
+
+   Zywina classifies all of the possible images of the mod p images of non-CM elliptic curves defined over Q
+given the corresponding moduli spaces for p ≤ 13, except the case when the image of GE (13) in PGL2 (F13 ) is
+isomorphic to S4 (the permutation group of 4 elements) (see [42, 3, 5]).
+Conjecture 3. Let E be a non-CM elliptic curve defined over Q and jE its j-invariant. Then the image of
+GE (13) in PGL2 (F13 ) is isomorphic to S4 if and only if
+                 4                                                                                      
+                  2 · 5 · 134 · 173 212 · 53 · 11 · 134 218 · 33 · 134 · 1273 · 1393 · 1573 · 2833 · 929
+           jE ∈                    ,−                  ,                                                   .
+                          313               313                            513 · 6113
+   Assuming1 Conjecture 3 and the Strong Uniformity Conjecture, Zywina gives all the possible groups GE (p)
+for E/Q and the corresponding moduli spaces. This data can be found in Tables 1 and 2.
+Remark 4. Let E/Q be a non-CM elliptic curve and p a prime. Serre [39, IV] showed that if p ≥ 5 then ρE,p is
+surjective if and only if ρE,p∞ is surjective. But when p = 2 or 3 it is not the case. The reason is that there are
+proper subgroups of SL2 (Z/4Z) and SL2 (Z/8Z) that surject onto SL2 (Z/2Z) under the standard reduction map
+as well as a proper subgroup of SL2 (Z/9Z) that surjects onto SL2 (Z/3Z). These groups and the corresponding
+moduli spaces of elliptic curves can be found in [22] or [32] and [20] or [36] and are available in Table 4.
+    In view of the above remark we make the following definition:
+Definition 5. Let E/Q be a non-CM elliptic curve and p a prime. We say that p is adically-exceptional for E
+if ρE,p∞ is not surjective.
+  Remark 4 asserts that if p ≥ 5 then p is exceptional if and only if it is adically-exceptional, and that the only
+possible primes that could be non-exceptional but adically-exceptional are p = 2 and p = 3.
+  An affirmative answer to the Serre’s uniformity question does not give any information about the possible
+combinations of exceptional primes (or adically-exceptional primes) which may occur for a given non-CM elliptic
+curve defined over Q. In attempt to study this question, we give the following definition2.
+
+    1J. S. Balakrishnan, N. Dogra, J. S. Müller, J. Tuitman, and J. Vonk have recently announced a proof of this conjecture but have
+yet to make the results available publicly.
+   2The deﬁnition of Serre’s constant that appears in this paper is a generalization of the one that Cojocaru deﬁned at [13].
+                          SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                   3
+
+Definition 6. Let E/Q be a non-CM elliptic curve, then we define Serre’s constant associated to E to be
+                                                      Y
+                                            A(E) =        pk
+                                                              p prime
+
+where k is the smallest positive integer such that ρE,pk is non-surjective if such an integer exists or 0 otherwise.
+  Note that if p is not adically-exceptional then valp (A(E)) = 0. In particular, if no prime is not adically-
+exceptional for E then A(E) = 1. Moreover, Jones [24] has proved that almost all non-CM elliptic curve over Q
+have A(E) = 1. On the other hand, if m is a positive integer, A(E) gives necessary conditions to conclude that
+ρE,m is non-surjective.
+Proposition 7. Let E/Q be a non-CM elliptic curve and m ∈ N. If there exists a prime factor p of m satisfying
+valp (m) ≥ valp (A(E)) > 0 then ρE,m is non-surjective.
+Remark 8. The hypothesis of above proposition is a neccessary but not sufficient condition. Let E/Q be the
+elliptic curve with Cremona label 3891b1. Then E is a Serre curve, so all the p-adic Galois representations
+are surjective. Therefore A(E) = 1. In this case if m = 2 · 3 · 1297, then the mod m Galois
+                                                                                         √ representation is
+non-surjective. The reason is that this curve has entanglement: Q(E[2]) ∩ Q(E[3891]) = Q( ∆E ), where ∆E is
+the discriminant of the minimal model of E, and [GL2 (Z/mZ) : GE (m)] = 2 (cf. [15]).
+  We will use the following notation:
+    • Let A be the set of the integers A(E) where E runs over all non-CM elliptic curve over Q.
+    • Let A∞ be the subset of A that occur infinitely often. More precisely, N ∈ A∞ if there are infinitely
+      many non-CM elliptic curves E, non-isomorphic over Q, such that A(E) = N .
+Remark 9. Notice that Serre’s Uniformity Conjecture is equivalent to the finiteness of the set A. We also
+point out here that the exponents that appear on 2 and 3 on numbers in A are bounded. We know this because,
+if E/Q is an elliptic curve, then if ρE,8 or ρE,9 respectively are surjective, then ρE,2∞ or ρE,3∞ respectively have
+to be surjective.
+  The first theorem of this paper is the following:
+Theorem 10. Assuming the Uniformity Conjecture:
+                    A∞ = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 21, 24, 28, 40, 56, 104}.
+Remark 11. We need to assume the Uniformity Conjecture in the proof of the complete classification of A∞ at
+Theorem 10 in order to ensure that there are infinitely many non-isomorphic curves with the Serre’s constant that
+we want. Without assuming uniformity we can not be sure that for all but finitely many of the Q-isomorphism
+classes the associated Serre’s constant does not contain some unexpected prime factors. Using Theorem 2, much
+of Theorem 10 can be made independent of the Uniformity Conjecture. In fact, only 4, 8, 9, 11, 20 and 21 are
+conditionally under uniformity.
+   In Section 2, Theorem 17 classifies the possible combinations of mod p Galois representations that occur
+for infinitely many non-isomorphic classes of non-CM elliptic curves over Q, and the known cases that appear
+only finitely. We obtain similar results in Theorem 19 for the possible combinations of maximal non-surjective
+subgroups of GL2 (Zp ). Theorem 10 is a direct consequence of the Theorem 17 and 19. Besides classifying which
+numbers occur as Serre’s constant for infinitely many elliptic curve we construct the moduli space for each of
+the possible combinations of images and determine all of the points on the corresponding modular curves when
+the genus ≤ 2. Further, for each curve of genus ≥ 3 we do a point search to find all easily visible points and
+we compute Serre’s constant for each curve in the LMFDB. The resulting data is compiled in tables at the
+Appendix. These results and the previous search motivate the following conjecture.
+Conjecture 12. A = A∞ ∪ {17, 36, 37, 44, 60, 120, 168}.
+  The above conjecture is being treated in an ongoing continuation of this paper at [17].
+
+Acknowledgements. The authors would like to thank Alina Cojocaru, Álvaro Lozano-Robledo, Filip Najman,
+Andrew Sutherland, Xavier Xarles and David Zywina for help in the preparation of this article. We would like
+to thank to John Cremona for providing access to computer facilities on the Number Theory Warwick Grid at
+University of Warwick, where the main part of the computations where done. The authors would also like to
+4                              HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+thank the anonymous referee for useful comments during the review process as well as the editors of this paper
+for a speedy review.
+
+Notation.    Through out the paper we will refer to conjugacy classes of subgroups of GL2 (Z/pZ) using the
+notation established by Sutherland in [40, Section 6.4] and used throughout the LMFDB database [31]. Notice
+that Zywina [42] uses different notation for such conjugacy classes and in Tables 1 and 2 we give the translation
+between Sutherland’s and Zywina’s labels. Any specific elliptic curves mentioned in this paper will be referred
+to by Cremona label [14, 9] and a link to the corresponding LMFDB page [31] for the ease of the reader.
+
+    2. Results for Combinations of Galois representations for non-CM elliptic curves over Q
+   One of the goals of this paper is to classify all the possible combinations of mod p Galois representations
+attached to elliptic curves defined over Q. We wish to point out here that Morrow [35] began the study of the
+possible combinations of mod n1 n2 Galois representations such that n1 is a power of 2 and n2 < 17 is a prime.
+Then Camacho-Navarro et al. [12] are continuing this study to the case of subgroups of GL2 (Z/n1 n2 Z) where
+the corresponding modular curve has low genus, and/or is hyperelliptic.
+   In order to establish the appropriate language to study the possible combinations of images that can occur
+we give the following definitions.
+Definition 13. Let E/Q be a non-CM elliptic curve and SE be the set of exceptional primes of E. Let S ⊆ SE
+and for each p ∈ S let Gp be a proper subgroup of GL2 (Z/pZ). We say that E is of exceptional type (or type for
+short) [Gp : p ∈ S] if for every p ∈ S the group GE (p) is conjugate to a subgroup of Gp . We say that the exact
+exceptional type (or exact type) of E is [Gp : p ∈ S] if S = SE and GE (p) is conjugate to Gp (not a proper
+subgroup of Gp ) for every p ∈ S.
+   Here we consider two possible types [Gp : p ∈ S] and [Hp : p ∈ T ] equal if S = T and for every p ∈ S, Gp
+is conjugate to Hp in GL2 (Z/pZ). Similarly, we say that [Gp : p ∈ S] is a smaller type than (or subtype of)
+[Hp : p ∈ T ] if S ⊆ T and Gp is conjugate to a subgroup of Hp for every p ∈ S. We will refer to #S as the length
+of type [Gp : p ∈ S]. With these conventions, the exact typeQ of E/Q is unique and equal to [GE (p) : p ∈ SE ].
+We also define the level of a given type [Gp : p ∈ S] to be p∈S p. We say a type [Gp : p ∈ S] is maximal if it is
+not a subtype of any other type of the same level. We point here out that for almost all elliptic curves E/Q the
+set SE = ∅ (cf. [21]). In this case we say that the exact type of E is [ ] and refer to this as the trivial type.
+   Before moving on we introduce the concept of a modular curve and explore the relationship between these
+curves and certain types. Let G be a subgroup of GL2 (Z/nZ) satisfying −I ∈ G and det(G) = (Z/nZ)× . There
+is a modular curve XG associated to G. This curve is defined over Q, smooth, projective and geometrically
+irreducible. Moreover, there is a non-constant morphism jG : XG → P1 (Q), called the j-map of G. Moreover,
+given another group G ( G′ ⊆ GL2 (Z/nZ) satisfying −I ∈ G′ and det(G′ ) = (Z/nZ)× , there exists a non-
+constant morphism XG → XG′ . One of the main properties of the pair (XG , jG ) is that for an elliptic curve
+E/Q with j-invariant jE ∈   / {0, 1728}, GE (n) is conjugate in GL2 (Z/nZ) to a subgroup of G if and only if
+jE ∈ jG (XG (Q)) ∩ Q.
+Remark 14. Here we pause to point out that it is sufficient to consider G containing −I since if H is an index 2
+subgroup of G such that G = hH, −Ii, then XG ≃ XH . This is because every non-cuspidal non-CM point on XG
+corresponds to a Q-isomorphism class of elliptic curves such that GE (n) is conjugate to a subgroup of G. Inside
+of each of these Q-isomorphism classes there is at least one Q-isomorphism class (or twist) of curves whose image
+is actually contained in H. Thus, classifying the rational points on XH amounts to classifying the points on XG
+and then determining which twists in the Q-isomorphism classes actually have GE (n) in H. We also point out
+here for every elliptic curve with rational j-invariant, there is an elliptic curve with the same j-invariant such
+that −I is in the image of the adelic Galois representation associated to the new elliptic curve.
+   The relationship between modular curves arising from the fact that given a type [Gp : p ∈ S] of level N we
+can associate a group G ⊆ GL2 (Z/N Z), where G is the largest group (by containment) such that πp (G) = ±Gp
+for all p ∈ S. Here πp : GL2 (Z/N Z) → GL2 (Z/pZ) is the standard componentwise reduction map which is
+well-defined since p divides N by construction. We point out here that the condition is that πp (G) = ±Gp
+and not just that πp (G) = Gp so that we can ensure that −I is in the group associated to a given type. Then,
+associated to the group G is the modular curve XG whose non-cuspidal and non-CM rational points correspond
+to Q-isomorphism classes of elliptic curves over Q of type [Gp : p ∈ S].
+   In the other direction, given a group G ⊆ GL2 (Z/N Z) with −I ∈ G and det(G) = (Z/N Z)× , we let SG be the
+set of primes p such that p divides N and πp (G) 6= GL2 (Z/pZ). Then we can associate a type [πp (G) : p ∈ SG ]
+                         SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                  5
+          Q
+of level p∈SG (p). Again, the Q-isomorphism classes of curves coming from points in XG (Q) all have type
+[πp (G) : p ∈ SG ]. In fact, every Q-isomorphism classes of curves of type [πp (G) : SG ] arises as a point on
+XG exactly when N is squarefree and G is maximal among the groups of level N corresponding to the type
+[πp (G) : p ∈ SG ].
+   This association of types with groups, and hence modular curves, will be extremely useful in studying what
+combinations of images can occur. We will use it intimately in the remaining sections.
+
+  Next we give a definition of adic-type and exact adic-type.
+Definition 15. Let E/Q be a non-CM elliptic curve and SE       ∞ be the set of adically exceptional primes. Let
+      ∞
+S ⊆ SE . For each p ∈ S, let Gp be a proper subgroup of GL2 (Zp ). We say that E is of adically-exceptional type
+(or adic-type for short) [Gp : p ∈ S] if for every p ∈ S the group G∞E (p) is conjugate to a subgroup of Gp . We
+say that the exact adically-exceptional type (or exact adic-type) of E is [Gp : p ∈ S] if S = SE ∞ and G∞ (p) is
+                                                                                                         E
+conjugate to Gp (not a proper subgroup group of Gp ) for every p ∈ S.
+   We adopt similar conventions as above to compare two adic-types so that everything is well-defined
+                                                                                             Q           changing
+                                                                                                     k
+what is necessary. For a given adic-type [Gp : p ∈ S] we define the level of that type to be p∈S p where kp is
+                                                                                                       p
+
+
+the minimum integer such that the standard componentwise reduction map Gp → GL2 (Z/pkp Z) is not surjective.
+For the sake of notational brevity, for each Gp ⊆ GL2 (Zp ) that occurs in an adic-type we will denote Gp by a
+subgroup G̃p ⊆ GL2 (Z/pk Z) for some k such that Gp = π −1 (G̃p ) where π : GL2 (Zp ) → GL2 (Z/pk Z) is again the
+standard componentwise reduction map.
+Remark 16. Let E/Q be an elliptic curve and ρE : Gal(Q/Q) → GL2 (Z)         b be the adelic Galois representation
+associated to E constructed choosing bases for E[n] compatible with divisibility and taking inverse limits. It
+is tempting to think that knowing the exact adic-type of E is equivalent to knowing the image of ρE upto
+conjugation, but this is not the case. The gap is that the exact adic-type does not contain any information about
+the entanglements between the field of definition of each Tate module. Serre showed that there must be some
+entanglement between these fields using the Weil paring and the Kronecker–Weber theorem and so we usually
+cannot recover the image of the adelic Galois representation attached to E just from the exact adic-type of E.
+   The following theorem gives the set of possible exceptional types that occur for infinitely many non-isomorphic
+classes of non-CM elliptic curves over Q, and the known cases that appear only finitely.
+Theorem 17. (A) The following nontrivial exceptional types occur for infinitely many non-isomorphic classes
+of non-CM elliptic curves over Q:
+      • [ Gp ] for any Gp in Tables 1 and 2 except 7Ns.3.1, 11B.10.4, 11B.10.5, 13S4, 17B.4.2, 17B.4.6,
+        37B.8.1 and 37B.8.2 (that appear only for finitely many Q-isomorphic classes).
+      • [ G2 , Gp ], where G2 is:
+           ⋆ 2B and Gp is 3B, 3B.1.1, 3B.1.2, 3Cs, 3Cs.1.1, 3Nn, 3Ns, 5B, 5B.4.1, 5B.1.1, 5B.1.4, 5B.4.2,
+              5B.1.2, or 5B.1.3.
+           ⋆ 2Cn and Gp is 3B, 3B.1.1, 3B.1.2, 5S4, 7B, 7B.2.1, or 7B.2.3.
+           ⋆ 2Cs and Gp is 3B, 3B.1.1, or 3B.1.2.
+      • [ G3 , Gp ], where G3 is 3Nn and Gp is 5B, 5Ns, 5Nn, or 7Nn.
+(B) For the following exceptional types there are only a finite number of Q-isomorphic classes:
+      • [ Gp ] where Gp is 7Ns.3.1, 11B.10.4, 11B.10.5, 13S4, 17B.4.2, 17B.4.6, 37B.8.1 or 37B.8.2.
+      • [ G3 , Gp ], where G3 is:
+           ⋆ 3B and Gp is 5B, 5B.4.1, 5B.1.1, 5B.4.2, 5B.1.2, 5S4, 7B, 7B.2.1, or 7B.2.3.
+           ⋆ 3B.1.1 or 3B.1.2 and Gp is 5B.1.3, 5B.1.4, 5B.4.1, 5B.4.2, 5S4, 7B, 7B.2.1, or 7B.2.3.
+           ⋆ 3Ns and Gp is 5B.
+Moreover, we give unconditionally the moduli space for each of the possible exceptional types (see Tables 1, 2, 3,
+6, 7, 9, 11, 12), except for the cases of level 13, 17 and 37 which are conditionally under Conjecture 3 and the
+Strong Uniformity Conjecture.
+Corollary 18. Assuming Serre’s Uniformity Conjecture, the set of nontrivial exact types such that there exist
+infinitely many non-isomorphic classes of non-CM elliptic curves over Q of that type correspond to the cases that
+appear at Theorem 17 (A).
+  The next result is similar to Theorem 17 but we do not obtain a complete characterization, instead we obtain
+only maximal adically exceptional types that can occur.
+6                                HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+Theorem 19. (A) The following list of maximal adically-exceptional types occur for infinitely many non-
+isomorphic classes of non-CM elliptic curves over Q:
+      • [ Gp ] where Gp is 2B, 2Cn, 3B, 3Nn, 5Nn, 5B, 5S4, 7Ns, 7Nn, 7B, 11Nn or 13B.
+      • [ Gp ] where Gp is 4X3, 4X7, 8X4, 8X5, or 9XE.
+      • [ G2 , Gp ], where G2 is:
+           ⋆ 2B and Gp is 3B, 3Nn, or 5B.
+           ⋆ 2Cn and Gp is 3B, 5S4, or 7B.
+           ⋆ 4X3 and Gp is 3B, 5S4, or 7B.
+           ⋆ 4X7 and Gp is 3Nn, or 5S4.
+           ⋆ 8X4 and Gp is 3B, 5S4, 7B, 5B, or 13B.
+           ⋆ 8X5 and Gp is 3B, 5S4, 5Nn, or 7B.
+      • [ G3 , Gp ], where G3 is 3Nn and Gp is 5B, 5Nn, or 7Nn.
+(B) There is only a finite number of Q-isomorphic classes of elliptic curves with the following maximal adic-types:
+      • [ Gp ] where Gp is 13S4, 17B.4.2, 17B.4.6, 37B.8.1 or 37B.8.2.
+      • [ G2 , Gp ], where G2 is:
+           ⋆ 4X3 and Gp is 11B.10.4, or 11B.10.5.
+           ⋆ 4X7 and Gp is 9XE, 3B, 5B, or 7B.
+           ⋆ 8X5 and G7 is 7Ns.3.1.
+      • [ G3 , Gp ], where G3 is 3B and Gp is 5B, 5S4, or 7B.
+      • [ G2 , G3 , G5 ], where G2 (resp. G3 , G5 ) is 4X3 (resp. 3B, 5S4).
+      • [ G2 , G3 , G5 ], where G2 (resp. G3 , G5 ) is 8X4 (resp. 3B, 5B).
+      • [ G2 , G3 , G7 ], where G2 (resp. G3 , G7 ) is 8X4 (resp. 3B, 7B).
+Moreover, we give unconditionally the moduli space for each of the possible maximal adic-types above (see Tables
+1, 4, 5, 6, 9, 11 and Remark 25), except (maybe) the case [4X7,9XE] and for the cases of level 13, 17 and 37
+that are conditionally under Conjecture 3 and the Strong Uniformity Conjecture.
+Corollary 20. Assuming Serre’s Uniformity Conjecture, any adically-exceptional type that has infinitely many
+elliptic curve over Q of exactly that type must be a subtype of one of those listed in the cases that appear at
+Theorem 19 (A).
+
+                    3. Invariance of the Serre’s constant under quadratic twists
+  The purpose of this section is to prove that A(E) is an invariant of the isomorphism class of a non-CM elliptic
+curve.
+Proposition 21. Let E/Q be a non-CM elliptic curve and let p be a prime. If E ′ /Q is a quadratic twist of E,
+then ρE,p is surjective if and only if ρE ′ ,p is surjective.
+Proof. Notice that it is enough to show that if ρE,p is surjective, then ρE ′ ,p is surjective. Now,√if E ′ is a quadratic
+twist of E, then there is a square free D ∈ Z such that E and E ′ are isomorphic over Q( D). Assume that
+GE (p) = GL2 (Z/pZ). Then, it must be that either GE ′ (p) = GL2 (Z/pZ) or GL2 (Z/pZ) ≃ GE ′ (p) ⋊ Z/2Z. In
+the last case, we would have that GE ′ (p) is a subgroup of index 2 inside of GL2 (Z/pZ). We have that det ρE,p
+is the cyclotomic character, a standard consequence of the Weil pairing says that det : GE ′ (p) → (Z/pZ)× is
+surjective. According to [1, Figure 5.1] there are no such groups unless p = 2 and GE ′ (p) is conjugate to 2Cn, but
+the property that GE ′ (p) is conjugate to 2Cn is equivalent to E ′ having a square discriminant which is invariant
+under quadratic twists. This would mean that GE (p) is not surjective giving a contradiction.                           
+Corollary 22. Let E/Q be a non-CM elliptic curve. Then A(E) is invariant under Q-isomorphism. In other
+words, A(E) only depends on jE .
+Proof. All that is left is to prove is that if p is adically-exceptional for E, then it is adically-exceptional with the
+same exponent for all of the quadratic twists of E. This follows from the exact same argument as above together
+with the fact that the 5 maximal groups in Table 4 that surject onto GL2 (Z/pZ) but are not all GL2 (Z/pk Z)
+for some k ≥ 2, all contain −I and thus can not be quadratic twisted into. That is, because they contain −I, if
+G∞                                              ′                                   ∞
+  E (p) is not in one of these groups and E is a quadratic twist of E, then GE ′ (p) is not in one of these groups
+either.                                                                                                               
+  Corollary 22 allow us to take representatives of each of the finitely many Q-isomorphism classes of elliptic
+curves and compute their Serre’s constant.
+                         SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                   7
+
+          4. Outline of the computations: Fiber products of pairs of modular curves
+   We are now ready to fully leverage the connection between types and subgroups of GL2 (Z/nZ) and their
+corresponding modular curves. To start we survey some of the results about modular curves that will form the
+foundation for our computations. For n = p ≤ 11 prime, Zywina [42] classifies all of the possible subgroups
+GE (p) ⊆ GL2 (Z/pZ) for elliptic curves E/Q. The case p = 13 is the first prime for which Zywina does not have
+a complete description. He classifies all the possible subgroups GE (13) except the cases concerning subgroups
+of 13Nn, 13Ns and 13S4. Baran [5] showed that the modular curves X13Nn and X13Ns are both isomorphic to a
+genus 3 curve, and recently Balakrishnan et al. [3] have determined that this genus 3 curve has no non-singular,
+non-CM rational points. Therefore there are no non-CM elliptic curves E/Q such that GE (13) is a subgroup of
+13Nn or 13Ns. The remaining case is the curve X13S4 . Banwait and Cremona [6] have shown that this curve has
+genus 3 and at least three non-singular, non-CM points corresponding to the three j-invariants that appear in
+Conjecture 3. Recently, Balakrishnan et al. have announced that using similar techniques to those in [3], the
+curve X13S4 has only the three non-singular, non-CM rational points found by Banwait and Cremona. Finally,
+thanks to Theorem 1 we have that if p ≥ 17 and ρE,p is non-surjective then GE (p) appears in Table 1 or GE (p)
+is a subgroup of pNn. In the later case, Baran [4] has showed that the genus of XpNn ≥ 2. On the other hand,
+by Remark 4 if p ≥ 5 we have G∞    E (p) = GL2 (Zp ) if and only if GE (p) = GL2 (Z/pZ) while when p = 2 or 3,
+  ∞
+GE (p) = GL2 (Zp ) if and only if GE (pk ) is not conjugate to a subgroup of one of the groups listed in Table 4.
+   The following table summarizes the genus of the modular curves of the form XG and whether or not the
+modular curve has infinitely many points:
+                                Genus XG                          G = G∞
+                                                                       E (p)
+                                    >1             13S4, 37B.8.1, 37B.8.2; pNn, p ≥ 17
+               #XG (Q) < ∞
+                                     1       7Ns.3.1, 11B.10.4, 11B.10.5, 17B.4.2, 17B.4.6
+                                     1                               11Nn
+               #XG (Q) = ∞
+                                     0                             otherwise
+The main goal of our project is to characterizes the exceptional and adically-exceptional types of non-CM elliptic
+curves defined over Q.
+    Let E be a non-CM elliptic curve defined over Q. Let S ⊆ SE be a subset of the set of exceptional primes for
+E and [±GE (p) : p ∈ S] be the exceptional type associated to E and S where we add −I to each component
+if it is not already there. Let G ⊆ GL2 (Z/nZ) be the group corresponding to the type [GE (p) : p ∈ S], where
+n is the product of p ∈ S (i.e. the level of [GE (p) : p ∈ S]). The group G satisfies −I ∈ G since we added −I
+to each GE (p) and det(G) = (Z/nZ)× and as discussed before we can associated a modular curve XG . Using
+the correspondence established in Section 2, there exist a non-CM elliptic curve with mod p image in ±GE (p)
+for all p ∈ S exactly when there exists a non-cuspidal, non-CM rational point in XG (Q). The case of adically-
+exceptional types is equivalent. We are primarily interested in those groups G coming from (adically-)exceptional
+types such that #XG (Q) = ∞. That is, when XG is a genus 0 curve with a rational point, i.e. XG (Q) ≃ P1 (Q),
+or XG is an elliptic curve defined over Q with positive rank over Q. Although this is our primary interest, in this
+paper we build the basis to finalize the characterization of the (adic-)types that can occur for non-CM elliptic
+curves over Q, as well as the combinations of primes that can be (adically-)exceptional for a given non-CM
+elliptic curve E/Q. This project will have a second component [17].
+    Let G be a group in Table 1 such that #XG (Q) < ∞. Thanks to Corollary 22 we know that Serre’s constant
+is an invariant of the Q-isomorphism class. For each non-CM j-invariant j0 , it is enough to take one elliptic
+curve E/Q with jE = j0 and then compute the set SE of exceptional primes. Zywina [43] gave an algorithm to
+compute SE and combined with his classification in Table 1 allow us to determine the exceptional type of the
+Q-isomorphic class of E. We can compute the set of adically-exceptional primes SE     ∞ in an analagous manner.
+
+Then we obtain that the possible (adically-)exceptional types are the ones that appear in Table 5. Assuming
+Conjecture 3 and Strong Uniformity gives that Table 5 is complete.
+    Let p be prime, after the above sieve, we have 29 groups G of the form GE (p) (see Table 1) and 5 of the form
+GE (pk ) for k ≥ 2 (Table 4) such that −I ∈ G and #XG (Q) = ∞. Moreover, all those curves have genus 0,
+except for G = 11Nn, that is an elliptic curve with positive rank. Of these 34 images that occur for infinitely
+many Q-isomorphism classes, there levels are broken down in the following table.
+                                     Level       2 3 4 5 7 8 9 11 13
+                                  # of groups    3 4 2 9 6 2 1            1    6
+8                                HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+4.1. Pairs of non-surjective Galois representations. For the remainder of this section any group G is one
+of the above 34 groups. In the next sections we treat separately the cases of exceptional primes and adically-
+exceptional primes. Note that we are trying to characterize the complete set of possible combination of mod
+p Galois representations, but in the p-adic case we are only interested up to conjugation of a subgroup of a
+maximal group in GL2 (Zp ).
+4.1.1. Exceptional pairs. Let E/Q be a non-CM elliptic curve with two distinct exceptional primes p < q and let
+Gp = GE (p) and Gq = GE (q). The next sieve comes from the classification of rational n-cyclic isogenies given
+by Mazur and Kenku (cf. [34, 25, 26, 27, 28]) and torsion structure given by Mazur (cf. [33]). For the special case
+of a non-CM elliptic curve E/Q we have:
+      • if E has a cyclic n-isogeny, then n ∈ {1, . . . , 13, 15, 16, 17, 18, 21, 25, 37}, and
+      • E(Q)tors ∈ {Z/mZ : m = 1, . . . , 10, 12} ∪ {Z/2Z ⊕ Z/2mZ : m = 1, . . . , 4}.
+Using the above classifications we can immediately eliminate some pairs G1 , G2 . For example, any combinations
+of groups G5 ⊆ 5B and G7 ⊆ 7B can be eliminated, since such a elliptic curve would have a 35-isogeny. After using
+these results to eliminate combinations of groups that would violate these classifications, we are left with 206
+possible pairs to consider. For each of these possibilities, we compute the corresponding group G ⊆ GL2 (Z/pqZ),
+and we compute the genus of the corresponding modular curve XG group theoretically (see [41, Lemma 2.4]).
+Note that XG = XGp ×P1 XGq , the fiber product:
+                                                            XG ❉
+                                                            ③         ❉❉
+                                                          ③③            ❉❉
+                                                       ③③③                ❉❉
+                                                     |③
+                                                     ③                      ❉"
+                                               XGp                               XGq
+                                                     ❉❉
+                                                       ❉❉                   ③③
+                                                         ❉❉              ③③③
+                                                    jGp ❉❉
+                                                                     |③③ jGq
+                                                                        ③
+                                                            "
+                                                                P1
+Therefore,
+                          XG (Q) = {(Rp , Rq ) ∈ XGp (Q) × XGq (Q) : jGp (Rp ) = jGq (Rq )}.
+The simplest case is that the modular curves associated to the groups Gp and Gq both have genus 0. That is
+Gp , Gq 6= 11Nn. In this case, both curves XGp and XGq are isomorphic to P1 and an equation of the fiber product
+XG is just the numerator of jGp (x) − jGq (y) = 0. This model for this curve is usually singular, but give an initial
+model to work with in order to classify all the rational points.
+   The next case we considered is when, say Gq = 11Nn. In [42, §4.5.5], Zywina gives polynomials A(x), B(x), C(x)
+in Z[x] such that an elliptic curve E has GE (11) conjugate to a subgroup of 11Nn exactly when the polynomial
+ 2 A(x) + j B(x) + C(x) has a rational root, where j denotes the j-invariant of E. Thus, in order to construct
+jE          E                                          E
+a plane curve model for the modular curve that parameterizes elliptic curves over whose image mod p image is
+conjugate to a subgroup of Gp and whose mod 11 image is conjugate to a subgroup of 11Nn can consider the
+curve given by the equation jGp (y)2 A(x) + jGp (y)B(x) + C(x) = 0.
+
+  The largest genus that occurs in this computation is genus 246, and of the 206 curves 141 of these curves have
+genus less than 20. The counts of genus curves are listed in the table below.
+              g              0     1   2   3    4      5 6 7 8 9 10 11 13 14 15 16 18 19 ≥ 20
+    # Curves of genus g     12 25 14 15 12 8 5 9 7 7                               2   2   4   5   4   3   1   6   65
+
+   Here we point out that the genus of the modular curve XG can computed without ever computing a model for
+the curve. This is becuase the genus of XG can be computed by counting elliptic points and cusps on XG (see
+[19, Theorem 3.1.1] for example) which can be done using just G. The code for the computation of the genus of
+these curves was taken from [41].
+
+We obtain the following data depending on the genus of the fiber product:
+
+• Genus 0: For each of the genus 0 curves we are able to compute the j-maps and thus completely classify all
+of the elliptic curves with those exceptional types. This data can be found in Table 6 and the corresponding
+parametrization to obtain the fine moduli in Table 7.
+• Genus 1: For the 25 genus 1 curves (see the first two columns of Table 8) there are 24 elliptic curves and 1
+                               SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                          9
+
+curve that does not have a single rational point. Of the 24 elliptic curves, 20 have rank 0 and 4 have positive
+rank. For the curves with rank 0, we compute all of the rational points and their corresponding j-invariants to
+see that only 6 curves have points that correspond to non-CM elliptic curves. These curves, their points and
+representatives of the corresponding non-CM Q-isomorphism classes can be found in Table 11 and the finitely
+many elliptic curve that correspond to the fine moduli in Table 12. Lastly, the modular curves that are genus
+1 and have positive rank we give the j-maps and the Cremona label for the corresponding model in Table 9
+(except for the case [3Nn,5S4], see Section 5).
+• Genus 2: For each of the genus 2 curves the rank of their jacobian have rank 0 or 1, then we can apply Chabauty
+to obtain all the rational points. We have obtained that all the rational points, if there are, correspond to CM
+j-invariants. This data can be found in Table 13.
+• Genus > 2: There are 155 curve of genus > 2. For the corresponding groups, there are 28 maximal groups.
+Now, thanks to the non-constant morphism XG → XG′ when G ⊆ G′ , we have that it is enough to compute
+the rational points of the curves corresponding to these 28 curves. First we checked for CM-points and then we
+have looked for points of bounded height. For the cases that Gi 6= 11Nn, i = 1, 2 with bound 106 , otherwise with
+bound 100 or until the computer used more than 50GB of memory. In all those maximal curves we have not
+found any non-CM rational point. For each type we add a subscript indicating the genus of the corresponding
+modular curve, a superscript of cm when the only points we have found correspond to elliptic curves with CM
+or a superscript of ∅ in the case that we have not found any rational point. This data can be found in Table 14.
+4.1.2. Adically-exceptional pairs. In the case of p-adic Galois representations, our objective in this paper is only
+to characterize the possible combinations of maximal p-adic images. That is up to conjugation of a subgroup of
+a maximal group in GL2 (Zp ).
+   Let E/Q be an elliptic curve with at least one adically-exceptional prime p such that p is not exceptional.
+That is G∞                                                                 ∞
+           E (p) 6= GL2 (Zp ) and GE (p) = GL2 (Z/pZ). Therefore G1 = GE (p) is conjugate to a subgroup of one
+                                                                      ∞
+of the groups listed in Table 4. Now, let q 6= p a prime and G2 = GE (q) one of the groups in Table 1 such that
+the corresponding modular curve has infinitely many points or in Table 4 such that it is maximal. All those
+groups in Table 4 are maximal, meanwhile the maximal groups in Table 1 are 2B, 2Cn, 3B, 3Nn, 5B, 5Nn, 5S4,
+7B, 7Nn, 7Ns, 11Nn and 13B 3. Let G1 = G∞                       ∞
+                                             E (p) and G2 = GE (q). Similarly to the exceptional case at section
+4.1.1, for each of these possibilities, we compute the corresponding group G ⊆ GL2 (Z/pk qZ), the genus and a
+model of the corresponding modular curve XG . In this case we obtain 54 curves, and the largest genus is 111.
+Note that for these computations we have not made the cases when G1 and G2 belong to Table 1, since those
+computations have been done in the previous section. The counts of genus curves are listed in the table below.
+                         g                 0    1   2 3 4 6 7 8 10 13 14 18 26 40 54 111
+              # Curves of genus g         10 15 6 7 2 2 3 1                1    1    1    1    1    1     1    1
+We obtain the following data depending on the genus of the fiber product:
+
+• Genus 0: Similar to the Section 4.1.1 although in this case we do not consider the fine moduli spaces. The
+data can be found in Table 6.
+• Genus 1: There are 15 genus 1 curves (see the first two columns of Table 8), only 2 of them without rational
+points. For the remaining elliptic curves there are 8 with rank 0 and 5 with positive rank, and the corresponding
+data appear in Table 11 and Table 9 respectively.
+• Genus 2: There are 6 genus 2 curves. One of then has not any rational point, 4 have jacobian with rank 0
+or 1 and then we obtain all their rational points applying Chabauty. The remaining curve is the modular curve
+associated to the pair [4X7,5Nn] whose jacobian has rank 2. Then in order to obtain its rational points we apply
+2-cover descent and elliptic Chabauty. This computation has been realized with the help of Xavier Xarles. Let
+C be the following hyperelliptic model associated to the modular curve corresponding to the pair [4X7 5Nn]:
+                                                                                        
+                        C : y 2 = f (x) ,   f (x) = (x − 2) x2 + 1 4x3 − 4x2 + 3x − 2 .
+First we do a point search to find all easily visible points and we compute that in projective coordinates
+                             S1 := {[0 : ±2 : 1], [3/4; ±50/4 : 1], [2 : 0 : 1], [1 : ±2 : 0]} ⊆ C(Q).
+Our purpose is to prove C(Q) = S1 . Let us determine an unramified two covering ψ : D → C defined over Q such
+that the associated covering collection ψδ : Dδ → C satisfies that any rational point P ∈ C(Q) on the curve lifts
+  3 One might expect to see 3Ns and 5Ns on this list of groups, but due to the unique characteristics of 3 and 5 these groups are
+in fact not maximal. One can check that in these cases, 3Ns ( 3Nn and 5Ns ( 5S4.
+10                              HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+to one of the covers Dδ (Q). The idea is to factorize the polynomial f (x) as the product of two polynomials (over
+some number field K) of even degree. Let be f (x) = f1 (x)f2 (x), where f1 (x), f2 (x) ∈ K[x] for some number
+field K. We get the subcovers E1 : y12 = f1 (x) and E2 : y22 = f2 (x) and the unramified two covering ψ : D → C,
+ψ(x0 , y1 , y2 ) = (x0 , y1 y2 ) where D : {y12 = f1 (x) , y22 = f2 (x)}:
+
+                                     D    ❈❈                                                               D   δ❇
+                                   ④④④      ❈❈
+                                                                                                         ⑤⑤⑤     ❇❇
+                                                                                                                   ❇❇
+                                 ④④      ψ    ❈❈                                                       ⑤⑤      ψ     ❇❇
+                                ④               ❈❈                                                              δ
+                            } ④④                 !            /o o/ o/ δ/o /o /o /o /            ~ ⑤⑤⑤
+                                                                                                                      ❇!
+                        E1 ❇         C                E2                                    E1δ            C                E2δ
+                             ❇❇               ⑤⑤                                                  ❇❇
+                               ❇❇
+                                     x      ⑤⑤                                                      ❇❇              ⑤⑤
+                                 ❇
+                              x ❇❇        ⑤
+                                          ⑤ x                                                         ❇❇ x       ⑤⑤⑤
+                                   !   }⑤⑤                                                         x ❇❇         ⑤ x
+                                                                                                         !  }⑤⑤
+                                     P1                                                                    P1
+Now if we can determine Dδ (Q) we determine C(Q), since Dδ (Q) maps to {P ∈ Eiδ (K) : x(P ) ∈ P1 (Q)}. Finally,
+in order to determine which of those points correspond to points in C(Q) we only have to determine wich points
+in x(Eiδ (K)) ∩ P1 (Q) lift to C(Q), for any of the two subcovers.
+   Let be K = Q(α) where α is a root of the polynomial g(x) = 4x3 − 4x2 + 3x − 2 then we choose the following
+factorization of the polynomial f (x):
+             f1 (x) = (x − 2)(x − α),                      f2 (x) = (x2 + 1)(4x2 + 4(α − 1)x + (4α2 − 4α + 3).
+We could have chosen other factorizations over other number fields, but this one works for our purpose. Now,
+in order to compute the (finite) set T of twists necessary to cover all the rational points we compute the Fake
+2-Selmer group of C/Q (see [11]). This can be done by the Magma function TwoCoverDescent. We check that
+all the possible twists come from the points in the set S1 : let δ ∈ T , then δ = f2 (x0 ) ∈ K ∗ /K ∗2 for x0
+the x-coordinate of an affine point in S1 ; and δ = 1. Note that f2 (3/4) ∈ K 2 . Therefore we have obtained
+T = {1} ∪ {f2 (x0 ) : x0 ∈ {0, 2}}. For any δ ∈ T we have that rankZ (E2δ (K)) < 3, then we can apply Elliptic
+Chabauty to the covering x : E2δ → P1 , to obtain the set C(Q). The following tables illustrates the data obtained
+for each δ the corresponding point in P1 (Q):
+
+                                δ                                 1                      α2 − α + 3/4 5α2 + 5α + 55/4
+                  x(P ) ∈ P1 (Q), P ∈ E2δ (K) [3/4 : 1], [1 : 0]                            [0 : 1]                   [2 : 1]
+Therefore we finish with C(Q) = S1 .
+• Genus > 2: Similar to the case in section 4.1.1: the data can be found in Table 14. But in this case we have
+found some non-CM rational points:
+     • j = 33 5 75 /27 in the modular curve of genus 3 asociated to [8X5,7Ns]. But this j-invariant corresponds
+       to [8X5,7Ns.3.1] (see Table 5).
+     • j = −22 37 53 4393 in the modular genus 6 curve associated to the pair [4X7,9XE].
+
+          5. Proof of the Theorem 17, Theorem 19, Corollary 18 , and Corollary 20
+    We have discussed previously that our computations allow us to compute the genus of the modular curves
+obtained as the fiber product of modular curves arising from pairs of non-surjective (mod p or p-adic) Galois
+representations. In particular, such a curves can have infinitely many non-CM points and non-cusps if and only
+if it has genus 0 with some rational point, or it is an elliptic curve with positive rank. Apart from the case with
+a single group (see Tables 1, 2, 4), we have obtained the following:
+• Genus 0: For each curve of genus zero we check that it has a rational point. See Tables 6 and 7 for all those
+possible pairs.
+• Genus 1: There are 40 modular curves of genus 1 associated to pairs of mod p and p-adic non-surjective
+representations. From them, the 9 elliptic curves of positive rank appear in Table 8. Note that the cases
+[8X5,3Nn] and [3Nn,5S4] do not appear at Theorems 17 and 19. In the following paragraphs we describe the
+reasons that we can discard those cases:
+       ⋆ [8X5,3Nn]: Let E be the modular curve associated to [8X5,3Nn]. In this case, E/Q is the elliptic curve
+         with Cremona label 576a3 and has j-map equal to j(x) = 8x3 where (x, y) ∈ E(Q). Now let 8X17 be the
+         group
+                                     h( 12 01 ) , ( 10 07 ) , ( 10 15 )i ( 8X5 ( GL2 (Z/8Z).
+                         SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                  11
+
+       The modular curve associated to the (nonmaximal) exceptional pair [8X17,3Nn] is the elliptic curve E ′ /Q
+                                                                       3     3
+       with Cremona label 576a1. The j-map E ′ is equal to j ′ (x) = 8 x x+32
+                                                                           2     where (x, y) ∈ E ′ (Q). As the
+       Cremona labels indicate, there is an isogeny ϕ : E ′ → E defined by
+                                                  3                  
+                                                  x + 32 x3 y − 64y
+                                      ϕ(x, y) =             ,           ,
+                                                     x2         x3
+        of degree 3. A simple calculation shows that j ′ (x, y) = j(ϕ(x, y)) and thus Im(j) = Im(j ′ ). Because of
+        the relationship between these two groups and the j-maps of these modular curves, any elliptic curve
+        that have potentially G∞                                               ∞
+                                E (2) conjugate to a subgroup of 8X5 and GE (3) conjugate to a subgroup of 3Nn
+                                         ∞
+        must have (smaller) images: GE (2) conjugate to 8X17. Further, 8X17 is a subgroup of 2B and so the
+        mod 2 Galois representation was already non-surjective. Thus, there are no elliptic curves of exact type
+        [8X5,3Nn] despite the fact that E(Q) contains infinitely many points.
+      ⋆ [3Nn,5S4]: Similarly the exact type [3Nn,5S4] does not actually occur for any elliptic curves over Q
+        despite the fact that the modular curve corresponding to this type has infinitely many rational points.
+        This is again because the modular curves for [3Nn,5S4] and [3Nn,5Ns] are isogenous elliptic curves and
+        their j-maps are related in the same way as the curves above. The group 5Ns is a proper subgroup of
+        5S4 and thus every elliptic curve coming from a rational point on the modular curve for [3Nn,5S4] also
+        comes from a point on the modular curve for the smaller type [3Nn,5Ns]. In this case the modular curve
+        associated to [3Nn,5S4] has Cremona label 225a2 and for [3Nn,5Ns] is 225a1. These elliptic curves
+        both have rank 1 and are 3-isogenous to each other.
+To summarize the above two cases, any elliptic curve of type [8X5,3Nn] (resp. [3Nn,5S4]) must also be of
+smaller type [8X17,3Nn] (resp. [3Nn,5Ns]). So there are no elliptic curves of exact adic type [8X5,3Nn] (resp.
+exact type [3Nn,5S4]) as all the curves of these types much have strictly smaller exact (adic-)type.
+   We also point out that we know that there are infinitely many elliptic curves whose image is conjugate to the
+groups listed in Table 2 since [42] give explicit 1-parameter families of elliptic curves with images exactly equal
+to each group outside of a thin set.
+   We are now ready to prove Corollary 18
+Proof of Corollary 18. The proof of this corollary breaks down into two cases. Given a group G ⊆ GL2 (Z/nZ)
+with n squarefree satisfying −I ∈ G and det(G) = (Z/nZ)× , from Faltings’ Theorem [23] there can only be
+infinitely many Q-isomorphism classes of elliptic curves over Q of type G if the corresponding modular curve XG
+is genus 0 with a rational point or if it is an elliptic curve with positive rank over Q.
+   For the first case, assume XG ≃ P1 over Q. Under the assumption of uniformity we may assume that p divides
+n if and only if there exists some elliptic curve over Q for which p is exceptional. This is because if p did not
+already divide n, we can lift the group G to be a subgroup of GL2 (Z/pnZ) by taking its preimage under the
+standard reduction map. This processes does not affect the modular curve XG or its moduli interpertation.
+   By [42, Lemma 3.5] we have that there are infinitely many Q-isomorphism classes of elliptic curves with
+±GE (n) conjugate to G. For each of these Q-isomorphism classes, the curves in them cannot have any additional
+exceptional primes by the assumption that any prime that could potentially be exceptional (under the assumption
+of uniformity) is already accounted for since it divides n. Thus, for each of the infinitely many Q-isomorphism
+classes of elliptic curves guaranteed to exist by [42, Lemma 3.5], Remark 14 ensures that there is at least one
+Q-isomorphism class with image exactly G.
+   Finally, assume that the corresponding modular curve XG has genus 1 and positive rank. For every p dividing
+n let Gp = πp (G) where πp : GL2 (Z/nZ) → GL2 (Z/pZ) is the standard componentwise reduction map. Then
+every point in XG (Q) corresponds to a Q-isomorphism class of elliptic curves with type [Gp : p dividing n].
+   Suppose that E has type [Gp : p dividing n] but its exact type is not [Gp : p dividing n]. Then at least one of
+the following must be true:
+       • The level of the type of E is larger than n.
+       • There is a prime p that divides n such that GE (p) is conjugate to a proper subgroup of Gp .
+   From the assumption of uniformity we know that there are only finitely many primes p such that p ∤ n and
+there are elliptic curves defined over Q that are exceptional at p. Of these finitely many primes p, there are only
+finitely many ways that an elliptic curve E/Q can be of the type associated to G and exceptional at p. The
+modular curves corresponding to each of these possibilities are shown to all have have genus greater than 1 or to
+be genus 1 with rank 0 in Section 4. Therefore, there can only be finitely many Q-isomorphism classes of elliptic
+curve of type G, but exact type of level larger than that of G.
+12                                   HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+   Next, checking every possible subtype shows that the are only 2 types whose corresponding modular curves
+are of genus 1 and have positive rank over Q that also have a subtype with a genus 1 positive rank corresponding
+modular curve. Those types are [8X5,3Nn] and [3Nn,5S4] and we dealt with these at the beginning of Section
+5.
+                                                                                                               
+  Since we do not require that the types be exact in Corollary 20, the result follows from the genus and rank
+computation that we have described in this section as well as an argument similar to that of the proof of Corollary
+18.
+
+   Now for a given (adic-)type to occur for infinitely many Q-isomorphism classes of elliptic curves it must be
+that the corresponding moduli space is genus 0 with a rational point or an elliptic curve with positive rank over
+Q. This is sufficient to conclude that there are infinitely many Q-isomorphism classes of elliptic curves of exact
+(adic)-type thanks once again to [42, Lemma 3.5]. Calculating all the possibilities gives the lists that appear in
+part (A) of Theorems 17 and 19 and the proof of Corollary 18 shows that the list in Theorem 17 part (A) is in
+fact complete. Further, a similar analysis of the computations completes the proof of Theorem 19.
+   In fact, with a further computation, we can prove the following lemma as well.
+Lemma 23. There are no (adically-)exceptional types of length 3 such that there exist infinitely many non-
+isomorphic classes of non-CM elliptic curves over Q.
+Proof. Let us suppose that there is a type of length 3 of the form [G1 , G2 , G3 ] such that there exist infinitely
+many non-isomorphic classes of non-CM elliptic curves over Q with that type. In order for this to be the case
+it must be that all the subtypes of length 2, [Gi , Gj ], occur for infinitely many Q-isomorphism classes of elliptic
+curves. Looking for all the possibilities in all the pairs at (A) in Theorems 17 and 19 we have that the unique
+possibility is [3Nn,5B,2B]. The modular curve associated to [3Nn,5B,2B] is equivalent to the fiber product of
+X3Nn and X10B = X0 (10). This modular curve4 has genus 2 and an hyperelliptic model is C : y 2 = x6 − 18x3 + 1.
+Since its jacobian has rank 0 we can apply Chabauty to obtain all the rational points. We have obtained that all
+the rational points correspond to cusps. Therefore there not exist any triples [G1 , G2 , G3 ] of exceptional types or
+adically-exceptional types such that there exist infinitely many non-isomorphic classes of non-CM elliptic curves
+over Q of that type.                                                                                                
+   In order to complete the proof of Theorem 10 we still need to justify that there are infinitely many distinct
+Q-isomorphism classes of elliptic curves defined over Q with Serre’s constant corresponding to the levels of all the
+modular curves associated to the types that appear in Tables 6, 7 and 9. We have justified already that all the
+others appears, but there is a subtlety that still needs to be sorted out with 104. While we have seen that there are
+infinitely many Q-isomorphism classes of elliptic curves of type [8X4,13B] since the modular curve corresponding
+to [8X4,13B] is genus 1 of positive rank. It is possible that for all but finitely many of these Q-isomorphism
+classes the mod 2 or mod 4 image is not actually surjective while still being contained inside 8X4. Therefore, all
+but finitely many of these curve might have smaller Serre’s constant (either 26 or 52). We start by showing that
+if E/Q has type [8X4,13B], then the mod 2 Galois representation associated to E must be surjective. Since
+having mod 8 image contained in the group associated to 8X4 corresponds to having ∆(E) = −2t2 for some t ∈ Q
+we know that the only way that E could have non-surjective mod 2 image would be for E to have a rational
+point of order 2. This, of course, is impossible for an elliptic curve of type [8X4,13B] since any such curve
+already has a 13-isogeny and there are no elliptic curves over Q with a 26-isogeny. Lastly, using the database
+in [36] we see that in order for an elliptic curve to have surjective image mod 2, be of type [8X4,13B], and to
+not have surjective image mod 4 is for the mod 4 image to be contained in the group associated to 4X7. This
+would mean that E also has type [4X7,13B], but our computations show that the modular curve corresponding
+to [4X7,13B] is genus 3 and so there can be at most finitely many such Q-isomorphism classes. Thus, there
+must be infinitely many curves with Serre’s constant 104 and we have completed the proof of Theorem 10. That
+is, A∞ is the set consisting of the levels of all the modular curves associated to the types that appear in Tables
+6, 7 and 9.
+
+  To finish our project we still need to complete the classification of possible (adic-)types and Serre’s constant.
+To do this we fix our attention to the associated modular curves with finitely many rational points. That is,
+     4A remarkable fact is that this genus 2 curve is new modular of level 90 and its jacobian is Q-isogenous to the product of two
+elliptic curves (see [2]).
+                          SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                  13
+
+genus 1 and rank 0, or genus >1:
+• Genus 1 and rank 0: There are 28 elliptic curves of rank 0. Only 8 have points that correspond to non-CM
+elliptic curves. All the data appears in Tables 11 and 12. The case [4X7,3B] does not appear in that table:
+       ⋆ The modular curve associated to the type [4X7,3B] is the elliptic curve E/Q with Cremona label 48a6
+         and with Mordell-Weil group E(Q) ≃ Z/8Z. These points give the non-CM j-invariants j1 = −33 · 113 /22
+         and j2 = 32 · 233 /26 . Now, let j(t) be the j-map (see Table 6) of the genus 0 modular curve associated to
+         the type [4X3,3B]. Therefore j(−1/2) = j1 and j(−1) = j2 . Therefore there are no elliptic curves with
+         type [4X7,3B] as any curve with this combination of images actually has smaller images [4X20,3B].
+         Here 4X7 referes to the level 4 group X20 in the notation of [36].
+• Genus = 2: We have computed all the rational points of all the modular curves of genus 2. In all the cases we
+have not obtained non-CM elliptic curves, except in the case [4X7,7B]:
+       ⋆ The associated modular curve to the type [4X7,7B] has genus 2 and we have computed all its rational
+         points. In this cases the non-CM non-singular j-invariants are j1 = 33 13/22 and j2 = −33 · 13 · 4793 /214
+         (see Table 13). That corresponds to evaluating the j-map of the genus 0 modular curve associated to the
+         type [4X3,7B] at the values 7/2 and 2 respectively. Therefore any elliptic curve E with those j-invariants
+         satisfies that G∞                                                          ∞
+                         E (2) is conjugate to a subgroup of 4X3 and 4X7, and GE (7) is conjugate to a subgroup
+         of 7B.
+• Genus > 2: We did a point search to find all easily visible points of bounded heigh. We have found only non-
+CM, non-cusps in the modular curve associated to the types [8X5,7Ns] and [4X7,9XE]. But the case [8X5,7Ns]
+does not appear at the statement:
+       ⋆ The corresponding modular curve to the type [8X5,7Ns] has genus 3 and searching for points of height
+         less than or equal to 106 yields only one non-CM non-singular j-invariant, j = 33 · 5 · 75 /27 (see Table
+         14) that corresponds to the unique j-invariant for the case GE (7) labeled as 7Ns.3.1 (see Table 1).
+   The above proves (B) of Theorems 17 and 19.
+Example 24. Let E be the elliptic curve given by Weierstrass equation y 2 + xy + y = x3 − 126x − 552. This
+curve has Cremona reference 50a1, it does not have CM and according to LMFDB [31], GE (3) = 3B.1.2,
+GE (5) = 5B.1.3, and GE (p) = GL2 (Z/pZ) for every other prime p. Checking the 2-adic representation in
+[31] (which uses the data collected in [36]) we see that the image of ρE,2∞ is the pullback of the group 8X4
+under the standard reduction map π : GL2 (Z2 ) → GL2 (Z/8Z). So the 2-adic representation associated to E
+is not surjective and A(E) = 120. Here we point out that if we let πk : GL2 (Z/8Z) → GL2 (Z/2k Z) be the
+standard componentwise reduction map for k = 1, and 2, then π1 (H) = GL2 (Z/2Z) and π2 (H) = GL2 (Z/4Z)
+where H = G∞   E (2). Therefore, ρE,2 and ρE,4 are both surjective. The modular curve whose points correspond
+to elliptic curves with these mod 3, 5, and 8 images is genus greater than 1, so there are only finitely many
+Q-isomorphism classes of elliptic curves with this particular combination of images. Moreover, since we have
+obtained all the rational points at the modular curve associated to [3B,5B] we are done.
+Remark 25. In fact we can check that for the four j-invariants coming from the modular curve [3B,5B] have
+that the image of ρE,2∞ is the pullback of the group 8X4. Similarly with [3B,7B] and 8X4; and [3B,5S4]
+with 8X3. In particular this completes the computation of all the points on the modular curves associated to
+[4X3,3B,5S4], [8X4,3B,5B] and [8X4,3B,7B].
+  Therefore we have obtained all the possible j-invariants for the item (B) at Theorems 17 and 19, except
+(maybe) the type [4X7,9XE]. The modular curve associated to the former case has genus 6. In this article we
+have not tried to compute all the rational points of such a curve. This will be done in an ongoing project [17].
+
+                                               Appendix: Tables
+   In this section, we give tables of data that summarize the results that we used in our computations as well
+as the data that we collected. Tables 1, 2, and 3 are taken from the results in [42] where Zywina does a
+search for all possible images of the mod p representations associated to non-CM elliptic curves over Q and then
+computes the moduli spaces for the ones that actually occur. Throughout [42] Zywina is careful to distinguish
+between subgroup of GL2 (Z/pZ) that do and do not contain −I. This is because if E and E ′ are quadratic
+twists of each other then we do not necessarily know that GE (p) = GE ′ (p). In this case all that can be said is
+that hGE (p), −Ii = hGE ′ (p), −Ii. Therefore, if G ⊆ GL2 (Z/pZ) contains −I, then GE (p) ⊆ G if and only if
+GE ′ (p) ⊆ G, while if −I 6∈ G then it is possible that GE (p) ⊆ G and GE ′ (p) 6⊆ G. Combining this with the
+fact that two non-CM elliptic curves E/Q and E ′ /Q are Q-isomorphic if and only if they are quadratic twists of
+14                               HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+each other, we have that the moduli spaces associated to groups containing −I are completely determined by a
+j-map and are coarse moduli spaces (See Table 1). On the other hand, the moduli spaces associated to groups
+that do not contain −I are called fine moduli spaces and are given by elliptic surfaces such that each nonsingular
+specialization is a representative of a Q-isomorphism class with the given type (See Table 3). We have included
+these three tables for the sake of completeness.
+  There are places in the tables where the polynomials that need to be written are too complicated to fit in the
+space provided. In those cases we simplify the entry by defining some notation for factors of the polynomials.
+The extra data is then presented at the end of the Appendix organized by table number.
+
+     Below we give a description of each of the tables:
+
+       • Table 1: For each possible groups GE (p) 6= GL2 (Z/pZ) with −I ∈ GE (p) we give Sutherland’s and
+         Zywina’s labels, the level, generators, the (possibly constant) j-maps, and the Cremona label of an
+         elliptic curve with minimal conductor with mod p image equal to the given group.
+       • Table 2: For each possible groups GE (p) 6= GL2 (Z/pZ) with −I 6∈ GE (p) we give Sutherland’s and
+         Zywina’s labels, the level, generators, and the Cremona label of an elliptic curve with minimal conductor
+         with mod p image equal to the given group.
+       • Table 3: For each possible groups GE (p) 6= GL2 (Z/pZ) with −I 6∈ GE (p) we give an elliptic curve model
+         for the fine moduli.
+       • Table 4: For each group GE (pk ) with k ≥ 2 that surjects onto GL2 (Z/pZ) we give the level, generators
+         j-map, and the Cremona label of an elliptic curve with minimal conductor with mod p image equal to
+         the given group.
+       • Table 5: For each group in Table 1 that only has finitely many Q-isomorphism classes, we check if the
+         corresponding j-invariants are in the image of the j-map of other modular curves. The results of this
+         checking are compiled in this table.
+       • Table 6: For each exceptional type [GE (p), GE (q)] such that GE (p) and GE (q) contain −I and the
+         corresponding modular curve has genus 0 we give the j-map associated to the curve and the Cremona
+         label of an elliptic curve with minimal conductor and that type. We do the same thing for maximal
+         adically exceptional types.
+       • Table 7: For each exceptional type [GE (p), GE (q)] such that GE (p) and GE (q) with −I not in one of the
+         groups such that the corresponding modular curve has genus 0 we give the parametrization to obtain a
+         fine moduli associated to the curve and the Cremona label of an elliptic curve with minimal conductor
+         and that type.
+       • Table 8: For each exceptional type such that the corresponding modular curve is genus 1 we give the
+         the Cremona reference of the modular curve as well as the structure of the Mordell-Weil group of the
+         modular curve in the case of the curve is elliptic, otherwise we show a reason why does not have rational
+         points. We do the same thing for maximal adically-exceptional types.
+       • Table 9: For each modular curve in Table 8 with positive rank, except [8X5,3Nn] and [3Nn,5S4] (see
+         §5), we give the j-map, Cremona reference of the modular curve, and the Cremona reference of an elliptic
+         curve with minimal conductor (if this is less than 400.000) and that (adic-)type.
+       • Table 10: For each modular curve in Table 9 with positive rank such that the examples of minimal
+         conductor are greater than 400000 and thus does not have a page in the LMFDB, we give a minimal
+         model of the an elliptic curve with that (adic-)type and its conductor.
+       • Table 11: For each modular curve in Table 8 with rank 0 and −I in both groups we give a complete list of
+         the j-invariants that correspond to all the Q-isomorphic classes with that (adic-)type, and the Cremona
+         labels of examples of elliptic curves with that combination of representations of minimal conductor.
+       • Table 12: For each modular curve in Table 8 with rank 0 and −I not in both groups we give a complete
+         list of the Cremona labels of all elliptic curves with that (adic-)type.
+       • Table 13: For each possible (adic-)type whose curve has genus 2 we give a complete list of non-cusps and
+         rational points and their corresponding elliptic curves j-invariants.
+       • Table 14: We give a list of the modular curves that one would classify all the non-cusps and rational
+         points in order to prove Conjecture 12 under the assumption of uniformity. For each type we add a
+         subscript indicating the genus of the corresponding modular curve, a superscript of cm when the only
+         points we have found correspond to elliptic curves with CM or a superscript of ∅ in the case that we
+         have not found any rational point. For all those curves we have found only CM and/or cusps, or nothing
+         in the modular curve associated to those types except for the pair [4X7,9XE], where we have found the
+                                     SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                                               15
+
+       j-invariant j = −22 37 53 4393 . For this j-invariant we have checked that does not appear neither for types
+       in Table 1 nor in Table 4. Assuming that for the remaining curves those are all the points we are done
+       to prove Conjecture 12 under the assumption of uniformity, since the set of types that appear at Table
+       14 corresponds to a set of maximal groups that cover all the possible (adically-)exceptional pairs. Note
+       that if G′ ⊆ G then there exists a non-constant morphism XG′ → XG and if we prove that XG (Q) only
+       corresponds to cusps and CM j-invariants, then XG′ (Q) corresponds to cusps and CM j-invariants.
+     • Table 15: We give examples of elliptic curves with a given (adic-)type whose modular curves have genus
+       greater than one and whose points correspond to elliptic curves that do not appear in the LMFDB.
+
+Remark 26. All the Magma [10] code to compute the tables in this appendix is available in the online supplement
+[16]. Some of the code for this paper was taken from [18].
+
+
+
+  Sutherland       Zywina        Model             Example           Sutherland    Zywina        Model       Example
+                                                                                                                            Sutherland   Zywina   Model   Example
+   3B.1.1           H3,1            E3,3              19a3             7B.1.1        H3,1         E7,3         26b1
+                                     −3                                                            −7
+                                                                                                                             11B.1.4      H1,1    E11,1    121a2
+   3B.1.2           H3,2            E3,3              19a2             7B.1.2        H5,2         E7,5         637a1
+                                       −3                                                                                    11B.1.5      H2,1    E11,2    121a1
+   3Cs.1.1          H1,1      E3,1 or E3,1            19a1             7B.1.3        H4,1         E7,4         26b2                                −11
+                                                                                                   −7
+                                                                                                                             11B.1.6      H2,2    E11,2    121c2
+   5B.1.1           H6,1            E5,6              11a3             7B.1.4        H4,2         E7,4         294a1                               −11
+                                                                                                                             11B.1.7      H1,2    E11,1    121c1
+   5B.1.2           H5,1            E5,5              11a2             7B.1.5        H5,1         E7,5         637a2
+                                     5                                                             −7                        13B.3.1      H5,1    E13,5    147b1
+   5B.1.3           H5,2            E5,5              75a1             7B.1.6        H3,2         E7,3         294a2
+                                     5                                                             −7                        13B.3.2      H4,1    E13,4    147b2
+   5B.1.4           H6,2            E5,6              75a2             7B.2.1        H7,2         E7,7         338b1                               13
+                                                                                                                             13B.3.4      H5,2    E13,5   24843o1
+   5Cs.1.1          H1,1            E5,1              11a1             7B.2.3        H7,1         E7,7         338b2                               13
+                                     5                                                                 −7                    13B.3.7      H4,2    E13,4   24843o2
+   5Cs.1.3          H1,2            E5,1             275b2             7Ns.2.1       H1,1     E7,1 or E7,1   2450ba1
+                          Table 2. Groups GE (p) not containing −I, for non-CM elliptic curves E/Q
+
+
+            E3,1 : y 2     = x3 − 3(t + 1)(t + 3)(t2 + 3)x − 2(t2 − 3)(t4 + 6t3 + 18t2 + 18t + 9)
+            E3,3   : y2    = x3 − 3(t + 1)3 (t + 9)x − 2(t + 1)4 (t2 − 18t − 27)
+            E5,1   : y2    = x3 − 27(t20 + 228t15 + 494t10 − 228t5 + 1)x + 54(t30 − 522t25 − 10005t20 − 10005t10 + 522t5 + 1)
+            E5,5 : y 2     = x3 − 27(t4 + 228t3 + 494t2 − 228t + 1)x + 54(t6 − 522t5 − 10005t4 − 10005t2 + 522t + 1)
+            E5,6   : y2    = x3 − 27(t4 − 12t3 + 14t2 + 12t + 1)x + 54(t6 − 18t5 + 75t4 + 75t2 + 18t + 1)
+            E7,1   : y2    = x3 − 53 73 x − 54 72 106
+            E7,3   : y2    = x3 − 27(t2 − t + 1)(t6 − 11t5 + 30t4 − 15t3 − 10t2 + 5t + 1)x + 54Q7,3 (t)
+            E7,4 : y 2     = x3 − 27(t2 − t + 1)(t6 + 229t5 + 270t4 − 1695t3 + 1430t2 − 235t + 1)x + 54Q7,4 (t)
+            E7,5   : y2    = x3 − 27 · 7(t2 − 3t − 3)(t2 − t + 1)(3t2 − 9t + 5)(5t2 − t − 1)x − 54 · 72 Q7,5 (t)
+            E7,7   : y2    = x3 − 27(t2 + 13t + 49)3 (t2 + 245t + 2401)x + 54(t2 + 13t + 49)4 (t4 − 490t3 − 21609t2 − 235298t − 823543)
+         E11,1     : y2    = x3 − 27 · 114 x + 54 · 115 · 43
+         E11,2 : y 2       = x3 − 27 · 113 · 131x + 54 · 114 · 4973
+         E13,4     : y2    = x3 − 27(t4 − t3 + 5t2 + t + 1)3 P13,4 (t)x + 54(t2 + 1)(t4 − t3 + 5t2 + t + 1)4 Q13,4 (t)
+         E13,5     : y2    = x3 − 27(t4 − t3 + 5t2 + t + 1)3 P13,5 (t)x + 54(t2 + 1)(t4 − t3 + 5t2 + t + 1)4 Q13,5 (t)
+                                                Table 3. Elliptic curve model for the fine moduli
+
+
+                   Type level              generators                                         j-map                                Example
+                    4X3         4          ( 30 31 ) , ( 03 11 )                            −t2 + 1728                              567a1
+                    4X7         4          ( 03 10 ) , ( 01 11 )                         −4t3 (t + 8)                               216a1
+                    8X4         8          ( 70 71 ) , ( 51 01 )                         −2t2 + 1728                                216a1
+                    8X5         8          ( 50 51 ) , ( 01 11 )                            2t2 + 1728                             1682b1
+                                                                   37 (t2 −1)3 (t6 +3t5 +6t4 +t3 −3t2 +12t+16)3 (2t3 +3t2 −3t−5)
+                    9XE         9          ( 44 54 ) , ( 48 86 )                            (t3 −3t−1)9
+                                                                                                                                   1944c1
+                      Table 4. Maximal groups G∞
+                                               E (p), for non-CM elliptic curves E/Q and p = 2, 3
+16                                     HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+
+ Sutherland     Zywina    Level          Generators                    j-map                                                                                                                                                           Example
+                                                                              2
+                                                                                +t+1)3
+       2Cs       G1         2                                          256 (tt2 (t+1) 2                                                                                                                                                  15a1
+                                                                                 3
+        2B       G2         2                 ( 10 11 )                256 (t+1)
+                                                                              t
+                                                                                                                                                                                                                                         15a4
+
+       2Cn       G3         2                 ( 01 11 )                t2 + 1728                                                                                                                                                        392b1
+                                                                                             3               3       2            3
+       3Cs       G1         3           ( 20 02 ) , ( 10 02 )          27 (t+1)  (t+3) (t +3)
+                                                                             t3 (t2 +3t+3)3
+                                                                                                                                                                                                                                        175b2
+                                                                                             3               3
+       3Ns       G2         3      ( 20 02 ) , ( 01 20 ) , ( 10 02 )   27 (t+1) t3(t−3)                                                                                                                                                 1210d1
+                                                                                                         3
+        3B       G3         3      ( 20 02 ) , ( 10 02 ) , ( 10 11 )   27 (t+1)(t+9)
+                                                                              t3
+                                                                                                                                                                                                                                        175b1
+
+       3Nn       G4         3           ( 10 02 ) , ( 22 12 )          t3                                                                                                                                                               245a1
+                                                                       (t20 +228t15 +494t10 −228t5 +1)3
+     5Cs.4.1     G1         5           ( 40 04 ) , ( 10 02 )                  t5 (t10 −11t5 −1)5
+                                                                                                                                                                                                                                         99d2
+                                                                       (t2 +5t+5)3 (t4 +5t2 +25)3 (t4 +5t3 +20t2 +25t+25)3
+       5Cs       G2         5           ( 20 03 ) , ( 10 02 )                      t5 (t4 +5t3 +15t2 +25t+25)5
+                                                                                                                                                                                                                                       18176b2
+                                                                       54 t3 (t2 +5t+10)3 (2t2 +5t+5)3 (4t4 +30t3 +95t2 +150t+100)3
+     5Ns.2.1     G3         5           ( 20 03 ) , ( 03 10 )                       (t2 +5t+5)5 (t4 +5t3 +15t2 +25t+25)5
+                                                                                                                                                                                                                                        6975a1
+                                                                       (t+5)3 (t2 −5)3 (t2 +5t+10)3
+       5Ns       G4         5      ( 01 40 ) , ( 20 03 ) , ( 10 02 )                     (t2 +5t+5)5
+                                                                                                                                                                                                                                        608b1
+                                                                         4                   3                   2                        3
+                                                                       (t +228t +494t −228t+1)
+      5B.4.2     G5         5      ( 40 04 ) , ( 20 01 ) , ( 10 11 )         t(t2 −11t−1)5
+                                                                                                                                                                                                                                         99d3
+                                                                       (t4 −12t3 +14t2 +12t+1)3
+      5B.4.1     G6         5      ( 40 04 ) , ( 10 02 ) , ( 10 11 )         t5 (t2 −11t−1)
+                                                                                                                                                                                                                                         99d1
+                                                                        3                                3           2                    3
+                                                                       5 (t+1)(2t+1) (2t −3t+3)
+       5Nn       G7         5           ( 10 04 ) , ( 24 32 )                  (t2 +t−1)5
+                                                                                                                                                                                                                                        675b1
+                                                                        2    2                           3
+                                                                       5 (t +10t+5)
+        5B       G8         5      ( 20 03 ) , ( 10 02 ) , ( 10 11 )         t5
+                                                                                                                                                                                                                                        867c1
+
+       5S4       G9         5      ( 03 34 ) , ( 20 02 ) , ( 34 04 )   t3 (t2 + 5t + 40)                                                                                                                                                648a1
+
+     7Ns.3.1     G1         7           ( 30 05 ) , ( 04 10 )          33 · 5 · 75 /27                                                                                                                                                  2450a1
+                                                                                     3       2                       3        2                   3   4           3       2                3
+                                                                       t(t+1) (t −5t+1) (t −5t+8) (t −5t +8t −7t+7)
+       7Ns       G2         7      ( 01 60 ) , ( 30 05 ) , ( 10 03 )                   (t3 −4t2 +3t+1)7
+                                                                                                                                                                                                                                        9225a1
+                                                                       (t2 −t+1)3 (t6 −11t5 +30t4 −15t3 −10t2 +5t+1)3
+      7B.6.1     G3         7      ( 60 06 ) , ( 10 03 ) , ( 10 11 )               (t−1)7 t7 (t3 −8t2 +5t+1)
+                                                                                                                                                                                                                                        208d1
+                                                                         2                   3       6                   5                4                3              2                    3
+                                                                       (t −t+1) (t +229t +270t −1695t +1430t −235t+1)
+      7B.6.3     G4         7      ( 60 06 ) , ( 30 01 ) , ( 10 11 )                 (t−1)t(t3 −8t2 +5t+1)7
+                                                                                                                                                                                                                                        208d2
+                                                                            (t2 −3t−3)3 (t2 −t+1)3 (3t2 −9t+5)3 (5t2 −t−1)3
+      7B.6.2     G5         7      ( 60 06 ) , ( 20 05 ) , ( 10 11 )   −                         (t3 −2t2 −t+1)(t3 −t2 −2t+1)7
+                                                                                                                                                                                                                                        5733d1
+                                                                             3       2           3       2                        3           2                   3
+                                                                       64t (t +7) (t −7t+14) (5t −14t−7)
+       7Nn       G6         7           ( 10 06 ) , ( 24 52 )                    (t3 −7t2 +7t+7)7
+                                                                                                                                                                                                                                       15341a1
+                                                                       (t2 +245t+2401)3 (t2 +13t+49)
+        7B       G7         7      ( 30 05 ) , ( 10 03 ) , ( 10 11 )                t7
+                                                                                                                                                                                                                                        338a1
+
+     11B.10.4    G1        11     ( 10 0        4 0       1 1
+                                     0 10 ) , ( 0 6 ) , ( 0 1 )        −112                                                                                                                                                             1089f2
+                                                                                                 3
+     11B.10.5    G2        11     ( 10 0        5 0       1 1
+                                     0 10 ) , ( 0 7 ) , ( 0 1 )        −11 · 131                                                                                                                                                        1089f1
+                                                                                                                                      3
+                                                                                     P11 (x,y)
+       11Nn      G3        11           ( 10 10
+                                              0
+                                                ) , ( 38 53 )          (11y+(2x2 +17x−34))2 ((x−4)y−(5x−9))11
+                                                                                                              ,                                                                       y 2 + y = x3 − x2 − 7x + 10                      232544f1
+                                                                         (t2 −t+1)3 P13 (t)3
+     13B.5.2     G1        13      ( 50 08 ) , ( 20 01 ) , ( 10 11 )   (t−1)t(t3 −4t2 +t+1)13
+                                                                                                                                                                                                                                        2890d2
+                                                                       (t2 −t+1)3 (t12 −9t11 +29t10 −40t9 +22t8 −16t7 +40t6 −22t5 −23t4 +25t3 −4t2 −3t+1)3
+     13B.5.1     G2        13      ( 50 08 ) , ( 10 02 ) , ( 10 11 )                                                                              (t−1)13 t13 (t3 −4t2 +t+1)
+                                                                                                                                                                                                                                        2890d1
+                                                                                 4       2                   3       4        3           2                   3       4       3        2               3       4       3   2       3
+     13B.5.4     G3        13      ( 50 08 ) , ( 40 07 ) , ( 10 11 )   − 13 (t −t+1) (t −t +2t(t−9t+3)   (3t −3t −7t +12t−4) (4t −4t −5t +3t−1)
+                                                                                                3 −4t2 +t+1)13 (5t3 −7t2 −8t+5)                                                                                                        216320i1
+                                                                         4           3           2                        8               7                   6           5                4       3               2           3
+                                                                       (t −t +5t +t+1)(t +235t +1207t +955t +3840t −955t +1207t −235t+1)
+     13B.4.2     G4        13     ( 40 10
+                                        0
+                                          ) , ( 20 01 ) , ( 10 11 )                               t(t2 −3t−1)13
+                                                                                                                                                                                                                                        147c2
+                                                                       (t4 −t3 +5t2 +t+1)(t8 −5t7 +7t6 −5t5 +5t3 +7t2 +5t+1)3
+     13B.4.1     G5        13     ( 40 10
+                                        0
+                                          ) , ( 10 02 ) , ( 10 11 )                        t13 (t2 −3t−1)
+                                                                                                                                                                                                                                        147c1
+                                                                         2                           4               3                2                   3
+                                                                       (t +5t+13)(t +7t +20t +19t+1)
+       13B       G6        13      ( 20 07 ) , ( 10 02 ) , ( 10 11 )                  t
+                                                                                                                                                                                                                                       2450bb1
+                                                                        4                4       3                   12       3               4                   18      3       4        3       3       3           3
+                                                                       2 ·5·13 ·17                                        ·5 ·11·13                                    ·3 ·13 ·127 ·139 ·157 ·283 ·929
+       13S4      G7        13        3 0
+                                  ( 12     2 0   9 5
+                                       9),(0 2),(0 6)                       313
+                                                                                                     ,−2                    313
+                                                                                                                                                      or          2
+                                                                                                                                                                                 513 ·6113
+                                                                                                                                                                                                                                       50700l1
+
+     17B.4.2     G1        17     ( 40 13
+                                        0
+                                          ) , ( 20 10
+                                                    0
+                                                      ) , ( 10 11 )    −17 · 3733 /217                                                                                                                                                 14450bk1
+
+     17B.4.6     G2        17     ( 40 13
+                                        0
+                                          ) , ( 60 09 ) , ( 10 11 )    −172 · 1013 /2                                                                                                                                                  14450bk2
+
+     37B.8.1     G1        37     ( 80 14
+                                        0
+                                          ) , ( 10 02 ) , ( 10 11 )    −7 · 113                                                                                                                                                         1225e1
+
+     37B.8.2     G2        37     ( 80 14
+                                        0
+                                          ) , ( 20 01 ) , ( 10 11 )    −7 · 1373 · 20833                                                                                                                                                1225e2
+
+                         Table 1. Groups GE (p) containing −I, for non-CM elliptic curves E/Q
+                      SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                                17
+
+
+                                         Type                    j-invariants                      Examples
+                                  [4X3,11B.10.4]                         −112                       1089h1
+                                  [4X3,11B.10.5]                  −11 · 1313                        1089h2
+                                   [8X5,7Ns.3.1] 33 · 5 · 75 /27  2450a1
+                                   Table 5. Modular curves: isolated point
+
+
+
+
+   Type                                                            j-maps                                         Example
+                                                                                      3
+                                            (11t−8)3    (   1259t3 −2856t2 +2112t−512                 )
+ [2B,3B]                                           2(t−1)t6 (3t−2)3 (25t−16)2
+                                                                                                                   80b1
+                                   3 −1 3 54t3 −54t2 −1 3 2916t6 +2916t5 +2916t4 −108t3 −54t2 +1 3
+                               (54t    )(              )(                                       )
+ [2B,3Cs]                  −            729t6 (3t+1)6 (6t−1)3 (9t2 −3t+1)6 (36t2 +6t+1)3
+                                                                                                                   98a3
+                                                                      3
+                                                           (t3 +16)
+ [2B,3Nn]                                                       t3                                                1568d1
+                                                               3                          3
+                                 (1024t3 +1920t2 +768t+115) (1024t3 +1920t2 +1200t+223)
+ [2B,3Ns]                                        46656(t+1)3 (4t+1)3 (16t+7)6                                      726a1
+                                                                                              3
+                            (5t6 −2080t5 +81920t4 −1310720t3 +10485760t2 −41943040t+67108864)
+ [2B,5B]                  −                                   5   10
+                                                       8(t−8) t (5t−32)     2                                      768b1
+                                                             P1 (t)3
+[2B,5B.4.1]   590490000000000t (3788t+1) (3818t+1) (3848t+1)5 (14118064t2 +7516t+1)(14690764t2 +7666t+1)2
+                              10          5           10
+                                                                                                                   198e1
+                                                                   (t)3
+[2B,5B.4.2]                           − 4t2 (2t−1)2 (4t−1)(4tP22+2t−1)  10
+                                                                           (16t2 −12t+1)5
+                                                                                                                   198e3
+                                                                                           3
+                                                       9(t2 +3)(t2 +27)
+ [2Cn,3B]                                                      t6
+                                                                                                                   196a1
+                                                      2 +1 3 64t4 +11t2 +1
+                                                   (3t    )(              )
+[2Cn,5S4]                                                     t10                                                 1444a1
+                                                                                  3
+                                           (7t2 −t+1)(7t2 +t+1)(2401t4 +245t2 +1)
+ [2Cn,7B]                                                      t2                                                 1922e1
+                                             3                                                                3
+                                  (7t2 +6t+3) (127t6 +738t5 +1605t4 +1260t3 +345t2 +18t+3)
+ [2Cs,3B]                                   4(t−1)6 t2 (t+1)6 (t+3)2 (3t+1)6 (5t+3)2                               150c2
+                                                                                               3
+                                                        (3125t6 +250t3 +1)
+ [3Nn,5B]                                                                t3
+                                                                                                                  1369e1
+                                                                              3
+                                                       9(t2 −2t−26) (t2 −2t−2)
+ [4X3,3B]                                            −          (t−1)6
+                                                                                                                   242a1
+                                                              3
+                                                      (3t2 −1) (64t4 −11t2 +1)
+[4X3,5S4]                                                     t10
+                                                                                                                   324b1
+                                                  4 −245t2 +2401 3 t4 −13t2 +49
+                                                (t               )(            )
+ [4X3,7B]                                     −                t14
+                                                                                                                  1369c2
+                                                                                   3
+                                                                   (32t3 +1)
+[4X7,3Nn]                                                     −          64t12
+                                                                                                                  80802b1
+                                                                      3
+                                                       9(         )(
+                                                            t2 −2t−53         )   t2 −2t−5
+ [8X4,3B]                                            −         2(t−1)6
+                                                                                                                  1296k2
+                                                              3
+                                                     2(3t2 −2) (32t4 −11t2 +2)
+[8X4,5S4]                                                             t10                                         4232d1
+                                                                                         3
+                                                 (
+                                                 49t4 −26t2 +4       )(2401t4 −490t2 +4)
+ [8X4,7B]                                   −                         128t2                                        162c3
+                                                                                  3
+                                                            9(       )(
+                                                                 t2 +6     t2 +54      )
+ [8X5,3B]                                                      2t6                                                7938d1
+                                                             3
+                                                    2(3t2 +2) (32t4 +11t2 +2)
+[8X5,5S4]                                                      t10
+                                                                                                                  16200e1
+                                                   4 +26t2 +4 2401t4 +490t2 +4 3
+                                              ( 49t          )(               )
+ [8X5,7B]                                                     128t2
+                                                                                                                  12482f2
+                                     Table 6. Modular curves of genus 0
+18                                HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+
+                       Type                Model                       Parametrization                              Example
+                    [2B,3B.1.1]             E3,3                          512(t−1)(3t−2)3                             14a4
+                                             −3                              t3 (25t−16)
+                    [2B,3B.1.2]             E3,3                                                                      14a3
+                                                                                              3
+                                         −3                            (6t−1)3 (           )
+                                                                                   36t2 +6t+1
+                   [2B,3Cs.1.1] E3,1 or E3,1                       − 432t3 (3t+1)3 (9t2 −3t+1)3                       14a1
+                    [2B,5B.1.1]             E5,6           (3788t+1)5 (3848t+1)5 (14118064t2 +7516t+1)                66c1
+                    [2B,5B.1.4]              5
+                                            E5,6           388800000t5 (3818t+1)5 (14690764t2 +7666t+1)              150b3
+                    [2B,5B.1.2]             E5,5                       (4t−1)(16t2 −12t+1)
+                                                                                                   5                  66c3
+                                             5                       − 32t(2t−1)(4t2 +2t−1)5
+                    [2B,5B.1.3]             E5,5                                                                     150b1
+                   [2Cn,3B.1.1]             E3,3                          3(t4 −54t2 −243)                           196b1
+                                             −3                                  t3
+                   [2Cn,3B.1.2]             E3,3                                                                     196b2
+                                             −7
+                   [2Cn,7B.2.1]             E7,7                      8            6           4         2           1922c1
+                                                             − 823543t +235298t t+21609t +490t −1
+                   [2Cn,7B.2.3]             E7,7                                                                     1922c2
+                   [2Cs,3B.1.1]             E3,3                                           3                          30a2
+                                             −3
+                                                                          − (t+3)(3t+1)
+                                                                              32t(t+1)3
+                   [2Cs,3B.1.2]             E3,3                                                                      30a6
+                           Table 7. Modular curves of genus 0: Fine Moduli Spaces
+
+                                                                                                          Type        E/Q          E(Q)
+         Type         E/Q         E(Q)                                                                  [4X3,3Nn]    144a3         Z/2Z
+                                                         Type        E/Q           E(Q)
+       [2B,5Nn]      50b1         Z/5Z                                                                  [4X3,13B]    208c1         Z/2Z
+                                                     [2Cs,3Nn]       36a1          Z/6Z
+       [2B,5Ns]      50b1         Z/5Z                                                                  [4X3,5B]      80b3         Z/2Z
+                                                     [2Cs,3Ns]       36a1          Z/6Z
+       [2B,5S4]      50b2         Z/5Z                                                                  [4X3,5Nn]    Non Elliptic: E(Q5 ) = ∅
+                                                        [3B,5B]      15a1    Z/2Z ⊕ Z/4Z
+       [2Cn,13B]     52a1         Z/2Z                                                                  [4X7,3B]      48a6         Z/8Z
+                                                    [3B,5B.4.1]      15a3    Z/2Z ⊕ Z/4Z
+     [2Cn,13B.4.1]   52a2         Z/2Z                                                                  [4X7,5B]      80a4         Z/4Z
+                                                    [3B,5B.4.2]      15a3    Z/2Z ⊕ Z/4Z
+     [2Cn,13B.4.2]   52a2         Z/2Z                                                                  [4X7,5S4]    400h1           Z
+                                                     [3B,5S4]        75c1          Z/5Z
+       [2Cn,3Cs]     36a3         Z/2Z                                                                  [8X4,3Nn]    576e3         Z/2Z
+                                                        [3B,7B]      21a1    Z/2Z ⊕ Z/4Z
+       [2Cn,3Nn]     36a3         Z/2Z                                                                  [8X4,5B]     320f4       Z/2Z ⊕ Z
+                                                     [3Nn,5Nn]       225a1             Z
+       [2Cn,3Ns]     36a4         Z/2Z                                                                  [8X4,5Nn]    Non Elliptic: E(Q2 ) = ∅
+                                                     [3Nn,5Ns]       225a1             Z
+       [2Cn,5B]      20a3         Z/2Z                                                                  [8X4,13B]    832h2       Z/2Z ⊕ Z
+                                                     [3Nn,5S4]       225a2             Z
+     [2Cn,5B.4.1]    20a4         Z/2Z                                                                  [8X5,3Nn]    576a3       Z/2Z ⊕ Z
+                                                     [3Nn,7Nn]       441b1     Z/3Z ⊕ Z
+     [2Cn,5B.4.2]    20a4         Z/2Z                                                                  [8X5,5B]     320c4         Z/2Z
+                                                     [3Ns,5B]        15a3    Z/2Z ⊕ Z/4Z
+       [2Cn,5Nn]     Non Elliptic: E(Q5 ) = ∅                                                           [8X5,5Nn]    1600g2      Z/2Z ⊕ Z
+                                                                                                        [8X5,13B]    832d2         Z/2Z
+                                            Table 8. Modular curves of genus 1
+
+
+                     Type                                   j-maps                                      E/Q         Example
+                                                                              3
+                                  125(   xy+4x−y 2 +4 )(                       )
+                                                           xy−12x+2y 2 −8y−12 F1 (x,y)3
+                   [3Nn,5Nn]                                F2 (x,y)5                                  225a1        Table 10
+                                                                    3        3
+                                                 (y−2)3 (y +y+4) (y +6y+4)
+                                                           2          2
+                   [3Nn,5Ns]                 −         (y 2 +y−1)5
+                                                                                                       225a1        Table 10
+                                               2 −30y+59 3 F (x,y)3 F (x,y)3 F (x,y)3
+                                  ( 7xy+28x−2y             ) 3        4       5
+                   [3Nn,7Nn]                           F6 (x,y)7
+                                                                                                       441b1        Table 10
+                                                        G1 (x,y)
+                   [4X7,5S4]                              1024                                         400h1        12996c1
+                                                                    3
+                                                   (x2 −470x+5225)
+                   [8X4,5B]                      −      2(x+15)5
+                                                                                                       320f4        6400b1
+                                                                                      3
+                                    (x2 −2x+28)(x4 −478x3 +7688x2 −38328x+149808)
+                   [8X4,13B]     −                      2(x+4)  13                                     832h2        20736c1
+                                                     8000G2 (x,y)
+                   [8X5,5Nn]                       (x2 −86x−151)10
+                                                                                                       1600g2 313600bz1
+                                 Table 9. Modular elliptic curve with positive rank
+                         SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                      19
+
+
+              Type                                      Example                                   NQ (E)
+           [3Nn,5Nn]           y 2 = x3 + x2 + 1218089157x + 10584902461321                    50840066816
+           [3Nn,5Ns]               y 2 = x3 − 1419330328x + 20580980954064                       1774432
+           [3Nn,7Nn] y 2 = x3 − x2 − 439163751869x + 112018153929262517 1541679392
+                       Table 10. Examples out of LMFDB: Genus XG = 1
+
+
+
+
+ Type                                      j-invariants                                            Examples
+           [3B,5B.4.1]                     {−5 · 293 /25 , 5 · 2113 /215 }                       400c3, 400c4
+[3B,5B]
+           [3B,5B.4.2]                      {−52 /2, −52 · 2413 /23 }                            400c1 , 400c2
+[3B,5S4]                          {−24 · 32 · 133 , 24 · 33 }                                    1296i1, 1296i2
+[3B,7B]    {−32 · 53 · 1013 /221 , −33 · 53 · 3833 /27 , 33 · 53 /2, −32 · 56 /23 } 1296k4, 1296k3, 1296k1, 1296k2
+[3Ns,5B]                         {113 /23 , −293 · 413 /215 }                                    338e1 , 338e2
+[4X7,5B]                   {−52 · 413 /22 , 5 · 593 /210 }                   14450bj1, 14450d1
+                     Table 11. Modular elliptic curves with rank 0: Coarse moduli
+
+
+
+
+                                                    Type          All curves        Type           All curves
+                                              [3B.1.1,5B.1.3]       50a1       [3B.1.2,5B.1.3]       50a2
+              Type          All curves        [3B.1.1,5B.1.4]       50a3       [3B.1.2,5B.1.4]       50a4
+           [3B,5B.1.1]      50b1,50b2         [3B.1.1,5B.4.1]       450b4      [3B.1.2,5B.4.1]       450b3
+           [3B,5B.1.2]      50b3,50b4         [3B.1.1,5B.4.2]       450b2      [3B.1.2,5B.4.2]       450b1
+           [3B,7B.2.1]    7938u3, 7938u4        [3B.1.1,5S4]     324b1,324d1    [3B.1.2,5S4]      324b2,324d2
+           [3B,7B.2.3]    7938u1, 7938u2        [3B.1.1,7B]      162c1,162c3     [3B.1.2,7B]      162c2, 162c4
+                                              [3B.1.1,7B.2.1]       162b1      [3B.1.2,7B.2.1]       162b2
+                                              [3B.1.1,7B.2.3]       162b3      [3B.1.2,7B.2.3]       162b4
+                         Table 12. Modular elliptic curves with rank 0: Fine moduli
+20                             HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+
+                               Type         Rank     Non-cuspidal points             j-invariants
+                          [2B,5Ns.2.1]        0                  ∅                           −
+                                                                                            6 3
+                            [2B,7Nn]          0         (−4, 3), (1/2, 3)                  2 3
+                                                             (−1, 0)                         0
+                                                            (32, −1)                     2 3 113
+                                                                                           3 3
+
+                            [2Cn,5Ns]         0              (0, −2)                       26 33
+                          [2Cn,7B.6.1]        0                  ∅                           −
+                          [2Cn,7B.6.2]        0                  ∅                           −
+                          [2Cn,7B.6.3]        0                  ∅                           −
+                                                                                            6 3
+                            [2Cs,5S4]         0     (1, 3), (−2, 3), (−1/2, 3)             2 3
+                            [3B,5Nn]          0               (1, 1)                      24 33 53
+                                                          (−1/9, 1/2)                    −215 3 53
+                                                     (−9, −1/2), (−9, −1)                    0
+                                                     (−1, −1/2), (−1, −1)
+                            [3Nn,13B]         0                  ∅                           −
+                          [3Nn,5B.4.1]        0                  ∅                           −
+                          [3Nn,5B.4.2]        0                  ∅                           −
+                            [3Nn,7B]          0             (255, 7)                     3 5 173
+                                                                                           3 3
+
+                                                           (−15, −7)                      −33 53
+                            [3Ns,5S4]         1       (1/3, −8), (−9, −8)                  −215
+                                                         (−1, 0), (3, 0)                     0
+                            [5S4,7B]          0                  ∅                           −
+                            [2Cn,9XE]         0                  ∅                           −
+                            [4X3,9XE]         0                  ∅                           −
+                            [4X7,5Nn]         2             (40, 1/2)                    −2 3 53
+                                                                                            15
+
+                                                          (−440, 3/5)                −215 33 53 113
+                                                          (120, −3/2)                    −218 33 53
+                                                       (−16008, −21/13)           −218 33 53 233 293
+                                                       (0, −1), (0, −1/2)                    0
+                                                     (−8, −1/2), (−8, −1)
+                            [4X7,7B]          1         (−3/2, −49/4)                    33 13/22
+                                                        (−479/16, −4)             −33 13 4793/214
+                            [8X4,9XE]         0                  ∅                           −
+                            [8X5,9XE]         2            C(Q3 ) = ∅                        −
+                                       Table 13. Modular curves of genus 2
+
+
+     [2B,7Ns]cm
+             3      [2Cn,7Nn]cm
+                             3      [2Cn,7Ns]∅3     [3Nn,7Ns]cm
+                                                             3         [3Ns,5Nn]cm
+                                                                                3          [4X3,7Nn]cm
+                                                                                                    3        [4X3,7Ns]∅3
+     [4X7,13B]∅3    [8X4,7Nn]cm
+                             3      [8X4,7Ns]∅3     [8X5,7Nn]cm
+                                                             3         [8X5,7Ns]3          [3Nn,5Cs]∅4       [3Nn,5Ns.2.1] cm
+                                                                                                                           4
+
+     [5S4,13B]∅4    [4X7,7Nn]cm
+                             4      [9XE,2B]cm
+                                            4       [3B,7Nn]cm
+                                                            5          [5Nn,7B]cm
+                                                                               5           [3B,7Ns]cm
+                                                                                                   6         [3Ns,7Nn]cm
+                                                                                                                      6
+
+     [5B,7Nn]∅6     [4X7,7Ns]cm
+                              6     [4X7,9XE]6      [2Cn,11Nn]cm7      [3Nn,11Nn]cm7       [5S4,7Nn]cm
+                                                                                                     7       [4X3,11Nn]cm
+                                                                                                                       7
+
+     [8X4,11Nn]cm
+               7    [8X5,11Nn]cm7   [2B,11Nn]cm
+                                             8      [9XE,5S4]cm
+                                                              8        [5B,7Ns]∅9          [5Nn,13B]∅9       [5S4,7Ns]cm
+                                                                                                                      9
+
+     [9XE,5B]∅10    [5Nn,7Nn]cm
+                              13    [4X7,11Nn]cm
+                                               13   [3B,11Nn]cm
+                                                              14       [9XE,7B]∅14         [5Nn,7Ns]cm
+                                                                                                     18      [9XE,5Nn]cm
+                                                                                                                      18
+
+     [5S4,11Nn]cm
+               19   [5B,11Nn]∅20    [7Nn,13B]∅20    [9XE,13B]∅26       [7Ns,13B]∅27        [7B,11Nn]∅32      [5Nn,11Nn]cm
+                                                                                                                       38
+
+     [9XE,7Nn]cm
+              40    [9XE,7Ns]cm
+                              54    [11Nn,13B]∅56   [7Nn,11Nn]cm81     [9XE,11Nn]cm111     [7Ns,11Nn]cm112
+
+                         Table 14. Remaining maximal modular curves of genus > 2
+                                        SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                                        21
+
+
+
+    Type                        j-invariant                                            Example                                             Conductor
+ [4X7,9XE]                     −22 37 53 4393                          y 2 = x3 − 1126035x + 459913278                                       701784
+                                   12 3
+                                        ·11·134
+                                − 2 ·5313                     y 2 + y = x3 + x2 − 7653878762768x + 8080142566037338385               374369283576145574257827
+    13S4             18    3   4    3     3     3   3
+                    2     ·3 ·13 ·127 ·139 ·157 ·283 ·929
+                                    513 ·6113
+                                                            y 2 + y = x3 − 53690013976669148x + 4788368560731534924873003                528531611786945
+                                              Table 15. Examples out of LMFDB: Genus XG > 1
+
+Extra information: Polynomials for some of the tables:
+
+• Table 1:
+   P11 (x, y) =     (x2 + 3x − 6)(11(x2 − 5)y + (2x4 + 23x3 − 72x2 − 28x + 127))(6y + 11x − 19)(22(x − 2)y + (5x3 + 17x2 − 112x + 120))
+      P13 (t) =     t12 + 231t11 + 269t10 − 3160t9 + 6022t8 − 9616t7 + 21880t6 − 34102t5 + 28297t4 − 12455t3 + 2876t2 − 243t + 1
+
+
+• Table 3:
+   Q7,3 (t) =     t12 − 18t11 + 117t10 − 354t9 + 570t8 − 486t7 + 273t6 − 222t5 + 174t4 − 46t3 − 15t2 + 6t + 1
+   Q7,4 (t) =     t12 − 522t11 − 8955t10 + 37950t9 − 70998t8 + 131562t7 − 253239t6 + 316290t5 − 218058t4 + 80090t3 − 14631t2 + 510t + 1
+   Q7,5 (t) =     (t4 − 6t3 + 17t2 − 24t + 9)(3t4 − 4t3 − 5t2 − 2t − 1)(9t4 − 12t3 − t2 + 8t − 3)
+  P13,4 (t) =     t8 + 235t7 + 1207t6 + 955t5 + 3840t4 − 955t3 + 1207t2 − 235t + 1
+  P13,5 (t) =     t8 − 5t7 + 7t6 − 5t5 + 5t3 + 7t2 + 5t + 1
+  Q13,4 (t) =     t12 − 512t11 − 13079t10 − 32300t9 − 104792t8 − 111870t7 − 419368t6 + 111870t5 − 104792t4 + 32300t3 − 13079t2 + 512t + 1
+  Q13,5 (t) =     t12 − 8t11 + 25t10 − 44t9 + 40t8 + 18t7 − 40t6 − 18t5 + 40t4 + 44t3 + 25t2 + 8t + 1
+
+
+• Table 6:
+          P1 (t) =        9289670605927434230887788667927350765223936t12 + 29278270369999901950955093380872504213504t11
+                          +42292791583476109342488555094120464384t10 + 37025228725171770917082043542364160t9
+                          +21878993767277277183859380817920t8 + 9193668584402084086752989184t7 + 2816901155195900104390656t6
+                          +634096368731743520256t5 + 104078307564875520t4 + 12147786424640t3 + 957045024t2 + 45696t + 1
+          P2 (t) =        65536t12 − 4063232t11 + 16777216t10 − 28958720t9 + 27832320t8 − 16576512t7
+                          +6385664t6 − 1608192t5 + 261120t4 − 25920t3 + 1376t2 − 32t + 1
+
+• Table 9:
+     F1 (x, y) =        53x2 y 2 − 232x2 y + 272x2 + 17xy 3 − 372xy 2 + 504xy + 544x + 2y 4 − 56y 3 + 468y 2 + 736y + 272
+     F2 (x, y) =        11x2 y 2 − 24x2 y − 16x2 − xy 3 − 44xy 2 + 8xy − 32x − y 4 + 8y 3 + 76y 2 + 32y − 16
+     F3 (x, y) =        28x2 y 2 − 266x2 y − 1169x2 + 14xy 3 − 126xy 2 + 378xy − 5180x − 5y 4 − 52y 3 + 1032y 2 + 2612y − 5711
+     F4 (x, y) =        28x2 y 2 + 77x2 y + 203x2 − 7xy 3 − 280xy 2 − 189xy + 875x + y 4 + 30y 3 + 509y 2 − 542y + 956
+     F5 (x, y) =        14x2 y 2 − 133x2 y + 616x2 + 7xy 3 − 210xy 2 + 385xy + 2947x + 2y 4 − 38y 3 + 185y 2 + 1758y + 3529
+     F6 (x, y) =        7x3 y 3 + 329x3 y 2 − 448x3 y − 4207x3 − 21x2 y 4 − 42x2 y 3 − 1575x2 y 2 − 1554x2 y − 28749x2 + 147xy 4 +
+                        294xy 3 + 3822xy 2 + 3675xy − 65268x + y 6 − 4y 5 − 565y 4 − 260y 3 + 20710y 2 + 11170y − 49223
+     G1 (x, y) =        −x10 − 210x9 − 20x8 y − 7085x8 − 1440x7 y − 72280x7 − 25904x6 y − 262770x6 − 150880x5 y − 650220x5 − 323320x4 y
+                        −2073650x4 − 703840x3 y − 3299800x3 − 1393200x2 y − 4157325x2 − 1015200xy − 4799250x − 580500y − 1454625
+     G2 (x, y) =        x20 + 1260x19 − 56x18 y + 42870x18 − 13456x17 y + 403100x17 + 440168x16 y + 1335852085x16
+                        −121312128x15 y − 61881358352x15 − 1307723360x14 y + 6615621682760x14 + 89306042944x13 y
+                        −160467247908880x13 − 47113584888416x12 y + 4865894105161650x12 + 2738042048551808x11 y
+                        +387841608615974760x11 − 171889581774911248x10 y − 31426480449116277436x10 +
+                        6725955511078796960x9 y + 1497426397985497774920x9 − 223160321487761337552x8 y−
+                        47343303309980334099710x8 + 4384140813703797518208x7 y + 1177623302292232438580400x7 +
+                        23859921698214377667616x6 y − 18020700523192267143943480x6 − 3625628171475452791902656x5 y−
+                        91886854155885171733697488x5 + 78452198711443613319043360x4 y+
+                        5946599171665206805434677005x4 − 1229423961196759128856211328x3 y−
+                        57315101050144284752075165940x3 + 3544228211661585891755479432x2 y+
+                        2147304967678389238737065757750x2 + 693493926872718537524755967344xy+
+                        51452457690608652712058018333180x + 4183073553838029267128981247656y+
+                        223823753822802307667379753623561
+22                                   HARRIS B. DANIELS AND ENRIQUE GONZÁLEZ-JIMÉNEZ
+
+                                                            References
+ [1] C. Adelmann, The decomposition of primes in torsion point ﬁelds. Lecture Notes in Mathematics, 1761. Springer-Verlag, Berlin,
+     2001. vi+142 pp. 6
+ [2] M. Baker, E. González-Jiménez, J. González, and B. Poonen. Finiteness results for modular curves of genus at least 2. Amer.
+     J. Math. 127 (2005), 1325–1387. 12
+ [3] J. S. Balakrishnan, N. Dogra, J. S. Müller, J. Tuitman, and J. Vonk. Explicit Chabauty-Kim for the Split Cartan Modular Curve
+     of Level 13. Ann. of Math. 189 (2019), 885–944. 2, 7
+ [4] B. Baran. Normalizers of non-split cartan subgroups, modular curves, and the class number one problem. J. Number Theory
+     130 (2010), 2753–2772.. 7
+ [5] B. Baran. An exceptional isomorphism between modular curves of level 13. J. Number Theory 145 (2014), 273–300. 2, 7
+ [6] B. S. Banwait and J. E. Cremona. Tetrahedral elliptic curves and the local-global principle for isogenies. Algebra Number Theory
+     8 (2014), no. 5, 1201–1229. 7
+ [7] Y. Bilu and P. Parent, Serre’s uniformity problem in the split Cartan case, Ann. Math. (2), 173 (2011), 569–584. 2
+ [8] Y. Bilu, P. Parent, and M. Rebolledo, Rational points on X0+ (pr )(Q), Ann. Inst. Fourier (Grenoble) 63 (2013), 957–984. 2
+ [9] B.J. Birch and W. Kuyk (eds.), Modular Functions of One Variable IV. Lecture Notes in Mathematics 476. Springer (1975). 4
+[10] W. Bosma, J. Cannon, C. Fieker, and A. Steel (eds.). Handbook of Magma functions,Edition 2.23.
+     http://magma.maths.usyd.edu.au/magma,2018. 15
+[11] N. Bruin and M. Stoll, Two-cover descent on hyperelliptic curves. Math. Comp. 78 (2009), 2347–2370. 10
+[12] C. Camacho-Navarro, W. Li, J. Morrow, J. Petok, and David Zureick-Brown. Modular curves of low composite level and genus
+     zero subgroups. In preparation. 4
+[13] A.C. Cojocaru, On the surjectivity of the Galois representations associated to non-CM elliptic curves (with an appendix by
+     Ernst Kani). Can. Math. Bull. 48 (2005), 16–31. 2
+[14] J.E. Cremona, Elliptic curve data for conductors up to 400.000. Available on http://www.warwick.ac.uk/~masgaj/ftp/data,
+     2016. 4
+[15] H.B. Daniels, An inﬁnite family of Serre curves. J. Number Theory 155 (2015), 226–247. 3
+[16] H.B. Daniels and E. González-Jiménez. Magma scripts and electronic transcript of computations for the paper “Serre’s constant
+     of elliptic curves over the rationals”. http://matematicas.uam.es/~enrique.gonzalez.jimenez 15
+[17] H.B. Daniels, E. González-Jiménez and X. Xarles. Serre’s constant of elliptic curves over the rationals II. In preparation. 3, 7,
+     13
+[18] H.B. Daniels, Á. Lozano-Robledo, F. Najman, and A.V. Sutherland, Torsion subgroups of rational elliptic curves over the
+     compositum of all cubic ﬁelds. Math. Comp. 87 (2018), 425–458. 15
+[19] F. Diamond and J. Shurman, A ﬁrst course in modular forms. Graduate Texts in Mathematics, 228. Springer-Verlag, New York,
+     2005. xvi+436 pp. 8
+[20] T. Dokchitser and V. Dokchitser, Surjectivity of mod 2n representations of elliptic curves. Math. Z. 272 (2012), no. 3–4, 961–964.
+     2
+[21] W. D. Duke, Elliptic curves with no exceptional primes. C. R. Math. Acad. Sci. Paris Sér. I 325 (1997), 813–818. 1, 4
+[22] N.D. Elkies, Elliptic curves with 3-adic Galois representation surjective mod 3 but not mod 9. arXiv:math/0612734. 2
+[23] G. Faltings, Endlichkeitssätze für abelsche VarietГһten über Zahlkörpern. Invent. Math. 73 (1983), no. 3, 349вҐҮ366 11
+[24] N. Jones, Almost all elliptic curves are Serre curves. Trans. Amer. Math. Soc. 362 (3), (2010), 1547-1570. 3
+[25] M. A. Kenku, The modular curve X0 (39) and rational isogeny. Math. Proc. Cambridge Philos. Soc. 85 (1979), 21–23. 8
+[26] M. A. Kenku, The modular curves X0 (65) and X0 (91) and rational isogeny. Math. Proc. Cambridge Philos. Soc. 87 (1980),
+     15–20. 8
+[27] M. A. Kenku, The modular curve X0 (169) and rational isogeny. J. London Math. Soc. (2) 22 (1980), 239–244. 8
+[28] M. A. Kenku, The modular curve X0 (125), X1 (25) and X1 (49). J. London Math. Soc. (2) 23 (1981), 415–427. 8
+[29] P. Lemos, Serre’s uniformity conjecture for elliptic curves with rational cyclic isogenies. Trans. Amer. Math. Soc. 371 (2019),
+     no. 1, 137–146. 2
+[30] P. Lemos, Some cases of Serre’s uniformity problem. Math. Z. 292 (2019), 739–762. 2
+[31] LMFDB Collaboration,The L-functions and modular forms database. Available at http://www.lmfdb.org. 4, 13
+[32] L. Mavrides, Modular curves and surjectivity of Galois representations attached to elliptic curves over Q. Master Thesis (Uni-
+     versity of Warwick) 2011. 2
+[33] B. Mazur, Modular curves and the Eisenstein ideal. Inst. Hautes Études Sci. Publ. Math. 47 (1977), 33–186. 8
+[34] B. Mazur, Rational isogenies of prime degree. Invent. Math. 44 (1978),129–162. 2, 8
+[35] J. S. Morrow, Composite images of Galois for elliptic curves over Q & Entanglement ﬁelds. To appear in Math. Comp. 4
+[36] J. Rouse and D. Zureick-Brown, Elliptic curves over Q and 2-adic images of Galois. Research in Number Theory 1 (2015), 34
+     pages. (data ﬁles and subgroup descriptions available at http://users.wfu.edu/rouseja/2adic/). 2, 12, 13
+[37] J.-P. Serre, Propriétès galoisiennes des points d’ordre ﬁni des courbes elliptiques. Invent. Math. 15 (1972), no. 4, 259–331. 1, 2
+[38] J.-P. Serre, Quelques applications du théorème de densité de Chebotarev. Inst. Hautes Études Sci. Publ. Math. 54 (1981),
+     323–401. 1
+[39] J.-P. Serre, Abelian l-adic representations and elliptic curves. Research Notes in Mathematics, vol. 7, A K Peters, Ltd., Wellesley,
+     MA, 1998. 2
+[40] A.V. Sutherland, Computing images of Galois representations attached to elliptic curves. Forum Math. Sigma 4 (2016), e4, 79
+     pp. 4
+[41] A.V. Sutherland and D. Zywina, Modular curves of prime power-level with inﬁnitely many rational points. Algebra Number
+     Theory 11 (2017), 1199–1229. 8
+                             SERRE’S CONSTANT OF ELLIPTIC CURVES OVER THE RATIONALS                                              23
+
+[42] D. Zywina, On the possible images of the mod ℓ representations associated to elliptic curves over Q. arXiv:1508.07660. 2, 4, 7,
+     8, 11, 12, 13
+[43] D. Zywina, On the surjectivity of mod ℓ representations associated to elliptic curves. arXiv:1508.07661. 7
+
+  Department of Mathematics and Statistics, Amherst College, MA 01002, USA
+  E-mail address: hdaniels@amherst.edu
+  URL: http://hdaniels.people.amherst.edu
+
+  Universidad Autónoma de Madrid, Departamento de Matemáticas, Madrid, Spain
+  E-mail address: enrique.gonzalez.jimenez@uam.es
+  URL: http://matematicas.uam.es/~enrique.gonzalez.jimenez
+

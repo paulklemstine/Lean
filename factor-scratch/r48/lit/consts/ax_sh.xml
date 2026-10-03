@@ -1,0 +1,867 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8NcM5V+NhhjhL6sZV00kM0ctGA4</id>
+  <title>arXiv Query: search_query=ti:"Shor" AND abs:"algorithm" AND cat:quant-ph&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T18:45:04Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22Shor%22+AND+(abs:%22algorithm%22+AND+cat:quant-ph)&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>114</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0210141v2</id>
+    <title>A Continuous Variable Shor Algorithm</title>
+    <updated>2004-06-08T04:07:13Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0210141v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0210141v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper, we use the methods found in quant-ph/0201095 to create a continuous variable analogue of Shor's quantum factoring algorithm. By this we mean a quantum hidden subgroup algorithm that finds the period P of a function F:R--&gt;R from the reals R to the reals R, where F belongs to a very general class of functions, called the class of admissible functions.
+  One objective in creating this continuous variable quantum algorithm was to make the structure of Shor's factoring algorithm more mathematically transparent, and thereby give some insight into the inner workings of Shor's original algorithm. This continuous quantum algorithm also gives some insight into the inner workings of Hallgren's Pell's equation algorithm. Two key questions remain unanswered. Is this quantum algorithm more efficient than its classical continuous variable counterpart? Is this quantum algorithm or some approximation of it implementable?</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-10-21T05:12:31Z</published>
+    <arxiv:comment>13 pages; a substantial revision to the first version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.05976v1</id>
+    <title>Distributed Shor's algorithm</title>
+    <updated>2022-07-13T06:00:03Z</updated>
+    <link href="https://arxiv.org/abs/2207.05976v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.05976v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm is one of the most important quantum algorithm proposed by Peter Shor [Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994, pp. 124--134]. Shor's algorithm can factor a large integer with certain probability and costs polynomial time in the length of the input integer. The key step of Shor's algorithm is the order-finding algorithm. Specifically, given an $L$-bit integer $N$, we first randomly pick an integer $a$ with $gcd(a,N)=1$, the order of $a$ modulo $N$ is the smallest positive integer $r$ such that $a^r\equiv 1 (\bmod N)$. The order-finding algorithm in Shor's algorithm first uses quantum operations to obtain an estimation of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$, then $r$ is obtained by means of classical algorithms. In this paper, we propose a distributed Shor's algorithm. The difference between our distributed algorithm and the traditional order-finding algorithm is that we use two quantum computers separately to estimate partial bits of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$. To ensure their measuring results correspond to the same $\dfrac{s}{r}$, we need employ quantum teleportation. We integrate the measuring results via classical post-processing. After that, we get an estimation of $\dfrac{s}{r}$ with high precision. Compared with the traditional Shor's algorithm that uses multiple controlling qubits, our algorithm reduces nearly $\dfrac{L}{2}$ qubits and reduces the circuit depth of each computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-13T06:00:03Z</published>
+    <arxiv:comment>15 pages, 3 Figures, comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ligang Xiao</name>
+    </author>
+    <author>
+      <name>Daowen Qiu</name>
+    </author>
+    <author>
+      <name>Le Luo</name>
+    </author>
+    <author>
+      <name>Paulo Mateus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.08852v1</id>
+    <title>Realization of a scalable Shor algorithm</title>
+    <updated>2015-07-31T12:24:48Z</updated>
+    <link href="https://arxiv.org/abs/1507.08852v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.08852v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers are able to outperform classical algorithms. This was long recognized by the visionary Richard Feynman who pointed out in the 1980s that quantum mechanical problems were better solved with quantum machines. It was only in 1994 that Peter Shor came up with an algorithm that is able to calculate the prime factors of a large number vastly more efficiently than known possible with a classical computer. This paradigmatic algorithm stimulated the flourishing research in quantum information processing and the quest for an actual implementation of a quantum computer. Over the last fifteen years, using skillful optimizations, several instances of a Shor algorithm have been implemented on various platforms and clearly proved the feasibility of quantum factoring. For general scalability, though, a different approach has to be pursued. Here, we report the realization of a fully scalable Shor algorithm as proposed by Kitaev. For this, we demonstrate factoring the number fifteen by effectively employing and controlling seven qubits and four "cache-qubits", together with the implementation of generalized arithmetic operations, known as modular multipliers. The scalable algorithm has been realized with an ion-trap quantum computer exhibiting success probabilities in excess of 90%.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-31T12:24:48Z</published>
+    <arxiv:comment>5 pages, 3 figures, 4 pages suppl. material (incl. 1 figure)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Thomas Monz</name>
+    </author>
+    <author>
+      <name>Daniel Nigg</name>
+    </author>
+    <author>
+      <name>Esteban A. Martinez</name>
+    </author>
+    <author>
+      <name>Matthias F. Brandl</name>
+    </author>
+    <author>
+      <name>Philipp Schindler</name>
+    </author>
+    <author>
+      <name>Richard Rines</name>
+    </author>
+    <author>
+      <name>Shannon X. Wang</name>
+    </author>
+    <author>
+      <name>Isaac L. Chuang</name>
+    </author>
+    <author>
+      <name>Rainer Blatt</name>
+    </author>
+    <arxiv:doi>10.1126/science.aad9480</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.aad9480" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0303037v2</id>
+    <title>Semiclassical Shor's Algorithm</title>
+    <updated>2004-05-14T20:16:06Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0303037v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0303037v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We propose a semiclassical version of Shor's quantum algorithm to factorize integer numbers, based on spin-1/2 SU(2) generalized coherent states. Surprisingly, we find evidences that the algorithm's success probability is not too severely modified by our semiclassical approximation. This suggests that it is worth pursuing practical implementations of the algorithm on semiclassical devices.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-03-07T19:08:02Z</published>
+    <arxiv:comment>19 pages (RevTex) + 10 Figures (in a separate ps file). Widened version: analytical discussion of the impact on the period-finding power added; scaling behaviour of the semiclassical probability addressed; two new appendices; other minor changes. Accepted for publication in Physical Review A</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Paolo Giorda</name>
+    </author>
+    <author>
+      <name>Alfredo Iorio</name>
+    </author>
+    <author>
+      <name>Samik Sen</name>
+    </author>
+    <author>
+      <name>Siddhartha Sen</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.70.032303</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.70.032303" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0102136v2</id>
+    <title>Entanglement Simulations of Shor's Algorithm</title>
+    <updated>2001-09-12T17:23:32Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0102136v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0102136v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We demonstrate that, in the case of Shor's algorithm for factoring, highly mixed states will allow efficient quantum computation, indeed factorization can be achieved efficiently with just one initial pure qubit and a supply of initally maximally mixed qubits (S. Parker and M. B. Plenio, Phys. Rev. Lett. 85, 3049 (2000)) . This leads us to ask how this affects the entanglement in the algorithm. We thus investigate the behaviour of entanglement in Shor's algorithm for small numbers of qubits by classical computer simulation of the quantum computer at different stages of the algorithm. We find that entanglement is an intrinsic part of the algorithm and that the entanglement through the algorithm appears to be closely related to the amount of mixing. Furthermore, if the computer is in a highly mixed state any attempt to remove entanglement by further mixing of the algorithm results in a significant decrease in its efficiency.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-02-27T17:56:08Z</published>
+    <arxiv:comment>17 pages including 16 figures. Typos corrected and more efficient simulation methods outlined</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>S. Parker</name>
+    </author>
+    <author>
+      <name>M. B. Plenio</name>
+    </author>
+    <arxiv:doi>10.1080/09500340110107207</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/09500340110107207" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0602075v1</id>
+    <title>A reply to P W Shor</title>
+    <updated>2006-02-07T12:04:01Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0602075v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0602075v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Two additional reasons are suggested for the seeming lack of progress in producing quantum algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-02-07T12:04:01Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Elemer E Rosinger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0408081v5</id>
+    <title>Robustness of Shor's algorithm</title>
+    <updated>2006-01-10T01:07:42Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0408081v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0408081v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's factorisation algorithm is a combination of classical pre- and post-processing and a quantum period finding (QPF) subroutine which allows an exponential speed up over classical factoring algorithms. We consider the stability of this subroutine when exposed to a discrete error model that acts to perturb the computational trajectory of a quantum computer. Through detailed state vector simulations of an appropriate quantum circuit, we show that the error locations within the circuit itself heavily influences the probability of success of the QPF subroutine. The results also indicate that the naive estimate of required component precision is too conservative.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-08-12T04:43:43Z</published>
+    <arxiv:comment>14 Pages, 14 Figures (LaTeX):</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quant. Inf. Comp. 6, 616-629 (2006)</arxiv:journal_ref>
+    <author>
+      <name>Simon J. Devitt</name>
+    </author>
+    <author>
+      <name>Austin G. Fowler</name>
+    </author>
+    <author>
+      <name>Lloyd C. L. Hollenberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.00433v2</id>
+    <title>Success probability in Shor's Algorithm</title>
+    <updated>2025-06-14T08:50:43Z</updated>
+    <link href="https://arxiv.org/abs/2505.00433v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.00433v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper aims to determine the exact success probability at each step of Shor's algorithm. Although the literature usually provides a lower bound on this probability, we present an improved bound. The derived formulas enable the identification of all failure cases in Shor's algorithm, which correspond to a success probability of zero. A simulation routine is provided to evaluate the theoretical success probability for a given integer when its prime factorization is known with potential applications in quantum resource estimation and algorithm benchmarking.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-01T10:08:58Z</published>
+    <arxiv:comment>V2, references update</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ali Abbassi</name>
+    </author>
+    <author>
+      <name>Lionel Bayle</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0403146v2</id>
+    <title>Distributed quantum computing: A distributed Shor algorithm</title>
+    <updated>2004-03-23T09:50:57Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0403146v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0403146v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a distributed implementation of Shor's quantum factoring algorithm on a distributed quantum network model. This model provides a means for small capacity quantum computers to work together in such a way as to simulate a large capacity quantum computer. In this paper, entanglement is used as a resource for implementing non-local operations between two or more quantum computers. These non-local operations are used to implement a distributed factoring circuit with polynomially many gates. This distributed version of Shor's algorithm requires an additional overhead of O((log N)^2) communication complexity, where N denotes the integer to be factored.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-03-19T23:27:15Z</published>
+    <arxiv:comment>13 pages, 12 figures, extra figures are removed</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Anocha Yimsiriwattana</name>
+    </author>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <arxiv:doi>10.1117/12.546504</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1117/12.546504" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0109004v1</id>
+    <title>Quantum Computing and Shor`s Factoring Algorithm</title>
+    <updated>2001-09-02T14:58:46Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0109004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0109004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Lectures on quantum computing. Contents: Algorithms. Quantum circuits. Quantum Fourier transform. Elements of number theory. Modular exponentiation. Shor`s algorithm for finding the order. Computational complexity of Schor`s algorithm. Factoring integers. NP-complete problems.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-09-02T14:58:46Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Igor V. Volovich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.06639v1</id>
+    <title>Coherence and entanglement dynamics in Shor's algorithm</title>
+    <updated>2026-04-08T03:25:43Z</updated>
+    <link href="https://arxiv.org/abs/2604.06639v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.06639v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm outperforms its classical counterpart in efficient prime factorization. We explore the coherence and entanglement dynamics of the evolved states within Shor's algorithm, showing that the coherence in each step relies on the dimension of register or the order, and discuss the relations between geometric coherence and geometric entanglement. We investigate how unitary operators induce variations in coherence and entanglement, and analyze the variations of coherence and entanglement within the entire algorithm, demonstrating that the overall effect of Shor's algorithm tends to deplete coherence and produce entanglement. Our research not only deepens the understanding of this algorithm but also provides methodological references for studying resource dynamics in other quantum algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T03:25:43Z</published>
+    <arxiv:comment>19 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Commun. Theor. Phys. 78 (2026) 015102</arxiv:journal_ref>
+    <author>
+      <name>Linlin Ye</name>
+    </author>
+    <author>
+      <name>Zhaoqi Wu</name>
+    </author>
+    <author>
+      <name>Shao-Ming Fei</name>
+    </author>
+    <arxiv:doi>10.1088/1572-9494/adf8cc</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1572-9494/adf8cc" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.10632v1</id>
+    <title>On the Role of Coherence in Shor's Algorithm</title>
+    <updated>2022-03-20T19:49:17Z</updated>
+    <link href="https://arxiv.org/abs/2203.10632v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.10632v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm provides a super-polynomial speed-up over all known classical factoring algorithms. Here, we address the question of which quantum properties fuel this advantage. We investigate a sequential variant of Shor's algorithm with a fixed overall structure and identify the role of coherence for this algorithm quantitatively. We analyze this protocol in the framework of dynamical resource theories, which capture the resource character of operations that can create and detect coherence. This allows us to derive a lower and an upper bound on the success probability of the protocol, which depend on rigorously defined measures of coherence as a dynamical resource. We compare these bounds with the classical limit of the protocol and conclude that within the fixed structure that we consider, coherence is the quantum resource that determines its performance by bounding the success probability from below and above. Therefore, we shine new light on the fundamental role of coherence in quantum computation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-20T19:49:17Z</published>
+    <arxiv:comment>5+24 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 129, 120501 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Felix Ahnefeld</name>
+    </author>
+    <author>
+      <name>Thomas Theurer</name>
+    </author>
+    <author>
+      <name>Dario Egloff</name>
+    </author>
+    <author>
+      <name>Juan Mauricio Matera</name>
+    </author>
+    <author>
+      <name>Martin B. Plenio</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.129.120501</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.129.120501" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0109103v1</id>
+    <title>An integral version of Shor's factoring algorithm</title>
+    <updated>2001-09-20T16:38:17Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0109103v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0109103v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider a version of Shor's quantum factoring algorithm such that the quantum Fourier transform is replaced by an extremely simple one where decomposition coefficients take only the values of $1,i,-1,-i$. In numerous calculations which have been carried out so far, our algorithm has been surprisingly stable and never failed. There are numerical indications that the probability of period finding given by the algorithm is a slowly decreasing function of the number to be factorized and is typically less than in Shor's algorithm. On the other hand, quantum computer (QC), capable of implementing our algorithm, will require a much less amount of resources and will be much less error-sensitive than standard QC. We also propose a modification of Coppersmith' Approximate Fast Fourier Transform. The numerical results show that the probability is signifacantly amplified even in the first post integral approximation. Our algorithm can be very useful at early stages of development of quantum computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-09-20T16:38:17Z</published>
+    <arxiv:comment>LaTex, 27 pages, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Felix M Lev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0010034v1</id>
+    <title>Shor's Quantum Factoring Algorithm</title>
+    <updated>2000-10-09T02:42:44Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0010034v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0010034v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper is a written version of a one hour lecture given on Peter Shor's quantum factoring algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-10-09T02:42:44Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco,</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0601097v1</id>
+    <title>Shor's algorithm with fewer (pure) qubits</title>
+    <updated>2006-01-15T20:22:55Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0601097v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0601097v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this note we consider optimised circuits for implementing Shor's quantum factoring algorithm. First I give a circuit for which none of the about 2n qubits need to be initialised (though we still have to make the usual 2n measurements later on). Then I show how the modular additions in the algorithm can be carried out with a superposition of an arithmetic sequence. This makes parallelisation of Shor's algorithm easier. Finally I show how one can factor with only about 1.5n qubits, and maybe even fewer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-01-15T20:22:55Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Christof Zalka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0612077v1</id>
+    <title>A Re-evaluation of Shor's Algorithm</title>
+    <updated>2006-12-11T16:07:40Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0612077v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0612077v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's algorithm is examined critically from the standpoint of it's eventual use to obtain the factors of large integers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-12-11T16:07:40Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>John W. Cooper</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0701169v3</id>
+    <title>Effects of imperfections for Shor's factorization algorithm</title>
+    <updated>2007-09-06T14:11:59Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0701169v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0701169v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study effects of imperfections induced by residual couplings between qubits on the accuracy of Shor's algorithm using numerical simulations of realistic quantum computations with up to 30 qubits. The factoring of numbers up to N=943 show that the width of peaks, which frequencies allow to determine the factors, grow exponentially with the number of qubits. However, the algorithm remains operational up to a critical coupling strength $ε_c$ which drops only polynomially with $\log_2 N$. The numerical dependence of $ε_c$ on $\log_2 N$ is explained by analytical estimates that allows to obtain the scaling for functionality of Shor's algorithm on realistic quantum computers with a large number of qubits.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-01-23T14:39:31Z</published>
+    <arxiv:comment>10 pages, 10 figures, 1 table. Added references and new data. Erratum added as appendix. 1 Figure and 1 Table added. Research is available at http://www.quantware.ups-tlse.fr/</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 75, 052311 (2007)</arxiv:journal_ref>
+    <author>
+      <name>Ignacio Garcia-Mata</name>
+      <arxiv:affiliation>UPS-CNRS, Toulouse</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Klaus M. Frahm</name>
+      <arxiv:affiliation>UPS-CNRS, Toulouse</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Dima L. Shepelyansky</name>
+      <arxiv:affiliation>UPS-CNRS, Toulouse</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.75.052311</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.75.052311" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.01434v1</id>
+    <title>Accelerating Shor's Factorization Algorithm on GPUs</title>
+    <updated>2018-01-04T16:41:43Z</updated>
+    <link href="https://arxiv.org/abs/1801.01434v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.01434v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's quantum algorithm is very important for cryptography, since it can factor large numbers much faster than classical algorithms. In this study, we implement a simulator for Shor's quantum algorithm on graphic processor units (GPU) and compare our results with Liquid -which is Microsoft quantum simulation platform- and two classical CPU-implementations. We evaluate 10 benchmarks for comparing our GPU implementation with Liquid and single-core implementation. The analysis shows that GPU vector operations is more suitable for Shor's quantum algorithm. Our GPU kernel function is compute-bound, due to all threads in a block reach to the same element of the state vector. Our implementation has $52.5\times$ speedup over single-core algorithm and $20.5\times$ speedup over Liquid.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-04T16:41:43Z</published>
+    <arxiv:comment>4 pages, 3 figures, 3 Tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Canadian Journal of Physics 96 (7), 759-761, 2018</arxiv:journal_ref>
+    <author>
+      <name>I. Savran</name>
+    </author>
+    <author>
+      <name>M. Demirci</name>
+    </author>
+    <author>
+      <name>A. H. Yilmaz</name>
+    </author>
+    <arxiv:doi>10.1139/cjp-2017-0768</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1139/cjp-2017-0768" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.06703v3</id>
+    <title>Shor's algorithm requires Fanout</title>
+    <updated>2026-08-25T20:58:49Z</updated>
+    <link href="https://arxiv.org/abs/2608.06703v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.06703v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm is a canonical quantum supremacy target whose core operation relies on the Quantum Fourier Transform (QFT). In this note, we resolve an open question of Fang, Fenner, Green, Homer and Zhang from 2006 by showing that approximating QFT in constant depth, for any $n$-qubit modulus, necessarily requires the $n$-qubit Fanout operation.
+  Formally, let $\mathsf{QFT}_q$ be the gate acting on $n = \lceil \log q \rceil$ qubits that computes the QFT under modulus $q$. It is known that any $n$-qubit $\mathsf{QFT}_q$ can be implemented in constant depth using $\mathsf{FANOUT}_n$, i.e. $\mathsf{QFT}_q \in \mathsf{QAC}^0_f$. We prove the converse by using a $\mathsf{QFT}_q$ gate to construct a state of "non-negligible felinity". Consequently, $\mathsf{QFT}_q \in \mathsf{QAC}^0 \iff \mathsf{FANOUT}_n \in \mathsf{QAC^0}$.
+  In the case of $q = 2^n$, such as in Shor's, we approximate $\mathsf{FANOUT}_n$ using a single $\mathsf{QFT}_{2^n}$ gate and $O(1)$ two-qubit local gates, thus tying the feasibility of realizing Shor's algorithm with NISQ circuits to that of Fanout.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-07T02:00:19Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Lucas Gretta</name>
+    </author>
+    <author>
+      <name>Malvika Raj Joshi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.03215v1</id>
+    <title>Realization of Shor's Algorithm at Room Temperature</title>
+    <updated>2017-06-10T10:09:39Z</updated>
+    <link href="https://arxiv.org/abs/1706.03215v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.03215v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm can find prime factors of a large number more efficiently than any known classical algorithm. Understanding the properties that gives the speedup is essential for a general and scalable construction. Here we present a realization of Shor's algorithm, that does not need any of the simplifications presently needed in current experiments and also gives smaller systematic errors than any former experimental implementation. Our realization is based on classical pass-transistor logic, runs at room temperature, and uses the same amount of resources as a scalable quantum computer. In this paper, the focus is not on the result of the factorization, but to compare our realization with current state-of-the-art experiment, factoring 15. Our result gives further insight to the resources needed for quantum computation, aiming for a true understanding of the subject.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-10T10:09:39Z</published>
+    <arxiv:comment>4 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Niklas Johansson</name>
+    </author>
+    <author>
+      <name>Jan-Åke Larsson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.00417v3</id>
+    <title>An exploration of the noise sensitivity of the Shor's algorithm</title>
+    <updated>2025-11-02T12:48:33Z</updated>
+    <link href="https://arxiv.org/abs/2509.00417v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.00417v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum algorithms face significant challenges due to qubit susceptibility to environmental noise, and quantum error correction typically requires prohibitive resource overhead. This paper proposes that quantum algorithms may possess inherent noise resilience characteristics that could reduce implementation barriers. We investigate Shor's algorithm by applying circuit-level noise models directly to the original algorithm circuit. Our findings reveal that Shor's algorithm demonstrates superior fault tolerance under Z noise compared to X and Y noise. Focusing on the modular exponentiation circuit which is the core component of the algorithm, we conduct fault-tolerant position statistics on circuits with bit lengths from 4 to 9. The results show that under Z noise, fault-tolerant positions grow with the same quartic polynomial order as potential error positions as the problem scale increases. In contrast, fault tolerance under X and Y noise exhibits a strong dependence on the composite number N and the parameter a. Based on these findings, we develop an extrapolation method predicting that the minimum probability of a correct output of the modular exponentiation circuit to factor 2048 bit integers under biased noise is approximately 1.417*{10}^{-17}.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-30T08:54:35Z</published>
+    <arxiv:comment>Withdrawn at the request of all authors. The manuscript was submitted without obtaining final consent from all authors</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Fusheng Yang</name>
+    </author>
+    <author>
+      <name>Zhipeng Liang</name>
+    </author>
+    <author>
+      <name>Zhengzhong Yi</name>
+    </author>
+    <author>
+      <name>Xuan Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.1242v1</id>
+    <title>Shor's quantum factoring algorithm on a photonic chip</title>
+    <updated>2009-11-06T13:11:48Z</updated>
+    <link href="https://arxiv.org/abs/0911.1242v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.1242v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's quantum factoring algorithm finds the prime factors of a large number exponentially faster than any other known method a task that lies at the heart of modern information security, particularly on the internet. This algorithm requires a quantum computer a device which harnesses the `massive parallelism' afforded by quantum superposition and entanglement of quantum bits (or qubits). We report the demonstration of a compiled version of Shor's algorithm on an integrated waveguide silica-on-silicon chip that guides four single-photon qubits through the computation to factor 15.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-06T13:11:48Z</published>
+    <arxiv:comment>2 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Science, 325, 1221 (2009)</arxiv:journal_ref>
+    <author>
+      <name>Alberto Politi</name>
+    </author>
+    <author>
+      <name>Jonathan C. F. Matthews</name>
+    </author>
+    <author>
+      <name>Jeremy L. O'Brien</name>
+    </author>
+    <arxiv:doi>10.1126/science.1173731</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.1173731" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9909027v2</id>
+    <title>Non-Resonant Effects in Implementation of Quantum Shor Algorithm</title>
+    <updated>1999-09-09T00:14:39Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9909027v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9909027v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We simulate Shor's algorithm on an Ising spin quantum computer. The influence of non-resonant effects is analyzed in detail. It is shown that our ``$2πk$''-method successfully suppresses non-resonant effects even for relatively large values of the Rabi frequency.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-09-08T21:24:18Z</published>
+    <arxiv:comment>11 pages, 13 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>G. P. Berman</name>
+    </author>
+    <author>
+      <name>G. D. Doolen</name>
+    </author>
+    <author>
+      <name>G. V. Lopez</name>
+    </author>
+    <author>
+      <name>V. I. Tsifrinovich</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.61.042307</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.61.042307" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.12100v2</id>
+    <title>Distributed Phase Estimation Algorithm and Distributed Shor's Algorithm</title>
+    <updated>2024-12-13T11:30:53Z</updated>
+    <link href="https://arxiv.org/abs/2304.12100v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.12100v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm is one of the most significant quantum algorithms. Shor's algorithm can factor large integers with a certain success probability in polynomial time. However, Shor's algorithm requires an unbearable amount of qubits in the NISQ (Noisy Intermediate-scale Quantum) era. To reduce the resources required for Shor's algorithm, in this paper we first propose a new distributed phase estimation algorithm. Our distributed phase estimation algorithm does not require quantum communication and it reduces the number of qubits of a single node compared to the traditional phase estimation algorithm (non-iterative version). Then we apply our distributed phase estimation algorithm to form a distributed order-finding algorithm for Shor's algorithm. Compared with the traditional Shor's algorithm (non-iterative version), the maximum number of qubits required by a single node of our dristributed order-finding algorithm is reduced by $(2-\dfrac{2}{k})L-\log_2k-O(1)$ when factoring an $L$-bit integer ($k$ is the number of compute nodes). The communication complexity of our distributed order-finding algorithm is $O(kL)$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-24T13:52:05Z</published>
+    <arxiv:comment>9 pages, 3 figures. Comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ligang Xiao</name>
+    </author>
+    <author>
+      <name>Daowen Qiu</name>
+    </author>
+    <author>
+      <name>Le Luo</name>
+    </author>
+    <author>
+      <name>Paulo Mateus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.13856v1</id>
+    <title>Benchmarks for quantum computers from Shor's algorithm</title>
+    <updated>2021-11-27T09:46:16Z</updated>
+    <link href="https://arxiv.org/abs/2111.13856v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.13856v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Properties of Shor's algorithm and the related period-finding algorithm could serve as benchmarks for the operation of a quantum computer. Distinctive universal behaviour is expected for the probability for success of the period-finding algorithm as the input quantum register is increased through its critical size of $\mathfrak{m}_0=\lceil 2\log_2 r\rceil$ qubits (where $r$ is the period sought). Use of quadratic non-residues permits unequivocal predictions to be made about the outcome of the factoring algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-27T09:46:16Z</published>
+    <arxiv:comment>10 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>E. D. Davis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0112055v4</id>
+    <title>A Refinement of Shor's Algorithm</title>
+    <updated>2002-04-17T12:19:47Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0112055v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0112055v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A refinement of Shor's Algorithm for determining order is introduced, which determines a divisor of the order after any one run of a quantum computer with almost absolute certainty. The information garnered from each run is accumulated to determine the order, and for any k greater than 1, there is a guaranteed minimum positive probability that the order will be determined after at most k runs. The probability of determination of the order after at most k runs exponentially approaches a value negligibly less than one, so that the accumulated information determines the order with almost absolute certainty. The probability of determining the order after at most two runs is more than 60%, and the probability of determining the order after at most four runs is more than 90%.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-12-09T22:53:28Z</published>
+    <arxiv:comment>45 pages v.2: Change to acknowledgements v.3: Abstract and first paragraph of introduction rewritten v.4: Typographical errors fixed</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>David McAnally</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.3076v1</id>
+    <title>Operator Imprecision and Scaling of Shor's Algorithm</title>
+    <updated>2008-04-18T17:59:35Z</updated>
+    <link href="https://arxiv.org/abs/0804.3076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.3076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's algorithm (SA) is a quantum algorithm for factoring integers. Since SA has polynomial complexity while the best classical factoring algorithms are sub-exponential, SA is cited as evidence that quantum computers are more powerful than classical computers. SA is critically dependent on the Quantum Fourier Transform (QFT) and it is known that the QFT is sensitive to errors in the quantum state input to it. In this paper, we show that the polynomial scaling of SA is destroyed by input errors to the QFT part of the algorithm. We also show that Quantum Error Correcting Codes (QECC) are not capable of suppressing errors due to operator imprecision and that propagation of operator precision errors is sufficient to severely degrade the effectiveness of SA. Additionally we show that operator imprecision in the error correction circuit for the Calderbank-Shor-Steane QECC is mathematically equivalent to decoherence on every physical qubit in a register. We conclude that, because of the effect of operator precision errors, it is likely that physically realizable quantum computers will be capable of factoring integers no more efficiently than classical computers.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-18T17:59:35Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>C. Ray Hill</name>
+    </author>
+    <author>
+      <name>George F. Viamontes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0412140v4</id>
+    <title>Entanglement and its Role in Shor's Algorithm</title>
+    <updated>2006-03-23T08:22:24Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0412140v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0412140v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Entanglement has been termed a critical resource for quantum information processing and is thought to be the reason that certain quantum algorithms, such as Shor's factoring algorithm, can achieve exponentially better performance than their classical counterparts. The nature of this resource is still not fully understood: here we use numerical simulation to investigate how entanglement between register qubits varies as Shor's algorithm is run on a quantum computer. The shifting patterns in the entanglement are found to relate to the choice of basis for the quantum Fourier transform.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-12-17T15:24:06Z</published>
+    <arxiv:comment>15 pages, 4 eps figures, v1-3 were for conference proceedings (not included in the end); v4 is improved following referee comments, expanded explanations and added references</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Info. &amp; Computation 6 (7) pp630-640 2006</arxiv:journal_ref>
+    <author>
+      <name>Vivien M Kendon</name>
+      <arxiv:affiliation>U Leeds</arxiv:affiliation>
+    </author>
+    <author>
+      <name>William J Munro</name>
+      <arxiv:affiliation>HP</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0705.1398v2</id>
+    <title>Experimental demonstration of Shor's algorithm with quantum entanglement</title>
+    <updated>2007-10-16T05:31:18Z</updated>
+    <link href="https://arxiv.org/abs/0705.1398v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0705.1398v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's powerful quantum algorithm for factoring represents a major challenge in quantum computation and its full realization will have a large impact on modern cryptography. Here we implement a compiled version of Shor's algorithm in a photonic system using single photons and employing the non-linearity induced by measurement. For the first time we demonstrate the core processes, coherent control, and resultant entangled states that are required in a full-scale implementation of Shor's algorithm. Demonstration of these processes is a necessary step on the path towards a full implementation of Shor's algorithm and scalable quantum computing. Our results highlight that the performance of a quantum algorithm is not the same as performance of the underlying quantum circuit, and stress the importance of developing techniques for characterising quantum algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-05-10T06:58:19Z</published>
+    <arxiv:comment>4 pages, 5 figures + half-page additional online material</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Physical Review Letters 99, 250505 (2007)</arxiv:journal_ref>
+    <author>
+      <name>B. P. Lanyon</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>T. J. Weinhold</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>N. K. Langford</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Barbieri</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>D. F. V. James*</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>A. Gilchrist</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <author>
+      <name>A. G. White</name>
+      <arxiv:affiliation>University of Queensland, *University of Toronto</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.99.250505</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.99.250505" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9806084v1</id>
+    <title>Fast versions of Shor's quantum factoring algorithm</title>
+    <updated>1998-06-24T23:51:37Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9806084v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9806084v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present fast and highly parallelized versions of Shor's algorithm. With a sizable quantum computer it would then be possible to factor numbers with millions of digits. The main algorithm presented here uses FFT-based fast integer multiplication. The quick reader can just read the introduction and the ``Results'' section.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-06-24T23:51:37Z</published>
+    <arxiv:comment>37 pages, LaTeX, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Christof Zalka</name>
+      <arxiv:affiliation>T-6 LANL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0303175v1</id>
+    <title>Shor's Algorithm for Factoring Large Integers</title>
+    <updated>2003-03-29T06:59:43Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0303175v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0303175v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This work is a tutorial on Shor's factoring algorithm by means of a worked out example. Some basic concepts of Quantum Mechanics and quantum circuits are reviewed. It is intended for non-specialists which have basic knowledge on undergraduate Linear Algebra.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-03-29T06:59:43Z</published>
+    <arxiv:comment>25 pages, 14 figures, introductory review</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>C. Lavor</name>
+    </author>
+    <author>
+      <name>L. R. U. Manssur</name>
+    </author>
+    <author>
+      <name>R. Portugal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.09122v3</id>
+    <title>Shor's Factoring Algorithm and Modular Exponentiation Operators</title>
+    <updated>2023-09-18T13:18:53Z</updated>
+    <link href="https://arxiv.org/abs/2306.09122v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.09122v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>These are pedagogical notes on Shor's factoring algorithm, which is a quantum algorithm for factoring very large numbers (of order of hundreds to thousands of bits) in polynomial time. In contrast, all known classical algorithms for the factoring problem take an exponential time to factor large numbers. In these notes, we assume no prior knowledge of Shor's algorithm beyond a basic familiarity with the circuit model of quantum computing. The literature is thick with derivations and expositions of Shor's algorithm, but most of them seem to be lacking in essential details, and none of them provide a pedagogical presentation. We develop the theory of modular exponentiation (ME) operators in some detail, one of the fundamental components of Shor's algorithm, and the place where most of the quantum resources are deployed. We also discuss the post-quantum processing and the method of continued fractions, which is used to extract the exact period of the modular exponential function from the approximately measured phase angles of the ME operator. The manuscript then moves on to a series of examples. We first verify the formalism by factoring N=15, the smallest number accessible to Shor's algorithm. We then proceed to factor larger numbers, developing a systematic procedure that will find the ME operators for any semi-prime $N = p \times q$ (where $q$ and~$p$ are prime). Finally, we factor the numbers N=21, 33, 35, 143, 247 using the Qiskit simulator. It is observed that the ME operators are somewhat forgiving, and truncated approximate forms are able to extract factors just as well as the exact operators. This is because the method of continued fractions only requires an approximate phase value for its input, which suggests that implementing Shor's algorithm might not be as difficult as first suspected.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-15T13:29:20Z</published>
+    <arxiv:comment>108 pages, 63 figures. Published version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quanta 2023; 12: 41-130</arxiv:journal_ref>
+    <author>
+      <name>Robert L Singleton</name>
+    </author>
+    <arxiv:doi>10.12743/quanta.v12i1.235</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.12743/quanta.v12i1.235" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11962v2</id>
+    <title>Coherence and decoherence in generalized and noisy Shor's algorithm</title>
+    <updated>2026-04-17T15:52:07Z</updated>
+    <link href="https://arxiv.org/abs/2508.11962v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11962v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum coherence constitutes a fundamental physical mechanism essential to the study of quantum algorithms. We study the coherence and decoherence in generalized Shor's algorithm where the register $A$ is initialized in arbitrary pure state, or the combined register $AB$ is initialized in any pseudo-pure state, which encompasses the standard Shor's algorithm as a special case. We derive both the lower and upper bounds on the performance of the generalized Shor's algorithm, and establish the relation between the probability of calculating $r$ when the register $AB$ is initialized in any pseudo-pure state and the one when the register $A$ initialized in arbitrary pure state. Moreover, we study the coherence and decoherence in noisy Shor's algorithm and give the lower bound of the probability that we can calculate $r$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-16T07:53:12Z</published>
+    <arxiv:comment>24 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Linlin Ye</name>
+    </author>
+    <author>
+      <name>Zhaoqi Wu</name>
+    </author>
+    <author>
+      <name>Nanrun Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0308171v3</id>
+    <title>Implementing Shor's algorithm on Josephson Charge Qubits</title>
+    <updated>2004-03-02T07:42:11Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0308171v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0308171v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We investigate the physical implementation of Shor's factorization algorithm on a Josephson charge qubit register. While we pursue a universal method to factor a composite integer of any size, the scheme is demonstrated for the number 21. We consider both the physical and algorithmic requirements for an optimal implementation when only a small number of qubits is available. These aspects of quantum computation are usually the topics of separate research communities; we present a unifying discussion of both of these fundamental features bridging Shor's algorithm to its physical realization using Josephson junction qubits. In order to meet the stringent requirements set by a short decoherence time, we accelerate the algorithm by decomposing the quantum circuit into tailored two- and three-qubit gates and we find their physical realizations through numerical optimization.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-08-29T13:02:38Z</published>
+    <arxiv:comment>12 pages, submitted to Phys. Rev. A</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Juha J. Vartiainen</name>
+    </author>
+    <author>
+      <name>Antti O. Niskanen</name>
+    </author>
+    <author>
+      <name>Mikio Nakahara</name>
+    </author>
+    <author>
+      <name>Martti M. Salomaa</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.70.012319</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.70.012319" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.00028v1</id>
+    <title>A Note On One Realization of a Scalable Shor Algorithm</title>
+    <updated>2015-10-20T02:04:42Z</updated>
+    <link href="https://arxiv.org/abs/1611.00028v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.00028v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Very recently, Monz, et al. [arXiv:1507.08852] have reported the demonstration of factoring 15 using a scalable Shor algorithm with an ion-trap quantum computer. In this note, we remark that the report is somewhat misleading because there are three flaws in the proposed circuit diagram of Shor algorithm. We also remark that the principles behind the demonstration have not been explained properly, including its correctness and complexity.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-20T02:04:42Z</published>
+    <arxiv:comment>6 pages, two figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Zhengjun Cao</name>
+    </author>
+    <author>
+      <name>Lihua Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.00271v5</id>
+    <title>An entangling-probe attack on Shor's algorithm for factorization</title>
+    <updated>2017-11-04T06:11:09Z</updated>
+    <link href="https://arxiv.org/abs/1705.00271v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.00271v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate how to attack Shor's quantum algorithm for factorization with an entangling probe. We show that an attacker can steal an exact solution of Shor's algorithm outside an institute where the quantum computer is installed if he replaces its initialized quantum register with entangled qubits, namely the entangling probe. He can apply arbitrary local operations to his own probe. Moreover, we assume that there is an unauthorized person who helps the attacker to commit a crime inside the institute. He tells garbage data obtained from measurements of the quantum register to the attacker secretly behind a legitimate user's back. If the attacker succeeds in cracking Shor's algorithm, the legitimate user obtains a random answer and does not notice the attacker's illegal acts. We discuss how to detect the attacker. Finally we estimate a probability that the quantum algorithm inevitably makes an error, of which the attacker can take advantage.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-30T05:14:24Z</published>
+    <arxiv:comment>v1: 11 pages, latex2e; v2: 14 pages, 2 eps figures, the previous version has been completely rewritten with a new title; v3: minor corrections; v4: minor corrections; v5: a typographical error is corrected</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>J. Mod. Opt. 65, 415-422 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Hiroo Azuma</name>
+    </author>
+    <arxiv:doi>10.1080/09500340.2017.1397221</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/09500340.2017.1397221" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.37636v1</id>
+    <title>Resonance Breaking in Noisy Shor's Algorithm</title>
+    <updated>2026-09-29T14:05:35Z</updated>
+    <link href="https://arxiv.org/abs/2609.37636v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.37636v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We argue that the exponential quantum advantage in Shor's algorithm is broken under one-layer depolarizing noise of arbitrary small error rate, by analyzing a resonance breaking phenomenon in noisy quantum circuits. First, we express the distribution of measurements on $n$-qubit strings as the superposition of the $4^n$ wave functions in the Pauli path integral. In the noiseless case, the bit-strings achieving resonant peaks guaranteed a constant rate of successful measurements to factor a large number. Secondly, when the middle layer of the quantum circuit has independent depolarizing noise of rate $λ$, for any Hamming weight $d$, we obtain corresponding measurement rate bounded by $2(1-λ)^d$ for higher frequency terms and by $O(n^d)/2^{n/2}$ for low frequency terms. The rate approaches to zero as $n$ and $d$ approaches to infinity. Resonance breaking destroys the exponential quantum advantage. Furthermore, we design a classical factoring algorithm in polynomial time $O(n^d)$ to substitute the low frequency contribution.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-29T14:05:35Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Zhengwei Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.2628v2</id>
+    <title>Shor's quantum algorithm using electrons in semiconductor nanostructures</title>
+    <updated>2010-12-17T10:48:15Z</updated>
+    <link href="https://arxiv.org/abs/1011.2628v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.2628v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm illustrates the potential power of quantum computation. Here we present and numerically investigate a proposal for a compiled version of such an algorithm based on a quantum-wire network exploiting the potentialities of fully coherent electron transport assisted by the surface acoustic waves. Specifically, a non standard approach is used to implement, in a simple form, the quantum circuits of the modular exponentiation execution for the simplest instance of the Shor's algorithm, that is the factorization of $N$=15. The numerical procedure is based on a time-dependent solution of the multi-particle Schrödinger equation. The near-ideal algorithm performance and the large estimated fidelity indicate the efficiency of the protocol implemented, which also results to be almost unsensitive to small destabilizing effects during quantum computation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-11T12:24:03Z</published>
+    <arxiv:comment>22 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 83, 012302 (2011)</arxiv:journal_ref>
+    <author>
+      <name>Fabrizio Buscemi</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.83.012302</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.83.012302" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1208.1987v3</id>
+    <title>Shor's algorithm without partial fractions</title>
+    <updated>2012-08-17T17:54:51Z</updated>
+    <link href="https://arxiv.org/abs/1208.1987v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1208.1987v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The purpose of this note was to give a proof that Shor's algorithm for period search is polynomial using only the standard $2^{n}$ quantum Fourier thansform and some simple trigonometry. There is an error that was pointed out to the author by Pavel Wocjan.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-08-09T18:15:51Z</published>
+    <arxiv:comment>This paper has been withdrawn by the author due to an error relating "m" and "x"</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Nolan R. Wallach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.05047v2</id>
+    <title>Large-Scale Simulation of Shor's Quantum Factoring Algorithm</title>
+    <updated>2023-10-09T16:10:56Z</updated>
+    <link href="https://arxiv.org/abs/2308.05047v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.05047v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's factoring algorithm is one of the most anticipated applications of quantum computing. However, the limited capabilities of today's quantum computers only permit a study of Shor's algorithm for very small numbers. Here we show how large GPU-based supercomputers can be used to assess the performance of Shor's algorithm for numbers that are out of reach for current and near-term quantum hardware. First, we study Shor's original factoring algorithm. While theoretical bounds suggest success probabilities of only 3-4 %, we find average success probabilities above 50 %, due to a high frequency of "lucky" cases, defined as successful factorizations despite unmet sufficient conditions. Second, we investigate a powerful post-processing procedure, by which the success probability can be brought arbitrarily close to one, with only a single run of Shor's quantum algorithm. Finally, we study the effectiveness of this post-processing procedure in the presence of typical errors in quantum processing hardware. We find that the quantum factoring algorithm exhibits a particular form of universality and resilience against the different types of errors. The largest semiprime that we have factored by executing Shor's algorithm on a GPU-based supercomputer, without exploiting prior knowledge of the solution, is 549755813701 = 712321 * 771781. We put forward the challenge of factoring, without oversimplification, a non-trivial semiprime larger than this number on any quantum computing device.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-09T16:19:52Z</published>
+    <arxiv:comment>differs from the published version in formatting and style; open source code available at https://jugit.fz-juelich.de/qip/shorgpu</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Mathematics 11, 4222 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Dennis Willsch</name>
+    </author>
+    <author>
+      <name>Madita Willsch</name>
+    </author>
+    <author>
+      <name>Fengping Jin</name>
+    </author>
+    <author>
+      <name>Hans De Raedt</name>
+    </author>
+    <author>
+      <name>Kristel Michielsen</name>
+    </author>
+    <arxiv:doi>10.3390/math11194222</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/math11194222" title="doi"/>
+  </entry>
+</feed>

@@ -1,0 +1,359 @@
+Algebraic-group factorization algorithms are algorithms for factoring an integer N by working in an algebraic group defined modulo N whose group structure is the direct sum of the 'reduced groups' obtained by performing the equations defining the group arithmetic modulo the unknown prime factors p1, p2, ...  By the Chinese remainder theorem, arithmetic modulo N corresponds to arithmetic in all the reduced groups simultaneously.
+The aim is to find an element which is not the identity of the group modulo N, but is the identity modulo one of the factors, so a method for recognising such one-sided identities is required. In general, one finds them by performing operations that move elements around and leave the identities in the reduced groups unchanged. Once the algorithm finds a one-sided identity all future terms will also be one-sided identities, so checking periodically suffices.
+
+
+== Algorithm ==
+Computation proceeds by picking an arbitrary element x of the group modulo N and computing a large and smooth multiple Ax of it; if the order of at least one but not all of the reduced groups is a divisor of A, this yields a factorisation. It need not be a prime factorisation, as the element might be an identity in more than one of the reduced groups.
+Generally, A is taken as a product of all the prime powers below some limit B1, and Ax is computed by successive multiplication of x by these primes; after each multiplication, or every few multiplications, the check is made for a one-sided identity. (A less efficient naive version would use a product of all integers below the limit B1.)
+
+
+=== The two-step procedure ===
+It is often possible to multiply a group element by several small integers more quickly than by their product, generally by difference-based methods: one calculates differences between consecutive primes and adds consecutively by the 
+  
+    
+      
+        
+          d
+          
+            i
+          
+        
+        r
+      
+    
+    {\displaystyle d_{i}r}
+  
+. This means that a two-step procedure becomes sensible, first computing Ax by multiplying x by all the primes below a limit B1, and then examining p Ax for all the primes between B1 and a larger limit B2. This would relax the smoothness requirement for the group order from being B1-powersmooth to being the product of a prime between B1 and B2 and a B1-powersmooth number.
+The difference-based method is the basic "stage 2" method. There exist modifications such as Montgomery's prime pairing (1978) and the Brent-Suyama extension.
+A more efficient "stage 2" method uses polynomial multiplication implemented via fast Fourier transform. This method was originally demonstrated for Lenstra's ECM by Montgomery in 1992, but has since been adapted for p-1 and p+1.
+
+
+== Methods corresponding to particular algebraic groups ==
+
+
+=== Practical methods ===
+If the algebraic group is the multiplicative group mod N, the one-sided identities are recognised by computing greatest common divisors with N, and the result is the p − 1 method.
+If the algebraic group is the multiplicative group of a quadratic extension of N, the result is the p + 1 method; the calculation involves pairs of numbers modulo N.  It is not possible to tell whether 
+  
+    
+      
+        
+          Z
+        
+        
+          /
+        
+        N
+        
+          Z
+        
+        [
+        
+          
+            t
+          
+        
+        ]
+      
+    
+    {\displaystyle \mathbb {Z} /N\mathbb {Z} [{\sqrt {t}}]}
+  
+ is actually a quadratic extension of 
+  
+    
+      
+        
+          Z
+        
+        
+          /
+        
+        N
+        
+          Z
+        
+      
+    
+    {\displaystyle \mathbb {Z} /N\mathbb {Z} }
+  
+ without knowing the factorisation of N. This requires knowing whether t is a quadratic residue modulo N, and there are no known methods for doing this without knowledge of the factorisation. However, provided N does not have a very large number of factors, in which case another method should be used first, picking random t (or rather picking A with t = A2 − 4) will accidentally hit a quadratic non-residue fairly quickly. If t is a quadratic residue, the p+1 method degenerates to a slower form of the p − 1 method.
+If the algebraic group is an elliptic curve, the one-sided identities can be recognised by failure of inversion in the elliptic-curve point addition procedure, and the result is the elliptic curve method; Hasse's theorem states that the number of points on an elliptic curve modulo p is always within 
+  
+    
+      
+        2
+        
+          
+            p
+          
+        
+      
+    
+    {\displaystyle 2{\sqrt {p}}}
+  
+ of p.
+All three of the above algebraic groups are used by the GMP-ECM package, which includes efficient implementations of the two-stage procedure, and an implementation of the PRAC group-exponentiation algorithm which is rather more efficient than the standard binary exponentiation approach.
+
+
+=== Other groups ===
+The use of other algebraic groups—higher-order extensions of N or groups corresponding to algebraic curves of higher genus—is occasionally proposed, but almost always impractical. For example, one can use the Jacobian variety of a hyperelliptic curve, which has an efficient group law. These methods end up with smoothness constraints on numbers of the order of pd for some d > 1, which are much less likely to be smooth than numbers of the order of p.
+
+
+== Practical considerations ==
+
+
+=== Complexity ===
+The naive first stage uses 
+  
+    
+      
+        O
+        (
+        
+          B
+          
+            1
+          
+        
+        log
+        ⁡
+        (
+        
+          B
+          
+            1
+          
+        
+        )
+        M
+        (
+        log
+        ⁡
+        (
+        N
+        )
+        )
+        )
+      
+    
+    {\displaystyle O(B_{1}\log(B_{1})M(\log(N)))}
+  
+ bit operations, while the prime-powers-only first stage takes 
+  
+    
+      
+        O
+        (
+        
+          B
+          
+            1
+          
+        
+        M
+        (
+        log
+        ⁡
+        (
+        N
+        )
+        )
+        )
+      
+    
+    {\displaystyle O(B_{1}M(\log(N)))}
+  
+, with N being the number-to-be-factored and 
+  
+    
+      
+        M
+        (
+        x
+        )
+      
+    
+    {\displaystyle M(x)}
+  
+ denoting the cost of multiplying two x-bit integers (practically 
+  
+    
+      
+        M
+        (
+        log
+        ⁡
+        (
+        N
+        )
+        )
+        =
+        O
+        (
+        N
+        log
+        ⁡
+        (
+        N
+        )
+        log
+        ⁡
+        log
+        ⁡
+        (
+        N
+        )
+        )
+      
+    
+    {\displaystyle M(\log(N))=O(N\log(N)\log \log(N))}
+  
+ using FFT-based methods).
+The standard (difference-based) second stage uses 
+  
+    
+      
+        O
+        (
+        (
+        
+          B
+          
+            2
+          
+        
+        −
+        
+          B
+          
+            1
+          
+        
+        )
+        M
+        (
+        log
+        ⁡
+        (
+        N
+        )
+        )
+        )
+      
+    
+    {\displaystyle O((B_{2}-B_{1})M(\log(N)))}
+  
+ bit operations. The polynomial-based second stage uses 
+  
+    
+      
+        O
+        (
+        
+          
+            
+              B
+              
+                2
+              
+            
+            −
+            
+              B
+              
+                1
+              
+            
+          
+        
+        log
+        ⁡
+        (
+        
+          B
+          
+            2
+          
+        
+        −
+        
+          B
+          
+            1
+          
+        
+        )
+        M
+        (
+        log
+        ⁡
+        (
+        N
+        )
+        )
+        )
+      
+    
+    {\displaystyle O({\sqrt {B_{2}-B_{1}}}\log(B_{2}-B_{1})M(\log(N)))}
+  
+ bit operations (the 
+  
+    
+      
+        
+          B
+          
+            1
+          
+        
+      
+    
+    {\displaystyle B_{1}}
+  
+ term can be discarded assuming 
+  
+    
+      
+        
+          B
+          
+            2
+          
+        
+        >>
+        
+          B
+          
+            1
+          
+        
+      
+    
+    {\displaystyle B_{2}>>B_{1}}
+  
+, which is often the case). Varying the size of the convolution gives a trade-off between memory and space: for each doubling of memory usage, double the amount of advancement in 
+  
+    
+      
+        
+          B
+          
+            2
+          
+        
+      
+    
+    {\displaystyle B_{2}}
+  
+ can be made for the same amount of computation.
+
+
+=== Probability of success ===
+See Kruppa (2010) sections 5.3 and 5.4.
+
+
+== See also ==
+Lenstra elliptic-curve factorization
+
+
+== References ==

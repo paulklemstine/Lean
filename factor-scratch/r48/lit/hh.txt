@@ -1,0 +1,971 @@
+arXiv:2105.11105v1 [math.NT] 24 May 2021
+
+A LOG-LOG SPEEDUP FOR EXPONENT ONE-FIFTH
+DETERMINISTIC INTEGER FACTORISATION
+DAVID HARVEY AND MARKUS HITTMEIR
+Dedicated to Richard Brent on the occasion of his (3 × 52 )-th birthday
+Abstract. Building on techniques recently introduced by the second author,
+and further developed by the first author, we show that a positive integer N
+may be rigorously and deterministically factored into primes in at most
+!
+N 1/5 log16/5 N
+O
+(log log N )3/5
+bit operations. This improves on the previous best known result by a factor
+of (log log N )3/5 .
+
+1. Introduction
+The aim of this paper is to further refine a method for integer factorisation
+that was recently introduced by the second author [Hit20], and subsequently improved and simplified by the first author [Har20]. We insist that all algorithms
+under discussion be deterministic and that all complexity bounds be proved rigorously. Faster factoring algorithms are known if one allows randomisation, heuristic
+arguments or quantum computers; see [CP05, Len00, Wag13, Rie94].
+We write F(N ) for the time required to compute the prime factorisation of an
+integer N ⩾ 2, where “time” means “bit operations”, i.e., the number of steps performed by a deterministic Turing machine with a fixed, finite number of linear tapes
+[Pap94]. All integers are assumed to be encoded in the usual binary representation.
+Prior to [Hit20], the best known asymptotic bounds for F(N ) were of the form
+N 1/4+o(1) . These were achieved by methods going back to Pollard, Strassen and
+Coppersmith; for further references see [Har20]. The algorithm presented in [Hit20]
+was the first to break the 1/4 barrier, achieving F(N ) = N 2/9+o(1) . Shortly afterwards the first author made further progress on the exponent [Har20], showing that
+F(N ) = O(N 1/5 log16/5 N ). The main result of the present paper is the following
+incremental improvement.
+Theorem 1.1. There is a deterministic integer factorisation algorithm achieving
+!
+N 1/5 log16/5 N
+.
+F(N ) = O
+(log log N )3/5
+2020 Mathematics Subject Classification. Primary 11Y05.
+The first author was supported by the Australian Research Council (grant FT160100219).
+SBA Research (SBA-K1) is a COMET Centre within the framework of COMET – Competence
+Centers for Excellent Technologies Programme and funded by BMK, BMDW, and the federal state
+of Vienna. The COMET Programme is managed by FFG.
+1
+
+2
+
+D. HARVEY AND M. HITTMEIR
+
+Note that if N has three or more prime factors (counting repetitions), then at
+least one factor is bounded above by N 1/3 , and it is well known that such a factor
+may be found in time N 1/6+o(1) (see for example [Har20, Prop. 2.5]). Using this
+observation one easily reduces the proof of Theorem 1.1 to the case that N is
+either prime or semiprime, i.e., a product of two distinct primes. For details of the
+reduction, see the proof of [Har20, Thm. 1.1]. For the rest of the paper, we assume
+that N is either prime or semiprime, say N = pq where p < q.
+The strategy of [Har20] may be outlined as follows. Fix some integer α coprime
+to N . Since p ≡ 1 (mod p−1), Fermat’s little theorem implies that αaq+bp ≡ αaN +b
+(mod p) for any a, b ∈ Z. If we can recover aq + bp, for known coefficients a, b 6= 0,
+then it is easy to deduce p and q, since we know the product pq = N (see Lemma
+2.4). Now, it was observed by Lehman [Leh74] (following ideas going back to
+Lawrence [Law95]) that if a are b are small integers, chosen so that a/b is a good
+rational approximation to the unknown p/q, then aq + bp will be especially close to
+(4abN )1/2 . This suggests rewriting the congruence as
+αaq+bp−⌊(4abN )
+
+1/2
+
+⌋
+
+≡ αaN +b−⌊(4abN )
+
+1/2
+
+⌋
+
+(mod p).
+
+i
+
+When a/b ≈ p/q, the left hand side has the form α where i is “small”. Consequently, to solve for aq + bp, it suffices to find a collision modulo p between the
+1/2
+“giantsteps” αaN +b−⌊(4abN ) ⌋ (mod N ), where a/b ranges over some sufficiently
+dense set of rational numbers, and the “babysteps” αi (mod N ), where i ranges over
+small integers. This collision-finding problem may be attacked using tools from fast
+polynomial arithmetic, and [Har20] shows that this strategy (after filling in many
+details left out in this rough sketch) leads to the bound F(N ) = O(N 1/5 log16/5 N ).
+The new algorithm in this paper follows the same basic plan described above,
+but utilises the additional information that p and q cannot themselves be divisible by
+small primes. We modify the algorithm so that it restricts attention to candidates
+for p that are coprime to m := 2×3×5×· · ·×pd ≪ N 1/2 , i.e., m is the product of the
+first d primes for suitable d. The number of possible values of p modulo m is φ(m)
+(the Euler totient function), and for suitable choice of m = N O(1) , Mertens’ theorem
+(see Lemma 2.6) implies that the ratio φ(m)/m decays like 1/ log log N . This is
+the source of the log-log savings over [Har20]. Actually, for technical reasons we
+reorganise the algorithm considerably: instead of defining the giantsteps by taking
+all pairs (a, b) in some range, as is done in [Har20], we use algorithms for finding
+short lattice vectors to compute suitable values for a and b for each giantstep.
+Of course it is well known that sieving on small primes in this way often leads
+to (log log N )-type speedups. For example, in the context of deterministic integer
+factorisation, this idea was used in [CH14] to improve the complexity of the factoring
+algorithm of [BGS07] by a factor of (log log N )1/2 .
+2. Preliminaries
+For n a positive integer, we define lg n := ⌊log n/ log 2⌋+1. Observe that lg n ⩾ 1
+for all n ⩾ 1, that lg n = Θ(log n) for n ⩾ 2, and that lg n may be computed in
+time O(lg n).
+We recall several facts about integer arithmetic. All results stated here without
+specific references may be found in textbooks such as [vzGG13] or [BZ11].
+Let n ⩾ 1, and assume that we are given integers x and y such that |x|, |y| ⩽ 2n .
+We may compute x + y and x − y in time O(n). We write M(n) for the cost of
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+3
+
+computing the product xy; it was shown recently that M(n) = O(n lg n) [HvdH21].
+If y > 0, we may compute the quotients ⌊x/y⌋ and ⌈x/y⌉, and therefore also the
+residue of x modulo y in the interval [0, y), in time O(M(n)). More generally, for a
+fixed positive rational number u/v, and assuming that x, y > 0, we may compute
+⌊(x/y)u/v ⌋ and ⌈(x/y)u/v ⌉ in time O(M(n)). We may compute g := gcd(x, y), and if
+desired find u, v ∈ Z such that ux + vy = g (i.e., solve the extended GCD problem),
+in time O(M(n) lg n) = O(n lg2 n).
+Next we consider modular arithmetic. Let N ⩾ 2. We write ZN for the ring
+Z/N Z of integers modulo N . Elements of ZN will always be represented by their
+residues in the interval [0, N ), so occupy O(lg N ) bits of storage. We write Z∗N for
+the group of units of ZN , i.e., the subset of those x ∈ ZN for which gcd(x, N ) = 1.
+Given x, y ∈ ZN , we may compute x ± y ∈ ZN in time O(lg N ), and xy ∈ ZN
+in time O(M(lg N )) = O(lg N lg lg N ). Given x ∈ ZN and an integer m ⩾ 1, we
+may compute xm ∈ ZN in time O(M(lg N ) lg m), using the “repeated squaring”
+algorithm. We may test whether x ∈ Z∗N , and if so compute x−1 ∈ Z∗N , in time
+O(M(lg N ) lg lg N ) = O(lg N (lg lg N )2 ), by solving the extended GCD problem for
+x and N . If the gcd is not 1 or N , and if N = pq is semiprime, then we immediately
+recover p and q in time O(M(lg N )).
+The next few results are taken from the previous papers [Hit18] and [Har20].
+Lemma 2.1. Let n ⩾ 1 with n = O(N ). Given as input v1 , . . . , vn ∈ ZN , we may
+compute the polynomial f (x) = (x − v1 ) · · · (x − vn ) ∈ ZN [x] in time O(n lg3 N ).
+Proof. This is exactly [Har20, Lem. 2.3]; the proof depends on a standard application of a product tree. By “compute a polynomial” we mean compute a list of its
+coefficients.
+
+Remark 2.2. In the above lemma, the hypothesis “n = O(N )” means that for every
+constant C > 0, the lemma holds for all n and N in the region n < CN , where the
+implied big-O constant in the target bound O(n lg3 N ) may depend on C. For the
+rest of the paper, a similar remark applies whenever we use the big-O notation in
+this way.
+Lemma 2.3. Given as input an element α ∈ Z∗N , positive integers n, κ = O(N ),
+and f ∈ ZN [x] of degree n, we may compute f (1), f (α), . . . , f (ακ−1 ) ∈ ZN in time
+O((n + κ) lg2 N ).
+Proof. This is exactly [Har20, Lem. 2.4]. The proof relies on Bluestein’s algorithm
+[Blu70], which saves a logarithmic factor over a general multipoint evaluation. 
+Lemma 2.4. Given as input an integer N ⩾ 2 such that N is either a prime or
+semiprime pq, and integers a, b, u with at most O(lg N ) bits, we may test if u is of
+the form aq + bp, and if so recover p and q, in time O(lg N lg lg N ).
+Proof. This is a trivial modification of [Har20, Lem. 3.1]. The proof depends on
+observing that aq and bp must be roots of the polynomial y 2 − uy + abN .
+
+Lemma 2.5. There is an algorithm with the following properties. It takes as input
+integers N ⩾ 2 and D such that N 2/5 ⩽ D ⩽ N . It returns either some β ∈ Z∗N
+with ordN (β) > D, or a nontrivial factor of N , or “N is prime”. Its runtime is
+bounded by
+ 1/2 2 
+D lg N
+O
+.
+(lg lg D)1/2
+
+4
+
+D. HARVEY AND M. HITTMEIR
+
+Proof. This is exactly [Hit18, Thm. 6.3]. Briefly, the idea is to attempt to compute
+orders of various α ∈ Z∗N via the standard babystep-giantstep procedure. If we fail
+to compute ordN (α), then the order must be large and we are done. If we succeed in
+computing k := ordN (α), then we try to find a factor of N via gcd(N, αk/r − 1) for
+each prime divisor r of k. If this fails, then we know that k | p − 1 for every prime
+divisor p of N . Repeating this process for various α, we either find an element of
+large order, or obtain enough information about the factorisation of p − 1 for p | N
+to make it feasible to factor N directly. For details, see [Hit18].
+
+We will need the following well-known results on the distribution of primes.
+Lemma 2.6. For B → ∞ we have
+X
+log r = (1 + o(1))B,
+2⩽r⩽B
+r prime
+
+ 1 
+Y r−1
+.
+=Θ
+r
+lg B
+
+2⩽r⩽B
+r prime
+
+Proof. See Theorem 6.9 and Theorem 2.7(e) in [MV07]. The first statement is a
+form of the Prime Number Theorem, and the second statement is one of Mertens’
+theorems.
+
+Finally we recall that a list of n ⩾ 1 elements of bit size β ⩾ 1 may be sorted
+using the “merge sort” algorithm in time O(nβ lg n) [Knu98]. Here we assume that
+the elements belong to some totally ordered set, and that we may compare a pair
+of elements in time O(β).
+3. A variant of Lehman’s result
+The crux of the algorithms of [Hit20] and [Har20] is the observation, going back
+to Lehman [Leh74], that if N = pq is semiprime, then there exist “small” integers
+a and b such that aq + bp is “close” to (4abN )1/2 (see [Har20, Lem. 3.3], or the
+main theorem of [Leh74]). In this section we prove a variant of this result in which
+we impose an additional constraint on a and b of the form aq − bp = 0 (mod m),
+where m is a positive integer. (In Section 4 we will specialise to the case that m is
+a product of small primes.) Moreover, instead of just an existence statement, we
+actually want to compute the desired a and b.
+We recall some basic facts about lattices in R2 . By a lattice we mean a subgroup
+of R2 generated by two linearly independent vectors u, v ∈ R2 , i.e., the subgroup
+hu, vi := {ru + sv : r, s ∈ Z} ⊆ R2 . The determinant of a lattice L is the area
+of the fundamental parallelogram associated to any basis for L. In particular for
+L = hu, vi we have
+
+
+u1 v1
+det L = det
+.
+u2 v2
+For a vector u ∈ R2 we write kuk := (u21 + u22 )1/2 for the usual Euclidean norm.
+
+Lemma 3.1. Let B ⩾ 2, and suppose we are given as input linearly independent
+vectors u, v ∈ Z2 defining a lattice L = hu, vi, such that kuk, kvk ⩽ B. Then in
+time O(log 3 B) we may find a nonzero vector w ∈ L such that kwk ⩽ 2(det L)1/2 .
+Proof. We may find a nonzero vector w ∈ L of minimal norm by applying the classical Lagrange–Gauss reduction algorithm to the input basis (see [Gal12, Chap. 17]).
+According to [Gal12, Thm. 17.1.10], this runs in time O(log3 B). (The reduction
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+5
+
+algorithm is essentially a special case of LLL: the basic idea is to repeatedly subtract a suitable integer multiple of the shorter vector from the longer vector, until
+no further progress can be made
+√ in reducing the norms.) This vector satisfies
+kwk2 ⩽ γ2 det L where γ2 = 2/ 3 is the Hermite constant for rank-2 lattices (see
+1/2
+[Gal12, Defn. 16.2.7]). Since γ2 = 1.074 . . . < 2 we are done.
+
+Remark 3.2. Lemma 3.1 can be improved slightly. Minkowski’s convex body theorem [Lan94, §V.3, Thm. 3] implies that there exists a nonzero vector w ∈ L such
+that |w1 |, |w2 | ⩽ (det L)1/2 , and such a vector can be found efficiently by a more
+involved algorithm; see for example [KS96]. This leads to better constants later in
+the paper, but does not affect our main asymptotic results.
+Proposition 3.3. There exists an algorithm with the following properties.
+It takes as input positive integers N ⩾ 2, m0 and σ0 , a positive integer m coprime
+to N , and an integer σ coprime to m such that 1 ⩽ σ ⩽ m.
+Its output is a pair of integers (a, b) 6= (0, 0), such that if N = pq is a semiprime
+satisfying
+
+
+1
+σ0
+(3.1)
+σ0 ⩽ p < 1 +
+m0
+and
+p ≡ σ (mod m),
+(3.2)
+
+then the linear combination aq + bp satisfies
+
+
+N
+4N 1/2 m1/2
+aq + bp − a + bσ0 ⩽
+3/2
+σ0
+m
+
+(3.3)
+
+0
+
+and
+aq + bp ≡ a
+
+N
++ bσ
+σ
+
+(mod m2 ).
+
+(3.4)
+
+Assuming that m0 , σ0 , m = O(N ), the algorithm runs in O(lg 3 N ) bit operations,
+and moreover the output satisfies |a|, |b| = O(N 2 ).
+Proof. Assume that the input parameters N , m0 , σ0 , m and σ are as described
+above. Assume also that N = pq is a semiprime satisfying (3.1) and (3.2).
+Let t0 := p/σ0 − 1 so that p = σ0 (1 + t0 ). Then 0 ⩽ t0 < 1/m0 ⩽ 1, so
+q=
+
+N
+N
+N
+(1 + t0 )−1 =
+(1 − t0 + δt20 )
+=
+p
+σ0
+σ0
+
+for some δ ∈ [0, 1). For any pair of integers (a, b), it then follows that
+
+
+
+
+
+
+N
+N
+N
+2
+.
+aq + bp = a + bσ0 + t0 −a + bσ0 + t0 δa
+σ0
+σ0
+σ0
+
+(3.5)
+
+Similarly, let t := p/σ − 1, so that p = σ(1 + t). Then t is a rational number that
+is m-integral (i.e., its denominator is coprime to m), and t ≡ 0 (mod m). Thus
+q=
+
+N
+N
+N
+= (1 + t)−1 ≡ (1 − t) (mod m2 ),
+p
+σ
+σ
+
+and for any pair of integers (a, b) we obtain
+
+
+
+
+N
+N
+aq + bp ≡ a + bσ + t −a + bσ
+σ
+σ
+
+(mod m2 ).
+
+6
+
+D. HARVEY AND M. HITTMEIR
+
+This last congruence implies that (3.4) holds for any (a, b) that satisfies
+N
++ bσ ≡ 0 (mod m).
+σ
+If (a, b) additionally satisfies the inequalities
+−a
+
+−a
+
+2N 1/2 m1/2
+N
+,
++ bσ0 ⩽
+1/2
+σ0
+m
+0
+
+a
+
+N
+1/2
+⩽ 2N 1/2 m1/2 m0 ,
+σ0
+
+(3.6)
+
+(3.7)
+
+then (3.5) implies that (3.3) holds. We are left with showing how to compute a
+pair (a, b) 6= (0, 0) satisfying both (3.6) and (3.7). (The point is that both of these
+conditions are independent of p.)
+The congruence (3.6) is equivalent to b ≡ γa (mod m), where γ is the unique
+integer in [0, m) congruent to N/σ 2 modulo m. Thus the solutions (a, b) ∈ Z2 to
+(3.6) form a lattice L = hu, vi, where u := (1, γ) and v := (0, m). Our goal is to
+find a nonzero vector (a, b) ∈ L that lies in the parallelogram defined by (3.7).
+To achieve this, it is convenient to introduce the linear change of variables
+c := N a,
+
+d := (−N m0 )a + (m0 σ02 )b.
+
+In the (c, d)-coordinates the inequalities (3.7) become simply
+1/2
+
+|c|, |d| ⩽ 2N 1/2 m1/2 m0 σ0 ,
+
+(3.8)
+
+i.e., the parallelogram becomes a square. Moreover, in the (c, d)-coordinates the
+lattice L gets mapped to the lattice L′ := hu′ , v ′ i where
+
+
+
+
+N
+0
+′
+:=
+u′ :=
+,
+v
+.
+−N m0 + m0 σ02 γ
+m0 σ02 m
+
+The determinant of L′ is N mm0 σ02 . We may therefore apply Lemma 3.1 to the
+basis u′ , v ′ to find a nonzero pair (c, d) ∈ L′ satisfying (3.8).
+The hypothesis m0 , σ0 , m = O(N ) implies that ku′ k, kv ′ k = O(N 4 ), so the cost of
+applying Lemma 3.1 is O(lg3 N ). The cost of the remaining arithmetic (computing
+γ, u′ and v ′ , and recovering (a, b) from (c, d)) is bounded by (lg N )1+o(1) . Finally,
+1/2
+(3.7) implies that |a| ⩽ 2N −1/2 m1/2 m0 = O(N 1/2 ) and |b| ⩽ 2N 1/2 m1/2 +|a|N =
+3/2
+O(N ).
+
+Remark 3.4. The special case m = 1 of Proposition 3.3 is closely related to [Har20,
+Lem. 3.3] and the main theorem of [Leh74] (note that our parameter m0 roughly
+corresponds to r in those statements), and in fact it is possible to prove those results
+using a similar lattice-based approach.
+4. The main algorithm
+For the convenience of the reader, we recall the following algorithm from [Har20],
+which forms a key subroutine of the main search algorithm presented afterwards.
+Algorithm 4.1 (Finding collisions modulo p or q).
+Input:
+– A positive integer N , either prime or semiprime.
+– A positive integer κ, and an element α ∈ Z∗N such that ordN (α) ⩾ κ.
+– Elements v1 . . . , vn ∈ ZN for some positive integer n, such that vh 6= αi for all
+h ∈ {1, . . . , n} and i ∈ {0, . . . , κ − 1}.
+Output:
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+7
+
+– If N = pq is semiprime, and if there exists h ∈ {1, . . . , n} such that vh ≡ αi
+(mod p) or vh ≡ αi (mod q) for some i ∈ {0, . . . , κ − 1}, returns p and q.
+– Otherwise returns “no factors found”.
+1: Using Lemma 2.1 (product tree), compute the polynomial
+f (x) := (x − v1 ) · · · (x − vn ) ∈ ZN [x].
+
+2: Using Lemma 2.3 (Bluestein’s algorithm), compute the values f (αi ) ∈ ZN for
+
+i = 0, . . . , κ − 1.
+
+3: for i = 0, . . . , κ − 1 do
+
+Compute γi := gcd(N, f (αi )).
+5:
+if γi ∈
+/ {1, N } then recover p and q and return.
+6:
+if γi = N then
+7:
+for h = 1, . . . , n do
+8:
+if gcd(N, vh − αi ) 6= 1 then recover p and q and return.
+9: Return “no factors found”.
+
+4:
+
+Proposition 4.2. Algorithm 4.1 is correct. Assuming that κ, n = O(N ), its running time is O(n lg 3 N + κ lg2 N ).
+Proof. This is exactly Proposition 4.1 in [Har20].
+
+
+
+We now present the main search algorithm.
+Algorithm 4.3 (The main search).
+Input:
+– A positive integer N ⩾ 2, either prime or semiprime.
+– Positive integers m0 and m such that gcd(m, N ) = 1.
+2
+– An element β ∈ Z∗N such that ordN (β m ) ⩾ 2λ + 1 where
+
+
+4N 1/2
+.
+λ :=
+(m · m0 )3/2
+
+Output: If N = pq is semiprime, returns p and q. Otherwise returns “N is prime”.
+1: for i = 0, . . . , 2λ do
+⊲ Computation of babysteps
+2
+2:
+Compute β m i (mod N ).
+2
+3:
+if gcd(N, β m i − 1) ∈
+/ {1, N } then recover p and q and return.
+4: for σ = 1, . . . , m do
+⊲ Computation of giantsteps
+5:
+if gcd(σ, m) = 1 then
+6:
+Initialise σ0 := 1.
+7:
+while σ0 < N 1/2 do
+8:
+Apply Proposition 3.3 with input N , m0 , σ0 , m and σ,
+to obtain a pair (a, b) = (aσ,σ0 , bσ,σ0 ).
+9:
+Compute
+jσ,σ0 := m2 (τ0 − λ) + τ,
+where
+
+
+. 
+N
+a + bσ0
+τ0 :=
+m2 ,
+σ0
+and where τ is the unique integer such that
+τ ≡a
+
+N
++ bσ
+σ
+
+(mod m2 ),
+
+0 ⩽ τ < m2 .
+
+8
+
+10:
+
+D. HARVEY AND M. HITTMEIR
+
+Compute
+vσ,σ0 := β aN +b−jσ,σ0
+
+11:
+
+(mod N ).
+
+Update σ0 := ⌈(1 + 1/m0 )σ0 ⌉.
+
+12: Applying a sort-and-match algorithm to the babysteps and giantsteps computed
+
+in Steps 2 and 10, find all i ∈ {0, . . . , 2λ} and all pairs (σ, σ0 ) such that
+2
+
+β m i ≡ vσ,σ0
+
+(mod N ).
+
+(4.1)
+
+For each such match, apply Lemma 2.4 to the candidate
+u := m2 i + jσ,σ0 ,
+
+(4.2)
+
+together with a := aσ,σ0 and b := bσ,σ0 . If p and q are found, return.
+13: Let v1 , . . . , vn be the list of giantsteps vσ,σ0 computed in Step 10, skipping those
+
+that were discovered in Step 12 to be equal to one of the babysteps. Apply
+2
+Algorithm 4.1 (finding collisions) with N , κ := 2λ + 1, α := β m (mod N ) and
+v1 , . . . , vn as inputs. If Algorithm 4.1 succeeds, return p and q.
+14: Return “N is prime”.
+Proposition 4.4. Algorithm 4.3 is correct. If m, m0 = O(N ), then it runs in time
+
+
+N 1/2 lg2 N
+4
+2
+O m lg N (lg lg N ) + φ(m)m0 lg N +
+.
+(4.3)
+(m · m0 )3/2
+Proof. We first prove correctness. Suppose that N = pq is semiprime, with p < q.
+We must show that in Steps 1–13 the algorithm succeeds in finding p and q.
+2
+Consider the loop in Steps 1–3. Since we have assumed that ordN (β m ) ⩾ 2λ+1,
+2
+in this loop we either find a factor of N , or prove that both ordp (β m ) ⩾ 2λ + 1
+2
+and ordq (β m ) ⩾ 2λ + 1. For the remainder of the proof, we will assume the latter.
+We next consider the giantsteps. The block in Steps 8–10 is executed for various
+pairs (σ, σ0 ). We claim that (3.2) holds for exactly one such σ, and that (3.1) holds
+for exactly one such σ0 . For (3.2) this is clear, as p is coprime to m by hypothesis, so
+there is exactly one σ visited by the outer loop such that gcd(σ, m) = 1 and p ≡ σ
+(mod m). For the inner loop, observe that σ0 strictly increases on each iteration
+(in Step 11), so the loop certainly terminates. For any σ0 visited in the loop, write
+σ0′ := ⌈(1 + 1/m0 )σ0 ⌉ for the value of σ0 at the next iteration. Since p < N 1/2 ,
+on some iteration we must have σ0 ⩽ p < σ0′ ; in fact, this occurs for precisely one
+value of σ0 because the successive intervals [σ0 , σ0′ ) are disjoint. Moreover, since p
+is an integer, the condition σ0 ⩽ p < σ0′ is equivalent to σ0 ⩽ p < (1 + 1/m0 )σ0 ,
+i.e., to (3.1). Therefore (3.1) holds for exactly one σ0 as claimed.
+Let (σ̄, σ̄0 ) be the pair for which (3.1) and (3.2) hold, and consider the corresponding coefficients ā := aσ̄,σ̄0 and b̄ := bσ̄,σ̄0 computed in Step 8. According to
+Proposition 3.3, the linear combination āq + b̄p satisfies (3.3) and (3.4) for (σ̄, σ̄0 ).
+Let τ and τ0 be as defined in Step 9. From (3.4) we find that
+
+
+2 āq + b̄p
++ τ,
+(4.4)
+āq + b̄p = m
+m2
+and (3.3) yields
+āN/σ̄0 + b̄σ̄0
+4N 1/2
+āN/σ̄0 + b̄σ̄0
+4N 1/2
+āq + b̄p
+−
+⩽
++
+⩽
+,
+m2
+m2
+m2
+(m · m0 )3/2
+(m · m0 )3/2
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+9
+
+so
+āq + b̄p
+< (τ0 + 1) + λ.
+m2
+This implies that τ0 − λ ⩽ ⌊(āq + b̄p)/m2 ⌋ ⩽ τ0 + λ, i.e., that ⌊(āq + b̄p)/m2 ⌋ =
+τ0 − λ + ī for some 0 ⩽ ī ⩽ 2λ. Inserting this into (4.4), we find that
+τ0 − λ ⩽
+
+āq + b̄p = m2 ī + j̄,
+
+where j̄ := jσ̄,σ̄0 is as defined in Step 9. Now, the congruence p ≡ 1 (mod p − 1)
+implies that āq + b̄p ≡ āN + b̄ (mod p − 1), so Fermat’s little theorem yields
+β āq+b̄p ≡ β āN +b̄
+
+(mod p).
+
+We conclude that there must be a collision modulo p between the babysteps computed in Step 2 and the giantsteps computed in Step 10, namely
+2
+
+β m ī ≡ vσ̄,σ̄0
+
+(mod p).
+
+(4.5)
+
+In Step 12, we attempt to find the solution (ī, σ̄, σ̄0 ) to (4.5), by finding all
+solutions to the stronger congruence (4.1), which is a congruence modulo N rather
+than modulo p. Let (i, σ, σ0 ) be one of the solutions found in Step 12. If it is equal
+to (ī, σ̄, σ̄0 ), then the corresponding u defined in (4.2) will be equal to m2 ī + j̄ =
+āq + b̄p, and the factors p and q will be found via Lemma 2.4. Now suppose
+instead that (i, σ, σ0 ) 6= (ī, σ̄, σ̄0 ). We claim then that (σ, σ0 ) 6= (σ̄, σ̄0 ). Indeed, if
+(σ, σ0 ) = (σ̄, σ̄0 ), then we would have
+2
+
+2
+
+β m ī ≡ vσ̄,σ̄0 = vσ,σ0 ≡ β m i
+
+(mod p),
+2
+
+which implies that ī = i due to the fact that 0 ⩽ i, ī ⩽ 2λ and ordp (β m ) ⩾ 2λ + 1.
+This establishes the claim, and consequently the giantstep vσ̄,σ̄0 remains among the
+candidates in the list v1 , . . . , vn constructed in Step 13.
+Finally we consider Step 13. The procedure in Step 12 ensures that all preconditions for Algorithm 4.1 are met. In addition, we have seen in the last paragraph
+that one of v1 , . . . , vn is equal to vσ̄,σ̄0 . Hence, Algorithm 4.1 will succeed in finding
+a nontrivial factor of N .
+If N is prime, then Steps 1–13 will fail to find a nontrivial factor, and the
+algorithm will correctly return “N is prime” in Step 14.
+We now analyse the runtime complexity. To prepare for the loop in Steps 1–3
+2
+we first compute β m (mod N ); the cost of this step is
+O(lg m lg N lg lg N ).
+The loop itself computes at most κ := 2λ + 1 products modulo N and κ GCDs of
+integers bounded by N , whose total cost is
+O(κ lg N (lg lg N )2 ).
+In Step 5 we compute m GCDs of integers bounded by m = O(N ), which costs
+O(m lg N (lg lg N )2 ).
+Now consider the inner loop over σ0 . The ratio between values of σ0 on successive
+iterations is at least 1 + 1/m0 , so for each σ the number of iterations of the inner
+loop over σ0 is at most
+
+
+log(N 1/2 )
+= O(m0 lg N ).
+log(1 + 1/m0 )
+
+10
+
+D. HARVEY AND M. HITTMEIR
+
+The number of σ considered is φ(m), so the block in Steps 8–11 executes altogether
+O(φ(m)m0 lg N )
+times. Let us estimate the cost of each iteration of this block. The cost of
+the invocation of Proposition 3.3 in Step 8 is O(lg 3 N ). By hypothesis we have
+σ, m, m0 = O(N ), certainly λ, σ0 = O(N 1/2 ), and Proposition 3.3 ensures that
+a, b = O(N 2 ), so all quantities appearing in Step 9 have O(lg N ) bits. The cost of
+computing σ −1 (mod m2 ) is therefore O(lg N (lg lg N )2 ), and all other arithmetic
+operations required to compute τ , τ0 and jσ,σ0 in Step 9 cost at most O(lg N lg lg N )
+bit operations. Similarly, the exponent aN + b − jσ,σ0 (= N O(1) ) in Step 10 and
+the updated value of σ0 in Step 11 are computed in time O(lg N lg lg N ). Finally,
+the modular exponentiation in Step 10 requires O(lg N ) multiplications modulo N ,
+plus possibly one inversion modulo N if the exponent is negative, so its cost is
+O((lg N )2 lg lg N + lg N (lg lg N )2 ). We conclude that the block in Steps 8–11 runs
+in time O(lg3 N ), and that the total over all iterations is
+O(φ(m)m0 lg4 N ).
+2
+
+In Step 12, we construct a list of pairs (β m i , i) of length κ, and a list of tuples
+(vσ,σ0 , jσ,σ0 , aσ,σ0 , bσ,σ0 ) of length O(φ(m)m0 lg N ). From the bounds already mentioned, each item in these lists occupies O(lg N ) bits. We then use merge-sort to
+sort the lists by the first component of each tuple, which requires
+O((κ + φ(m)m0 lg N ) lg2 N )
+2
+
+bit operations. Each giantstep vσ,σ0 is equal to at most one babystep β m i , be2
+cause our assumption ordN (β m ) ⩾ κ implies that the babysteps are all distinct.
+Matching the two sorted lists, we may hence find all matches in time
+O((κ + φ(m)m0 lg N ) lg N ).
+Since there are at most κ such matches, the total cost for applying Lemma 2.4 in
+Step 12 is bounded by
+O(κ lg N lg lg N ).
+Again, we note that the assumptions of Lemma 2.4 on the size of the candidates for
+a, b and u are always satisfied. Finally, in Step 13 we apply Algorithm 4.1, whose
+complexity is
+O(φ(m)m0 lg4 N + κ lg2 N ).
+Combining the contributions from all steps, we obtain the overall bound
+O(m lg N (lg lg N )2 + φ(m)m0 lg4 N + κ lg2 N ).
+The last term becomes
+
+
+ 1/2 2 
+
+N
+lg N
+N 1/2
+2
++ 1 lg N = O
++ O(lg2 N ).
+O
+3/2
+(m · m0 )
+(m · m0 )3/2
+
+The final lg2 N term is dominated by φ(m)m0 lg4 N , completing the proof.
+
+
+
+Remark 4.5. The φ(m)m0 lg4 N term in Proposition 4.4 arises from two sources:
+finding short lattice vectors in order to compute a and b (Lemma 3.1), and the
+collision-finding step (Algorithm 4.1). In fact, the collision-finding step is the real
+bottleneck; with some effort the O(lg 3 N ) cost of Lemma 3.1 can be improved to
+(lg N )1+o(1) [NSV11].
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+11
+
+Finally we present the main factoring routine. In this algorithm, N0 is a constant
+that is chosen large enough to ensure that the proof of correctness works for all
+N ⩾ N0 . In principle one could work out N0 explicitly, but we will not do so.
+Algorithm 4.6 (Factoring (semi)primes).
+Input: A positive integer N ⩾ N0 , either prime or semiprime.
+Output: If N = pq is semiprime, returns p and q. Otherwise returns “N is prime”.
+1: Compute
+
+
+Y
+lg N
+r,
+,
+m :=
+B :=
+30
+2⩽r⩽B
+r prime
+
+and
+
+
+
+N 1/5 (lg lg N )2/5 .
+m0 :=
+m .
+(lg N )4/5
+If gcd(N, m) ∈
+/ {1, N }, recover p and q and return.
+2: Apply Theorem 2.5 with D := ⌈N 2/5 ⌉. If any factors of N are found, or if
+N is proved to be prime, return. Otherwise, we obtain β ∈ Z∗N such that
+ordN (β) > D.
+3: Run Algorithm 4.3 (the main search) with the given N , β, m and m0 . Return
+the factors found, or “N is prime”.
+
+
+Proposition 4.7. Algorithm 4.6 is correct (for suitable N0 ), and it runs in time
+!
+N 1/5 lg16/5 N
+.
+O
+(lg lg N )3/5
+Proof. We start by discussing the choice of m in Step 1. By the Prime Number
+Theorem (see Lemma 2.6) we have m = e(1+o(1))B . Since
+log N
+log N
+B=
++ O(1) =
++ O(1),
+30 log 2
+20.794 . . .
+we find that for large N ,
+N 1/21 < m < N 1/20 .
+(4.6)
+We may compute m by simply enumerating the primes up to B and multiplying
+them together; this may be done in time B O(1) = (lg N )O(1) . The rest of Step 1
+(computing B, m0 and gcd(N, m)) may also be carried out in time (lg N )O(1) .
+Step 2 runs in time
+ 1/5 2 
+N
+lg N
+O
+,
+(lg lg N )1/2
+which is negligible. Assume that we do not find factors of N or prove N prime. We
+then obtain β ∈ Z∗N such that ordN (β) > N 2/5 .
+For the invocation of Algorithm 4.3 in Step 3, we must check the precondition
+2
+ordN (β m ) ⩾ 2λ + 1, where we recall that λ = ⌈4N 1/2 /(m · m0 )3/2 ⌉. On one hand,
+(4.6) yields
+2
+N 2/5
+ordN (β)
+>
+= N 3/10 .
+ordN (β m ) ⩾
+m2
+(N 1/20 )2
+On the other hand, the definition of m0 , together with (4.6), implies that
+m0 · m ≍
+
+N 1/5 (lg lg N )2/5
+,
+(lg N )4/5
+
+(4.7)
+
+12
+
+D. HARVEY AND M. HITTMEIR
+
+so
+2λ + 1 =
+
+N 1/2
+(N 1/5+o(1) )3/2
+
+= N 1/5+o(1) .
+
+2
+
+Therefore certainly ordN (β m ) ⩾ 2λ + 1 for large N . We conclude that Step 3
+succeeds in factoring N or proving N prime.
+The hypotheses m, m0 = O(N ) of Proposition 4.4 are certainly satisfied, so the
+cost of Step 3 is given by (4.3). The first term of (4.3) is negligible thanks to (4.6).
+To estimate the second term, we note that Mertens’ theorem (Lemma 2.6) implies
+that
+ 1 
+ 1 
+Y r−1
+φ(m)
+=O
+.
+=
+=O
+m
+r
+log B
+lg lg N
+2⩽r⩽B
+r prime
+
+Using this estimate together with (4.7), it is easy to check that the second and
+third terms in (4.3) simplify to the desired bound O(N 1/5 (lg N )16/5 /(lg lg N )3/5 ),
+and hence our choice for the size of m · m0 balances the asymptotic contribution
+from these two terms. Taking into account the discussion in Section 1, this also
+completes the proof of Theorem 1.1.
+
+References
+[BGS07]
+
+A. Bostan, P. Gaudry, and É. Schost, Linear recurrences with polynomial coefficients
+and application to integer factorization and Cartier-Manin operator, SIAM J. Comput.
+36 (2007), no. 6, 1777–1806. MR 2299425 (2008a:11156)
+[Blu70]
+L. I. Bluestein, A linear filtering approach to the computation of discrete Fourier transform, IEEE Transactions on Audio and Electroacoustics 18 (1970), no. 4, 451–455.
+[BZ11]
+R. P. Brent and P. Zimmermann, Modern Computer Arithmetic, Cambridge Monographs on Applied and Computational Mathematics, vol. 18, Cambridge University
+Press, Cambridge, 2011. MR 2760886
+[CH14]
+E. Costa and D. Harvey, Faster deterministic integer factorization, Math. Comp. 83
+(2014), no. 285, 339–345. MR 3120593
+[CP05]
+R. Crandall and C. Pomerance, Prime Numbers: a Computational Perspective, second
+ed., Springer, New York, 2005. MR 2156291 (2006a:11005)
+[Gal12]
+S. D. Galbraith, Mathematics of Public Key Cryptography, Cambridge University Press,
+Cambridge, 2012. MR 2931758
+[Har20]
+D. Harvey, An exponent one-fifth algorithm for deterministic integer factorisation,
+to appear in Mathematics of Computation,
+arXiv preprint
+https://arxiv.org/abs/2010.05450, 2020.
+[Hit18]
+M. Hittmeir, A babystep-giantstep method for faster deterministic integer factorization,
+Math. Comp. 87 (2018), no. 314, 2915–2935. MR 3834692
+, A time-space tradeoff for Lehman’s deterministic integer factoriza[Hit20]
+tion method, to appear in Mathematics of Computation, arXiv preprint
+http://arxiv.org/abs/2006.16729v1, 2020.
+[HvdH21] D. Harvey and J. van der Hoeven, Integer multiplication in time O(n log n), Ann. of
+Math. (2) 193 (2021), no. 2, 563–617. MR 4224716
+[Knu98] D. E. Knuth, The Art of Computer Programming. Vol. 3, Addison-Wesley, Reading,
+MA, 1998, Sorting and searching, Second edition [of MR0445948]. MR 3077154
+[KS96]
+M. Kaib and C. P. Schnorr, The generalized Gauss reduction algorithm, J. Algorithms
+21 (1996), no. 3, 565–578. MR 1417664
+[Lan94] S. Lang, Algebraic Number Theory, second ed., Graduate Texts in Mathematics, vol.
+110, Springer-Verlag, New York, 1994. MR 1282723
+[Law95] F. W. Lawrence, Factorisation of numbers, Messenger of Math. 24 (1895), 100–109.
+[Leh74]
+R. S. Lehman, Factoring large integers, Math. Comp. 28 (1974), 637–646. MR 340163
+[Len00]
+A. K. Lenstra, Integer factoring, Des. Codes Cryptogr. 19 (2000), no. 2-3, 101–128,
+Towards a quarter-century of public key cryptography. MR 1758972
+
+A LOG-LOG SPEEDUP FOR DETERMINISTIC INTEGER FACTORISATION
+
+13
+
+[MV07]
+
+H. L. Montgomery and R. C. Vaughan, Multiplicative Number Theory. I. Classical
+Theory, Cambridge Studies in Advanced Mathematics, vol. 97, Cambridge University
+Press, Cambridge, 2007. MR 2378655
+[NSV11] A. Novocin, D. Stehlé, and G. Villard, An LLL-reduction algorithm with quasi-linear
+time complexity [extended abstract], STOC’11—Proceedings of the 43rd ACM Symposium on Theory of Computing, ACM, New York, 2011, pp. 403–412. MR 2931990
+[Pap94] C. H. Papadimitriou, Computational Complexity, Addison-Wesley Publishing Company, Reading, MA, 1994. MR 1251285 (95f:68082)
+[Rie94]
+H. Riesel, Prime Numbers and Computer Methods for Factorization, second ed.,
+Progress in Mathematics, vol. 126, Birkhäuser Boston, Inc., Boston, MA, 1994.
+MR 1292250
+[vzGG13] J. von zur Gathen and J. Gerhard, Modern Computer Algebra, 3rd ed., Cambridge
+University Press, Cambridge, 2013. MR 3087522
+[Wag13] S. S. Wagstaff, Jr., The Joy of Factoring, Student Mathematical Library, vol. 68,
+American Mathematical Society, Providence, RI, 2013. MR 3135977
+School of Mathematics and Statistics, University of New South Wales, Sydney NSW
+2052, Australia
+Email address: d.harvey@unsw.edu.au
+SBA Research, Floragasse 7, A-1040 Vienna
+Email address: mhittmeir@sba-research.org
+
+

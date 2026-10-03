@@ -1,0 +1,752 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/cl5Fh+QN1prBQuVF9/HRspRyPWQ</id>
+  <title>arXiv Query: search_query=all:"Jacobi symbol"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Jacobi+symbol%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>43</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1907.07795v1</id>
+    <title>Efficient computation of the Jacobi symbol</title>
+    <updated>2019-07-17T22:11:22Z</updated>
+    <link href="https://arxiv.org/abs/1907.07795v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.07795v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The family of left-to-right GCD algorithms reduces input numbers by repeatedly subtracting the smaller number, or multiple of the smaller number, from the larger number. This paper describes how to extend any such algorithm to compute the Jacobi symbol, using a single table lookup per reduction. For both quadratic time GCD algorithms (Euclid, Lehmer) and subquadratic algorithms (Knuth, Schönhage, Möller), the additional cost is linear, roughly one table lookup per quotient in the quotient sequence. This method was used for the 2010 rewrite of the Jacobi symbol computation in GMP.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-17T22:11:22Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Niels Möller</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.09577v1</id>
+    <title>On local geometry of vector distributions with given Jacobi symbols</title>
+    <updated>2016-10-29T23:08:09Z</updated>
+    <link href="https://arxiv.org/abs/1610.09577v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.09577v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Based on the ideas of Optimal Control, we introduce the new basic characteristic of a bracket generating distribution, the Jacobi symbol. In contrast to the classical Tanaka symbol, the set of Jacobi symbols is discrete and classifiable. We give an explicit and unified algebraic procedure for the construction of the canonical frames (the structure of absolute parallelism) for all distribution with given Jacobi symbol. We describe all Jacobi symbols for which this procedure ends up in a finite number of steps (i.e. all Jacobi symbols of finite type) and distinguish the symplectically flat distributions with given Jacobi symbol, which in the case of finite type are the maximally symmetric distribution among all distribution with given Jacobi symbol. Also, for the most of Jacobi symbols we relate the prolongation procedure and the resulting prolongation algebra, which is the algebra of infinitesimal symmetries of the corresponding symplectically flat distribution, to the standard (in the sense of Kobayashi and Sternberg) prolongation of certain subspace in the algebra of infinitesimal symmetries of the flat (unparametrized) curve of flags associated with the Jacobi symbol. Finally, we give an upper bounds for the size of the resulting prolongation algebra in terms of certain spaces of polynomials vanishing on certain projective varieties. For some class of Jacobi symbols we are able to identify the resulting prolongation algebra with such spaces of polynomials. In this way we get the description of the prolongation algebra for all Jacobi symbols of finite type appearing in rank 2 and rank 3 distributions and also for most of such Jacobi symbols appearing in rank 4 distributions. In particular, in the case of rank 3 distributions this description is given in terms of the tangential developable and the secant varieties of a rational normal curve.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-29T23:08:09Z</published>
+    <arxiv:comment>56 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <author>
+      <name>Boris Doubrov</name>
+    </author>
+    <author>
+      <name>Igor Zelenko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.08080v5</id>
+    <title>On some determinants involving Jacobi symbols</title>
+    <updated>2020-03-23T16:38:44Z</updated>
+    <link href="https://arxiv.org/abs/1812.08080v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.08080v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we study some conjectures on determinants with Jacobi symbol entries posed by Z.-W. Sun. For any positive integer $n\equiv3\pmod4$, we show that $$(6,1)_n=[6,1]_n=(3,2)_n=[3,2]_n=0$$ and $$(4,2)_n=(8,8)_n=(3,3)_n=(21,112)_n=0$$ as conjectured by Sun, where $$(c,d)_n=\bigg|\left(\frac{i^2+cij+dj^2}n\right)\bigg|_{1\le i,j\le n-1}$$ and $$[c,d]_n=\bigg|\left(\frac{i^2+cij+dj^2}n\right)\bigg|_{0\le i,j\le n-1}$$ with $(\frac{\cdot}n)$ the Jacobi symbol. We also prove that $(10,9)_p=0$ for any prime $p\equiv5\pmod{12}$, and $[5,5]_p=0$ for any prime $p\equiv 13,17\pmod{20}$, which were also conjectured by Sun. Our proofs involve character sums over finite fields.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-19T16:54:15Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Finite Fields Appl. 64 (2020), Article 101672</arxiv:journal_ref>
+    <author>
+      <name>Dmitry Krachun</name>
+    </author>
+    <author>
+      <name>Fedor Petrov</name>
+    </author>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+    <author>
+      <name>Maxim Vsemirnov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.11755v2</id>
+    <title>A Jacobi Symbol Criterion Involving $k$-Fibonacci and $k$-Lucas numbers and Integer Points on Elliptic Curves</title>
+    <updated>2022-08-14T18:28:16Z</updated>
+    <link href="https://arxiv.org/abs/2203.11755v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.11755v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1989, Ming Luo \cite{L2} showed that the Fibonacci number $U_n$ is Triangular if and only if $n=\pm1,2,4,8,10$. For this, he established a Jacobi Symbol Criterion. Moreover, he observed that this problem is equivalent to finding all integer points on two elliptic curves. In this paper, we prove a Jacobi Symbol Criterion for more general families of binary recurrences. In addition, applying the criterion and elementary methods, we determine all integer points on the elliptic curves $y^2=5x^2(x+3)^2+4(-1)^n$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-22T14:10:19Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gérsica Freitas</name>
+    </author>
+    <author>
+      <name>Jean Lelis</name>
+    </author>
+    <author>
+      <name>Elaine Silva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.06037v1</id>
+    <title>Rotation Symmetries of Sequential Matrices with Applications to the Jacobi Symbol</title>
+    <updated>2018-08-18T03:03:16Z</updated>
+    <link href="https://arxiv.org/abs/1808.06037v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.06037v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Suppose that $p$ is an odd prime and $\genfrac{(}{)}{}{}{\cdot}{p}$ denotes the Legendre symbol modulo $p$. If $p$ is has the form $p= n^2+1$ then one easily verifies that $\genfrac{(}{)}{}{}{a}{p} = \genfrac{(}{)}{}{}{-a}{p}$ for all $a\in \mathbb Z/p\mathbb Z$. We identify various symmetry properties of sequential matrices over $\mathbb Z/(n^2+1)\mathbb Z$ regardless of whether $n^2+1$ is prime. We deduce from these results a collection of symmetries involving Jacobi symbol modulo $n^2+1$ which generalize our above observation on the Legendre symbol.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-18T03:03:16Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yemeen Ayub</name>
+    </author>
+    <author>
+      <name>Charles L. Samuels</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.00127v2</id>
+    <title>Extremal sequences related to the Jacobi symbol</title>
+    <updated>2022-12-12T14:01:37Z</updated>
+    <link href="https://arxiv.org/abs/2201.00127v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.00127v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a weight-set $A\subseteq \mathbb Z_n$, the $A$-weighted zero-sum constant $C_A(n)$ is defined to be the smallest natural number $k$, such that any sequence of $k$ elements in $\mathbb Z_n$ has an $A$-weighted zero-sum subsequence of consecutive terms. A sequence of length $C_A(n)-1$ in $\mathbb Z_n$ which does not have any $A$-weighted zero-sum subsequence of consecutive terms will be called a $C$-extremal sequence for $A$.
+  Let $\big(\frac{x}{n}\big)$ denote the Jacobi symbol of $x\in\mathbb Z_n$. We characterize the $C$-extremal sequences for the weight-set $S(n)=\big\{\,x\in U(n):\big(\frac{x}{n}\big)=1\,\big\}$ and for the weight-set $L(n;p)=\big\{\,x\in U(n):\big(\frac{x}{n}\big)=\big(\frac{x}{p}\big)\,\big\}$ where $p$ is a prime divisor of $n$. We can define $D$-extremal sequences for these weight-sets in a way analogous to the definition of $C$-extremal sequences. We also characterize these sequences.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-01T06:17:29Z</published>
+    <arxiv:comment>15 pages. arXiv admin note: substantial text overlap with arXiv:2111.14477</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Santanu Mondal</name>
+    </author>
+    <author>
+      <name>Krishnendu Paul</name>
+    </author>
+    <author>
+      <name>Shameek Paul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1004.2091v2</id>
+    <title>An O(M(n) log n) algorithm for the Jacobi symbol</title>
+    <updated>2010-06-02T01:16:52Z</updated>
+    <link href="https://arxiv.org/abs/1004.2091v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1004.2091v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The best known algorithm to compute the Jacobi symbol of two n-bit integers runs in time O(M(n) log n), using Schönhage's fast continued fraction algorithm combined with an identity due to Gauss. We give a different O(M(n) log n) algorithm based on the binary recursive gcd algorithm of Stehlé and Zimmermann. Our implementation - which to our knowledge is the first to run in time O(M(n) log n) - is faster than GMP's quadratic implementation for inputs larger than about 10000 decimal digits.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-04-13T02:15:09Z</published>
+    <arxiv:comment>Submitted to ANTS IX (Nancy, July 2010)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>Proc. ANTS-IX (Nancy, 19-23 July 2010), Lecture Notes in Computer Science, Vol. 6197, Springer-Verlag, 2010, 83-95</arxiv:journal_ref>
+    <author>
+      <name>Richard P. Brent</name>
+    </author>
+    <author>
+      <name>Paul Zimmermann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.2834v1</id>
+    <title>A prime sensitive Hankel determinant of Jacobi symbol enumerators</title>
+    <updated>2008-03-19T16:34:18Z</updated>
+    <link href="https://arxiv.org/abs/0803.2834v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.2834v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that the determinant of a Hankel matrix of odd dimension n whose entries are the enumerators of the Jacobi symbols which depend on the row and the column indices vanishes iff n is composite. If the dimension is a prime p, then the determinant evaluates to a polynomial of degree p-1 which is the product of a power of p and the generating polynomial of the partial sums of Legendre symbols. The sign of the determinant is determined by the quadratic character of -1 modulo p. The proof of the evaluation makes use of elementary properties of Legendre symbols, quadratic Gauss sums and orthogonality of trigonometric functions.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-19T16:34:18Z</published>
+    <arxiv:comment>13 pages, to appear in Annals of Combinatorics</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Omer Egecioglu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1105.5180v2</id>
+    <title>The L_4 norm of Littlewood polynomials derived from the Jacobi symbol</title>
+    <updated>2012-07-02T15:08:12Z</updated>
+    <link href="https://arxiv.org/abs/1105.5180v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1105.5180v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Littlewood raised the question of how slowly the L_4 norm ||f||_4 of a Littlewood polynomial f (having all coefficients in {-1,+1}) of degree n-1 can grow with n. We consider such polynomials for odd square-free n, where φ(n) coefficients are determined by the Jacobi symbol, but the remaining coefficients can be freely chosen. When n is prime, these polynomials have the smallest known asymptotic value of the normalised L_4 norm ||f||_4/||f||_2 among all Littlewood polynomials, namely (7/6)^{1/4}. When n is not prime, our results show that the normalised L_4 norm varies considerably according to the free choices of the coefficients and can even grow without bound. However, by suitably choosing these coefficients, the limit of the normalised L_4 norm can be made as small as the best known value (7/6)^{1/4}.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-05-26T00:55:25Z</published>
+    <arxiv:comment>minor revisions</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Pac. J. Math., vol. 257, no. 2, pp. 395-418, 2012</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Jedwab</name>
+    </author>
+    <author>
+      <name>Kai-Uwe Schmidt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.07719v1</id>
+    <title>On Euclidean Methods for Cubic and Quartic Jacobi Symbols</title>
+    <updated>2018-07-20T07:16:22Z</updated>
+    <link href="https://arxiv.org/abs/1807.07719v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.07719v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the bit complexity of two methods, related to the Euclidean algorithm, for computing cubic and quartic analogs of the Jacobi symbol. The main bottleneck in such procedures is computation of a quotient for long division. We give examples to show that with standard arithmetic, if quotients are computed naively (by using exact norms as denominators, then rounding), the algorithms have $Θ(n^3)$ bit complexity. It is a "folk theorem" that this can be reduced to $O(n^2)$ by modifying the division procedure. We give a self-contained proof of this, and show that quadratic time is best possible for these algorithms (with standard arithmetic or not).
+  We also address the relative efficiency of using reciprocity, as compared to Euler's criterion, for testing if a given number is a cubic or quartic residue modulo an odd prime. Which is preferable depends on the number of residue tests to be done.
+  Finally, we discuss the cubic and quartic analogs of Eisenstein's even-quotient algorithm for computing Jacobi symbols in ${\bf Z}$. Although the quartic algorithm was given by Smith in 1859, the version for cubic symbols seems to be new. As far as we know, neither was analyzed before. We show that both algorithms have exponential worst-case bit complexity. The proof for the cubic algorithm involves a cyclic repetition of four quotients, which may be of independent interest.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-20T07:16:22Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Eric Bach</name>
+    </author>
+    <author>
+      <name>Bryce Sandlund</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.08509v1</id>
+    <title>On Sun's Conjectures for Truncated Jacobi-Symbol Determinants via Supersingular Elliptic Curves</title>
+    <updated>2026-08-09T06:11:12Z</updated>
+    <link href="https://arxiv.org/abs/2608.08509v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.08509v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the truncated Jacobi-symbol determinants $$\{c,d\}_n=\det\!\left[\left(\frac{j^2+cjk+dk^2}{n}\right)\right]_{2\le j,k\le n-2}$$ proposed by Zhi-Wei Sun in \cite{ZWSun} and prove Conjectures 5.1(i), 5.2, 5.3, 5.4, 5.5, 5.6(i), 5.7, 5.8, a case of 5.6(ii) of \cite{ZWSun}, Conjecture 4.8(i) of \cite{Sun2019} and some strengthened forms. All results follow from a single unified approach: for a prime $p$, we diagonalize the nonzero-residue matrix indexed by $\mathbb{F}_p^\times$ and reduce the vanishing of determinants to the supersingular reduction of certain CM elliptic curves. The same framework extends naturally to further families of parameters, suggesting a general mechanism behind identities of this type.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-09T06:11:12Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Guo Li</name>
+    </author>
+    <author>
+      <name>Xiaoju Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.08320v3</id>
+    <title>Generalization of a Result of Sylvester Regarding the Frobenius Coin Problem and an Elementary Proof of Eisenstein's Lemma for Jacobi Symbols</title>
+    <updated>2021-07-26T07:36:16Z</updated>
+    <link href="https://arxiv.org/abs/2102.08320v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.08320v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a recent work, the present author generalized a fundamental result of Gauss related to quadratic reciprocity, and also showed that the above result of Gauss is equivalent to a special case of a well-known result of Sylvester related to the Frobenius coin problem. In this note, we use this equivalence to show that the above generalization of the result of Gauss naturally leads to an interesting generalization of the result of Sylvester. To be precise, for given positive coprime integers $a$ and $b$, and for a family of values of $k$ in the interval $0 \leq k &lt; (a-1)(b-1)$, we find the number of nonnegative integers $\leq k$ that can be expressed in the form $ax+by$ for nonnegative integers $x$ and $y$. We also give an elementary proof of Eisenstein's Lemma for Jacobi symbols using floor function sums. Our proof provides a natural straightforward generalization of the Gauss-Eisenstein proof of the law of quadratic reciprocity for Jacobi symbols.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-16T18:04:04Z</published>
+    <arxiv:comment>A new proof added</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Damanvir Singh Binner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.12558v4</id>
+    <title>The Jacobi Factoring Circuit: Quantum Factoring with Near-Linear Gates and Sublinear Space and Depth</title>
+    <updated>2026-07-02T21:23:46Z</updated>
+    <link href="https://arxiv.org/abs/2412.12558v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.12558v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a compact quantum circuit for factoring a large class of integers, including some whose classical hardness is expected to be equivalent to RSA (but not including RSA integers themselves). Most notably, we factor $n$-bit integers of the form $P^2 Q$ with $\log Q = Θ(n^a)$ for $a \in (2/3, 1)$ in space and depth sublinear in n (specifically, $\tilde{O}(\log Q)$) using $\tilde{O}(n)$ quantum gates; for these integers, no known classical algorithms exploit the relatively small size of $Q$ to run asymptotically faster than general-purpose factoring algorithms. To our knowledge, this is the first polynomial-time circuit to achieve sublinear qubit count for a classically-hard factoring problem.
+  Our circuit builds on the quantum algorithm for squarefree decomposition discovered by Li, Peng, Du, and Suter (Nature Scientific Reports 2012), which relies on computing the Jacobi symbol in quantum superposition. The technical core of our contribution is a new space-efficient quantum algorithm to compute the Jacobi symbol of $A$ mod $B$, in the regime where $B$ is classical and much larger than $A$. Our circuit for computing the Jacobi symbol generalizes to related problems such as computing the greatest common divisor and modular inverses, and thus could be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-17T05:34:54Z</published>
+    <arxiv:comment>STOC 2025; minor updates</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gregory D. Kahanamoku-Meyer</name>
+    </author>
+    <author>
+      <name>Seyoon Ragavan</name>
+    </author>
+    <author>
+      <name>Vinod Vaikuntanathan</name>
+    </author>
+    <author>
+      <name>Katherine Van Kirk</name>
+    </author>
+    <arxiv:doi>10.1145/3717823.3718273</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3717823.3718273" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.14477v3</id>
+    <title>Zero-sum constants related to the Jacobi symbol</title>
+    <updated>2023-02-20T15:03:10Z</updated>
+    <link href="https://arxiv.org/abs/2111.14477v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.14477v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For $A\subseteq\mathbb Z_n$, the $A$-weighted Gao constant $E_A(n)$ is defined to be the smallest natural number $k$ such that any sequence of $k$ elements in $\mathbb Z_n$ has a subsequence of length $n$ whose $A$-weighted sum is zero. When $A$ is the set of all units in $\mathbb Z_n$, we determine the value of $E_A(n)$ and values of two related constants $C_A(n)$ and $D_A(n)$. We also characterize all sequences of length $E_A(n)-1$ in $\mathbb Z_n$ which do not have any $A$-weighted zero-sum subsequence of length $n$ when $n$ is a power of 2.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-29T11:42:37Z</published>
+    <arxiv:comment>17 pages. arXiv admin note: text overlap with arXiv:2110.02539</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Santanu Mondal</name>
+    </author>
+    <author>
+      <name>Krishnendu Paul</name>
+    </author>
+    <author>
+      <name>Shameek Paul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.14909v2</id>
+    <title>General Bilinear Forms In The Jacobi Symbol Over Hyperbolic Regions</title>
+    <updated>2023-02-27T13:23:06Z</updated>
+    <link href="https://arxiv.org/abs/2208.14909v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.14909v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study averages involving the Jacobi quadratic symbol $(\frac{n}{m})$ in regions where the product $mn$ is bounded by a large parameter. We show that these averages exhibit cancellation whenever the summation is restricted to square-free integers bounded away from the axes.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-31T15:10:04Z</published>
+    <arxiv:comment>Accepted for publication by Monatshefte für Mathematik</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Cameron Wilson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.13597v2</id>
+    <title>Quadratic residues and domino tilings</title>
+    <updated>2024-02-01T18:56:47Z</updated>
+    <link href="https://arxiv.org/abs/2311.13597v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.13597v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The formula for the number of domino tilings due to Kasteleyn and Temperley-Fisher is strikingly similar to Eisenstein's formula for the Legendre symbol. We study the connection between these two concepts and prove a formula which expresses the Jacobi symbol in terms of domino tilings.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-22T18:58:52Z</published>
+    <arxiv:comment>15 Pages. A combinatorial proof has been included</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yuhi Kamio</name>
+    </author>
+    <author>
+      <name>Junnosuke Koizumi</name>
+    </author>
+    <author>
+      <name>Toshihiko Nakazawa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.1591v3</id>
+    <title>On Algebraic Functions</title>
+    <updated>2014-03-27T06:11:09Z</updated>
+    <link href="https://arxiv.org/abs/1305.1591v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.1591v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this note we consider functions with Moebius-periodic rational coefficients. These functions under some conditions take algebraic values and can be recovered by theta functions and the Dedekind eta function. Special cases are the elliptic singular moduli, the Rogers-Ramanujan continued fraction, Eisenstein series and functions associated with Jacobi symbol coefficients.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-05T09:19:37Z</published>
+    <arxiv:comment>12 pages, elliptic functions</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Nikos Bagis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.05002v2</id>
+    <title>Average liar count for degree-2 Frobenius pseudoprimes</title>
+    <updated>2020-04-03T21:02:23Z</updated>
+    <link href="https://arxiv.org/abs/1707.05002v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.05002v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we obtain lower and upper bounds on the average number of liars for the Quadratic Frobenius Pseudoprime Test of Grantham, generalizing arguments of Erdős and Pomerance, and Monier. These bounds are provided for both Jacobi symbol plus and minus cases, providing evidence for the existence of several challenge pseudoprimes.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-17T04:51:23Z</published>
+    <arxiv:comment>19 pages, published in Mathematics of Computation, revised version fixes typos and made a minor correction to the proof of Lemma 18 (result remains unchanged)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Math Comp, Vol 89 (321), January 2020, pg 493-514</arxiv:journal_ref>
+    <author>
+      <name>Andrew Fiori</name>
+    </author>
+    <author>
+      <name>Andrew Shallue</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3452</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3452" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.14221v2</id>
+    <title>On a supercongruence conjecture of Z.-W. Sun</title>
+    <updated>2020-04-05T06:32:52Z</updated>
+    <link href="https://arxiv.org/abs/2003.14221v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.14221v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we partly prove a supercongruence conjectured by Z.-W. Sun in 2013. Let $p$ be an odd prime and let $a\in\mathbb{Z}^{+}$. Then if $p\equiv1\pmod3$, we have \begin{align*} \sum_{k=0}^{\lfloor\frac{5}6p^a\rfloor}\frac{\binom{2k}k}{16^k}\equiv\left(\frac{3}{p^a}\right)\pmod{p^2}, \end{align*} where $\left(\frac{\cdot}{\cdot}\right)$ is the Jacobi symbol.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-30T08:57:43Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Chinese Annals of Mathematics, Series B (2022) 43(3), 2022, 417-424</arxiv:journal_ref>
+    <author>
+      <name>Guo-Shuai Mao</name>
+    </author>
+    <arxiv:doi>10.1007/s11401-022-0332-7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11401-022-0332-7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.11750v5</id>
+    <title>A new proof of Legendre's theorem on the Diophantine equation $ax^2+by^2+cz^2=0$</title>
+    <updated>2022-03-26T16:07:50Z</updated>
+    <link href="https://arxiv.org/abs/1912.11750v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.11750v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One of Legendre's theorems on the Diophantine equation $ax^2+by^2+cz^2=0$ provides necessary and sufficient conditions on the existence of nonzero rational solutions of this equation, which helps determine the existence of rational points on a conic. In this paper, we provide a new proof of this famous theorem using Hasse invariant and Jacobi symbol from the theory of quadratic forms.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-26T02:37:51Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jingbo Liu</name>
+    </author>
+    <author>
+      <name>Bruce McOsker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0601026v1</id>
+    <title>A remark on Zoloterav's theorem</title>
+    <updated>2006-01-02T16:25:00Z</updated>
+    <link href="https://arxiv.org/abs/math/0601026v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0601026v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let n&gt;=3 be an odd integer. For any integer a prime to n, define the permutation gamma_{a,n} of {1,...,(n-1)/2} by gamma_{a,n}(x)=n-\dec{ax}_n if {ax}_n&gt;=(n+1)/2, and {ax}_n if {ax}_n&lt;=(n-1)/2, where {x}_n denotes the least nonnegative residue of x modulo n. In this note, we show that the sign of gamma_{a,n} coincides with the Jacobi symbol (a/n) if n=1 mod 4, and 1 if n=3 mod 4.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-01-02T16:25:00Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Hao Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.04642v2</id>
+    <title>Some determinants involving binary forms</title>
+    <updated>2025-05-22T15:39:16Z</updated>
+    <link href="https://arxiv.org/abs/2407.04642v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.04642v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study arithmetic properties of certain determinants involving powers of $i^2+cij+dj^2$, where $c$ and $d$ are integers. For example, for any odd integer $n&gt;1$ with $(\frac dn)=-1$ we prove that $\det [ (\frac{i^2+cij+dj^2}{n})]_{0\le i,j\le n-1}$ is divisible by $\varphi(n)^2$, where $(\frac{\cdot}{n})$ is the Jacobi symbol and $\varphi$ is Euler's totient function. This confirms a previous conjecture of the second author.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-05T16:54:43Z</published>
+    <arxiv:comment>15 pages, refined version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yue-Feng She</name>
+    </author>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1411.4398v1</id>
+    <title>Rabin-$p$ Cryptosystem: Practical and Efficient Method for Rabin based Encryption Scheme</title>
+    <updated>2014-11-17T09:27:44Z</updated>
+    <link href="https://arxiv.org/abs/1411.4398v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1411.4398v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we introduce a new, efficient and practical scheme based on the Rabin cryptosystem without using the Jacobi symbol, message redundancy technique or the needs of extra bits in order to specify the correct plaintext. Our system involves only a single prime number as the decryption key and does only one modular exponentiation. Consequently, this will practically reduce the computational efforts during decryption process. We demonstrate that the decryption is unique and proven to be equivalent to factoring.The scheme is performs better when compared to a number of Rabin cryptosystem variants.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-11-17T09:27:44Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Muhammad Asyraf Asbullah</name>
+    </author>
+    <author>
+      <name>Muhammad Rezal Kamel Ariffin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16240v2</id>
+    <title>Evaluation of two determinants involving $q$-integers</title>
+    <updated>2026-05-18T17:28:05Z</updated>
+    <link href="https://arxiv.org/abs/2605.16240v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16240v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The $q$-analogue of an integer $m$ is given by $[m]_q=(1-q^m)/(1-q)$. Let $a$ be an integer, and let $n$ be a positive odd integer. Via discrete Fourier transforms, we establish the following two identities: $$\det\left[\left[\left\lfloor\frac{aj-(a+1)k}n\right\rfloor\right]_q\right]_{1\leqslant j,k\leqslant n}=-\left(\frac{a(a+1)}n\right)q^{(1-3n)/2}$$ and $$\det\left[\left[\left\lceil\frac{(a+1)j-ak}n\right\rceil\right]_q\right]_{1\leqslant j,k\leqslant n}=\left(\frac{a(a+1)}n\right)q^{(n-1)/2},$$ where $(\frac{\cdot}n)$ denotes the Jacobi symbol.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-15T17:48:24Z</published>
+    <arxiv:comment>10 pages. Correct typos and make Theorem 1.3 more general</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.11618v1</id>
+    <title>On non-congruent numbers with $8a\pm1$ type odd prime factors and tame kernels</title>
+    <updated>2021-11-23T02:39:41Z</updated>
+    <link href="https://arxiv.org/abs/2111.11618v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.11618v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $n$ be a positive square-free integer, where every odd prime factor of $n$ has form $8a\pm 1$. We determine when $n$ is non-congruent with second minimal $2$-primary Shafarevich-Tate group, in terms of the $4$-ranks of class groups and a Jacobi symbol. In particular, when every odd prime factor of $n$ has form $8a+1$, this condition is equivalent to the vanishing of the $4$-rank of the tame kernel of $\mathbb Q(\sqrt{n})$ for odd $n$, or $\mathbb Q(\sqrt{-n})$ for even $n$. This generalizes previous results.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-23T02:39:41Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Shenxing Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.11366v1</id>
+    <title>On the Diophantine equation $(5pn^{2}-1)^{x}+(p(p-5)n^{2}+1)^{y}=(pn)^{z}$</title>
+    <updated>2020-02-26T09:09:21Z</updated>
+    <link href="https://arxiv.org/abs/2002.11366v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.11366v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p$ be a prime number with $p&gt;3$, $p\equiv 3\pmod{4}$ and let $n$ be a positive integer. In this paper, we prove that the Diophantine equation $(5pn^{2}-1)^{x}+(p(p-5)n^{2}+1)^{y}=(pn)^{z}$ has only the positive integer solution $(x,y,z)=(1,1,2)$ where $pn \equiv \pm1 \pmod 5$. As an another result, we show that the Diophantine equation $(35n^{2}-1)^{x}+(14n^{2}+1)^{y}=(7n)^{z}$ has only the positive integer solution $(x,y,z)=(1,1,2)$ where $n\equiv \pm 3% \pmod{5}$ or $5\mid n$. On the proofs, we use the properties of Jacobi symbol and Baker's method.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-26T09:09:21Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Honam Mathematical J. 42 (2020), No. 1, pp. 139-150</arxiv:journal_ref>
+    <author>
+      <name>Elif Kızıldere</name>
+    </author>
+    <author>
+      <name>Gökhan Soydan</name>
+    </author>
+    <arxiv:doi>10.5831/HMJ.2020.42.1.139</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5831/HMJ.2020.42.1.139" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0910.5667v6</id>
+    <title>On sums of binomial coefficients modulo p^2</title>
+    <updated>2010-06-15T06:49:28Z</updated>
+    <link href="https://arxiv.org/abs/0910.5667v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0910.5667v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let p be an odd prime and let a be a positive integer. In this paper we investigate the sum $\sum_{k=0}^{p^a-1}\binom{hp^a-1}{k}\binom{2k}{k}/m^k$ mod p^2, where h,m are p-adic integers with m\not=0 (mod p). For example, we show that if h\not=0 (mod p) and p^a&gt;3 then $$ sum_{k=0}^{p^a-1}\binom{hp^a-1}{k}\binom{2k}{k}(-h/2)^k =(\frac{1-2h}{p^a})(1+h((4h-2)^{p-1}/h^{p-1}-1)) (mod p^2),$$ where (-) denotes the Jacobi symbol. Here is another remarkable congruence: If p&gt;3 then $$\sum_{k=0}^{p^a-1}\binom{p^a-1}{k}\binom{2k}{k}(-1)^k =3^{p-1}(\frac{p^a}3) (mod p^2).$$</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-10-29T15:56:06Z</published>
+    <arxiv:comment>13 pages, polished version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0805.0563v4</id>
+    <title>New congruences for central binomial coefficients</title>
+    <updated>2010-04-01T15:50:57Z</updated>
+    <link href="https://arxiv.org/abs/0805.0563v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0805.0563v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let p be a prime and let a be a positive integer. In this paper we determine $\sum_{k=0}^{p^a-1}\binom{2k}{k+d}/m^k$ and $\sum_{k=1}^{p-1}\binom{2k}{k+d}/(km^{k-1})$ modulo $p$ for all d=0,...,p^a, where m is any integer not divisible by p. For example, we show that if $p\not=2,5$ then $$\sum_{k=1}^{p-1}(-1)^k\frac{\binom{2k}k}k=-5\frac{F_{p-(\frac p5)}}p (mod p),$$ where F_n is the n-th Fibonacci number and (-) is the Jacobi symbol. We also prove that if p&gt;3 then $$\sum_{k=1}^{p-1}\frac{\binom{2k}k}k={8/9} p^2B_{p-3} (mod p^3),$$ where B_n denotes the n-th Bernoulli number.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-05-05T15:55:39Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Adv. in Appl. Math. 45(2010), no.1, 125-148.</arxiv:journal_ref>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+    <author>
+      <name>Roberto Tauraso</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0911.3060v9</id>
+    <title>Fibonacci numbers modulo cubes of primes</title>
+    <updated>2013-10-31T15:21:29Z</updated>
+    <link href="https://arxiv.org/abs/0911.3060v9" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0911.3060v9" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p$ be an odd prime. It is well known that $F_{p-(\frac p5)}\equiv 0\pmod{p}$, where $\{F_n\}_{n\ge0}$ is the Fibonacci sequence and $(-)$ is the Jacobi symbol. In this paper we show that if $p\not=5$ then we may determine $F_{p-(\frac p5)}$ mod $p^3$ in the following way: $$\sum_{k=0}^{(p-1)/2}\frac{\binom{2k}k}{(-16)^k}\equiv\left(\frac{p}5\right)\left(1+\frac{F_{p-(\frac {p}5)}}2\right)\pmod{p^3}.$$ We also use Lucas quotients to determine $\sum_{k=0}^{(p-1)/2}\binom{2k}k/m^k$ modulo $p^2$ for any integer $m\not\equiv0\pmod{p}$; in particular, we obtain $$\sum_{k=0}^{(p-1)/2}\frac{\binom{2k}k}{16^k}\equiv\left(\frac3{p}\right)\pmod{p^2}.$$ In addition, we pose three conjectures for further research.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-11-16T19:06:17Z</published>
+    <arxiv:comment>21 pages. Final published version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Taiwanese J. Math. 17(2013), 1523-1543</arxiv:journal_ref>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.09295v1</id>
+    <title>Fourier and Zak transforms of multiplicative characters</title>
+    <updated>2021-04-13T20:57:11Z</updated>
+    <link href="https://arxiv.org/abs/2104.09295v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.09295v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we derive formulas for the N-point discrete Fourier transform and the R1 x R2 finite Zak transform of multiplicative characters on Z/N, where N is an odd integer, and R1 and R2 are co-prime factors of N. In one special case this permits computation of the discrete Fourier transform and the finite Zak transform of the Jacobi symbol, the modified Jacobi sequence, and the Golomb sequence. In other cases, not addressed here, this permits computation of the discrete Fourier transform and the finite Zak transform of certain complex-valued sequences. These results constitute, to our knowledge, the first unified treatment of key Fourier and Zak space properties of multiplicative characters. These results also provide a convenient framework for the design of new character-based sequences.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-13T20:57:11Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrzej K. Brodzik</name>
+    </author>
+    <author>
+      <name>Richard Tolimieri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.06453v2</id>
+    <title>Proof of three conjectures on determinants related to quadratic residues</title>
+    <updated>2020-11-16T15:33:48Z</updated>
+    <link href="https://arxiv.org/abs/2007.06453v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.06453v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we confirm three conjectures of Z.-W. Sun on determinants. We first show that any odd integer $n&gt;3$ divides the determinant $$\left|(i^2+dj^2)\left(\frac{i^2+dj^2}n\right)\right|_{0\le i,j\le (n-1)/2},$$ where $d$ is any integer and $(\frac{\cdot}n)$ is the Jacobi symbol. Then we prove some divisibility results concerning $|(i+dj)^n|_{0\le i,j\le n-1}$ and $|(i^2+dj^2)^n|_{0\le i,j\le n-1}$, where $d\not=0$ and $n&gt;2$ are integers. Finally, for any odd prime $p$ and integers $c$ and $d$ with $p\nmid cd$, we determine completely the Legendre symbol $(\frac{S_c(d,p)}p)$, where $S_c(d,p):=|(\frac{i^2+dj^2+c}p)|_{1\le i,j\le(p-1)/2}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-08T15:57:02Z</published>
+    <arxiv:comment>14 pages, accepted by Linear and Multilinear Algebra</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Darij Grinberg</name>
+    </author>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+    <author>
+      <name>Lilu Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0909.5648v12</id>
+    <title>Binomial coefficients, Catalan numbers and Lucas quotients</title>
+    <updated>2016-02-15T16:20:00Z</updated>
+    <link href="https://arxiv.org/abs/0909.5648v12" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0909.5648v12" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p$ be an odd prime and let $a,m$ be integers with $a&gt;0$ and $m \not\equiv0\pmod p$. In this paper we determine $\sum_{k=0}^{p^a-1}\binom{2k}{k+d}/m^k$ mod $p^2$ for $d=0,1$; for example, $$\sum_{k=0}^{p^a-1}\frac{\binom{2k}k}{m^k}\equiv\left(\frac{m^2-4m}{p^a}\right)+\left(\frac{m^2-4m}{p^{a-1}}\right)u_{p-(\frac{m^2-4m}{p})}\pmod{p^2},$$ where $(-)$ is the Jacobi symbol, and $\{u_n\}_{n\geqslant0}$ is the Lucas sequence given by $u_0=0$, $u_1=1$ and $u_{n+1}=(m-2)u_n-u_{n-1}$ for $n=1,2,3,\ldots$. As an application, we determine $\sum_{0&lt;k&lt;p^a,\, k\equiv r\pmod{p-1}}C_k$ modulo $p^2$ for any integer $r$, where $C_k$ denotes the Catalan number $\binom{2k}k/(k+1)$. We also pose some related conjectures.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-09-30T19:57:32Z</published>
+    <arxiv:comment>24 pages. Correct few typos</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Sci. China Math. 53(2010), no.9, 2473-2488</arxiv:journal_ref>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+    <arxiv:doi>10.1007/s11425-010-3151-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11425-010-3151-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.05675v2</id>
+    <title>A Cubic analogue of the Friedlander-Iwaniec spin over primes</title>
+    <updated>2021-10-01T14:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2012.05675v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.05675v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1998 Friedlander and Iwaniec proved that there are infinitely many primes of the form $a^2+b^4$. To show this they defined the spin of Gaussian integers by the Jacobi symbol, and one of the key ingredients in the proof was to show that the spin becomes equidistributed along Gaussian primes. To generalize this we define the cubic spin of ideals of $\mathbb{Z}[ζ_{12}]=\mathbb{Z}[ζ_3,i]$ by using the cubic residue character on the Eisenstein integers $\mathbb{Z}[ζ_3]$. Our main theorem says that the cubic spin is equidistributed along prime ideals of $\mathbb{Z}[ζ_{12}]$. The proof of this follows closely along the lines of Friedlander and Iwaniec. The main new feature in our case is the infinite unit group, which means that we need to show that the definition of the cubic spin on the ring of integers lifts to a well-defined function on the ideals. We also explain how the cubic spin arises if we consider primes of the form $a^2+b^6$ on the Eisenstein integers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-10T14:00:20Z</published>
+    <arxiv:comment>v2: small corrections and some details added</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jori Merikoski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.04782v1</id>
+    <title>New congruences involving products of two binomial coefficients</title>
+    <updated>2016-01-19T03:18:05Z</updated>
+    <link href="https://arxiv.org/abs/1601.04782v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.04782v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p&gt;3$ be a prime and let $a$ be a positive integer. We show that if $p\equiv1\pmod 4$ or $a&gt;1$ then $$\sum_{k=0}^{\lfloor\frac34p^a\rfloor}\frac{\binom{2k}k^2}{16^k}\equivł(\frac{-1}{p^a}\r)\pmod{p^3}$$ with $(-)$ the Jacobi symbol, which confirms a conjecture of Z.-W. Sun. We also establish the following new congruences: \begin{align*}\sum_{k=0}^{(p-1)/2}\frac{\binom{2k}k\binom{3k}k}{27^k}\equiv&amp;ł(\frac p3\r)\frac{2^p+1}3\pmod{p^2}, \\\sum_{k=0}^{(p-1)/2}\frac{\binom{6k}{3k}\binom{3k}k}{(2k+1)432^k}\equiv&amp;ł(\frac p3\r)\frac{3^p+1}4\pmod{p^2}, \\\sum_{k=0}^{(p-1)/2}\frac{\binom{4k}{2k}\binom{2k}k}{(2k+1)64^k}\equiv&amp;ł(\frac{-1}p\r)2^{p-1}\pmod{p^2}. \end{align*} Note that in 2003 Rodriguez-Villeguez posed conjectures on $$\sum_{k=0}^{p-1}\frac{\binom{2k}k^2}{16^k},\ \sum_{k=0}^{p-1}\frac{\binom{2k}k\binom{3k}k}{27^k},\ \sum_{k=1}^{p-1}\frac{\binom{4k}{2k}\binom{2k}k}{64^k},\ \sum_{k=1}^{p-1}\frac{\binom{6k}{3k}\binom{3k}k}{432^k}$$ modulo $p^2$ which were later proved.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-19T03:18:05Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>The Ramanujan Journal(2018)</arxiv:journal_ref>
+    <author>
+      <name>Guo-Shuai Mao</name>
+    </author>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+    <arxiv:doi>10.1007/s11139-018-0089-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11139-018-0089-5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.2489v5</id>
+    <title>Proof of three conjectures on congruences</title>
+    <updated>2014-08-07T11:56:44Z</updated>
+    <link href="https://arxiv.org/abs/1010.2489v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.2489v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we prove three conjectures on congruences involving central binomial coefficients or Lucas sequences. Let $p$ be an odd prime and let $a$ be a positive integer. We show that if $p\equiv 1\pmod{4}$ or $a&gt;1$ then $$ \sum_{k=0}^{\lfloor\frac34p^a\rfloor}\binom{-1/2}k\equiv\left(\frac{2}{p^a}\right)\pmod{p^2}, $$ where $(-)$ denotes the Jacobi symbol. This confirms a conjecture of the second author. We also confirm a conjecture of R. Tauraso by showing that $$\sum_{k=1}^{p-1}\frac{L_k}{k^2}\equiv0\pmod{p}\quad {\rm provided}\ \ p&gt;5,$$ where the Lucas numbers $L_0,L_1,L_2,\ldots$ are defined by $L_0=2,\ L_1=1$ and $L_{n+1}=L_n+L_{n-1}\ (n=1,2,3,\ldots)$. Our third theorem states that if $p\not=5$ then we can determine $F_{p^a-(\frac{p^a}5)}$ mod $p^3$ in the following way: $$\sum_{k=0}^{p^a-1}(-1)^k\binom{2k}k\equiv\left(\frac{p^a}5\right)\left(1-2F_{p^a-(\frac{p^a}5)}\right)\ \pmod{p^3},$$ which appeared as a conjecture in a paper of Sun and Tauraso in 2010.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-12T19:57:46Z</published>
+    <arxiv:comment>16 pages, final published version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Sci. China Math. 57(2014), 2091-2102</arxiv:journal_ref>
+    <author>
+      <name>Hao Pan</name>
+    </author>
+    <author>
+      <name>Zhi-Wei Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1504.02618v1</id>
+    <title>Periodic continued fractions and Kronecker symbols</title>
+    <updated>2015-04-10T09:42:05Z</updated>
+    <link href="https://arxiv.org/abs/1504.02618v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1504.02618v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the Kronecker symbol $\left(\frac st\right)$ for the sequence of the convergents $s/t$ of a purely periodic continued fraction expansion. Whereas the corresponding sequence of Jacobi symbols is always periodic, it turns out that the sequence of Kronecker symbols may be aperiodic. Our main result describes the period length in the periodic case in terms of the period length of the sequence of Jacobi symbols and gives a necessary and sufficient condition for the occurrence of the aperiodic case.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-04-10T09:42:05Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kurt Girstmair</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.03722v2</id>
+    <title>Parity of $k$-differentials in genus zero and one</title>
+    <updated>2026-07-03T16:14:25Z</updated>
+    <link href="https://arxiv.org/abs/2602.03722v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.03722v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Here we completely determine the spin parity of $k$-differentials with prescribed zero and pole orders on Riemann surfaces of genus zero and one. This result was previously obtained conditionally by the first author and Quentin Gendron assuming the truth of a number-theoretic hypothesis Conjecture A.10. We prove this hypothesis by reformulating it in terms of Jacobi symbols, reducing the proof to a combinatorial identity and standard facts about Jacobi symbols. The proof was obtained by AxiomProver and the system formalized the proof of the combinatorial identity in Lean/Mathlib (see the Appendix).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-03T16:43:42Z</published>
+    <arxiv:comment>Minor edits to address a referee's report</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Dawei Chen</name>
+    </author>
+    <author>
+      <name>Evan Chen</name>
+    </author>
+    <author>
+      <name>Kenny Lau</name>
+    </author>
+    <author>
+      <name>Ken Ono</name>
+    </author>
+    <author>
+      <name>Jujian Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1303.2887v1</id>
+    <title>The period length of Euler's number e</title>
+    <updated>2013-03-12T14:15:26Z</updated>
+    <link href="https://arxiv.org/abs/1303.2887v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1303.2887v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let s_k/t_k, k&gt;= 0, be the convergents of the continued fraction expansion of a real number x. We investigate the sequence of Jacobi symbols (s_k/t_k), k&gt;= 0. We show that this sequence is purely periodic with shortest possible period length 24 for x=e=2.718281... and shortest possible period length 40 for x=e^2. Further, we make the first steps towards a general theory of such sequences of Jacobi symbols. For instance, we show that there are uncountably many numbers x such that this sequence has the period 1 (of length 1), and that every natural number L actually occurs as the shortest possible period length of some x.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-03-12T14:15:26Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kurt Girstmair</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.07791v3</id>
+    <title>Computational aspects of rational residuosity</title>
+    <updated>2017-07-16T13:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1604.07791v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.07791v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider an extension of Jacobi's symbol, the so called rational $2^k$-th power residue symbol. In Section 3, we prove a novel generalization of Zolotarev's lemma. In Sections 4, 5 and 6, we show that several hard computational problems are polynomial-time reducible to computing these residue symbols, such as getting nontrivial information about factors of semiprime numbers. We also derive criteria concerning the Quadratic Residuosity Problem.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-26T18:55:31Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/S1793042118500380</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S1793042118500380" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.08578v1</id>
+    <title>An L-function free proof of Hua's Theorem on sums of five prime squares</title>
+    <updated>2017-11-23T05:16:38Z</updated>
+    <link href="https://arxiv.org/abs/1711.08578v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.08578v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a new proof of Hua's result that every sufficiently large integer N\equiv 5(mod\,24) can be written as the sum of the five prime squares. Hua's original proof relies on the circle method and uses results from the theory of $L$-functions. Here, we present a proof based on the transference principle first introduced by Green. Using a sieve theoretic approach similar to the work by Shao, we do not require any results related to the distributions of zeros of L- functions. The main technical difficulty of our approach lies in proving the pseudorandomness of the majorant of the characteristic function of the W-tricked primes which requires a precise evaluation of the occurring Gaussian sums and Jacobi symbols.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-23T05:16:38Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Claus Bauer</name>
+    </author>
+  </entry>
+</feed>

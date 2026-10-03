@@ -1,0 +1,190 @@
+2
+
+SARVAGYA JAIN
+
+X
+for u = log
+, then the interval [x, x + h] contains a y-smooth number for almost all x ∈
+log y
+[X, 2X].
+
+In particular, we improve upon an earlier result of Matomäki [8, Theorem 1.3]. She showed
+such a result for
+
+y ≥ exp (log X)2/3 (log log X)4/3+ε
+and
+
+h ≥ exp
+
+
+
+
+
+14
++ ε (4u log u + log log X) .
+3
+
+We also prove a result about the existence of a y-smooth number in all intervals of the form
+[x, x + x1/2+o(1) ] for suﬃciently large x.
+Theorem 1.2. For any ε > 0, there exists a positive constant C = C(ε) such that the
+following holds. If x is large in terms of ε,
+
+1
+exp C(log x)2/3 (log log x)4/3 ≤ y ≤ x C ,
+
+and
+
+h≥
+
+√
+
+
+
+
+11
+u
+e log u
+e + 2 log log x
+,
+x exp (1 + ε)
+16
+
+x
+, then the interval [x, x + h] contains a y-smooth number.
+where u
+e = log
+log y
+
+The above result can be contrasted with Theorem 1.1 in [8]. Matomäki proved in this
+theorem that, for suﬃciently large x, one could take
+
+
+
+√
+7
+h ≥ x exp
++ ε (4e
+u log u
+e + log log x) ,
+3
+
+provided that y ≥ exp (log x)2/3 (log log x)4/3+ε .
+
+There have been various other results concerning the distribution of smooth numbers in short
+intervals. For example, Hildebrand and Tenenbaum [6] proved an asymptotic formula for the
+number of smooth numbers in almost all short intervals. However, the intervals they consider
+are signiﬁcantly longer than those considered here. Building on their work, Granville and
+Friedlander [2] obtained the corresponding “all intervals” type result. We refer the reader to
+[3, 6] for more detailed surveys of results on smooth numbers and their applications to other
+problems in analytic number theory and cryptography.
+1.1. Sketch of the Argument. We will give a brief outline of the proof of Theorem 1.1 to
+orient the reader. In this sketch, we use the imprecise notion of inequality . and & to hide
+the ρ(u)ε and log X factors.
+Suppose that we want to show for some h ≥ 2, the intervals [x, x + h] contains a y-smooth
+number for almost all x ∈ [X, 2X]. Choose weights {wn }n such that wn ≥ 0 if n ∈ S(y) and
+
+SMOOTH NUMBERS IN SHORT INTERVALS
+
+3
+
+P
+0 otherwise. Let H be such that x≤n≤x+H wn > 0 for all x ∈ [X, 2X]. It turns out that,
+for our choice of weights, we can take H = Xy −3/8 (see Lemma 4.2 below). If we show that
+!
+1 X
+1 X
+1 X
+wn −
+wn = o
+wn
+h
+H x≤n≤x+H
+H x≤n≤x+H
+x≤n≤x+h
+
+for almost all x ∈ [X, 2X], then we will have our result. By a routine Chebyshev-style
+argument (see Section 7 below), we can reduce it further to showing that
+
+!2 
+2
+Z 2X
+X
+X
+X
+1
+1
+1
+1
+wn −
+wn dx = o 
+wn  .
+X X h x≤n≤x+h
+H x≤n≤x+H
+X X≤n≤2X
+
+2
+With our choice of wP
+n , this reduces to essentially showing that the left-hand side is o(ρ(u) ).
+Now, letting F (s) = n wn /ns , we bound the second moment on the left-hand side by using
+a Parseval-style bound (see Section 5 below). Doing this, we essentially get the bound
+
+1
+X
+
+Z 2X
+X
+
+Z X
+h
+1 X
+1 X
+wn −
+|F (1 + it)|2 dt.
+wn dx .
+h x≤n≤x+h
+H x≤n≤x+H
+1/8
+y
+2
+
+P
+We choose our weights so that F (s) has the form P1 (s)P2 (s)P3 (s)J M(s) for Pj (s) = pj ∼Pj 1/ps
+P
+and M(s) = m∈M 1/ms for some M ⊆ S(y) and P1 ≤ P2 ≤ P3 ≤ y. If we choose parameters P1 , P2 , P3 , J and the set M carefully, we may exploit the factorisation of our polynomial
+to get non-trivial savings for its mean value estimate using the ideas introduced in [9]. Our
+goal is to get enough savings so that we have the bound
+Z X
+h
+
+|F (1 + it)|2 dt = o ρ(u)2 .
+y 1/8
+
+The details of how one can get such a saving are given in Section 6. Here we content ourselves
+with a very informal sketch. We begin by choosing 0 < α1 < α2 < 1/4 with α1 , α2 ≈ 1/4 and
+then partitioning the interval [y 1/8 , X/h] into T1 ∪ T2 ∪ T3 , where t ∈ T1 if |P1 (1 + it)| ≤ P1−α1 ,
+t ∈ T2 if |P1 (1 + it)| > P1−α1 , |P2 (1 + it)| ≤ P2−α2 and T3 contains the remaining values of t.
+
+To bound the integral over T1 , we note that
+Z X/h
+Z
+−2α1
+2
+|F (1 + it)| dt . P1
+|P2 (1 + it)P3 (1 + it)J M(1 + it)|2 dt.
+T1
+
+−X/h
+
+At this point, it may seem tempting to use the standard mean value theorem (see Lemma
+2.1 below) to bound the integral above. But the approach mentioned above turns out to be
+lossy as it does not incorporate the sparsity of the coeﬃcients of the Dirichlet polynomial
+P2 (s)P3 (s)J M(s), say {an }n , that comes from being supported on y-smooth numbers. To
+exploit this sparsity better, one instead uses a variant of the standard mean value theorem
+that preserves some non-diagonal terms (see Lemma
+2.2 below). This naturally leads us
+P
+to upper bounding sums essentially of the form n∼N 1S(y) (n)1S(y) (n + k) (see Lemma 6.2
+below). These kinds of sums have been considered in earlier works, and bounds of the form
+O(ρ(u)ϕ N) for some 1 < ϕ < 2 are known. We use the best existing bound, i.e., the largest
+
+

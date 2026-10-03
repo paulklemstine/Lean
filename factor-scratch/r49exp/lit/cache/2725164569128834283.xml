@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/0XRnU+Y5iESRNuuAt1I50abGV6E</id>
+  <title>arXiv Query: search_query=abs:"Schnorr" AND abs:sieving AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Schnorr%22+AND+(abs:sieving+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16355v3</id>
+    <title>Integer Factorization via Tensor Network Schnorr's Sieving</title>
+    <updated>2026-01-26T21:21:04Z</updated>
+    <link href="https://arxiv.org/abs/2410.16355v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16355v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical public-key cryptography standards rely on the Rivest-Shamir-Adleman (RSA) encryption protocol. The security of this protocol is based on the exponential computational complexity of the most efficient classical algorithms for factoring large semiprime numbers into their two prime components. Here, we address RSA factorization building on Schnorr's mathematical framework where factorization translates into a combinatorial optimization problem. We solve the optimization task via tensor network methods, a quantum-inspired classical numerical technique. This tensor network Schnorr's sieving algorithm displays numerical evidence of polynomial scaling of resources with the bit-length of the semiprime. We factorize RSA numbers up to 100 bits and assess how computational resources scale through numerical simulations up to 130 bits, encoding the optimization problem in quantum systems with up to 256 qubits. Only the high-order polynomial scaling of the required resources limits the factorization of larger numbers. Although these results do not currently undermine the security of the present communication infrastructure, they strongly highlight the urgency of implementing post-quantum cryptography or quantum key distribution.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T18:00:00Z</published>
+    <arxiv:comment>Accepted version. Change title, implement review suggestions and comment, and improve statistical analysis of the resource scaling</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Phys. Rev. A 113, 032418 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Marco Tesoro</name>
+    </author>
+    <author>
+      <name>Ilaria Siloi</name>
+    </author>
+    <author>
+      <name>Daniel Jaschke</name>
+    </author>
+    <author>
+      <name>Giuseppe Magnifico</name>
+    </author>
+    <author>
+      <name>Simone Montangero</name>
+    </author>
+    <arxiv:doi>10.1103/d9dl-ctt4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/d9dl-ctt4" title="doi"/>
+  </entry>
+</feed>

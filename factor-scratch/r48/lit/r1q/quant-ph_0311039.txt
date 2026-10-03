@@ -1,0 +1,2127 @@
+                                               Multilinear Formulas and Skepticism of Quantum Computing
+                                                                                       Scott Aaronson∗
+
+
+
+                                                                                            Abstract
+arXiv:quant-ph/0311039v4 15 Jul 2004
+
+
+
+
+                                                   Several researchers, including Leonid Levin, Gerard ’t Hooft, and Stephen Wolfram, have
+                                               argued that quantum mechanics will break down before the factoring of large numbers becomes
+                                               possible. If this is true, then there should be a natural set of quantum states that can account for
+                                               all quantum computing experiments performed to date, but not for Shor’s factoring algorithm.
+                                               We investigate as a candidate the set of states expressible by a polynomial number of additions
+                                               and tensor products. Using a recent lower bound on multilinear formula size due to Raz, we
+                                               then show that states arising in quantum error-correction require nΩ(log n) additions and tensor
+                                               products even to approximate, which incidentally yields the first superpolynomial gap between
+                                               general and multilinear formula size of functions. More broadly, we introduce a complexity
+                                               classification of pure quantum states, and prove many basic facts about this classification. Our
+                                               goal is to refine vague ideas about a breakdown of quantum mechanics into specific hypotheses
+                                               that might be experimentally testable in the near future.
+
+
+                                       1       Introduction
+                                               QC of the sort that factors long numbers seems firmly rooted in science fiction . . . The
+                                               present attitude would be analogous to, say, Maxwell selling the Daemon of his famous
+                                               thought experiment as a path to cheaper electricity from heat. —Leonid Levin [35]
+
+                                          Quantum computing presents a dilemma: is it reasonable to study a type of computer that has
+                                       never been built, and might never be built in one’s lifetime? Some researchers strongly believe the
+                                       answer is ‘no.’ Their objections generally fall into four categories:
+
+                                        (A) There is a fundamental physical reason why large quantum computers can never be built.
+
+                                        (B) Even if (A) fails, large quantum computers will never be built in practice.
+
+                                        (C) Even if (A) and (B) fail, the speedup offered by quantum computers is of limited theoretical
+                                            interest.
+
+                                        (D) Even if (A), (B), and (C) fail, the speedup is of limited practical value.1
+                                           ∗
+                                            University of California, Berkeley. Email: aaronson@cs.berkeley.edu. Part of this work was done at the Perimeter
+                                       Institute (Waterloo, Canada). Supported by an NSF Graduate Fellowship and by the Defense Advanced Research
+                                       Projects Agency (DARPA).
+                                          1
+                                            Because of the ‘even if’ clauses, the objections seem to us logically independent, so that there are 16 possible
+                                       positions regarding them (or 15 if one is against quantum computing). We ignore the possibility that no speedup
+                                       exists, in other words that BPP = BQP. By ‘large quantum computer’ we mean any computer much faster than its
+                                       best classical simulation, as a result of asymptotic complexity rather than the speed of elementary operations. Such
+                                       a computer need not be universal; it might be specialized for (say) factoring.
+
+
+
+
+                                                                                                1
+   The objections can be classified along two axes:
+                                              Theoretical     Practical
+                             Physical         (A)             (B)
+                             Algorithmic      (C)             (D)
+This paper focuses on objection (A). Its goal is not to win a debate about this objection, but
+to lay the groundwork for a rigorous discussion, and thus hopefully lead to new science. Section
+2 provides the philosophical motivation for our paper, by examining the arguments of several
+quantum computing skeptics, including Leonid Levin, Gerard ’t Hooft, and Stephen Wolfram. It
+concludes that a key weakness of their arguments is their failure to answer the following question:
+Exactly what property separates the quantum states we are sure we can create, from those that
+suffice for Shor’s factoring algorithm? We call such a property a Sure/Shor separator. Section 3
+develops a complexity theory of pure quantum states, that studies possible Sure/Shor separators.
+In particular, it introduces tree states, which informally are those states |ψi ∈ H2⊗n expressible by
+a polynomial-size ‘tree’ of addition and tensor product gates. For example, α |0i⊗n + β |1i⊗n and
+(α |0i + β |1i)⊗n are both tree states. Section 4 investigates basic properties of this class of states.
+Among other results, it shows that any tree state is representable by a tree of polynomial size and
+logarithmic depth; and that most states do not even have large inner product with any tree state.
+     Our main results, proved in Section 5, are lower bounds on tree size for various natural families
+of quantum states. In particular, Section 5.1 analyzes “subgroup states,” which are uniform
+superpositions |Si over all elements of a subgroup S ≤ Zn2 . The importance of these states arises
+from their central role in stabilizer codes, a type of quantum error-correcting code. We first show
+that if S is chosen uniformly at random, then with high probability |Si cannot be represented by
+any tree of size no(log n) . This result has a corollary of independent complexity-theoretic interest:
+the first superpolynomial gap between the formula size and the multilinear formula size of a function
+f : {0, 1}n → R. We then present two improvements of our basic lower bound. First, we show that
+a random subgroup state cannot even be approximated well in trace distance by any tree of size
+no(log n) . Second, we “derandomize” the lower bound, by using Reed-Solomon codes to construct
+an explicit subgroup state with tree size nΩ(log n) .
+     Section 5.2 analyzes the states that arise in Shor’s factoring algorithm—for example, a uniform
+superposition over all multiples of a fixed positive integer p, written in binary. Originally, we had
+hoped to show a superpolynomial tree size lower bound for these states as well. However, we are
+only able to show such a bound assuming a number-theoretic conjecture.
+     Our lower bounds use a sophisticated recent technique of Raz [41, 42], which was introduced
+to show that the permanent and determinant of a matrix require superpolynomial-size multilinear
+formulas. Currently, Raz’s technique is only able to show lower bounds of the form nΩ(log n) , but
+we conjecture that 2Ω(n) lower bounds hold in all of the cases discussed above.
+     One might wonder how tree size relates to more physical properties of quantum states, such as
+their robustness to decoherence. Section 5.3 addresses this question. In particular, it shows that
+if |Si is a superposition over codewords of any sufficiently good erasure code, then |Si has tree size
+nΩ(log n) , although not vice versa. It also argues that Raz’s lower bound technique is connected to
+a notion called “persistence of entanglement,” but gives examples showing that the connection is
+not exact.
+     Section 6 addresses the following question. If the state of a quantum computer at every time
+step is a tree state, then can the computer be simulated classically? In other words, letting
+TreeBQP be the class of languages accepted by such a machine, does TreeBQP = BPP? A positive
+answer would make tree states more attractive as a Sure/Shor separator. For once we admit any
+states incompatible with the polynomial-time Church-Turing thesis, it seems like we might as well
+
+                                                   2
+go all the way, and admit all states preparable by polynomial-size quantum circuits! Although we
+leave this question open, we do show that TreeBQP ⊆ ΣP3 ∩ ΠP3 , where ΣP3 ∩ ΠP3 is the third level of
+the polynomial hierarchy PH. By contrast, it is conjectured that BQP 6⊂ PH, though admittedly
+not on strong evidence.
+    Section 7 discusses the implications of our results for experimental physics. It advocates a
+dialectic between theory and experiment, in which theorists would propose a class of quantum states
+that encompasses everything seen so far, and then experimenters would try to prepare states not in
+that class. It also asks whether states with superpolynomial tree size have already been observed
+in condensed-matter systems; and more broadly, what sort of evidence is needed to establish a
+state’s existence. Other issues addressed in Section 7 include how to deal with mixed states and
+particle position and momentum states, and the experimental relevance of asymptotic bounds.
+    Finally, two appendices investigate quantum state complexity measures other than tree size.
+Appendix 3 shows relationships among tree size, circuit size, bounded-depth tree size, Vidal’s χ
+complexity [46], and several other measures. It also relates questions about quantum state classes
+to more traditional questions about computational complexity classes. Appendix 10 studies a
+weakening of tree size called “manifestly orthogonal tree size,” and shows that this measure can
+sometimes be characterized exactly, enabling us to prove exponential lower bounds. Our techniques
+in Appendix 10 might be of independent interest to complexity theorists.
+    We conclude in Section 8 with some open problems.
+
+
+2       How Quantum Mechanics Could Fail
+This section discusses objection (A), that quantum computing is impossible for a fundamental
+physical reason. Among computer scientists, this objection is most closely associated with Leonid
+Levin [35].2 The following passage captures much of the flavor of his critique:
+
+        The major problem [with quantum computing] is the requirement that basic quantum
+        equations hold to multi-hundredth if not millionth decimal positions where the signifi-
+        cant digits of the relevant quantum amplitudes reside. We have never seen a physical
+        law valid to over a dozen decimals. Typically, every few new decimal places require
+        major rethinking of most basic concepts. Are quantum amplitudes still complex num-
+        bers to such accuracies or do they become quaternions, colored graphs, or sick-humored
+        gremlins? [35]
+
+    Among other things, Levin argues that quantum computing is analogous to the unit-cost arith-
+metic model, and should be rejected for essentially the same reasons; that claims to the contrary
+rest on a confusion between metric and topological approximation; that quantum fault-tolerance
+theorems depend on extravagant assumptions; and that even if a quantum computer failed, we could
+not measure its state to prove a breakdown of quantum mechanics, and thus would be unlikely to
+learn anything new.
+    A few responses to Levin’s arguments can be offered immediately. First, even classically, one
+can flip a coin a thousand times to produce probabilities of order 2−1000 . Should one dismiss such
+probabilities as unphysical? At the very least, it is not obvious that amplitudes should behave
+    2
+    Since this paper was written, Oded Goldreich [25] has also put forward an argument against quantum computing.
+Compared to Levin’s arguments, Goldreich’s is easily understood: he believes that Shor states have exponential “non-
+degeneracy” and therefore take exponential time to prepare, and that there is no burden on those who hold this view
+to suggest a definition of non-degeneracy.
+
+
+
+
+                                                         3
+differently than probabilities with respect to error—since both evolve linearly, and neither is directly
+observable.
+    Second, if Levin believes that quantum mechanics will fail, but is agnostic about what will
+replace it, then his argument can be turned around. How do we know that the successor to
+quantum mechanics will limit us to BPP, rather than letting us solve (say) PSPACE-complete
+problems? This is more than a logical point. Abrams and Lloyd [4] argue that a wide class of
+nonlinear variants of the Schrödinger equation would allow NP-complete and even #P-complete
+problems to be solved in polynomial time. And Penrose [39], who proposed a model for ‘objective
+collapse’ of the wavefunction, believes that his proposal takes us outside the set of computable
+functions entirely!
+    Third, to falsify quantum mechanics, it would suffice to show that a quantum computer evolved
+to some state far from the state that quantum mechanics predicts. Measuring the exact state is
+unnecessary. Nobel prizes have been awarded in the past ‘merely’ for falsifying a previously held
+theory, rather than replacing it by a new one. An example is the physics Nobel awarded to Fitch
+[19] and Cronin [17] in 1980 for discovering CP symmetry violation.
+    Perhaps the key to understanding Levin’s unease about quantum computing lies in his remark
+that “we have never seen a physical law valid to over a dozen decimals.” Here he touches on a
+serious epistemological question: How far should we extrapolate from today’s experiments to where
+quantum mechanics has never been tested? We will try to address this question by reviewing the
+evidence for quantum mechanics. For our purposes it will not suffice to declare the predictions of
+quantum mechanics “verified to one part in a trillion,” because we need to distinguish at least three
+different types of prediction: interference, entanglement, and Schrödinger cats. Let us consider
+these in turn.
+ (1) Interference. If the different paths that an electron could take in its orbit around a
+     nucleus did not interfere destructively, canceling each other out, then electrons would not
+     have quantized energy levels. So being accelerating electric charges, they would lose energy
+     and spiral into their respective nuclei, and all matter would disintegrate. That this has not
+     happened—together with the results of (for example) single-photon double-slit experiments—
+     is compelling evidence for the reality of quantum interference.
+ (2) Entanglement. One might accept that a single particle’s position is described by a wave
+     in three-dimensional phase space, but deny that two particles are described by a wave in six -
+     dimensional phase space. However, the Bell inequality experiments of Aspect et al. [8] and
+     successors have convinced all but a few physicists that quantum entanglement exists, can be
+     maintained over large distances, and cannot be explained by local hidden-variable theories.
+ (3) Schrödinger Cats. Accepting two- and three-particle entanglement is not the same as
+     accepting that whole molecules, cats, humans, and galaxies can be in coherent superposition
+     states. However, recently Arndt et al. [7] have performed the double-slit interference exper-
+     iment using C60 molecules (buckyballs) instead of photons; while Friedman et al. [20] have
+     found evidence that a superconducting current, consisting of billions of electrons, can enter
+     a coherent superposition of flowing clockwise around a coil and flowing counterclockwise (see
+     Leggett [34] for a survey of such experiments). Though short of cats, these experiments at
+     least allow us to say the following: if we could build a general-purpose quantum computer with
+     as many components as have already been placed into coherent superposition, then on certain
+     problems, that computer would outperform any computer in the world today.
+   Having reviewed some of the evidence for quantum mechanics, we must now ask what alter-
+natives have been proposed that might also explain the evidence. The simplest alternatives are
+
+                                                   4
+those in which quantum states “spontaneously collapse” with some probability, as in the GRW
+(Ghirardi-Rimini-Weber) theory [23].3 The drawbacks of the GRW theory include violations of en-
+ergy conservation, and parameters that must be fine-tuned to avoid conflicting with experiments.
+More relevant for us, though, is that the collapses postulated by the theory are only in the po-
+sition basis, so that quantum information stored in internal degrees of freedom (such as spin) is
+unaffected. Furthermore, even if we extended the theory to collapse those internal degrees, large
+quantum computers could still be built. For the theory predicts roughly one collapse per particle
+per 1015 seconds, with a collapse affecting everything in a 10−7 -meter vicinity. So even in such a
+vicinity, one could perform a computation involving (say) 1010 particles for 105 seconds. Finally, as
+pointed out to us by Rob Spekkens, standard quantum error-correction techniques might be used
+to overcome even GRW-type decoherence.
+    A second class of alternatives includes those of ’t Hooft [30] and Wolfram [48], in which some-
+thing like a deterministic cellular automaton underlies quantum mechanics. On the basis of his
+theory, ’t Hooft predicts that “[i]t will never be possible to construct a ‘quantum computer’ that
+can factor a large number faster, and within a smaller region of space, than a classical machine
+would do, if the latter could be built out of parts at least as large and as slow as the Planckian
+dimensions” [30]. Similarly, Wolfram states that “[i]ndeed within the usual formalism [of quantum
+mechanics] one can construct quantum computers that may be able to solve at least a few specific
+problems exponentially faster than ordinary Turing machines. But particularly after my discov-
+eries . . . I strongly suspect that even if this is formally the case, it will still not turn out to be
+a true representation of ultimate physical reality, but will instead just be found to reflect various
+idealizations made in the models used so far” [48, p.771].
+    The obvious question then is how these theories account for Bell inequality violations. We
+confess to being unable to understand ’t Hooft’s answer to this question, except that he believes
+that the usual notions of causality and locality might no longer apply in quantum gravity. As for
+Wolfram’s theory, which involves “long-range threads” to account for Bell inequality violations, we
+argued in [1] that it fails Wolfram’s own desiderata of causal and relativistic invariance.
+    So the challenge for quantum computing skeptics is clear. Ideally, come up with an alternative
+to quantum mechanics—even an idealized toy theory—that can account for all present-day exper-
+iments, yet would not allow large-scale quantum computation. Failing that, at least say what you
+take quantum mechanics’ domain of validity to be. One way to do this would be to propose a set
+S of quantum states that you believe corresponds to possible physical states of affairs.4 The set
+S must contain all “Sure states” (informally, the states that have already been demonstrated in
+the lab), but no “Shor states” (again informally, the states that can be shown to suffice for factor-
+ing, say, 500-digit numbers). If S satisfies both of these constraints, then we call S a Sure/Shor
+separator (see Figure 1).
+    Of course, an alternative theory need not involve a sharp cutoff between possible and impossible
+states. So it is perfectly acceptable for a skeptic to define a “complexity measure” C (|ψi) for quan-
+tum states, and then say something like the following: If |ψn i is a state of n spins, and C (|ψn i) is
+at most, say, n2 , then I predict that |ψn i can be prepared using only “polynomial effort.” Also, once
+prepared, |ψn i will be governed by standard quantum mechanics to extremely high precision. All
+states created to date have had small values of C (|ψn i). However, if C (|ψn i) grows as, say, 2n ,
+then I predict that |ψn i requires “exponential effort” to prepare, or else is not even approximately
+governed by quantum mechanics, or else does not even make sense in the context of an alternative
+   3
+     Penrose [39] has proposed another such theory, but as mentioned earlier, his theory suggests that the quantum
+computing model is too restrictive.
+   4
+     A skeptic might also specify what happens if a state |ψi ∈ S is acted on by a unitary U such that U |ψi ∈
+                                                                                                             / S, but
+this will not be insisted upon.
+
+
+                                                         5
+                                                Shor States (suffice for
+                                                 nontrivial factoring)
+
+
+                                                Allowed by GRW theory
+
+
+                                                 Sure States (already
+                                                   demonstrated)
+
+
+                                                Allowed by local hidden
+                                                    variable theories
+
+
+
+
+Figure 1: A Sure/Shor separator must contain all Sure states but no Shor states.                       That is why
+neither local hidden variables nor the GRW theory yields a Sure/Shor separator.
+
+
+theory. The states that arise in Shor’s factoring algorithm have exponential values of C (|ψn i).
+So as my Sure/Shor separator, I propose the set of all infinite families of states {|ψn i}n≥1 , where
+|ψn i has n qubits, such that C (|ψn i) ≤ p (n) for some polynomial p.
+    To understand the importance of Sure/Shor separators, it is helpful to think through some
+examples. A major theme of Levin’s arguments was that exponentially small amplitudes are
+somehow unphysical. However, clearly we cannot reject all states with tiny amplitudes—for would
+anyone dispute that the state 2−5000 (|0i + |1i)⊗10000 is formed whenever 10, 000 photons are each
+polarized at 45◦ ? Indeed, once we accept |ψi and |ϕi as Sure states, we are almost forced to accept
+|ψi ⊗ |ϕi as well—since we can imagine, if we like, that |ψi and |ϕi are prepared in two separate
+laboratories.5 So considering a Shor state such as
+                                                       n −1
+                                                      2X
+                                                  1
+                                        |Φi =                 |ri |xr mod N i ,
+                                                2n/2 r=0
+
+what property of this state could quantum computing skeptics latch onto as being physically ex-
+travagant? They might complain that |Φi involves entanglement across hundreds or thousands
+of particles; but as mentioned earlier,
+                                    √there are other states with that same property, namely the
+“Schrödinger cats” |0i⊗n + |1i⊗n / 2, that should be regarded as Sure states. Alternatively,
+the skeptics might object to the combination of exponentially small amplitudes with entanglement
+across hundreds of particles. However, simply viewing a Schrödinger cat state in the Hadamard
+basis produces an equal superposition over all strings of even parity, which has both properties.
+We seem to be on a slippery slope leading to all of quantum mechanics! Is there any defensible
+place to draw a line?
+    The dilemma above is what led us to propose tree states as a possible Sure/Shor separator.
+The idea, which might seem more natural to logicians than to physicists, is this. Once we accept
+the linear combination and tensor product rules of quantum mechanics—allowing α |ψi + β |ϕi and
+|ψi ⊗ |ϕi into our set S of possible states whenever |ψi , |ϕi ∈ S—one of our few remaining hopes
+   5
+    A reviewer comments that in Chern-Simons theory (for example), there is no clear tensor product decomposition.
+However, the only question that concerns us is whether |ψi ⊗ |ϕi is a Sure state, given that |ψi and |ϕi are both Sure
+states that are well-described in tensor product Hilbert spaces.
+
+
+                                                          6
+                                                 1
+                                                           +      −1
+
+                                            ⊗                            ⊗
+                            1    +   1           1     +   1      |1〉1       |1〉2
+                             2        2           2         2
+
+                          |0〉1       |1〉1       |0〉2       |1〉2
+
+
+
+Figure 2: Expressing (|00i + |01i + |10i − |11i) /2 by a tree of linear combination and tensor prod-
+uct gates, with scalar multiplication along edges. Subscripts denote the identity of a qubit.
+
+
+for keeping S a proper subset of the set of all states is to impose some restriction on how those two
+rules can be iteratively applied. In particular, we could let S be the closure of {|0i , |1i} under a
+polynomial number of linear combinations and tensor products. That is, S is the set of all infinite
+families of states {|ψn i}n≥1 with |ψn i ∈ H2⊗n , such that |ψn i can be expressed as a “tree” involving
+at most p (n) addition, tensor product, |0i, and |1i gates for some polynomial p (see Figure 2).
+    To be clear, we are not advocating that “all states in Nature are tree states” as a serious physical
+hypothesis. Indeed, even if we believed firmly in a breakdown of quantum mechanics,6 there are
+other choices for the set S that seem equally reasonable. For example, define orthogonal tree
+states similarly to tree states, except that we can only form the linear combination α |ψi + β |ϕi if
+hψ|ϕi = 0. Rather than choose among tree states, orthogonal tree states, and the other candidate
+Sure/Shor separators that occurred to us, our approach will be to prove everything we can about
+all of them. If we devote more space to tree states than to others, that is simply because tree
+states are the subject of our most interesting results. On the other hand, if we show (for example)
+that {|ψn i} is not a tree state, then we have also shown that {|ψn i} is not an orthogonal tree state.
+So many candidate separators are related to each other; and indeed, their relationships will be a
+major theme of the paper.
+    Let us summarize. To debate whether quantum computing is fundamentally impossible, we
+need at least one proposal for how it could be impossible. Since even skeptics admit that quantum
+mechanics is valid within some “regime,” a key challenge for any such proposal is to separate
+the regime of acknowledged validity from the quantum computing regime. Though others will
+disagree, we do not see any choice but to identify those two regimes with classes of quantum states.
+For gates and measurements that suffice for quantum computing have already been demonstrated
+experimentally. Thus, if we tried to identify the two regimes with classes of gates or measurements,
+then we could equally well talk about the class of states on which all 1- and 2-qubit operations
+behave as expected. A similar argument would apply if we identified the two regimes with classes
+of quantum circuits—since any “memory” that a quantum system retains of the previous gates in a
+circuit, is part of the system’s state by definition. So: states, gates, measurements, circuits—what
+else is there?
+    We should stress that none of the above depends on the interpretation of quantum mechanics. In
+particular, it is irrelevant whether we regard quantum states as “really out there” or as representing
+subjective knowledge—since in either case, the question is whether there can exist systems that we
+would describe by |ψi based on their observed behavior.
+  6
+      which we don’t
+
+
+
+                                                       7
+    Once we agree to seek a Sure/Shor separator, we quickly find that the obvious ideas—based
+on precision in amplitudes, or entanglement across of hundreds of particles—are nonstarters. The
+only idea that we have found plausible is to limit the class of allowed quantum states to those with
+some kind of succinct representation. That still leaves numerous possibilities; and for each one,
+it might be a difficult problem to decide whether a given |ψi is succinctly representable or not.
+Thus, constructing a useful theory of Sure/Shor separators will not be easy. But we should start
+somewhere.
+
+
+3        Classifying Quantum States
+In both quantum and classical complexity theory, the objects studied are usually sets of languages or
+Boolean functions. However, a generic n-qubit quantum state requires exponentially many classical
+bits to describe, and this suggests looking at the complexity of quantum states themselves. That is,
+which states have polynomial-size classical descriptions of various kinds? This question has been
+studied from several angles by Aharonov and Ta-Shma [5]; Janzing, Wocjan, and Beth [31]; Vidal
+[46]; and Green et al. [28]. Here we propose a general framework for the question. For simplicity,
+we limit ourselves to pure states |ψn i ∈ H2⊗n with the fixed orthogonal basis {|xi : x ∈ {0, 1}n }.
+Also, by ‘states’ we mean infinite families of states {|ψn i}n≥1 .
+    Like complexity classes, pure quantum states can be organized into a hierarchy (see Figure 3).
+At the bottom are the classical basis states, which have the form |xi for some x ∈ {0, 1}n . We
+can generalize classical states in two directions: to the class ⊗1 of separable states, which have
+the form (α1 |0i + β1 |1i) ⊗ · · · ⊗ (αn |0i + βn |1i); and to the class Σ1 , which consists of all states
+|ψn i that are superpositions of at most p (n) classical states, where p is a polynomial. At the
+next level, ⊗2 contains the states that can be written as a tensor product of Σ1 states, with qubits
+permuted arbitrarily. Likewise, Σ2 contains the states that can be written as a linear combination
+of a polynomial number of ⊗1 states. We can continue indefinitely to Σ3 , ⊗3 , etc. Containing
+the whole ‘tensor-sum hierarchy’ ∪k Σk = ∪k ⊗k is the class Tree, of all states expressible by a
+polynomial-size tree of additions and tensor products nested arbitrarily. Formally, Tree consists of
+all states |ψn i such that TS (|ψn i) ≤ p (n) for some polynomial p, where the tree size TS (|ψn i) is
+defined as follows.
+
+Definition 1 A quantum state tree over H2⊗n is a rooted tree where each leaf vertex is labeled with
+α |0i + β |1i for some α, β ∈ C, and each non-leaf vertex (called a gate) is labeled with either + or
+⊗. Each vertex v is also labeled with a set S (v) ⊆ {1, . . . , n}, such that
+
+    (i) If v is a leaf then |S (v)| = 1,
+
+ (ii) If v is the root then S (v) = {1, . . . , n},
+
+(iii) If v is a + gate and w is a child of v, then S (w) = S (v),
+
+ (iv) If v is a ⊗ gate and w1 , . . . , wk are the children of v, then S (w1 ) , . . . , S (wk ) are pairwise
+      disjoint and form a partition of S (v).
+
+   Finally, if v is a + gate, then the outgoing edges of v are labeled with complex numbers. For
+each v, the subtree rooted at v represents a quantum state of the qubits in S (v) in the obvious way.
+We require this state to be normalized for each v.7
+    7
+        Requiring only the whole tree to represent a normalized state clearly yields no further generality.
+
+
+
+                                                              8
+                                                              AmpP
+
+
+                                                                               Circuit
+
+                                                         ⊄         Tree
+                                         ΨP
+                                                                   TSH
+
+                                       OTree
+                                                                               Vidal
+
+                                     MOTree                        ⊄
+                                                                   ⊄
+                                                    ⊗2                    Σ2
+
+
+                                                    ⊗1                    Σ1
+
+                                       Strict containment
+                                       Containment
+                                   ⊄   Non-containment       Classical
+
+
+
+
+                           Figure 3: Relations among quantum state classes.
+
+    We say a tree is orthogonal if it satisfies the further condition that if v is a + gate, then any
+two children w1 , w2 of v represent |ψ1 i , |ψ2 i with hψ1 |ψ2 i = 0. If the condition hψ1 |ψ2 i = 0 can
+be replaced by the stronger condition that for all basis states |xi, either hψ1 |xi = 0 or hψ2 |xi = 0,
+then we say the tree is manifestly orthogonal. Manifest orthogonality is an extremely unphysical
+definition; we introduce it only because it is interesting from a lower bounds perspective.
+    For reasons of convenience, we define the size |T | of a tree T to be the number of leaf vertices.
+Then given a state |ψi ∈ H2⊗n , the tree size TS (|ψi) is the minimum size of a tree that represents
+|ψi. The orthogonal tree size OTS (|ψi) and manifestly orthogonal tree size MOTS (|ψi) are defined
+similarly. Then OTree is the class of |ψn i such that OTS (|ψn i) ≤ p (n) for some polynomial p, and
+MOTree is the class such that MOTS (|ψn i) ≤ p (n) for some p.
+    It is easy to see that
+
+                             n ≤ TS (|ψi) ≤ OTS (|ψi) ≤ MOTS (|ψi) ≤ n2n
+
+for every |ψi, and that the set of |ψi such that TS (|ψi) < 2n has measure 0 in H2⊗n . Two other
+important properties of TS and OTS are as follows:
+
+Proposition 2
+
+  (i) TS and OTS are invariant under local8 basis changes, up to a constant factor of 2.
+
+ (ii) If |φi is obtained from |ψi by applying a k-qubit unitary, then TS (|φi) ≤ k4k TS (|ψi) and
+      OTS (|φi) ≤ k4k OTS (|ψi).
+
+       Proof.
+
+  (i) Simply replace each occurrence of |0i in the original tree by a tree for α |0i + β |1i, and each
+      occurrence of |1i by a tree for γ |0i + δ |1i, as appropriate.
+   8
+     Several people told us that a reasonable complexity measure must be invariant under all basis changes. Alas,
+this would imply that all pure states have the same complexity!
+
+
+                                                              9
+ (ii) Suppose without loss of generality that the gate is applied to the first k qubits. Let T be a
+      tree representing |ψi, and let Ty be the restriction of T obtained by setting the first k qubits to
+                                                                                       P
+      y ∈ {0, 1}k . Clearly |Ty | ≤ |T |. Furthermore, we can express |φi in the form y∈{0,1}k Sy Ty ,
+      where each Sy represents a k-qubit state and hence is expressible by a tree of size k2k .
+
+
+   We can also define the ε-approximate tree size TSε (|ψi) to be the minimum size of a tree
+representing a state |ϕi such that |hψ|ϕi|2 ≥ 1−ε, and define OTSε (|ψi) and MOTSε (|ψi) similarly.
+
+Definition 3 An arithmetic formula (over the ring C and n variables) is a rooted binary tree where
+each leaf vertex is labeled with either a complex number or a variable in {x1 , . . . , xn }, and each non-
+leaf vertex is labeled with either + or ×. Such a tree represents a polynomial p (x1 , . . . , xn ) in the
+obvious way. We call a polynomial multilinear if no variable appears raised to a higher power than
+1, and an arithmetic formula multilinear if the polynomials computed by each of its subtrees are
+multilinear.
+
+   The size |Φ| of a multilinear formula Φ is the number of leaf vertices. Given a multilinear
+polynomial p, the multilinear formula size MFS (p) is the minimum size of a multilinear formula
+that represents p. Then given a function f : {0, 1}n → C, we define
+
+                               MFS (f ) =            min               MFS (p) .
+                                            p : p(x)=f (x) ∀x∈{0,1}n
+
+(Actually p turns out to be unique [38].) We can also define the ε-approximate multilinear formula
+size of f ,
+                                 MFSε (f ) =     min     MFS (p)
+                                                  p : kp−f k22 ≤ε
+                      P
+where kp − f k22 =                               2
+                         x∈{0,1}n |p (x) − f (x)| . (This metric is closely related to the inner prod-
+    P         ∗
+uct
+P      x p (x) f (x), but is often more convenient to work with.)           Now given a state |ψi =
+                        ⊗n                                    n
+          n αx |xi in H
+  x∈{0,1}               2 , let fψ be the function from {0, 1} to C defined by fψ (x) = αx .
+
+Theorem 4 For all |ψi,
+
+  (i) MFS (fψ ) = O (TS (|ψi)).
+
+ (ii) TS (|ψi) = O (MFS (fψ ) + n).
+                                                √
+(iii) MFSδ (fψ ) = O (TSε (|ψi)) where δ = 2 − 2 1 − ε.
+
+ (iv) TS2ε (|ψi) = O (MFSε (fψ ) + n).
+
+   Proof.
+
+  (i) Given a tree representing |ψi, replace every unbounded fan-in gate by a collection of binary
+      gates, every ⊗ by ×, every |1ii vertex by xi , and every |0ii vertex by a formula for 1 − xi .
+      Push all multiplications by constants at the edges down to × gates at the leaves.
+
+ (ii) Given a multilinear formula Φ for fψ , let p (v) be the polynomial computed at vertex v of Φ,
+      and let S (v) be the set of variables that appears in p (v). First, call Φ syntactic if at every
+      × gate with children v and w, S (v) ∩ S (w) = ∅. A lemma of Raz [41] states that we can
+      always make Φ syntactic without increasing its size.
+
+                                                     10
+      Second, at every + gate u with children v and w, enlarge both S (v) and S (w) to S (v)∪S (w),
+      by multiplying p (v) by xi + (1 − xi ) for every xi ∈ S (w) \ S (v), and multiplying p (w) by
+      xi + (1 − xi ) for every xi ∈ S (v) \ S (w). Doing this does not invalidate any × gate that
+      is an ancestor of u, since by the assumption that Φ is syntactic, p (u) is never multiplied by
+      any polynomial containing variables in S (v) ∪ S (w). Similarly, enlarge S (r) to {x1 , . . . , xn }
+      where r is the root of Φ.
+      Third, call v max-linear if |S (v)| = 1 but |S (w)| > 1 where w is the parent of v. If v is
+      max-linear and p (v) = a + bxi , then replace the tree rooted at v by a tree computing a |0ii +
+      (a + b) |1ii . Also, replace all multiplications by constants higher in Φ by multiplications at
+      the edges. (Because of the second step, there are no additions by constants higher in Φ.)
+      Replacing every × by ⊗ then gives a tree representing |ψi, whose size is easily seen to be
+      O (|Φ| + n) .
+(iii) Apply the reduction from part (i). Let the resulting multilinear formula compute polynomial
+      p; then
+                   X                               X                         √
+                        |p (x) − fψ (x)|2 = 2 − 2        p (x) fψ (x) ≤ 2 − 2 1 − ε = δ.
+                  x∈{0,1}n                                     x∈{0,1}n
+
+ (iv) Apply the reduction from part (ii). Let (βx )x∈{0,1}n be the resulting amplitude vector; since
+                                                              P
+      this vector might not be normalized, divide each βx by x |βx |2 to produce βx′ . Then
+                                      2
+                    X                           1       X                 2
+                             βx′ αx       =1−                  βx′ − αx
+                                                2
+                  x∈{0,1}n                          x∈{0,1}n
+                                                                                                         2
+                                                        s X                          s X
+                                                1
+                                          ≥1−                       |βx′ − βx |2 +              |βx − αx |2 
+                                                2
+                                                        x∈{0,1}n                     x∈{0,1}n
+                                                1 √ 2
+                                          ≥1−     2 ε = 1 − 2ε.
+                                                2
+
+     Besides Tree, OTree, and MOTree, four other classes of quantum   P states deserve mention:
+     Circuit, a circuit analog of Tree, contains the states |ψn i = x αx |xi such that for all n, there
+exists a multilinear arithmetic circuit of size p (n) over the complex numbers that outputs αx given
+x as input, for some polynomial p. (Multilinear circuits are the same as multilinear trees, except
+that they allow unbounded fanout—that is, polynomials computed at intermediate points can be
+reused arbitrarily many times.)            P
+     AmpP contains the states |ψn i = x αx |xi such that for all n, b, there exists a classical circuit
+of size p (n + b) that outputs αx to b bits of precision given x as input, for some polynomial p.
+     Vidal contains the states that are ‘polynomially entangled’ in the sense of Vidal [46]. Given a
+partition of {1, . . . , n} into A and B, let χA (|ψn i) be the minimum k for which |ψn i can be written as
+P  k         A        B             A and ϕB are states of qubits in A and B respectively. (χ (|ψ i)
+   i=1 αi ϕi ⊗ ϕi , where ϕi                   i                                                  A     n
+is known as the Schmidt rank ; see [37] for more information.) Let χ (|ψn i) = maxA χA (|ψn i). Then
+|ψn i ∈ Vidal if and only if χ (|ψn i) ≤ p (n) for some polynomial p.
+     ΨP contains the states |ψn i such that for all n and ε > 0, there exists a quantum circuit of size
+p (n + log (1/ε)) that maps the all-0 state to a state some part of which has trace distance at most
+1 − ε from |ψn i, for some polynomial p. Because of the Solovay-Kitaev Theorem [32, 37], ΨP is
+invariant under the choice of universal gate set.
+
+                                                               11
+4    Basic Results
+Before studying the tree size of specific quantum states, we would like to know in general how tree
+size behaves as a complexity measure. In this section we prove three rather nice properties of tree
+size.
+                                                                                        
+                                                                                     1+ε
+Theorem 5 For all ε > 0, there exists a tree representing |ψi of size O TS (|ψi)           and depth
+                                                                                       
+                                                                                    1+ε
+O (log TS (|ψi)), as well as a manifestly orthogonal tree of size O MOTS (|ψi)             and depth
+O (log MOTS (|ψi)).
+
+    Proof. A classical theorem of Brent [12] says that given an arithmetic formula Φ, there exists
+an equivalent formula of depth O (log |Φ|) and size O (|Φ|c ), where c is a constant. Bshouty, Cleve,
+and Eberly [13] (see also Bonet and Buss [10]) improved Brent’s theorem to show that c can be
+taken to be 1 + ε for any ε > 0. So it suffices to show that, for ‘division-free’ formulas, these
+theorems preserve multilinearity (and in the MOTS case, preserve manifest orthogonality).
+    Brent’s theorem is proven by induction on |Φ|. Here is a sketch: choose a subformula I of Φ
+size between |Φ| /3 and 2 |Φ| /3 (which one can show always exists). Then identifying a subformula
+with the polynomial computed at its root, Φ (x) can be written as G (x) + H (x) I (x) for some
+formulas G and H. Furthermore, G and H are both obtainable from Φ by removing I and then
+applying further restrictions. So |G| and |H| are both at most |Φ| − |I| + O (1). Let Φb be a formula
+equivalent to Φ that evaluates G, H, and I separately, and then returns G (x) + H (x) I (x). Then
+ b is larger than |Φ| by at most a constant factor, while by the induction hypothesis, we can
+ Φ
+assume the formulas for G, H, and I have logarithmic depth. Since the number of induction steps
+is O (log |Φ|), the total depth is logarithmic and the total blowup in formula size is polynomial in
+|Φ|. Bshouty, Cleve, and Eberly’s improvement uses a more careful decomposition of Φ, but the
+basic idea is the same.
+    Now, if Φ is syntactic multilinear, then clearly G, H, and I are also syntactic multilinear.
+Furthermore, H cannot share variables with I, since otherwise a subformula of Φ containing I
+would have been multiplied by a subformula containing variables from I. Thus multilinearity is
+preserved. To see that manifest orthogonality is preserved, suppose we are evaluating G and H
+‘bottom up,’ and let Gv and Hv be the polynomials computed at vertex v of Φ. Let v0 = root (I),
+let v1 be the parent of v0 , let v2 be the parent of v1 , and so on until vk = root (Φ). It is clear
+that, for every x, either Gv0 (x) = 0 or Hv0 (x) = 0. Furthermore, suppose that property holds
+for Gvi−1 , Hvi−1 ; then by induction it holds for Gvi , Hvi . If vi is a × gate, then this follows
+from multilinearity (if |ψi and |ϕi are manifestly orthogonal, then |0i ⊗ |ψi and |0i ⊗ |ϕi are also
+manifestly orthogonal). If vi is a + gate, then letting supp (p) be the set of x such that p (x) 6= 0,
+any polynomial p added to Gvi−1 or Hvi−1 must have
+                                                                  
+                            supp (p) ∩ supp Gvi−1 ∪ supp Hvi−1 = ∅,
+
+and manifest orthogonality follows.
+
+Theorem 6 Any |ψi can be prepared by a quantum circuit of size polynomial in OTS (|ψi). Thus
+OTree ⊆ ΨP.
+
+   Proof. Let Γ (|ψi) be the minimum size of a circuit needed to prepare |ψi ∈ H2⊗n starting from
+    ⊗n
+|0i . We prove by induction on Γ (|ψi) that Γ (|ψi) ≤ q (OTS (|ψi)) for some polynomial q. The
+base case OTS (|ψi) = 1 is clear. Let T be an orthogonal state tree for |ψi, and assume without
+
+                                                 12
+loss of generality that every gate has fan-in 2 (this increases |T | by at most a constant factor).
+Let T1 and T2 be the subtrees of root (T ), representing states |ψ1 i and |ψ2 i respectively; note that
+|T | = |T1 | + |T2 |. First suppose root (T ) is a ⊗ gate; then clearly Γ (|ψi) ≤ Γ (|ψ1 i) + Γ (|ψ2 i).
+     Second, suppose root (T ) is a + gate, with |ψi = α |ψ1 i + β |ψ2 i and hψ1 |ψ2 i = 0. Let U be a
+quantum circuit that prepares |ψ1 i, and V be a circuit that prepares |ψ2 i. Then we can prepare
+α |0i |0i⊗n +β |1i U −1 V |0i⊗n . Observe that U −1 V |0i⊗n is orthogonal to |0i⊗n , since |ψ1 i = U |0i⊗n
+is orthogonal to |ψ2 i = V |0i⊗n . So applying a NOT to the first register,          conditioned on the
+OR of the bits in the second register, yields |0i ⊗ α |0i⊗n + βU −1 V |0i⊗n , from which we obtain
+α |ψ1 i+β |ψ2 i by applying U to the second register. The size of the circuit used is O (|U | + |V | + n),
+with a possible constant-factor blowup arising from the need to condition on the first register. If
+we are more careful, however, we can combine the ‘conditioning’ steps across multiple levels of the
+recursion, producing a circuit of size |V | + O (|U | + n). By symmetry, we can also reverse the roles
+of U and V to obtain a circuit of size |U | + O (|V | + n). Therefore
+                 Γ (|ψi) ≤ min {Γ (|ψ1 i) + cΓ (|ψ2 i) + cn, cΓ (|ψ2 i) + Γ (|ψ1 i) + cn}
+for some constant c ≥ 2. Solving this recurrence we find that Γ (|ψi) is polynomial in OTS (|ψi).
+
+
+Theorem 7 If |ψi ∈ H2⊗n is chosen uniformly at random under the Haar measure, then TS1/16 (|ψi) =
+2Ω(n) with probability 1 − o (1).
+                                                        P
+    Proof. To generate a uniform random state |ψi = x∈{0,1}n αx |xi, we can choose α   bx , βbx ∈ R
+for
+ each xindependently     from a Gaussian
+                                        distribution
+                                                       with mean 0 and variance 1, then let αx =
+             √                P
+  bx + iβbx / R where R = x∈{0,1}n α
+  α                                      bx + βbx . Let
+                                          2     2
+
+                                                                           
+                                                                    1
+                                    Λψ =     x : (Re αx )2 <                    ,
+                                                                 4 · 2n
+and let G be the set of |ψi for which |Λψ | < 2n /5. We claim that Pr|ψi [|ψi ∈ G] = 1 − o (1). First,
+EX [R] = 2n+1 , so by a standard Hoeffding-type bound, Pr [R < 2n ] is doubly-exponentially small
+in n. Second, assuming R ≥ 2n , for each x
+                                                                
+                                               2   1            1
+                          Pr [x ∈ Λψ ] ≤ Pr α bx <     = erf    √    < 0.198,
+                                                   4           4 2
+and the claim follows by a Chernoff bound.
+   For g : {0, 1}n → R, let Ag = {x : sgn (g (x)) 6= sgn (Re αx )}, where sgn (y) is 1 if y ≥ 0 and −1
+otherwise. Then if |ψi ∈ G, clearly
+                                  X                               |Ag | − |Λψ |
+                                           |g (x) − fψ (x)|2 ≥
+                                                                     4 · 2n
+                                x∈{0,1}n
+
+where fψ (x) = Re αx , and thus
+                                                                      
+                                                                   1
+                                     |Ag | ≤       4 kg − fψ k22 +         2n .
+                                                                   5
+Therefore to show that MFS1/15 (fψ ) = 2Ω(n) with probability 1 − o (1), we need only show that for
+almost all Boolean functions f : {0, 1}n → {−1, 1}, there is no arithmetic formula Φ of size 2o(n)
+such that
+                              |{x : sgn (Φ (x)) 6= f (x)}| ≤ 0.49 · 2n .
+
+                                                        13
+Here an arithmetic formula is real-valued, and can include addition, subtraction, and multiplication
+gates of fan-in 2 as well as constants. We do not need to assume multilinearity, and it is easy
+to see that the assumption of bounded fan-in is without loss of generality. Let W be the set
+of Boolean functions sign-represented by an arithmetic formula Φ of size 2o(n) , in the sense that
+                                                                             o(n)
+sgn (Φ (x)) = f (x) for all x. Then it suffices to show that |W | = 22 , since the number of
+                                                                             n
+functions sign-represented on an 0.51 fraction of inputs is at most |W | · 22 H(0.51) . (Here H denotes
+the binary entropy function.)
+    Let Φ be an arithmetic formula that takes as input the binary string x = (x1 , . . . , xn ) as well as
+constants c1 , c2 , . . .. Let Φc denote Φ under a particular assignment c to c1 , c2 , . . .. Then a result
+of Gashkov [22] (see also Turán and Vatan [44]), which follows from Warren’s Theorem [47] in
+                                                                                                        |Φ|
+real algebraic geometry, shows that as we range over all c, Φc sign-represents at most 2n+4 |Φ|
+distinct Boolean functions, where |Φ| is the size of Φ. Furthermore, excluding constants, the
+                                                                       |Φ|
+number of distinct arithmetic formulas of size |Φ| is at most 3 |Φ|2         . When |Φ| = 2o(n) , this
+             |Φ|              |Φ|     o(n)
+gives 3 |Φ|2         · 2n+4 |Φ|      = 22 . We have shown that MFS1/15 (fψ ) = 2Ω(n) ; by Theorem
+4, part (iii), this implies that TS1/16 (|ψi) = 2Ω(n) .
+    A corollary of Theorem 7 is the following ‘nonamplification’ property: there exist states that
+can be approximated to within, say, 1% by trees of polynomial size, but that require exponentially
+large trees to approximate to within a smaller margin (say 0.01%).
+
+Corollary 8 For all δ ∈ (0, 1], there exists a state |ψi such that TSδ (|ψi) = n but TSε (|ψi) = 2Ω(n)
+where ε = δ/32 − δ2 /4096.
+                                                                    P
+   Proof. It is clear from Theorem 7 that there exists a state |ϕi = x∈{0,1}n αx |xi such that
+                                            √              √                  ⊗n 2
+TS1/16 (|ϕi) = 2Ω(n) and α0n = 0. Take |ψi = 1 − δ |0i⊗n + δ |ϕi.
+                                                                P Since hψ|0i      = 1 − δ, we
+have MOTSδ (|ψi) = n. On the other hand, suppose some |φi = x∈{0,1}n βx |xi with TS (|φi) =
+2o(n) satisfies |hφ|ψi|2 ≥ 1 − ε. Then
+                                   X √               2          √
+                                           δαx − βx        ≤ 2 − 2 1 − ε.
+                                  x6=0n
+                                                                             √     
+Thus, letting fϕ (x) = αx , we have MFSc (fϕ ) = O (TS (|φi)) where c = 2 − 2 1 − ε /δ. By
+Theorem 4, part (iv), this implies that TS2c (|ϕi) = O (TS (|φi)). But 2c = 1/16 when ε =
+δ/32 − δ2 /4096, contradiction.
+
+
+5    Lower Bounds
+We want to show that certain quantum states of interest to us are not represented by trees of
+polynomial size. At first this seems like a hopeless task. Proving superpolynomial formula-
+size lower bounds for ‘explicit’ functions is a notoriously hard open problem, as it would imply
+complexity class separations such as NC1 6= P.
+    Here, though, we are only concerned with multilinear formulas. Could this make it easier
+to prove a lower bound? The answer is not obvious, but very recently, for reasons unrelated to
+quantum computing, Raz [41, 42] showed the first superpolynomial lower bounds on multilinear
+formula size. In particular, he showed that multilinear formulas computing the permanent or
+determinant of an n × n matrix over any field have size nΩ(log n) .
+
+
+                                                    14
+     Raz’s technique is a beautiful combination of the Furst-Saxe-Sipser method of random restric-
+tions [21], with matrix rank arguments as used in communication complexity. We now outline
+the method. Given a function f : {0, 1}n → C, let P be a partition                  of the input variables
+x1 , . . . , xn into two collections y = y1 , . . . , yn/2 and z = z1 , . . . , zn/2 . This yields a function
+fP (y, z) : {0, 1}n/2 × {0, 1}n/2 → C. Then let Mf |P be a 2n/2 × 2n/2 matrix whose rows are labeled
+by assignments y ∈ {0, 1}n/2 , and whose columns                                                    n/2
+                                                           are labeled by assignments z ∈ {0, 1} . The
+(y, z) entry of Mf |P is fP (y, z). Let rank Mf |P be the rank of Mf |P over the complex numbers.
+Finally, let P be the uniform distribution over all partitions P .
+     The following, Corollary 3.6 in [42], is one statement of Raz’s main theorem; recall that MFS (f )
+is the minimum size of a multilinear formula for f .
+
+Theorem 9 ([42]) Suppose that
+                         h                    1/8
+                                                   i
+                     Pr rank Mf |P ≥ 2n/2−(n/2) /2 = n−o(log n) .
+                            P ∈P
+
+Then MFS (f ) = nΩ(log n) .
+
+    An immediate corollary yields lower bounds on approximate multilinear formula size. Given
+an N × N matrix M = (mij ), let rankε (M ) = minL : kL−M k2 ≤ε rank (L) where kL − M k22 =
+PN                   2
+                                                              2
+
+  i,j=1 |lij − m ij |  .
+
+Corollary 10 Suppose that
+                                h                      1/8
+                                                            i
+                             Pr rankε Mf |P ≥ 2n/2−(n/2) /2 = n−o(log n) .
+                            P ∈P
+
+Then MFSε (f ) = nΩ(log n) .
+
+  Proof. Suppose MFSε (f ) = no(log n) . Then for all g such that kf − gk22 ≤ ε, we would have
+MFS (g) = no(log n) , and therefore
+                               h                   1/8
+                                                         i
+                           Pr rank Mg|P ≥ 2n/2−(n/2) /2 = n−Ω(log n) .
+                            P ∈P
+                                        
+by Theorem 9. But rankε Mf |P ≤ rank Mg|P , and hence
+                         h                      1/8
+                                                     i
+                      Pr rankε Mf |P ≥ 2n/2−(n/2) /2 = n−Ω(log n) ,
+                            P ∈P
+
+contradiction.
+    Another simple corollary gives lower bounds in terms of restrictions of f . Let Rl be the following
+distribution over restrictions R: choose 2l variables of f uniformly at random, and rename them
+y = (y1 , . . . , yl ) and z = (z1 , . . . , zl ). Set each of the remaining n − 2l variables to 0 or 1 uniformly
+and independently at random. This yields a restricted function fR (y, z). Let Mf |R be a 2l × 2l
+matrix whose (y, z) entry is fR (y, z).
+
+Corollary 11 Suppose that
+                                        h                   1/8
+                                                                 i
+                                   Pr       rank Mf |R ≥ 2l−l /2 = n−o(log n)
+                                R∈Rl
+
+where l = nδ for some constant δ ∈ (0, 1]. Then MFS (f ) = nΩ(log n) .
+
+                                                        15
+    Proof. Under the hypothesis, clearly there exists a fixed restriction g : {0, 1}2l → C of f , which
+leaves 2l variables unrestricted, such that
+                             h                1/8
+                                                    i
+                        Pr rank Mg|P ≥ 2l−l /2 = n−o(log n) = l−o(log l) .
+                         P ∈P
+
+Then by Theorem 9,
+                                MFS (f ) ≥ MFS (g) = lΩ(log l) = nΩ(log n) .
+
+
+    We will apply Raz’s theorem to obtain nΩ(log n) tree size lower bounds for two classes of quantum
+states: states arising in quantum error-correction in Section 5.1, and (assuming a number-theoretic
+conjecture) states arising in Shor’s factoring algorithm in Section 5.2.
+
+5.1    Subgroup States
+Let the elements of Zn2 be labeled by n-bit strings. Given a subgroup S ≤ Zn2 , we define the
+subgroup state |Si as follows:
+                                              1 X
+                                      |Si = p          |xi .
+                                               |S| x∈S
+Coset states arise as codewords in the class of quantum error-correcting codes known as stabilizer
+codes [16, 27, 43]. Our interest in these states, however, arises from their large tree size rather
+than their error-correcting properties.
+   Let E be the following distribution over subgroups S. Choose an n/2 × n matrix A by setting
+each entry to 0 or 1 uniformly and independently. Then let S = {x | Ax ≡ 0 (mod 2)}. By
+Theorem 4, part (i), it suffices to lower-bound the multilinear formula size of the function fS (x),
+which is 1 if x ∈ S and 0 otherwise.
+
+Theorem 12 If S is drawn from E, then MFS (fS ) = nΩ(log n) (and hence TS (|Si) = nΩ(log n) ),
+with probability Ω (1) over S.
+
+    Proof. Let P be a uniform random           partition of the inputs x1 , . . . , xn of fS into two sets
+y = y1 , . . . , yn/2 and z = z1 , . . . , zn/2 . Let MS|P be the 2n/2 × 2n/2 matrix whose (y, z) entry
+is fS|P (y, z); then we need to show that rank MS|P is large with high probability. Let Ay be the
+n/2 × n/2 submatrix of the n/2 × n matrix A consisting of all rows that correspond to yi for some
+i ∈ {1, . . . , n/2}, and similarly let Az be the n/2 × n/2 submatrix corresponding to z. Then it
+is easy to see that, so long as Ay and Az are both invertible, for all 2n/2 settings of y there exists
+a unique setting of z for which fS|P (y, z) = 1. This then implies that MS|P is a permutation
+                                                         
+of the identity matrix, and hence that rank MS|P = 2n/2 . Now, the probability that a random
+n/2 × n/2 matrix over Z2 is invertible is
+
+                                      1 3        2n/2 − 1
+                                       · · ··· ·          > 0.288.
+                                      2 4          2n/2
+So the probability that Ay and Az are both invertible is at least        2 . By Markov’s inequality,
+                                                                 0.288
+                                                                     n/2
+it follows that for at least an 0.04 fraction of S’s, rank MS|P = 2      for at least an 0.04 fraction
+of P ’s. Theorem 9 then yields the desired result.
+    Aaronson and Gottesman   [3] show how to prepare any n-qubit subgroup state using a quantum
+circuit of size O n2 / log n . So a corollary of Theorem 12 is that ΨP 6⊂ Tree. Since fS clearly has
+a (non-multilinear) arithmetic formula of size O (nk), a second corollary is the following.
+
+                                                    16
+Corollary 13 There exists a family of functions fn : {0, 1}n → R that has polynomial-size arith-
+metic formulas, but no polynomial-size multilinear formulas.
+
+    The reason Corollary 13 does not follow from Raz’s results is that polynomial-size formulas for
+the permanent and determinant are not known; the smallest known formulas for the determinant
+have size nO(log n) (see [15]).
+    We have shown that not all subgroup states are tree states, but it is still conceivable that all
+subgroup states are extremely well approximated by tree states. Let us now rule out the latter
+possibility. We first need a lemma about matrix rank, which follows from the Hoffman-Wielandt
+inequality.
+
+Lemma 14 Let M be an N × N complex matrix, and let IN be the N × N identity matrix. Then
+kM − IN k22 ≥ N − rank (M ).
+
+   Proof. The Hoffman-Wielandt inequality [29] (see also [6]) states that for any two N × N
+matrices M, P ,
+                          XN
+                             (σi (M ) − σi (P ))2 ≤ kM − P k22 ,
+                                  i=1
+                                                                       p
+where σi (M ) is the ith singular value of M (that is, σi (M ) = λi (M ), where λ1 (M ) ≥ · · · ≥
+λN (M ) ≥ 0 are the eigenvalues of M M ∗ , and M ∗ is the conjugate transpose of M ). Clearly
+σi (IN ) = 1 for all i. On the other hand, M has only rank (M ) nonzero singular values, so
+                             N
+                             X
+                                   (σi (M ) − σi (IN ))2 ≥ N − rank (M ) .
+                             i=1
+
+
+                         p                                    2
+   Let fbS (x) = fS (x) / |S| be fS (x) normalized to have fbS = 1.
+                                                                       2
+                                                                         
+Theorem 15 For all constants ε ∈ [0, 1), if S is drawn from E, then MFSε fbS = nΩ(log n) with
+probability Ω (1) over S.
+
+    Proof. As in Theorem 12, we look at the matrix MS|P induced by a random partition P = (y, z).
+We already know that for at least an 0.04 fraction of S’s, the y and z variables are in one-to-one
+correspondence for at least an 0.04 fraction of P ’s. In that case |S| = 2n/2 , and therefore MS|P is
+                   p
+a permutation of I/ |S| = I/2n/4 where I is the identity. It follows from Lemma 14 that for all
+                                    2
+matrices M such that M − MS|P 2 ≤ ε,
+                                             p                   2
+                      rank (M ) ≥ 2n/2 −         |S| M − MS|P         ≥ (1 − ε) 2n/2
+                                                                  2
+                        
+and therefore rankε MS|P ≥ (1 − ε) 2n/2 . Hence
+                             h                      1/8
+                                                         i
+                          Pr rankε Mf |P ≥ 2n/2−(n/2) /2 ≥ 0.04,
+                           P ∈P
+
+and the result follows from Corollary 10.
+   A corollary of Theorem 15 and of Theorem 4, part (iii), is that TSε (|Si) = nΩ(log n) with
+probability Ω (1) over S, for all ε < 1.
+
+                                                    17
+   Finally, let us show how to derandomize the lower bound for subgroup states, using ideas pointed
+out to us by Andrej Bogdanov. In the proof of Theorem 12, all we used about the matrix A was
+that a random k × k submatrix has full rank with Ω (1) probability, where k = n/2. If we switch
+from the field F2 to F2d for some d ≥ log2 n, then it is easy to construct explicit k × n matrices
+with this same property. For example, let
+                                        0                    
+                                          1 11 · · · 1k−1
+                                        20 21 · · · 2k−1 
+                                                             
+                                   V = .       ..         .. 
+                                        . .     .          . 
+                                            0     1
+                                          n n ··· n       k−1
+
+
+be the n × k Vandermonde matrix, where 1, . . . , n are labels of elements in F2d . Any k × k
+submatrix of V has full rank, because the Reed-Solomon (RS) code that V represents is a perfect
+erasure code.9 Hence, there exists an explicit state of n “qupits” withp = 2d that has tree size
+nΩ(log n) —namely the uniform superposition over all elements of the set x | V T x = 0 , where V T
+is the transpose of V .
+    To replace qupits by qubits, we concatenate the RS and Hadamard codes to obtain a binary
+linear erasure code with parameters almost as good as those of the original RS code. More explicitly,
+interpret F2d as the field of polynomials over F2 , modulo some irreducible of degree d. Then let
+m (a) be the d × d Boolean matrix that maps q ∈ F2d to aq ∈ F2d , where q and aq are encoded
+by their d × 1 vectors of coefficients. Let H map a length-d vector to its length-2d Hadamard
+encoding. Then Hm (a) is a 2d × d Boolean matrix that maps q ∈ F2d to the Hadamard encoding
+of aq. We can now define an n2d × kd “binary Vandermonde matrix” as follows:
+                                                                       
+                                  Hm 10  Hm 11  · · · Hm 1k−1 
+                                Hm 20       Hm 21 · · · Hm 2k−1 
+                                                                           
+                        Vbin =       ..        ..                 ..       .
+                                      .        .                 .       
+                                         0          1                 k−1
+                                                                          
+                                  Hm n      Hm n        · · · Hm n
+
+For the remainder of the section, fix k = nδ for some δ < 1/2 and d = O (log n).
+
+Lemma 16 A (kd + c) × kd submatrix of Vbin chosen uniformly at random has rank kd (that is,
+full rank) with probability at least 2/3, for c a sufficiently large constant.
+
+    Proof. We claim that |Vbin u| ≥ (n − k) 2d−1 for all nonzero vectors u ∈ Fkd
+                                                                               2 , where | | repre-
+sents the number of ‘1’ bits. To see this, observe that for all nonzero u, the “codeword vector”
+V u ∈ Fn2d must have at least n − k nonzero entries by the Fundamental Theorem of Algebra, where
+here u is interpreted as an element of Fk2d . Furthermore, the Hadamard code maps any nonzero
+                                                 d
+entry in V u to 2d−1 nonzero bits in Vbin u ∈ Fn2
+                                               2 .
+    Now let W be a uniformly random (kd + c) × kd submatrix of Vbin . By the above claim, for
+any fixed nonzero vector u ∈ Fkd2 ,
+                                                       kd+c         
+                                           (n − k) 2d−1         1    k kd+c
+                     Pr [W u = 0] ≤ 1 −                      =    +          .
+                     W                         n2d              2 2n
+So by the union bound, W u is nonzero for all nonzero u (and hence W is full rank) with probability
+at least                                                           
+                          kd 1      k kd+c                k kd 1     k c
+                     1−2         +            =1− 1+               +        .
+                               2 2n                       n      2 2n
+  9
+      In other words, because a degree-(k − 1) polynomial is determined by its values at any k points.
+
+
+                                                          18
+Since k = n1/2−Ω(1) and d = O (log n), the above quantity is at least 2/3 for sufficiently large c.
+   Given an n2d × 1 Boolean vector x, let f (x) = 1 if Vbin
+                                                         T x = 0 and f (x) = 0 otherwise. Then:
+
+
+Theorem 17 MFS (f ) = nΩ(log n) .
+                                                                       T chosen uniformly at
+   Proof. Let Vy and Vz be two disjoint kd × (kd + c) submatrices of Vbin
+random. Then by Lemma 16 together with the union bound, Vy and Vz both have full rank with
+probability at least 1/3. Letting l = kd + c, it follows that
+                                  h              i 1
+                             Pr  rank Mf |R ≥ 2l−c ≥ = n−o(log n)
+                            R∈Rl                    3
+
+by the same reasoning as in Theorem 12. Therefore MFS (f ) = nΩ(log n) by Corollary 11.
+    Let |Si be a uniform superposition over all x such that f (x) = 1; then a corollary of Theorem
+17 is that TS (|Si) = nΩ(log n) . Naturally, using the ideas of Theorem 15 one can also show that
+TSε (|Si) = nΩ(log n) for all ε < 1.
+
+5.2   Shor States
+Since the motivation for our theory was to study possible Sure/Shor separators, an obvious question
+is, do states arising in Shor’s algorithm have superpolynomial tree size? Unfortunately, we are only
+able to answer this question assuming a number-theoretic conjecture. To formalize the question,
+let
+                                             2n −1
+                                          1 X
+                                                   |ri |xr mod N i
+                                        2n/2 r=0
+be a Shor state. It will be convenient for us to measure the second register, so that the state of
+the first register has the form
+                                                    I
+                                                1 X
+                                   |a + pZi = √        |a + pii
+                                                 I i=0
+for some integers a < p and I = ⌊(2n − a − 1) /p⌋. Here a + pi is written out in binary using n
+bits. Clearly a lower bound on TS (|a + pZi) would imply an equivalent lower bound for the joint
+state of the two registers. Also, to avoid some technicalities we assume p is prime. Since our goal
+is to prove a lower bound, this assumption is without loss of generality.
+    Given an n-bit string x = xn−1 . . . x0 , let fn,p,a (x) = 1 if x ≡ a (mod p) and fn,p,a (x) = 0
+otherwise. Then TS (|a + pZi) = Θ (MFS (fn,p,a)) by Theorem 4, so from now on we will focus
+attention on fn,p,a.
+
+Proposition 18
+
+  (i) Let fn,p = fn,p,0. Then MFS (fn,p,a) ≤ MFS (fn+log p,p ), meaning that we can set a = 0
+      without loss of generality.
+
+ (ii) MFS (fn,p ) = O (min {n2n /p, np}).
+
+   Proof.
+
+  (i) Take the formula for fn+log p,p , and restrict the most significant log p bits to sum to a number
+      congruent to −a mod p (this is always possible since x → 2n x is an isomorphism of Zp ).
+
+
+                                                  19
+ (ii) For MFS (fn,p ) = O (n2n /p), write out the x’s for which fn,p (x) = 1 explicitly.                             For
+      MFS (fn,p ) = O (np), use the Fourier transform, similarly to Theorem 26, part (v):
+                                                       p−1 n−1                    
+                                                    1XY                  2πih j
+                                         fn,p (x) =     exp                  · 2 xj .
+                                                    p                     p
+                                                       h=0 j=0
+
+       This immediately yields a sum-of-products formula of size O (np).
+
+
+    We now state our number-theoretic conjecture.
+                                                                             δ
+Conjecture 19 There exist constants γ, δ ∈ (0, 1) and a prime p = Ω 2n for which the following
+                                               
+holds. Let the set A consist of nδ elements of 20 , . . . , 2n−1 chosen uniformly at random. Let S
+                 δ
+consist of all 2n sums of subsets of A, and let S mod p = {x mod p : x ∈ S}. Then
+                                 h                      pi
+                              Pr |S mod p| ≥ (1 + γ)         = n−o(log n) .
+                              A                         2
+Theorem 20 Conjecture 19 implies that MFS (fn,p ) = nΩ(log n) and hence TS (|pZi) = nΩ(log n) .
+
+      Proof. Let f = fn,p and l = nδ . Let R be a restriction of f that renames 2l variables
+y1 , . . . , yl , z1 , . . . , zl , and sets each of the remaining n − 2l variables to 0 or 1. This leads to a new
+function, fR (y, z), which is 1 if y+z+c ≡ 0 (mod p) and 0 otherwise for some constant c. Here we are
+defining y = 2a1 y1 +· · ·+2al yl and z = 2b1 z1 +· · ·+2bl zl where a1 , . . . , al , b1 , . . . , bl are the appropriate
+place values. Now suppose y mod p and z mod p both assume at least (1 + γ) p/2 distinct values as
+we range over all x ∈ {0, 1}n . Then by the pigeonhole principle, for at least γp possible values of
+y mod p, there exists a unique possible value of z mod p for which y + z + c ≡ 0 (mod p) and hence
+fR (y, z) = 1. So rank Mf |R ≥ γp, where Mf |R is the 2l × 2l matrix whose (y, z) entry is fR (y, z).
+It follows that assuming Conjecture 19,
+                                                                    
+                                               Pr rank Mf |R ≥ γp = n−o(log n) .
+                                       R∈Rl
+
+                              1/8 /2
+                                                                            δ
+Furthermore, γp ≥ 2l−l                 for sufficiently large n since p = Ω 2n .              Therefore MFS (f ) =
+nΩ(log n) by Corollary 11.
+    Using the ideas of Theorem 15, one can show that under the same conjecture, MFSε (fn,p ) =
+nΩ(log n) and TSε (|pZi) = nΩ(log n) for all ε < 1—in other words, there exist Shor states that cannot
+be approximated by polynomial-size trees.
+    In an earlier version of this paper, Conjecture 19 was stated without any restriction on how the
+set S is formed. The resulting conjecture was far more general than we needed, and indeed was
+falsified by Carl Pomerance (personal communication).
+
+5.3     Error Correction, Tree Size, and Persistence of Entanglement
+In this section we pursue a deeper understanding of our lower bounds. Recall the states for which
+we were most successful in proving lower bounds are exactly the states that arise in quantum error
+correction. Is this just a coincidence, or should it have been expected? Also, can Raz’s technique
+be given any physical interpretation?
+     Let |Si be a uniform superposition over the elements of some subset S ⊂ {0, 1}n . Then our
+first observation is that if the elements of S are codewords of a sufficiently good erasure code, then
+Corollary 11 yields an nΩ(log n) tree size lower bound for |Si.
+
+                                                           20
+                                               8
+                                                 
+Theorem 21 Let l = nδ for some δ ∈ 0, 15          , and let l < L < 4ln7/8 . Suppose that |S| = 2n−L
+(that is, n − L bits are being encoded); and that for each x ∈ S, if we are given n − l bits of x drawn
+uniformly at random together with their locations, then with probability 1 − o (1) we can recover x
+itself. Then TS (|Si) = nΩ(log n) .
+
+    Proof. Let f (x) = 1 if x ∈ S and 0 otherwise. Then it suffices to show that
+                                  h                1/8
+                                                         i
+                               Pr rank Mf |R ≥ 2l−l /2 = Ω (1) .
+                                 R∈Rl
+
+Clearly an x ∈ S drawn uniformly at random has entropy n − L. So if i1 , . . . , in−l ∈ {1, . . . , n} are
+drawn uniformly at random without replacement, then the subsequence xi1 , . . . , xin−2l has expected
+entropy n−2l                                                                            n−l
+            n (n − L), and the subsequence xi1 , . . . , xin−l has expected entropy n (n − L).               By
+Markov’s inequality, therefore, the entropy of xin−2l+1 , . . . , xin−l conditioned on xi1 , . . . , xin−l is at
+least l − 2lL
+           n with probability at least 1/2 (since the entropy can never be greater than l). It follows
+                                                                                                           1/8
+that with probability at least 1/2 over the restriction R ∈ Rl , there are at least 2l−2lL/n > 2l−l /2
+                               l
+distinct settings of y ∈ {0, 1} for which fR (y, z) = 1. Here we have used the fact that L < 4ln7/8 .
+                                               1/8
+But this then implies that rank Mf |R ≥ 2l−l /2 with probability 1 − o (1). For given y, if there
+are two or more values of z for which fR (y, z) = 1, then x is not uniquely recoverable from the
+n − l bits outside of z.
+    The converse of Theorem 21 is false. For choose S ⊂ {0, 1}n uniformly at random subject
+to |S| = 2n−1 . Then Corollary 11 yields an nΩ(log n) lower bound on TS (|Si), but S does not
+correspond to any good error-correcting code. So roughly speaking, if |Si is a codeword state then
+|Si has large tree size, but not vice versa.
+    We can gain further insight by asking what physical properties a codeword state has to have.
+One important property is “persistence of entanglement,” introduced Dür and Briegel [18] among
+others. This is the property of remaining highly entangled even after a limited amount
+                                                                                      √        of interaction
+                                                                         ⊗n      ⊗n
+with the environment. For example, the Schrödinger cat state |0i + |1i              / 2 is in some sense
+highly entangled, but it is not persistently entangled, since measuring a single qubit in the standard
+basis destroys all entanglement.
+    By contrast, consider the “cluster states” defined by Briegel and Raussendorf [14]. These
+states have attracted a great deal of attention because of their application to quantum computing
+via 1-qubit measurements only [40]. For our purposes, a two-dimensional cluster state is an equal
+                                     √      √
+superposition over all settings of a n × n array of bits, with each basis state having a phase of
+(−1)r , where r is the number of horizontally or vertically adjacent pairs of bits that are both ‘1’.
+Dür and Briegel [18] showed that such states are persistently entangled in a precise sense: one can
+distill n-partite entanglement from them even after each qubit has interacted with a heat bath for
+an amount of time independent of n.
+    Persistence of entanglement seems related to how one shows tree size lower bounds using Raz’s
+technique. For to apply Corollary 11, one basically “measures” most of a state’s qubits, then
+partitions the unmeasured qubits into two subsystems of equal size, and argues that with high
+probability those two subsystems are still almost maximally entangled. The connection is not
+perfect, though. For one thing, setting most of the qubits to 0 or 1 uniformly at random is not the
+same as measuring them. For another, Theorem 9 yields nΩ(log n) tree size lower bounds without
+the need to trace out a subset of qubits. It suffices for the original state to be almost maximally
+entangled, no matter how one partitions it into two subsystems of equal size.
+    But what about 2-D cluster states—do they have tree size nΩ(log n) ? We strongly conjecture
+that the answer is ‘yes.’ However, proving this conjecture will almost certainly require going
+
+
+                                                      21
+beyond Theorem 9. One will want to use random restrictions that respect the 2-D neighborhood
+structure of cluster states—similar to the restrictions used by Raz [41] to show that permanent and
+determinant have multilinear formula size nΩ(log n) .
+    We end this section by showing that there exist states that are persistently entangled in the
+sense of Dür and Briegel [18], but that have polynomial tree size. In particular, Dür and Briegel
+showed that even one-dimensional cluster states are persistently entangled. On the other hand:
+
+Proposition 22 Let
+                                      1       X
+                            |ψi =                      (−1)x1 x2 +x2 x3 +···+xn−1 xn |xi .
+                                    2n/2
+                                            x∈{0,1}n
+                    
+Then TS (|ψi) = O n4 .
+                                        E
+   Proof. Given bits i, j, k, let Pnijk be an equal superposition over all n-bit strings x1 . . . xn
+such that x1 = i, xn = k, and x1 x2 + · · · + xn−1 xn ≡ j (mod 2). Then
+                            E      E          E       E        E      E        E      E 
+            E    1     P i00   P 00k + P i10     P  01k + P i00   P 10k + P i10   P 11k +
+                        n/2 E n/2 E         n/2 E n/2 E     n/2 E n/2 E    n/2 E n/2 E 
+       Pni0k = √                                                                          ,
+                  8        i01    00k        i11     01k      i01
+                        Pn/2 Pn/2 + Pn/2 Pn/2 + Pn/2 Pn/2 + Pn/2     11k      i11    10k
+                                                                                   Pn/2
+                            E      E          E       E        E      E        E      E 
+            E    1     P i00   P 01k + P i10     P  00k + P i00   P 11k + P i10   P 10k +
+                        n/2 E n/2 E         n/2 E n/2 E     n/2 E n/2 E    n/2 E n/2 E 
+       Pni1k = √                                                                          .
+                  8        i01    01k        i11     00k      i01
+                        Pn/2 Pn/2 + Pn/2 Pn/2 + Pn/2 Pn/2 + Pn/2     10k      i11    11k
+                                                                                   Pn/2
+                  E             E                                                       E
+Therefore TS Pnijk             ijk
+                      ≤ 16 TS Pn/2    , and solving this recurrence relation yields TS Pnijk    =
+     
+O n4 . Finally observe that
+                                           ⊗n
+                                |0i + |1i              Pn010 + Pn011 + Pn110 + Pn111
+                    |ψi =          √              −                  √               .
+                                     2                                 2
+
+
+
+6    Computing With Tree States
+Suppose a quantum computer is restricted to being in a tree state at all times. (We can imagine that
+if the tree size ever exceeds some polynomial bound, the quantum computer explodes, destroying
+our laboratory.) Does the computer then have an efficient classical simulation? In other words,
+letting TreeBQP be the class of languages accepted by such a machine, does TreeBQP = BPP? A
+positive answer would make tree states more attractive as a Sure/Shor separator. For once we
+admit any states incompatible with the polynomial-time Church-Turing thesis, it seems like we
+might as well go all the way, and admit all states preparable by polynomial-size quantum circuits!
+The TreeBQP versus BPP problem is closely related to the problem of finding an efficient (classical)
+algorithm to learn multilinear formulas. In light of Raz’s lower bound, and of the connection
+between lower bounds and learning noticed by Linial, Mansour, and Nisan [36], the latter problem
+might be less hopeless than it looks. In this section we show a weaker result: that TreeBQP is
+contained in ΣP3 ∩ ΠP3 , the third level of the polynomial hierarchy. Since BQP is not known to lie
+in PH, this result could be taken as weak evidence that TreeBQP 6= BQP. (On the other hand, we
+do not yet have oracle evidence even for BQP 6⊂ AM, though not for lack of trying [2].)
+
+                                                           22
+Definition 23 TreeBQP is the class of languages accepted by a BQP machine subject to the con-
+straint that at every time step t, the machine’s state ψ (t) is exponentially close to a tree state.
+More formally, the initial state is ψ (0) = |0i⊗(p(n)−n) ⊗ |xi (for an input x ∈ {0, 1}n and poly-
+nomial bound p), and a uniform classical polynomial-time algorithm generates a sequence of gates
+g(1) , . . . , g(p(n)) . Each g(t) can be either be selected from some finite universal basis of unitary
+gates (as we will show in Theorem 24, part (i), the choice of gate set will not matter), or can be
+a 1-qubit measurement. When we perform a measurement, the state evolves to one of two pos-
+sible pure states, with the usual probabilities, rather than to a mixed state. We require that the
+final gate g(p(n)) is a measurement of the first qubit. If at least one intermediate state ψ (t) had
+                        
+TS1/2Ω(n) ψ (t) > p (n), then the outcome of the final measurement is chosen adversarially; oth-
+erwise it is given by the usual Born probabilities. The measurement must return 1 with probability
+at least 2/3 if the input is in the language, and with probability at most 1/3 otherwise.
+
+    Some comments on the definition: we allow ψ (t) to deviate from a tree state by an exponen-
+tially small amount, in order to make the model independent of the choice of gate set. We allow
+intermediate measurements because otherwise it is unclear even how to simulate BPP.10 The rule
+for measurements follows the “Copenhagen interpretation,” in the sense that if a qubit is measured
+to be 1, then subsequent computation is not affected by what would have happened were the qubit
+measured to be 0. In particular, if measuring 0 would have led to states of tree size greater than
+p (n), that does not invalidate the results of the path where 1 is measured.
+    The following theorem shows that TreeBQP has many of the properties we would want it to
+have.
+
+Theorem 24
+
+  (i) The definition of TreeBQP is invariant under the choice of gate set.
+                                                                                   √
+                                                                                       log n
+ (ii) The probabilities (1/3, 2/3) can be replaced by any (p, 1 − p) with 2−2                  < p < 1/2.
+
+(iii) BPP ⊆ TreeBQP ⊆ BQP.
+
+       Proof.
+
+  (i) The Solovay-Kitaev Theorem [32, 37] shows that given a universal gate set, we can approxi-
+      mate any k-qubit unitary to accuracy 1/ε using k qubits and a circuit of size O (polylog (1/ε)).
+                                         ⊗p(n)
+      So let ψ (0) , . . . , ψ (p(n)) ∈ H2     be a sequence of states, with ψ (t) produced from ψ (t−1)
+      by applying a k-qubit unitary g(t) (where k = O (1)). Then using a polynomial-size circuit,
+      we can approximate each ψ (t) to accuracy 1/2Ω(n) , as in the definition of TreeBQP. Fur-
+      thermore, since the approximation circuit for g (t) acts only on k qubits,        any intermediate
+                                                             k
+      state |ϕi it produces satisfies TS1/2Ω(n) (|ϕi) ≤ k4 TS1/2Ω(n) ψ      (t−1)    by Proposition 2.
+
+ (ii) To amplify to a constant probability, run k copies of the computation in tensor product, then
+      output the majority answer. By part (i), outputting √
+                                                                the majority can increase the tree size
+                                                            log n
+      by a factor of at most 2k+1 . To amplify to 2−2             , observe that the Boolean majority
+  10
+    If we try to simulate BPP in the standard way, we might produce complicated entanglement between the com-
+putation register and the register containing the random bits, and no longer have a tree state.
+
+
+
+
+                                                     23
+      function on k bits has a multilinear formula of size kO(log k) . For let Tkh (x1 , . . . , xk ) equal 1
+      if x1 + · · · + xk ≥ h and 0 otherwise; then
+                                                h 
+                                                Y                                 h−i                        
+                 Tkh (x1 , . . . , xk ) = 1 −           i
+                                                   1 − T⌊k/2⌋ x1 , . . . , x⌊k/2⌋ T⌈k/2⌉ x⌊k/2⌋+1 , . . . , xk ,
+                                                i=0
+
+                                                                                       
+                                                                                       k/2
+      so MFS Tkh ≤ 2h maxi MFS T⌈k/2⌉
+                                h      +O (1), and solving this recurrence yields MFS Tk     =
+                                                √
+      kO(log k) . Substituting k = 2 log n into kO(log k) yields nO(1) , meaning the tree size increases
+      by at most a polynomial factor.
+
+(iii) To simulate BPP, we just perform a classical reversible computation, applying a Hadamard
+      followed by a measurement to some qubit whenever we need a random bit. Since the number
+      of basis states with nonzero amplitude is at most 2, the simulation is clearly in TreeBQP.
+      The other containment is obvious.
+
+
+
+Theorem 25 TreeBQP ⊆ ΣP3 ∩ ΠP3 .
+
+    Proof. Since TreeBQP is closed under complement, it suffices to show that TreeBQP ⊆ ΠP3 . Our
+proof will combine approximate counting with a predicate to verify the correctness of a TreeBQP
+computation. Let C be a uniformly-generated quantum circuit, and let M = m(1) , . . . , m(p(n))
+be a sequence of binary measurement outcomes. We adopt the convention that after making a
+measurement, the state vector is not rescaled to have norm 1. E That way the         E probabilities across
+                                                               (0)            (p(n))
+all ‘measurement branches’ continue to sum to 1. Let ψM,x , . . . , ψM,x               be the sequence of
+                                                                                                        E
+                                                                                                    (t)
+unnormalized pure states under measurement outcome sequence M and input x, where ψM,x =
+P                                                                               E
+                (t)                                                         (t)
+          p(n) αy,M,x |yi. Also, let Λ (M, x) express  that TS  1/2Ω(n)   ψM,x        ≤ p (n) for every t.
+   y∈{0,1}
+Then C accepts if
+                                       X         X          (p(n)) 2     2
+                              Wx =                        α1y,M,x ≥ ,
+                                                                         3
+                                                M : Λ(M,x) y∈{0,1}
+                                                   p(n)−1
+
+
+                                                                            (p(n))
+while C rejects if Wx ≤ 1/3. If we could compute each α1y,M,x efficiently (as well as Λ (M, x)),
+we would then have a ΠP2 predicate expressing that Wx ≥ 2/3. This follows since we can do
+approximate counting via hashing in AM ⊆ ΠP2 [26], and thereby verify that an exponentially large
+sum of nonnegative terms is at least 2/3, rather than at most 1/3. The one further fact we need
+is that in our ΠP2 (∀∃) predicate, we can take the existential quantifier to range over tuples of
+                                                                                                  (p(n))
+‘candidate solutions’—that is, (M, y) pairs together with lower bounds β on α1y,M,x .
+                                                                                              (p(n))
+    It remains only to show how we verify that Λ (M, x) holds and that α1y,M,x = β. First, we
+extend the existential quantifier so that
+                                      E     it guessesEnot only M and y, but also a sequence of trees
+  (0)      (p(n))                 (0)            (p(n))
+T ,...,T          , representing ψM,x , . . . , ψM,x    respectively. Second, using the last universal
+quantifier to range over yb ∈ {0, 1}p(n) , we verify the following:
+
+ (1) T (0) is a fixed tree representing |0i⊗(p(n)−n) ⊗ |xi.
+        (p(n))
+ (2) α1y,M,x equals its claimed value to Ω (n) bits of precision.
+
+                                                               24
+ (3) Let g (1) , . . . , g(p(n)) be the                                                 (t)
+                                       E gates applied by C. Then for all t and yb, if g is unitary then
+      (t)                        (t−1)
+     αyb,M,x = hb   y | · g(t) ψM,x to Ω (n) bits of precision. Here the right-hand side is a sum of 2k
+      terms (k being the number of qubits acted on by g(t) ), each term efficiently computable given
+                                                                            (t)       (t−1)
+      T (t−1) . Similarly, if g(t) is a measurement of the ith qubit, then αyb,M,x = αyb,M,x if the ith bit
+                                (t)
+      of yb equals m(t) , while αyb,M,x = 0 otherwise.
+
+
+    In the proof of Theorem 25, the only fact about tree states we use is that Tree ⊆ AmpP; that
+is, there is a polynomial-time classical algorithm that computes the amplitude αx of any basis
+state |xi. So if we define AmpP-BQP analogously to TreeBQP except that any states in AmpP are
+allowed, then AmpP-BQP ⊆ ΣP3 ∩ ΠP3 as well.
+
+
+7    The Experimental Situation
+The results of this paper suggest an obvious challenge for experimenters: prepare non-tree states
+in the lab. For were this challenge met, it would rule out one way in which quantum mechanics
+could fail, just as the Bell inequality experiments of Aspect et al. [8] did twenty years ago. If they
+wished, quantum computing skeptics could then propose a new candidate Sure/Shor separator, and
+experimenters could try to rule out that one, and so on. The result would be to divide the question
+of whether quantum computing is possible into a series of smaller questions about which states can
+be prepared. In our view, this would aid progress in two ways: by helping experimenters set clear
+goals, and by forcing theorists to state clear positions.
+     However, our experimental challenge raises some immediate questions. In particular, what
+would it mean to prepare a non-tree state? How would we know if we succeeded? Also, have
+non-tree states already been prepared (or observed)? The purpose of this section is to set out our
+thoughts about these questions.
+     First of all, when discussing experiments, it goes without saying that we must convert asymp-
+totic statements into statements about specific values of n. The central tenet of computational
+complexity theory is that this is possible. Thus, instead of asking whether n-qubit states with
+tree size 2Ω(n) can be prepared, we ask whether 200-qubit states with tree size at least (say) 280
+can be prepared. Even though the second question does not logically imply anything about the
+first, the second is closer to what we ultimately care about anyway. Admittedly, knowing that
+TS (|ψn i) = nΩ(log n) tells us little about TS (|ψ100 i) or TS (|ψ200 i), especially since in Raz’s paper
+[41], the constant in the exponent Ω (log n) is taken to be 10−6 (though this can certainly be im-
+proved). Thus, proving tight lower bounds for small n is one of the most important problems left
+open by this paper. In Appendix 10 we solve the problem for the case of manifestly orthogonal
+tree size.
+     A second common objection is that our formalism applies only to pure states, but in reality
+all states are mixed. However, there are several natural ways to extend the formalism to mixed
+states. Given a mixedPstate ρ, we could minimize tree size over all purifications of ρ, or minimize
+the expected tree size i |αi |2 TS (|ψi i), or maximum maxi TS (|ψi i), over all decompositions ρ =
+P
+   i αi |ψi i hψi |.
+     A third objection is a real quantum state might be a “soup” of free-wandering fermions and
+bosons, with no localized subsystems corresponding to qubits. How can one determine the tree size
+of such a state? The answer is that one cannot. Any complexity measure for particle position and
+momentum states would have to be quite different from the measures considered in this paper. On
+the other hand, the states of interest for quantum computing usually do involve localized qubits.
+
+                                                    25
+Indeed, even if quantum information is stored in particle positions, one might force each particle
+into two sites (corresponding to |0i and |1i), neither of which can be occupied by any other particle.
+In that case it again becomes meaningful to discuss tree size.
+    But how do we verify that a state with large tree size was prepared? Of course, if |ψi is
+preparable by a polynomial-size quantum circuit, then assuming quantum mechanics is valid (and
+assuming our gates behave as specified), we can always test whether a given state |ϕi is close to
+|ψi or not. Let U map |0i⊗n to |ψi; then it suffices to test whether U −1 |ϕi is close to |0i⊗n .
+However, in the experiments under discussion, the validity of quantum mechanics is the very point
+in question. And once we allow Nature to behave in arbitrary ways, a skeptic could explain any
+experimental result without having to invoke states with large tree size.
+    The above fact has often been urged against us, but as it stands, it is no different from the fact
+that one could explain any astronomical observation without abandoning the Ptolemaic system.
+The issue is not one of mathematical proof, but of accumulating observations that are consistent
+with the hypothesis of large tree size, and inconsistent with alternative hypotheses if we disallow
+special pleading. So for example, to test whether the subgroup state
+                                                       1 X
+                                                |Si = p         |xi
+                                                        |S| x∈S
+
+was prepared, we might use CNOT gates to map |xi to |xi v T x for some vector v ∈ Zn2 . Based
+on our knowledge of S, we could then predict whether the qubit v T x should be |0i, |1i, or an
+equal mixture of |0i and |1i when measured. Or we could apply Hadamard gates to all n qubits
+of |Si, then perform the same test for the subgroup dual to S. In saying that a system is in state
+|Si, it is not clear if we mean anything more than that it responds to all such tests in expected
+ways. Similar remarks apply to Shor states and cluster states.
+    In our view, tests of the sort described above are certainly sufficient, so the interesting question
+is whether they are necessary, or whether weaker and more indirect tests would also suffice. This
+question rears its head when we ask whether non-tree states have already been observed. For as
+pointed out to us by Anthony Leggett, there exist systems studied in condensed-matter physics
+that are strong candidates for having superpolynomial tree size. An example is the magnetic salt
+LiHox Y1−x F4 studied by Ghosh et al. [24], which, like the cluster states of Briegel and Raussendorf
+[14], basically consists of a lattice of spins subject to pairwise nearest-neighbor Hamiltonians. The
+main differences are that the salt lattice is 3-D instead of 2-D, is tetragonal instead of cubic, and
+is irregular in that not every site is occupied by a spin. Also, there are weak interactions even
+between spins that are not nearest neighbors. But none of these differences seems likely to change
+a superpolynomial tree size into a polynomial one.
+    For us, the main issues are (1) how precisely can we characterize11 the quantum state of the
+magnetic salt, and (2) how strong the evidence is that that is the state. What Ghosh et al. [24]
+did was to calculate bulk properties of the salt, such as its magnetic susceptibility and specific heat,
+with and without taking into account the quantum entanglement generated by the nearest-neighbor
+Hamiltonians. They found that including entanglement yielded a better fit to the experimentally
+measured values. However, this is clearly a far cry from preparing a system in a state of one’s
+choosing by applying a known pulse sequence, and then applying any of a vast catalog of tests to
+verify that the state was prepared. So it would be valuable to have more direct evidence that
+states qualitatively like cluster states can exist in Nature.
+  11
+    By “characterize,” we mean give an explicit formula for the amplitudes at a particular time t, in some standard
+basis. If a state is characterized as the ground state of a Hamiltonian, then we first need to solve for the amplitudes
+before we can prove tree size lower bounds using Raz’s method.
+
+
+                                                          26
+    In summary, our results underscore the importance of current experimental work on large,
+persistently entangled quantum states; but they also suggest a new motivation and perspective for
+this work. They suggest that we reexamine known condensed-matter systems with a new goal in
+mind: understanding the complexity of their associated quantum states. They also suggest that
+2-D cluster states and random subgroup states are interesting in a way that 1-D spin chains and
+Schrödinger cat states are not. Yet when experimenters try to prepare states of the former type,
+they often see it as merely a stepping stone towards demonstrating error-correction or another
+quantum computing benchmark. Thus, Knill et al. [33] prepared12 the 5-qubit state
+                                                                                            
+         1     |00000i + |10010i + |01001i + |10100i + |01010i − |11011i − |00110i − |11000i
+  |ψi =                                                                                        ,
+         4 − |11101i − |00011i − |11110i − |01111i − |10001i − |01100i − |10111i + |00101i
+
+for which MOTS (|ψi) = 40 from the decomposition
+                                                                                     
+                1   (|01i + |10i) ⊗ (|010i − |111i) + (|01i − |10i) ⊗ (|001i − |100i)
+          |ψi =                                                                         ,
+                4 − (|00i + |11i) ⊗ (|011i + |110i) + (|00i − |11i) ⊗ (|000i + |101i)
+
+and for which we conjecture TS (|ψi) = 40 as well. However, the sole motivation of the experiment
+was to demonstrate a 5-qubit quantum error-correcting code. In our opinion, whether states with
+large tree size can be prepared is a fundamental question in its own right. Were that question
+studied directly, perhaps we could address it for larger numbers of qubits.
+    Let us end by stressing that, in the perspective we are advocating, there is nothing sacrosanct
+about tree size as opposed to other complexity measures. This paper concentrated on tree size
+because it is the subject of our main results, and because it is better to be specific than vague. On
+the other hand, Section 4, Appendix 9, and Appendix 10 contain numerous results about orthogonal
+tree size, manifestly orthogonal tree size, Vidal’s χ complexity, and other measures. Readers
+dissatisfied with all of these measures are urged to propose new ones, perhaps motivated directly
+by experiments. We see nothing wrong with having multiple ways to quantify the complexity of
+quantum states, and much wrong with having no ways.
+
+
+8     Conclusion and Open Problems
+A crucial step in quantum computing was to separate the question of whether quantum computers
+can be built from the question of what one could do with them. This separation allowed computer
+scientists to make great advances on the latter question, despite knowing nothing about the former.
+We have argued, however, that the tools of computational complexity theory are relevant to both
+questions. The claim that large-scale quantum computing is possible in principle is really a claim
+that certain states can exist—that quantum mechanics will not break down if we try to prepare
+those states. Furthermore, what distinguishes these states from states we have seen must be more
+than precision in amplitudes, or the number of qubits maintained coherently. The distinguishing
+property should instead be some sort of complexity. That is, Sure states should have succinct
+representations of a type that Shor states do not.
+    We have tried to show that, by adopting this viewpoint, we make the debate about whether
+quantum computing is possible less ideological and more scientific. By studying particular examples
+  12
+     Admittedly, what they really prepared is the ‘pseudo-pure’ state ρ = ε |ψi hψ|+(1 − ε) I, where I is the maximally
+mixed state and ε ≈ 10−5 . Braunstein et al. [11] have shown that, if the number of qubits n is less than about 14,
+then such states cannot be entangled. That is, there exists a representation of ρ as a mixture of pure states, each of
+which is separable and therefore has tree size O (n). This is a well-known limitation of the liquid NMR technology
+used by Knill et al. Thus, a key challenge is to replicate the successes of liquid NMR using colder qubits.
+
+
+                                                          27
+of Sure/Shor separators, quantum computing skeptics would strengthen their case—for they would
+then have a plausible research program aimed at identifying what, exactly, the barriers to quantum
+computation are. We hope, however, that the ‘complexity theory of quantum states’ initiated in
+this paper will be taken up by quantum computing proponents as well. This theory offers a new
+perspective on the transition from classical to quantum computing, and a new connection between
+quantum computing and the powerful circuit lower bound techniques of classical complexity theory.
+    We end with some open problems.
+
+ (1) Can Raz’s technique be improved to show exponential tree size lower bounds?
+
+ (2) Can we prove Conjecture 19, implying an nΩ(log n) tree size lower bound for Shor states?
+
+ (3) Let |ϕi be a uniform superposition over all n-bit strings of Hamming weight n/2. It is easy
+     to show by divide-and-conquer that TS (|ϕi) = nO(log n) . Is this upper bound tight? More
+     generally, can we show a superpolynomial tree size lower bound for any state with permutation
+     symmetry?
+
+ (4) Is Tree = OTree? That is, are there tree states that are not orthogonal tree states?
+
+ (5) Is the tensor-sum hierarchy of Section 3 infinite? That is, do we have Σk 6= Σk+1 for all k?
+
+ (6) Is TreeBQP = BPP? That is, can a quantum computer that is always in a tree state be
+     simulated classically? The key question seems to be whether the concept class of multilinear
+     formulas is efficiently learnable.
+
+ (7) Is there a practical method to compute the tree size of, say, 10-qubit states? Such a method
+     would have great value in interpreting experimental results.
+
+
+Acknowledgments
+I thank Ran Raz for fruitful correspondence and for sharing an early version of his paper; the
+anonymous reviewers for detailed comments that improved the paper enormously; and Andrej
+Bogdanov, Don Coppersmith, Viatcheslav Dobrovitski, Oded Goldreich, Ray Laflamme, Anthony
+Leggett, Leonid Levin, Mike Mosca, Ashwin Nayak, Carl Pomerance, John Preskill, Alexander
+Razborov, Peter Shor, Rob Spekkens, Barbara Terhal, Luca Trevisan, Umesh Vazirani, Guifre
+Vidal, and Avi Wigderson for helpful discussions.
+
+
+References
+ [1] S. Aaronson. Book review on A New Kind of Science, Quantum Information and Computation
+     (QIC) 2(5), 2002. quant-ph/0206089.
+
+ [2] S. Aaronson. Quantum lower bound for recursive Fourier sampling, Quantum Information
+     and Computation 3(2), 2003. quant-ph/0209060.
+
+ [3] S. Aaronson and D. Gottesman. Improved simulation of stabilizer circuits, submitted, 2004.
+     quant-ph/0406196.
+
+ [4] D. S. Abrams and S. Lloyd. Nonlinear quantum mechanics implies polynomial-time solution
+     for NP-complete and #P problems, Phys. Rev. Lett. 81:3992–3995, 1998. quant-ph/9801041.
+
+
+                                               28
+ [5] D. Aharonov and A. Ta-Shma. Adiabatic quantum state generation and statistical zero knowl-
+     edge, Proc. ACM STOC, pp. 20–29, 2003. quant-ph/0301023.
+
+ [6] A. Ambainis, L. Schulman, A. Ta-Shma, U. Vazirani, and A. Wigderson. The quantum com-
+     munication complexity of sampling, SIAM J. Comput. 32:1570–1585, 2003.
+
+ [7] M. Arndt, O. Nairz, J. Vos-Andreae, C. Keller, G. van der Zouw, and A. Zeilinger. Wave-
+     particle duality of C60 molecules, Nature 401:680–682, 1999.
+
+ [8] A. Aspect, P. Grangier, and G. Roger. Experimental realization of Einstein-Podolsky-Rosen-
+     Bohm gedankenexperiment: a new violation of Bell’s inequalities, Phys. Rev. Lett. 49:91–94,
+     1982.
+
+ [9] E. Bernstein and U. Vazirani. Quantum complexity theory, SIAM J. Comput. 26(5):1411–
+     1473, 1997.
+
+[10] M. L. Bonet and S. R. Buss. Size-depth tradeoff for Boolean formulae, Inf. Proc. Lett. 11:151–
+     155, 1994.
+
+[11] S. L. Braunstein, C. M. Caves, N. Linden, S. Popescu, and R. Schack. Separability of very noisy
+     mixed states and implications for NMR quantum computing, Phys. Rev. Lett. 83:1054–1057,
+     1999. quant-ph/9811018.
+
+[12] R. P. Brent. The parallel evaluation of general arithmetic expressions, J. ACM 21:201–206,
+     1974.
+
+[13] N. H. Bshouty, R. Cleve, and W. Eberly. Size-depth tradeoffs for algebraic formulae, in Proc.
+     IEEE FOCS’91, pp. 334–341, 1991.
+
+[14] H. J. Briegel and R. Raussendorf. Persistent entanglement in arrays of interacting particles,
+     Phys. Rev. Lett. 86:910–913, 2001. quant-ph/0004051.
+
+[15] P. Bürgisser, M. Clausen, and M. A. Shokrollahi. Algebraic Complexity Theory, Springer-
+     Verlag, 1997.
+
+[16] A. R. Calderbank and P. W. Shor. Good quantum error-correcting codes exist, Phys. Rev. A
+     54:1098–1105, 1996.
+
+[17] J. Cronin. CP symmetry violation—the search for its origin, Nobel Lecture, December 8,
+     1980.
+
+[18] W. Dür and H. J. Briegel. Stability of macroscopic entanglement under decoherence, Phys.
+     Rev. Lett. 92:180403, 2004. quant-ph/0307180.
+
+[19] V. Fitch. The discovery of charge-conjugation parity asymmetry, Nobel Lecture, December 8,
+     1980.
+
+[20] J. R. Friedman, V. Patel, W. Chen, S. K. Tolpygo, and J. E. Lukens. Quantum superposition
+     of distinct macroscopic states, Nature 406:43–46, 2000.
+
+[21] M. Furst, J. B. Saxe, and M. Sipser. Parity, circuits, and the polynomial time hierarchy, Math.
+     Systems Theory 17:13–27, 1984.
+
+
+
+                                                29
+[22] S. B. Gashkov. The complexity of the realization of Boolean functions by networks of func-
+     tional elements and by formulas in bases whose elements realize continuous functions, Prob.
+     Kibernetiki 37:52–118, 1980.
+
+[23] G. C. Ghirardi, A. Rimini, and T. Weber. Unified dynamics for microscopic and macroscopic
+     systems, Phys. Rev. D, 34:470, 1986.
+
+[24] S. Ghosh, T. F. Rosenbaum, G. Aeppli, and S. N. Coppersmith. Entangled quantum state of
+     magnetic dipoles, Nature 425:48–51, 2003. cond-mat/0402456.
+
+[25] O. Goldreich. On quantum computing, 2004. www.wisdom.weizmann.ac.il/˜oded/on-qc.html
+
+[26] S. Goldwasser and M. Sipser. Private coins versus public coins in interactive proof systems, in
+     Randomness and Computation, Vol. 5 of Advances in Computing Research, JAI Press, 1989.
+
+[27] D. Gottesman. Class of quantum error-correcting codes saturating the quantum Hamming
+     bound, Phys. Rev. A. 54:1862–1868, 1996. quant-ph/9604038.
+
+[28] F. Green, S. Homer, C. Moore, and C. Pollett. Counting, fanout, and the complexity of
+     quantum ACC, Quantum Information and Computation 2(1):35–65, 2002. quant-ph/0106017.
+
+[29] A. J. Hoffman and H. W. Wielandt. The variation of the spectrum of a normal matrix, Duke
+     J. Math. 20:37–39, 1953.
+
+[30] G. ’t Hooft. Quantum gravity as a dissipative deterministic system, Classical and Quantum
+     Gravity 16:3263–3279, 1999.
+
+[31] D. Janzing, P. Wocjan, and T. Beth. Cooling and low energy state preparation for 3-local
+     Hamiltonians are FQMA-complete, manuscript, 2003. quant-ph/0303186.
+
+[32] A. Yu. Kitaev. Quantum computation: algorithms and error correction, Russian Math. Sur-
+     veys 52(6):1191-1249, 1997.
+
+[33] E. Knill, R. Laflamme, R. Martinez, and C. Negrevergne. Implementation of the five qubit
+     error correction benchmark, Phys. Rev. Lett. 86:5811, 2001. quant-ph/0101034.
+
+[34] A. J. Leggett. Testing the limits of quantum mechanics: motivation, state of play, prospects,
+     J. Phys. Condensed Matter 14:R415–451, 2002.
+
+[35] L. Levin. Polynomial time and extravagant models, in The tale of one-way functions, Problems
+     of Information Transmission 39(1), 2003.
+
+[36] N. Linial, Y. Mansour, and N. Nisan. Constant depth circuits, Fourier transform, and learn-
+     ability, J. ACM 40(3):607–620, 1993.
+
+[37] M. A. Nielsen and I. L. Chuang. Quantum Computation and Quantum Information, Cambridge
+     Univ. Press, 2000.
+
+[38] N. Nisan and M. Szegedy. On the degree of Boolean functions as real polynomials, Comput.
+     Complexity 4(4):301–313, 1994.
+
+[39] R. Penrose. The Emperor’s New Mind, Oxford Univ. Press, 1989.
+
+[40] R. Raussendorf, D. E. Browne, and H. J. Briegel. Measurement-based quantum computation
+     on cluster states, Phys. Rev. A 68:022312, 2003. quant-ph/0301052.
+
+                                                30
+[41] R. Raz. Multi-linear formulas for permanent and determinant are of super-polynomial size,
+     Proc. ACM STOC, pp. 633–641, 2004.
+[42] R. Raz. Multilinear-N C1 6= Multilinear-N C2 , Proc. IEEE FOCS, 2004.
+[43] A. Steane. Multiple particle interference and quantum error correction, Proc. Roy. Soc. Lond.
+     A, 452:2551–2577, 1996. quant-ph/9601029.
+[44] G. Turán and F. Vatan. On the computation of Boolean functions by analog circuits of
+     bounded fan-in (extended abstract), Proc. IEEE FOCS’94, pp. 553–564, 1994.
+[45] L. G. Valiant and V. V. Vazirani. NP is as easy as detecting unique solutions, Theoret. Comp.
+     Sci. 47(3):85–93, 1986.
+[46] G. Vidal. Efficient classical simulation of slightly entangled quantum computations, Phys.
+     Rev. Lett. 91:147902, 2003. quant-ph/0301063.
+[47] H. E. Warren. Lower bounds for approximation by non-linear manifolds, Trans. Amer. Math.
+     Soc. 133:167–178, 1968.
+[48] S. Wolfram. A New Kind of Science, Wolfram Media, 2002.
+
+
+9      Appendix: Relations Among Quantum State Classes
+This appendix presents some results about the quantum state hierarchy introduced in Section 3.
+Theorem 26 shows simple inclusions and separations, while Theorem 27 shows that separations
+higher in the hierarchy would imply major complexity class separations (and vice versa).
+Theorem 26
+    (i) Tree ∪ Vidal ⊆ Circuit ⊆ AmpP.
+ (ii) All states in Vidal have tree size nO(log n) .
+(iii) Σ2 ⊆ Vidal but ⊗2 6⊂ Vidal.
+(iv) ⊗2 ( MOTree.
+ (v) Σ1 , Σ2 , Σ3 , ⊗1 , ⊗2 , and ⊗3 are all distinct. Also, ⊗3 6= Σ4 ∩ ⊗4 .
+     Proof.
+    (i) Tree ⊆ Circuit since any multilinear tree is also a multilinear circuit. Circuit ⊆ AmpP since the
+        circuit yields a polynomial-time algorithm for computing the amplitudes. For Vidal ⊆ Circuit,
+        we use an idea of Vidal [46]: given |ψn i ∈ Vidal, for all j ∈ {1, . . . , n} we can express |ψn i as
+                                           χ(|ψi)                  E                  E
+                                           X             [1...j]          [j+1...n]
+                                                    αij φi             ⊗ φi
+                                            i=1
+                                                                                                            E
+                                                                                                    [1...j]
+       where χ (|ψn i) is polynomially bounded. Furthermore, Vidal showed that each φi                        can
+                                                                              E                       E
+                                                                    [1...j−1]              [1...j−1]
+       be written as a linear combination of states of the form φi              ⊗ |0i and φi             ⊗ |1i—
+                                                  E                                                     E
+                                        [1...j−1]                                               [1...j]
+       the point being that the set of φi           states is the same, independently of φi               . This
+       immediately yields a polynomial-size multilinear circuit for |ψn i.
+
+                                                         31
+ (ii) Given |ψn i ∈ Vidal, we can decompose |ψn i as
+                                            χ(|ψi)                      E                    E
+                                             X              [1...n/2]          [n/2+1...n]
+                                                     αi φi                  ⊗ φi                 .
+                                             i=1
+                              E                                           E
+                   [1...n/2]                                  [n/2+1...n]
+     Then χ       φi                ≤ χ (|ψn i) and χ        ≤ χ (|ψn i) for all i, so we can recursively
+                                                            φi
+                                                                                                       
+     decompose these states in the same manner. It follows that TS (|ψn i) ≤ 2χ (|ψi) TS ψn/2 ;
+     solving this recurrence relation yields TS (|ψn i) ≤ (2χ (|ψi))log n = nO(log n) .
+
+(iii) Σ2 ⊆ Vidal follows since a sum of t separable states has χ ≤ t, while ⊗2 6⊂ Vidal follows from
+      the example of n/2 Bell pairs: 2−n/4 (|00i + |11i)⊗n/2 .
+
+(iv) ⊗2 ⊆ MOTree is obvious, while MOTree 6⊂ ⊗2 follows from the example of Pni , an equal
+     superposition over all n-bit
+                                strings
+                                      E of parity i. The following recursive formulas imply that
+                i
+                                  i
+     MOTS Pn ≤ 4 MOTS Pn/2               = O n2 :
+
+                                              1  0 E 0 E         E      E
+                                       Pn0 = √                1
+                                                 Pn/2 Pn/2 + Pn/2    1
+                                                                    Pn/2    ,
+                                               2
+                                              1  0 E 1 E         E      E
+                                       Pn1 = √                1
+                                                 Pn/2 Pn/2 + Pn/2    0
+                                                                    Pn/2    .
+                                               2
+     On the other hand, |Pn i ∈
+                              / ⊗2 follows from |Pn i ∈
+                                                      / Σ1 together with the fact that |Pn i has no
+     nontrivial tensor product decomposition.
+
+ (v) ⊗1 6⊂ Σ1 and Σ1 6⊂ ⊗1 are obvious. ⊗2 6⊂ Σ2 (and hence ⊗1 6= ⊗2 ) follows from part (iii).
+     Σ2 6⊂ ⊗2 (and hence Σ1 6= Σ2 ) follows from part (iv), together with the fact that |Pn i has a
+     Σ2 formula based on the Fourier transform:
+                                                                   !
+                                   1       |0i + |1i ⊗n     |0i − |1i ⊗n
+                          |Pn i = √           √         +      √           .
+                                     2          2                2
+
+     Σ2 6= Σ3 follows from ⊗2 6⊂ Σ2 and ⊗2 ⊆ Σ3 . Also, Σ3 6⊂ ⊗3 follows from Σ2 6= Σ3 , together
+     with the fact that we can easily construct states in Σ3 \ Σ2 that have no nontrivial tensor
+     product decomposition—for example,
+                                                                !
+                                   1      ⊗n     |01i + |10i ⊗n/2
+                                  √    |0i +         √              .
+                                    2                  2
+
+     ⊗2 6= ⊗3 follows from Σ2 6⊂ ⊗2 and Σ2 ⊆ ⊗3 . Finally, ⊗3 6= Σ4 ∩ ⊗4 follows from Σ3 6⊂ ⊗3
+     and Σ3 ⊆ Σ4 ∩ ⊗4 .
+
+
+
+Theorem 27
+
+ (i) BQP = P#P implies AmpP ⊆ ΨP.
+
+(ii) AmpP ⊆ ΨP implies NP ⊆ BQP/poly.
+
+(iii) P = P#P implies ΨP ⊆ AmpP.
+
+                                                                 32
+ (iv) ΨP ⊆ AmpP implies BQP ⊆ P/poly.
+
+       Proof.
+
+  (i) First, BQP = P#P implies BQP/poly = P#P /poly, since given a P#P /poly machine M , the
+      language consisting of all (x, a) such that M accepts on input x and P   advice a is clearly in
+                                         #P
+      BQP. So assume BQP/poly = P /poly, and consider a state |ψi = x∈{0,1}n αx |xi with
+      |ψi ∈ AmpP. By the result of Bernstein and Vazirani [9] that BQP ⊆ P#P , forP all b there exists
+      a quantum circuit of size polynomial in n and b that approximates p0 = y∈{0,1}n−1 |α0y |2 ,
+      or the probability that the first qubit is measured to be 0, to b bits of precision. So by
+                                                              √         √
+      uncomputing garbage, we can prepare a state close to p0 |0i + 1 − p0 |1i. Similarly, given
+      a superposition over length-k prefixes of x, we can prepare a superposition over length-(k + 1)
+      prefixes of x by
+                     Papproximating the conditional measurement probabilities. We thus obtain a
+      state close to x |αx | |xi. The last step is to approximate
+                                                         P          the phase of each |xi, apply that
+      phase, and uncompute to obtain a state close to x αx |xi.
+
+ (ii) Given a SAT instance, first use Valiant-Vazirani [45] to produce a formula ϕ with either
+      0 or 1 satisfying assignments. Then
+                                        P let αx = 1 if x is a satisfying assignment for ϕ and
+      αx = 0 otherwise; clearly |ψi = x αx |xi is in AmpP. By the assumption AmpP ⊆ ΨP,
+      there exists a polynomial-size quantum circuit that approximates |ψi, and thereby finds the
+      unique satisfying assignment for ϕ if it exists.
+
+ (iii) As in part (i), P = P#P implies P/poly = P#P /poly. The containment ΨP ⊆ AmpP follows
+       since we can approximate amplitudes to polynomially many bits of precision in #P.
+
+ (iv) As is well known [9], any quantum computation can be made ‘clean’ in the sense that it
+      accepts if and only if a particular basis state (say |0i⊗n ) is measured. The implication
+      follows easily.
+
+
+
+
+10       Appendix: Manifestly Orthogonal Tree Size
+This appendix studies the manifestly orthogonal tree size of coset states:13 states having the form
+                                                       1 X
+                                                |Ci = p         |xi
+                                                        |C| x∈C
+
+where C = {x | Ax ≡ b} is a coset in Zn2 . In particular, we present a tight characterization
+of MOTS (|Ci), which enables us to prove exponential lower bounds on it, in contrast to the
+nΩ(log n) lower bounds for ordinary tree size. This characterization also yields a separation between
+orthogonal and manifestly orthogonal tree size; and an algorithm for computing MOTS (|Ci) whose
+complexity is only singly exponential in n. Our proof technique is independent of Raz’s, and is
+highly tailored to take advantage of manifest orthogonality. However, even if our technique finds
+no broader application, the fact that it gives tight bounds makes it almost unique—and thus, we
+hope, of interest to complexity theorists.
+  13
+     All results apply equally well to the subgroup states of Section 5.1; the greater generality of coset states is just
+for convenience.
+
+
+
+                                                           33
+    Given a state |ψi, recall that the manifestly orthogonal tree size MOTS (|ψi) is the minimum
+size of a tree representing |ψi, in which all additions are of two states |ψ1 i , |ψ2 i with “disjoint
+supports”—that is, either hψ1 |xi = 0 or hψ2 |xi = 0 for every basis state |xi. Here the size |T | of T
+is the number of leaf vertices. We can assume without loss of generality that every + or ⊗ vertex
+has at least one child, and that every child of a + vertex is a ⊗ vertex and vice versa. Also, given
+a set S ⊆ {0, 1}n , let
+                                                  1 X
+                                         |Si = p          |xi
+                                                  |S| x∈S
+be a uniform superposition over the elements of S, and let M (S) be a shorthand for MOTS (|Si).
+   Let C = {x : Ax ≡ b} be a subgroup in Zn2 , for some A ∈ Z2k×n and b ∈ Zk2 . Let [n] = {1, . . . , n},
+and let (I, J) be a nontrivial partition of [n] (one where I and J are both nonempty). Then clearly
+                              (1)         (H)                                        (1)          (H)
+there exist distinct cosets CI , . . . , CI in the I subsystem, and distinct cosets CJ , . . . , CJ in
+the J subsystem, such that                      [ (h)       (h)
+                                           C=       CI ⊗ CJ .
+                                                h∈[H]
+
+       (h)          (h)                                                                       (h)     (h)
+The CI ’s and CJ ’s are unique up to ordering. Furthermore, the quantities CI , CJ ,
+                         
+       (h)              (h)
+M CI , and M CJ               remain unchanged as we range over h ∈ [H]. For this reason we
+suppress the dependence on h when mentioning them.
+    For various sets S, our strategy will be to analyze M (S) / |S|, the ratio of tree size to cardinality.
+We can think of this ratio as the “price per pound” of S: the number of vertices that we have to
+pay per basis state that we cover. The following lemma says that, under that cost measure, a coset
+is “as good a deal” as any of its subsets:
+
+Lemma 28 For all cosets C,                                              
+                                        M (C)                    M (S)
+                                              = min
+                                         |C|                      |S|
+where the minimum is over nonempty S ⊆ C.
+
+    Proof. By induction on n. The base case n = 1 is obvious, so assume the lemma true for
+n − 1. Choose S ∗ ⊆ C to minimize M (S ∗ ) / |S ∗ |. Let T be a manifestly orthogonal tree for |S ∗ i
+of minimum size, and let v be the root of T . We can assume without loss of generality that v is
+a ⊗ vertex, since otherwise v has some ⊗ child representing a set R ⊂ S ∗ such that M (R) / |R| ≤
+M (S ∗ ) / |S ∗ |. Therefore for some nontrivial partition (I, J) of [n], and some SI∗ ⊆ {0, 1}|I| and
+SJ∗ ⊆ {0, 1}|J| , we have
+
+                                         |S ∗ i = |SI∗ i ⊗ |SJ∗ i ,
+                                         |S ∗ | = |SI∗ | |SJ∗ | ,
+                                     M (S ∗ ) = M (SI∗ ) + M (SJ∗ ) ,
+
+where the last equality holds because if M (S ∗ ) < M (SI∗ ) + M (SJ∗ ), then T was not a minimal tree
+for |S ∗ i. Then                                                               
+                      M (S ∗ )   M (SI∗ ) + M (SJ∗ )          M (SI ) + M (SJ )
+                               =                     = min
+                       |S ∗ |        SI∗ SJ∗                      |SI | |SJ |
+
+where the minimum is over nonempty SI ⊆ {0, 1}|I| and SJ ⊆ {0, 1}|J| such that SI ⊗ SJ ⊆ C.
+                                        (h)          (h)
+Now there must be an h such that SI∗ ⊆ CI and SJ∗ ⊆ CJ , since otherwise some x ∈
+                                                                                / C would be
+
+                                                        34
+assigned nonzero amplitude. By the induction hypothesis,
+                                                                       
+                  M (CI )         M (SI )         M (CJ )         M (SJ )
+                          = min             ,             = min             ,
+                   |CI |           |SI |           |CJ |           |SJ |
+                                                              (h)                (h)
+where the minima are over nonempty SI ⊆ CI and SJ ⊆ CJ respectively.                         Define β =
+                                                                                      (h)              (h)
+|SI | · |SJ | /M (SJ ) and γ = |SJ | · |SI | /M (SI ). Then since setting SI := CI and SJ := CJ
+maximizes the four quantities |SI |, |SJ |, |SI | /M (SI ), and |SJ | /M (SJ ) simultaneously, this choice
+also maximizes β and γ simultaneously. Therefore it maximizes their harmonic mean,
+
+                                     βγ       |SI | |SJ |      |S|
+                                        =                   =       .
+                                    β+γ   M (SI ) + M (SJ )   M (S)
+                                           (h)         (h)
+We have proved that setting S := CI ⊗ CJ maximizes |S| /M (S), or equivalently minimizes
+                                                                               (h)   (h)
+M (S) / |S|. The one remaining observation is that taking the disjoint sum of CI ⊗ CJ over all
+h ∈ [H] leaves the ratio M (S) / |S| unchanged. So setting S := C also minimizes M (S) / |S|, and
+we are done.
+   We are now ready to give a recursive characterization of M (C).
+
+Theorem 29 If n ≥ 2, then
+                                                                                
+                                                             M (CI ) + M (CJ )
+                                    M (C) = |C| min
+                                                                 |CI | |CJ |
+
+where the minimum is over nontrivial partitions (I, J) of [n].
+
+     Proof. The upper bound is obvious; we prove the lower bound. Let T be a manifestly
+orthogonal tree for |Ci of minimum size, and         let v (1) , . . . , v (L) be the topmost ⊗ vertices in T .
+Then there exists a partition S (1) , . . . , S (L) of C such that the subtree rooted at v (i) represents
+ S (i) . We have
+                                                        (1)
+                                                                                    (L)
+                                                                                         
+                       (1)               (L)       (1) M S                  (L) M S
+            |T | = M S       + ··· + M S       = S                + ··· + S                .
+                                                        S (1)                    S (L)
+                                                                                  
+Now let η = mini M S (i) / S (i) . We will construct a partition R(1) , . . . , R(H) of C such that
+         
+M R(h) / R(h) = η for all h ∈ [H], which will imply a new tree T ′ with |T ′ | ≤ |T |. Choose
+                          
+j ∈ [L] such that M S (j) / S (j) = η, and suppose vertex v (j) of T expresses S (j) as |SI i ⊗ |SJ i
+for some nontrivial partition (I, J). Then
+                                              
+                                      M S (j)     M (SI ) + M (SJ )
+                                 η=      (j)
+                                                =
+                                       S              |SI | |SJ |
+             
+where M S (j) = M (SI ) + M (SJ ) follows from the minimality of T . As in Lemma 28, there must
+                              (h)                (h)
+be an h such that SI ⊆ CI and SJ ⊆ CJ . But Lemma 28 then implies that M (CI ) / |CI | ≤
+M (SI ) / |SI | and that M (CJ ) / |CJ | ≤ M (SJ ) / |SJ |. Combining these bounds with |CI | ≥ |SI |
+and |CJ | ≥ |SJ |, we obtain by a harmonic mean inequality that
+
+                     M (CI ⊗ CJ )   M (CI ) + M (CJ )   M (SI∗ ) + M (SJ∗ )
+                                  ≤                   ≤                     = η.
+                      |CI ⊗ CJ |        |CI | |CJ |         SI∗ SJ∗
+
+                                                             35
+                    (h)      (h)
+So setting R(h) := CI     ⊗ CJ     for all h ∈ [H] yields a new tree T ′ no larger than T . Hence by the
+minimality of T ,
+                                                              |C|
+            M (C) = |T | = T ′ = H · M (CI ⊗ CJ ) =                    · (M (CI ) + M (CJ )) .
+                                                           |CI | |CJ |
+
+   We can express Theorem 29 directly in terms of the matrix A as follows. Let M (A) = M (C) =
+MOTS (|Ci) where C = {x : Ax ≡ b} (the vector b is irrelevant, so long as Ax ≡ b is solvable).
+Then                                                                        
+                 M (A) = min 2rank(AI )+rank(AJ )−rank(A) (M (AI ) + M (AJ ))              (*)
+
+where the minimum is over all nontrivial partitions (AI , AJ ) of the columns of A. As a base case,
+if A has only one column, then M (A) = 2 if A = 0 and M (A) = 1 otherwise. This immediately
+implies the following.
+
+Corollary 30 There exists a deterministic O (n3n )-time algorithm that computes M (A), given A
+as input.
+
+    Proof. First compute rank (A∗ ) for all 2n−1               ∗
+                                                 matrices A that are∗ formed by∗ choosing a subset
+                                          3   n
+of the columns of A. This takes time O n 2 . Then compute M (A ) for all A with one column,
+then for all A∗ with two columns, and so on, applying the formula (*) recursively. This takes time
+                                     Xn  
+                                            n
+                                                 t2t = O (n3n ) .
+                                     t=1
+                                            t
+
+
+   Another easy consequence of Theorem 29 is that the language {A : M (A) ≤ s} is in NP. We
+do not know whether this language is NP-complete but suspect it is.
+   As we mentioned, our characterization lets us prove exponential lower bounds on the manifestly
+orthogonal tree size of coset states.
+
+Theorem h31 Suppose the entries
+                             i    of A ∈ Z2k×n are drawn uniformly and independently at random,
+                      √                              Ω(k)
+where k ∈ 4 log2 n, 12 n ln 2 . Then M (A) = n/k2          with probability Ω (1) over A.
+
+    Proof. Let us upper-bound the probability that certain “bad events” occur when A is drawn.
+The first bad event is that A contains an all-zero column. This occurs with probability at most
+2−k n = o (1). The second bad event is that there exists a k × d submatrix of A with d ≥ 12k that
+has rank at most 2k/3. This also occurs with probability o (1). For we claim that, if A∗ is drawn
+uniformly at random from Z2k×d , then
+                                                           r d−r
+                                              ∗          d   2
+                                   Pr [rank (A ) ≤ r] ≤              .
+                                   AI                    r   2k
+To see this, imagine choosing the columns of A∗ one by one. For rank (A∗ ) to be at most r, there
+must be at least d − r columns that are linearly dependent on the previous columns. But each
+column is dependent on the previous ones with probability at most 2r /2k . The claim then follows
+from the union bound. So the probability that any k × d submatrix of A has rank at most r is at
+most                               r d−r            r d−r
+                                n d      2           d r  2
+                                          k
+                                                 ≤n d             .
+                                d    r   2                2k
+
+                                                    36
+Set r = 2k/3 and d = 12k; then the above is at most
+                                                           
+                                     2k                   2k k
+                    exp 12k log n +     log (12k) − 12k −       = o (1)
+                                      3                    3 3
+where we have used the fact that k ≥ 4 log n.             
+                                                  (0)  (0)
+   Assume that neither bad event occurs, and let AI , AJ     be a partition of the columns of A
+                                                          (0)         (0)         (0)               (0)
+that minimizes the expression (*). Let A(1) = AI                if AI        ≥ AJ       and A(1) = AJ otherwise,
+          (0)             (0)                                        (0)         (0)                       (0)
+where AI        and AJ    are the numbers of columns in AI and AJ respectively (so that AI +
+                                         
+  (0)                             (1) (1)
+AJ      = n).    Likewise, let AI , AJ      be an optimal partition of the columns of A(1) , and let
+          (1)       (1)         (1)               (1)
+A(2) = AI       if AI       ≥ AJ      and A(2) = AJ     otherwise.          Continue in this way until an A(t) is
+reached such that A(t) = 1. Then an immediate consequence of (*) is that M (A) ≥ Z (0) ·· · ··Z (t−1)
+where                                                
+                                           (l)      (l)
+                              (l)    rank AI +rank AJ −rank(A(l) )
+                             Z =2
+and A(0) = A.                           n                 o
+                                             (l)     (l)
+    Call l a “balanced cut” if min AI , AJ                   ≥ 12k, and an “unbalanced cut” otherwise. If
+                                                                      
+                                      (l)                            (l)
+l is a balanced cut, then rank AI            ≥ 2k/3 and rank AJ ≥ 2k/3, so Z (l) ≥ 2k/3 . If l is an
+                                                                                      
+                                                           (l)             (l)
+unbalanced cut, then call l a “freebie” if rank AI + rank AJ = rank A(l) . There can be at
+                                                                        
+most k freebies, since for each one, rank A(l+1) < rank A(l) by the assumption that all columns
+of A are nonzero. For the other unbalanced cuts, Z (l) ≥ 2.
+    Assume A(l+1) = A(l) /2 for each balanced cut and A(l+1) = A(l) −12k for each unbalanced
+cut. Then if our goal is to minimize Z (0) ·· · ··Z (t−1) , clearly the best strategy is to perform balanced
+cuts first, then unbalanced cuts until A(l) = 12k2 , at which point we can use the k freebies. Let
+B be the number of balanced cuts; then
+                                                               B
+                            Z (0) · · · · · Z (t−1) = 2k/3 2(n/2 −12k )/12k .
+                                                                      B        2
+
+
+
+                                                                                           Ω(k)
+This is minimized by taking B = log2 n4kln22 , in which case Z (0) · · · · · Z (t−1) = n/k2       .
+    A final application of our characterization is to separate orthogonal from manifestly orthogonal
+tree size.
+
+Corollary 32 There exist states with polynomially-bounded orthogonal tree size, but manifestly
+orthogonal tree size nΩ(log n) . Thus OTree 6= MOTree.
+
+    Proof. Set k = 4 log2 n, and let C = {x : Ax ≡ 0} where A is drawn uniformly at random from
+Z2k×n . Then by Theorem 31,
+                                                             Ω(k)
+                                      MOTS (|Ci) = n/k2              = nΩ(log n)
+
+with probability Ω (1) over A. On the other hand, if we view |Ci in the Fourier basis (that is,
+apply a Hadamard to every qubit), then the resulting state has only 2k = n16 basis states with
+nonzero amplitude, and hence has orthogonal tree size at most n17 . So by Proposition 2, part (i),
+OTS (|Ci) ≤ 2n17 as well.
+   Indeed, the orthogonal tree states of Corollary 32 are superpositions over polynomially many
+separable states, so we also obtain that Σ2 6⊂ MOTree.
+
+                                                        37
+

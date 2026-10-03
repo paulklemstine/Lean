@@ -1,0 +1,2735 @@
+arXiv:2308.06130v1 [math.NT] 11 Aug 2023
+
+Fast square-free decomposition of integers using
+class groups
+Erik Mulder
+July 2023
+Abstract
+Let n = a2 b, where b is square-free. In this paper we present an
+algorithm based on class groups of binary quadratic forms that finds the
+square-free decomposition of n, i.e. a and b, in heuristic expected time:
+e b [1/2, 1] ln(n) + Lb [1/2, 1/2] ln(n)2 ).
+O(L
+If a, b are both primes of roughly the same cryptographic size, then our
+method is currently the fastest known method to factor n. This has applications in cryptography, since some cryptosystems rely on the hardness
+of factoring integers of this form.
+
+1
+
+Contents
+1 Introduction
+1.1 Outline of this paper . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+4
+
+2 Class group of binary quadratic forms
+2.1 Preliminaries . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.2 Non-fundamental discriminants . . . . . . . . . . . . . . . . . . .
+
+4
+4
+5
+
+3 Application to square-free decomposition
+3.1 Forms derived from the identity element e . . . . . . . . . . . . .
+3.2 Schnorr and Lenstra class group factorization . . . . . . . . . . .
+3.3 A new square-free decomposition algorithm . . . . . . . . . . . .
+
+7
+7
+9
+11
+
+4 Stage 2
+16
+4.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+4.2 Generic stage 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+5 Timings and comparison to other algorithms
+18
+5.1 Complexity comparisons . . . . . . . . . . . . . . . . . . . . . . . 18
+5.2 Speed in practice . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+A Algorithm 2 for composite square factors
+
+24
+
+B Choice of multipliers s
+
+26
+
+C Searching for a better stage 2
+31
+C.1 Pollard rho . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+C.2 Fast Fourier transform . . . . . . . . . . . . . . . . . . . . . . . . 34
+D Implementation in Magma
+
+38
+
+References
+
+40
+
+2
+
+1
+
+Introduction
+
+One of the classic questions in computational number theory is whether the
+square-free decomposition of a given mathematical object can be computed
+‘fast’. The question for polynomials is easy to solve: given a polynomial f =
+f1 f22 , where f1 is square-free, we can compute g = gcd(f, f ′ ). Then g is a
+multiple of f2 , and with some more care, the exact square factor f2 can be found
+in polynomial time [36]. For integers however, the question is still open. In this
+paper we present a novel technique that uses class groups to find the square-free
+decomposition of an integer n = a2 b, with b square-free. The algorithm runs in
+heuristic expected time
+e b [1/2, 1] ln(n) + Lb [1/2, 1/2] ln(n)2 )
+O(L
+
+where Lb is the L-notation:
+
+α
+
+Lb [α, c] = e(c+o(1)) ln(b) (ln ln(b))
+
+1−α
+
+In the special case that a = p and b = q are distinct primes and p ≈ q,
+our algorithm is currently the fastest known method for computing the squarefree decomposition if q is roughly in the range [1020 , 105000 ]. The upper bound
+should be taken with a grain of salt, see Section 5.1. Numbers n of this form
+might seem like a very specific case. It is true that the probability that a random
+large integer n is of this form is very low. However, these numbers appear quite
+frequently in cryptographic systems [27, 26, 28, 31, 35]. In these cryptosystems,
+the assumption is usually made that factoring an integer n = p2 q with p ≈ q is
+as hard as factoring an arbitrary integer with 3 large prime factors. Our method
+shows that this is not true when q is of cryptographic size. Therefore, larger
+moduli should be used in these cryptosystems than advised in those articles.
+Another application of our algorithm is to determine the ring of integers of
+number fields, since this is polynomial time equivalent to finding the squarefree decomposition of the discriminant of the number field [13]. In [9], this
+equivalence is studied in great detail. Unfortunately, our algorithm does not
+run in polynomial time, but it can be useful when the square-free part of the
+discriminant is not too big. Another possible application is in determining the
+endomorphism ring of an elliptic curve over a finite field [3]. Since that algorithm
+requires the square part of the discriminant of the characteristic equation of the
+Frobenius endomorphism.
+Factoring integers that have repeated prime factors has been an area of active
+research for quite some time. Lattice algorithms are quite popular [4, 15, 24, 20],
+but also elliptic curves [29] and even class groups [11, 12] have been used before.
+In [5] an algorithm is presented that also uses class groups, which can be used to
+detect square-free numbers. Finally, it is good to mention that general purpose
+
+3
+
+factorization algorithms such as the number field sieve [21] or the elliptic curve
+method [22] can of course also factor numbers of this form.
+In 1984, Schnorr and Lenstra [32] presented the following algorithm to factor
+an integer n, which is very similar to other factorization algorithms such as
+the elliptic curve method and Pollard’s p − 1 method. Take a random form
+f in the class group C(−4n) and compute g = f k , where k is a large highly
+composite integer. If h(−4n) is smooth, then g ∼ e, where e is the identity
+element of C(−4n). They showed how to factor n in this case. Based on
+heuristic assumptions, they claimed that the expected runtime of their algorithm
+is O(Ln [1/2, 1]). Unfortunately, it was later found that if n has a large square
+prime divisor, then this runtime is out of reach [23].
+We adapt the algorithm of Schnorr and Lenstra such that it actually becomes
+faster when n = a2 b has a large square divisor. We will use the fact that every
+form in g ∈ C(−4n) can be derived from a unique form π(g) ∈ C(−4b). We
+don’t require that g ∼ e ∈ C(−4n), but instead that π(g) ∼ e ∈ C(−4b). Given
+such g, we show how to retrieve a, which gives the square-free decomposition of
+n. Our method is successful if the class number h(−4b) is smooth. If b is not too
+big, then the probability that this happens is much larger than the probability
+that h(−4n) is smooth.
+
+1.1
+
+Outline of this paper
+
+In Chapter 2 we will recall some basic properties of binary quadratic forms and
+how forms in C(−4a2 b) can be derived from forms in C(−4b). In Chapters 3
+and 4, we look at the factorization algorithm of Schnorr and Lenstra [32] and
+we adapt it to make it fast for integers of the form n = p2 q. In Chapter 5 we
+compare our algorithm to other factorization algorithms and we test its speed
+in practice.
+This article also has four appendices. In Appendix A we show that our
+algorithm works more generally for integers n = a2 b, where a and b can both be
+composite. Appendices B and C are more experimental in nature, there we try
+to find adjustments that speed up our algorithm. In Appendix D we provide a
+basic implementation of our algorithm in Magma [6].
+Acknowledgements. The author would like to thank Wieb Bosma for the
+helpful discussions and for proofreading this paper.
+
+2
+
+Class group of binary quadratic forms
+
+2.1
+
+Preliminaries
+
+In this section we quickly recall important definitions from the theory of binary
+quadratic forms. For more details see Cox [16], Chapters 1 to 3.
+4
+
+A binary quadratic form f is a polynomial of the form f (x, y) = ax2 +
+bxy + cy 2 = (a, b, c), where a, b, c ∈ Z. The discriminant of f is D = b2 −
+4ac = 0, 1 mod 4. We say that f represents m if there exist x, y ∈ Z such that
+f (x, y) = m. A form is primitive if gcd(a, b, c) = 1. We will always assume that
+our forms are primitive, unless stated otherwise. Let Γ be the classical modular
+group of 2 × 2 matrices A with integer coefficients and det(A) = 1. Two binary
+quadratic forms f, g are equivalent if there exists a matrix A = ( pr sq ) ∈ Γ such
+that f (x, y) = g(A · (x, y)T ) = g(px + qy, rx + sy). If this is the case, then we
+write f ∼ g. This implies that equivalent forms have the same discriminant. A
+form (a, b, c) of discriminant D < 0 is reduced if |b| ≤ a ≤ c, and b ≥ 0 if either
+|b| = a or a = c. Every form of negative discriminant is equivalent to a unique
+reduced form.
+The class group C(D) consists of the equivalence classes of primitive binary
+quadratic forms of discriminant D, the group operation is composition of forms.
+Given two forms f = (a1 , b1 , c2 ), g = (a2 , b2 , c2 ) in C(D) with gcd(a1 , a2 , (b1 +
+2
+b2 )/2) = 1, their (Dirichlet) composition is f ·g = (a1 a2 , B, B4a1−D
+a2 ), for a suitable
+integer B. For more details about this operation, see Chapter 3 of [16]. This
+e
+composition can be computed in O(ln(D))
+using a variant of fast GCD [33]. The
+class
+number
+h(D)
+is
+the
+order
+of
+C(D).
+For
+D < 0, on average h(D) is roughly
+√
+D/π [10], page 84. A discriminant D is fundamental if either D = 1 mod 4
+and D square-free, or D = 4m for some m with m = 2, 3 mod 4 and m squarefree. D is called non-fundamental (non-fun) otherwise. In most number theory
+papers it is assumed that D is fundamental, but for our purposes we will mainly
+focus on non-fundamental discriminants instead.
+
+2.2
+
+Non-fundamental discriminants
+
+We will mainly follow Chapter 7 of Buell [10] for this subsection. Let D be a
+discriminant and r a positive integer. We will discuss how the class groups C(D)
+and C(Dr2 ) are related. For this we use transformation matrices A, which are
+2 × 2 integer matrices with det(A) = r.
+Proposition 2.1.
+a) Given any primitive form f of discriminant Dr2 , there exists a form g of
+discriminant D and a transformation matrix A with det(A) = r such that
+f (x, y) = g(A · (x, y)T ).
+b) If f1 and f2 are primitive equivalent forms of discriminant Dr2 , then there
+exists a primitive form g of discriminant D, together with transformation
+matrices A1 , A2 such that A1 A−1
+2 ∈ Γ and:
+det(A1 ) = det(A2 ) = r,
+
+g(A1 · (x, y)T ) = f1 ,
+
+5
+
+g(A2 · (x, y)T ) = f2 .
+
+Proof. See Proposition 7.1 in [10].
+Proposition 2.1 basically says that for every primitive form f in the group
+of larger discriminant Dr2 , there is a unique (up to equivalence) primitive form
+g in the group of smaller discriminant D and a transformation matrix A of
+determinant r such that f (x, y) = g(A · (x, y)T ). In this case we say that f is
+derived from g.
+Buell also makes those transformations explicit, for this he uses the following
+notion. Define two transformation matrices A1 and A2 of determinant r to be
+right-equivalent if there exists a matrix B ∈ Γ such that A1 B = A2 . It is
+easy to see that this is an equivalence relation. Furthermore, if g is a form
+of discriminant D and f1 , f2 are forms derived from g using right-equivalent
+transformations, then f1 and f2 are equivalent.
+We first restrict ourselves to the case that r is a prime p. The general case
+will be partially discussed in Appendix A.
+Proposition 2.2. The right-equivalent transformations of determinant p have
+as equivalence class representatives the p + 1 transformations:
+
+
+p h
+0 1
+
+for 0 ≤ h ≤ p − 1
+
+and
+
+
+1
+0
+
+
+0
+.
+p
+
+Proof. See Proposition 7.2 in [10].
+This means that given a form g = (a, b, c) ∈ C(D) with gcd(a, p) = 1, we
+can create the following p + 1 forms of discriminant Dp2 :
+(ap2 , p(b + 2ah), ah2 + bh + c) for 0 ≤ h ≤ p − 1
+and (a, bp, cp2 )
+
+(2.1)
+
+and no others, up to equivalence. In the last case, we say that h = ∞ was used
+in the transformation. Note that these forms are not necessarily reduced, even
+when g is reduced.
+Using the formulas from (2.1), we can also define a map that goes the other
+way. Given a form f ∈ C(Dp2 ), find a form f2 of the form (ap2 , bp, c) that is
+equivalent to f . Then define π(f ) = (a, b, c) ∈ C(D). This map is well-defined
+(up to equivalence) because of Proposition 2.1.
+The next question is whether the forms from (2.1) are primitive and if they
+can be equivalent to each other.
+We will use the Kronecker symbol ([16] page
+
+93), which we denote by D
+,
+for
+given
+integers D, p. Using this symbol, we can
+p
+state the relation between h(D) and h(Dp2 ). From this points onwards, we will
+focus on negative discriminants, because the important proposition below is not
+true for positive discriminants.
+
+6
+
+Proposition 2.3. Given a form (a, b, c) of discriminant D < −4 and an odd
+prime p with gcd(a, p) = 1, the p + 1 representative transformations of determi2
+nant p produce exactly p − D
+p primitive forms of discriminant Dp which are
+all pairwise inequivalent. It follows that:
+ 
+D
+2
+)
+h(Dp ) = h(D) · (p −
+p
+Proof. See Propositions 7.3 and 7.4 in [10].
+By applying this formula repeatedly, we get the following corollary:
+Q
+Corollary 2.4. Given a discriminant D < −4 and an odd integer r = ki=1 pekk .
+Define
+ 
+k
+Y
+D
+).
+pkek −1 (pk −
+ϕD (r) =
+pk
+i=1
+
+Then we have the following relation:
+
+h(Dr2 ) = h(D) · ϕD (r)
+An important property of the embedding of C(D) in C(Dr2 ) is that the
+derivedness property behaves well under composition of forms:
+Proposition 2.5. If f1 , f2 ∈ C(Dr2 ) are derived from g1 , g2 ∈ C(D) respectively, then f1 · f2 is derived from g1 · g2 .
+Proof. See Proposition 7.9 in [10]. Buell’s map 1∆ is the map π in our context.
+Corollary 2.6. Suppose f ∈ C(Dr2 ) is derived from g ∈ C(D), where r is odd.
+Let a be the order of g, then the order of f divides a · ϕD (r).
+Proof. The forms in C(Dr2 ) derived from e ∈ C(D) form a subgroup in C(Dr2 ).
+We know from Corollary 2.4 that the order of this subgroup is ϕD (r). Proposition 2.5 implies that f a is derived from e. Therefore, f a·ϕD (r) = e.
+
+3
+
+Application to square-free decomposition
+
+3.1
+
+Forms derived from the identity element e
+
+From this point onwards, D is a positive integer and p is a prime. All our
+discriminants will contain a factor 4, this is to make sure that −4D is a discriminant.
+In this section we will introduce an algorithm that computes the square-free
+decomposition of a given integer that uses class groups with non-fundamental
+7
+
+discriminants. One of the main ingredients is the following proposition. This
+proposition contains the very restricting condition that D > p2 . But, we will
+later see in Lemma 3.6 that we can drop this assumption.
+Proposition 3.1. Suppose we have a reduced form f ∈ C(−4Dp2 ) that is
+derived from e−4D = (1, 0, D) ∈ C(−4D) and f 6∼ e−4Dp2 = (1, 0, Dp2 ). Furthermore, suppose that D > p2 . Then
+f = (p2 , 2pk, k 2 + D)
+for some −p/2 ≤ k ≤ p/2.
+Proof. Using the formulas from (2.1), we see that f is equivalent to
+g = (p2 , 2ph, h2 + D)
+for some 0 ≤ h ≤ p − 1. Let’s check if g is reduced. We have h2 + D ≥ D > p2 ,
+so that is a good start.
+If h ≤ p/2 then |2ph| ≤ p2 , so in this case g is reduced. Reduced forms are
+unique, therefore f = (p2 , 2ph, h2 + D) (not just equivalent,
+ really equal).
+1 −1
+If h ≥ p/2 then we do one reduction step with A = 0 1 :
+g ∼ g2 = (p2 , 2ph − 2p2 , p2 − 2ph + h2 + D) = (p2 , 2p(h − p), (h − p)2 + D).
+
+Then since |2p(h − p)| ≤ |2p(p/2)| = p2 , we see that g2 is reduced. Therefore
+f = (p2 , 2p(h − p), (p − h)2 + D).
+The main takeaway from this proposition is the following factorization plan.
+If we are able to find a non-trivial form in the larger group C(−4Dp2 ), that is
+derived from the trivial form in the smaller group C(−4D), then we can find
+p2 by reading off the first coefficient of the reduced form of f . As mentioned
+before, the condition that D > p2 will be dropped later.
+A version of this proposition can also be stated for composite p. However,
+there are special cases where the complete factor p can’t be read off immediately
+from the first coordinate. We show how to deal with this in Appendix A. We
+recommend finishing this chapter first before reading that appendix.
+It is good to mention that this factorization idea in a general sense is very
+similar to other integer factorization algorithms. For example, in the elliptic
+curve method (ECM) by Lenstra [22], a non-trivial point P on an elliptic curve
+E(Z/nZ) is constructed such that P reduced mod p is the identity element in
+the group E(Z/pZ) of smaller size, where p | n. By computing gcd(Px , n), the
+factor p of n will be found. This will not be the last time that we compare our
+algorithm to the ECM, since there are many similarities.
+The next step is to find a form f that meets the requirements from Proposition 3.1. For this we use one of the many algorithms of Lenstra.
+8
+
+3.2
+
+Schnorr and Lenstra class group factorization
+
+In 1984, Schnorr and Lenstra published a general purpose integer factorization algorithm which they claimed could heuristically factor an integer n in
+O(Ln [1/2, 1]) [32]. We will briefly discuss how the algorithm works.
+Let n be the number you want to factor, possibly square-free. Consider the
+class group C(−4n) and take a random form f ∈ C(−4n). Construct a number
+k that consists of powers of all primes up to some bound B. Now, if f k = e
+m
+and the order of f is even, then g = f k/2 has order 2 for some integer m.
+n
+Forms of order 2 are called ambiguous. They are of the form (m, 0, m
+), with
+n
+gcd(m, m ) = 1, which makes it easy to retrieve a factor of n from them. If this
+was successful and if n is not yet completely factored, then we go again with a
+different f and hopefully find another factor of n.
+This method works as long as the order of C(−4n) is smooth. If it is not
+smooth, then we can try again by considering the class group C(−4ns) for some
+small positive integer s. An ambiguous form in that group will still lead to
+the factorization of n. Repeat this process for different values of s until the
+factorization of n is found.
+Algorithm 1 Schnorr and Lenstra stage 1
+1: function GeneralClassGroupFactorization(n)
+
+p
+e = ln(n)/ ln ln(n))
+3:
+B = n1/(2e)
+4:
+compute the first t primes p1 , . . . , pt up to B
+Qt
+5:
+k = i=2 pei i , where ei = max{v : pvi ≤ p2t }
+6:
+s=1
+7:
+while no factorization found do
+8:
+pick random f ∈ C(−4ns)
+9:
+g = fk
+10:
+if g = e (the identity) then
+11:
+go back and pick a new f
+12:
+end if
+√
+13:
+for 1 ≤ i ≤ log2 ( n) do
+14:
+g = g2
+15:
+if g = e then
+16:
+construct ambiguous forms
+17:
+return complete factorization of n
+18:
+end if
+19:
+end for
+20:
+update s to be the next square-free number after s
+21:
+end while
+22: end function
+2:
+
+9
+
+⊲ Prime bound
+
+Schnorr and Lenstra made the following heuristic assumptions. Assumptions
+a, b are (2.1), (2.2) in [32] respectively. Assumption c is mentioned later in their
+article in equation (4.3). This final assumption turned out to be wrong, which
+we will see later in this chapter. Let Ψ(x, y) be the number of positive integers
+a ≤ x such that a is y-smooth.
+Assumptions 3.2.
+a) The order of a class group of discriminant
+D is at least as likely to be
+√
+smooth as a random integer of size D. More precisely, for all n, t:
+#{m ≤ n : h(−m) |
+
+t
+Y
+
+i=1
+
+pei i }/(0.5n) ≥ #{m ≤
+
+√
+
+n:m|
+
+t
+Y
+
+i=1
+
+√
+pei i }/ n,
+
+where the ei are defined in Algorithm 1.
+b) A significant
+portion of integers are smooth. More explicitly, for all n and
+p
+e ≤ ln(n)/ ln ln(n)) we have that Ψ(n, n1/e )/n ≥ e−e .
+
+c) Given an integer n, the smoothness bounds of h(−4ns) are independent
+for all square-free integers s.
+
+It is good to mention that the Cohen-Lenstra heuristics [14] suggest that the
+odds of finding a class group with a smooth order is actually a bit better than
+that of a random integer of the same size.
+We can now state the main result from Schnorr and Lenstra.
+Theorem 3.3. Assume Assumptions 3.2. Then for all composite integers n,
+Algorithm 1 will completely factor n in expected O(Ln [1/2, 1]) time.
+Proof. See Theorem 5 and the run time analysis section of Chapter 4 from
+[32].
+Unfortunately, in 1992 it was found by Lenstra and Pomerance [23] (Chapter
+11), that the above stated run time was incorrect for a large set of numbers.
+Can you guess which? Numbers that have a large prime square divisor!
+Suppose that n has a divisor p2 , where p is prime. Suppose furthermore
+that p − 1 and p + 1 are both not smooth. Then by Proposition 2.3, we see that
+C(−4ns) is divisible by either p − 1 or p + 1 for all integers s. Therefore, there
+will be no s such that C(−4ns) is smooth.
+Interestingly enough, we will show that by adapting Lenstra’s algorithm
+for integers of this form, we actually get an algorithm that is faster than the
+originally claimed time bound in this special case.
+We have now know that assumption c is incorrect. Therefore, we will use
+the following assumptions instead, where we only tweak assumption c.
+
+10
+
+Assumptions 3.4.
+a) The order of a class group of discriminant
+D is at least as likely to be
+√
+smooth as a random integer of size D. More precisely, for all n, t:
+#{m ≤ n : h(−m) |
+
+t
+Y
+
+i=1
+
+pei i }/(0.5n) ≥ #{m ≤
+
+√
+
+n:m|
+
+t
+Y
+
+i=1
+
+√
+pei i }/ n,
+
+where the ei are defined in Algorithm 1.
+b) A significant
+portion of integers are smooth. More precisely, for all n and
+p
+e ≤ ln(n)/ ln ln(n)) we have that Ψ(n, n1/e )/n ≥ e−e .
+
+c) Given a square-free integer n, the smoothness bounds of h(−4ns) are independent for all square-free integers s.
+These new assumptions are still just conjectures, but now at least the problem with large square divisors is now taken care of. In Section 5.2, we will
+give experimental results that might convince one of the correctness of these
+assumptions.
+We will rephrase Theorem 3.3 so that it uses the new assumptions and it
+can be used for the analysis of our algorithm.
+Theorem 3.5. Assume Assumptions 3.4. Let n be square-free and composite.
+Let
+B = n1/(2e) ∈ O(Ln [1/2, 1/2])
+as stated in Algorithm 1. Then per multiplier s, the algorithm performs O(B)
+compositions. It takes expected O(B) tries to find a suitable s. Afterwards,
+another O(ln(s)(B + s)) compositions are needed to construct the ambiguous
+forms. In total, it takes expected O(B 2 ) = O(Ln [1/2, 1]) compositions to factor
+n.
+Proof. We again refer to the time analysis section of Chapter 4 of [32].
+
+3.3
+
+A new square-free decomposition algorithm
+
+Using the results from Sections 3.1 and 3.2, we can now state the first version of
+our new algorithm that finds the square-free decomposition of a given integer.
+From this point onwards, n = a2 b is an integer with b square-free. The main
+idea is to use Algorithm 1 to find a form f ∈ C(−4n) that is derived from
+e−4b ∈ C(−4b). Then use Proposition 3.1, or Appendix A if a is composite, to
+find the factor a of n. From this the square-free decomposition can be easily
+computed.
+As mentioned before, the assumption that b > a2 is quite limiting. Because
+then h(−4b) will be fairly large, making the algorithm not very efficient. Fortunately, there is a great way to circumvent this problem, by introducing an
+11
+
+integer r with known factorization. In the next lemma we show that we can
+enlarge b with a factor r2 with minimal drawbacks. This will help a lot, since
+then the form f in Proposition 3.1 will be reduced, even if the original b is not
+large compared to a.
+Lemma 3.6. Suppose g ∈ C(−4n) is derived from e ∈ C(−4b). Let r be a
+positive integer with gcd(r, a) = 1. Lift g to some h ∈ C(−4nr2 ) using the
+formulas in (2.1). Then l = hϕ−4n (r) is not only derived from e ∈ C(−4b), but
+also from e ∈ C(−4br2 ).
+Proof. First note that h is derived from e ∈ C(−4b). Suppose h ∈ C(−4nr2 )
+is derived from h2 ∈ C(−4br2 ). Then h2 is also derived from e ∈ C(−4b),
+because Proposition 2.1 implies that h is derived from a unique form in C(−4b).
+Corollary 2.6 now implies that the order of h2 divides ϕ−4b (r).
+C(−4b)
+e
+
+C(−4n)
+g
+
+h2
+
+h
+
+ϕ
+
+(r)
+
+l = hϕ−4n (r)
+
+C(−4br2 )
+
+C(−4nr2 )
+
+h2 −4n
+
+Write r =
+
+Qk
+
+ek
+i=1 pk , then
+
+ϕ−4b (r) =
+
+k
+Y
+
+i=1
+
+pkek −1 (pk −
+
+ 
+ 
+k
+Y
+n
+b
+ek −1
+)=
+) = ϕ−4n (r)
+pk (pk −
+pk
+p
+k
+i=1
+
+since gcd(r, a) = 1. Using Proposition 2.5, we see that l is derived from
+ϕ
+
+h2 −4n
+
+(r)
+
+ϕ
+
+= h2 −4b
+
+(r)
+
+= e ∈ C(−4br2 ).
+
+In the algorithm below, n = a2 b is an integer not divisible by 3 and b2 is an
+upper bound for b. If no good upper bound is known, then a small value can be
+used initially, and it can be incrementally increased if no factorization is found.
+The first part of the algorithm is completely the same as Algorithm 1. The
+difference is that if Lenstra’s algorithm is unable to find the factorization, then
+we do some additional steps which might lead to the square-free decomposition
+of n.
+
+12
+
+Algorithm 2 Square-free decomposition stage 1
+1: function SquareFreeDecomposition(n, b2 )
+
+p
+e = ln(b2 )/ ln ln(b2 ))
+1/(2e)
+3:
+B = b2
+⊲ Prime bound
+4:
+compute the first t primes p1 , . . . , pt up to B
+Qt
+5:
+k = i=2 pei i , where ei = max{v : pvi ≤ p2t }
+6:
+s=1
+√
+7:
+r = 3⌈log3 ( n))⌉
+8:
+while no factorization found do
+9:
+pick random f ∈ C(−4ns)
+10:
+g = fk
+11:
+if g = e (the identity) then
+12:
+go back and pick a new f
+13:
+end if
+√
+14:
+for 1 ≤ i ≤ log2 ( n) do
+15:
+g = g2
+16:
+if g = e then
+17:
+construct ambiguous forms
+18:
+return complete factorization of n
+19:
+end if
+20:
+end for
+21:
+lift g to a form h ∈ C(−4nsr2 ) using the formulas in (2.1)
+22:
+l = hϕ−4ns (r)
+23:
+try to find a2 using the form l and Proposition 3.1 or Appendix A
+24:
+if a2 is √
+found then
+25:
+a = a2 and b = n/a2
+26:
+return a, b
+27:
+end if
+28:
+update s to be the next square-free number after s
+29:
+end while
+30: end function
+2:
+
+Theorem 3.7. Assume Assumptions 3.4. Then for all integers n = a2 b, Algorithm 2 will find the square-free decomposition (and possibly the full factorization) of n in expected time:
+e b [1/2, 1] ln(n) + Lb [1/2, 1/2] ln(n)2 )
+O(L
+
+Proof. Let’s first look at the correctness of the algorithm. We know from Algorithm 1 that the code up to line 20 has a chance to completely factor the integer
+n. This is the case if g is the trivial form in the group C(−4ns). If that is not
+the case, then using Proposition 2.5, we see that there is still a possibility that
+
+13
+
+g is derived from the form e in the underlying group C(−4bs).
+In that case, we know from Lemma 3.6 that the form l in the larger group
+C(−4nsr2 ) is not just derived from e ∈ C(−4bs), but also from e ∈ C(−4bsr2 ).
+Thus, we can now apply Proposition 3.1 or Appendix A with the form l to find
+a2 , because
+bsr2 ≥ r2 ≥ n ≥ a2 .
+Now let’s look at the running time of the algorithm. Until line 20, the code
+is the same as Algorithm 1, except that our prime bound depends on b2 instead
+of n. If b2 is a good approximation of b, then Proposition 2.5 and Theorem 3.5
+imply that we can expect to get a form derived from e in O(Lb [1/2, 1]) group
+e b [1/2, 1] ln(n)) steps if we use a fast composition algorithm
+operations, i.e. O(L
+2
+e
+[33]. Finally, line 21 and 22 can be done in O(ln(n)
+) per value of s that we
+√
+2
+try, since the discriminant of h is O(−n s) and the exponent is O( n). From
+Theorem 3.5 we also know that the expected number of multipliers s that we
+have to try is O(Lb [1/2, 1/2]). Hence, the total expected running time of the
+algorithm in this case is
+e b (n)) := O(L
+e b [1/2, 1] ln(n) + Lb [1/2, 1/2] ln(n)2 ).
+O(ψ
+
+If a good approximation of b is not known, then start with a small value for b2
+e b2 (n)) time. If the algorithm is not successful
+and try to find the factor a2 in O(ψ
+in that time frame, then try again with b2 = 2b2 , etc. A b2 of size b is found
+within log2 (b) steps. Thanks to the definition of Lb , the total complexity is still
+e b (n)).
+O(ψ
+
+Corollary 3.8. Fix ǫ > 0 and assume Assumptions 3.4. Then for all integers
+n = a2 b with b = n1/ǫ , Algorithm 2 will find the square-free decomposition (and
+possibly the full factorization) of n in expected time:
+O(Lb [1/2, 1]) = O(e(1+o(1))
+
+√
+
+ln(b) ln ln(b)
+
+) = O(Ln [1/2,
+
+Proof. First note that for any constant c
+
+p
+1/ǫ]).
+
+p
+Lb [1/2, c] = Ln [1/2, c 1/ǫ].
+
+Therefore, we can hide the factors ln(n) of ψb (n) in the o(1) terms to get
+e b (n)) = O(L
+e b [1/2, 1] + Lb [1/2, 1/2]) = O(L
+e b [1/2, 1]).
+O(ψ
+
+e for the same reason.
+Finally, we can drop the ∼ in O
+
+Remark 3.9. Let’s make some remarks about our new factorization algorithm.
+• In cryptographic applications, integers n = p2 q are sometimes used, where
+
+14
+
+p, q are primes of roughly the same size. Thus a good approximation of
+b ≈ n1/3 is then known. In cases like these we can also choose r smaller:
+r = cn1/6 , for some small c that depends on how much p and q differ. Using
+this r, we still meet the requirement of Proposition 3.1. More generally,
+numbers of the n = pk q are sometimes used in cryptographic systems. Our
+algorithm is especially fast when k is even, because then the square-free
+part of n is only q, compared to pq when k is odd.
+• The order in which we try the different multipliers s might not be optimal in the current presentation. The optimization of this seems to be
+somewhat of an art, we analyze this (experimentally) in Appendix B.
+• Instead of taking r = 3m , we could also take r = 2m for a suitable
+m (we did not state Corollary 2.4 for this case), or r could be r =
+√
+NextPrime( n). The good thing about taking r prime is that r will
+√
+only a little bit bigger than n. With r = 3m for example, you usually
+overshoot it by quite a bit. Smaller r speed up the arithmetic in the group
+C(−4nsr2 ), which is not very important for this version of the algorithm,
+but it will make a practical difference in Chapter 4. However, the complexity analysis of the NextPrime function is somewhat messy, so we left
+it out of this presentation.
+• If we reach line 26 and find the factors a and b, then we can also find the
+complete factorization of b. This is because we can run Algorithm 1 with
+input b, using the same k and s that were used to find a and b. This does
+not produce the full factorization of n, because we haven’t factored a yet.
+√
+But, a ≤ n, so in most cases it will be fairly easy to factor it.
+• As mentioned before, Lenstra’s original algorithm struggled with numbers
+n that have large prime square divisors. We now see that in that case
+we actually have a faster way to find at least the square-free decomposition of n. We can also restore Lenstra’s algorithm to its former glory by
+amending it as follows. Given n, possibly square-free, run Algorithm 2. If
+an ambiguous form is found, then compute the full factorization of n and
+stop. If factors a, b are found such that n = a2 b, then completely factor b
+using Lenstra’s original algorithm, which is possible since b is square-free.
+It is possible that a does contain a square factor. Therefore, we repeat
+this algorithm recursively with the input a. There are at most log2 log2 (n)
+recursion steps. This produces the full factorization of n in expected
+O(Ln [1/2, 1] ln ln(n)) = O(Ln [1/2, 1])
+which is the original running time that Schnorr and Lenstra claimed!
+
+15
+
+• After we discovered the trick of introducing the factor r, we later found out
+that [12] had already done in 2009. In Theorem 3 of that article, Castagnos and Laguillaumie show how to find the square part of the discriminant
+given a form that is derived from e in the underlying group. Another article from 2009 [11] does something similar. Using Coppersmith’s method,
+they show that when given a form that is derived from a form of small
+norm, you can find the square part of the discriminant. An example of
+such a form of small norm is of course e.
+A natural question for both articles is therefore: how can we find a form
+that is derived from e? As we now have seen, Lenstra’s algorithm answers
+this question quite well, which raises the question why this combination
+has not been spotted before. One possible explanation is that Schnorr
+and Lenstra’s algorithm is from 1984, whereas these articles are much
+more recent.
+Now that we have a solid foundation for our factoring algorithm, we will
+look at similar algorithms and try to learn from them to optimize ours.
+
+4
+
+Stage 2
+
+4.1
+
+Introduction
+
+In Algorithm 2 we constructed a large k and computed g = f k for some f ∈
+C(−4ns), we then hoped that this form is derived from e. If not, then we try
+the next s. Our algorithm is an example of algebraic-group factorization, which
+is a more general factorization strategy that works in some other groups as well,
+such as finite fields and elliptic curves.
+In most other groups where this principle can be applied, there is something
+called a ‘stage 2’. If in stage 1 we used primes up to a bound B, then in stage 2
+we extend our prime bound to B2 > B. But, instead of doing exactly the same
+steps with a larger k, we now continue with the g = f k that we computed, and
+we check for every prime p ∈ [B, B2 ] separately if g p is derived from e. The idea
+behind this is that if stage 1 was unsuccessful, then there is a good chance that
+we are just missing one prime factor q of the order of C(−4bs). Then since we
+only are examining one prime p at the time, we might be able to take B2 quite a
+bit larger than B, without having to increase the runtime by a lot. If the factor
+q lies in the interval [B, B2 ], then we find the square-free decomposition of n.
+Note that if there are two (or more) primes q1 , q2 ∈ [B, B2 ] that we are
+missing from the order of C(−4bs), then we are not going to factor n using
+stage 2, since we only look at one prime at the time. In stage 1 this problem
+does not exist. Nevertheless, we will see that on average, having a stage 2
+improves the performance of the algorithm.
+
+16
+
+We of course want to take B2 as large as possible, without having it impact
+the runtime too much. In Section 4.2, we look at a method where we can take
+B2 to be roughly B ln(B). In Appendix C, we will look at algebraic-group
+factorization algorithms that are able to use B2 = B 2 . Unfortunately, we have
+not found such a method for our algorithm, but in that appendix we do present
+possible ways that could lead to such a method.
+
+4.2
+
+Generic stage 2
+
+The first known ‘stage 2’ for algebraic-group factorization algorithms was already discovered in 1974 in Pollard’s classic paper [30], Chapter 4. There, it
+was applied in the group (Z/nZ)∗ , which uses the Chinese remainder theorem to
+see that this group has a subgroup F∗p , where p is prime and p | n. If an element
+in b ∈ (Z/nZ)∗ is found that is derived from 1 ∈ F∗p , then the factor p can be
+found. Derived in this context means that b = 1 mod p, hence gcd(b − 1, n) will
+provide p. Such b can be found by computing b = ak mod n for a large highly
+composite k and some random a, precisely as what we saw in Algorithms 1, 2.
+Because of the order of the group F∗p , methods like Pollard’s are called p − 1
+algorithms.
+After computing b = ak mod n, Pollard continues by first precomputing
+2 4
+b , b , . . . , b2m , where 2m is the largest gap between two consecutive primes in
+the interval [B, B2 ]. The best known unconditional bound on m is O(B20.525 )
+[1]. However, most conjectured bounds are much smaller, for example Cramér’s
+bound is O(ln(B2 )2 ) [17].
+Let pt+1 ≤ · · · ≤ pu be the primes in the interval [B, B2 ]. We can now
+compute br mod n for each prime r ∈ [B, B2 ] by first computing c = bp1 mod
+n in O(ln(B)) multiplications mod n. Afterwards, we only have to do one
+multiplication mod n to compute bp2 = c · bp2 −p1 mod n, since we precomputed
+bp2 −p1 mod n. Continuing like this covers all primes in the interval [B, B2 ] in
+O(π(B2 )−π(B)) multiplications mod n, where π is the prime counting function.
+The prime number theorem states that π(x) ≈ x/ ln(x) for all large positive
+integers x. Therefore, this stage 2 takes O(B2 / ln(B2 )) multiplications mod n.
+If we take B2 = B ln(B) then the number of multiplications becomes O(B).
+This is the same number of multiplications as in stage 1. Brent [8] (Section 9.2)
+mentions that using this stage 2 improves the runtime of the p − 1 algorithm by
+a factor roughly ln ln(p).
+We call this the ‘generic’ stage 2 because it can be used in all groups that
+follow the algebraic-group factorization strategy. So, let’s apply it to our algorithm. We won’t state Algorithm 2 here again, Algorithm 3 will take place
+between lines 27 and 28 of Algorithm 2.
+Unfortunately, the compositions of stage 2 will take place in the larger group
+C(−4nsr2 ), because otherwise we would have to lift the form g p to this group
+
+17
+
+for every prime p in the interval [B, B2 ], which is slower. This is where it is
+useful to take r as small as possible.
+Algorithm 3 Generic stage 2 continuation
+1: function Stage2(n, b2 )
+
+B2 = B ln(B)
+compute the primes pt+1 , . . . , pu in the interval [B, B2 ]
+m=
+max (pi+1 − pi )
+
+2:
+3:
+4:
+
+t+1≤i≤u−1
+
+precompute l2 , l4 , . . . , lm ∈ C(−4nsr2 )
+6:
+p−1 = 0
+⊲ the previous prime
+7:
+for p ∈ [pt+1 , . . . , pu ] do
+8:
+step = p − p−1
+9:
+l2 = l2 · lstep
+⊲ if p−1 6= 0 then lstep is precomputed
+10:
+try to find a2 using the form l2 and Proposition 3.1 or Appendix A
+11:
+if a2 is found then
+√
+12:
+compute a = a2 and b = n/a2
+13:
+return a, b
+14:
+end if
+15:
+p−1 = p
+⊲ update the previous prime
+16:
+end for
+17: end function
+5:
+
+In the next proposition we summarize what we know about Algorithm 3.
+Proposition 4.1. Assume that the largest prime gap in [B, B2 ] is polynomial in
+ln(B2 ). Then the generic stage 2 continuation of Algorithm 2 does not change
+the complexity per s that we try. The number of class groups that have to be
+tried to factor n = a2 b this way is reduced by a factor of about ln ln(b).
+The generic stage 2 continuation uses B2 = B ln(B). This is not bad, but
+there are methods used in other algebraic-group factorization algorithms that
+use a whopping B2 = B 2 , or something close to it, and still only take O(B) group
+operations. This provides a significant speedup, as can be seen in Proposition
+C.1, so we want to be able to do this as well. Unfortunately, we were not able
+to find such a good stage 2 for our algorithm. However, we do explore some
+interesting possible approaches in Appendix C.
+
+5
+
+Timings and comparison to other algorithms
+
+5.1
+
+Complexity comparisons
+
+In this section we will compare our algorithm to three other algorithms: the
+elliptic curve method (ECM), the number field sieve (NFS) and the lattice
+18
+
+methods mentioned in Chapter 1. Let’s start with the ECM.
+As we saw in Theorem 3.7, given an integer n = a2 b, we can compute the
+square-free decomposition of n in expected time
+e b [1/2, 1] ln(n) + Lb [1/2, 1/2] ln(n)2 )
+O(L
+
+The ECM works a bit differently, if p is √
+the smallest prime factor of n, then the
+e
+ECM can find p in expected O(Lp [1/2, 2] ln(n)) time [22] if fast arithmetic is
+used. Because of the o(1) in the exponent of the Lp function, the logarithmic
+improvement provided by the better stage 2 of the ECM is not shown in the
+complexity.
+Both algorithms hope to find a group of smooth order. In our
+√ algorithm, we
+work with the class groups C(−4bs), which have size roughly b. In the ECM,
+you work with elliptic curves E(Fp ), which have size roughly p. This is why the
+√
+2 term is not present in the L function of the complexity of our algorithm.
+It is good to mention that just like the ECM, there is a natural way to
+parallelize our algorithm. If you have m processors, give each of them a different
+s and try to factor n using the class groups C(−4ns). This will provide a linear
+speed-up in m.
+If the factors a, b of n are not prime, then the ECM will most likely find
+some factor of n before our algorithm computes the square-free decomposition.
+However, the ECM might take longer to find the complete square-free decomposition, depending on the structure of the remaining prime factors of n. If n is of
+the form n = p2 q, where p, q are primes, then purely looking at the asymptotic
+complexities, our method will be faster than the ECM when p2 > q. In practice,
+we might need p2 to be even larger compared to q, since the ECM has a better
+stage 2 and many more optimizations.
+From now on, we will assume that n is of the form n = p2 q, where p, q
+are primes of roughly the same size. We do this, because this is the hardest
+and probably the most common setting where our algorithm can be used. As
+mentioned in Chapter 1, there are quite a few cryptographic systems that use
+numbers of this form, where they rely on the assumption that these numbers
+are hard to factor. In this case p2 is much larger than q, so our algorithm will
+be faster than the ECM when n is large enough.
+The number field sieve completely factors its input n in expected time
+O(Ln [1/3, (64/9)1/3]) = O(e(64/9+o(1))
+
+1/3
+
+ln(n)1/3 ln ln(n)2/3
+
+)
+
+[18], page 288. From Corollary 3.8, we know that our method takes expected
+time
+√
+√
+p
+O(Ln [1/2, 1/3]) = O(e( 1/3+o(1)) ln(n) ln ln(n) )
+
+The exponent of ln(n) in the complexity of the NFS is smaller than in ours.
+
+19
+
+Therefore, when n is large enough, the NFS will factor n faster than our algorithm, even when n is in this special
+p form. However, since the constant
+1/3
+(64/9)
+≈ 1.92 is much bigger than 1/3 ≈ 0.58, our method will likely be
+faster up to some point. If we solve for n in the equation
+p
+Ln [1/3, (64/9)1/3] = Ln [1/2, 1/3]
+
+then we find the massive n ≈ 105613 . This should be taken with a grain of
+salt, since this does not take into account any optimizations nor the o(1) terms.
+But, it seems reasonable to assume that for integers n = p2 q of cryptographic
+size, our method will be faster than the NFS. Table 2 also supports this claim,
+because factoring integers of 150 digits on a standard computer will take more
+than a few hours using the NFS.
+Finally, let’s have a look at the lattice methods that can factor integers of
+the form n = pr q. If p and q are primes of roughly the same size, then a
+e 1/(r+1)2 ) time [20], Section 1.3.
+lattice attack can factor n in deterministic O(n
+e 1/9 ) time, which is not subThis means that for r = 2, this method takes O(n
+exponential in ln(n) and therefore slower than our method if n is large enough.
+But, if r is large enough, then the lattice methods will be faster. Especially
+if r is odd, since then the square-free part of n is pq instead of p, significantly
+slowing down our algorithm.
+
+5.2
+
+Speed in practice
+
+We implemented our algorithm in Magma and ran it on a fairly standard desktop (3.35 GHz). Our basic implementation can be found in Appendix D. In
+Table 1 we compare three algorithms:
+1. Our complete algorithm, i.e. the combination of Algorithm 2 with the
+generic stage 2 continuation presented in Algorithm 3.
+2. Only stage 1 of our algorithm, i.e. Algorithm 2.
+3. The elliptic curve method (ECM). We used the optimized built-in version
+of Magma.
+The numbers that are were factored to create this table were of the form n = p2 q,
+where p, q are primes of roughly the same size.
+
+20
+
+q ≈ 1015
+
+q ≈ 1020
+
+q ≈ 1025
+
+q ≈ 1030
+
+q ≈ 1035
+
+Mean time
+with stage 2
+
+0.11
+
+0.80
+
+5.16
+
+30.30
+
+135.91
+
+Median time
+with stage 2
+
+0.07
+
+0.50
+
+3.54
+
+23.04
+
+80.52
+
+Mean time
+only stage 1
+
+0.16
+
+1.63
+
+11.65
+
+66.71
+
+357.74
+
+Median time
+only stage 1
+
+0.10
+
+0.98
+
+7.80
+
+43.91
+
+267.61
+
+Mean ECM
+time
+
+0.07
+
+1.01
+
+14.15
+
+141.78
+
+1549.16
+
+Median ECM
+time
+
+0.05
+
+0.65
+
+11.05
+
+102.76
+
+832.52
+
+Number of
+n’s factored
+
+100
+
+100
+
+100
+
+100
+
+50
+
+Table 1: Comparison between factorization algorithms, in seconds
+We see that for smaller inputs the ECM is faster than our method, but for
+q ≥ 1020 our method becomes significantly faster. The fact that the ECM is
+faster for smaller inputs can be explained by the many years of optimizations
+that were done to improve the method.
+If the reader has tried to avoid statistics as much as the author, then they
+might be wondering why the mean times seem to be larger than the median
+times. However, this is explained by the fact that in an exponential distribution,
+the mean is about 1/ ln(2) times the median [34]. For example, for q = 1030 we
+have 23.04/ ln(2) = 33.24 ≈ 30.30.
+Our method that picks the multipliers s is quite straightforward, start at
+s = 1 and after each round go to the next square-free value. In Appendix B we
+present heuristic arguments and numerical results that suggest that there are
+other strategies to choose your multipliers s that on average improve the runtime
+of the algorithm. This improvement probably won’t change the complexity of
+the algorithm, but it can make a difference in practice.
+For the remainder of this section, we place our focus on our complete algorithm. In Table 2, the numbers n that were factored were of the same form as
+in Table 1. We see that if n has 150 digits, then on average we can factor it in
+about 3 hours.
+21
+
+q ≈ 1020
+
+q ≈ 1030
+
+q ≈ 1040
+
+q ≈ 1050
+
+Mean time
+
+0.72 s
+
+33.63 s
+
+9.74 m
+
+174.47 m
+
+Median time
+
+0.54 s
+
+20.55 s
+
+7.20 m
+
+87.69 m
+
+Successful in
+stage 1
+
+27%
+
+26%
+
+20%
+
+24%
+
+Successful in
+stage 2
+
+73%
+
+74%
+
+80%
+
+76%
+
+Mean number
+of groups
+
+6.19
+
+26.80
+
+63.54
+
+206.36
+
+Median number
+of groups
+
+5
+
+17
+
+47
+
+103
+
+Number of
+n’s factored
+
+100
+
+100
+
+50
+
+25
+
+Table 2: Timing of Algorithm 2 extended with Algorithm 3
+Some notable examples: when we used
+q = 37294202675688843722966391031920296857220275388239,
+the algorithm finished within 43 seconds, this is because the very first group
+that we tried was successful (in stage 2). On the contrary,
+q = 53328961473418475894520883222727806445395016777723
+took more than 13 hours, when finally the 965th group was successful (s = 1581).
+Upon closer inspection, we see that
+h = h(−4 · 1581 · q) = 184735851610543000235261184 =
+28 · 3 · 19 · 113 · 349 · 6359 · 25031 · 39461 · 51109.
+
+We used B = 229158, which is bigger than all of the prime factors of h, therefore
+stage 1 was successful. However, if we had a method where we could have taken
+
+22
+
+B2 = B 2 , then we would have been done after 51 groups (s = 82), since
+h(−4 · 82 · q) = 121744820463339475628644536 =
+24 · 5 · 7 · 32633 · 35993 · 153521 · 1161878987.
+
+We see that 1161878987 > B and also 1161878987 > 2828306 ≈ B ln(B). But,
+1161878987 < 52513388964 = B 2 . If we had access to such a method, then this
+factorization would have taken about 45 minutes instead of 13 hours.
+
+23
+
+A
+
+Algorithm 2 for composite square factors
+
+The purpose of this appendix is to provide a version of Algorithm 2 that also
+works for a, b both possibly composite, where n = a2 b. We recommend finishing
+Chapter 3 first before reading this appendix.
+Let’s first look at what Proposition 3.1 becomes in this setting. The main
+difference is that the form f can now also be derived from e that lies in a
+larger group than C(−4b). There can be many intermediate groups between
+C(−4b) and C(−4a2 b) if a has many prime factors. In the next lemma we
+compose transformations from (2.1). We restrict ourselves to transformations
+with h 6= ∞, which will make sense in the proof of Proposition A.2.
+Lemma A.1. Suppose f ∈ C(−4a2 b) is derived from g ∈ C(−4b) using the
+following transformations (see (2.1)), starting from left to right:
+
+p1
+0
+
+
+
+h1
+p
+,..., r
+1
+0
+
+hr
+1
+
+
+
+where the pi are primes (not necessarily distinct) and p1 · · · pr = a and 0 ≤ hi ≤
+pi − 1 for all i. Then the transformation matrix of determinant a that maps g
+to f can be written as
+
+a
+0
+
+h
+1
+
+
+
+where
+
+h=
+
+r
+X
+i=1
+
+hi
+
+i−1
+Y
+
+pj
+
+j=1
+
+Furthermore, 0 ≤ h ≤ a − 1.
+Proof. This can be proven by doing induction on r, the number of prime factors
+of a.
+We can now state and prove the composite analogue of Proposition 3.1.
+Proposition A.2. Suppose we have a reduced form f ∈ C(−4a2 b) that is derived from e−4b = (1, 0, b) ∈ C(−4b) and f 6∼ e−4a2 b = (1, 0, a2 b). Then there
+exists a maximal b2 = ( aa2 )2 b for some a2 | a, such that f is derived from e−4b2 ,
+and if b2 > a22 , then
+f = (a22 , 2a2 k, k 2 + b2 )
+for some −a2 /2 ≤ k ≤ a2 /2.
+Proof. Let b2 = ( aa2 )2 b be maximal such that f is derived from e = e−4b2 . We
+know that f can be derived from e by repeatedly applying the formulas from
+(2.1) for each prime factor of a2 . Claim: only the transformations with h 6= ∞
+in (2.1) are used to produce f from e.
+In the chain of transformations from e to f , suppose we have an intermediate
+
+24
+
+form
+f2 ∈ C(−4a23 b2 ) = C(−4(
+
+a · a3 2
+) b)
+a2
+
+which is produced from e using the prime factors of a3 = p1 · · · pr | a2 , and
+suppose only transformations of the form
+
+p1
+0
+
+
+
+h1
+p
+,..., r
+1
+0
+
+hr
+1
+
+
+
+were used up to this point. Suppose furthermore that the next prime p | a2 in
+the chain does use h = ∞ to produce f3 . We know from Lemma A.1 that the
+transformation from e to f2 is of the form
+
+a3
+0
+
+h
+1
+
+
+
+with h =
+
+r
+X
+
+hi
+
+i=1
+
+i−1
+Y
+
+pj
+
+j=1
+
+Therefore, the transformation from e to f3 can be written as
+
+a3
+0
+
+
+h
+1
+1
+0
+
+0
+p
+
+
+
+
+a3
+=
+0
+
+
+hp
+p
+
+However, there is another way to produce f3 from e. Namely, if we instead start
+with the prime p and use h = ∞ again, then we produce
+f2′ = (1, 0, p2 b2 ) = e−4p2 b2
+from e. Next, we produce f3′ by using the following transformations for the
+prime factors of a3 :
+
+p1
+0
+
+
+
+p · h1
+p
+,..., r
+1
+0
+
+p · hr
+1
+
+
+
+where p · hi can be computed modulo pi for all i. Then using Lemma A.1 again,
+we see that the transformation from e to f3′ is:
+
+1
+0
+
+0
+p
+
+
+a3
+0
+
+hp
+1
+
+
+
+=
+
+
+
+a3
+0
+
+
+hp
+p
+
+Hence f3 = f3′ . We now see that f3 is also derived from e′ = e−4p2 b2 . Therefore,
+f is also derived from e′ . This contradicts the assumption that b2 was maximal,
+hence the claim is proven.
+To finish the proof of the proposition, we use Lemma A.1 one final time, together
+with the claim, to see that the transformation from e = (1, 0, b2 ) to f is of the
+
+25
+
+form
+
+
+a2
+0
+
+
+l
+1
+
+for some 0 ≤ l ≤ a2 − 1.
+
+We are now in the same situation as Proposition 3.1. By repeating the steps of
+that proof we see that f is either equal to
+(a22 , 2a2 l, l2 + b2 ) or to
+
+(a22 , 2a2 (l − a2 ), (l − a2 )2 + b2 ).
+
+Proposition A.3. Algorithm 2 can be extended to work for integers n having
+composite square factors, without increasing the asymptotic complexity.
+Proof. Until line 23 of Algorithm 2, we don’t have to make any adjustments. In
+line 23, if the x2 coefficient of l is a2 , then we can continue as usual. But, as we
+saw in Proposition A.2, this coefficient can also be a divisor of a2 , say a22 . This
+happens when our highly composite integer k not just covers the prime factors
+of h(−4bs), but also those of h(−4( aa2 )2 bs).
+To get the full factor a of n, we can use Lenstra’s original Algorithm 1, together
+with the same s and k, to completely factor b2 = ( aa2 )2 b. By reading off the
+square part of the factorization of b2 , we get aa2 . Combining this with the factor
+a2 we found earlier, we now have computed the square-free decomposition of
+n = (a2 aa2 )2 b. Note that in this case, the only part of n that we possibly don’t
+have the full factorization of is a2 .
+We only added a single iteration of Algorithm 1 to factor b2 . We know from
+e b [1/2, 1] ln(b2 )) and not just O(Lb2 [1/2, 1]),
+Theorem 3.5 that this only takes O(L
+since we use the same prime bound B and multiplier s that we also applied in
+Algorithm 2 with input n = a2 b. Therefore, the asymptotic complexity of this
+algorithm is the same as Algorithm 2.
+
+B
+
+Choice of multipliers s
+
+In Algorithm 2, the order of the multipliers s that we try is fairly straightforward:
+start at 1 and increase
+each round to the next square-free number. We hope
+√
+that h(−4bs) ≈ 2 bs/π is smooth. So, the smallest values of s should be tried
+first right? Well, numerical ‘evidence’ and heuristic arguments suggest that this
+is not always the case.
+One of those arguments is that the number of prime factors of the discriminant strongly influences the number of factors 2 of the class number.
+Proposition B.1. Let D be a negative discriminant, let r be the number of
+distinct odd primes dividing D. Define the number µ as follows: if D = 1 mod 4,
+then µ = r, and if D = 0 mod 4, then D = −4m, where m > 0, and µ is
+determined by the following table:
+
+26
+
+n
+m = 3 mod 4
+m = 1, 2 mod 4
+m = 4 mod 8
+m = 0 mod 8
+
+µ
+r
+r+1
+r+1
+r+2
+
+Then the class group C(D) has exactly 2µ−1 elements of order ≤ 2.
+Proof. See Proposition 3.11 of [16].
+If C(D) has 2µ−1 elements of order ≤ 2, then C(D) is divisible by 2µ−1 .
+Therefore, if n = a2 b and D = −4bs, then we only need that h(−4bs)/2µ−1 is
+smooth to find the square-free factorization of n. If we have an s = 1 mod 4
+with gcd(s, b) = 1, then heuristically we might expect that h(−4bs) is more
+√
+likely to be smooth than h(−4b) if 2r > s, where r is the number of distinct
+odd prime factors of s. Funnily enough, this suggests that taking s = 1 to be
+your first attempt is actually quite bad, since it has no prime factors!
+However, it is clear that this heuristic argument doesn’t give the complete
+picture. For example, if C(−4b) contains a group isomorphic to Z/4Z, then it
+is possible that C(−4bs) no longer has such a subgroup, but instead contains
+the group Z/2Z × Z/2Z. In this case, h(−4bs) has the same number of factors
+2 as h(−4b). So, from that perspective, the probability that it is smooth has
+not increased. But, as we will see in the upcoming tables, it seems that having
+a lot of divisors in your multiplier s is generally good.
+In both tables below we constructed 40.000 integers n of the form n = p2 q,
+where p and q are primes which are both roughly 1010 . In Table 3 we only took
+primes q = 1 mod 4, and in Table 4 we only took primes q = 3 mod 4. Using our
+complete algorithm, we tested each square-free s ≤ 30 to see if a factorization
+was found. For s = 1 we constructed an additional 360.000 integers n, for a
+total of 400.000 integers to factor, to ensure the accuracy of the probability
+estimation for s = 1.
+The column s denotes the multiplier that was used. The column ‘prob’ is
+the observed probability that the factorization was successful with the given s.
+The final column shows the ratio of the success probability of the given s to the
+success probability for s = 1.
+
+27
+
+s
+1
+2
+3
+5
+6
+7
+10
+11
+13
+14
+15
+17
+19
+21
+22
+23
+26
+29
+30
+
+prob
+63.63%
+59.92%
+63.77%
+66.66%
+58.44%
+59.13%
+55.15%
+56.50%
+60.90%
+62.90%
+59.79%
+62.50%
+53.43%
+61.86%
+50.67%
+52.34%
+49.27%
+56.93%
+64.17%
+
+ratio to s = 1
+1.000
+0.942
+1.002
+1.048
+0.919
+0.929
+0.867
+0.888
+0.957
+0.989
+0.940
+0.982
+0.840
+0.972
+0.796
+0.823
+0.774
+0.895
+1.009
+
+s
+1
+2
+3
+5
+6
+7
+10
+11
+13
+14
+15
+17
+19
+21
+22
+23
+26
+29
+30
+
+Table 3:
+Multipliers for q = 1 mod 4
+
+prob
+54.75%
+59.49%
+62.36%
+60.65%
+65.23%
+64.35%
+55.16%
+54.93%
+55.72%
+60.41%
+66.54%
+54.12%
+51.11%
+64.99%
+58.45%
+58.05%
+50.07%
+51.58%
+62.86%
+
+ratio to s = 1
+1.000
+1.087
+1.139
+1.108
+1.192
+1.175
+1.008
+1.003
+1.018
+1.103
+1.215
+0.989
+0.934
+1.187
+1.068
+1.060
+0.915
+0.942
+1.148
+
+Table 4:
+Multipliers for q = 3 mod 4
+
+We see that when q = 1 mod 4, then s = 1 is not too bad, but when q =
+3 mod 4, it does not seem to be the best starting multiplier. As we would
+expect from Proposition B.1, the success probability is increased when s has
+many prime factors and when qs = 1 mod 4. In Table 3, we see that s = 5
+√
+performs better than s = 1, but our heuristic only predicted this if s > 2r ,
+which is not the case here. Therefore, it might be extra important that s has
+many prime factors. For more on the two-part of the class group, see [7].
+Another way to improve the probability that h(−4bs) is smooth is by taking multipliers s such that h(−4bs) is smaller than average. We can try to
+accomplish this by using the class number formula [19].
+Theorem B.2. Let D be a negative discriminant. Then
+√
+p
+−D Y
+
+h(D) =
+π
+p− D
+p
+p
+
+where the infinite product runs over all primes p and where
+symbol.
+
+D
+p
+
+
+
+is the Kronecker
+
+We can use this formula as follows. Given an integer n = a2 b, we can very
+28
+
+
+
+conveniently compute −4n
+= −4b
+for some small primes pi . If we now choose
+pi
+pi
+multipliers s such that for most of the symbols:
+ 
+
+
+s
+−4b
+=−
+(B.1)
+pi
+pi
+then we expect h(−4bs) to be relatively small on average.
+Given a set of primes pi , it is easy to find multipliers s such that (B.1) holds
+for all i by applying the Chinese remainder theorem. But, you have to find the
+balance between the size of s and how much you gain from using Theorem B.2.
+This seems to be a non-trivial problem, since it also depends on the number of
+prime factors of s, as we saw in Tables 3, 4. We won’t solve this problem in this
+article, but we do provide some more numerical ‘evidence’ that suggests that
+this method helps in finding the square-free decomposition of n faster.
+The next two tables have the same structure as Tables 3, 4. We also generated the same number of integers n = p2 q. However, the condition on the
+primes q that we consider
+In Table 5 we only take primes q
+ is different.
+
+−q
+−q
+=
+=
+=
+1.
+In Table 6 we take primes
+that satisfy: −q
+3
+5
+7
+
+ q with
+−q
+−q
+−qs
+−q
+=
+=
+=
+−1
+instead.
+The
+new
+column
+‘symbols
+3
+5
+7
+r ’ denotes
+the values of the three Legendre symbols for the primes r = 3, 5, 7.
+s
+1
+2
+3
+5
+6
+7
+10
+11
+13
+14
+15
+17
+19
+21
+22
+23
+26
+29
+30
+
+prob
+51.58 %
+64.28 %
+65.35 %
+74.01 %
+62.10 %
+54.75 %
+56.69 %
+55.59 %
+58.91 %
+58.66 %
+58.62 %
+65.69 %
+48.23 %
+60.16 %
+51.02 %
+59.64 %
+53.46 %
+54.09 %
+59.71 %
+
+ratio to s = 1
+1.000
+1.246
+1.267
+1.435
+1.204
+1.062
+1.099
+1.078
+1.142
+1.137
+1.136
+1.273
+0.935
+1.166
+0.989
+1.156
+1.036
+1.049
+1.157
+
+symbols −qs
+r
+(1, 1, 1)
+(-1, -1, 1)
+(0, -1, -1)
+(-1, 0, -1)
+(0, 1, -1)
+(1, -1, 0)
+(1, 0, -1)
+(-1, 1, 1)
+(1, -1, -1)
+(-1, 1, 0)
+(0, 0, 1)
+(-1, -1, -1)
+(1, 1, -1)
+(0, 1, 0)
+(1, -1, 1)
+(-1, -1, 1)
+(-1, 1, -1)
+(-1, 1, 1)
+(0, 0, 1)
+
+
+
+Table 5: Effect of Legendre symbols on multipliers, part 1
+
+29
+
+s
+1
+2
+3
+5
+6
+7
+10
+11
+13
+14
+15
+17
+19
+21
+22
+23
+26
+29
+30
+
+prob
+66.68 %
+55.27 %
+61.18 %
+53.05 %
+63.44 %
+68.29 %
+53.63 %
+55.58 %
+58.19 %
+65.59 %
+61.98 %
+50.75 %
+57.06 %
+71.64 %
+57.56 %
+50.82 %
+46.77 %
+53.87 %
+62.84 %
+
+ratio to s = 1
+1.000
+0.829
+0.918
+0.796
+0.951
+1.024
+0.804
+0.834
+0.873
+0.984
+0.930
+0.761
+0.856
+1.074
+0.863
+0.762
+0.701
+0.808
+0.942
+
+symbols −qs
+r
+(-1, -1, -1)
+(1, 1, -1)
+(0, 1, 1)
+(1, 0, 1)
+(0, -1, 1)
+(-1, 1, 0)
+(-1, 0, 1)
+(1, -1, -1)
+(-1, 1, 1)
+(1, -1, 0)
+(0, 0, -1)
+(1, 1, 1)
+(-1, -1, 1)
+(0, -1, 0)
+(-1, 1, -1)
+(1, 1, -1)
+(1, -1, 1)
+(1, -1, -1)
+(0, 0, -1)
+
+
+
+Table 6: Effect of Legendre symbols on multipliers, part 2
+It indeed seems that negative symbols imply a increased probability of finding the square-free factorization. Also as expected, the symbols for the smallest
+primes r are the most important, since they have the biggest impact in the
+formula of Theorem B.2. We also again see the effect of the number of prime
+factors of s. Whether the same patterns still hold when the size of q increases
+has to be analyzed more thoroughly another time.
+One might have noticed that we have skipped the very small prime r = 2.
+This prime (as usual) behaves a bit different than the other primes. The even
+prime is also quite important, since it has the largest impact in the class
+ number
+= −1 for
+formula. When q = 3 mod 4, it is generally favorable to have −q
+2
+finding a factorization, as one might expect. However, when q = 1 mod 4, then
+−q is no longer
+tomake it valid. This
+ a discriminant, so have to multiply it by 4 −q
+=
+0,
+so
+one
+might
+think
+that
+the
+value
+of
+has no impact
+on
+makes −4q
+2
+2
+
+the probability of factorization. However, in practice it seems that −q
+=
+−1
+is
+2
+actually worse in this case than +1. Even though the number of forms of order
+2 seem roughly equal in both cases, in the former case there appears to be quite
+often a form of higher 2-power order, which is beneficial for the factorization.
+The idea of carefully choosing the groups that you try is again quite similar to
+the ECM. For example, special curves are chosen that are known to be divisible
+
+30
+
+by 12 or 16 [2], improving the probability of finding a factor. The idea to look
+for small class groups does not have a direct elliptic equivalent though, since the
+order of an elliptic curve modulo a prime p always lies in the limited (compared
+to class groups) interval of
+√
+√
+[p + 1 − 2 p, p + 1 + 2 p]
+[18], Theorem 7.3.1.
+In conclusion, there is very likely a way to choose your multipliers s in a
+different order than in Algorithm 2 that performs better on average. But, it is
+also clear that it requires further analysis to determine such a strategy. Not to
+forget that this strategy might also change when the size of the square-free part
+of n gets larger. Very interesting nevertheless!
+
+C
+
+Searching for a better stage 2
+
+In this appendix we will discuss some methods that are used in other algebraicgroup factorization algorithms where a better stage 2 is known. We will try
+to make one these methods work in our own algorithm. The first one of these
+methods can be found in the article from Schnorr and Lenstra [32].
+
+C.1
+
+Pollard rho
+
+In the second stage of their factoring algorithm, Schnorr and Lenstra employ a
+Pollard rho type of method. Let us briefly discuss this method and see if we can
+use it in our own algorithm. In Algorithm 1, we compute a form g that we hope
+will be the identity element. If not, suppose that it has prime order q, where
+q ∈ [B, B2 ].
+Define a random function ρ : hgi −→ hgi, where hgi is the subgroup of order
+q in C(−4ns) containing the powers of g. In their article, Schnorr and Lenstra
+describe a few of those functions ρ. They all take a form h ∈ hgi and compose
+it with a power of g, depending on what the coefficients of the reduced form of
+h are. For example, given a reduced form h = (a, b, c), define
+(
+p
+h2
+if a ≤ ∆(h)/4,
+(C.1)
+ρ(h) =
+h · g otherwise.
+There are some more complicated mappings ρ in the article of Schnorr and
+Lenstra that might perform better in practice (i.e. they are more random), but
+the idea is the same.
+Given the initial form g, we can repeatedly apply ρ to it to create a chain:
+g, ρ(g), ρ(ρ(g)), . . . . We know from [18] Section 5.2.1, that if ρ is sufficiently
+random, then we can expect that this chain returns to a previously encountered
+31
+
+√
+√
+form after O( q) ⊆ O( B2 ) steps, after which it repeats that cycle. Using a
+√
+cycle detection algorithm, we can find such a collision in O( B2 ) applications
+of ρ. Note that the chain does not necessarily have to return to g.
+By carefully storing the exponent of the power of g that was multiplied to
+the initial form, the collision provides a relation of the form g x = g y , where
+x 6= y. Then q | (x − y), so the ambiguous forms can be constructed and n can
+be factored.
+To compute one step in the cycle, we need to compute one composition in
+the class group. Therefore, if we take B2 = B 2 , then stage 2 will take O(B)
+compositions, just like stage 1. Lenstra [32] page 300, mentions that on average
+this provides a speedup of roughly a factor ln(n)/ ln ln(n), compared to only
+using stage 1. Summarizing, we have the following proposition.
+Proposition C.1. Algorithm 1 can be extended using a random map in C(−4ns)
+to factor n, without increasing the asymptotic run time per s that we try. It will
+factor n if the form produced by stage 1 has order less than B 2 . The number
+of class groups that have to be tried to factor n this way is reduced by roughly a
+factor ln(n)/ ln ln(n).
+Algorithm 2 also takes place in class groups, so surely we can just use the
+same method to get this very nice speedup? Well, not quite. The difference
+is that we don’t seek a collision in the big group C(−4ns), but in underlying
+group C(−4bs) instead. We need a random function ρ that has the following
+property: given f1 , f2 ∈ C(−4ns),
+π(f1 ) = π(f2 ) =⇒ π(ρ(f1 )), π(ρ(f2 ))
+
+(C.2)
+
+where π is the projection map π : C(−4ns) −։ C(−4bs) from Section 2.2. This
+property is necessary because otherwise the cycle created by ρ won’t repeat fast
+enough in the underlying group C(−4bs). The random function in (C.1) does
+not have this property, so we can’t use it. But, that doesn’t mean of course that
+there is not another map that does tick all of the boxes.
+In 1996, Okamoto and Peralta [29] introduced a variant of the elliptic curve
+method (ECM) that is specialized for numbers of the form p2 q, where p, q are
+primes and q is relatively small. This variant works the same as the ECM in
+stage 1: take some point P on an elliptic curve modulo n and compute Q = [k]P
+for some large smooth k and hope to find p or q. For stage 2, a random map is
+defined using the Jacobi Symbol. Note that for every a 6= 0 mod p, we have
+   
+a
+a
+=
+.
+(C.3)
+n
+q
+From this, we can define a random map ρ : hQi −→ hQi as follows:
+
+32
+
+ρ(R) =
+
+(
+
+Rx
+n
+
+
+
+[2]R
+
+if
+
+R+Q
+
+otherwise.
+
+= 1,
+
+(C.4)
+
+Because of (C.3), this map satisfies the elliptic equivalent of property (C.2). This
+means that if the order of Q in E(Fq ) is r, then the cycle Q, ρ(Q), ρ(ρ(Q)), . . .
+√
+will repeat in E(Fq ) after O( r) steps. Hence B2 = B 2 can also be chosen in
+this algorithm. If r < B 2 then the factor q will most likely be obtained.
+This approach seems very promising at first for our algorithm, because we
+can do something similar in class groups using assigned characters.
+Definition C.2. Let D be a negative discriminant and let p1 , . . . , pr be the
+distinct odd prime factors of D. Then define:
+ 
+a
+χpi (a) =
+,
+for a prime to pi , for i = 1, . . . , r
+pi
+ 
+−1
+,
+for a odd
+δ(a) =
+a
+ 
+2
+ǫ(a) =
+,
+for a odd
+a
+The functions χ1 , . . . , χr are always part of the assigned characters. If D =
+0 mod 4, then there can be additional ones. Write D = −4n, then:
+n
+n = 3 mod 4
+n = 1 mod 4
+n = 2 mod 8
+n = 6 mod 8
+n = 4 mod 8
+n = 0 mod 8
+
+additional assigned characters
+none
+δ
+δ·ǫ
+ǫ
+δ
+δ, ǫ
+
+We will state two important properties of these assigned characters. These
+properties provide a rich structure, but at the same time they will block us from
+obtaining a better stage 2.
+Proposition C.3. Let D be a negative discriminant with assigned characters
+Ψ1 , . . . , Ψµ , where µ is the same as in Proposition B.1. Let f ∈ C(D) and
+suppose f represents a with gcd(D, a) = 1. Define
+ΦD : C(D) −→ {−1, 1}µ
+
+[f ] 7−→ (Ψ1 (a), . . . , Ψµ (a)).
+
+Then ΦD is a well-defined homomorphism.
+Proof. This follows from Lemma 3.13 and Lemma 3.17 from [16]. Note that our
+ΦD is the composition (of maps) of Φ with Ψ in the text of Cox.
+33
+
+The next proposition states an important property of Φ in the case of non-fun
+discriminants.
+Proposition C.4. Let D be a negative discriminant with odd prime factors
+p1 , . . . , pt and let r > 0 be an integer. Suppose f1 ∈ C(Dr2 ) is derived from
+f2 ∈ C(D). Then ΦDr2 (f1 ) is equal to ΦD (f2 ) for the assigned characters that
+they have in common.
+Proof. Suppose f1 represents a ∈ (Z/DZ)∗ . Then from the formulas in (2.1),
+we see that f2 also represents a. The result now follows from the fact that ΦD
+and ΦDr2 are well-defined.
+In the setting of Algorithm 2, we have n = a2 b and we work in the class
+group C(−4nsr2 ). We can compute χn (c) = nc , where
+if gcd(c, a) = 1.
+
+χn (c) = χb (c)
+
+We can now try to use the idea from (C.4) for our stage 2. Let g ∈ C(−4nsr2 )
+be the form that we will use for stage 2. Define ρ : hgi −→ hgi as:
+ρ(h) =
+
+(
+
+h2
+
+if χn (h) = 1,
+
+h·g
+
+otherwise.
+
+(C.5)
+
+Here χn (h) means χn (c), where h represents c ∈ (Z/DZ)∗ . Because of
+χn (c) = χb (c) and Propositions 2.5 and C.4, the map ρ very nicely meets the
+requirement (C.2). However, because of Proposition C.3, the map is no longer
+random, since
+χn (h2 ) = 1 and χn (h · g) = χn (h) · χn (g)
+This makes the ‘random’ map ρ very predictable. Therefore, ρ won’t become
+periodic quickly enough in C(−4bs). Every variation of the map ρ that depends
+on the function χn and which uses the standard composition of forms runs into
+this problem. This problem doesn’t exist
+in (C.4),
+
+ because there doesn’t seem
+x)
+. But again, there could still
+to be an obvious relation between Rnx and ρ(R
+n
+be a random map that does work for our setting as well.
+
+C.2
+
+Fast Fourier transform
+
+Another possible way to get a better stage 2 is by applying the fast Fourier
+transform (FFT), also known as magic. The FFT has many applications, one
+of them is fast evaluation of polynomials.
+Given a polynomial f ∈ R[x] of degree m, where R is a ring where the
+FFT is possible, such as Z/nZ. Let a ∈ R, we can compute f (a) in O(m)
+multiplications and additions in R by computing a, a2 , . . . , am and then taking
+the appropriate sums. So, if we are given m elements a1 , . . . , am ∈ R that are
+34
+
+completely arbitrary, then surely we need at least O(m2 ) operations in R to
+compute the evaluations f (a1 ), . . . , f (am ). Right...?
+Theorem C.5. f (a1 ), . . . , f (am ) can be computed in O(m ln(m)2 ) operations
+in R.
+Proof. The proof uses the fact that
+f (ai ) = f (x) mod (x − ai ).
+Computing these reductions directly takes too much time because the degree
+of f can be large. It turns out that gradually reducing f modulo intermediate
+products of the linear polynomials (x − ai ) before computing f (x) mod (x − ai )
+is faster.
+See Section 9.6.3 of [18] for an actual proof.
+A common stage 2 continuation of the ECM uses Theorem C.5 to factor an
+integer n as follows. Suppose again that Q = [k]P is a point on an elliptic curve
+E modulo n that we got from stage 1. Suppose furthermore that p | n is prime
+and the order of Q ∈ E(Fp ) is q < B2 , for some prime q.
+√
+Define t = ⌈ B2 ⌉, now compute two lists that contain the following multiples
+of Q (all calculations are done in E(Z/nZ)):
+L1 = {O, Q, [2]Q, [3]Q, . . . , [t − 1]Q},
+
+L2 = {[t]Q, [2t]Q, . . . , [t2 ]B}.
+
+(C.6)
+
+Now, q < B2 , hence there exists 0 ≤ i, j − 1 ≤ t − 1 such that q = i · t − j. Thus,
+[it]Q = [j]Q when viewed in E(Fp ), where [j]Q ∈ L1 and [it]Q ∈ L2 .
+The difference of the x-coordinates of [it]Q and [j]Q will provide the factor p.
+Construct
+Y
+f=
+(x − Rx ) ∈ Z/nZ[x].
+R∈L1
+
+Then evaluate this polynomial using Theorem C.5 in all the points {Rx | R ∈
+L2 } to obtain the values b1 , . . . , bt ∈ Z/nZ. Compute gcd(n, bi ) for i = 1, . . . , t
+√
+to find the factor p of n. In total this takes O( B2 ln(B2 )2 ) = O(B ln(B)2 )
+operations mod n if we take B2 = B 2 . This is slightly more than the O(B)
+operations mod n needed in stage 1 of the ECM, so we need to take B2 somewhat
+smaller, namely B 2 / ln(B)4 .
+The choice of the sets L1 and L2 can be further optimized like in [25] Chapter
+5, but this is the general idea. Summarizing, we have the following proposition.
+Proposition C.6. The ECM can be extended using the FFT to factor n if the
+point produced by stage 1 has order less than B 2 / ln(B)4 in the underlying group,
+without increasing the asymptotic run time per curve that we try.
+35
+
+Unfortunately, when we have two forms fi = (ai , bi , ci ) ∈ C(−4ns), i = 1, 2
+that are derived from the same form in C(−4bs), then we can’t expect a relation
+like a1 = a2 mod b to hold, where n = a2 b. The values a1 , a2 mod b heavily
+depend on the choice of representatives. Therefore we can’t use the coefficients
+directly to determine whether two forms are derived from the same form. We
+could check if f1 · f2−1 is derived from e using the idea from Proposition 3.1.
+Unfortunately, the process of computing the product f1 · f2−1 and then reducing
+it can’t be written as a polynomial function (as far as we know), therefore we
+can’t use it in the FFT method.
+But, perhaps we can still use the FFT method with another property of
+the forms. One promising idea introduces an additional factor r2 again, like in
+Lemma 3.6. The main idea is that the product a1 a2 will be represented by e
+in the underlying group. We would like to stress that this factor r does not
+necessarily have to be prime. This flexibility could be quite useful, but taking
+it prime makes the presentation easier.
+Lemma C.7. Suppose f1 , f2 ∈ C(−4n) are derived from the same form in
+C(−4b). Let r be a prime. Lift f1 , f2 to forms g1 , g2 ∈ C(−4nr2 ) and let
+ϕ
+(r)
+ϕ
+(r)
+and h2 = g2 −4n . Furthermore, suppose that hi ∼ (ai , bi , ci ),
+h1 = g1 −4n
+i = 1, 2. Then the form e−4br2 (x, y) = x2 + br2 y 2 represents a1 a2 .
+Proof. Using Lemma 3.6, we see that h1 h−1
+is derived from e−4br2 . Now, h1
+2
+represents a1 , and h−1
+represents
+a
+.
+Therefore,
+h1 h2−1 represents a1 a2 , hence
+2
+2
+e−4br2 also represents a1 a2 .
+Because of this lemma, we can instead think about what type of integers
+are represented by e−4br2 to determine which forms in C(−4n) are derived from
+the same form. The next proposition tells us a lot about the value of x in the
+representation e−4br2 (x, y) = a1 a2 , without the knowledge of b. The statement
+is quite technical, so we will look at an example before proving it.
+Proposition C.8. Assume the assumptions from Lemma C.7. Furthermore,
+√
+suppose that h1 , h2 are reduced, r > 43 n and gcd(r, a1 a2 ) = 1. Let xi =
+√
+ai mod r2 , for i = 1, 2 and let x3 = ±x1 x2 mod r2 , where the sign is chosen
+such that the lift of x3 to x4 ∈ Z is as small as possible in absolute value. Then
+x4 = ±x, where x is from the representation e−4br2 (x, y) = a1 a2 .
+Example C.9. Let n = 37559 = 232 · 71 and r = 37273, a prime of roughly size
+n. Let’s suppose that we don’t know a = 23 and b = 71, but that we do have
+forms f1 = (125, −42, 304), f2 = (40, −18, 941) ∈ C(−4n) that are both derived
+from (8, −2, 9) ∈ C(−4b). Following Lemma C.7, we compute
+h1 = (5981917, 450638, 8731416), h2 = (1138784, 754166, 45945525) ∈ C(−4nr2 ).
+
+36
+
+This is independent of the choice of lifts g1 and g2 . Afterwards, we compute
+x1 =
+
+√
+√
+5981917 = 827751348 mod r2 , x2 = 1138784 = 467938638 mod r2 .
+
+Their product is x1 x2 = x3 = 1386685492 mod r2 , but −x3 = 2591037 mod r2 ,
+which is smaller. Therefore we have x4 = 2591037 ∈ Z.
+It can be checked that
+e−4br2 (x4 , 1) = x24 + br2 = a1 a2 .
+This also means that gcd(x24 − a1 a2 , n) would reveal the factor b of n. Also note
+that x4 is relatively small compared to r2 = 1389276529.
+Let’s now do the proof of Proposition C.8.
+Proof. First note that x1 and x2 exist mod r2 since h1 and h2 are squares.
+Now, x24 = a1 a2 = x2 mod r2 , hence x4 = ±x mod r2 . Therefore, we can write
+x = ±x4 + kr2 , for some integer k. We know that x2 + br2 y 2 = a1 a2 , hence
+(±x4 + kr2 )2 + br2 y 2 = a1 a2 .
+√
+Now, h1 , h2 ∈ C(−4nr2 ) are reduced, so a1 , a2 ≤ 4nr2 /3, hence a1 a2 ≤
+4nr2 /9. Also, x4 was chosen as small as possible, so if k 6= 0, then
+a1 a2 = (±x4 +kr2 )2 +br2 y 2 ≥ (±x4 +kr2 )2 ≥ (r2 /2)2 = r4 /4 > 4nr2 /9 ≥ a1 a2 .
+Thus k = 0, meaning x = ±x4 .
+We can also see that if r is large, say roughly the size of n, then
+√
+√
+x4 ≤ a1 a2 ≤ 4nr2 /3 ≈ r3/2 .
+This means that given two forms f1 , f2 ∈ C(−4n), a necessary condition that
+they are derived from the same form in C(−4b) is that the product x1 x2 mod r2
+is small in absolute value, where x1 , x2 and r are as in Proposition C.8.
+The problem is that recognizing whether a number mod r2 is small or not
+is also not a polynomial expression (as far as we know). Otherwise, we could
+compute two lists as in (C.6), containing the forms fi = (ai , bi , ci ), which are
+powers of the form produced in stage 1. Then compute the square roots xi =
+√
+ai mod r2 , and use the FFT to find xi and xj such that xi xj mod r2 is small.
+Then fi fj−1 would likely reveal the factor a of n.
+One other attempt to use the FFT uses that gcd(x24 − a1 a2 , n) = b if f1 and
+f2 are derived from the same form (and f1 6= f2 ). One of the problems here is
+that x4 = x1 x2 mod r2 first has to be fully reduced mod r2 . However, the gcd
+
+37
+
+is with n and not with r2 again. While creating the FFT polynomial, we can
+either work modulo n or modulo r2 , but not both.
+In summary, we were not able to find a better stage 2 for our algorithm.
+Fortunately, this is by no means an exhaustive list of possible approaches for a
+better stage 2. Hopefully the examples given in this appendix will provide some
+inspiration.
+
+D
+
+Implementation in Magma
+
+We implemented a basic version of Algorithm 2, together with the stage 2 extension as presented in Algorithm 3. We specialized it for numbers n of the
+form n = p2 q, where p, q are primes of roughly the same size. We used this code
+for all the tables that are present in this article. This code should only be used
+as a start, it is definitely not optimized. We also did not include a lot of error
+handling, nor the construction of ambiguous forms in line 17 of Algorithm 2,
+since it is very unlikely to happen for integers n of this form anyways, especially
+when n is large.
+SquareFactorization := function(n) // n = p^2*q
+q2 := n^(1/3); // we assume that q is roughly equal to p
+e := Sqrt(Log(q2)/Log(Log(q2)));
+B := 2*Round(q2^(1/(2*e))); // we took B somewhat bigger,
+// not sure if it is better
+prod := 1; // prod is the integer k
+for p in PrimesUpTo(B) do
+prod *:= p^(Ceiling(Log(p,B)));
+end for;
+B2 := 2*B*Round(Log(B));
+stage2primes := PrimesInInterval(B,B2);
+largeprime := NextPrime(Round(10*n^(1/6)));
+// this is the prime r from Algorithm 2.
+// if p/q <= 10, then this r is large enough
+s := 0;
+while true do
+s +:= 1;
+if IsSquarefree(s) eq false then
+
+38
+
+continue;
+end if;
+// STAGE 1
+m := n*s;
+Q := QuadraticForms(-4*m);
+Q2 := QuadraticForms(-4*m*largeprime^2);
+for r in PrimesInInterval(3,1000) do
+// we search for an element in C(-4*m)
+// we expect this to work within a few tries
+if LegendreSymbol(-m,r) ne 1 then
+continue;
+end if;
+b := Integers() ! Sqrt(Integers(4*r) ! (-4*m));
+f := Q ! [r,b,(4*m+b^2) div (4*r)];
+break;
+end for;
+g := f^prod; // this is the main part of stage 1
+// we hope that g is the identity element in
+// the underlying group C(-4*q*s)
+h := Q2 ! [g[1]*largeprime^2, g[2]*largeprime, g[3]];
+// we lift g to the larger group C(-4mr^2)
+// this makes it possible to retrieve p^2
+h := Reduction(h);
+k := h^(largeprime - LegendreSymbol(-m,largeprime));
+d := GCD(k[1],n);
+if d gt 1 and d lt n then // if a factor is found
+return(d); // then return it
+end if;
+// STAGE 2
+k2 := k^2;
+smallpowers := [k2];
+k3 := k2;
+smallbound := Round(10*Log(B2)); // largest prime gap
+// for our tables this bound was large enough
+for i in [1..smallbound] do
+k2 *:= k3;
+
+39
+
+Append(~smallpowers, k2);
+end for;
+previousprime := 0;
+// for each prime z in [B,B_2] we will consider k^z
+for p1 in stage2primes do
+currentprime := p1;
+if previousprime eq 0 then
+l := k^currentprime;
+else
+smallstep := (currentprime - previousprime) div 2;
+if smallstep gt smallbound then
+"help", smallbound, smallstep;
+break;
+else
+// we try the next prime
+l *:= smallpowers[smallstep];
+end if;
+end if;
+d := GCD(l[1],n);
+if d gt 1 and d lt n then
+return(d);
+end if;
+previousprime := currentprime;
+end for;
+// if stage 2 was also unsuccessful,
+// then take the next s and try again
+end while;
+end function;
+
+References
+[1] Roger C Baker, Glyn Harman, and János Pintz. The difference between
+consecutive primes, II. Proceedings of the London Mathematical Society,
+83(3):532–562, 2001.
+
+40
+
+[2] Daniel Bernstein, Peter Birkner, Tanja Lange, and Christiane Peters. ECM
+using Edwards curves. Mathematics of Computation, 82(282):1139–1179,
+2013.
+[3] Gaetan Bisson and Andrew V Sutherland. Computing the endomorphism
+ring of an ordinary elliptic curve over a finite field. Journal of Number
+Theory, 131(5):815–831, 2011.
+[4] Dan Boneh, Glenn Durfee, and Nick Howgrave-Graham. Factoring N = pr q
+for large r. In Advances in Cryptology-CRYPTO’99, pages 326–337, Berlin,
+Heidelberg, 1999. Springer.
+[5] Andrew R Booker, Ghaith A Hiary, and Jon P Keating. Detecting squarefree numbers. Duke Mathematical Journal, 2015.
+[6] Wieb Bosma, John Cannon, and Catherine Playoust. The Magma algebra system. I. The user language. J. Symbolic Comput., 24(3-4):235–265,
+1997. Computational algebra and number theory (London, 1993). URL:
+http://dx.doi.org/10.1006/jsco.1996.0125.
+[7] Wieb Bosma and Peter Stevenhagen. On the computation of quadratic
+2-class groups. Journal de théorie des nombres de Bordeaux, 8(2):283–313,
+1996.
+[8] Richard P. Brent.
+Some integer factorization algorithms using elliptic curves, 1998.
+Accessed on:
+2023-4-18.
+URL:
+https://arxiv.org/abs/1004.3366.
+[9] Johannes A Buchmann and Hendrik W Lenstra Jr. Approximating rings
+of integers in number fields. Journal de théorie des nombres de Bordeaux,
+6(2):221–260, 1994.
+[10] Duncan A Buell. Binary quadratic forms: classical theory and modern
+computations. Springer Science & Business Media, 1989.
+[11] Guilhem Castagnos, Antoine Joux, Fabien Laguillaumie, and Phong Q
+Nguyen. Factoring pq 2 with quadratic forms: Nice cryptanalyses. In Asiacrypt, volume 9, pages 469–486. Springer, 2009.
+[12] Guilhem Castagnos and Fabien Laguillaumie. On the security of cryptosystems with quadratic decryption: the nicest cryptanalysis. In Advances in
+Cryptology-EUROCRYPT 2009: 28th Annual International Conference on
+the Theory and Applications of Cryptographic Techniques, Cologne, Germany, April 26-30, 2009. Proceedings 28, pages 260–277. Springer, 2009.
+[13] Alexander Leonidovich Chistov. The complexity of the construction of the
+ring of integers of a global field. In Doklady Akademii Nauk, volume 306:5,
+pages 1063–1067. Russian Academy of Sciences, 1989.
+41
+
+[14] Henri Cohen and Hendrik W Lenstra Jr. Heuristics on class groups of
+number fields. In Number Theory Noordwijkerhout 1983: Proceedings of
+the Journées Arithmétiques held at Noordwijkerhout, The Netherlands July
+11–15, 1983, pages 33–62. Springer, 2006.
+[15] Jean-Sébastien Coron, Jean-Charles Faugère, Guénaël Renault, and Rina
+Zeitoun. Factoring N = pr q s for large r and s. In Topics in CryptologyCT-RSA 2016: The Cryptographers’ Track at the RSA Conference 2016,
+San Francisco, CA, USA, February 29-March 4, 2016, Proceedings, pages
+448–464. Springer, 2016.
+[16] David A Cox. Primes of the Form x2 + ny 2 : Fermat, Class Field Theory,
+and Complex Multiplication. John Wiley & Sons, 2nd edition, 2013.
+[17] Harald Cramér. On the order of magnitude of the difference between consecutive prime numbers. Acta arithmetica, 2:23–46, 1936.
+[18] Richard E Crandall and Carl Pomerance. Prime numbers: a computational
+perspective. Springer, 2nd edition, 2005.
+[19] Shanks Daniel. Class number, a theory of factorization, and genera. In
+Proc. Sympos. Pure Math., volume 20, pages 415–440, 1971.
+[20] David Harvey and Markus Hittmeir. A deterministic algorithm for finding
+r-power divisors. Research in Number Theory, 8(4):94, 2022.
+[21] Arjen K Lenstra and Hendrik W Lenstra Jr. The development of the number
+field sieve, volume 1554. Springer Science & Business Media, 1993.
+[22] Hendrik W Lenstra Jr. Factoring integers with elliptic curves. Annals of
+mathematics, pages 649–673, 1987.
+[23] Hendrik W Lenstra Jr and Carl Pomerance. A rigorous time bound for
+factoring integers. Journal of the American Mathematical Society, 5(3):483–
+516, 1992.
+[24] Alexander May. Using LLL-reduction for solving RSA and factorization
+problems. In The LLL Algorithm: Survey and Applications, pages 315–
+348. Springer, 2009.
+[25] Peter Lawrence Montgomery. An FFT extension of the elliptic curve
+method of factorization. University of California, Los Angeles, 1992.
+[26] Tatsuaki Okamoto. A fast signature scheme based on congruential polynomial operations. IEEE Transactions on Information Theory, 36(1):47–53,
+1990.
+
+42
+
+[27] Tatsuaki Okamoto and Shigenori Uchiyama. A new public-key cryptosystem as secure as factoring. In Advances in Cryptology—EUROCRYPT’98:
+International Conference on the Theory and Application of Cryptographic
+Techniques Espoo, Finland, May 31–June 4, 1998 Proceedings 17, pages
+308–318. Springer, 1998.
+[28] Sachar Paulus and Tsuyoshi Takagi. A new public-key cryptosystem over
+a quadratic order with quadratic decryption time. Journal of Cryptology,
+13:263–272, 2000.
+[29] René Peralta and Eiji Okamoto. Faster factoring of integers of a special
+form. IEICE transactions on fundamentals of electronics, communications
+and computer sciences, 79(4):489–493, 1996.
+[30] John M Pollard. Theorems on factorization and primality testing. In Mathematical Proceedings of the Cambridge Philosophical Society, volume 76(3),
+pages 521–528. Cambridge University Press, 1974.
+[31] Katja Schmidt-Samoa. A new Rabin-type trapdoor permutation equivalent
+to factoring. Electronic Notes in Theoretical Computer Science, 157(3):79–
+94, 2006.
+[32] C-P Schnorr and Hendrik W Lenstra Jr. A Monte Carlo factoring algorithm
+with linear storage. Mathematics of Computation, 43(167):289–311, 1984.
+[33] Arnold Schönhage. Fast reduction and composition of binary quadratic
+forms. In Proceedings of the 1991 international symposium on Symbolic
+and algebraic computation, pages 128–133, 1991.
+[34] Joram Soch. Proof: Median of the exponential distribution. Accessed on:
+2023-4-18. URL: https://statproofbook.github.io/P/exp-med.
+[35] Tsuyoshi Takagi. Fast RSA-type cryptosystem modulo pk q. In Advances in
+Cryptology—CRYPTO’98: 18th Annual International Cryptology Conference Santa Barbara, California, USA August 23–27, 1998 Proceedings 18,
+pages 318–326. Springer, 1998.
+[36] David YY Yun. On square-free decomposition algorithms. In Proceedings
+of the third ACM symposium on Symbolic and algebraic computation, pages
+26–35, 1976.
+
+43
+
+

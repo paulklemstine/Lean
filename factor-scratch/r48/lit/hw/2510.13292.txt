@@ -1,0 +1,2259 @@
+Counting rational points on elliptic and hyperelliptic curves over
+function fields
+Jean Gillibert
+
+Emmanuel Hallouin
+
+Aaron Levin
+
+arXiv:2510.13292v1 [math.NT] 15 Oct 2025
+
+October 2025
+
+Abstract
+Combining 2-descent techniques with Riemann-Roch and Bézout’s theorems, we give an
+upper bound on the number of rational points of bounded height on elliptic and hyperelliptic
+curves over function fields of characteristic ̸= 2. We deduce an upper bound on the number of
+S-integral points, where S is a finite set of places. As a primary application, over small finite
+fields we bound the 3-torsion of Jacobians of hyperelliptic curves and the 2-torsion of Jacobians
+of trigonal curves. In this setting, these bounds improve on both the trivial geometric bound
+and the naive inequality coming from the Weil bound, as well as recent upper bounds on
+2-torsion in the work of Bhargava et al..
+
+1
+
+Introduction
+
+Let k be an algebraically closed field of characteristic not 2, and let B be a smooth projective
+irreducible k-curve of genus g. In this paper, we consider a hyperelliptic curve C over k(B) defined
+by a Weierstrass equation of the form
+y 2 = f (x),
+(1)
+where f is a monic separable polynomial of odd degree d ≥ 3 with coefficients in k(B).
+We shall use 2-descent computations to study rational points of bounded naive height on this
+Weierstrass model of C , that is, the set
+C (k(B))≤c := {(x0 , y0 ) ∈ C (k(B)) | deg x0 ≤ c}.
+It is known that this set is finite under each of the following assumptions (see §2.1):
+(A1) C is a non-constant elliptic curve
+(A2) char(k) = 0 and C is non-constant
+(A3) char(k) > 0 and C is not isotrivial.
+Recall that C is constant if one can obtain it by base-change from a curve defined over k, and
+that C is isotrivial if it becomes constant over some finite extension of k(B).
+In fact, when C has genus at least 2 then the whole set of rational points of C is known to be
+finite under (A2) or (A3) (this is the function field version of Mordell’s conjecture).
+
+1
+
+Counting rational points
+Our main result is the following:
+Theorem 1.1. Let C be the hyperelliptic curve defined over k(B) by the equation y 2 = f (x) where
+f is monic and separable, of odd degree d ≥ 3. Let hB (f ) be the height of f (see §2.1). Let Cf be
+the smooth projective curve defined over k by the equation f (x) = 0, and let ω(f ) be the number
+of irreducible components of Cf . If Cf is irreducible, we denote its genus by gf . Finally, let J be
+the Jacobian of C over k(B), let Trk(B)/k (J) be the k(B)/k-trace of J, and let
+LN(J) := J(k(B))/Trk(B)/k (J)(k)
+be the Lang-Néron group of J relative to k(B)/k (which, according to the Lang-Néron theorem, is
+finitely generated). If c is a positive integer, we let
+(
+
+max d(c + g) + hB (f ) − gf , 12 (d(c + g) + hB (f ))
+if Cf is irreducible
+Ω(c, f, g) :=
+d(c + g) + hB (f ) + ω(f ) − 1
+otherwise.
+Assume that one of the assumptions (A1), (A2) or (A3) holds. Then
+(1) For any positive integer c we have
+1
+
+|C (k(B))≤c | ≤ 2Ω(c,f,g)+max{c, 2 (c+g)}+1+rkZ LN(J)+dimF2 LN(J)[2] .
+(2) When the base field is k(t) = k(P1 ), and f has coefficients in k[t], one can improve this as
+follows:
+|C (k(B))≤c | ≤ 2Ω(⌈ 2 ⌉,f,0)+⌈ 2 ⌉+1+rkZ LN(J)+dimF2 LN(J)[2] .
+c
+
+c
+
+It follows from the Grothendieck-Ogg-Shafarevich formula (see §2.4) that
+rkZ LN(J) + dimF2 LN(J)[2] ≤ 2d0 + (d − 1)(2g − 2) + deg(fJ ) + ω(f ) − 1
+
+(2)
+
+where d0 is the dimension of Trk(B)/k (J), and fJ is the conductor of J. This allows one to deduce
+from the statements above an upper bound in terms of more computable invariants of J.
+Alternatively, one can get a bound in terms of C by observing that deg(fJ ) ≤ deg(fC ) where
+fC is the Artin conductor of C .
+Note that ω(f ) is none other than the number of irreducible factors of f as a polynomial over
+k(B), and that dimF2 J(k(B))[2] = ω(f ) − 1.
+In the case d = 3, our curve C is (under the assumptions of Theorem 1.1) a non-constant
+elliptic curve, hence its k(B)/k-trace vanishes. This means that d0 = 0 and that the Lang-Néron
+group agrees with the group of k(B)-rational points of C . In this case, it is a classical result of
+Néron that |C (k(B))≤c | ∼ β · cr/2 as c tends to infinity, where r is the rank of C (k(B)) and β is
+a constant depending on C . Although the bounds in Theorem 1.1 are asymptotically weaker in
+comparison, the key point is that they give an explicit estimate of the number of points of small
+height; the precise form of our bounds will be crucial in the applications in Section 4.1 to bounding
+the 3-torsion of hyperelliptic Jacobians over finite fields.
+The strategy of our proof is mainly geometric: it relies on a counting argument for the number
+of points of bounded height which map to the same class under the 2-descent map. This amounts
+to counting functions in certain linear systems, the main tool being the Riemann-Roch theorem.
+2
+
+One of its strengths is that it is characteristic-free. One weakness is its geometric nature: one
+cannot expect an improvement when the base field is not algebraically closed. The end of the
+proof is classical: we bound the size of the image of the 2-descent map in terms of the rank and
+the size of the 2-torsion subgroup. This part is sensitive to the base field, and indeed in our primary
+application we exploit this by taking advantage of an upper bound on the rank of an elliptic curve
+over Fq (t) due to Brumer.
+
+Counting integral points
+We now choose a finite non-empty set S ⊂ B and denote by RS ⊂ k(B) the ring of functions
+with no poles outside S. We assume that f has coefficients in RS . We are now interested in the
+set of S-integral points on the given Weierstrass model of C , namely
+C (RS ) := {(x0 , y0 ) ∈ C (k(B)) | x0 , y0 ∈ RS }.
+Under assumption (A2) or (A3) this set is finite. More precisely, when C has genus 1 then the
+set of S-integral points is known to be finite by results of Lang [Lan60] when char(k) = 0, and
+Voloch [Vol90] when char(k) > 0; when C has genus at least two then the set of rational points is
+finite. See §2.1 for the details.
+In §3.1 we give an upper bound on the height of S-integral points on C , following previous
+work of Hindry-Silverman. This allows us to derive from Theorem 1.1 an upper bound on the
+number of S-integral points, which reads as follows:
+Theorem 1.2. With the same notation as in Theorem 1.1, assume (A2) holds, or (A3) with
+char(k) > d. Assume that f has coefficients in RS , and let ∆f be the discriminant of f . Let ρ be
+the inseparable degree defined in Theorem 3.1, and let
+(
+4(2g − 2 + |S| + deg ∆f ) + 3hBd(f ) if char(k) = 0
+cmax :=
+6ρ(2g − 2 + |S| + deg ∆f ) + 3hBd(f ) if char(k) > d.
+Then we have
+(
+2(d+1)cmax +hB (f )+dg−gf +1+rkZ LN(J)
+|C (RS )| ≤
+2(d+1)cmax +hB (f )+dg+ω(f )+rkZ LN(J)+dimF2 LN(J)[2]
+
+if Cf is irreducible
+otherwise.
+
+In order to bound the height of integral points, the key ingredient is the abc-theorem over
+function fields, that we apply over a splitting field of f . The condition char(k) > d is used to
+ensure that this extension is tamely ramified over k(B).
+In the case when the base curve is P1 , one has an improved bound as in Theorem 1.1 (2). One
+can also deduce an alternative bound by combining this with the inequality (2).
+When k has characteristic 0 and d = 3 (i.e. C is an elliptic curve), Hindry and Silverman
+[HS88] proved, under the assumption that the Weierstrass equation of C is minimal over the ring
+RS , that
+
+
+p r
+ 144 107.1 |S|
+if deg(D) ≥ 24(g − 1)
+
+r
+|C (RS )| ≤
+p
+ (8π 2 (g − 1))2/3 107+12g |S|
+otherwise,
+where D is the discriminant of (the Weierstrass equation of) C , and r = rkZ C (k(B)) is the rank of
+C . This result was extended to function fields of positive characteristic by Pacheco [Pac98]. Our
+bound improves on Hindry and Silverman’s one only in specific ranges (e.g. if S is small enough),
+3
+
+but also applies without a minimality hypothesis. Yet another bound on the number of integral
+points, valid in characteristic 0 and without a minimality hypothesis, was given by Chi, Lai, and
+Tan [CLT04]; their bound may have advantages over the Hindry-Silverman bound in certain cases
+when k is not algebraically closed.
+
+Bounding the 3-torsion of Jacobians of hyperelliptic curves
+When the base curve is P1 , S = {∞}, and C is an elliptic curve, we are able to improve
+the bound for the number of integral points in C (k[t]) with small naive height by using refinements of Riemann-Roch specific to trigonal curves, originating in classical results of Maroni (see
+Theorem 3.7).
+By relating 3-torsion points of Jacobians of hyperelliptic curves to integral points on certain
+elliptic curves, we deduce the following result.
+Theorem 1.3. Let q = pr for some prime p ≥ 5. Let X be a hyperelliptic curve of genus g over
+Fq , with a rational Weierstrass point, and let Jac(X) be the Jacobian of X. Then
+g
+
+| Jac(X)(Fq )[3]| ≤ q 2
+
+g
++γ log
+g
+
+for some explicit constant γ depending only on q.
+When q < 81 this asymptotically improves on the trivial bound | Jac(X)(Fq )[3]| ≤ 32g . When Fq
+does not contain a primitive third root of unity (i.e. when q ̸≡ 1 (mod 3)) then | Jac(X)(Fq )[3]| ≤
+3g by Galois-invariance of the Weil pairing. We (asymptotically) improve on this bound when
+q < 9.
+√
+√
+Weil [Wei48] proved the inequalities ( q − 1)2g ≤ | Jac(X)(Fq )| ≤ ( q + 1)2g , and in particular
+√
+| Jac(X)(Fq )[3]| ≤ ( q + 1)2g . An argument of Soundararajan outlined in [HV06, p. 19] (see also
+[Yud08]), when applied over function fields using the (known) generalized Riemann hypothesis in
+2
+that setting, improves this to | Jac(X)(Fq )[3]| ≤ q 3 g+ϵ for any ϵ > 0. Our result (asymptotically)
+improves both of these bounds.
+To compare with analogous results over number fields, we note that curves X of genus g
+and gonality n over Fq are analogous to number fields k of degree n over Q, and the absolute
+discriminant ∆k of k is analogous to q 2g . If we write ∆X = q 2g , then our bound is of the form
+1
+
++ϵ
+
+4
+∆X
+, and the hyperelliptic curves X are analogous to quadratic fields over Q. After work of
+Pierce [Pie05, Pie06] and Helfgott and Venkatesh [HV06], the best known upper bound for the
+1
+
++ϵ
+
+size of the 3-part of the ideal class group of a quadratic field k over Q is ∆k3 , due to Ellenberg
+and Venkatesh [EV07]. Thus, we obtain an improvement over these results in the function field
+setting.
+Remark 1.4. Let X be a hyperelliptic curve of genus g over Q, with a rational Weierstrass point.
+If X has good reduction at 5, then
+g
+
+| Jac(X)(Q)[3]| ≤ 5 2
+
+g
++γ log
+g
+
+for some absolute constant γ, which asymptotically improves on the trivial bound 3g . Indeed, the
+reduction-mod-5 map is injective on 3-torsion hence the result follows from Theorem 1.3. Under
+the weaker assumption that Jac(X) has good reduction at 5, one has a slightly modified variant,
+because in this case the reduction of Jac(X) is a product of Jacobians of hyperelliptic curves,
+whose sum of genera is equal to g (see Remark 4.3).
+A similar statement holds when X has good reduction at 7. If X has bad reduction, one can
+still give an upper bound depending on the reduction type of X (see Remark 4.3).
+4
+
+Remark 1.5. Let T → P1 be a trigonal curve, whose Galois closure T̃ → P1 has group S3 , and let
+X → P1 be the unique hyperelliptic subcover of T̃ . Spencer [Spe24] constructs a Galois-equivariant
+map Jac(T )[3] → Jac(X)[3] which is injective when g(X) = g(T ) or g(X) = g(T ) + 1. In these
+cases, one can derive from Theorem 1.3 an upper bound on Jac(T )(Fq )[3].
+Finally let us make a small comment on the case when char(k) = 2. In order to extend our
+results to this case, one should replace étale cohomology by flat cohomology. The 2-descent map
+can be still described explicitly, but the formulas are more involved. Let us cite the results of
+Kramer [Kra77] who worked out the case of an ordinary elliptic curve over a field of characteristic
+2. In this case multiplication-by-2 can be decomposed into Frobenius and Verschiebung isogenies,
+and the 2-descent mixes Kummer theory and Artin-Schreier theory. This is beyond the scope of
+the current paper.
+
+Bounding the 2-torsion of Jacobians of trigonal curves
+Using techniques similar to those described in the previous section, by relating 2-torsion points
+of Jacobians of trigonal curves to integral points on certain elliptic curves, we deduce the following
+result.
+Theorem 1.6. Let q = pr for some prime p ≥ 5. Let π : X → P1 be a trigonal curve of genus g
+over Fq , with a rational totally ramified point, and let Jac(X) be the Jacobian of X. Then
+g
+
+| Jac(X)(Fq )[2]| ≤ (2q) 3
+
+g
++γ log
+g
+
+,
+
+for some explicit constant γ depending only on q.
+Bhargava et al. [BST+ 20, Theorem 7.1] proved the general upper bound (without a trigonal
+hypothesis)
+| Jac(X)(Fq )[2]| ≤
+
+q g+1 − 1
+,
+q−1
+
+and in the case of n-gonal curves the bound
+1
+
+| Jac(X)(Fq )[2]| ≪n q (1− n )g .
+It is worth noting that their proof relies on the Riemann-Roch Theorem, like ours.
+In the case of trigonal curves (n = 3) with a rational totally ramified point and p ≥ 5, our
+Theorem 1.6 asymptotically improves on these bounds for all valid values of q. When q < 32, we
+asymptotically improve on the trivial bound | Jac(X)(Fq )[2]| ≤ 22g .
+Remark 1.7. Let E be a non-constant elliptic curve over Fq (t). Assume that E has at least one
+rational place of additive reduction of type II, IV, II∗ or IV∗ (hence the trigonal curve over Fq
+defined by the vanishing of the y-coordinate on E has a rational totally ramified point). When
+the conductor of E has large degree but only a few irreducible components, one obtains by combining [GL22, Theorem 1.1] and Theorem 1.6 an upper bound on the rank of E over Fq (t) which
+asymptotically improves on the geometric rank bound (see the introduction of [GL22] for relevant
+terminology). Under suitable assumptions, a reduction trick as in Remark 1.4 allows to replace Fq
+by a number field.
+
+5
+
+Structure of the paper
+In Section 2 we recall properties of heights and the explicit formula for the 2-descent map,
+and then we prove the main result, Theorem 2.4, which gives an upper bound on the number
+of rational points of bounded height mapping to a given class under the 2-descent map; we then
+derive Theorem 1.1. In Section 3 we give an upper bound on the height of S-integral points on
+C , then we prove Theorem 1.2. Then we focus on elliptic curves over P1 . The refinements of
+Riemann-Roch for the trigonal curve Cf lead to improvements on the counting of points of small
+height. At the core of our ingredients is the notion of Maroni invariant of a trigonal curve. In
+Section 4.1, we take advantage of these refinements to prove Theorem 1.3 and Theorem 1.6.
+
+2
+
+Counting rational points
+
+As in the introduction, k is an algebraically closed field of characteristic not 2, and B is a
+smooth projective geometrically connected k-curve of genus g. We consider a hyperelliptic curve
+C over k(B) defined by a Weierstrass equation of the form (1). We let Cf be the smooth projective
+k-curve defined by the equation f (x) = 0, and we denote by π : Cf → B the natural degree d map.
+We let ω(f ) be the number of irreducible factors of f over k(B), which is equal to the number of
+irreducible components of Cf . We denote by k(Cf ) = k(B)[X]/f (X) the ring of rational functions
+on Cf , which is a k(B)-algebra of degree d. If C1 , . . . , Cω(f ) are the irreducible components of Cf ,
+then we have a splitting k(Cf ) = k(C1 ) × · · · × k(Cω(f ) ) where the k(Ci ) are fields.
+
+2.1
+
+Heights
+
+The degree of a non-constant rational function on B is by definition the degree of the divisor
+of its poles, equivalently the degree of the corresponding map B → P1 . By convention, the degree
+of a constant map is zero.
+Recall that we have the properties
+deg(ur ) = r deg(u);
+
+deg(uv) ≤ deg(u) + deg(v);
+
+deg(u + v) ≤ deg(u) + deg(v).
+
+If P = (x0 , y0 ) is a k(B)-rational point on C , we consider deg(x0 ) as being its naive height (as
+does Silverman in [Sil94, Chap. III, §4]). In order to keep the notation as simple as possible, we
+shall refer to the degree in all statements, avoiding the language of heights.
+Let us point out that this naive height depends on the choice of an equation for C . Once an
+equation is fixed, the naive height is closely related to the Néron-Tate height (on the Jacobian of
+C ); more precisely, the difference between 21 deg(x0 ) and the Néron-Tate height of the divisor class
+of (x0 , y0 ) − ∞ is bounded by an absolute constant depending only on the Weierstrass equation of
+C . In the case of elliptic curves, this is proved in [Sil94, Chap. III, §4]. The hyperelliptic case is
+similar. We give an explicit inequality in the simplest case of an elliptic curve over k(t); the result
+is implicit in the literature, but lacking a direct reference we provide a proof.
+Theorem 2.1. Let E : y 2 = x3 +Ax+B be a nonconstant elliptic curve over k(t) with A, B ∈ k[t].
+Let χ = max{⌈ 41 deg A⌉, ⌈ 16 deg B⌉} and let j be the j-invariant of E. For P = (x0 , y0 ) ∈ E(k(t)),
+we have
+−2χ ≤ deg(x0 ) − 2ĥ(P ) ≤
+
+6
+
+1
+deg(j) + 2χ.
+12
+
+Proof. We may identify the set of places of k(t) with the set of maximal ideals of k[t] along with a
+unique place ∞, where v(f /g) = deg g − deg f when v = ∞ and f, g ∈ k[t] \ {0} (identifying a place
+with its associated discrete valuation). For every place v ̸= ∞, since A and B are polynomials (and
+so v-integral) it follows from a result of Tate (see [Lan78, Theorem 4.5] and [Sil90, Theorem 4.1])
+that
+1
+1
+− v(∆) ≤ max{0, −v(x(P ))} − 2λv (P ) ≤
+max{0, −v(j)},
+6
+12
+
+(3)
+
+P
+where ĥ(P ) = v λv (P ) and λv (P ) does not depend on the choice of Weierstrass equation [Lan78,
+p. 64]. Now consider v = ∞. We change coordinates so that the coefficients in the Weierstrass
+equation are v-integral and work with the point P ′ = (x′ , y ′ ) = (x(P )/t2χ , y/t3χ ) on the curve
+E ′ : y ′2 = x′3 + A/t4χ x′ + B/t6χ , with discriminant ∆′ and j-invariant j ′ . Then applying (3) to P ′
+and E ′ , and using λv (P ′ ) = λv (P ), j ′ = j, v(x′ (P ′ )) = v(x(P )) + 2χ, and v(∆′ ) = v(∆) + 12χ, we
+obtain
+1
+1
+max{0, −v(j)},
+− v(∆) − 2χ ≤ max{0, −v(x(P )) − 2χ} − 2λv (P ) ≤
+6
+12
+which implies
+1
+1
+max{0, −v(j)} + 2χ.
+− v(∆) − 2χ ≤ max{0, −v(x(P ))} − 2λv (P ) ≤
+6
+12
+Now summing over all places yields the inequality.
+Under our running assumptions, the naive height satisfies the Northcott property, i.e. there
+are only finitely many rational points of bounded height on C .
+Proposition 2.2 (Northcott). Assume (A1), (A2) or (A3) holds. Then for any c > 0 the set
+C (k(B))≤c := {(x0 , y0 ) ∈ C (k(B)) | deg(x0 ) ≤ c}
+is finite.
+Proof. Under assumption (A1), C is a non-constant elliptic curve hence, according to the LangNéron Theorem, the group C (k(B)) is finitely generated. Actually, it is part of the proof of
+the Lang-Néron Theorem that the naive height satisfies the Northcott property. For a modern
+exposition, we refer the reader to Conrad [Con06, Section 7].
+When C has genus at least 2 then the whole set of rational points of C is known to be finite
+under (A2) or (A3), by results of Manin [Man63] and Grauert [Gra65] in the case when char(k) = 0,
+completed by Samuel [Sam66] when char(k) > 0.
+We shall also use the notion of height of a polynomial with coefficients in k(B). More precisely,
+if
+f = X d + ad−1 X d−1 + · · · + a1 X + a0 ,
+then the height of the polynomial f (with respect to B) is defined as usual by
+X
+hB (f ) := −
+min{0, v(a0 ), . . . , v(ad−1 )}.
+v∈B
+
+We refer to [Mas84, Chap. I, §2] for basic properties of this height. In particular:
+7
+
+1. hB (X + a0 ) = deg(a0 )
+2. If f and g are monic polynomials, then hB (f g) = hB (f ) + hB (g)
+3. When changing the base curve, the height is multiplied by the degree of the corresponding
+function field extension.
+It follows by combining the three previous properties that, if B ′ /B is a cover of curves over
+which the monic polynomial f has all its roots e1 , . . . , ed , then we have
+d
+X
+
+degB ′ (ei ) = hB ′ (f ) = [B ′ : B]hB (f ).
+
+(4)
+
+i=1
+
+Going back to our construction of the curve Cf , one can deduce that
+degCf (x) = hB (f ),
+
+(5)
+
+where the degree of x is computed over the curve Cf . Let us sketch the proof: since the degree of
+a function is additive over irreducible components of Cf , we may assume that f is irreducible, in
+which case its roots are all conjugates (in the splitting field k(B ′ )) hence all have the same degree.
+Therefore, (4) yields
+d degB ′ (x) = hB ′ (f ) = [B ′ : B]hB (f ),
+which can be rewritten as
+d[B ′ : Cf ] degCf (x) = d[B ′ : Cf ]hB (f ),
+hence the result.
+
+2.2
+
+The 2-descent map
+
+Before we define this map, let us introduce some notation. Given a k-curve C and a divisor D
+on C, we identify the étale cohomology group H 1 (C \ D, µ2 ) as a subgroup of k(C)× /(k(C)× )2 as
+follows:
+H 1 (C \ D, µ2 ) = {h ∈ k(C)× /(k(C)× )2 | ∀v ∈ C \ D,
+
+v(h) ≡ 0
+
+(mod 2)}.
+
+Since k is algebraically closed, this group is finite; if C is irreducible then
+(
+2g(C)
+if D = ∅
+1
+dimF2 H (C \ D, µ2 ) =
+2g(C) + #D − 1 if D ̸= ∅.
+Lemma 2.3. Let Σ2 ⊂ B be the set of places above which the order of the group of connected
+components of the Néron model of the Jacobian of C is even, and let x be the function on Cf
+defined by x := X mod f (X). Then the map
+δ : C (k(B)) −→ H 1 (Cf \ π −1 (Σ2 ), µ2 )
+(x0 , y0 ) 7−→ x0 − x
+(x0 , 0) 7−→ (x0 − X) +
+
+when f (x0 ) ̸= 0
+f (X)
+(X − x0 )
+
+mod f (X)
+
+when f (x0 ) = 0
+
+is well-defined. If C is an elliptic curve, this map is a group homomorphism.
+8
+
+Proof. If C is an elliptic curve, then this map δ is obtained by composing the classical 2-descent
+map deduced from the Kummer exact sequence with the map induced (on the H 1 ) by the Weil
+pairing with the generic 2-torsion point. In general, δ is the composition of the analogous map on
+the Jacobian of C with the embedding of C into its Jacobian relative to the point at infinity. One
+can work this out from the description given by Schaefer [Sch95, Theorem 1.2], including the case
+when f (x0 ) = 0 [Sch95, Lemma 2.2].
+Finally, the argument proving that δ has values in the group H 1 (Cf \ π −1 (Σ2 ), µ2 ) is the same
+as in the proof of Proposition 4.1 of [GHL23].
+
+2.3
+
+Upper bound for rational points of given height
+
+As in the introduction, we denote by C (k(B))≤c the set of k(B)-rational points (x0 , y0 ) with
+deg(x0 ) ≤ c. The main result of this section is the following.
+Theorem 2.4. Let C be the hyperelliptic curve over k(B) defined by the equation y 2 = f (x),
+where f ∈ k(B)[x] is a monic separable polynomial of odd degree d ≥ 3. Let hB (f ) be the height
+of f , let Cf be the curve defined over k by the equation f (x) = 0, and let ω(f ) be the number of
+irreducible components of Cf . If Cf is irreducible, we denote its genus by gf .
+If c is a positive integer, we let
+(
+
+max d(c + g) + hB (f ) − gf , 21 (d(c + g) + hB (f ))
+if Cf is irreducible
+Ω(c, f, g) :=
+d(c + g) + hB (f ) + ω(f ) − 1
+otherwise.
+Assume that one of (A1), (A2) or (A3) holds. Then there are at most
+1
+
+2Ω(c,f,g)+max{c, 2 (c+g)}+1
+points in the set C (k(B))≤c mapping (under δ) to the same class in H 1 (Cf \ π −1 (Σ2 ), µ2 ), where
+Σ2 and δ are defined in Lemma 2.3.
+Before proving the theorem, we give two preliminary lemmas.
+Lemma 2.5. Let (x0 , y0 ) ∈ C (k(B)) be a rational point with y0 ̸= 0, and let x1 ∈ k(B) be such
+that x1 − x and x0 − x define the same class in k(Cf )× /(k(Cf )× )2 . Then there exists y1 ∈ k(B)
+such that (x1 , y1 ) belongs to C (k(B)). In particular, assuming that one of (A1), (A2) or (A3)
+holds, there are only finitely many x1 ∈ k(B) with deg x1 ≤ c such that x1 − x and x0 − x define
+the same class in k(Cf )× /(k(Cf )× )2 .
+Proof. Let us consider the norm map NCf /B : k(Cf )× → k(B)× . By definition, NCf /B (x0 − x) is
+the determinant of the d × d matrix (with coefficients in k(B)) corresponding to multiplication by
+x0 − x in the basis {1, x, . . . , xd−1 } of k(Cf )/k(B). This is equal to the value at x0 of the minimal
+polynomial of x, in other terms
+NCf /B (x0 − x) = f (x0 ).
+(6)
+Now, let x1 ∈ k(B) be such that x1 − x and x0 − x define the same class in k(Cf )× /(k(Cf )× )2 .
+This means that there exists a rational function ϕ on Cf such that x1 − x = (x0 − x)ϕ2 . In
+particular, we have the relation
+NCf /B (x1 − x) = NCf /B (x0 − x) NCf /B (ϕ)2
+
+9
+
+which, according to (6), can be written as
+f (x1 ) = f (x0 ) NCf /B (ϕ)2 .
+Since (x0 , y0 ) is a point on C , we have f (x0 ) = y02 , hence it follows from the above relation
+that f (x1 ) = (y0 NCf /B (ϕ))2 , which proves the first claim, letting y1 := y0 NCf /B (ϕ).
+The conclusion follows from Northcott’s property (see §2.1): under (A1), (A2) or (A3) there
+are only finitely many rational points (x1 , y1 ) on C with deg x1 ≤ c.
+Recall that for a function z we let div(z) = (z)0 − (z)∞ . In the following Lemma, we prove
+that every function on the curve B can be written as the quotient of two functions with poles
+concentrated on a given point.
+Lemma 2.6. Let x0 ∈ k(B) of degree ≤ c, and let P0 be a closed point of B. Then there exist two
+functions u0 , v0 ∈ LB ((c + g)P0 ) such that x0 = u0 /v0 . In particular:
+(v0 )∞ ≤ (c + g)P0
+
+(v0 x0 )∞ = (u0 )∞ ≤ (c + g)P0 .
+
+and
+
+Proof. Since −(x0 )∞ + (c + g)P0 has degree ≥ g, by Riemann-Roch there exists a function v0 ∈
+k(B)× such that
+div(v0 ) − (x0 )∞ + (c + g)P0 ≥ 0.
+It follows that div(v0 x0 ) + (c + g)P0 ≥ 0 and that div(v0 ) + (c + g)P0 ≥ 0 (as divisors on B).
+Proof of Theorem 2.4. In coherence with Lemma 2.3, we let D2 := π −1 (Σ2 ). Let us pick an
+arbitrary closed point P0 of B, and let D0 := π ∗ (P0 ).
+Let (x0 , y0 ) ∈ C (k(B)) be a rational point on C , such that deg x0 ≤ c and y0 ̸= 0. Then
+according to Lemma 2.6 there exist two functions u0 , v0 ∈ L((c + g)P0 ) such that x0 = u0 /v0 .
+On Cf , this leads to
+(v02 x0 )∞ ≤ (v0 )∞ + (u0 )∞ ≤ 2(c + g)D0 ,
+and to
+(v02 x)∞ ≤ 2(v0 )∞ + (x)∞ ≤ 2(c + g)D0 + (x)∞ .
+Since the order of a pole of a sum is bounded above by the maximum of the order of the poles of
+each term, we deduce that
+(v02 x0 − v02 x)∞ ≤ 2(c + g)D0 + (x)∞ ,
+or equivalently that
+div(v02 x0 − v02 x) ≥ −2(c + g)D0 − (x)∞ .
+
+(7)
+
+We let
+D∞ :=
+
+X
+
+−⌊ordP (x)/2⌋.P
+
+P pole of x
+
+By construction, D∞ is an effective divisor whose support is the same as div(x)∞ , and
+D∞ ≤ (x)∞ ≤ 2D∞
+
+10
+
+(8)
+
+Let ψ0 := v02 x0 − v02 x. Then according to Lemma 2.3, ψ0 defines a class in H 1 (Cf \ D2 , µ2 ),
+which means that v(ψ0 ) ≡ 0 (mod 2) for all v ̸∈ D2 . Summing all this up we have
+div(ψ0 ) = 2E0 +
+
+s
+X
+
+Pi − 2(c + g)D0 − 2D∞ ,
+
+(9)
+
+i=1
+
+where E0 is an effective divisor and the points Pi belong to the support of D2 . If a point Pi appears
+with multiplicity two or more, one sends it inside E0 . If a point Pi is a pole of odd order of x, it
+also appears in D∞ . Then we note that E0 , D0 , D∞ and Pi may have points in common.
+Let x1 be a rational function on B with deg x1 ≤ c such that x1 − x and x0 − x define the same
+class in k(Cf )× /(k(Cf )× )2 . As we did previously for ψ0 , let ψ1 = v12 x1 − v12 x. Then we may again
+write
+l
+X
+div(ψ1 ) = 2E1 +
+Qj − 2(c + g)D0 − 2D∞ ,
+j=1
+
+for some effective divisor E1 and some points Qj in the support of D2 . Since ψ0 and ψ1 define the
+2
+same class in a 2-torsion group, we find that ψ0 ψ1 is the trivial class, so is equal
+P some
+Pl to ϕ for
+2
+rational function ϕ. Since the divisor of ϕ has even coefficients, we deduce that j=1 Qj + si=1 Pi
+has even coefficients, hence these two divisors agree. Therefore,
+div(ϕ) = E0 + E1 +
+
+s
+X
+
+Pi − 2(c + g)D0 − 2D∞ .
+
+i=1
+
+P
+In particular, ϕ ∈ L(2(c + g)D0 + 2D∞ − E0 − si=1 Pi ). Let us denote by V this
+Pspace of functions
+and let ϕ0 , . . . , ϕn be a basis for V , where n = h0 (2(c + g)D0 + 2D∞ − E0 − si=1 Pi ) − 1. Then
+we may write ϕ = a0 ϕ0 + · · · + an ϕn for some ai ∈ k. It follows that
+[ϕ2 ] = [ψ0 ψ1 ] = [(a0 ϕ0 + · · · + an ϕn )2 ],
+or
+
+
+
+
+
+ϕ2
+1
+2
+= [ψ1 ] =
+(a0 ϕ0 + · · · + an ϕn )
+ψ0
+ψ0
+
+
+X
+ϕi ϕj 
+=
+ai aj
+ψ0
+i,j
+
+(brackets mean projectively, i.e. up to a non-zero constant
+of k). The last equality takes place
+h 2i
+ϕ
+inside P (L(2(c + g)D0 + 2D∞ )), and the map [ϕ] 7→ ψ0 is part of the following diagram:
+P Sym2 (V )
+
+
+
+2-uple Veronese
+linear projection
+P (V )
+[ϕ]
+
+W ⊂ P (L(2(c + g)D0 + 2D∞ ))
+h 2i
+ϕ
+ψ0
+
+11
+
+ϕϕ
+
+The linear projection takes into account the fact that the functions ψi 0j may not be linearly
+independent. In any case, since the image of the 2-uple Veronese is known to be of degree 2n and
+since the degree can only decrease under a linear projection, the image W of the bottom map has
+degree bounded by 2n . By construction, elements of W are functions which define the same class
+as ψ0 in H 1 (Cf \ D2 , µ2 ).
+On the other hand, we denote by LB ((c + g)P0 ) the Riemann-Roch space computed on B
+(unadorned linear spaces being computed on Cf ), and inside P (L(2(c + g)D0 + 2D∞ )) we consider
+the image W ′ of the map
+P2,1 (LB (2(c + g)P0 ) × LB ((c + g)P0 )) → P (L(2(c + g)D0 + 2D∞ ))
+[u1 , v1 ] 7→ [u1 − v12 x].
+Here, P2,1 (L1 × L2 ) is the weighted projective space obtained by modding out the vector space
+L1 × L2 by the equivalence relation (λ2 u, λv) ∼ (u, v). By the same argument as above, involving
+′
+a 2-uple Veronese on the second linear factor, the subvariety W ′ has degree bounded by 2n , where
+n′ = h0 ((c + g)P0 ) − 1. Note that W ′ , unlike W , does not depend on x0 ; by construction, elements
+of W ′ are all functions (up to a multiplicative constant) of the form u1 − v12 x where u1 and v1 are
+chosen in suitable Riemann-Roch spaces.
+Consider the subvariety W0′ of W ′ where v1 ̸= 0, and the subvariety W0′ ∩ W . We define a map
+α : (W0′ ∩ W )(k) → k(Cf )×
+u1
+[u1 − v12 x] 7→ 2 − x.
+v1
+By the construction of W and W ′ , and by virtue of Lemma 2.6, the image of α contains the
+set of functions x1 − x with deg x1 ≤ c which define the same class as x0 − x in k(Cf )× /(k(Cf )× )2 .
+According to Lemma 2.5 this set is finite; let us call m its cardinality.
+We note that the image of α may be larger than the desired set, but is in any case finite, since
+deg(u1 ) ≤ 2(c + g) and deg(v12 ) ≤ 2(c + g) implies that deg( uv21 ) ≤ 4(c + g) (in fact, the functions u1
+1
+
+and v12 having a unique pole at the same point P0 , this can be reduced to 2(c + g)), and we apply
+Lemma 2.5 again. So the image of α is a finite set of functions, say (x0 −x), (x1 −x), . . . , (xM −1 −x),
+with M ≥ m.
+We claim that for all i ∈ {0, . . . , M − 1}, α−1 (xi − x) is the set of closed points of a Zariski
+closed subset of W0′ ∩ W . Indeed, consider the space of functions
+Vi = {v(xi − x) | v ∈ k(B), v(xi − x) ∈ LB (2(c + g)P0 ) + LB (2(c + g)P0 )x}
+= {v(xi − x) | v ∈ LB (2(c + g)P0 ), vxi ∈ LB (2(c + g)P0 )}.
+From the latter description, Vi is clearly a linear subspace of L(2(c+g)D0 +2D∞ ). From the former
+description, α−1 (xi − x) = P(Vi ) ∩ (W0′ ∩ W )(k), and the claim follows. Let Wi = P(Vi ) ∩ (W0′ ∩ W ).
+−1
+′
+Then W0′ ∩ W = ∪M
+i=0 Wi , and from the definitions Wi ∩ Wj = ∅ if i ̸= j. It follows that W ∩ W
+n
+must have at least M ≥ m irreducible components. On the other hand, since deg W ≤ 2 and
+′
+deg W ′ ≤ 2n , by a suitable version of Bézout’s theorem [Ful98, Example 8.4.6], W ∩ W ′ has at
+′
+′
+most 2n+n irreducible components. Therefore m ≤ 2n+n , and it follows that the number of points
+′
+in C (k(B))≤c having the same image by the 2-descent map is bounded above by 2n+n +1 (we pick
+up an extra factor of 2 since there are two rational points (x1 , y1 ) ∈ C (k(B)) corresponding to
+each x1 ).
+
+12
+
+Finally, we note that 2(c + g)D0 + 2D∞ −
+it follows that
+
+Ps
+
+Ps
+
+i=1 Pi ∼ 2E0 by (9), and since deg(
+
+i=1 Pi ) ≥ 0
+
+deg E0 ≤ deg ((c + g)D0 + D∞ )
+≤ d(c + g) + deg x
+
+by (8)
+
+≤ d(c + g) + hB (f )
+
+by (5)
+
+where hB (f ) denotes the height of the polynomial
+Ps f , computed on the base curve B. We also
+derive from (9) that 2(c + g)D0 + 2D∞ − E0 − i=1 Pi ∼ E0 , hence
+n = h0 (2(c + g)D0 + 2D∞ − E0 −
+
+s
+X
+
+Pi ) − 1 = h0 (E0 ) − 1
+
+i=1
+
+Assuming first that Cf is irreducible, we have
+1
+n = h0 (E0 ) − 1 ≤ max{deg E0 − gf , deg E0 }
+2
+
+
+1
+≤ max d(c + g) + hB (f ) − gf , (d(c + g) + hB (f ))
+2
+by Riemann-Roch and Clifford’s theorem. Similarly,
+n′ = h0 ((c + g)P0 )) − 1
+1
+≤ max{c, (c + g)}
+2
+and the result follows. If Cf is not irreducible, then the upper bound on n no longer holds.
+However, since the divisor E0 is effective, we have [Liu02, §7.3.2, Prop. 3.25]
+h0 (E0 ) ≤ deg E0 + dimk H 0 (Cf , OCf ) ≤ deg E0 + ω(f )
+which yields, by the same reasoning as above, an upper bound on the number of points which are
+not of the form (x0 , 0) and map to the same class.
+We now consider points of the form (x0 , 0) ∈ C (k(B)), if any. The strategy is the following: if
+f has a root x0 then, by considering a modified 2-descent map, one can slightly improve on the
+previous bound for all c > 0, and the difference between the improved bound and the one in the
+statement is larger than ω(f ), which is an obvious upper bound on the number of points of the
+form (x0 , 0). This argument does not requires us to consider the image of points (x0 , 0) by the
+2-descent map δ.
+Let us construct this modified 2-descent map. Assume that x0 ∈ k(B) is a root of f , and let
+us write f (X) = (X − x0 )φ(X) for some monic polynomial φ. Then Cf = B ∪ Cφ (disjoint union
+of smooth curves), where Cφ is the k-curve defined by φ = 0. We have
+H 1 (Cf \ D2 , µ2 ) = H 1 (B \ Σ2 , µ2 ) ⊕ H 1 (Cφ \ D2′ , µ2 )
+
+(10)
+
+where D2′ is the restriction of D2 to Cφ . We observe (Lemma 2.5) that the 2-descent map δ takes
+its values in the kernel of the norm map H 1 (Cf \ D2 , µ2 ) → H 1 (B \ Σ2 , µ2 ). If we represent a class
+in H 1 (Cf \ D2 , µ2 ) as a couple (µ, ν) ∈ k(B)× × k(Cφ )× (modulo squares), then the norm of this
+class is represented by µ · Nφ (ν) (modulo squares) where Nφ it the norm relative to k(Cφ )/k(B).
+It follows that projecting on the second factor in (10) yields an isomorphism between the kernel
+13
+
+of the norm map and H 1 (Cφ \ D2′ , µ2 ), the inverse map being given by ν 7→ (Nφ (ν), ν). Therefore,
+by composing δ with the projection onto the second factor of (10) we obtain a modified 2-descent
+map C (k(B)) → H 1 (Cφ \ D2′ , µ2 ), defined by the same formula and having the same properties as
+the original one. The same counting argument applies to this modified 2-descent map, with the
+small improvement that there is one component less on the curve Cφ , so that ω(f ) is replaced by
+ω(f ) − 1. The resulting bound is half the size of the previous bound, hence the result.
+When the base curve B is the projective line, one can improve on Theorem 2.4 under the
+additional assumption that f has coefficients in k[t] (which can be achieved after a suitable change
+of coordinates).
+Proposition 2.7. Assume that C is defined over k(t) = k(P1 ), and that the affine equation
+y 2 = f (x) of C has coefficients in k[t]. Then for an integer c > 0, there are at most
+2Ω(⌈ 2 ⌉,f,0)+⌈ 2 ⌉+1
+c
+
+c
+
+points in the set C (k(t))≤c mapping (under δ) to the same class in H 1 (Cf \ π −1 (Σ2 ), µ2 ), where
+Σ2 and δ are defined in Lemma 2.3.
+Proof. Let (x0 , y0 ) ∈ C (k(t))≤c . Since k[t] is a unique factorization domain and f is monic, with
+coefficients in k[t], one can deduce from the relation y02 = f (x0 ) that
+x0 =
+
+u0
+e2
+
+where u0 and e are coprime polynomials, unique up to multiplication by a scalar. More precisely,
+if v is a valuation of k[t] such that v(x0 ) < 0, then v(y02 ) = v(f (x0 )) = v(xd0 ) = dv(x0 ) (since xd0 is
+the leading term in f (x0 )), hence v(x0 ) is even (since d is odd).
+It follows that max{deg(u0 ), 2 deg(e)} = deg(x0 ) ≤ c. On the curve Cf ,
+div(e2 x0 − e2 x) ≥ −cπ ∗ (∞) − (x)∞
+lcm
+≥ −2
+π ∗ (∞) − (x)∞ ,
+2
+improving the inequality (7) (choosing P0 = ∞ and D0 = π ∗ (∞)). This improvement allows us to
+replace c + g by ⌈ 2c ⌉ everywhere in the proof of Theorem 2.4.
+Working again over the projective line, a classical problem is to count integral points, that
+is, points with coordinates in k[t]. The following statement gives a slightly better bound for the
+number of such points, provided c is large enough. The main improvement is that we replace the
+variety W ′ in the proof of Theorem 2.4 by a suitable linear subvariety of the target space.
+Proposition 2.8. Under the assumptions of Proposition 2.7, if c ≥ hB (f ) then the number of
+points in the set C (k[t])≤c mapping to the same class under δ is bounded above by
+(
+d c
+c
+2max{d⌈ 2 ⌉−gf , 2 ⌈ 2 ⌉}+1 if Cf is irreducible
+c
+2d⌈ 2 ⌉+ω(f )
+otherwise.
+Proof. Let us go through the proof of Theorem 2.4, with the same notation. According to Proposition 2.7, one can replace c + g by ⌈ 2c ⌉ when counting rational points.
+
+14
+
+Since f is monic, with coefficients in k[t], the function x has all its poles in the support of
+π ∗ (∞). Therefore, if x0 ∈ k[t]≤c is a polynomial of degree ≤ c, and if c ≥ hB (f ) = deg(x), then
+we have, on the curve Cf ,
+div(x0 − x) ≥ −cπ ∗ (∞).
+It follows that, when counting integral points, one can remove the quantity hB (f ) from the upper
+bound on the integer n.
+Next, we observe that, in order to count functions of the form x1 −x with x1 ∈ k[t]≤c , the variety
+W ′ can be replaced by the linear variety P(⟨x, k[t]≤c ⟩), and its subvariety W0′ can P
+be replaced by
+the affine subvariety P(⟨x, k[t]≤c ⟩)0 corresponding to functions of the form λx + i≤c µi ti with
+λ ̸= 0. Up to rescaling λ, such a function can be uniquely represented by a function of the form
+x1 −x with x1 ∈ k[t]≤c . Therefore, the k-points of W ∩P(⟨x, k[t]≤c ⟩)0 are in bijection with functions
+of the form x1 − x with x1 ∈ k[t]≤c which define the same class as x0 − x in k(Cf )× /(k(Cf )× )2 .
+It then follows from Lemma 2.5 that W ∩ P(⟨x, k[t]≤c ⟩)0 is a finite variety; according to Bézout’s
+theorem, its degree is bounded above by deg W ≤ 2n . It follows that the number of points in
+C (k[t])≤c having the same image by δ is bounded above by 2n+1 .
+
+2.4
+
+Proof of Theorem 1.1
+
+Proof of Theorem 1.1 (1). Since d is odd, C has a unique rational point at infinity, which induces
+an embedding C ,→ J of C into its Jacobian. It is well-known [Sch95] that the map δ is the
+composition of this particular embedding with the (cohomological) 2-descent map on J. Therefore,
+the image of δ is a subset of the image of the Mordell-Weil group of J.
+On the other hand, the canonical map Trk(B)/k (J) → J is injective on k(B)-points [Con06,
+Theorem 6.12], so we have by construction of LN(J) an exact sequence of abelian groups
+0 −→ Trk(B)/k (J)(k) −→ J(k(B)) −→ LN(J) → 0.
+Since k is algebraically closed, the group Trk(B)/k (J)(k) is 2-divisible, hence it follows from the
+Snake Lemma that
+J(k(B))[2]/Trk(B)/k (J)(k)[2] ≃ LN(J)[2],
+(11)
+and that
+J(k(B))/2J(k(B)) ≃ LN(J)/2LN(J).
+It follows from the last statement that the size of the image of δ is bounded above by
+2rkZ LN(J)+dimF2 LN(J)[2] .
+Combining this with Theorem 2.4 yields the bound.
+Proof of Theorem 1.1 (2). Same proof as above, just replace Theorem 2.4 by its improved version
+over the projective line: Proposition 2.7.
+Proof of (2). The dimension of J is the genus of the curve C which is equal to (d − 1)/2, so letting
+d0 := dim Trk(B)/k (J) we have [Ray95, Théorème 3]
+rkZ LN(J) ≤ 4d0 + (d − 1)(2g − 2) + deg(fJ ),
+where fJ denotes the conductor of J.
+
+15
+
+(12)
+
+Since k is algebraically closed of characteristic not 2, the 2-torsion subgroup of Trk(B)/k (J)(k)
+is an F2 -vector space of dimension 2d0 , hence it follows from (11) and (12) that
+rkZ LN(J) + dimF2 LN(J)[2] ≤ 2d0 + (d − 1)(2g − 2) + deg(fJ ) + dimF2 J(k(B))[2].
+Finally, we replace the size of the 2-torsion subgroup by its value
+dimF2 J(k(B))[2] = ω(f ) − 1,
+where ω(f ) is the number of irreducible factors of f . This concludes the proof.
+
+3
+
+Counting integral points
+
+3.1
+
+Upper bound on the height of S-integral points
+
+In this section, we fix a finite non-empty set S ⊂ B, that we also view as a reduced divisor on
+B. We denote by RS ⊂ k(B) the ring of rational functions on B with no poles outside S; we call
+it the ring of S-integers in k(B).
+In order to count the number of S-integral points on the Weierstrass model of C , it suffices to
+give an upper bound on the height of such points, and then apply Theorem 1.1.
+Inspired by the proof given by Hindry and Silverman [HS88, Proposition 8.2] and its version
+in positive characteristic by Pacheco [Pac98], we obtain the following.
+Theorem 3.1. Let C be the hyperelliptic curve over k(B) defined by the equation y 2 = f (x), where
+f ∈ k(B)[x] is a monic separable polynomial of odd degree d ≥ 3. Assume that f has coefficients
+in RS ; let ∆f be the discriminant of f , and let Σ := {v ∈ B | v(∆f ) > 0}.
+1. Assume char(k) = 0 and C is non-constant. Then we have, for all (x0 , y0 ) ∈ C (RS ),
+deg x0 ≤ 4(2g − 2 + |S ∪ Σ|) +
+
+3hB (f )
+d
+
+2. Assume char(k) > d and C is not isotrivial. Then
+deg x0 ≤ 6ρ(2g − 2 + |S ∪ Σ|) +
+
+3hB (f )
+,
+d
+
+where the inseparable degree ρ is defined below (Definition 3.2).
+Before we define ρ, let us recall basic facts about inseparable degrees. If p = char(k) > 0, then
+s
+given z ∈ k(B) \ k its inseparable degree is the largest power ps of p such that z belongs to k(B)p ;
+we denote it by ideg(z). The separable degree is then defined by the formula
+deg(z) = sdeg(z) ideg(z).
+Alternatively, the separable (resp. inseparable) degree of z is the separable (resp. inseparable)
+degree of the field extension k(B)/k(z). When z is a constant function, we do not define sdeg(z)
+and ideg(z). We note that ideg(z) does not change if one computes it over a separable extension
+K/k(B), since
+ideg(K/k(z)) = ideg(K/k(B)) · ideg(k(B)/k(z)) = ideg(k(B)/k(z)).
+The main property of ideg we shall use in the proof is the following elementary one: if z1 z2 is
+non-constant, then
+ideg(z1 z2 ) ≥ min{ideg(z1 ), ideg(z2 )}.
+(13)
+16
+
+Definition 3.2. Assume char(k) > d and C is not isotrivial. Given a finite separable extension
+K/k(B) over which f has all its roots e1 , . . . , ed , we let
+
+
+
+
+ek − e 1
+ek − e 1
+| k = 3, . . . , d and
+∈
+/k .
+ρ := inf idegK
+e2 − e1
+e2 − e 1
+Note that ρ is well-defined, and strictly positive: if the set above were empty, then over K the
+curve y 2 = (e2 − e1 )f (x) would be defined by an equation with coefficients in k, i.e. C would be
+constant over a quadratic extension of K, hence isotrivial over k(B). Moreover, as long as K/k(B)
+is separable, this quantity does not depend on the choice of K. Alternatively, one can define ρ by
+
+
+
+ek − e 1
+ρ := ideg K/k
+; k = 3, . . . , d
+e2 − e1
+from which one can check that ρ does not depend on the choice of an ordering of e1 , . . . , ed .
+Remark 3.3. In the case when C is an elliptic curve, we have
+
+
+e3 − e1
+ρ = ideg
+= ideg j(C )
+e2 − e1
+where j(C ) is the modular invariant. More generally, ρ is the largest power of p such that C is
+defined over k(B)ρ .
+Proof. Let us assume first that char(k) = 0. Let P = (x0 , y0 ) be an S-integral point. We shall
+work with the set T := S ∪ Σ, which is the smallest set containing S and such that ∆f is a T -unit.
+Let e1 , . . . , ed be the roots of f in some algebraic closure of k(B), ordered by increasing degree, let
+√
+ui := x0 − ei , and let
+L := k(B)(ei , ui , i = 1, . . . , d).
+Since ∆f is a T -unit, the extension k(B)(e1 , . . . , ed )/k(B), which is the splitting field of f , is unramified outside T . Moreover, the extension L/k(B)(e1 , . . . , ed ) is unramified outside T , exactly by
+the same argument which proves that the descent map is well-defined (see Lemma 2.3). Therefore,
+the extension L/k(B) is unramified outside T .
+Let B ′ → B be the finite cover of curves corresponding to the extension L/k(B), and let T ′ be
+the set of places of B ′ lying over T . Since B ′ → B is unramified outside T , and tamely ramified
+above T , the Riemann-Hurwitz formula yields
+2g ′ − 2 + |T ′ | = [L : k(B)](2g − 2 + |T |)
+
+(14)
+
+where g ′ denotes the genus of B ′ . It follows that, in the formula we want to prove, all quantities
+are multiplied by [L : k(B)] when computed over L. So we may, and do, assume that L = k(B).
+We note that the ei are T -integers, because they are roots of a monic polynomial whose
+coefficients are T -integers. Likewise, since x0 and the ei are T -integers, so are the ui . Finally,
+since ∆f is a T -unit, the ej − ei are also T -units, for all i ̸= j.
+For appropriate choices of signs, we have the following relation between T -units:
+(u1 ± u3 ) ± (u2 ± u3 ) = u1 ± u2 .
+Hence the abc-theorem over function fields [Sil84] implies that, for all choices of signs,
+
+
+u1 ± u3
+deg
+≤ 2g − 2 + |T |.
+u1 ± u2
+17
+
+(15)
+
+It follows that
+
+
+
+
+
+
+
+
+2u1
+u1 + u3
+u1 − u3
+u1
+= deg
+≤ deg
++ deg
+≤ 2(2g − 2 + |T |)
+deg
+u1 ± u2
+u1 ± u2
+u1 ± u2
+u1 ± u2
+(in passing, we used the fact that 2 ̸= 0 in k). Therefore,
+
+
+
+
+
+
+
+
+x0 − e 1
+u21
+u1
+u1
+deg
+= deg
+≤ deg
++ deg
+e2 − e1
+u1 + u2
+u1 − u2
+u21 − u22
+≤ 4(2g − 2 + |T |).
+On the other hand, by the properties of the degree we have
+
+
+
+
+x0 − e 1
+x0 − e 1
+deg(x0 ) = deg
+(e2 − e1 ) + e1 ≤ deg
++ 2 deg(e1 ) + deg(e2 )
+e2 − e 1
+e2 − e1
+
+
+x0 − e 1
+3hB (f )
+≤ deg
++
+,
+e2 − e 1
+d
+where the last inequality follows from the elementary observations (recalling the chosen ordering
+on the ei ):
+2hB (f )
+hB (f )
+deg(e1 ) + deg(e2 ) ≤
+,
+deg(e1 ) ≤
+d
+d
+hence the result.
+Let us now consider the case when char(k) > d. The first step of the proof (base-changing to L)
+is the same, observing that the extension L/k(B) is separable (because f is), and tamely ramified
+(since char(k) > d), hence the Riemann-Hurwitz formula (14) holds without change. Note that as
+previously all quantities in the formula are multiplied by the degree [L : k(B)] and that ρ remains
+unchanged.
+We let as previously e1 and e2 be the roots of f with smallest degree, then we choose a third
+root e3 in such a way that
+
+
+e3 − e1
+ρ = ideg
+,
+e2 − e1
+where ρ is the inseparable degree (Definition 3.2).
+Then the relation between T -units
+e3 − e1 e2 − e3
++
+=1
+e2 − e1 e2 − e1
+implies, via the abc-theorem, that
+
+
+
+
+
+
+e3 − e1
+e3 − e1
+e3 − e1
+deg
+= ideg
+sdeg
+≤ ρ(2g − 2 + |T |).
+e2 − e1
+e2 − e 1
+e2 − e1
+On the other hand, we have
+e3 − e1
+=
+e2 − e 1
+
+
+
+u1 − u3
+u1 − u2
+
+
+
+u1 + u3
+u1 + u2
+
+
+.
+
+This quantity being non-constant, it follows from (13) that ρ satisfies
+
+
+
+
+
+u1 − u3
+u1 + u3
+min ideg
+, ideg
+≤ ρ.
+u1 − u2
+u1 + u2
+18
+
+(16)
+
+Now, applying the abc-theorem to the relation (15) we have
+
+
+u1 ± u3
+sdeg
+≤ 2g − 2 + |T |.
+u1 ± u2
+Combining the two previous inequalities yields
+
+
+
+
+
+u1 + u3
+u1 − u3
+, deg
+≤ ρ(2g − 2 + |T |).
+min deg
+u1 − u2
+u1 + u2
+Assume that the first quantity is the minimum. Then, according to (16) we have
+
+
+
+
+
+
+u1 + u3
+e3 − e 1
+u1 − u3
+deg
+≤ deg
++ deg
+≤ 2ρ(2g − 2 + |T |).
+u1 + u2
+e2 − e 1
+u1 − u2
+Finally, the same reasoning holds when switching signs between numerators in the right-hand
+side of (16). By the same method as in the characteristic 0 case, we deduce that
+
+
+x0 − e 1
+deg
+≤ 6ρ(2g − 2 + |T |),
+e2 − e 1
+and the result follows by the same argument as in the characteristic zero case.
+
+3.2
+
+Proof of Theorem 1.2
+
+Proof of Theorem 1.2. With the notation of Theorem 3.1 we have |S ∪ Σ| ≤ |S| + deg ∆f , hence
+it follows from Theorem 3.1 that the quantity cmax is an upper bound on the naive height of
+S-integral points on C . It suffices to apply Theorem 1.1 in order to deduce an upper bound on
+the number of S-integral points.
+In order to prove Theorem 1.2, it remains to check that, in both brackets, the maximum is
+achieved by the first quantity, namely
+
+
+1
+max d(cmax + g) + hB (f ) − gf , (d(cmax + g) + hB (f ))
+(17)
+2
+when Cf is irreducible, and
+
+
+
+1
+max cmax , (cmax + g) .
+2
+
+(18)
+
+By definition, cmax satisfies
+cmax ≥ 4(2g − 2 + |T |) +
+
+3hB (f )
+,
+d
+
+(19)
+
+where T := S ∪ Σ as previously. If g = 0 then |T | ≥ 2 (since a non-constant fibration of the
+projective line has at least 2 bad fibers), and in any case |S| ≥ 1, hence we deduce from (19) that
+cmax ≥ 4g in all cases. This proves the first quantity in (18) is the maximum.
+In order to prove that the first quantity in (17) is the maximum, it suffices to prove that
+d(cmax + g) + hB (f ) ≥ 2gf .
+But we have, according to the Riemann-Hurwitz formula,
+2gf − 2 + |Tf | = d(2g − 2 + |T |),
+19
+
+where Tf denotes the set of points of Cf lying above T . So, in order to prove the result, it suffices
+to prove that
+2
+hB (f )
+≥ 2g − 2 + |T | + .
+cmax + g +
+d
+d
+But this follows from (19), observing that hB (f ) ≥ 1 (if hB (f ) = 0 then f would have constant
+coefficients, which contradicts the assumption that C is non-constant).
+
+3.3
+
+Integral points of small height on elliptic curves over P1
+
+In this section we work over k(B) = k(P1 ) = k(t), although the arguments may admit extensions to the general case. Let C = E be an elliptic curve defined over k(t) = k(P1 ) by an affine
+equation y 2 = f (x), where deg f = 3 and f has coefficients in k[t]. In addition to the running
+assumption that f is a monic separable cubic polynomial, we assume additionally that f is irreducible (or equivalently, Cf is irreducible). The key idea behind the results in this section is
+that when the divisor E0 in the proof of Theorem 2.4 is a special divisor, then instead of applying
+Clifford’s theorem we may use a more refined analysis based on classical results of Maroni on
+the Brill-Noether theory of trigonal curves. The resulting improvements will be important in the
+applications in the next section.
+We begin by collecting some classical facts about trigonal curves. Let C be a trigonal curve of
+genus g > 4. This implies that the g31 is unique, and we let g13 be its image in Pic3 (C). We next
+recall the Maroni invariant m of C, which we can take to be defined by [MS86, Eq. (1.2)]
+m = min{n ∈ N | h0 (ng13 ) > n + 1} − 2.
+It is known [MS86, Eq. (1.1)] that
+0<
+
+g−2
+g−4
+≤m≤
+.
+3
+2
+
+Let Wnr = Wnr (C) = {[D] ∈ Picn (C) | deg D = n, h0 (D) ≥ r + 1}, and let Wn = Wn0 . Let
+κ = [K] ∈ Pic2g−2 (C) be the canonical class of C. We define
+(
+rg13 + Wn−3r if n ≥ 3r
+Unr =
+∅
+otherwise,
+and
+Vnr =
+
+(
+κ − ((g − n + r − 1)g13 + W2(n−1)−g−3(r−1) ) if 2(n − 1) − g − 3(r − 1) ≥ 0
+∅
+otherwise.
+
+Then a classical result of Maroni [MS86, Prop. 1] states:
+Theorem 3.4. Let C be a trigonal curve of genus g > 4. For n < g and r ≥ 1, we have
+1. Wnr = Unr ∪ Vnr
+2. If Unr ̸= ∅ then Unr is an irreducible component of Wnr .
+3. Let Vnr ̸= ∅. Then Unr ̸= ∅ and Vnr is an irreducible component of Wnr different from Unr if
+and only if g − n + r − 1 ≤ m.
+We reformulate this result in a form more convenient for our purposes.
+20
+
+Corollary 3.5. Let C be a trigonal curve of genus g > 4 and Maroni invariant m, and let D be an
+effective divisor on C with deg D < g. Let t ∈ k(C)
+n be anrational function yielding the trigonalomoro
+0
+phism. Then either L(D) ⊂ k(t) or h (D) ≤ max min m + deg D + 2 − g, 2(deg D−1)−g
++
+2
+,
+1
+.
+3
+Proof. If h0 (D) = 1 then the conclusion of the corollary is trivially satisfied. Suppose now that
+h0 (D) = r + 1 ≥ 2 and let n = deg D. We easily reduce to the case |D| is basepoint free. By
+Theorem 3.4(1), either [D] ∈ Unr or [D] ∈ Vnr . In the first case, we will show that L(D) ⊂ k(t).
+In the second case, we combine two inequalities: one coming from the condition Vnr ̸= ∅, and one
+coming from requiring (as we may) Vnr ̸⊂ Unr .
+Suppose first that [D] ∈ Unr . Note that consistent with the fact Unr ⊂ Wnr , since n < g and
+1
+Unr ̸= ∅, we have r ≤ n3 ≤ g−1
+3 ≤ m + 1, and from our definition of the Maroni invariant, rg3
+1
+is a complete linear system (and dim rg3 = r). Then in this case, since |D| is basepoint free,
+[D] = rg13 and |D| = rg31 . Let ϕ ∈ L(D). Then it follows that we can write div(ϕ) = E − F , where
+E, F ∈ rg31 . But any such function ϕ can be written as a rational function in t (of degree ≤ r),
+and in particular, L(D) ⊂ k(t).
+Suppose now that [D] ∈ Vnr , but [D] ̸∈ Unr . Then Vnr must be different from Unr , which implies
+that g − n + r − 1 ≤ m by Theorem 3.4(3). Since Vnr ̸= ∅, we have 2(n − 1) − g − 3(r − 1) ≥ 0.
+Combining these two inequalities gives
+
+
+2(n − 1) − g
+r + 1 = h0 (D) ≤ min m + n + 2 − g,
++2 ,
+3
+completing the proof.
+Using Riemann-Roch and Serre duality when deg D ≥ g, Theorem 3.4 gives (see [LN10, Remark 4.5(b)]:
+Theorem 3.6. Let C be a trigonal curve of genus g > 4 and let D be a divisor. Then
+(
+2
+(deg D + 2) − 31 g if g ≤ deg D ≤ 2g − 2,
+0
+h (D) ≤ 3
+deg D + 1 − g
+if deg D > 2g − 2.
+We now use these results to study integral points of small height on elliptic curves over k(t).
+Theorem 3.7. Let E be a curve over k(t) = k(P1 ) defined by an affine equation y 2 = f (x) =
+x3 + A(t)x + B(t), A, B ∈ k[t]. Let C be the curve C : x3 + A(t)x + B(t) = 0 and suppose that C
+is irreducible and gC > 4. Let m be the Maroni invariant of C. Let c be an even integer satisfying
+c≥
+
+1
+1
+max{deg A, deg B} = h(f ).
+2
+2
+
+Let
+
+n
+o
+4−gC
+3c
+
+min
+m
++
++
+2
+−
+g
+,
+c
++
+
+C
+
+2
+3
+µ = c + 4−gC
+3
+
+
+3c + 1 − g
+C
+2
+
+if c < 23 gC
+if 23 gC ≤ c ≤ 43 (gC − 1)
+if c > 34 (gC − 1).
+
+Then there are at most
+2max{µ,1}
+points in the set E (k[t])≤c mapping (under δ) to the same class in H 1 (Cf \ π −1 (Σ2 ), µ2 ).
+21
+
+Proof. Let (x0 , y0 ) ∈ E (k[t])≤c . From the form of f (x) and since c ≥ 12 h(f ), we have
+div(x0 − x) ≥ −cπ ∗ ∞,
+and therefore we can remove the term D∞ in the proof of Theorem 2.4. With the same notation
+as in the proof of Theorem 2.4, we have
+div(ψ0 ) = div(x0 − x) = 2E0 +
+
+s
+X
+
+Pi − cπ ∗ (∞)
+
+(20)
+
+i=1
+
+(note also that by our assumptions 2 | c, so that 2⌈ 2c ⌉ = c). It follows from (20) that 2 deg(E0 ) ≤
+c deg(π ∗ (∞)), or equivalently,
+deg E0 ≤
+
+3c
+.
+2
+
+Suppose first that L(E0 ) ̸⊂ k(t). Then using Corollary 3.5 or Theorem 3.6 (depending on deg E0 ),
+we find h0 (E0 ) ≤ µ. Then the same proof as in Proposition 2.8 proves that δ is at most 2µ -to-one
+on such points.
+Let us now consider the case when L(E0 ) ⊂ k(t). By (20), the map
+∗
+
+L(cπ (∞) −
+
+s
+X
+
+Pi − E0 ) → L(E0 )
+
+i=1
+
+ϕ′ 7→ ϕ′ /ψ0 ,
+is an isomorphism. Applying it to the map ϕ defined by ψ0 ψ1 = ϕ2 as in the proof of Theorem 2.4,
+we deduce that ϕ/ψ0 ∈ k(t) and so ψ1 = (ϕ/ψ0 )2 ψ0 differs from ψ0 by the square of a rational
+function in t. But since 1 and x are linearly independent over k(t) ⊂ k(C), looking at coefficients
+this immediately implies that ψ0 = ψ1 , hence δ is 2-to-one on such points.
+We get a more precise result in the j-invariant 0 case.
+Theorem 3.8. Let E be a curve over k(t) = k(P1 ) defined by an affine equation y 2 = f (x) =
+x3 + B(t). Write
+B = B1 B22 B33 ,
+where B1 and B2 are coprime and squarefree. Let d1 = deg B1 and d2 = deg B2 . Let
+(
+d1 + d2 − 2 if 3|(d1 + 2d2 ),
+gC =
+d1 + d2 − 1 otherwise,
+and assume gC > 4. Let c be an even integer satisfying
+1
+2
+deg B ≤ c < gC .
+3
+3
+Then there are at most
+1
+
+3c
+
+2max{⌈ 3 min{d1 +2d2 ,2d1 +d2 }⌉+ 2 −gC ,1}
+points in the set E (k[t])≤c mapping (under δ) to the same class in H 1 (Cf \ π −1 (Σ2 ), µ2 ).
+22
+
+Proof. Since gC > 4, B is not a cube and the curve C : x3 + B(t) = 0 is irreducible. We note that
+3 div(x) = div(B),
+as divisors on C, and the divisor of poles of x is given by deg3 B π ∗ (∞) (note that either 3| deg B or
+π ∗ ∞ is a point with multiplicity 3). Let (x0 , y0 ) ∈ E (k[t])≤c . Since c ≥ 31 deg B, we again have
+div(x0 − x) ≥ −cπ ∗ ∞.
+The formula for the genus gC is well-known. Finally, we note that x/B3 and x2 /(B2 B32 ) have poles
+only at infinity, and deg(x/B3 ) = d1 + 2d2 , deg(x2 /(B2 B32 )) = 2d1 + d2 . Since x, x2 ̸∈ k(t) (viewing
+k(t) ⊂ k(C)), it follows that the Maroni invariant m satisfies m ≤ ⌈ 31 min{d1 + 2d2 , 2d1 + d2 }⌉ − 2.
+The result now follows from the previous result.
+For elliptic curves of the form E : y 2 = x3 + B(t), we may use Davenport’s inequality to give
+an improvement of Theorem 1.2, and a generalization of our earlier work [GHL23].
+Corollary 3.9. With the notation of Theorem 3.8, assume that gC > 4, and that either char(k) = 0
+or char(k) > 3 and B contains at least one root of multiplicity one. Then
+|E (k[t])| ≤ 23 deg(B)−2−gC +rkZ E (k(t)) .
+Proof. According to Davenport’s inequality [Dav65], generalized to positive characteristic by Schütt
+and Schweizer [SS08, Theorem 1.2, (b)], for all points (x0 , y0 ) ∈ E (k[t]) we have
+deg x0 ≤ 2 deg(B) − 2.
+Using the explicit formula for gC one checks that 2 deg(B) − 2 > 43 (gC − 1). Now, it follows from
+Theorem 3.7 that the 2-descent map is at most a 23 deg(B)−2−gC -to-one map on the set of all integral
+points, hence the result.
+
+4
+
+Applications to bounding torsion of Jacobians over small finite
+fields
+
+4.1
+
+Bounding 3-torsion of Jacobians of hyperelliptic curves over small finite
+fields
+
+Let q = pr for some prime p ≥ 5. Let X be a hyperelliptic curve of genus g over Fq , with
+a rational Weierstrass point. Then one can find an equation X : y 2 = F (t) with F squarefree,
+deg F = d = 2g + 1. Let J = Jac(X) be the Jacobian of X. The main result of this section is
+Theorem 1.3: for some constant γ depending only on q,
+g
+
+|J(Fq )[3]| ≤ q 2
+
+g
++γ log
+g
+
+.
+
+The starting point of our strategy is to relate the 3-torsion points of J(Fq ) to integral points
+on certain elliptic curves over Fq (t).
+Actually we prove a slightly more general statement regarding n-torsion points of the Jacobian
+of X over an arbitrary base field k.
+
+23
+
+Lemma 4.1. Let n > 2 be an odd integer. For a ∈ k[t], a ̸= 0, let Ca be the hyperelliptic curve
+(over k(t)) defined by
+y 2 = xn + a(t)2 F (t).
+Then there exists an injective map
+G
+
+J(k)[n] \ {0} →
+
+Ca (k[t])≤g .
+
+(n−2)g−1
+deg a≤
+2
+
+a̸=0
+
+Proof. Let ∞ denote the (unique) point at infinity on X. Then we may write P = [D − g∞] for
+some effective divisor D on X of degree g, and
+nD − ng∞ = div(ϕ),
+for some rational function ϕ ∈ k(X). Since ϕ has poles only at infinity, we may write
+ϕ = a(t)y + b(t),
+for some polynomials a, b ∈ k[t]. Using that n is odd, elementary arguments yield a ̸= 0. Since
+deg y = 2g + 1, deg t = 2, deg D = g, we find that max{2 degt a + 2g + 1, 2 degt b} ≤ ng (noting
+that the two integers in the maximum have opposite parity). In particular, this implies degt a ≤
+(n−2)g−1
+. Taking norms gives
+2
+b2 − a2 y 2 = b2 − a2 F = c(x0 )n
+for some x0 ∈ k[t], c ∈ k ∗ . From previous calculations, n degt x0 ≤ ng and so degt x0 ≤ g. Then
+(cx0 , c(n−1)/2 b) is a point on the hyperelliptic curve
+C n−1
+c
+
+2
+
+n−1
+
+a(t)
+
+: y 2 = xn + (c 2 a(t))2 F (t).
+
+This construction gives a map as in the statement of the lemma (dependent on some arbitrarily
+made choices; for instance, ϕ is only determined up to a constant). To show the map is injective,
+we note that if (x0 , y0 ) ∈ Ca (k[t]) is in the image of the map, then P is determined as P =
+1
+n div(a(t)y + y0 (t)).
+Let us point out that although Lemma 4.1 holds for all k, when char(k) divides n, the equation
+y 2 = xn + a(t)2 F (t) does not define a smooth curve over k(t) (see Remark 4.4).
+We now return to a finite field k = Fq , where q is the power of a prime p ≥ 5, and n = 3. We
+shall need the following Lemma, which is closely related to the prime number theorem over Fq [t].
+Lemma 4.2. Let F (t) ∈ Fq [t] be a squarefree polynomial of degree d. Then F (t) has at most
+4q logd d irreducible factors.
+q
+
+Proof. Let p1 , p2 , . . . , pN (m) be the monic irreducible polynomials in Fq [t] of degree at most m. We
+first note that there are at most q n /n monic irreducible polynomials in Fq [t] of degree n. Indeed,
+this is immediate from the observation that the n roots of each such polynomial yield n distinct
+P
+qi
+elements of Fqn . In particular, N (m) ≤ m
+i=1 i .
+
+24
+
+PN (m)
+Let ω(F ) be the number of irreducible factors of F . Then clearly if i=1 deg pi ≥ d, then
+m
+ω(F ) ≤ N (m). Since xq − x is the product of the distinct monic irreducible polynomials in Fq [t]
+of degree dividing m, we have in particular
+N (m)
+
+X
+
+deg pi ≥ q m .
+
+i=1
+
+So if m = ⌈logq (d)⌉ ≤ logq (d) + 1, then
+ω(F ) ≤ N (m) ≤
+
+m
+X
+qi
+i=1
+
+i
+
+≤4
+
+qm
+,
+m
+
+where the last inequality is easily proven by induction (assuming q ≥ 2). Thus,
+ω(F ) ≤ 4
+
+qd
+.
+logq (d) + 1
+
+In order to prove Theorem 1.3 we shall use the following result of Brumer [Bru92, Proposition 6.9] to bound the rank of an elliptic curve E over Fq (t):
+rkZ E(Fq (t)) ≤
+
+deg(fE )
+deg(fE ) − 4
++λ
+,
+2 logq deg(fE )
+(logq deg(fE ))2
+
+(21)
+
+where fE is the conductor of E and λ is a constant depending only on q, which has been made
+explicit by Pazuki [Paz22]. The characteristic p is assumed to be at least 5 here.
+Proof of Theorem 1.3. According to Lemma 4.1, each nonzero element of J(Fq )[3] gives rise to a
+distinct point (x0 , y0 ) ∈ Ea (k[t]) on an elliptic curve
+Ea : y 2 = x3 + a(t)2 F (t),
+d−1
+for some a ∈ Fq [t], a ̸= 0, deg a ≤ d−3
+4 , and deg x0 ≤ 2 . Thus,
+X
+|J(Fq )[3]| − 1 ≤
+Ea (k[t])≤ d−1 .
+2
+
+a∈Fq [t]\{0}
+deg a≤ d−3
+4
+
+We now bound the right-hand side of this inequality.
+d−1 d+1
+d−3
+Let c = 2⌈ d−1
+4 ⌉ ∈ { 2 , 2 } and let a ∈ Fq [t] \ {0} with deg a ≤ 4 . Then
+
+
+1
+1 d−3
+deg(a2 F ) ≤
++ d ≤ c.
+3
+3
+2
+Let Ca be the curve over Fq given by Ca : x3 + a(t)2 F (t) = 0. We may write a(t) in the form
+a(t) = a0 a1 a22 a33 ,
+where a0 = gcd(a, F ), a0 , a1 , a2 are squarefree, and a1 and a2 are coprime. Let di = deg ai , i =
+0, 1, 2, 3. Then the genus of Ca is given by
+gCa = d − d0 + d1 + d2 − ϵa ,
+25
+
+where ϵa ∈ {1, 2} (with the value depending on if 3|(deg a2 F )).
+d−11
+Case 1: We first assume that d0 < d−3
+(note that in any case d0 ≤ deg a ≤ d−3
+4 −2 =
+4
+4 ).
+Then one easily finds
+2
+c < gCa .
+3
+By Theorem 3.8, letting ra be the rank of Ea (Fq (t)), we have
+3 d+1
+
+1
+
+|Ea (Fq [t])≤c | ≤ 2 3 (d−d0 +2d1 +d2 )+ 2 2 −(d−d0 +d1 +d2 −ϵa )+ra
+1
+
+2
+
+1
+
+2
+
+≤ 2 12 d+ 3 d0 − 3 d1 − 3 d2 +ϵa +ra +1 .
+Note that 31 d1 + 23 d2 ≤ 13 deg a ≤ d−3
+12 , and so the quantity in the exponent is always at least 1.
+Let r = maxdeg a≤ d−3 ra . If one fixes a polynomial F0 of degree d0 , and integers di , i = 1, 2, 3
+4
+
+d−3
+with d0 + d1 + 2d2 + 3d3 ≤ d−3
+4 , then the number of polynomials a of degree at most 4 with a
+factorization a0 = F0 = gcd(a, F ) and ai of degree di is at most
+
+q (d1 +1)+(d2 +1)+(d3 +1) .
+Since 2 < q and
+2
+2
+1
+2
+2
+2d−3
+d−3
+d0 + d1 + d2 + d3 ≤ (d0 + d1 + 2d2 + 3d3 ) ≤ deg a ≤
+=
+,
+3
+3
+3
+3
+3
+3 4
+6
+we have
+X
+
+1
+
+2
+
+1
+
+2
+
+1
+
+2
+
+2
+
+1
+
+1
+
+d−3
+
+|Ea (Fq [t])≤c | ≤ 2 12 d+ 3 d0 − 3 d1 − 3 d2 +ϵa +r+1 q d1 +d2 +d3 +3
+
+a∈Fq [t]\{0}
+deg ai =di ,i=1,2,3
+a0 =F0
+
+≤ q 12 d+ 3 d0 + 3 d1 + 3 d2 +d3 +r+6
+≤ q 12 d+ 6 +r+6
+d
+
+≤ q 4 +r+6 .
+There are at most d possibilities for each of the integers d1 , d2 , d3 , and by Lemma 4.2, there
+4qd
+
+are at most 2 logq d possibilities for F0 . Therefore,
+4qd
+X
+d
+|Ea (Fq [t])≤c | ≤ d3 2 logq d q 4 +r+6 .
+a∈Fq [t]\{0}
+deg a≤ d−3
+4
+d0 ≤ d−11
+4
+4qd
+
+d−11
+Case 2: Similarly, there are at most 2 logq d q 3 polynomials a with deg a ≤ d−3
+4 and d0 ≥
+4 .
+d+1
+3d
+Since c ≤ 2 and gCa ≥ d − d0 − 2 ≥ 4 , by Theorem 3.7, we have
+g
+
+X
+
+|Ea (Fq [t])≤c | ≤ q 3 2
+
+4qd
+c− C3a +2+ log
++r
+d
+q
+
+a∈Fq [t]\{0}
+deg a≤ d−3
+4
+d0 ≥ d−11
+4
+d+1
+
+≤ q32 2
+
+4qd
+− d4 +2+ log
++r
+d
+
+26
+
+q
+
+d
+
+≤ q4
+
+4qd
++6+ log
++r
+d
+q
+
+.
+
+Finally, from the shape of the equation of Ea we see that deg(fEa ) ≤ 3d, hence by the result of
+Brumer (21) we have
+3d
+3d
+r≤
++λ
+2 logq (3d)
+(logq (3d))2
+for some constant λ. Combining everything, it follows that for some constant γ we have
+X
+
+d
+
+|Ea (Fq [t])≤c | ≤ q 4
+
+d
++γ log
+d
+
+a∈Fq [t]\{0}
+deg a≤ d−3
+4
+
+and the result follows since d = 2g + 1.
+Remark 4.3. Let p ≥ 5 be a prime number, and let X be a hyperelliptic curve of genus g defined
+over Qp , with a rational Weierstrass point. Let J → Spec(Zp ) be the Néron model of Jac(X),
+and let Jp be the fiber of J at p.
+Since p ̸= 3, the 3-torsion subgroup scheme J [3] is étale (but not necessarily finite) over
+Spec(Zp ), hence the reduction map
+Jac(X)(Qp )[3] = J (Zp ) → Jp (Fp )[3]
+is injective (and in fact bijective by Hensel’s Lemma). So, bounding Jac(X)(Qp )[3] is equivalent
+to bounding Jp (Fp )[3].
+According to [DDMM23], the special fiber Xp of the minimal regular model X → Spec(Zp )
+of X can be explicitly described from the so-called “cluster picture” attached to the roots of F
+in an equation X : y 2 = F (x). If X has semi-stable reduction, the special fiber of X is reduced,
+and consists of hyperelliptic curves X1 , . . . , Xr (possibly singular) linked by chains of P1 s. The
+connected component Jp0 of Jp is in this case an extension of an abelian variety B by a torus
+T , whose rank we denote by t. The well-known relation [Ray70] between J and the relative
+Picard functor of X implies that the abelian variety B is the product of Jacobians of the X̃i (the
+desingularized Xi ), and in particular we have g = g(X̃i )+· · ·+g(X̃i )+t. By virtue of Theorem 1.3,
+and since T [3] is an étale group scheme of rank 3t over Fp , we deduce that
+g−t
+
+|Jp0 (Fp )[3]| ≤ 3t × p 2
+
++γ logg−t
+g
+
+min
+
+where γ is an absolute constant, and gmin := mini g(X̃i ).
+The remaining contribution comes from the group of components Φ := Jp /Jp0 . Since the reduction is semi-stable, it is known at least since Grothendieck [GRR72, exposé IX, 11.9, 11.11] that
+the étale group scheme Φ is generated by at most t elements. Therefore, Φ[3]( p) has cardinality
+at most 3t . Putting everything together we deduce that, in the semi-stable case,
+g−t
+
+|Jp (Fp )[3]| ≤ 32t × p 2
+
++γ logg−t
+g
+
+min
+
+.
+
+We leave other cases to the interested reader.
+Previous authors have given bounds on the torsion subgroup of an abelian variety by taking
+advantage of bad reduction, an approach which seems orthogonal to ours. For example, Clark and
+Xarles [CX08] give torsion bounds for an abelian variety with purely additive reduction over a
+p-adic field. In [Lor11], Lorenzini studies the ratio between the product of the Tamagawa numbers
+and the torsion subgroup of an abelian surface.
+27
+
+Remark 4.4. Assume that char(k) = 3. Then Lemma 4.1 still holds: a 3-torsion point gives rise
+to a k[t]-integral point on some curve Ea : y 2 = x3 + a(t)2 F (t). Now, since the characteristic of
+the base field is 3, this curve Ea has
+arithmetic genus 1 but geometric genus 0; more precisely, it
+√
+3 2
+becomes rational over the field k( a F ), hence has infinitely many integral points over this field.
+In short, Ea is not an elliptic curve and the strategy of our proof is irrelevant in this case.
+
+4.2
+
+Bounding 2-torsion of Jacobians of trigonal curves over small finite fields
+
+In this section we interchange the roles of 2 and 3, and prove analogues of results of the previous
+section for 2-torsion of Jacobians of trigonal curves.
+Let q = pr for some prime p ≥ 5. Let X be a trigonal curve of genus g over Fq with trigonal
+morphism π : X → P1 . We assume that there exists a totally ramified rational point P∞ ∈ X(Fq ) of
+π, in which case after an automorphism of P1 we may assume that π ∗ (∞) = 3P∞ . Let J = Jac(X)
+be the Jacobian of X. The main result of this section is Theorem 1.6: for some constant γ
+depending only on q,
+g
+
+|J(Fq )[2]| ≤ (2q) 3
+
+g
++γ log
+g
+
+.
+
+As in the previous section, we first relate 2-torsion points of J(Fq ) to integral points on certain
+elliptic curves over Fq (t).
+Lemma 4.5. There exists a set E of elliptic curves over Fq (t) (depending on the trigonal curve
+X) with the following properties:
+g
+
+1. |E| = q ⌈ 3 ⌉ − 1
+2. Each elliptic curve E ∈ E may be defined by a Weierstrass equation
+y 2 = x3 + a2 (t)x2 + a1 (t)x + a0 (t),
+3
+2
+where ai ∈ Fq [t], deg ai ≤ 2g
+3 (3 − i), and x + a2 (t)x + a1 (t)x + a0 (t) is irreducible in Fq [t, x]
+and defines a nonsingular projective curve isomorphic to X over Fq (and in particular of
+genus g).
+
+3. There is a map
+J(Fq )[2] \ {0} →
+
+G
+E ∈E
+
+E (Fq [t])≤ 2g ,
+3
+
+which is at most 3-to-1.
+Proof. We first construct an appropriate set of elliptic curves E over Fq (t). By assumption,
+π ∗ (∞) = 3P∞ , where P∞ ∈ X(Fq ). We note that by Riemann-Roch, h0 (2gP∞ ) = 2g+1−g = g+1.
+The map π induces an inclusion of function fields Fq (P1 ) = Fq (t) ⊂ Fq (X), and viewed as a function
+on X we have deg t = 3 and 1, t, . . . , t⌊2g/3⌋ ∈ L(2gP∞ ). Note that
+h0 (2gP∞ ) − (⌊2g/3⌋ + 1) = g − ⌊2g/3⌋ = ⌈g/3⌉.
+We complete 1, t, . . . , t⌊2g/3⌋ to a basis 1, t, . . . , t⌊2g/3⌋ , ψ1 , . . . , ψ⌈g/3⌉ of L(2gP∞ ) over Fq . Let
+V ⊂ Fq (X) be the Fq -vector space spanned by ψ1 , . . . , ψ⌈g/3⌉ . Let ψ ∈ V \ {0}, and let Fψ ∈
+Fq (t)[x] denote the minimal polynomial of ψ over Fq (t). By construction, ψ ̸∈ Fq (t), and since
+28
+
+Fq (t) ⊂ Fq (t, ψ) ⊂ Fq (X) and [Fq (X) : Fq (t)] = 3 is prime, we must have Fq (t, ψ) = Fq (X) and
+deg Fψ = 3. Let
+Fψ = x3 + a2,ψ x2 + a1,ψ x + a0,ψ ,
+where each coefficient ai,ψ is an appropriate symmetric polynomial in the conjugates of ψ over k(t).
+Since ψ ∈ L(2gP∞ ) has poles only at P∞ , it follows that ai,ψ ∈ Fq [t], and looking at the order of
+poles we immediately find degt ai,ψ ≤ 2g
+3 (3−i). This can also be proved by considering the Newton
+polygon of Fψ , which has a unique edge since P∞ is totally ramified. Note that Fψ is irreducible
+in Fq [t, x], and the (nonsingular projective) curve over Fq defined by Fψ = 0 is isomorphic to X.
+We let Eψ be the elliptic curve over k(t) given by the Weierstrass equation
+y 2 = Fψ = x3 + a2,ψ (t)x2 + a1,ψ (t)x + a0,ψ (t),
+and we let E = {Eψ | ψ ∈ V \ {0}}. Since dim V = ⌈g/3⌉, we have |E| = q ⌈g/3⌉ − 1. It remains
+only to prove (3).
+Let P ∈ J(Fq )[2] \ {0}. We may write P = [D − gP∞ ] for some effective divisor D on X of
+degree g, and then
+2D − 2gP∞ = div(ϕ),
+for some rational function ϕ ∈ L(2gP∞ ) ⊂ k(X). Then from the definitions, we may write
+ϕ = x0 (t) − ψ for some x0 ∈ Fq [t], deg x0 ≤ ⌊2g/3⌋, and ψ ∈ V . Moreover, ψ = 0 easily implies
+that x0 is a constant multiple of a square in Fq [t] and P = [0]. Therefore, we must have ψ ∈ V \{0}.
+Taking norms, we find by the same argument as in the proof of Lemma 2.5 that
+NX/P1 (ϕ) = NX/P1 (x0 (t) − ψ) = Fψ (x0 (t)),
+and, on the other hand, NX/P1 (ϕ) = cy0 (t)2 for some y0 ∈ Fq [t] and c ∈ F∗q . Replacing x0 by cx0 ,
+ψ by cψ, and y0 by c2 y0 , we may assume c = 1. Then we obtain a point (x0 , y0 ) ∈ Eψ (k[t])≤ 2g ,
+3
+where Eψ ∈ E. Conversely, for a point (x0 , y0 ) ∈ Eψ (k[t]) in the image of the map in (3), note that
+we can recover the divisor class in J(Fq )[2] \ {0} as 21 div(x0 − ψ ′ ) for one of the three possible
+roots ψ ′ of Fψ (and hence the map is at worst 3-to-1).
+We now prove Theorem 1.6.
+Proof of Theorem 1.6. By Lemma 4.5,
+|J(Fq )[2]| − 1 ≤ 3
+
+X
+
+E (Fq [t])≤ 2g .
+3
+
+E ∈E
+
+Taking c = ⌊ 2g
+3 ⌋ and gC = g in Theorem 3.7 (note the difference with the proof of Theorem 1.3
+in which the genus of the curve Ca depends on the value of a), we find
+g+4
+
+E (Fq [t])≤ 2g ≤ 2 3 +rE ,
+3
+
+where rE is the rank of E over Fq (t). Using Brumer’s rank bound (21) and |E| ≤ q g/3 − 1, we have
+that for some constant γ depending only on q,
+g
+
+|J(Fq )[2]| ≤ (2q) 3
+
+29
+
+g
++γ log
+g
+
+.
+
+References
+[Bru92]
+
+Armand Brumer, The average rank of elliptic curves. I. (With an appendix by Oisı́n
+McGuinness: The explicit formula for elliptic curves over function fields), Invent.
+Math. 109 (1992), no. 3, 445–472 (English).
+
+[BST+ 20]
+
+M. Bhargava, A. Shankar, T. Taniguchi, F. Thorne, J. Tsimerman, and Y. Zhao,
+Bounds on 2-torsion in class groups of number fields and integral points on elliptic
+curves, J. Am. Math. Soc. 33 (2020), no. 4, 1087–1099 (English).
+
+[CLT04]
+
+W.-C. Chi, K. F. Lai, and K.-S. Tan, Integral points on elliptic curves over function
+fields, J. Aust. Math. Soc. 77 (2004), no. 2, 197–208 (English).
+
+[Con06]
+
+Brian Conrad, Chow’s K/k-image and K/k-trace, and the Lang-Néron theorem, Enseign. Math. (2) 52 (2006), no. 1-2, 37–108 (English).
+
+[CX08]
+
+Pete L. Clark and Xavier Xarles, Local bounds for torsion points on abelian varieties,
+Can. J. Math. 60 (2008), no. 3, 532–555 (English).
+
+[Dav65]
+
+Harold Davenport, On f 3 (t) − g 2 (t), Norske Vid. Selsk. Forhdl. 38 (1965), 86–87
+(English).
+
+[DDMM23] Tim Dokchitser, Vladimir Dokchitser, Céline Maistret, and Adam Morgan, Arithmetic
+of hyperelliptic curves over local fields, Math. Ann. 385 (2023), no. 3-4, 1213–1322
+(English).
+[EV07]
+
+Jordan S. Ellenberg and Akshay Venkatesh, Reflection principles and bounds for class
+group torsion, Int. Math. Res. Not. IMRN (2007), no. 1, Art. ID rnm002, 18. MR
+2331900
+
+[Ful98]
+
+William Fulton, Intersection theory, second ed., Ergebnisse der Mathematik und ihrer
+Grenzgebiete. 3. Folge. A Series of Modern Surveys in Mathematics [Results in Mathematics and Related Areas. 3rd Series. A Series of Modern Surveys in Mathematics],
+vol. 2, Springer-Verlag, Berlin, 1998. MR 1644323
+
+[GHL23]
+
+Jean Gillibert, Emmanuel Hallouin, and Aaron Levin, Integral points on elliptic curves
+with j-invariant 0 over k(t), Preprint, arXiv:2306.11353 [math.AG], 2023.
+
+[GL22]
+
+Jean Gillibert and Aaron Levin, Descent on elliptic surfaces and arithmetic bounds
+for the Mordell-Weil rank, Algebra Number Theory 16 (2022), no. 2, 311–333. MR
+4412575
+
+[Gra65]
+
+Hans Grauert, Mordells Vermutung über rationale Punkte auf algebraischen Kurven
+und Funktionenkörper, Publ. Math., Inst. Hautes Étud. Sci. 25 (1965), 363–381 (German).
+
+[GRR72]
+
+Alexander Grothendieck, M. Raynaud, and D. S. Rim, Séminaire de Géométrie
+Algébrique Du Bois-Marie 1967–1969. Groupes de monodromie en géométrie
+algébrique (SGA 7 I). Dirigé par A. Grothendieck avec la collaboration de M. Raynaud
+et D. S. Rim. Exposés I, II, VI, VII, VIII, IX, Lect. Notes Math., vol. 288, Springer,
+Cham, 1972 (French).
+
+30
+
+[HS88]
+
+Marc Hindry and Joseph H. Silverman, The canonical height and integral points on
+elliptic curves, Invent. Math. 93 (1988), no. 2, 419–450. MR 948108
+
+[HV06]
+
+H. A. Helfgott and A. Venkatesh, Integral points on elliptic curves and 3-torsion in
+class groups, J. Amer. Math. Soc. 19 (2006), no. 3, 527–550. MR 2220098
+
+[Kra77]
+
+Kenneth Kramer, Two-descent for elliptic curves in characteristic two, Trans. Am.
+Math. Soc. 232 (1977), 279–295 (English).
+
+[Lan60]
+
+Serge Lang, Integral points on curves, Inst. Hautes Études Sci. Publ. Math. (1960),
+no. 6, 27–43. MR 130219
+
+[Lan78]
+
+, Elliptic curves: Diophantine analysis, Grundlehren der Mathematischen Wissenschaften, vol. 231, Springer-Verlag, Berlin-New York, 1978. MR 518817
+
+[Liu02]
+
+Qing Liu, Algebraic geometry and arithmetic curves, Oxford Graduate Texts in Mathematics, vol. 6, Oxford University Press, Oxford, 2002, Translated from the French by
+Reinie Erné, Oxford Science Publications.
+
+[LN10]
+
+Herbert Lange and Peter E. Newstead, Clifford indices for vector bundles on curves,
+Affine flag manifolds and principal bundles, Trends Math., Birkhäuser/Springer Basel
+AG, Basel, 2010, pp. 165–202. MR 3013031
+
+[Lor11]
+
+Dino Lorenzini, Torsion and Tamagawa numbers, Ann. Inst. Fourier 61 (2011), no. 5,
+1995–2037 (English).
+
+[Man63]
+
+Yu. I. Manin, Rational points of algebraic curves over function fields, Izv. Akad. Nauk
+SSSR, Ser. Mat. 27 (1963), 1395–1440 (Russian).
+
+[Mas84]
+
+R. C. Mason, Diophantine equations over function fields, London Mathematical Society Lecture Note Series, vol. 96, Cambridge University Press, Cambridge, 1984. MR
+754559
+
+[MS86]
+
+G. Martens and F.-O. Schreyer, Line bundles and syzygies of trigonal curves, Abh.
+Math. Sem. Univ. Hamburg 56 (1986), 169–189. MR 882414
+
+[Pac98]
+
+Amı́lcar Pacheco, Integral points on elliptic curves over function fields of positive
+characteristic, Bull. Aust. Math. Soc. 58 (1998), no. 3, 353–357 (English).
+
+[Paz22]
+
+Fabien Pazuki, The regulator dominates the rank, Arithmetic, geometry, cryptography,
+and coding theory, AGC2T. 18th international conference, Centre International de
+Rencontres Mathématiques, Marseille, France, May 31 – June 4, 2021, Providence,
+RI: American Mathematical Society (AMS), 2022, pp. 159–165 (English).
+
+[Pie05]
+
+L. B. Pierce, The 3-part of class numbers of quadratic fields, J. London Math. Soc.
+(2) 71 (2005), no. 3, 579–598. MR 2132372
+
+[Pie06]
+
+Lillian B. Pierce, A bound for the 3-part of class numbers of quadratic fields by means
+of the square sieve, Forum Math. 18 (2006), no. 4, 677–698. MR 2254390
+
+[Ray70]
+
+M. Raynaud, Spécialisation du foncteur de Picard, Publ. Math., Inst. Hautes Étud.
+Sci. 38 (1970), 27–76 (French).
+
+31
+
+[Ray95]
+
+Michel Raynaud, Caractéristique d’Euler-Poincaré d’un faisceau et cohomologie des
+variétés abéliennes, Séminaire Bourbaki, Vol. 9, Soc. Math. France, Paris, 1995,
+pp. Exp. No. 286, 129–147. MR 1608794
+
+[Sam66]
+
+P. Samuel, Compléments à un article de Hans Grauert sur la conjecture de Mordell,
+Publ. Math., Inst. Hautes Étud. Sci. 29 (1966), 311–318 (French).
+
+[Sch95]
+
+Edward F. Schaefer, 2-descent on the Jacobians of hyperelliptic curves, J. Number
+Theory 51 (1995), no. 2, 219–232 (English).
+
+[Sil84]
+
+Joseph H. Silverman, The S-unit equation over function fields, Math. Proc. Camb.
+Philos. Soc. 95 (1984), 3–4 (English).
+
+[Sil90]
+
+, The difference between the Weil height and the canonical height on elliptic
+curves, Math. Comp. 55 (1990), no. 192, 723–743. MR 1035944
+
+[Sil94]
+
+, Advanced topics in the arithmetic of elliptic curves, Graduate Texts in Mathematics, vol. 151, Springer-Verlag, New York, 1994. MR 1312368
+
+[Spe24]
+
+Harry Spencer, Wild conductor exponents of trigonal and tetragonal curves, Preprint,
+arXiv:2409.12688v1 [math.NT], 2024.
+
+[SS08]
+
+Matthias Schütt and Andreas Schweizer, On Davenport-Stothers inequalities and elliptic surfaces in positive characteristic, Q. J. Math. 59 (2008), no. 4, 499–522. MR
+2461271
+
+[Vol90]
+
+J. F. Voloch, Explicit p-descent for elliptic curves in characteristic p, Compos. Math.
+74 (1990), no. 3, 247–258 (English).
+
+[Wei48]
+
+André Weil, Sur les courbes algébriques et les variétés qui s’en déduisent, Publications
+de l’Institut de Mathématiques de l’Université de Strasbourg [Publications of the
+Mathematical Institute of the University of Strasbourg], vol. 7 (1945), Hermann &
+Cie, Paris, 1948, Actualités Scientifiques et Industrielles, No. 1041. [Current Scientific
+and Industrial Topics]. MR 27151
+
+[Yud08]
+
+Elena Yudovina, Diophantine equations and congruences over function fields, Proc.
+Amer. Math. Soc. 136 (2008), no. 11, 3839–3850. MR 2425723
+
+Jean Gillibert, Université de Toulouse, Institut de Mathématiques de Toulouse, CNRS UMR
+5219, 118 route de Narbonne, 31062 Toulouse Cedex 9, France.
+E-mail address: jean.gillibert@math.univ-toulouse.fr
+Emmanuel Hallouin, Université de Toulouse, Institut de Mathématiques de Toulouse, CNRS
+UMR 5219, 118 route de Narbonne, 31062 Toulouse Cedex 9, France.
+E-mail address: hallouin@univ-tlse2.fr
+Aaron Levin, Department of Mathematics, Michigan State University, 619 Red Cedar Road,
+East Lansing, MI 48824.
+E-mail address: adlevin@math.msu.edu
+
+32
+
+

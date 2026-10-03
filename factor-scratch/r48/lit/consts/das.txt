@@ -1,0 +1,1885 @@
+                                              Basic concepts in quantum computation
+                                              Artur Ekert, Patrick Hayden and Hitoshi Inamori
+arXiv:quant-ph/0011013v1 2 Nov 2000
+
+
+
+
+                                                      Centre for Quantum Computation,
+                                           University of Oxford, Oxford OX1 3PU, United Kingdom
+                                                                    November 26, 2024
+
+
+                                      1    Qubits, gates and networks
+                                      Consider the two binary strings,
+
+                                                                                011,                                  (1)
+                                                                                111.                                  (2)
+
+                                      The first one can represent, for example, the number 3 (in binary) and the
+                                      second one the number 7. In general three physical bits can be prepared in
+                                      23 = 8 different configurations that can represent, for example, the integers
+                                      from 0 to 7. However, a register composed of three classical bits can store only
+                                      one number at a given moment of time. Enter qubits and quantum registers:
+                                          A qubit is a quantum system in which the Boolean states 0 and 1 are rep-
+                                      resented by a prescribed pair of normalised and mutually orthogonal quantum
+                                      states labeled as {|0i, |1i} [1]. The two states form a ‘computational basis’ and
+                                      any other (pure) state of the qubit can be written as a superposition α|0i + β|1i
+                                      for some α and β such that |α|2 + |β|2 = 1. A qubit is typically a microscopic
+                                      system, such as an atom, a nuclear spin, or a polarised photon. A collection of
+                                      n qubits is called a quantum register of size n.
+                                          We shall assume that information is stored in the registers in binary form.
+                                      For example, the number 6 is represented by a register in state |1i ⊗ |1i ⊗
+                                      |0i. In more compact notation: |ai stands for the tensor product |an−1 i ⊗
+                                      |an−2 i . . . |a1 i ⊗ |a0 i, where ai ∈ {0, 1}, and it represents a quantum register
+                                      prepared with the value a = 20 a0 + 21 a1 + . . . 2n−1 an−1 . There are 2n states of
+                                      this kind, representing all binary strings of length n or numbers from 0 to 2n −1,
+                                      and they form a convenient computational basis. In the following a ∈ {0, 1}n
+                                      (a is a binary string of length n) implies that | ai belongs to the computational
+                                      basis.
+                                          Thus a quantum register of size three can store individual numbers such as
+                                      3 or 7,
+
+                                                               |0i ⊗ |1i ⊗ |1i ≡    |011i ≡ |3i,                      (3)
+                                                               |1i ⊗ |1i ⊗ |1i ≡    |111i ≡ |7i,                      (4)
+
+                                                                               1
+but, it can also store the two of them simultaneously. For if we take the
+first
+   √ qubit and instead of setting it to |0i or |1i we prepare a superposition
+1/ 2 (|0i + |1i) then we obtain
+               1                                     1
+               √ (|0i + |1i) ⊗ |1i ⊗ |1i ≡          √ (|011i + |111i) ,         (5)
+                2                                     2
+                                                     1
+                                             ≡      √ (|3i + |7i) .             (6)
+                                                      2
+In fact we can prepare this register in a superposition√of all eight numbers – it
+is enough to put each qubit into the superposition 1/ 2 (|0i + |1i) . This gives
+                1                1               1
+                √ (|0i + |1i) ⊗ √ (|0i + |1i) ⊗ √ (|0i + |1i) ,                 (7)
+                 2                2               2
+which can also be written in binary as (ignoring the normalisation constant
+2−3/2 ),
+
+          |000i + |001i + |010i + |011i + |100i + |101i + |110i + |111i.        (8)
+
+or in decimal notation as
+
+                   |0i + |1i + |2i + |3i + |4i + |5i + |6i + |7i,               (9)
+
+or simply as
+                                     7
+                                     X
+                                           | xi .                              (10)
+                                     x=0
+
+    These preparations, and any other manipulations on qubits, have to be per-
+formed by unitary operations. A quantum logic gate is a device which performs
+a fixed unitary operation on selected qubits in a fixed period of time and a
+quantum network is a device consisting of quantum logic gates whose compu-
+tational steps are synchronised in time [2]. The outputs of some of the gates
+are connected by wires to the inputs of others. The size of the network is the
+number of gates it contains.
+    The most common quantum gate is the Hadamard gate, a single qubit gate
+H performing the unitary transformation known as the Hadamard transform.
+It is defined as
+                                
+                     1    1 1
+               H= √                    | xi     H       (−1)x | xi + | 1 − xi
+                      2   1 −1
+
+The matrix is written in the computational basis {| 0i , | 1i} and the diagram on
+the right provides a schematic representation of the gate H acting on a qubit
+in state | xi, with x = 0, 1.
+    And here is a network, of size three, which affects the Hadamard transform
+on three qubits. If they are initially in state | 000i then the output is the super-
+position of all eight numbers from 0 to 7.
+
+
+
+                                         2
+                                             
+                                             
+                                             
+                                                       IN BINARY
+                             | 0i+| 1i
+                                             
+       | 0i          H          √
+                                             
+                                             
+                                  2
+                                                                                                       
+                                                                   | 000i + | 001i + | 010i + | 011i +
+                                             
+                                                         1
+                                                  =
+                                                       23/2       + | 100i + | 101i + | 110i + | 111i
+                             | 0i+| 1i
+       | 0i          H          √
+                                  2                           
+                                                                   | 0i + | 1i + | 2i + | 3i +
+                                                                                                 
+                                                          1
+                                                  =
+                                                        23/2       + | 4i + | 5i + | 6i + | 7i
+                                             
+                                             
+                                             
+                             | 0i+| 1i
+                                             
+       | 0i          H
+                                             
+                                √            
+                                                       IN DECIMAL
+                                  2          
+                                             
+
+    If the three qubits are initially in some other state from the computational
+basis then the result is a superposition of all numbers from 0 to 7 but exactly
+half of them will appear in the superposition with the minus sign, for example,
+                                                                   
+                          1     | 000i − | 001i + | 010i − | 011i +
+               | 101i 7→ 3/2                                          .     (11)
+                        2       − | 100i + | 101i − | 110i + | 111i
+
+In general, if we start with a register of size n in some state y ∈ {0, 1}n then
+                                        X
+                         | yi 7→ 2−n/2         (−1)y·x | xi ,                 (12)
+                                                 x∈{0,1}n
+
+where the product of y = (yn−1 , . . . , y0 ) and x = (xn−1 , . . . , x0 ) is taken bit by
+bit:
+                    y · x = (yn−1 xn−1 + . . . y1 x1 + y0 x0 ).                       (13)
+     We will need another single qubit gate – the phase shift gate φ defined as
+| 0i 7→ | 0i and | 1i 7→ eiφ | 1i, or, in matrix notation,
+
+                                                        ✈
+                                                        φ
+                                
+                        1 0
+               φ=            iφ                | xi        eixφ | xi       (14)
+                        0 e
+
+    The Hadamard gate and the phase gate can be combined to construct the
+following network (of size four), which generates the most general pure state of
+a single qubit (up to a global phase),
+
+
+
+                               t                    t
+                                                  π
+                              2θ                  2 +φ
+              | 0i       H               H                         cos θ | 0i + eiφ sin θ | 1i .         (15)
+
+Consequently, the Hadamard and phase gates are sufficient to construct any
+unitary operation on a single qubit.
+    Thus the Hadamard gates and the phase gates can be used to transform the
+input state |0i|0i...|0i of the n qubit register into any state of the type |Ψ1 i
+|Ψ2 i... |Ψn i, where |Ψi i is an arbitrary superposition of |0i and |1i. These are
+rather special n-qubit states, called the product states or the separable states.
+In general, a quantum register of size n > 1 can be prepared in states which
+are not separable – they are known as entangled states. For example, for two
+qubits (n = 2), the state
+
+                         α |00i + β |01i = |0i ⊗ (α |0i + β |1i)                                         (16)
+
+                                                    3
+is separable, | Ψ1 i = |0i and | Ψ2 i = α |0i + β |1i, whilst the state
+
+                          α |00i + β |11i =
+                                          6 | Ψ1 i ⊗ | Ψ2 i                     (17)
+
+is entangled (α, β 6= 0), because it cannot be written as a tensor product.
+    In order to entangle two (or more qubits) we have to extend our repertoire
+of quantum gates to two-qubit gates. The most popular two-qubit gate is the
+controlled-NOT (c-not), also known as the xor or the measurement gate. It
+flips the second (target) qubit if the first (control) qubit is | 1i and does nothing
+if the control qubit is | 0i. The gate is represented by the unitary matrix
+
+                                                               t
+                                         
+                             1 0 0 0                  | xi           | xi
+                          0 1 0 0 
+                                                               ♠ | x ⊕ yi
+                   C=                                                         (18)
+                             0 0 0 1                 | yi
+                             0 0 1 0
+
+where x, y = 0 or 1 and ⊕ denotes XOR or addition modulo 2. If we apply
+the c-not to Boolean data in which the target qubit is |0i and the control is
+either |0i or |1i then the effect is to leave the control unchanged while the target
+becomes a copy of the control, i.e.
+
+                           |xi|0i 7→ |xi|xi     x = 0, 1.                       (19)
+
+One might suppose that this gate could also be used to copy superpositions such
+as |Ψi = α |0i + β |1i, so that
+
+                                 |Ψi|0i 7→ |Ψi|Ψi                               (20)
+
+for any |Ψi. This is not so! The unitarity of the c-not requires that the gate
+turns superpositions in the control qubit into entanglement of the control and
+the target. If the control qubit is in a superposition state |Ψi = α|0i + β|1i,
+(α, β 6= 0), and the target in |0i then the c-not generates the entangled state
+
+                        (α|0i + β|1i) |0i 7→ α|00i + β|11i.                     (21)
+
+   Let us notice in passing that it is impossible to construct a universal quan-
+tum cloning machine effecting the transformation in Eq.(20), or even the more
+general
+                           |Ψi|0i|W i 7→ |Ψi|Ψi|W ′ i                       (22)
+where |W i refers to the state of the rest of the world and |Ψi is any quantum
+state [3]. To see this take any two normalised states |Ψi and |Φi which are non-
+identical (|hΦ|Ψi| =6 1) and non-orthogonal (hΦ|Ψi =  6 0 ), and run the cloning
+machine,
+
+                           |Ψi|0i|W i 7→ |Ψi|Ψi|W ′ i                           (23)
+                                                       ′′
+                           |Φi|0i|W i 7→ |Φi|Φi|W i                             (24)
+
+
+
+                                         4
+As this must be a unitary transformation which preserves the inner product
+hence we must require                     ′   ′′
+                         hΦ|Ψi = hΦ|Ψi2 hW |W i                       (25)
+and this can only be satisfied when |hΦ|Ψi| = 0 or 1, which contradicts our
+assumptions. Thus states of qubits, unlike states of classical bits, cannot be
+faithfully cloned. This leads to interesting applications, quantum cryptography
+being one such.
+    Another common two-qubit gate is the controlled phase shift gate B(φ)
+defined as
+                                                   t
+                                                        
+                1 0 0 0                    | xi           
+                                                          
+               0 1 0 0                                  
+
+                                                   t
+     B(φ) =                                              eixyφ | xi | yi . (26)
+                0 0 1 0                   | yi           
+                                                          
+                            iφ
+                0 0 0 e
+                                                          
+
+Again, the matrix is written in the computational basis {| 00i , | 01i , | 10i , | 11i}
+and the diagram on the right shows the structure of the gate.
+     More generally, these various 2-qubit controlled gates are all of the form
+controlled-U , for some single-qubit unitary transformation U . The controlled-U
+gate applies the identity transformation to the auxiliary (lower) qubit when the
+control qubit is in state | 0i and applies an arbitrary prescribed U when the
+control qubit is in state | 1i. The gate maps | 0i | yi to | 0i | yi and | 1i | yi to
+| 1i (U | yi), and is graphically represented as
+
+
+                                           ✈
+
+
+                                          U
+
+    The Hadamard gate, all phase gates, and the c-not, form an infinite uni-
+versal set of gates i.e. if the c-not gate as well as the Hadamard and all phase
+gates are available then any n-qubit unitary operation can be simulated exactly
+with O(4n n) such gates [4]. (Here and in the following we use the asymptotic
+notation – O(T (n)) means bounded above by c T (n) for some constant c > 0 for
+sufficiently large n.) This is not the only universal set of gates. In fact, almost
+any gate which can entangle two qubits can be used as a universal gate [6, 8].
+Mathematically, an elegant choice is a pair of the Hadamard and the controlled-
+V (c-V ) where V is described by the unitary matrix
+                                              
+                                         1 0
+                                  V =             .                            (27)
+                                         0 i
+
+The two gates form a finite universal set of gates – networks containing only
+a finite number of these gates can approximate any unitary transformation on
+two (and more) qubits. More precisely, if U is any two-qubit gate and ε > 0
+
+                                          5
+then there exists a quantum network of size O(logd (1/ε)) (where d is a constant)
+consisting of only H and c-V gates which computes a unitary operation U ′ that
+is within distance ε from U [49]. The metric is induced by the Euclidean norm
+- we say that U ′ is within distance ε from U if there exists a unit complex
+number λ (phase factor) such that ||U − λU ′ || P
+                                                ≤ ε. Thus if U ′ is substituted for
+                                                     ′
+U in a quantum network then the final state x αp     x |xi  approximates the final
+                                                                ′       2
+                              P                         P
+state of the original network x αx |xi as follows:         x |λαx − αx | ≤ ε. The
+probability of any specified measurement outcome on the final state is affected
+by at most ε.
+     A quantum computer will be viewed here as a quantum network (or a family
+of quantum networks)and quantum computation is defined as a unitary evolu-
+tion of the network which takes its initial state “input” into some final state
+“output”. We have chosen the network model of computation, rather than Tur-
+ing machines, because it is relatively simple and easy to work with and because
+it is much more relevant when it comes to physical implementation of quantum
+computation.
+
+
+2     Quantum arithmetic and function evaluations
+Let us now describe how quantum computers actually compute, how they add
+and multiply numbers, and how they evaluate Boolean functions by means of
+unitary operations. Here and in the following we will often use the modular
+arithmetic [9]. Recall that
+                                 a mod b                               (28)
+denotes the remainder obtained by dividing integer b into integer a, which is
+always a number less than b. Basically a = b mod n if a = b+kn for some integer
+k. This is expressed by saying that a is congruent to b modulo n or that b is the
+residue of a modulo n. For example, 1 mod 7 = 8 mod 7 = 15 mod 7 = 50 mod
+7 = 1. Modular arithmetic is commutative, associative, and distributive.
+               (a ± b) mod n    = ((a mod n) ± (b mod n)) mod n                  (29)
+               (a × b) mod n    = ((a mod n) × (b mod n)) mod n                  (30)
+         (a × (b + c)) mod n    = (((ab) mod n + ((ac) mod n)) mod n             (31)
+                                          8
+Thus, if you need to calculate, say, 3 mod 7 do not use the naive approach
+and perform seven multiplications and one huge modular reduction. Instead,
+perform three smaller multiplications and three smaller reductions,
+    ((32 mod 7)2 mod 7)2 mod 7 = (22 mod 7)2 mod 7 = 16 mod 7 = 2.               (32)
+This kind of arithmetic is ideal for computers as it restricts the range of all inter-
+mediate results. For l-bit modulus n, the intermediate results of any addition,
+subtraction or multiplication will not be more than 2l bits long. In quantum
+registers of size n, addition modulo 2n is one of the most common operations;
+for all x ∈ {0, 1}n and for any a ∈ {0, 1}n,
+                              | xi 7→ | (x + a) mod 2n i                         (33)
+
+                                          6
+is a well defined unitary transformation.
+    The tricky bit in the modular arithmetic is the inverse operation, and here
+we need some basic number theory. An integer a ≥ 2 is said to be prime if
+it is divisible only by 1 and a (we consider only positive divisors). Otherwise,
+a is called composite. The greatest common divisor of two integers a and b is
+the greatest positive integer d denoted d = gcd(a, b) that divides both a and b.
+Two integers a and b are said to be coprime or relatively prime if gcd(a, b) = 1.
+Given two integers a and n that are coprime, it can be shown that there exists
+an unique integer d ∈ {0, . . . , n − 1} such that ad = 1 mod n [9]. The integer d
+is called inverse modulo n of a, and denoted a−1 . For example, modulo 7 we
+find that 3−1 = 5 mod n, since 3 × 5 = 15 = 2 × 7 + 1 = 1 mod 7. This bizarre
+arithmetic and the notation is due to Karl Friedrich Gauss (1777-1855). It was
+first introduced in his Disquistiones Arithmeticae in 1801.
+    In quantum computers addition, multiplication, and any other arithmetic
+operation have to be embedded in unitary evolution. We will stick to the
+Hadamard and the controlled-V (c-V ), and use them as building blocks for
+all other gates and eventually for quantum adders and multipliers.
+    If we apply c-V four times we get identity, so any three subsequent applica-
+tions of c-V give the inverse of c-V , which will be called c-V † . Now, if we have
+a couple of the c-V gates and a couple of the Hadamard gates we can build the
+c-not as follows
+
+
+                              ✈        ✈                           ✈
+
+                                                           ≡
+
+                      H       V        V           H               ❧
+
+
+
+    A single qubit operation not can be performed via a c-not gate if the con-
+trol qubit is set to |1i and viewed as an auxiliary qubit. This is not to say
+that we want to do it in practice. The c-not gate is much more difficult to
+build than a single qubit not. Right now we are looking into the mathematical
+structure of quantum Boolean networks and do not care about practicalities.
+Our two elementary gates also allow us to construct a very useful gate called
+the controlled-controlled-not gate (c2 -not) or the Toffoli gate [10]. The con-
+struction is given by the following network,
+
+                          t                t       t                   t
+
+                   t      ❥        t       ❥                   ≡       t
+
+
+            H     V               V†               V   H               ❥
+
+
+
+                                               7
+This gate has two control qubits (the top two wires on the diagram) and one
+target qubit which is negated only when the two controls are in the state |1i|1i.
+The c2 -not gate gives us the logical connectives we need for arithmetic. If the
+target is initially set to |0i the gate acts as a reversible and gate - after the gate
+operation the target becomes the logical and of the two control qubits.
+                           | x1 , x2 i | 0i 7→ | x1 , x2 i | x1 ∧ x2 i                   (34)
+Once we have in our repertoire operations such as not, and, and c-not, all of
+them implemented as unitary operations, we can, at least in principle, evaluate
+any Boolean function {0, 1}n → {0, 1}m which map n bits of input into m
+bits of output. A simple concatenation of the Toffoli gate and the c-not gives
+a simplified quantum adder, shown below, which is a good starting point for
+constructing full adders, multipliers and more elaborate networks.
+
+
+        | x1 i     s     | x1 i               | x1 i      s      s       | x1 i
+
+        | x2 i     s     | x2 i               | x2 i      s      ❤       SUM = | x1 ⊕ x2 i
+
+        | yi       ❤    | x1 x2 ⊕ yi          | 0i        ❤              CARRY = | x1 x2 i
+
+            TOFFOLI GATE                             QUANTUM ADDER
+We can view the Toffoli gate and the evolution given by Eq. (34) as a quantum
+implementation of a Boolean function f : {0, 1}2 → {0, 1} defined by f (x1 , x2 ) =
+x1 ∧ x2 . The operation and is not reversible, so we had to embed it in the
+reversible operation c2 -not. If the third bit is initially set to 1 rather than 0
+then the value of x1 ∧ x2 is negated. In general we write the action of the Toffoli
+gate as the function evaluation,
+                  | x1 , x2 i | yi 7→ | x1 , x2 i | (y + (x1 ∧ x2 )) mod 2i .            (35)
+    This is how we compute any Boolean function {0, 1}n → {0, 1}m on a quan-
+tum computer. We require at least two quantum registers; the first one, of size
+n, to store the arguments of f and the second one, of size n, to store the values
+of f . The function evaluation is then a unitary evolution of the two registers,
+                           |x, yi 7→ |x, (y + f (x)) mod 2m i.                           (36)
+for any y ∈ {0, 1}m. (In the following, if there is no danger of confusion, we
+may simplify the notation and omit the mod suffix.)
+    For example, a network computing f : {0, 1}2 → {0, 1}3 such that f (x) = x2
+acts as follows
+                 |00i|000i 7→ |00i|000i,               |10i|000i 7→ |10i|100i            (37)
+                 |01i|000i 7→ |01i|001i,               |11i|000i 7→ |11i|001i            (38)
+which can be written as
+                                  |x, 0i 7→ |x, x2 mod 8i,                               (39)
+
+                                               8
+e.g. 32 mod 23 = 1 which explains why |11i|000i 7→ |11i|001i.
+    In fact, for these kind of operations we also need a third register with the
+so-called working bits which are set to zero at the input and return to zero at
+the output but which can take non-zero values during the computation.
+    What makes quantum function evaluation really interesting is its action on
+a superposition of different inputs x, for example,
+                             X             X
+                                 |x, 0i 7→   |x, f (x)i                     (40)
+                                 x               x
+
+produces f (x) for all x in a P single run. The snag is that we cannot get them
+all from the entangled state x |x, f (x)i because any bit by bit measurement
+on the first register will yield one particular value x′ ∈ {0, 1}n and the second
+register will then be found with the value f (x′ ) ∈ {0, 1}m.
+
+
+3     Algorithms and their complexity
+In order to solve a particular problem, computers, be it classical or quantum,
+follow a precise set of instructions that can be mechanically applied to yield
+the solution to any given instance of the problem. A specification of this set
+of instructions is called an algorithm. Examples of algorithms are the proce-
+dures taught in elementary schools for adding and multiplying whole numbers;
+when these procedures are mechanically applied, they always yield the correct
+result for any pair of whole numbers. Any algorithm can be represented by a
+family of Boolean networks (N1 , N2 , N3 , ...), where the network Nn acts on all
+possible input instances of size n bits. Any useful algorithm should have such
+a family specified by an example network Nn and a simple rule explaining how
+to construct the network Nn+1 from the network Nn . These are called uniform
+families of networks [11].1
+    The quantum Hadamard transform defined by Eq.(12) has a uniform family
+of networks whose size is growing as n with the number of input qubits. Another
+good example of a uniform family of networks is the quantum Fourier transform
+(QFT) [12] defined in the computational basis as the unitary operation
+                                          X 2π
+                            | yi 7→ 2−n/2    ei 2n yx | xi ,                (41)
+                                             x
+
+Suppose we want to construct such a unitary evolution of n qubits using our
+repertoire of quantum logic gates. We can start with a single qubit and notice
+that in this case the QFT is reduced to applying a Hadamard gate. Then we
+can take two qubits and notice that the QFT can be implemented with two
+Hadamard gates and the controlled phase shift B(π)in between. Progressing
+this way we can construct the three qubit QFT and the four qubit QFT, whose
+network looks like this:
+   1 This means that the network model is not a self-contained model of computation. We
+
+need an algorithm, a Turing machine, which maps each n into an explicit description of Nn .
+
+
+
+                                            9
+   | x0 i   H     s          s                s               | 0i + e2πix/2 | 1i
+
+   | x1 i         s   H          s                s                         2
+                                                              | 0i + e2πix/2 | 1i
+
+   | x2 i                    s s     H                s                     3
+                                                              | 0i + e2πix/2 | 1i
+
+   | x3 i                                     s s s       H
+                                                                            4
+                                                              | 0i + e2πix/2 | 1i
+
+              H B(π) H B(π/2)B(π) H B(π/4)B(π/2)B(π) H
+
+
+(N.B. there are three different types of the B(φ) gate in the network above:
+B(π), B(π/2) and B(π/4).)
+    The general case of n qubits requires a trivial extension of the network
+following the same sequence pattern of gates H and B. The QFT network
+operating on n qubits contains n Hadamard gates H and n(n − 1)/2 phase
+shifts B, in total n(n + 1)/2 elementary gates.
+    The big issue in designing algorithms or their corresponding families of net-
+works is the optimal use of physical resources required to solve a problem.
+Complexity theory is concerned with the inherent cost of computation in terms
+of some designated elementary operations, memory usage, or network size. An
+algorithm is said to be fast or efficient if the number of elementary operations
+taken to execute it increases no faster than a polynomial function of the size
+of the input. We generally take the input size to be the total number of bits
+needed to specify the input (for example, a number N requires log2 N bits of
+binary storage in a computer). In the language of network complexity - an al-
+gorithm is said to be efficient if it has a uniform and polynomial-size network
+family (O(nd ) for some constant d) [11]. For example, the quantum Fourier
+transform can be performed in an efficient way because it has a uniform family
+of networks whose size grows only as a quadratic function of the size of the
+input, i.e. O(n2 ). Changing from one set of gates to another, e.g. constructing
+the QFT out of the Hadamard and the controlled-V gates with a prescribed
+precision ǫ, can only affect the network size by a multiplicative constant which
+does not affect the quadratic scaling with n. Thus the complexity of the QFT
+is O(n2 ) no matter which set of adequate gates we use. Problems which do not
+have efficient algorithms are known as hard problems.
+    Elementary arithmetic operations taught at schools, such as long addition,
+multiplication or division of n bit numbers require O(n2 ) operations. For ex-
+ample, to multiply x = (xn−1 ...x1 x0 ) and y = (yn−1 ...y1 y0 ) we successively
+multiply y by x0 , x1 and so on, shift, and then add the result. Each multi-
+plication of y by xk takes about n single bit operations, the addition of the n
+products takes of the order of n2 bit operations, which adds to the total O(n2 )
+operations. Knowing the complexity of elementary arithmetic one can often
+assess the complexity of other algorithms. For example, the greatest common
+divisor of two integers x and y < x can be found using Euclid’s algorithm; the
+
+
+                                         10
+oldest nontrivial algorithm which has been known and used since 300 BC.2 First
+divide x by y obtaining remainder r1 . Then divide y by r1 obtaining remainder
+r2 , then divide r1 by r2 obtaining remainder r3 , etc., until the remainder is
+zero. The last non-zero remainder is gcd(x, y) because it divides all previous
+remainders and hence also x and y (it is obvious from the construction that it
+is the greatest common divisor). For example, here is a sequence or remainders
+(rj , rj+1 ) when we apply Euclid’s algorithm to compute gcd(12378, 3054) = 6:
+(12378,3054), (3054,162), (162, 138), (138, 24), (24, 18), (18,6), (6,0). What is
+the complexity of this algorithm? It is easy to see that the largest of the two
+numbers is at least halved every two steps, so every two steps we need one bit
+less to represent the number, and so the number of steps is at most 2n, where
+n is the number of bits in the two integers. Each division can be done with at
+most O(n2 ) operations hence the total number of operations is O(n3 ).
+     There are basically three different types of Boolean networks: classical deter-
+ministic, classical probabilistic, and quantum. They correspond to, respectively,
+deterministic, randomised, and quantum algorithms.
+     Classical deterministic networks are based on logical connectives such as
+and, or, and not and are required to always deliver correct answers. If a
+problem admits a deterministic uniform network family of polynomial size, we
+say that the problem is in the class P [11].
+     Probabilistic networks have additional “coin flip” gates which do not have
+any inputs and emit one uniformly-distributed random bit when executed dur-
+ing a computation. Despite the fact that probabilistic networks may generate
+erroneous answers they may be more powerful than deterministic ones. A good
+example is primality testing – given an n-bit number x decide whether or not x
+is prime. The smallest known uniform deterministic network family that solves
+this problem is of size O(nd log log n ), which is not polynomially bounded. How-
+ever, there is a probabilistic algorithm, due to Solovay and Strassen [13], that
+can solve the same problem with a uniform probabilistic network family of size
+O(n3 log(1/ǫ)), where ǫ is the probability of error. N.B. ǫ does not depend on
+n and we can choose it as small as we wish and still get an efficient algorithm.
+     The log(1/ǫ) part can be explained as follows. Imagine a probabilistic net-
+work that solves a decision problem 3 and that errs with probability smaller
+than 12 + δ for fixed δ > 0. If you run r of these networks in parallel (so that the
+size of the overall network is increased by factor r) and then use the majority
+voting for the final YES or NO answer your overall probability of error will
+bounded by ǫ = exp(−δ 2 r). (This follows directly from the Chernoff bound- see
+for instance, [14]). Hence r is of the order log(1/ǫ). If a problem admits such
+a family of networks then we say the problem is in the class BP P (stands for
+“bounded-error probabilistic polynomial”) [11].
+     Last but not least we have quantum algorithms, or families of quantum
+networks, which are more powerful than their probabilistic counterparts. The
+   2 This truly ‘classical’ algorithm is described in Euclid’s Elements, the oldest Greek treatise
+
+in mathematics to reach us in its entirety. Knuth (1981) provides an extensive discussion of
+various versions of Euclid’s algorithm.
+   3 A decision problem is a problem that admits only two answers: YES or NO
+
+
+
+
+                                               11
+example here is the factoring problem – given an n-bit number x find a list of
+prime factors of x. The smallest known   √
+                                            uniform probabilistic network family
+                                        d n log n
+which solves the problem is of size O(2           ). One reason why quantum com-
+putation is such a fashionable field today is the discovery, by Peter Shor, of
+a uniform family of quantum networks of O(n2 log log n log(1/ǫ)) in size, that
+solve the factoring problem [15]. If a problem admits a uniform quantum net-
+work family of polynomial size that for any input gives the right answer with
+probability larger than 12 + δ for fixed δ > 0 then we say the problem is in the
+class BQP (stands for “bounded-error quantum probabilistic polynomial”).
+    We have
+                               P ⊆ BP P ⊆ BQP                                (42)
+    Quantum networks are potentially more powerful because of multiparticle
+quantum interference, an inherently quantum phenomenon which makes the
+quantum theory radically different from any classical statistical theory.
+    Richard Feynman [16] was the first to anticipate the unusual power of quan-
+tum computers. He observed that it appears to be impossible to simulate a
+general quantum evolution on a classical probabilistic computer in an efficient
+way i.e. any classical simulation of quantum evolution appears to involve an
+exponential slowdown in time as compared to the natural evolution since the
+amount of information required to describe the evolving quantum state in clas-
+sical terms generally grows exponentially in time. However, instead of viewing
+this fact as an obstacle, Feynman regarded it as an opportunity. Let us then fol-
+low his lead and try to construct a computing device using inherently quantum
+mechanical effects.
+
+
+4    From interferometers to computers
+A single particle interference in the Mach-Zehnder interferometer works as fol-
+lows. A particle, in this case a photon, impinges on a beam-splitter (BS1), and,
+with some probability amplitudes, propagates via two different paths to another
+beam-splitter (BS2) which directs the particle to one of the two detectors. Along
+each path between the two beam-splitters, is a phase shifter (PS).
+
+
+
+
+                                       12
+                                             P0 = cos2 φ0 −φ
+                                                  ✎☞
+                                                             1
+                                                          2
+
+
+
+
+                                                                   ☞
+                                PS
+
+                                                                   ✌1
+                                 φ1                                 P = sin2 φ0 −φ
+                                                                                2
+                                                                                   1
+
+            |1i                                          BS2
+
+
+
+                                PS
+   |0i                                             |0i
+                                 φ0
+            BS1
+      |1i
+
+   If the lower path is labeled as state | 0i and the upper one as state | 1i
+then the particle, initially in path | 0i, undergoes the following sequence of
+transformations
+
+                   BS1      1               PS  1
+            | 0i   7→      √ (| 0i + | 1i) 7→ √ (eiφ0 | 0i + eiφ1 | 1i)                         (43)
+                             2                   2
+                             φ0 +φ1 1    φ0 −φ1        −φ0 +φ1
+                   =       ei 2 √ (ei 2 | 0i + ei 2            | 1i)
+                                     2
+                   BS2          φ1 +φ2
+                   7→      ei      2     (cos 12 (φ0 − φ1 ) | 0i + i sin 12 (φ0 − φ1 ) | 1i),   (44)
+
+where φ0 and φ1 are the settings of the two phase shifters and the action of the
+beam-splitters is defined as
+
+                         | 0i 7→ √12 (| 0i + | 1i),        | 1i 7→ √12 (| 0i − | 1i).           (45)
+
+(We have ignored the phase shift in the reflected beam.) The global phase
+        φ0 +φ0
+shift ei 2 is irrelevant as the interference pattern depends on the difference
+between the phase shifts in different arms of the interferometer. The phase
+shifters in the two paths can be tuned to effect any prescribed relative phase
+shift φ = φ0 − φ1 and to direct the particle with probabilities
+                                     
+                                     φ       1
+                      P0 = cos2           = (1 + cos φ)                   (46)
+                                      2      2
+                                     
+                                     φ       1
+                      P1 = sin2           = (1 − cos φ)                   (47)
+                                     2       2
+respectively to detectors “0” and “1”.
+    The roles of the three key ingredients in this experiment are clear. The first
+beam splitter prepares a superposition of possible paths, the phase shifters mod-
+ify quantum phases in different paths and the second beam-splitter combines all
+the paths together erasing all information about which path was actually taken
+
+                                                      13
+by the particle between the two beam-splitters. This erasure is very important
+as we shall see in a moment.
+    Needless to say, single particle interference experiments are not restricted
+to photons. One can go for a different “hardware” and repeat the experiment
+with electrons, neutrons, atoms or even molecules. When it comes to atoms and
+molecules both external and internal degrees of freedom can be used.
+    Although single particle interference experiments are worth discussing in
+their own right, here we are only interested in their generic features simply be-
+cause they are all “isomorphic” and once you know and understand one of them
+you, at least for our purposes, understand them all (modulo experimental de-
+tails, of course). Let us now describe any single particle interference experiment
+in more general terms. It is very convenient to view this experiment in a dia-
+gramatic way as a quantum network with three quantum logic gates [17]. The
+beam-splitters will be now called the Hadamard gates and the phase shifters the
+phase shift gates. In particular any single particle quantum interference can be
+represented by the following simple network,
+
+
+                                                ①
+                                          φ = φ0 − φ1
+                             H                                       H
+
+
+
+    In order to make a connection with a quantum function evaluation let us
+now describe an alternative construction which simulates the action of the phase
+shift gate. This construction introduces a phase factor φ using a controlled-U
+gate. The phase shift φ is “computed” with the help of an auxiliary qubit in a
+prescribed state | ui such that U | ui = eiφ | ui.
+
+
+                     | 0i      H              ✈          H         Measurement
+
+
+
+                     | ui                     U                    | ui
+
+
+In our example, shown above, we obtain the following sequence of transforma-
+tions on the two qubits
+                 H                            c−U
+        | 0i | ui 7→ √12 (| 0i + | 1i) | ui       7→   √1 (| 0i + eiφ | 1i) | ui
+                                                         2
+                                                  H
+                                                  7→   (cos φ2 | 0i + i sin φ2 | 1i) | ui .   (48)
+
+   We note that the state of the auxiliary qubit | ui, being an eigenstate of U , is
+not altered along this network, but its eigenvalue eiφ is “kicked back” in front of
+the | 1i component in the first qubit. The sequence (48) is the exact simulation
+
+
+                                                  14
+of the Mach-Zehnder interferometer and, as we shall see later on, the kernel of
+quantum algorithms.
+    Some of the controlled-U operations are special - they represent quantum
+function evaluations! Indeed, a unitary evolution which computes f : {0, 1}n 7→
+{0, 1}m,
+                      | xi | yi 7→ | xi | (y + f (x)) mod 2m i ,           (49)
+is of the controlled-U type. The unitary transformation of the second register,
+specified by
+                          | yi 7→ | (y + f (x)) mod 2m i ,                (50)
+depends on x – the state of the first register. If the initial state of the second
+register is set to
+                                  2m −1             
+                              1 X               2πi
+                     | ui = m/2         exp − m y |yi,                         (51)
+                            2      y=0
+                                                2
+
+by applying the QFT to the state | 111...1i, then the function evaluation gener-
+ates
+                              m
+                             2X −1             
+                     1                     2πi
+       |xi | ui =        |xi       exp − m y |yi                            (52)
+                   2m/2       y=0
+                                           2
+                                  m
+                                 2X −1     
+                        1               2πi
+                 7→        |xi     exp − m y |f (x) + yi                         (53)
+                      2m/2     y=0
+                                        2
+                                      m
+                        2πi          2X −1
+                      e 2m f (x)
+                                                                
+                                                  2πi
+                 =               |xi       exp  −     (f (x) + y)  |f (x) + yi   (54)
+                        2m/2          y=0
+                                                  2m
+                                       m
+                        2πi          2X−1
+                      e 2m f (x)
+                                                      
+                                                 2πi
+                 =               |xi      exp  −     y   |yi                     (55)
+                        2m/2          y=0
+                                                 2m
+                       2πi
+                 =    e 2m f (x) |xi | ui ,                                      (56)
+
+where we have relabelled the summation index in the sum containing 2m terms
+      m                                      m
+     2X −1                                2X −1         
+               2πi                                     2πi
+          exp − m (f (x) + y) |f (x) + yi =       exp − m y |yi.                 (57)
+      y=0
+               2                             y=0
+                                                       2
+
+Again, the function evaluation effectively introduces the phase factors in front
+of the |xi terms in the first register.
+                                                  
+                                          2πi
+                        |xi | ui 7→ exp       f (x) |xi | ui                (58)
+                                          2m
+
+Please notice that the resolution in φ(x) = 22π  m f (x) is determined by the size
+
+m of the second register. For m = 1 we obtain φ(x) = πf (x), i.e. the phase
+factors are (−1)f (x) . Let us see how this approach explains the internal working
+of quantum algorithms.
+
+                                              15
+5    The first quantum algorithms
+The first quantum algorithms showed advantages of quantum computation with-
+out referring to computational complexity measured by the scaling properties of
+network sizes. The computational power of quantum interference was discovered
+by counting how many times certain Boolean functions have to be evaluated in
+order to find the answer to a given problem. Imagine a “black box” (also called
+an oracle) computing a Boolean function and a scenario in which one wants to
+learn about a given property of the Boolean function but has to pay for each use
+of the “black box” (often referred to as a query). The objective is to minimise
+number of queries.
+    Consider, for example, a “black box” computing a Boolean function f :
+{0, 1} 7→ {0, 1}. There are exactly four such functions: two constant functions
+(f (0) = f (1) = 0 and f (0) = f (1) = 1) and two “balanced” functions (f (0) =
+0, f (1) = 1 and f (0) = 1, f (1) = 0). The task is to deduce, by queries to the
+“black box”, whether f is constant or balanced (in other words, whether f (0)
+and f (1) are the same or different).
+    Classical intuition tells us that we have to evaluate both f (0) and f (1), which
+involves evaluating f twice (two queries). We shall see that this is not so in the
+setting of quantum information, where we can solve this problem with a single
+function evaluation (one query), by employing an algorithm that has the same
+mathematical structure as the Mach-Zehnder interferometer. The quantum al-
+gorithm that accomplishes this is best represented as the quantum network
+shown below, where the middle operation is the “black box” representing the
+function evaluation [17].
+
+                  | 0i          H             ✈          H          Measurement
+
+
+
+
+           | 0i − | 1i                        f                     | 0i − | 1i
+
+
+The initial state of the qubits in the quantum network is | 0i (| 0i − | 1i) (apart
+from a normalization factor, which will be omitted in the following). After
+the first Hadamard transform, the state of the two qubits has the form (| 0i +
+| 1i)(| 0i − | 1i). To determine the effect of the function evaluation on this state,
+first recall that, for each x ∈ {0, 1},
+                                          f
+                     | xi (| 0i − | 1i) 7→ (−1)f (x) | xi (| 0i − | 1i).          (59)
+Therefore, the state after the function evaluation is
+                         [(−1)f (0) | 0i + (−1)f (1) | 1i](| 0i − | 1i) .         (60)
+That is, for each x, the | xi term acquires a phase factor of (−1)f (x) , which
+corresponds to the eigenvalue of the state of the auxiliary qubit under the action
+
+                                                  16
+of the operator that sends | yi to | y + f (x)i. The second qubit is of no interest
+to us any more but the state of the first qubit
+
+                              (−1)f (0) | 0i + (−1)f (1) | 1i                       (61)
+
+is equal either to
+                                     ± (| 0i + | 1i) ,                              (62)
+when f (0) = f (1), or
+                                     ± (| 0i − | 1i) ,                              (63)
+when f (0) 6= f (1). Hence, after applying the second Hadamard gate the state of
+the first qubit becomes | 0i if the function f is constant and | 1i if the function
+is balanced! A bit-value measurement on this qubit distinguishes these cases
+with certainty.
+    This example [17] is an improved version of the first quantum algorithm
+proposed by Deutsch [18] (The original Deutsch algorithm provides the correct
+answer with probability 50%.) Deutsch’s result laid the foundation for the
+new field of quantum computation, and was followed by several other quantum
+algorithms.
+    Deutsch’s original problem was subsequently generalised to cover “black
+boxes” computing Boolean functions f : {0, 1}n 7→ {0, 1}. Assume that, for
+one of these functions, it is “promised” that it is either constant or balanced
+(i.e. has an equal number of 0’s outputs as 1’s), and the goal is to determine
+which of the two properties the function actually has. How many queries to
+f are required to do this? Any classical algorithm for this problem would, in
+the worst-case, require 2n−1 + 1 queries before determining the answer with
+certainty. There is a quantum algorithm that solves this problem with a single
+evaluation of f .
+    The algorithm is illustrated by a simple extension of the network which
+solves Deutsch’s problem.
+
+                     | 0i        H        ✉        H            Measurement
+
+                     | 0i        H                 H            Measurement
+
+                     | 0i        H        ✉        H            Measurement
+
+
+                | 0i − | 1i               f                     | 0i − | 1i
+
+The control register, now composed out of n qubits (n = 3 in the diagram
+above), is initially in state | 00 · · · 0i and an auxiliary qubit in the second register
+starts and remains in the state | 0i − | 1i.
+
+
+
+
+                                              17
+   Stepping through the execution of the network, the state after the first n-
+qubit Hadamard transform is applied is
+                            X
+                                | xi (| 0i − | 1i) ,                      (64)
+                                         x
+
+which, after the function evaluation, is
+                           X
+                              (−1)f (x) | xi (| 0i − | 1i).                    (65)
+                                    x
+
+Finally, after the last Hadamard transform, the state is
+                         X
+                            (−1)f (x)+(x·y) | yi (| 0i − | 1i).                (66)
+                              x,y
+
+                                                       f (x)
+    Note that the amplitude of | 00 · · · 0i is x (−1)       which is (−1)f (0) when
+                                               P
+                                                    2n
+f is constant and 0 when f is balanced. Therefore, by measuring the first n
+qubits, it can be determined with certainty whether f is constant or balanced.
+The algorithm follows the same pattern as Deutsch’s algorithm: the Hadamard
+transform, a function evaluation, the Hadamard transform (the H-f-H sequence).
+We recognize it as a generic interference pattern.
+
+
+6     Quantum search
+The generic H-f-H sequence may be repeated several times. This can be illus-
+trated, for example, with Grover’s data base search algorithm [19]. Suppose we
+are given, as an oracle, a Boolean function fk which maps {0, 1}n to {0, 1} such
+that fk (x) = δxk for some k. Our task is to find k. Thus in a set of numbers
+from 0 to 2n − 1 one element has been “tagged” and by evaluating fk we have
+to find which one. In order to find k with probability of 50% any classical algo-
+rithm, be it deterministic or randomised, will need to evaluate fk a minimum of
+2n−1 times. In contrast, a quantum algorithm needs only O(2n/2 ) evaluations.
+    Unlike the algorithms studied so far, Grover’s algorithm consists of repeated
+applications of the same unitary transformation many (O(2n/2 )) times. The
+initial state is chosen to be the one that has equal overlap with each of the com-
+                                        P2n
+putational basis states: | Si = 2−n/2 i=0 | ii. The operation applied at each
+individual iteration, referred to as the Grover iterate, can be best represented
+by the following network:
+
+                   | ψi                  ✈   H         ✈   H
+
+
+
+
+                | 0i − | 1i             fk            f0
+
+
+
+                                                 18
+The components of the network are by now familiar: Hadamard transforms (H)
+and controlled-f gates. It is important to notice that in drawing the network we
+have used a shorthand notation: the first register (with the | ψi input) actually
+consists of n qubits. The Hadamard transform is applied to each of those qubits
+and the controlled-f gates act on all of them simultaneously. Also, the input
+to the second register is always | 0i − | 1i but the input to the first register,
+denoted | ψi changes from iteration from iteration, as the calculation proceeds.
+As usual, the second register will be ignored since it remains constant throughout
+the computation.
+    To begin, consider only the controlled-fk gate. This is just the phase-
+kickback construction that was introduced in Section 4 but for the specific
+function fk . In particular, the transformation does nothing to any basis el-
+ements except for | ki, which goes to − | ki. Geometrically, this is simply a
+reflection in the hyperplane perpendicular to | ki so let us call it Rk .
+    Similarly, with respect to the first register only, the controlled-f0 operation
+sends | 0i to − | 0i and fixes all other basis elements, so it can be written R0 .
+Now consider the sequence of operations HR0 H. Since H 2 = I, we can rewrite
+the triple as HR0 H −1 which is simply R0 performed in a different basis. More
+specifically, it is reflection about the hyperplane perpendicular to
+                                                    n
+                                                   2X −1
+                                           1
+                          H | 0i =                            | xi = | Si      (67)
+                                       2n/2 x=0
+
+so we will simply write the triple as RS .
+    We can therefore rewrite the Grover iterate in the simple form G = RS Rk .
+Now, since each reflection is an orthogonal transformation with negative de-
+terminant, their composition must be an orthogonal transformation with unit
+determinant, in other words, a rotation. The question, of course, is which rota-
+tion. To find the answer it suffices to consider rotations in the plane spanned by
+| ki and | Si since all other vectors are fixed by the Grover iterate. The generic
+geometrical situation is then illustrated in the following diagram.
+
+
+
+                                                   L2
+                               |a’’>
+
+
+
+                                 y
+
+                                       y               |a’>       L1
+                                               x
+                                                   x    |a>
+
+
+
+
+If the vector | ai is reflected through the line L1 to produce the vector | a′ i and
+then reflected a second time through line L2 to produce the vector | a′′ i, then
+the net effect is a rotation by the total subtended angle between | ai and | a′′ i,
+which is 2x + 2y = 2(x + y) = 2θ.
+
+                                               19
+   Therefore, writing k ⊥ and S ⊥ for plane vectors perpendicular to | ki
+and | Si respectively, the Grover iterate performs a rotation of twice the angle
+                                        1
+from k ⊥ to S ⊥ . Setting, sin φ = 2n/2   , this is easily seen to be a rotation by
+                                 π
+                           2(3     − φ) = π − 2φ mod 2π.                        (68)
+                                 2
+Thus, up to phases, the Grover iterate rotates the state vector by an angle 2φ
+towards the desired solution | ki. Normally, the initial state for the first register
+is chosen to be | Si. Since this initial state | Si is already at an angle φ to | ki,
+the iterate should be repeated m times, where
+                                                 π
+                                 (2m + 1)φ ≈ ,                                  (69)
+                                                 2
+giving
+                                          π   1
+                                     m≈     −                                   (70)
+                                          4φ 4
+to get a probability of success bounded below by cos2 (2φ), which goes to 1 as
+                        1
+n 7→ ∞. For large n, 2n/2  = sin φ ≈ φ, so
+                                          π 1
+                                     m≈          .                              (71)
+                                          4 2n/2
+    This is an astounding result: any search of an unstructured database can
+be performed in time proportional to the square-root of the number of entries
+in the database. Subsequent work extended the result to searches for multiple
+items [20], searches of structured databases [21], and many other situations.
+Also, Zalka [22], Boyer et. al [20] and others have demonstrated that Grover’s
+algorithm is optimal, in the sense that any other quantum algorithm for search-
+ing an unstructured database must take time at least O(2n/2 ).
+
+
+7    Optimal phase estimation
+Query models of quantum computation provided a natural setting for subse-
+quent discoveries of “real quantum algorithms”. The most notable example
+is Shor’s quantum factoring algorithm [15] which evolved from the the order-
+finding problem, which was originally formulated in the language of quantum
+queries. Following our “interferometric approach” we will describe this algo-
+rithm in the terms of multiparticle quantum interferometry. We start with a
+simple eigenvalue or phase estimation problem.
+    Suppose that U is any unitary transformation on m qubits and | ui is an
+eigenvector of U with eigenvalue eiφ and consider the following scenario. We
+do not explicitly know U or | ui or eiφ , but instead we are given devices that
+                                       1                2
+perform controlled-U , controlled-U 2 , controlled-U 2 and so on until we reach
+              n−1
+controlled-U 2 . Also, assume that we are given a single preparation of the
+state | ui. Our goal is to obtain an n-bit estimator of φ. We start by constructing
+the following network,
+
+
+                                          20
+                                                                                                      2
+     | 0i + | 1i                                                  s                       | 0i + ei2 φ | 1i
+                                                                                                      1
+     | 0i + | 1i                                   s                                      | 0i + ei2 φ | 1i
+
+                                                                                                      0
+     | 0i + | 1i                   s                                                      | 0i + ei2 φ | 1i
+
+
+
+
+                                    0               1              2
+              | ui                U2              U2          U2                          | ui
+
+
+
+    The second register of m qubits is initially prepared in state | ui and remains
+in this state after the computation, whereas the first register of n qubits evolves
+into the state,
+                                                                                   n
+                                                                                  2X −1
+                                                                                                 φy
+             i2n−1 φ                    i2n−2 φ                        iφ
+ (| 0i + e             | 1i)(| 0i + e             | 1i) · · · (| 0i + e | 1i) =            e2πi 2n | yi . (72)
+                                                                                  y=0
+
+                                                               Pn−1
+    Consider the special case where φ = 2πx/2n for x = i=0 2i xi , and recall
+the quantum Fourier transform (QFT) introduced in Section 2. The state which
+gives the binary representation of x, namely, | xn−1 · · · x0 i (and hence φ) can be
+obtained by applying the inverse of the QFT , that is by running the network
+for the QFT in the backwards direction (consult the diagram of the QFT). If x
+is an n-bit number this will produce the exact value φ.
+    However, φ does not have to be a fraction of a power of two (and may not
+even be a rational number). For such a φ, it turns out that applying the inverse
+of the QFT produces the best n-bit approximation of φ with probability at least
+4/π 2 ≈ 0.405.
+    To see why this is so, let us write φ = 2π(a/2n + δ), where a = (an−1 . . . a0 )
+                                 φ
+is the best n-bit estimate of 2π   and 0 < |δ| ≤ 1/2n+1 . Applying the inverse
+QFT to the state in Eq. (72) now yields the state
+                                        n     n
+                                     2 −1 2 −1
+                                   1 X X 2πi
+                                               e 2n (a−x)y e2πiδy | xi                                    (73)
+                                  2n x=0 y=0
+
+and the coefficient in front of | x = ai in the above is the geometric series
+                              n
+                             2 −1                                             n
+                                                                  1 − (e2πiδ )2
+                                                                                 
+                           1 X 2πiδ y                     1
+                                 (e )               =                                 .                   (74)
+                          2n y=0                         2n         1 − e2πiδ
+
+              1
+Since |δ| ≤ 2n+1 , it follows that 2n |δ| ≤ 1/2, and using the inequality 2z ≤
+                                                            n
+sin πz ≤ πz holding for any z ∈ [0, 1/2], we get |1 − e2πiδ2 | = 2| sin(πδ2n )| ≥
+
+
+
+                                                        21
+4|δ|2n . Also, |1 − e2πiδ | = 2| sin πδ| ≤ 2πδ. Therefore, the probability of observ-
+ing an−1 · · · a0 when measuring the state is
+                                       n   2                             2
+                           1 − (e2πiδ )2                           4δ2n
+                                                             
+                   1                                       1                        4
+                                                 ≥                              =      ,   (75)
+                  2n         1 − e2πiδ                    2n       2πδ              π2
+
+which proves our assertion. In fact, the probability of obtaining the best esti-
+mate can be made 1 − δ for any 0 < δ < 1, by creating the state in Eq.(72)
+but with n + O(log(1/δ)) qubits and rounding the answer off to the nearest n
+bits [17].
+
+
+8     Periodicity and quantum factoring
+Amazingly, the application of optimal phase estimation to a very particular
+unitary operator will allow us to factor integers efficiently. In fact, it will allow
+us to solve a more general class of problems related to the periodicity of certain
+integer functions.
+    Let N be an m-bit integer, and let a be an integer smaller than N , and
+coprime to N . Define a unitary operator Ua acting on m qubits such that for
+all y < N
+                           | yi 7→ Ua | yi = | ay mod N i .                      (76)
+This unitary operation can be called multiplication by a modulo N . Since a is
+coprime to N , as discussed in Section 2, there exists a least strictly positive r
+such that ar = 1 mod N . This r is called the order of a modulo N . Equivalently,
+r is the period of the function f (x) = ax mod N , i.e. the least r > 0 such that
+f (x) = f (x + r) for all x. We are after the optimal n-bit estimate of this period,
+given some specified precision n.
+    Now let the vectors | uk i (k ∈ {1, . . . , r}) be defined by
+                                           r−1
+                                           X          2πikj
+                                    −1/2
+                       | uk i = r                e−     r      aj mod N .                  (77)
+                                           j=0
+
+It is easy to check [23] that for each k ∈ {1, . . . , r}, | uk i is an eigenvector with
+                 k
+eigenvalue e2πi r of the modular multiplication operator Ua defined above.
+     It is important to observe that one can efficiently construct a quantum net-
+work for controlled multiplication modulo some number N . Moreover, for any j,
+                                                             j
+it is possible to efficiently implement a controlled-Ua2 gate [24, 25]. Therefore,
+we can apply the techniques for optimal phase estimation discussed in Section
+7. For any k ∈ {1, . . . , r}, given the state | uk i we can obtain the best n-bit
+approximation to kr . This is tantamount to determining r itself. Unfortunately,
+there is a complication.
+     Our task is: given an m bit long number N and randomly chosen a < N
+coprime with N , find the order of a modulo N . The problem with the above
+
+
+
+                                                 22
+method is that we are aware of no straightforward efficient way to prepare any
+of the states | uk i. However, the state
+                                                    r
+                                                    X
+                                     | 1i = r−1/2         | uk i                (78)
+                                                    k=1
+
+is most definitely an easy state to prepare.
+    If we start with | 1i in place of the eigenvector | uk i, apply the phase estima-
+tion network and measure the first register bit by bit we will obtain n binary
+digits of x such that, with probability exceeding 4/π 2 , 2xn is the best n-bit es-
+timate of kr for a randomly chosen k from {1, . . . , r}. The question is: given x
+how to compute r? Let us make few observations:
+   • k/r is unique, given x.
+     Value x/2n , being the n-bit estimate, differs by at most 1/2n from k/r.
+     Hence, as long as n > 2m, the n bit estimate x determines a unique value
+     of kr since r is an m-bit number.
+   • Candidate values for k/r are all convergents to x/2m .
+     For any real number θ, there is a unique sequence of special rationals
+     ( pqnn )n∈N (gcd(pn , qn ) = 1) called the convergents to θ that tend to θ as n
+       grows. A theorem [9] states that if p and q are integers with θ − pq < 2q12
+       then p/q is a convergent to θ. Since we have 21n ≤ 2(21m )2 ≤ 2r12 , this
+       implies 2xn − kr < 2r12 and k/r is a convergent to x/2n .
+   • Only one convergent is eligible.
+     It is easy to show that there is at most one fraction a/b satisfying both
+     b ≤ r and 2xn − ab < 2r12 .
+    Convergents can be found efficiently using the well-known continued fraction
+method [9]. Thus we employ continued fractions and our observations above to
+find a fraction a/b such that b ≤ 2m and 2xn − ab < 21n . We get the rational
+k/r, and k = a, r = b, provided k and r are coprime. For randomly chosen k,
+this happens with probability greater than or equal to 1/ ln r [26].
+    Finally, we show how order-finding can be used to factor a composite number
+N . Let a be a randomly chosen positive integer smaller than N such that
+gcd(a, N ) = 1. Then the order of a modulo N is defined, and we can find it
+efficiently using the above algorithm. If r is even, then we have:
+
+                                                  ar       =       1 mod N      (79)
+                               ⇔       (ar/2 )2 − 12       =       0 mod N      (80)
+                               r/2
+                    ⇔     (a         − 1)(ar/2 + 1) =              0 mod N.     (81)
+   The product (ar/2 − 1)(ar/2 + 1) must be some multiple of N , so unless
+ r/2
+a    = ±1 mod N at least one of terms must have a nontrivial factor in common
+with N . By computing the greatest common divisor of this term and N , one
+gets a non-trivial factor of N .
+
+                                              23
+    Furthermore, if N is odd with prime factorisation
+
+                                  N = pα1 α2       αs
+                                       1 p2 · · · ps ,                                (82)
+
+then it can be shown [26] that if a < N is chosen at random such that gcd(a, N ) =
+1 then the probability that its order modulo N is even and that ar/2 6= ±1 mod
+N is:
+                                                               1
+                Pr(r is even and ar/2 6= ±1 mod N ) ≥ 1 − s−1 .               (83)
+                                                             2
+Thus, combining our estimates of success at each step, with probability greater
+than or equal to                             
+                           4 1             1       2 1
+                            2
+                                    1 −   s−1
+                                                ≥ 2                           (84)
+                          π ln r        2         π ln N
+we find a factor of N 4 . (Here we have used that N is composite and r < N .) If
+N is log N = n bits long then by repeating the whole process O(n) times, or by
+a running O(n) computations in parallel by a suitable extension of a quantum
+factoring network, we can then guarantee that we will find a factor of N with a
+fixed probability greater than 21 . This, and the fact that the quantum network
+family for controlled multiplication modulo some number is uniform and of size
+O(n2 ), tells us that factoring is in the complexity class BQP .
+    But why should anybody care about efficient factorisation?
+
+
+9     Cryptography
+Human desire to communicate secretly is at least as old as writing itself and
+goes back to the beginnings of our civilisation. Methods of secret communica-
+tion were developed by many ancient societies, including those of Mesopotamia,
+Egypt, India, and China, but details regarding the origins of cryptology5 remain
+unknown [27].
+    Originally the security of a cryptosystem or a cipher depended on the se-
+crecy of the entire encrypting and decrypting procedures; however, today we
+use ciphers for which the algorithm for encrypting and decrypting could be re-
+vealed to anybody without compromising their security. In such ciphers a set
+of specific parameters, called a key, is supplied together with the plaintext as
+an input to the encrypting algorithm, and together with the cryptogram as an
+input to the decrypting algorithm [28]. This can be written as
+
+                      Êk (P ) = C, and conversely, D̂k (C) = P,                      (85)
+
+where P stands for plaintext, C for cryptotext or cryptogram, k for crypto-
+graphic key, and Ê and D̂ denote an encryption and a decryption operation
+respectively.
+   4 N.B. by Eq.(83), the method fails if N is a prime power, N = pα , but prime powers can
+
+be efficiently recognised and factored by classical means.
+   5 The science of secure communication is called cryptology from Greek kryptos hidden and
+
+logos word. Cryptology embodies cryptography, the art of code-making, and cryptanalysis,
+the art of code-breaking.
+
+
+                                            24
+    The encrypting and decrypting algorithms are publicly known; the security
+of the cryptosystem depends entirely on the secrecy of the key, and this key
+must consist of a randomly chosen, sufficiently long string of bits. Probably the
+best way to explain this procedure is to have a quick look at the Vernam cipher,
+also known as the one-time pad [29].
+    If we choose a very simple digital alphabet in which we use only capital
+letters and some punctuation marks such as
+
+           A B C D E ...                      ... X Y Z        ? ,   .
+           00 01 02 03 04 ...                 ... 23 24 25 26 27 28 29
+
+   we can illustrate the secret-key encrypting procedure by the following simple
+example (we refer to the dietary requirements of 007):
+      S    H    A    K    E    N         N    O    T         S    T     I   R    R    E    D
+      18   07   00   10   04   13   26   13   14   19   26   18   19   08   17   17   04   03
+      15   04   28   13   14   06   21   11   23   18   09   11   14   01   19   05   22   07
+      03   11   28   23   18   19   17   24   07   07   05   29   03   09   06   22   26   10
+
+    In order to obtain the cryptogram (sequence of digits in the bottom row)
+we add the plaintext numbers (the top row of digits) to the key numbers (the
+middle row), which are randomly selected from between 0 and 29, and take the
+remainder after division of the sum by 30, that is we perform addition modulo
+30. For example, the first letter of the message “S” becomes a number “18”in
+the plaintext, then we add 18 + 15 = 33; 33 = 1 × 30 + 3, therefore we get 03
+in the cryptogram. The encryption and decryption can be written as Pi + ki
+(mod 30) = Ci and Ci − ki (mod 30) = Pi respectively for the symbol at
+position i.
+    The cipher was invented in 1917 by the American AT&T engineer Gilbert
+Vernam. It was later shown, by Claude Shannon [30], that as long as the key
+is truly random, has the same length as the message, and is never reused then
+the one-time pad is perfectly secure. So, if we have a truly unbreakable system,
+what is wrong with classical cryptography?
+    There is a snag. It is called key distribution. Once the key is established,
+subsequent communication involves sending cryptograms over a channel, even
+one which is vulnerable to total passive eavesdropping (e.g. public announce-
+ment in mass-media). This stage is indeed secure. However in order to establish
+the key, two users, who share no secret information initially, must at a certain
+stage of communication use a reliable and a very secure channel. Since the inter-
+ception is a set of measurements performed by an eavesdropper on this channel,
+however difficult this might be from a technological point of view, in principle
+any classical key distribution can always be passively monitored, without the
+legitimate users being aware that any eavesdropping has taken place.
+    In the late 1970s Whitfield Diffie and Martin Hellman [31] proposed an
+interesting solution to the key distribution problem. It involved two keys, one
+public key π for encryption and one private key κ for decryption:
+
+                               Êπ (P ) = C, and D̂κ (C) = P.                                   (86)
+
+
+                                               25
+In these systems users do not need to share any private key before they start
+sending messages to each other. Every user has his own two keys; the public
+key is publicly announced and the private key is kept secret. Several public-key
+cryptosystems have been proposed since 1976; here we concentrate our attention
+on the most popular one namely the RSA [32]. In fact the techniques were first
+discovered at CESG in the early 1970s by James Ellis, who called them “Non-
+Secret Encryption” [33]. In 1973, building on Ellis’ idea, C. Cocks designed what
+we now call RSA [34], and in 1974 M. Williamson proposed what is essentially
+known today as the Diffie-Hellman key exchange protocol.
+    Suppose that Alice wants to send an RSA encrypted message to Bob. The
+RSA encryption scheme works as follows:
+
+Key generation Bob picks randomly two distinct and large prime numbers p
+    and q. We denote n = pq and φ = (p − 1)(q − 1). Bob then picks a random
+    integer 1 < e < φ that is coprime with φ, and computes the inverse d of e
+    modulo φ (gcd(e, φ) = 1). This inversion can be achieved efficiently using
+    for instance the extended Euclidean algorithm for the greatest common
+    divisor[9]. Bob’s private key is κ = d and his public key is π = (e, n)
+Encryption Alice obtains Bob’s public key π = (e, n) from some sort of yellow
+    pages or an RSA public key directory. Alice then writes her message as a
+    sequence of numbers using, for example, our digital alphabet. This string
+    of numbers is subsequently divided into blocks such that each block when
+    viewed as a number P satisfies P ≤ n. Alice encrypts each P as
+
+                               C = Êπ (P ) = P e mod n                     (87)
+
+     and sends the resulting cryptogram to Bob.
+Decryption Receiving the cryptogram C, Bob decrypts it by calculating
+
+                              D̂κ (C) = C d mod n = P                       (88)
+
+     where the last equality will be proved shortly.
+
+   The mathematics behind the RSA is a lovely piece of number theory which
+goes back to the XVI century when a French lawyer Pierre de Fermat discovered
+that if a prime p and a positive integer a are coprime, then
+
+                                ap−1 = 1 mod p.                             (89)
+
+   The cryptogram C = P e mod n is decrypted by C d mod n = P ed mod n
+because ed = 1 mod φ, implying the existence of an integer k such that ed =
+kφ + 1 = k(p − 1)(q − 1) + 1. If P 6= 0 mod p, using equation (9.5) this implies
+                                  k(q−1)
+              P ed mod p = P (p−1)         P mod p = P mod p.               (90)
+
+
+
+
+                                       26
+   The above equality holds trivially in the case P = 0 mod p. By identical
+arguments, P ed mod q = P mod q. Since p and q are distinct primes, it follows
+that
+                              P ed mod n = P.                             (91)
+    For example, let us suppose that Bob’s public key is π = (e, n) = (179, 571247). 6
+He generated it following the prescription above choosing p = 773, q = 739 and
+e = 179. The private key d was obtained by solving 179d = 1 mod 772 × 738
+using the extended Euclidean algorithm which yields d = 515627. Now if we
+want to send Bob encrypted “SHAKEN NOT STIRRED” we first use our digital
+alphabet to obtain the plaintext which can be written as the following sequence
+of six digit numbers
+                180700 100413 261314 192618 190817 170403
+
+Then we encipher each block Pi by computing Ci = Pie mod n; e.g. the first
+block P1 = 180700 will be eciphered as
+
+                P1e mod n = 180700179 mod 571247 = 141072 = C1 ,                        (92)
+
+and the whole message is enciphered as:
+                141072 253510 459477 266170 286377 087175
+
+The cryptogram C composed of blocks Ci can be send over to Bob. He can
+then decrypt each block using his private key d = 515627, e.g. the first block is
+decrypted as
+                  141072515627 mod 571247 = 180700 = P1 .                   (93)
+   In order to recover plaintext P from cryptogram C, an outsider, who knows
+C, n, and e, would have to solve the congruence
+
+                                     P e mod n = C,                                     (94)
+
+for example, in our case,
+
+                              P1179 mod 571247 = 141072.                                (95)
+
+Solving such an equation is believed to be a hard computational task for clas-
+sical computers. So far, no classical algorithm has been found that computes
+the solution efficiently when n is a large integer (say 200 decimal digits long or
+more). However, if we know the prime decomposition of n it is a piece of cake
+to figure out the private key d: we simply follow the key generation procedure
+and solve the congruence ed = 1 mod (p − 1)(q − 1). This can be done efficiently
+even when p and q are very large. Thus, in principle, anybody who knows n
+can find d by factoring n. The security of RSA therefore relies among others
+on the assumption that factoring large numbers is computationally difficult.
+   6 Needless to say, number n in this example is too small to guarantee security, do not try
+
+this public key with Bob.
+
+
+
+                                             27
+In the context of classical computation, such difficulty has never been proved.
+Worse still, we have seen in Section 8 that there is a quantum algorithm that
+factors large number efficiently. This means that the security of the RSA cryp-
+tosystem will be completely compromised if large-scale quantum computation
+becomes one day practical. This way, the advent of quantum computation rules
+out public cryptographic schemes commonly used today that are based on the
+“difficulty” of factoring or the “difficulty” of another mathematical operation
+called discrete logarithm [9].
+    On the other hand, quantum computation provides novel techniques to gen-
+erate a shared private key with perfect confidentiality, regardless the compu-
+tational power (classical or quantum) of the adversaries. Such techniques are
+referred to as quantum key distribution protocols and were proposed indepen-
+dently in the United States (S.Wiesner [35], C.H. Bennett and G. Brassard [36])
+and in Europe (A. Ekert [37]). Discussion on quantum key distribution is outside
+the scope of this lecture.
+
+
+10     Conditional quantum dynamics
+Quantum gates and quantum networks provide a very convenient language for
+building any quantum computer or (which is basically the same) quantum mul-
+tiparticle interferometer. But can we build quantum logic gates?
+    Single qubit quantum gates are regarded as relatively easy to implement. For
+example, a typical quantum optical realisation uses atoms as qubits and controls
+their states with laser light pulses of carefully selected frequency, intensity and
+duration; any prescribed superposition of two selected atomic states can be
+prepared this way.
+    Two-qubit gates are much more difficult to build.
+    In order to implement two-qubit quantum logic gates it is sufficient, from the
+experimental point of view, to induce a conditional dynamics of physical bits,
+i.e. to perform a unitary transformation on one physical subsystem conditioned
+upon the quantum state of another subsystem,
+
+             U = | 0i h0 | ⊗ U0 + | 1i h1 | ⊗ U1 + · · · + | ki hk | ⊗ Uk ,   (96)
+
+where the projectors refer to quantum states of the control subsystem and the
+unitary operations Ui are performed on the target subsystem [6]. The sim-
+plest non-trivial operation of this sort is probably a conditional phase shift such
+as B(φ) which we used to implement the quantum Fourier transform and the
+quantum controlled-not (or xor) gate.
+    Let us illustrate the notion of the conditional quantum dynamics with a
+simple example. Consider two qubits, e.g. two spins, atoms, single-electron
+                                            (1) (2)
+quantum dots, which are coupled via a σz σz interaction (e.g. a dipole-dipole
+interaction):
+
+
+
+
+                                          28
+             ✬ ✩                                              ✬ ✩
+                     | 1i                                             | 1i
+                             ✛     V̂ = ~Ωσz σz
+                                                (1) (2)   ✲
+              | 0i                                             | 0i
+             ✫ ✪                                              ✫ ✪
+                            (1)                                              (2)
+             Ĥ1 = ~ω1 σz                                     Ĥ2 = ~ω2 σz
+
+
+The first qubit, with resonant frequency ω1 , will act as the control qubit and
+the second one, with resonant frequency ω2 , as the target qubit. Due to the
+coupling V̂ the resonant frequency for transitions between the states | 0i and | 1i
+of one qubit depends on the neighbour’s state. The resonant frequency for the
+first qubit becomes ω1 ± Ω depending on whether the second qubit is in state
+| 0i or | 1i. Similarly the second qubit’s resonant frequency becomes ω2 ± Ω,
+depending on the state of the first qubit. Thus a π-pulse at frequency ω2 + Ω
+causes the transition | 0i ↔ | 1i in the second qubit only if the first qubit is in
+| 1i state. This way we can implement the quantum controlled-not gate.
+
+
+11     Decoherence and recoherence
+Thus in principle we know how to build a quantum computer; we can start with
+simple quantum logic gates and try to integrate them together into quantum
+networks. However, if we keep on putting quantum gates together into networks
+we will quickly run into some serious practical problems. The more interacting
+qubits are involved the harder it tends to be to engineer the interaction that
+would display the quantum interference. Apart from the technical difficulties
+of working at single-atom and single-photon scales, one of the most important
+problems is that of preventing the surrounding environment from learning about
+which computational path was taken in the multi-particle interferometer. This
+“welcher Weg” information can destroy the interference and the power of quan-
+tum computing.
+   Consider the following qubit-environment interaction, known as decoherence[38],
+
+                     |0, mi 7→ |0, m0 i,        |1, mi 7→ |1, m1 i,                (97)
+
+where |mi is the initial state and |m0 i, |m1 i are the two final states of the envi-
+ronment. This is basically a measurement performed by the environment on a
+qubit. Suppose that in our single qubit interference experiment (see Eqs. (43))
+a qubit in between the two Hadamard transformation is “watched” by the en-
+vironment which learns whether the qubit is in state |0i or |1i. The evolution
+of the qubit and the environment after the first Hadamard and the phase gate
+is described by the following transformation,
+
+                H 1                     φ 1
+     | 0i | mi 7→ √ (| 0i + | 1i) | mi 7→ √ (eiφ/2 | 0i + e−iφ/2 | 1i) | mi .      (98)
+                   2                       2
+
+                                           29
+We write the decoherence action as
+     1     φ            φ               1     φ                   φ
+     √ (ei 2 | 0i + e−i 2 | 1i) | mi 7→ √ (ei 2 | 0i | m0 i + e−i 2 | 1i | m1 i).    (99)
+      2                                  2
+The final Hadamard gate generates the output state
+                       1     φ                   φ
+                       √ (ei 2 | 0i | m0 i + e−i 2 | 1i | m1 i)                     (100)
+                        2
+                         H    1       φ                  φ
+                                                                
+                        7→      | 0i ei 2 | m0 i + e−i 2 | m1 i
+                              2
+                              1       φ                  φ
+                                                                
+                         +      | 1i ei 2 | m0 i − e−i 2 | m1 i .                   (101)
+                              2
+   Taking | m0 i and | m1 i to be normalised and hm0 | m1 i to be real we obtain
+the probabilities P0 and P1 ,
+                                    1
+                          P0   =      (1 + hm0 | m1 i cos φ) ,                      (102)
+                                    2
+                                    1
+                          P1   =      (1 − hm0 | m1 i cos φ) .                      (103)
+                                    2
+    It is instructive to see the effect of decoherence on the qubit alone when its
+state is written in terms as a density operator. The decoherence interaction
+entangles qubits with the environment,
+
+                    (α| 0i + β|1i) |mi 7→ α| 0i|m0 i + β| 1i|m1 i.                  (104)
+
+Rewriting in terms of density operators and tracing over the environment’s
+Hilbert space on the both sides, we obtain
+                  2                        2
+               |α| αβ ∗                           αβ ∗ hm0 | m1 i
+                                                               
+                                        |α|
+                        2    →
+                             7                             2        . (105)
+               α∗ β |β|            α∗ βhm1 | m0 i       |β|
+
+The off-diagonal elements, originally called by atomic physicists coherences, van-
+ish as hm1 | m0 i 7→ 0, that is why this particular interaction with the environment
+is called decoherence.
+    How does decoherence affect, for example, Deutsch’s algorithm? Substitut-
+ing 0 or π for φ in Eq.(102) we see that we obtain the correct answer only with
+some probability, which is
+                                     1 + hm0 | m1 i
+                                                    .                           (106)
+                                           2
+If hm0 | m1 i = 0, the perfect decoherence case, then the network outputs 0 or 1
+with equal probabilities, i.e. it is useless as a computing device. It is clear that
+we want to avoid decoherence, or at least diminish its impact on our computing
+device.
+    In general when we analyse physically realisable computations we have to
+consider errors which are due to the computer-environment coupling and from
+
+
+                                           30
+the computational complexity point of view we need to assess how these er-
+rors scale with the input size n. If the probability of an error in a single run,
+δ(n), grows exponentially with n, i.e. if δ(n) = 1 − A exp(−αn), where A and
+α are positive constants, then the randomised algorithm cannot technically be
+regarded as efficient any more regardless of how weak the coupling to the en-
+vironment may be. Unfortunately, the computer-environment interaction leads
+to just such an unwelcome exponential increase of the error rate with the in-
+put size. To see this consider a register of size n and assume that each qubit
+decoheres separately,
+
+          | xi | M i = | xn−1 . . . x1 x0 i | mi . . . | mi | mi
+             7→ | xn−1 . . . x1 x0 i mxn−1 ... | mx1 i | mx0 i = | xi | Mx i ,   (107)
+
+where xi ∈ {0, 1}. Then a superposition α | xi + β | yi evolves as
+
+                (α | xi + β | yi) | M i 7→ α | xi | Mx i + β | yi | My i ,       (108)
+
+but now the scalar product hMx | My i which reduces the off-diagonal elements
+of the density operator of the whole register and which affects the probabilities
+in the interference experiment is given by
+
+             hMx | My i = hmx0 | my0 i hmx1 | my1 i... mxn−1 myn−1 i             (109)
+
+which is of the order of
+
+                           hMx | My i = hm0 | m1 iH(x,y) ,                       (110)
+
+where H(x, y) is the Hamming distance between x and y, i.e. the number of
+binary places in which x and y differ (e.g. the Hamming distance between
+101101 and 111101 is 1 because the two binary string differ only in the second
+binary place). Hence there are some coherences which disappear as hm0 | m1 in
+and therefore in some interference experiments the probability of error may grow
+exponentially with n.
+    It is clear that for quantum computation of any reasonable length to ever be
+physically feasible it will be necessary to incorporate some efficiently realisable
+stabilisation scheme to combat the effects of decoherence. Deutsch was the first
+one to discuss this problem. During the Rank Prize Funds Mini–Symposium
+on Quantum Communication and Cryptography, Broadway, England in 1993
+he proposed ‘recoherence’ based on a symmetrisation procedure (for details
+see [39]). The basic idea is as follows. Suppose we have a quantum system,
+we prepare it in some initial state | Ψi i and we want to implement a prescribed
+unitary evolution | Ψ(t)i or just preserve | Ψi i for some period of time t. Now,
+suppose that instead of a single system we can prepare R copies of | Ψi i and
+subsequently we can project the state of the combined system into the symmet-
+ric subspace i.e. the subspace containing all states which are invariant under
+any permutation of the sub-systems. The claim is that frequent projections
+into the symmetric subspace will reduce errors induced by the environment.
+
+
+                                           31
+The intuition behind this concept is based on the observation that a prescribed
+error-free storage or evolution of the R independent copies starts in the sym-
+metric sub-space and should remain in that sub-space. Therefore, since the
+error-free component of any state always lies in the symmetric subspace, upon
+successful projection it will be unchanged and part of the error will have been
+removed. Note however that the projected state is generally not error–free since
+the symmetric subspace contains states which are not of the simple product
+form | Ψi | Ψi . . . | Ψi. Nevertheless it has been shown that the error probability
+will be suppressed by a factor of 1/R [39].
+    More recently projections on symmetric subspaces were replaced by more
+complicated projections on carefully selected subspaces. These projections, pro-
+posed by Shor [40], Calderbank and Shor [41], Steane [42] and others [43, 44, 45,
+46, 47], are constructed on the basis of classical error-correcting methods but
+represent intrinsically new quantum error-correction and stabilisation schemes;
+they are the subject of much current study.
+    Let us illustrate the main idea of recoherence by describing a simple method
+for protecting an unknown state of a single qubit in a noisy quantum register.
+Consider the following scenario: we want to store in a computer memory one
+qubit in an unknown quantum state of the form | φi = α | 0i+β | 1i and we know
+that any single qubit which is stored in a register undergoes a decoherence type
+entanglement with an environment described by Eq.(104). To see how the state
+of the qubit is affected by the environment, we calculate the fidelity of the
+decohered state at time t with respect to the initial state | φi
+                                F (t) = hφ | ρ(t) | φi ,                      (111)
+where ρ(t) is given by Eq. (105). It follows that
+                F (t) = |α|4 + |β|4 + 2|α|2 |β|2 Re[hm0 (t) | m1 (t)i] .      (112)
+    The expression above depends on the initial state | φi and clearly indicates
+that some states are more vulnerable to decoherence than others. In order to
+get rid of this dependence we consider the average fidelity, calculated under the
+assumption that any initial state | φi is equally probable. Taking into account
+the normalisation constraint the average fidelity is given by
+                        Z 1
+                                          1
+               F̄ (t) =     F (t) d |α|2 = (2 + Re[hm0 (t) | m1 (t)i]) .    (113)
+                         0                3
+If we assume an exponential-type decoherence, where hm0 (t) | m1 (t)i = e−γt ,
+the average fidelity takes the simple form
+                                           1
+                                F̄ (t) =     (2 + e−γt ) .                    (114)
+                                           3
+In particular, for times much shorter than the decoherence time td = 1/γ, the
+above fidelity can be approximated as
+                                        1
+                            F̄ (t) ≃ 1 − γt + O(γ 2 t2 ) .                    (115)
+                                        3
+
+                                            32
+   Let us now show how to improve the average fidelity by quantum encoding.
+Before we place the qubit in the memory register we encode it: we can add two
+qubits, initially both in state | 0i, to the original qubit and then perform an
+encoding unitary transformation
+
+                | 000i 7→ | 0̄0̄0̄i = (| 0i + | 1i)(| 0i + | 1i)(| 0i + | 1i),               (116)
+                | 100i 7→ | 1̄1̄1̄i = (| 0i − | 1i)(| 0i − | 1i)(| 0i − | 1i),               (117)
+
+generating state α | 0̄0̄0̄i + β | 1̄1̄1̄i, where | 0̄i = | 0i + | 1i and | 1̄i = | 0i − | 1i.
+Now, suppose that only the second stored qubit was affected by decoherence
+and became entangled with the environment:
+
+                       α(| 0i + | 1i)(| 0i | m0 i + | 1i | m1 i)(| 0i + | 1i) +
+                       β(| 0i − | 1i)(| 0i | m0 i − | 1i | m1 i)(| 0i − | 1i),               (118)
+
+which can also be written as
+
+  (α | 0̄0̄0̄i + β | 1̄1̄1̄i)(| m0 i + | m1 i) + (α | 0̄1̄0̄i + β | 1̄0̄1̄i)(| m0 i − | m1 i). (119)
+
+   The decoding unitary transformation can be constructed using a couple of
+quantum controlled-NOT gates and the Toffoli gate, thus completing the error-
+correcting network:
+
+    α | 0i + β | 1i                                                           α | 0i + β | 1i
+              ❄t t H                 Encoded State                  H     t t ❤         ✻
+
+       | 0i     ❤      H            α | 0̄0̄0̄i + β | 1̄1̄1̄i       H     ❤       t      | x1 i
+
+       | 0i         ❤ H                                             H         ❤ t        | x2 i
+
+              ENCODING DECOHERENCE AREA                               DECODING
+
+
+    Careful inspection of the network shows that any single phase-flip | 0̄i ↔ | 1̄i
+will be corrected and the environment will be effectively disentangled from the
+qubits. In our particular case we obtain
+
+              (α | 0i + β | 1i) [| 00i (| m0 i + | m1 i) + | 10i (| m0 i − | m1 i)].         (120)
+
+The two auxiliary outputs carry information about the error syndrome - 00
+means no error, 01 means the phase-flip occurred in the third qubit, 10 means
+the phase-flip in the second qubit and 11 signals the phase flip in the first qubit.
+    Thus if only one qubit in the encoded triplet decoheres we can recover the
+original state perfectly. In reality all three qubits decohere simultaneously and,
+as the result, only partial recovery of the original state is possible. In this
+case lengthy but straightforward calculations show that the average fidelity of
+
+
+                                                 33
+the reconstructed state after the decoding operation for an exponential-type
+decoherence is
+                                   1
+                        F̄ec (t) = [4 + 3e−γt − e−3γt ] .              (121)
+                                   6
+For short times this can be written as
+                                      1
+                        F̄ec (t) ≃ 1 − γ 2 t2 + O(γ 3 t3 ).            (122)
+                                      2
+Comparing Eq. (114) with Eq. (121), we can easily see that for all times t,
+                                 F̄ec (t) ≥ F̄ (t).                         (123)
+   This is the essence of recoherence via encoding and decoding. There is much
+more to say (and write) about quantum codes and the reader should be warned
+that we have barely scratched the surface of the current activities in quantum
+error correction, neglecting topics such as group theoretical ways of constructing
+good quantum codes [45, 46], concatenated codes [47], quantum fault tolerant
+computation [48] and many others.
+
+
+12     Concluding remarks
+Research in quantum computation and in its all possible variations has become
+vigorously active and any comprehensive review of the field must be obsolete
+as soon as it is written. Here we have decided to provide only some very basic
+knowledge, hoping that this will serve as a good starting point to enter the field.
+Many interesting papers in these and many related areas can be found at the Los
+Alamos National Laboratory e-print archive (http://xxx.lanl.gov/archive/quant-
+ph) and on the web site of the Center for Quantum Computation (www.qubit.org).
+
+
+13     Acknowledgments
+This work was supported in part by the European TMR Research Network ERP-
+4061PL95-1412, The Royal Society London, and Elsag plc. PH acknowledges
+the support of the Rhodes Trust.
+
+
+References
+ [1] The term was coined by B. Schumacher. See, for example, Phys. Rev. A 51
+     2738 (1995).
+ [2] D. Deutsch, Proc. R. Soc. Lond. A 425 73 (1989).
+ [3] W. K. Wootters and W. H. Zurek, Nature 299 802 (1982).
+ [4] A. Barenco, C. H. Bennett, R. Cleve, D. P. DiVincenzo, N. Margolus,
+     P. W. Shor, T. Sleator, J. Smolin and H.Weinfurter, Phys. Rev. A 52 3457
+     (1995).
+
+                                        34
+ [5] D. Deutsch, A. Barenco and A. Ekert, Proc. R. Soc. Lond. A 449 669
+     (1995).
+ [6] A. Barenco, D. Deutsch, A. Ekert and R. Jozsa, Phys. Rev. Lett. 74 4083
+     (1995).
+ [7] D. P. DiVincenzo, Phys. Rev. A 51 1015 (1995).
+ [8] S. Lloyd Phys. Rev. Lett. 75 346 (1995).
+ [9] G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers
+     (Oxford University Press, Oxford, 1979).
+[10] T. Toffoli, Mathematical Systems Theory 14 13 (1981).
+[11] C. H. Papadimitriou, Computational Complexity (Addison-Wesley, 1994).
+[12] D. Coppersmith, IBM Research report (1994).
+[13] R. Solovay and V. Strassen SIAM J. Comp. 6 84 (1977).
+[14] R. Motwani and P. Raghavan, Randomised Algorithms (Cambridge Uni-
+     versity Press, 1995).
+[15] P. W. Shor, “Algorithms for quantum computation: Discrete logarithms
+     and factoring” Proc. 35th Annual Symposium on the Foundations of Com-
+     puter Science, p. 124 Edited by S. Goldwasser (IEEE Computer Society
+     Press, Los Alamitos, CA 1994). Expanded version of this paper is available
+     at LANL quant-ph archive.
+
+[16] R. P. Feynman, International Journal of Theoretical Physics 21 467 (1982).
+[17] R. Cleve, A. Ekert, C. Macchiavello and M. Mosca, Proc. R. Soc. Lond. A
+     454 339 (1998).
+[18] D. Deutsch, Proc. R. Soc. Lond. A 400 97 (1985).
+[19] L. K. Grover, “A fast quantum mechanical algorithm for database
+     search”, Proc. 28th Annual ACM Symposium on the Theory of Comput-
+     ing (STOC’96) p. 212 (ACM, Philadelphia, Pennsylvania, 1996).
+[20] M. Boyer, G. Brassard, P. Hoyer, A. Tapp, Proc. of the Workshop on
+     Physics and Computation (PhysComp96) 36 (1996).
+[21] T. Hogg, Physica D120 102 (1998).
+[22] C. Zalka, Physical Review A60 2746 (1999).
+[23] A. Y. Kitaev, LANL quant-ph archive, quant-ph/9511026 (1995).
+[24] V. Vedral, A. Barenco and A. Ekert, Phys. Rev. A 54 147 (1996).
+
+
+
+                                      35
+[25] D. Beckman, A. Chari, S. Devabhaktuni and J. Preskill, Phys. Rev. A 54
+     1034 (1996).
+[26] A. Ekert and R. Jozsa, Rev. Mod. Phys. 68 733 (1996).
+[27] D. Kahn, The Codebreakers: The Story of Secret Writing, (Macmillan, New
+     York,1967).
+[28] D. Stinson, Cryptography: Theory and Practice (CRC Press, 1995).
+[29] G. S. Vernam, J. AIEE 45 109 (1926).
+[30] C. E. Shannon, Bell Syst. Tech. J. 28 657 (1949).
+[31] W. Diffie and M. E. Hellman, IEEE Transactions on Information Theory
+     22 644 (1976).
+[32] R. L. Rivest, A. Shamir and L. M. Adleman, Communication of the ACM
+     21 120 (1978).
+[33] J. H. Ellis, Tech. report Communications-Electronics Security Group,
+     United Kingdom (1970).
+[34] C. Cocks, Tech. report Communications-Electronics Security Group,
+     United Kingdom (1973).
+[35] S. Wiesner, Sigact News 15, 78 (1983).
+[36] C. H. Bennett and G. Brassard, Proc. IEEE Int. Conference on Computers,
+     Systems and Signal Processing (IEEE, New York, 1984).
+[37] A. Ekert, Phys. Rev. Lett. 67, 661 (1991).
+[38] W. H. Zurek, Phys. Today 44 October p.36 (1991).
+[39] A. Berthiaume, D. Deutsch and R. Jozsa, Proceedings of the Workshop on
+     the Physics and Computation—PhysComp ’94, IEEE Computer Society
+     Press, Dallas, Texas (1994); A. Barenco, A. Berthiaume, D. Deutsch, A.
+     Ekert, R. Jozsa and C. Macchiavello, SIAM J. Comput. 26, 1541 (1997).
+[40] P. W. Shor, Phys. Rev. A 52, R2493 (1995).
+[41] R. Calderbank and P. W. Shor, Phys. Rev. A 54, 1098 (1996).
+[42] A. Steane, Phys. Rev. Lett. 77, 793 (1996); A. Steane, Proc. R. Soc. Lond.
+     A 452, 2551 (1996).
+[43] A. Ekert and C. Macchiavello, Phys. Rev. Lett. 77, 2585 (1996).
+[44] R. Laflamme, C. Miquel, J.P. Paz and W.H. Zurek, Phys. Rev. Lett. 77,
+     198 (1996).
+[45] D. Gottesman, Phys. Rev. A 54, 1862 (1996).
+
+                                      36
+[46] A.R. Calderbank, E.M. Rains, P.W. Shor and N.J.A. Sloane, Phys. Rev.
+     Lett. 78, 405 (1997).
+[47] E. Knill and R. Laflamme, e-print quant-ph/9608012 (1996).
+[48] P.W. Shor, e-print quant-ph/9605011 (1996); D.P. DiVincenzo and P.W.
+     Shor, Phys. Rev. Lett. 77, 3260 (1996).
+[49] R.Solovay, “Lie groups and quantum circuits”, preprint 1999.
+
+
+
+
+                                     37
+

@@ -1,0 +1,128 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{BGG{\etalchar{+}}20}
+
+\bibitem[Ber08]{Ber-smallheight}
+D.~J. Bernstein, \emph{Reducing lattice bases to find small-height values of
+  univariate polynomials}, Algorithmic number theory: lattices, number fields,
+  curves and cryptography, Math. Sci. Res. Inst. Publ., vol.~44, Cambridge
+  Univ. Press, Cambridge, 2008, pp.~421--446. \MR{2467553}
+
+\bibitem[BGG{\etalchar{+}}20]{BGGHTZ-RSA250}
+F.~Boudot, P.~Gaudry, A.~Guillevic, N.~Heninger, E.~Thomé, and P.~Zimmermann,
+  \emph{Comparing the difficulty of factorization and discrete logarithm: a
+  240-digit experiment}, Cryptology ePrint Archive, Report 2020/697, 2020,
+  \url{https://eprint.iacr.org/2020/697}.
+
+\bibitem[BGS07]{BGS-recurrences}
+A.~Bostan, P.~Gaudry, and {\'E}.~Schost, \emph{Linear recurrences with
+  polynomial coefficients and application to integer factorization and
+  {C}artier-{M}anin operator}, SIAM J. Comput. \textbf{36} (2007), no.~6,
+  1777--1806. \MR{2299425 (2008a:11156)}
+
+\bibitem[Blu70]{Blu-dft}
+L.~I. Bluestein, \emph{A linear filtering approach to the computation of
+  discrete {F}ourier transform}, IEEE Transactions on Audio and
+  Electroacoustics \textbf{18} (1970), no.~4, 451--455.
+
+\bibitem[BZ11]{BZ-mca}
+R.~P. Brent and P.~Zimmermann, \emph{Modern computer arithmetic}, Cambridge
+  Monographs on Applied and Computational Mathematics, vol.~18, Cambridge
+  University Press, Cambridge, 2011. \MR{2760886}
+
+\bibitem[CH14]{CH-factor}
+E.~Costa and D.~Harvey, \emph{Faster deterministic integer factorization},
+  Math. Comp. \textbf{83} (2014), no.~285, 339--345. \MR{3120593}
+
+\bibitem[Cop97]{Cop-lowexponent}
+D.~Coppersmith, \emph{Small solutions to polynomial equations, and low exponent
+  {RSA} vulnerabilities}, J. Cryptology \textbf{10} (1997), no.~4, 233--260.
+  \MR{1476612}
+
+\bibitem[CP05]{CP-primes}
+R.~Crandall and C.~Pomerance, \emph{Prime numbers}, second ed., Springer, New
+  York, 2005, A computational perspective. \MR{2156291 (2006a:11005)}
+
+\bibitem[Hit18]{Hit-BSGS}
+M.~Hittmeir, \emph{A babystep-giantstep method for faster deterministic integer
+  factorization}, Math. Comp. \textbf{87} (2018), no.~314, 2915--2935.
+  \MR{3834692}
+
+\bibitem[Hit20]{Hit-timespace}
+\bysame, \emph{A time-space tradeoff for {L}ehman's deterministic integer
+  factorization method}, arXiv preprint
+  \url{http://arxiv.org/abs/2006.16729v1}, 2020.
+
+\bibitem[HvdH18]{HvdH-zmatmult}
+D.~Harvey and J.~van~der Hoeven, \emph{On the complexity of integer matrix
+  multiplication}, J. Symbolic Comput. \textbf{89} (2018), 1--8. \MR{3804803}
+
+\bibitem[HvdH19]{HvdH-nlogn}
+\bysame, \emph{Integer multiplication in time {$O(n \log n)$}}, HAL preprint
+  \url{http://hal.archives-ouvertes.fr/hal-02070778}, 2019.
+
+\bibitem[HW08]{HW-intro-NT}
+G.~H. Hardy and E.~M. Wright, \emph{An introduction to the theory of numbers},
+  sixth ed., Oxford University Press, Oxford, 2008, Revised by D. R.
+  Heath-Brown and J. H. Silverman, With a foreword by Andrew Wiles.
+  \MR{2445243}
+
+\bibitem[Knu98]{Knu-TAOCP3}
+D.~E. Knuth, \emph{The art of computer programming. {V}ol. 3}, Addison-Wesley,
+  Reading, MA, 1998, Sorting and searching, Second edition [of MR0445948].
+  \MR{3077154}
+
+\bibitem[Leh74]{Leh-factoring}
+R.~S. Lehman, \emph{Factoring large integers}, Math. Comp. \textbf{28} (1974),
+  637--646. \MR{340163}
+
+\bibitem[LP92]{LP-rigorous}
+H.~W. Lenstra, Jr. and C.~Pomerance, \emph{A rigorous time bound for factoring
+  integers}, J. Amer. Math. Soc. \textbf{5} (1992), no.~3, 483--516.
+  \MR{1137100}
+
+\bibitem[MP96]{MP-oldandnew}
+J.~McKee and R.~Pinch, \emph{Old and new deterministic factoring algorithms},
+  Algorithmic number theory ({T}alence, 1996), Lecture Notes in Comput. Sci.,
+  vol. 1122, Springer, Berlin, 1996, pp.~217--224. \MR{1446514}
+
+\bibitem[Pap94]{Pap-complexity}
+C.~H. Papadimitriou, \emph{Computational complexity}, Addison-Wesley Publishing
+  Company, Reading, MA, 1994. \MR{1251285 (95f:68082)}
+
+\bibitem[Pol74]{Pol-factorization}
+J.~M. Pollard, \emph{Theorems on factorization and primality testing}, Proc.
+  Cambridge Philos. Soc. \textbf{76} (1974), 521--528. \MR{0354514 (50 \#6992)}
+
+\bibitem[Pol78]{Pol-montecarlo}
+\bysame, \emph{Monte {C}arlo methods for index computation {$({\rm mod}\ p)$}},
+  Math. Comp. \textbf{32} (1978), no.~143, 918--924. \MR{491431}
+
+\bibitem[Sha71]{Sha-classnumber}
+D.~Shanks, \emph{Class number, a theory of factorization, and genera}, 1969
+  {N}umber {T}heory {I}nstitute ({P}roc. {S}ympos. {P}ure {M}ath., {V}ol. {XX},
+  {S}tate {U}niv. {N}ew {Y}ork, {S}tony {B}rook, {N}.{Y}., 1969), 1971,
+  pp.~415--440. \MR{0316385}
+
+\bibitem[Sho94]{Sho-factoring}
+P.~W. Shor, \emph{Algorithms for quantum computation: discrete logarithms and
+  factoring}, 35th {A}nnual {S}ymposium on {F}oundations of {C}omputer
+  {S}cience ({S}anta {F}e, {NM}, 1994), IEEE Comput. Soc. Press, Los Alamitos,
+  CA, 1994, pp.~124--134. \MR{1489242}
+
+\bibitem[Str77]{Str-factoring}
+V.~Strassen, \emph{Einige {R}esultate \"uber {B}erechnungskomplexit\"at}, Jber.
+  Deutsch. Math.-Verein. \textbf{78} (1976/77), no.~1, 1--8. \MR{0438807 (55
+  \#11713)}
+
+\bibitem[vzGG13]{vzGG-compalg3}
+J.~von~zur Gathen and J.~Gerhard, \emph{Modern computer algebra}, 3rd ed.,
+  Cambridge University Press, Cambridge, 2013. \MR{3087522}
+
+\end{thebibliography}

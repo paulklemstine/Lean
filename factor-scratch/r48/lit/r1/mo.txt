@@ -1,0 +1,398 @@
+Title: best deterministic complexity for factoring polynomials over finite field
+
+URL Source: https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field
+
+Markdown Content:
+# ![Image 1: site logo](https://stackoverflow.com/Content/Img/SE-logo75.png)**Join MathOverflow**
+
+By clicking “Sign up”, you agree to our [terms of service](https://mathoverflow.net/legal/terms-of-service/public) and acknowledge you have read our [privacy policy](https://mathoverflow.net/legal/privacy-policy).
+
+ Sign up with Google
+
+# OR
+
+Email 
+
+Password 
+
+Sign up
+
+Already have an account? [Log in](https://mathoverflow.net/users/login)
+
+[Skip to main content](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field#content)
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field#)[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field#)
+
+#### 184 communities for the curious
+
+**MathOverflow** is part of Stack Overflow’s open communities: specialist spaces where curiosity is welcome, knowledge is shared freely, and the best answers rise to the top.
+
+[Find your community](https://stackexchange.com/)
+
+Loading…
+
+1.   [](https://mathoverflow.net/help)Help Center and other resources  
+
+    *   [Tour Start here for a quick overview of the site](https://mathoverflow.net/tour)
+    *   [Help Center Detailed answers to any questions you might have](https://mathoverflow.net/help)
+    *   [Meta Discuss the workings and policies of this site](https://meta.mathoverflow.net/)
+    *   [About Us Learn more about Stack Overflow the company, and our products](https://stackoverflow.co/)
+
+2.   [](https://stackexchange.com/)A list of all 184 Stack Overflow communities  
+3.   
+### [current community](https://mathoverflow.net/)
+
+   
+
+    *   [MathOverflow MathOverflow](https://mathoverflow.net/) [help](https://mathoverflow.net/help)[chat](https://chat.stackexchange.com/?tab=site&host=mathoverflow.net) 
+    *    [MathOverflow Meta MathOverflow Meta](https://meta.mathoverflow.net/)
+
+### your communities
+
+[Sign up](https://mathoverflow.net/users/signup?ssrc=site_switcher&returnurl=https%3a%2f%2fmathoverflow.net%2fquestions%2f60847%2fbest-deterministic-complexity-for-factoring-polynomials-over-finite-field) or [log in](https://mathoverflow.net/users/login?ssrc=site_switcher&returnurl=https%3a%2f%2fmathoverflow.net%2fquestions%2f60847%2fbest-deterministic-complexity-for-factoring-polynomials-over-finite-field) to customize your list. 
+
+### [More communities](https://stackexchange.com/sites)
+
+[company blog](https://stackoverflow.blog/)
+
+4.   Click to show search  
+5.   [Log in](https://mathoverflow.net/users/login?ssrc=head&returnurl=https%3a%2f%2fmathoverflow.net%2fquestions%2f60847%2fbest-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+6.   [Sign up](https://mathoverflow.net/users/signup?ssrc=head&returnurl=https%3a%2f%2fmathoverflow.net%2fquestions%2f60847%2fbest-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+[![Image 2: MathOverflow](https://mathoverflow.net/Content/Sites/mathoverflow/Img/logo.svg?v=3a674b060adf)](https://mathoverflow.net/)
+
+1.       1.   [Home](https://mathoverflow.net/)
+    2.   [Questions](https://mathoverflow.net/questions)
+    3.   [Unanswered](https://mathoverflow.net/unanswered)
+    4.   [AI Assist](https://stackoverflow.com/ai-assist)
+    5.   [Tags](https://mathoverflow.net/tags)
+
+    7.   [Chat](https://chat.stackexchange.com/)
+    8.   [Users](https://mathoverflow.net/users)
+
+# [best deterministic complexity for factoring polynomials over finite field](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+[Ask Question](https://mathoverflow.net/questions/ask)
+
+Asked 15 years, 6 months ago
+
+Modified[9 years, 11 months ago](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field?lastactivity "2016-10-18 11:04:25Z")
+
+Viewed 1k times 
+
+This question shows research effort; it is useful and clear
+
+ 1 
+
+This question does not show any research effort; it is unclear or not useful
+
+Save this question.
+
+[](https://mathoverflow.net/posts/60847/timeline)
+
+Show activity on this post.
+
+I would like to know currently what's the best deterministic complexity for factoring polynomials over finite field (without the assumption of GRH)? I have searched on google, there are many source, but I can't find an explicit result. Some of them are only for some special cases. Some of them are used the assumption of GRH.
+
+*   [computational-complexity](https://mathoverflow.net/questions/tagged/computational-complexity "show questions tagged 'computational-complexity'")
+*   [computer-science](https://mathoverflow.net/questions/tagged/computer-science "show questions tagged 'computer-science'")
+*   [finite-fields](https://mathoverflow.net/questions/tagged/finite-fields "show questions tagged 'finite-fields'")
+*   [polynomials](https://mathoverflow.net/questions/tagged/polynomials "show questions tagged 'polynomials'")
+
+[Share](https://mathoverflow.net/q/60847)
+
+Short permalink to this question
+
+Cite
+
+[Improve this question](https://mathoverflow.net/posts/60847/edit)
+
+ Follow 
+
+Follow this question to receive notifications
+
+ asked Apr 6, 2011 at 19:42
+
+[![Image 3: user565739's user avatar](https://www.gravatar.com/avatar/2e66400576d7d2ad2f243068d08eb5d3?s=64&d=identicon&r=PG)](https://mathoverflow.net/users/5482/user565739)
+
+[user565739](https://mathoverflow.net/users/5482/user565739)
+
+1,129 9 9 silver badges 25 25 bronze badges
+
+1
+
+*   3  The trouble is that different algorithms have different complexities in different situations. The situation changes drastically from polynomials of large degree over small finite fields (where Berlekamp's algorithm is polynomial time) to quadratic polynomials over large prime fields (where deteministically you are stuck with dumb potentially exponential time algorithms). Felipe Voloch  –[Felipe Voloch](https://mathoverflow.net/users/2290/felipe-voloch "31,026 reputation") 2011-04-07 00:02:25 +00:00 Commented Apr 7, 2011 at 0:02  
+
+[Add a comment](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.")|[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Expand to show all comments on this post")
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+## 3 Answers 3
+
+ Sorted by:  [Reset to default](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field?answertab=scoredesc#tab-top)
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+This answer is useful
+
+ 3 
+
+This answer is not useful
+
+Save this answer.
+
+Loading when this answer was accepted…
+
+[](https://mathoverflow.net/posts/60889/timeline)
+
+Show activity on this post.
+
+First, let me echo Felipe Voloch's comment and the answer by (the other) unknown (google). Having done that, here are a few recent papers that might be of interest.
+
+Mullin, Ronald C.; Yucas, Joseph L.; Mullen, Gary L., A generalized counting and factoring method for polynomials over finite fields. J. Combin. Math. Combin. Comput. 72 (2010), 121–143. No review yet, so I don't know what's in there.
+
+You don't say how many variables your polynomials have. If it's two, then the review of MR2537701 (2010d:12001) Belabas, Karim; van Hoeij, Mark; Klüners, Jürgen; Steel, Allan, Factoring polynomials over global fields. J. Théor. Nombres Bordeaux 21 (2009), no. 1, 15–39 by R. A. Mollin says, "They also provide polynomial time complexity results for bivariate polynomials over a finite field."
+
+I was going to mention MR2582906 (2011c:68221) Umans, Christopher, Fast polynomial factorization and modular composition in small characteristic. STOC'08, 481–490, ACM, New York, 2008, but then I noticed the summary says "We obtain randomized algorithms for factoring degree n$n$ univariate polynomials over F q$F_{q}$ that use O(n 1.5+o(1)+n 1+o(1)log q)$O \left(\right. n^{1.5 + o \left(\right. 1 \left.\right)} + n^{1 + o \left(\right. 1 \left.\right)} log ⁡ q \left.\right)$ field operations, when the characteristic is at most n o(1)$n^{o \left(\right. 1 \left.\right)}$," and you don't want randomized algorithms, right?
+
+MR2284290 (2007m:68318) Genovese, Giulio, Improving the algorithms of Berlekamp and Niederreiter for factoring polynomials over finite fields. J. Symbolic Comput. 42 (2007), no. 1-2, 159–177 claims "to accelerate deterministic algorithms for the factorization of polynomials over finite fields."
+
+[Share](https://mathoverflow.net/a/60889)
+
+Short permalink to this answer
+
+Cite
+
+[Improve this answer](https://mathoverflow.net/posts/60889/edit)
+
+ Follow 
+
+Follow this answer to receive notifications
+
+ answered Apr 7, 2011 at 5:49
+
+[![Image 4: Gerry Myerson's user avatar](https://www.gravatar.com/avatar/6073eed709acded7ca570cd86c80cd93?s=64&d=identicon&r=PG)](https://mathoverflow.net/users/3684/gerry-myerson)
+
+[Gerry Myerson](https://mathoverflow.net/users/3684/gerry-myerson)
+
+41.5k 10 10 gold badges 197 197 silver badges 264 264 bronze badges
+
+[Add a comment](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.")|[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Expand to show all comments on this post")
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+This answer is useful
+
+ 4 
+
+This answer is not useful
+
+Save this answer.
+
+Loading when this answer was accepted…
+
+[](https://mathoverflow.net/posts/60860/timeline)
+
+Show activity on this post.
+
+A deterministic algorithm of Shoup factors univariate polynomials of degree n$n$ over Z/p Z$Z / p Z$ in time (worst case)
+
+O(p 1/2 n 2+ε(log p)2)
+
+$$
+O \left(\right. p^{1 / 2} n^{2 + \epsilon} \left(\right. log ⁡ p \left.\right)^{2} \left.\right)
+$$
+
+[On the deterministic complexity of factoring polynomials over finite fields, Information Processing Letters 33:261-267, 1990](http://www.shoup.net/papers/detfac.pdf)
+
+Regarding 'best known' I cannot say anything; but since you said you had no explicit result I thought it might still be useful information.
+
+[Share](https://mathoverflow.net/a/60860)
+
+Short permalink to this answer
+
+Cite
+
+[Improve this answer](https://mathoverflow.net/posts/60860/edit)
+
+ Follow 
+
+Follow this answer to receive notifications
+
+ answered Apr 6, 2011 at 23:57
+
+ user9072
+
+[Add a comment](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.")|[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Expand to show all comments on this post")
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field)
+
+This answer is useful
+
+ 2 
+
+This answer is not useful
+
+Save this answer.
+
+Loading when this answer was accepted…
+
+[](https://mathoverflow.net/posts/252432/timeline)
+
+Show activity on this post.
+
+Check the recent paper by Bourgain, Konyagin and Shparlinski: [CHARACTER SUMS AND DETERMINISTIC POLYNOMIAL ROOT FINDING IN FINITE FIELDS](https://arxiv.org/pdf/1308.4803.pdf)
+
+[Share](https://mathoverflow.net/a/252432)
+
+Short permalink to this answer
+
+Cite
+
+[Improve this answer](https://mathoverflow.net/posts/252432/edit)
+
+ Follow 
+
+Follow this answer to receive notifications
+
+ answered Oct 18, 2016 at 11:04
+
+[![Image 5: Zeyu's user avatar](https://www.gravatar.com/avatar/258f718433cdad0b89c6b3325d8071c6?s=64&d=identicon&r=PG)](https://mathoverflow.net/users/4162/zeyu)
+
+[Zeyu](https://mathoverflow.net/users/4162/zeyu)
+
+537 4 4 silver badges 15 15 bronze badges
+
+1
+
+*     Nice reference (though only does a special case...)Igor Rivin  –[Igor Rivin](https://mathoverflow.net/users/11142/igor-rivin "98,365 reputation") 2016-10-18 12:28:49 +00:00 Commented Oct 18, 2016 at 12:28  
+
+[Add a comment](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.")|[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field# "Expand to show all comments on this post")
+
+## You must [log in](https://mathoverflow.net/users/login?ssrc=question_page&returnurl=https%3a%2f%2fmathoverflow.net%2fquestions%2f60847) to answer this question.
+
+Start asking to get answers
+
+Find the answer to your question by asking.
+
+[Ask question](https://mathoverflow.net/questions/ask)
+
+Explore related questions
+
+*   [computational-complexity](https://mathoverflow.net/questions/tagged/computational-complexity "show questions tagged 'computational-complexity'")
+*   [computer-science](https://mathoverflow.net/questions/tagged/computer-science "show questions tagged 'computer-science'")
+*   [finite-fields](https://mathoverflow.net/questions/tagged/finite-fields "show questions tagged 'finite-fields'")
+*   [polynomials](https://mathoverflow.net/questions/tagged/polynomials "show questions tagged 'polynomials'")
+
+See similar questions with these tags.
+
+*    Featured on Meta 
+*     [Free (votes) for all (that want them)](https://meta.stackexchange.com/questions/419716/free-votes-for-all-that-want-them) 
+*     [Moderation of blog-style / discussion questions](https://meta.mathoverflow.net/questions/6561/moderation-of-blog-style-discussion-questions) 
+
+### Related
+
+[15](https://mathoverflow.net/questions/6194/how-to-compute-the-rank-of-a-matrix "Question score (upvotes - downvotes)")[How to compute the rank of a matrix?](https://mathoverflow.net/questions/6194/how-to-compute-the-rank-of-a-matrix)
+
+[10](https://mathoverflow.net/questions/162828/fast-checking-that-overdetermined-polynomial-system-does-not-have-a-solution "Question score (upvotes - downvotes)")[Fast checking that overdetermined polynomial system does not have a solution](https://mathoverflow.net/questions/162828/fast-checking-that-overdetermined-polynomial-system-does-not-have-a-solution)
+
+[7](https://mathoverflow.net/questions/182168/modular-polynomials-for-elliptic-curves-point-counting "Question score (upvotes - downvotes)")[Modular polynomials for elliptic curves point counting](https://mathoverflow.net/questions/182168/modular-polynomials-for-elliptic-curves-point-counting)
+
+[3](https://mathoverflow.net/questions/288577/on-generating-squarefree-integers-and-primes "Question score (upvotes - downvotes)")[On generating squarefree integers and primes?](https://mathoverflow.net/questions/288577/on-generating-squarefree-integers-and-primes)
+
+[3](https://mathoverflow.net/questions/471255/on-a-efficient-algorithm-for-factoring-bivariate-polynomials-modulo-composite-mo "Question score (upvotes - downvotes)")[On a efficient algorithm for factoring bivariate polynomials modulo composite modulus assuming the solution is unique](https://mathoverflow.net/questions/471255/on-a-efficient-algorithm-for-factoring-bivariate-polynomials-modulo-composite-mo)
+
+[Question feed](https://mathoverflow.net/feeds/question/60847 "Feed of this question and its answers")
+
+# Subscribe to RSS
+
+ Question feed 
+To subscribe to this RSS feed, copy and paste this URL into your RSS reader.
+
+ 
+
+[](https://mathoverflow.net/questions/60847/best-deterministic-complexity-for-factoring-polynomials-over-finite-field#)
+
+# Why are you flagging this comment?
+
+It contains harassment, bigotry or abuse. 
+This comment attacks a person or group. Learn more in our [Abusive behavior policy](https://mathoverflow.net/conduct/abusive-behavior).
+
+ 
+
+It's unfriendly or unkind. 
+This comment is rude or condescending. Learn more in our [Code of Conduct](https://mathoverflow.net/conduct/abusive-behavior).
+
+ 
+
+Not needed. 
+This comment is not relevant to the post.
+
+ 
+
+  
+
+Enter at least 6 characters
+
+Something else. 
+A problem not listed above. Try to be as specific as possible.
+
+ 
+
+  
+
+Enter at least 6 characters
+
+Flag comment Cancel
+
+You have 0 flags left today
+
+##### [Business](https://stackoverflow.co/)
+
+*   [Stack Internal](https://stackoverflow.co/internal/?utm_medium=referral&utm_source=stackoverflow-community&utm_content=footer)
+
+##### [MathOverflow](https://mathoverflow.net/)
+
+*   [Tour](https://mathoverflow.net/tour)
+*   [Help](https://mathoverflow.net/help)
+*   [Chat](https://chat.stackexchange.com/?tab=site&host=mathoverflow.net)
+*   [Contact](https://mathoverflow.net/contact)
+*   [Feedback](https://meta.mathoverflow.net/)
+
+##### [Company](https://stackoverflow.co/)
+
+*   [Stack Overflow](https://stackoverflow.com/)
+*   [Stack Data Licensing](https://stackoverflow.co/data-licensing/)
+*   [Stack Ads](https://stackoverflow.co/advertising/)
+*   [About](https://stackoverflow.co/)
+*   [Press](https://stackoverflow.co/company/press/)
+*   [Legal](https://stackoverflow.com/legal)
+*   [Privacy Policy](https://stackoverflow.com/legal/privacy-policy)
+*   [Terms of Service](https://stackoverflow.com/legal/terms-of-service/public)
+*    Your Privacy Choices 
+*   [Cookie Policy](https://policies.stackoverflow.co/stack-overflow/cookie-policy)
+
+##### [Stack Overflow’s open communities](https://stackexchange.com/)
+
+*   [Technology](https://stackexchange.com/sites#technology)
+*   [Culture & recreation](https://stackexchange.com/sites#culturerecreation)
+*   [Life & arts](https://stackexchange.com/sites#lifearts)
+*   [Science](https://stackexchange.com/sites#science)
+*   [Professional](https://stackexchange.com/sites#professional)
+*   [Business](https://stackexchange.com/sites#business)
+*   [API](https://api.stackexchange.com/)
+*   [Data](https://data.stackexchange.com/)
+
+*   [Blog](https://stackoverflow.blog/?blb=1)
+*   [Facebook](https://www.facebook.com/officialstackoverflow/)
+*   [Twitter](https://twitter.com/stackoverflow)
+*   [LinkedIn](https://linkedin.com/company/stack-overflow)
+*   [Instagram](https://www.instagram.com/thestackoverflow)
+
+Site design / logo © 2026 Stack Exchange Inc; user contributions licensed under [CC BY-SA](https://stackoverflow.com/help/licensing). rev 2026.10.2.46193
+
+By continuing to use this website, you agree Stack Exchange can store cookies on your device and disclose information in accordance with our [Cookie Policy](https://policies.stackoverflow.co/stack-overflow/cookie-policy/). By exiting this window, default cookies will be accepted. To reject cookies, select an option from below.
+
+Necessary cookies only
+
+Customize settings

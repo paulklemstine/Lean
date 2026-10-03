@@ -1,0 +1,1930 @@
+INTEGER FACTORIZATION VIA CONTINUED FRACTIONS
+AND QUADRATIC FORMS
+
+arXiv:2409.03486v2 [math.NT] 20 Jan 2025
+
+NADIR MURRU AND GIULIA SALVATORI
+Abstract. We propose a novel factorization algorithm that leverages the theory
+underlying the SQUFOF method, including reduced quadratic forms, infrastructural distance, and Gauss composition. We also
+our method,
+ present
+ √an analysis of
+which has a computational complexity of O exp √38 ln N ln ln N , making it
+more efficient than the classical SQUFOF and CFRAC algorithms. Additionally, our algorithm is polynomial-time,
+provided knowledge of a (not too large)
+√
+multiple of the regulator of Q( N ).
+
+1. Introduction
+The integer factorization problem is a fascinating challenge in number theory, with
+many important theoretical aspects and practical applications (e.g., in cryptography,
+where the most important public key cryptosystems are based on the hardness of
+solving this problem for large composite numbers). Indeed, currently, there does not
+exist a polynomial algorithm for factorizing integers and thus the research in this
+field is fundamental and active.
+To date, the most efficient algorithm known for factoring integers larger than
+10100 is the General Number
+[24], with a heuris
+ designed by Pomerance
+ q Field Sieve
+
+3 64
+1/3 (ln ln N )2/3 . However, for smaller
+tic running time of exp
+9 + o(1) (ln N )
+numbers other algorithms perform better, such as the Quadratic Sieve and SQUare
+FOrm Factorization (SQUFOF).
+SQUFOF algorithm (the best method for numbers between 1010 and 1018 ) was
+proposed by Shanks in [27] and it is based on the properties of square forms and
+continued fractions. The algorithm is discussed, for example, in [3] and [5]. A
+rigorous and complete description of the method and its complexity is provided in
+the well-regarded paper by Gower and Wagstaff [13], where the details are meticulously presented and the algorithm is examined in depth. Recently, the SQUFOF
+algorithm has been revisited by Elia [9] who proposed an improvement whose complexity is based on the computation of the regulator of a quadratic field. Another
+improvement, which exploits a sieve inspired by the Quadratic Sieve, can be found
+in [2].
+The other main algorithm, which exploits the theory of continued fractions, is
+CFRAC [20] which was implemented and used for factorizing large numbers (such
+as the 7th Fermat number) by Morrison and Brillhart [22].
+In this paper, we focus on the underlying theory of SQUFOF and, starting from
+the work by Elia [9], we improve it, obtaining 
+a novel
+algorithm
+whose
+
+ factorization
+√
+3
+complexity for factoring the integer N is O exp √8 ln N ln ln N , making it
+more efficient than the classical CFRAC and SQUFOF algorithms. The time complexity is similar to that obtained in [2], although their method uses a different
+approach.
+The paper is structured as follows. Sections 2, 3 and 4 introduce the notation and
+develop the foundational results applied in the design of the factorization algorithm.
+Specifically, in Section 2, we deal with the theory of continued fractions, focusing on
+
+2010 Mathematics Subject Classification. 11A51, 11Y05.
+1
+
+the expansion of square roots and the properties of particular sequences arising from
+these expansions. Section 3 analyzes
+the conditions under which the period of the
+√
+continued fraction expansion of N is even and a nontrivial factor of N can be found.
+Finally, in Section 4, we introduce the tools regarding quadratic forms, including the
+notion of distance, the reduction operator, and the Gauss composition, focusing on
+the properties of particular sequences of quadratic forms used in the algorithm. In
+Section 5, we present and discuss all the details of our new algorithm and analyze the
+time complexity, highlighting
+also the fundamental role played by the computation
+√
+of the regulator of Q( N ). Lastly, Section 6 briefly reports some conclusions.
+2. Sequences from continued fractions of quadratic irrationals
+It is well-known that the continued fraction expansion of quadratic irrationals is
+periodic and in this case the Lagrange algorithm can be used for obtaining such
+expansion. Let us consider, without loss of generality, quadratic irrationals
+√
+P0 + N
+,
+α0 =
+Q0
+with P0 , Q0 , N ∈ Z, N > 0 not square, Q0 6= 0, and Q0 | N − P02 . The continued
+fractions expansion [a0 , a1 , . . .] of α0 can be obtained computing
+
+√
+
+am = ⌊αm ⌋
+Pm + N
+(1)
+, where αm =
+, m ≥ 0.
+Pm+1 = am Qm − Pm
+
+Qm
+
+2
+Qm+1 = (N − Pm+1 )/Qm
+√
+We recall that the continued fraction expansion of N is periodic and has the
+following particular form
+√
+(2)
+N = [a0 , a1 , a2 , a3 , . . . , aτ −1 , 2a0 ],
+where the sequence (a1 , . . . , aτ −1 ) is a palindrome.
+Remark 2.1.√ Kraitchik [19] showed that √the period τ of the continued fraction expansion of N is upper bounded by 0.72 N ln N , for N > 7. However, the period
+length has irregular behavior as a function
+√ of N : it can assume any value from 1,
+when N = M 2 +1, to values greater than N ln ln N (see [28] and [23], respectively).
+√
+From now on, we always consider the continued fraction expansion of N as in
+(2) (i.e., quadratic irrationals with Q0 = 1 and P0 = 0). Let {pn }n≥−1
+√and {qn }n≥−1
+be the sequences of numerators and denominators of convergents of N , defined by
+p−1 = 1,
+
+p 0 = a0 ,
+
+q−1 = 0,
+
+q0 = 1
+
+and
+pm = am pm−1 + pm−2 , qm = am qm−1 + qm−2 , ∀ m ≥ 1.
+We also recall the following two properties:
+
+
+
+ 
+
+a0 1
+am 1
+pm pm−1
+(3)
+···
+=
+∀ m ≥ 0,
+1 0
+1 0
+qm qm−1
+and
+(4)
+
+(
+
+pτ −2 = −a0 pτ −1 + N qτ −1
+qτ −2 = pτ −1 − a0 qτ −1
+
+.
+
+Equation (3) follows from straightforward verification, and (4) is proved in [28,
+pp. 329–332].
+We examine the sequence {cn }n≥−1 , defined by
+√
+cm := pm + qm N .
+
+The result in the next proposition is also found in [9]. Here, we provide a slightly
+different proof for completeness.
+Proposition 2.2. The sequence {cn }n≥−1 satisfies the relation
+(5)
+
+cm+kτ = cm ckτ−1
+
+for all k ∈ N and m ≥ −1.
+
+Proof. The claimed equality is trivial for k = 0. First, we prove by induction on m
+the equality for k = 1, and then we generalize for k > 1.
+The case m = −1 is trivial, since c−1 = 1. Now, we proceed by induction. Using
+the inductive hypothesis, we consider the following chain of equalities
+cτ +m+1 = am+1 cτ +m + cτ +m−1 = am+1 cm cτ −1 + cm−1 cτ −1
+= (am+1 cm + cm−1 )cτ −1 = cm+1 cτ −1
+
+which concludes the proof in the case k = 1.
+For the case k > 1 we iterate as follows:
+cm+kτ = cm+(k−1)τ cτ −1 = · · · = cm ckτ−1 .
+
+
+
+We recall that the minimal positive solution of the Pell Equation X 2 − N Y 2 = 1
+is (pτ −1 , qτ −1 ) if τ is √
+even, and (p2τ −1 , q2τ −1 ) if τ is odd. We denote by R+ (N )
+is the minimal positive solution of the√Pell
+the logarithm of a + b N , where (a, b) √
+equation, by R(N ) the regulator of Q( N ), and by N the field norm of Q( N ).
+√
+√
+√
+Moreover, given x + y N ∈ Q( N ), we denote by x + y N its conjugate.
+Proposition 2.3. We have
+(6)
+and
+(7)
+
+(−1)m Pm+1 = pm pm−1 − N qm qm−1
+
+∀m ≥ 0
+
+2
+(−1)m+1 Qm+1 = p2m − N qm
+= N (cm )
+
+∀ m ≥ −1.
+
+Proof. The proof is straightforward by induction.
+
+
+
+Since we will exploit the sequences {Pn }n≥0 and {Qn }n≥0 to factor the integer
+N , it is computationally important to bound their elements.
+Proposition 2.4 ([9]). We have
+2 √
+N,
+0 < Qm <
+am
+
+0 ≤ Pm <
+
+√
+N
+
+∀ m ≥ 0.
+
+The following lemma proves two equalities that are useful in Theorem 2.6.
+Lemma 2.5. It holds that
+(
+pτ −m−2 = (−1)m−1 pτ −1 pm + (−1)m N qτ −1 qm
+(8)
+qτ −m−2 = (−1)m pτ −1 qm + (−1)m−1 qτ −1 pm
+
+∀ − 1 ≤ m ≤ τ − 1.
+
+Proof. Using Equation (3) and the fact that (a1 , . . . , aτ −1 ) is palindrome, we obtain,
+for all 0 ≤ m ≤ τ − 2,
+
+ 
+
+ 
+
+pτ −1 pτ −2
+pτ −m−2 pτ −m−3
+aτ −m−1 1
+aτ −1 1
+=
+···
+qτ −1 qτ −2
+qτ −m−2 qτ −m−3
+1
+0
+1
+0
+
+
+ 
+
+pτ −m−2 pτ −m−3
+am+1 1
+a 1
+=
+··· 1
+qτ −m−2 qτ −m−3
+1
+0
+1 0
+"
+
+ 
+−1 
+#T
+pτ −m−2 pτ −m−3
+a0 1
+pm+1 pm
+=
+qτ −m−2 qτ −m−3
+1 0
+qm+1 qm
+
+
+
+
+pτ −m−2 pτ −m−3
+pm+1 qm+1
+0
+1
+=
+.
+qτ −m−2 qτ −m−3
+pm
+qm
+1 −a0
+
+Multiplying by the inverse of the matrices
+
+
+
+pm+1 qm+1
+pm
+qm
+
+
+
+
+
+
+0
+1
+and
+, and using
+1 −a0
+
+Equation (4), we obtain
+(9)
+
+
+
+
+
+pτ −m−2 pτ −m−3
+a0 1
+qm −qm+1
+m pτ −1 pτ −2
+= (−1)
+qτ −m−2 qτ −m−3
+qτ −1 qτ −2
+1 0
+−pm pm+1
+
+
+−N qτ −1 qm+1
+m N qτ −1 qm − pm pτ −1
+= (−1)
+.
+pτ −1 qm − pm qτ −1 −pτ −1 qm+1 + qτ −1 pm+1
+The cases m = −1 and m = τ − 1 are straightforward to verify.
+
+
+
+The transformation defined by (8) is identified by the matrix
+Mτ −1 =
+
+
+
+
+−pτ −1 N qτ −1
+.
+−qτ −1 pτ −1
+
+The results that follow in this section are those found by Elia in [9], but they
+are further extended, approaching also the case of odd periods, and we include more
+detailed proofs. The sequences {Qn }n≥0 and {Pn }n≥1 are periodic of period τ , where
+τ is the period√of the sequence of partial quotients {an }n≥0 of the continued fraction
+expansion of N . Further, within a period, there exist interesting symmetries.
+Theorem 2.6. The sequence {Qn }n≥0 is periodic with period τ . The elements of
+the first block {Qn }τn=0 satisfy the symmetry relation
+Qm = Qτ −m ,
+
+∀ 0 ≤ m ≤ τ.
+
+√
+Proof. Using Equation (5), Equation (7), and the fact that N (pτ −1 + qτ −1 N ) =
+(−1)τ , the following chain of equalities holds for all m ≥ 0
+Qm+τ = |N (cm−1+τ )| = |N (cm−1 cτ −1 )| = |N (cm−1 )N (cτ −1 )| = Qm ,
+from which we deduce that the period of {Qn }n≥0 is τ .
+The symmetry of the sequence {Qn }n≥0 within the τ elements of the first period
+follows from Equation (8). We have
+p2τ −m−2 − N qτ2−m−2 = (pτ −1 pm − N qτ −1 qm )2 − N (−pτ −1 qm + qτ −1 pm )2
+2
+= (p2m − N qm
+)(p2τ −1 − N qτ2−1 )
+
+2
+),
+= (−1)τ (p2m − N qm
+
+implying that (−1)τ −m−1 Qτ −m−1 = (−1)τ (−1)m+1 Qm+1 for all −1 ≤ m ≤ τ −1. 
+Theorem 2.7. The sequence {Pn }n≥1 is periodic with period τ . The elements of
+the first block {Pm }τm=1 satisfy the symmetry relation
+(10)
+
+Pτ −m+1 = Pm ,
+
+∀ 1 ≤ m ≤ τ.
+
+Proof. The periodicity of the sequence {Pn }n≥1 follows from the properties expressed
+by Equation (5) and Equation (6), noting that
+1
+(−1)m Pm+1 = (cm cm−1 + cm cm−1 )
+2
+
+cm+τ cm−1+τ
+1 cm+τ cm−1+τ
++
+=
+2 cτ −1 cτ −1
+cτ −1 cτ −1
+= (−1)τ (−1)m+τ Pm+1+τ .
+
+The next chain of equalities proves the symmetry property
+(−1)τ −m−1 Pτ −m = pτ −m−1 p(τ −1)−m−1 − N qτ −1−m q(τ −1)−m−1
+
+= −(pτ −1 pm − N qτ −1 qm )(pτ −1 pm−1 − N qτ −1 qm−1 )
+
++ N (pτ −1 qm − qτ −1 pm )(pτ −1 qm−1 − pm−1 qτ −1 )
+= −(p2τ −1 − N qτ2−1 )(pm pm−1 − N qm qm−1 )
+= −(−1)τ (pm pm−1 − N qm qm−1 )
+
+= (−1)τ +1 (−1)m Pm+1 ,
+
+where, in the second-to-last equality, we used Equation (6).
+
+
+
+Note that Mτ2−1 = (−1)τ I2 , with I2 the identity matrix, and, if τ is even, the
+eigenvalues of Mτ −1 are λ0 = 1 and λ1 = −1, with eigenvectors
+
+
+pτ −1 + λh qτ −1 T
+(h)
+,
+,
+(11)
+U =
+d
+d
+where d = gcd(pτ −1 + λh , qτ −1 ) for h ∈ {0, 1}.
+
+√
+Theorem 2.8. If the period τ of the continued fraction expansion of N is even, a
+factor of 2N is located at positions τ2 +jτ with j = 0, 1, . . ., in the sequence {Qn }n≥0 .
+Proof. It is sufficient to consider j = 0, due to the periodicity of {Qn }n≥0 . Since τ is
+even, Mτ −1 is involutory and has eigenvalues λ0 = 1 and λ1 = −1 with corresponding
+eigenvectors shown in (11). Considering Equation (8) written as
+
+
+ 
+pτ −j−2
+p
+j−1
+= (−1) Mτ −1 j ,
+qτ −j−2
+qj
+we see that V (j) = [pj , qj ]T is an eigenvector of Mτ −1 , of eigenvalue (−1)j−1 , if and
+only if j satisfies the condition τ − j − 2 = j, that is j = τ −2
+2 = τ0 . From the
+(j)
+(h)
+comparison of V
+and U , we have
+
+qτ −1
+pτ −1 + (−1)τ0
+qτ0 =
+,
+d
+d
+where the equalities are fully motivated because gcd (pτ0 , qτ0 ) = 1, recalling that
+d = gcd(pτ −1 + (−1)τ0 , qτ −1 ). Direct computation yield
+pτ0 =
+
+(−1)τ0 +1 Qτ0 +1 =
+
+(pτ −1 + (−1)τ0 −1 )2 − N qτ2−1
+(−1)τ0 pτ −1 + 1
+=
+2
+,
+d2
+d2
+p
+
+p
+
+which can be written as p2τ0 − N qτ20 = 2(−1)τ0 dτ0 . Dividing this equality by 2 dτ0 we
+have
+1
+dpτ0
+− N 2pτ qτ20 = (−1)τ0 .
+0
+2
+d
+
+Noting that gcd (pτ0 , qτ0 ) = 1, it follows that
+Qτ /2 | 2N .
+
+2pτ0
+d
+
+is a divisor of 2N , i.e. Qτ0 +1 =
+
+
+In the case where τ is odd, we can state the following two results.
+Theorem
+2.9. Let N be a positive integer such that the continued fraction expansion
+√
+of N has an odd period τ . The representation of N as a sum of two squares is
+given by N = a2 + b2 , where a = Q(τ +1)/2 and b = P(τ +1)/2 .
+τ −1
+Proof. Since τ is odd, by the anti-symmetry in the sequence {Qn }n=0
+, we have
+2
+Q(τ +1)/2 = Q(τ −1)/2 , so that the quadratic form Q(τ −1)/2 X + 2P(τ +1)/2 XY −
+Q(τ +1)/2 Y 2 has discriminant 4P(τ2 +1)/2 − 4Q(τ +1)/2 Q(τ −1)/2 = 4N , which shows the
+assertion.
+
+
+From this, we can deduce a result similar to that in Theorem 2.8 for the case of
+an odd period.
+Corollary 2.10. Let N > 0√be a composite nonsquare integer such that the continued fraction expansion of N has odd period τ . If −1 is a quadratic nonresidue
+modulo N , then Q(τ +1)/2 contains a nontrivial factor of N .
+Proof. Using the previous theorem, N = Q2(τ +1)/2 + P(τ2 +1)/2 , and so P(τ2 +1)/2 ≡
+
+−Q2(τ +1)/2 (mod N ). If gcd(N, Q(τ +1)/2 ) = 1, then Q−1
+(τ +1)/2 (mod N ) exists. There2
+
+fore, Q−1
+≡ −1 (mod N ), and so −1 is a quadratic residue modulo
+(τ +1)/2 P(τ +1)/2
+N.
+
+Lemma 2.11. The following identity holds
+√
+√
+pm−1 − qm−1 N
+N + Pm+1
+√
+=−
+Qm+1
+pm − q m N
+
+∀ m ≥ 0.
+
+Proof. The proof is straightforward.
+
+
+
+The following result will be used in the proof of Theorem 4.17.
+Lemma 2.12. If τ is even, defining γ as
+γ=
+we have γγ = (pτ −1 + qτ −1
+
+√
+
+√
+( N + Pm+1 ),
+
+m=0
+
+N )2 = c2τ −1 . If τ is odd, defining ω as
+ω=
+
+we have ωω = (p2τ −1 + q2τ −1
+
+τY
+−1
+
+√
+
+2τ
+−1 √
+Y
+
+( N + Pm+1 ),
+
+m=0
+
+N )2 = c22τ −1 .
+
+Proof. We provide a proof for the case τ even; the odd case follows the same procedure. We have
+τY
+−1 √
+N + Pm+1
+γ
+√
+=
+γ
+− N + Pm+1
+m=0
+τY
+−1 √
+( N + Pm+1 )2
+=
+2
+Pm+1
+−N
+m=0
+τY
+−1 √
+( N + Pm+1 )2
+.
+=
+−Qm+1 Qm
+m=0
+Qτ −1
+Qτ −1
+Qτ −1 2
+Noting that m=0
+−Qm Qm+1 = m=0
+−Q2m+1 = m=0
+Qm+1 due to the periodicity of the sequence {Qm }m≥0 and the parity of τ , we deduce that γγ is a perfect
+square. From Lemma 2.11, it follows that the base of the square giving γγ is
+√
+τY
+−1
+τY
+−1 √
+pm−1 − qm−1 N
+N + Pm+1
+√
+−
+=
+Qm+1
+p
+−
+q
+N
+m
+m
+m=0
+m=0
+√
+p−1 − q−1 N
+√
+=
+pτ −1 − qτ −1 N
+√
+= pτ −1 + qτ −1 N .
+Therefore,
+(12)
+
+τY
+−1 √
+
+m=0
+
+√
+N + Pm+1
+= pτ −1 + qτ −1 N = cτ −1 ,
+Qm+1
+
+and in conclusion γγ = c2τ −1 .
+Similarly, if τ is odd, we have
+2τ
+−1 √
+Y
+√
+N + Pm+1
+= p2τ −1 + q2τ −1 N = c2τ −1 .
+(13)
+Qm+1
+m=0
+
+
+
+3. Even period and nontrivial factor
+In this section, we establish conditions on the integer N and its factors to ensure
+that the period τ is even and that Qτ /2 6= 2. First, we address the problem of
+guaranteeing an even period, and then, under this assumption, we derive conditions
+for the existence of a nontrivial factor of N (i.e., Qτ /2 6= 2). Subsequently, we turn
+our attention to the case where N is an RSA modulus.
+According to a classical
+√ result on the Pell equation, the period τ of the continued
+fraction expansion of N is even if and only if the negative Pell equation
+X 2 − N Y 2 = −1
+
+(14)
+
+has no solution. Based on this, we derive the following sufficient condition on the
+factors of N for τ to be even.
+Proposition 3.1. Let N > 0 be a nonsquare integer. If N is divided√by a prime
+p ≡ 3 (mod 4), then the period τ of the continued fraction expansion of N is even.
+
+Proof. Suppose that (14) has an integral solution (u, v). Then, u2 ≡ −1 (mod N ),
+and so u2 ≡ −1 (mod p). This means that −1 is a quadratic residue modulo p, but
+this cannot be possible since p ≡ 3 (mod 4).
+
+As we can see in the example below, this is not a necessary condition.
+Example 3.2. Let N = 52 · 17 · 37 = 15725, which is not divisible
+√ by any prime
+p ≡ 3 (mod 4). The period of the continued fraction expansion of 15725 is 10.
+Determining the parity of the period when no primes congruent to 3 (mod 4)
+divide N is a challenging open problem. Recently, Koymans and Pagano [18] proved
+the following theorem, originally conjectured by Stevenhagen in [30]. For further
+results in this area see [4], [10] and [11].
+Theorem 3.3 ([18]). Let D = {N ∈ N | N squarefree and not divisible by primes p ≡
+3 (mod 4)}, D − = {N ∈ D | (14) has an integral solution}, (D)≤X = {N ∈ D |
+N ≤ X} and (D − )≤X = {N ∈ D − | N ≤ X}. We have
+#(D − )≤X
+= 1 − α,
+X→∞ #(D)≤X
+lim
+
+where
+α=
+
+Y
+
+j odd
+
+(1 − 2−j ) = 0.41942244117951...
+
+This result does hold when restricted to odd/even numbers.
+We now examine the case N = pq and provide sufficient conditions on p and q for
+determining the parity of τ .
+Proposition 3.4 ([26]). If N = rs, then τ is even if and only if one of the following
+two conditions holds:
+(1) rX 2 − sY 2 = ±2, with X and Y odd;
+(2) r, s 6= 1 and rX 2 − sY 2 = ±1, with X and Y integers.
+Using the above proposition, we can provide sufficient conditions on p and q for
+odd period.
+
+Proposition
+3.5. Let N = pq, where p and q are primes congruent to 1 (mod 4).
+ 
+√
+p
+If q = −1, then the period τ of the continued fraction expansion of N is odd.
+
+Proof. The first equation of Proposition 3.4 cannot have integral solutions, since in
+this case r ≡s ≡ 1 (mod 4), and so rX 2 − sY 2 ≡ 0 (mod 4). By Hasse–Minkowski
+theorem, pq = 1 is a necessary condition for the solubility of pX 2 − qY 2 = ±1 in
+ 
+Q. Therefore, if pq = −1 then, by Proposition 3.4, the period τ is odd.
+
+The following proposition, proved by Dirichlet in [8], gives us sufficient conditions
+on p and q for even period.
+
+Proposition
+ ([8]). Let
+ N = pq, where p and q are primes congruent to 1
+ 3.6
+q
+p
+(mod 4). If q = 1 and pq
+p 4 = −1, then the period of the continued fraction
+4
+√
+expansion of N is even.
+The conditions in Proposition 3.5 and Proposition 3.6 are sufficient but not necessary, as showed in the following example.
+
+5
+= 1 and the period of the
+Example 3.7. Consider N = 5 · 89 = 445, then 89
+√
+continued fraction of 445 is 5.
+
+ 53 
+13
+Consider N = 13 · 53 = 689, then 53
+= 1, 13
+= 1 and the period of the
+53
+4 13 4
+√
+continued fraction of 689 is 2.
+Determining the parity of the period when N = pq and p ≡ q ≡ 1 (mod 4)
+remains a challenging problem. The following conjecture is the version of Theorem
+3.3 restricted to integers with exactly two prime factors.
+Conjecture 3.8 ([30]). Let D2 = {N = pq | p ≡ q ≡ 1 (mod 4)}, D2− = {N ∈ D2 |
+τ ≡ 1 (mod 2)}, (D2 )≤X = {N ∈ D2 | N ≤ X} and (D2− )≤X = {N ∈ D2− | N ≤ X}.
+Then, the following limit
+#(D2− )≤X
+lim
+X→∞ #(D2 )≤X
+2
+exists and it is equal to 3 .
+Cremona–Odoni [7] and Stevenhagen [30] studied the problem when the number
+of prime divisors equals a fixed integer t ≥ 1.
+We derive conditions on N for a proper factorization, specifically conditions ensuring that Qτ /2 6= 2. The following theorem, proved by Mollin in [25], provides
+necessary and sufficient conditions, expressed in terms of Diophantine equations, for
+τ to be even and Qτ /2 = 2.
+Theorem 3.9 ([25]). The following statements are equivalent for N > 2.
+(1) X 2 − N Y 2 = ±2 is solvable, indicating that at least one of the equations
+X 2 − N Y 2 = 2 and X 2 − N Y 2 = −2 has a solution.
+(2) τ is even and Qτ /2 = 2.
+This result implies that, if τ ≡ 0 (mod 2) and the two Diophantine equations
+
+(15)
+
+X2 − N Y 2 = 2
+
+and X 2 − N Y 2 = −2
+
+have no solutions, then the central term Qτ /2 6= 2, and so it contains a proper factor
+of N . The following result, due to Yokoi, and presented in [32], gives us sufficient
+conditions for the insolubility of the two equations in (15).
+Proposition 3.10 ([32]). For any positive nonsquare integer N , if the Diophantine
+equation X 2 − N Y 2 = ±2 has an integral solution, then
+N ≡2
+
+(mod 4)
+
+or
+
+N ≡3
+
+(mod 4).
+
+Hence, the following set of integers guarantees parity of the period and Qτ /2 6= 2
+F = {N ∈ N | N ≡ 1 (mod 4) and ∃ p prime, p | N such that p ≡ 3 (mod 4)} .
+Proposition 3.11. Let N ∈ N such that exist two primes p ≡ 5 (mod 8) and q ≡ 4
+(mod
+4) such that pq | N . Then, the period τ of the continued fraction expansion of
+√
+N is even and Qτ /2 6= 2.
+Proof. By Proposition 3.1 we deduce the parity of the period. If one of the two
+Diophantine equations X 2 − N Y 2 = 2 and X 2 − N Y 2 = −2 admits an integral
+solution, then 2 or −2 is a quadratic residue modulo p, which is absurd. We conclude
+using Theorem 3.9.
+
+We now focus on RSA moduli N = pq and summarize the results in Table 3.
+Corollary 3.12. Let N = pq, where√p and q are primes, and let τ be the period of
+the continued fraction expansion of N .
+(1) If p ≡ q ≡ 3 (mod 4), then τ is even and Qτ /2 contains a nontrivial factor
+of N .
+(2) If p ≡ 5 (mod 8) and q ≡ 3 (mod 4), then τ is even and Qτ /2 contains a
+nontrivial factor of N .
+(3) If p ≡ q ≡ 1 (mod 4) and τ is even, then Qτ /2 contains a nontrivial factor
+of N .
+Finally, in the case N = pq with p ≡ 1 (mod 8) and q ≡ 3 (mod 4), we have a
+sufficient condition for a trivial factorization, proved by Ji in [17].
+Proposition 3.13
+  ([17]). Let N = pq, where p ≡ 1 (mod 8) and q ≡ 3 (mod 4)
+are primes. If pq = −1, then one of the following two Diophantine equations
+X2 − N Y 2 = 2
+
+or
+
+X 2 − N Y 2 = −2
+
+has an integral solution.
+The following example demonstrates that the conditions in Proposition 3.13 are
+sufficient but not necessary.
+
+Example 3.14. Let N = 17 · 43 = 731. Then, 17
+43 = 1, the period τ of the
+√
+continued fraction expansion of 731 is 2, and Qτ /2 = 2.
+Table 3 summarizes the results described above for the case of RSA moduli.
+p (mod 8) q (mod 8)
+3
+3
+3
+7
+7
+7
+5
+7
+5
+3
+1
+7
+1
+3
+1
+1
+1
+5
+5
+5
+
+τ (mod 2)
+
+Qτ /2
+
+0
+
+6= 2
+
+0
+
+6= 2
+
+0
+If
+
+   
+
+p
+q
+q 4 p 4 = −1, then 0
+ 
+If pq = −1, then 1
+
+If
+
+ 
+p
+q
+
+= −1, then = 2
+
+If τ even, then 6= 2
+
+Table 1. Conditions for the parity of the period and nontrivial factorization for N = pq.
+
+4. Quadratic forms
+An overview of binary quadratic forms can be found in [3].
+Definition 4.1. A binary quadratic form is a polynomial F (X, Y ) = aX 2 + bXY +
+cY 2 , with a, b, c ∈ Z. The matrix associated with F is
+
+
+a b/2
+MF =
+.
+b/2 c
+We abbreviate a binary quadratic form with coefficients a, b, c as (a, b, c).
+Definition 4.2. Two quadratic forms F and F ′ are equivalent if there exists a
+matrix C ∈ Z2×2 such that
+MF ′ = C T MF C
+and det(C) = ±1. If det(C) = 1, the forms are properly equivalent and we write
+F ∼ F ′.
+
+Definition 4.3. The discriminant ∆ of a quadratic form (a, b, c) is ∆ = b2 − 4ac.
+We define F∆ as the set of all quadratic forms of discriminant ∆.
+
+The discriminant is an invariant for the equivalence relation of quadratic forms
+∼: if F ∈ F∆ , and F ∼ F ′ , then F ′ ∈ F∆ .
+Definition 4.4. A quadratic form (a, b, c), with positive discriminant ∆ = b2 − 4ac
+is reduced if
+√
+√
+∆ − 2 |a| < b < ∆.
+(16)
+
+Given a quadratic form F , it is always possible to find a reduced quadratic form
+equivalent to F . In the following we are going to prove it giving a reduction algorithm
+on quadratic forms of positive nonsquare discriminant. To do so, we first need the
+following definition.
+Definition 4.5. For any form F = (a, b, c) with ac 6= 0 of discriminant ∆, a nonsquare positive integer, we define the standard reduction operator ρ by
+
+
+r(−b, c)2 − ∆
+,
+ρ(a, b, c) = c, r(−b, c),
+4c
+
+where r(−b, c) is defined to be the unique integer r such that r + b ≡ 0 (mod 2c)
+and
+√
+−|c| < r ≤ |c| if
+∆ < |c|,
+√
+√
+√
+∆ − 2|c| < r < ∆ if |c| < ∆.
+ρ(F ) is called the reduction of F . The inverse reduction operator is defined by
+
+
+r(−b, c)2 − ∆
+ρ−1 (a, b, c) =
+, r(−b, a), a .
+4c
+
+We denote ρn (F ) the result of n applications of ρ on F . The identities ρ(ρ−1 (F )) =
+hold when F is reduced. We point out the fact that (a, b, c) ∼
+ρ(a, b, c) through the transformation given by the matrix
+
+
+0 −1
+,
+1 t
+
+ρ−1 (ρ(F )) = F
+
+where r(−b, c) = −b + 2ct. The proof of the following fundamental proposition can
+be found in [5, p. 264].
+Proposition 4.6 ([5]).
+(1) The number ofliterations of ρm which are necessary to reduce a form (a, b, c)
+√
+is at most 2 + log2 (|c|/ ∆) .
+
+(2) If F = (a, b, c) is a reduced form, then ρ(a, b, c) is again a reduced form.
+Remark 4.7.
+√ If (a, b, c), of discriminant ∆ > 0, is reduced, then |a|, b and |c| are
+less than ∆, and a and c are of opposite signs ([5, p. 262]). This implies that the
+number of reduced quadratic forms of discriminant ∆ is finite.
+Definition 4.8. Two forms F (X, Y ) = aX 2 + bXY + cY 2 and F ′ (X, Y ) = a′ X 2 +
+b′ XY + c′ Y 2 are adjacent if c = a′ and b + b′ ≡ 0 (mod 2c).
+Given a reduced quadratic form F , there exists a unique reduced quadratic form
+equivalent to F and adjacent to F . This form is ρ(F ). As we have seen in Remark
+4.7, there exists a finite number of reduced quadratic forms of positive discriminant
+∆, and so this process eventually repeats, forming a cycle. The significant aspect of
+this is that the cycle consists of all the reduced forms equivalent to the first form,
+as proved in [15, pp. 109–113].
+Definition 4.9. We call the principal form the unique reduced form of discriminant
+∆ having as first coefficient 1. It is denoted by 1 and the cycle in which it lies is
+called the principal cycle.
+Definition 4.10. Let Υ = {F n }n≥0 be the sequence of binary quadratic forms
+defined as
+F m (X, Y ) = (−1)m Qm X 2 + 2Pm+1 XY + (−1)m+1 Qm+1 Y 2 ,
+
+for m ≥ 0.
+
+Remark 4.11. If τ is even, then the sequence Υ is periodic of period τ , and if τ is
+odd Υ is periodic of period 2τ . This is due to Theorem 2.6 and Theorem 2.7.
+Definition 4.12. Let F = (a1 , b1 , c1 ) and G = (a2 , b2 , c2 ) two quadratic forms
+having same discriminant ∆. The Gauss composition of F and G is
+ 2
+
+
+
+b3 − ∆
+2a1 s(b2 − b1 )
+a1 a2
+− c1 v ,
+,
+(17)
+F ◦ G = (a3 , b3 , c3 ) = d0 2 , b1 +
+n
+n
+2
+4a3
+where β = (b1 + b2 )/2, n = gcd(a1 , a2 , β), s, u, v such that a1 s + a2 u + βv = n, and
+d0 = gcd(a1 , a2 , β, c1 , c2 , (b1 − b2 )/2). Although the composition is not unique, all
+compositions of given forms F and G are equivalent.
+
+We remark that all quadratic forms in Υ have the same discriminant ∆ = 4N ,
+where N > 0 is the nonsquare integer we want to factorize. This implies that for all
+(a, b, c) ∈ Υ, we have
+∆ ≡ b2 ≡ b (mod 2),
+and so b ≡ 0 (mod 2). Therefore, the value β in the Definition 4.12 is an integer.
+A quadratic form F = (a, b, c) is primitive if gcd(a, b, c) = 1. As proved in the next
+proposition, the forms in Υ are primitive.
+Proposition 4.13. The forms F n are primitive for all n ≥ 0.
+Proof. We prove the statement by induction on n.
+Base step (n = 0): The base step is proved recalling that Q0 = 1.
+Inductive step (n ⇒ n + 1): The result follows from these equalities:
+
+2
+gcd(Qn , 2Pn+1 , Qn+1 ) = gcd(Qn , 2(an Qn − Pn ), (N − Pn+1
+)/Qn )
+
+= gcd(Qn , −2Pn , Qn−1 − a2n Qn + 2an Pn )
+
+= gcd(Qn , −2Pn , Qn−1 ) = 1.
+
+
+
+This implies that in the Gauss composition of two elements of Υ, the coefficient
+d0 is always equal to 1.
+Using the definition of ρ and Equation (1), it is straightforward to prove that
+ρn (F 0 ) = F n .
+
+The form F 0 is reduced and equal to 1, so the quadratic forms in Υ are reduced,
+and Υ is the principal cycle. Moreover, for any pair of forms F n , F m ∈ Υ, their
+Gauss composition F n ◦ F m is equivalent to F 0 . This follows from the property
+proved by Gauss in [12, Article 237-239]: if F ∼ G, then H ◦ F ∼ H ◦ G, for all
+quadratic forms F, G, H having same discriminant. In particular, we obtain
+F n ◦ F m ∼ F n ◦ F 0 ∼ F n ∼ F 0,
+using also the fact that F 0 ◦ F n ∼ F n for all n ≥ 0. Consequently, applying the
+Gauss composition to any couple of elements of Υ, followed by a sufficient number
+of applications of ρ to obtain a reduced form, results in an element of Υ.
+As mentioned previously, we are interested in quickly finding the coefficient Qτ /2
+when τ is even, or Q(τ +1)/2 when τ is odd. Consequently, we aim to determine the
+quadratic form F τ /2 , or F (τ −1)/2 , in an efficient manner (i.e. with time complexity
+O(ln(N )α ) with α constant). The value of τ could be too large (see Remark 2.1), so
+we need a way to make longer jumps within the principal cycle. As we will see, Gauss
+composition, followed by the reduction, will allow us to make long jumps in Υ. To
+estimate the length of these jumps we use the (well-known) infrastructural distance
+δ. A comprehensive definition and detailed description of distance is provided in [5,
+pp. 279–283].
+Definition 4.14. Given a quadratic form F = (a, b, c) of discriminant ∆ > 0, the
+infrastructural distance δ of F and ρ(F ) is
+√
+b+ ∆
+1
+√ .
+δ(F, ρ(F )) = ln
+2
+b− ∆
+Given n > 0, the distance δ of F and ρn (F ) is
+n
+
+δ(F, ρ (F )) =
+
+n
+X
+
+δ(ρi−1 (F ), ρi (F )).
+
+i=1
+
+We now restrict ourselves to forms in the principal cycle. We then have the
+following proposition.
+Proposition 4.15 ([5]). Let F n and F m be two reduced forms in the principal
+cycle, and let F 0 be the principal form. Then, if we define G = F n ◦ F m , G may
+not be reduced, but let F r be a (non unique) form obtained from G by the reduction
+algorithm, i.e. by successive applications of ρ. Then we have
+δ(F 0 , F r ) = δ(F 0 , F n ) + δ(F 0 , F m ) + δ(G, F r ),
+and furthermore,
+(18)
+
+|δ(G, F r )| < 2 ln ∆,
+
+where ∆ is the discriminant of these forms.
+The above proposition follows from the property that δ is exactly additive under
+composition before any reductions are made (see [5, p. 281]) and the estimation of
+the bound for |δ(G, F r )| discussed in Section 12 of [21].
+The next proposition is fundamental for a computational point of view. Indeed,
+given F i , F j , with i < j, and their distance δ(F i , F j ), it gives an estimation of j − i.
+2D
+2D
+In particular, if δ(F i , F j ) = D, then ln(4N
+) < j − i < ln 2 + 1.
+Proposition 4.16 ([21]). Let F ∈ F∆ reduced. The following two bounds hold:
+(1) δ(F, ρ(F )) < 21 ln ∆,
+(2) δ(F, ρ2 (F )) > ln 2, and the same holds for ρ−1 .
+
+In our case, the discriminant of the forms in Υ is ∆ = 4N , where N is an odd
+nonsquare integer. Theorem 4.17 (proved also in [9]) and Theorem 4.18 show that
+the distance between quadratic forms can be considered modulo
+(
+√
+if τ ≡ 0 (mod 2)
+ln(pτ −1 + qτ −1 N ) = ln(cτ −1 )
++
+√
+R (N ) =
+.
+ln(p2τ −1 + q2τ −1 N ) = ln(c2τ −1 ) if τ ≡ 1 (mod 2)
+Theorem 4.17. If τ is even, the distance δ(F 0 , F τ ) (the distance of a period) is
+exactly equal to ln(cτ −1 ) and the distance δ(F 0 , F τ /2 ) is exactly equal to 21 δ(F 0 , F τ ).
+Proof. The distance between F τ and F 0 is the summation
+!
+!
+√
+τ √
+τ
+τ −1
+Y
+X
+X
+N + Pi
+N + Pi
+1
+1
+√
+ln √
+d(F i , F i+1 ) =
+d(F 0 , F τ ) =
+= ln
+.
+2
+2
+N
+−
+P
+N
+−
+P
+i
+i
+i=1
+i=1
+i=0
+
+Recalling that N − Pi2 = Qi Qi−1 > 0, and taking into account the periodicity of the
+sequence {Qn }n≥0 , the last expression can be written with rational denominator as
+!
+!
+!
+√
+√
+τ
+τ
+τ √
+Y
+Y
+Y
+1
+( N + Pi )2
+( N + Pi )2
+N + Pi
+1
+ln
+= ln
+.
+= ln
+2
+Qi Qi−1
+2
+Qi
+Q2i
+i=1
+i=1
+i=1
+
+The conclusion follows from Equation (12). The equality d(F 0 , F τ /2 ) = 21 d(F 0 , F τ )
+is an immediate consequence of the symmetry of the sequence {Pn }n≥1 within a
+period.
+
+We now give a similar result for the case of odd period.
+Theorem 4.18. If τ is odd, the distance δ(F 0 , F 2τ ) (the distance of a period) is
+exactly equal to ln(c2τ −1 ) and the distance δ(F 0 , F τ ) is equal to ln(c2τ −1 )/2.
+Proof. The distance between F 2τ and F 0 is the summation
+!
+!
+√
+2τ √
+2τ
+2τ
+−1
+Y
+X
+X
+N + Pi
+N + Pi
+1
+1
+√
+ln √
+= ln
+.
+d(F i , F i+1 ) =
+d(F 0 , F 2τ ) =
+2
+2
+N
+−
+P
+N − Pi
+i
+i=1
+i=1
+i=0
+
+Recalling that N − Pi2 = Qi Qi−1 > 0, and taking into account the periodicity of the
+sequence {Qn }n≥0 , the last expression can be written with rational denominator as
+!
+!
+!
+2τ √
+2τ √
+2τ √
+Y
+Y
+Y
+( N + Pi )2
+( N + Pi )2
+1
+N + Pi
+1
+ln
+= ln
+.
+= ln
+2
+Qi Qi−1
+2
+Qi
+Q2i
+i=1
+
+i=1
+
+i=1
+
+The conclusion follows from Equation (13) and the periodicity of {Pn }n≥1 .
+
+
+
+Corollary 4.19. If τ is odd, the distance δ(F 0 , F (τ −1)/2 ) (the distance of a target
+form) is equal to ln(c2τ −1 )/4 + O(ln(N )).
+Proof. From the previous theorem, we know that δ(F 0 , F τ ) = ln(c2τ −1 )/2. Moreover, using the symmetry (10), we obtain the following equality
+!
+√
+N + P(τ +1)/2
+1
+δ(F 0 , F τ ) = 2δ(F 0 , F (τ −1)/2 ) + ln √
+.
+2
+N − P(τ +1)/2
+Therefore,
+
+δ(F 0 , F τ ) 1
+− ln
+δ(F 0 , F (τ −1)/2 ) =
+2
+4
+=
+
+1
+1
+ln(c2τ −1 ) − ln
+4
+4
+
+and so
+δ(F 0 , F (τ −1)/2 ) −
+
+√
+
+√
+
+N + P(τ +1)/2
+
+!
+
+N − P(τ +1)/2
+!
+√
+N + P(τ +1)/2
+√
+,
+N − P(τ +1)/2
+
+1
+1
+ln(c2τ −1 ) ≤ ln(4N ).
+4
+4
+
+
+The following remark is fundamental from a computational point of view, because
+it provides an upper bound on the distance of a cycle in Υ.
+Remark 4.20. We have that R+ (N ) = nR(N ), with n ≤ 6. Hua, in [14, p. 329],
+proves that
+(√
+
+N 21 ln N + 1
+if N ≡ 1 (mod 4)
+√
+
+R(N ) ≤
+1
+2 N 2 ln(4N ) + 1 if N ≡ 3 (mod 4)
+√
+and thus R+ (N ) = O( N ln N ). However, we do not know which is the largest
+value that R(N ) can attain as a function of N .√It is conjectured that there exists
+an infinite set of values of N such that R(N ) ≫ N ln ln N (see [16] for large-scale
+numerical experiments and more details).
+5. The factorization algorithm
+In this section, we present our factorization method. The integer N > 0 to be
+factorized is odd, nonsquare and composite. In the first part of this section, we
+describe the method and provide the pseudocodes (Algorithms 1 and 2). We then
+prove the correctness of our approach and analyze its computational cost. This
+method is a modification of the one presented by Elia [9]. We assume that R+ (N )
+has been preliminarily computed. In the final part of this section, we mention a
+method for computing an integer multiple of R+ (N ).
+To simplify the notation, we introduce the following definition.
+Definition 5.1. Given two forms F n , F m ∈ Υ, the giant step of F n and F m is the
+composition
+F n • F m = ρr (F n ◦ F m ),
+realized through the Gauss composition F n ◦ F m , followed by the minimum number
+r of reduction operations ρ to obtain a reduced form. The notation F tn represents t
+successive applications of the giant step of F n with itself, i.e., F n • · · ·•F n (repeated
+t times).
+We define our method for both the even-period and odd-period cases. To enhance
+readability, we define the following quantity
+(
+R+ (N )/2 if τ ≡ 0 (mod 2)
+D(N ) =
+,
+R+ (N )/4 if τ ≡ 1 (mod 2)
+which represents the distance of the quadratic form we want to reach (or an approximation of it). Indeed, if τ ≡ 0 (mod 2), then δ(F 0 , F τ /2 ) = R+ (N )/2 = D(N ) and
+if τ ≡ 1 (mod 2), then δ(F 0 , F (τ −1)/2 ) = R+ (N )/4+ O(ln(N )) = D(N )+ O(ln(N )),
+using Theorem 4.17 and Corollary 4.19.
+We distinguish two cases: R+ (N ) ≤ (ln N )2 and R+ (N ) > (ln N )2 . In the first
+case, we compute F i = ρi (F 0 ) until a nontrivial factor of N is found among their
+coefficients, if such a factor exists. By Proposition 4.16, the number of reduction
++
+2δ(F 0 ,F τ /2 )
+)
+2
++ 1 = R ln(N
+steps ρ is at most
+ln 2
+2 + 1 = O((ln N ) ) when the period is even,
+
++
+2δ(F 0 ,F (τ −1)/2 )
+)
+2
++ 1 ≤ R2 ln(N2 ) + ln(4N
+ln 2
+2 ln 2 + 1 = O((ln N ) ), when the period is odd.
++
+)
+ln(4N )
+If the number of iterations exceeds R ln(N
+2 + 2 ln 2 + 1 the procedure is stopped: our
+
+and
+
+algorithm cannot find a factor of N . The pseudocode for this method is given in
+Algorithm 1.
+If R+ (N ) > (ln N )2 we proceed in the following way.
+(1) First phase: In this phase we compute an approximation of F τ /2 , if τ is
+even, or of F (τ −1)/2 , if τ is odd. By an approximation of F ∈ Υ, we mean a
+form G ∈ Υ such that either δ(F, G) or δ(G, F ) is small.
+
+Starting from F 0 , we compute the forms F i in the principal cycle, for
+i = 0, . . . , ℓ, until δ(F 0 , F ℓ ) ≥ 2 ln(4N ) + 1 and δ(F 0 , F ℓ ) ≤ 4 ln N (this
+is possible using Proposition 4.16 and the definition of distance). Then, we
+i
+compute the quadratic forms F 2ℓ , using giant steps, and their exact distance
+i
+di = δ(F 0 , F 2ℓ ), using Proposition 4.15, for i = 1, . . . , t, with t such that
+dt−1 ≤ D(N ) < dt . We point out the fact that di+1 > di for all i ≥ 0. Then,
+t−1
+using the forms F ℓ , . . . , F 2ℓ , we compute F̄ , which approximates F τ /2 if
+t−1
+the period is even, or F (τ −1)/2 otherwise. To do so, first we set F̄ = F 2ℓ
+and d¯ = dt−1 . Then, we start by computing d¯+ dt−2 : if it is smaller or equal
+t−2
+than D(N ), we update F̄ with F̄ • F 2ℓ
+and d¯ with d¯+ dt−2 . We iterate this
+procedure for i = t − 3, . . . , 0 by computing d¯+ di , comparing it with D(N ),
+i
+and, if it is smaller or equal, updating F̄ with F̄ • F 2ℓ and d¯ with d¯ + di .
+(2) Second phase: Starting from F̄ , we iterate the operators ρ and ρ−1 until
+a factor of N is found. An upper bound on the number of iterations of ρ
+and ρ−1 needed to find a factor (both in the case of even and odd period) is
+given by:
+
+
+
+ +
+R (N )
+33
+2
++
+ln(4N ) + 1.
+4 ln(4N ) log 2
++
+Ψ(R (N ), N ) :=
+ln 2
+2
+4
+This bound derives from the results demonstrated later in this section.
+A priori, we do not know the parity of τ , so we proceed as follows (as outlined in
+Algorithm 2). First, we run the procedure assuming τ ≡ 0 (mod 2), which implies
+D(N ) = R+ (N )/2. If, at the end of the second phase, after Ψ(R+ (N ), N ) steps,
+a factor is not found, we then try again assuming τ ≡ 1 (mod 2), which implies
+D(N ) = R+ (N )/4. If, even in this case, no factor is found after Ψ(R+ (N ), N ) steps
+during the second phase, the output is −1: our method cannot factor N .
+Algorithm 1: Our method, assuming R+ (N ) ≤ (ln N )2 known
+Input : An odd, composite nonsquare integer N > 0; R+ (N ).
+Output: A factor of N if the method is applicable; −1 otherwise.
+√
+1 a0 ← ⌊ N ⌋, F ← (1, 2a0 , a2
+0 − N ) = (Q0 , 2P1 , −Q1 )
+2 i ← 1, imax ←
+
+ln(4N )
+R+ (N )
+ln 2 + 2 ln 2 + 1
+
+3 while i ≤ imax do
+
+if gcd(Qi , N ) > 1 then
+return gcd(Qi , N )
+6
+end
+7
+i←i+1
+8
+F ← ρ(F ) = ((−1)i−1 Qi−1 , 2Pi , (−1)i Qi )
+9 end
+10 return −1
+4
+
+5
+
+Algorithm 2: Our method, assuming R+ (N ) > (ln N )2 known
+Input : An odd, composite nonsquare integer N > 0; R+ (N ).
+Output: A factor of N if the method is applicable; −1 otherwise.
+ + 
+
+
+R (N )
+33
+2
+ln(4N
+)
++1
++
+1 imax ← ln 2 4 ln(4N ) log 2
+2
+4
+√
+√
+a0 +√N
+1
+ln
+2 a0 ← ⌊ N ⌋, G0 ← (1, 2a0 , a2
+−
+N
+),
+d
+←
+,F ←∅
+0
+0
+2
+a − N
+0
+
+3 while d0 < 2 ln(4N ) + 1 do
+4
+5
+
+G0 ← ρ(G0 ) = (a, b, c)
+√
+
+√4N
+d0 ← d0 + 21 ln b+
+b− 4N
+
+6 end
+
+7 for j = 1, 2 do
+8
+D(N ) ← R+ (N )/2j , F ← {(G0 , d0 )}, i ← 0
+9
+
+10
+11
+12
+13
+
+while di ≤ D(N ) do
+Gi+1 ← Gi ◦ Gi = (a, b, c)
+di+1 ← 2di
+while Gi+1 not reduced do
+√
+
+√4N
+di+1 ← di+1 + 12 ln b+
+b− 4N
+
+Gi+1 ← ρ(Gi+1 ) = (a, b, c)
+end
+16
+F ← F ∪ {(Gi+1 , di+1 )}
+17
+i ←i+1
+18
+end
+19
+t ← i, d¯ ← dt−1 , F̄ ← Gt−1
+20
+for i = t − 2, . . . , 0 do
+21
+if d¯ + di ≤ D(N ) then
+22
+F̄ ← F̄ • Gi
+23
+d¯ ← d¯ + di
+24
+end
+25
+end
+26
+H ← ρ(F̄ ) = (a, b, c), K ← ρ−1 (F̄ ) = (d, e, f )
+27
+for i = 0, . . . , imax do
+28
+if gcd(c, N ) > 1 then
+29
+return gcd(c, N )
+30
+else if gcd(f, N ) > 1 then
+31
+return gcd(f, N )
+32
+else
+33
+H ← ρ(H) = (a, b, c)
+34
+K ← ρ−1 (K) = (d, e, f )
+35
+end
+36
+end
+37 end
+38 return −1
+14
+
+15
+
+In what follows, we present two propositions that play a fundamental role in the
+analysis of our method for the case R+ (N ) > (ln N )2 . The first shows that t (the
+number of powers of G0 ) is always “small”, the second proves that our approximation
+of F τ /2 , if τ even, or F (τ −1)/2 if τ is odd, is good.
+Proposition 5.2. The value of t in Algorithm 2 is at most ⌈log2 D(N )⌉.
+
+Proof. Using Proposition 4.15 and the above notation, we have that
+and so
+
+δ(F 0 , Gi ) > 2δ(F 0 , Gi−1 ) − 2 ln(4N )
+δ(F 0 , Gi ) > 2i δ(F 0 , G0 ) − 2
+
+i−1
+X
+
+∀ i > 0,
+
+2k ln(4N )
+
+k=0
+
+= 2i δ(F 0 , G0 ) − 2(2i − 1) ln(4N )
+
+≥ 2i (2 ln(4N ) + 1) − 2(2i − 1) ln(4N )
+
+= 2i + 2 ln(4N ).
+Therefore, for i ≥ ⌈log2 D(N )⌉, we have δ(F 0 , Gi ) > D(N ).
+
+
+
+This proposition implies that t = O(ln N ), thanks to Remark 4.20.
+Proposition 5.3. Let F̄ be the quadratic form obtained at the end of the second
+phase of the method (using the notation of Algorithm 2). Then, the following holds
+D(N ) − δ(F 0 , F̄ ) = O((ln N )2 ).
+Proof. In the for loop at line 20 of Algorithm 2, we have at most t − 1 giant steps.
+Therefore, using the previous proposition and Proposition 4.15, we have that
+d¯ − δ(F 0 , F̄ ) = O((ln N )2 ).
+
+Now, we prove that d¯ − D(N ) = O((ln N )2 ). We define I ⊆ {0, . . . , t − 1} the set
+¯ i.e.
+of indexes of the distances d0 , . . . , dt−1 that appear in the computation of d,
+X
+d¯ =
+di .
+i∈I
+
+We distinguish two cases:
+• Case 0 ∈
+/ I: Then we have d¯ + d0 > D(N ), and so
+d¯ ≤ D(N ) < d¯ + d0 ,
+from which we deduce that
+
+0 ≤ D(N ) − d¯ < d0 ≤ 4 ln N.
+
+• Case 0 ∈ I: Let j = min{i ∈ N | i ∈
+/ I}, then 1 ≤ j ≤ t − 2. We have that
+X
+d¯ + d0 =
+di + 2d0
+i∈I\{0}
+
+=
+
+X
+
+di + d1 + O(ln N )
+
+i∈I\{0}
+
+=
+
+X
+
+di + 2d1 + O(ln N )
+
+i∈I\{0,1}
+
+=
+
+X
+
+di + d2 + O(ln N )
+
+i∈I\{0,1}
+
+..
+.
+=
+
+X
+
+di + dj + γ(N )
+
+i∈I\{0,...,j−1}
+
+where γ(N ) = O((ln N )2 ). By construction, we have that
+X
+
+di + dj > D(N ),
+
+i∈I\{0,...,j−1}
+
+from which
+
+d¯ ≤ D(N ) ≤ d¯ + d0 − γ(N ),
+
+and so
+Therefore,
+
+0 ≤ D(N ) − d¯ ≤ d0 − γ(N ) = O((ln N )2 ).
+
+D(N ) − δ(F 0 , F̄ ) ≤ D(N ) − d¯ + d¯ − δ(F 0 , F̄ ) = O((ln N )2 ).
+
+
+
+Therefore, if τ is even, then δ(F 0 , F τ /2 ) − δ(F 0 , F̄ ) = O((ln N )2 ). If τ is odd,
+we have that
+δ(F 0 , F (τ −1)/2 ) − δ(F 0 , F̄ ) = D(N ) − δ(F 0 , F̄ ) + O(ln N ) = O((ln N )2 )
+
+since δ(F 0 , F (τ −1)/2 ) = D(N ) + O(ln N ) by Corollary 4.19. We analyze the computational cost of this algorithm, assuming that R+ (N ) > (ln N )2 is preliminarily
+computed. The cost of the computation of the form G0 such that δ(F 0 , G0 ) ≥
+)+1)
++ 1, using Proposition 4.16.
+2 ln(4N ) + 1 is at most 2(2 ln(4N
+ln 2
+We then analyze the cost of the while loop at line 9. The number t of the giant
+steps is at most ⌈log2 D(N )⌉ = O(ln N ), proved in Proposition 5.2. Each giant step
+requires: O(ln N ) elementary operations for the extended Euclidean algorithm, used
+to compute s, u and v in the Gauss composition, and at most O(ln N ) applications
+of ρ. Indeed, if we apply the Gauss composition of two forms in Υ, using the
+extended Euclidean algorithm, we obtain (a, b, c) such that |c| = O(N 4 ). This follows
+from Proposition 2.4 and the classical bounds on the solution of Bézout’s identity
+via the extended Euclidean algorithm. Hence, by Proposition 4.6, the number of
+applications of ρ is O(ln N ). Therefore, the cost of the while loop at line 9 is
+O((ln N )2 ).
+The computation of F̄ requires at most O((ln N )2 ) steps: at most O(ln N ) giant
+steps, and at most O(ln N ) application of ρ for each giant step.
+Finally, as proved in Proposition 5.3, the distance between the approximation F̄
+and F τ /2 , or F (τ −1)/2 , is at most O((ln N )2 ), and so, using again the fact that, for
+each reduced form F , δ(F, ρ2 (F )) > ln 2, are needed only O((ln N )2 ) applications of
+ρ to reach F τ /2 or F (τ −1)/2 .
+In conclusion, the method has a computational complexity of O((ln N )2 ). It is
+remarked that the cost of elementary arithmetic operations (i.e. additions, subtractions, multiplications and divisions of big integers) and logarithm valuations are not
+counted.
+Remark 5.4. Using Proposition 5.2, Proposition 5.3, Corollary 4.19, and Proposition 4.16, it is possible to derive the following upper bound on the number of iterations of ρ and ρ−1 in the second phase of the method
+
+
+
+ +
+R (N )
+33
+2
++
+ln(4N ) + 1.
+4 ln(4N ) log 2
++
+Ψ(R (N ), N ) =
+ln 2
+2
+4
+This bound holds for both the cases when τ is even and τ is odd.
+Remark 5.5. We point out that it is not necessary to have R+ (N ) precomputed; it
+is sufficient to have an integer multiple of it: R′ (N ) = kR+ (N ), with k ∈ N. For
+simplicity, we describe how the method is modified in the case of an even period.
+In this case, running Algorithm 2 with R′ (N ) instead of R+ (N ) is equivalent to
+considering the principal cycle with multiplicity k (i.e. k times the principal cycle).
+Our target form is located in the middle of some period of distance R+ (N )/2, so:
+(1) if k is odd, a factor of 2N is found (as coefficient of a form) at the position
++
+at distance kR 2(N ) , from the beginning;
+(2) if k is even, the quadratic form F τ −1 is found in a position at distance
+kR+ (N )
+(which reveals a posteriori that k is even); in this case, the procedure
+2
++
+
+can be repeated, targeting the form at position at distance kR 4(N ) from F 0 .
+
+Again, either a factor of 2N is found, or k is found to be a multiple of 4.
++
+Clearly the process can be iterated h times until kR2h(N ) is an odd multiple of
+R+ (N ), and a factor of 2N is found.
+If k, as a function of N , is O(N α ) with α constant, then the computational cost
+of the algorithm does not change. Indeed, in this case, the value of t in Algorithm
+2 is at most ⌈log2 (k D(N ))⌉ = O(ln N ) (see Proposition 5.2), and the number of
+iterations of ρ and ρ−1 is at most Ψ(kR+ (N ), N ) = O((ln N )2 ). The odd-period
+case follows similarly.
+As outlined in Remark 5.5, we are focused on studying and researching methods
+to efficiently calculate or approximate R+ (N ), or one of its integer multiples that
+is “not too large”. In particular, we are seeking a method that efficiently computes kR+ (N ), where k, as a function of N , is O(N α ), with α constant. Since
+R+ (N ) = nR(N ), with n ≤ 6, our problem is equivalent to
+√ finding an efficient algorithm that computes (a multiple of) the regulator of Q( N ). The method due to
+Vollmer, described in [31], currently has the bestknown
+It 
+is a Monte
+ complexity.
+√
+3
+Carlo algorithm that computes R(N ) in time O exp √8 ln N ln ln N , assuming the Generalized Riemann Hypothesis (GRH). Other methods for computing the
+regulator are detailed in [15].
+In conclusion, using this approach for the precomputation of R(N ) and the algorithm previously described,
+have obtained
+a factorization method of (conjectured)
+
+ we
+√
+3
+time complexity O exp √8 ln N ln ln N , which is more efficient than CFRAC
+and SQUFOF.
+6. Conclusions
+We proposed a novel factorization algorithm which is polynomial-time,
+provided
+√
+knowledge of a (not too large) multiple of the regulator of Q( N ), or an accurate
+approximation of it. The problem of computing the regulator R(N ) lies in N P ∩
+co-N P, under the assumptions of the GRH and the Extended Riemann Hypothesis
+(ERH), as shown in [15, Section 13.6].
+A natural direction for advancing our method involves studying techniques for
+finding good approximations of kR(N ), with k being a positive integer. A common
+approach in this line of research involves the use of the analytic class number formula
+p
+(19)
+h(N )R(N ) = D(N )L(1, χD(N ) )
+√
+where N is squarefree, D(N ) is the discriminant
+of
+Q(
+N ), h(N ) is the class number
+
+
+√
+D(N )
+, and L(1, χD(N ) ) is the Dirichlet
+of Q( N ), χD(N ) is the Kronecker symbol
+·
+L-function defined by
+
+
+∞
+X
+1 D(N )
+L(1, χD(N ) ) =
+.
+n
+n
+n=1
+Determining precise bounds on R(N ) is a difficult problem, closely connected
+to the Cohen–Lenstra heuristics [6]. Jacobson, Luke, and Williams [16], examined
+bounds on R(N ) and L(1, χD(N ) ), reporting results from large-scale numerical experiments. An overview of the main results concerning bounds on L(1, χD(N ) ) and
+R(N ) is further reported in [15, Section 9.5]
+Two main methods have been developed to approximate h(N )R(N ) using (19).
+The first is due to Bach [1] and requires the ERH for estimating the error in the approximation, which is O(N 2/5+ǫ ). This method has time complexity of O(N 1/5+ǫ ).
+The second one, introduced by Srinivasan [29], approximates h(N )R(N ) using a
+technique called the ‘Random Summation Technique’, which differs from Bach’s
+
+method. The error in the approximation is O(N 2/5+ǫ ) and is estimated probabilistically in expected time O(N 1/5+ǫ ) without assuming the ERH. However, there is a
+small probability that the approximation may be inaccurate, requiring recomputation.
+Acknowledgments
+The first author is member of GNSAGA of INdAM and acknowledges support
+from Ripple’s University Blockchain Research Initiative. The second author is partially supported by project SERICS (PE00000014 - https://serics.eu) under the
+MUR National Recovery and Resilience Plan funded by European Union - NextGenerationEu.
+References
+
+[1] E. Bach. “Improved Approximations for Euler Products”. In: Number theory.
+1995, pp. 13–28.
+[2] C. Bradford and S. S. Wagstaff Jr. “Square Form Factorization, II”. In: Bulletin
+of the Polish Academy of Sciences. Mathematics 70 (1) (2022), pp. 13–34.
+[3] D. A. Buell. Binary Quadratic Forms: Classical Theory and Modern Computations. Springer, 1989. isbn: 9783540970378.
+[4] S. Chan, P. Koymans, D. Milovic, and C. Pagano. “The 8-rank of the Narrow
+Class Group and the Negative Pell Equation”. In: Forum of Mathematics,
+Sigma 10 (2022), e46. doi: 10.1017/fms.2022.40.
+[5] H. Cohen. A Course in Computational Algebraic Number Theory. Springer
+Publishing Company, Incorporated, 2010. isbn: 3642081428.
+[6] H. Cohen and H. W. Lenstra Jr. “Heuristics on Class Groups of Number
+Fields”. In: Number Theory Noordwijkerhout 1983: Proceedings of the Journées
+Arithmétiques held at Noordwijkerhout, The Netherlands July 11–15, 1983.
+Springer, 2006, pp. 33–62.
+[7] J. E. Cremona and R. W. K. Odoni. “Some Density Results for Negative
+Pell Equations; an Application of Graph Theory”. In: Journal of the London
+Mathematical Society s2-39.1 (Feb. 1989), pp. 16–28. issn: 0024-6107. doi:
+10.1112/jlms/s2-39.1.16. eprint: https://academic.oup.com/jlms/article-pdf/s2-39/1/16
+url: https://doi.org/10.1112/jlms/s2-39.1.16.
+[8] P. G. L. Dirichlet. “Einige neue Sätze über unbestimmte Gleichungen”. In:
+Abh. K. Preuss. Akad. Wiss (1834), pp. 649–664.
+[9] M. Elia. “Continued Fractions and Factoring”. In: Rendiconti del Seminario
+Matematico, Università e Politecnico di Torino 78.1 (2020), pp. 83–101.
+[10] É. Fouvry and J. Klüners. “On the Negative Pell Equation”. In: Annals of
+mathematics (2010), pp. 2035–2104.
+Fouvry and J. Klüners. “The Parity of the Period of the Continued Fraction
+[11] É. √
+of d”. In: Proceedings of the London Mathematical Society 101.2 (Sept. 2010),
+pp. 337–391. issn: 0024-6115. doi: 10.1112/plms/pdp057. eprint: https://academic.oup.com/plm
+url: https://doi.org/10.1112/plms/pdp057.
+[12] C. F. Gauß and A. A. Clarke. Disquisitiones Arithmeticae. Yale University
+Press, 1966.
+[13] J. E. Gower and S. S. Wagstaff Jr. “Square Form Factorization”. In: Mathematics of Computation 77 (261) (2007), pp. 551–588.
+[14] L. Hua. Introduction to Number Theory. Springer-Verlag, 1982. isbn: 9783540108184.
+[15] M. Jacobson and H. Williams. Solving the Pell Equation. CMS Books in Mathematics. Springer New York, 2008. isbn: 9780387849232.
+[16] M. J. Jacobson Jr, R. F. Lukes, and H. C. Williams. “An Investigation of
+Bounds for the Regulator of Quadratic Fields”. In: Experimental Mathematics
+4.3 (1995), pp. 211–225.
+
+[17] C. G. Ji. “Diophantine Equations x2 − Dy 2 = −1, ±2, Odd Graphs, and Their
+Applications”. In: Journal of Number Theory 114.1 (2005), pp. 18–36.
+[18] P. Koymans and C. Pagano. “On Stevenhagen’s Conjecture”. In: arXiv preprint
+arXiv:2201.13424 (2022).
+[19] M. Kraitchik. Recherches sur la Théorie des Nombres, Tome II Factorization.
+Paris : Gauthier-Villars, 1929.
+[20] D. H. Lehmer and R. E. Powers. “On Factoring Large Numbers”. In: Bulletin
+of the American Mathematical Society 37 (10) (1931), pp. 770–776.
+[21] H. W. Lenstra Jr. “On the Calculation of Regulators and Class Numbers of
+Quadratic Fields”. In: 1982.
+[22] M. A. Morrison and J. Brillhart. “A Method of Factoring and the Factorization
+of F7 ”. In: Mathematics of Computation 29 (1975), pp. 183–205.
+[23] C. D. Patterson and H. C. Williams. “Some Periodic Continued Fractions With
+Long Periods”. In: Mathematics of Computation 44.170 (1985), pp. 523–532.
+[24] C. Pomerance. “A Tale of Two Sieves”. In: Notices Amer. Math. Soc. 43.12
+(1996), pp. 1473–1485. issn: 0002-9920,1088-9477.
+[25] M. Richard. “Lagrange, Central Norms, and Quadratic Diophantine Equations”. In: International Journal of Mathematics and Mathematical Sciences
+2005 (June 2005). doi: 10.1155/IJMMS.2005.1039.
+[26] P. J. Rippon and H. Taylor. “Even and Odd Periods in Continued Fractions
+of Square Roots”. In: The Fibonacci Quarterly 42.2 (2004), pp. 170–180.
+[27] D. Shanks. “Analysis and Improvement of the Continued Fraction Method of
+Factorization”. In: American Mathematical Society Notices 22:A-68 (1975).
+[28] W. Sierpiński and A. Schinzel. Elementary Theory of Numbers. Monographie
+Matematyczne. North-Holland, 1988. isbn: 9780444866622.
+[29] A. Srinivasan. “Computations of Class Numbers of Real Quadratic Fields”. In:
+Mathematics of Computation 67.223 (1998), pp. 1285–1308.
+[30] P. Stevenhagen. “The Number of Real Quadratic Fields Having Units of Negative Norm”. In: Experimental Mathematics 2.2 (1993), pp. 121–136.
+[31] U. Vollmer. “An Accelerated Buchmann Algorithm for Regulator Computation
+in Real Quadratic Fields”. In: Algorithmic Number Theory. Ed. by Claus Fieker
+and David R. Kohel. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002,
+pp. 148–162. isbn: 978-3-540-45455-7.
+[32] H. Yokoi. “Solvability of the Diophantine Equation x2 − Dy 2 = ±2 and New
+Invariants for Real Quadratic Fields”. In: Nagoya Mathematical Journal 134
+(1994), pp. 137–149. doi: 10.1017/S002776300000489X.
+Dipartimento di Matematica, Università di Trento, Via Sommarive 14, 38123, Povo
+(TN), Italy
+Email address: nadir.murru@unitn.it
+Dipartimento di Scienze Matematiche L. Lagrange, Politecnico di Torino, Corso
+Duca degli Abruzzi 24, 10129, Torino (TO), Italy
+Email address: giulia.salvatori@polito.it
+
+

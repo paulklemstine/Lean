@@ -1,0 +1,1127 @@
+arXiv:2503.10158v4 [math.NT] 7 Sep 2025
+
+Solving Modular Linear Systems with a Constraint by parallel
+decomposition of the Smith form and extended Euclidean division
+modulo powers of primes divisors
+Virendra Sule
+Professor of Practice
+Department of Computer Science and Engineering
+Indian Institute of Technology Hyderabad
+India
+virendra.sule@prjt.cse.iith.in
+September 9, 2025
+Abstract
+Integral linear systems Ax = b with matrices A, b and solutions x are also required to be in integers,
+can be solved using invariant factors of A (by computing the Smith Canonical Form of A). This paper
+explores a new problem which arises in applications, that of obtaining conditions for solving the Modular
+Linear System Ax = b mod n given A, b in Zn for x in Zn along with the constraint that the value
+of the linear function ϕ(x) = ⟨w, x⟩ is coprime to n for some solution x. In this paper we develop
+decomposition of the system to coprime moduli pr(p) which are divisors of n and show how such a
+decomposition simplifies the computation of Smith form. This extends the well known index calculus
+method of computing the discrete logarithm where the moduli over which the linear system is reduced
+were assumed to be prime (to solve the reduced systems over prime fields) to the case when the factors of
+the modulus are prime powers pr(p) . It is shown how this problem can be addressed efficiently using the
+invariant factors and Smith form of the augmented matrix [A, −pr(p) I] and conditions modulo p satisfied
+by w, where pr(p) vary over all divisors of n with p prime.
+
+Keywords: Modular linear algebra, Smith form of integral matrices, Chinese Remainder Theorem (CRT).
+
+1
+
+Introduction
+
+The problem of solving the non-homogeneous modular linear system
+Ax = b mod n
+
+(1)
+
+arises in many computational problems of Cryptography and Coding where, n is a given modulus and A, b
+are matrices over the modular ring Zn , such as for instance in the prime factorization of n by quadratic
+residues and for discrete log computation [1, 9] over finite fields by the index calculus method. In most such
+problems main practical hurdles are, the large size of the system (or the number of unknowns) along with
+the large size of the modulus n. For solving such large sized linear modular systems over large n it would
+be highly desirable to reduce the problem by parallel computation using the Chinese remainder theorem
+(CRT) over moduli pr(p) which are coprime divisors of n. Surprisingly, such a reduction does not seem to
+have been discussed in the past literature for solving modular linear systems. A well known case of reduction
+to coprime factors of n arises in the Baby Step Giant Step method of solving the discrete log over a cyclic
+group with known prime factorization of the group order n. This computation of the discrete log over a
+1
+
+cyclic group of large order n has been shown to be parallely decomposable over groups of order p, the prime
+divisors of n, well known as the Pohlig-Hellman reduction [2]. On the other hand, reduction of the linear
+system arising in the index calculus method of computing the discrete logarithm has not been known when
+the group order has prime power factors. The reduction in the number of variables is usually achieved by
+special number field sieves [11] in factorisation problems. In most discrete log computations using index
+calculus the prime is of the form 2q + 1 where q is a large prime. Hence the linear algebra step (which
+leads to solving a modular linear system) of solving the logarithms of the factor base by a modular linear
+system is performed modulo q and modulo 2 and the result is computed by CRT. Hence the reduced systems
+are defined over finite prime fields. But for general modulus n the reduction of the linear system requires
+solving for moduli pr when r > 1. In this paper we develop a reduction of the Smith form computation of an
+extended matrix for solving the modular system (1) over moduli pr . Hence the algorithm results in parallel
+decomposition necessary for solving the system in p-adic arithmetic.
+In fact, in this paper we consider the modular system problem (1) with the further constraint that a
+given linear function ϕ(x) = ⟨w, x⟩ is coprime to n. Such a problem arises in Cryptanalysis, [13, 14], in the
+problem of inversion of sequences of m-tuples over Cartesian products of binary or small prime p fields, Fm
+p
+or that of local inversion of non-linear maps over Fm
+p when the complexity of the sequences is considered in
+terms of Linear Recurrence Relations (LRR) modulo pm . Previous cases of LRR as well as non-linear RRs
+over the finite field F are discussed in [12, 13, 14]. For instance, when the sequence {sk , k = 0, 1, 2, . . .} has
+minimal linear recurrence, the unknown co-efficients of the minimal polynomial {x0 , . . . , x(m−1) } satisfy a
+linear system defined by the Hankel matrix of the sequence and the invertibility of the sequence requires that
+x0 ̸= 0 which is a special case of a linear function ⟨w, x⟩ = x0 ̸= 0 over the field of the sequence. When the
+LRR is considered over modulo n then the corresponding condition becomes x0 invertible modulo n. Hence
+the problem considered in this paper is a general problem of solving the system (1) with the constraint that
+a given linear function ⟨w, x⟩ is coprime to n.
+There are two main hurdles with this problem of computing LRRs of sequences modulo pr . First one is
+that the order of a LRR of a pseudorandom sequence over Fp can be exponential, comparable to pm . The
+second theoretical hurdle is that the linear system modulo pr for r > 1 required to be solved for computing
+the LRR is no more over a finite field. Hence linear algebra methods (over fields) do not apply. Hence any
+computational method which can compute the Linear Complexity of such sequences modulo pr has to be
+scalable for large sizes of pr . The method of decomposition proposed in this paper utilizes special version
+of Smith form of matrices over pr and is theoretically suitable to achieve the objective of efficient parallel
+computation using p-adic arithmetic.
+
+1.1
+
+Summery of contribution
+
+Consider a brief summary of contributions made in this paper and the plan of presentation.
+1. Solution of the modular system (1) is first addressed in Section 2 using the Smith canonical form for
+integral matrices. An alternative direct linear algebra method of solving such a system by Gaussian
+reduction fails even for a simplest system ax = b mod n when a, n are not coprime without first
+using the Euclidean division to compute the Greatest Common Divisor (GCD) of a, n. Solution of the
+constrained system (3) is obtained in terms of conditions related to the prime divisors of n and the
+unimodular transformations arising in the Smith form in Theorem 2.
+2. The modular system solution can be decomposed as shown in Theorem 4 in terms of its residues by
+using the CRT by decomposing the system modulo pr(p) for the set of all prime divisors p of n. However
+the resultant systems modulo pr are also not solvable by linear algebra over fields when there is an
+r(p) > 1. Such a system then can be solved by the special Smith form for the augmented matrix
+[A, −pr I] as shown in Theorem 3.
+3. Next it is shown in Lemma 3 that the Smith form of [A, −pr I] can be efficiently computed by the
+solution of the Bezout identity modulo pr . This computation involves modulo p divisions only by
+
+2
+
+which the computation of GCD of elements of A and pr is much simpler in computation compared to
+using Euclidean division to solve the Bezout identity. This is the crux of the contribution of this paper
+which shows how the direct solution of the Bezout identity modulo pr by p-adic arithmetic is more
+efficient to compute the Smith form for special augmented matrix [A, −pr I] than using the Euclidean
+division.
+4. The above technique leads to the methodology of reducing the Smith form computation of [A, −nI] to
+[A, −pr I] using only modulo p computation. Hence the methodology is a local prime factor decomposition analogous to the decomposition known as Pohlig-Hellman reduction of the Baby Step Giant Step
+method of computing the discrete logarithm over cyclic groups. Such a reduction has been missing in
+the literature since the publication of [2].
+5. This paper shows how use of p-adic arithmetic for computation of the transform of the augmented
+matrix [A, −pr I] to Smith form using the Bezout identity results into an efficient computation compared
+to the Euclidean division and Smith form computation of [A, −nI] by parallel computation of Smith
+forms of [A, −pr I]. Further, the computation of Smith form of [A, −pr I] is also accomplished efficiently
+for known primes p using p-adic arithmetic. This is a computational insight which reverses the usual
+computation of Bezout identity for the of gcd a, pr by using Euclidean division. It shows that direct
+p-adic arithmetic requires only modulo p computations while Euclidean division to find this GCD
+requires division with respect to multiple divisors and dividends.
+6. In the final section, Section 4, we provide a solution of the constrained linear system (14), (15) over a
+field.
+7. Appendix A, treats the case of solving a linear system modulo q r where q is the power pd of a prime
+denoting the p-adic byte representation of numbers modulo q r . The resulting algorithm shows that the
+Smith form computation modulo q r can be carried out in efficient byte operations pre-defined in the
+computer.
+8. For solving modular systems, the finite field linear algebra approach is not applicable when there are
+prime divisors of n with powers larger than unity. Hence the method proposed in this paper provides
+a completion of this old problem of linear algebra modulo n by using p-adic arithmetic and reducing
+to moduli pr .
+The above points briefly summarize the contributions of this paper. We focused mainly on the theory
+behind the computation and have omitted numerical illustrations, which are truly out of scope and would
+have required a much longer article. This paper is based on the arxiv version [15].
+
+1.2
+
+Linear modular system with a constraint
+
+Condition for solvability and solutions of the modular system (1) can be obtained in terms of a nonhomogeneous Integral Linear System of the form
+Ax = b
+(2)
+where A, b are integral matrices and solutions x sought are also integral. A well known approach to solving
+such integral systems is to reduce A and [A, b] to Hermit normal form [4, 10]. A stronger normal form
+than the Hermit form is the Smith canonical form which is diagonal. Existence condition and all integral
+solutions of (2) can be described in terms of the Smith canonical form of A. In this paper we show how to
+find conditions to solve the modular linear system (1) with the additional constraint that ⟨w, x⟩ is coprime
+to n, using the Smith form reduction and the Chinese Reminder Theorem (CRT). This problem is stated
+formally as,
+
+3
+
+k
+Problem 1. Given a modulus n (positive integer), matrix A over Zk×l
+n , b over Zn and a linear function
+l
+ϕ(x) = ⟨w, x⟩ : Zn → Zn , find the conditions for the existence of solutions to the following system with the
+constraint
+Ax = b mod n and ϕ(x) is coprime to n
+(3)
+
+Find a characterization of all solution x mod n when the conditions are satisfied and compute one of the
+solutions.
+In the following sections we show how this extended problem 1 can be solved by using the Smith form
+reduction of an augmented matrix, the extended Euclidean division and the CRT.
+
+1.3
+
+Efficient computation by reduction of Smith form modulo pr
+
+As briefly pointed out above in Section 1.1, Summery of Contributions, the main drivers of efficiency, in
+computation of the Smith form for solving the modular system (1) and subsequent checking of existence
+conditions for solving the constraint on ϕ(x) in Problem 1 are
+1. Use of CRT which allows decomposition of the problem into independent sub-problems over the moduli
+pr(p) corresponding to coprime divisors of n. Hence the solution has a natural parallel computational
+decomposition.
+2. Further, the Smith form computation of the resulting augmented matrix is vastly simplified since only
+gcds of the form pk are needed. This is because gcd computation of a system of integers a1 , a2 , . . . , pr
+for a known prime p only involves discovering the largest power pk which divides all the ai . Hence
+explicit Euclidean division by general integers is avoided.
+3. Another important issue leading to the difficulty of solving modular liner system modulo n arises when
+n has divisors of the form pr(p) with p prime and r(p) > 1. For such cases solving the reduced linear
+systems Ax = b mod p over prime fields Fp does not lead to a solution of the system modulo n. Hence
+in such cases, efficient (black box) linear algebra method of [3] cannot be used. Such cases of r(p) > 1
+the modular systems have to be necessarily addressed using the Smith form (or invariant factors) of the
+matrix [A, −pr(p) I]. Reduction of Smith form computation over moduli pr using parallel computation
+(and CRT) has surprisingly not appeared in the past literature.
+Due to the above reasons, the solution of the problem is greatly simplified by parallel reduction over
+moduli pr and hence the computations are scalable for large number of unknown variables as well as large
+size of n. In the case when the powers r(p) = 1 for all prime divisors p of n the reduction to moduli p
+of the systems lead to independent linear systems over Fp . In such a case the individual systems can be
+solved very efficiently by the Wiedemann’s method known as Black box Linear Algebra [3, 7]. Unfortunately,
+Wiedemann’s method based on minimal polynomial computation of the matrix is not applicable when the
+matrix is not square and the modulus is pr with r > 1 (system is not over a field).
+
+2
+
+Solution of the integral linear system in terms of the Smith form
+
+First we consider the integral linear system (2) and describe the condition for the existence of solutions, as
+well as determine all solutions using the well known Smith form of A. The Smith form computation of a
+matrix over a Euclidean Domain such as Z and polynomials K[X] over a field K is a generalization of the
+GCD computation of set of integers and has well known algorithms [4, 7, 5, 10]. Importance of Hermit and
+Smith forms of matrices have also been pointed out in the past [6]. Hence following lemma is stated without
+proof.
+Lemma 1. For an (integral) matrix A in Zk×l there exist unimodular matrices P in Zk×k and Q in Zl×l
+such that
+P AQ = Ŝ
+4
+
+where the integral matrix Ŝ is of the form
+
+Ŝ =
+
+S
+0
+
+0
+0
+
+
+
+S is an r ×r diagonal matrix when A has rank r (i.e. the largest order of nonzero determinant of a submatrix
+of A is r)
+S = diag [f1 , f2 , . . . , fr ]
+where fi are unique positive integers such that f1 |f2 , f2 |f3 ,. . . ,fr−1 |fr .
+The matrix Ŝ is said to be the Smith canonical form of A and the numbers fi , i = 1, . . . r are called its
+invariant factors. Consider the linear system (2) and let P in Zk×k and Q in Zl×l be unimodular matrices
+which bring A into the Smith form as above. Define b̃ = P b and x̃ = Q−1 x with partitions
+
+
+
+
+x1
+b1
+x̃ =
+and b̃ =
+x2
+b2
+where the vectors x1 and b1 are in Zr , b2 is in Zk−r , b1 = [β1 , β2 , . . . , βr ]T .
+Theorem 1. The integral system (2) has a solution iff
+1. b2 = 0.
+2. fi |βi for i = 1, . . . r. Let di fi = βi .
+then all solutions of (2) are given by
+
+
+
+d1
+ .. 
+
+
+x = Q . 
+ dr 
+x2
+for an arbitrary integral x2 in Zl−r .
+Proof. Denoting x̃ = Q−1 x the equation and transforming the equation (2) to the system of equations
+(P AQ)(Q−1 )x = P b which is
+Sx1 = b1 , 0 = b2
+in which x2 does not appear. Since S is diagonal with invariant factor fi on the i-th row, x1 is integral iff
+fi |βi for i = 1, 2, . . . , r. Hence x1 = [d1 , d2 , . . . , dr ] and x2 an arbitrary Zl−r tuple gives all the solutions of
+the transformed equation x̃ = [x1 , x2 ]T . Hence all solutions are
+x = Qx̃
+as claimed.
+
+2.1
+
+Solution of the modular linear system
+
+The modular system (1) has a solution x in Zl iff there is an integral k-tuple y in Zk such that
+Ax − Iyn = b
+where I is an k × k identity matrix. Hence we get an equivalent integral system
+
+
+
+ x
+A −nI
+=b
+y
+
+(4)
+
+Then we can determine the solutions of the modular system by solving (4) using the Smith form of [A, −nI].
+5
+
+Lemma 2. There exist unimodular matrices P in Zk×k , Q in Z(k+l)×(k+l) such that
+P [A, −nI]Q = [S, 0]
+where S is a k × k diagonal nonsingular matrix of invariant factors of [A, −nI] and [S, 0] is a k × (k + l)
+matrix with l zero columns added. Denote b̃ = P b. The system (4) has a solution iff x0 = S −1 P b is integral
+which is equivalent to fi |βi . For an arbitrary integral l tuple x1 , denote x̃ = [xT0 , xT1 ]T . Then
+
+
+
+
+x
+x0
+=Q
+(5)
+y
+x1
+are all solutions of (4).
+Proof. Since the modular system (1) has a solution iff the equivalent system (4) has an integral solution
+x, y, from the theorem (1) it follows that there exist unimodular matrices P, Q which transform [A, −nI] to
+[S, 0] since integral rank [A, −nI] is equal to k. The matrix S is the diagonal nonsingular matrix of invariant
+factors of [A, −nI]. The integral system (4) is then transformed to
+Sx0 = b̃
+The existence of a solution then follows iff S divides b̃ which makes x0 = S −1 b̃ integral. Since the transformed
+equation does not involve x1 this Zl tuple is free. Hence all solutions x, y are described by (5).
+For ease of exposition consider further notations. Let the matrix Q be partitioned and denoted as
+
+
+Q0 Q1
+Q=
+Q2 Q3
+Necessary and sufficient condition for solvability for the modular system (1) is thus obtained in above
+lemma as, the diagonals of S must divide all the components of b̃ at the corresponding indices. If x0 = S −1 b̃,
+then all solutions of the modular system (1) are described by
+x = (Q0 x0 + Q1 x1 ) mod n
+
+(6)
+
+for arbitrary Zl -tuple x1 . To express the conditions for uniqueness of solutions of the system (1) we need
+a definition of unimodular-rank Zn A of a matrix A over Zn . Such a rank of A is r if r is the largest size
+of minors of A such that if {a1 , a2 , . . . , aM } is the set of all such minors then the GCD(a1 , a2 , . . . , aM ) is
+coprime to n.
+Corollary 1. Following statements are equivalent
+1. The modular system (1) has a unique solution x in Zln .
+2. Q1 = 0 mod n
+3. l ≤ k and unimodular-rank Zn A = l
+Proof. Assume first statement holds. Consider the residue equation Ax = b mod p where p is a prime divisor
+of n. If the system (1) has a unique solution then x mod p is the unique solution of the residue equation
+at p for all p|n. Hence rank Zp (A mod p) = r = l which must be less than or equal to k. This implies that
+for every prime divisor p of n, there exists a non-zero l × l minor of A modulo p. Since an l × l minor of
+(A mod p) equals l × l minor of A modulo p, it follows that the GCD of all l × l minors of A is not divisible
+by p for all prime divisors of n, i.e. the GCD of l × l minors of A is coprime to n. Hence the condition that
+unimodular-rank Zn A = l follows. This proves that 1 ⇒ 3.
+The expression of all solutions (6) implies that x is unique iff x = Q0 x0 mod n which implies that
+Q1 x1 = 0 mod n
+6
+
+for all x1 in Zln . Hence the solution is unique iff Q1 mod n = 0. Hence 1 ⇒ 2.
+Assume now that condition 2 holds. Since
+P [A, −nI]Q = [S, 0]
+using the partition of Q and noting that Q1 = 0 we get
+
+
+Q0 0
+P [A, −nI]
+= [P AQ0 − nP Q2 , −nP Q3 ]
+Q2 Q3
+Hence (4) can be written as
+
+[P AQ0 − nP Q2 , −nP Q3 ]
+
+x0
+x1
+
+
+= P b.
+
+Hence
+P AQ0 x0 = P b mod n
+Since P and Q0 are unimodular it follows that denoting y0 = Q0 x0 the equation Ay0 = b mod n has a unique
+solution. Hence 2 ⇒ 1.
+Hence equivalence of all the three statements is proved.
+
+2.2
+
+Solution of the constrained system
+
+Next consider the constraint ϕ(x) = ⟨w, x⟩ required to be coprime to n for some solution x of (1) or
+equivalently that of (4). Consider the (l + k) tuple [wT , 0T ]T obtained by adding k tuple of zero rows to w.
+Denote
+
+
+
+
+w0
+w
+w̃ =
+= QT
+(7)
+w1
+0
+where Q is the unimodular matrix in the Smith form decomposition of [A, −nI], w0 is the first l rows of w̃
+and w1 is the remaining k rows of w̃. Then we have
+
+
+
+
+w
+x0
+⟨w, x⟩ = ⟨
+,Q
+⟩ = ⟨w0 , x0 ⟩ + ⟨w1 , x1 ⟩
+0
+x1
+Let {p1 , p2 , . . . , pr } denote the set of all prime divisors of n. Since all solutions of the modular system (1) are
+given by (6), the solutions which satisfy the constraint < w, x > coprime to n need to be characterized within
+this set of all solutions. Existence of such solutions satisfying the constraint and choice of x1 to construct a
+solutionare described by the next Theorem.
+Theorem 2. The linear system (3) of Problem 1 has a solution iff
+1. x0 = S −1 b̃ is integral and
+2. For all j = 1, 2, . . . r, whenever ⟨w0 , x0 ⟩ mod pj = 0, w1 mod pj ̸= 0.
+All solutions x are of the form (6). To construct a solution x1 may be chosen as follows:
+1. x1 = 0 if ⟨w0 , x0 ⟩ mod pj ̸= 0 for all j.
+2. If ⟨w0 , x0 ⟩ mod pj = 0 for any j then for all such j, x1j = x1 mod pj are chosen such that ⟨w1 , x1j ⟩ mod pj ̸=
+0 and x1 is obtained to satisfy the residues x1j = x1 mod pj and x1 mod pj = 0 when ⟨w0 , x0 ⟩ mod pj ̸=
+0.
+
+7
+
+Proof. If the conditions hold then the modular system (1) has a solution x by the first condition and
+⟨w, x⟩ = ⟨w0 , x0 ⟩ + ⟨w1 , x1 ⟩ for an arbitrary integral x1 .
+Now it remains to show how the second condition is sufficient to satisfy the constraint that ⟨w, x⟩ is
+coprime to n. This constraint is satisfied iff ⟨w, x⟩ mod pj ̸= 0 for all prime divisors pj of n. If for some
+j, ⟨w0 , x0 ⟩ mod pj ̸= 0, then x1 = 0 gives a solution which satisfies ⟨w, x⟩ coprime to n. On the other
+hand if ⟨w0 , x0 ⟩ mod pj = 0 for all j and w1 mod pj ̸= 0 for some j, then there exists x1j in Zpj such that
+⟨w1 mod pj , x1j ⟩ ̸= 0. Hence by the CRT there exists x1 which satisfies the residues
+x1
+
+= x1j
+= 0
+
+mod pj
+mod pj
+
+such that w1 mod pj ̸= 0
+whenever ⟨w0 , x0 ⟩ mod pj ̸= 0
+
+Conversely, suppose that there is a solution x to the system (1) such that ⟨w, x⟩ is coprime to n. Then
+clearly the first condition holds and there exists an integer q such that q⟨w, x⟩ = 1 mod n. Hence ⟨w, x⟩ is
+invertible in Zn and it follows from the CRT that ⟨w, x⟩ mod pj ̸= 0 for all prime divisors pj of n. This leads
+to the second condition. Hence, the conditions are necessary.
+Theorem above shows how the Problem (1) can be solved by using the Smith form of [A, −nI] and the
+knowledge of prime divisors of n.
+
+3
+
+Solution modulo q r where q = pd
+
+Next we consider the special case of the Problem 1 when the modulus is q r where q = pd and p is a fixed
+prime. Such a case arises when the modular system is defined over strings of r bytes where each byte is a
+string of d bits in Zp for small primes such as 2, 3. This special case of the problem of solving the modular
+system with constraint is stated as follows.
+Problem 2. Given A in Z/(q r )k×l , b in Z/(q r )k , w in Z/(q r )l and a linear function ϕ(x) : Z/(q r )l → Zp
+defined by ϕ(x) =< w, x > mod p determine necessary and sufficient conditions for existence of solutions x
+in Z/(q r )l to the linear system
+Ax = b mod (q r )
+such that ϕ(x) mod p ̸= 0. Describe construction of a solution when the conditions hold.
+From Theorem 2 we get the condition for solvability and the charactreization of solutions of this special
+case from the following theorem.
+Theorem 3. There exist unimodular matrices P , Q as in Lemma 2 such that P [A, −q r I]Q = [S, 0] is in
+Smith form where S is the diagonal matrix of invariant factors. Denote b̃ = P b. Then the Problem 1 for
+n = q r and q = pd has a solution iff
+1. x0 = S −1 b̃ is integral.
+2. For an arbitrary l tuple x1 in Z/(q r ) and x̃ as defined in Lemma (2) all solutions x of (4) with n = (q r )
+are given by (6).
+3. From the definition of w0 , w1 in (7), if < w0 , x0 > mod p = 0, w1 mod p ̸= 0.
+4. To construct a solution x1 , the component defining the solutions is chosen as x1 = 0 when < w0 , x0 >
+mod p ̸= 0 and < w1 , x1 > mod ̸= 0 when < w0 , x0 > mod p = 0.
+Proof follows from the steps in Lemma (2) and Theorem (2) and from the fact that x1 exists when
+w1 mod p ̸= 0 such that < w1 , x1 > mod p ̸= 0. Since there is only one prime divisor p in this special case
+of n = q r and q = pd the construction of x1 using CRT is not necessary as in the general case.
+
+8
+
+3.1
+
+Decomposition modulo pr and solution for general modulus n
+
+The modulo prime power case described above leads to the decomposition which helps in solving the general
+case when n is given with prime factorization
+Y
+n=
+prp
+p|n
+
+we can state the following theorem for existence and construction of a solution of Problem 1 using the CRT.
+Theorem 4. The Problem 1 has a solution iff for each prime divisor p of n the modular system of Problem
+2 has a solution x(p) for each p and q = p, r = r(p) such that x(p) satisfies < w, x(p) > mod p ̸= 0. If
+x(p) is a solution of the Problem 2 for each of the prime divisors p of n satisfying the constraint < w, x(p) >
+mod p ̸= 0 and
+x = x(p) mod pr(p) ∀p|n
+is the solution of the residues with respect to mutually coprime factors pr(p) , then x is a solution of the
+Problem 1.
+Proof. If the modular system Ax = b mod n has a solution x then x can be obtained uniquely from the
+residues x(p) = x mod pr(p) which are solutions of Ax = b mod pr(p) (termed as equations of residues
+modulo pr(p) ) and conversely if the residue equations have solutions x(p) then the vector x obtained by CRT
+with respect to coprime moduli pr(p) satisfies the modular system. Further the solution x satisfies < w, x >
+coprime to n iff < w, x > mod p ̸= 0 for all prime divisors p. Hence every solution x(p) of the residue
+equation must satisfy < w, x > mod p =< w mod p, x(p) > mod p ̸= 0. Conversely any solutions x(p) of
+residue systems satisfying the constraint < w, x(p) > mod p ̸= 0 determine a unique solution x of Problem
+2 modulo n. All other solutions can be obtained from such residues with respect to all prime divisors p.
+This theorem shows the decomposition of the problem from modulus n to the smaller moduli pr(p) for
+prime divisors p of n. Such a decomposition is computationally advantageous as we show next because the
+Smith form computation of [A, −pr(p) I] does not involve computation of GCDs of elements of A along with
+n but only involves division of pr to find the largest divisor. Hence solving the decomposed linear systems
+modulo pr(p) creates a notion of relative invariant factors which are invariant factors of [A, −pr(p) I]. These
+can be computed much efficiently because the prime p is known (hence also all the divisors of pr ) and hence
+analogous computation of the GCD of rows and columns of A required in Smith form computation of A are
+not required.
+
+3.2
+
+Smith form reduction of [A, −pr I]
+
+The above theorem gives solution of the special case of the modular system with constraint defined in
+Problem 2 for q = p. Hence it is desirable to simplify the algorithm for computation of the invariant factors
+of [A, −pr I] since all of these are powers of the prime p.
+3.2.1
+
+Solution of the Bezout identity with a prime power dividend
+
+The Smith form reduction of a matrix such as [A, −pr I] with p a prime by unimodular transformations, is
+based on computation of integral solutions xi , y to the Bezout identities such as
+l
+X
+
+ai xi + pr y = q
+
+(8)
+
+i=1
+
+where ai are given integers modulo pr and q is the GCD of (a1 , . . . , al , pr ). We may call such a Bezout
+identity to be Bezout identity modulo pr . Since the only divisors of pr are pk for 0 ≤ k ≤ r, q = pg and the
+
+9
+
+normalized Bezout identity (after canceling the factor pg from ai and pr ) is
+l
+X
+
+ai xi + pd y = 1
+
+(9)
+
+i=1
+
+d = r − g, where we now consider ai , xi , y to be in the modular ring Z/(pd ). Consider a solution in the
+simplest case
+ax + pd y = 1
+(10)
+where a and pd are coprime and
+a = a0 + a1 p + . . . + ad−1 p(d−1)
+b = b0 + b1 p + . . . + bd−1 p(d−1)
+x = x0 + x1 p + . . . + xd−1 p(d−1)
+y = y0 + y1 p + . . . + y(d−1) p(d−1)
+
+(11)
+
+are the p-adic representations of a, x and y in Z/(pd ) with ai , xi , yi in [0, p − 1]. For any number z in Z/(pd )
+denote (z) = z mod p and [z] = z div p. when (a, pd ) are coprime. When (a, pd ) are coprime a has no divisor
+pk for 0 ≤ k ≤ d.
+Lemma 3 (Bezout identity mod pr for a single element). Given the single number
+a=
+
+d−1
+X
+
+ai pi
+
+i=0
+
+for i = 0, . . . , (d − 1) with a0 mod p ̸= 0 is coprime to pd . If x, y satisfy the Bezout identity (10)
+axb + pd yb = b
+then xb, yb give solutions of the Bezout identity for right hand side b. The unique solutions xi , yi of
+co-efficients of solutions x, y of (10) modulo pd are given by the following iterations
+t0
+:= (a0 x0 )
+t0
+= 1 mod p
+for k = 1, 2, . . . , (d − 1)
+tk
+:= [t(k−1) ] + (a0 xk + a1 x(k−1) + . . . + ak x0 )
+tk
+= 0 mod p
+for j = 0, 1, . . . , (d − 1)
+t(d+j)
+:= [t(d−1+j) ] + a1 x(d−1+j) + a2 x(d−2+j) + . . . + a(d−1) x(1+j)
+t(d+j) + yj
+= 0 mod p
+
+(12)
+
+Given the solutions x, y in Z/(pd ) an integral solution to the Bezout identity (10) is
+ax + pd (y − t) = 1
+
+(13)
+
+where t exists because ax + pd y = 1 mod pd
+Proof. Proof follows by substitution of p-adic representations of a, x, y in (10) and comparing co-efficients
+of powers of p. While each co-efficient is computed modulo p, the carry part which is quotient by p is added
+to the higher power of p shown as [t(k−1) ] in the next value of tk in the iteration. Note that each equation
+tk = 0 for k > 0 has the unknown xk , is of the form a0 xk = bk mod p where bk depends on previously
+computed x0 , . . . , x(k−1) and only inversion modulo p of a0 is required for solving all xk . Since x, y were
+assumed with representations in Z/(pd ) the solution x, y of the iterations (12) satisfy
+ax + pd y = 1 mod pd
+Hence there exists an integer t such that the right hand side above is 1 + pd t. Hence a solution of the Bezout
+identity (10) is given by (13) as claimed.
+10
+
+Remark 1. Note that to find solutions x, y for (10), it is enough to solve the equation
+ax = 1 mod pd
+for x modulo pd . Once x is solved, ax = 1 + py for some y which can be obtained by dividing ax − 1 by pd .
+Since a is assumed to be in Z/(pd ) for any other integer a the Bezout identity solutions x, y can be found by
+solving (a mod pd )x = 1 modulo pd .
+If solution x, y in pd of the Bezout identity (10) are known then the matrix
+
+
+x −pd
+Q=
+y
+a
+is unimodular and
+[a, pd ]Q = [1, 0]
+Also [ab, pd b]Q = [b, 0]. We can thus formally state
+Lemma 4. If GCD(a, pr ) = b then there exists a unimodular matrix Q such that [a, pr ]Q = b.
+Remark 2. Note that the unimodular matrix Q is obtained using x, y the solutions of the Bezout identity
+(10) for the pair (ap−g , pd ) for d = r − g which is coprime. This computation is performed as shown in
+iterations (12) in Lemma 3 which involves division operations by p to compute the co-efficients mod p and
+the carry as quotient by p. The operations required to compute x, y are 1) one mod p inversion, 2) maximum
+of d2 multiplications modulo p and 3) d integral divisions by p. The overall cost of computations of iterations
+(12) can be shown to be O(l(p)d2 ). In general the cost of computation of the extended GCD of two integers a, b
+is known to be approximately O(l(a)l(b)) where l(a) is the bit length of a [8]. If a, b have prime factorizations
+Y
+Y r
+a
+pri i and b =
+pj j
+pi |a
+
+pj |b
+
+then
+l(a) =
+
+X
+
+ri l(pi ) and l(b) =
+
+X
+
+i
+
+rj l(pj )
+
+j
+
+Hence the cost of sequential computation of the solution of the Bezout identity is considerably reduced by
+considering independent representations of a, b modulo powers of prime divisors of n. For general integers
+solving the Bezout identity by parallel computation using CRT by reduction over every divisor pr(p) of the
+modulus n is the most transparent way to reduce the cost of computation.
+Remark 3. Another important observation about the computation of the Bezout identity and Q using the
+iterations (12) is that the successive Euclidean divisions of a by pd are not used. The only equations to be
+solved at all iteration steps are of the form a0 x = b mod p. On the other hand Euclidean division method
+of computing the Bezout identity involves several division by dividends other than pd . Hence the direct
+computation of the Bezout identity using the p-adic iterations (12) is far more inexpensive.
+3.2.2
+
+Solution of Bezout identity mod pr with multiple elements
+
+Next we state a lemma to extend the Lemma 4 to multiple elements
+Lemma 5 (Bezout identity for Multiple elements with GCD pg ). Let GCD(a1 , a2 , . . . , aN , pr ) = pg . Then
+there exists a unimodular matrix Q such that [a1 , a2 , . . . , an , pr ]Q = [pg , 0, . . . , 0]. The first column of Q is
+[x1 , x2 , . . . , xN , y]T where xi and y are modulo pr and satsfy
+N
+X
+
+ai xi + pr y = pg
+
+i=1
+
+11
+
+Proof. Let Q1 be a 2 unimodular matrix as computed in Lemma 3 such that [aN , pr ] = [pt1 , 0] where pt1
+is the GCD of (aN , pr ). By induction step assume that the GCD of (a(N −1) , . . . , a1 , pr ) be pt(N −1) and let
+Q(N −1) be a n × n unimodular matrix such that
+[a(N −1) , . . . , a1 , pr ]Q = [p(t(N −1) , 0, . . . , 0]
+The GCD of (aN , pt(N −1) ) is then pg . Let Q′ be a unimodular matrix as derived in lemma 4 such that
+[aN , pt(N −1) Q′ = [pg , 0]. Define
+ ′
+
+
+Q 0
+1 0
+QN =
+0
+I(n−1)
+0 Q(n−1)
+Then QN is (N + 1) × (N + 1) unimodular matrix such that
+[aN , . . . , a1 , pr ]Q = [ptg , 0, . . . , 0]
+The numbers xi and y from the first column of Q then satisfy the Bezout identity as claimed.
+The construction of unimodular matrix for solving the Bezout identity modulo pr for multiple elements
+(a1 , . . . , aN ) and GCD pg with pr uses the computations of Lemma 3 which are mod p and quotients by p.
+Hence for a known prime p these computations are much reduced compared to GCD computation of general
+(N + 1) elements and further solution of the general Bezout identity. In the next proposition we derive the
+unmodular matrix to transform the matrix [A, −pr I] to its Smith form.
+Proposition 1. There exist unimodular matrices P , Q such that
+P [A, −pr I]Q = [Sp , 0]
+where Sp is a diagonal matrix
+Sp = diag {pr1 , pr2 , . . . , prk }
+with 0 ≤ r1 ≤ r2 ≤ . . . ≤ rk .
+Proof. First bring the matrix Â = [A, −pr I] by column (unimodular) transformations ÂV1 to the upper
+triangular form [pr I, A]. Let t ≤ r be the largest power such that pt divides all elements in the first row
+of A. Then pt is the GCD of elements in the first row of ÂV1 . Hence there exists a unimodular matrix V2
+obtained from the extended Euclidean divison representation of the first row such that Â2 = ÂV1 V2 has pt
+as (1, 1) element while the entire first row is zero. Repeat the same process to make the first column of Â2
+equal to zero by constructing a unimodular matrix P and computing P Â2 . Repeat both steps of operation
+by left and right unimodular matrices till Â is brought to the form
+
+ k
+p 1 0
+0
+A1
+Since the original matrix Â has some of its 2 × 2 minors of the form p2r the GCD of elements of A1 must
+have a divisor pk2 where k2 ≥ k1 . Now repeat the same steps to make A1 successively into diagonal form by
+unimodular row and column operations. Hence after repeating such steps the matrix [A, −pr ] is transformed
+into a diagonal form with diagonal entries pki . Next add all columns from 2nd to last to the first column
+and then reduce the matrix to pr1 as (1, 1) entry and and another matrix A1 as above. Now we can see
+that 0 ≤ r1 and pr1 divides all other powers pki for i ≥ 2. Repeating the same process now on the resultant
+matrix gives the Smith form of [A, −pr I] as claimed.
+Remark 4. The reduction to Smith form of [A, −pr I] shown in the above Proposition uses division by p in
+all the steps to determine largest powers of p as the gcd of entries of the matrices at each step. If any element
+in the matrix is not divisible by p then the corresponding invariant factor is 1. Using the well known result
+on high probability of coprimeness of random integers it follows that the invariant factors for lower indices
+are highly likely to be 1.
+12
+
+Remark 5. Computing the GCD and solving the Bezout identity of a set of N integers and pr modulo pr
+has complexity equivalent to the O(N d2 (log p)2 ) where d = r − t and pt is the GCD of (a1 , . . . , aN , pr ). For
+a given prime p the unimodular matrix Q which can transform [a1 , a2 , . . . , aN , pr ] as
+
+
+[a1 , . . . , aN , pr ] Q = pt , 0, . . . , 0
+can be obtained in steps involving O(N d2 (log p)2 ) parallel operations. This involves only a verification of
+division by p and modulo p operations to solve equations (12). On the other hand if pr was one more general
+integer instead, the complexity of computing the GCD of N + 1 general integers of length l is O((l2 (N + 1))
+which increases rapidly with l, as observed from the lengths of general integers modulo n in Remark 1.
+
+3.3
+
+High level algorithm to solve the modular system
+
+The above discussion clearly shows that the solution of the modular system (1) can be solved using the CRT
+by decomposition and solution modulo divisors pr(p) in the prime factorization of n. However for r(p) > 1
+such decomposition does not result into linear systems over finite fields. Hence the decomposed systems
+need to be solved again using the Smith form for the augmented matrix of the system Ax = b mod pr(p) .
+This step can then be carried out by the procedure described above by solving for the unimodular matrices
+modulo pr(p) . Algorithm 1 describes the computation of solutions modulo pr(p) .
+Algorithm 1 Algorithm to compute the solution of the linear system modulo pr
+1: procedure LSmodpr(Solve Ax = b mod pr )
+2:
+Input A, b, p, r.
+3:
+Output Integeral Solutions x, y of the system Ax − pr y = b and solution modulo pr .
+4:
+Form the augmented matrix [A, −pr I].
+5:
+Find unimodular integral matrices P , Q from the procedure described in Lemma 2, to determine the
+Smith form [Sp , 0] of the augmented matrix.
+6:
+Compute
+x0 = (Sp )−1 P b
+if x0 is not an integral then Go to end if
+else
+Return x = Q0 x0 , y = Q2 x0 as one solution. See (5).
+Choose an arbitrary integral x1 in Zl . Compute arbitrary solutions x, y from formula (5) dependent on x1 .
+11:
+Return solutions x, y and solutions x mod pr .
+12:
+end if
+13:
+“Solution does not exist".
+14: end procedure
+7:
+8:
+9:
+10:
+
+3.4
+
+Using the CRT to solve the modular system
+
+The final algorithm to solve the modular system (1) using CRT is now presented below as Algorithm 2.
+Using the simplification in computation of the invariant factors of [A, −pr I] and decomposition of the
+problem of solving the modular system over the residues as described in Theorem 4, existence and construction of solutions to Problem 1 can be solved efficiently by parallel computation by using the reduction over
+moduli pr(p) which are coprime divisors of n. Further refinement of the computation is obtained by using
+efficient arithmetic modulo q = pd where d is the byte length of representation of numbers in digits modulo
+p. Such a computation is described in Appendix A.
+
+13
+
+Algorithm 2 Algorithm to compute the solution of the linear system modulo n using CRT
+1: procedure LSmodn(Solve Ax = b mod n)
+2:
+Input A, b, n, m distinct prime divisors of n and their multiplicities p, r(p).
+3:
+Output Integeral Solutions x, y of the system Ax − ny = b.
+4:
+Form the augmented matrix [A, −nI].
+5:
+for For each prime divisor pi |n with multipicity ri do
+6:
+Compute j = 1, 2, . . . , m
+Qi=m
+ri
+Pj =
+i=1,i̸=j (pi )
+r
+−1
+Qj = (Pj ) mod pj j
+Find solutions x(i), y(i) of the integral system Ax(i) − pri i y(i) = b using the procedure LSmodpr.
+x(i) ← x(i) mod pri i
+if for some i a solution does not exist then
+Go to end if
+11:
+else
+P
+12:
+Compute x = ( x(i)Pi Qi ) mod n
+13:
+Return solution x of (1).
+14:
+end if
+15:
+“Solution does not exist".
+16:
+end for
+17: end procedure
+7:
+8:
+9:
+10:
+
+4
+
+Linear system with constraint over a field
+
+For completeness of exposition and to conclude this paper, we consider a special case of Problem 1 over a field.
+This problem is likely to be only of theoretical interest but the analysis below shows that the problem can
+be solved purely using Linear Algebra instead of integer or modular arithmetic. Consider a fresh statement
+of the problem.
+Problem 3. Let K be a field and A in K m×l , b in K m , w in K l be given matrices. Determine the necessary
+and sufficient conditions under which the linear system
+Ax = b
+
+(14)
+
+has a solution x in K l such that the linear function ϕ(x) = ⟨w, x⟩ satisfies
+ϕ(x) ̸= 0
+
+(15)
+
+Develop a computational procedure to determine a solution.
+The problem is resolved by the following
+Proposition 2. The linear system (14) over K has a solution x over K such that ϕ(x) ̸= 0 iff
+1
+
+rank A = rank [A|b]
+
+
+2
+
+dim rowspan A < dim rowspan
+
+A
+wT
+
+
+
+(16)
+
+Proof. Since the linear system (14) must have a solution, condition 1 is necessary and sufficient for existence
+of a solution x over K. Let x0 be one solution of Ax = b over K. Then the set of all solutions of this system
+is given by
+S0 = {x0 + ker A}
+
+14
+
+Let ker A ̸= 0. Next requirement of the problem is that there exists a solution x such that < w, x ≯= 0.
+Hence it is necessary and sufficient along with condition 1 that the system of equations
+
+
+
+
+A
+b
+x=
+0
+wT
+has a solution set S1 which is a strict subset of S0 . Let Ax0 = b then x0 belongs to S0 . If < w, x0 ≯= 0
+then x0 does not belong to the solution set S1 and this shows that S1 is already a strict subset of S0 . Hence
+we assume that < w, x0 >= 0. Then the solution set of the above equations is
+
+
+A
+S1 = {x0 + ker
+}
+wT
+The condition required is that S1 is a strict subset of S0 . This is equivalent to the statement
+
+
+A
+dim ker
+< dim ker A
+wT
+Or equivalently
+
+dim rowspan A < dim rowspan
+
+A
+wT
+
+
+
+which is the condition 2. Hence condition 1 and 2 together are necessary and sufficient.
+
+4.1
+
+Condition when the linear equation (14) has a unique solution
+
+If the linear system (14) has a unique solution S0 = {x0 } (or when ker A = 0, then the requirement that the
+set S1 is a strict subset of S0 is equivalent to S1 = ∅. Hence we observe
+Proposition 3. If the linear system (14) over K has a unique solution then the problem 3 over K has a
+solution iff
+
+
+
+
+A
+b
+A
+< dim rowspan
+dim rowspan
+wT 0
+wT
+Proof. The problem has a solution iff
+
+
+A
+wT
+
+
+
+
+x=
+
+b
+0
+
+
+
+has no solution (or is inconsistent) which is expressed by the nas condition
+
+
+
+
+A
+A
+b
+rank
+< rank
+wT
+wT 0
+which is equivalent to the condition in the proposition.
+
+4.2
+
+Computation of a solution
+
+In the present case over a field K, steps to find a solution of (14) with the constraint that ϕ(x) ̸= 0 are as
+follows when conditions in Proposition 2 are satisfied.
+1. Let ker A ̸= 0 and {v1 , v2 , . . . , vs } be a basis of ker A.
+2. Find one solution x0 of Ax = b. This soln exists by condition 1 of (16) in Proposition 2.
+3. If ⟨w, x0 ⟩ ̸= 0, then x0 satisfies the constraint. If not at least one nonzero vector x1 exists in ker A such
+that ⟨w, x1 ⟩ ̸= 0 due to condition 2 in (16). Hence compute ci = ⟨w, vi ⟩. If for some i, ⟨w, vi ⟩ ̸= 0, then
+choose x1 = vi , then x0 + x1 is a solution which satisfies the constraint as well as the linear system
+(14).
+15
+
+5
+
+Conclusions
+
+The problem of solving a modular linear system with a given linear function such that the function is
+coprime to the modulus is solved in terms of the Smith form of an augmented matrix of an integral linear
+system and evaluation of the linear function modulo prime divisors of the modulus. This procedure is then
+shown to be efficiently computable in parallel, by decomposing the Smith form computation over prime
+power divisors of the modulus and operations modulo the primes. Such a parallel reduction of the modular
+linear systems modulo prime powers, gives a reduction of the index calculus method of solving the discrete
+logarithm problem analogous to the Pohlig Hellman reduction for the discrete logarithm computation over
+cyclic groups when the group order has divisors which are powers of primes. For general modular linear
+systems the problem with the constraint on the value of a linear function on its solutions is shown to be
+efficiently solvable by reduction of the smith form computation for integers modulo prime powers and using
+the CRT to get the solution of the modular system from residues which satisfy the constraint on a linear
+function modulo prime powers. The arithmetic modulo prime powers is utilized in these computations
+for solving even the basic identities such as the Bezout identity and is the primary driver of efficiency of
+computation by parallelization.
+
+References
+[1] Richard Crandall and Carl Pommerance. Prime Numbers, A computational perspective. 2nd Edition.
+Springer 2005.
+[2] S. Pohlig, M. Hellman An improved algorithm for computing logarithms over GF(p) and its cryptographic
+significance IEEE Transaction on Information Theory, 24 (1) (1978), pp. 106-110
+[3] D. H. Wiedemann Solving sparse linear equations over finite fields IEEE Transaction on Information
+Theory, 32 (1986), pp. 54-62
+[4] Arne Storjohann and Thom Mulders. Fast Algorithms for Linear Algebra modulo N ∗ . G. Bilardi et al.
+(Eds.): ESA’98, LNCS 1461, pp. 139–150, 1998. Springer-Verlag Berlin.
+[5] G.H. Bradley. Algorithms for Hermite and Smith normal matrixes and linear diophantine equations Math.
+Comp., 25 (1971), pp. 897-907.
+[6] Ming Hung and Walter Rom. An application of the Hermite normal form in integer programming. Linear
+Algebra and its Applications, vol.140, October 1990, pp.163-179.
+[7] Joachim von zur Gathen and Jurgen Paderborn. Modern Computer Algebra. Cambridge University Press,
+1999.
+[8] J. Buchmann. Introduction to Cryptography. Springer 2001.
+[9] Abhijit Das. Computational Number Theory. CRC Press, Indian reprint, 2015.
+[10] Wiki page on Hermit Normal Form.
+[11] R. Padmavathy and Chakravarthy Bhagvati. Discrete Logarithm problem using the index calculus
+method. Mathematical and Computer Modeling. Volume 55, Issues 1–2, January 2012, Pages 161-169.
+[12] Virendra Sule: A complete algorithm for local inversion of maps: Application to Cryptanalysis.
+arXix.org/cs.CR/2202.06584v2. May, 2021.
+[13] Virendra Sule. Local Inversion of Maps: A New attack on Symmetric Encryption, RSA and ECDLP.
+http://arxiv.org/cs.CR/2202.06584v2. March 2022
+
+16
+
+[14] Virendra Sule. Polynomial complexity of inversion of sequences and local inversion of maps.
+https://arxiv.org/abs/cs.CR/2406.19610v1, June 28, 2024.
+[15] Virendra Sule. Solving Modular Linear Systems with a Constraint by parallel decomposition of the Smith form and extended Euclidean division modulo powers of primes divisors.
+https://arxiv.org/abs/math.NT/2503.10158.
+
+A
+
+Byte Arithmetic for Smith form reduction modulo q r
+
+To take advantage of efficient libraries for byte operations available in systems software, in the Smith form
+computation, the solution of the Bezout identity in iterations (12) need to be formulated modulo q where
+q = pd , d is the byte length, instead of modulo p. This is explained below for the simplest identity for
+computing GCD of (a, q r ) by a unimodular transformation modulo q = pd .
+Let pg = GCD(a, q r ) where g ≥ d. We want to find x, y modulo q r such that ax + q r y = pg by using
+arithmetic (i.e. addition, multiplication and division) modulo q. Consider a q-adic representation of a, x, y
+analogous to that in (11)
+a = a0 + a1 q + . . . + ar−1 q (r−1)
+(17)
+x = x0 + x1 q + . . . + xr−1 q (r−1)
+y = y0 + y1 q + . . . + y(r−1) q (r−1)
+Since a′ = ap−g and q r−g = pdr−g are coprime, there exist integers x, y such that a′ x + pdr−g y = 1. Let
+t = g mod d and g = md + t, then pdr−g = q r p−g = q r−m p−t . Since t < d, it follows that q r−m p−t > q r−m−1
+and hence (a′ , q r−m−1 ) are coprime. Let x′ , y ′ be a solution of
+a′ x′ + q r−m−1 y ′ = 1
+
+(18)
+
+then multiplying by pg , we get
+⇔
+
+ax′ + q r p−md−d y ′ pmd+t
+ax′ + q r p−d+t y ′
+
+=
+=
+
+pg
+pg
+
+hence y ′ q −1 pt is an integer. Hence solving for (18) gives the solution of the Bezout identity for the
+GCD(a, q r ) = pg and subsequently a unimodular matrix Q such that
+[a, q r ]Q = [pg , 0]
+
+A.1
+
+Solution modulo q
+
+The solution of (18) can now be carried out using the arithmetic modulo q because (a, q r ) is coprime implies
+pk does not divide a for any 0 < k ≤ r. Hence a mod p ̸= 0 as well as a mod q ̸= 0. Hence we have unique
+solutions to the following iterations to solve for the co-efficients of x′ , y ′ in (18).
+This is formally stated in the following lemma.
+Lemma 6 (Bezout identity mod q r−(m+1) for a single element). Let s = r − (m + 1), given the single number
+a=
+
+s−1
+X
+
+ai q i
+
+i=0
+
+for i = 0, . . . , (s − 1) with a0 mod p ̸= 0 is coprime to q.
+
+17
+
+The unique solutions xi , yi of co-efficients of solutions x, y of (10) modulo q are given by the following
+iterations
+t0
+:= (a0 x0 )
+t0
+= 1 mod q
+for k = 1, 2, . . . , (t − 1)
+tk
+:= [t(k−1) ] + (a0 xk + a1 x(k−1) + . . . + ak x0 )
+tk
+= 0 mod q
+for j = 0, 1, . . . , (t − 1)
+t(t+j)
+:= [t(t−1+j) ] + a1 x(t−1+j) + a2 x(t−2+j) + . . . + a(t−1) x(1+j)
+t(t+j) + yj
+= 0 mod q
+
+(19)
+
+Proof. Proof follows by substitution of q-adic representations of a, x, y in (10) and comparing co-efficients
+of powers of q. While each co-efficient is computed modulo q, the carry part which is quotient by q is added
+to the higher power of q shown as [t(k−1) ] in the next value of tk in the iteration. Note that each equation
+tk = 0 for k > 0 has the unknown xk , is of the form a0 xk = bk mod q where bk depends on previously
+computed x0 , . . . , x(k−1) and only inversion modulo q of a0 is required for solving all xk .
+Remark 6. The iterations (19) require arithmetic modulo q which are byte operations. In a predefined
+arithmetic library the byte operations are implemented efficiently, for instance by look up tables, for addition
+and multiplication modulo q, inversion modulo q. One extra operation required in solving the iterations
+(19) is the quotient operation by q denoted as [tk ] (the carry obtained in evaluating tk ). Hence modulo q r
+computations can be carried out efficiently by byte operations which are mod q to solve the Bezout identity
+and subsequently the Smith form by extending the unimodular matrix computations as shown in Section 4.2.2.
+
+18
+
+

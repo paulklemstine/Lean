@@ -1,0 +1,1828 @@
+Some mathematical remarks
+on the polynomial selection in NFS
+Razvan Barbulescu ∗1,2 and Armand Lachand†1,3
+
+arXiv:1403.0184v2 [cs.CR] 12 Mar 2014
+
+1
+
+Université de Lorraine
+2
+CNRS, INRIA
+3
+Institut Elie Cartan Lorraine (CNRS/Univ. Lorraine)
+
+Abstract
+In this work, we consider the proportion of smooth (free of large prime factors) values of a binary
+form F (X1 , X2 ) ∈ Z[X1 , X2 ]. In a particular case, we give an asymptotic equivalent for this proportion
+which depends on F . This is related to Murphy’s α function, which is known in the cryptographic
+community, but which has not been studied before from a mathematical point of view. Our result
+proves that, when α(F ) is small, F has a high proportion of smooth values. This has consequences on
+the ﬁrst step, called polynomial selection, of the Number Field Sieve, the fastest algorithm of integer
+factorization.
+
+1
+
+Introduction
+
+Smooth – or friable –numbers, deﬁned as integers whose prime factors are smaller than a given bound,
+are a celebrated topic in analytic number theory and have a key importance in cryptography today.
+In this work we are motivated by the Number Field Sieve (NFS), the fastest algorithm of integer
+factorization [LL93].
+Brieﬂy, if N is an integer to be factored, NFS can be summarized as follows. In the ﬁrst step,
+called polynomial selection, we select two irreducible polynomials with integer coeﬃcients f and g,
+which have a common root m modulo N , i.e. f (m) ≡ 0 ≡ g(m) (mod N ). In the next step, we ﬁx a
+parameter B and we search for B pairs of coprime integers (a, b) such that F (a, b) := bdeg f f (a/b) and
+G(a, b) := bdeg g g(a/b) are B-smooth – an integer n is B-smooth if its greatest prime factor, denoted
+by P (n), satisﬁes P (n) ≤ B. The collected pairs allow us to obtain a B × B linear system over Z/2Z.
+Next, we compute a linear combination of the rows of the system. By a square root computation in a
+number ﬁeld, we ﬁnd a non-trivial solution of the equation x2 ≡ y 2 mod N , which gives a non-trivial
+factor of N .
+Computing the complexity of the algorithm requires to ﬁnd the distribution of coprime pairs (a, b)
+which are smooth with respect to two binary forms F and G, i.e. F (a, b) and G(a, b) are smooth for
+two irreducible homogeneous polynomials F and G with integer coeﬃcients. In the sequel, small caps
+letters f and g denote polynomials and capital letters denote the associated binary forms.
+The distribution of B-smooth integers has made the object of abundant works (for an overview,
+we refer to [HT93] and [Gra08]). For example, Hildebrand proved in [Hil86] an asymptotic formula in
+the region
+
+
+x ≥ 3,
+exp (log log x)5/3+ε ≤ B ≤ x.
+(Hε )
+Theorem A. For any fixed ε > 0 and uniformly for (x, B) in the region (Hε ), we have
+
+!
+
+log(u + 1)
+Ψ(x, B) := # n ∈ [1, x] : P (n) ≤ B = xρ(u) 1 + O
+,
+log B
+
+∗ razvan.barbulescu@inria.fr
+
+† armand.lachand@univ-lorraine.fr
+
+1
+
+log x
+where u := log
+and ρ denotes the Dickman function, namely the one defined by the delay differential
+B
+equation
+(
+uρ′ (u) + ρ(u − 1) = 0 if u > 1,
+ρ(u) = 1
+if 0 ≤ u ≤ 1.
+
+A few years later, Saias reﬁned this result by giving an asymptotic expansion of Ψ(x, B).
+Theorem B (Main corollary,[Sai89]). There exists C > 0 such that, for any fixed J ≥ 0, ε > 0 and
+uniformly for (x, B) in the region (Hε ) and such that
+0 < u < J + 1 ⇒ (u − ⌊u⌋) > C(J + 1)
+we have
+
+
+J
+X
+ρ(j) (u)
+Ψ(x, B) = x 
+γj
++O
+(log B)j
+j=0
+
+ρ(u)
+
+
+
+log log B
+,
+log B
+
+log(u + 1)
+log B
+
+
+J +1 !
+,
+
+. In particular, we have γ1 = γ − 1.
+where γj are the coefficients of the Taylor series in s = 0 of sζ(s+1)
+s+1
+Let x and B be two given integers, F (X1 , X2 ) ∈ Z[X1 , X2 ] a binary form and K a compact subset
+of R2 whose boundary is a continuous closed curve with piecewise continuous derivatives. By xK we
+denote the set K rescaled by a factor x. In order to study the distribution of the B-smooth integers of
+(1)
+the form F (a, b) for coprime integers a and b, we consider the cardinal ΨF (K, x, B) deﬁned by
+
+(1)
+ΨF (K, x, B) := # (a, b) ∈ xK : gcd(a, b) = 1 and P (F (a, b)) ≤ B .
+
+In [BBDT12], Balog, Blomer, Dartyge and Tenenbaum developed an argument which can be easily
+adapted to show the following result.
+Theorem C. Let K be a compact subset of R2 whose boundary is a continuous closed curve with
+piecewise continuous derivatives, k ≥ 1 and F1 (X1 , X2 ), . . . , Fk (X1 , X2 ) ∈ Z[X1 , X2 ] some integral and
+irreducible binary forms of degree d1 ≥ · · · ≥ dk . There exists u(d1 , . . . , dk ) in the interval 1/d1 , +∞
+with the following property. For any fixed u < u(d1 , . . . , dk ), there exists a constant cF1 ,...,Fk ,K (u) such
+that, for B ≥ x1/u ≥ 2, we have
+(1)
+
+ΨF1 ...Fk (K, x, B) ≥ cF1 ,...,Fk ,K (u)x2 .
+More precisely, one can take
+u(d1 , . . . , dk ) :=
+
+(
+
++∞
+1
+e2
+
+if k ≥ 2 and d1 + · · · + dk ≤ 3,
+if k = 1 and d1 = 3.
+
+It is common to make the assumption that integers represented by a given binary form have the
+same probability to be B-smooth as arbitrary integers of the same size. Consequently, in the light of
+Theorem A, we conjecture that, in a domain to be made precise, we have
+(1)
+
+ΨF1 ...Fk (K, x, B) ∼
+
+6
+A(K)x2 ρ(d1 u) . . . ρ(dk u),
+π2
+
+(1)
+
+where A(K) denotes the area of K. A similar formula was proven by the second author ([Lacb] and
+[Laca]) when d1 + · · · + dk ≤ 3.
+Note that the right hand member of Equation 1 does not depend on the binary forms F1 , . . ., Fk .
+In the current state of research, it seems out of reach to obtain in the general case an equation in which
+both members depend on the binary forms. In Theorem 4.2 we reﬁne Theorem C in the case k = 1 and
+d1 = 2 by making explicit the ﬁrst approximation term. Since this term depends on the polynomial f ,
+it can be used in the polynomial selection stage of NFS, which is done as follows. Using one of the two
+methods of Kleinjung ([Kle06],[Bai11, Sections 4.1] and [Kle08],[Bai11, Section 4.2]), one generates a
+large number of pairs of polynomials f and g, such that f is irreducible and g linear. For each pair
+of polynomials, one computes Murphy’s E(F, G) or Murphy’s α(f ) for the associated binary forms,
+
+2
+
+as deﬁned in [Mur99]. Hence one can make a model of the polynomial selection as a random trial of
+polynomials from a set
+
+
+d
+
+
+X
+fi X i ∈ Z[X] | f is irreducible, ∀i, fi ∈ Ii ,
+(2)
+E(d, I) = f =
+
+
+i=0
+
+Qd
+
+where I = i=0 Ii is a (d + 1)-tuple of intervals.
+Murphy’s α is the main object in this article. It is hard to determine when it was proposed
+in the cryptographic community, but it was known to Montgomery in 1996 [Boe96]. In his thesis,
+Murphy [Mur99] introduced α(f ) as the sum of a series and gave evidence that, when α(f ) is small,
+F has a high proportion of smooth values. It is computed using the number of roots of f modulo each
+prime power pk . Based on α(f ), one can compute Murphy’s E(F, G), which takes into account the
+real roots of f and g, but it is more costly to compute and not much more accurate than α(f ). Also
+note that, α does not depend on the linear polynomial g since, based on experiments, one can make
+the conjecture that g has a small inﬂuence on the formula of Equation (1). A thorough development
+on the polynomial selection from a cryptographic perspective is due to Bai [Bai11].
+
+Outline In Section 2, we give a rigorous deﬁnition of α(f ). The mean value of α(f ) over E(d, I)
+will be the main goal of Section 3. In the last section, we introduce a modiﬁcation of NFS. It allows us
+to obtain a rigorous result on the proportion of smooth elements in number ﬁelds of arbitrary degree
+and then to show that α(f ) eﬀectively occurs in the proportion of smooth values of a binary form of
+degree 2.
+
+Notation In what follows, K stands for a number ﬁeld and dK , OK , UK , GK , ζK and λK denote
+respectively its degree, ring of integer, unit group, class group, Dedekind zeta function and residue of
+ζK . The letters p, p and I denote respectively a rational prime, a prime ideal and an arbitrary ideal
+of OK .
+
+Definition and convergence of Murphy’s α(f )
+
+2
+
+From a cryptographic point of view, Theorem 4.2, proved in Section 4.3, states that α(f ) is a good
+indicator of a polynomial’s eﬃciency for NFS when f is quadratic. In this section we show that it has
+two properties which are equally important: it has an easy-to-compute formula and it is deﬁned by a
+series with a high speed of convergence.
+
+2.1
+
+Definition of α(f )
+
+Murphy introduced α explicitly for arbitrary polynomials, but he gives credit to Montgomery for using
+the formula in the case of quadratic polynomials [Boe96]. One can ﬁnd the formula of α by the following
+heuristic argument. For any integer n and bound C, the C-sifted part of n is the largest divisor of n
+without prime factors less than C. For a bound B, the B-smooth part of n is the largest B-smooth
+(1)
+divisor of n. Experiments show that one can obtain a good guess of ΨF (K, x, B) by the following
+empirical method:
+1. Choose a large constant C and compute the average value cont(F, C) of the logarithm of the
+C-smooth part of the values of F . Deﬁne α(F, C) as the average value of the logarithm of the
+C-smooth part of a random integer minus cont(F, C).
+(1)
+
+2. Approximate ΨF (K, x, B) by the cardinality of xK times the probability of a random C-sifted
+integer of size max(a,b)∈xK |F (a, b)| + α(f, C) to be B-smooth.
+
+This suggests to deﬁne α as in the deﬁnition below. In the sequel, f is a polynomial in Z[X] such
+that Disc(f ) 6= 0 and p is a prime. The associated binary form F is deﬁned by F (X1 , X2 ) =
+deg(f )
+f (X1 /X2 ).
+X2
+Definition 2.1. For any prime p we deﬁne, if it exists,
+
+
+1
+αp (f ) = (log p)
+− contp (f ) ,
+p−1
+
+3
+
+(3)
+
+with
+contp (f ) = lim
+
+P
+
+x→∞ #
+
+(a,b)∈[1,x]2 ,gcd(a,b,p)=1 valp F (a, b)
+
+.
+(a, b) ∈ [1, x]2 : gcd(a, b, p) = 1
+
+Under the reserve of proving the convergence of the series below, we deﬁne
+X
+αp (f ).
+α(f ) =
+p prime
+
+To get an other expression for contp (f ), we can split the region
+n
+o
+(a, b) ∈ [1, x]2 : gcd(a, b, p) = 1
+
+in congruence classes modulo pk and try to approximate
+n
+o
+# (a, b) ∈ [1, x]2 : gcd(a, b, p) = 1, pk |F (a, b)
+by
+
+o
+x2 n
+# (a, b) ∈ [1, pk ]2 : gcd(a, b, p) = 1, pk |F (a, b)
+2k
+p
+
+This procedure is essentially the object of Lemma 2.3. Before doing this, we can remark that
+o
+n
+# (a, b) ∈ [1, pk ]2 : gcd(a, b, p) = 1, pk |F (a, b) = ϕ(pk )npk (f ),
+
+(4)
+
+where
+
+npk (f )
+
+=
++
+
+n
+o
+# a ∈ [0, pk − 1] : f (a) ≡ 0 mod pk
+n
+# b ∈ [0, pk − 1] : b ≡ 0 mod p, F (1, b) ≡ 0
+
+o
+mod pk .
+
+Nagell [Nag21] proved what survives of Hensel’s lemma when the hypothesis on the derivative fails.
+We adapt his result to obtain an upper bound of npk in a similar way one would in the case when
+Hensel’s lemma applies.
+Lemma 2.2. If p does not divide Disc(f ), then npk (f ) = np (f ). In the general case, for any prime p
+and k ≥ 1, we have
+npk (f ) ≤ 2 deg(f )pmin(2 valp (Disc(f )),k) .
+Proof. The ﬁrst assertion is a direct consequence of [[Nag21],Theorem 1] which asserts that
+n
+o
+
+# a ∈ [0, pk − 1] : f (a) ≡ 0 mod pk = # a ∈ [0, p − 1] : f (a) ≡ 0 mod p .
+In the proof of [[Nag21],Theorem 2], it is shown that
+n
+o
+# a ∈ [0, pk − 1] : f (a) ≡ 0 mod pk ≤ deg(f )pmin(2 valp (Disc(f )),k) .
+
+When applied to f (x) = F (x, 1) and f = F (1, x), this implies the second assertion.
+Proposition 2.3. We have, for every prime p,
+
+
+X npk (f )
+1
+p
+.
+αp (f ) = log p 
+−
+p−1
+p+1
+pk
+k≥1
+
+4
+
+Proof. We ﬁrst focus on the numerator of contp (f ). Let x be a suﬃciently large integer. One can
+choose k0 such that x2/3 ≤ pk0 ≤ px2/3 . We write
+X
+valp (F (a, b)) = Σ1 (p, x) + Σ2 (p, x)
+1≤a,b≤x
+(a,b)=1
+
+with
+Σ1 (p, x) =
+
+X
+
+X
+
+n
+o
+# 1 ≤ a, b ≤ x : (a, b, p) = 1 and pk |F (a, b)
+
+X
+
+X
+
+n
+o
+# 1 ≤ a, b ≤ x : (a, b, p) = 1 and pk |F (a, b) .
+
+k≤k0 1≤a,b≤x
+
+and
+Σ2 (p, x) =
+
+k≥k0 +1 1≤a,b≤x
+
+In view of the formula (4), we can use Lemma 3.2 of [Dan99] to deduce that
+n
+o
+k 2
+k
+X # (a, b) ∈ [1, p ] : gcd(a, b, p) = 1, p |F (a, b) 2
+Σ1 (p, x) =
+x
+p2k
+k≤k0
+
+
++O xpk0 /2 (k0 log p)νf + pk0 (k0 log p)2 deg f
+
+
+
+
+1 X npk (f ) 2
+x + O x4/3 (log x)νf ,
+= 1−
+k
+p
+p
+k≤k0
+
+where νf = deg f (1 + 2 deg f )deg f +1 .
+
+On the other hand, since valp F (a, b) ≪ log x, we can use Lemma 2.2 and again Lemma 3.2 of
+[Dan99] to deduce that
+n
+o
+X
+# 1 ≤ a, b ≤ x : (a, b, p) = 1 and pk0 |F (a, b)
+Σ2 (p, x) ≪ log x
+1≤a,b≤x
+
+≪ (log x)x2
+≪x
+
+4/3
+
+n
+o
+# (a, b) ∈ [1, pk0 ]2 : gcd(a, b, p) = 1, pk0 |F (a, b)
+p2k0
+
+νf
+
+(log x) .
+
+
+
++ O x4/3 (log x)νf
+
+Finally, we note that
+
+
+
+# 1 ≤ a, b ≤ x : (a, b, p) = 1 = # 1 ≤ a, b ≤ x : p ∤ a + # 1 ≤ a, b ≤ x : p|a and p ∤ b
+
+
+1
+= 1 − 2 x2 + O(x).
+p
+The result follows when x tends to inﬁnity since then k0 tends to inﬁnity.
+
+2.2
+
+Convergence of α(f )
+
+The formula of αp (f ) gets a simple form when p does not divide Disc(f ) nor the leading coeﬃcient of
+f . Indeed, Lemma 2.2 and Proposition 2.3 imply that, for such primes p, we have
+
+!
+1
+np (f )
+p
+αp (f ) = log p
+−
+.
+(5)
+p−1
+p−1 p+1
+Let ω be a root of f , K the rupture ﬁeld of f and ω̃ := F (1, 0)ω an integer of K. It follows from a
+result of Dedekind [Ded78] that, for any prime p which not divide F (1, 0) nor the index [OK : Z[ω̃]],
+np (f ) is the number of ideals p such that N (p) = p. This suggests to put
+
+p0 = max p prime : p|F (1, 0)F (0, 1) or p| Disc(F ) or p|[OK , Z[ω̃]] .
+
+5
+
+After the previous discussion, the problem of convergence of α(f ) is reduced to showing the convergence
+of the series
+
+!
+X
+np (K)
+p
+1
+−
+log p
+p−1
+p−1 p+1
+p
+where np (K) denotes the number of ideals p such that N (p) = p.
+We ﬁrst remark that, for any X ≥ 2, we can write
+
+!
+
+
+X
+X log p
+ X log p
+1
+np (K)
+np (K)
+p
+log p
+−
+1−
+.
+1 − np (K) +
+=
+p−1
+p−1 p+1
+p
+p(p − 1)
+p+1
+p≤X
+
+p≤X
+
+p≤X
+
+On the one hand, from the trivial estimation |np (K)| ≤ nK and the Chebyshev estimation
+X
+log p ≤ eX
+
+(6)
+
+p≤X
+
+with e = 1.01624 (see Theorem 9 of [RS62]), we can use a summation by parts to get, for any
+X2 ≥ X1 ≥ nK ,
+X
+
+X1 <p≤X2
+
+np (K)
+log p
+1−
+≤
+p(p − 1)
+p+1
+≤
+
+X
+
+X1 <p≤X2
+
+log p
+p(p − 1)
+
+3e
+.
+X1 − 1
+
+On the other hand, we can write, again with a summation by parts,
+X
+
+X1 <p≤X2
+
+
+R(X1 )
+R(X2 )
+log p
+−
++
+1 − np (K) =
+p
+X2
+X1
+
+Z X2
+X1
+
+R(t)
+dt,
+t2
+
+where R is the rest term deﬁned by
+R(t) :=
+
+X
+
+(1 − np (K)) log p.
+
+p≤t
+
+Therefore, it suﬃces to use a suﬃciently sharp estimation of R(t), which is the object of the next
+theorem. On the one hand, we can obtain a very sharp estimation using the Riemann hypothesis for
+ζK and ζQ . But on the other hand, we have a good estimation relying on no assumptions.
+Theorem 2.4 (Theorem 9.2 of [LO77]).
+
+
+1. There exists
+an absolute effectively computable constant
+
+c1 > 0 such that, if X ≥ exp 4dK (log Disc(K))2 , then
+X
+
+log N (p) − X +
+
+N(pk )≤X
+
+
+
+X β(K)
+−1/2
+≤ X exp −c1 dK (log X)1/2 ,
+β(K)
+
+where β(K) denotes the largest real zero of ζK in the interval (0, 1) if it exists and 1/2 otherwise.
+2. Moreover, if the Riemann Hypothesis holds for ζK , there exist explicit constants aK , bK and cK
+such that, for X ≥ 2, we have
+X
+
+N(pk )≤X
+
+Remark 2.5.
+
+
+
+log N (p) − X ≤ X 1/2 aK + bK log X + cK (log X)2 .
+
+• Some eﬀective bounds for βK are contained in Theorem 1.4 of [LO77].
+
+• Numerical values for aK , bK and cK are given without proof in [Oes79]. The values aK =
+4781
+log(dK ) + 58681
+nK , bK = 23
+log(dK ) + 68
+n and cK = 863
+n can be rigorously obtained
+96
+113
+3
+3 K
+31 K
+from Theorem 8.1 of [Win].
+
+6
+
+In order to use Theorem 2.4, we have to study the contribution of powers of prime ideals. Using
+the Chebyshev estimation (6), we get, for any X ≥ 2,
+X
+X X
+log N (p) ≤ edK
+log p
+k≥2
+
+N(pk )≤X
+k≥2 or N(p) not prime
+
+
+
+1
+
+p≤X k
+
+
+log X 1/3
+X
+.
+≤ edK X +
+log 2
+
+
+Consequently, we have, for t ≥ exp 4dK (log Disc(K))2 ,
+1
+
+R(t) ≪ dK t 2 +
+
+1
+2
+
+
+
+tβ(K)
++ t exp −c1 (dK )−1/2 (log t)1/2
+β(K)
+
+By a straightforward
+calculationof primitive, we deduce from these estimations that we have, for
+
+X2 ≥ X1 ≥ exp 4dK (log Disc(K))2 ,
+X
+
+X1 <p≤X2
+
+
+|R(X2 )|
+|R(X1 )|
+log p
++
++
+1 − np (K) ≤
+p
+X1
+X2
+−1
+
+≪ dK X1 2 +
+
+β(K)−1
+X1
+
+β(K)
+
+Z X2
+X1
+
+|R(t)|
+dt
+t2
+
+
+
++ exp −c1 (dK )−1/2 (log X1 )1/2 ,
+
+which implies the convergence of α(f ).
+In order to get a good estimation of the convergence speed, we now assume that the Riemann
+Hypothesis holds for ζQ and ζK . It follows from Theorem 2.4 that we have, for t ≥ 2,
+|R(t)| ≤ edK t1/2 + edK t1/3 log t/ log 2 + aK t1/2 + bK t1/2 (log t) + cK t1/2 (log t)2 .
+As a consequence of the previous discussion, we can get that, for X ≥ 2,
+X log p
+
+X<p
+
+p
+
+1 − np (K)
+
+
+
+≤
+
+|R(X)|
++
+X
+
+≤ X −1/2
++X
+
+
+
+Z +∞
+X
+
+|R(t)|
+dt
+t2
+
+3aK + 3edK + 4bK + 16cK + (3bK + 8cK ) log X + 3cK (log X)2
+
+−1/6 edK
+
+log 4
+
+
+
+9
++ 5 log X
+2
+
+!
+.
+
+
+
+It follows that the speed of convergence is given, for X ≥ max(p0 , nK ), by
+α(f ) −
+
+
+
+ eX 1/2
+edK 9
+αp (f ) ≤X −1/2 3
++ X −1/6
++ 5 log X
+X −1
+log 4 2
+p≤X
+
+
++ 3aK + 3edK + 4bK + 16cK + (3bK + 8cK ) log X + 3cK (log X)2 .
+X
+
+(7)
+
+Example 2.6. Using the best numerical values in Remark 2.5 we can certify eﬀective bounds on α(F )
+for given binary forms F . Consider for example F (X1 , X2 ) = X12 + qX22 with q = 1030 + 57. By
+computing the partial sum of α(F ) for primes less than X = 40096176099 we obtain:
+α(F ) − 2.39 < 1.
+This emphasizes the importance of obtaining small eﬀective constants in Theorem 2.4.
+
+7
+
+Towards the average of α on a set of polynomials
+
+3
+
+P
+The polynomial selection stage of NFS consists in enumerating polynomials f = di=0 fi xi of a given
+degree and with a bound on each coeﬃcient fi and in selecting those with the best value of α. Some
+variants restrict the enumeration to a subset and a short list of polynomials with a good α can be
+further tested with longer tests or by direct sieving. In any case, by computing the average of α we
+guarantee a value of α for the best polynomials.
+During the polynomial selection in NFS, it is common to restrict the search to a set of polynomials
+f given by deg f and the size of each coeﬃcient. For each pair (m, d) of integers and each d-tuple
+I = I0 × · · · × Id−1 of intervals such that, for all i, Ii ⊂ [−m, m], we put
+
+
+d−1
+
+
+X
+E (1) (m, d, I) = f = xd +
+(8)
+fi xi : (f0 , f1 , . . . , fd−1 ) ∈ I, Disc(f ) 6= 0 .
+
+
+i=0
+
+Due to technical reasons, we now now study the average of α(f ) on E (1) (m, d, I) rather than E(d, I)
+deﬁned by (2).
+Theorem 3.1. For any given prime p, uniformly with respect to I, one has
+X
+
+1
+
+lim
+
+m→∞
+#E (1) (m, d, I)
+minj |Ij |/d(log d+log m)→∞
+f ∈E (1) (m,d,I)
+
+(9)
+
+αp (f ) = αp (X).
+
+Proof. In view of Proposition 2.3 and Theorem 3.2, we can suppose that d ≥ 2 and write, for any
+prime p,
+αp (f ) − αp (x) =
+
+p log p X 1 − npk (f )
+.
+p+1
+pk
+k≥1
+
+For any pair k, we put
+Sp (k, m, d, I) =
+
+X
+
+(1 − npk (f )).
+
+f ∈E(d,m,I)
+
+Then we have
+X
+
+(2)
+(αp (f ) − αp (x)) = Σ(1)
+p (m, d, I) + Σp (m, d, I),
+
+f ∈E (1) (m,d,I)
+
+where
+Σ(1)
+p (m, d, I)
+
+=
+
+p log p X Sp (k, m, d, I)
+,
+p+1
+pk
+k≤k0
+
+Σ(2)
+p (m, d, I)
+
+=
+
+p log p X Sp (k, m, d, I)
+.
+p+1
+pk
+k≥k0
+
+Using the deﬁnition of the discriminant, for any f in E (1) (m, d, I), we have the upper bound
+| Disc(f )| ≤ (2d − 1)!m2d−1 .
+
+
+
+Consider k0 (p) = logp (2d − 1)!m2d−1
++ ⌈log p (md)⌉.
+
+Case k ≤ k0 (p). Since the elements of E (1) (m, d, I) are monic, we have
+
+
+
+
+# f ∈ E (1) (m, d, I), pjd f p−j ≡ 0 (mod pk ) = 0.
+
+Consequently, we can write
+
+
+pk −1
+X
+X n
+p log p
+1 
+(1)
+(1)
+Σp (m, d, I) =
+# f ∈ E (1) (m, d, I), f (r) ≡ 0
+#E (m, d, I) −
+k
+p+1
+p
+r=0
+k≤k0
+
+8
+
+
+o
+
+(mod pk )  .
+
+We consider
+the cardinality of E (1) (m, d, I). Given (f1 , . . . , fd−1 ) ∈ I1 ×· · · Id−1 , the polynomial
+Pd−1 ﬁrsti−1
+dx
++ i=1 ifi x
+has at most d − 1 complex roots. For each such root z, there is exactly one
+Pd
+i
+value of f0 ∈ I0 such that
+i=0 fi z = 0. Hence there are at most d|I|/|I0 | polynomials f of zero
+discriminant and coeﬃcients in I. It follows that
+
+
+d−1
+
+
+X
+
+d
+(1)
+i
+E (m, d, I) = # (f0 , . . . , fd−1 ) ∈ I − # (f0 , . . . , fd−1 ) ∈ I : Disc(x +
+fi x ) = 0
+
+
+i=0
+!
+
+
+d
+= |I| 1 + O
+.
+minj |Ij |
+d−1
+
+Let k ≤ k0 (p) be an integer and r ∈ [0, pk −1]. For eachj (d−1)-tuple
+(f1 , . . . , fd−1 ) ∈ I1 ×· · ·×Id−1 ,
+k
+
+the number of values f0 such that f (r) ≡ 0 (mod pk ) is |Ipk0 | + ǫ with ǫ = 0 or 1. Hence, it follows
+that
+n
+o
+# f ∈ E (1) (m, d, I), f (r) ≡ 0 (mod pk )
+n
+o
+=# (f0 , . . . , fd−1 ) ∈ I : f (r) ≡ 0 (mod pk )
+ 
+
+d−1
+
+
+X
+
+
+fi xi ) = 0 
++ O # (f0 , . . . , fd−1 ) ∈ I : Disc(xd +
+
+
+i=0
+
+
+
+
+!
+
+d
+|I0 |
+d|I|
+|I|
+1
++
+O
+=
++
+O
++
+O(1)
+pk
+|I0 |
+minj |Ij |
+minj |Ij |
+
+
+|I|d
+|I|
+.
+= k +O
+p
+minj |Ij |
+
+
+It results that
+Σ(1)
+p (m, d, I) ≪ log p
+
+X
+
+k≤k0 (p)
+
+≪ k0 (p) log p
+
+|I|d
+minj |Ij |
+
+|I|d
+.
+minj |Ij |
+
+Case k ≥ k0 (p). Due to the choice of k0 (p), we have k0 ≥ 2 valp Disc(f ) for all polynomials f in
+E(m, d, I). By Lemma 2.2, for all k ≥ k0 (p), we have
+npk (f ) ≪ d Disc(f )2 ,
+which is further upper bounded by (2d − 1)!dm2d−1 ≤ pk0 (p) /m. We deduce that
+2d−1 2
+Σ(2)
+) log p
+p (m, d, I) ≪ d((2d − 1)!m
+
+X
+
+p−k E (1) (m, d, I)
+
+k>k0 (p)
+
+log p
+≪ d((2d − 1)!m2d−1 )2 |I| k (p)
+p 0
+|I|
+.
+≪
+m
+P(1)
+P(2)
+When combining the bounds on
+p (m, d, I) and
+p (m, d, I), we obtain that, uniformly for
+p ≥ 1, we have
+
+
+X
+1
+d(log d + log m)
+(αp (f ) − αp (x)) ≪ |I|
++
+.
+(10)
+m
+minj |Ij |
+(1)
+f ∈E
+
+(m,d,I)
+
+9
+
+In view of the previous theorem, it seems to be interesting to compute the value of α(X). This is
+the aim of the following proposition.
+Proposition 3.2. Let g = aX + b ∈ Z[X] be a polynomial with gcd(a, b) = 1. Then we have
+α(g) = 12 log A − γ − log(2π) ≈ 0.56.
+where A denotes the Glaisher-Kinkelin constant and γ denotes the Euler-Mascheroni constant.
+Proof. Since f has degree 1 and gcd(a, b) = 1, we have, for every prime p and k ≥ 1,
+npk (f ) = 1.
+Consequently, it follows from Proposition 2.3 that
+ X
+X log p 
+log p
+p
+α(f ) =
+1−
+=
+.
+2 −1
+p
+−
+1
+p
++
+1
+p
+p
+p
+From the formula
+X log p
+ζQ′ (s)
+=−
+,
+ζQ (s)
+ps − 1
+p
+which holds for any complex s such that ℜ(s) > 1, we deduce that
+α(f ) =
+
+X log p
+p
+
+p2 − 1
+
+=−
+
+ζQ′ (2)
+.
+ζQ (2)
+
+The result is then a direct consequence of the formulas
+ζQ (2) =
+
+π2
+6
+
+and
+
+ζQ′ (2) =
+
+
+π2
+γ + log(2π) − 12 log A .
+6
+
+We can remark that this proposition asserts that α(g) = α(X) for any linear polynomial g. This
+observation is a new argument towards the direction that the polynomial selection is essentially not
+inﬂuenced by the linear polynomial.
+
+4
+
+A theoretical modification of NFS
+
+4.1
+
+The algorithm
+
+The main goal of this section is to prove smoothness results for binary forms of degree 2. This case
+can be treated with multiplicative methods since the values of a quadratic binary form are norms of
+arbitrary integer elements of a quadratic ﬁeld. The same theorems apply to binary forms of higher
+degrees if we modify the algorithm as below. By doing so, we transfer the diﬃculty from the ﬁeld of
+analytic number theory to that of algorithmic number theory.
+In short, in our modiﬁcation of NFS, instead of considering elements a − bθ of Q(θ), we consider
+arbitrary elements a0 + a1 ω + · · · ad−1 ω d−1 of norm bounded by a constant, where d is the degree of
+the deﬁning polynomial f . In more detail, the new version of the algorithm is as follows. We select
+two polynomials f and g, with g linear such that there exists an integer m such that f (m) ≡ g(m) ≡ 0
+mod N . We use the same factor base as in the classical version of NFS, i.e. if B is the smoothness
+bound, the factor base includes degree-1 ideals in the number ﬁeld of f and primes up to B. Let
+ω be a root of f in its number ﬁeld. We set Xf and Xg to the maximal value of N(a0 + a1 ω) and
+|a0 + a1 m| respectively when a0 and b0 are bounded by the constant used in NFS. Next we collect
+primitive polynomials P (x) = a0 + a1 x + · · · + ad−1 xd−1 such that
+• (a0 , . . . , ad−1 ) = 1
+• | N(P (ω))| ≤ Xf and |P (m)| ≤ Xg .
+• N(P (ω)) and |P (m)| are B-smooth.
+
+10
+
+Each polynomial P allows us to obtain a relation as explained by Joux, Lercier, Smart and Vercauteren
+in [JLPV06]. Finally, we use the linear system to obtain a non-trivial solution of equation X 2 ≡ Y 2
+(mod N ) by following step by step the classical variant of NFS.
+The practicality of this modiﬁcation will be investigated by the ﬁrst author in a future work. The
+main diﬃculty is to enumerate the ideals whose norm is bounded by a given constant.
+
+4.2
+
+The smoothness probability : general case
+
+Let ω be an algebraic integer, non rational, and K = Q(ω). In view of the previous discussion, we now
+focus on the study of the cardinality of
+(
+(a0 , . . . , ad−1 ) ∈ Zd : gcd(a0 , . . . , ad−1 ) = 1, N (a0 + · · · + ad−1 ω d−1 ) ≤ x
+
+)
+
+
+d−1
+and P N (a0 + · · · + ad−1 ω
+) ≤B .
+
+If the unit group UK is inﬁnite (this is the case when dK ≥ 3 or K is a real quadratic ﬁeld), such
+a set is inﬁnite. However, we can remark that the ideals I generated by its elements are primitive,
+namely that, for any prime p, pOK ∤ I. Consequently, it makes sense to concentrate ourself to the
+cardinality
+
+(1)
+ΨK (x, B) := # I primitive : N (I) ≤ x and P (N (I)) ≤ B .
+(1)
+
+A standard way – the one followed here – to get an asymptotic formula for ΨK (x, B) consists to
+apply to the Dirichlet series FK (s) deﬁned by
+FK (s) :=
+
+X
+
+1
+s
+N
+(I)
+I primitive
+
+some results of complex analysis, such as Perron’s formula. It is consistent to take a look at the shape
+of FK (s). Using the inclusion–exclusion principle, we ﬁrst remark that we have, for ℜ(s) > 1,
+FK =
+
+X
+
+m≥1
+
+µ(m)
+
+X
+
+mOK |I
+
+1
+= ζK (s)ζQ (dK s)−1 .
+N (I)s
+
+(11)
+
+Moreover, using the properties of the Riemann zeta function, it is immediate that ζQ (dK s)−1 is absolutely convergent for ℜ(s) > d1K .
+In view of the previous discussion, we are now in capacity to use asymptotic results of Hanrot,
+Tenenbaum and Wu [HTW08]. We obtain the following theorem.
+Theorem 4.1. Let K be a number field of degree
+dK ≥ 2. Then,
+
+ there exists C > 0 such that, for any
+J ≥ 0 and ε > 0, we have, uniformly for exp (log log x)5/3+ε ≤ B ≤ x and
+0 < u < J + 1 ⇒ {u} > C(J + 1)
+
+where
+
+
+J
+X
+ρ(j) (u)
+(1)
++O
+ΨK (x, B) = x 
+γj (K)
+(log B)j
+j=0
+γj (K)
+
+ρ(u)
+
+X
+
+1 ∂ j1 (1 − s−1 )ζK (s)
+j1 !j2 !
+∂sj1
+j +j =j
+1
+
+2
+
+In particular, we have
+γ0 (K) =
+
+λK
+ζQ (dK )
+
+11
+
+s=1
+
+log 2 B
+log B
+
+
+
+log(u + 1)
+log B
+
+J +1 !
+
+∂ j2 ζQ (dK s)−1
+∂sj2
+
+
+
+,
+
+.
+s=1
+
+(12)
+
+and
+
+
+γ1 (K) =γ0 (K) γ − 1 +
+
+with
+
+X
+
+log p
+
+p
+
+
+
+
+
+1
+− contp (K)  ,
+p−1
+
+
+
+n
+o
+n
+o −1
+k
+k
+k#|
+I
+primitive,
+N
+(I)
+=
+p
+#
+I
+primitive,
+N
+(I)
+=
+p
+X
+X
+
+
+
+contp (K) = 
+
+ .
+pk
+pk
+k≥1
+
+k≥0
+
+Proof. In view of Equation (11), it is immediate that FK (s) satisﬁes the Condition (1.7) of [HTW08].
+Moreover, as it is noted in Section 2.3 of [HTW08], Theorem II.1.13 of [Ten95] implies that, for any
+1
+< δ < 1 and uniformly for ℜ(s) ≥ δ, we have
+d(K)
+X
+
+P (n)≤B
+
+X µ(n)
+µ(n)
+=
++O
+d
+s
+n K
+ndK s
+n
+
+
+
+1
+B 1−δ
+
+
+
+(13)
+
+.
+
+Consequently, we can apply successively Theorem 1.2 and Theorem 1.1 of [HTW08] to deduce (12).
+The statement on the values γ0 (K) and γ1 (K) follows from the fact that
+
+
+
+
+ζQ (s)
+∂FK (s)
+X
+1
+∂s
+∂s
+
+
+−
+− contp (K) .
+log p
+=
+FK (s)
+ζQ (s)
+p−1
+p
+s=1
+
+4.3
+
+The smoothness probability : imaginary quadratic case
+
+Let f be an irreducible quadratic polynomial. Its discriminant Disc(f ) is a fundamental discriminant
+if it satisﬁes one of the following conditions :
+• Disc(f ) ≡ 1 (mod 4) and is square-free,
+• Disc(f ) = 4m where m ≡ 2 or 3 (mod 4) and m is square-free.
+We now apply the previous result to get an asymptotic estimation related to the proportion of smooth
+values of quadratic binary forms with fundamental negative discriminant.
+Theorem 4.2. Let F (X1 , X2 ) ∈ Z[X1 , X2 ] be a primitive and irreducible quadratic form such that
+Disc(F ) is negative and fundamental. Let KF the compact defined by
+n
+o
+KF := (x1 , x2 ) ∈ R2 : |F (x1 , x2 )| ≤ 1
+
+
+
+Then, there exists κ > 0 such that, for any ε > 0, we have, uniformly for exp (log log x)5/3+ε ≤ B ≤
+x(log x)−κ ,
+
+
+Ψ(xeα(f ) , B) 
+=
+1+O
+(1)
+xeα(f )
+ΨF (KF , x, x)
+(1)
+
+ΨF (KF , x, B)
+
+(log(u + 1))2
+(log B)2
+
+!
+.
+
+(14)
+
+Proof. Let ω be a root of f (X) = F (X, 1) and K := Q(ω). Since Disc(f ) is a fundamental discriminant,
+we have Disc(K) = Disc(f ). Moreover, there exists a basis (ω1 , ω2 ) of OK such that, for any integers
+a and b, one has
+F (a, b) = N(aω1 + bω2 ).
+Since UK is ﬁnite, we have
+
+(1)
+ΨF (KF , x, B) =# ω = (aω1 + bω2 ) ∈ OK : (a, b) = 1, N(aω1 + bω2 )| ≤ x, P (N((aω1 + bω2 )) ≤ B
+
+= U (K) # I principal ideal : I is primitive, N (I) ≤ x, P (N (I)) ≤ B
+
+12
+
+d
+In order to pick up ideals from the class Cl(OK ), i.e. principal ideals, we can consider the group G
+K
+of the multiplicative characters of the class group GK . By the orthogonality property of characters,
+we have
+X (1)
+
+1
+Ψ (x, B; χ),
+# I ∈ Cl(OK ) : N (I) ≤ x, I primitive, P (N (I))) ≤ B =
+|GK |
+d
+χ∈G
+K
+
+where
+X
+
+Ψ(1) (x, B; χ) =
+
+χ(I).
+
+I primitive
+N(I)≤x
+P (N(I))≤B
+
+Contribution of nontrivial characters:
+Since Cl(pOK ) is the identity element of the class group GK , the inclusion-exclusion principle
+implies that
+
+
+ −1
+X
+X χ(I)
+Y
+χ(J)
+1
+
+1 − 2s  .
+=
+N (J)s
+N (I)s
+p
+p
+I primitive
+
+I
+
+Consequently, we can adapt, step by step, the proof of Theorem 4.1 to deduce that, for any ε and
+uniformly for
+
+
+x ≥ 3 and
+exp (log log x)5/3+ε ≤ B ≤ x,
+we have
+
+
+
+χ(I)
+≪ xρ(u) exp −(log B)3/5−ε .
+s
+N (I)
+I primitive
+X
+
+This procedure is essentially made in [Ten90] and [FT91].
+Contribution from the trivial character :
+For the principal character, denoted by χ0 , we use Theorem 4.1. There exists c > 0 such that, for
+any ε > 0, we have, uniformly for
+
+
+x ≥ 3 and exp (log log x)5/3+ε ≤ B ≤ x(log x)−c ,
+
+
+ρ′ (u)
+Ψ(1) (x, B; χ0 ) = x γ0 (K)ρ(u) + γ1 (K)
++O
+log B
+
+ρ(u)
+
+
+
+log(u + 1)
+log B
+
+K
+and
+where γ0 (K) = 6λ
+π2
+
+
+
+γ1 (K) =γ0 (K) γ − 1 +
+
+X
+
+log p
+
+p
+
+
+
+2 !
+
+
+
+,
+
+
+
+1
+− contp (K)  .
+p−1
+
+Using the decomposition of rational primes into ideals of OK (see for example the discussion in
+Section 6.4 of [Bue89]), we can note that
+(
+n
+o
+0
+if p | Disc(K) and k ≥ 2,
+k
+# I primitive, N (I) = p =
+np (K) if k = 1 or p ∤ Disc(K),
+and therefore
+contp (K) =
+
+(
+
+1
+p+1
+p np (K)
+p+1 p−1
+
+if p| Disc(K),
+otherwise.
+
+A careful study of contp (f ) implies that we have actually
+contp (K) = contp (f )
+
+13
+
+(15)
+
+To see this, assume ﬁrst that p| Disc(K). In view of the hypothesis on Disc(K), a straightforward
+computation implies that np (f ) = 1 and npk (f ) = 0 for k ≥ 2, and therefore Equation (15) holds.
+We consider now primes p which do not divide Disc(K), for which we must show that np (f ) = nK (f )
+(Hensel’s Lemma allows to obtain npk (f ) = npk (K) for k ≥ 2). If p does not divide 2F (1, 0)F (0, 1),
+since the index is 1 or 2, Dedekind’s result states that np (f ) = np (K). If p is an odd prime which divide
+F (1, 0)F (0, 1), it is not diﬃcult, using the decomposition of p in OK , to see that np (f ) = np (K) = 2.
+If p = 2 and (at least) one of F (1, 0) and F (0, 1) is even, then Disc(K) ≡ 1 (mod 8), which implies
+that n2 (K) = 2. But then F (0, 1) and F (1, 1) are even and one obtains n2 (f ) = 2 = n2 (K). Finally, if
+p = 2 does not divide F (0, 1) nor F (1, 0), all the coeﬃcients of F are odd and then n2 (f ) = 0. Since,
+in this case, Disc(K) ≡ 5 (mod 8), we have also n2 (K) = 0 = n2 (f ). For the remaining primes, we
+have by Lemma 2.2 that npk (f ) = np (K) for any k ≥ 1 which implies (15).
+From this discussion, it ﬁnally follows that
+
+!
+′
+2
+6λK
+ρ
+(u)
+(log(u
++
+1))
+(1)
+.
+ΨF (KF , x, B) = 2
+x ρ(u) + (γ − 1 + α(f ))
++ O ρ(u)
+π |GK |
+log B
+(log B)2
+Using the standard Selberg-Delange’s method instead of Theorem 4.1 (see [Ten95]), we can also
+prove that, for any ε > 0, we have
+
+
+
+n
+o
+6
+(1)
+x + O x exp − log x)3/5−ε
+.
+ΨF (KF , x, x) := # (a, b) ∈ Z2 : (a, b) = 1, |F (a, b| ≤ x = 2
+π |GK |
+From Theorem B, we see also that for any ε > 0 and uniformly for
+
+
+x ≥ 3 and exp (log log x)5/3+ε ≤ B ≤ x(log x)−c ,
+
+we have
+
+
+
+ρ′ (u)
++O
+Ψ(x, B) = x ρ(u) + (γ − 1)
+log B
+
+!
+(log(u + 1))2 
+.
+(log B)2
+
+This enables us to estimate the right-hand term of Equation 14 and to deduce the result.
+Remark 4.3. The theorem above encompasses a large set of binary forms. For example, since the
+quadratic binary form F = X12 + qX22 deﬁned in Example 2.6 has fundamental discriminant and α(F )
+is positive, we know that asymptotically it has less smooth values than the random integers of same
+size. Nevertheless, many examples of binary forms F ′ with good values of α(F ′ ) have non fundamental
+disciminants.
+
+5
+
+Conclusion and open questions
+
+The results in this article establish a rigorous connection between Murphy’s α and a polynomial’s
+eﬃciency in NFS. On can improve the speed of the algorithm by studying α and, in particular, the
+following questions:
+• What is the maximum value of α on a given set E(d, I)? Indeed, if a polynomial with a good
+value of α is found, one can end the polynomial selection phase, reducing therefore the time spent
+in this phase of the algorithm.
+• Can one deﬁne a variance of α? Indeed, experiments indicate that, uniformly on the ideals products I, the distribution of the values of α on a set E(d, m, I) converges to a Gaussian distribution
+when m tends to inﬁnity. If one can deﬁne and compute the variance of α, one will be able to
+ﬁnd a good trade-oﬀ between the time spent to select a good polynomial and the time used to
+collect relations using that polynomial.
+
+14
+
+References
+[Bai11]
+
+S. Bai. Polynomial selection for the number field sieve. PhD thesis, Australian National
+University, 2011.
+
+[BBDT12] A Balog, V. Blomer, C. Dartyge, and G. Tenenbaum. Friable values of binary forms.
+Comment. Math. Helv., 87(3):639–667, 2012.
+[Boe96]
+
+H. Boender. The number of relations in the quadratic sieve algorithm. Technical report,
+Departement of Numerical Mathematics CWI Amsterdam, 1996.
+
+[Bue89]
+
+D. A. Buell. Binary quadratic forms–Classical theory and modern computations. SpringerVerlag, New York, 1989.
+
+[Dan99]
+
+S. Daniel. On the divisor-sum problem for binary forms. J. Reine Angew. Math., 507:107–
+129, 1999.
+
+[Ded78]
+
+R. Dedekind. Über den zusammenhang zwischen der theorie der ideale und der höheren
+kongruenzen. Abh. Kgl. Ges. Wiss. Göttingen, 23:1–23, 1878.
+
+[FT91]
+
+É. Fouvry and G. Tenenbaum. Entiers sans grand facteur premier en progressions arithmetiques. Proc. London Math. Soc. (3), 63(3):449–494, 1991.
+
+[Gra08]
+
+A. Granville. Smooth numbers: computational number theory and beyond. In Algorithmic
+number theory: lattices, number fields, curves cryptography, volume 44 of Math. Sci. Res.
+Inst. Publ., pages 267–323. Cambridge Univ. Press, Cambridge, 2008.
+
+[Hil86]
+
+A. Hildebrand. On the number of positive integers ≤ x and free of prime factors > y. J.
+Number Theory, 22(3):289–307, 1986.
+
+[HT93]
+
+A. Hildebrand and G Tenenbaum. Integers without large prime factors. J. Théor. Nombres
+Bordeaux, 5(2):411–484, 1993.
+
+[HTW08] G. Hanrot, G. Tenenbaum, and J. Wu. Moyennes de certaines fonctions multiplicatives sur
+les entiers friables. II. Proc. Lond. Math. Soc. (3), 96(1):107–135, 2008.
+[JLPV06] A. Joux, R. Lercier, Smart N. P., and F. Vercauteren. The number ﬁeld sieve in the medium
+prime case. In Advances in cryptology—CRYPTO 2006, volume 4117 of Lecture Notes in
+Comput. Sci., pages 326–344, Berlin, 2006. Springer.
+[Kle06]
+
+T. Kleinjung. On polynomial selection for the general number ﬁeld sieve. Math. Comp.,
+75(256):2037–2047, 2006.
+
+[Kle08]
+
+T. Kleinjung. Polynomial selection, 2008. CADO workshop on integer factorization. Slides
+available online at http://cado.gforge.inria.fr/workshop/slides/kleinjung.pdf.
+
+[Laca]
+
+A. Lachand. Sommes de fonctions arithmétiques sur les valeurs de formes binaires cubiques
+irréductibles. in preparation.
+
+[Lacb]
+
+A. Lachand. Valeurs friables de formes binaires cubiques réductibles. in preparation.
+
+[LL93]
+
+A. K. Lenstra and H. W. Lenstra. The development of the number field sieve. Springer
+Verlag, 1993.
+
+[LO77]
+
+J. C. Lagarias and A. M. Odlyzko. Eﬀective versions of the Chebotarev density theorem. In
+Algebraic number fields: L-functions and Galois properties (Proc. Sympos., Univ. Durham,
+Durham, 1975), pages 409–464. Academic Press, London, 1977.
+
+[Mur99]
+
+B. A. Murphy. Polynomial selection for the number field sieve integer factorisation algorithm. PhD thesis, Australian National University, 1999.
+
+[Nag21]
+
+T. Nagell. Généralisation d’un théorème de Tchebycheﬀ. J. Math. Pures Appl. (8), 4(4):343–
+356, 1921.
+
+[Oes79]
+
+J. Oesterlé. Versions eﬀectives du théorème de Chebotarev sous l’hypothèse de riemann
+généralisée. Astérisque, 61:165–167, 1979.
+
+[RS62]
+
+J. B. Rosser and L. Schoenfeld. Approximate formulas for some functions of prime numbers.
+Illinois J. Math., 6:64–94, 1962.
+
+[Sai89]
+
+É. Saias. Sur le nombre des entiers sans grand facteur premier. J. Number Theory, 32(1):78–
+99, 1989.
+
+15
+
+[Ten90]
+
+G. Tenenbaum. Sur un problème d’Erdős et Alladi. In Séminaire de Théorie des Nombres,
+Paris 1988–1989, volume 91 of Progr. Math., pages 221–239. Birkhäuser Boston, Boston,
+MA, 1990.
+
+[Ten95]
+
+G. Tenenbaum. Introduction to analytic and probabilistic number theory, volume 46 of
+Cambridge Studies in Advanced Mathematics. Cambridge University Press, Cambridge,
+1995. Translated from the second French edition (1995) by C. B. Thomas.
+
+[Win]
+
+B. Winckler.
+Théorème de Chebotarev eﬀectif.
+Preprint available
+http://hal.archives-ouvertes.fr/docs/00/90/74/10/PDF/chebotarev.pdf.
+
+16
+
+at
+
+

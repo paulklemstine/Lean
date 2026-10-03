@@ -1,0 +1,973 @@
+Factoring pq2 with Quadratic Forms: Nice Cryptanalyses
+Guilhem Castagnos, Antoine Joux, Fabien Laguillaumie, Phong Q. Nguyen
+
+To cite this version:
+Guilhem Castagnos, Antoine Joux, Fabien Laguillaumie, Phong Q. Nguyen. Factoring pq2 with Quadratic
+Forms: Nice Cryptanalyses. ASIACRYPT’2009 - 15th Annual International Conference on the Theory and
+Application of Cryptology and Information Security, A, Dec 2009, Tokyo, Japan. pp.469-486, ⟨10.1007/978-3642-10366-7⟩. ⟨hal-01022756⟩
+
+HAL Id: hal-01022756
+https://hal.science/hal-01022756v1
+Submitted on 10 Jul 2014
+
+HAL is a multi-disciplinary open access archive
+for the deposit and dissemination of scientific research documents, whether they are published or not.
+The documents may come from teaching and research
+institutions in France or abroad, or from public or private research centers.
+
+L’archive ouverte pluridisciplinaire HAL, est destinée au dépôt et à la diffusion de documents scientifiques de niveau recherche, publiés ou non, émanant
+des établissements d’enseignement et de recherche
+français ou étrangers, des laboratoires publics ou
+privés.
+
+HAL Authorization
+
+Factoring pq 2 with Quadratic Forms:
+Nice Cryptanalyses
+Guilhem Castagnos?1 , Antoine Joux2,3 , Fabien Laguillaumie4 , and
+Phong Q. Nguyen5
+1
+
+Institut de Mathématiques de Bordeaux – Université Bordeaux 1
+guilhem.castagnos@math.u-bordeaux1.fr
+2
+PRISM – Université de Versailles St-Quentin-en-Yvelines
+3
+DGA
+antoine.joux@m4x.org
+4
+GREYC – Université de Caen Basse-Normandie
+fabien.laguillaumie@info.unicaen.fr
+5
+INRIA and ENS, France
+http://www.di.ens.fr/~pnguyen/
+
+Abstract. We present a new algorithm based on binary quadratic forms
+to factor integers of the form N = pq 2 . Its heuristic running time is exponential in the general case, but becomes polynomial when special (arithmetic) hints are available, which is exactly the case for the so-called NICE
+family of public-key cryptosystems based on quadratic fields introduced
+in the late 90s. Such cryptosystems come in two flavours, depending
+on whether the quadratic field is imaginary or real. Our factoring algorithm yields a general key-recovery polynomial-time attack on NICE,
+which works for both versions: Castagnos and Laguillaumie recently obtained a total break of imaginary-NICE, but their attack could not apply
+to real-NICE. Our algorithm is rather different from classical factoring
+algorithms: it combines Lagrange’s reduction of quadratic forms with a
+provable variant of Coppersmith’s lattice-based root finding algorithm for
+homogeneous polynomials. It is very efficient given either of the following
+arithmetic hints: the public key of imaginary-NICE, which provides an
+alternative to the CL attack; or the knowledge that the regulator of the
+√
+quadratic field Q( p) is unusually small, just like in real-NICE.
+Keywords: Public-key Cryptanalysis, Factorisation, Binary Quadratic
+Forms, Homogeneous Coppersmith’s Root Finding, Lattices.
+
+1
+
+Introduction
+
+Many public-key cryptosystems require the hardness of factoring large integers
+of the special form N = pq 2 , such as Okamoto’s Esign [Oka90], Okamoto and
+Uchiyama’s encryption [OU98], Takagi’s fast RSA variants [Tak98], and the large
+family (surveyed in [BTV04]) of cryptosystems based on quadratic fields, which
+?
+
+This work was done while this author was with the PRISM – Université de Versailles.
+
+was initiated by Buchmann and Williams’ key exchange [BW88], and which
+includes NICE1 cryptosystems [HPT99,PT99,PT00,JSW08] (whose main feature
+is a quadratic decryption). These moduli are popular because they can lead
+to special functionalities (like homomorphic encryption) or improved efficiency
+(compared to RSA). And no significant weakness has been found compared to
+standard RSA moduli of the form N = pq: to the best of our knowledge, the only
+results on pq 2 factorisation are [PO96, Per01, BDH99]. More precisely, [PO96,
+Per01] obtained a linear speed-up of Lenstra’s ECM, and [BDH99, Sect. 6] can
+factor in time Õ(N 1/9 ) when p and q are balanced. Furthermore, computing
+the “squarefree part” of an integer (that is, given N ∈ N as input, compute
+(r, s) ∈ N2 such that N = r2 s with s squarefree) is a classical problem in
+algorithmic number theory (cf. [AM94]), because it is polynomial-time equivalent
+to determining the ring of integers of a number field [Chi89].
+However, some of these cryptosystems actually provide additional information (other than N ) in the public key, which may render factorisation easy. For
+instance, Howgrave-Graham [How01] showed that the public key of [Oka86] disclosed the secret factorisation in polynomial time, using the gcd extension of Coppersmith’s root finding method [Cop97]. Very recently, Castagnos and Laguillaumie [CL09] showed that the public key in the imaginary version [HPT99, PT99,
+PT00] of NICE allowed to retrieve the secret factorisation in polynomial time.
+And this additional information in the public key was crucial to make the complexity of decryption quadratic in imaginary-NICE, which was the main claimed
+benefit of NICE. But surprisingly, the attack of [CL09] does not work against
+REAL-NICE [JSW08], which is the version of NICE with real (rather than imaginary) quadratic fields, and which also offers quadratic decryption. In particular,
+the public key of REAL-NICE only consists of N = pq 2 , but the prime p has
+special arithmetic properties.
+Our Results. We present a new algorithm to factor integers of the form
+N = pq 2 , based on binary quadratic forms (or equivalently, ideals of orders of
+quadratic number fields). In the worst case, its heuristic running time is exponential, namely Õ(p1/2 ). But in the presence of special hints, it becomes heuristically
+polynomial. These hints are different from the usual ones of lattice-based factoring methods [Cop97, BDH99, How01] where they are a fraction of the bits of the
+secret prime factors. Instead, our hints are arithmetic, and correspond exactly
+to the situation of NICE, including both the imaginary [HPT99, PT99, PT00]
+and real versions [JSW08]. This gives rise to the first general key-recovery
+polynomial-time attack on NICE, using only the public key.
+More precisely, our arithmetic hints can be either of the following two:
+i. The hint is an ideal equivalent to a secret ideal of norm q 2 in an imaginary
+quadratic field of discriminant −pq 2 : in NICE, such an ideal is disclosed by the
+public key. This gives an alternative attack of NICE, different from [CL09].
+√
+ii. The hint is the knowledge that the regulator of the quadratic field Q( p) is
+unusually small, just like in REAL-NICE. Roughly speaking, the regulator is a
+1
+
+for New Ideal Coset Encryption
+
+2
+
+real number which determines how “dense” the units of the ring of integers
+√
+of the number field Q( p) are. This number is known to lie in the large
+q
+h
+i
+√
+√ 
+interval log 12 ( p − 4 + p) , 12 p 12 log p + 1 . But for infinitely many
+p (including square-free numbers of the form p = k 2 + r, where p > 5, r|4k
+and −k < r ≤ k, see [Deg58]), the regulator is at most polynomial in log p.
+For these unusually small regulators, our algorithm heuristically runs in time
+polynomial in the bit-length of N = pq 2 , which gives the first total break of
+REAL-NICE [JSW08]. We stress that although such p’s are easy to construct,
+their density is believed to be arbitrary small.
+Interestingly, our algorithm is rather different from classical factoring algorithms. It is a combination of Lagrange’s reduction of quadratic forms with a
+provable variant of Coppersmith’s lattice-based root finding algorithm [Cop97]
+for homogeneous polynomials. In a nutshell, our factoring method first looks for
+a reduced binary quadratic form f (x, y) = ax2 + bxy + cy 2 representing properly q 2 with small coefficients, i.e. there exist small coprime integers x0 and y0
+such that q 2 = f (x0 , y0 ). In case i., such a quadratic form is already given. In
+case ii., such a quadratic form is found by a walk along the principal cycle of
+the class group of discriminant pq 2 , using Lagrange’s reduction of (indefinite)
+quadratic forms. Finally, the algorithm finds such small coprime integers x0 and
+y0 such that q 2 = f (x0 , y0 ), by using the fact that gcd(f (x0 , y0 ), pq 2 ) is large.
+This discloses q 2 and therefore the factorisation of N . In both cases, the search
+for x0 and y0 is done with a new rigorous homogeneous bivariate variant of Coppersmith’s method, which might be of independent interest: by the way, it was
+pointed out to us that Bernstein [Ber08] independently used a similar method
+in the different context of Goppa codes decoding.
+Our algorithm requires “natural” bounds on the roots of reduced quadratic
+forms of a special shape. We are unable to prove rigorously these bounds, which
+makes our algorithm heuristic (like many factoring algorithms). But we have
+performed many experiments supporting such bounds, and the algorithm works
+very well in practice.
+Factorisation and Quadratic Forms. Our algorithm is based on quadratic
+forms, which share a long history with factoring (see [CP01]). Fermat’s factoring
+method represents N in two intrinsically different ways by the quadratic form
+x2 + y 2 . It has been improved by Shanks with SQUFOF, whose complexity is
+Õ(N 1/4 ) (see [GW08] for a detailed analysis). Like ours, this method works
+with the infrastructure of a class group of positive discriminant, but is different
+in spirit since it searches for an ambiguous form (after having found a square
+form), and does not focus on discriminants of a special shape. Schoof’s factoring
+algorithms [Sch82] are also essentially looking for ambiguous forms. One is based
+on computation in class groups of complex quadratic orders and the other is
+close to SQUFOF since it works with real quadratic orders by computing a
+good approximation of the regulator to find an ambiguous form. Like SQUFOF,
+this algorithm does not takes advantage of working in a non-maximal order
+and is rather different from our algorithm. Both algorithms of [Sch82] runs in
+3
+
+Õ(N 1/5 ) under the generalised Riemann hypothesis. McKee’s method [McK99]
+is a speedup of Fermat’s algorithm (and was presented as an alternative to
+SQUFOF) with a heuristic complexity of Õ(N 1/4 ) instead of Õ(N 1/2 ).
+SQUFOF and other exponential methods are often used to factor small numbers (say 50 to 100 bits), for instance in the post-sieving phase of the Number
+Field Sieve algorithm. Some interesting experimental comparisons can be found
+in [Mil07]. Note that the currently fastest rigorous deterministic algorithm actually has exponential complexity: it is based on a polynomial evaluation method
+(for a polynomial of the form x(x − 1) · · · (x − B + 1) for some bound B) and its
+best variant is described in [BGS07]. Finally, all sieve factoring algorithms are
+somewhat related to quadratic forms, since their goal is to find random pairs
+(x, y) of integers such that x2 ≡ y 2 mod N . However, these algorithms factor
+generic numbers and have a subexponential complexity.
+Road Map. The rest of the paper is organised as follows. The first section
+recalls facts on quadratic fields and quadratic forms, and present our heuristic
+supported by experiments. The next section describes the homogeneous Coppersmith method and the following exhibits our main result: the factoring algorithm.
+The last section consists of the two cryptanalyses of cryptosystems based on real
+quadratic fields (REAL-NICE) and on imaginary quadratic fields (NICE).
+
+2
+
+Background on Quadratic Fields and Quadratic Forms
+
+2.1
+
+Quadratic Fields
+
+Let D 6=√0, 1 be a squarefree integer and consider the quadratic number field
+K = Q( D). If D < 0 (resp. D > 0), K is called an imaginary (resp. a real )
+quadratic field. The fundamental discriminant ∆K of K is defined as ∆K = D
+if D ≡ 1 (mod 4) and ∆K = 4D otherwise. An order O in K is a subset of K
+such that O is a subring of K containing 1 and O is a free Z-module of rank
+2. The ring O∆K of algebraic integers in K is √
+the maximal order of K. It can
+be written as Z + ωK Z, where ωK = 21 (∆K + ∆K ). If we set f = [O∆K : O]
+the finite index of any order O in O∆K , then O = Z + f ωK Z. The integer f
+is called the conductor of O. The discriminant of O is then ∆f = f 2 ∆K . Now,
+let O∆ be an order of discriminant ∆ and a be a nonzero ideal of O∆ , its norm
+is N(a) = |O∆ /a|. A fractional ideal is a subset a ⊂ K such that da is an ideal
+of O∆ for d ∈ N. A fractional ideal a is said to be invertible if there exists
+an another fractional ideal b such that ab = O∆ . The ideal class group of O∆ is
+C(O∆ ) = I(O∆ )/P (O∆ ), where I(O∆ ) is the group of invertible fractional ideals
+of O∆ and P (O∆ ) the subgroup consisting of principal ideals. Its cardinality is
+the class number of O∆ denoted by h(O∆ ). A nonzero ideal a of O∆ , a is said
+to be prime to f if a + f O∆ = O∆ . We denote by I(O∆ , f ) the subgroup of
+?
+I(O∆ ) of ideals prime to f . The group O∆
+of units in O∆ is equal to {±1} for
+?
+?
+all ∆ < 0, except when ∆ is equal to −3 and −4 (O−3
+and O−4
+are respectively
+?
+the group of sixth and fourth roots of unity). When ∆ > 0, then O∆
+= h−1, ε∆ i
+where ε∆ > 0 is called the fundamental unit. The real number R∆ = log(ε∆ ) is
+4
+
+the regulator of O∆ . The following important bounds on the regulator of a real
+quadratic field can be found in [JLW95]:
+r
+
+
+
+
+√
+1 √
+1
+1
+log
+( ∆ − 4 + ∆) ≤ R∆ <
+∆
+log ∆ + 1 .
+(1)
+2
+2
+2
+The lower bound is reached infinitely often, for instance with ∆ = x2 + 4 with
+2 - x. Finally, this last proposition is the heart of both NICE and REAL-NICE.
+Proposition 1 ([Cox99, Proposition 7.20] [Wei04, Theorem 2.16]). Let
+O∆f be an order of conductor f in a quadratic field K.
+i. If A is an O∆K -ideal prime to f , then A ∩ O∆f is an O∆f -ideal prime to f
+of the same norm.
+ii. If a is an O∆f -ideal prime to f , then aO∆K is an O∆K -ideal prime to f of
+the same norm.
+iii. The map ϕf : I(O∆f , f ) → I(O∆K , f ), a 7→ aO∆K is an isomorphism.
+The map ϕf from Proposition 1 induces a surjection ϕ̄f : C(O∆f )  C(O∆K )
+which can be efficiently computed (see [PT00]). In our settings, we will use a
+prime conductor f = q and consider ∆q = q 2 ∆K , for a fundamental discriminant
+∆K . In that case, the order of the kernel of ϕ̄q is given by the classical analytic
+class number formula (see for instance [BV07])
+
+h(O∆q )
+q − (∆K /q)
+if ∆k < −4,
+=
+(2)
+(q − (∆K /q))R∆K /R∆q if ∆k > 0.
+h(O∆K )
+Note that in the case of real quadratic fields, ∆q = t∆K for a positive integer
+t, hence R∆q /R∆K = t and t | (q − (∆K /q)).
+2.2
+
+Representation of the Classes
+
+Working with ideals modulo the equivalence relation of the class group is essentially equivalent to work with binary quadratic forms modulo SL2 (Z) (cf. Section
+5.2 of [Coh00]). Moreover, quadratic forms are more suited to
+
+ an algorithmic
+√
+
+point of view. Every ideal a of O∆ can be written as a = m aZ + −b+2 ∆ Z
+
+with m ∈ Z, a ∈ N and b ∈ Z such that b2 ≡ ∆ (mod 4a). In the remainder,
+we will only consider primitive integral ideals, which are those with m = 1.
+This notation also represents the binary quadratic form ax2 + bxy + cy 2 with
+b2 − 4ac = ∆. This representation of the ideal is unique if the form is normal
+(see below). We recall here some facts about binary quadratic forms.
+Definition 1. A binary quadratic form f is a degree 2 homogeneous polynomial
+f (x, y) = ax2 +bxy +cy 2 where a, b and c are integers, and is denoted by [a, b, c].
+The discriminant of the form is ∆ = b2 − 4ac. If a > 0 and ∆ < 0, the form is
+called definite positive and indefinite if ∆ > 0.
+
+
+αβ
+Let M ∈ SL2 (Z) with M =
+, and f = [a, b, c], a binary quadratic form,
+γ δ
+then f.M is the equivalent binary quadratic form f (αx + βy, γx + δy).
+5
+
+Definite Positive Forms. Let us first define the crucial notion of reduction.
+Definition 2. The form f = [a, b, c] is called normal if −a < b ≤ a. It is called
+reduced if it is normal, a ≤ c, and if b ≥ 0 for a = c.
+The procedure which transforms a form f = [a, b, c] into a normal one consists
+in setting s such that b + 2sa belongs to the right interval (see [BV07, (5.4)]) and
+producing the form [a, b+2sa, as2 +bs+c]. Once a form f = [a, b, c] is normalised,
+a reduction step consists in normalising the form [c, −b, a]. We denote this form
+by ρ(f ) and by Rho a corresponding algorithm. The reduction then consists in
+normalising f , and then iteratively replacing f by ρ(f ) until f is reduced. The
+time complexity of this (Lagrange-Gauß) algorithm is quadratic (see [VV07]).
+It returns a reduced form g which is equivalent to f modulo SL2 (Z). We will
+call matrix of the reduction, the matrix M such that g = f.M . The reduction
+procedure yields a uniquely determined reduced form in the class modulo SL2 (Z).
+
+Indefinite Forms. Our main result will deal with forms of positive discriminant. Here is the definition of a reduced indefinite form.
+Definition 3. The form f = [a, b, c] of positive discriminant ∆ is reduced if
+√
+√
+√
+∆ − 2|a| < b < ∆ and normal if −|a| < b ≤ |a| for |a| ≥ ∆, and
+√
+√
+√
+∆ − 2|a| < b < ∆ for |a| < ∆.
+The reduction process is similar to the definite positive case. The time complexity of the algorithm is still quadratic (see [BV07, Theorem 6.6.4]). It returns
+a reduced form g which is equivalent to f modulo SL2 (Z). The main difference
+with forms of negative discriminant is that there will in general not exist a unique
+reduced form per class, but several organised in a cycle structure i. e., when f
+has been reduced then subsequent applications of ρ give other reduced forms.
+Definition 4. Let f be an indefinite binary quadratic form, the cycle of f is
+the sequence (ρi (g))i∈Z where g is a reduced form which is equivalent to f .
+From Theorem 6.10.3 from [BV07], the cycle of f consists of all reduced
+forms in the equivalence class of f . Actually, the complete cycle is obtained by
+a finite number of application of ρ as the process is periodic. It has been shown
+in [BTW95] that the period length ` of the sequence of reduced forms in each
+R∆
+2R∆
+class of a class group of discriminant ∆ satisfies log
+∆ ≤ ` ≤ log 2 + 1.
+Our factoring algorithm will actually take place in the principal equivalence
+class. The following definition exhibits the principal form of discriminant ∆.
+√
+√
+Definition 5. The reduced form [1, b ∆c, (b ∆c2 − ∆)/4] of discriminant ∆
+is called the principal form of discriminant ∆, and will be denoted 1∆ .
+6
+
+2.3
+
+Reduction of the Forms [q 2 , kq, (k2 ± p)/4] and Heuristics
+
+In this subsection, p and q are two distinct primes of the same bit-size λ and
+p ≡ 1 mod 4 (resp. p ≡ 3 mod 4) when we deal with positive (resp. negative)
+discriminant. Our goal is to factor the numbers pq 2 with the special normalised
+quadratic forms [q 2 , kq, (k 2 + p)/4] or [q 2 , kq, (k 2 − p)/4], depending whether we
+work with a negative discriminant ∆q = −pq 2 or with a positive one ∆q = pq 2 .
+If p and q have the same size, these forms are clearly not reduced neither in the
+imaginary setting nor in real one. But as we shall see, we can find the reduced
+forms which correspond to the output of the reduction algorithm applied on
+these forms.
+Suppose that we know a form fˆk , either definite positive or indefinite, which
+is the reduction of a form fk = [q 2 , kq, (k 2 ± p)/4] where
+ k isan integer. Then
+αβ
+2
+fˆk represents the number q . More precisely, if Mk =
+∈ SL2 (Z) is the
+γ δ
+matrix such that fˆk = fk .Mk , then fˆk .Mk−1 = fk and q 2 = fk (1, 0) = fˆk (δ, −γ).
+In Section 3, we will see that provided they are relatively small compared to
+∆q , the values δ and −γ can be found in polynomial time with a new variant
+of Coppersmith method. Our factoring algorithm can be sketched as follows:
+find such a form fˆk and if the coefficients of Mk are sufficiently small, retrieve
+δ and −γ and the non-trivial factor q 2 of ∆q . In this paragraph, we give some
+heuristics on the size of such a matrix Mk and discuss their relevance. If M is a
+matrix we denote by |M | the max norm, i. e., the maximal coefficient of M in
+absolute value.
+In the imaginary case, it is showed in the proof of [CL09, Theorem 2] that
+the forms fk belong to different classes of the kernel of the map ϕ̄q , depending
+on k, so the reduced equivalent forms fˆk are the unique reduced elements of the
+classes of the kernel. To prove the correctness of our attack on NICE, we need
+the following heuristic (indeed, the root finding algorithm of Section 3 recovers
+roots up to |∆q |1/9 ):
+Heuristic 1 (Imaginary case) Given a reduced element fˆk of a nontrivial
+class of ker ϕ̄q , the matrix of reduction Mk is such that |Mk | < |∆q |1/9 with
+probability asymptotically close to 1.
+p
+From Lemma 5.6.1 of [BV07], |Mk | < 2 max{q 2 , (k 2 + p)/4}/ pq 2 . As fk is
+√
+normalised, |k| ≤ q and |Mk | < 2q/ p ≈ |∆q |1/6 . Note that we cannot reach such
+a bound with our root finding algorithm. Experimentally, for random k, |Mk | can
+be much smaller. For example, if the bit-size λ of p and q equals 100, the mean
+value of |Mk | is around |∆q |1/11.7 . Our heuristic can be explained as follows.
+A well-known heuristic in the reduction of positive definite quadratic forms (or
+equivalently, two-dimensional lattices) is that if [a, b, c]
+√ is a reduced quadratic
+form of discriminant ∆, then a and c should be close to ∆. This cannot hold for
+all reduced forms, but it can be proved to hold for an overwhelming majority of
+reduced forms. Applied to fˆk = [a, b, c], this means that we expect a and c to be
+close to |∆q |1/2 . Now, recall that q 2 = fˆk (δ, −γ) = aδ 2 − bδγ + cγ 2 , which leads
+7
+
+p
+√
+to δ and γ close to q 2 /a = q/ a ≈ q/|∆q |1/4 ≈ |∆q |1/12 . Thus, we expect that
+|Mk | ≤ |∆q |1/12 . And this explains why we obtained experimentally the bound
+|∆q |1/11.7 . Figure 1(a) shows a curve obtained by experimentation, which gives
+the probability that |Mk | < |∆q |1/9 for random k, in function of λ. This curve
+also supports our heuristic.
+In the real case, we prove in the following theorem that R∆q /R∆K forms fk
+are principal and we exhibit the generators of the corresponding primitive ideals.
+Theorem 1. Let ∆K be a fundamental positive discriminant, ∆q = ∆K q 2 where
+q is an odd prime conductor. Let ε∆K (resp. ε∆q ) be the fundamental unit of
+O∆K (resp. O∆q ) and t such that εt∆K = ε∆q . Then the principal ideals of O∆q
+generated by qεi∆K correspond to quadratic forms fk(i) = [q 2 , k(i)q, (k(i)2 − p)/4]
+with i ∈ {1, . . . , t − 1} and k(i) is an integer defined modulo 2q computable from
+εi∆K mod q.
+Proof. Let αi = qεi∆K with i ∈ {1, . . . , t − 1}. Following the proof of [BTW95,
+Proposition 2.9], we detail here the computation of ai = αi O∆q . Let xi and yi
+be two integers such that εi∆K = xi + yi ωK . Then αi = qxi + yi q∆K (1 − q)/2 +
+p
+of O∆q . Let mi , ai and bi be three integers
+yi 12 (∆q + ∆q ), and
+ αi is an element
+√ 
+−bi + ∆q
+such that ai = mi ai Z +
+. As mentioned in the proof of [BTW95,
+2
+p
+Proposition 2.9], mi is the smallest positive coefficient of ∆q /2 in ai . As O∆q
+p
+p
+is equal to Z + (∆q + ∆q )/2Z, αi O∆q is generated by αi and αi (∆q + ∆q )/2
+as a Z-module. So a simple calculation gives that mi = gcd(yi , q(xi + yi ∆K /2)).
+As εi∆K is not an element of O∆q , we have gcd(yi , q) = 1 so mi = gcd(yi , xi +
+yi ∆K /2). The same calculation to find m0i for the ideal εi∆K O∆K reveals that
+mi = m0i . As εi∆K O∆K = O∆K we must have m0i = 1. Now, N(ai ) = |N(αi )| = q 2
+and N(ai ) = m2i ai = ai and therefore ai = q 2 . Let us now find bi . Note that
+bi is defined modulo 2ai . Since αi ∈ αi O∆q , there exist µi and νi such that
+p
+p
+αi = ai µi + (−bi + ∆q )/2νi . By identification in the basis (1, ∆q ), νk = 1
+and by a multiplication by 2, we obtain 2qxi + qyi ∆K ≡ −bi yi (mod 2ai ). As
+bi ≡ ∆q (mod 2), we only have to determine bi modulo q 2 . As yi is prime to
+q, we have bi ≡ k(i)q (mod q 2 ) with k(i)
+p ≡ −2xi /yi −p∆K (mod q). Finally,
+p as
+we must have −ai < b ≤ ai if ai > ∆q and else ∆q − 2ai < b < ∆q ,
+k(i) is the unique integer with k(i) ≡ ∆q (mod 2) and k(i) ≡ −2xi /yi − ∆K
+(mod q), such that b = k(i)q satisfies that inequalities. Eventually, the principal
+ideal of O∆q generated by qεi∆K corresponds to the form [q 2 , k(i)q, ci ] with ci =
+(b2i − ∆q )/(4ai ) = (k(i)2 − ∆K )/4.
+t
+u
+From this theorem, we see that if we go across the cycle of principal forms,
+then we will find reduced forms fˆk . To analyse the complexity of our factoring algorithm, we have to know the distribution of these forms on the cycle.
+An appropriate tool is the Shanks distance d (see [BV07, Definition 10.1.4])
+which is close to the number of iterations of Rho between two forms. One has
+d(1∆q , fk(i) ) = iR∆K . From Lemma 10.1.8 of [BV07], |d(fˆk(i) , fk(i) )| < log q, for
+8
+
+(a) Imaginary case
+
+(b) Real case
+
+Fig. 1. Probability that |Mk | < |∆q |1/9 in function of the bit-size λ of p and q
+
+all i = 1, 2, . . . , t − 1. Let j be the smallest integer such that 0 < jR∆K −
+2 log q, then as jR∆K = d(fk(i) , fk(i+j) ) = d(fk(i) , fˆk(i) ) + d(fˆk(i) , fˆk(i+j) ) +
+d(fˆk(i+j) , fk(i+j) ), from the triangle inequality, one has jR∆K < 2 log(q) +
+|d(fˆk(i) , fˆk(i+j) )|. So, |d(fˆk(i) , fˆk(i+j) )| > jR∆K − 2 log q > 0. This inequality
+proves that fk(i) and fk(i+j) do not reduce to the same form. Experiments actually show that asymptotically, |d(fˆk(i) , fk(i) )| is very small on average (smaller
+than 1). As a consequence, as pictured in figure 2, d(1∆q , fˆk(i) ) ≈ iR∆K .
+
+fk(1)
+1∆q
+fˆk(1)
+R∆K
+
+fˆk(2)
+fˆk(3)
+
+fk(2)
+
+fk(3)
+
+Fig. 2. Repartition of the forms fˆk(i) along the principal cycle
+
+Moreover, as in the imaginary case, experiments show that asymptotically
+the probability that the norm of the matrices of reduction, |Mk | is smaller than
+1/9
+∆q is close to 1 (see figure 1(b)). This leads to the following heuristic.
+Heuristic 2 (Real case) From the principal form 1∆q , a reduced form fˆk such
+1/9
+that the matrix of the reduction, Mk , satisfy |Mk | < ∆q , can be found in
+O(R∆K ) successive applications of Rho.
+We did also some experiments to investigate the case where the bit-sizes of
+p and q are unbalanced. In particular when the size of q grows, the norm of the
+9
+
+matrix of reduction becomes larger. For example, for a 100-bit p and a 200-bit q
+(resp. a 300-bit q), more than 95% (resp. 90%) of the fˆk have a matrix Mk with
+1/6.25
+1/5.44
+|Mk | < ∆q
+(resp. |Mk | < ∆q
+).
+
+3
+
+A Rigorous Homogeneous Variant of Coppersmith’s
+Root Finding Method
+
+Our factoring algorithm searches many times for small modular roots of degree two homogeneous polynomials and the most popular technique to find
+them is based on Coppersmith’s method (see [Cop97] or May’s survey [May07]).
+Our problem is the following: Given f (x, y) = x2 + bxy + cy 2 a (monic) binary quadratic form and N = pq 2 an integer of unknown factorisation, find
+(x0 , y0 ) ∈ Z2 such that f (x0 , y0 ) ≡ 0 (mod q 2 ), while |x0 |, |y0 | ≤ M , where
+M ∈ N. The usual technique for this kind of problems is only heuristic, since it
+is the gcd extension of bivariate congruences. Moreover, precise bounds cannot
+be found in the litterature. Fortunately, because our polynomial is homogeneous,
+we will actually be able to prove the method. This homogenous variant is quite
+similar to the one-variable standard Coppersmith method, but is indeed even
+simpler to describe and more efficient since there is no need to balance coefficients. We denote as k · k the usual Euclidean norm for polynomials. The main
+tool to solve this problem is given by the following variant of the widespread
+elementary Howgrave-Graham’s lemma [How97].
+Lemma 1. Let B ∈ N and g(x, y) ∈ Z[x, y] be a homogeneous polynomial of
+B
+total degree δ. Let M > 0 be a real number and suppose that ||g(x, y)|| < √δ+1M
+δ
+then for all x0 , y0 ∈ Z such that g(x0 , y0 ) ≡ 0 (mod B) and |x0 |, |y0 | ≤ M ,
+g(x0 , y0 ) = 0.
+Pδ
+Proof. Let g(x, y) = i=0 gi xi y δ−i where some gi s might be zero. We have
+Pδ
+Pδ
+|g(x0 , y0 )| ≤ i=0
+|gi ||xi0 y0δ−i | ≤ M δ i=0 |gi |
+√
+≤ M δ δ + 1kg(x, y)k < B
+t
+u
+
+and therefore g(x0 , y0 ) = 0.
+
+The trick is then to find only one small enough bivariate homogeneous polynomial satisfying the conditions of this lemma and to extract the rational root
+of the corresponding univariate polynomial with standard techniques. On the
+contrary, the original Howgrave-Graham’s lemma suggests to look for two polynomials of small norm having (x0 , y0 ) as integral root, and to recover it via
+elimination theory. The usual way to obtain these polynomials is to form a
+lattice spanned by a special family of polynomials, and to use the LLL algorithm (cf. [LLL82]) to obtain the two “small” polynomials. Unfortunately, this
+reduction does not guarantee that these polynomials will be algebraically independent, and the elimination can then lead to a trivial relation. Consequently,
+this bivariate approach is heuristic. Fortunately, for homogeneous polynomials,
+10
+
+we can take another approach by using Lemma 1 and then considering a univariate polynomial with a rational root. This makes the method rigorous and
+slightly simpler since we need a bound on kg(x, y)k and not on kg(xX, yY )k if
+X and Y are bounds on the roots and therefore the resulting lattice has smaller
+determinant than in the classical bivariate approach.
+To evaluate the maximum of the bound we can obtain, we need the size of
+the first vector provided by LLL which is given by:
+Lemma 2 (LLL). Let L be a full-rank lattice in Zd spanned by an integer basis
+B = {b1 , . . . , bd }. The LLL algorithm, given B as input, will output in time
+O(d6 log3 (max kbi k)) a non-zero vector u satisfying kuk ≤ 2(d−1)/4 det(L)1/d .
+We will now prove the following general result regarding the modular roots
+of bivariate homogeneous polynomials which can be of independent interest.
+Theorem 2. Let f (x, y) ∈ Z[x, y] be a homogeneous polynomial of degree δ with
+f (x, 0) = xδ , N be a non-zero integer and α be a rational number in [0, 1], then
+one can retrieve in polynomial time in log N , δ and the bit-size of α, all the
+rationals x0 /y0 , where x0 and y0 are integers such that gcd(f (x0 , y0 ), N ) ≥ N α
+2
+and |x0 |, |y0 | ≤ N α /2δ .
+Proof. Let b be a divisor of N for which their exists (x0 , y0 ) ∈ Z2 such that
+b = gcd(f (x0 , y0 ), N ) ≥ N α . We define some integral parameters (to be specified
+later) m, t and t0 with t = m + t0 and construct a family of δt + 1 homogeneous
+polynomials g and h of degree δt such that (x0 , y0 ) is a common root modulo
+bm . More precisely, we consider the following polynomials
+
+gi,j (x, y) = xj y δ(t−i)−j f i N m−i for i = 0, . . . , m − 1, j = 0, . . . , δ − 1
+0
+hi (x, y) = xi y δt −i f m
+for i = 0, . . . , δt0 .
+We build the triangular matrix L of dimension δt + 1, containing the coefficients of the polynomials gi,j and hi . We will apply LLL to the lattice spanned
+by the rows of L. The columns correspond to the coefficients of the monomials
+y δt , xy δt−1 , . . . , xδt−1 y, xδt . Let β ∈ [0, 1] such that M = N β . The product of the
+diagonal elements gives det(L) = N δm(m+1)/2 . If we omit the quantities that do
+not depend on N , to satisfy the inequality of Lemma 1 with the root bound M ,
+the LLL bound from Lemma 2 implies that we must have
+δm(m + 1)/2 ≤ (δt + 1)(αm − δtβ)
+
+(3)
+
+1
+α
+− 2δλ
+and if we set λ such that t = λm, this gives asymptotically β ≤ δλ
+2 , which
+1
+2
+is maximal when λ = α , and in this case, βmax = α /2δ. The vector output by
+LLL gives a homogeneous polynomial f˜(x, y) such that f˜(x0 , y0 ) = 0 thanks to
+Lemma 1. Let r = x/y, any rational root of the form x0 /y0 can be found by
+extracting the rational roots of f˜0 (r) = 1/y δt f˜(x, y) with classical methods. t
+u
+
+For the case we are most interested in, δ = 2, N = pq 2 with p and q of the
+same size, i. e., α = 2/3 then λ = 3/2 and we can asymptotically get roots up
+11
+
+to N β with β = 19 . If we take m = 4 and t = 6, i. e., we work with a lattice of
+1
+dimension 13, we get from (3) that β ≈ 10.63
+and with a 31-dimensional lattice
+1
+(m = 10 and t = 15), β ≈ 9.62 . If the size of q grows compared to p, i. e., α
+increases towards 1, then β increases towards 1/4. For example, if q is two times
+larger than p, i. e., α = 4/5 then β = 1/6.25. For α = 6/7, we get β ≈ 1/5.44.
+We will call HomogeneousCoppersmith the algorithm which implements this
+method. It takes as input an integer N = pq 2 and a binary quadratic form [a, b, c],
+from which we deduce the unitary polynomial x2 +b0 xy +c0 y 2 , by dividing both b
+and c by a modulo N , and the parameters m and t. In fact, this method will only
+disclose proper representations of q 2 , those for which x and y are coprime, but
+we note that fk properly represents q 2 , and therefore so does our form [a, b, c].
+The case α = 1 of Theorem 2 can already be found in Joux’s book [Jou09] and
+we mention that a similar technique has already been independently investigated
+by Bernstein in [Ber08].
+
+4
+
+A Õ(p1/2 )-Deterministic Factoring Algorithm for pq 2
+
+We detail our new quadratic form-based factoring algorithm for numbers of the
+form pq 2 . In this section, p and q will be of same bit-size, and p ≡ 1 (mod 4).
+
+4.1
+
+The Algorithm
+
+Roughly speaking, if ∆q = N = pq 2 , our factoring algorithm, depicted in Fig. 3,
+exploits the fact that the non-reduced forms fk = [q 2 , kq, −] reduce to forms
+fˆk for which there exists a small pair (x0 , y0 ) such that q 2 | fˆk (x0 , y0 ) while
+q 2 | N . From Theorem 1, we know that these reduced forms appear on the
+principal cycle of the class group of discriminant ∆q . To detect them, we start a
+walk in the principal cycle from the principal form 1N , and apply Rho until the
+Coppersmith-like method finds these small solutions.
+
+Input: N = pq 2 , m, t
+Output: p, q
+1. h ← 1N
+2. while (x0 , y0 ) not found do
+2.1. h ← Rho(h)
+2.2. x0 /y0 ← HomogeneousCoppersmith(h, N, m, t)
+3. q ← Sqrt(Gcd(h(x0 , y0 ), N ))
+4. return (N/q 2 , q)
+Fig. 3. Factoring N = pq 2
+
+12
+
+4.2
+
+Heuristic Correctness and Analysis of Our Algorithm
+
+Assuming Heuristic 2, starting from 1N , after O(Rp ) iterations, the algorithm
+will stop on a reduced form whose roots will be found with our Coppersmithlike method (for suitable values of m and t) since they will satisfy the expected N 1/9 bound. The computation of gcd(h(x0 , y0 ), N ) will therefore expose
+q 2 and factor N . The time complexity of our algorithm is then heuristically
+O(Rp Poly(log N )), whereas the space complexity is O(log N ). The worst-case
+complexity is O(p1/2 log p Poly(log N )). For small regulators, such as in REALNICE cryptosystem (see. Subsection 5.1), the time complexity is polynomial.
+This algorithm can be generalised with a few modifications to primes p such
+that p ≡ 3 (mod 4), by considering ∆q = 4pq 2 . Moreover if the bit-sizes of p and
+q are unbalanced, our experiments suggest that the size of the roots will be small
+enough (see end of Subsection 2.3 and Section 3), so the factoring algorithm will
+also work in this case, with the same complexity.
+Comparison with other Deterministic Factorisation Methods. Boneh,
+Durfee and Howgrave-Graham presented in [BDH99] an algorithm for factoring
+integers N = pr q. Their main result is the following:
+Lemma 3 ([BDH99]). Let N = pr q be given, and assume q < pcc for rsome c.
+Furthermore, assume that P is an integer satisfying |P − p| < p1− r+c −2 d . Then
+the factor p may be computed from N , r, c and P by an algorithm whose running
+time is dominated by the time it takes to run LLL on a lattice of dimension d.
+For r = 2 and c = 1, this leads to a deterministic factoring algorithm which
+consists in exhaustively search for an approximation P of p and to solve the
+polynomial equation (P + X)2 ≡ 0 (mod p2 ) with a method à la Coppersmith.
+The approximation will be found after O(p1/3 ) = O(N 1/9 ) iterations.
+The fastest deterministic generic integer factorisation algorithm is actually a
+version of Strassen’s algorithm [Str76] from Bostan, Gaudry and Schost [BGS07],
+who ameliorates a work
+√ of Chudnovsky and Chudnovsky [CC87] and proves a
+complexity of O(Mint ( 4 N log N )) where Mint is a function such that integers of
+bit-size d can me multiplied in Mint (d) bit operations. More precisely, for numbers
+of our interest, Lemma 13 from [BGS07] gives the precise complexity:
+Lemma 4 ([BGS07]). Let b, N be two integers with 2 ≤ b < N . One can
+compute a prime divisor of N bounded by b, or prove
+ that no such divisor ex√
+ists in O Mint ( b log N ) + log bMint (log N ) log log N bit operations and space
+√
+O( b log N ) bits.
+In particular, for b = N 1/3 , the complexity is Õ(N 1/6 ), with a very large space
+complexity compared to our algorithm. Moreover, none of these two last of algorithms can actually factor an integer of cryptographic size. The fact that a
+prime divisor has a small regulator does not help in these algorithms, whereas
+it makes the factorisation polynomial in our method.
+13
+
+5
+
+Cryptanalysis of the NICE Cryptosystems
+
+Hartmann, Paulus and Takagi proposed the elegant NICE encryption scheme
+(see [HPT99,PT99,PT00]), based on imaginary quadratic fields and whose main
+feature was a quadratic decryption time. Later on, several other schemes, including (special) signature schemes relying on this framework have been proposed.
+The public key of these NICE cryptosystems contains a discriminant ∆q = −pq 2
+together with a reduced ideal h whose class belongs to the kernel of ϕ̄q . The
+idea underlying the NICE cryptosystem is to hide the message behind a random
+element [h]r of the kernel. Applying ϕ̄q will make this random element disappear,
+and the message will then be recovered.
+In [JSW08], Jacobson, Scheidler and Weimer embedded the original NICE
+cryptosystem in real quadratic fields. Whereas the idea remains essentially the
+same as the original, the implementation is very different. The discriminant is
+now ∆q = pq 2 , but because of the differences between imaginary and real setting,
+these discriminant will have to be chosen carefully. Among these differences, the
+class numbers are expected to be small with very high probability (see the CohenLenstra heuristics [CL84]). Moreover, an equivalence class does not contain a
+unique reduced element anymore, but a multitude of them, whose number is
+governed by the size of the fundamental unit. The rough ideas to understand
+these systems and our new attacks are given in the following. The full description
+of the systems is omitted for lack of space but can be found in [HPT99, JSW08].
+5.1
+
+Polynomial-Time Key Recovery in the Real Setting
+
+The core of the design of the REAL-NICE encryption scheme is the very particular
+choice of the secret prime numbers p and q such that ∆K = p and ∆q = pq 2 .
+They are chosen such that the ratio R∆q /R∆K is of order of magnitude of q
+and that R∆K is bounded by a polynomial in log(∆
+). To ensure the first
+ K
+
+property, it is sufficient to choose q such that q − ∆qK is a small multiple of
+a large prime. If the second property is very unlikely to naturally happen since
+√
+the regulator of p is generally of the order of magnitude of p, it is indeed
+quite easy to construct fundamental primes with small regulator. The authors
+of [JSW08] suggest to produce a prime p as a so-called Schinzel sleeper, which
+is a positive squarefree integer of the form p = a2 x2 + 2bx + c with a, b, c, x
+in Z, a 6= 0 and b2 − 4ac dividing 4 gcd(a2 , b)2 . Schinzel sleepers are known to
+have a regulator of the order log(p) (see [CW05]). Some care must be taken
+when setting the (secret) a, b, c, x values, otherwise the resulting ∆q = pq 2 is
+subject to factorisation attacks described in [Wei04]. We do not provide here
+more details on these choices since the crucial property for our attack is the fact
+that the regulator is actually of the order log(p). The public key consists of the
+sole discriminant ∆q . The message is carefully embedded (and padded) into a
+primitive O∆q -ideal so that it will be recognised during decryption. Instead of
+moving the message ideal m to a different equivalence class (like in the imaginary
+case), the encryption actually hides the message in the cycle of reduced ideal
+14
+
+of its own equivalent class by multiplication of a random principal O∆q -ideal h
+(computed during encryption). The decryption process consists then in applying
+the (secret) map ϕ̄q and perform an exhaustive search for the padded message in
+the small cycle of ϕ̄q ([mh]). This exhaustive search is actually possible thanks to
+the choice of p which has a very small regulator. Like in the imaginary case, the
+decryption procedure has a quadratic complexity and significantly outperforms
+an RSA decryption for any given security level (see Table 3 from [JSW08]).
+Unfortunately, due to the particular but necessary choice of the secret prime p,
+the following result states the total insecurity of the REAL-NICE system.
+Result 1 Algorithm 3 recovers the secret key of REAL-NICE in polynomial time
+in the security parameter under Heuristic 2 since the secret fundamental discriminant p is chosen to have a regulator bounded by a polynomial in log p.
+We apply the cryptanalysis on the following example. The Schinzel polynomial S(X) = 27252 X 2 + 2 · 3815X + 2 produces a suitable 256-bit prime p
+for the value X0 = 103042745825387139695432123167592199. This prime has
+a regulator R∆K ≃ 90.83. The second 256-bit prime q is chosen following the
+recommendations from [Wei04]. This leads to a the discriminant
+∆q = 28736938823310044873380716142282073396186843906757463274792638734144060602830510
+80738669163489273592599054529442271053869832485363682341892124500678400322719842
+63278692833860326257638544601057379571931906787755152745236263303465093
+
+Our algorithm recovers the prime
+q = 60372105471499634417192859173853663456123015267207769653235558092781188395563
+
+from ∆q after 45 iterations in 42.42 seconds on a standard laptop. The rational
+log(∆q )
+root is xy00 equal to − 2155511611710996445623
+3544874277134778658948 , where x0 and y0 satisfy log(|x0 |) ≃ 10.8
+log(∆ )
+
+and log(|y0q|) ≃ 10.7.
+5.2
+
+Polynomial-Time Key Recovery of the Original NICE
+
+As mentioned above, the public key of the original NICE cryptosystem contains
+the representation of a reduced ideal h whose class belongs to the kernel of the
+surjection ϕ̄q . The total-break of the NICE cryptosystem is equivalent to solving
+the following kernel problem.
+Definition 6 (Kernel Problem [BPT04]). Let λ be an integer, p and q be
+two λ-bit primes with p ≡ 3 (mod 4). Fix a non-fundamental discriminant ∆q =
+−pq 2 . Given an element [h] of ker ϕ̄q , factor the discriminant ∆q .
+Castagnos and Laguillaumie proposed in [CL09] a polynomial-time algorithm
+to solve this problem. We propose here a completely different solution within the
+spirit of our factorisation method and whose complexity is also polynomial-time.
+As discuss in Subsection 2.3, the idea is to benefit from the fact that the public
+ideal h corresponds to a reduced quadratic form, fˆk , which represents q 2 . We thus
+find these x0 and y0 such that gcd(fˆk (x0 , y0 ), ∆q ) = q 2 with the Coppersmith
+method of Section 3.
+15
+
+Result 2 The Homogeneous Coppersmith method from Section 3 solves the Kernel Problem in polynomial time in the security parameter under Heuristic 1.
+We apply our key recovery on the example of NICE proposed in [JJ00,CL09]:
+∆q = −1001133619402846750073919037082619174565372425946674915149340539464219927955168
+18216760083640752198709726199732701843864411853249644535365728802022498185665592
+98370854645328210791277591425676291349013221520022224671621236001656120923
+a = 5702268770894258318168588438117558871300783180769995195092715895755173700399
+141486895731384747
+b = 3361236040582754784958586298017949110648731745605930164666819569606755029773
+074415823039847007
+
+The public key consists in ∆q and h = (a, b). Our Coppersmith method finds
+x0
+in less that half a second the root u0 = −103023911
+349555951 = y0 and
+h(x0 , y0 ) = 5363123171977038839829609999282338450991746328236957351089
+4245774887056120365979002534633233830227721465513935614971
+593907712680952249981870640736401120729 = q 2 .
+
+All our experiments have been run on a standard laptop under Linux with
+software Sage. The lattice reduction have been performed with Stehlé’s fplll [Ste].
+
+Acknowledgements. We warmly thank Denis Simon and Brigitte Vallée for
+helpful discussions and the reviewers for their useful comments. Part of this work
+was supported by the Commission of the European Communities through the
+ICT program under contract ICT-2007-216676 ECRYPT II.
+
+References
+[AM94]
+
+L. M. Adleman and K. S. McCurley. Open problems in number theoretic
+complexity, II. Proc. of ANTS-I, Springer LNCS Vol. 877, 291–322 (1994)
+[BDH99] D. Boneh, G. Durfee and N. Howgrave-Graham. Factoring N = pr q for large
+r. Proc. of Crypto’99, Springer LNCS Vol. 1666, 326–337 (1999)
+[Ber08] D. J. Bernstein. List decoding for binary Goppa codes. Preprint available at
+http://cr.yp.to/papers.html#goppalist (2008)
+[BGS07] A. Bostan, P. Gaudry and É. Schost. Linear Recurrences with Polynomial
+Coefficients and Application to Integer Factorization and Cartier-Manin Operator. SIAM J. Comput., 36(6), 1777–1806 (2007)
+[BPT04] I. Biehl, S. Paulus and T. Takagi. Efficient Undeniable Signature Schemes
+based on Ideal Arithmetic in Quadratic Orders. Des. Codes Cryptography
+31(2), 99–123 (2004)
+[BTV04] J. Buchmann, T. Takagi and U. Vollmer. Number Field Cryptography. High
+Primes & Misdemeanours: Lectures in Honour of the 60th Birthday of Hugh
+Cowie Williams, van der Poorten and Stein, eds., vol. 41 of Fields Institute
+Communications, AMS 111–125 (2004)
+[BTW95] J. Buchmann, C. Thiel and H. C. Williams. Short Representation of
+Quadratic Integers. Proc. of CANT’92, Math. Appl. 325, Kluwer Academic
+Press, 159–185 (1995)
+
+16
+
+[BV07]
+[BW88]
+[CC87]
+
+[Chi89]
+
+[CL84]
+[CL09]
+
+[Coh00]
+[Cop97]
+[Cox99]
+[CP01]
+[CW05]
+[Deg58]
+[GW08]
+[How97]
+[How01]
+[HPT99]
+[JJ00]
+[JLW95]
+
+[Jou09]
+[JSW08]
+
+[LLL82]
+[May07]
+
+[McK99]
+
+J. Buchmann and U. Vollmer. Binary Quadratic Forms. An Algorithmic Approach. Springer (2007)
+J. Buchmann and H. C. Williams. A Key-Exchange System based on Imaginary Quadratic Fields. J. Cryptology, 1, 107–118 (1988)
+D. V. Chudnovsky and G. V. Chudnovsky, Approximations and Complex
+Multiplication According to Ramanujan, in Ramanujan Revisited: Proceedings, Boston, MA: Academic Press, 375–472, (1987)
+A. L. Chistov. The complexity of constructing the ring of integers of a global
+field. Dolk. Akad. Nauk. SSSR, 306, 1063–1067 (1989). English translation:
+Soviet. Math. Dolk. 39, 597–600 (1989)
+H. Cohen and H.W. Lenstra, Jr. Heuristics on class groups. Springer LNM
+Vol. 1052, 26–36 (1984)
+G. Castagnos and F.Laguillaumie. On the Security of Cryptosystems with
+Quadratic Decryption: The Nicest Cryptanalysis. Proc. of Eurocrypt’09,
+Springer LNCS Vol. 5479, 260-277 (2009)
+H. Cohen. A Course in Computational Algebraic Number Theory. Springer
+(2000).
+D. Coppersmith. Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities. J. Cryptology. 10 (4), 233–260 (1997)
+D. A. Cox. Primes of the form x2 + ny 2 . John Wiley & Sons (1999)
+R. Crandall and C. Pomerance. Prime Numbers: A Computational Perspective. Springer (2001)
+K.H.F. Cheng and H.C. Williams. Some Results Concerning Certain Periodic
+Continued Fractions. Acta Arith. 117, 247–264 (2005)
+G. Degert. Uber die Bestimmung der Grundeinheit gewisser reell- quadratischer Zhalkörper. Abh. Math. Sem. Univ. Hanburg, 22, 92–97 (1958)
+J. E. Gower and S. S. Wagstaff, Jr. Square form factorization. Math. Comput.
+77(261), 551-588 (2008)
+N. Howgrave-Graham. Finding small roots of univariate modular equations
+revisited. Proc. of IMA-C2, Springer LNCS Vol. 1355, 131–142 (1997)
+N. Howgrave-Graham. Approximate Integer Common Divisors Proc. of
+CALC ’01, Springer LNCS Vol. 2146, 51–66 (2001)
+M. Hartmann, S. Paulus and T. Takagi. NICE - New Ideal Coset Encryption.
+Proc. of CHES’99, Springer LNCS Vol. 1717, 328–339 (1999)
+É. Jaulmes and A. Joux. A NICE Cryptanalysis. Proc. of Eurocrypt’00,
+Springer LNCS Vol. 1807, 382–391 (2000)
+M. J. Jacobson Jr., R. F. Lukes and H. C. Williams. An investigation of
+bounds for the regulator of quadratic fields. Experimental Mathematics, 4(3),
+211–225, 1995
+A. Joux. Algorithmic Cryptanalysis. CRC Press (2009)
+M. J. Jacobson Jr., R. Scheidler and D. Weimer. An Adaptation of the NICE
+Cryptosystem to Real Quadratic Orders. Proc. of Africacrypt’08, Springer
+LNCS Vol. 5023, 191-208 (2008)
+A. K. Lenstra, H. W. Lenstra Jr., and L. Lovász, Factoring Polynomials with
+Rational Coefficients. Math. Ann. 261, 515–534, (1982)
+A. May. Using LLL-Reduction for Solving RSA and Factorization Problems:
+A Survey. LLL+25 Conference in honour of the 25th birthday of the LLL
+algorithm (2007).
+J. McKee. Speeding Fermat’s factoring method. Math. Comput. 68(228),
+1729–1737 (1999)
+
+17
+
+[Mil07]
+[Oka86]
+[Oka90]
+[OU98]
+[Per01]
+
+[PO96]
+[PT99]
+
+[PT00]
+[Sch82]
+[Ste]
+[Str76]
+[Tak98]
+[VV07]
+
+[Wei04]
+
+J. Milan. Factoring Small Integers: An Experimental Comparison. INRIA
+report available at http://hal.inria.fr/inria-00188645/en/ (2007)
+T. Okamoto. Fast public-key cryptosystem using congruent polynomial equations. Electronic Letters 22(11), 581–582 (1986)
+T. Okamoto. A fast signature scheme based on congruential polynomial operations. IEEE Transactions on Information Theory 36(1), 47–53 (1990)
+T. Okamoto and S. Uchiyama. A New Public-Key Cryptosystem as Secure as
+Factoring. Proc. of Eurocrypt’98, Springer LNCS Vol. 1403, 308–318 (1998)
+R. Peralta. Elliptic curve factorization using a “partially oblivious” function.
+Cryptography and computational number theory, Progr. Comput. Sci. Appl.
+Logic. 20. Birkhäuser, 123–128 (2001).
+R. Peralta and E. Okamoto. Faster Factoring of Integers of a Special Form.
+IEICE Trans. Fundamentals, E79-A, 4, 489–493 (1996).
+S. Paulus and T. Takagi. A generalization of the Diffie-Hellman problem and
+related cryptosystems allowing fast decryption. Proc. of ICISC’98, 211–220
+(1999)
+S. Paulus and T. Takagi. A New Public-Key Cryptosystem over a Quadratic
+Order with Quadratic Decryption Time. J. Cryptology, 13(2), 263–272 (2000)
+R. Schoof. Quadratic fields and factorization. Computational Methods in
+Number Theory, MC-Tracts 154/155, 235–286 (1982)
+D. Stehlé. fplll-3.0.
+Available at http://perso.ens-lyon.fr/damien.stehle/#software
+V. Strassen. Einige Resultate über Berechnungskomplexität. Jber. Deutsch.
+Math.-Verein., 78, 1–8 (1976/77)
+T. Takagi. Fast RSA-Type Cryptosystem Modulo pk q. Proc. of Crypto’98,
+Springer LNCS Vol. 1462, 318–326 (1998)
+B. Vallée and A. Vera. Lattice Reduction in Two Dimensions: Analyses under Realistic Probabilistic Models. Proc. of AofA’07, DMTCS AH, 181–216
+(2007)
+D. Weimer. An Adaptation of the NICE Cryptosystem to Real Quadratic
+Orders. Master’s thesis, Technische Universität Darmstadt (2004)
+
+18
+
+

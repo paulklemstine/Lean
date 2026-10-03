@@ -1,0 +1,2892 @@
+Point counting on curves using a gonality preserving lift
+Wouter Castryck and Jan Tuitman
+
+arXiv:1605.02162v3 [math.NT] 13 Jun 2017
+
+Abstract
+We study the problem of lifting curves from finite fields to number fields in a
+genus and gonality preserving way. More precisely, we sketch how this can be done
+efficiently for curves of gonality at most four, with an in-depth treatment of curves of
+genus at most five over finite fields of odd characteristic, including an implementation
+in Magma. We then use such a lift as input to an algorithm due to the second author
+for computing zeta functions of curves over finite fields using p-adic cohomology.
+
+1
+
+Introduction
+
+This article is about efficiently lifting algebraic curves over finite fields to characteristic
+zero, in a genus and gonality preserving way, with an application to p-adic point counting.
+Throughout, our curves are always understood to be geometrically irreducible, but not
+necessarily non-singular and/or complete. By the genus of a curve we mean its geometric
+genus, unless otherwise stated. As for the gonality of a curve over a field k, we make a
+distinction between two notions: by its k-gonality we mean the minimal degree of a nonconstant k-rational map to the projective line, while by its geometric gonality we mean the
+k̄-gonality, where k̄ denotes an algebraic closure of k. We also make a notational distinction
+between projective, affine or toric (= affine minus coordinate hyperplanes) n-space in
+characteristic zero, in which case we write Pn , An , Tn , and their finite characteristic
+counterparts, where we opt for Pn , An , Tn . Apart from that we avoid reference to the base
+field, which should always be clear from the context. Similarly we write Q for the field
+of rational numbers and Fq for the finite field with q elements, where q is a power of a
+prime number p. For each such q we fix a degree logp q extension K ⊃ Q in which p is
+inert, and let OK denote its ring of integers. We then identify Fq with the residue field
+OK /(p). Our lifting problem is as follows:
+Problem 1. Given a curve C over Fq , find an efficient algorithmic way of producing a
+polynomial f ∈ OK [x, y] such that
+(i) its reduction mod p defines a curve that is birationally equivalent to C,
+(ii) the curve C ⊂ A2 it defines has the same genus as C,
+(iii) its degree in y equals the Fq -gonality of C.
+2010 Mathematics Subject Classification: 14H25, 14H51, 14G10
+Key words and phrases: curves over finite fields, gonality, Hasse-Weil zeta function
+
+1
+
+Note that these conditions imply that the K-gonality of C equals the Fq -gonality of C,
+because the gonality cannot increase under reduction mod p; see e.g. [21, Thm. 2.5]. We
+are unaware of whether an f satisfying (i-iii) exists in general. Grothendieck’s existence
+theorem [36] implies that in theory one can achieve (i) and (ii) over the ring of integers
+Zq of the p-adic completion Qq of K, but, firstly, it is not clear that we can always take
+f to be defined over OK and, secondly, we do not know whether it is always possible to
+incorporate (iii), let alone in an effective way. To give a concrete open case, we did not
+succeed in dealing with Problem 1 for curves of genus four having Fq -gonality five, which
+can only exist if q ≤ 7. (However, as we will see, among all curves of genus at most five,
+the only cases that we cannot handle are pathological examples of the foregoing kind.)
+We are intentionally vague about what it means to be given a curve C over Fq .
+It could mean that we are considering the affine plane curve defined by a given absolutely irreducible polynomial f ∈ Fq [x, y]. Or it could mean that we are considering the
+affine/projective curve defined by a given more general system of equations over Fq . In all
+cases we will ignore the cost of computing the genus g of C. Moreover, in case g = 0 we
+assume that it is easy to realize C as a plane conic (using the anticanonical embedding)
+and if g = 1 we ignore the cost of finding a plane Weierstrass model. By the Hasse-Weil
+bound every genus one curve over Fq is elliptic, so this is indeed possible. If g ≥ 2 then
+we assume that one can easily decide whether C is hyperelliptic or not (note that over
+finite fields, curves are hyperelliptic iff they are geometrically hyperelliptic, so there is no
+ambiguity here). If it is then we suppose that it is easy to find a generalized Weierstrass
+model. If not then it is assumed that one can effectively compute a canonical embedding
+κ : C ,→ Pg−1
+along with a minimal set of generators for the ideal of its image. The latter will usually
+be our starting point. Most of the foregoing tasks are tantamount to computing certain
+Riemann-Roch spaces. There is extensive literature on this functionality, which has been
+implemented in several computer algebra packages, such as Magma [7] and Macaulay2 [28].
+The idea is then to use the output polynomial f as input to a recent algorithm due to
+the second author [53, 54] for computing the Hasse-Weil zeta function of C. This algorithm
+uses p-adic cohomology, which it represents through the map π : C → P1 : (x, y) 7→ x. The
+algorithm only works if C and π have appropriate reduction modulo p, in a rather subtle
+sense for the precise description of which we refer to [54, Ass. 1]. This condition is needed
+to be able to apply a comparison theorem between the (relative) p-adic cohomology of C
+and the (relative) de Rham cohomology of C ⊗Qq , which is where the actual computations
+are done. For such a theorem to hold, by dimension arguments it is necessary that C and
+C have the same genus, whence our condition (ii). This may be insufficient, in which case
+f will be rejected, but for p > 2 our experiments show that this is rarely a concern as soon
+as q is sufficiently large. Moreover, in many cases below, our construction leaves enough
+freedom to retry in the event of a failure.
+The algorithm from [53, 54] has a running time that is sextic in deg π, which equals
+the degree in y of f , so it is important to keep this value within reason. Because the
+Fq -gonality of C is an innate lower bound, it is natural to try to meet this value, whence
+2
+
+our condition (iii). At the benefit of other parameters affecting the complexity, one could
+imagine it being useful to allow input polynomials whose degree in y exceeds the Fq gonality of C, but in all cases that we studied the best performance results were indeed
+obtained using a gonality-preserving lift. At the same time, looking for such a lift is a
+theoretically neat problem.
+Remark 2. For the purpose of point counting, it is natural to wonder why we lift to
+OK , and not to the ring Zq , which is a priori easier. In fact, most computations in the
+algorithm from [53, 54] are carried out to some finite p-adic precision N , so it would even
+be sufficient to lift to OK /(pN ) = Zq /(pN ). A first reason for lifting to OK is simply that
+this turns out to be possible in the cases that we studied, without additional difficulties.
+A second more practical reason is that at the start of the algorithm from [53, 54] some
+integral bases have to be computed in the function field of the curve. Over a number field
+K this is standard and implemented in Magma, but to finite p-adic precision it is not clear
+how to do this, and in particular no implementation is available. Therefore, the integral
+bases are currently computed to exact precision, and we need f to be defined over OK .
+Contributions As explained in Section 2 the cases where C is rational, elliptic or
+hyperelliptic are straightforward. In this article we give a recipe for tackling Problem 1 in
+the case of curves of Fq -gonality 3 and 4. Because of their practical relevance, our focus
+lies on curves having genus at most five, which is large enough for the main trigonal and
+tetragonal phenomena to be present. The details can be found in Section 3; more precisely
+in Sections 3.1, 3.2 and 3.3 we attack Problem 1 for curves of genus three, four and five,
+respectively, where we restrict ourselves to finite fields Fq having odd characteristic. Each
+of these sections is organized in a stand-alone way, as follows:
+• In a first part we classify curves by their Fq -gonality γ and solve Problem 1 in its
+basic version (except for some pathological cases such as pentagonal curves in genus
+four or hexagonal curves in genus five, which are irrelevant for point counting because
+these can only exist over extremely small fields). If the reader is interested in such
+a basic solution only, he/she can skip the other parts, which are more technical.
+• Next, in an optimization part we take into account the fact that the actual input to
+the algorithm from [53, 54] must be monic when considered as a polynomial in y.
+This is easily achieved: if we write
+f = f0 (x)y γ + f1 (x)y γ−1 + · · · + fγ−1 (x)y + fγ (x),
+then the birational transformation y ← y/f0 (x) gives
+y γ + f1 (x)y γ−1 + · · · + fγ−1 (x)f0 (x)γ−2 y + fγ (x)f0 (x)γ−1 ,
+
+(1)
+
+which still satisfies (i), (ii) and (iii). But one sees that the degree in x inflates, and
+this affects the running time. We discuss how our basic solution to Problem 1 can
+be enhanced such that (1) becomes a more compact expression.
+
+3
+
+• We have implemented the algorithms from this paper in the computer algebra system Magma. The resulting package is called goodmodels and can be found at the
+webpage http://perswww.kuleuven.be/jan_tuitman. In a third part we report
+on this implementation and on how it performs in composition with the algorithm
+from [53, 54] for computing Hasse-Weil zeta functions. We give concrete runtimes,
+memory usage and failure rates, but avoid a detailed complexity analysis, because in
+any case the lifting step is heavily dominated by the point counting step. All computations were carried out with Magma v2.22 on a single Intel Core i7-3770 CPU
+running at 3.40 GHz. The code used to generate the tables with running times,
+memory usage and failure rates can be found in the subdirectory ./profiling of
+goodmodels.
+As we will see, the case of trigonal curves of genus five provides a natural transition to the
+study of general curves of Fq -gonality 3 and 4. These are discussed in Section 4, albeit in
+a more sketchy way.
+Consequences The main consequences of our work are that
+• computing Hasse-Weil zeta functions using p-adic cohomology has now become practical on virtually all curves of genus at most five over finite fields Fq of (small) odd
+characteristic,
+• the same conclusion for curves of Fq -gonality at most four looms around the corner,
+even though some hurdles remain, as explained in Section 4,
+• we have a better understanding of which Fq -gonalities can occur for curves of genus
+at most five, see the end of Section 2.1 for a summarizing table.
+We stress that the general genus five curve, let alone the general tetragonal curve of any
+given genus, cannot be tackled using any of the previous Kedlaya-style point counting
+algorithms, that were designed to deal with elliptic curves [43], hyperelliptic curves [19,
+29, 31, 35, 37], superelliptic curves [26, 40], Cab curves [12, 20, 55] and nondegenerate
+curves [11, 52], in increasing order of generality. We refer to [13] for a discussion of which
+classes of curves do admit a nondegenerate model.
+A reference problem (†) At sporadic places in this article, we refer to a paper that
+develops its theory over C only, while in fact we need it over other fields, such as Fq .
+This concern mainly applies to the theory of genus five curves due to Arbarello, Cornalba,
+Griffiths and Harris [2, VI.§4.F]. We are convinced that most of the time this is not
+an issue (the more because we rule out even characteristic) but we did not sift every
+one of these references to the bottom to double-check this: we content ourselves with
+the fact that things work well in practice. In our concluding Section 4 on trigonal and
+tetragonal curves, the field characteristic becomes a more serious issue, for instance in the
+Lie algebra method developed by de Graaf, Harrison, Pı́lniková and Schicho [18]. More
+comments on this will be given there. Each time we cite a C-only (or characteristic zero
+4
+
+only) reference whose statement(s) we carry over to finite characteristic without having
+verified the details, we will indicate this using the dagger symbol †.
+Acknowledgements We would like to thank Arnaud Beauville, Tom De Medts, Jeroen
+Demeyer, Steve Donnelly and Josef Schicho for answering several of our questions. A large
+part of this paper was prepared while the first author was affiliated with the University
+of Ghent. The second author is a postdoctoral research fellow of the Research Foundation Flanders (FWO). Further support for this research was received from the project
+G093913N of the Research Foundation Flanders (FWO) and from the European Commission through the European Research Council under the FP7/2007-2013 programme with
+ERC Grant Agreement 615722 MOTMELSUM.
+
+2
+
+Background
+
+2.1
+
+First facts on the gonality
+
+Let k be a field and let C be a curve over k. The geometric gonality γgeom of C is a
+classical invariant. It is 1 if and only if the genus of C equals g = 0, while for curves of
+genus g ≥ 1, by Brill-Noether theory γgeom lies in the range
+2, . . . , dg/2e + 1.
+For a generic curve the upper bound dg/2e + 1 is met [15], but in fact each of the foregoing
+values can occur: inside the moduli space of curves of genus g ≥ 2 the corresponding locus
+has dimension min{2g − 5 + 2γgeom , 3g − 3}; see [1, §8]† . From a practical point of view,
+determining the geometric gonality of a given curve is usually a non-trivial computational
+task, although in theory it can be computed using so-called scrollar syzygies [44].
+In the arithmetic (= non-geometric) case the gonality has seen much less study, even
+for classical fields such as the reals [16]. Of course γgeom is always less than or equal to
+the k-gonality γ, but the inequality may be strict. In particular the Brill-Noether upper
+bound dg/2e + 1 is no longer valid. For curves of genus g = 1 over certain fields γ can
+even be arbitrarily large [14]. As for the other genera, using the canonical or anticanonical
+linear system one finds
+• if g = 0 then γ ≤ 2,
+• if g ≥ 2 then γ ≤ 2g − 2.
+These bounds can be met. We refer to [41, Prop. 1.1] and the references therein for precise
+statements, along with some additional first facts.
+If k = K is a number field then the notion of K-gonality has enjoyed more attention,
+both from a computational [21, 22] and a theoretical [41] point of view, especially in
+the case where C is a modular curve. This is due to potential applications towards
+effective versions of the uniform boundedness conjecture; see [49] for an overview. In the
+non-modular case not much literature seems available, but our rash guess would be that
+5
+
+almost all (in any honest sense) curves of genus g ≥ 2 over K meet the upper bound
+γ ≤ 2g − 2. This is distantly supported by the Franchetta conjecture; see again [41,
+Prop. 1.1] and the references therein for a more extended discussion.
+Over finite fields k = Fq the notion has attracted the attention of coding theorists in
+the context of Goppa codes [51]. They proved the following result:
+Lemma 3. If the C is a curve over a finite field Fq then its Fq -gonality is at most g + 1.
+Moreover, if equality holds then g ≤ 10 and q ≤ 31.
+Proof. See [51, §4.2].
+In [51, §4.2] it is stated as an open problem to find tighter bounds for the Fq -gonality.
+In fact we expect the sharpest possible upper bound to be dg/2e + 1 + ε for some small
+ε; maybe ε ≤ 1 is sufficient as soon as q is large enough. A byproduct of this paper is
+a better understanding of which Fq -gonalities can occur for curves of genus at most five,
+in the cases where q is odd (the cases where q is even should be analyzable in a similar
+way). The following table summarizes this.
+g
+0
+1
+2
+3
+4
+5
+
+Brill-Noether
+upper bound
+1
+2
+2
+3
+3
+4
+
+possible Fq -gonalities
+(union over all odd q)
+1
+2
+2
+2, 3, 4
+2, 3, 4, 5
+2, 3, 4, 5, 6?
+
+possible Fq -gonalities
+(for a given odd q > B)
+1
+2
+2
+2, 3
+2, 3, 4
+2, 3, 4, 5
+
+B
+1
+1
+1
+29
+7
+3
+
+For background we refer to Section 2.3 (for g ≤ 2), Lemma 7 (for g = 3), Lemma 11
+(for g = 4), and Lemma 18, Remark 19 and Remark 20 (for g = 5). The question mark
+indicates that over F3 there might exist curves of genus g = 5 having F3 -gonality 6, but
+there also might not exist such curves, see Remark 20.
+
+2.2
+
+Baker’s bound
+
+Throughout a large part of this paper we will use the convenient language of Newton
+polygons. Let
+f=
+
+X
+(i,j)∈Z2≥0
+
+ci,j xi y j ∈ k[x, y]
+
+be an irreducible polynomial
+ over a field k. Then its Newton polygon
+∆(f ) is defined as conv (i, j) ∈ Z2≥0 ci,j 6= 0 ⊂ R2 . Note that
+∆(f ) lies in the first quadrant and meets the coordinate axes in at
+least one point each, by the irreducibility of f . Let C be the affine
+curve that is cut out by f . Then one has the following bounds on the genus and the
+gonality of C, purely in terms of the combinatorics of ∆(f ).
+
+6
+
+Genus The genus of C is at most the number of points in the interior of ∆(f ) having
+integer coordinates: this is Baker’s theorem. See [5, Thm. 2.4] for an elementary proof
+and [17, §10.5] for a more conceptual version (using adjunction theory on toric surfaces).
+If one fixes the Newton polygon then Baker’s bound on the genus is generically attained,
+i.e. meeting the bound is a non-empty Zariski-open condition; this result is essentially due
+to Khovanskii [38]. An explicit sufficient generic condition is that f is nondegenerate with
+respect to its Newton polygon [11, Prop. 2.3, Cor. 2.8].
+Gonality The k-gonality is at most the lattice width lw(∆(f )) of ∆(f ). By definition,
+the lattice width is the minimal height d of a horizontal strip
+
+(a, b) ∈ R2 0 ≤ b ≤ d
+inside which ∆(f ) can be mapped using a unimodular transformation, i.e. an affine transformation of R2 with linear part in GL2 (Z) and translation part in Z2 .
+
+∆(f )
+
+d
+
+This is discussed in [8, §2], but briefly the argument goes as follows. By applying the same
+transformation to the exponents, which is a k-rational birational change of variables, our
+polynomial f can be transformed along with its Newton polygon. When orienting f in
+this way one obtains degy f = lw(∆(f )), and the gonality bound follows by considering
+the k-rational map (x, y) 7→ x. If a unimodular transformation can be used to transform
+∆(f ) into
+(0, d)
+
+(2Υ)
+
+(dΣ)
+
+or
+(0, 0)
+
+(d, 0)
+
+for d ≥ 2, then the geometric gonality enjoys the sharper bound lw(∆(f )) − 1 (amounting
+to 3 resp. d − 1); see [8, Thm. 3]. If one fixes the Newton polygon then the sharpest
+applicable foregoing upper bound on the geometric gonality, i.e.
+• lw(∆(f )) − 1 in the exceptional cases 2Υ, dΣ (d ≥ 2),
+• lw(∆(f )) in the non-exceptional cases,
+is generically met, and again nondegeneracy is a sufficient condition [10, Cor. 6.2]. In fact,
+the slightly weaker condition of meeting Baker’s genus bound is already sufficient [10, §4].
+7
+
+Remark 4. The results from [10] are presented in characteristic zero only, but [10, Cor. 6.2]
+holds in finite characteristic too, as can be seen as follows. Assume for simplicity that
+∆(f ) is not of the form 2Υ or dΣ for some d ≥ 2, these cases are easy to deal with
+separately. Suppose that C meets Baker’s bound but that the gonality of C is strictly less
+than lw(∆(f )), say realized by a map π : C → P1 . We split this map in the usual way
+into a purely inseparable and a separable part
+Fq
+
+π
+
+s
+P1 ,
+C −→ C Fq −→
+
+where Fq denotes an appropriate Frobenius power and C Fq is the curve defined by f Fq , the
+polynomial obtained by applying Fq to each coefficient of f . Note that ∆(f ) = ∆(f Fq ),
+so one sees that C Fq also meets Baker’s bound because Frobenius preserves the genus [30,
+Prop. IV.2.5]. Clearly deg πs < lw(∆(f Fq )). Now the crucial ingredient in the proof of [10,
+Cor. 6.2] is a theorem due to Serrano on the possibility of extending morphisms from
+curves to ambient surfaces, which assumes char k = 0. However as Serrano points out [47,
+Rmk. 3.12] his theorem also holds in finite characteristic, provided that the morphism is
+separable, the ambient surface S is rational, and h0 (OS (C)) is large enough compared to
+the degree of the morphism to be extended. The reader can verify that these conditions
+are satisfied when applying the proof of [10, Thm. 6.1] to πs , leading to the conclusion
+that it is necessarily of the form (x, y) 7→ xa y b for some pair of coprime integers a, b. This
+contradicts that deg πs < lw(∆(f Fq )).
+Summing up in the non-geometric case, if we are not in the exceptional cases 2Υ, dΣ
+(d ≥ 2) then meeting Baker’s bound is sufficient for the k-gonality to equal lw(∆(f )). In
+the exceptional cases the k-gonality is either lw(∆(f )) or lw(∆(f )) − 1.
+This yields a large class of defining polynomials f ∈ Fq [x, y] for which finding an f ∈
+OK [x, y] satisfying (i), (ii) and (iii) is easy. Indeed, by semi-continuity the genus cannot
+increase under reduction modulo p. Therefore if f attains Baker’s upper bound on the
+genus, then it suffices to pick any f ∈ OK [x, y] that reduces to f mod p, in such a
+way that ∆(f ) = ∆(f ): the corresponding curve C/K necessarily attains Baker’s upper
+bound, too. If moreover we are not in the exceptional cases 2Υ and dΣ (d ≥ 2), then
+from the foregoing discussion we know that both the Fq -gonality of C and the K-gonality
+of C are equal to lw(∆(f )) = lw(∆(f )). A unimodular transformation then ensures that
+degy f = lw(∆(f )) as desired; such a transformation is computationally easy to find [24].
+It is therefore justifiable to say that conditions (i), (ii) and (iii) are easy to deal with
+for almost all polynomials f ∈ Fq [x, y]. But be cautious: this does not mean that almost
+all curves C/ Fq are defined by such a polynomial. In terms of moduli, the locus of
+curves for which this is true has dimension 2g + 1, except if g = 7 where it is 16; see [13,
+Thm. 12.1]. Recall that the moduli space of curves of genus g has dimension 3g − 3, so
+as soon as g ≥ 5 the defining polynomial f of a plane model of a generic curve C/ Fq
+of genus g can never attain Baker’s bound. For such curves, the foregoing discussion
+becomes counterproductive: if we take a naive coefficient-wise lift f ∈ OK [x, y] of f , then
+it is very likely to satisfy Baker’s bound, causing an increase of genus. This shows that f
+has to be constructed with more care, which is somehow the main point of this article.
+8
+
+2.3
+
+Preliminary discussion
+
+We will attack Problem 1 in the cases where the genus g of C is at most five (in Section 3)
+or the Fq -gonality γ of C is at most four (in Section 4), where we recall our overall
+assumption that q is odd. In this section we quickly discuss the cases where g and/or γ
+are at most 2.
+Remark 5. Note that for the purpose of computing the Hasse-Weil zeta function using
+the algorithm from [53, 54], the characteristic p of Fq should moreover not be too large:
+this restriction is common to all p-adic point counting algorithms. For the lifting methods
+described in the current paper, the size of p does not play a role.
+If C is a curve of genus g = 0 then we can assume that C = P1 , because every plane
+conic carries at least one Fq -point, and projection from that point gives an isomorphism
+to the line. In particular γ = 1 if and only if g = 0, in which case Problem 1 can be
+addressed by simply outputting f = y.
+Next, if g = 1 then we can assume that C is defined by a polynomial f ∈ Fq [x, y]
+in Weierstrass form, i.e. f = y 2 − h(x) for some squarefree cubic h(x) ∈ Fq [x]. In this
+case γ = 2, and any f ∈ OK [x, y] for which ∆(f ) = ∆(f ) will address Problem 1 (for
+instance because Baker’s bound is attained, or because a non-zero discriminant must lift
+to a non-zero discriminant).
+Finally, if g ≥ 2 then C is geometrically hyperelliptic if and only if κ realizes C as
+a degree 2 cover of a curve of genus zero [30, IV.5.2-3]. By the foregoing discussion the
+latter is isomorphic to P1 , and therefore every geometrically hyperelliptic curve C/ Fq
+admits an Fq -rational degree 2 map to P1 . In particular, one can unambiguously talk
+about hyperelliptic curves over Fq . In this case it is standard how to produce a defining
+polynomial f ∈ Fq [x, y] that is in Weierstrass form, i.e. f = y 2 − h(x) for some squarefree
+h(x) ∈ Fq [x]. Then again any f ∈ OK [x, y] for which ∆(f ) = ∆(f ) will address Problem 1.
+
+Remark 6. Let gd1 be a complete base-point free Fq -rational linear pencil of degree d on a
+non-singular projective curve C/ Fq . Then from standard arguments in Galois cohomology
+(that are specific to finite fields) it follows that this gd1 automatically contains an Fq rational effective divisor, which can be used to construct an Fq -rational map to P1 of
+degree d. See for instance the proof of [27, Lem. 6.5.3]. This gives another way of seeing
+that a geometrically hyperelliptic curve over Fq is automatically Fq -hyperelliptic, because
+the hyperelliptic pencil g21 is unique, hence indeed defined over Fq . The advantage of
+this argument is that it is more flexible: for instance it also shows that a geometrically
+trigonal curve C/ Fq of genus g ≥ 5 always admits an Fq -rational degree 3 map to P1 ,
+again because the g31 on such a curve is unique. So we can unambiguously talk about
+trigonal curves from genus five on.
+Summing up, throughout the paper, it suffices to consider curves of Fq -gonality γ > 2,
+so that the canonical map κ : C → Pg−1 is an embedding. In particular we have g ≥ 3.
+From the p-adic point counting viewpoint, all omitted cases are covered by the algorithms
+of Satoh [43] and Kedlaya [29, 37].
+
+9
+
+3
+
+Curves of low genus
+
+3.1
+
+Curves of genus three
+
+3.1.1
+
+Lifting curves of genus three
+
+Solving Problem 1 in genus three in its basic version is not hard, so we consider this as a
+warm-up discussion. We first analyze which Fq -gonalities can occur:
+Lemma 7. Let C/ Fq be a non-hyperelliptic curve of genus 3 and Fq -gonality γ, and
+assume that q is odd. If #C(Fq ) = 0 then γ = 4, while if #C(Fq ) > 0 (which is guaranteed
+if q > 29) then γ = 3.
+Proof. Using the canonical embedding we can assume that C is a smooth plane quartic.
+It is classical that such curves have geometric gonality 3, and that each gonal map arises
+as projection from a point on the curve. For a proof see [47, Prop. 3.13], where things are
+formulated in characteristic zero, but the same argument works in positive characteristic;
+alternatively one can consult [33]. In particular if there is no Fq -point then there is no
+rational gonal map and γ > 3. But then a degree 4 map can be found by projection from
+an Fq -point outside the curve. By [34, Thm. 3(2)] there exist pointless non-hyperelliptic
+curves of genus three over Fq if and only if q ≤ 23 or q = 29.
+We can now address Problem 1 as follows. As in the proof we assume that C is given
+as a smooth quartic in P2 . First suppose that #C(Fq ) = 0. Because this is possible for
+q ≤ 29 only, the occurrence of this event can be verified exhaustively. In this case the
+Newton polygon of the defining polynomial f ∈ Fq [x, y] of the affine part of C equals:
+
+(∆0,0
+3 )
+
+In particular Baker’s bound is attained, and a naive Newton polygon preserving lift f ∈
+OK [x, y] automatically addresses (i), (ii) and (iii). If #C(Fq ) > 0 then one picks a random
+Fq -point P (which can be found quickly) and one applies a projective transformation that
+maps P to (0 : 1 : 0). After doing so the Newton polygon of f ∈ Fq [x, y] becomes contained
+in (and typically equals):
+
+(∆1,0
+3 )
+
+Again Baker’s bound is attained, and a naive Newton polygon preserving lift f ∈ OK [x, y]
+satisfies (i), (ii) and (iii).
+10
+
+It is important to transform the curve before lifting to characteristic 0. Indeed, if one
+would immediately lift our input quartic to a curve C ⊂ P2 then it is highly likely that
+C(K) = ∅, and therefore that the K-gonality equals 4 (by the same proof as above). This
+type of reasoning plays an important role throughout the paper, often in a more subtle
+way than here.
+Remark 8 (purely notational). The indices i, j in ∆i,j
+3 refer to the multiplicities of intersection of C with the line at infinity at the coordinate points (0 : 1 : 0) and (1 : 0 : 0),
+0,0
+assuming that it is defined by a polynomial having Newton polygon ∆i,j
+3 . Note that ∆3
+is just another way of writing 3Σ.
+Algorithm 9. Lifting curves of genus 3: basic solution
+Input: non-hyperelliptic genus 3 curve C over Fq
+Output: lift f ∈ OK [x, y] satisfying (i), (ii), (iii) that is supported
+• on ∆0,0
+3 if C(Fq ) = ∅, or else
+• on ∆2,0
+3
+1 : C ← CanonicalImage(C) in P2 = Proj Fq [X, Y, Z]
+2 : if q > 29 or C(Fq ) 6= ∅ (verified exhaustively) then
+3:
+P := Random(C(Fq ))
+4:
+apply automorphism of P2 transforming TP (C) into Z = 0
+5:
+apply automorphism of P2 transforming and P into (0 : 1 : 0)
+6 : return NaiveLift(DehomogenizationZ (DefiningPolynomial(C)))
+
+3.1.2
+
+Optimizations
+
+For point counting purposes we can of course assume that q > 29, so that γ = 3. By
+applying (1) to a polynomial with Newton polygon ∆31,0 one ends up with a polynomial
+that is monic in y and that has degree 4 + (γ − 1) = 6 in x. This can be improved: in
+addition to mapping P to (0 : 1 : 0), we can have its tangent line TP (C) sent to the line
+at infinity. If we then lift f to OK [x, y] we find an f whose Newton polygon is contained
+in (and typically equals):
+
+(∆2,0
+3 )
+
+In particular f is monic (up to a scalar) and degx f ≤ 4. We can in fact achieve degx f = 3
+in all cases of practical interest. Indeed, with an asymptotic chance of 1/2 our tangent line
+TP (C) intersects C in two other rational points. The above construction leaves enough
+freedom to position one of those points Q at (1 : 0 : 0). The resulting lift f then becomes
+contained in (and typically equals)
+
+11
+
+(∆2,1
+3 )
+
+In the case of failure we retry with another P . If q > 59 (say) then there are enough
+Fq -points P ∈ C for this approach to work with near certainty, although there might exist
+sporadic counterexamples well beyond that point.
+Remark 10 (non-generic optimizations). For large values of q one might want to pursue
+a further compactification of the Newton polygon. Namely, if one manages to choose
+P ∈ C(Fq ) such that it is an ordinary flex or such that TP (C) is a bitangent, then TP (C)
+meets C in a unique other point Q, which is necessarily defined over Fq . By proceeding as
+before one respectively ends up inside the first and second polygon below. If one manages
+to let P ∈ C(Fq ) be a non-ordinary flex, i.e. a hyperflex, then positioning it at (0 : 1 : 0)
+results in a polygon of the third form:
+
+(∆3,1
+3 )
+
+(∆2,2
+3 )
+
+(∆4,0
+3 )
+
+Heuristically, as q → ∞ we expect to be able to realize the first two polygons with
+√
+probablities 1 − 1/e and 1 − 1/ e, respectively; more background can be found in an
+arXiv version of our paper (1605.02162v2). In contrast the hyperflex case ∆4,0
+3 is very
+exceptional, but we included it in the discussion because it corresponds to the well-known
+class of C3,4 curves: even though degx f = 4 here, the corresponding point count is slightly
+faster.
+3.1.3
+
+Implementation
+
+We now report on timings, memory usage and failure rates of our implementation of the
+algorithms in this section for various values of p and q = pn . The first column in each
+table contains the time used to compute the lift to characteristic 0 averaged over 1000
+random examples. Then the second column gives the time used by the point counting code
+pcc from [53, 54] averaged over 10 different random examples. Next, the third column
+contains the total memory used in the computation. Finally, the last column gives the
+number of examples out of the 1000 where we did not find a lift satisfying [54, Ass. 1],
+which each time turned out to be 0, i.e. we always found a good lift.
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.2
+0.2
+32
+0
+0.2
+0.6
+32
+0
+0.2
+4.2
+64
+0
+0.2
+41
+165
+0
+0.2
+590 1124
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.4
+2.4
+64
+0
+0.4
+6.6
+64
+0
+0.4
+12
+76
+0
+0.4
+26
+124
+0
+0.4
+66
+241
+0
+
+12
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.5
+15
+76
+0
+0.6
+40
+118
+0
+0.7
+82
+241
+0
+0.7
+181
+403
+0
+0.8
+473
+831
+0
+
+Alternatively, without using the methods from this section, we can just make any
+plane quartic monic using (1), then lift naively to characteristic 0 and try to use this lift
+as input for pcc. This way, we obtain the following three tables.
+p
+11
+67
+521
+4099
+32771
+
+time
+pcc(s)
+0.4
+1.3
+8.7
+83
+1153
+
+space
+(Mb)
+32
+32
+76
+307
+2086
+
+fails
+/1000
+225
+52
+5
+1
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+pcc(s)
+6.1
+14
+32
+71
+161
+
+space
+(Mb)
+32
+32
+80
+156
+288
+
+fails
+/1000
+13
+0
+0
+0
+0
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+pcc(s)
+42
+94
+248
+524
+1296
+
+space
+(Mb)
+76
+124
+320
+589
+1311
+
+fails
+/1000
+0
+0
+0
+0
+0
+
+Comparing the different tables, we see that the approach described in this section
+saves a factor of about 3 in runtime and a factor of about 2 in memory usage. Moreover,
+for small fields the naive lift of a plane quartic sometimes does not satisfy [54, Ass. 1],
+while this never seems to be the case for the lift constructed using our methods.
+
+3.2
+3.2.1
+
+Curves of genus four
+Lifting curves of genus four
+
+By [30, Ex. IV.5.2.2] the ideal of a canonical model C ⊂ P3 = Proj Fq [X, Y, Z, W ] of a
+non-hyperelliptic genus g = 4 curve is generated by a cubic S 3 and a unique quadric S 2 .
+Since q is assumed odd, the latter can be written as
+
+t
+t
+X Y Z W ·M · X Y Z W ,
+M ∈ F4×4
+q , M = M.
+Let χ2 : Fq → {0, ±1} denote the quadratic character on Fq . Then χ2 (det M ) is an
+invariant of C, which is called the discriminant.
+If we let S2 , S3 ∈ OK [X, Y, Z, W ] be homogeneous polynomials that reduce to S 2
+and S 3 modulo p, then by [30, Ex. IV.5.2.2] these define a genus 4 curve C ⊂ P3 over
+K, thereby addressing (i) and (ii). However as mentioned in Section 2.1 we expect the
+K-gonality of C to be typically 2g − 2 = 6. This exceeds the Fq -gonality of C:
+Lemma 11. Let C/ Fq be a non-hyperelliptic curve of genus 4 and Fq -gonality γ, and
+assume that q is odd. If the discriminant of C is 0 or 1 then γ = 3. If it is −1 and
+#C(Fq2 ) > 0 (which is guaranteed if q > 7) then γ = 4. Finally, if it is −1 and #C(Fq2 ) =
+0 then γ = 5.
+Proof. By [30, Ex. IV.5.5.2] our curve carries one or two geometric g31 ’s, depending on
+whether the quadric S 2 is singular (discriminant 0) or not. In the former case the quadric
+is a cone, and the g31 corresponds to projection from the top. This is automatically defined
+over Fq . In the latter case the quadric is Fq2 -isomorphic to the hyperboloid P1 × P1 ⊂ P3
+and the g31 ’s correspond to the two rulings of the latter. If the isomorphism can be defined
+over Fq (discriminant 1) then the g31 ’s are Fq -rational. In the other case (discriminant −1)
+the smallest field of definition is Fq2 . So we can assume that the discriminant of C is
+−1, and therefore that γ > 3. Now suppose that #C(Fq2 ) > 0, which is guaranteed if
+13
+
+q > 7 by [34, Thm. 2]. If there is an Fq -point then let ` be the tangent line to C at it. In
+the other case we can find two conjugate Fq2 -points, and we let ` be the line connecting
+both. In both cases ` is defined over Fq , and the pencil of planes through ` cuts out a
+g41 , as wanted. The argument can be reversed: if there exists a g41 containing an effective
+Fq -rational divisor D, then by Riemann-Roch we find that |K − D| is non-empty. In
+particular there exists an effective Fq -rational divisor of degree deg(K − D) = 2 on C, and
+#C(Fq2 ) > 0. So if #C(Fq2 ) = 0 then γ > 4. Now note that #C(Fq5 ) > 0 by the Weil
+bound. So C carries an effective divisor D of degree 5. The linear system |K − D| must
+be empty, for otherwise there would exist an Fq -point on C. But then Riemann-Roch
+implies that dim |D| = 1, i.e. our curve carries an Fq -rational g51 .
+Remark 12. An example of a genus four curve C/ F3 having F3 -gonality five can be found
+in an arXiv version of our paper (1605.02162v2).
+To address Problem 1 in the non-hyperelliptic genus 4 case we make a case-by-case
+analysis.
+χ2 (det M 2 ) = 0 In this case S 2 is a cone over a conic. A linear change of variables takes
+S 2 to the form ZW − X 2 , which we note is one of the standard realizations inside P3 of
+the weighted projective plane P(1, 2, 1). It is classical how to find such a linear change of
+variables (diagonalization, essentially). Projecting from (0 : 0 : 0 : 1) on the XY Z-plane
+amounts to eliminating the variable W , to obtain
+X2
+(2)
+) = S 3 (XZ, Y Z, Z 2 , X 2 ).
+Z
+After dehomogenizing with respect to Z, renaming X ← x and Y ← y and rescaling if
+needed, we obtain an affine equation f = y 3 + f 2 (x)y 2 + f 4 (x)y + f 6 (x), with f i ∈ Fq [x]
+of degree at most i. Its Newton polygon is contained in (and typically equals):
+Z 3 S 3 (X, Y, Z,
+
+(∆04,0 )
+
+So Baker’s bound is attained and we take for f ∈ OK [x, y] a naive coefficient-wise lift.
+χ2 (det M 2 ) = 1 In this case S 2 is a hyperboloid. A linear change of variables takes S 2 to
+the standard form XY − ZW , which we note is the image of P1 × P1 in P3 under the Segre
+embedding. Projection from (0 : 0 : 0 : 1) on the XY Z-plane amounts to eliminating the
+variable W , to obtain
+XY
+) = S 3 (XZ, Y Z, Z 2 , XY ).
+Z
+After dehomogenizing with respect to Z and renaming X ← x and Y ← y we obtain an
+affine equation f = f 0 (x)y 3 + f 1 (x)y 2 + f 2 (x)y + f 3 (x) with all f i ∈ Fq [x] of degree at
+most 3. Its Newton polygon is contained in (and typically equals)
+Z 3 S 3 (X, Y, Z,
+
+14
+
+(∆04,1 )
+
+So Baker’s bound is attained and we can take for f ∈ OK [x, y] a coefficient-wise lift of f .
+χ2 (det M 2 ) = −1 This is our first case where in general no plane model can be found
+for which Baker’s bound is attained [13, §6]. If C(Fq2 ) = ∅, or in other words if γ = 5,
+then unfortunately we do not know how to address Problem 1. We therefore assume that
+C(Fq2 ) 6= ∅ and hence that γ = 4. This is guaranteed if q > 7, so for point counting
+purposes this is amply sufficient. We follow the proof of Lemma 11: by exhaustive search
+we find a point P ∈ C(Fq2 ) along with its Galois conjugate P 0 and consider the line `
+connecting both (tangent line if P = P 0 ). This line is defined over Fq , so that modulo a
+projective transformation we can assume that ` : X = Z = 0.
+When plugging in X = Z = 0 in S 2 we find a non-zero quadratic expression in Y
+and W . Indeed: S 2 cannot vanish identically on ` because no three points of S 2 (Fq ) are
+collinear. Because C intersects ` in two points (counting multiplicities) we find that
+S 3 (0, Y, 0, W ) = (aY + bW )S 2 (0, Y, 0, W )
+for certain a, b ∈ Fq that are possibly zero. Lift S 2 coefficient-wise to a homogenous
+quadric S2 ∈ OK [X, Y, Z, W ] and let a, b ∈ OK reduce to a, b mod p. We now construct
+S3 ∈ OK [X, Y, Z, W ] as follows: for the coefficients at Y 3 , Y 2 W, Y W 2 , W 3 we make the
+unique choice for which
+S3 (0, Y, 0, W ) = (aY + bW )S2 (0, Y, 0, W ),
+while the other coefficients are randomly chosen lifts of the corresponding coefficients of
+S 3 . Then the genus 4 curve C ⊂ P3 defined by S2 and S3 is of gonality 4. Indeed, it is
+constructed such that the line ` : X = Z = 0 intersects the curve in two points (possibly
+over a quadratic extension), and the pencil of planes through this line cuts out a g41 .
+Now we project our lift C ⊂ P3 from (0 : 0 : 0 : 1) to a curve in P2 . This amounts to
+eliminating W from S2 and S3 . By dehomogenizing the resulting sextic with respect to
+Z, and by renaming X ← x and Y ← y we end up with a polynomial f ∈ OK [x, y] whose
+Newton polygon is contained in (and typically equals):
+
+(∆64,−1 )
+
+Geometrically, what happens is that the points of C on ` are both mapped to (0 : 1 : 0)
+under projection from (0 : 0 : 0 : 1), creating a singularity there, which in terms of the
+15
+
+Newton polygon results in 6Σ with its top chopped off. The polynomial f satisfies (i),
+(ii) and (iii) from Problem 1. Note that Baker’s bound is usually not attained here: it
+gives an upper bound of 9, while C has genus 4. So it is crucial to lift the equations to
+OK before projecting on the plane.
+Algorithm 13. Lifting curves of genus 4: basic solution
+Input: non-hyperelliptic genus 4 curve C/ Fq of Fq -gonality γ ≤ 4
+Output: lift f ∈ OK [x, y] satisfying (i), (ii), (iii) that is supported
+• on ∆04,0 if the discriminant is 0, or else
+• on ∆04,1 if the discriminant is 1, or else
+• on ∆64,−1
+1 : C ← CanonicalImage(C) in P3 = Proj Fq [X, Y, Z, W ]
+2 : S 2 ← unique quadric in Ideal(C); M 2 ← Matrix(S 2 ); χ ← χ2 (det M 2 )
+3 : S 3 ← cubic that along with S 2 generates Ideal(C)
+4 : if χ = 0 then
+5:
+apply automorphism of P3 transforming S 2 = 0 into ZW − X 2 = 0
+6:
+return NaiveLift(DehomogenizationZ (S 3 (XZ, Y Z, Z 2 , X 2 )))
+7 : else if χ = 1 then
+8:
+apply automorphism of P3 transforming S 2 = 0 into XY − ZW = 0
+9:
+return NaiveLift(DehomogenizationZ (S 3 (XZ, Y Z, Z 2 , XY )))
+10 : else
+11 :
+P := Random(C(Fq2 )); P 0 := Conjugate(P )
+12 :
+` ← line through P and P 0 (tangent line if P = P 0 )
+13 :
+apply automorphism of P3 transforming ` into X = Z = 0
+14 :
+S2 ← NaiveLift(S 2 )
+15 :
+S3 ← lift of S 3 satisfying S3 (0, Y, 0, W ) = (aY + bW )S2 (0, Y, 0, W ) for a, b ∈ OK
+16 :
+return DehomogenizationZ (resW (S2 , S3 ))
+
+3.2.2
+
+Optimizations
+
+χ2 (det M 2 ) = 0 By applying (1) to a polynomial with Newton polygon ∆04,0 one ends up
+with a polynomial that is monic in y and that has degree 6 in x. This can be improved
+as soon as C(Fq ) 6= 0, which is guaranteed if q > 49 by [34, Thm. 2]. Namely we can
+view (2) as the defining equation of a smooth curve in the weighted projective plane
+P(1, 2, 1). Using an automorphism of the latter we can position a given Fq -rational point
+P at (1 : 0 : 0) and the corresponding tangent line at X = 0, in order to end up with a
+Newton polygon that is contained in (and typically equals):
+
+(∆14,0 )
+
+16
+
+See Remark 14 below for how to do this in practice. So we find degx f = 4, which is
+optimal because the g31 is unique in the case of a singular S 2 . There is a caveat here, in
+that the tangent line at P might exceptionally be vertical, i.e. P might be a ramification
+point of our degree 3 map (x, y) 7→ x. In this case it is impossible to position this line at
+X = 0, but in practice one can simply retry with another P . But in fact having a vertical
+tangent line is an even slightly better situation, as explained in Remark 15 below.
+Remark 14. The automorphisms of P(1, 2, 1) can be applied directly to f . They correspond to
+0
+
+• substituting y ← ay + bx2 + cx + d and x ← a0 x + b in f for some a, a0 ∈ F∗q and
+0
+b, b , c, d ∈ Fq ,
+• exchanging the line at infinity for the y-axis by replacing f by x6 f (x−1 , x−2 y),
+or to a composition of both. For instance imagine that an affine point P = (a, b) was found
+with a non-vertical tangent line. Then f ← f (x+a, y+b) translates this point to the origin,
+at which the tangent line becomes of the form y = cx. Substituting f ← f (x, y + cx)
+positions this line horizontally, and finally replacing f by x6 f (x−1 , x−2 y) results in a
+polynomial with Newton polygon contained in ∆14,0 .
+Remark 15 (non-generic optimizations). If P has a vertical tangent line then positioning
+it at (1 : 0 : 0) results in a Newton polygon that is contained in (and typically equals) the
+first polygon below:
+
+(∆24,0 )
+
+(∆34,0 )
+
+Even though degx f = 5 here, this results in a slightly faster point count. Such a P
+will exist if and only if the ramification scheme of (x, y) 7→ x has an Fq -rational point.
+Following the same heuristic as in Remark 10 we expect that this works in about 1 − 1/e
+of the cases. If there exists a point of ramification index 3 then one can even end up inside
+the second polygon. This event is highly exceptional, but we include it in our discussion
+because this corresponds to the well-known class of C3,5 curves.
+χ2 (det M 2 ) = 1 By applying (1) to a polynomial with Newton polygon ∆04,1 one ends
+up with a polynomial that is monic in y and that has degree 3 + (γ − 1)3 = 9 in x. This
+can be improved as soon as C(Fq ) 6= 0, which is guaranteed if q > 49 by [34, Thm. 2].
+Assume as before that S 2 is in the standard form XY − ZW . So it is the image of the
+Segre embedding
+P1 × P1 ,→ P3 : ((X0 : Z0 ), (Y0 : W0 )) 7→ (X0 W0 : Y0 Z0 : Z0 W0 : X0 Y0 ).
+
+(3)
+
+That is: we can view C as the curve in P1 × P1 defined by the bihomogeneous polynomial
+S 3 (X0 W0 , Y0 Z0 , Z0 W0 , X0 Y0 )
+17
+
+of bidegree (3, 3). Remark that if we dehomogenize with respect to both Z0 and W0 and
+rename X0 ← x and Y0 ← y then we get the polynomial f from before. Now if our
+curve has a rational point P , by applying an appropriate projective transformation in
+each component we can arrange that P = ((1 : 0), (1 : 0)). If we then dehomogenize we
+end up with a Newton polygon that is contained in (and typically equals):
+
+(∆14,1 )
+
+So Baker’s bound is attained and we take for f ∈ OK [x, y] a naive coefficient-wise lift.
+Now applying (1) typically results in a polynomial of degree 3 + (γ − 1)2 = 7 in x.
+
+Remark 16. The automorphisms of P1 × P1 can again be applied directly to f . They
+correspond to
+0
+
+0
+
+• substituting y ← ay + b and x ← a0 x + b in f for some a, a0 ∈ F∗q and b, b ∈ Fq ,
+• exchanging the x-axis for the horizontal line at infinity by replacing f by y 3 f (x, y −1 ),
+• exchanging the y-axis for the vertical line at infinity by replacing f by x3 f (x−1 , y),
+or to a composition of these. For instance imagine that an affine point P = (a, b) was
+found, then f ← f (x + a, y + b) translates this point to the origin, and subsequently
+replacing f by x3 y 3 f (x−1 , y −1 ) results in a polynomial with Newton polygon contained
+in ∆14,1 .
+Remark 17 (non-generic optimizations). If one manages to let P be a point with a horizontal tangent line, i.e. if P is a ramification point of the projection map from C onto the
+second component of P1 × P1 , then the Newton polygon even becomes contained in (and
+typically equals):
+
+(∆24,1 )
+
+This eventually results in a polynomial f ∈ OK [x, y] of degree 3 + (γ − 1)1 = 5 in x. As
+in the discriminant 0 case, we heuristically expect the probability of success to be about
+1 − 1/e. However, it is also fine to find a ramification point of the projection of C onto
+the first component of P1 × P1 , because we can change the role of (X0 , Z0 ) and (Y0 , W0 )
+if wanted. Assuming independence of events, the percentage of non-hyperelliptic genus
+4 curves with discriminant 1 that admit a Newton polygon of the form ∆24,1 should be
+approximately 1 − 1/e2 .
+
+18
+
+χ2 (det M 2 ) = −1 By applying (1) to a polynomial with Newton polygon ∆64,−1 we end
+up with a polynomial that is monic in y and that has degree 3 + (γ − 1)2 = 9. This can be
+improved as soon as C(Fq ) 6= 0, which is guaranteed if q > 49 by [34, Thm. 2]. In this case
+we redo the construction with ` the tangent line to a point P ∈ C(Fq ). As before we apply
+a projective transformation to obtain ` : X = Z = 0, but in addition we make sure that
+P = (0 : 0 : 0 : 1). This implies that S 2 (0, Y, 0, W ) = Y 2 , possibly after multiplication
+by a scalar. We now proceed as before, to find lifts S2 , S3 ∈ OK [X, Y, Z, W ] that cut out
+a genus 4 curve C ⊂ P3 , still satisfying the property of containing (0 : 0 : 0 : 1) with
+corresponding tangent line ` : X = Z = 0. If we then project from (0 : 0 : 0 : 1) we
+end up with a quintic in P2 , rather than a sextic. The quintic still passes through the
+point (0 : 1 : 0), which is now non-singular: otherwise the pencil of lines through that
+point would cut out a K-rational g31 . We can therefore apply a projective transformation
+over K that maps the corresponding tangent line to infinity, while keeping the point at
+(0 : 1 : 0). After having done so, we dehomogenize to find a polynomial f ∈ OK [x, y]
+whose Newton polygon is contained in (and typically equals)
+
+(∆54,−1 )
+
+It still satisfies (i), (ii) and (iii), while here degx f ≤ 5.
+3.2.3
+
+Implementation
+
+The tables below contain timings, memory usage and failure rates for χ2 = 0, 1, −1 and
+various values of p and q = pn . For the precise meaning of the various entries in the table
+see Section 3.1.3.
+χ2 = 0
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.01
+0.3
+32
+159
+0.01
+1.4
+32
+2
+0.01
+13
+73
+2
+0.01
+189
+323
+0
+0.01 2848 2396
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.04
+6.6
+64
+2
+0.05
+13
+73
+0
+0.1
+32
+118
+0
+0.1
+73
+197
+0
+0.1
+183
+371
+0
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.3
+34
+112
+0
+0.4
+76
+156
+0
+0.6
+205
+320
+0
+0.7
+537
+653
+0
+0.9 1392 1410
+0
+
+χ2 = 1
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.01
+0.4
+32
+169
+0.02
+1.8
+32
+1
+0.02
+14
+76
+0
+0.02
+230
+508
+0
+0.02 2614 3616
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.1
+7.5
+64
+0
+0.1
+16
+112
+0
+0.2
+41
+197
+0
+0.2
+94
+320
+0
+0.2
+241
+589
+0
+
+19
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.7
+41
+150
+0
+1.2
+102
+320
+0
+2.1
+276
+556
+0
+2.8
+736 1070
+0
+3.9 1904 2016
+0
+
+χ2 = −1
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.06
+2.4
+73
+0
+0.02
+4.3
+73
+0
+0.02
+32
+124
+0
+0.03
+503
+815
+0
+0.02 5958 6064
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.15
+20
+76
+0
+0.3
+46
+156
+0
+0.4
+108
+241
+0
+0.6
+243
+403
+0
+0.8
+570
+749
+0
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+1.3
+130
+273
+0
+2.8
+312
+416
+0
+5.0
+815
+813
+0
+6.5 1939 1463
+0
+8.4 4609 2942
+0
+
+Contrary to the genus 3 case, we see that for very small p or q = pn , sometimes we do
+not find a lift satisfying [54, Ass. 1]. However, in these cases we can usually compute the
+zeta function by counting points naively, so not much is lost here in practice. Note that
+the point counting is considerably slower for χ2 = −1 than for χ2 = 0, 1 which is due to
+the map from the curve to P1 having degree 4 instead of 3 in this case.
+
+3.3
+3.3.1
+
+Curves of genus five
+Lifting curves of genus five
+
+By Petri’s theorem [42] a minimal set of generators for the ideal of a canonical model
+C ⊂ P4 = Proj Fq [X, Y, Z, W, V ]
+of a non-hyperelliptic genus 5 curve consists of
+• three quadrics S 2,1 , S 2,2 , S 2,3 and two cubics S 3,1 , S 3,2 in the trigonal case,
+• just three quadrics S 2,1 , S 2,2 , S 2,3 in the non-trigonal case.
+So given such a minimal set of generators, it is straightforward to decide trigonality. We
+denote the space of quadrics in the ideal of C by I2 (C). Then in both settings I2 (C) is a
+three-dimensional Fq -vector space of which S 2,1 , S 2,2 , S 2,3 form a basis.
+Trigonal case Here Petri’s theorem moreover tells us that I2 (C) cuts out a smooth irreducible surface S that is a rational normal surface scroll
+of type (1, 2). This means that up to a linear change of
+variables, it is the image S(1, 2) of
+P1 × P1 ,→ P4 : ((s : t), (u : v)) 7→ (vst : ut : vt2 : us : vs2 ),
+i.e. it is the ruled surface obtained by simultaneously parameterizing a line in the Y W -plane (called the directrix) and a conic in the XZV -plane,
+each time drawing the rule through the points under consideration (each of these rules
+intersects our trigonal curve in three points, counting multiplicities). In other words,
+modulo a linear change of variables the space I2 (C) admits the basis
+X 2 − ZV,
+
+XY − ZW,
+20
+
+XW − Y V.
+
+(4)
+
+Note that these are (up to sign) the 2 × 2 minors of
+
+
+X V
+W
+.
+Z X Y
+It is not trivial to find such a linear change of variables. A general method using Lie
+algebras for rewriting Severi-Brauer surfaces in standard form was developed by de Graaf,
+Harrison, Pı́lniková and Schicho [18], and a Magma function ParametrizeScroll for
+carrying out this procedure in the case of rational normal surface scrolls was written by
+Schicho. Unfortunately this was intended to work over fields of characteristic zero only,
+and indeed the function always seems to crash when invoked over fields of characteristic
+three; see also Remark 25 below. We do not know how fundamental this flaw is, or to
+what extent it is an artefact of the implementation, but to resolve this issue we have
+implemented an ad hoc method that is specific to scrolls of type (1, 2). It can be found
+in convertscroll.m; more background on the underlying reasoning can be read in an
+arXiv version of this paper (1605.02162v2).
+Once our quadrics S 2,1 , S 2,2 , S 2,3 are given by (4) we project from the line X = Y =
+Z = 0, which amounts to eliminating the variables V and W , in order to obtain the
+polynomials
+pr
+
+S 3,i = Z 3 S 3,i (X, Y, Z,
+
+X 2 XY
+,
+) = S 3,i (XZ, Y Z, Z 2 , X 2 , XY )
+Z
+Z
+
+for i = 1, 2. Dehomogenizing with respect to Z and renaming X ← x and Y ← y we
+obtain two polynomials f 1 , f 2 ∈ Fq [x, y], whose zero loci intersect in the curve defined by
+f = gcd(f 1 , f 2 ). The Newton polygon of f is contained in (and typically equals):
+0,0
+)
+(∆5,trig
+
+Note that in particular f attains Baker’s bound, and a naive Newton polygon preserving
+lift f ∈ OK [x, y] satisfies (i), (ii) and (iii). An alternative (namely, toric) viewpoint on our
+construction of f , along with more background on the claims above, is given in Section 4.1.
+In the non-trigonal case, let us write the quadrics as
+
+t
+t
+Z W V · Mi · X Y Z W V ,
+M i ∈ Fq5×5 , M i = M i .
+
+Non-trigonal case
+S 2,i = X Y
+
+The curve D(C) in P2 = Proj Fq [λ1 , λ2 , λ3 ] defined by
+det(λ1 M 1 + λ2 M 2 + λ3 M 3 ) = 0
+parameterizes the singular members of I2 (C). It is a possibly reducible curve called the
+discriminant curve of C, known to be of degree 5 and having at most nodes as singularities
+21
+
+[2]† . The non-singular points correspond to quadrics of rank 4, while the nodes correspond
+to quadrics of rank 3. For a point P ∈ D(C)(Fq ), let us denote by M P the corresponding
+(5 × 5)-matrix and by S P the corresponding quadric, both of which are well-defined up
+to a scalar. We define
+
+χ2 (pdet(M P )) if P is non-singular,
+χ : D(C)(Fq ) → {0, ±1} : P 7→
+0
+if P is singular,
+where pdet denotes the pseudo-determinant, i.e. the product of the non-zero eigenvalues.
+If we let S2,i ∈ OK [X, Y, Z, W, V ] be homogeneous polynomials that reduce to S 2,i
+modulo p, then by [30, Ex. IV.5.5.3] these define a genus 5 curve C ⊂ P4 over K, thereby
+addressing (i) and (ii). But as mentioned in Section 2.1 we expect the K-gonality of C to
+be typically 2g − 2 = 8, which exceeds the Fq -gonality of C:
+Lemma 18. Let C/ Fq be a non-hyperelliptic non-trigonal curve of genus 5 and Fq gonality γ, and assume that q is odd. If there is a point P ∈ D(C)(Fq ) for which
+χ(P ) ∈ {0, 1} then γ = 4. If there does not exist such a point and #C(Fq3 ) > 0 (which
+is guaranteed if q > 3) then γ = 5. If there does not exist such a point and #C(Fq3 ) = 0
+then γ = 6.
+Proof. By [2, VI.Ex. F]† the geometric g41 ’s are in correspondence with the singular quadrics
+containing C. More precisely:
+• Each rank 4 quadric is a cone over P1 × P1 . By taking its span with the top, each
+line on P1 × P1 gives rise to a plane intersecting the curve in 4 points. By varying
+the line we obtain two g41 ’s, one for each ruling of P1 × P1 .
+• Each rank 3 quadric is a cone with a 1-dimensional top over a conic. By taking
+its span with the top, every point of the conic gives rise to a plane intersecting the
+curve in 4 points. By varying the point we obtain a g41 .
+There are no other geometric g41 ’s. Over Fq , we see that there exists a rational g41 precisely
+• when there is a rank 4 quadric that is defined over Fq , such that the base of the
+corresponding cone is Fq -isomorphic to P1 × P1 , or
+• when there is a rank 3 quadric that is defined over Fq .
+In terms of the discriminant, this amounts to the existence of a P ∈ D(C) for which
+χ(P ) ∈ {0, 1}. So let us assume that γ > 4. If #C(Fq3 ) > 0, which by the Serre-Weil
+bound is guaranteed for q > 3, then there exists an effective Fq -rational degree 3 divisor
+D on C. Because our curve is non-trigonal we find dim |D| = 0, so by the RiemannRoch theorem we have that dim |K − D| = 1, and because deg(K − D) = 5 we conclude
+that there exists a rational g51 on C. (Remark: geometrically, this g51 is cut out by the
+pencil of hyperplanes through the plane spanned by the support of D, taking into account
+multiplicities.) The argument can be reversed: if there exists a g51 3 D for some Fq rational divisor D on C, then Riemann-Roch implies that |K − D| is non-empty, yielding
+an effective divisor of degree 3, and in particular #C(Fq3 ) > 0. So it remains to prove
+that if #C(Fq3 ) = 0 then there exists a rational g61 . We make a case distinction:
+22
+
+• If #C(Fq2 ) > 0 then there exists a rational effective divisor D of degree 2, and
+Riemann-Roch implies that dim |K − D| = 2, yielding the requested rational g61
+(even a g62 , in fact).
+• If #C(Fq2 ) = 0 then at least #C(Fq6 ) > 0 by the Weil bound, so there exists a
+rational effective divisor D of degree 6. Then K − D is of degree 2 and by our
+assumption |K − D| is empty. But then Riemann-Roch asserts that dim |D| = 1,
+and we have our rational g61 .
+This ends the proof.
+Remark 19. If q is large enough then it is very likely that D(C)(Fq ) will contain a point
+P with χ(P ) ∈ {0, 1}, and therefore that γ = 4; a more precise discussion is given below.
+There do however exist counterexamples for every value of q, as is shown by a construction
+explained in an arXiv version of this paper (1605.02162v2).
+Remark 20. We do not know whether gonality 6 actually occurs or not. For this one needs
+to verify the existence of a non-trigonal genus five curve over F3 which is pointless over
+F27 and whose discriminant curve has no F3 -rational points P for which χ(P ) ∈ {0, 1}.
+We ran a naive brute-force search for such curves, but did not manage to find one.
+If q is large enough and D(C) has at least one (geometrically) irreducible component
+that is defined over Fq , then a point P ∈ D(C)(Fq ) with χ(P ) ∈ {0, 1} exists and therefore
+C has Fq -gonality 4. To state a precise bound on q, let us analyze the (generic) setting
+where D(C) is a non-singular plane quintic. In this case the ‘good’ points P are in a
+natural correspondence with pairs of Fq -points on an unramified double cover of D(C);
+we refer to [4, §2(c)] and the references therein for more background. By Riemann-Hurwitz
+this cover is of genus 11, for which the lower Serre-Weil bound is positive from q > 467 on.
+The presence of singularities or of absolutely irreducible Fq -components of lower degree
+can be studied in a similar way and leads to smaller bounds.
+There are two possible ways in which D(C) does not have an absolutely irreducible
+Fq -component: either it could decompose into two conjugate lines over Fq2 and three
+conjugate lines over Fq3 , or it could decompose into five conjugate lines over Fq5 . But
+in the former case the Fq -rational point P of intersection of the two Fq2 -lines satisfies
+χ(P ) = 0, so here too our curve C has Fq -gonality 4. Thus the only remaining case is
+that of five conjugate lines over Fq5 , which can occur for every value of q.
+Let us now address Problem 1. First assume that γ = 4, i.e. that there exists a point
+P ∈ D(C)(Fq ) with χ(P ) ∈ {0, 1}. This can be decided quickly: if q ≤ 467 then one
+can proceed by exhaustive search, while if q > 467 it is sufficient to verify whether or
+not D(C) decomposes into five conjugate lines. To find such a point, we first look for
+Fq -rational singularities of D(C): these are exactly the points P for which χ(P ) = 0. If
+no such singularities exist then we look for a point P ∈ D(C)(Fq ) for which χ(P ) = 1 by
+trial and error. Once our point has been found, we proceed as follows.
+χ(P ) = 0 In this case P corresponds to a rank 3 quadric, which using a linear change of
+variables we can assume to be in the standard form S = ZW − X 2 . Choose homogeneous
+23
+
+quadratic polynomials
+
+(0 : 0 : 0 : 0 : 1)
+
+0
+S 2 , S 2 ∈ Fq [X, Y, Z, W, V ]
+
+that along with S form a basis of I2 (C). (In practice
+0
+one can usually take S 2 = S 2,1 and S 2 = S 2,2 .) Let
+S2 , S20 ∈ OK [X, Y, Z, W, V ] be quadrics that reduce to
+0
+S 2 , S 2 modulo p. Along with
+S = ZW − X 2 ∈ OK [X, Y, Z, W, V ]
+
+C
+
+these cut out a canonical genus 5 curve C ⊂ P4 . We
+view the quadric defined by S as a cone over the weighted
+projective plane P(1, 2, 1) with top (0 : 0 : 0 : 0 : 1). Our
+curve is then an intersection of two quadrics inside this
+cone, and by projecting from the top we obtain a curve
+C pr in P(1, 2, 1). In terms of equations this amounts to
+eliminating V from S2 and S20 by taking the resultant
+S2pr := resV (S2 , S20 ), which is a homogeneous quartic. Now
+as in (2) we further eliminate the variable W to end up
+C pr
+pr
+with S2 (XZ, Y Z, Z 2 , X 2 ). After dehomogenizing with
+P(1, 2, 1)
+respect to Z, renaming X ← x and Y ← y and rescaling
+if needed, we obtain an affine equation f = y 4 + f2 (x)y 3 + f4 (x)y 2 + f6 (x)y + f8 (x), with
+fi ∈ OK [x] of degree at most i. Its Newton polygon is contained in (and typically equals):
+(∆05,0 )
+
+Note that Baker’s genus bound reads 9, so this exceeds the geometric genus by 4. Thus
+0
+it was important to lift S 2 , S 2 before projecting.
+χ(P ) = 1 In this case P corresponds to a rank 4 quadric whose pseudo-determinant is
+a square. Using a linear change of variables we can assume it to be in the standard
+form S = XY − ZW , which is a cone over P1 × P1 with top (0 : 0 : 0 : 0 : 1). Choose
+homogeneous quadratic polynomials
+0
+
+S 2 , S 2 ∈ Fq [X, Y, Z, W, V ]
+that along with S form a basis of I2 (C). (In practice one can usually take S 2 = S 2,1 and
+0
+0
+S 2 = S 2,2 .) Let S2 , S20 ∈ OK [X, Y, Z, W, V ] be quadrics that reduce to S 2 , S 2 modulo p.
+Along with
+S = XY − ZW ∈ OK [X, Y, Z, W, V ]
+
+these cut out a canonical genus 5 curve C ⊂ P4 , which can be viewed as an intersection of
+two quadrics inside a cone over P1 × P1 with top (0 : 0 : 0 : 0 : 1). We first project from
+24
+
+(0 : 0 : 0 : 0 : 1)
+
+this top, to obtain a curve C pr in P1 × P1 . In terms
+of equations, this amounts to eliminating V from S2
+and S20 by taking the resultant S2pr := resV (S2 , S20 ),
+which is a homogeneous quartic. As in the discussion following (3), we conclude that C pr is defined
+by the bihomogeneous polynomial
+S2pr (X0 W0 , Y0 Z0 , Z0 W0 , X0 Y0 )
+
+(5)
+
+C
+
+of bidegree (4, 4). Let f ∈ OK [x, y] be the polynomial obtained from (5) by dehomogenizing with
+respect to Z0 and W0 and by renaming X0 ← x and
+Y0 ← y. Then the Newton polygon of f is contained
+in (and typically equals):
+C pr
+
+(∆05,1 )
+P1 × P1
+
+In particular degy f = 4, as wanted. Here again Baker’s bound reads 9, which exceeds the
+geometric genus by 4.
+∀P ∈ D(C)(Fq ) : χ(P ) = −1 This case is very rare, so we will be rather sketchy here. If
+γ = 6 then we do not know how to address Problem 1, which for point counting purposes
+is not an issue because this could only occur when q = 3. If γ = 5 then one can try to
+address Problem 1 by following the proof of Lemma 18, similar to the way we treated the
+χ(det M 2 ) = −1 case in genus four. For instance this works as follows if C(Fq ) has at least
+three non-collinear points, which is guaranteed as soon as #C(Fq ) ≥ 4, which in turn is
+guaranteed if q > 101 by the Serre-Weil bound. Apply a transformation of P4 to position
+these points at (0 : 1 : 0 : 0 : 0), (0 : 0 : 0 : 1 : 0) and (0 : 0 : 0 : 0 : 1), so that the plane
+they span is X = Z = 0. This implies that the defining quadrics have no terms in Y 2 , W 2
+and V 2 , a property which is of course easily preserved when lifting to OK [X, Y, Z, W, V ],
+resulting in a curve C ⊂ P4 again passing through (0 : 1 : 0 : 0 : 0), (0 : 0 : 0 : 1 : 0)
+and (0 : 0 : 0 : 0 : 1). Eliminating W and V , which geometrically amounts to projecting
+from the line X = Y = Z = 0, results in a sextic in P2 = Proj K[X, Y, Z] passing through
+(0 : 1 : 0) in a non-singular way (otherwise the pencil of lines through that point would
+cut out a K-rational g41 ). We can therefore apply a projective transformation that maps
+the corresponding tangent line to infinity, while keeping the point at (0 : 1 : 0). Then by
+dehomogenizing with respect to Z and renaming X ← x and Y ← y we end up with a
+polynomial f ∈ OK [x, y] whose Newton polygon is contained in (and typically equals):
+
+25
+
+(∆55 )
+
+We omit a further discussion.
+
+Algorithm 21. Lifting curves of genus 5: basic solution
+Input: non-hyperelliptic genus 5 curve C/ Fq of Fq -gonality γ ≤ 5
+or of Fq -gonality γ = 5 and #C(Fq ) ≥ 4
+Output: lift f ∈ OK [x, y] satisfying (i), (ii), (iii) that is supported
+• on ∆0,0
+5,trig if C is trigonal, or else
+• on ∆05,0 if ∃P ∈ D(C) : χ(P ) = 0, or else
+• on ∆05,1 if ∃P ∈ D(C) : χ(P ) = 1, or else
+• on ∆55
+1 : C ← CanonicalImage(C) in P4 = Proj Fq [X, Y, Z, W, V ]
+2 : if Ideal(C) is generated by quadrics then
+S 2,1 , S 2,2 , S 2,3 ← quadrics that generate Ideal(C)
+3:
+4:
+M i ← Matrix(S 2,i ) (i = 1, 2, 3)
+5:
+D(C) ← curve in P2 = Proj Fq [λ1 , λ2 , λ3 ] defined by det(λ1 M 1 + λ2 M 2 + λ3 M 3 )
+6:
+if q ≤ 467 and ∀P ∈ D(C)(Fq ) : χ(P ) = −1 (verified exhaustively)
+7:
+or q > 467 and D(C) decomposes into five conjugate lines then
+8:
+goodpoints ← false
+9:
+else
+10 :
+goodpoints ← true
+11 :
+if goodpoints then
+12 :
+if D(C) has Fq -rational singular point P then
+13 :
+14 :
+15 :
+16 :
+17 :
+18 :
+19 :
+20 :
+21 :
+22 :
+23 :
+24 :
+
+0
+
+0
+
+S 2 , S 2 ← quadrics such that hS P , S 2 , S 2 iFq = hS 2,1 , S 2,2 , S 2,3 iFq
+apply automorphism of P4 transforming S P into W Z − X 2
+0
+S2 ← NaiveLift(S 2 ); S20 ← NaiveLift(S 2 ); S2pr ← resV (S2 , S20 )
+return DehomogenizationZ (S2pr (XZ, Y Z, Z 2 , X 2 ))
+else
+repeat P ← Random(D(C)(Fq )) until χ(P ) = 1
+0
+0
+S 2 , S 2 ← quadrics such that hS P , S 2 , S 2 iFq = hS 2,1 , S 2,2 , S 2,3 iFq
+apply automorphism of P4 transforming S P into XY − ZW
+0
+S2 ← NaiveLift(S 2 ); S20 ← NaiveLift(S 2 ); S2pr ← resV (S2 , S20 )
+return DehomogenizationZ (S2pr (XZ, Y Z, Z 2 , XY ))
+else
+P1 , P2 , P3 ← distinct random points of C(Fq )
+26
+
+apply automorphism of P4 sending P1 , P2 , P3 to (0 : 1 : 0 : 0 : 0),
+(0 : 0 : 0 : 1 : 0), (0 : 0 : 0 : 0 : 1)
+S2,i ← NaiveLift(S 2,i ) (i = 1, 2, 3)
+C pr ← resW,V (S2,1 , S2,2 , S2,3 )
+apply automorphism of P2 transforming T(0:1:0) (C pr ) into Z = 0
+return DehomogenizationZ (C pr )
+
+25 :
+
+26 :
+27 :
+28 :
+29 :
+30 : else
+31 :
+apply automorphism of P4 transforming space of quadrics in Ideal(C) to
+32 :
+33 :
+34 :
+
+hX 2 − ZV, XY − ZW, XW − Y V iFq
+S 3,1 , S 3,2 ← cubics that along with quadrics generate Ideal(C)
+f i ← DehomogenizationZ (S 3,i (XZ, Y Z, Z 2 , X 2 , XY )) (i = 1, 2)
+return NaiveLift(gcd(f 1 , f 2 ))
+
+3.3.2
+
+Optimizations
+
+0,0
+Trigonal case By applying (1) to a polynomial with Newton polygon ∆5,trig
+we end up
+with a polynomial f ∈ OK [x, y] that is monic in y and that has degree 5 + (γ − 1)2 = 9
+in x. This can be improved as soon as our curve C/ Fq has a rational point P , which
+is guaranteed if q > 89 by the Serre-Weil bound (probably this bound is not optimal).
+The treatment below is very similar to the genus four case where χ2 (det M 2 ) = 0, as
+elaborated in Section 3.2.2. The role of P(1, 2, 1) is now played by our scroll S(1, 2).
+Recall that the latter is a ruled surface spanned by a line (the directrix) and a conic
+that are being parameterized simultaneously. Using an automorphism of S(1, 2) we can
+position P at the point at infinity of the spanning conic, in such a way that the curve and
+the conic meet at P with multiplicity at least two. This results in a Newton polygon that
+is contained in (and typically equals):
+
+(∆0,1
+5,trig )
+
+See Remark 22 below for how this can be done in practice. Here an application of (1)
+typically results in degx f = 3 + (γ − 1)2 = 7. There are two caveats here: our curve
+might exceptionally be tangent at P to a rule of the scroll, in which case it is impossible
+to make it tangent to the conic at that point. Or worse: our point P might lie on the
+directrix, in which case it is just impossible to move it to the spanning conic. In these
+cases one can most likely just retry with another P . But in fact these two situations are
+better, as explained in Remark 23 below.
+Remark 22. The automorphisms of S(1, 2) can be applied directly to f . They correspond
+to
+0
+
+0
+
+• substituting y ← ay +bx+c and x ← a0 x+b in f for some a, a0 ∈ F∗q and b, b , c ∈ Fq ,
+27
+
+• exchanging the rule at infinity for the y-axis by replacing f by x5 f (x−1 , x−1 y),
+or to a composition of both. For instance imagine that an affine point P = (a, b) was found
+with a non-vertical tangent line. Then f ← f (x+a, y+b) translates this point to the origin,
+at which the tangent line becomes of the form y = cx. Substituting f ← f (x, y + cx)
+positions this line horizontally, and finally replacing f by x5 f (x−1 , x−1 y) results in a
+0,1
+polynomial with Newton polygon contained in ∆5,trig
+.
+Remark 23 (non-generic optimizations). As for the first caveat, if C turns out to be
+tangent at P to one of the rules of the scroll then moving P to the point at infinity of the
+spanning conic results in a Newton polygon that is contained in (and typically equals):
+
+(∆0,2
+5,trig )
+
+Even though this yields degx f = 4 + (γ − 1)2 = 8, the corresponding point count is
+slightly faster. Such a P will exist if and only if the ramification scheme of (x, y) 7→ x has
+an Fq -rational point. Following the heuristics from Remark 10 we expect that this works
+in about 1 − 1/e of the cases. As for the second caveat, if P is a point on the directrix of
+the scroll, we can move it to its point at infinity. This results in a Newton polygon that
+is contained in (and typically equals) the left polygon below.
+
+(∆1,0
+5,trig )
+
+1,1
+)
+(∆5,trig
+
+This again gives us degx f = 5 + (γ − 1)1 = 7, but here too the corresponding point count
+is faster. As explained in an arXiv version of our paper (1605.02162v2), the probability
+of being able to realize this polygon is about 1/2, and one can even end up inside the
+right polygon with a probability of about 3/8, yielding degx f = 4 + (γ − 1)1 = 6.
+Non-trigonal case For point counting purposes it is advantageous to give preference
+to the case χ(P ) = 0, i.e. to use a singular point P ∈ D(C)(Fq ) if it exists. Some
+optimizations over the corresponding discussion in Section 3.3.2 are possible, for instance
+generically one can replace ∆05,0 with the left polygon below:
+
+(∆15,0 )
+
+(∆25,0 )
+
+28
+
+With an estimated probability of about 1 − (3/8)ρ one can even end up inside the right
+polygon. Here 10 ≥ ρ ≥ 1 denotes the number of singular points P ∈ D(C)(Fq ). We will
+spend a few more words on this in Remark 24 below, after having discussed the χ(P ) = 1
+case. However usually such a singular Fq -point P does not exist, i.e. ρ = 0. More precisely
+we expect that the proportion of curves for which D(C) is a smooth plane quintic tends
+to 1 as q → ∞. Indeed, in terms of moduli the locus of (non-hyperelliptic, non-trigonal)
+genus five curves having a singular point on its discriminant curve has codimension one;
+see [50, 25]† . For this reason we will focus our attention on the case χ(P ) = 1, and leave
+it to the interested reader to elaborate the remaining details.
+As for the case χ(P ) = 1, note that by applying (1) to a polynomial with Newton
+polygon ∆05,1 one ends up with a polynomial that is monic in y and that has degree
+4 + (γ − 1)4 = 16 in x. With near certainty this can be reduced to 10, as we will explain
+now. The idea is to exploit the fact that in practice the discriminant curve D(C) contains
+enough Fq -rational points for there to be considerable freedom in choosing a P for which
+χ(P ) = 1. We want to select a suited such P , by which we mean the following.
+As before, assume that an automorphism of P4 has been applied such that S P = S =
+0
+XY − ZW and let S 2 , S 2 ∈ Fq [X, Y, Z, W, V ] be quadrics that along with S cut out our
+curve C. Now suppose that we would have projected C from the point (0 : 0 : 0 : 0 : 1)
+pr
+before lifting to characteristic 0. Then we would have ended up with a curve C in
+P1 × P1 : S = 0
+
+in P3 = Proj Fq [X, Y, Z, W ].
+
+This curve has arithmetic genus 9, because in fact that is what Baker’s bound measures.
+Since the excess in genus is 9 − 5 = 4 we typically expect there to be 4 nodes. Our point P
+pr
+is ‘suited’ as soon as one of the singular points Q of C is Fq -rational. If P is not suited,
+i.e. if there is no such Fq -rational singularity, then we retry with another P ∈ D(C)(Fq )
+for which χ(P ) = 1. Heuristically we estimate the probability of success to be about
+5/8. In particular if there are enough candidates for P available, we should end up being
+successful very quickly with overwhelming probability.
+pr
+Given such a singular point Q ∈ C (Fq ) ⊂ P1 × P1 we can move it to the point
+((1 : 0), (1 : 0)), similar to what we did in the genus 4 case where χ2 (det M 2 ) = 1. In
+terms of the coordinates X, Y, Z, W of the ambient space P3 this means moving the point
+to (0 : 0 : 0 : 1). Let’s say this amounts to the change of variables
+ 
+ 
+X
+X
+Y 
+Y 
+ ←A· 
+Z 
+Z 
+W
+W
+where A ∈ F4×4
+q . Then we can apply the change of variables
+ 
+ 
+X
+X
+Y 
+
+ Y 
+ 
+ 
+Z  ← A 0 · Z 
+
+ 
+0 1 
+W 
+W 
+V
+V
+29
+
+directly to the defining polynomials S, S 1 , S 2 of C to obtain the curve C tr cut out by
+S = XY − ZW, S 2,tr , S 20 ,tr ∈ Fq [X, Y, Z, W, V ].
+Indeed the transformation affects S at most through multiplication by a non-zero scalar.
+If we would now project from (0 : 0 : 0 : 0 : 1) as before, we would end up with a curve
+pr
+C tr ⊂ P1 × P1 having a singularity at ((1 : 0), (1 : 0)), which is at (0 : 0 : 0 : 1) in the
+coordinates X, Y, Z, W .
+Recall that inside P4 we view S as the defining equation of a cone over P1 × P1 with
+top (0 : 0 : 0 : 0 : 1). The fact that the projected curve has a singularity at (0 : 0 : 0 : 1)
+implies that the line X = Y = Z = 0 meets the curve at least twice, counting multiplicities
+(these points of intersection need not be Fq -rational). Thus after multiplying S 2,tr by a
+scalar if needed we find that
+0
+
+S 2,tr (0, 0, 0, W, V ) = S 2,tr (0, 0, 0, W, V ) = aW 2 + bW V + cV 2
+for some a, b, c ∈ Fq . Now lift S 2,tr and S 20 ,tr in a consistent way, in order to obtain
+quadrics S2 , S20 ∈ OK [X, Y, Z, W, V ] satisfying
+S2 (0, 0, 0, W, V ) = S20 (0, 0, 0, W, V ) = aW 2 + bW V + cV 2
+for elements a, b, c ∈ OK that reduce to a, b, c modulo p. If we then proceed as before, we
+end up with a curve C pr in P1 × P1 having a singularity at ((1 : 0), (1 : 0)). This eventually
+results in a defining polynomial f ∈ OK [x, y] whose Newton polygon is contained in (and
+typically equals):
+
+(∆25,1 )
+
+Applying (1) to f results in a polynomial having degree at most 4 + (γ − 1)2 = 10 in x,
+as announced.
+Remark 24. The same ideas apply to the case χ(P ) = 0, with the role of P1 × P1 replaced
+pr
+by P(1, 2, 1). If the projection C of C to P(1, 2, 1) has an Fq -rational singular point, then
+it can be arranged that the resulting curve C pr ⊂ P(1, 2, 1) has a singularity at (1 : 0 : 0),
+eventually yielding a polynomial f ∈ OK [x, y] whose Newton polygon is contained in ∆25,0 .
+As in the χ(P ) = 1 case we expect that the probability that this works out for a given P
+is about 5/8. But unlike the χ(P ) = 1 case there is not much freedom to retry in the case
+of failure: we have ρ chances only. This explains our expected probability of 1 − (3/8)ρ
+to be able to realize ∆25,0 .
+If the foregoing fails every time then we can play the same game with a non-singular
+pr
+Fq -rational point Q on C (guaranteed to exist if q > 89 because then C has an Fq rational point by the Serre-Weil bound). The result is a curve C pr ⊂ P(1, 2, 1) containing
+30
+
+the point (1 : 0 : 0). We can then use an automorphism of P(1, 2, 1) to make C pr tangent
+to X = 0 at that point (unless the tangent line is vertical, in which case we simply retry
+with another Q). This is done similarly to the way we handled the case χ2 (det M 2 ) = 0
+in Section 3.2.2: see in particular Remark 14. In this way one ends up in ∆15,0 .
+3.3.3
+
+Implementation
+
+The tables below contain timings, memory usage and failure rates for the trigonal and
+non-trigonal case and various values of p and q = pn . For the precise meaning of the
+various entries in the tables see Section 3.1.3.
+Trigonal
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.02
+0.6
+96
+206
+0.02
+2.4
+96
+45
+0.02
+23
+112
+4
+0.02
+358
+548
+1
+0.02 4977 3982
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.1
+17
+108
+6
+0.1
+33
+150
+0
+0.2
+76
+556
+0
+0.2
+186 1070
+0
+0.3
+452 1716
+0
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+1.2
+82
+188
+0
+2.0
+214
+621
+0
+3.6
+587 1366
+0
+4.5 1584 2453
+0
+6.3 4039 4176
+0
+
+Non-trigonal
+p
+11
+67
+521
+4099
+32771
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+0.1
+2.0
+64
+14
+0.1
+7.2
+76
+0
+0.2
+65
+165
+0
+0.2 1326 1326
+0
+0.2 21974 10329
+0
+
+q
+35
+75
+175
+375
+795
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+2.5
+59
+229
+0
+5.3
+114
+352
+0
+10
+261
+556
+0
+14
+662
+919
+0
+19 1552 1494
+0
+
+4
+
+Curves of low gonality
+
+4.1
+
+Trigonal curves
+
+q
+310
+710
+1710
+3710
+7910
+
+time
+time space
+fails
+lift(s) pcc(s) (Mb) /1000
+16
+504
+780
+0
+40 1191 1304
+0
+89 2946 2231
+0
+128 7032 3679
+0
+193 15729 6267
+0
+
+Recall from Remark 6 that from genus five on a curve C/ Fq is trigonal iff it is geometrically
+trigonal. It is known [42] that a minimal set of generators for the ideal of a canonical
+model C ⊂ Pg−1 = Proj Fq [X1 , X2 , . . . , Xg ] of a non-hyperelliptic curve of genus g ≥ 4
+over Fq consists of
+• (g − 2)(g − 3)/2 quadrics
+S 2,1 , S 2,2 , . . . , S 2,(g−2)(g−3)/2
+and g − 3 cubics
+
+S 3,1 , S 3,2 , . . . , S 3,g−3
+
+if C is trigonal or Fq -isomorphic to a smooth curve in P2 of degree five,
+• just (g − 2)(g − 3)/2 quadrics in the other cases.
+31
+
+So given such a minimal set of generators, it is straightforward to decide trigonality, unless
+g = 6 in which case one might want to check whether C is isomorphic to a smooth plane
+quintic or not. See Remark 27 below for how to do this.
+From now on assume that we are given a trigonal curve C/ Fq in the above canonical
+form. Then the quadrics S 2,i spanning I2 (C) are known to define a rational normal surface
+scroll S of type (a, b), where a, b are non-negative integers satisfying
+a ≤ b,
+
+a + b = g − 2,
+
+b ≤ (2g − 2)/3,
+
+(6)
+
+called the Maroni invariants1 of C. This means that up to a linear change of variables, it
+is the image S(a, b) of
+P1 × P1 ,→ Pg−1 : ((s : t), (u : v)) 7→ (uta : uta−1 s : · · · : usa : vtb : vtb−1 s : · · · : vsb ),
+i.e. it is the ruled surface obtained by simultaneously parameterizing
+• a rational normal curve of degree a in the Pa corresponding to X1 , X2 , . . . , Xa+1 ,
+and
+0 ,
+• a rational normal curve of degree b in the Pb corresponding to X10 , X20 , . . . , Xb+1
+where Xi0 denotes the variable Xa+1+i ,
+
+each time drawing the rule through the points under consideration (each of these rules
+intersects our trigonal curve in three points, counting multiplicities).
+As a consequence, modulo a linear change of variables, the space I2 (C) admits the
+2 × 2 minors of
+
+
+X10 X20 . . .
+Xb0
+X1 X2 . . .
+Xa
+(7)
+0
+X2 X3 . . . Xa+1 X20 X30 . . . Xb+1
+as a basis, for some a, b satisfying (6). We assume that we have a function ConvertScroll
+at our disposal that upon input of I2 (C) and a pair (a, b) satisfying (6), either finds such
+a linear change of variables, or outputs ‘wrong type’ in case the surface cut out by I2 (C)
+is not a scroll of type (a, b).
+Remark 25. If g = 5 then (1, 2) is the only pair of integers satisfying (6), and one can
+use our ad hoc method from mentioned in Section 3.3.1 to find the requested linear
+change of variables as above. For higher genus we have written an experimental version of
+ConvertScroll in Magma, which can be found in the file convertscroll.m. It blindly relies on Schicho’s function ParametrizeScroll, which implements the Lie algebra method
+from [18]. Unfortunately the latter is only guaranteed to work in characteristic zero, and
+indeed one runs into trouble when naively applying ParametrizeScroll over finite fields
+of very small characteristic; empirically however, we found that p > g suffices for a slight
+modification of ParametrizeScroll to work consistently. We remark that it is an easy
+linear algebra problem to verify the correctness of the output, in case it is returned. In
+any case further research is needed to turn this into a more rigorous step.
+1
+
+The existing literature is ambiguous on this terminology. Some authors talk about the Maroni invariant
+of a trigonal curve, in which case they could mean either a = min(a, b), or b − a.
+
+32
+
+Remark 26. If ‘wrong type’ is returned then one retries with another pair (a, b) satisfying
+(6). From a moduli theoretic point of view [48]† the most likely case is a = b = (g − 2)/2 if
+g is even, and a + 1 = b = (g − 1)/2 if g is odd, so it is wise to try that pair first, and then
+to let a decrease gradually. According to [45]† the Lie algebra method implicitly computes
+the Maroni invariants, so it should in fact be possible to get rid of this trial-and-error part;
+recall that we just use the function ConvertScroll as a black box.
+Remark 27 (g = 6). If ‘wrong type’ is returned on input (2, 2) as well as on input (1, 3),
+then we are in the smooth plane quintic case and therefore C is not trigonal. Here I2 (C)
+cuts out a Veronese surface in P5 , rather than a scroll. We will revisit this case at the end
+of the section.
+Once our quadrics S 2,i are given by the minors of (7), we restrict our curve C to the
+embedded torus
+T2 ,→ Pg−1 : (x, y) 7→ (y : xy : · · · : xa y : 1 : x : · · · : xb )
+by simply substituting
+X1 ← y, X2 ← xy, . . . , Xa+1 ← xa y
+
+0
+and X10 ← 1, X20 ← x, . . . , Xb+1
+← xb .
+
+This makes the quadrics vanish identically, while the cubics become
+f 1 , f 2 , . . . , f g−3 ∈ Fq [x, y].
+The ideal generated by these polynomials is principal, i.e. of the form (f ), where the
+Newton polygon of f = gcd(f 1 , f 2 , . . . , f g−3 ) is contained in (and typically equals):
+(0, 3)
+
+(2a + 2 − b, 3)
+
+(2b + 2 − a, 0)
+
+(0, 0)
+
+The correctness of these claims follows for instance from [9, §3]. Note that in particular
+f attains Baker’s bound, so a naive Newton polygon preserving lift f ∈ OK [x, y] satisfies
+(i), (ii) and (iii).
+Remark 28. It should be clear that the above is a generalization of the corresponding
+method from Section 3.3.1, where we dealt with trigonal curves of genus five. But the
+method also generalizes the genus four cases χ2 (det M 2 ) = 0 and χ2 (det M 2 ) = 1 from
+Section 3.2.1, where the scrolls are S(0, 2) = P(1, 2, 1) and S(1, 1) = P1 × P1 , respectively.
+
+Remark 29. Here too one could try to compress the Newton polygon by clipping off
+boundary points, similar to what we did in Section 3.3.2. But as the genus grows the
+resulting speed-ups become less and less significant, and we omit a further discussion.
+
+33
+
+Example
+
+Let us carry out the foregoing procedure for the curve defined by
+
+(x3 + x + 1)y 3 + 42(2x4 + x3 + 3x2 + 3x + 1)y 2 + (x + 1)(x4 + 2x2 + x + 1)y + 42(x2 + 1) = 0
+over F43 . This is the reduction mod 43 of the modular curve X0+ (164), or rather an affine
+model of it, whose equation we took from [32]. It is of genus 6, while we note that Baker’s
+bound reads 7, so it is not met here. Using the intrinsic CanonicalMap one computes that
+
+X 2 X + 42X12 X5 + 40X12 X6 + 40X1 X2 X6 + X1 X32 + 2X1 X3 X6 + 42X1 X42 + 40X1 X4 X5 + X1 X4 X6
+
+ 1 2
+
++6X1 X5 X6 + 7X1 X62 + 42X2 X32 + 2X2 X3 X6 + 41X2 X62 + 42X33 + 40X3 X62 + 2X42 X5 + 4X42 X6
+
+
+
+2
+2
+3
+
++4X
+
+4 X5 X6 + X4 X6 + 38X5 X6 + 39X6
+
+
+
+ X12 X3 + 42X12 X6 + 39X1 X2 X6 + X1 X32 + 38X1 X3 X6 + 42X1 X4 X5 + X1 X5 X6 + 7X1 X62 + X2 X32
+
+
+
++41X2 X3 X6 + 8X2 X62 + 42X32 X6 + 4X3 X62 + X42 X6 + 5X4 X5 X6 + X4 X62 + 40X5 X62 + 37X63
+
+
+
+2
+
+ 42X1 X6 + X1 X2 X3 + 42X1 X2 X6 + 39X1 X3 X6 + 42X1 X4 X5 + 42X1 X5 X6 + 6X1 X62 + X2 X32 + 39X2 X3 X6
++7X2 X62 + X33 + 42X32 X6 + 5X3 X62 + 42X42 X6 + 5X4 X5 X6 + 41X4 X62 + X5 X62 + 36X63
+
+
+42X
+X
++
+42X1 X5 + X22 + X2 X6 + X3 X6 + 42X42 + 42X4 X6 + X5 X6
+
+1 3
+
+
+
+ 42X1 X5 + X2 X4 + X2 X6 + 42X42 + 42X4 X6 + X5 X6
+
+
+2
+
+
+ 42X1 X6 + X3 X4 + X3 X6 + 42X42X5 + X6
+
+
+42X
+X
++
+X
+X
++
+42X
+X
++
+X
+
+1 6
+2 5
+4 5
+6
+
+
+
+
+ 42X2 X6 + X32X5
+2
+42X4 X6 + X5 + 42X6
+
+is a minimal set of generators for the ideal I(C) of a canonical model C ⊂ P5 . We are
+clearly in the trigonal case, so the six quadrics must cut out a rational normal surface
+scroll. According to (6) the type of the latter is either (1, 3) or (2, 2). Following Remark 26
+we first try (2, 2), so we search for a linear change of variables taking I2 (C) to the space
+of quadrics spanned by the 2 × 2 minors of
+
+
+X1 X2 X4 X5
+.
+X2 X3 X5 X6
+Our experimental version of the function ConvertScroll turns out to work here, and the
+type (2, 2) was a correct guess: the change of variables returned by Magma reads
+ 
+
+  
+X1
+40 3 42 0 30 33
+X1
+X2 
+ 0 12 35 40 42 2  X2 
+ 
+
+  
+X3 
+ 0 9 4 30 29 42 X3 
+ ←
+  
+X4 
+20 37 5 2 8 22 · X4  .
+ 
+
+  
+X5 
+22 19 11 28 32 14 X5 
+X6
+
+38 29 16 21 33 36
+
+X6
+
+Applying this transformation to our generators of I(C) and then substituting
+X1 ← y, X2 ← xy, X3 ← x2 y, X4 ← 1, X5 ← x, X6 ← x2
+annihilates the quadrics, while the cubics become
+6(x + 27)(x + 32)f , 39(x + 13)(x + 20)f , 2(x + 13)2 f
+respectively, where
+f = x4 y 3 + 8x4 y 2 + 31x4 y + 29x4 + 37x3 y 3 + 23x3 y 2 + 16x3 y + x3 + 12x2 y 3 + 18x2 y 2
++12x2 y + 25x2 + 10xy 3 + 7xy 2 + 30xy + 11x + 13y 3 + 36y 2 + 3y + 2.
+34
+
+For this polynomial Baker’s bound is attained, so a naive lift to f ∈ OK [x, y] satisfies (i),
+(ii), (iii). After making f monic using (1) it can be fed to the algorithm from [53, 54] to
+find the numerator
+436 T 12 + 435 · 8T 11 + 434 · 154T 10 + 433 · 1032T 9 + 432 · 9911T 8 + 43 · 62496T 7
+
++ 444940T 6 + 62496T 5 + 9911T 4 + 1032T 3 + 154T 2 + 8T + 1
+
+of the zeta function ZC/ F43 (T ) in a couple of seconds.
+Point counting timings Despite the lack of a well-working function ConvertScroll,
+we can tell how the point counting algorithm from [53, 54] should perform in composition with the above method, by simply assuming that C is given as the genus g curve
+defined by a suitably generic polynomial f ∈ Fq [x, y] supported on conv{(0, 0), (2b + 2 −
+a, 0), (2a + 2 − b, 3), (0, 3)}. Then we can immediately lift to OK [x, y]. The tables below
+give point counting timings and memory usage for randomly chosen such polynomials
+in genera g = 6, 7, where for the sake of conciseness we restrict to the generic Maroni
+invariants a = b(g − 2)/2c and b = d(g − 2)/2e; the other Maroni invariants give rise to
+faster point counts.
+g=6
+p
+11
+67
+521
+4099
+32771
+
+time space
+pcc(s) (Mb)
+0.9
+32
+6.0
+32
+70
+118
+769
+824
+8863 6829
+
+time space
+pcc(s) (Mb)
+33
+76
+64
+80
+176
+197
+415
+371
+1035
+791
+
+q
+35
+75
+175
+375
+795
+
+q
+310
+710
+1710
+3710
+7910
+
+time space
+pcc(s) (Mb)
+183
+188
+503
+320
+1490
+749
+3970 1663
+10945 3716
+
+g=7
+p
+11
+67
+521
+4099
+32771
+
+time space
+pcc(s) (Mb)
+1.5
+32
+6.5
+32
+88
+118
+955
+857
+13279 6983
+
+q
+35
+75
+175
+375
+795
+
+time space
+pcc(s) (Mb)
+43
+76
+91
+118
+257
+241
+602
+460
+1561
+983
+
+q
+310
+710
+1710
+3710
+7910
+
+time space
+pcc(s) (Mb)
+283
+197
+777
+371
+2384
+919
+6706 2212
+18321 4682
+
+Smooth plane quintics We end this section with a brief discussion of the genus 6
+case where our canonical curve C ⊂ P5 is Fq -isomorphic to a smooth plane quintic. Such
+curves are never trigonal: using a variant of Lemma 7 one verifies that the Fq -gonality is
+4 if and only if #C(Fq ) > 0, which is guaranteed if q > 137 by the Serre-Weil bound. In
+the other cases it is 5. Nevertheless from the point of view of the canonical embedding,
+smooth plane quintics behave ‘as if they were trigonal’, which is why we include them
+here. (The appropriate unifying statement reads that trigonal curves and smooth plane
+quintics are exactly the curves having Clifford index 1.) Here our main task towards
+tackling Problem 1 is to find a linear change of variables transforming the space I2 (C)
+35
+
+into
+hX22 − X1 X4 , X2 X3 − X1 X5 , X32 − X1 X6 , X3 X4 − X2 X5 , X3 X5 − X2 X6 , X52 − X4 X6 iFq
+whose zero locus is the Veronese surface in ‘standard form’, i.e. the closure of the image
+of
+T2 ,→ P5 : (x, y) 7→ (x2 : xy : x : y 2 : y : 1).
+
+In order to achieve this, we simply assume that we have a function ConvertVeronese at
+our disposal. One could again try to use Schicho’s function ParametrizeScroll for this,
+but here too we expect problems because of the characteristic being finite (although we did
+not carry out the experiment). Once this standard form is attained, an easy substitution
+X1 ← x2 , X2 ← xy, X3 ← x, X4 ← y 2 , X5 ← y, X6 ← 1
+makes the quadrics vanish identically, while the cubics have a gcd whose homogenization
+defines the desired smooth plane quintic. From here one proceeds as in the smooth plane
+quartic case described in Section 3.1.1.
+
+4.2
+
+Tetragonal curves
+
+We conclude this article with some thoughts on how the foregoing material can be adapted
+to the tetragonal case. A full elaboration of the steps below (or even a rigorous verification of some corresponding claims) lies beyond our current scope. In particular we have
+not implemented anything of what follows. The main aim of this section is twofold: to
+illustrate how our treatment of non-trigonal curves of genus five from Section 3.3.1 naturally fits within a larger framework, and to propose a track for future research, involving
+mathematics that was developed mainly by Schreyer in [46, §6]† and Schicho, Schreyer
+and Weimann in [44, §5].
+Let
+C ⊂ Pg−1 = Proj R,
+R = Fq [X1 , X2 , . . . , Xg ]
+
+be the canonical model of a genus g ≥ 5 curve that is non-hyperelliptic, non-trigonal, and
+not isomorphic to a smooth plane quintic, so that a minimal set of generators of I(C) ⊂ R
+consists of β12 := (g − 2)(g − 3)/2 quadrics
+S 2,1 , S 2,2 , . . . , S 2,β12 .
+The notation β12 refers to the corresponding entry in the graded Betti table of the homogeneous coordinate ring of C, to which we will make a brief reference at the end of this
+section. Assume that the Fq -gonality of C is four, and consider a corresponding Fq -rational
+map π : C → P1 . We note that unlike the trigonal case this map may not be uniquely determined
+modulo automorphisms of P1 , even for g arbitrarily large. The linear spans of the fibers of π form a
+one-dimensional family of planes in Pg−1 that cut
+out a rational normal threefold scroll S. Similar
+to before, up to a linear change of variables, such a
+scroll is obtained by simultaneously parameterizing
+36
+
+• a rational normal curve of degree a in the Pa corresponding to X1 , X2 , . . . , Xa+1 ,
+0 ,
+• a rational normal curve of degree b in the Pb corresponding to X10 , X20 , . . . , Xb+1
+0
+where Xi denotes the variable Xa+1+i , and
+00 ,
+• a rational normal curve of degree c in the Pc corresponding to X100 , X200 , . . . , Xc+1
+00
+where Xi denotes the variable Xa+b+2+i ,
+
+each time taking the plane connecting the points under consideration (each of these planes
+intersects our trigonal curve in four points, counting multiplicities). Again this concerns
+a determinantal variety, defined by the 2 × 2 minors of
+
+
+X10 X20 . . .
+Xb0
+X100 X200 . . . Xc00
+X1 X2 . . .
+Xa
+.
+(8)
+0
+00
+X200 X300 . . . Xc+1
+X2 X3 . . . Xa+1 X20 X30 . . . Xb+1
+Alternatively our scroll can be thought of as the Zariski closure of the image of
+T3 ,→ Pg−1 : (x, y, z) 7→ (z : xz : · · · : xa z : y : xy : · · · : xb y : 1 : x : · · · : xc ),
+or if one prefers, as the toric threefold associated to the polytope
+(0, 1, 0)
+
+(b, 1, 0)
+(c, 0, 0) (∆(a,b,c) ).
+
+(0, 0, 0)
+(0, 0, 1)
+
+(a, 0, 1)
+
+Let us denote this ‘standard’ scroll in Pg−1 by S(a, b, c). The non-negative integers (a, b, c)
+are called the scrollar invariants of C with respect to π and can be chosen to satisfy
+a ≤ b ≤ c,
+
+a + b + c = g − 3,
+
+c ≤ (2g − 2)/4,
+
+(9)
+
+where the last inequality follows from Riemann-Roch.
+Inside the scroll S our curve C arises as a complete intersection of two hypersurfaces
+Y and Z that are ‘quadratic’. More precisely the Picard group of S is generated by the
+class [H] of a hyperplane section and the class [Π] of a ruling (i.e. of the linear span of a
+fiber of π), and Y and Z can be chosen such that
+Y ∈ 2[H] − b1 [Π],
+
+Z ∈ 2[H] − b2 [Π]
+
+for non-negative integers b1 ≥ b2 satisfying b1 + b2 = g − 5. These integers are invariants
+of the curve, that is, they do not depend on the choice of π. If b2 < b1 then also the
+surface Y is uniquely determined by C. This is automatic when g is even.
+Let us now assume that S is given in the standard form S(a, b, c), which we consider
+along with the embedded torus T3 . Then for Y to be in the class 2[H] − b1 [Π] it means
+that Y ∩ T3 is defined by an irreducible polynomial f Y ∈ Fq [x, y, z] whose support is
+contained in
+37
+
+(2b − b1 , 2, 0)
+
+(0, 2, 0)
+
+(∆(a,b,c),b1 ).
+
+(0, 0, 0)
+(0, 0, 2)
+
+(2c − b1 , 0, 0)
+
+(2a − b1 , 0, 2)
+
+or more precisely2 in
+conv{(0, 0, 0), (2c − b1 , 0, 0), (0, 2, 0), (2b − b1 , 2, 0), (0, 0, 2), (2a − b1 , 0, 2)} ∩ R3≥0 .
+In other words this is the polytope obtained from 2∆(a,b,c) by shifting its right-most face
+leftwards over a distance b1 . Moreover b1 is the maximal integer for which this containment
+holds. The same applies to Z, leading to a polynomial f Z ∈ Fq [x, y, z] whose support is
+contained in ∆(a,b,c),b2 , which is the polytope obtained from 2∆a,b,c by shifting the rightmost face inwards over a distance b2 .
+The main observation of this section is that f Y , f Z ∈ Fq [x, y, z] is a pair of polynomials meeting a version of Baker’s bound for complete intersections, again due to Khovanskii [39]† . In the case of two trivariate polynomials supported on polytopes ∆1 and ∆2
+the bound reads
+g ≤ # (interior points of ∆1 + ∆2 )−# (interior points of ∆1 )−# (interior points of ∆2 ) .
+In our case where ∆1 = ∆(a,b,c),b1 and ∆2 = ∆(a,b,c),b2 , this indeed evaluates to g−0−0 = g.
+Thus the strategy would be similar: lift these polynomials in a Newton polytope preserving
+way to polynomials fY , fZ ∈ OK [x, y, z]. These then again cut out a genus g curve in T3 ,
+and a polynomial f ∈ OK [x, y] satisfying (i)-(iii) can be found by taking the resultant of
+fY and fZ with respect to z (or with respect to y).
+Genus 5 curves revisited Let us revisit our treatment of tetragonal curves of genus
+five C ⊂ P4 = Proj Fq [X, Y, Z, W, V ] from Section 3.3.1.
+1. Our first step was to look for a point P ∈ D(C)(Fq ) for which χ(P ) = 0 or χ(P ) = 1.
+The corresponding quadrics were described as cones over P(1, 2, 1) and P1 × P1 ,
+respectively. But in the current language these are just rational normal threefold
+scrolls of type (0, 0, 2) resp. (0, 1, 1). Note that this shows that the scroll S may
+indeed depend on the choice of π.
+2. For ease of exposition let us restrict to the case χ(P ) = 1. Then the second step was
+to transform the quadric into XY − ZW , whose zero locus is the Zariski closure of
+T3 ,→ P4 : (x, y, z) 7→ (1 : xy : x : y : z),
+i.e. the transformation takes the scroll S(0, 1, 1) into ‘standard form’.
+2
+
+Indeed, the coordinate 2a − b1 might be negative; an example of such behaviour can be found in an
+arXiv version of this paper (1605.02162v2).
+
+38
+
+0
+
+3. The other quadrics S 2 , S 2 are instances of the surfaces Y and Z. They are both in
+the class 2[H], i.e. b1 = b2 = 0. Viewing Y and Z inside the torus T3 amounts to
+evaluating them at (1, xy, x, y, z), resulting in polynomials that are supported on
+(0, 2, 0)
+
+(2, 2, 0)
+
+(0, 0, 0)
+(2, 0, 0)
+(0, 0, 2)
+
+as predicted. With the present approach we naively lift these polynomials to
+0
+fY , fZ ∈ OK [x, y, z]. In Section 3.3.1 we applied this naive lift directly to S 2 , S 2 ,
+which was fine there, but in higher genus it is more convenient to work in T3 , since
+Y , Z ⊂ S will no longer be cut out by a single quadratic hypersurface of Pg−1 .
+4. The last step was to project this lifted curve from (0 : 0 : 0 : 0 : 1), which in our
+case amounts to taking the resultant of fY , fZ with respect to z.
+General recipe If we want to turn the above into a rigorous recipe for lifting tetragonal
+curves, three questions show up naturally. We share some brief first thoughts, but further
+research is needed regarding each of these.
+1. How do we decide whether the input curve has Fq -gonality 4 or not, and how do
+we extract from I2 (C) the equations of a corresponding rational normal threefold
+scroll S?
+In genus five we used the discriminant curve for this, but in general the desired
+information should be traceable from (the first few steps of) a minimal free resolution
+R(−4)β34 ⊕R(−5)β35 → R(−3)β23 ⊕R(−4)β24 → R(−2)β12 → R → R(S
+
+2,1 , . . . , S 2,β12 )
+
+of the homogeneous coordinate ring of C as a graded R-module, thanks to a proven
+part of Green’s canonical syzygy conjecture [44, Thm. 2.5], namely that β24 6= 0 if
+and only if C is Fq -tetragonal or Fq -isomorphic to a smooth plane sextic, which in
+turn holds if and only if C has Clifford index 2. (The dimensions βij are usually
+gathered in the so-called graded Betti table of C, and in general Green’s conjecture
+predicts that the Clifford index equals the number of leading zeroes on the cubic
+strand, i.e. the minimal i for which βi,i+2 6= 0.)
+
+If g ≥ 7 then a sufficiently generic geometrically tetragonal curve satisfies β24 = g−4.
+This is what Schicho, Schreyer and Weimann [44, Ex. 4.2] refer to as the goneric
+case; see also [23, Thm. 0.3]† . It implies that our curve admits a unique g41 , hence it
+is Fq -tetragonal, and that the ideal of the corresponding scroll S can be computed
+as the annihilator of the cokernel of the map
+R(−5)β35 → R(−4)β24 .
+39
+
+See [44, Prop. 4.11].
+In the non-goneric cases one has β24 = (g −1)(g −4)/2 and a finer analysis is needed.
+Some further useful statements can be found in [44] and [29]† .
+2. How do we find the type (a, b, c) of the scroll S, along with a linear change of
+variables taking it into the standard form S(a, b, c) cut out by the minors of (8)?
+We encountered an analogous hurdle in the trigonal case. Here too it would be
+natural to try the Lie algebra method from [18], but as mentioned this was designed
+to work over fields of characteristic zero, and it is not clear to us how easily the
+method carries over to small finite characteristic.
+3. How do we find the invariants b1 , b2 along with hypersurfaces Y ∈ 2[H] − b1 [Π] and
+Z ∈ 2[H] − b2 [Π] that inside S(a, b, c) cut out our curve C?
+By evaluating the generators of I(C) in (z, xz, . . . , xa z, y, xy, . . . , xb y, 1, x, . . . , xc )
+one easily finds a set of generators for the ideal of C ∩ T3 . The challenge is now to
+replace this set by two polynomials that are supported on polytopes of the form
+∆(a,b,c),b1
+
+and
+
+∆(a,b,c),b2 ,
+
+with b1 , b2 satisfying b1 + b2 = g − 5. Here our approach would be to use a Euclidean
+type of algorithm to find generators whose Newton polytopes are as small as possible.
+Point counting timings We have not implemented anything of the foregoing recipe,
+but we can predict how its output should perform in composition with the point counting
+algorithm from [53, 54], by simply starting from a sufficiently generic pair of polynomials
+f Y , f Z ∈ Fq [x, y, z] that are supported on ∆(a,b,c),b1 and ∆(a,b,c),b2 for non-negative integers a, b, c satisfying (9) and b1 + b2 = g − 5. Then one can naively lift to OK [x, y, z],
+take the resultant with respect to z, make the outcome monic using (1), and feed the
+result to the point counting algorithm. The tables below contain point counting timings
+and memory usage for randomly chosen such pairs in genera g = 6, 7. For the sake of
+conciseness it makes sense to restrict to the case where the scrollar invariants a, b, c and
+the tetragonal invariants b1 , b2 are as balanced as possible, meaning that c − a ≤ 1 and
+b1 −b2 ≤ 1, because this is the generic case [3, 6]† . We expect the other cases to run faster.
+g=6
+p
+11
+67
+521
+4099
+
+g=7
+time space
+pcc(s) (Mb)
+8.5
+32
+34.7
+64
+445
+379
+4748 2504
+
+q
+35
+75
+310
+710
+
+time space
+pcc(s) (Mb)
+266
+214
+549
+325
+2750 6072
+6407 9814
+
+p
+11
+67
+521
+4099
+
+time space
+pcc(s) (Mb)
+11
+32
+46
+80
+445
+347
+4350 2441
+
+q
+35
+75
+310
+710
+
+time space
+pcc(s) (Mb)
+254
+156
+550
+241
+2347 3606
+5819 5724
+
+References
+[1] E. Arbarello, M. Cornalba, Su una congettura di Petri, Commentarii Mathematici Helvetici
+56, pp. 1-38 (1981)
+
+40
+
+[2] E. Arbarello, M. Cornalba, P. Griffiths, J. Harris, Geometry of algebraic curves: Volume I,
+Grundlehren der mathematischen Wissenschaften 267, Springer (2010)
+[3] E. Ballico, Scrollar invariants of smooth projective curves, Journal of Pure and Applied Algebra 166(3), pp. 239-246 (2002)
+[4] A. Beauville, Prym varieties: a survey, Proceedings of Symposia in Pure Mathematics 49(1),
+pp. 607-620 (1989)
+[5] P. Beelen, A generalization of Baker’s theorem, Finite Fields and Their Applications 15, pp.
+558-568 (2009)
+[6] C. Bopp, M. Hoff, Resolutions of general canonical curves on rational normal scrolls, Archiv
+der Mathematik 105, pp. 239-249 (2015)
+[7] W. Bosma, J. Cannon, C. Playoust, The Magma algebra system. I. The user language, Journal
+of Symbolic Computation 24, pp. 235-265 (1997)
+[8] W. Castryck, F. Cools, Newton polygons and curve gonalities, Journal of Algebraic Combinatorics 35(3), pp. 345-366 + err. pp. 367-372 (2012)
+[9] W. Castryck, F. Cools, A minimal set of generators for the canonical ideal of a non-degenerate
+curve, Journal of the Australian Mathematical Society 98(3), pp. 311-323 (2015)
+[10] W. Castryck, F. Cools, Linear pencils encoded in the Newton polygon, International Mathematics Research Notices 2017(10), pp. 2998-3049 (2017)
+[11] W. Castryck, J. Denef, F. Vercauteren, Computing zeta functions of nondegenerate curves,
+International Mathematics Research Papers 2006, pp. 1-57 (2006)
+[12] W. Castryck, H. Hubrechts, F. Vercauteren, Computing zeta functions in families of Cab
+curves using deformation, ANTS VIII – Lecture Notes in Computer Science 5011, pp. 296311 (2008)
+[13] W. Castryck, J. Voight, On nondegeneracy of curves, Algebra & Number Theory 3(3), pp.
+255-281 (2009)
+[14] P. Clark, There are genus one curves of every index over every number field, Journal für die
+Reine und Angewante Mathematik 594, pp. 201-206 (2006)
+[15] F. Cools, J. Draisma, S. Payne, E. Robeva, A tropical proof of the Brill-Noether theorem,
+Advances in Mathematics 230, pp. 759-776 (2012)
+[16] M. Coppens, G. Martens, Linear pencils on real algebraic curves, Journal of Pure and Applied
+Algebra 214(6), pp. 841-849 (2010)
+[17] D. Cox, J. Little, H. Schenck, Toric varieties, Graduate Studies in Mathematics 124, American Mathematical Society (2011)
+[18] W. de Graaf, M. Harrison, J. Pı́lniková, J. Schicho, A Lie algebra method for rational parameterization of Severi-Brauer surfaces, Journal of Algebra 303(2), pp. 514-529 (2006)
+[19] J. Denef, F. Vercauteren, An extension of Kedlaya’s algorithm to hyperelliptic curves in characteristic 2, Journal of Cryptology 19(2), pp. 1-25 (2006)
+[20] J. Denef, F. Vercauteren, Computing zeta functions of Cab curves using Monsky-Washnitzer
+cohomology, Finite Fields and Their Applications 12(1), pp. 78-102 (2006)
+[21] M. Derickx, Torsion points on elliptic curves and gonalities of modular curves, master thesis,
+Universiteit Leiden (2012)
+
+41
+
+[22] M. Derickx, M. van Hoeij, Gonality of the modular curve X1 (N ), Journal of Algebra 417,
+pp. 52-71 (2014)
+[23] G. Farkas, M. Kemeny, Linear syzygies of k-gonal curves, preprint
+[24] F. Feschet, The exact lattice width of planar sets and minimal arithmetical thickness, Combinatorial Image Analysis, Lecture Notes in Computer Science 4040, pp. 25-33 (2006)
+[25] C. Fontanari, E. Looijenga, A perfect stratification of Mg for g ≤ 5, Geometriae Dedicata
+136, pp. 133-143 (2008)
+[26] P. Gaudry, N. Gürel, An extension of Kedlaya’s point-counting algorithm to superelliptic
+curves, ASIACRYPT 2001 – Lecture Notes in Computer Science 2248, pp. 480-494 (2001)
+[27] P. Gille, T. Szamuely, Central simple algebras and Galois cohomology, Cambridge Studies in
+Advanced Mathematics 101, Cambridge University Press (2006)
+[28] D. Grayson, M. Stillman, Macaulay2, a software system for research in algebraic geometry,
+available at http://www.math.uiuc.edu/Macaulay2/
+[29] M. Harrison, An extension of Kedlaya’s algorithm for hyperelliptic curves, Journal of Symbolic
+Computation 47(1), pp. 89-101 (2012)
+[30] R. Hartshorne, Algebraic geometry, Graduate Texts in Mathematics 52, Springer (1977)
+[31] D. Harvey, Kedlaya’s algorithm in larger characteristic, International Mathematics Research
+Notices 2007(rnm095), rnm095-29 (2007)
+[32] Y. Hasegawa, M. Shimura, Trigonal modular curves X0+d (N ), Proceedings of the Japan
+Academy, Series A 75, pp. 172-175 (1999)
+[33] M. Homma, Funny plane curves in characteristic p > 0, Communications in Algebra 15(7),
+pp. 1469-1501 (1987)
+[34] E. Howe, K. Lauter, J. Top, Pointless curves of genus three and four, Arithmetic, geometry
+and coding theory (AGCT 2003), Sémin. Congr. 11, Soc. Math. France, Paris, pp. 125-141
+(2005)
+[35] H. Hubrechts, Point counting in families of hyperelliptic curves, Foundations of Computational Mathematics 8(1), pp. 137-169 (2008)
+[36] L. Illusie, Grothendieck’s existence theorem in formal geometry, with a letter from Jean-Pierre
+Serre, Fundamental Algebraic Geometry: Grothendieck’s FGA explained, Mathematical Surveys and Monographs 112, pp. 179-234 (2005)
+[37] K. Kedlaya, Counting points on hyperelliptic curves using Monsky-Washnitzer cohomology,
+Journal of the Ramunajan Mathematical Society 16(4), pp. 323-338 (2001) + errata, ibid.
+18, pp. 417-418 (2003)
+[38] A. G. Khovanskii, Newton polyhedra and toroidal varieties, Functional Analysis and Its Applications 11(4), pp. 289-296 (1977)
+[39] A. G. Khovanskii, Newton polyhedra and the genus of complete intersections, Functional Analysis and Its Applications 12(1), pp. 38-46 (1978)
+[40] M. Minzlaff, Computing zeta functions of superelliptic curves in larger characteristic, Mathematics in Computer Science 3(2), pp. 209-224 (2010)
+[41] B. Poonen, Gonality of modular curves in characteristic p, Mathematics Research Letters
+14(4) (2007)
+
+42
+
+[42] B. Saint-Donat, On Petri’s analysis of the linear system of quadrics through a canonical curve,
+Mathematische Annalen 206, pp. 157-175 (1973)
+[43] T. Satoh, The canonical lift of an ordinary elliptic curve over a finite field and its point
+counting, Journal of the Ramanujan Mathemathical Society 15(4), pp. 247-270 (2000)
+[44] J. Schicho, F.-O. Schreyer, M. Weimann, Computational aspects of gonal maps and radical
+parametrization of curves, Applicable Algebra in Engineering, Communication and Computing 24(5), pp. 313-341 (2013)
+[45] J. Schicho, D. Sevilla, Effective radical parametrization of trigonal curves, Computational
+Algebraic and Analytic Geometry, Contemporary Mathematics 572, American Mathematical
+Society, pp. 221-231 (2012)
+[46] F.-O. Schreyer, Syzygies of canonical curves and special linear series, Mathematische Annalen
+275(1), pp. 105-137 (1986)
+[47] F. Serrano, Extension of morphisms defined on a divisor, Mathematische Annalen 277, pp.
+395-413 (1987)
+[48] K.-O. Stöhr, P. Viana, Weierstrass gap sequences and moduli varieties of trigonal curves,
+Journal of Pure and Applied Algebra 81(1), pp. 63-82 (1992)
+[49] A. V. Sutherland, Torsion subgroups of elliptic curves over number fields, notes available at
+https://math.mit.edu/~drew/ (2012)
+[50] M. Teixidor i Bigas, The divisor of curves with a vanishing theta-null, Compositio Mathematica 66(1), pp. 15-22 (1988)
+[51] M. Tsfasman, S. Vlăduţ, D. Nogin, Algebraic geometric codes: basic notions, Mathematical
+Surveys and Monographs 139, American Mathematical Society (2007)
+[52] J. Tuitman, Counting points in families of nondegenerate curves, Ph.D. thesis, KU Leuven
+(2010)
+[53] J. Tuitman, Counting points on curves using a map to P1 , Mathematics of Computation 85,
+pp. 961-981 (2016)
+[54] J. Tuitman, Counting points on curves using a map to P1 , II, Finite Fields and Their Applications 45, pp. 301-322 (2017)
+[55] G. Walker, Computing zeta functions of varieties via fibration, Ph.D. thesis, University of
+Oxford (2010)
+
+Laboratoire Painlevé, Université de Lille-1
+Cité Scientifique, 59 655 Villeneuve d’Ascq cedex, France
+Departement Elektrotechniek, KU Leuven and imec-Cosic
+Kasteelpark Arenberg 10/2452, 3001 Leuven, Belgium
+E-mail address: wouter.castryck@gmail.com
+Departement Wiskunde, KU Leuven
+Celestijnenlaan 200B, 3001 Leuven, Belgium
+E-mail address: jan.tuitman@wis.kuleuven.be
+
+43
+
+

@@ -1,0 +1,156 @@
+SMOOTH NUMBERS IN SHORT INTERVALS
+
+5
+
+Note that
+1
+ ζ′
+√
+1 Γ′
+1
+ξ′
+(s) =
++
+− log π +
+(s/2) + (s),
+ξ
+s s−1
+2Γ
+ζ
+
+and accordingly write J = J1 + J2 . To estimate J2 , we expand the Dirichlet series for
+ζ ′ /ζ(s), M (s) and M (1 − s) and exchange the summations and integration. Thus
+Z 
+∞
+X
+X
+1 1
+m2 s  eδ(s−1/2) − e−δ(s−1/2) 2
+ds.
+J2 = −
+Λ(n)
+m2 2πi (c) nm1
+(s − 1/2)
+m ,m ∈S(y)
+n=1
+1
+2
+1
+√
+√
+x/y1/3 ≤m1 ,m2 ≤ x/y 4
+
+By shifting contours appropriately, we find that
+(√
+Z
+ δ(s−1/2) − e−δ(s−1/2) 2
+ξ(2δ − | log ξ|) if e−2δ ≤ ξ ≤ e2δ
+1
+s e
+ds =
+ξ
+2πi (c)
+(s − 1/2)
+0
+otherwise.
+√
+1
+Since m1 and m2 are below x/y 4 , if nm1 6= m2 then m2 /nm1 lies outside the interval
+−2δ 2δ
+(e , e ). Thus
+X
+X
+1
+Λ(n) < 0.
+J2 = −2δ
+m2
+nm1 =m2
+m ∈S(y)
+√
+
+2
+√
+x/y1/3 ≤m2 ≤ x/y1/4
+
+√
+
+x/y1/3 ≤m1 ≤
+
+√
+
+x/y1/4
+
+Thus J ≤ J1 , and we are reduced to estimating J1 .
+To estimate J1 we move the line of integration to the line Re(s) = 1/2. We encounter a pole at s = 1 whose residue is 4M (0)M (1)(eδ/2 − e−δ/2 )2 . Using Stirling’s
+formula we find that the remaining integral on the Re(s) = 1/2 line is
+Z ∞
+ sin(δt) 2
+dt.
+≪
+|M (1/2 + it)|2 log(2 + |t|)
+t
+−∞
+
+Splitting this integral into the intervals Ij as above, and appealing to the mean value
+theorem for Dirichlet polynomials we conclude that this quantity is
+ √x 1 
+M (1).
+≪ δ 2 log x 1 +
+δ
+y4
+√
+1
+Since M (0) ≤ x/y 4 we conclude that
+ √x 1 
+2
+J ≤ J1 ≪ δ log x 1 +
+M (1).
+δ
+y4
+
+This proves (5) for the region I0 , and as noted before the other cases follow similarly.
+Our proof of the Theorem is now complete.
+Acknowledgments. This note was inspired by an unpublished manuscript of Ganguly, Pal, and Sankaranarayanan. I offered them joint authorship of this note, but they
+declined and preferred that I write it up separately. I thank them for their comments
+and valuable correspondence. I also thank Carl Pomerance for drawing my attention
+to Hafner’s work [6].
+
+6
+
+K. SOUNDARARAJAN
+
+References
+[1] A. Balog, On the distribution of integers having no large prime factors, Astérisque., 147-148
+(1987), 27-31.
+[2] E. Croot, Smooth numbers in short intervals, Int. J. Number Theory, 3 (2007), 159–169.
+[3] K. Dickman, On the frequency of numbers containing prime factors of a certain relative magnitude, Ark. Mat. Astr. Fys., 22 (1930), 1-14.
+[4] S. Ganguly and G. Pal, Integers without large prime factors in short intervals: conditional
+results, Proc. Ind. Acad. Sci,, to appear.
+[5] A. Granville, Smooth numbers: Computational Number Theory and Beyond, Proc. MSRI Conf.
+Algorithmic Number Theory: Lattices, Number Fields, Curves and Cryptography, Berkeley,
+(2000), J. Buhler and P. Stevenhagen eds., Cambridge University Press, 1-56 .
+[6] J. Hafner, On smooth numbers in short intervals under the Riemann hypothesis, preprint, (1993).
+[7] G. Harman, Short intervals containing numbers without large prime factors, Math. Proc. Cambridege Philos. Soc., 109 no: 1 (1991), 1-5.
+[8] G. Harman, Integers without large prime factors in short intervals and arithmetic progressions,
+Acta Arith. XCL. 3 (1999), 279–289.
+[9] A. Hildebrand and G. Tenenbaum, Integers without large prime factors, J. Thor. Nombres.
+Bordeaux., 5 (1993) no: 2, 411-484.
+[10] H. Iwaniec and E. Kowalski, Analytic number theory. Amer. Math. Soc. Colloquium Publications,
+53, (2004).
+[11] H. W. Lenstra, Jr., Factoring integers with elliptic curves, Ann. of Math. (2) 126 (1987), no. 3,
+649–673.
+[12] K. Matomäki, A note on smooth numbers in short intervals, Int. J. Number Theory, to appear,
+4 pages.
+[13] C. Pomerance, The role of smooth numbers in number-theoretic algorithms, Proceedings of International Congress of Mathematicians., 1, 2 (Zurich, 1994), Birkhauser, Basel (1995), 411-422.
+[14] K. Soundararajan, An asymptotic expansion related to the Dickman function, preprint, available
+as arXiv:1005.3494.
+[15] T.Z. Xuan, On smooth integers in short intervals under the Riemann Hypothesis, Acta Arith.,
+88 (1999), 327-332.
+
+Department of Mathematics,
+Stanford University,
+450 Serra Mall, Building 380,
+Stanford, CA 94305-2125, USA.
+ksound@math.stanford.edu
+
+

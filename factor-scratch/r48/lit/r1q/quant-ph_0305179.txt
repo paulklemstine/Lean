@@ -1,0 +1,446 @@
+                                           Polynomial Degree and Lower Bounds in Quantum Complexity:
+                                                Collision and Element Distinctness with Small Range
+                                                                                     Andris Ambainis∗
+arXiv:quant-ph/0305179v3 29 Apr 2005
+
+
+
+
+                                                                                          Abstract
+                                                   We give a general method for proving quantum lower bounds for problems with small range.
+                                               Namely, we show that, for any symmetric problem defined on functions f : {1, . . . , N } →
+                                               {1, . . . , M }, its polynomial degree is the same for all M ≥ N . Therefore, if we have a quantum
+                                               query lower bound for some (possibly, quite large) range M which is shown using the polynomials
+                                               method, we immediately get the same lower bound for all ranges M ≥ N . In particular, we get
+                                               Ω(N 1/3 ) and Ω(N 2/3 ) quantum lower bounds for collision and element distinctness with small
+                                               range. As a corollary, we obtain a better lower bound on the polynomial degree of the two-level
+                                               AND–OR tree.
+
+
+                                       1       Introduction
+                                       Quantum computing provides speedups for many search problems. √The most famous example is
+                                       Grover’s algorithm [14], which computes OR of N variables with O( N ) queries. Other examples
+                                       include counting [10], estimating mean and median [15, 19], finding collisions [9], determining
+                                       element distinctness [8, 5], finding triangles in a graph [18] and verifying matrix products [11]. For
+                                       many of these problems, we can also prove that known quantum algorithms are optimal or nearly
+                                       optimal.
+                                            In at least two cases, the lower bounds match the best known algorithm only with an additional
+                                       “large range” assumption. For example, consider the collision problem [9, 2] which models collision-
+                                       free hash functions. We have to distinguish if a function f : {1, . . . , N } → {1, . . . , M } is one-to-one
+                                       or two-to-one. A quantum algorithm can solve the problem with O(N 1/3 ) queries (evaluations of
+                                       f ) [9], which is better than the Θ(N 1/2 ) queries required classically. A lower bound by Aaronson
+                                       and Shi [2] says that Ω(N 1/3 ) quantum queries are required if M ≥ 3N/2. If M = N , the lower
+                                       bound becomes Ω(N 1/4 ).
+                                            A similar problem exists for element distinctness. (Again, we are given f : {1, . . . , N } →
+                                       {1, . . . , M } but f can be arbitrary and we have to determine if there are i, j, i 6= j, f (i) = f (j).) If
+                                       M = Ω(N 2 ), the lower bound             2/3
+                                                                      √ is Ω(N √) [2], which matches the best algorithm [5]. But, if M = N ,
+                                       the lower bound is only Ω( N ) or Ω( N log N ), depending on the model [8, 16].
+                                            Thus, it might be possible that a quantum algorithm could use the small M to decrease the
+                                       number of queries. While unlikely, this cannot be ruled out. Remember that classically, sorting
+                                       requires Ω(N log2 N ) steps in the general case but only O(N ) steps if the items to be sorted are all
+                                       from the set {1, . . . , N } (Bucket Sort, [13]).
+                                           ∗
+                                           Department of Combinatorics and Optimization, Faculty of Mathematics, 200 University Avenue West, Waterloo,
+                                       ON N2L 3G1, Canada e-mail:ambainis@math.uwaterloo.ca. Supported by IQC University Professorship and CIAR.
+                                       This work done while at University of Latvia.
+
+
+                                                                                               1
+    In this paper, we show that the collision and element distinctness problems require Ω(N 2/3 )
+and Ω(N 1/3 ) queries even if the range M is equal to N . Our result follows from a general result on
+the polynomial degree of Boolean functions.
+    We show that, for any symmetric property φ of functions f : {1, 2, . . . , N } → {1, 2, . . . , M }, its
+polynomial degree is the same for all M ≥ N . The polynomial degree of φ provides a lower bound
+for both classical and quantum query complexity. (This was first shown by Nisan and Szegedy
+[20] in the classical case and then extended to the quantum case by Beals et al. [6] for M = 2
+and Aaronson [1, 2] for M > 2.) Thus, one can prove lower bounds on quantum query complexity
+of a function φ by lower-bounding the polynomial degree of φ. This is known as the polynomials
+method for proving quantum lower bounds [6, 12, 2].
+    Our result means that, if we have a quantum lower bound for a symmetric property φ shown
+by the polynomials method for some range size M , we also have the same quantum lower bound
+for all M ≥ N . As particular cases, we get lower bounds on the collision and element distinctness
+problems with small range. Since many quantum lower bounds are shown using the polynomial
+degree method, our result may have other applications.
+    A corollary of our lower bound on element distinctness with small range is that the polynomial
+degree of the two level AND–OR
+                           √       tree on N 2 variables is Ω(N 2/3 ). This improves over the previously
+known lower bound of Ω( N log N ) by Shi [22].
+    Related work. The Ω(N 1/3 ) lower bound for the collision problem with small range was
+independently discovered by the author of this paper and Kutin [17], at about the same time, with
+completely different proofs. Kutin [17] takes the proof of Ω(N 1/3 ) lower bound for the collision
+problem with a large range [2] and changes it so that it works for all M ≥ N . Our result is
+more general because it applies to any symmetric property and any lower bound shown by the
+polynomials method. On the other hand, Kutin’s proof has the advantage that it also simplifies
+the lower bound for the collision problem with large range by Aaronson and Shi [2].
+
+
+2     Preliminaries
+2.1    Quantum query model
+Let [k] denote the set {1, . . . , k}. Let f be a function from [N ] to [M ]. Let F(N, M ) be the set of
+all f : [N ] → [M ]. We are given a function f ∈ F(N, M ) by an oracle that answers queries. In one
+query, we can give i to the oracle and it returns f (i) to us.
+    We would like to know whether f has a certain property (for example, whether f is one-to-one).
+More formally, we would like to compute a partial function φ : F ′ → {0, 1}, where F ′ ⊆ F(N, M ).
+In particular, we are interested in the following two properties:
+    Problem 1: Collision. φ(f ) = 1 if the input function f is one-to-one. φ(f ) = 0 if f is
+two-to-one (i.e., if, for every k ∈ [M ], there are either zero or two x ∈ [N ] satisfying f (x) = k).
+φ(f ) is undefined for all other f .
+    Problem 2: Element distinctness. φ(f ) = 1 if the input function f is one-to-one. φ(f ) = 0
+if there exist i, j, i 6= j, f (i) = f (j).
+    A quantum algorithm with T queries is just a sequence of unitary transformations
+
+                          U0 → Of → U1 → Of → · · · → UT −1 → Of → UT .
+
+The Uj ’s can be arbitrary unitary transformations that do not depend on f (1), . . . , f (N ). O is a
+query (oracle) transformation. To define Of , we represent basis states as |i, b, zi where i consists
+
+                                                     2
+of ⌈log N ⌉ bits, b is ⌈log M ⌉ bits and z consists of all other bits. Then, Of maps |i, b, zi to
+|i, (b + f (i)) mod M, zi.
+     The computation starts with a state |0i. Then, we apply U0 , Of , . . ., Of , UT and measure
+the final state. The result of the computation is the rightmost bit of the state obtained by the
+measurement.
+     The quantum algorithm computes φ with error ǫ if, for every f such that φ(f ) is defined, the
+probability that the rightmost bit of UT Of UT −1 · · · Of U0 |0i equals φ(f ) is at least 1 − ǫ. (Through-
+out this paper, ǫ is an arbitrary but fixed value, with 0 < ǫ < 1/2.)
+
+2.2    Polynomial lower bound
+We can describe a function f : [N ] → [M ] by N × M Boolean variables yij which are 1 if f (i) = j
+and 0 otherwise. Let y = (y11 , . . . , yN M ).
+
+Definition 1 We say that a polynomial P ǫ-approximates the property φ if
+
+   1. φ(f ) = 1 implies 1 − ǫ ≤ P (y) ≤ 1 for y = (y11 , . . . , yN M ) corresponding to f ;
+
+   2. φ(f ) = 0 implies 0 ≤ P (y) ≤ ǫ for y = (y11 , . . . , yN M ) corresponding to f ;
+
+   3. If φ(f ) is undefined, then 0 ≤ P (y) ≤ 1 for the corresponding y.
+
+A polynomial P approximates f if it ǫ-approximates f for some fixed ǫ < 1/2
+
+    P is allowed to take any value if y does not correspond to any f . (This happens if for some
+i ∈ [N ] there is no or there is more than one j ∈ [M ] with yij = 1.)
+
+Lemma 1 [1, 2] If a quantum algorithm computes φ with error ǫ using T queries then there is a
+polynomial P (y11 , . . . , yN M ) of degree at most 2T that ǫ-approximates φ.
+
+   A lower bound on the number of queries can be then shown by proving that such a polynomial
+P does not exist. For the collision and element distinctness problems, we have
+
+Theorem 1 [21, 2] 1
+
+   1. If a polynomial P approximates the collision property for M ≥ 3N
+                                                                     2 , the degree of P is Ω(N
+                                                                                                1/3 );
+
+
+   2. If a polynomial P approximates the element distinctness property for M = Ω(N 2 ), the degree
+      of P is Ω(N 2/3 );
+
+    Therefore, Ω(N 1/3 ) and Ω(N 2/3 ) queries are required to solve the collision problem and element
+distinctness problem√ if the range M is sufficiently large. Previously, only weaker lower bounds of
+Ω(N 1/4 ) [2] and Ω( N log N ) [16] were known if M = N .
+   1
+     More precisely, Shi [21, 2] proved that any polynomial approximating another problem, the half two-to-one
+problem, has degree Ω(N 1/3 ). He then used that to deduce that Ω(N 1/3 ) and Ω(N 2/3 ) quantum queries are needed
+for the collision problem (when M ≥ 3N  2
+                                          ) and the element distinctness problem (when M = Ω(N 2 )). His proof
+can be easily modified to show a lower bound on the degree of polynomials approximating the collision and element
+distinctness problems.
+
+
+
+
+                                                        3
+3     Results
+We call a property φ symmetric if, for any π ∈ SN and σ ∈ SM ,
+
+                                                 φ(f ) = φ(σf π).
+
+That is, φ(f ) should remain the same if we permute the input set {1, . . . , N } before applying f
+or permute the output set {1, . . . , M } after applying f . The collision and element distinctness
+properties are both symmetric.
+   Our main result is
+
+Theorem 2 Let φ : F ′ → {0, 1}, F ′ ⊆ F(N, M ) be symmetric. Let φ′ be the restriction of φ to
+f : [N ] → [N ]. Then, the minimum degree of a polynomial (in yij , i ∈ [N ], j ∈ [M ]) approximating
+φ is equal to the minimum degree of a polynomial (in yij , i ∈ [N ], j ∈ [N ]) approximating φ′ .
+
+   Theorems 1 and 2 imply that Ω(N 1/3 ) and Ω(N 2/3 ) queries are needed to solve the collision
+and element distinctness problems, even if M = N . (For M < N , these problems do not make
+sense because they both involve f being one-to-one as one of the cases.)
+   The proof of Theorem 2 is in two steps.
+
+    1. We describe a different way to describe an input function f by variables z1 , . . ., zM instead
+       of y11 , . . . , yN M . We prove that a polynomial of degree k in z1 , . . ., zM exists if and only if a
+       polynomial of degree k in y11 , . . ., yN M exists.
+
+    2. We show that a polynomial Q(z1 , . . . , zM ) for M > N exists if and only Q(z1 , . . . , zN ) exists.
+
+The first step can be useful on its own. The representation of f by y11 , . . ., yN M gave the lower
+bounds of [2]. The new representation by z1 , . . ., zN might yield new lower bounds that are easier
+to prove using this approach.
+
+3.1     New polynomial representation
+We introduce variables z1 , . . ., zM , with zj = |f −1 (j)| (equivalently, zj = |{i : yij = 1}|). We say
+that a polynomial Q in z1 , . . . , zM approximates φ if it satisfies requirements similar to Definition
+1. (Q ∈ [1 − ǫ, 1] if φ(f ) = 1, Q ∈ [0, ǫ] if φ(f ) = 0, and Q ∈ [0, 1] if z1 , . . . , zM correspond to
+f ∈ F(N, M ) for which φ(f ) is not defined.)
+   Example 1: A polynomial Q(z1 , . . . , zM ) approximates the collision property if:
+
+    1. Q(z1 , . . . , zM ) ∈ [1 − ǫ, 1] if N of the variables z1 , . . ., zM are 1 and the remaining M − N
+       variables are 0;
+
+    2. Q(z1 , . . . , zM ) ∈ [0, ǫ] if N2 of the variables z1 , . . ., zM are 2 and the remaining M − N2 variables
+       are 0;
+
+    3. Q(z1 , . . . , zM ) ∈ [0, 1] if z1 , . . . , zM are non-negative integers and z1 + · · · + zM = N .
+
+    Example 2: A polynomial Q(z1 , . . . , zM ) approximates element distinctness if:
+
+    1. Q(z1 , . . . , zM ) ∈ [1 − ǫ, 1] if N of the variables z1 , . . ., zM are 1 and the remaining M − N
+       variables are 0;
+
+
+                                                         4
+   2. Q(z1 , . . . , zM ) ∈ [0, ǫ] if z1 , . . . , zM are non-negative integers, z1 + · · · + zM = N , and zi > 1
+      for some i.
+     In both cases, there is no restriction on Q(z1 , . . . , zM ) when z1 + · · · + zM 6= N because such
+z1 , . . ., zM do not correspond to any f : [N ] → [M ].
+
+Lemma 2 Let φ : F ′ → {0, 1}, F ′ ⊆ F(N, M ) be symmetric. Then, the following two statements
+are equivalent:
+ (1) There exists a polynomial Q of degree at most k in z1 , . . . , zM approximating φ;
+
+ (2) There exists a polynomial P of degree at most k in y11 , . . ., yN M approximating φ.
+
+Proof: To see that (1) implies (2), we substitute zj = y1j + y2j + . . . + yN j into Q and obtain a
+polynomial in yij with the same approximation properties. Next, we show that (2) implies (1).
+   Let P (y11 , . . . , yN M ) be a polynomial approximating φ. We define Q(z1 , . . . , zM ) as follows. Let
+S be the set of all y = (y11 , . . . , yN M ) corresponding to functions f : [N ] → [M ] with the property
+that, for every i ∈ [M ] the number of j with f (j) = i is exactly zi . We define Q(z1 , . . . , zM ) as the
+expectation of of P (y11 , . . . , yN M ) when y = (y11 , . . . , yN M ) is picked uniformly at random from S.
+(An equivalent way to define Q is to fix one function f with this property and to define Q as the
+expectation of of P (y11 , . . . , yN M ), for y = (y11 , . . . , yN M ) corresponding to the function f π, with
+π being a random element of SN .)
+   Since φ is symmetric, we have φ(f ) = φ(f π). Therefore, if P (y11 , . . . , yN M ) approximates φ,
+then Q(z1 , . . . , zM ) also approximates φ.
+   It remains to prove that Q is a polynomial of degree at most k in z1 , . . . , zM . Let
+
+                                               I = y i1 j 1 y i2 j 2 · · · y ik j k
+
+be a monomial of P . It suffices to prove that each E[I] is a polynomial of degree at most k because
+E[P ] is the sum of E[I] over all I.
+    We can assume that il for l ∈ {1, . . . , k} are all distinct. (If the monomial I contains two
+variables yij with the same i, j, one of them is redundant because yij   2 = y . If I contains y , y ′ ,
+                                                                              ij                ij  ij
+      ′                                                          ′
+j 6= j , then yij yij ′ = 0 because f (i) cannot be equal j and j at the same time. Then, I = 0.) We
+have
+                                                   Y
+                                                   k
+                        E[I] = P r[yi1 j1 = 1]           P r[yil jl = 1|yi1 j1 · · · yil−1 jl−1 = 1].
+                                                   l=2
+There are N variables yij1 . Out of them, zj1 variables are equal to 1 and each yij1 is equally likely
+to be 1. Therefore,
+                                                          zj
+                                         P r[yi1 j1 = 1] = 1
+                                                          N
+                                       ′
+Furthermore, let sl be the number of l < l such that jl = jl′ . Then,
+                                                                                       zjl − sl
+                               P r[yil jl = 1|yi1 j1 · · · yil−1 jl−1 = 1] =
+                                                                                      N −l−1
+because, once we have set yi1 j1 = 1, . . ., yil−1 jl−1 = 1, we have also set all other yi1 j , . . ., yil−1 j to 0.
+Then, we have N − l − 1 variables yijl which are not set yet and, out of them, zjl − sl must be 1.
+   Therefore, E[I] is a product of k terms, each of which is a linear function of z1 , . . . , zM . This
+means that E[I] is a polynomial in z1 , . . . , zM of degree k. This completes the proof of the lemma.
+✷
+
+                                                                5
+3.2    Lower bound for properties with small range
+We now finish the proof of Theorem 2. Obviously, the minimum degree of a polynomial approxi-
+mating φ′ is at most the minimum degree of a polynomial approximating φ (because we can take a
+polynomial approximating φ and obtain a polynomial approximating φ′ by restricting it to variables
+yij , j ∈ [N ]). In the other direction, we can take a polynomial P ′ approximating φ′ and obtain a
+polynomial Q′ in z1 , . . . , zN approximating φ′ by Lemma 2. We then construct a polynomial Q in
+z1 , . . . , zM of the same degree approximating φ. After that, using Lemma 2 in the other direction
+gives us a polynomial P in y11 , . . . , yN M approximating φ.
+      It remains to construct Q from Q′ . For that, we can assume that Q′ is symmetric w.r.t.
+permuting z1 , . . . , zN . (Otherwise, replace Q′ by the expectation of Q′ (zπ(1) , . . . , zπ(N ) ), where π is
+a uniformly random permutation of {1, 2, . . . , N }.) Since Q′ is symmetric, it is a sum of elementary
+symmetric polynomials                               X
+                                     Q′c1 ,...,cl =       zic11 zic22 · · · zicll .
+                                                      i1 ,...,il ∈[N ]
+
+Let Q be the sum of elementary symmetric polynomials in z1 , . . . , zM with the same coefficients.
+    We claim that Q approximates φ. To see this, consider an input function f : [N ] → [M ]. There
+are at most N values j ∈ {1, . . . , M } such that there exists i ∈ {1, . . . , N } with f (i) = j. This
+means that, out of M variables z1 , . . . , zM corresponding to f , at most N are nonzero.
+    Consider a permutation π ∈ SM that maps all i ∈ [M ] with zi 6= 0 to {1, . . . , N }. Let f ′ = πf .
+Since φ is symmetric, φ(f ) = φ(f ′ ). Since f ′ is a function from [N ] to [N ], Q′ correctly approximates
+φ on f ′ . Since Q(z1 , . . . , zN , 0, . . . , 0) = Q′ (z1 , . . . , zN ), Q also correctly approximates φ on f ′ . Since
+Q is symmetric w.r.t. permutations of z1 , . . . , zM , Q approximates φ on the input function f as
+well. This completes the proof of Theorem 2.
+
+3.3    Lower bound on the polynomial degree of the AND–OR tree
+As a by-product, our result provides a better lower bound on the polynomial degree of a well-studied
+Boolean function.
+      This Boolean function is the two level AND–OR tree on N 2 variables. Let x1 , . . . , xN 2 ∈ {0, 1}
+be the variables. We split them into N groups, with the ith group consisting of x(i−1)N +1 , x(i−1)N +2 ,
+. . ., xiN . The AND–OR function g(x1 , . . . , xN 2 ) is defined as
+
+                                                                 ^
+                                                                 n       _
+                                                                         iN
+                                       g(x1 , . . . , xN 2 ) =                     xj .
+                                                                 i=1 j=(i−1)N +1
+
+A polynomial p(x1 , . . . , xN 2 ) approximates g if 0 ≤ p(x1 , . . . , xN 2 ) ≤ ǫ whenever g(x1 , . . . , xN 2 ) = 0
+and 1 − ǫ ≤ p(x1 , . . . , xN 2 ) ≤ 1 whenever g(x1 , . . . , xN 2 ) = 1 (similarly to Definition 1).
+   It has been an open problem to determine the minimum√degree of a polynomial approximating
+the two-level AND–OR tree. The best lower bound is Ω( N log N ) by Shi [22], while the best
+upper bound is O(N ). (Curiously, the quantum query complexity of this problem is known. It is
+Θ(N ), as shown by [7, 3]. If the polynomial degree is o(N ), this would be the second example of a
+Boolean function with a gap between the polynomial degree and quantum query complexity, with
+the first example being the iterated functions in [4].) We show
+
+Theorem 3 Any polynomial approximating g has degree Ω(N 2/3 ).
+
+
+
+                                                               6
+Proof: Consider the element distinctness problem for M = N . An instance of this problem,
+f ∈ F(N, N ) can be described by N 2 variables y11 , . . . , yN N (as shown in Section 2.2).
+     The values of the function, f (1), f (2), . . ., f (N ), are all distinct if and only if, for each j ∈ [N ],
+there exists i ∈ [N ] with f (i) = j. This, in turn, is equivalent to saying that, for each i ∈ [N ], one
+of the variables y1i , y2i , . . . , yN i is equal to 1.
+     Assume we have a polynomial P (x1 , . . . , xN 2 ) of degree d approximating the two level AND–OR
+tree function g. Consider the polynomial Q(y11 , . . . , yN N ) obtained from P by replacing x(i−1)N +j
+with yji . If the N values f (i) are all distinct, then, for each j ∈ {1, . . . , N }, there exists i such that
+f (i) = j. Therefore, one of the variables y1j , . . . , yN j is 1 and the OR of those variables is also 1.
+This means that the AND–OR function g(x1 , . . . , xN 2 ) is equal to 1. If the values f (i) are not all
+distinct, then there exists j ∈ [N ] such that there is no i with f (i) = j. Then, y1i , y2i , . . . , yN i are
+all 0, implying that g(x1 , . . . , xN 2 ) = 0 for the corresponding assignment x1 , . . ., xN 2 .
+     This means that Q approximates the element distinctness property, in the sense of section 2.2.
+Since degree Ω(N 2/3 ) is required to approximate element distinctness, d = Ω(N 2/3 ). ✷
+
+
+4     Conclusion
+We have shown that, for any symmetric property of functions f : [N ] → [M ], its polynomial degree
+is the same for all M ≥ N . Thus, if we prove a lower bound for the degree for some large M , this
+immediately implies the same bound for M = N . Since the polynomial degree is a lower bound for
+quantum query complexity, this can be used to show quantum lower bounds. As particular cases of
+our result, we get that the collision problem has degree Ω(N 1/3 ) and that the element distinctness
+problem has degree Ω(N 2/3 ), even if M = N . This implies Ω(N 1/3 ) and Ω(N 2/3 ) quantum lower
+bounds on these problems for M = N .
+    A part of our result is a new representation for polynomials describing properties of functions
+f : [N ] → [M ]. This new description might be useful for proving new quantum lower bounds. We
+conclude with two open problems.
+
+    1. Modified element distinctness problem. Say we are given f : [N ] → [N ] and we are
+       promised that either f is one-to-one or there are i, j, k such that f (i) = f (j) = f (k). We
+       would like to know which of these two is the case. What is the quantum query complexity of
+       this problem?
+      The problem is quite similar to element distinctness in which we have to distinguish one-
+      to-one function from one having f (i) = f (j) for some i, j with i 6= j. The known O(N 2/3 )
+      quantum algorithm still applies, but the Ω(N 2/3 ) quantum lower bound of [2] (by a reduction
+      from the collision problem) breaks down. The best lower bound that we can prove is Ω(N 1/2 )
+      by a reduction from Grover’s search. Improving this bound to Ω(N 2/3 ) is an open problem.
+      This problem is also similar to element distinctness if we look at it in our new z1 , . . ., zM
+      representation. For element distinctness, a polynomial Q must satisfy Q(1, . . . , 1) ∈ [1 − ǫ, 1]
+      and Q(z1 , . . . , zN ) ∈ [0, ǫ] if z1 + · · · + zN = N and zi ≥ 2 for some i. For our new problem,
+      we must have Q(1, . . . , 1) ∈ [1 − ǫ, 1] and Q(z1 , . . . , zN ) ∈ [0, ǫ] if z1 + · · · + zN = N and zi ≥ 3
+      for some i. In the first case, degree Ω(N 2/3 ) is needed [2]. In the second case, no such lower
+      bound is known.
+
+    2. Polynomial degree vs. quantum query complexity for symmetric properties. Let
+       φ be a symmetric property of functions f : [N ] → [M ]. Let deg(φ) be the minimum degree
+
+                                                       7
+     of a polynomial that ǫ-approximates f and Q2 (φ) be the minimum number of queries in
+     a quantum query algorithm computing φ with error at most ǫ. Is it true that these two
+     quantities are polynomially related: Q2 (φ) = O(degc (φ)) for some constant c?
+     This open problem was first proposed by Aaronson [1, 2], regarding properties which are only
+     symmetric with respect to permuting inputs to f : φ(f ) = φ(f π) for any π ∈ SN . It remains
+     open both in this case and in the case of properties having the more general symmetry
+     considered in this paper (φ(f ) = φ(σf π), for all π ∈ SN and σ ∈ SM ). It is known that
+     Q2 (φ) = O(deg2 (φ)) if M = 2.
+
+
+References
+ [1] S. Aaronson. Quantum lower bound for the collision problem. Proceedings of STOC’02, pp.
+     635-642. Also quant-ph/0111102.
+
+ [2] S. Aaronson, Y. Shi. Quantum lower bounds for the collision and the element distinctness
+     problems. Journal of ACM, 51:595-605, 2004. Earlier versions in [1] and [21].
+
+ [3] A. Ambainis. Quantum lower bounds by quantum arguments. Journal of Computer and System
+     Sciences, 64:750-767, 2002. Earlier versions at STOC’00 and quant-ph/0002066.
+
+ [4] A. Ambainis. Polynomial degree vs. quantum query complexity. Proceedings of FOCS’03, pp.
+     230-239, quant-ph/0305028.
+
+ [5] A. Ambainis. Quantum walk algorithm for element distinctness. Proceedings of FOCS’04, pp.
+     22-31, quant-ph/0311001.
+
+ [6] R. Beals, H. Buhrman, R. Cleve, M. Mosca, R. de Wolf. Quantum lower bounds by polynomials.
+     Journal of ACM, 48: 778-797, 2001. Earlier versions at FOCS’98 and quant-ph/9802049.
+
+ [7] H. Buhrman, R. Cleve, A. Wigderson. Quantum vs. classical communication and computation.
+     Proceedings of STOC’98, pp. 63-68.
+
+ [8] H. Buhrman, C. Durr, M. Heiligman, P. Høyer, F. Magniez, M. Santha, and R. de Wolf.
+     Quantum algorithms for element distinctness. 16th IEEE Annual Conference on Computational
+     Complexity (CCC’01), pp.131-137, quant-ph/0007016.
+
+ [9] G. Brassard, P. Høyer and A. Tapp. Quantum algorithm for the collision problem. SIGACT
+     News, 28:14-19, 1997. Also quant-ph/9705002.
+
+[10] G. Brassard, P. Høyer, A. Tapp. Quantum counting. Proceedings of ICALP’98, pp. 820-831,
+     quant-ph/9805082.
+
+[11] H. Buhrman, R. Špalek. Quantum verification of matrix products, quant-ph/0409035.
+
+[12] H. Buhrman, R. de Wolf. Complexity measures and decision tree complexity: a survey. Theo-
+     retical Computer Science, 288:21-43, 2002.
+
+[13] T. Cormen, C. Leiserson, R. Rivest, C. Stein. Introduction to Algorithms, 2nd Edition. The
+     MIT Press and McGraw-Hill Book Company, 2001
+
+
+
+                                               8
+[14] L. Grover. A fast quantum mechanical algorithm for database search. Proceedings of STOC’96,
+     pp. 212-219, quant-ph/9605043.
+
+[15] L. Grover. A framework for fast quantum mechanical algorithms. Proceedings of STOC’98, pp.
+     53-62, quant-ph/9711043.
+
+[16] P. Hoyer, J. Neerbek, Y. Shi. Quantum lower bounds of ordered searching, sorting and ele-
+     ment distinctness. Algorithmica, 34:429-448, 2002. Earlier versions at ICALP’01 and quant-
+     ph/0102078.
+
+[17] S. Kutin. Quantum lower bound for the collision problem. Theory of Computing, 1:29-36, 2005.
+     Also quant-ph/0304162.
+
+[18] F. Magniez, M. Santha, and M. Szegedy. Quantum algorithms for the triangle problem. Pro-
+     ceedings of SODA’05. Also quant-ph/0310134.
+
+[19] A. Nayak, F. Wu. The quantum query complexity of approximating the median and related
+     statistics. Proceedings of STOC’99, pp. 384-393, quant-ph/9804066.
+
+[20] N. Nisan, M. Szegedy. On the degree of Boolean functions as real polynomials. Computational
+     Complexity, 4: 301-313, 1994. Earlier version at STOC’02.
+
+[21] Y. Shi. Quantum lower bounds for the collision and the element distinctness problems. Pro-
+     ceedings of FOCS’02, pp. 513-519. quant-ph/0112086.
+
+[22] Y. Shi. Approximating linear restrictions of Boolean functions. Manuscript.
+
+
+
+
+                                                9
+

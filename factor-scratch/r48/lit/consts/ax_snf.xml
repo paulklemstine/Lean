@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/esW+VxaLh4kLqvRM4gu7hqP0ndc</id>
+  <title>arXiv Query: search_query=abs:"Shor" AND abs:"number field sieve"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:40:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Shor%22+AND+abs:%22number+field+sieve%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+</feed>

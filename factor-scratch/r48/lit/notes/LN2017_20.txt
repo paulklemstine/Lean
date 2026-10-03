@@ -1,0 +1,522 @@
+18.783 Elliptic Curves                                                                  Spring 2017
+Lecture #20                                                                             04/26/2017
+
+20     The modular equation
+In the previous lecture we defined modular curves as quotients of the extended upper half
+plane under the  action of a congruence
+                                           subgroup (a subgroup of SL2 (Z) that contains
+Γ(N ) := { ac db ∈ SL2 (Z) : ac db ≡ ( 10 01 )} for some integer N ≥ 1). Of particular in-
+terest is the modular curve X0 (N ) := H∗ /Γ0 (N ), where
+                                      
+                        Γ0 (N ) = ac db ∈ SL2 (Z) : c ≡ 0 mod N .
+
+This modular curve plays a central role in the theory of elliptic curves. One form of the
+modularity theorem (a special case of which implies Fermat’s last theorem) is that every
+elliptic curve E/Q admits a morphism X0 (N ) → E for some N ∈ Z≥1 . It is also a key
+ingredient for algorithms that use isogenies of elliptic curves over finite fields, including the
+Schoof-Elkies-Atkin algorithm, an improved version of Schoof’s algorithm that is the method
+of choice for counting points on elliptic curves over a finite fields of large characteristic. Our
+immediate interest in the modular curve X0 (N ) is that we will use it to prove the first
+main theorem of complex multiplication; among other things, this theorem implies that the
+j-invariants of elliptic curve E/C with complex multiplication are algebraic integers.
+     There are two properties of X0 (N ) that make it so useful. The first, which we will prove
+in this lecture, is that it has a canonical model over Q with integer coefficients; this allows
+us to interpret X0 (N ) as a curve over any field, including finite fields. The second is that it
+parameterizes isogenies between elliptic curves (in a sense that we will make precise in the
+next lecture). In particular, given the j-invariant of an elliptic curve E and an integer N ,
+we can use our explicit model of X0 (N ) to determine the j-invariants of all elliptic curves
+that are related to E by an isogeny whose kernel is a cyclic group of order N .
+     In order to better understand modular curves, we introduce modular functions.
+
+20.1    Modular functions
+Modular functions are meromorphic functions on a modular curve. To make this statement
+precise, we first need to discuss q-expansions. The map q : H → D defined by
+
+                     q(τ ) = e2πiτ = e−2π im τ (cos(2π re τ ) + i sin(2π re τ ))
+
+bijectively maps each vertical strip Hn := {τ ∈ H : n ≤ re τ < n + 1} (for any n ∈ Z) to the
+punctured unit disk D0 := D − {0}. We also note that
+
+                                           lim q(τ ) = 0.
+                                         im τ →∞
+
+If f : H → C is a meromorphic function that satisfies f (τ + 1) = f (τ ) for all τ ∈ H, then
+we can write f in the form f (τ ) = f ∗ (q(τ )), where f ∗ : D0 → C is a meromorphic function
+that we can define by fixing a vertical strip Hn and putting f ∗ := f ◦ (q|Hn )−1 .
+    The q-expansion (or q-series) of f (τ ) is obtained by composing the Laurent-series ex-
+pansion of f ∗ at 0 with the function q(τ ):
+                                              +∞
+                                              X                   +∞
+                                                                  X
+                                 ∗                         n
+                       f (τ ) = f (q(τ )) =          an q(τ ) =          an q n .
+                                              n=−∞                n=−∞
+
+As on the RHS above, it is customary to simply write q for q(τ ) = e2πiτ , as we shall do
+henceforth; but keep in mind that the symbol q denotes a function of τ ∈ H.
+
+                                                                           Lecture by Andrew Sutherland
+   If f ∗ is meromorphic at 0 (meaning that z −k f ∗ (z) has an analytic continuation to an
+open neighborhood of 0 ∈ D for some k ∈ Z≥0 ) then the q-expansion of f has only finitely
+many nonzero an with n < 0 and we can write
+                                                  ∞
+                                                  X
+                                       f (τ ) =          an q n ,
+                                                  n=n0
+
+with an0 6= 0, where n0  is the order of f ∗ at 0.  We then say that f is meromorphic at ∞,
+and call n0 the order of f at ∞.
+   More generally, if f satisfies f (τ + N ) = f (τ ) for all τ ∈ H, then we can write f as
+                                                           ∞
+                                                           X
+                                       ∗       1/N
+                             f (τ ) = f (q(τ )       )=             an q n/N ,                         (1)
+                                                          n=−∞
+
+and we say that f is meromorphic at ∞ if f ∗ is meromorphic at 0.
+    If Γ is a congruence subgroup of level N , then for any Γ-invariant function f we have
+f (τ + N ) = f (τ ) (for γ = ( 10 N1 ) ∈ Γ we have γτ = τ + N ), so f can be written as in (1),
+and it makes sense to say that f is (or is not) meromorphic at ∞.
+Definition 20.1. Let f : H → C be a meromorphic function that is Γ-invariant for some
+congruence subgroup Γ. The function f (τ ) is said to be meromorphic at the cusps if for
+every γ ∈ SL2 (Z) the function f (γτ ) is meromorphic at ∞.
+It follows immediately from the definition that if f (τ ) is meromorphic at the cusps, then
+for any γ ∈ SL2 (Z) the function f (γτ ) is also meromorphic at the cusps. In terms of the
+extended upper half-plane H∗ , notice that for any γ ∈ SL2 (Z),
+                                           lim γτ ∈ P1 (Q),
+                                      im τ →∞
+
+and recall that P1 (Q) is the SL2 (Z)-orbit of ∞ ∈ H∗ , whose elements are called cusps. To
+say that f (γτ ) is meromorphic at ∞ is to say that f (τ ) is meromorphic at γ∞. To check
+whether f is meromorphic at the cusps, it suffices to consider a set of Γ-inequivalent cusp
+representatives γ1 ∞, γ1 ∞, . . . , γn ∞, one for each Γ-orbit of ∞; this is a finite set because
+the congruence subgroup Γ has finite index in SL2 (Z).
+    If f is a Γ-invariant meromorphic function, then for any γ ∈ Γ we must have
+                                   lim f (γτ ) =          lim f (τ )
+                                 im τ →∞              im τ →∞
+
+whenever either limit exists, and if neither limit exits then f must still have the same order
+at ∞ and γ∞. Thus if f is meromorphic at the cusps then it determines a meromorphic
+function g : XΓ → C on the modular curve XΓ := H∗ /Γ (as a complex manifold).
+Definition 20.2. Let Γ be a congruence subgroup. A modular function for Γ is a Γ-
+invariant meromorphic function f : H → C that is meromorphic at the cusps; equivalently,
+it is a meromorphic function g : XΓ → C.
+     Sums, products, and quotients of modular functions for Γ are also modular functions
+for Γ, as are constant functions, thus the set of all modular functions for Γ forms a field
+C(Γ) that we view as a transcendental extension of C. As we will shortly prove for X0 (N ),
+modular curves XΓ are not only Riemann surfaces, they are also algebraic curves, and the
+field C(Γ) of modular functions for Γ is isomorphic to the function field C(XΓ ) of XΓ as an
+algebraic curve over C.
+
+                                                                    18.783 Spring 2017, Lecture #20, Page 2
+Remark 20.3. In fact, every compact Riemann surface corresponds to a smooth projective
+(algebraic) curve over C that is uniquely determined up to isomorphism. Conversely, if X/C
+is a smooth projective curve then the set X(C) can be given a topology and a complex
+structure that makes it a compact Riemann surface S. The function field of X and the
+field of meromorphic functions on S are both finite extensions of a purely transcendental
+extension of C (of transcendence degree one), and the two fields are isomorphic. We will
+make this isomorphism completely explicit for X(1) and X0 (N ).
+
+Remark 20.4. If f is a modular function for a congruence subgroup Γ, then it is also a
+modular function for any congruence subgroup Γ0 ⊆ Γ, since Γ-invariance obviously implies
+Γ0 -invariance, and the property of being meromorphic at the cusps does not depend on Γ0 .
+Thus for all congruence subgroups Γ and Γ0 we have
+
+                                 Γ0 ⊆ Γ =⇒ C(Γ) ⊆ C(Γ0 ),
+
+and the corresponding inclusion of function fields C(XΓ ) ⊆ C(XΓ0 ) induces a morphism
+XΓ0 → XΓ of algebraic curves, a fact that has many useful applications.
+
+20.2    Modular Functions for Γ(1)
+We first consider the modular functions for Γ(1) = SL2 (Z). In Lecture 16 we proved that
+the j-function is Γ(1)-invariant and holomorphic (hence meromorphic) on H. To show that
+the j(τ ) is a modular function for Γ(1) we just need to show that it is meromorphic at the
+cusps. The cusps are all Γ(1)-equivalent, so it suffices to show that the j(τ ) is meromorphic
+at ∞, which we do by computing its q-expansion. We first record the following lemma,
+which was used in Problem Set 8.
+
+Lemma 20.5. Let σk (n) = d|n dk , and let q = e2πiτ . We have
+                              P
+
+                                                     ∞
+                                                                  !
+                                      4π 4          X
+                                                                n
+                            g2 (τ ) =      1 + 240      σ3 (n)q     ,
+                                       3
+                                                    n=1
+                                                     ∞
+                                                                  !
+                                      8π 6          X
+                            g3 (τ ) =      1 − 504      σ5 (n)q n ,
+                                       27
+                                                     n=1
+                                                                 ∞
+                                                                 X
+                                  3             2          12
+                     ∆(τ ) = g2 (τ ) − 27g3 (τ ) = (2π) q            (1 − q n )24 .
+                                                                 n=1
+
+Proof. See Washington [1, pp. 273-274].
+
+Corollary 20.6. With q = e2πiτ we have
+                                                      ∞
+                                           1         X
+                                 j(τ ) =     + 744 +   an q n ,
+                                           q
+                                                     n=1
+
+where the an are integers.
+
+
+
+
+                                                                18.783 Spring 2017, Lecture #20, Page 3
+Proof. Applying Lemma 20.5 yields
+                64 12                                   64
+     g2 (τ )3 =    π (1 + 240q + 2160q 2 + · · · )3 = π 12 (1 + 720q + 179280q 2 + · · · ),
+                27                                      27
+                64π 12                                    64
+   27g3 (τ )2 =        (1 − 504q − 16632q 2 − · · · )2 = π 12 (1 − 1008q + 220752q 2 + · · · ),
+                 27                                       27
+                64                                     64
+      ∆(τ ) = π 12 q(1728q − 41472q 2 + · · · ) = π 21 1728q(1 − 24q + · · · ),
+                27                                     27
+and we then have
+                                                                   ∞
+                                     1728g2 (τ )3  1        X
+                           j(τ ) =                = + 744 +   an q n ,
+                                        ∆(τ )      q
+                                                                  n=1
+
+with an ∈ Z, as desired.
+
+Remark 20.7. The proof of Corollary 20.6 explains the factor 1728 that appears in the
+definition of the j-function: it is the least positive integer that ensures that the q-expansion
+of j(τ ) has integral coefficients.
+
+    The corollary implies that the j-function is a modular function for Γ(1), with a simple
+pole at ∞. We proved in Theorem 18.5 that the j-function defines a holomorphic bijection
+from Y (1) = H/Γ(1) to C. If we extend the domain of j to H∗ by defining j(∞) = ∞,
+then the j-function defines an isomorphism from X(1) to the Riemann sphere S := P1 (C)
+that is holomorphic everywhere except for a simple pole at ∞. In fact, if we fix j(ρ) = 0,
+j(i) = 1728, and j(∞) = ∞, then the j-function is uniquely determined by this property
+(as noted above, we put j(i) = 1728 to obtain an integral q-expansion). It is for this reason
+that the j-function is sometimes referred to as the modular function. Indeed, every modular
+function for Γ(1) = SL2 (Z) can be written in terms of the j-function.
+
+Theorem 20.8. Every modular function for Γ(1) is a rational function of j(τ ); in other
+words C(Γ(1)) = C(j).
+
+Proof. As noted above, the j-function is a modular function for Γ(1), so C(j) ⊆ C(Γ(1)). If
+g : X(1) → C is a modular function for Γ(1) then f := g ◦ j −1 : S → C is meromorphic, and
+Lemma 20.9 below implies that f is a rational function. Thus g = f ◦ j ∈ C(j).
+
+Lemma 20.9. Every meromorphic function f : S → C on the Riemann sphere S := P1 (C)
+is a rational function.
+
+Proof. Let f : S → C be a nonzero meromorphic function. We may assume without loss of
+generality that f has no zeros or poles at ∞ := (1 : 0), since we can always apply a linear
+fractional transformation γ ∈ SL2 (C) to move a point where f does not have a pole or a
+zero to ∞ and replace f by f ◦ γ (note that γ and γ −1 are rational functions, and if f ◦ γ
+is a rational function, so is f = f ◦ γ ◦ γ −1 ).
+    Let {pi } be the set of poles of f (z), with orders mi := −ordpi (f ), and let {qj } be the
+set of zeros of f , with orders nj := ordqj (f ). We claim that
+                                          X           X
+                                               mi =       nj .
+                                           i          j
+
+
+
+
+                                                                 18.783 Spring 2017, Lecture #20, Page 4
+To see this, triangulate S so that all the poles and zeros of f (z) lie in the interior of a
+triangle. It follows from Cauchy’s argument principle (Theorem 15.17) that the contour
+integral
+                                           f 0 (z)
+                                        Z
+                                                   dz
+                                         ∆ f (z)
+about each triangle (oriented counter clockwise) is the difference between the number of
+zeros and poles that f (z) in its interior. The sum of these integrals must be zero, since each
+edge in the triangulation is traversed twice, once in each direction.
+    The function h : S → C defined by
+                                                     (z − pi )mi
+                                                  Q
+                                   h(z) = f (z) · Qi            nj
+                                                    j (z − qj )
+
+has no zeros or poles on S. It follows from Liouville’s theorem (Theorem 15.30) that h is a
+constant function, and therefore f (z) is a rational function of z.
+
+Corollary 20.10. Every modular function f (τ ) for Γ(1) that is holomorphic on H is a
+polynomial in j(τ ).
+
+Proof. Theorem 20.8 implies that f can be written as a rational function of j, so
+                                          Q
+                                             (j(τ ) − αi )
+                                f (τ ) = c i
+                                          Q                 ,
+                                            k (j(τ ) − βk )
+
+for some c, αi , βj ∈ C. Now the restriction of j to any fundamental region for Γ(1) is a
+bijection, so f (τ ) must have a pole at j −1 (βk ) for each βk . But f (τ ) is holomorphic and
+therefore has no poles, so the set {βj } is empty and f (τ ) is a polynomial in j(τ ).
+                                                                              ∼
+   We proved in the previous lecture that the j-function j : X(1) −→ S determines an
+isomorphism of Riemann surfaces. As an algebraic curve over C, the function field of X(1) ≃
+S = P1 (C) is the rational function field C(t), and we have just shown that the field of modular
+functions for Γ(1) is the field C(j) of rational functions of j. Thus, as claimed in Remark 20.3,
+the function field C(X(1)) = C(t) and the field of modular functions C(Γ(1)) = C(j) are
+isomorphic, with the isomorphism given by t 7→ j. More generally, for every congruence
+subgroup Γ, the field C(XΓ ) ≃ C(Γ) is a finite extension of C(t) ≃ C(j) whose degree is
+equal to the index of Γ in Γ(1).
+
+Theorem 20.11. Let Γ be a congruence subgroup. The field C(Γ) of modular functions
+for Γ is a finite extension of C(j) of degree at most n := [Γ(1) : Γ].
+
+Proof. Let γ1 be the identity in Γ(1) and let {γ1 , · · · , γn } ⊆ Γ(1) be a set of right coset
+representatives for Γ as a subgroup of Γ(1) (so Γ(1) = Γγ1 t · · · t Γγn ).
+     Let f ∈ C(Γ) and for 1 ≤ i ≤ n define fi (τ ) := f (γi τ ). For any γi0 ∈ Γγi the functions
+f (γi0 τ ) and f (γi τ ) are the same, since f is Γ-invariant. For any γ ∈ Γ(1), the set of functions
+{f (γi γτ )} is therefore equal to the set of functions {f (γi τ )}, since multiplication on the right
+by γ permutes the cosets {Γγi }. Any symmetric polynomial in the functions fi is thus Γ(1)-
+invariant, and meromorphic at the cusps (since f , and therefore each fi , is), hence an element
+of C(j), by Theorem 20.8. Now let
+                                                    Y
+                                        P (Y ) =          (Y − fi ).
+                                              i∈{1,··· ,n}
+
+
+                                                              18.783 Spring 2017, Lecture #20, Page 5
+Then f = f1 is a root of P (since γ1 is the identity), and the coefficients of P (Y ) lie in C(j),
+since they are all symmetric polynomials in the fi .
+    It follows that every f ∈ C(Γ) is the root of a monic polynomial in C(j)[Y ] of degree n;
+this implies that C(Γ)/C(j) is an algebraic extension, and it is separable, since we are in
+characteristic zero. We now claim that C(Γ) is finitely generated: if not we could pick
+functions g1 , . . . , gn+1 ∈ C(Γ) such that
+
+                  C(j) ( C(j)(g1 ) ( C(j)(g1 , g2 ) ( · · · ( C(j)(g1 , . . . , gn+1 ).
+
+But then C(j)(g1 , . . . , gn+1 ) is a finite separable extension of C(j) of degree at least n + 1,
+and the primitive element theorem implies it is generated by some g ∈ C(Γ) whose minimal
+polynomial most have degree greater than n, which is a contradiction. The same argument
+then shows that [C(Γ) : C(j)] ≤ n.
+
+Remark 20.12. If −I ∈ Γ then in fact [C(Γ(1)) : C(Γ)] = [Γ(1) : Γ]; we will prove this for
+Γ = Γ0 (N ) in the next section. In general [C(Γ(1)) : C(Γ)] = [Γ(1) : Γ], where Γ denotes
+the image of Γ in PSL2 (Z) := SL2 (Z)/{±I}.
+
+20.2.1    Modular functions for Γ0 (N )
+We now consider modular functions for the congruence subgroup Γ0 (N ).
+
+Theorem 20.13. The function jN (τ ) := j(N τ ) is a modular function for Γ0 (N ).
+
+Proof. The function jN (τ ) is obviously meromorphic (in fact holomorphic) on H, since j(τ )
+is, and it is meromorphic at the cusps for the same reason (note that τ is a cusp if and only
+if N τ is). We just need to show that jN (τ ) is Γ0 (N )-invariant.
+               a b
+     Let γ = c d ∈ Γ0 (N ). Then c ≡ 0 mod N and
+                                                          
+                              N (aτ + b)         aN τ + bN
+    jN (γτ ) = j(N γτ ) = j                =j     c             = j(γ 0 N τ ) = j(N τ ) = jN (τ ),
+                               cτ + d             N N τ  + d
+
+where                                                   
+                                    0         a     bN
+                                   γ =                       ∈ SL2 (Z),
+                                             c/N     d
+since c/N is an integer and det(γ 0 ) = det(γ) = 1. Thus jN (τ ) is Γ0 (N )-invariant.
+
+Theorem 20.14. The field of modular functions for Γ0 (N ) is an extension of C(j) of degree
+n := [Γ(1) : Γ0 (N )] generated by jN (τ ).
+
+Proof. By the previous theorem, we have jN ∈ C(Γ0 (N )), and from Theorem 20.11 we know
+that C(Γ0 (N )) is a finite extension of C(j) of degree at most n, so it suffices to show that
+the minimal polynomial of jN over C(j) has degree at least n.
+     As in the proof of Theorem 20.11, let us fix a set of right coset representatives {γ1 , · · · , γn }
+for Γ0 (N ) ⊆ Γ(1), and let P ∈ C(j)[Y ] be the minimal polynomial of jN over C(j). We may
+view P (j(τ ), jN (τ )) as a function of τ , which must be the zero function. If we replace τ by
+γi τ then for each γi we have
+
+                           0 = P (j(γi τ ), jN (γi τ )) = P (j(τ ), jN (γi τ )),
+
+so the function jN (γi τ ) is also a root of P (Y ).
+
+                                                                  18.783 Spring 2017, Lecture #20, Page 6
+   To prove that deg P ≥ n it suffices to show that the n functions jN (γi τ ) are distinct.
+Suppose not. Then j(N γi τ ) = j(N γk τ ) for some i 6= k and τ ∈ H that we can choose to
+have stabilizer ±I. Fix a fundamental region F for H/Γ(1) and pick α, β ∈ Γ(1) so that
+αN γi τ and βN γj τ lie in F. The j-function is injective on F, so
+
+  j(αN γi τ ) = j(βN γk τ )      ⇐⇒αN γi τ = ±βN γk τ          ⇐⇒                   αN γi = ±βN γk ,
+
+where we may view N as the matrix N0 10 , since N τ = N0ττ+1
+                                                          +0
+                                       
+                                                             .
+                −1
+                          
+   Now let γ = α β = ac db . We have
+                                                                  
+                               N    0           a b    N             0
+                                        γi = ±                           γ ,
+                                0   1            c d    0            1 k
+
+and therefore
+                                                                                
+                               1/N      0   a b    N           0         a       b/N
+                γi γk−1   = ±                                      = ±                     .
+                                0       1    c d    0          1        cN        d
+
+   We have γi γk−1 ∈ SL2 (Z), so b/N is an integer, and cN ≡ 0 mod N , so γi γk−1 ∈ Γ0 (N ).
+But then γi and γk lie in the same right coset of Γ0 (N ), which is a contradiction.
+
+20.3    The modular polynomial
+Definition 20.15. The modular polynomial ΦN is the minimal polynomial of jN over C(j).
+
+    It follows from the proof of Theorem 20.14, we may write ΦN ∈ C(j)[Y ] as
+                                                n
+                                                Y
+                                    ΦN (Y ) =         (Y − jN (γi τ )),
+                                                i=1
+
+where {γ1 , . . . γn } is a set of right coset representatives for Γ0 (N ). The coefficients of ΦN (Y )
+are symmetric polynomials in jN (γi τ ), so as in the proof of Theorem 20.11 they are Γ(1)-
+invariant. They are holomorphic on H, so they are polynomials in j, by Corollary 20.10.
+Thus ΦN ∈ C[j, Y ]. If we replace every occurrence of j in ΦN with a new variable X we
+obtain a polynomial in C[X, Y ] that we write as ΦN (X, Y ).
+    Our next task is to prove that the coefficients of ΦN (X, Y ) are actually integers, not just
+complex numbers. To simplify the presentation, we will prove this only prove for prime N ,
+which is all that is needed in most practical applications (such as the SEA algorithm), and
+suffices to prove the main theorem of complex multiplication. The proof for composite N is
+essentially the same, but explicitly writing down a set of right coset representatives γi and
+computing the q-expansions of the functions jN (γi τ ) is more complicated.
+    We begin by fixing a specific set of right coset representatives for Γ0 (N ).
+
+Lemma 20.16. For prime N we can write the right cosets of Γ0 (N ) in Γ(1) as
+
+                       Γ0 (N ) ∪ Γ0 (N )ST k : 0 ≤ k < N ,
+                               
+
+
+where S = ( 01 −1             11
+                0 ) and T = ( 0 1 ).
+
+
+
+
+                                                                  18.783 Spring 2017, Lecture #20, Page 7
+                                                                        
+Proof. We first show that the these cosets cover Γ(1). Let γ = ac db ∈ Γ. If c ≡ 0 mod N ,
+then γ ∈ Γ0 (N ) lies in the first coset. Otherwise, pick k ∈ [0, N − 1] so that kc ≡ d mod N
+(c is nonzero modulo the prime N , so this is possible), and let
+                                                   
+                                          ka − b a
+                                  γ0 :=               ∈ Γ0 (N ).
+                                           kc − d c
+Then                                               
+                            k  ka − b a    0 −1     a b
+                      γ0 ST =                    =        = γ,
+                                kc − d c   1 k      c d
+lies in Γ0 (N )ST k .
+    We now show the cosets are distinct. Suppose not. Then there must exist γ1 , γ2 ∈ Γ0 (N )
+such that either (a) γ1 = γ2ST k for some 0 ≤ k < N , or (b) γ1 ST j = γ2 ST k with
+0 ≤ j < k < N . Let γ2 = ac db . In case (a) we have
+                                                     
+                            a b      0 −1        b bk − a
+                      γ1 =                   =              ∈ Γ0 (N ),
+                             c d     1 k         d dk − c
+which implies d ≡ 0 mod N and det γ2 = ad − bc ≡ 0 mod N , a contradiction. In case (b),
+with m = k − j we have
+                                                            
+                  m −1     a b     0 −1       0 1       a − bm b
+        γ1 = γ2 ST S =                              =                ∈ Γ0 (N ).
+                            c d    1 m       −1 0       c − dm d
+Thus c − dm ≡ 0 mod N , and since c ≡ 0 mod N and m 6≡ 0 mod N , we must have
+d ≡ 0 mod N , which again implies det γ2 = ad − bc ≡ 0 mod N , a contradiction.
+
+Theorem 20.17. ΦN ∈ Z[X, Y ].
+Proof (for N prime). Let γk = ST k . By Lemma 20.16 we have
+                                                        N
+                                                        Y −1
+                          ΦN (Y ) = (Y − jN (τ ))             (Y − jN (γk τ )).
+                                                        k=0
+
+Let f (τ ) be a coefficient of ΦN (Y ). Then f (τ ) is holomorphic function on H, since j(τ )
+is, and f (τ ) is Γ(1)-invariant, since it is symmetric polynomial in jN (τ ) and the functions
+jN (γk τ ), corresponding to a complete set of right coset representatives for Γ0 (N ); and f (τ )
+is meromorphic at the cusps, since it is a polynomial in functions that are meromorphic
+at the cusps. Thus f (τ ) is a modular function for Γ(1) holomorphic on H and therefore
+a polynomial in j(τ ), by Corollary 20.10. By Lemma 20.18 below, if we can show that
+the q-expansion of f (τ ) has integer coefficients, then it will follow that f (τ ) is an integer
+polynomial in j(τ ) and therefore ΦN ∈ Z[X, Y ].
+    We first show that the q-expansion of f (τ ) has rational coefficients. We have
+                                                                   ∞
+                                              1         X
+                          jN (τ ) = j(N τ ) = N + 744 +   an q nN ,
+                                             q
+                                                                  n=1
+
+where the an are integers, thus jN ∈ Z((q)). For jN (γk τ ), we have
+                                               
+       jN (γk τ ) = j(N γk τ ) = j N0 10 ST k τ
+                                        
+                                                                                                    
+                                       1 0
+                                             
+                                                 1k
+                                                                1 0
+                                                                        
+                                                                            1k
+                                                                                            τ +k
+                                =j S   0N        0 1    τ =j      0N        0 1    τ =j                  ,
+                                                                                                N
+
+
+                                                                  18.783 Spring 2017, Lecture #20, Page 8
+                                                                                    2πi
+where we are able to drop the S because j(τ ) is Γ-invariant. If we let ζN = e N , then
+                                             τ +k        k
+                       q ((τ +k)/N ) = e2πi( N ) = e2πi N q 1/N = ζN
+                                                                   k 1/N
+                                                                     q   ,
+
+and
+                                                −k   ∞
+                                             ζN      X
+                                                            kn n/N
+                              jN (γk τ ) =         +   a n ζN q    ,
+                                             q 1/N n=0
+
+thus jN (γk τ ) ∈ Q(ζN )((q 1/N )). The action of the Galois group Gal(Q(ζN )/Q) on the coef-
+ficients of the q-expansions of each jN (γk τ ) induces a permutation of the set {jN (γkτ )}
+and fixes jN (τ ). It follows that the coefficients of the q-expansion of f are fixed by
+Gal(Q(ζN ))/Q) and must lie in Q. Thus f ∈ Q((q 1/N )), and f (τ ) is a polynomial in
+j(τ ), so its q-expansion contains only integral powers of q and f ∈ Q((q)).
+     We now note that the coefficients of the q-expansion of f (τ ) are algebraic integers, since
+the coefficients of the q-expansions of jN (τ ) and the jN (γk ) are algebraic integers, as is any
+polynomial combination of them. This implies f (τ ) ∈ Z((q)).
+
+Lemma 20.18 (Hasse q-expansion principal). Let f (τ ) be a modular function for Γ(1) that
+is holomorphic on H and whose q-expansion has coefficients that lie in an additive subgroup A
+of C. Then f (τ ) = P (j(τ )), for some polynomial P ∈ A[X].
+
+Proof. By Corollary 20.10, we know that f (τ ) = P (j(τ )) for some P ∈ C[X], we just need
+to show that P ∈ A[X]. We proceed by induction on d = deg P . The lemma clearly
+holds for d = 0, so assume d > 0. The q-expansionP∞      of the j-function begins with q −1 , so
+the q-expansion of f (τ ) must have the form n=−d an q n , with an ∈ A and a−d 6= 0. Let
+P1 (X) = P (X) − a−d X d , and let f1 (τ ) = P1 (j(τ )) = f (τ ) − a−d j(τ )d . The q-expansion of
+the function f1 (τ ) has coefficients in A, and by the inductive hypothesis, so does P1 (X),
+and therefore P (X) = P1 (X) + a−d X d also has coefficients in A.
+
+
+References
+[1] Lawrence C. Washington, Elliptic curves: number theory and cryptography, second edi-
+    tion, Chapman & Hall/CRC, 2008.
+
+
+
+
+                                                             18.783 Spring 2017, Lecture #20, Page 9
+

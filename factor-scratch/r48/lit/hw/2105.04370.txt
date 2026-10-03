@@ -1,0 +1,1635 @@
+arXiv:2105.04370v1 [math.NT] 10 May 2021
+
+AN IMPROVEMENT OF THE HASSE-WEIL BOUND FOR
+ARTIN-SCHREIER CURVES VIA CYCLOTOMIC FUNCTION
+FIELDS
+LIMING MA AND CHAOPING XING
+
+Abstract. The corresponding Hasse-Weil bound was a major breakthrough in history of mathematics. It has found many applications in mathematics, coding theory
+and theoretical computer science. In general, the Hasse-Weil bound is tight and cannot be improved. However, the Hasse-Weil bound is no longer tight when it is applied
+to some specific classes of curves. One of the examples where the Hasse-Weil bound is
+not tight is the family of Artin-Schreier curves. Due to various applications of ArtinSchreier curves to coding, cryptography and theoretical computer science, researchers
+have made great effort to improve the Hasse-Weil bound for Artin-Schreier curves.
+In this paper, we focus on the number of rational places of the Artin-Schreier
+curve defined by y p − y = f (x) over the finite field Fq of characteristic p, where
+f (x) is a polynomial in Fq [x]. Our road map for attacking this problem works as
+follows. We first show that the function field Ef := Fq (x, y) of the Artin-Schreier
+curve y p − y = f (x) is a subfield of some cyclotomic function field. We then make
+use of the class field theory to prove that the number of points of the curve is upper
+bounded by a function of a minimum distance of a linear code. By analyzing the
+minimum distance of this linear code, we can improve the Hasse-Weil bound and
+Serre bound for Artin-Schreier curves.
+
+1. Introduction
+Throughout this paper, let p be a prime and let q = pm for some integer m ≥ 1. Let
+f (x) ∈ Fq [x] be a polynomial and consider the set
+Zf := {α ∈ Fq : Tr(f (α)) = 0},
+where Tr is the trace function from Fq to Fp . For simplicity, throughout this paper, we
+assume that the degree of f (x) is r with r < p. Then the Weil bound shows that the
+cardinality |Zf | is bounded by the following inequality
+(1)
+
+|Zf | − q m−1 ≤
+
+(r − 1)(p − 1) √
+q.
+p
+
+A good upper bound on |Zf | has found various applications such as exponential sums
+[7, 13, 14, 19, 25], BCH codes in coding theory [4, 10, 24, 26] and nonlinearity of
+boolean functions [1, 6], etc. Let Nf be the number of rational points of the ArtinSchreier curve:
+(2)
+
+y p − y = f (x).
+1
+
+2
+
+LIMING MA AND CHAOPING XING
+
+Based on the relation Nf = 1 + p|Zf |, the bound (1) is derived from the following
+Hasse-Weil bound for Artin-Schreier curves
+√
+(3)
+|Nf − 1 − q| ≤ (r − 1)(p − 1) q.
+
+In literatures, there are various improvements on the Hasse-Weil bound (3) for ArtinSchreier curves. Firstly Serre improved the Hasse-Weil bound for arbitrary curves of
+genus g over Fq to the following bound
+√
+(4)
+|N − q − 1| ≤ g⌊2 q⌋
+
+by analyzing the property of algebraic integers of its L-polynomial [23, Theorem 5.3.1],
+where N stands for the number of points of the curve. The bound (4) is called the
+Serre bound. If we apply the Serre bound to the Artin-Schreier curve y p − y = f (x),
+we get the following bound
+√
+(r − 1)(p − 1)
+× ⌊2 q⌋.
+2
+In 1993, Moreno and Moreno provided an improvement to the Hasse-Weil bound
+for Artin-Schreier curves by the property of exact division [20]. Kaufman and Lovett
+proved that the Hasse-Weil bound can be improved for Artin-Schreier curves y p − y =
+√
+f (x) with f (x) = g(x) + h(x), where g(x) is a polynomial with deg(g(x)) ≪ q and
+h(x) is a sparse polynomial of arbitrary degree with bounded weight in [13]. Rojas√
+Leon and Wan showed that an extra p can be removed for this family of curves if
+p is very large compared with polynomial degree of f (x) and logp q in [22]. Cramer
+and Xing showed that the property of exact division related to the number of rational
+places can be improved by using L-polynomials of algebraic curves with the Hasse-Witt
+invariant 0 in [8].
+In this paper, we will focus on the upper bound of the number of rational points
+of Artin-Schreier curves as well. However, our approach is completely different from
+those in all previous papers. More precisely speaking, our approach is divided into the
+following steps.
+Step 1: We first assume that an Artin Schreier curve has at least two rational
+points. In this case, there is a rational place corresponding to x − α of Fq (x) that splits
+completely in the function field Ef of an Artin Schreier curve. Thus, we can show that
+the function field Ef of an Artin-Schreier curve is a subfield of the cyclotomic function
+field Kr = K(ΛT r+1 ) with modulo T r+1 , where K = Fq (x) and T = (x−α)−1 . As Kr /K
+is a Galois extension with Galois group Gal(Kr /K) ≃ F∗q × Fmr
+p and Gal(Ef /K) ≃ Fp ,
+where Ef = Fq (x, y) with y p − y = f (x), Ef is in fact a subfield of F , where F is
+the subfield of Kr fixed by F∗q . Thus, Gal(F/K) ≃ Fmr
+p can be viewed as an Fp -vector
+space of dimension mr and the Galois group Gal(F/Ef ) is a subspace of Gal(F/K) of
+dimension mr − 1.
+Step 2: To see whether x = α − β has p solutions in the equation y p − y = f (x)
+for β ∈ F∗q , by the class field theory it is equivalent to checking if x − (α − β) or
+equivalently 1 + βT , belongs to the group Gal(F/Ef ). Let F∗q = {α1 , . . . , αq−1 } and a
+subset I ⊆ [q − 1], the space spanned by {1 + αi T }i∈I has Fp -rank rm if and only if
+the matrix (αij )1≤j≤r,i∈I has Fp -rank rm. This gives an upper bound on Nf that is a
+(5)
+
+|Nf − q − 1| ≤
+
+ARTIN-SCHREIER CURVES
+
+3
+
+function of the minimum distance of the linear code over Fp generated by the matrix
+(αij )1≤j≤r,1≤i≤q−1, where αij are viewed column vectors via an isomorphism between Fq
+and Fm
+p .
+Step 3: By investigating the minimum distance of the above linear code, we finally
+obtain an improvement on the Hasse-Weil bound for Artin-Schreier curves.
+This paper is organized as follows. In Section 2, we introduce the basic results and
+theory on algebraic function fields and coding theory, such as Hilbert’s ramification
+theory, conductors, Artin symbols, cyclotomic function fields, ray class fields and linear codes. In Section 3, we determine the conductors of Artin-Schreier curves and
+cyclotomic function fields, and show that the function field of an Artin-Schreier curve
+is a subfield of some cyclotomic function field. In Section 4, we show that the upper
+bound of the number of rational places of Artin-Schreier curves is a function of the minimum distance of some linear code. Furthermore, this upper bound is better than the
+Hasse-Weil bound for Artin-Schreier curves. In Section 5, we determine the minimum
+distance of the above linear code and provide a tight upper bound for Artin-Schreier
+curves with degf (x) = 2, and we provide some examples for Artin-Schreier curves for
+degf (x) ≥ 3 with the help of the software Magma.
+2. Preliminaries
+In this section, we introduce the basic results and theory on algebraic function fields
+and coding theory, such as Hilbert’s ramification theory, conductors, Artin symbols,
+cyclotomic function fields, ray class fields and linear codes. For more details, please
+refer to [2, 3, 18, 21, 23].
+2.1. Hilbert’s ramification theory. Let Fq be the finite field with q elements. Let
+K be the rational function field Fq (x), where x is a transcendental element over Fq .
+There are exactly q + 1 rational places of K, that is, the finite place Pα corresponding
+to x − α for all α ∈ Fq and the infinity place ∞ corresponding to 1/x.
+Let F/Fq be a function field with genus g(F ) over the full constant field Fq , which
+is called a global function field. Let PF denote the set of places of F . The place of
+F with degree one is called rational. Let E/Fq be a finite extension of function fields
+F/Fq . The Hurwitz genus formula yields
+2g(E) − 2 = [E : F ] · (2g(F ) − 2) + deg Diff(E/F ),
+
+where Diff(E/F ) stands for the different of the extension E/F (see [23, Theorem
+3.4.13]).
+For a place P ∈ PF and a place Q ∈ PE with Q|P , we denote by d(Q|P ), e(Q|P ) the
+different exponent and ramification index of Q|P , respectively. Then the different of
+E/F is given by
+X
+d(Q|P )Q.
+Diff(E/F ) =
+Q∈PE
+
+If Q|P is unramified or tamely ramified, then d(Q|P ) = e(Q|P ) − 1 by Dedekind’s
+Different Theorem [23, Theorem 3.5.1]. However, if Q|P is wildly ramified, that is,
+e(Q|P ) is divisible by char(Fq ), then it is more complicated to calculate the different
+
+4
+
+LIMING MA AND CHAOPING XING
+
+exponent d(Q|P ). One way to find the different exponent d(Q|P ) is through high
+ramification groups and Hilbert’s different formula.
+The i-th ramification group Gi (Q|P ) of Q|P for each i ≥ −1 is defined by
+Gi (Q|P ) = {σ ∈ Gal(E/F )|νQ (σ(z) − z) ≥ i + 1 for all z ∈ OQ },
+
+where OQ stands for the integral ring of Q in E and νQ is the normalized discrete
+valuation of E corresponding to the place Q. If Q|P is wildly ramified, then the
+different exponent d(Q|P ) is
+∞ 
+
+X
+d(Q|P ) =
+|Gi (Q|P )| − 1
+i=0
+
+from Hilbert’s Different Theorem [23, Theorem 3.8.7].
+
+2.2. Conductor. Let F/Fq be a global function field and let E/Fq be a finite abelian
+extension of F/Fq . Let P ∈ PF be a unramified place in the extension E/F and Q be
+a place of E lying over P . Let a(Q|P ) be the least non-negative integer l such that the
+ramification groups Gi (Q|P ) are trivial for all i ≥ l. The conductor exponent cP (E/F )
+of P in E/F is defined by
+cP (E/F ) :=
+
+d(Q|P ) + a(Q|P )
+.
+e(Q|P )
+
+The conductor of E/F is an effective divisor of F given by
+X
+cP (E/F )P.
+Cond(E/F ) :=
+P ∈PF
+
+The following two lemmas are useful to determine conductor exponents of places in
+abelian extensions (see [21, Theorem 2.3.4] and [21, Lemma 2.3.7]).
+Lemma 2.1. Let E/F be a finite abelian extension of global function fields and let P
+be a place of F . Then
+(i) P is unramified in E/F if and only if cP (E/F ) = 0.
+(ii) P is tamely ramified in E/F if and only if cP (E/F ) = 1.
+(iii) P is widely ramified in E/F if and only if cP (E/F ) ≥ 2.
+Lemma 2.2. Let K ⊆ F ⊆ E be three global function fields with E/K being a finite
+abelian extension. Let P be a place of K and Q be a place of F lying over P . Then we
+have
+cP (F/K) ≤ cP (E/K) ≤ max{cP (F/K), cQ (E/F )}.
+2.3. Artin symbol. Let E/Fq be a finite Galois extension of F/Fq . Let P ∈ PF
+be a unramified place in E/F and Q be a place of E lying over P . Let Z be the
+decomposition field of Q over P . There exists a unique automorphism σ ∈ Gal(E/Z)
+such that
+deg(P )
+σ(z) ≡ z q
+(mod Q) for all z ∈ OQ .
+This
+h unique
+i automorphism σ is called the Frobenius symbol of Q over hP and
+i denoted
+E/F
+E/F
+by Q . Furthermore, if E/F is abelian, then the Frobenius symbol Q does not
+
+ARTIN-SCHREIER CURVES
+
+5
+
+hdepend
+i on the choice of Q,
+h but
+i only on the place of P . Hence, the Frobenius symbol
+E/F
+E/F
+can be written as P and called the Artin symbol of P in E/F .
+Q
+The following result can be found in [21, Proposition 1.4.12]. It characterizes whether
+a place splits completely in an abelian extension in terms of Artin symbols.
+Lemma 2.3. Let E/K be a finite abelian extension and let F be a subfield of E/K.
+Suppose that a place P ∈ PK is unramified in the
+E/K. Then P splits
+h extension
+i
+E/K
+completely in F/K if and only if the Artin symbol P
+belongs to Gal(E/F ).
+
+2.4. Cyclotomic function fields. In this subsection, we briefly review some of the
+fundamental notions and results of cyclotomic function fields. The theory of cyclotomic
+function fields was developed in the language of function fields by Hayes (see [11, 21]).
+Let q be a prime power. Let x be an indeterminate over Fq , R = Fq [x] the polynomial
+ring, K = Fq (x) the quotient field of R, and K ac the algebraic closure of K. Let ϕ be
+the endomorphism given by
+ϕ(z) = z q + xz
+for all z ∈ K ac . Define a ring homomorphism
+
+R → EndFq (K ac ), f (x) 7→ f (ϕ).
+
+Then the Fq -vector space of K ac is made into an R-module by introducing the following
+action of R on K ac , namely,
+z f (x) = f (ϕ)(z)
+for all f (x) ∈ R and z ∈ K ac . For a nonzero polynomial M ∈ R, we consider the set
+of M-torsion points of K ac defined by
+ΛM = {z ∈ K ac |z M = 0}.
+
+In fact, z M is a separable polynomial of degree q d , where d = deg(M). The cyclotomic
+function field over K with modulus M is defined by the subfield of K ac generated
+over K by all elements of ΛM , and it is denoted by K(ΛM ). In particular, we list the
+following facts:
+Proposition 2.4. Let P be a monic irreducible polynomial of degree d in R and let n
+be a positive integer. Then
+(i) [K(ΛP n ) : K] = φ(P n ), where φ(P n ) is the Euler function of P n , i.e., φ(P n ) =
+q (n−1)d (q d − 1).
+(ii) Gal(K(ΛP n )/K) ∼
+= (Fq [x]/(P n ))∗ . The Galois automorphism σf associated to
+f ∈ (Fq [x]/(P n ))∗ is determined by σf (λ) = λf for λ ∈ ΛP n .
+(iii) The zero place of P in K, also denoted by P , is totally ramified in K(ΛP n ) with
+different exponent dP (K(ΛP n )/K) = n(q d − 1)q d(n−1) − q d(n−1) . All other finite
+places of k are unramified in K(ΛP n )/K.
+(iv) The infinite place ∞ of K splits into φ(P n )/(q − 1) places of K(ΛP n ) and the
+ramification index e∞ (K(ΛP n )/K) is equal to q − 1. In particular, Fq is the full
+constant field of K(ΛP n ).
+
+6
+
+LIMING MA AND CHAOPING XING
+
+(v) The genus of K(ΛP n ) is given by
+h
+i
+qd − 1
+2g(K(ΛP n )) − 2 = q d(n−1) (qdn − dn − q)
+−d .
+q−1
+
+2.5. Ray class fields. Let F/Fq be a global function field. Let P be a place of F and
+let FP be the completion of F at P . We still use P to stand for the place of FP lying
+over P . We use OFP and UFP for the valuation ring of FP and the group of units of
+OFP , respectively. For a place of P of F , we consider the n-th unit group of P in FP
+defined by
+(n)
+UFP = {x ∈ OFP : νP (x − 1) ≥ n}
+(0)
+
+and denote by UFP the unit group of P in FP .
+Let JF be the set of ideles of F and let CF be the idele class group JF /F ∗ of F . Let
+S be a non-empty finite subset of PF and let D be an effective divisor of F . Define
+Q
+Q
+(mP )
+the S-congruence subgroup mod D as JSD = P ∈S FP∗ × P ∈S
+/ UFP . Its class group
+is defined by
+CSD = (F ∗ · JSD )/F ∗ .
+Let OS be the holomorphy ring of all functions in F with poles in S. From the weak
+approximation [23, Theorem 1.3.1] or [21, Proposition 2.4.3], the S-ray class group
+mod D is isomorphic to S-ideal class group mod D, i.e.,
+CF /C D ∼
+= JF /(F ∗ · J D ) ∼
+= ClD (OS ).
+S
+
+S
+
+Note that ClD (OS ) is defined as the quotient of the group of fractional ideals of OS
+prime to D by its subgroup of principal ideals. It follows that CSD is a subgroup of
+CF with finite index. Then there exists a unique extension FSD /F such that (F ∗ ·
+NE/F (JE ))/F ∗ = CSD from the existence theorem [21, Theorem 2.5.1]. The field FSD is
+called the S-ray class field with modulus D.
+In particular, if S consists of only one place, an explicit construction of FSD via
+rank one Drinfeld modules has been given by Hayes [12]. Moreover, the degree of the
+extension FSD /F can be found from [3].
+
+Lemma 2.5.
+P Let S be a set consisting of a unique place of F/Fq with degree t > 0.
+Let D = sj=1 cj Qj be a positive divisor of E with supp(D) ∩ S = ∅. Let hF be the
+class number of F . Then we have
+1
+· hF · t · φ(D),
+[FSD : F ] =
+q−1
+Q
+where φ(D) is the Euler function of D, i.e., φ(D) = sj=1 (q deg(Qj ) − 1)q (cj −1)deg(Qj ) .
+The following lemma is useful to determine the relationship of abelian extensions
+and ray class fields (see [21, Theorem 2.5.4]).
+
+Lemma 2.6. (Conductor Theorem) Let E/F be a finite abelian extension of global
+function fields and let S be a non-empty finite subset of PF such that any place in S
+splits completely in E/F . Denote the conductor Cond(E/F ) by C. Then
+(i) E is a subfield of FSC .
+(ii) If D is a positive divisor of F with supp(D) ∩ S = ∅ and E ⊆ FSD , then D ≥ C.
+
+ARTIN-SCHREIER CURVES
+
+7
+
+From the above lemma, it is easy to see that FSD is the largest abelian extension E
+over F such that Cond(E/F ) ≤ D and every place in S splits completely in E.
+2.6. Linear codes. In this subsection, we briefly discuss linear codes. The reader may
+refer to [16] for the details.
+A linear code C of length n over a finite field Fq is an Fq -subspace of Fnq . The
+dimension of C, denoted by dimFq (C), is defined to be the Fq -dimension of C as a
+vector space over Fq . An element of C is called a codeword. The Hamming weight of
+a vector in Fnq is defined to be the number of nonzero coordinates. If dimFq (C) > 0,
+then minimum distance of C is defined to be the smallest Hamming weight of nonzero
+codewords in C.
+An m × n matrix G with entries in Fq is called a generator matrix of C if (i) every
+row of G is a codeword; and (ii) every codeword is a linear combination of rows of
+G. Note that most of textbooks require that the rows of G are linearly independent.
+However, for convenience, we do not require this condition in this paper.
+The following result that characterizes the minimum distance of C in terms of G is
+well known in the coding community. However, this result is not explicitly stated in
+literatures. For completeness, we provide a proof below.
+Lemma 2.7. Let G be a generator matrix of C of dimension k. Then the minimum
+distance of C is d if and only if
+(i) any n − d + 1 columns of G form a matrix of rank k; and
+(ii) there exist n − d columns of G that form a matrix of rank at most k − 1.
+Proof. Let H be a k × n submatrix of G such that the rows of H form a basis of C.
+Assume that the minimum distance of C is d. Then there exists a codeword c of C
+with Hamming weight d. Without loss of generality, we may assume that the last d
+positions of c are nonzero. As c is a nonzero linear combination of the rows of H, this
+implies that the first n − d rows are linearly independent, i.e., the rank of the first n − d
+rows of H is less than k. As every row of G is a linear combination of the rows of H,
+the rank of the first n − d rows of H is equal to the rank of the first n − d rows of
+G. This proves (ii). Now suppose that, without loss of generality, the first n − d + 1
+columns of G form a matrix of rank less than k, then the first n − d + 1 columns of
+G form a matrix of rank less than k as well. This implies that there exists a nonzero
+codeword with the first n − d + 1 positions equal to 0, i.e., this codeword has Hamming
+weight at most d − 1. This contradicts the fact that d(C) = d.
+Now assume that both (i) and (ii) hold. Again without loss of generality, we assume
+that the first n − d columns of G has rank less than k. Then the fist n − d columns of
+G has rank less than k as well. There there is a nonzero codeword c that is a linear
+combination of rows of H such that the first n − d positions are zero. This implies that
+the Hamming weight of c is at most d, i.e., d(C) ≤ d. Suppose that d(C) < d, then
+in a similar way one can show that there are n − k + 1 columns that form a matrix of
+rank less than k. This conviction shows that d(C) ≥ d. The proof is completed.
+
+
+8
+
+LIMING MA AND CHAOPING XING
+
+3. Artin-Schreier curves as subfields of cyclotomic function fields
+In this section, we will determine the conductors of Artin-Schreier curves and the
+cyclotomic function fields over the rational function field Fq (x) with modulus x−n−1
+for any integer n ≥ 1. In particular, we will show that the function field of an ArtinSchreier curve y p − y = f (x) with f (x) ∈ Fq [x] can be viewed as a subfield of some
+cyclotomic function field. From now onwards, we denote by K the rational function
+field Fq (x).
+3.1. Artin-Schreier curves. Let p be a prime and let q = pm for some integer m ≥ 1.
+Consider the Artin-Scherier curve defined by
+y p − y = f (x),
+
+where f (x) is a polynomial of degree r in Fq [x]. The corresponding function field is
+given by Ef := Fq (x, y) with y p − y = f (x). From [23, Proposition 3.7.8], the properties
+of Artin-Schreier curves can be summarized as follows.
+Lemma 3.1. Let K/Fq be the rational function field of characteristic p > 0. Let f (x)
+be a polynomial in Fq [x] of degree r with gcd(r, p) = 1. Let
+Ef = K(y) = Fq (x, y) with y p − y = f (x).
+
+For any place P ∈ PK , we define the integer mP by
+(
+ℓ
+if ∃z ∈ K satisfying νP (u − (z p − z)) = −ℓ < 0 and ℓ 6≡ 0(mod p),
+mP =
+−1 if νP (u − (z p − z)) ≥ 0 for some z ∈ K.
+Then we have:
+(a) Ef /K is a cyclic Galois extension of degree p. The automorphisms of Ef /K
+are given by σ(y) = y + u with u = 0, 1, · · · , p − 1.
+(b) P is unramified in Ef /K if and only if mP = −1.
+(c) P is totally ramified in Ef /K if and only if mP > 0. Denote by P ′ the unique
+place of Ef lying over P . Then the different exponent d(P ′|P ) is given by
+d(P ′|P ) = (p − 1)(mP + 1).
+
+(d) The infinity place ∞ of K, i.e., the pole of x, is the unique ramified place in
+Ef /K, the full constant field of Ef is Fq and
+(p − 1)(r − 1)
+.
+2
+Proposition 3.2. Let f (x) be a polynomial in Fq [x] of degree r ≥ 1 with gcd(r, p) = 1.
+Let ∞ be the pole of x in the rational function field K. Denote by Ef the Artin-Schreier
+curve defined by y p − y = f (x). Then the conductor of Ef /K is
+g(Ef ) =
+
+Cond(Ef /K) = (r + 1)∞.
+
+Proof. Let P∞ be the place of Ef lying above ∞. From Lemma 3.1, P∞ |∞ is the
+unique ramified place in Ef /K. Then we have ν∞ (f (x)) = −deg(f (x)) = −r <
+0 and gcd(r, p) = 1, i.e., m∞ = r. Hence, the different exponent of P∞ |∞ is given by
+d(P∞ |∞) = (p − 1)(m∞ + 1) = (p − 1)(r + 1).
+
+ARTIN-SCHREIER CURVES
+
+9
+
+Let σ be the automorphism of Ef /K defined by σ(y) = y + u with u ∈ Fp and let t be
+a prime element of P∞ . Then we have νP∞ (σ(t) − t) = m∞ + 1 = r + 1 for σ 6= 1 from
+the proof of [23, Proposition 3.7.8]. Hence, the higher ramification groups of P∞ |∞
+are given by
+G0 (P∞ |∞) = G1 (P∞ |∞) = · · · = Gr (P∞ |∞) = Gal(Ef /K) and Gr+1 (P∞ |∞) = {1}.
+Thus, the conductor exponent of ∞ in Ef /K is
+c∞ (Ef /K) =
+
+d(P∞ |∞) + a(P∞ |∞)
+(p − 1)(r + 1) + (r + 1)
+=
+= r + 1.
+e(P∞ |∞)
+p
+
+This completes the proof from Lemma 2.1.
+
+
+
+3.2. Subfields of cyclotomic function fields. Let T = (x − α)−1 for α ∈ Fq and n
+be a positive integer. Then we have K = Fq (x) = Fq (T ). Let Kn be the cyclotomic
+function field K(ΛT n+1 ) with modulus T n+1 over K. In fact, the cyclotomic function
+field Kn is an abelian extension over K of degree q n (q − 1). Moreover, we have the
+following facts from [11, 17]:
+Lemma 3.3. Let Kn = K(ΛT n+1 ) denote the cyclotomic function field with modulus
+T n+1 over the rational function field K. Then one has
+(i) Gal(Kn /K) ∼
+= (Fq [T ]/(T n+1 ))∗ . The Galois automorphism σf associated to f ∈
+(Fq [T ]/(T n+1 ))∗ is determined by σf (λ) = λf for any generator λ ∈ ΛT n+1 .
+(ii) The zero place of T in K, which is the pole ∞ of x in K, is totally ramified
+in Kn . Let Q∞ denote the unique place of Kn lying over ∞. The different
+exponent of Q∞ |∞ is d(Q∞ |∞) = (n + 1)q n (q − 1) − q n .
+(iii) The pole place of T in K, which is the zero place Pα of x − α in K, splits into
+q n rational places with ramification index q − 1. In particular, Fq is the full
+constant field of Kn .
+(iv) A monic irreducible polynomial P ∈ Fq [T ] is unramified in Kn /K if P does not
+divide T n+1 .
+n+1
+(v) For a monic
+, the Artin
+h
+iirreducible polynomial P ∈ Fq [T ] not dividing T
+symbol
+
+Kn /K
+P
+
+satisfies
+
+
+
+
+Kn /K
+: λ 7→ λP
+P
+
+for any generator λ of ΛT n+1 .
+(vi) The automorphism group of Kn over Fq is given by
+Aut(Kn /Fq ) := {σ : Kn → Kn |σ is an Fq -automorphism of Kn } = Gal(Kn /K).
+In the following, we need to determine the conductor of Kn /K.
+Proposition 3.4. Let ∞ be the pole place of x and let Pα be the zero place of x − α
+in K. Then the conductor of Kn /K is
+Cond(Kn /K) = (n + 1) · ∞ + min{1, q − 2} · Pα .
+
+10
+
+LIMING MA AND CHAOPING XING
+
+Furthermore, let F be the subfield of Kn fixed by F∗q , then the conductor of F/K is
+Cond(F/K) = (n + 1) · ∞.
+Proof. Let Pα be the zero place of x − α in K. In fact, Pα is the pole place of T in
+K. Let Qα be any place of Kn lying above Pα . Then we have e(Qα |Pα ) = q − 1 from
+Lemma 3.3(iii). If q > 2, then Qα |Pα is tamely ramified and the conductor exponent of
+Pα in Kn /K is 1 from Lemma 2.1(ii); otherwise, Qα |Pα is unramified and the conductor
+exponent of Pα in Kn /K is 0 from Lemma 2.1(i).
+Let ∞ be the pole place of x. From Lemma 3.3(ii), ∞ is totally ramified in Kn /K.
+Let Q∞ denote the unique place of Kn lying over ∞. Then we have e(Q∞ |∞) = q n (q−1)
+and the following claim holds true.
+Claim: The conductor exponent of ∞ in Kn /K is n + 1.
+For any automorphism
+σ ∈ Gal(Kn /K), there exists an equivalence class of a polyPn
+i
+nomial f (T ) = i=0 ai T in Fq [T ]/(T n+1 ) such that σ(λ) = λf . Since λT = λq + T λ
+and νQ∞ (T ) = q n (q − 1), we have
+νQ∞ (σ(λ) − λ) = νQ∞ (λf − λ)
+n
+
+n−1
+
++ · · · + a1 λT + (a0 − 1)λ)
+= νQ∞ (an λT + an−1 λT
+
+1,
+if a0 6= 1
+
+
+
+q,
+if a1 6= 0, a0 = 1
+=
+
+···
+
+
+ n
+q , if an 6= 0, an−1 = · · · = a1 = 0, a0 = 1.
+
+Hence, the orders of higher ramification groups gi = |Gi (Q∞ |∞)| can be determined
+explicitly as follows: g0 = q n (n − 1), g1 = g2 = · · · = gq−1 = q n , gq = · · · = gq2 −1 =
+q n−1 , · · · , gqn−1 = · · · = gqn −1 = q and gqn = 1. Hence, the conductor of ∞ in Kn /K is
+c∞ (Kn /K) =
+
+(n + 1)q n (q − 1) − q n + q n
+d(Q∞ |∞) + a(Q∞ |∞)
+=
+= n + 1.
+e(Q∞ |∞)
+q n (q − 1)
+
+Thus, the first part follows from Lemma 3.3(iv) and Lemma 2.1.
+Let F be the subfield of Kn fixed by F∗q . From Galois theory, Kn /F is a finite
+extension of degree q − 1 and [F : K] = q n . It follows that Pα is tamely ramified in
+Kn /F with ramification index q − 1 and Pα is unramified in F/K. From Lemma 2.1,
+the conductor exponent of Pα in F/K is cPα (F/K) = 0. Let P∞ be the restriction of
+Q∞ in F . The place ∞ is totally ramified in Kn /K with ramification index (q − 1)q n
+and P∞ is tamely ramified in Kn /F . From Lemma 2.1, we have cP∞ (Kn /F ) = 1.
+Furthermore, from Lemma 2.2, we have
+c∞ (F/K) ≤ c∞ (Kn /K) = n + 1 ≤ max{c∞ (F/K), cP∞ (Kn /F )}.
+
+It follows that c∞ (F/K) = n + 1. Hence, we have Cond(F/K) = (n + 1) · ∞.
+
+
+
+Now we can obtain the main result of this section.
+
+Theorem 3.5. Let f (x) be a polynomial in Fq [x] of degree r. Let Ef = Fq (x, y) be the
+function field of an Artin-Schreier curve defined by y p − y = f (x). Assume that there
+are at least one rational place Pα ∈ PK such that Pα splits completely in Ef /K. Then
+
+ARTIN-SCHREIER CURVES
+
+11
+
+the Artin-Schreier function field Ef is a subfield of the cyclotomic function field Kt for
+any integer t ≥ r.
+(r+1)∞
+
+: K] = q r . From Proposition 3.4, the place
+Proof. From Lemma 2.5, we have [KPα
+Pα is splitting completely in F/K and Cond(F/K) = (n + 1) · ∞. From Lemma 2.6,
+(r+1)∞
+(r+1)∞
+we have F ⊆ KPα
+. Together with the fact [F : K] = q r , we have KPα
+= F, i.e,
+(r+1)∞
+the ray class field KPα
+is the subfield F of Kr fixed by F∗q .
+As we know Pα splits completely in Ef /K and Cond(Ef /K) = (r + 1)∞ from
+(r+1)∞
+Proposition 3.2, it follows that Ef is a subfield of KPα
+= F from Lemma 2.6.
+Hence Ef is a subfield of Kr . Since Kr is a subfield of Kt for any t ≥ r from the
+definition of cyclotomic function fields, Ef is a subfield of Kt as well.
+
+From Lemma 3.3, the cyclotomic function field Kr is an abelian extension of K with
+Galois group Gal(Kr /K) ∼
+= (Fq [T ]/(T r+1))∗ . It follows that Kr /Ef is a Galois extension
+with Galois group Gal(Kr /Ef ) being a subgroup of Gal(Kr /K). From Galois theory,
+the Artin-Schreier function field Ef is the subfield of Kr fixed by Gal(Kr /Ef ). Hence,
+we can estimate the number of rational places of Artin-Schreier curves by studying fixed
+subfields of subgroups of Gal(Kr /K) ∼
+= Aut(Kr /Fq ) with index p, which is very similar
+to the method of systematically constructing maximal function fields via automorphism
+groups of Hermitian function fields [5, 9, 18].
+4. An upper bound of the number of rational places of Artin-Schreier
+curves
+Let q = pm be a prime power and let Fq be the finite field with q elements, i.e.,
+Fq = {0, α1 , α2 , · · · , αq−1 }. Let G = Gal(Kr /K)/F∗q ∼
+= (Fq [T ]/(T r+1 ))∗ /F∗q . The set of
+G consists of elements:
+G∼
+= (Fq [T ]/(T r+1))∗ /F∗ = {F∗ (1 + a0 T + · · · + ar T r + (T r+1 )) : ai ∈ Fq for 1 ≤ i ≤ r}.
+q
+
+q
+
+We can identify 1 + a0 T + · · · + ar T r with the equivalence class F∗q (1 + a0 T + · · · +
+ar T r + (T r+1 )). For simplicity, we assume that r < p. The order of any non-identity
+element in (Fq [T ]/(T r+1 ))∗ /F∗q is p, since
+
+(1 + a1 T + a2 T 2 + · · · + ar T r )p = 1 + ap1 T p + ap2 T 2p + · · · + apr T rp ≡ 1(mod T r+1 ).
+Hence, G can be viewed as a vector space over Fp , i.e., G ∼
+= (Fq [T ]/(T r+1))∗ /F∗q ∼
+= Frm
+p .
+In order to estimate the number of rational places of the Artin-Scherier function
+field Ef , we need to study the number of rational places P of K such that its Artin
+symbol [ KrP/K ] is contained in Gal(Kr /Ef ). Let G be any subgroup of Gal(Kr /K) ∼
+=
+r+1 ∗
+(Fq [T ]/(T )) with index [Gal(Kr /K) : G] = p. Now we consider the rational places
+of K corresponding to linear polynomials 1 + βT for β ∈ F∗q , which are equivalent to
+rational places with respect to T + β −1 in Fq (T ) or x − (α − β) in Fq (x). We need to
+estimate the size of the set {β ∈ F∗q : 1 + βT ∈ G}.
+We view 1 + αi T as a column vector of dimension rm in G. Let A = (1 + α1 T, 1 +
+α2 T, · · · , 1+αq−1 T ) be the matrix generated by column vectors 1+αi T for 1 ≤ i ≤ q−1.
+We need to find the smallest d such that any n − d + 1 columns of A form a submatrix
+
+12
+
+LIMING MA AND CHAOPING XING
+
+of rank rm. Assume that {1 + αi T }i∈I with I ⊆ [q − 1] := {1, 2, · · · , q − 1} form a
+submatrix of rank rm. Then we have the following result.
+Lemma 4.1. The space spanned by {1 + αi T }i∈I with I = {i1 , i2 , · · · , it } ⊆ [q − 1]
+
+
+α i1 α i2 · · · α it
+ αi21 αi22 · · · αi2t 
+rm×(q−1)
+has Fp -dimension rm if and only if GI := 
+∈ Fp
+has the
+.. . .
+.. 
+ ...
+
+. .
+.
+
+full rank rm, here αik
+
+αir1 αir2 · · · αirt
+is viewed as a column vector under a basis of Fq over Fp for
+
+1 ≤ k ≤ r and i ∈ I.
+
+Proof. Assume that {1 + αi T }P
+i∈I with I = {i1 , i2 , · · · , it } ⊆ [q − 1] generates the vector
+space G over Fp . For any 1 + rk=1 bk T k + (T r+1 ) ∈ G, there exist elements ui for i ∈ I
+such that
+r
+X
+Y
+1+
+bk T k ≡
+(1 + αi T )ui (mod T r+1 ),
+k=1
+
+Pr
+
+i∈I
+k
+
+i.e., i∈I (1 + αi T ) = 1 + k=1 bk T + T r+1 h(T ) for some h(T ) ∈ Fq [T ]. Taking the
+logarithm and using the Taylor expansion of log function, we have
+!
+∞
+r
+X
+X
+X X
+(−1)j−1 αij j
+k
+r+1
+bk T + T h(T )
+=
+ui ln(1 + αi T ) =
+ui
+ln 1 +
+T
+j
+j=1
+i∈I
+i∈I
+k=1
+!
+∞
+X (−1)j−1 X
+ui αij T j .
+=
+j
+j=1
+i∈I
+Q
+
+ui
+
+Comparing with the coefficients of T j at the both sides for 1 ≤ j ≤ r, we have
+!
+n
+X
+(−1)ℓ−1 (b1 T + · · · + br T r )ℓ
+(−1)j−1 X
+ui αij
+= the coefficient of T j in
+j
+ℓ
+i∈I
+ℓ=1
+=
+
+j
+
+the coefficient of T in
+
+j
+X
+(−1)ℓ−1 (b1 T + · · · + bj T j )ℓ
+ℓ=1
+
+Hence, we have
+X
+i∈I
+
+ℓ
+
+ui αij = (−1)j−1 jbj + fj (b1 , b2 , · · · , bj−1 ),
+
+for some fj ∈ Fq [X1 , X2 , · · · , Xj−1 ]. That is to say, the system of linear equations
+
+
+ 
+
+α i1 α i2 · · · α it
+xi1
+b1
+ αi21 αi22 · · · αi2t   xi2  
+
+b21 − 2b2
+ .
+
+
+
+
+ := b
+=
+.
+.
+.
+.
+ ..
+
+.. · · · ..   ..  
+..
+αir1 αir2 · · · αirt
+
+.
+
+xit
+
+(−1)r−1 rbr + fr (b1 , b2 , · · · , br−1 )
+
+has at least one solution (ui1 , ui2 , · · · , uit ) ∈ Ftp for every tuple (b1 , b2 , · · · , br ) ∈ Frq .
+We claim that the rank of GI must be rm. Suppose that the rank of GI is strictly
+less than rm. When bi runs through F∗q for each 1 ≤ i ≤ r, there must exist an tuple
+
+ARTIN-SCHREIER CURVES
+
+13
+
+(b1 , b2 , · · · , br ) such that the rank of GI is strictly less than the augmented matrix
+(GI , b) in the above system of linear equations. Thus, we obtain a contradiction.
+On the other hand, if GI has rank rm, then the above system of linear equations
+has at least a solution for each tuple (b1 , b2 , · · · , br ) ∈ Frq . That is to say any element
+P
+1 + rk=1 bk T k ∈ G can be generated by {1 + αi T }i∈I with I = {i1 , i2 , · · · , it } ⊆
+[q − 1].
+
+Remark 4.2. The function fj in the above proof can be recursively computed. For
+instance, for 1 ≤ j ≤ 5, it is easy to compute that
+P
+ui αi = b1 ,
+
+
+Pi∈I
+
+2
+2
+
+Pi∈I ui αi = b1 − 2b2 ,
+3
+3
+i∈I ui αi = b1 − 3b1 b2 + 3b3 ,
+
+P
+
+
+ui αi4 = b41 − 4b21 b2 + 2b22 + 4b1 b3 − 4b4 ,
+
+
+Pi∈I
+5
+5
+3
+2
+2
+i∈I ui αi = b1 − 5b1 b2 + 5b1 b3 + 5b1 b2 − 5b1 b4 − 5b2 b3 + 5b5 .
+Let C be the code generated by
+
+
+α1 α2 · · · αq−1
+2
+
+ α12 α22 · · · αq−1
+,
+∈ Frm×(q−1)
+(6)
+A=
+.. 
+..
+p
+
+ ...
+.
+. ···
+r
+α1r α2r · · · αq−1
+
+where αji ∈ F∗q is viewed as a column vector of dimension m under a fixed Fp isomorphism between Fq and Fm
+p for each 1 ≤ i ≤ r and 1 ≤ j ≤ q − 1. For given
+pm and r, the code C is uniquely determined up to equivalence. Hence, the minimum
+distance d(C) of C is a uniquely determined function of the variables p, m and r. We
+denote by d(p, m, r) the minimum distance d(C) of C.
+
+Theorem 4.3. Let f (x) ∈ Fq [x] be a polynomial of degree at most r, then the number
+of rational places of Artin-Scherier function field Ef = Fq (x, y) defined by y p −y = f (x)
+is upper bounded by
+(7)
+
+Nf ≤ 1 + p(q − d(p, m, r)).
+
+Moreover, there exists a polynomial h(x) ∈ Fq [x] of degree at most r such that Nh =
+1 + p(q − d(p, m, r)).
+Proof. Assume that there are at least one rational place Pα ∈ PK such that Pα splits
+completely in Ef /K. From Theorem 3.5, Ef is the subfield of Kr fixed by some
+subgroup G of Gal(Kr /K). As [Ef : K] = p, the index [Gal(Kr /K) : G] is equal to p.
+A rational place corresponding to T + β −1 in Fq (T ) or Pα−β in Fq (x) splits completely
+in Ef /K, i.e., y p − y = f (α − β) has p solutions for β ∈ F∗q , if and only if 1 + βT belong
+to G. Suppose that there are exactly t rational places of K that split completely in Ef ,
+i.e., Nf = 1 + pt, then there exist pairwise distinct elements {α1 , . . . , αt−1 } of F∗q such
+that the space spanned by {1 + α1 T, . . . , 1 + αt−1 T } has dimension at most rm − 1.
+This implies that t − 1 ≤ (q − 1) − d(p, m, r) by Lemma 2.7. This proves the inequality
+(7).
+
+14
+
+LIMING MA AND CHAOPING XING
+
+By Lemma 2.7 again, there exists a subset I ⊆ [q − 1] of size |I| = q − 1 − d(p, m, r)
+such that the space spanned by {1 + αi T }i∈I has dimension at most rm − 1. Let G be
+an Fp -subspace of dimension mr −1 that contains {1+αi T }i∈I and let L be the subfield
+of F fixed by G, where F is the subfield of Kr fixed by F∗q . Then L/K is a Galois
+extension of degree p. Thus, we must have that L = Fq (x, y) with y p − y = h(x)/u(x),
+where h(x), u(x) ∈ Fq [x] with gcd(h(x), u(x)) = 1. As the pole of x is the unique place
+that ramifies in L/K, we must have u(x) = 1. The completes the proof.
+
+Theorem 4.4. Let d(p, m, r) be the minimum distance d(C) of C defined as above.
+Our bound (7) given in Theorem 4.3 is upper bounded by the Serre bound for the number
+of rational places of Artin-Schreier curves, i.e.,
+(r − 1)(p − 1) √
+1 + p(q − d(p, m, r)) ≤ 1 + q +
+⌊2 q⌋
+2
+Proof. From Theorem 4.3, there exists a polynomial h(x) ∈ Fq [x] of degree at most r
+such that Nh = 1 + p(q − d(p, m, r)). From the Serre bound, the number of rational
+places of Artin-Schreier curve y p − y = h(x) is upper bounded
+(degh(x) − 1)(p − 1) √
+(r − 1)(p − 1) √
+Nh ≤ 1 + q +
+⌊2 q⌋ ≤ 1 + q +
+⌊2 q⌋.
+2
+2
+This completes the proof.
+
+Remark 4.5. By making use of the Serre bound, we derive a lower bound on the
+minimum distance of the linear code generated by the matrix of (6), that is,
+(r − 1)(p − 1) √
+⌊2 q⌋.
+d(p, m, r) ≥ q − pm−1 −
+2p
+If one can provide a good lower bound on the minimum distance d(p, m, r), then the
+Serre bound for the Artin-Schreier curves defined by y p − y = f (x) can be improved.
+5. Bounds and examples
+In Section 4, we have shown that our bound (7) given in Theorem 4.3 is upper
+bounded by the Serre bound for the number of rational places of an Artin-Schreier
+curve Ef , i.e.,
+(r − 1)(p − 1) √
+⌊2 q⌋.
+2
+In order to obtain a tight upper bound on the number of rational places of ArtinSchreier curve Ef = Fq (x, y) defined by y p − y = f (x), it remains to determine the
+minimum distance d(p, m, r) of C which is generated by the matrix
+
+
+α1 α2 · · · αq−1
+2
+
+ α12 α22 · · · αq−1
+rm×(q−1)
+
+,
+A=
+.
+.
+.
+ ..
+.. · · ·
+..  ∈ Fp
+Nf ≤ 1 + p(q − d(p, m, r)) ≤ 1 + q +
+
+r
+α1r α2r · · · αq−1
+
+where αji ∈ F∗q is viewed as a column vector of dimension m under a fixed Fp isomorphism between Fq and Fm
+p for each 1 ≤ i ≤ r and 1 ≤ j ≤ q − 1. However,
+
+ARTIN-SCHREIER CURVES
+
+15
+
+the function of minimum distances d(p, m, r) hasn’t been determined explicitly. In
+this section, we will determine the minimum distance d(p, m, r) for r = 2 and provide
+many examples of minimum distance d(p, m, r) for r ≥ 3 with the help of the software
+Magma.
+5.1. Bounds for degf (x) = 2. In this subsection, we will determine the minimum
+distance of the code C defined by
+
+
+α1 α2 · · · αq−1
+,
+2
+α12 α22 · · · αq−1
+where each αji is viewed as a column vector under a fixed Fp -basis {γ1 , · · · , γm } of Fq
+for 1 ≤ i ≤ 2 and 1 ≤ j ≤ q − 1.
+Lemma 5.1. Let C be a code defined by the above matrix. Then we have
+C = {(Tr(ax2 + bx))x∈F∗q | a, b ∈ Fq }.
+Proof. Let
+a basis
+Pm of Fq over Fp . Then there exist a unique expression
+Pγ1 , γ2, · · · , γm be
+2
+a
+γ
+and
+α
+=
+for αi = m
+i
+j=1 bij γj for some aij , bij ∈ Fp , respectively. Let G be
+j=1 ij j
+the matrix defined by
+
+
+a11 a21 · · · aq−1,1
+..
+..
+
+ ..
+.
+. ···
+
+ .
+
+
+ a1m a2m · · · aq−1,m 
+G=
+.
+ b11 b21 · · · bq−1,1 
+
+ .
+..
+..
+
+ ..
+.
+. ···
+b1m b2m · · · bq−1,m
+
+The code C is generated by the rows of above matrix G. Let {β1 , β2 , · · · , βm } be the
+dual basis of {γ1 , γ2 , · · · , γm }. Then we have
+(Tr(βi α1 ), Tr(βi α2 ), · · · , Tr(βi αq−1 )) = (a1i , a2i , · · · , aq−1,i )
+and
+2
+(Tr(βi α12 ), Tr(βi α22 ), · · · , Tr(βi αq−1
+)) = (b1i , b2i , · · · , bq−1,i ).
+
+Hence, we have
+
+C = {(Tr(ax2 + bx))x∈F∗q | a, b ∈ Fq }.
+
+
+
+In order to determine the minimum distance of C, it is sufficient to determine the
+size of the set {x ∈ F∗q : Tr(ax2 + bx) = 0}. Let p be an odd prime, q = pm and let
+ζ1 , ζ2P
+, · · · , ζm be a basis of Fq over Fp . Then there exists a unique linear combination
+∗
+x= m
+i=1 xi ζi with xi ∈ Fp . For any nonzero element a ∈ Fq ,
+2
+
+Tr(ax ) = Tr(a(
+
+m
+X
+i=1
+
+2
+
+xi ζi ) ) =
+
+m
+X
+
+i,j=1
+
+Tr(aζi ζj )xi xj
+
+16
+
+LIMING MA AND CHAOPING XING
+
+is a quadratic form in n indeterminates x1 , x2 , · · · , xm over Fp . The function Tr(ax2 )
+is non-degenerate quadratic form, since a(x + z)2 − ax2 = 2axz + z 2 is permutation of
+Fq for any nonzero z ∈ F∗q .
+The following two lemmas are very useful to determine the number of solutions of
+equations in quadratic forms from [15, Theorem 6.26 and 6.27]. Let v be an integervalued function defined by v(c) = −1 for c ∈ F∗q and v(0) = q − 1.
+Lemma 5.2. Let f be a nondegenerate quadratic form over Fq for odd prime power q
+in an even number n of indeterminates. Then for c ∈ Fq the number of the equation
+f (x1 , x2 , · · · , xn ) = c in Fnq is
+q n−1 + v(c)q (n−2)/2 η((−1)n/2 ∆),
+
+where η is the quadratic character of Fq and ∆ is the determinant of f .
+Lemma 5.3. Let f be a nondegenerate quadratic form over Fq for odd prime power
+q in an odd number n of indeterminates. Then for c ∈ Fq the number of the equation
+f (x1 , x2 , · · · , xn ) = c in Fnq is
+q n−1 + q (n−1)/2 η((−1)(n−1)/2 c∆),
+
+where η is the quadratic character of Fq and ∆ is the determinant of f .
+Proposition 5.4. Let p be an odd prime, q = pm and C be the code defined as above.
+If m is even, then the minimum distance of C is
+m−2
+
+d(p, m, 2) = (p − 1)pm−1 − (p − 1)p 2 .
+
+If m is odd, then the minimum distance of C is
+
+m−1
+
+d(p, m, 2) = (p − 1)pm−1 − p 2 .
+
+In particular, the code C is a q-ary [q − 1, 2m, d(p, m, 2)] linear code.
+
+Proof. As we have shown that Tr(ax2 ) is a nondegenerate quadratic form, the equation
+!
+m
+m
+m
+m
+X
+X
+X
+X
+2
+2
+Tr(ax + bx) = Tr a(
+xi ζi ) + b
+xi ζi =
+Tr(aζi ζj )xi xj +
+Tr(bζi )xi = 0
+i=1
+
+i=1
+
+i,j=1
+
+i=1
+
+2
+is equivalent to the equation a1 y12 + a2 y22 + · · · + am ym
++ b1 y1 + b2 y2 + · · · + bm ym = 0 for
+∗
+ai ∈ Fp and bi ∈ Fp after a nonsingular linear transformation. There is a one-to-one
+correspondence between b ∈ Fq and (b1 , b2 , · · · , bm ) ∈ Fm
+p . Let zi = yi + bi /2ai for
+Pm 2
+1 ≤ i ≤ m and ca,b = i=1 bi /4ai . Then the equation Tr(ax2 + bx) = 0 is equivalent
+
+to the following form
+
+2
+a1 z12 + a2 z22 + · · · + am zm
+= ca,b .
+Let us first consider the case when m is even. From Lemma 5.2, the number of
+solutions of the equation with the non-degenerate quadratic form Tr(ax2 + bx) = 0 is
+m−2
+
+m
+
+pm−1 + v(ca,b )p 2 η((−1) 2 ∆a ),
+Q
+where η(·) = ( p· ) is the quadratic character or Legendre symbol of Fp and ∆a = m
+i=1 ai
+is the determinant of the quadratic form. Hence, the possible smallest Hamming weight
+
+ARTIN-SCHREIER CURVES
+
+17
+
+m−2
+
+of nonzero codewords of C is q − pm−1 − (p − 1)p 2 . It remains to prove that there
+m
+exists a ∈ F∗q such that η((−1) 2 ∆a ) = 1 for the quadratic form Tr(ax2 ). Using the
+technique of double counting, we have
+X
+X
+|{a ∈ F∗q : Tr(ax2 ) = 0}|
+|{x ∈ Fq : Tr(ax2 ) = 0}| =
+x∈Fq
+
+a∈F∗q
+
+= (q − 1)(pm−1 − 1) + (q − 1)
+= pm−1 (q − 1).
+m
+
+Thus, there are exactly one-half elements a ∈ F∗q such that η((−1) 2 ∆a ) = 1 and onem
+half elements a ∈ F∗q such that η((−1) 2 ∆a ) = −1. It follows that there exists an
+m−2
+codeword in C with Hamming weight q − pm−1 − (p − 1)p 2 . Hence, the minimum
+m−2
+distance of C is q − pm−1 − (p − 1)p 2 .
+If m is odd, then the number of solutions of Tr(ax2 + bx) = 0 is
+m−1
+
+m−1
+
+N = pm−1 + p 2 η((−1) 2 ca,b ∆a )
+from Lemma 5.3. It is easy to check that x2 + bx is a permutation of Fq , we have
+X
+|{x ∈ Fq : Tr(x2 + bx) = 0}| = pm−1 q.
+(8)
+b∈Fq
+
+Moreover, there exists an element b ∈ F∗q such that c1,b 6= 0. It follows that there are
+m
+at least one element b ∈ F∗q such that η((−1) 2 c1,b ∆1 ) = 1 from Equation (8) and the
+m−1
+Hamming weight of Tr(x2 + bx)x∈F∗q is q − pm−1 − p 2 . Hence, the minimum distance
+m−1
+
+of C is q − pm−1 − p 2 .
+From Theorem 4.3 and Proposition 5.4, we have the following tight bound for the
+number of rational places of Artin-Schreier curves defined by y p − y = f (x) with
+degf (x) = 2.
+Theorem 5.5. The number of rational places of the function field Ef = Fq (x, y) of
+Artin-Scherier curve defined by y p − y = f (x) with degf (x) = 2 is upper bounded by
+(
+m+1
+q+1+p 2
+if m is odd,
+N(Ef ) ≤ 1 + p(q − d(p, m, 2)) =
+m
+q + 1 + (p − 1)p 2
+if m is even.
+Moreover, the above upper bound can be achieved by the number of rational places of
+Artin-Scherier curves.
+Remark 5.6. From Lemma 3.1, the genus of the Artin-Scherier curve Ef is
+(degf − 1)(p − 1)
+p−1
+=
+2
+2
+and the Hasse-Weil upper bound is given by
+√
+√
+q + 1 + 2g(Ef ) q = q + 1 + (p − 1) q.
+g(Ef ) =
+
+If m is even, the bound given in Theorem 5.5 is the same as the Hasse-Weil bound.
+For even m, there are maximal curves given in the form of Artin-Schreier curves with
+
+18
+
+LIMING MA AND CHAOPING XING
+
+genus (p − 1)/2. If m is odd, the bound given in Theorem 5.5 is better than the Serre
+√
+bound. Roughly speaking, a factor p can be removed from the Hasse-Weil bound
+√
+N − q − 1 ≤ (p − 1) q.
+5.2. Examples for degf (x) ≥ 3. Unfortunately we can’t determine the exact value
+of minimum distance d(p, m, r) for r ≥ 3. However, we provide some examples of the
+minimum distance d(p, m, r) with the help of the software Magma in this subsection.
+Example 1. If degf (x) = 3, then the genus of the Artin-Scherier curve Ef is
+(degf − 1)(p − 1)
+=p−1
+2
+and the Hasse-Weil upper bound is given by
+√
+√
+q + 1 + 2g(Ef ) q = q + 1 + 2(p − 1) q.
+g(Ef ) =
+
+(1) If q = 72 , then the code C is a [48, 6, 34] linear code. From Theorem 4.3, the
+number of rational places is upper bounded by
+N(Ef ) ≤ 1 + 7 × (49 − 34) = 106,
+√
+√
+while the Hasse-Weil bound is q + 1 + 2g(Ef ) · q = 49 + 1 + 2 × 6 × 49 = 134.
+For more examples, please refer to Table 1. From the table, we can see that our
+bound is indeed better than the Hasse-Weil bound. Furthermore, if our bound
+achieves the Hasse-Weil bound, then there exist maximal function fields given
+by Artin-Schreier curves.
+(2) If q = 53 , then the code C is a [124, 9, 90] linear code. From Theorem 4.3, the
+number of rational places is upper bounded by
+N(Ef ) ≤ 1 + 5 × (125 − 90) = 176,
+√
+√
+while the Serre bound is q + 1 + g(Ef ) · [2 q] = 125 + 1 + 4 × [2 × 125] = 214.
+For more examples, please refer to Table 2.
+Example 2. If degf (x) = 4, then the genus of Ef is
+(degf − 1)(p − 1)
+3(p − 1)
+=
+,
+2
+2
+and the Hasse-Weil upper bound is given by
+√
+√
+q + 1 + 2g(Ef ) q = q + 1 + 3(p − 1) q.
+g(Ef ) =
+
+(1) If q = 52 , then the code C is a [24, 8, 12] linear code. From Theorem 4.3, the
+number of rational places is upper bounded by
+N(Ef ) ≤ 1 + 5 × (25 − 12) = 66,
+√
+√
+while the Hasse-Weil bound is q + 1 + 2g(Ef ) q = 25 + 1 + 2 × 6 × 25 = 86.
+For more examples, please refer to Table 3.
+
+ARTIN-SCHREIER CURVES
+
+19
+
+Table 1. q = p2 , degf (x) = 3
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+
+q = p2 Parameters [n,k,d] Hasse-Weil bound Our bound
+52
+[24,6,12]
+66
+66
+2
+7
+[48,6,34]
+134
+106
+112
+[120,6,90]
+342
+342
+2
+13
+[168,6,142]
+482
+352
+172
+[288,6,240]
+834
+834
+2
+19
+[360,6,322]
+1046
+742
+2
+23
+[528,6,462]
+1542
+1542
+292
+[840,6,756]
+2466
+2466
+2
+31
+[960,6,898]
+2822
+1954
+372
+[1368,6,1294]
+4034
+2776
+2
+41
+[1680,6,1560]
+4962
+4962
+2
+43
+[1848,6,1762]
+5462
+3742
+472
+[2208,6,2070]
+6534
+6534
+2
+53
+[2808,6,2652]
+8322
+8322
+592
+[3480,6,3306]
+10326
+10326
+612
+[3720,6,3598]
+11042
+7504
+672
+[4488,6,4354]
+13334
+9046
+2
+71
+[5040,6,4830]
+14982
+14982
+2
+73
+[5328,6,5182]
+14842
+10732
+792
+[6240,6,6082]
+18566
+12562
+2
+83
+[6888,6,6642]
+20502
+20502
+Table 2. q = p3 , degf (x) = 3
+
+1
+2
+3
+4
+
+q = p5 Parameters [n,k,d] Serre bound Our bound
+53
+[124,9,90]
+214
+176
+73
+[342,9,270]
+566
+512
+3
+11
+[1330,9,1166]
+2052
+1816
+133
+[2196,9,1944]
+3314
+3290
+
+(2) If q = 53 , then the code C is a [124, 12, 83] linear code. From Theorem 4.3, the
+number of rational places is upper bounded by
+N(Ef ) ≤ 1 + 5 × (125 − 83) = 211,
+√
+√
+while the Serre bound is q + 1 + g(Ef )[2 q] = 125 + 1 + 6 × [2 × 125] = 258.
+(3) If q = 73 , then the code C is a [342, 12, 265] linear code. From Theorem 4.3,
+the number of rational places is upper bounded by
+N(Ef ) ≤ 1 + 7 × (343 − 265) = 547,
+√
+√
+while the Serre bound is q + 1 + g(Ef )[2 q] = 343 + 1 + 9 × [2 × 343] = 677.
+
+20
+
+LIMING MA AND CHAOPING XING
+
+Table 3. q = p2 , degf (x) = 4
+degf (x) = 4 q = p2 Parameters [n,k,d] Hasse-Weil bound Our bound
+1
+52
+[24,8,12]
+86
+66
+2
+2
+7
+[48,8,24]
+176
+176
+3
+112
+[120,8,80]
+452
+452
+2
+4
+13
+[168,8,132]
+638
+482
+5
+172
+[288,8,240]
+1106
+834
+2
+6
+19
+[360,8,288]
+1388
+1388
+2
+7
+23
+[528,8,440]
+2048
+2048
+Example 3. If degf (x) = 5, then the genus of Ef is
+(degf − 1)(p − 1)
+= 2(p − 1),
+2
+and the Hasse-Weil upper bound is given by
+√
+√
+q + 1 + 2g(Ef ) q = q + 1 + 4(p − 1) q.
+g(Ef ) =
+
+If q = 72 , then the code C is a [48, 10, 24] linear code. From Theorem 4.3, the number
+of rational places is upper bounded by
+
+N(Ef ) ≤ 1 + 7 × (49 − 24) = 176,
+√
+√
+while the Hasse-Weil bound is q + 1 + 2g(Ef ) q = 49 + 1 + 2 × 12 × 49 = 218. For
+more examples, please refer to Table 4.
+Table 4. q = p2 , degf (x) = 5
+degf (x) = 5 q = p2 Parameters [n,k,d] Hasse-Weil bound Our bound
+1
+72
+[48,10,24]
+218
+176
+2
+2
+11
+[120,10,80]
+562
+452
+2
+3
+13
+[168,10,132]
+794
+482
+From the above examples, we can see that our bound (7) given in Theorem 4.3 is
+better than the Hasse-Weil bound and Serre bound if the minimum distance d(p, m, r)
+are explicitly determined.
+6. Conclusion
+In order to obtain a tight upper bound for the number of rational places of ArtinSchreier curves, it remains to determine the exact value or provide a good lower bound
+for the minimum distance of the code C generated by the matrix
+
+
+α1 α2 · · · αq−1
+2
+
+ α12 α22 · · · αq−1
+
+∈ Frm×(q−1)
+,
+A =  ..
+..
+.. 
+p
+.
+. ···
+. 
+r
+α1r α2r · · · αq−1
+
+ARTIN-SCHREIER CURVES
+
+21
+
+where αji ∈ F∗q are viewed as column vectors of dimension m under a fixed basis of Fq
+over Fp for 1 ≤ i ≤ r and 1 ≤ j ≤ q − 1.
+In this paper we determine the exact value of the minimum distance only for r = 2.
+For r ≥ 3, we provide some numerical examples. In general, we leave it as an open
+research problem.
+References
+[1] N. Anbar and W. Meidl, Quadratic functions and maximal Artin-Schreier curves curves, Finite
+Fields Appli. 30(2014), 49–71.
+[2] E. Artin and J. Tate, Class Field Theory, American Mathematical Society, Providence, Rhode
+Island, 2009.
+[3] R. Auer, Ray class fields of global function fields with many rational places, Acta Arithmetica
+95(2000), 97–122.
+[4] D. Augot, F. Levy-Dit-Vehel, Bounds on the minimum distance of the duals of BCH codes, IEEE
+Trans. Inf. Theory, vol. 42, no. 4, pp. 1257–1260, Aug. 1994.
+[5] A. Bassa, L. Ma, C. Xing and S. Yeo, Towards a characterization of subfields of the Deligne–
+Lusztig function fields, J. Combin. Theory Ser. A 120(2013), 1351–1371.
+[6] C. Carlet, Boolean functions for cryptography and error-correcting codes, Book chapter in:
+Boolean Models and Methods in Mathematics, Computer Science and Engineering, 2010, pp.
+257–397.
+[7] L. Carlitz, Evaluation of some exponential sums over a finite field, Math. Nachr. 96(1980), 319–
+339.
+[8] R. Cramer and C. Xing, An improvement to the Hasse-Weil bound and applications to character
+sums, cryptography and coding, Adv. Math. 309(2017), 238–253.
+[9] A. Garcia, H. Stichtenoth and Chaoping Xing, On subfields of the Hermitian function fields,
+Compositio Mathematica 120(2000), 137–170.
+[10] M. Geer and M. Vlugt, Fibre products of Artin-Schreier curves and generalized Hamming weights
+of codes, J. Combin. Theory, Series A 70(1995), 337–348.
+[11] D.R. Hayes, Explicit class field theory for rational function fields, Trans. Amer. Math. Soc.
+189(1974), 77–91.
+[12] D. R. Hayes. Explicit class field theory in global function fields, Stud. Alg. Number Th./Adv.
+Math. Suppl. Stud. 6 (1979), 173–217.
+[13] T. Kaufman and S. Lovett, New extension of the Weil bound for character sums with applications
+to coding, In: 2011 IEEE 52nd Annual Symposium on Foundations of Computer Science (FOCS),
+2011, pp. 788–796.
+[14] G. Lachaud, Artin-Schreier curves, exponential sums, and the Carlitz-Uchiyama bound for geometric codes, J. Number Theory 39(1991), 18–40.
+[15] R. Lidl and H. Niederreiter, Finite Fields, Encyclopedia of mathematics and its applications,
+1983.
+[16] S. Ling and C. Xing, Coding Thoery–A First Course, Cambridge University Press, 2004.
+[17] L. Ma, C. Xing and S. L. Yeo, On automorphism groups of cyclotomic function fields over finite
+fields, J. Number Theory 169(2016), 406–419.
+[18] L. Ma and C. Xing, On subfields of the Hermitian function field involving the involution automorphism, J. Number Theory 198(2019), pp. 293–317.
+[19] O. Moreno and P.V. Kumar, Minimum distance bounds for cyclic codes and Deligne’s theorem,
+IEEE Trans. Inf. Theory, vol. 39, no. 5, pp. 1524–1534, Sep. 1993.
+[20] O. Moreno and C.J. Moreno, An elementary proof of a partial improvement to the Ax-Katz
+theorem, Lecture Notes in Comput. Sci., vol. 673, 1993, pp. 257–268.
+[21] H. Niederreiter and C. Xing, Rational Points on Curves over Finite Fields: Theory and Applications, LMS 285, Cambridge, 2001.
+
+22
+
+LIMING MA AND CHAOPING XING
+
+[22] A. Rojas-Leon and D. Wan, Improvements of the Weil bound for Artin-Scherier curves, Math.
+Ann. 351(2011), 417–442.
+[23] H. Stichtenoch, Algebraic Function Fields and Codes, GTM 254, Springer–Verlag, 2009.
+[24] H. Stichtenoth and C. Voss, Generalized Hamming weights of trace codes, IEEE Trans. Inf. Theory
+40(1994), 554–558.
+[25] D. Wan and Q. Wang, Index bounds for character sums of polynomials over finite fields, Des.
+Codes. Cryptogr. 81(2016), no. 3, 459–468.
+[26] J. Wolfmann, New bounds on cyclic codes from algebraic curves, Lecture Notes in Comput. Sci.,
+vol. 388, Springer-Verlag, New Yourk, 1988, pp. 47–62.
+School of Mathematical Sciences, University of Science and Technology of China,
+Hefei China 230026
+Email address: lmma20@ustc.edu.cn
+School of Electronic Information and Electric Engineering, Shanghai Jiao Tong
+University, China 200240
+Email address: xingcp@sjtu.edu.cn
+
+

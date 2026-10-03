@@ -1,0 +1,595 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/RzGBxx+gmEYvqPr7FHnxeoqfSL4</id>
+  <title>arXiv Query: search_query=au:"Vollmer" AND abs:"factoring"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-03T18:35:20Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Vollmer%22+AND+abs:%22factoring%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>30</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2604.00708v1</id>
+    <title>Predicting CO and dust emission of star-forming galaxies</title>
+    <updated>2026-04-01T10:13:57Z</updated>
+    <link href="https://arxiv.org/abs/2604.00708v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.00708v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How do Dwarf Galaxies differ from spirals? Does star formation produce radio and far-infrared emission in the same way as in spiral galaxies? Radio, FarIR, and CO emission depend on gas density, temperature, magnetic field strength, and metallicity. The radio-FarIR correlation and Schmidt-Kennicutt relation characterize the links for Milky Way-like galaxies but do they hold for smaller objects, with different morphologies? Here we extend our previous work on the IR, line, and radio emission of local and high-z galaxies to local star-forming low-mass and dwarf galaxies. The calculation of the cosmic ray (CR) densities were improved compared to the previous version of the model. The CR ionization rate we found for the different galaxy samples is higher by a factor of three than for the solar neighborhood. This means that the mean yield of low-energy CR particles three times higher in external galaxies than was observed by Voyager I. The dependence of the N_H2/I_CO factor on the metallicity and stellar mass are calculated by the model. The weaker CO emission from low-metallicity galaxies is due to the large amount of (CO-dark) H_2 surrounding the regions where CO is not photo-dissociated. Within our model framework, star-forming low-mass and dwarf galaxies follow the radio-IR correlation.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-01T10:13:57Z</published>
+    <arxiv:comment>15 pages, accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire Astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Laboratoire d'Astrophysique de Bordeaux, Univ. Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Soida</name>
+      <arxiv:affiliation>Astronomical Observatory, Jagiellonian University, Poland</arxiv:affiliation>
+    </author>
+    <author>
+      <name>P. Gratier</name>
+      <arxiv:affiliation>Laboratoire d'Astrophysique de Bordeaux, Univ. Bordeaux, France</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.14513v1</id>
+    <title>From the Circumnuclear Disk in the Galactic Center to thick, obscuring tori of AGNs -- Modelling the molecular emission of a parsec-scale torus as found in NGC1068</title>
+    <updated>2022-06-29T10:16:13Z</updated>
+    <link href="https://arxiv.org/abs/2206.14513v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.14513v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The accretion rates needed to fuel the central black hole in a galaxy can be achieved via viscous torques in thick disks and rings, which can be resolved by millimetre interferometry within the inner ~20pc of the active galaxy NGC1068 at comparable scales and sensitivity to single dish observations of the Circumnuclear Disk (CND) in the Galactic Center. To interpret observations of these regions and determine the physical properties of their gas distribution, we present a modelling effort that includes (i) a simple dynamical simulations involving partially inelastic collisions between disk gas clouds, (ii) an analytical model of a turbulent clumpy gas disk calibrated by the dynamical model and observations, (iii) local turbulent and cosmic ray gas heating and cooling via H2O, H2, and CO emission, and (iv) determination of the molecular abundances. We also consider photodissociation regions (PDR) where gas is directly illuminated by the central engine. We compare the resulting model datacubes of the CO, HCN, HCO+, and CS brightness temperatures to available observations. In both cases the kinematics can be explained by one or two clouds colliding with a pre-existing ring, in a prograde sense for the CND and retrograde for NGC1068. And, with only dense disk clouds, the line fluxes can be reproduced to within a factor of about two. To avoid self-absorption of the intercloud medium, turbulent heating at the largest scales, comparable to the disk height, has to be decreased by a factor of 50-200. Our models indicate that turbulent mechanical energy input is the dominant gas heating mechanism within the thick gas disks. In N1068, while the bulk of the AGN X-ray radiation is absorbed in a layer of Compton-thick gas inside the dust sublimation radius, the optical/UV radiation may enhance the molecular line emission from photodissociation regions by ~50% at the inner edge of the gas ring.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-29T10:16:13Z</published>
+    <arxiv:comment>36 pages, 32 figures, accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <arxiv:journal_ref>A&amp;A 665, A102 (2022)</arxiv:journal_ref>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>R. I. Davies</name>
+      <arxiv:affiliation>Max-Planck-Institut fuer extraterrestrische Physik, Germany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>P. Gratier</name>
+      <arxiv:affiliation>Laboratoire d'Astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Th. Lizee</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Imanishi</name>
+      <arxiv:affiliation>National Astronomical Observatory of Japan</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. F. Gallimore</name>
+      <arxiv:affiliation>Department of Physics and Astronomy, Bucknell University, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>C. M. V. Impellizzeri</name>
+      <arxiv:affiliation>Leiden Observatory-Allegro, Leiden University, The Netherlands</arxiv:affiliation>
+    </author>
+    <author>
+      <name>S. Garcia-Burillo</name>
+      <arxiv:affiliation>Observatorio Astronomico Nacional</arxiv:affiliation>
+    </author>
+    <author>
+      <name>F. Le Petit</name>
+      <arxiv:affiliation>LERMA, Observatoire de Paris, France</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/202141684</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/202141684" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.18420v1</id>
+    <title>Predicting HCN, HCO$^+$, multi-transition CO, and dust emission of star-forming galaxies -- Extension to luminous infrared galaxies and the role of cosmic ray ionization</title>
+    <updated>2024-11-27T15:03:14Z</updated>
+    <link href="https://arxiv.org/abs/2411.18420v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.18420v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The specific star-formation rate of star-forming `main sequence' galaxies significantly decreased since z~1.5, due to the decreasing molecular gas fraction and star formation efficiency. However, the radio-infrared (IR) correlation has not changed significantly since z~1.5. The theory of turbulent clumpy starforming gas disks together with the scaling relations of the interstellar medium describes the large and small-scale properties of galactic gas disks. Here we extend our previous work on infrared, multi-transition molecular line, and radio continuum emission of local and high-z starforming and starburst galaxies to local and z~0.5 luminous infrared galaxies. The model reproduces the IR luminosities, CO, HCN, and HCO+ line luminosities, and the CO spectral line energy distributions of these galaxies. We derive CO(1-0) and HCN(1-0) conversion factors for all galaxy samples. The relation between the star formation rate per unit area and H2 surface density cannot be fit simply for all redshifts. There is a tight correlation between the star formation efficiency and the product of the gas turbulent velocity dispersion and the angular velocity of the galaxies. Galaxies of lower stellar masses can in principle compensate their gas consumption via star formation by radial viscous gas accretion. The limiting stellar mass increases with redshift. Whereas the radio continuum emission is directly proportional to the density of cosmic ray (CR) electrons, the molecular line emission depends on the CR ionization rate via the gas chemistry. The normalization of the CR ionization rate found for the different galaxy samples is about a factor of three to five higher than the normalization for the Solar neighborhood. This means that the mean yield of low energy CR particles for a given star formation rate per unit area is about three to ten times higher in external galaxies than observed by Voyager I.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-27T15:03:14Z</published>
+    <arxiv:comment>accepted for publication by A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <arxiv:journal_ref>A&amp;A 693, A267 (2025)</arxiv:journal_ref>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Freundlich</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>P. Gratier</name>
+      <arxiv:affiliation>Laboratoire d'astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Th. Lizee</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Lendrin</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Laboratoire d'astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Soida</name>
+      <arxiv:affiliation>Astronomical Observatory, Jagiellonian University, Krakow, Poland</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/202451607</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/202451607" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1612.06744v2</id>
+    <title>Predicting HCN, HCO+, multi-transition CO, and dust emission of star-forming galaxies From local spiral and ultraluminous infrared galaxies to high-z star-forming and submillimeter galaxies</title>
+    <updated>2017-01-25T09:43:48Z</updated>
+    <link href="https://arxiv.org/abs/1612.06744v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1612.06744v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>(abridged) In this work we have a closer look at the gas content or fraction and the associated star formation rate in main sequence and starburst galaxies at z=0 and z~1-2 by applying an analytical model of galactic clumpy gas disks to samples of local spiral galaxies, ULIRGs, submillimeter (smm), and high-z starforming galaxies. The model gas and dust temperatures are determined by the heating and cooling equilibrium. Dense clouds are heated by turbulent mechanical and cosmic ray heating. The molecular abundances of individual gas clouds are determined by a detailed chemical network involving the cloud lifetime, density, and temperature. Molecular line emission is calculated with an escape probability formalism. The model calculates simultaneously the total gas mass, HI/H_2 mass, the gas velocity dispersion, IR luminosity, IR spectral energy distribution, CO spectral line energy distribution (SLED), HCN(1-0), and HCO+(1-0) emission of a galaxy given its size, integrated star formation rate, stellar mass radial profile, rotation curve, and Toomre Q parameter. The model reproduces the observed CO luminosities and SLEDs of all sample galaxies within the model uncertainties (~0.3 dex). Whereas the CO emission is robust against the variation of model parameters, the HCN and HCO+ emission is sensitive to the chemistry of the interstellar medium. The CO and HCN mass-to-light conversion factors including CO-dark H_2 are given and compared to the values found in the literature. Both, the HCN and HCO+ emission trace the dense molecular gas to a factor of ~2 for the local spiral galaxies, ULIRGs and smm-galaxies. About 80% of the molecular line emission of compact starburst galaxies originates in non-selfgravitating gas clouds. The integrated Kennicutt-Schmidt law has a slope of ~1 for the local spirals, ULIRGs, and smm-galaxies, whereas the slope is 1.7 for high-z starforming galaxies.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-12-20T16:38:57Z</published>
+    <arxiv:comment>accepted for publication in A&amp;A; corrected version The smm and high-z starforming galaxies were erroneously treated as if they were local galaxies. This lead to differences in the CO fluxes of about 10% and in the HCN and HCO+ fluxes of about 25-30%. Given that the model uncertainties are of the order of a factor of 2 (Sect. 4), this does not change the discussion nor the conclusions</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>P. Gratier</name>
+      <arxiv:affiliation>Laboratoire d'astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Laboratoire d'astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>C. Bot</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/201629641</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/201629641" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.1650v1</id>
+    <title>Efficient implementation of the Time Renormalization Group</title>
+    <updated>2014-12-04T12:56:44Z</updated>
+    <link href="https://arxiv.org/abs/1412.1650v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.1650v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Time Renormalization Group (TRG) is an effective method for accurate calculations of the matter power spectrum at the scale of the first baryonic acoustic oscillations. By using a particular variable transformation in the TRG formalism, we can reduce the 2D integral in the source term of the equations of motion for the power spectrum into a series of 1D integrals. The shape of the integrand allows us to pre-compute only thirteen antiderivatives numerically, which can then be reused when evaluating the outer integral. While this introduces a few challenges to keep numerical noise under control, we find that the computation time for nonlinear corrections to the matter power spectrum decreases by a factor of 50. This opens up the possibility to use of TRG for mass production as in Markov Chain Monte Carlo methods. A Fortran code demonstrating this new algorithm has been made publicly available.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-04T12:56:44Z</published>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <arxiv:journal_ref>Phys. Rev. D 93, 043526 (2016)</arxiv:journal_ref>
+    <author>
+      <name>Adrian Vollmer</name>
+      <arxiv:affiliation>Institut für Theoretische Physik, Ruprecht-Karls-Universität Heidelberg, Philosophenweg 16, 69120 Heidelberg, Germany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Luca Amendola</name>
+      <arxiv:affiliation>Institut für Theoretische Physik, Ruprecht-Karls-Universität Heidelberg, Philosophenweg 16, 69120 Heidelberg, Germany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Riccardo Catena</name>
+      <arxiv:affiliation>Institut für Theoretische Physik, Georg-August-Universität Göttingen, Friedrich-Hund-Platz 1, 37077 Göttingen, Germany</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.93.043526</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.93.043526" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.0244v1</id>
+    <title>All-Optical Arithmetic and Combinatorial Logic Circuits with High-Q Bacteriorhodopsin Coated Microcavities</title>
+    <updated>2010-01-01T16:29:54Z</updated>
+    <link href="https://arxiv.org/abs/1001.0244v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.0244v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present designs of all-optical computing circuits, namely, half-full adder/subtractor, de-multiplexer, multiplexer, and an arithmetic unit, based on bacteriorhodopsin (BR) protein coated microcavity switch in a tree architecture. The basic all-optical switch consists of an input infrared (IR) laser beam at 1310 nm in a single mode fiber (SMF-28) switched by a control pulsed laser beam at 532 nm, which triggers the change in the resonance condition on a silica bead coated with BR between two tapered fibers. We show that fast switching of 50 us can be achieved by injecting a blue laser beam at 410 nm that helps in truncating the BR photocycle at the M intermediate state. Realization of all-optical switch with BR coated microcavity switch has been done experimentally. Based on this basic switch configuration, designs of all-optical higher computing circuits have been presented. The design requires 2n-1 switches to realize n bit computation. The proposed designs require less number of switches than terahertz optical asymmetric demultiplexer based interferometer designs. The combined advantages of high Q factor, tunability, compactness and low power control signals, with the flexibility of cascading switches to form circuits, makes the designs promising for practical applications. The design combines the exceptional sensitivities of BR and microcavities for realizing low power circuits and networks. The designs are general and can be implemented (i) in both fiber-optic and integrated optic formats, (ii) with any other coated photosensitive material, or (iii) an externally controlled microresonator switch.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-01T16:29:54Z</published>
+    <arxiv:comment>first submitted to JAP Sept. 18th, 2009; 39 pages, 9 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Sukhdev Roy</name>
+    </author>
+    <author>
+      <name>Mohit Prasad</name>
+    </author>
+    <author>
+      <name>Juraj Topolancik</name>
+    </author>
+    <author>
+      <name>Frank Vollmer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0809.3397v1</id>
+    <title>Starbursts and torus evolution in AGN</title>
+    <updated>2008-09-19T15:35:30Z</updated>
+    <link href="https://arxiv.org/abs/0809.3397v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0809.3397v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recent VLT SINFONI observations of the close environments (~30pc) of nearby AGNs have shown that thick gas tori and starbursts with ages between 10 and 150Myr are frequently found. By applying these observations to a previously established analytical model of clumpy accretion disks, we suggest an evolutionary sequence for starburst and AGN phases. Whereas the observed properties of the gas tell us about the current state of the torus, the starburst characteristics provide information on the history of the torus. In the suggested evolution, a torus passes through 3 different phases predetermined by an external mass accretion rate. Started by an initial, short, and massive gas infall, a turbulent and stellar wind-driven Q~1 disk is formed in which the starburst proceeds. Once the supernovae explode the intercloud medium is removed, leaving a massive, geometrically thick, collisional disk with a decreasing, but still high-mass accretion rate. When the mass accretion rate has significantly decreased, the collisional torus becomes thin and transparent as the circumnuclear disk in the Galactic center of the Milky Way. Variations on this scenario are possible either when there is a second short and massive gas infall, in which case the torus may switch back into the starburst mode, or when there is no initial short massive gas infall. All observed tori up to now have been collisional and thick. The observations show that this phase can last more than 100Myr. During this phase the decrease in the mass accretion rate within the torus is slow (a factor of 4 within 150Myr). The collisional tori also form stars, but with an efficiency of about 10% when compared to a turbulent disk.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-09-19T15:35:30Z</published>
+    <arxiv:comment>14 pages, 4 figures, A&amp;A accepted for publication</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>Observatoire de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>T. Beckert</name>
+      <arxiv:affiliation>Max-Planck Institut fuer Radioastronomie, Bonn, Gemrany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>R. Davies</name>
+      <arxiv:affiliation>Max Planck Insitut fuer extraterrestrische Physik, Garching. Germany</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361:200810446</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361:200810446" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.04883v1</id>
+    <title>Effects of environmental gas compression on the multiphase ISM and star formation</title>
+    <updated>2016-01-19T11:55:56Z</updated>
+    <link href="https://arxiv.org/abs/1601.04883v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.04883v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The cluster environment can affect galaxy evolution in different ways: via ram pressure stripping or by gravitational perturbations caused by galactic encounters. New IRAM 30m HERA CO(2-1) data of NGC 4501 and NGC 4567/68 are presented. We find an increase in the molecular fraction where the ISM is compressed. The gas is close to self-gravitation in compressed regions. This leads to an increase in gas pressure and a decrease in the ratio between the molecular fraction and total ISM pressure. The overall Kennicutt Schmidt relation based on a pixel-by-pixel analysis at ~1.5 kpc resolution is not significantly modified by compression. However, we detected continuous regions of low molecular star formation efficiencies in the compressed parts of the galactic gas disks. The data suggest that a relation between the molecular star formation efficiency SFE_H2 and gas self-gravitation exists. Both systems show spatial variations in the star formation efficiency with respect to the molecular gas that can be related to environmental compression of the ISM. An analytical model was used to investigate the dependence of SFE_H2 on self-gravitation. The model correctly reproduces the correlations between R_mol/P_tot, SFE_H2, and Toomre Q if different global turbulent velocity dispersions are assumed for the three galaxies. We found that variations in the N_H_2/I_CO conversion factor can mask most of the correlation between SFE_H2 and the Q parameter. Dynamical simulations were used to compare the effects of ram pressure and tidal ISM compression. We conclude that a gravitationally induced ISM compression has the same consequences as ram pressure compression: (i) an increasing gas surface density, (ii) an increasing molecular fraction, and (iii) a decreasing R_mol/P_tot in the compressed region due to the presence of nearly self-gravitating gas. The response of SFE_H2 to compression is more complex.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-19T11:55:56Z</published>
+    <arxiv:comment>accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>F. Nehlig</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Univ. Bordeaux, Laboratoire d'Astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.7353v1</id>
+    <title>The quenching of star formation in accretion-driven clumpy turbulent tori of active galactic nuclei</title>
+    <updated>2013-05-31T10:58:50Z</updated>
+    <link href="https://arxiv.org/abs/1305.7353v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.7353v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Galactic gas-gas collisions involving a turbulent multiphase ISM share common ISM properties: dense extraplanar gas visible in CO, large linewidths (&gt;= 50 km/s), strong mid-infrared H_2 line emission, low star formation activity, and strong radio continuum emission. Gas-gas collisions can occur in the form of ICM ram pressure stripping, galaxy head-on collisions, compression of the intragroup gas and/or galaxy ISM by an intruder galaxy which flies through the galaxy group at a high velocity, or external gas accretion on an existing gas torus in a galactic center. We suggest that the common theme of all these gas-gas interactions is adiabatic compression of the ISM leading to an increase of the turbulent velocity dispersion of the gas. The turbulent gas clouds are then overpressured and star formation is quenched. Within this scenario we developed a model for turbulent clumpy gas disks where the energy to drive turbulence is supplied by external infall or the gain of potential energy by radial gas accretion within the disk. The cloud size is determined by the size of a C-type shock propagating in dense molecular clouds with a low ionization fraction at a given velocity dispersion. We give expressions for the expected volume and area filling factors, mass, density, column density, and velocity dispersion of the clouds. The latter is based on scaling relations of intermittent turbulence whose open parameters are estimated for the CND in the Galactic Center. The properties of the model gas clouds and the external mass accretion rate necessary for the quenching of the star formation rate due to adiabatic compression are consistent with those derived from high-resolution H_2 line observations. Based on these findings, a scenario for the evolution of gas tori in galactic centers is proposed and the implications for star formation in the Galactic Center are discussed.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-31T10:58:50Z</published>
+    <arxiv:comment>13 pages, 1 figure, accepted for publication by A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>R. I. Davies</name>
+      <arxiv:affiliation>Max Planck Insitut fuer extraterrestrische Physik, Garching, Germany</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/201321409</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/201321409" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.1770v1</id>
+    <title>A holistic view on ram pressure stripping in the Virgo cluster - The first complete model-based time sequence</title>
+    <updated>2009-05-12T06:54:18Z</updated>
+    <link href="https://arxiv.org/abs/0905.1770v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.1770v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Based on a comparison of dynamical models with observations of the interstellar gas in 6 Virgo cluster spiral galaxies a first complete ram pressure stripping time sequence has been established. The observational characteristics of the different stages of ram pressure stripping are presented. The dynamical models yield the 3D velocity vectors of the galaxies, peak ram pressures, and times to peak ram pressure. In the case of a smooth, static, and spherical intracluster medium, peak ram pressure occurs during the galaxy's closest approach to the cluster center, i.e. when the galaxy's velocity vector is perpendicular to its distance vector from the cluster center (M 87). Assuming this condition the galaxy's present line-of-sight distance and its 3D position during peak ram pressure can be calculated. The linear orbital segments derived in this way together with the intracluster medium density distribution derived from X-ray observations give estimates of the ram pressure that are on average a factor of 2 higher than derived from the dynamical simulations for NGC 4501, NGC 4330, and NGC 4569. Resolving this discrepancy would require either a 2 times higher intracluster medium density than derived from X-ray observations, or a 2 times higher stripping efficiency than assumed by the dynamical models. Compared to NGC 4501, NGC 4330, and NGC 4569, NGC 4388 requires a still 2 times higher local intracluster medium density or a direction which is moderately different from that derived from the dynamical model. A possible scenario for the dynamical evolution of NGC 4438 and M 86 within the Virgo cluster is presented.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-12T06:54:18Z</published>
+    <arxiv:comment>10 pages, 5 figures; accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/200911892</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/200911892" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.0430v1</id>
+    <title>The influence of the cluster environment on the star formation efficiency of 12 Virgo spiral galaxies</title>
+    <updated>2012-04-02T15:16:06Z</updated>
+    <link href="https://arxiv.org/abs/1204.0430v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.0430v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The influence of the environment on gas surface density and star formation efficiency of cluster spiral galaxies is investigated. We extend previous work on radial profiles by a pixel-to pixel analysis looking for asymmetries due to environmental interactions. The star formation rate is derived from GALEX UV and Spitzer total infrared data. As in field galaxies, the star formation rate for most Virgo galaxies is approximately proportional to the molecular gas mass. Except for NGC 4438, the cluster environment does not affect the star formation efficiency with respect to the molecular gas. Gas truncation is not associated with major changes in the total gas surface density distribution of the inner disk of Virgo spiral galaxies. In three galaxies, possible increases in the molecular fraction and the star formation efficiency with respect to the total gas, of factors of 1.5 to 2, are observed on the windward side of the galactic disk. A significant increase of the star formation efficiency with respect to the molecular gas content on the windward side of ram pressure-stripped galaxies is not observed. The ram-pressure stripped extraplanar gas of 3 highly inclined spiral galaxies shows a depressed star formation efficiency with respect to the total gas, and one of them (NGC 4438) shows a depressed rate even with respect to the molecular gas. The interpretation is that stripped gas loses the gravitational confinement and associated pressure of the galactic disk, and the gas flow is diverging, so the gas density decreases and the star formation rate drops. However, the stripped extraplanar gas in one highly inclined galaxy (NGC 4569) shows a normal star formation efficiency with respect to the total gas. We propose this galaxy is different because it is observed long after peak pressure, and its extraplanar gas is now in a converging flow as it resettles back into the disk.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-02T15:16:06Z</published>
+    <arxiv:comment>34 pages, 24 figures, accepted for publication by A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>CDS, Observatoire de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>. O. I. Wong</name>
+      <arxiv:affiliation>CSIRO Astronomy and Space Science, Epping, Australia</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Univ. Bordeaux, Laboratoire d'Astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>A. Chung</name>
+      <arxiv:affiliation>Department of Astronomy and Yonsei University Observatory, Republic of Korea</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. D. P. Kenney</name>
+      <arxiv:affiliation>Yale University Astronomy Department, New Haven, USA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/201118690</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/201118690" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.07092v2</id>
+    <title>Low star formation efficiency due to turbulent adiabatic compression in the Taffy bridge</title>
+    <updated>2021-01-22T10:58:03Z</updated>
+    <link href="https://arxiv.org/abs/2101.07092v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.07092v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Taffy system (UGC 12914/15) consists of two massive spiral galaxies which had a head-on collision about 20 Myr ago. New sensitive, high-resolution CO(1-0) observations of the Taffy system with the IRAM PdBI are presented. About 25% of the total interferometric CO luminosity stems from the bridge region. Assuming a Galactic N(H2)/ICO conversion factor for the galactic disks and a third of this value for the bridge gas, about 10% of the molecular gas mass is located in the bridge region. The giant HII region close to UGC 12915 is located at the northern edge of the high-surface brightness giant molecular cloud association (GMA), which has the highest velocity dispersion among the bridge GMAs. The bridge GMAs are clearly not virialized because of their high velocity dispersion. Three dynamical models are presented and while no single model reproduces all of the observed features, they are all present in at least one of the models. Most of the bridge gas detected in CO does not form stars. We suggest that turbulent adiabatic compression is responsible for the exceptionally high velocity dispersion of the molecular ISM and the suppression of star formation in the Taffy bridge. In this scenario the turbulent velocity dispersion of the largest eddies and turbulent substructures/clouds increase such that giant molecular clouds are no longer in global virial equilibrium. The increase of the virial parameter leads to a decrease of the star formation efficiency. Most of the low-surface density, CO-emitting gas will disperse without forming stars but some of the high-density gas will probably collapse and form dense star clusters, such as the luminous HII region close to UGC 12915. We suggest that globular clusters and super star clusters formed and still form through the gravitational collapse of gas previously compressed by turbulent adiabatic compression during galaxy interactions.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-18T14:31:30Z</published>
+    <arxiv:comment>accepted for publication in A&amp;A, corrected Observations section</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>J. Braine</name>
+      <arxiv:affiliation>Laboratoire d'astrophysique de Bordeaux, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>B. Mazzilli-Ciraulo</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+      <arxiv:affiliation>AIM, CEA, CNRS, Universite Paris-Saclay, Universite Paris Diderot, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>B. Schneider</name>
+      <arxiv:affiliation>Observatoire astronomique de Strasbourg, France</arxiv:affiliation>
+      <arxiv:affiliation>LERMA, Observatoire de Paris, France</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/202037887</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/202037887" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1510.02451v6</id>
+    <title>The Bouncy Particle Sampler: A Non-Reversible Rejection-Free Markov Chain Monte Carlo Method</title>
+    <updated>2017-02-17T20:49:02Z</updated>
+    <link href="https://arxiv.org/abs/1510.02451v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1510.02451v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Markov chain Monte Carlo methods have become standard tools in statistics to sample from complex probability measures. Many available techniques rely on discrete-time reversible Markov chains whose transition kernels build up over the Metropolis-Hastings algorithm. We explore and propose several original extensions of an alternative approach introduced recently in Peters and de With (2012) where the target distribution of interest is explored using a continuous-time Markov process. In the Metropolis-Hastings algorithm, a trial move to a region of lower target density, equivalently "higher energy", than the current state can be rejected with positive probability. In this alternative approach, a particle moves along straight lines continuously around the space and, when facing a high energy barrier, it is not rejected but its path is modified by bouncing against this barrier. The resulting non-reversible Markov process provides a rejection-free MCMC sampling scheme. We propose several original techniques to simulate this continuous-time process exactly in a wide range of scenarios of interest to statisticians. When the target distribution factorizes as a product of factors involving only subsets of variables, such as the posterior distribution associated to a probabilistic graphical model, it is possible to modify the original algorithm to exploit this structure and update in parallel variables within each clique. We present several extensions by proposing methods to sample mixed discrete-continuous distributions and distributions restricted to a connected smooth domain. We also show that it is possible to move the particle using a general flow instead of straight lines. We demonstrate the efficiency of this methodology through simulations on a variety of applications and show that it can outperform Hybrid Monte Carlo schemes in interesting scenarios.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-08T19:17:41Z</published>
+    <arxiv:comment>42 pages, 15 figures, reference in abstract is to arXiv:1112.1263v3</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Alexandre Bouchard-Côté</name>
+    </author>
+    <author>
+      <name>Sebastian J. Vollmer</name>
+    </author>
+    <author>
+      <name>Arnaud Doucet</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.12135v1</id>
+    <title>Single-nanoparticle detection using quasi-bound states in the continuum supported by silicon metasurfaces</title>
+    <updated>2026-03-12T16:39:46Z</updated>
+    <link href="https://arxiv.org/abs/2603.12135v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.12135v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The detection of single particles or molecules represents a critical milestone in the development of biosensing technologies. Recently developed optical sensors based on quasi-bound states in the continuum (qBICs) have primarily focused on detecting global refractive index changes, aiming to simultaneously enhance both refractive index sensitivity and quality ($Q$) factors. However, sensors capable of resolving local refractive index perturbations, such as the binding of a nanometer-sized molecule on a surface, remain elusive and have not yet been demonstrated in BIC geometries due to the limited $Q$ factors and relatively large mode volumes. Here, we demonstrate low-contrast BIC metasurfaces that can perform sensing with a virus-sized single-nanoparticle resolution. The qBIC resonance operating at the critical coupling condition exhibits an experimental $Q$ factor of 4.5 x 10$^4$ in heavy water. The strong interaction between the localized electric field and polystyrene nanoparticles with a diameter of 100 nm enable the experimental observation of step-like resonance wavelength shifts, serving as signatures of individual particle binding events. Furthermore, binding-induced modifications to the qBIC resonance alter the optical confinement and asymmetry factor, inducing changes not only in the resonance wavelength but also in the linewidth and amplitude with single-particle sensitivity. Combined with position-insensitive response and free-space accessible features, low-contrast BIC metasurfaces provide a user-friendly platform for next-generation single-molecule sensing integrated with microfluidic systems.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-12T16:39:46Z</published>
+    <arxiv:comment>16 pages, 5 main figures + 4 supporting figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Keisuke Watanabe</name>
+    </author>
+    <author>
+      <name>Samuel Crowther</name>
+    </author>
+    <author>
+      <name>Masanobu Iwanaga</name>
+    </author>
+    <author>
+      <name>Frank Vollmer</name>
+    </author>
+    <author>
+      <name>Tadaaki Nagao</name>
+    </author>
+    <arxiv:doi>10.1002/smtd.70931</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/smtd.70931" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.01140v1</id>
+    <title>SoCal: A Language for Memory-Layout Factorization of Recursive Datatypes</title>
+    <updated>2026-05-01T22:32:52Z</updated>
+    <link href="https://arxiv.org/abs/2605.01140v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.01140v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Array-of-structures (AoS) to structure-of-arrays (SoA) is a classic compiler transformation that improves memory locality and enables data-parallel execution. Existing AoS-to-SoA transformations primarily target regular, array-based programs in imperative languages like C and C++. In contrast, many applications manipulate tree-shaped data structures, for example, ASTs in compilers, DOM trees in browsers, and k-d trees in scientific workloads. Prior work improves the performance of functional programs operating on such data by serializing algebraic datatypes (ADTs) into contiguous memory buffers. However, these representations interleave fields within a single buffer, similar to AoS layouts. We introduce factored, multi-buffer layouts that store different ADT fields in separate buffers, enabling SoA-like layouts for serialized recursive data structures. We formalize this approach in SoCal, a language for generating factored ADT representations, and implement it in a compiler called Colobus. Colobus automatically transforms functional programs to operate over a serialized, factored layout of recursive ADTs. Our evaluation shows a 1.46x geometric mean speedup on a suite of tree-processing benchmarks.</summary>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-01T22:32:52Z</published>
+    <arxiv:primary_category term="cs.PL"/>
+    <author>
+      <name>Vidush Singhal</name>
+    </author>
+    <author>
+      <name>Mikah Kainen</name>
+    </author>
+    <author>
+      <name>Artem Pelenitsyn</name>
+    </author>
+    <author>
+      <name>Michael H. Borkowski</name>
+    </author>
+    <author>
+      <name>Mike Vollmer</name>
+    </author>
+    <author>
+      <name>Milind Kulkarni</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.07520v2</id>
+    <title>Comparing transient oligonucleotide hybridization kinetics using DNA-PAINT and optoplasmonic single-molecule sensing on gold nanorods</title>
+    <updated>2021-08-03T22:39:35Z</updated>
+    <link href="https://arxiv.org/abs/2103.07520v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.07520v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report a comparison of two photonic techniques for single-molecule sensing: fluorescence nanoscopy and optoplasmonic sensing. As the test system, oligonucleotides with and without fluorescent labels are transiently hybridized to complementary docking strands attached to gold nanorods. Comparing the measured single-molecule kinetics helps to examine the influence of fluorescent labels as well as factors arising from different sensing geometries. Our results demonstrate that DNA dissociation is not significantly altered by the fluorescent label, while DNA association is affected by geometric factors in the two techniques. These findings open the door to exploiting plasmonic sensing and fluorescence nanoscopy in a complementary fashion, which will aid in building more powerful sensors and uncovering the intricate effects that influence the behavior of single molecules.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-12T20:50:01Z</published>
+    <arxiv:comment>8 pages, 3 figures, 1 table. Added an analysis for another DNA strand plus several control experiments</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Narima Eerqing</name>
+    </author>
+    <author>
+      <name>Sivaraman Subramanian</name>
+    </author>
+    <author>
+      <name>Jesús Rubio</name>
+    </author>
+    <author>
+      <name>Tobias Lutz</name>
+    </author>
+    <author>
+      <name>Hsin-Yu Wu</name>
+    </author>
+    <author>
+      <name>Janet Anders</name>
+    </author>
+    <author>
+      <name>Christian Soeller</name>
+    </author>
+    <author>
+      <name>Frank Vollmer</name>
+    </author>
+    <arxiv:doi>10.1021/acsphotonics.1c01179</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1021/acsphotonics.1c01179" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0306200v1</id>
+    <title>The line-of-sight distribution of the gas in the inner 60 pc of the Galaxy</title>
+    <updated>2003-06-10T13:45:37Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0306200v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0306200v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  2MASS K_S band data of the inner 60 pc of the Galaxy are used to reconstruct the line-of-sight distances of the giant molecular clouds located in this region. Using the 2MASS H band image of the same region, two different populations of point sources are identified according to their flux ratio in the two bands. The population of blue point sources forms a homogeneous foreground that has to be subtracted before analyzing the K_S band image. The reconstruction is made using two basic assumptions: (i) an axis-symmetric stellar distribution in the region of interest and
+  (ii) optically thick clouds with an area filling factor of ~1 that block all light of stars located behind them. Due to the reconstruction method, the relative distance between the different cloud complexes is a robust result, whereas it is not excluded that the absolute distance with respect to Sgr A* of structures located more than 10 pc in front of Sgr A* are understimated by up to a factor of 2. It is shown that all structures observed in the 1.2 mm continuum and in the CS(2-1) line are present in absorption. We place the 50 km s^-1 cloud complex close to, but in front of, Sgr A*. The 20 km s^-1 cloud complex is located in front of the 50 km s^-1 cloud complex and has a large LOS distance gradient along the direction of the galactic longitude. The bulk of the Circumnuclear Disk is not seen in absorption. This leads to an upper limit of the cloud sizes within the Circumnuclear Disk of ~0.06 pc.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-06-10T13:45:37Z</published>
+    <arxiv:comment>12 pages with 17 figures. Accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <arxiv:journal_ref>Astron.Astrophys. 407 (2003) 515-526</arxiv:journal_ref>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>MPI fuer Radioastronomie, Bonn, Germany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>R. Zylka</name>
+      <arxiv:affiliation>Physikalisches Institut, Uni Koeln, Germany</arxiv:affiliation>
+      <arxiv:affiliation>IRAM, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>W. J. Duschl</name>
+      <arxiv:affiliation>ITA, Uni Heidelberg, Germany</arxiv:affiliation>
+      <arxiv:affiliation>MPI fuer Radioastronomie, Bonn, Germany</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361:20030846</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361:20030846" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.07543v1</id>
+    <title>Effect of Sediment Form and Form Distribution on Porosity: A Simulation Study Based on the Discrete Element Method</title>
+    <updated>2022-05-16T09:45:00Z</updated>
+    <link href="https://arxiv.org/abs/2205.07543v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.07543v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Porosity is one of the key properties of dense particle packings like sediment deposits and is influenced by a multitude of grain characteristics such as their size distribution and shape. In the present work, we focus on the form, a specific aspect of the overall shape, of sedimentary grains in order to investigate and quantify its effect on porosity, ultimately deriving novel porosity-prediction models. To this end, we develop a robust and accurate simulation tool based on the discrete element method which we validate against laboratory experiments. Utilizing digital representations of actual sediment from the Rhine river, we first study packings that are composed of particles with a single form. There, the porosity is found to be mainly determined by the inverse equancy, i.e., the ratio of the longest to the smallest form-defining axis. Only for small ratios, additional shape-related properties become relevant, as revealed by a direct comparison to packings of form-equivalent ellipsoids. Since sediment naturally features form mixtures, we extend our simulation tool to study sediment packings with normally-distributed forms. In agreement with our single form studies, the porosity depends primarily on the inverse of the mean equancy. By supplying additional information about a second form factor and the standard deviations, we derive an accurate model for porosity prediction. Due to its simplicity, it can be readily applied to sediment packings for which some measurements of flatness and elongation, the two most common form factors, are available.</summary>
+    <category term="physics.geo-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-16T09:45:00Z</published>
+    <arxiv:primary_category term="physics.geo-ph"/>
+    <author>
+      <name>Christoph Rettinger</name>
+    </author>
+    <author>
+      <name>Ulrich Rüde</name>
+    </author>
+    <author>
+      <name>Stefan Vollmer</name>
+    </author>
+    <author>
+      <name>Roy M. Frings</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0111411v1</id>
+    <title>Turbulent viscosity in clumpy accretion disks. Application to the Galaxy</title>
+    <updated>2001-11-21T12:37:10Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0111411v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0111411v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The equilibrium state of a turbulent clumpy gas disk is analytically investigated. The disk consists of distinct self-gravitating clouds. Gravitational cloud-cloud interactions transfer energy over spatial scales and produce a viscosity, which allows mass accretion in the gas disk. Turbulence is assumed to be generated by instabilities involving self-gravitation and to be maintained by the energy input from differential rotation and mass transfer. Disk parameters, global filling factors, molecular fractions, and star formation rates are derived. The application of our model to the Galaxy shows good agreement with observations. They are consistent with the scenario where turbulence generated and maintained by gravitation can account for the viscosity in the gas disk of spiral galaxies. The role of the galaxy mass for the morphological classification of spiral galaxies is investigated.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-11-21T12:37:10Z</published>
+    <arxiv:comment>14 pages with 5 PS figures. Accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>B. Vollmer</name>
+      <arxiv:affiliation>MPI fuer Radioastronomie, Bonn, Germany</arxiv:affiliation>
+    </author>
+    <author>
+      <name>T. Beckert</name>
+      <arxiv:affiliation>MPI fuer Radioastronomie, Bonn, Germany</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361:20011640</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361:20011640" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.00522v1</id>
+    <title>Efficient Tree-Traversals: Reconciling Parallelism and Dense Data Representations</title>
+    <updated>2021-07-01T15:08:53Z</updated>
+    <link href="https://arxiv.org/abs/2107.00522v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.00522v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent work showed that compiling functional programs to use dense, serialized memory representations for recursive algebraic datatypes can yield significant constant-factor speedups for sequential programs. But serializing data in a maximally dense format consequently serializes the processing of that data, yielding a tension between density and parallelism. This paper shows that a disciplined, practical compromise is possible. We present Parallel Gibbon, a compiler that obtains the benefits of dense data formats and parallelism. We formalize the semantics of the parallel location calculus underpinning this novel implementation strategy, and show that it is type-safe. Parallel Gibbon exceeds the parallel performance of existing compilers for purely functional programs that use recursive algebraic datatypes, including, notably, abstract-syntax-tree traversals as in compilers.</summary>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-01T15:08:53Z</published>
+    <arxiv:primary_category term="cs.PL"/>
+    <author>
+      <name>Chaitanya Koparkar</name>
+    </author>
+    <author>
+      <name>Mike Rainey</name>
+    </author>
+    <author>
+      <name>Michael Vollmer</name>
+    </author>
+    <author>
+      <name>Milind Kulkarni</name>
+    </author>
+    <author>
+      <name>Ryan R. Newton</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,277 @@
+    Astérisque
+
+A. BALOG
+On the distribution of integers having no large prime factor
+Astérisque, tome 147-148 (1987), p. 27-31
+<http://www.numdam.org/item?id=AST_1987__147-148__27_0>
+
+
+
+
+    © Société mathématique de France, 1987, tous droits réservés.
+    L’accès aux archives de la collection « Astérisque » (http://smf4.emath.fr/
+    Publications/Asterisque/) implique l’accord avec les conditions générales d’uti-
+    lisation (http://www.numdam.org/conditions). Toute utilisation commerciale ou
+    impression systématique est constitutive d’une infraction pénale. Toute copie
+    ou impression de ce fichier doit contenir la présente mention de copyright.
+
+
+
+
+                      Article numérisé dans le cadre du programme
+                    Numérisation de documents anciens mathématiques
+                                 http://www.numdam.org/
+Société Mathématique de France
+Astérisque 147-148 (1987), p.27-31.
+
+
+
+
+               On the distribution of integers having no
+                            large prime factor
+
+                          A. Balog (Budapest)
+
+1.       Friedlander and Lagarias [2] considered the problem of
+estimating the number $$ (X,Z,Y) of integers in the interval (X-Y,X]
+having no prime factor >Z . Especially they defined f(a) as the
+infimum of the values of 0 for which for all a'>a one had
+\p{X,Xa 1,X 0) >0 for sufficiently large X and they proved for CXa^-j
+                                                                  1
+
+(1)                       f(a)^1-2(1-2     a )a .
+The proof was based on a simple combinatorial conscruction, a special
+case of i t was discovered independently by Balog and Sarkozy [1] .
+Our aim is to develop an alternative method. Instead of ij;(X,Z,Y)
+itself we investigate a weighted sum by analytic arguments originated
+from Heath-Brown and Iwaniec [3] .We have
+
+THEOREM: For     0<a^1
+
+(2)                              f(a)^l .
+       The theorem is a simple consequence of our main lemma
+
+LEMMA: Let   k£1 be an integer, ^-^6>0 , X>X be real numbers,
+|a |^1 be arbitrary complex coefficients and we define M=X          ,
+v m v1/2+1/8k+6
+Y=X             , finally
+(3)                       d = E a a
+                           n m^2 Ii n m.1mn2
+                             M<m.
+                                l ^2M
+For any A>0 we have
+
+
+
+                                      27
+                                          A. BALOG
+
+
+                                         am,~2
+(4)                       £ d = Y( E                       ni Y i
+                       X-Y<n^X 1  M<ms2M                     log X
+
+2.    For a given      e>0 and          0<a^1 we can choose a k>max {TT— .-5—)
+ana, am=s/[ A
+            1 if
+            0
+                    m has no cprime
+                                 .
+                         otherwise
+                                    factor
+                                    .
+                                                     >Xa ', Our
+                                                            - lemma
+                                                                ,
+                                                                    ^guarantee
+that the interval (X-X^y/2 + e rx] contains numbers n in the form
+n = 5,m1m2 where m. has no prime factor >Xa and l<—j=X
+                                                     X 1 / 2k
+                                                            1 OL
+                                                               <X
+                 1                                  M
+This gives the theorem.
+
+3.     At first we reduce the proof of (4) to estimating a certain
+integral. Our basic tool is the Perron integral formula (Lemma 3.12
+of [6]). We define
+
+                    M(s) =       amm S . L ( s) =
+                          M<m^2M                L1<£^L2
+           1 2k and L2 = 2X2k . By Perron formula we can express the
+where L^=-g-X
+left hand side of (4) as an integral taken on a vertical line of the
+complex plane. We have
+                                ^+iT
+(5)             dn =                   •ri 4**2,(s),X -(X-Y)&
+                                       L(s)M            ^ — ds, + 0(
+                                                                  _,X log
+                                                                       ^ X,) .
+                            I
+      X-Y<n^X           2TT i1-iT
+                             2 11
+We can provide a fairly small error term by choosing T= -XV =
+=X1 / 2—• 1/8k—"(5/2. The major part of the integral is that around ~"+i0
+                                                                      1
+Choosing T =X            and using the facts that
+                        dklX Vx
+               L(s) =             + 0(L21/2) for s=l+it , |t|^TQ ,
+                           1-s
+                                               _3
+               XS-(X-Y)S YXS 1 + 0(Is-1|Y2X. 2. for s=^+it ,
+                     s
+                                   |M(l+it)I2« M
+we get again from the Perron formula that
+                            DVd+
+                        1        L(s)M2(s)X "(X Y) ds =
+                       2TTÌ
+                            --ÌT
+                            2 .
+                                             28
+                  INTEGERS HAVING NO LARGE PRIME FACTOR
+
+
+           1
+                                                _1 _1      _2 1
+        1 2 f c L2 L1      M2(s)YXS       + 0 (L0 oYX o+Yox oLo; ) T M
+      2TTÌ 1-iT   1-s
+           2 o                                  z                IO;
+           1 .
+        1 7 /• r         am/mx2 (X/L^3 1-(X/L2)S 1
+(6)                                                ds + C Y
+      2TTÌ 1 J   1-(X/L2)S              s-1              logAX
+           2 o
+                             a 2
+               qdf            m!   O Y
+                     vM<m^2M m       logAX
+for all   A>0 . Combining (5) and (6) we arrive at
+                                 ams 2      Y       Y •R)
+(7)           Z   d = Y                + Oi
+           X-Y<n^X n     ^M<m^2M m        V  Â~ ddf
+                                          log^X
+for all A>0 , where
+                        T
+                     R = L(l+it)M2(l+it)|dt .
+                        T
+From (7) i t is enough too prove that
+                           x1/2
+(8)                 R <         for all   A>0 .
+                          logAX
+4.     Next we prove (8). To bound R we use three important
+principles, the mean-value theorem of Dirichlet polynomials (Theorem
+6.1 of [5]) which states
+              T                        la J 2
+              J '|M(ì+it)I2dt « (M+T) Z m
+             -T
+the Halasz-Montgomery-Huxley large-value theorem [4] which states
+                                           , M MT. 2VX ,
+            I{It|^T : V<|M(^+it)|^2V}I « (-T+—-)log
+                                            \7 T7
+and the fact that for T <t^T and for all A>0 we have
+                         o            L1/2
+                                      L2
+(9)                       L(^+it) «
+                                     logAX
+
+
+                                   29
+                                       A. BALOG
+
+
+which follows for example from van der Corput's bound for trigonomet­
+rical sums (Theorem 5.13 of [6]). Note that the mean-value theorem
+when is applied to L^+it) gives
+          T
+             |L(-l+it) |2kdt « (Lk+T) 1 1.                   D2 « X1/2logkX .
+         -1                                n  n=n   ...n
+                                              L1<VL2
+              We divide the interval [T ,T] into parts and denote the
+integral over the set Q on which              °     | M1(•=•+ it) | £1/4
+                                                                       M     by R and over
+the set fi(V) on which ° V<1| M (j+it) | S 2V by R(V). As | 1°                 M (j+it) 1/?
+                                                                                        |^ M 1
+t r i v i a l l y , i t is possible to cover the interval [TQ,T] by using
+« log X sets Q(V) together with Q . From Holder's inequality and
+the mean-value theorem
+                                                                   4k        1
+                                            t2k                           1 2k ^
+                    odd      |L(l+it)|2kdt          |M(l+it)           dt
+                           o                    d
+                       T          T      vrxd                    1
+                                I
+                   <                »i2         max|M(y+it) 1*«
+                               2k
+                                                tea
+                       T       J_ T                 o
+ (10)              « (x'7o +T) 2k o 1-L /4klog1/2X            «
+                                 W(M+T)i 2kM1'
+             <<x4k <2 8k 2>(1 2k> <2 4k)4klQg1/2x <<c
+
+                1_, rl_J_,
+                2 (2Z 4k1
+             « XZ            1/2X x1/5
+                       4K log'7
+                                    logAX
+for a l l   A>0 . From the large-value theorem for              M <V^T
+                                     MT, 2VX
+                              1 dt « —F-log
+                          fi(V)
+and
+                                                                     4k
+             R(V) ^          |L(l+it)|2kdt^ \2k           |M(l+it)| 2k"1dt (1 2k «
+                                                  fl(V)
+                 T         J_ 4k
+             «        |L|2kWv2k-1        1 dt
+                 \J
+               T               n(V)
+                o     J_      4k ,
+(11)         « x1/2+t 2k MTV.2k=r6              log3X «
+
+
+                                           30
+                INTEGERS HAVING NO LARGE PRIME FACTOR
+
+
+
+                    « X4kT 2kVk M 2klog3X «
+                                           x1/2
+                    « X4kT 2kM4klog3X «
+                                          logAX
+                           1 /4
+for all  A>0 . Finally if T <V then from the large-value theorem
+                                      M 2X
+                             1 dt « —log
+                         fi(V)       \7
+and from (9)
+                                                     x1/2
+(12)      R(V) « max |L(l+it)| V2      1 dt « x4k M
+                 t€fi(V)                      logAX logAX
+                                  Q(V)
+Now (8) follows from (10) , (11) and (12). This completes the proof.
+
+                              REFERENCES
+
+[1] A. Balog and A. Sárközy, On sums of integers having small prime
+    factors I I , Studia Sci. Math. Hungar. 19 (1984), 81-88.
+[2] J . B. Friedlander and J . C. Lagarias, On the distribution in
+    short intervals of integers having no large prime factor, to
+    appear.
+[3] D. R. Heath-Brown and H. Iwaniec, On the difference between
+    consecutive primes, Inventiones Math. 55 (1979), 49-69.
+[4] M. N. Huxley, On the difference between consecutive primes,
+    Inventiones Math. 15 (1972), 164-170.
+[5] H. L. Montgomery, Topics in multiplicative number theory. Lecture
+    notes Math. 227. Berlin-Heidelberg-New-York, Springer 1971.
+[6] E. C. Titchmarsh, The theory of Riem ann zeta-function. Oxford.
+    Clarendon Press 1951.
+
+                                      BALOG, ANTAL
+                                      MATHEMATICAL INSTITUTE OF THE
+                                      HUNGARIAN ACADEMY OF SCIENCES
+                                      1364 BUDAPEST, P. O. BOX 127.
+
+
+
+
+                                 31
+

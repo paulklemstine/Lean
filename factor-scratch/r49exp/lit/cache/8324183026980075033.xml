@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/jDSYdYMmOnQk9/GF/eRswnyHkMs</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"special form" AND abs:primes&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:52Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22special+form%22+AND+abs:primes)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1402.6658v1</id>
+    <title>Computing discrete logarithms in subfields of residue class rings</title>
+    <updated>2014-02-26T19:40:38Z</updated>
+    <link href="https://arxiv.org/abs/1402.6658v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.6658v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent breakthrough methods \cite{gggz,joux,bgjt} on computing discrete logarithms in small characteristic finite fields share an interesting feature in common with the earlier medium prime function field sieve method \cite{jl}. To solve discrete logarithms in a finite extension of a finite field $\F$, a polynomial $h(x) \in \F[x]$ of a special form is constructed with an irreducible factor $g(x) \in \F[x]$ of the desired degree. The special form of $h(x)$ is then exploited in generating multiplicative relations that hold in the residue class ring $\F[x]/h(x)\F[x]$ hence also in the target residue class field $\F[x]/g(x)\F[x]$. An interesting question in this context and addressed in this paper is: when and how does a set of relations on the residue class ring determine the discrete logarithms in the finite fields contained in it? We give necessary and sufficient conditions for a set of relations on the residue class ring to determine discrete logarithms in the finite fields contained in it. We also present efficient algorithms to derive discrete logarithms from the relations when the conditions are met. The derived necessary conditions allow us to clearly identify structural obstructions intrinsic to the special polynomial $h(x)$ in each of the aforementioned methods, and propose modifications to the selection of $h(x)$ so as to avoid obstructions.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-26T19:40:38Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1312.1674</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Ming-Deh Huang</name>
+    </author>
+    <author>
+      <name>Anand Kumar Narayanan</name>
+    </author>
+  </entry>
+</feed>

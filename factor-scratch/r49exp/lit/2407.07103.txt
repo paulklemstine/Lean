@@ -1,0 +1,422 @@
+The p-adic valuation of the general degree-2 and
+degree-3 polynomial in 2 variables
+Shubham
+
+arXiv:2407.07103v2 [math.GM] 14 Jul 2024
+
+School of Physical Sciences, Jawaharlal Nehru University
+New Delhi, India
+e-mail: Shubha76_sps@jnu.ac.in
+Abstract: This paper investigates the p-adic valuation trees of degree-2 and degree-3 polynomials
+in two variables over any prime p, building upon prior research outlined in [14].
+Keywords: p-adic valuation, valuation tree, polynomial sequences.
+2020 Mathematics Subject Classification:11B99, 11D88, 11B83,11G16
+
+1 Introduction
+This paper explores the p-adic valuation tree of degree-2 and degree-3 polynomials in two variables,
+building upon the foundational work discussed in [14]. We extend the results of [14] to encompass
+degree-2 and degree-3 polynomials in two variables over any prime p, leveraging the p-adic
+valuation tree to analyze the p-adic valuations of sequences. We say the p-adic valuation νp (f (x, y))
+of a polynomial f (x, y) has a closed-form if its p-adic valuation tree has no infinite branch.
+In [14], it was established that the p-adic valuation νp (f (x, y)) admits a closed-form when the
+equation f (x, y) = 0 has no solution in Qp × Qp . Additionally, it was shown that the set
+Vp (f ) = νp (f (n, m)) : 0 ≤ m ≤ n, n ∈ N, where f (x, y) ∈ Z[x, y], exhibits periodic behavior if
+and only if f has no zeros in Zp × Zp . In the periodic case, the minimal period is a power of p.
+The main contributions of this paper, encapsulated in Theorems 3.1 and 4.1, focus on the p-adic
+valuation trees of degree-2 and degree-3 polynomials in two variables, respectively. Theorem
+3.1 details the structure of the p-adic valuation tree for degree-2 polynomials, while Theorem 4.1
+extends this analysis to degree-3 polynomials. The subsequent section provides an overview of
+the applications and known results concerning the p-adic valuations of various sequences.
+
+2 Related Work
+For n ∈ N, the exponent of the highest power of a prime p that divides n is called the p-adic
+valuation of the n. This is denoted by νp (n). Legendre establishes the following result about
+p-adic valuation of n! in [11]
+∞ j k
+P
+p (n)
+n
+,
+= n−s
+νp (n!) =
+pk
+p−1
+k=1
+
+where sp (n) is the sum of digits of n in base p. It is observed in [6] that 2-adic valuation of central
+binomial coefficient is s2 (n), that is
+1
+
+v0
+0
+
+1
+
+Figure 1. The valuation tree of x2 + 5
+ν2 (an ) = s2 (n), where an =
+
+2n
+.
+n
+
+
+
+It follows from here that an is always an even number and an /2 is odd when n is a power of
+2. This expression is called a closed form in [6]. The definition of closed form depends on the
+context. This has been discussed in [4, 8].
+The work presented in [6] forms part of a general project initiated by Moll and his co-authors
+to analyse the set
+Vx = {νp (xn ) : n ∈ N},
+for a given sequence x = {xn } of integers.
+The 2-adic valuation of {n2 −a} is studied in [6]. It is shown that n2 −a, a ∈ Z has a simple closed
+form when a 6≡ 4, 7 mod 8. For these two remaining cases the valuation is quite complicated. It
+is studied by the notion of the valuation tree.
+Given a polynomial f (x) with integer coefficients, the sequence {ν2 (f (n))} is described by
+a tree. This is called the valuation tree attached to the polynomial f . The vertices of this tree
+correspond to some selected subsets
+Cm,j = {2m i + j : i ∈ N},
+
+0 ≤ j < 2m
+
+starting with the root node C0,0 = N. The procedure to select classes is explained below in
+Example 2.1. Some notation for the vertices of this tree are introduced as follows:
+Definition 2.1. A residue class Cm,j is called terminal if ν2 (f (2m i + j)) is independent of i.
+Otherwise, it is called non-terminal. The same terminology is given to vertices corresponding
+to the class Cm,j . In the tree, terminal vertices are labelled by their constant valuation and
+non-terminal vertices are labelled by a ∗.
+Example 2.1. Construction of valuation tree of x2 + 5 is as follows: note that ν2 (1 + 5) = 1
+and ν2 (2 + 5) is 0. So node v0 is non terminating. Hence it splits into two vertices and forms
+the first level. These vertices correspond to the residue classes C1,0 and C1,1 . We can check that
+both these nodes are terminating with valuation 0 and 1. The valuation tree of x2 + 5 is shown in
+Figure 1.
+The main theorem of [6] is as follows:
+Theorem 2.1. Let v be a non-terminating node at the k-th level for the valuation tree of n2 + 7.
+Then v splits into two vertices at the (k + 1)-level. Exactly one of them terminates, with valuation
+k. The second one has valuation at least k + 1.
+2
+
+The 2-adic valuation of the Stirling numbers is discussed in [2]. The numbers S(n, k) are the
+number of ways to partition a set of n elements into exactly k non-empty subsets where n ∈ N
+and 0 ≤ k ≤ n. These are explicitly given by
+S(n, k) = k!1
+
+i=k−1
+P
+i=0
+
+
+(−1)i ki (k − i)n ,
+
+or, by the recurrence
+S(n, k) = S(n − 1, k − 1) + kS(n − 1, k),
+with initial condition S(0, 0) = 1 and S(n, 0) = 0 for n > 0.
+The 2-adic valuation of S(n, k) can be easily determined for 1 ≤ k ≤ 4 and closed form
+expression is given as follows:
+v2 (S(n, 1)) = 0 = v2 (S(n, 2)),
+
+
+1,
+v2 (S(n, 3)) =
+0,
+
+v2 (S(n, 4)) =
+
+
+1,
+0,
+
+if n is even
+otherwise
+
+if n is odd.
+otherwise
+
+The important conjecture described there is that the partitions of N in classes of the form
+(k)
+
+Cm,j = {2m i + j : i ∈ N and starts at the point where 2m i + j ≥ k }
+leads to a clear pattern for v2 (S(n, k)) for k ∈ N is fixed. We recall that the parameter m is called
+the level of the class. The main conjecture of [2] is now stated:
+Conjecture 2.1. Let k ∈ N be fixed. Then we conjecture that
+(a) there exists a level m0 (k) and an integer µ(k) such that for any m ≥ m0 (k), the number of
+non-terminal classes of level m is µ(k), independently of m;
+(b) moreover, for each m ≥ m0 (k), each of the µ(k) non-terminal classes splits into one
+terminal and one non-terminal subclass. The latter generates the next level set.
+This conjecture is only established for the case k = 5. A similar conjecture is given in [3] for
+the p-adic valuation of the Stirling numbers.
+From the point of view of application, the 2-adic valuation tree is used to solve quadratic
+and cubic diophantine equations in [5]. Apart from this, some other special cases are studied
+in [1, 7, 12].
+In [14], the set
+3
+
+0
+
+0
+
+0
+
+*
+
+1
+
+1
+
+1
+
+1
+
+Figure 2. The valuation tree of x2 + y 2 + xy + x + y + 1
+Vf = {νp (f (m, n)) : m, n ∈ N},
+where f (x, y) ∈ Z[x, y], is discussed by the generalized notion of the valuation tree. The
+definition of the p-adic valuation tree in [14] is as follows:
+Definition 2.2. Let p be a prime number. Consider the integers f (x, y) for every (x, y) in Z2 . The
+p-adic valuation tree of f is a rooted, labelled p2 -ary tree defined recursively as follows:
+1. Suppose that v0 be a root vertex at level 0. There are p2 edges from this root vertex to its p2
+children vertices at level 1. These vertices correspond to all possible residue classes (i0 , j0 )
+mod p. Label the vertex corresponding to the class (i0 , j0 ) with 0 if f (i0 , j0 ) 6≡ 0 (mod p)
+and with ∗ if f (i0 , j0 ) ≡ 0 (mod p).
+2. If the label of a vertex is 0, it does not have any children.
+3. If the label of a vertex is ∗, then it has p2 children at level 2. These vertices correspond
+to the residue classes (i0 + i1 p, j0 + j1 p) mod p2 where i1 , j1 ∈ {0, 1, 2, . . . , p − 1} and
+(i0 , j0 ) mod p is the class of the parent vertex.
+This process continues recursively so that at the lth level, there are p2 children of any non-terminating
+vertex in the previous level (l − 1), each child of which corresponds to the residue classes
+(i0 +i1 p+· · ·+il−1 pl−1 , j0 +j1 p+· · ·+jl−1 pl−1 ) (mod pl ). Here il−1 , jl−1 ∈ {0, 1, 2, . . . , p−1}
+and (i0 + i1 p + · · · + il−2 pl−2 , j0 + j1 p + · · · + jl−2 pl−2 ) (mod pl−1 ) is the class of the parent
+vertex. Label the vertex corresponding to the class (i, j) with l − 1 if f (i, j) 6≡ 0 (mod pl ) and ∗
+if f (i, j) ≡ 0 (mod pl ). Thus i = i0 + i1 p + · · · + il−1 pl−1 , j = j0 + j1 p + · · · + jl−1 pl−1 .
+Example 2.2. Valuation tree of x2 + y 2 + xy + x + y + 1 is shown in Figure 2.
+So
+
+
+1,
+ν2 (x2 + y 2 + xy + x + y + 1) =
+0,
+
+if both x, y are odd.
+otherwise
+
+3 p-adic Valuation Tree of Degree-2 Polynomial
+The 2-adic valuation tree is given in [14]. We extend this result for general prime p.
+4
+
+Theorem 3.1. Consider the p-adic valuation tree of the general bivariate polynomialf (x, y) ∈
+Z[x, y] of degree two, and let v be a vertex labelled with ∗ at level k ≥ 1, p > 2. Then, at the next
+level (k + 1), vertex v splits into p2 vertices. There are following possibilities about the labelling
+of these nodes:
+1. All nodes are labelled with ∗.
+2. All nodes are labelled with k + 1.
+3. Exactly p nodes are labelled with ∗ and rest p2 − p are labelled with k + 1.
+P
+l m
+Proof. Let f (x, y) =
+l+m≤2 alm x y , l, m ∈ Z be the general degree-2 polynomial in two
+variables and (bk−1 , ck−1 ) be associated with the vertex v at the k-th level of the valuation tree.
+So we have
+f (bk−1 , ck−1 ) ≡ 0 (mod pk ),
+where bk = (ik ik−1 · · · i1 i0 )p = bk−1 + pk ik , ck = (jk jk−1 · · · j1 j0 )p = bk−1 + pk ik . Here
+i0 , i1 , . . . , ik , j0 , j1 , . . . , jk ∈ {0, 1, . . . , p − 1} and (b0 , c0 ) = (i0 , j0 ). We want to find (ik , jk )
+such that
+f (bk , ck ) ≡ 0 (mod pk+1 ).
+(1)
+On putting the expression for (bk , ck ) into above equation we get
+X
+alm (bk−1 + pk ik )l (ck−1 + pk jk )m ≡ 0 (mod p)k+1
+
+(2)
+
+l+m≤2
+
+On solving above equation and using f (bk−1 , ck−1 ) = αpk for some integer α, we get
+α + 2a20 ik bk−1 + a11 (ik ck−1 + jk bk−1 ) + a10 ik + a01 jk + 2a02 jk ck−1 ≡ 0
+
+(mod p).
+
+(3)
+
+Further by using bk−1 ≡ i0 (mod p) and ck−1 ≡ j0 (mod p) in the above equation, we get
+α + (2a20 i0 + a11 j0 + a10 )ik + (2a02 j0 + a11 i0 + a01 )jk ≡ 0 (mod p).
+
+(4)
+
+Based on the values of (i0 , j0 ), we can have following cases:
+Case 1. If (i0 , j0 ) = (0, 0) then equation (4) becomes
+α + a10 ik + a01 jk ≡ 0
+
+(mod p).
+
+(5)
+
+In this case if atleast one of a10 or a01 has p-adic valuation zero, then the above equation
+has p solutions. Hence there are p nodes with label ∗ and p2 − p with label k + 1 at the level
+k + 1. Further if vp (a10 ) and vp (a01 ) are greater than one then depending upon α, either all
+nodes are labelled with ∗ or k + 1 at the level k + 1.
+Case 2 If (i0 , j0 ) 6= (0, 0) and νp (aij ) ≥ 1 then equation (4) becomes
+α ≡ 0 (mod p).
+
+(6)
+
+Hence in this case based upon α, either all nodes at level k + 1 are labelled with ∗ or k + 1.
+Case 3. if (i0 , j0 ) 6= (0, 0) and exactly one of a20 , a11 , a10 , a02 , a11 , a01 has p-adic valuation zero
+then equation (4) has exactly p solutions. Hence in this case also exactly p nodes are
+labelled with ∗ and rest p2 − p are labelled with k + 1.
+The above three cases constitutes the proof of the theorem.
+5
+
+4 p-adic valuation tree of degree-3 polynomial
+The following theorem gives p-adic valuation tree of the general degree-3 polynomial for all
+primes p.
+Theorem 4.1. Consider the p-adic valuation tree of the general bivariate polynomialf (x, y) ∈
+Z[x, y] of degree three, and let v be a vertex labelled with ∗ at level k ≥ 1. Then, at the next level
+(k + 1), vertex v splits into p2 vertices. There are following possibilities about the labelling of
+these nodes:
+1. All nodes are labelled with ∗.
+2. All nodes are labelled with k + 1.
+3. Exactly p nodes are labelled with ∗ and rest p2 − p are labelled with k + 1.
+P
+l m
+Proof. Let f (x, y) =
+l+m≤3 alm x y , l, m ∈ Z be the general degree-2 polynomial in two
+variables and (bk−1 , ck−1 ) be associated with the vertex v at the k-th level of the valuation tree.
+So we have
+f (bk−1 , ck−1 ) ≡ 0 (mod pk ),
+where bk = (ik ik−1 · · · i1 i0 )p = bk−1 + pk ik , ck = (jk jk−1 · · · j1 j0 )p = bk−1 + pk ik . Here
+i0 , i1 , . . . , ik , j0 , j1 , . . . , jk ∈ {0, 1, . . . , p − 1} and (b0 , c0 ) = (i0 , j0 ). We want to find (ik , jk )
+such that
+f (bk , ck ) ≡ 0 (mod pk+1 ).
+(7)
+On putting the expression for (bk , ck ) into above equation we get
+X
+alm (bk−1 + pk ik )l (ck−1 + pk jk )m ≡ 0 (mod p)k+1
+
+(8)
+
+l+m≤2
+
+On solving above equation and using f (bk−1 , ck−1 ) = αpk for some integer α, we get
+α + (3a30 i20 + 2a12 i0 j0 + a12 j02 + 2a20 i0 + a11 j0 + a10 )ik +
+(3a03 j02 + 2a21 i0 j0 + a21 i20 + 2a02 j0 + a11 i0 + a01 )jk ≡ 0
+
+(mod p)
+
+(9)
+
+First we give proof for the prime p = 2. In this case, equation (9) becomes
+α + (a30 i0 + a12 j0 + a11 j0 + a10 )ik + (a03 j0 + a21 i0 + a11 i0 + a01 )jk ≡ 0
+
+(mod p).
+
+(10)
+
+Again we can split this case into following sub-cases:
+Case 1. If (i0 , j0 ) = (0, 0) then the above equation becomes
+α + a10 ik + a01 jk ≡ 0
+
+(mod p).
+
+(11)
+
+In this case if atleast one of a10 or a01 has p-adic valuation zero, then the above equation
+has p solutions. Hence there are p nodes with label ∗ and p2 − p with label k + 1 at the level
+k + 1. Further if vp (a10 ) and vp (a01 ) are greater than one then depending upon α, either all
+nodes are labelled with ∗ or k + 1 at the level k + 1.
+6
+
+Case 2. If (i0 , j0 ) 6= (0, 0) and atleast one of the coefficient is not divisible by p then exactly p
+nodes are labelled by ∗ and rest are labelled by k + 1.
+Case 3. If (i0 , j0 ) 6= (0, 0) and all coefficients are divisible by p then equation (10) becomes
+α ≡ 0 (mod p).
+
+(12)
+
+Hence in this case either all nodes are labelled with ∗ or all are labelled with k + 1.
+These three constitute the proof for the prime p = 2. Now we give the proof for the p = 3. In this
+case equation (9) becomes
+α+(2a12 i0 j0 +a12 j02 +2a20 i0 +a11 j0 +a10 )ik +(2a21 i0 j0 +a21 i20 +2a02 j0 +a11 i0 +a01 )jk ≡ 0
+
+(mod p)
+(13)
+
+We split this case into the following sub-cases:
+Case 1. If (i0 , j0 ) = (0, 0), then above equation becomes
+α + a10 ik + a01 jk ≡ 0
+
+(mod p).
+
+(14)
+
+Now if νp (a10 ) > 0 and νp (a01 ) > 0, then all nodes at level k + 1 are labelled with k + 1
+or all nodes are labelled with ∗. If either νp (a10 ) = 0 or νp (a01 ) = 0 or both are zero then,
+then there are exactly p nodes with label ∗ and the rest p2 − p are labelled with k + 1.
+Case 2. If i0 = 0 and j0 6= 0 then equation (13) has p solutions for (ik , jk ) if atleast one of
+coefficients aij has valuation greater than zero, thus there are p nodes with label ∗ and
+p2 − p nodes with label k + 1. If νp (aij ) > 0 then all nodes at level k + 1 are either labelled
+with ∗ or all are labelled with k + 1.
+Case 3 Similar reasoning for the case j0 = 0 and i0 6= 0 gives the labels of children of the vertex
+v.
+Now we give the proof for the general prime p > 3. We split this case into three cases:
+Case 1. If (i0 , j0 ) = (0, 0), then equation (9) becomes
+α + a10 ik + a01 jk ≡ 0
+
+(mod p).
+
+(15)
+
+Now if νp (a10 ) > 0 and νp (a01 ) > 0, then all nodes at level k + 1 are labelled with k + 1
+or all nodes are labelled with ∗. If either νp (a10 ) = 0 or νp (a01 ) = 0 or both are zero then,
+then there are exactly p nodes with label ∗ and the rest p2 − p are labelled with k + 1.
+Case 2. If i0 = 0 and j0 6= 0 then equation (9) has p solutions for (ik , jk ) if atleast one of coefficients
+aij has valuation greater than zero, thus there are p nodes with label ∗ and p2 − p nodes
+with label k + 1. If νp (aij ) > 0 then all nodes at level k + 1 are either labelled with ∗ or all
+are labelled with k + 1.
+Case 3 Similar reasoning for the case j0 = 0 and i0 6= 0 gives the labels of children of the vertex
+v.
+
+7
+
+References
+[1] Amdeberhan, T., De Angelis, V., & Moll, V. H. (2013). Complementary Bell numbers:
+Arithmetical properties and Wilf’s conjecture. Advances in Combinatorics, 23–56, Springer.
+[2] Amdeberhan, T., Manna, D., & Moll, V. H. (2008). The 2-adic valuation of Stirling numbers.
+Experimental Mathematics, 17, 69–82.
+[3] Berribeztia, A., Medina, L., Moll, A., Moll, V., & Noble, L. (2010). The p-adic valuation of
+Stirling numbers. Journal for Algebra and Number Theory Academia, 1, 1–30.
+[4] Borwein, J. M., & Crandall, R. (2013). Closed forms: what they are and why we care.
+Notices American Mathematical Society, 60, 50–65.
+[5] Brucal–Hallare, M., Goedhart, E. G., Riley, R. M., Sharma, V., & Thompson, B. (2021).
+Solving quadratic and cubic Diophantine equations using 2-adic valuation trees. Available
+online at: https://doi.org/10.48550/arXiv.2105.03352.
+[6] Byrnes, A., Fink, J., Lavigne, G., Nogues, I., Rajasekaran, S., Yuan, A., Almodovar, L.,
+Guan, X., Kesarwani, A., Medina, L., Rowland, E., & Moll, V. H. (2019). A closed-form
+solution might be given by a tree. Valuations of quadratic polynomials. Scientia, Series A:
+Mathematical Sciences, 29 11–28.
+[7] Caicedo, J. B., Moll, V. H., Ramı́rez, J. L., & Villamizar, D. (2019). Extensions of set
+partitions and permutations. Electronic Journal of Combinatorics, 26(2), Article Number
+P2.20.
+[8] Chow, T. Y. (1999). What is a closed-form number? American Mathematical Monthly,
+106(5), 440–448.
+[9] Conrad,
+K.
+A
+multivariable
+Hensel’s
+lemma.
+Available
+online
+at:
+https://kconrad.math.uconn.edu/blurbs/gradnumthy/multivarhensel.pdf.
+[10] Gouvêa, F. Q. (2020). p-adic Numbers: An Introduction (Universitext). (3rd ed.). Springer.
+[11] Legendre, A. M. (1830). Théorie des Nombres. Firmin Didot Frères, Paris.
+[12] Sun, X., & Moll, V. H. (2010). A binary tree representation for the 2-adic valuation of a
+sequence arising from a rational integral. Integers, 10(2), 211–222.
+[13] Maila Brucal-Hallare, Eva G. Goedhart, Ryan Max Riley, Vaishavi Sharma, and Bianca
+Thompson. Solving quadratic and cubic diophantine equation using 2-adic valuation tree.
+Available online at: https://doi.org/10.48550/arXiv.2105.03352.
+[14] Shubham (2023). The 2-adic valuation of the general degree-2 polynomial in 2
+variables. Notes on Number Theory and Discrete Mathematics.29(4), 737-751, DOI:
+10.7546/nntdm.2023.29.4.737-751.
+
+8
+
+

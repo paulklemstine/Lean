@@ -1,0 +1,614 @@
+                                       Entangled coherent states: teleportation and
+arXiv:quant-ph/0012086v1 17 Dec 2000
+
+
+
+
+                                                      decoherence
+                                                         S.J. van Enk1 and O. Hirota2
+                                                      1
+                                                        Bell Laboratories, Room 2C-401
+                                                             600-700 Mountain Ave
+                                                             Murray Hill NJ 07974
+                                              2
+                                                Research Center for Quantum Communications
+                                                    Tamagawa University, Tokyo, Japan
+                                                                   October 1, 2018
+
+
+                                                                         Abstract
+                                            When a superposition (|αi−|−αi) of two coherent states with opposite
+                                        phase falls upon a 50-50 beamsplitter, the resulting state is entangled.
+                                        Remarkably, the amount of entanglement is exactly 1 ebit, irrespective
+                                        of α, as was recently discovered by O. Hirota and M. Sasaki. Here we
+                                        discuss decoherence properties of such states and give a simple protocol
+                                        that teleports one qubit encoded in Schrödinger cat states.
+
+
+                                        1     Introduction
+                                        Entangled states are useful for quantum information processing, but are
+                                        hard to produce and tend to decohere fast. For quantum communication
+                                        purposes entangled states of the electromagnetic (em) field are of partic-
+                                        ular interest. Such states can be used, e.g., for quantum key distribution
+                                        [1] and teleportation [2].
+                                            There are different types of entanglement for light fields. For instance,
+                                        in the teleportation experiments from the Innsbruck group [3], it is the
+                                        polarization directions of single photons that are entangled. An example
+                                        of a polarization-entangled state is
+                                                                                                 √
+                                                           |ψi1,2 = (| li1 | ↔i2 − | ↔i1 | li2 )/ 2,              (1)
+
+                                        where | ↔i and | li denote single-photon states with two orthogonal po-
+                                        larization directions and the subscripts 1 and 2 refer to different (spatial)
+                                        modes of the em field. The state (1) has one ebit of entanglement [4] and
+                                        consequently can be used to teleport one qubit encoded in polarization.
+
+
+
+                                                                             1
+    In the Caltech teleportation experiment [5], two em field modes are
+entangled with respect to photon numbers and the state used for telepor-
+tation is a two-mode squeezed state [6] of the form
+                                        ∞
+                                 1 X
+                     |ψr i =          (tanh r)n |ni|ni,                   (2)
+                               cosh r
+                                        n=0
+
+where |ni denotes a state with n photons and r is a real parameter (giving
+the amount of squeezing in the fields used to produce |ψr i). The state (2)
+possesses an amount of entanglement equal to [7]
+
+            E(r) = cosh2 r log2 (cosh2 r) − sinh2 r log2 (sinh2 r),       (3)
+
+which can lie anywhere between zero (for r → 0) and infinityP (for r → ∞).
+In principle, E(r) qubits encoded in a state of the form         α |ni can be
+                                                                n n
+teleported with |ψr i.
+    In this paper we discuss a third type of entangled states of two modes of
+the electromagnetic field. They are parametrized by a complex parameter
+α,                                                        √
+                |Hα i1,2 = (|αi1 |αi2 − | − αi1 | − αi2 )/ Nα ,           (4)
+where |αi is a coherent state. Entanglement properties of states of this
+form were considered in [8, 9], although other properties, such as nonclas-
+sical photon statistics and squeezing properties were considered before
+[10]. Similar states but with a different relative phase factor, which does
+make a crucial difference (see below and [11]) were considered in [12, 13]
+and earlier in [14]. A related family of states, including |Hα i, was dis-
+cussed in [15] in the context of ion traps. In spite of the crucial difference
+the phase factor makes, we denote the entangled states (4) as “entangled
+coherent states”, the term used in [14]. The normalization factor Nα is
+
+                           Nα = 2 − 2 exp(−4|α|2 ),                       (5)
+
+and for later use we abbreviate
+
+                        cα ≡ hα| − αi = exp(−2|α|2 ).                     (6)
+
+The state (4) can be expanded in the photon-number state basis as
+
+                        2 exp(−|α|2 )         X     αn+m
+           |Hα i1,2 =       √                       √      |ni1 |mi2 .    (7)
+                              Nα                      n!m!
+                                        n,m|n+m odd
+
+
+Note the difference between |Hα i and the two-mode squeezed state |ψr i:
+in particular, in the former the total number of photons is always odd,
+whereas in the latter it is always even. We also note that the average
+number of photons in the state |Hα i is
+
+                                              1 + c2α
+                               hN i = 2|α|2           ,                   (8)
+                                              1 − c2α
+
+
+
+                                         2
+which reduces to 1 in the limit α → 0 and to 2|α|2 for |α| → ∞. The state
+(4) can be produced from a Schrödinger cat state
+                          √          √      √
+                        (| 2αi − | − 2αi)/ Nα ,                       (9)
+
+by splitting it on a 50/50 beam splitter. Cat states of em fields have been
+produced inside micro-cavities [16, 17], although the procedure used in
+these experiments works only for not too small values of |α|.
+    Remarkably, for any value of α the state (4) has one ebit of entangle-
+ment [8, 9]. Indeed, as can be easily verified, the reduced density matrix
+Tr1 |Hα i1,2 hHα | has two nonzero eigenvalues, both equal to 1/2. Alterna-
+tively we may define
+                                                  p
+                     |+i    =     (|αi + | − αi)/      N+ ,
+                                                  p
+                     |−i    =     (|αi − | − αi)/      N− ,
+                     N±     =     2 ± 2cα ,                           (10)
+
+and note that
+                                             √
+                   |Hα i = (|+i|−i + |−i|+i)/ 2,                      (11)
+
+which manifestly has one ebit of entanglement.
+   For completeness we note one can construct a whole class of states
+with the same entanglement by applying local unitary transformations to
+modes 1 and 2. Here we are interested only in transformations that take
+coherent states to coherent states. For instance, the unitary displacement
+operator D(β) acts on coherents states as follows [6],
+
+                      D(β)|αi = exp(iφβα )|α + βi,                    (12)
+
+with
+                                φβα = Im(βα∗ ).                       (13)
+Furthermore, we can multiply the coherent state amplitude by an arbi-
+trary phase factor. Thus, all states of the form
+                                                         p
+           |Hαβγδ i ≡ (|αi|βi − exp(iΓαβγδ )|γi|δi)/          Nα0     (14)
+
+with
+
+                  |α − γ|   =      |β − δ| = const ≡ 2α0 ,
+                   Γαβγδ    =      Im(βδ ∗ + αγ ∗ ),                  (15)
+
+can be produced from the state |Hα0 i by the two operations mentioned
+above, and consequently possess one ebit of entanglement.
+   Since the amount of entanglement in (4) is independent of α it may
+seem that such states may be especially robust against decoherence due
+to photon absorption. Namely, although photon absorption attenuates
+the coherent state, that by itself has no effect on the entanglement. On
+the other hand, there will be decoherence due to the inevitable entangle-
+ment with the environment. That is, although a coherent state remains
+
+
+                                       3
+coherent, a superposition of coherent states does not remain coherent.
+Precisely how much decoherence there is will be examined in the follow-
+ing Section. A related issue, namely, using Schrödinger cat states to allow
+for correction of errors due to photon absorption, is discussed in [18].
+
+
+2     Noise and decoherence
+We imagine a situation where a field mode 1 is “stored” in Alice’s lab,
+while mode 2 describes a light beam propagating to Bob. Clearly, the
+latter mode will suffer from losses, but even Alice’s system will not be
+lossless. For simplicity we then assume that both modes are equally lossy.
+In particular, we assume the modes 1 and 2 travel each through a noisy
+channel characterized by
+                                   √      p
+                      |αi1 |0iE → | ηαi1 | 1 − ηαiE ,                (16)
+where the second state now refers to the “environment” and η is the noise
+parameter, which gives the fraction of photons that survives the noisy
+channel. This noise model may look too simplistic but is in fact equivalent
+(after tracing over the environment) to a more complicated model where
+the environment is assumed to consist of many modes and where
+                                      √
+                     |αi1 Πi |0iEi → | ηαi1 Πi |ǫi αiEi ,              (17)
+          |ǫ |2 + η = 1. The model (16) describes realistic noise for optical
+      P
+with     i i
+fields. For micro-wave fields the influence of the thermal field may not be
+neglected, but for an optical field the temperature is effectively zero.
+    Starting from a state |Hαβγδ i the density matrix of the modes 1 and
+2 after traveling through the noisy channels becomes
+          1    √   √        √   √        √   √        √   √
+ρ1,2 =       [| ηα, ηβi1,2 h ηα, ηβ| + | ηγ, ηδi1,2 h ηγ, ηδ|
+         Nα0
+            √    √       √    √         √   √        √   √
+         −s| ηα, ηβi1,2 h ηγ, ηδ| − s∗ | ηγ, ηδi1,2 h ηα, ηβ|] . (18)
+Here we abbreviated
+                               |α, βi = |αi|βi,                         (19)
+and
+                           p         p        p             p
+      s = exp(−iΓαβγδ )h   1 − ηγ,    1 − ηδ|     1 − ηα,   1 − ηβi.    (20)
+This decohered state obviously will have less entanglement than 1 ebit.
+A relevant measure of how much useful (to be used for teleportation for
+instance) entanglement is left, is the overlap of ρ1,2 with states of the
+form (14), since the latter always contain one ebit of entanglement. The
+maximum overlap is in fact with the state |H√ηα√ηβ √ηγ √ηδ i. This defines
+a fidelity
+             F   ≡   hH√ηα√ηβ √ηγ √ηδ |ρ1,2 |H√ηα√ηβ √ηγ √ηδ i
+                     [1 − exp(−4ηα20 )][1 + exp(−4(1 − η)α20 )]
+                 =                                              ,       (21)
+                                2[1 − exp(−4α20 )]
+
+
+                                      4
+          0.9
+
+
+          0.8
+
+
+          0.7
+
+
+          0.6
+Overlap
+
+
+
+
+          0.5
+
+
+          0.4
+
+
+          0.3
+
+
+          0.2
+
+
+          0.1
+             0           1         2            3           4          5
+                                          α0
+
+
+
+Figure 1: Overlap of ρ1,2 with appropriately chosen fully entangled state as a
+function of α0 for various noise parameters η = 0.9, 0.7, 0.5, 0.3, 0.1 for top to
+bottom curves.
+
+                 with α0 as defined in (15). Since this fidelity depends only on η and α0
+                 the whole family of states described by (14) and (15) decoheres in the
+                 same way. In Fig. 1 we plot the fidelity as a function of α0 . From that
+                 figure one sees that for α0 → 0, F → η. For η = 1/2, the fidelity is always
+                 F = 1/2, and the same fidelity is reached in the limit |α| → ∞ (for η < 1).
+                 Note that in this limit Alice and Bob actually obtain a separable state.
+                     For η > 1/2 the fidelity decreases with increasing α0 . For a fixed
+                 amount of noise η > 1/2 the optimum states for teleportation are thus
+                 the family of states corresponding to α0 → 0, for which the state (4)
+                 reduces to                                        √
+                                         |H0 i ≡ (|0i|1i + |1i|0i)/ 2,                  (22)
+                 in terms of photon number states.
+
+
+                 3      Teleportation
+                 Any of the family of states (14) can in principle be used to teleport one
+                 qubit. Indeed, as we will show now, Schrödinger cat states of the form
+                                                                  √
+                                     |ψ0 i = (ǫ+ |αi + ǫ− | − αi)/ N0 ,                (23)
+
+                 with
+                                       N0 = |ǫ+ |2 + |ǫ− |2 + 2cα Reǫ∗− ǫ+ ,           (24)
+                 can be faithfully teleported using |Hα i. The protocol we discuss here
+                 is chosen for its simplicity; it is not the optimal teleportation protocol.
+
+
+                                                        5
+         It does, however, lead with nonzero probability to perfect teleportation
+         (if there is no noise). It is straightforward to formulate the optimum
+         teleportation protocol using but it would require measurements that are
+         hard to implement, see [9]. Here we let Alice mix her part of the entangled
+         state (mode 1) with the state to be teleported (in mode 0) by using a beam
+         splitter. The resulting state is1
+                                  √                       √
+               |ψ1 i0,1,2 ≡ ǫ+ [| 2αi0 |0i1 |αi2 − [|0i0 | 2αi1 | − αi2 ] +
+                                       √                            √
+                              −ǫ− [| − 2αi0 |0i1 | − αi2 − [|0i0 | − 2αi1 |αi2 ]. (25)
+
+         Subsequently Alice performs two photon number measurements on the
+         modes 0 and 1 on her side. Denote the probability to find n and m
+         photons in modes 0 and 1, respectively, by P (n, m),
+
+                                  P (n, m) = |0 hn|1 hm|ψ1 i0,1,2 |2 .                 (26)
+
+         Only one of the two outcomes can be a nonzero number and let’s suppose
+         that n 6= 0. In this case the state on Bob’s side collapses into
+                                                                             p
+                       |ψ0′ i2     =   (ǫ+ |αi2 − (−1)n ǫ− | − αi2 )/            N0′
+                          N0′      =   |ǫ+ |2 + |ǫ− |2 − 2(−1)n cα Reǫ∗− ǫ+ .          (27)
+
+         We see that provided n is odd, the teleportation works perfectly. For n
+         even the transformation required for perfect state transfer would be
+
+                                       | − αi      →    −| − αi
+                                          |αi      →    |αi                            (28)
+
+         which is not in general unitary (it is unitary only in the limit |α| → ∞).
+         Although for even nonzero values of n the teleportation fidelity may still
+         be better than can be achieved classically (i.e. without entanglement), we
+         focus here only on the case n is odd. For n odd (26) reduces to
+                                             √
+                                         |hn| 2αi|2
+                              P (n, 0) =              for odd n.                (29)
+                                             Nα
+         This quantity is independent of the state to be teleported, as is to be
+         expected in a perfect teleportation protocol. The probability of success
+         (i.e. finding an odd number of photons in either mode) is
+                                        X                    X
+                             Podd =             P (n, 0) +           P (0, n).         (30)
+                                        n odd                n odd
+   1 Phase factors i have been eliminated, so that instead of the standard definition of the
+
+action of a beam splitter on coherent states:
+                                               √            √
+                            |αi|βi → |(α + iβ)/ 2i|(iα + β)/ 2i,
+we get                                             √           √
+                                 |αi|βi → |(α + β)/ 2i|(α − β)/ 2i.
+This corresponds to phase-shifting the second input and the second output modes by −π/2.
+
+
+
+                                                    6
+These summations can be performed and the result turns out to be inde-
+pendent of α,
+                                    1
+                             Podd = .                             (31)
+                                    2
+
+3.1     Noisy case
+When the noise parameter η < 1, the teleportation fidelity will drop
+below 1. On the other hand, as we will show, the probability to find an
+odd number of photons does not necessarily decrease below 50%.
+    In the presence of noise, the states we should expect to be able to
+teleport more or less successfully are of the form
+                                                           p
+                          |ψ̃0 i = (ǫ+ |α̃i + ǫ− | − α̃i)/   Ñ0 ,         (32)
+            √
+with α̃ =       ηα and
+
+                          Ñ0 = |ǫ+ |2 + |ǫ− |2 + 2cα̃ Reǫ∗− ǫ+ .          (33)
+
+Following the same steps as before, after Alice has measured n 6= 0 pho-
+tons in mode 1, say, the joint entangled state of Bob’s mode and the
+environment is
+                                                              √
+            |ψ̃ ′ 0 i = (ǫ+ |α̃i|ki − (−1)n ǫ− | − α̃i| − ki)/ Nk , (34)
+
+where
+                            p               p
+                |ki   ≡    |   1 − ηαi|         1 − ηαi,
+                Nk    =    |ǫ+ | + |ǫ− | − (−1)n 2cα̃ c2√1−ηα Reǫ∗− ǫ+ .
+                                2           2
+                                                                           (35)
+
+We find again that a measurement of an odd number of photons is required
+for near-perfect teleportation. The probability of finding n photons is now
+                                     √         Nk
+                      P (n, 0) = |hn| 2α̃i|2        for odd n,             (36)
+                                             Ñ0 Nα
+and the probability of finding an odd number of photons in either mode
+is                   X                X                1 Nk Nα̃
+            Podd =         P (n, 0) +       P (0, n) =          .  (37)
+                                                       2 Ñ0 Nα
+                     n odd            n odd
+Both these quantities do depend now on the state to be teleported through
+Nk and Ñ0 . In principle there is, therefore, some information about the
+identity of the state |ψ0 i to be gained from the particular measurement
+outcome. This issue is further discussed in [19]. Here, however, we assume
+that Bob does not make any use of this extra knowledge about the identity
+of the state to be teleported. The fidelity of the teleported state is then
+simply given by
+
+                      F    ≡    |hψ̃0 |ψ̃ ′ 0 i|2
+                                |A|2 + |B|2 + ck (AB ∗ + BA∗ )
+                           =                                   ,           (38)
+                                            Ñ0 Nk
+
+                                                    7
+with
+                              A       =     |ǫ+ |2 + ǫ∗− ǫ+ cα̃ ,
+                              B       =     |ǫ− |2 + ǫ∗+ ǫ− cα̃ .               (39)
+Suppose now we intend to teleport an arbitrary qubit in the space spanned
+by |αi and | − αi. We may parametrize that qubit as follows,
+           |ψ0 (θ, φ)i        =     sin(θ/2)|+i + cos(θ/2) exp(iφ)|−i,
+                      0       ≤     θ ≤ π; 0 ≤ φ < 2π,                          (40)
+with the states |±i defined as in (10) and with a probability distribution
+dp = sin θdθdφ/(4π). This procedure corresponds to choosing a spin-1/2
+representation for the qubit and choosing an arbitrary direction for its
+“spin”. The expectation value of the number of photons N (θ, φ) in the
+state (40) is
+                                                     N−                  N+
+           N (θ, φ)       =       sin2 (θ/2)|α|2        + cos2 (θ/2)|α|2    .   (41)
+                                                     N+                  N−
+Averaging over θ and φ gives the average number of photons
+                                                            
+                                    1 2         N−   N+
+                      hN i =          |α|          +             .              (42)
+                                    2           N+   N−
+
+Although in the limit of small α the number of photons in both |αi and
+| − αi is small, a qubit (40) has half a photon on average, since for α → 0,
+hN i → 1/2. For large α (roughly for |α| > 1) the average number of
+photons is simply hN i ≈ |α|2 .
+    We can average the results for Podd and the teleportation fidelity F
+over θ and φ. Averaging (37) gives, surprisingly perhaps,
+                                                       1
+                                          hPodd i =      ,                      (43)
+                                                       2
+just as in the noiseless case. The average teleportation fidelity is plotted
+in Fig. 2. For |α| ≫ 1 the average teleportation fidelity approaches 2/3
+for any noise parameter η < 1, which is the value expected for “classical”
+teleportation, where Alice performes a projective measurement in the ba-
+sis |+i, |−i, tells Bob the result, who then prepares that state. This is
+because in this limit Alice and Bob share no entanglement.
+
+3.2    Using different entangled states
+States of the form
+                  |Gα i1,2 = (|αi1 |αi2 + | − αi1 | − αi2 ),                    (44)
+as discussed in [12, 13] have less than one ebit of entanglement [9]. In
+fact, the reduced density matrix has two nonzero eigenvalues given by
+                                                (1 ± cα )2
+                                      λ± =                                      (45)
+                                                 2 + 2c2α
+
+                                                 8
+            1
+
+
+
+           0.9
+                    η=0.9
+
+
+           0.8
+Fidelity
+
+
+
+
+           0.7       η=0.5
+
+
+
+           0.6
+
+
+
+           0.5                      η=0.1
+
+
+           0.4
+              0              1              2            3                   4           5
+                                                |α|
+
+
+Figure 2: Teleportation fidelity in the noisy case as a function of |α| for different
+values of the noise parameter η.
+
+                                                                 P
+                  and its entanglement is E = − i=± λi log2 λi ≤ 1, with the equality
+                  sign holding only in the limit |α| → ∞. We therefore expect this type of
+                  state to be less successful in teleporting quantum states. Indeed, using
+                  the same teleportation procedure as before, we find that the probability
+                  to find a desired measurement outcome is less than 1/2 now, although the
+                  teleportation fidelity still is 100% in the absence of noise. In particular,
+                  following the same steps as before, after Alice measures a nonzero number
+                  of photons in mode 1, Bob’s state collapses into
+                                                                                              p
+                                     |ψ0′ i2    =     (ǫ+ |αi2 + (−1)n ǫ− | − αi2 )/             N0′
+                                        N0′     =            2           2
+                                                      |ǫ+ | + |ǫ− | + 2(−1)          n         ∗
+                                                                                         cα Reǫ− ǫ+ .        (46)
+
+                  Hence, a successful teleportation now occurs when Alice measures a nonzero
+                  even number of photons. The probability of succesful teleportation is
+                                                X                        X                    (1 − cα )2
+                                 Peven =              P (n, 0) +                 P (0, n) =              ,   (47)
+                                                                                               2 + 2c2α
+                                           n>0 even                n>0 even
+
+                  which is less than 1/2. For small |α| this probability approaches zero:
+                  there is indeed no entanglement in the state |Gα i for |α| → 0. For |α| →
+                  ∞, on the other hand, the probability of successful teleportation becomes
+                  1/2 as before, and correspondingly the state |Gα i does indeed possess one
+                  ebit of entanglement in that limit. In Fig. 3 we plot both the entanglement
+                  and Peven as functions of |α|.
+
+
+
+
+                                                                     9
+       1
+
+
+      0.9
+
+
+      0.8
+
+
+      0.7
+
+
+      0.6
+P,E
+
+
+
+
+      0.5
+
+
+      0.4
+
+
+      0.3
+
+
+      0.2
+
+
+      0.1
+
+
+       0
+            0       0.2   0.4   0.6   0.8   1       1.2   1.4        1.6   1.8   2
+                                            |α|
+
+
+Figure 3: Probability of successful teleportation Peven (solid curve) with a state
+of the form (44) and its entanglement E (dashed curve) as functions of |α| in
+the absence of noise.
+
+                4         Conclusions
+                We studied properties of entangled coherent states of the form
+                                                  |αi|αi − | − αi| − αi.
+                These states can be produced from Schrödinger cat states by using a 50/50
+                beam splitter. Such states possess exactly one ebit of entanglement[8] and
+                can be used to teleport one qubit encoded in superpositions of |αi and
+                | − αi. We discussed a simple protocol that achieves this aim with a 50%
+                probability of success. This protocol requires beam splitters, the ability
+                to produce Schrödinger cat states, and photon counting. A teleportation
+                experiment along the lines sketched here may be feasible in the context of
+                cavity-QED. In the presence of noise, the teleportation fidelity decreases,
+                but the probability of success does not necessarily decrease and its average
+                value in fact remains constant.
+
+
+                Acknowledgements
+                We thank Chris Fuchs and Masahide Sasaki for useful discussions and
+                comments.
+
+
+                References
+                 [1] A. Ekert, Phys. Rev. Lett. 67, 661 (1991).
+
+
+                                                                10
+ [2] C.H. Bennett, H.G. Brassard, C. Crepeau, R. Jozsa, A. Peres, and
+     W.K. Wootters, Phys. Rev. Lett., 70, 1895 (1993).
+ [3] D. Bouwmeester, J.W. Pan, K. Mattle, M. Eibl, H. Weinfurter, and
+     A. Zeilinger, Nature 390, 575 (1997).
+ [4] C.H. Bennett, D.P. DiVincenzo, J.A. Smolin, and W.K. Wootters,
+     Phys. Rev. A 54, 3824 (1996).
+ [5] A. Furusawa, J.L. Sørensen, S.L. Braunstein, C.A. Fuchs, H.J. Kim-
+     ble, and E.S. Polzik, Science 282, 706 (1998).
+ [6] D.F. Walls and G.J. Milburn, Quantum Optics (Springer-Verlag,
+     Berlin, 1994).
+ [7] S.J. van Enk, Phys. Rev. A 60, 5095 (1999).
+ [8] O. Hirota and M. Sasaki, Proceedings QCMC, 2000, to be published.
+ [9] O. Hirota, K. Nakamura, M. Sohma, and K. Kato, to be published.
+[10] C.L. Chai, Phys. Rev. A 46, 7187 (1992).
+[11] The nontrivial character of the relative phase φ in the entangled state
+                          |αi|αi + exp(iφ)| − αi| − αi
+    can be seen already by considering superpositions of coherent states
+                          √                 √
+                         | 2αi + exp(iφ)| − 2αi,
+    from which the entangled states can be produced by using a 50/50
+    beamsplitter. For instance, for φ = 0 this state is a so-called even
+    coherent state, containing superpositions of states with even numbers
+    of photons. Similarly, for φ = π we get the odd coherent state, with
+    always an odd number of photons. For φ = π/2 on the other hand,
+    the photon number distribution is Poissonian, just as for a coherent
+    state. For a review of nonclassical properties of these types of states,
+    see V. Bužek and P.L. Knight, Prog. in Optics XXXIV, p. 1, Elsevier
+    Amsterdam (1995).
+[12] J.C. Howell and J.A. Yeazell, Phys. Rev. A 62, 012102 (2000).
+[13] R. Filip, J. Řehaček and M. Dušek, quant-ph/0011006.
+[14] B.C. Sanders, Phys. Rev. A 45, 6811 (1992).
+[15] W.J. Munro, G.J. Milburn and B.C. Sanders, Phys. Rev. A 62,
+     052108 (2000).
+[16] M. Brune, E. Hagley, J. Dreyer, X. Maitre, C. Wunderlich, J.M.
+     Raimond, and S. Haroche, Phys. Rev. Lett. 77, 4887 (1996).
+[17] J.M. Raimond, M. Brune, and S. Haroche, Phys. Rev. Lett. 79, 1964
+     (1997).
+[18] P.T. Cochrane, G.J. Milburn and W.J. Munro, Phys. Rev. A 59,
+     2631 (1999).
+[19] H.F. Hofmann, T. Ide, T. Kobayashi, and A. Furusawa, Phys. Rev.
+     A 62, 062304 (2000)
+
+
+
+                                    11
+

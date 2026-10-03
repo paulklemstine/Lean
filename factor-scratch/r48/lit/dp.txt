@@ -1,0 +1,1528 @@
+                                                                DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES
+
+
+                                                                                              KATHERINE E. STANGE
+
+
+
+                                              .
+
+                                                      Abstract. Following work of Mazur-Tate and Satoh, we extend the definition of division polynomials to
+arXiv:2503.15428v3 [math.NT] 17 Apr 2026
+
+
+
+
+                                                      arbitrary isogenies of elliptic curves, including those whose kernels do not sum to the identity. In analogy
+                                                      to the classical case of division polynomials for multiplication-by-n, we demonstrate recurrence relations,
+                                                      identities relating to classical elliptic functions, the chain rule describing relationships between division
+                                                      polynomials on source and target curve, and generalizations to higher dimension (i.e., elliptic nets).
+
+
+                                                                                                 1. Introduction
+                                             Given an elliptic curve E with identity O, and a positive integer n with associated multiplication-by-n
+                                           map [n] : E → E, the n-th division polynomial Ψn is an elliptic function on E with divisor
+                                           (1.1)                                                  [n]∗ (O) − n2 (O).
+                                           We typically set Ψ0 = 0 and Ψ−n = −Ψn . Sometimes these are called Weber polynomials [3]. These are
+                                           furthermore normalized so that they satisfy a recurrence relation
+                                           (1.2)                              Ψp+q Ψp−q Ψ2r + Ψq+r Ψq−r Ψ2p + Ψr+p Ψr−p Ψ2q = 0,
+                                           or the more general [14]
+                                           (1.3)                 Ψp+q+s Ψp−q Ψr+s Ψr + Ψq+r+s Ψq−r Ψp+s Ψp + Ψr+p+s Ψr−p Ψq+s Ψq = 0,
+                                           for all p, q, r, s ∈ Z. This doesn’t completely specify the sequence: Ψn can be multiplied by a factor of
+                                                          2
+                                           the form αn β for scalars α and β. Under the normalization we will use throughout, the first few division
+                                           polynomials, in terms of a Weierstrass curve y 2 = x3 + ax + b, are:
+                                                                        Ψ1 = 1,     Ψ2 = −2y,       Ψ3 = 3x4 + 6ax2 + 12bx − a2 ,
+                                                                        Ψ4 = −4y · x6 + 5ax4 + 20bx3 − 5a2 x2 − 4abx − 8b2 − a3 ,
+                                                                                                                               
+
+                                           from which the rest follow by (1.2) or (1.3).
+                                              The recurrence allows for efficient computation, with O(log n) applications of (1.3) to compute Ψn from the
+                                           initial terms Ψ1 , Ψ2 , Ψ3 , Ψ4 . Ward [20] showed in 1948 that integer sequences satisfying (1.2) are essentially
+                                           those of the form Ψn (P ) for some point P on an elliptic curve E; the curve coefficients and point coordinates
+                                           can be recovered from the integer sequence as polynomials in the initial terms. Such integer sequences are
+                                           known as elliptic divisibility sequences.
+                                              There are three traditionally important properties of the division polynomials:
+                                                (1) Chain rule. The Ψn satisfy
+                                                                                                                        2
+                                                                                              Ψnm = (Ψn ◦ [m]) Ψnm .
+                                                  (2) Relation to x. Letting x be the x-coordinate in the Weierstrass form, the Ψn satisfy
+                                                                                         Ψn+m Ψn−m
+                                                                                                   = x ◦ [m] − x ◦ [n].
+                                                                                           Ψ2n Ψ2m
+                                                  (3) Recurrence relations. The Ψn satisfy (1.2) as a consequence of the relation to x, as well as the
+                                                      more general (1.3).
+
+                                               2020 Mathematics Subject Classification. Primary: 11G05 11B37 14H52 Secondary: 11B39 11R37 14K02.
+                                               Key words and phrases. elliptic curves, division polynomials, kernel polynomials, elliptic divisibility sequence, isogenies,
+                                           elliptic functions.
+                                                                                                           1
+2                                                   STANGE
+
+
+   Later, Ward studied a generalization to the case of complex multiplication by the Gaussian integers [21].
+Just as in his original memoir, he worked in the complex case, defining Ψα := σ(αz)/σ(z)N (α) in terms of
+the Weierstrass sigma function for α ∈ Z[i]. These still satisfy the recurrence relation but are not elliptic
+functions inpall cases, so he defines an adjustment which is elliptic but no longer satisfies the recurrence, by
+scaling by ℘(z). Durst studies the Eisenstein case [5].
+   In 1991, in an appendix to their work on the p-adic sigma function, Mazur and Tate defined division
+polynomials more generally [9, Appendix I] as follows. For any isogeny ϕ : E → E ′ for which the divisor
+                                              ϕ∗ (O) − (deg ϕ)(O)
+is principal, we write Ψϕ for a function with this divisor, which we will call the division polynomial for ϕ. To
+set the scalar normalization, let t and t′ be uniformizers at the identities O and O′ for E and E ′ respectively,
+and let ω and ω ′ be invariant differentials. One requires
+                                                          deg ϕ  ′       −1
+                                  tdeg ϕ Ψϕ
+                                                  
+                                                    dt             dt    ′
+                                            (O) =      (O)             (O )     .
+                                    t′ ◦ ϕ          ω               ω′
+This is independent of the choice of t and t′ but depends on ω, ω ′ . As an example, suppose ϕ = [2] on
+y 2 = x3 + ax + b, where ω = dx/2y. Around O, we can choose t = t′ = −x/y, with x = t−2 + · · · and
+y = −t−3 + · · · . We have t ◦ [2] = 2t + · · · and (dt/ω)(O) = 1. Then, the requirement above becomes
+Ψ2 = 2t−3 + · · · . Thus, combining normalization and divisor, Ψ2 = −2y.
+    The requirement of principality, i.e., the sum of the geometric points in the kernel being trivial, is re-
+strictive: the isogenies for which the sum of points is non-zero are exactly those
+                                                                                √ which
+                                                                                      √ are cyclic of even
+degree, with odd inseparable degree. For example, the endomorphisms 1 + i, 1 + −5, −2 etc. do not have
+well-defined division polynomials
+                       p            (see also [10, Lemma 2.2]). For CM by Z[i], these are exactly the cases
+where Ward involves ℘(z).
+    Mazur and Tate show that for Ψϕ which are defined, we obtain the three usual properties: a recurrence
+relation, the chain rule, and the relation to the x-coordinate.
+    For an isogeny ϕ, we may also define the closely related kernel polynomial
+                                                     Y
+                                      kϕ (X) :=               (X − x(R)).
+                                               O̸=R∈E[ϕ]/{±1}
+
+For ϕ of odd degree, this is again the divisionP
+                                               polynomial, but for even degree, the multiplicities of two-torsion
+points may differ; e.g., div(Ψ2 ) = div(y) = O̸=R∈E[2] (R) − 3(O) but div(k[2] ) = 2 div(Ψ2 ). In SageMath,
+the command division_polynomial comes with the option two_torsion_multiplicity to choose amongst
+the variations [16].
+   Schoof shows how to compute the kernel polynomial from knowledge of the image curve, the degree, and
+the sum of the x-coordinates of the kernel points (which specifies the second coefficient of the polynomial),
+by means of Taylor series expansions of Weierstrass functions [11]. The kernel polynomial’s roots can be
+used to compute the isogeny itself [18, Equation (8)], and its coefficients determine the target curve [18,
+Equation (11)]. The kernel polynomial can be computed by an algorithm of Stark based on continued
+fraction expansions [15]. For more background on the isogeny computation problem, see [3]. Evaluations of
+kernel polynomials can be used to compute the values of isogenies [1]. In the theory of complex multiplication,
+ray class fields can be generated over Hilbert class fields by division and kernel polynomials. Motivated by
+this connection, Küçüksakalli studied kernel polynomials (calling them generalized division polynomials),
+and gave a method to compute them using Newton identities and Hurwitz numbers [8]. None of these
+methods approach the problem using recurrence relations like (1.2).
+   In 2004, Satoh independently defined generalized division polynomials for endomorphisms, and studied
+their computational properties [10]. Again, one is restricted to the case that the geometric points of the
+kernel sums to zero; Satoh called such endomorphisms unbiased. In this case, the normalization condition
+is given in terms of the uniformizer T = −x/y at O by specifying the leading coefficient of a formal series
+expansion:
+                                       Ψα = (−1)N (α)−1 αT −N (α)+1 + · · · .
+Again, Satoh recovers the three basic properties of recurrence, chain rule and relation to x. Observe again
+that Satoh’s normalization gives Ψ2 = −2y, agreeing with Mazur-Tate for y 2 = x3 +ax+b and ω = dx/2y. As
+                                                                                                             2
+for the history of normalizations, Weber [22, pp.197-199] normalizes so that Ψ2n has lead term −2nyx2n −2 ;
+                              DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                       3
+
+
+Cassels [4] chose to change this to a plus sign, which is the most common convention today, e.g. [13]. Mazur
+and Tate’s convention, equivalently that of Satoh, which we use here, changes the sign back to Weber’s
+convention, at least assuming we take ω = dx/(2y + a1 x + a3 ) for a Weierstrass model [9, p.682].
+   Over Q, a very closely related (but not exactly equivalent) definition of an elliptic divisibility sequence is
+as the sequence of denominators of [n]P , n ≥ 0. The distinction goes back to Ward [20], but see for example
+[19] for modern details on when and how these two definitions differ. In 2008, Streng [17] generalized this
+alternate definition to curves with complex multiplication, in order to prove a generalization of a property
+due to Silverman [12] for elliptic divisibility sequences: that every term has a primitive divisor, that is, a
+prime divisor not appearing as a divisor earlier in the sequence. Streng’s definition generalizes terms from
+numbers to ideals.
+   In 2008, the author generalized elliptic divisibility sequences and division polynomials to elliptic nets [14].
+Net polynomials areP polynomials in the coefficients of E and several points Pi : the net polynomial Ψa1 ,...,an
+will vanish when      ai Pi = O.
+   The purpose of this note is to show that the restriction that the sum of points in the kernel be trivial can
+be circumvented. We can define division polynomials Ψϕ attached to arbitrary isogenies ϕ, and they satisfy
+analogues of the three main properties: chain rule, relation to x, and recurrence relation. Some adjustments
+to the statements are needed.
+   The fundamental idea is to replace the Mazur-Tate divisor with
+                                   Dϕ = ϕ∗ (O′ )−(deg ϕ)(O) + (Pϕ ) − (O),
+where Pϕ ∈ E[2] is the sum of the kernel of ϕ. Then we define an appropriately normalized elliptic function
+Ψϕ having this divisor. This necessitates a great deal of wrangling of two-torsion points and isogenies of
+degree 2. In particular, the normalization of division polynomials is delicate (the recurrences depend on it),
+and our case is no exception. The normalization in the general case is taken with respect to a fixed collection
+of isogenies of degree 2. Aspects of this approach are reminiscent of the theory of theta characteristics and
+syzygetic triples [7, Section 1].
+    To facilitate all this wrangling, we consider some generalities about kernel divisors formed as linear
+combinations of divisors of the form ϕ∗ (O′ ), and, for principal kernel divisors, appropriately normalized
+kernel functions. We do only what is needed here, but there may be a more general theory available
+(Section 3).
+    One of the interesting waypoints appears in the form of Lemma 4.1, which turns on the fact that kernel
+sums play well with the cube law of quadratic forms. It states that certain ‘quadratic combinations’ of
+functions supported on two-torsion are squares.
+    Since the recurrence relations necessitate new factors in our setting, the Ψϕ themselves do not form an
+elliptic divisibility sequence. However, we demonstrate that specializations to a point Ψϕ (P ) can recover
+elliptic divisibility sequences on the target curve (Theorem 6.3).
+    In Section 7, we give some examples. These demonstrate the three main properties in various contexts,
+including supersingular and inseparable examples. In the Gaussian complex multiplication case, we compare
+our definitions to Ward’s.
+    Finally, we generalize such generalized division polynomials – perhaps ‘isogeny polynomials’ is a better
+name – to higher dimension. That is, we define such things on products of E, in analogy to elliptic nets
+(Section 8).
+Acknowledgements. Thank you to Joseph Macula and very helpful anonymous referees for feedback on
+an earlier draft. The author would like to thank her colleague David Grant for suggesting the footnote, the
+history of division polynomial normalization, and the alternate proof of Theorem 5.1.
+
+                                                2. Definitions
+  Throughout the paper, we will assume the base field is perfect, algebraically closed, and of characteristic
+not two.
+2.1. Biased and unbiased isogenies. Generalizing Satoh, we call a non-zero isogeny ϕ : E → E ′ unbi-
+ased
+P if its kernel P elements sum to the identity with   multiplicity [10, Section 2]. In other words, the map
+                                                 ∗    ′
+    n
+   i i (P i ) →
+              7   n P
+                 i i i taking Div(E) to E takes ϕ  (O   ) to O. Equivalently, the divisor
+                                              ϕ∗ (O′ ) − (deg ϕ)(O)
+4                                                          STANGE
+
+
+is principal. By convention, the zero isogeny, which we will write as [0] to avoid confusion, is unbiased.
+   A non-zero isogeny is biased if its kernel sum is non-trivial; in this case, it must sum to a non-trivial
+two-torsion point (all points of higher order are distinct from their inverses and will cancel one another). We
+will denote this point Pϕ . For a biased isogeny ϕ : E → E ′ , the divisor
+                                                   ϕ∗ (O′ ) − (deg ϕ)(O)
+is no longer principal. There are three ‘nearby’ principal divisors which may prove useful:
+    2 (ϕ∗ (O′ ) − (deg ϕ)(O)) ,   [2]∗ (ϕ∗ (O′ ) − (deg ϕ)(O)) ,     and    Dϕ := ϕ∗ (O′ )−(deg ϕ)(O) + (Pϕ ) − (O).
+This last, denoted Dϕ , may for applications be the ‘best’ replacement for ϕ∗ (O′ ) − (deg ϕ)(O), in the sense
+that it is the minimal modification. But the first two will also have a role to play1: see Remark 5.3 and the
+alternate proof to Theorem 5.1.
+2.2. Three isogenies of degree two. Write P0 = O, P1 , P2 , P3 for the points in E[2]. For each i = 1, 2, 3,
+let gi : E → Ei denote a fixed isogeny of degree 2 with kernel {O, Pi }. Let g0 denote the identity isogeny on
+E0 := E. Let t and ti be uniformizers at the identities on E and Ei respectively. Let ω and ωi be invariant
+differentials on E and Ei respectively. And finally, write O for the identity on E and Oi for the identity on
+Ei . By convention, choose t0 = t, and ω0 = ω.
+   Let ϕ : E → E ′ be a non-zero isogeny. Let Pϕ ∈ E[2] be the sum of the points in the kernel of ϕ. Write
+ι(ϕ) for the i ∈ {0, 1, 2, 3} such that Pϕ = Pi . Then we have or define
+                       Pϕ = Pι(ϕ) ,              tϕ := tι(ϕ) , ωϕ := ωι(ϕ) , Oϕ := Oι(ϕ) .
+                                       gϕ := gι(ϕ) ,
+                                                       P             P
+Observe that ι(ϕ) depends only on ϕ|E[2] , since Pϕ = P ∈E[ϕ] P = P ∈E[ϕ]∩E[2] P . By convention, we also
+set
+                        E[0] := E, P[0] := O, g[0] := [1], t[0] := t, ω[0] := ω.
+2.3. The elliptic function Ψϕ . We now extend the definition of division polynomials to arbitrary (possibly
+biased) isogenies. Let ϕ : E → E ′ be non-zero, let t′ be a uniformizer at the identity and ω ′ an invariant
+differential for E ′ . Let O′ be the identity of E ′ . In analogy to Mazur and Tate, define an elliptic function
+Ψϕ with the principal divisor
+(2.1)                                   Dϕ = ϕ∗ (O′ )−(deg ϕ)(O) + (Pϕ ) − (O),
+where we require, as a means of normalization, that
+                                                  deg ϕ+deg gϕ  ′       −1            −1
+                  tdeg ϕ+deg gϕ Ψϕ
+                                          
+                                            dt                   dt    ′        dtϕ
+(2.2)                               (O) =      (O)                  (O   )          (O ϕ )    .
+                 (tϕ ◦ gϕ )(t′ ◦ ϕ)         ω                    ω′             ωϕ
+One observes that this is independent of t, t′ , tϕ but depends on ω, ω ′ , ωϕ . As an example, for E : y 2 = x3 + x
+with complex multiplication by Z[i], Ψ1+i = 2ix has divisor 2(0, 0) − 2(O) (examples are given in Section 7).
+   By (somewhat paradoxical) convention, we set Ψ[0] = Ψ0 = 0 and D[0] = ∅.
+
+2.4. The elliptic function Ψ  b ϕ . We need some auxiliary functions that will ‘correct’ the recurrence equa-
+tions for biased isogenies. Define Ψb i := Ψg for i = 1, 2, 3 and Ψ
+                                             i
+                                                                  b 0 := 1. Then for a general isogeny, define
+
+                                                        Ψ
+                                                        b ϕ := Ψ
+                                                               b ι(ϕ) .
+
+To be explicit, for each i = 0, 1, 2, 3, we equivalently define an elliptic function Ψ
+                                                                                     b i on E with the principal
+divisor
+                                          div(Ψ      b i := 2(Pi ) − 2(O),
+                                              b i) = D
+normalized so that                                        2 deg gi           −2
+                               t2 deg gi Ψ
+                                                  
+                                         bi         dt                dti
+                                            (O) =      (O)                (Oi )    .
+                                (ti ◦ gi )2         ω                 ωi
+As usual, this is independent of t, ti but depends on the invariant differentials.
+
+   1These three modifications correspond respectively, in the arithmetic setting of a non-principal ideal in a number field, to
+taking a principal power; extending to a field where the ideal becomes principal; and multiplying by a fixed representative of
+the inverse ideal class.
+                              DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                       5
+
+
+2.5. Formulæ. With the definitions as in the last section, we will prove the following formulæ:
+    (1) First chain rule for unbiased α : E → E ′ , β : E ′′ → E (Theorem 3.3):
+                                              Ψαβ = (Ψα ◦ β) Ψdeg
+                                                              β
+                                                                  α
+                                                                    .
+    (2) First chain rule for possibly biased α, β (Theorem 3.3):
+                                                      !2
+                                           Ψαβ                   Ψ
+                                                                 b αβ
+                                                         =                   .
+                                      (Ψα ◦ β) Ψdeg α β
+                                                            b α ◦ β)Ψ
+                                                           (Ψ        b deg α
+                                                                        β
+
+        See also the Second Chain Rule (Theorem 4.3).
+    (3) First relation to x (Theorem 5.1): For non-zero α, β : E → E ′ ,
+                                        Ψα+β Ψα−β Ψ b αΨ
+                                                       bβ
+                                                          = x′ ◦ β − x′ ◦ α.
+                                          Ψ2α Ψ2 Ψ
+                                                 b α+β
+                                                  β
+
+    (4) First recurrence relation (Corollary 5.2): For α, β, γ : E → E ′ for which the following are defined,
+                       Ψα+β Ψα−β Ψ b αΨ
+                                      bβ   Ψβ+γ Ψβ−γ Ψ bβΨbγ   Ψγ+α Ψγ−α Ψ  bγΨbα
+                                         +                   +                    = 0.
+                         Ψ2α Ψ2 Ψ
+                               β
+                                b α+β        Ψ2 Ψ2γ Ψ
+                                                    b β+γ
+                                                      β          Ψ2γ Ψ2α Ψ
+                                                                         b γ+α
+
+    (5) Second relation to x (Theorem 5.4): For α, β, σ : E → E ′ for which the following are defined,
+                                  s
+                 Ψα+β+σ Ψα−β Ψσ Ψ   b α+σ Ψ
+                                          b β+σ Ψ
+                                                b αΨ
+                                                   bβ      y′ ◦ β − y′ ◦ σ  y′ ◦ α − y′ ◦ σ
+                                                       = ′                 − ′              .
+                 Ψα+σ Ψβ+σ Ψα Ψβ Ψ   b α+β+σ Ψ
+                                             b α−β Ψ
+                                                   bσ      x ◦ β − x ◦ σ x ◦ α − x′ ◦ σ
+                                                                     ′
+
+
+    (6) Second recurrence relation (Corollary 5.5): For α, β, γ, σ : E → E ′ for which the following are
+        defined,
+                             s                                       s
+              Ψα+β+σ Ψα−β       Ψ
+                                b α+σ Ψ
+                                      b β+σ Ψ
+                                            b αΨ
+                                               bβ    Ψβ+γ+σ Ψβ−γ        Ψ
+                                                                        b β+σ Ψ
+                                                                              b γ+σ Ψ
+                                                                                    bβΨ
+                                                                                      bγ
+                                                  +
+             Ψα+σ Ψβ+σ Ψα Ψβ      Ψ
+                                  b α+β+σ Ψ
+                                          b α−β     Ψβ+σ Ψγ+σ Ψβ Ψγ       Ψ
+                                                                          b β+γ+σ Ψ
+                                                                                  b β−γ
+                                                                      s
+                                                     Ψγ+α+σ Ψγ−α        Ψ
+                                                                        b γ+σ Ψ
+                                                                              b α+σ Ψ
+                                                                                    bγΨ
+                                                                                      bα
+                                                  +                                      = 0.
+                                                    Ψγ+σ Ψα+σ Ψγ Ψα       Ψ
+                                                                          b γ+α+σ Ψ
+                                                                                  b γ−α
+The role and well-definition of the extra square-root factors are explained by Lemmas 4.1 and 4.2.
+
+                                3. Kernel functions and the chain rule
+   The Mazur-Tate method for normalizing division polynomials can be applied generally to a class of
+functions which we will call kernel functions, and gives rise to a system of functions which are well-normalized
+with respect to one another. Using this language, we obtain the chain rule and its generalization.
+   Given an isogeny ϕ : E → E ′ , define the divisor
+                                             Kϕ := ϕ∗ (O′ ) ∈ Div(E).
+Conventionally, K[0] = ∅ for any zero isogeny [0]. Distinct from the divisor Kϕ , we will write (Kϕ ) as a
+formal kernel symbol associated to ϕ. We can define the group of formal Z-sums of kernel symbols (Kϕ ),
+                                                                                              
+                               X                                                              
+                    Ker(E) :=        nϕ (Kϕ ) : ϕ ranges over non-zero isogenies with source E
+                                                  and all but finitely many nϕ ∈ Z are zero.     .
+                                                                                              
+                                    ϕ
+
+Its elements will be called kernel symbol sums. Conventionally, for any zero isogeny [0], the symbol (K[0] )
+should be interpreted as the zero element of Ker(E) (the empty sum). There is a map from Ker(E) to
+Div(E) by substituting the kernel divisor Kϕ for each symbol (Kϕ ), namely
+                                          X              X
+                                             nϕ (Kϕ ) 7→   nϕ Kϕ .
+                                              ϕ              ϕ
+                                                                  P′
+Throughout the paper, a sum or product with a prime, such as         ϕ , indicates that zero isogenies are dropped
+from the indexing set.
+6                                                           STANGE
+
+
+   Given a kernel symbol sum whose image in Div(E) is principal, we can associate an elliptic function with
+that image, up to scalar normalization. The choice of normalization is more delicate, depending on the kernel
+symbol sum and not just the image divisor. Fix a uniformizer tϕ at the identity and differential ωϕ on the
+target curve for each ϕ. For now, for the greatest generality, we   Pdo this independently for each ϕ, even if
+some target curves coincide. To a principal kernel symbol sum ϕ nϕ (Kϕ ), the associated elliptic function
+h can be normalized by requiring
+                                                           Y ′  dtϕ      −nϕ
+                                          h
+(3.1)                           Q                  (O) =           (Oϕ )     ,
+                                    ′
+                                      (t   ◦ ϕ) nϕ               ωϕ
+                                    ϕ    ϕ                 ϕ
+
+where by design both sides have a finite non-zero value. This is independent of the choice of uniformizers
+but depends on the choice of invariant differentials. Any elliptic function h of this form and normalized in
+this way is called the kernel function for the associated kernel symbol sum.
+   This normalization is consistent in the sense that the product of two kernel functions is again a kernel
+function (for the sum of the kernel symbol sums).
+   It has the following convenient property.
+                                                                        ′            ′
+Lemma 3.1. Fix an elliptic curve E. For each other elliptic   Pcurve E , suppose ω := ωϕ are chosen to
+                          ′
+agree for all ϕ ∈ Hom(E, E ). Consider a kernel symbol sum ϕ∈I nϕ (Kϕ ) indexed over some collection I
+of isogenies out of E.
+                    P Then the derived kernel function is independent of the choice of invariant differential
+ω ′ on E ′ whenever ϕ∈I∩Hom(E,E ′ ) nϕ = 0.
+
+    Returning to Ψϕ , for non-zero ϕ, observe that we have defined it in (2.1) by kernel symbol sum
+(3.2)                                  (Kϕ ) + (Kgϕ ) − (deg ϕ + deg gϕ )(K1 )
+(giving rise to divisor Dϕ ), and the associated normalization; it is therefore a kernel function with respect to
+the given kernel symbol sum. The auxiliary functions Ψ  b ϕ (defined above) and Ψ  e ϕ (discussed in Remark 5.3)
+are also kernel functions, with divisors
+    b ϕ ) = 2(Pϕ ) − 2(O) = 2(Kg − (deg gϕ )K1 ),
+div(Ψ                                                             e ϕ ) = 2ϕ∗ (O′ )−2(deg ϕ)(O) = 2(Kϕ − (deg ϕ)K1 ).
+                                                              div(Ψ
+                                ϕ
+
+
+and normalizations controlled by the kernel symbol sums
+                             2(Kgϕ ) − 2(deg gϕ )(K1 ),         and   2(Kϕ ) − 2(deg ϕ)(K1 ),
+respectively.
+   Because of the importance of the isogenies of degree two, we will make a further convention on the choice
+of invariant differentials, i.e., we choose ω1 , ω2 , ω3 and ω so that the kernel function associated to the kernel
+symbol sum
+(3.3)                                 (Kg1 ) + (Kg2 ) + (Kg3 ) − (K[2] ) − 2(K1 )
+is 1. Namely,
+                                                              −1         −1         −1        3
+                     (t ◦ [2])t2
+                                                   
+                                                       dt1          dt2          dt3          dt
+(3.4)                                      (O) =           (O)          (O)          (O)         (O) .
+            (t1 ◦ g1 )(t2 ◦ g2 )(t3 ◦ g3 )             ω1           ω2           ω3           ω
+In other words, we accomplish this by scaling the ωi , ω relative to one another. This convention allows us
+to consider kernel symbol sums equivalent modulo the expression (3.3) when normalizing kernel functions.
+   A word of caution: (Kϕ ) and (K−ϕ ) are examples of distinct kernel symbols whose divisors Kϕ and K−ϕ
+are equal, but which may induce a different normalization when included in a kernel symbol sum used to
+generate a kernel function. In particular, t ◦ (−ϕ) = −t ◦ ϕ, altering the normalization (3.1) by a sign. The
+same applies to any post-composition by an automorphism.
+   It would be interesting to describe the kernel of Ker(E) → Div(E) more generally; for related literature,
+see [2].
+   There is a natural notion of pullback on kernel symbol sums, namely, when β : E ′′ → E,
+                                                       β ∗ (Kγ ) := (Kγβ ),
+extended linearly. This commutes with pullback on divisors.
+                              DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                        7
+
+
+Lemma 3.2. Let E be an elliptic curve. For each other elliptic curve E ′ , suppose ω ′ := ωϕ are cho-
+sen toPagree for all ϕ ∈ Hom(E,P   E ′ ). Suppose f and g are kernel functions associated to kernel symbol
+sums γ∈Hom(E,E ′ ) nγ (Kγ ) and δ∈Hom(E ′′ ,E ′ ) mδ (Kδ ), respectively. Suppose β : E ′′ → E. Suppose that
+                 ∗
+P                  P
+  δ mδ (Kδ ) = β    γ nγ (Kγ ). Then f ◦ β = g.
+
+  That is, the pullback of a kernel function is a kernel function for the pullback of its kernel symbol sum.
+
+Proof. The assumptions imply β ∗ div f = div g. Now we consider the normalization. Since f and g are
+kernel functions,
+                                                      ′      − P γ nγ
+                                      g         ′′    dt   ′
+                              Q ′             (O ) =     (O )           ,
+                                 γ (t ◦ γβ)
+                                           nγ         ω′
+and
+                                                                                         − Pγ nγ
+                                                                               dt′ ′
+                                                                           
+                            f ◦β                        f
+                       Q ′                (O′′ ) = Q ′          (O) =             (O )              .
+                        γ (t ◦ γ ◦ β)
+                                      n γ
+                                                    γ (t ◦ γ)
+                                                             nγ                ω′
+Therefore, the normalizations agree.                                                                             □
+
+Theorem 3.3 (First chain rule). If non-zero α : E ′ → E ′′ and β : E → E ′ are unbiased, then
+                                             Ψαβ = (Ψα ◦ β) Ψdeg
+                                                             β
+                                                                 α
+                                                                   .
+In general, we have
+                                                         !2
+                                            Ψαβ                        Ψ
+                                                                       b αβ
+                                                              =                    .
+                                       (Ψα ◦ β) Ψdeg
+                                                 β
+                                                     α
+                                                                  (Ψα ◦ β)Ψ
+                                                                   b       b deg α
+                                                                             β
+
+Proof. We begin with the second equation. Using (3.2), the left side is a kernel function with kernel symbol
+sum
+          2((Kαβ ) + (Kgαβ ) − β ∗ (Kα ) − β ∗ (Kgα ) − deg α(Kβ ) − deg α(Kgβ )
+          − (deg αβ + deg gαβ )(K1 ) + β ∗ (deg α + deg gα )(K1 ) + (deg α deg β + deg α deg gβ )(K1 ))
+          = 2((Kgαβ ) − β ∗ (Kgα ) − deg α(Kgβ ) + β ∗ deg gα (K1 ) − (deg gαβ − deg α deg gβ )(K1 ))
+          + 2(Kαβ ) − 2 deg α(Kβ ) − 2β ∗ (Kα ) − 2β ∗ deg α(K1 ).
+We have used that deg(αβ) = deg α deg β. Using the definition of pullback on kernel symbol sums, this
+simplifies to
+            2((Kgαβ ) − β ∗ (Kgα ) − deg α(Kgβ ) + β ∗ deg gα (K1 ) − (deg gαβ − deg α deg gβ )(K1 )).
+The right side is a kernel function whose kernel symbol sum is this same quantity. Therefore the two sides
+have the same divisor and normalization. The first equation is calculated similarly (but more simply). □
+
+                                4. Functions supported on two-torsion
+   The divisor of Ψϕ differs from the ‘ideal’ but non-principal divisor ϕ∗ (O′ ) − (deg ϕ)(O) by half of div(Ψ
+                                                                                                             b ϕ ),
+which is again non-principal. In this section we prove some generalities on when the ‘extra two torsion’
+summands combinePto give a principal divisor.
+   When we write ϕ we will take this as an abbreviation for ϕ∈Hom(E,E ′ ) for a fixed E and E ′ . We also
+                                                                    P
+                                                                          P
+define a finite integral quadratic identity to be any identity of the form i∈I ai q(i) = 0, having finitely many
+terms, indexed over a Z-module I with coefficients ai ∈ Z, which is a combination of finitely many instances
+of the cube identity:
+               q(α + β + γ) − q(α + β) − q(β + γ) − q(γ + α) + q(α) + q(β) + q(γ) − q(0) = 0,
+One example is the better-known parallelogram rule,
+                               q(α + β) + q(α − β) − 2q(α) − 2q(β) + 2q(0) = 0.
+Such identities are true for any function which is a linear combination of a quadratic form and a constant.
+  Recall that a prime on sums and products indicates that zero isogenies are omitted from the indexing set.
+8                                                      STANGE
+
+
+Lemma 4.1. Fix E and E ′ . Suppose that
+                                                 X
+                                                          eϕ q(ϕ) = 0
+                                                  ϕ
+
+is a finite integral quadratic identity on ϕ ∈ Hom(E, E ′ ). Then there is a kernel function f given by
+                                                 X′
+                                                    eϕ (Kgϕ )
+                                                   ϕ
+
+which has as its square
+                                                      Y′
+                                                                  b eϕ .
+                                                                  Ψ ϕ
+                                                          ϕ
+
+    We will denote f by
+                                                   sY
+                                                                  ′
+                                                                      b eϕ .
+                                                                      Ψ ϕ
+                                                              ϕ
+
+                                Q ′ b eϕ
+Proof. Observe that the function ϕ Ψ  ϕ is the kernel function of the kernel symbol sum
+                                                                   
+                                 X′                  X′
+                              2    eϕ (Kgϕ ) − 2       eϕ (deg gϕ ) (K1 ).
+                                     ϕ                                 ϕ
+                               P′
+It will suffice to show that    ϕ eϕ Kgϕ is a principal divisor.
+                                                            This ensures that f exists, and since the only
+                                                                                    Q′ b eϕ
+multiple of K1 = (O) which is principal is the trivial multiple, it also shows that ϕ Ψ   ϕ is the kernel
+function of the kernel symbol sum
+                                                          
+                                             X′
+                                          2      eϕ (Kgϕ ) ,
+                                                      ϕ
+
+which implies the statementPabout the square of f .
+                              ′
+  Therefore we show that ϕ eϕ Kgϕ is a principal divisor. We may assume without loss of generality that
+we are in the case of the cube identity
+       X
+           eϕ q(ϕ) = q(α + β + γ) − q(α + β) − q(β + γ) − q(γ + α) + q(α) + q(β) + q(γ) − q(0) = 0,
+         ϕ
+
+where α, β, γ ∈ Hom(E, E ′ ). The degree of the corresponding divisor is zero, and it is supported on two-
+                        P′              P3
+torsion points. Write ϕ eϕ Kgϕ =: i=0 ai (Pi ). We will compute the parity of the ai , i = 1, 2, 3; it will
+suffice to observe that the ai all have the same parity. The parity of ai is the parity of the number of elements
+ϕ in the list
+(4.1)                               0, α, β, γ, α + β, β + γ, γ + α, α + β + γ
+for which Pϕ = Pi .
+   To determine ai , we examine the action of each ϕ = α, β, γ on the 2-torsion, as a map E[2] → E ′ [2]
+on F2 -vector spaces. Denote this by ρ(ϕ) ∈ HomF2 (E[2], E ′ [2]). The map κi : HomF2 (E[2], E ′ [2]) → E ′ [2]
+taking F to F (Pi ) is a linear transformation of vector spaces over F2 from dimension 4 to dimension 2. We
+have Pϕ = Pi if and only if ρ(ϕ) ∈ ker κi \ {0}.
+   Let C be the subspace of HomF2 (E[2], E ′ [2]) generated by ρ(α), ρ(β) and ρ(γ), namely
+                    C = {0, ρ(α), ρ(β), ρ(γ), ρ(α + β), ρ(β + γ), ρ(γ + α), ρ(α + γ + β)}.
+If it is of dimension 3 (so C has 8 distinct elements), then we conclude from linearity that the fibres of κi |C
+are of even size, and so all the ai are odd.
+    On the other hand, if C is of lower dimension, then each element in the image under ρ of the list (4.1)
+occurs with even multiplicity. Therefore Pϕ = Pi occurs an even number of times amongst ϕ in (4.1).
+    We have shown that the parity of a1 , a2 , a3 agree.                                                       □
+                               DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                                      9
+
+
+Lemma 4.2. If
+                                                          X
+                                                              eϕ q(ϕ) = 0
+                                                          ϕ
+is a finite integral quadratic identity, then
+                                                      Y′          sY
+                                                                        ′
+                                                            e
+                                                           Ψϕϕ              b −eϕ
+                                                                            Ψ ϕ
+                                                      ϕ             ϕ
+
+is a well-defined kernel function, with divisor
+                                                           X′
+                                                                  eϕ Kϕ .
+                                                              ϕ
+
+Proof. That
+          qQit is well-defined follows from Lemma 4.1; that it has the given divisor is a calculation using the
+              ′ b eϕ             P′
+fact that     ϕ Ψ has divisor
+                  ϕ                  eϕ Kg (from the proof of Lemma 4.1).
+                                      ϕ       ϕ
+                                                                                                             □
+
+   The First Chain Rule (Theorem 3.3) in the biased case is somewhat unsatisfying; however, in certain cases
+the relationship simplifies. The next result follows immediately from Lemma 4.2, Lemma 3.2 and Lemma 3.1.
+                                               P
+Theorem 4.3 (Second chain rule). Suppose α∈Hom(E ′′ ,E ′ ) eα q(α) = 0 is a finite integral quadratic identity.
+Let β : E ′′ → E be non-zero, such that eα = 0 for α not factoring through β. Then, letting γ range through
+Hom(E, E ′ ),
+                                                     
+                                          s                            s
+                                Y′ e       Y′ e              Y′ e       Y′ e
+                                       γβ          γβ              γβ    b γβ .
+                                   Ψγ          Ψγ
+                                                 b      ◦β =     Ψγβ      Ψ γβ
+                                  γ               γ                          γ             γ
+                                                                                                                    P′
+The quantity is independent of the choice of invariant differential on E and E ′′ . If, in addition,                  γ eγβ = 0,
+then the quantity in question is independent of the choice of invariant differential on E ′ .
+
+                                      5. Recurrences and Relations to x
+5.1. Normalization in terms of formal groups. If we choose the normalizer T := −x/y for the Weier-
+strass form E : y 2 = f (x) over a field, and similarly T ′ for E ′ and Ti for Ei , then we can specify the
+normalizations of Ψϕ etc. in terms of the formal groups. We have expansions for the normalized invariant
+differential, formal group law and x- and y-coordinates:
+                dT
+(5.1)   ω=             ,   F (T1 , T2 ) = T1 + T2 + · · · ,        x(T ) = T −2 + O(T −1 ),          y(T ) = −T −3 + O(T −2 ).
+             1 + O(T )
+We also have that there are non-zero constants aϕ and ai := agi so that
+(5.2)                       ϕT = aϕ T degin ϕ + O(T 2 degin ϕ ),                 gi T = ai T + O(T 2 ),
+where degin represents the inseparable degree (which does not figure in the case for gi because we are away
+from characteristic two). So the normalization (2.2), taking the normalized differential as above, becomes
+                                      Ψϕ (T ) = T − deg ϕ−2 (ϕT )(gι(ϕ) T )
+(5.3)                                         = aι(ϕ) aϕ T − deg ϕ+degin ϕ−1 + · · · .
+Similarly,
+                                               b ϕ (T ) = T −2 (gι(ϕ) T )2
+                                               Ψ
+(5.4)                                                      = a2ι(ϕ) T −2 + · · · .
+   Satoh [10, Section 3] uses the same divisor to define Ψα for unbiased inseparable α ∈ End(E), but specifies
+the normalization by requiring
+                                     Ψα = (−1)N (α)−1 αT −N (α)+1 + · · · .
+Recall that for such α, one has aα = α, so that the normalizations of Mazur-Tate and Satoh differ by a sign
+of the form (−1)deg ϕ−1 . As briefly discussed in the introduction, including this sign does not affect (1.2) or
+(1.3), nor does it affect the relation to x or the chain rule. It is just a convention.
+10                                                         STANGE
+
+
+5.2. Recurrences and Relations. For everything that follows, we will now fix five invariant differentials:
+ω on E, ω ′ on E ′ , ωi on Ei (regardless of whether some of these curves coincide). We will simultaneously fix
+Weierstrass equations for E, E ′ , Ei for which these are the normalized invariant differentials as in Section 5.1.
+These are used for normalization consistently as described for Ψ, Ψ,  b subject to the constraint (3.4). Finally,
+we will use the expressions x′ , y ′ for the coordinate functions associated to the Weierstrass equation for E ′ .
+   The following relation generalizes the usual relation to x in the unbiased case (described in the Introduc-
+tion), where the Ψ-terms
+                   b        become trivial. One should think of this formula as demonstrating the philosophy
+that, while for biased α, the Ψα we want isn’t naturally an elliptic function, we add something small to make
+it elliptic. The Ψ-terms
+                 b         in the quotient below can remove this extra fudge factor in the aggregate quotient
+(where what remains is elliptic), to obtain the quantity we are used to.
+Theorem 5.1 (Relation to x). Let α and β be non-zero isogenies from E to E ′ such that α ̸= ±β. Assume
+the characteristic is not two. Then
+                                    Ψα+β Ψα−β Ψ
+                                              b αΨ
+                                                 bβ
+(5.5)                                               = x′ ◦ β − x′ ◦ α.
+                                       2  2
+                                      Ψα Ψβ Ψα+β
+                                            b
+
+Proof. The parallelogram law is an integral quadratic identity:
+                                 q(α + β) + q(α − β) − 2q(α) − 2q(β) + 2q(0) = 0.
+Thus from Lemma 4.2 (observe that Ψ
+                                  b α+β = Ψ
+                                          b α−β ), the left side has divisor
+                                             Kα+β + Kα−β − 2Kα − 2Kβ .
+  To see that this is also the divisor of the right hand side, let π1 , π2 : E ′ × E ′ → E ′ be the coordinate
+projections, and recall that the function x ◦ π1 − x ◦ π2 on E ′ × E ′ has divisor
+                 ((π1 + π2 )(P ) = O′ ) + ((π1 − π2 )(P ) = O′ ) − 2 (π1 (P ) = O′ ) − 2 (π2 (P ) = O′ ) .
+Then, we pullback along (α, β) : E → E ′ × E ′ to obtain the divisor above.
+   For the scaling on both sides of (5.5), we can compute the formal group expansions around O. For the
+left side, we have, using (5.3) and (5.4), that the leading coefficient is
+                                                   aα−β aα+β
+                                                              .
+                                                      a2α a2β
+     For the right side, first compute
+                            (x′ ◦ β − x′ ◦ α)(T ) = (aβ T degin β )−2 − (aα T degin α )−2 + · · ·
+                                                       (aα T degin α )2 − (aβ T degin β )2
+                                                   =                                       + ··· .
+                                                        (aα T degin α )2 (aβ T degin β )2
+Now, assume without loss of generality that degin α ≥ degin β. Observe that
+                   aα+β T degin (α+β) + · · · = aα T degin α + · · · + aβ T degin β + · · · .
+                                                                                          
+
+If degin α = degin β, then comparing leading coefficients, aα±β = aα ± aβ . From this, we see that the leading
+                                         a2α −a2β         −2
+coefficient on both sides of (5.5) is     a2α a2β
+                                                  = a−2
+                                                     α − aβ .
+     Otherwise, we have
+                                      aα+β T degin (α+β) + · · · = aα T degin α + · · · ,
+from which aα+β = aα , and then both sides of (5.5) have leading coefficient a−2
+                                                                              β .                                □
+   The following alternate proof was suggested by David Grant, which shows that the biased recurrence
+relation pulls back under multiplication-by-2 to (and hence follows from) the unbiased case.
+Alternate proof. Define
+                                                                 Ψ2ϕ
+                                                       Ψ′ϕ :=
+                                                                Ψdeg
+                                                                 2
+                                                                     ϕ
+
+having divisor
+                                               [2]∗ (ϕ∗ (O′ ) − (deg ϕ)(O)) .
+                              DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                 11
+
+
+Define
+                                                   √     [2]∗ Ψϕ
+(5.6)                                            Ψϕ :=           ,
+                                                           Ψ′ϕ
+which from the Chain Rule (Theorem 3.3) has the property that
+                                          √ 2
+(5.7)                                      Ψϕ     = [2]∗ Ψ
+                                                         b ϕ.
+
+   Now we can derive the result from the corresponding fact for unbiased isogenies ([9, Appendix I, Propo-
+sition 1, Eqn. (4)]), namely,
+                                      Ψα+β Ψα−β
+                                                  = x′ ◦ β − x′ ◦ α.
+                                         Ψ2α Ψ2β
+                                                                                     √
+To do this, apply [2]∗ to (5.5), and using (5.6), (5.7) and the observation that Ψα depends only on α modulo
+2, the statement is equivalent to
+                                         Ψ′α+β Ψ′α−β      ′        ′
+                                                  2 = x ◦ 2β − x ◦ 2α,
+                                           Ψ′α Ψ′β
+which can be rewritten, using the fact that deg is quadratic, as
+                                    Ψ2α+2β Ψ2α−2β
+                                                2   = x′ ◦ 2β − x′ ◦ 2α,
+                                      (Ψ2α Ψ2β )
+which is an example of the unbiased case.                                                                  □
+                                                                                         ′
+Corollary 5.2 (First recurrence relation). For non-zero isogenies α, β, γ : E → E , we have the recurrence
+                       Ψα+β Ψα−β Ψ b αΨ
+                                      bβ   Ψβ+γ Ψβ−γ Ψ bβΨbγ   Ψγ+α Ψγ−α Ψ  bγΨbα
+(5.8)                                    +                   +                    = 0.
+                         Ψ2α Ψ2 Ψ
+                               β
+                                b α+β        Ψ2 Ψ2γ Ψ
+                                                  β
+                                                    b β+γ        Ψ2γ Ψ2α Ψ
+                                                                         b γ+α
+
+Remark 5.3. Define another auxiliary kernel function Ψ
+                                                     e ϕ with the principal divisor
+                                          e ϕ = 2ϕ∗ (O′ )−2(deg ϕ)(O),
+                                          D
+i.e., we require, as a means of normalization, that
+                                                          2 deg ϕ  ′       −2
+                                t2 deg ϕ Ψ
+                                                  
+                                         eϕ         dt              dt    ′
+                                            (O) =      (O)             (O   )    .
+                                 (t′ ◦ ϕ)2          ω               ω′
+The notations Ψ e ϕ and Ψϕ agree with Satoh [10, Definition 3.1] for unbiased endomorphisms, up to a factor
+of ±1. In the case of endomorphisms for which all sums and differences of α, β, γ are unbiased, Satoh obtains
+[10, Corollary 3.7] the special case
+                                 Ψα+β Ψα−β    Ψβ+γ Ψβ−γ      Ψγ+α Ψγ−α
+                                           +              +               = 0.
+                                    Ψα Ψβ
+                                    e  e         Ψβ Ψγ
+                                                 e  e           Ψ
+                                                                eγΨeα
+
+Recall that Ψe α = Ψ2α when α is unbiased, and Ψ  b α = Ψ2α in general; if all subscripts are unbiased this
+                                               e αΨ
+recovers the usual form (1.2).
+   We now give the second, more general recurrence relation. (Mazur and Tate do not address this one in
+the unbiased case.)
+Theorem 5.4 (Second relation to x). Let α, β and γ be isogenies from E to E ′ . Then, when defined,
+                                s
+              Ψα+β+γ Ψα−β Ψγ Ψ     b α+γ Ψ
+                                         b β+γ Ψ
+                                               b αΨ
+                                                  bβ   y′ ◦ β − y′ ◦ γ   y′ ◦ α − y′ ◦ γ
+(5.9)                                                = ′               −                  .
+              Ψα+γ Ψβ+γ Ψα Ψβ Ψ    b α+β+γ Ψb α−β Ψ
+                                                  bγ   x ◦ β − x′ ◦ γ    x′ ◦ α − x ′ ◦ γ
+Proof. The cube law on three items α, β + γ, −β takes the form
+              q(α + γ) − q(α − β) − q(γ) − q(α + β + γ) + q(α) + q(β + γ) + q(β) − q(0) = 0.
+Therefore the leftmost quotient is an instance of the cube law, so that Lemma 4.2 applies. Then the left side
+has divisor
+                           Kα+β+γ + Kα−β − Kα+γ − Kα − Kβ+γ − Kβ + Kγ .
+12                                                         STANGE
+
+
+To see that this is the divisor of the right side, we again pullback from E ′ ×E ′ as in the proof of Theorem 5.1.
+In this case, we know the divisor on E ′ × E ′ using classical formulas in complex analysis (see [14, Lemma
+3.6]):
+        1 ℘′ (a) − ℘′ (c) 1 ℘′ (b) − ℘′ (c)                                       σ(a + b + c)σ(c)σ(a − b)
+                         −                  = ζ(a + c) − ζ(a) − ζ(b + c) + ζ(b) =                          .
+        2 ℘(a) − ℘(c)      2 ℘(b) − ℘(c)                                          σ(a + c)σ(b + c)σ(a)σ(b)
+   Next, we check the constant. By Lemma 4.1 and applying (5.2) to the normalization of the square root
+factor in (5.9), the T -expansion of said square root factor has leading coefficient
+                                            aι(α+γ) aι(β+γ) aι(α) aι(β)
+                                                                        .
+                                             aι(α+β+γ) aι(α−β) aι(γ)
+Applying that fact, together with (5.3), the leading coefficient of the left hand side of (5.9) is
+                                               aα+β+γ aα−β aγ
+                                                               .
+                                               aα+γ aβ+γ aα aβ
+For the right hand side, assume for the moment that the inseparable degrees of α, β and γ are equal. Then,
+we consider the leading coefficients of the formal expansions around the origin, using (5.1), and obtain
+y′ ◦ β − y′ ◦ γ   y′ ◦ α − y′ ◦ γ    (aβ T degin β )−3 − (aγ T degin γ )−3   (aα T degin α )−3 − (aγ T degin γ )−3
+                −                  =                                       −                                       + ··· .
+x′ ◦ β − x′ ◦ γ   x′ ◦ α − x ′ ◦ γ   (aβ T degin β )−2 − (aγ T degin γ )−2   (aα T degin α )−2 − (aγ T degin γ )−2
+Consider the following algebraic identity in abstract variables a, b, s:
+                                    b−3 − s−3   a−3 − s−3   (a + b + s)(a − b)s
+(5.10)                               −2    −2
+                                              −  −2    −2
+                                                          =                     .
+                                    b −s        a −s         (a + s)(b + s)ab
+Apply the identity (5.10) to a, b, s = aα , aβ , aγ and observe, as in the proof of Theorem 5.1, that in the equal
+inseparable degree case, aα+β+γ = aα + aβ + aγ , and similarly for other such sums. This shows that the
+leading scalars on both sides of (5.9) agree.
+   For inseparable degrees that differ, we must consider the various cases in turn. We may assume without
+loss of generality that degin α ≤ degin β.
+   If degin γ < degin α < degin β, Again as in the proof of Theorem 5.1, we have aα+γ = aα etc. Using these
+simplifications, the leading term at left is a−1                                2
+                                                 β and at right is aγ aα aγ /(aγ aα aβ ). Then we use the identity
+b−1 = sas/(s2 ab).
+   If degin α < degin γ < degin β, we use the identity b−1 = a2 s/(asab).
+   If degin γ < degin α = degin β, we use the identity b−1 − a−1 = s(a − b)s/(s2 ab).
+                                                           −3
+                                                              −s−3      −1
+   If degin α < degin γ = degin β, we use the identity bb−2 −s  −2 − s     = a2 s/(a(b + s)ab).
+                                                                        −3   −3
+                                                                    −s
+     If degin α = degin γ < degin β, we use the identity s−1 − aa−2 −s       2
+                                                                      −2 = −b s/((a + s)bab).
+
+     If degin α < degin β < degin γ, then one expands the right side of (5.9) as
+     (y ′ ◦ β)(x′ ◦ α) − (y ′ ◦ γ)(x′ ◦ α) − (y ′ ◦ β)(x′ ◦ γ) − (y ′ ◦ α)(x′ ◦ β) + (y ′ ◦ γ)(x′ ◦ β) + (y ′ ◦ α)(x′ ◦ γ)
+                                             (x′ ◦ β − x′ ◦ γ)(x′ ◦ α − x′ ◦ γ)
+                           −3 −2       2
+and uses the identity ss−2 sb−2 = abab
+                                  a s
+                                       .
+                                                                            −3 −2    −3 −2
+  If degin α = degin β < degin γ, then with this same expansion, one uses −s as−2 s+s
+                                                                                    −2
+                                                                                       b
+                                                                                           = (a+b)(a−b)s
+                                                                                                abab     .                   □
+
+     The following is an immediate consequence.
+Corollary 5.5 (Second recurrence relation). Wherever the following terms are defined
+                           s                                        s
+            Ψα+β+σ Ψα−β       Ψ
+                              b α+σ Ψ
+                                    b β+σ Ψ
+                                          b αΨ
+                                             bβ    Ψβ+γ+σ Ψβ−γ        Ψ
+                                                                      b β+σ Ψ
+                                                                            b γ+σ Ψ
+                                                                                  bβΨbγ
+                                                +
+           Ψα+σ Ψβ+σ Ψα Ψβ      Ψ
+                                b α+β+σ Ψ
+                                        b α−β     Ψβ+σ Ψγ+σ Ψβ Ψγ       Ψ
+                                                                        b β+γ+σ Ψ
+                                                                                b β−γ
+(5.11)                                                              s
+                                                   Ψγ+α+σ Ψγ−α        Ψ
+                                                                      b γ+σ Ψ
+                                                                            b α+σ Ψ
+                                                                                  bγΨbα
+                                                +                                       = 0.
+                                                  Ψγ+σ Ψα+σ Ψγ Ψα       Ψγ+α+σ Ψγ−α
+                                                                        b       b
+
+In particular, if all the indices represent unbiased isogenies, then the Ψϕ satisfy (1.3).
+                               DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                        13
+
+
+   In order to compare this statement with Corollary 5.2, observe that
+                                                  v
+                                                  u
+                                         Ψα Ψβ    u Ψ        b2
+                                                        b 2α Ψ
+                                                               β
+                                         b  b
+                                               =t                .
+                                         Ψα+β
+                                         b           Ψα+β Ψα−β
+                                                     b       b
+
+                                      6. Specialization and elliptic nets
+   Specializing (evaluating) Ψϕ at a specific point P ∈ E, we obtain a sequence of values of the field satisfying
+the recurrence relations (5.8) and (5.11). Observe that we have a choice of ωi . Fix a particular point P ∈ E.
+We can choose ωi , i = 1, 2, 3 so that Ψ
+                                       b i (P ) = 1; by our convention (3.4), this dictates the choice of ω = ω0 .
+In this case, the extra factors of Ψ disappear and we recover the usual recurrences (1.2) and (1.3) for that
+                                   b
+value of P . We cannot, however, choose such a normalization globally (that is, simultaneously for all P ).
+Definition 6.1. Fix a point P ∈ E. The collection Ψϕ (P ), as ϕ varies, is called consonant if the ωi are
+chosen so that Ψ
+               b i (P ) = 1 for all i = 1, 2, 3.
+Lemma 6.2. A consonant collection Ψϕ (P ) satisfies (1.2) and (1.3).
+    Next we recall some general results classifying collections satisfying (1.3).
+    Net polynomials [14] generalize division polynomials. Define for any vector #» a = (a1 , . . . , ak ) ∈ Zk , an
+                           k
+elliptic function Ψ #»
+                     a on E with divisor
+             X             X                    X
+(6.1)             ai Pi = O −     a2i (Pi = O) −     ai aj ((Pi + Pj = O) − (Pi = O) − (Pj = O)) ,
+                                  i                          i<j
+
+and normalized in a manner similar to the previous cases, namely, where we denote by σ the summation
+function (P1 , . . . , Pk ) 7→ P1 + · · · + Pk , and by πi the projection onto the i-th component, and require
+                Q a2 −P ai aj                                                             Pi a2i −Pi<j ai aj −1
+                                       ◦ πi ) i<j tai aj ◦ (σ ◦ (πi × πj ))
+                                             Q
+          Ψ #»       i (t
+                          i   j̸=i
+                                                                                  
+             a                                                                      dt
+(6.2)                                                                       (O) =      (O)                       .
+                                 t ◦ σ ◦ (a1 × · · · × ak )                         ω
+The means of normalizing in [14] differs, but amounts to the same thing: in both means of normalizing, the
+dependence on ω is the same [14, Proposition 7.1], and Ψei (P ) = 1 for the standard basis vectors ei .
+   Interpreting the indices of (1.2) and (1.3) as elements of Zk , the Ψ #»
+                                                                         a satisfy both recurrences [14, Theorem
+4.1]. More generally, we call any k-dimensional array which satisfies (1.3) an elliptic net [14, Definition 1.1].
+   The ψ #»
+          a also satisfy the usual relationship to x [14, Lemma 4.2], and a version of the chain rule [14,
+Proposition 4.3], namely, for a k × k linear transformation T , and standard basis vectors ei ,
+                                          k
+                                                  a2 −
+                                                         P
+                                          Y                       ai aj Y     a a
+                              (Ψ #»
+                                 a ◦ T)         ΨTitr (ei j̸)=i             ΨTitrj(ei +ej ) = ΨT tr ( #»
+                                                                                                      a ).
+                                          i=1                         i<j
+
+   Ward’s theorem classifying elliptic divisibility sequences extends to elliptic nets [14, Theorem 7.4]. This
+result states that, up to appropriate equivalences and normalizations and degenerate cases, n-dimensional
+arrays satisfying (1.3) are in bijection with tuples (E, P1 , . . . , Pn ). In particular, since for a fixed point P ,
+the Ψϕi (P ) satisfy (1.3) (after suitable normalization), we can conclude that they form an elliptic net of the
+form Ψ #»
+        a (P1 , . . . , Pk ) for some choice of curve E and points Pi ∈ E (we say it is the elliptic net associated
+to this choice of curve and points). The following theorem verifies this constructively.
+Theorem 6.3. Let ϕ1 , . . . , ϕn ∈ Hom(E, E ′ ). Let P ∈ E. Suppose that ϕi (P ) ∈ / E ′ [2] and (ϕi ± ϕj )(P ) ̸= 0
+                                                                           #»
+for all i, j. Choose the ωi so that the resulting division polynomials W ( a ) := ΨP ai ϕi (P ) form a consonant
+collection. Then they form an elliptic net associated to E ′ and the points ϕi (P ).
+Proof. This is an application of the chain rule. In particular, since the collection is consonant,        it forms an
+elliptic net in the sense that it satisfies (1.3), where the indices #»
+                                                                                                P
+                                                                        a are interpreted as i ai ϕi . To apply
+[14, Theorem 7.4], we require that the elliptic net be non-degenerate. That is, we require Ψϕi (P ), Ψ2ϕi (P ),
+Ψϕi +ϕj (P ) and Ψϕi −ϕj (P ) to be non-zero. This is guaranteed by the hypotheses.
+    To figure out which curve and points this elliptic net represents, we can look at elliptic divisibility sequences
+Ψnϕi (P ), n ∈ Z for each i. Fixing i, by the chain rule (Theorem 3.3), using the assumption the collection is
+consonant,
+                                                                          2
+                                        Ψnϕi (P ) = Ψn (ϕi (P ))Ψϕi (P )n .
+14                                                       STANGE
+
+
+Thus, up to normalization, the associated curve and point are E ′ and ϕi (P ). From this we conclude that
+the elliptic net is that associated to (E ′ , ϕ1 (P ), . . . , ϕn (P )).                               □
+
+   This shows that the collection of division polynomials Ψα for α ∈ End(E) (differentials suitably normal-
+ized) form an elliptic net whose rank is equal to the rank of the endomorphism ring End(E). In particular,
+by the classification theorem for the endomorphism ring of an elliptic curve, these are equivalent to an elliptic
+net associated to a single, pair or quadruple of points.
+   The term magnified has been applied to elliptic divisibility sequences associated to image points of rational
+isogenies; see for example [6]. The theorem can be read as saying that the collections Ψϕ (P ) can be interpreted
+as ‘magnified elliptic nets’ of rank one, two or four.
+
+                                                    7. Examples
+   We will compute generalized division polynomials for Gaussian CM (comparing to Ward’s case), for an
+isogeny, and for a supersingular curve with inseparability. We use these to verify examples of the chain rule,
+recurrence relation, and relation to x.
+
+7.1. An elliptic curve with CM by Z[i]. Let E : y 2 = x3 − x, which is an elliptic curve over Q with
+complex multiplication by Z[i]. Use the usual invariant differential ω = dx/2y, and uniformizer T = −x/y.
+We have [i] : (x, y) 7→ (−x, yi) and E[2] = {(0, 0), (1, 0), (−1, 0)}. We also have
+                                                                     
+                                                        4      2    1
+                    Ψ1 = 1, Ψ2 = −2y, Ψ3 = 3 x − 2x −                   ,
+                                                                    3
+                    Ψ4 = −4y(x + i)(x − i)(x2 − 2x − 1)(x2 + 2x − 1),
+                                                     
+                                2     1          2    1
+                    Ψ5 = 5 x 2 − i −        x2 + i −       x8 − 12x6 − 26x4 + 52x2 + 1 .
+                                                                                      
+                                5     5          5    5
+Now, Ψi is constant (begin unbiased with trivial kernel), and to determine the constant, we have the re-
+quirement that
+                                             T Ψi
+                                                    (O) = 1,
+                                            T ◦ [i]
+which implies that Ψi = i. Similarly (see Section 7.4 for more details on such computations in more
+challenging cases), we can compute
+                                  Ψi = i,  Ψ1+i = 2ix, Ψ1−i = 2x,
+                                                          
+                                                     2   1
+                               Ψ1+2i = (1 + 2i) x2 + i −     = (1 + 2i)x2 − 1,
+                                                     5   5
+                                                          
+                                                     2   1
+                               Ψ1−2i = (1 − 2i) x2 − i −     = (1 − 2i)x2 − 1,
+                                                     5   5
+                                                         
+                                                 2  2   1
+                                Ψ2+i = (2 + i) x − i −      = (2 + i)x2 − i,
+                                                    5   5
+                                                         
+                                                 2  2   1
+                                Ψ2−i = (2 − i) x + i −      = (2 − i)x2 + i.
+                                                    5   5
+     Next we verify the recurrence relation in one case. Let α = 1 + i, β = i, γ = 1. Then we have
+                                                                                   
+                       Ψα+β Ψα−β Ψ   b αΨ
+                                        bβ   Ψ1+2i Ψ1 Ψ b 1+i Ψ
+                                                              bi   (1 + 2i)x2 − 1 2ix
+                                           =                     =                    ;
+                          Ψ2α Ψ2β Ψ
+                                  b α+β       Ψ21+i Ψ2i Ψ
+                                                        b 1+2i         (2i)2 x2 i2
+                       Ψβ+γ Ψβ−γ Ψ
+                                 bβΨ
+                                   bγ   Ψ1+i Ψi−1 Ψ
+                                                  b iΨ
+                                                     b1   (2i)x(−2)x
+                                      =                 =            ;
+                          2
+                           β
+                             2
+                         Ψ Ψγ Ψβ+γ
+                               b           2  2
+                                          Ψ Ψ Ψ1+i
+                                                b
+                                                i    1
+                                                            i2 (2i)x
+                                                                               
+                       Ψγ+α Ψγ−α Ψ  bγΨbα   Ψ2+i Ψ−i Ψ
+                                                     b 1Ψb 1+i   (2 + i)x2 − i (−i)(2i)x
+                                          =                    =                         .
+                         Ψ2γ Ψ2α Ψ
+                                 b γ+α       Ψ2 Ψ2 Ψ
+                                               1
+                                                      b 2+i
+                                                     1+i
+                                                                         (2i)2 x2
+
+Plugging these in verifies the first recurrence relation (Corollary 5.2) in this example.
+                                DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                 15
+
+
+7.2. Comparison with Ward. It is worth comparing to Ward’s Z[i] case [21]. He obtained polynomials
+                                    P1 = 1,     P2 = 2,
+                                    Pi = i,  P1+i = 1 + i, P1−i = 1 − i,
+                                                            
+                                                   2   2   1
+                                 P1+2i = (1 + 2i) x + i −      = (1 + 2i)x2 − 1,
+                                                       5   5
+                                  P3+i = (3 + i)x4 − 2(1 + 3i)x2 + (3 + i).
+His
+√ polynomials do not     satisfy the usual recurrence (1.2); instead the polynomials Eα Pα do, where Eα = 1,
+  x or y, according as2 the norm of α is 1, 2, or 0 modulo 4. We have Eα Pα = Ψα in the unbiased case.
+   Let α = 1 + i, β = i, γ = 1. Then setting Ψα = Eα Pα , we can verify the same instance of the recurrence
+relation by adding the following terms:
+                                   Ψα+β Ψα−β          Ψ1+2i Ψ1         (1 + 2i)x2 − 1
+                                       2 2        =    2    2    =                     ;
+                                      Ψα Ψβ           Ψ1+i Ψi            (1 + i)2 i2 x
+                                   Ψβ+γ Ψβ−γ          Ψ1+i Ψi−1          (1 + i)(1 − i)x
+                                       2 2        =     2 2          =                   ;
+                                      Ψβ Ψγ            Ψi Ψ1                    i2
+                                   Ψγ+α Ψγ−α          Ψ2+i Ψi        ((2 + i)x2 − i)(−i)
+                                        2   2     =    2    2    =                       .
+                                      Ψγ Ψα           Ψ1 Ψ1+i             (1 + i)2 x
+                √
+Ward’s use of       x was justified by his restriction to the complex analytic case.
+
+7.3. An isogeny division polynomial. There is a rational isogeny from E to E ′ : y 2 = x3 − 11x − 14
+given by
+                                              2
+                                              x − x + 2 y(x2 − 2x − 1)
+                                                                       
+                          ϕ(1,0) : (x, y) 7→           ,
+                                                 x−1     x2 − 2x + 1
+with kernel {(1, 0), O}. To compute the associated division polynomial, observe that x − 1 has the correct
+divisor. To set the normalization, choose the normalized invariant differential on the target curve (so dT /ω =
+1 + O(T ) as in Section 5) and compute
+                            x′     (x2 − x + 2)(x2 − 2x + 1)     x T −6 + · · ·
+                      ϕT = − ′ = −                           = −                = T + ··· .
+                            y        y(x − 1)(x2 − 2x − 1)       y T −6 + · · ·
+So we obtain
+                                                        b ϕ = x − 1.
+                                                   Ψϕ = Ψ
+The kernel of ϕ ◦ (1 + i) is cyclic of order 4:
+                                            {O, (i, i − 1), (i, −i + 1), (0, 0)}.
+This has kernel sum (0, 0). Therefore, up to a scalar, the generalized division polynomial is
+                                                           x(x − i).
+Combining the known scalars for ϕ and 1 + i, we have
+                                                 Ψϕ◦(1+i) = 2ix(x − i).
+We also have
+                                                       2                          2
+           Ψb ϕ ◦ (1 + i) = x ◦ [1 + i] − 1 = −i(x − 1) − 1 = (x − i) , Ψ    b ϕ◦(1+i) = Ψ
+                                                                                         b 1+i = 2ix.
+                                                 2x               2ix
+We verify the chain rule (Theorem 3.3) by checking
+                                               2
+                                   Ψϕ◦(1+i)             1               Ψ
+                                                                        b ϕ◦(1+i)
+                                             2     =         2
+                                                               =                       .
+                             (Ψϕ ◦ (1 + i))Ψ1+i      (x − i)     (Ψb ϕ ◦ (1 + i))Ψb2
+                                                                                   1+i
+
+  2Ward referred to these three cases as α being odd, oddly even or totally even.
+16                                                       STANGE
+
+
+7.4. A supersingular example with inseparability. Consider the supersingular curve E ′′ : y 2 = x3 + x
+over F7 . It has E ′′ [2] = {O, (0, 0), (I, 0), (−I, 0)}, where I 2 + 1 = 0. Furthermore, a basis for the 4-torsion is
+given by P = (4I, 4I + 3) and Q = (2I, 5I + 5) where 2P = (I, 0) and 2Q = (−I, 0). A basis for the 3-torsion
+has x-coordinates ±1 + 4I. We can compute some classical division polynomials:
+         Ψ1 = 1,    Ψ2 = 2y,    Ψ3 = 3x4 − x2 − 1 = 3(x + 3I + 1)(x + 3I + 6)(x + 4I + 1)(x + 4I + 6),
+         Ψ4 = y(−3x6 − x4 + x2 + 3) = 4y(x + 1)(x − 1)(x − 3I)(x + 3I)(x − 2I)(x + 2I),
+         Ψ5 = −2x12 − x10 + x6 + x4 − x2 + 1,
+         Ψ6 = y(−x16 − 3x14 − x8 − 3x2 − 1),
+         Ψ7 = −1.
+                                                                                                i+j
+Write F49 = F7 [I] where I 2 = −1. The curve E ′′ has endomorphism ring Z + iZ + 1+k       2 Z + 2 Z, where
+                                           7 7
+i : (x, y) 7→ (−x, Iy) and j : (x, y) 7→ (x , y ) is the Frobenius endomorphism, and k = ij.
+    In order to compute further division polynomials, we begin with determining the leading coefficients of
+the basis elements of the endomorphism ring. We use the normalized invariant differential and have
+                                                                  
+                                                       x         x
+                                                iT =      =I −       .
+                                                       Iy        y
+So we have Ψi = I. Next
+                                              ±y 7 − Iy + x2 − x14                      −Iyx
+                (i ± j)T = −    ±y 7 −Iy
+                                                                                    =        = IT + · · ·
+                               − x7 +x     (±y 7 − Iy + x2 − x14 ) − Iyx7 ∓ y 7 x        y2
+
+Also [2]T = 2T + · · · . Therefore, we have i±j2 T = −3IT + · · · . In particular, then, Ψ 2 = −9T + · · · . The
+                                                                                            i±j
+
+reason for the square is (5.4), since this endomorphism is biased and the divisor for its division polynomial
+is 2(Pi ) − 2(O) for some 2-torsion point Pi .
+    Observe that the minimal polynomial of ±i±j 2   is x2 +2 having roots ±3I in F49 , which is a check against the
+calculation above (we expect the leading coefficient of the T -expansion to satisfy the minimal polynomial).
+Since −1±k2   = i i±j
+                   2 , the leading coefficient of the T -expansion of
+                                                                       −1±k
+                                                                         2   is 3, and that of 1±k2 is −3. When
+everything is inseparable, leading coefficients will add (by the theory of formal groups), so that for example
+1+i+j+k
+     2      = 1 + −1+k2  + i+j
+                             2 has leading coefficient 1 + 3 − 3I = −3 − 3I. The minimal polynomial is
+  2
+x − x + 4 having roots −3 ± 3I. In this way, we determine all our leading coefficients for the following
+division polynomials.
+    First, we consider endomorphisms of degree 2, which are biased. One can verify directly that i+j   2 (−I, 0) =
+(i + j)(2I, ±(5I + 5)) = O. Since i+j 2   must  have  just one primitive two-torsion  point  in the kernel, we find
+that Ψ i+j = −9(x + I) (recall the divisor for biased division polynomials (2.1)). Similar reasoning obtains
+          2
+
+the other cases ±i±j
+                  2 . Observe that i(i + j) = −1 + k, so this also gives polynomials Ψ ±1±k , which are other
+                                                                                         2
+unit multiples.
+   Next, endomorphisms of degree 3, which are unbiased. A computation reveals that 3I + 6 is the x-
+coordinate of the 3-torsion point in the kernel of 1 − i − j, which acts exactly as 1 + i+j
+                                                                                         2 on the 3-torsion.
+Thus Ψ1+ i+j is (1 − 3I)(x + 1 − 3I). Observe that the minimal polynomial in this case is x2 − 2x + 3 which
+            2
+has roots 1 ± 3I. Similar computations give the division polynomials for other endomorphisms of degree 3.
+   Finally, we consider cyclic endomorphisms of degree 4, which are again biased. It will be helpful to
+compute, using Vélu’s formulas [18], the explicit isogenies
+                                                 x2 + 1 s2 y − y
+                                                                
+                             (1 + i)(x, y) = 3I         ,          ,
+                                                     x       x2
+                                             2
+                                                x − Ix − 2 s2 y + 2Ixy + y
+                                                                             
+                               i−j
+(7.1)                               (x, y) = 3               ,I 2               ,
+                                2                   x−I         x + 2Ix − 1
+                                             2
+                                                x + Ix − 2 s2 y − 2Ixy + y
+                                                                             
+                               i+j
+                                    (x, y) = 3               ,I 2               .
+                                2                   x+I         x − 2Ix − 1
+     For the case of Ψ 3i±j , it must divide Ψ4 and have a cyclic subgroup of E[4] as the endomorphism kernel,
+                       2
+
+since the minimal polynomial of 3i±j
+                                  2  is x2 + 4, and its leading coefficient is I − 3I = −2I. We can compute
+                                 DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                               17
+
+
+its action on the 4-torsion explicitly using the formulas above. The leading coefficient of the T -expansion of
+3+k                                                    2                  2
+  2 is −2, which satisfies the minimal polynomial x − 3x − 3 = (x + 2) .
+                                                 1+i+j+k
+   The same type of computation determines          2    etc.
+   With this, we can compute some generalized division polynomials:
+                    Ψi = I,   Ψj = 1,           Ψ1+i = (1 + I)2 x,
+             Ψ i+j = −9(x + I),             Ψ i−j = −9(x − I),                Ψ 1−k = −9I(x + I),   Ψ 1+k = −9I(x − I),
+                    2                            2                                2                    2
+
+          Ψ1+ i+j = (1 − 3I)(x + 1 − 3I),                        Ψ1− i+j = (1 + 3I)(x − 1 − 3I),
+                    2                                                     2
+
+         Ψ 1+i+j+k = (−3 − 3I)(1 + I)x(x − 1),                        Ψ −1+i+j−k = (3 − 3I)(1 + I)x(x + 1),
+                2                                                             2
+
+            Ψ 3+k = −2(−3I)(x + I)(x − 2I), Ψ 3i−j = IΨ 3+k = −2I(−3I)(x + I)(x − 2I),
+                    2                                                 2           2
+
+            Ψ 3i+j = −2I(−3I)(x − I)(x + 2I).
+                    2
+
+                       b we fix the three 2-isogenies g1 = 1 + i, g2 = i+j , and g3 = i−j . Now we can verify
+   For computation of Ψ,                                                2              2
+the recurrence relation with α = i+j
+                                  2  , β = 1+k
+                                            2  and  γ =  1:
+
+    Ψα+β Ψα−β Ψ b αΨ
+                   bβ   Ψ 1+i+j+k Ψ −1+i+j−k Ψb i+j Ψ
+                                                    b 1+k
+                             2          2        2     2
+                      =
+      Ψ2α Ψ2 Ψ
+            β
+             b α+β           Ψ2i+j Ψ21+k Ψb 1+i+j+k
+                                        2            2            2
+
+                      (−3 − 3I)(1 + I)x(x − 1)(3 − 3I)(1 + I)x(x + 1)(−9)(x + I)(−9)(x − I)
+                    =                                                                         ;
+                                          (−9)2 (x + I)2 (−9I)2 (x − I)2 (1 + I)2 x
+                      x(x + 1)(x + 1)
+                    =
+                       (x − I)(x − I)
+    Ψβ+γ Ψβ−γ Ψ
+              bβΨbγ   Ψ 3+k Ψ −1+k Ψb 1+k Ψ
+                                          b1
+                                                 −2(−3I)(x + I)(x − 2I)(−9I)(x + I)(−9)(x − I)
+                          2     2      2
+                    =                        =                                                 ;
+       2  2
+      Ψβ Ψγ Ψβ+γ
+            b               2     2
+                          Ψ 1+k Ψ1 Ψ 3+k
+                                    b                       (−9I)2 (x − I)2 (−9)(x + I)
+                                   2                     2
+
+                          (x − 2I)(x + I)
+                       =4
+                              (x − I)
+    Ψγ+α Ψγ−α Ψ  bγΨbα   Ψ1+ i+j Ψ1− i+j Ψb 1Ψ
+                                             b i+j
+                                                     (1 − 3I)(x + 1 − 3I)(1 + 3I)(x − 1 − 3I)(−9)(x + I)
+                              2        2        2
+                       =                           =
+      Ψ2γ Ψ2α Ψ
+              b γ+α           2   2
+                             Ψ1 Ψ i+j Ψ
+                                      b i+j
+                                        1+
+                                                                        (−9)2 (x + I)2
+                                            2                2
+
+                             (x + 1 − 3I)(x − 1 − 3I)
+                          =2
+                                     (x + I)
+These three terms add to zero.
+  Now we can verify the recurrence in an inseparable case, with α = i+j               i−j
+                                                                     2 , β = i and γ = 2 :
+
+       Ψα+β Ψα−β Ψ
+                 b αΨ
+                    bβ   Ψ 3i+j Ψ −i+j Ψ
+                                       b i+j Ψ
+                                             bi
+                                                  −2I(−3I)(x − I)(x + 2I)(9)(x − I)(−9)(x + I)
+                             2     2      2
+                       =                        =                                              ;
+          2
+            α
+             2
+         Ψ Ψ Ψα+β
+               b
+                    β
+                               2    2
+                            Ψ i+j Ψ Ψ 3i+j
+                                      b
+                                                     i
+                                                      (−9)2 (x + I)2 (I)2 (−2I)(−9)(x − I)
+                                            2                2
+
+                                 (x − I)(x + 2I)
+                              =3
+                                      (x + I)
+        Ψβ+γ Ψβ−γ Ψ bβΨbγ       Ψ 3i−j Ψ i+j Ψ
+                                             b iΨ
+                                                b i−j
+                                                                          −2I(−3I)(x + I)(x − 2I)(−9)(x + I)(−9)(x − I)
+                                    2            2               2
+                          =                                           =                                                 ;
+          Ψ2 Ψ2γ Ψ
+            β
+                 b β+γ             Ψ2i Ψ2i−j Ψ
+                                             b 3i−j                               (−9)2 (x − I)2 (I)2 (−9)(x + I)
+                                                22
+
+                            (x + I)(x − 2I)
+                       = −3                  ,
+                                 (x − I)
+       Ψγ+α Ψγ−α Ψ
+                 bγΨbα   Ψi Ψ−j Ψb i−j Ψ
+                                       b i+j
+                                               (I)(−1)(−9)(x − I)(−9)(x + I)
+                                    2     2
+                       =                     =
+          2  2
+         Ψγ Ψα Ψγ+α
+               b             2     2
+                           Ψ i−j Ψ i+j Ψi
+                                       b         (−9)2 (x − I)2 (−9)2 (x + I)2
+                                        2            2
+
+                                             1
+                              = −2I                   .
+                                       (x − I)(x + I)
+18                                                                             STANGE
+
+
+This sums to zero also. To double check the simplification of the third term, we can use the divisor:
+                 Ki + Kj − 2K i+j − 2K i−j = (O) + 7(O) − 2(((−I, 0)) + (O)) − 2(((I, 0)) + (O))
+                                      2                 2
+
+                                                             = 4(O) − 2((−I, 0)) − 2((I, 0))
+                                                                                   
+                                                                           1
+                                                             = div                    .
+                                                                     (x − I)(x + I)
+Finally, the third term, together with (7.1), can be used to verify the relation to x (Theorem 5.1):
+              b i−j Ψ
+        Ψi Ψj Ψ     b i+j
+                                            1           x2 − Ix − 2    x2 + Ix − 2        i−j        i+j
+                   2       2
+                               = 2I                  =3             −3             = x′ ◦     − x′ ◦     .
+          Ψ2i−j Ψ2i+j Ψ
+                      bi              (x − I)(x + I)      (x − I)        (x + I)           2          2
+             2         2
+
+
+
+
+                                                               8. Higher dimension
+    The definitions and result for Ψϕ can be extended to higher dimension, in the same fashion as for elliptic
+                                                                                   #»
+nets. Let ⟨ϕ, ϕ′ ⟩ = 12 (deg(ϕ + ϕ′ ) − deg ϕ − deg ϕ′ ). Define for any vector ϕ = (ϕ1 , . . . , ϕk ) whose entries
+are isogenies ϕi : E → E ′ , an elliptic function Ψ #»     k
+                                                    ϕ on E with divisor
+(8.1)
+  #»           X                X                          X
+( ϕ · P = 0) +    (Pi = Pϕi ) −     (deg ϕi + 1)(Pi = O) −     ⟨ϕi , ϕj ⟩ ((Pi + Pj = O) − (Pi = O) − (Pj = O)) ,
+                  i                       i                                           i<j
+
+and normalized in a manner similar, namely, where we denote by σ the summation function (P1 , . . . , Pk ) 7→
+P1 + · · · + Pk , and by πi the projection onto the i-th component, and require
+                        Q deg ϕi +deg gϕ −P ⟨ϕi ,ϕj ⟩
+                   Ψ #»                                 ◦ πi ) i<j t⟨ϕi ,ϕj ⟩ ◦ (σ ◦ (πi × πj ))
+                                                                Q
+                          i (t
+                                         i    j̸=i
+                     ϕ
+                                                                                                 (O)
+                                (t′ ◦ σ ◦ (ϕ1 × · · · × ϕk )) i (tϕi ◦ gϕi ◦ πi )
+                                                              Q
+(8.2)                         Pi (deg ϕi +deg gϕi )−Pi<j ⟨ϕi ,ϕj ⟩  ′       −1 Y                 −1
+                        dt                                            dt    ′           dtϕi
+                    =       (O)                                          (O   )              (O  ϕ  )     .
+                         ω                                            ω′           i
+                                                                                         ωϕi      i
+
+
+
+
+   One can verify that, in each individual copy of E, the function above is an elliptic function. One can
+define
+                                                     Y
+                                              b #» =
+                                              Ψ        Ψ
+                                                       bϕ ,
+                                                                           ϕ                i
+                                                                                  i
+
+and Ψ̃ #»   b #» #»        #»
+       ϕ so Ψ ϕ Ψ̃ ϕ = Ψ ϕ . The formal group expansion becomes
+                                                !
+                                  Y                 P                        P
+                        #»
+                      Ψ ϕ (T ) =     aϕi aι(ϕi ) T − i (deg ϕi −degin ϕi +1)+ i<j ⟨ϕi ,ϕj ⟩ + · · · .
+                                              i
+
+Lemma 4.2 holds where the α are interpreted as vectors, and the relation to x can be given as
+
+                                  Ψα   #» Ψ #» #» Ψ
+                                   #»+ β           bα  b #»
+                                                    #» Ψ
+                                            α−β          β
+                                                                       Y                Y
+                                                            = x′ ◦ σ ◦   βi − x ′ ◦ σ ◦   αi .
+                                       2    2
+                                     Ψ #» Ψ #» Ψ #» #»
+                                               b
+                                              α    β        α+β                               i                    i
+
+The first and second recurrence relations (Corollaries 5.2 and 5.5) work out the same, where we interpret
+the indices as vectors of endomorphisms.
+   The final consideration is the chain rule, and one can show a version of the elliptic net chain rule for
+isogenies. Let T : E ′′k → E k be a linear transformation. Then we have T tr : Hom(E, E ′ )k → Hom(E ′′ , E ′ )k .
+                                                                                     #»
+Theorem 8.1 (First chain rule in higher dimension). Let T be as above. Let ϕ ∈ Hom(E, E ′ )k , i.e.
+ϕi : E → E ′ . Then whenever all coordinate isogenies in the subscripts are unbiased, we have
+                                                  k                    P
+                                                  Y         deg ϕi −   j̸=i ⟨ϕi ,ϕj ⟩
+                                                                                        Y         ⟨ϕ ,ϕ ⟩
+                                (Ψ #»
+                                   ϕ ◦ T)               ΨT tr (ei )                           ΨT tri (eji +ej ) = ΨT tr ( #»
+                                                                                                                          ϕ ).
+                                                  i=1                                   i<j
+                                   DIVISION POLYNOMIALS FOR ARBITRARY ISOGENIES                                                    19
+
+
+In general, we have
+                             P
+                    deg ϕi − j̸=i ⟨ϕi ,ϕj ⟩ Q
+                                                                2               Qk b deg ϕi −Pj̸=i ⟨ϕi ,ϕj ⟩ Q
+              Qk                                  ⟨ϕi ,ϕj ⟩                                                        b ⟨ϕi ,ϕj ⟩
+  (Ψ #» ◦ T )     Ψ
+               i=1 T tr (ei )                   Ψ
+                                             i<j T tr (ei +ej )     ( Ψ
+                                                                      b #» ◦ T )  i=1 ΨT tr (ei )              i<j ΨT tr (ei +ej )
+ ϕ                                                              =     ϕ
+                                                                                                                                   .
+                          ΨT tr ( #»
+                                  ϕ)
+                                                                                              b tr #»
+                                                                                              Ψ   T (ϕ)
+
+Theorem 8.2 (Second chain rule in higher dimension). Let T be as above. Suppose α
+                                                                                                   P
+                                                                                                                           #» q( α)
+                                                                                                     #»∈Hom(E ′′ ,E ′ )k e α
+                                                                                                                                    #» =
+0 is a finite integral quadratic identity. Suppose e α       #» = 0 whenever α is not in the image of T tr . Then
+                                                             
+                                   s                                                              s
+                      eT tr ( #γ»)
+                                             b e#»T tr ( #γ»)  ◦ T =                eT tr ( #γ»)
+                                                                                                                     b eTtrtr (#»#γ») .
+          Y                          Y                                     Y                             Y
+                   Ψ #»
+                      γ                      Ψ  γ                                  Ψ        #»
+                                                                                     T tr ( γ )                      Ψ  T (γ )
+     #»
+     γ ∈Hom(E,E ′ )k               #»
+                                   γ ∈Hom(E,E ′ )k                       #»
+                                                                         γ ∈Hom(E,E ′ )k               #»
+                                                                                                       γ ∈Hom(E,E ′ )k
+
+                                                       9. Declarations.
+Data Availability Statement. We do not analyse or generate any datasets.
+Funding. The author was supported by NSF DMS-2401580 and a Joan and Joseph Birman Fellowship from
+the American Mathematical Society.
+Competing Interests. The author has no relevant financial or non-financial interests to disclose.
+
+                                                          References
+ [1] Daniel J. Bernstein, Luca De Feo, Antonin Leroux, and Benjamin Smith. Faster computation of isogenies of large prime
+     degree. In ANTS XIV—Proceedings of the Fourteenth Algorithmic Number Theory Symposium, volume 4 of Open Book
+     Ser., pages 39–55. Math. Sci. Publ., Berkeley, CA, 2020.
+ [2] K. P. S. Bhaskara Rao and J. D. Reid. Abelian groups that are unions of proper subgroups. Bull. Austral. Math. Soc.,
+     45(1):1–7, 1992.
+ [3] A. Bostan, F. Morain, B. Salvy, and É. Schost. Fast algorithms for computing isogenies between elliptic curves. Math.
+     Comp., 77(263):1755–1778, 2008.
+ [4] J. W. S. Cassels. A note on the division values of ℘(u). Proc. Cambridge Philos. Soc., 45:167–172, 1949.
+ [5] L. K. Durst. The apparition problem for equianharmonic divisibility sequences. Proc. Nat. Acad. Sci. U.S.A., 38:330–333,
+     1952.
+ [6] Graham Everest, Patrick Ingram, Valéry Mahé, and Shaun Stevens. The uniform primality conjecture for elliptic curves.
+     Acta Arith., 134(2):157–181, 2008.
+ [7] Gavril Farkas. Theta characteristics and their moduli. Milan J. Math., 80(1):1–24, 2012.
+ [8] Ömer Küçüksakallı. On the computation of generalized division polynomials. Turkish J. Math., 39(4):547–555, 2015.
+ [9] B. Mazur and J. Tate. The p-adic sigma function. Duke Math. J., 62(3):663–688, 1991.
+[10] Takakazu Satoh. Generalized division polynomials. Math. Scand., 94(2):161–184, 2004.
+[11] René Schoof. Counting points on elliptic curves over finite fields. volume 7, pages 219–254. 1995. Les Dix-huitièmes Journées
+     Arithmétiques (Bordeaux, 1993).
+[12] Joseph H. Silverman. Wieferich’s criterion and the abc-conjecture. J. Number Theory, 30(2):226–237, 1988.
+[13] Joseph H. Silverman. The arithmetic of elliptic curves, volume 106 of Graduate Texts in Mathematics. Springer-Verlag,
+     New York, 1992. Corrected reprint of the 1986 original.
+[14] Katherine Stange. Elliptic nets and elliptic curves. Algebra Number Theory, 5(2):197–229, 2011.
+[15] H. M. Stark. Class-numbers of complex quadratic fields. In Modular functions of one variable, I (Proc. Internat. Summer
+     School, Univ. Antwerp, Antwerp, 1972), volume Vol. 320 of Lecture Notes in Math., pages 153–174. Springer, Berlin-New
+     York, 1973.
+[16] William Stein. Sage:           Open Source Mathematical Software (Version 10.5). The Sage Group, 2025.
+     http://www.sagemath.org.
+[17] Marco Streng. Divisibility sequences for elliptic curves with complex multiplication. Algebra Number Theory, 2(2):183–208,
+     2008.
+[18] Jacques Vélu. Isogénies entre courbes elliptiques. C. R. Acad. Sci. Paris Sér. A-B, 273:A238–A241, 1971.
+[19] Matteo Verzobio. A recurrence relation for elliptic divisibility sequences. Riv. Math. Univ. Parma (N.S.), 13(1):223–242,
+     2022.
+[20] Morgan Ward. Memoir on elliptic divisibility sequences. Amer. J. Math., 70:31–74, 1948.
+[21] Morgan Ward. Arithmetical properties of polynomials associated with the lemniscate elliptic functions. Proc. Nat. Acad.
+     Sci. U.S.A., 36:359–362, 1950.
+[22] Heinrich Weber. Lehrbuch der Algebra, volume III. Chelsea Publishing Company, New York, third edition, 1961.
+
+   University of Colorado Boulder, Boulder, Colorado, USA
+   Email address: kstange@math.colorado.edu
+   URL: https://math.katestange.net/
+

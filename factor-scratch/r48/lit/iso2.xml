@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/hcphcdZub0vxM85cpRTAjZzS6kw</id>
+  <title>arXiv Query: search_query=abs:"rational l-isogeny"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:24:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22rational+l-isogeny%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1009.0807v3</id>
+    <title>On the pre-image of a point under an isogeny and Siegel's theorem</title>
+    <updated>2010-11-01T08:30:22Z</updated>
+    <link href="https://arxiv.org/abs/1009.0807v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1009.0807v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a rational point on an elliptic curve under an isogeny. Suppose that the action of Galois partitions the set of its pre-images into n orbits. It is shown that all such points above a certain height have their denominator divisible by at least n distinct primes. This generalizes Siegel's theorem and more recent results of Everest et al. For multiplication by a prime l, it is shown that if n&gt;1 then either the point is l times a rational point or the elliptic curve emits a rational l-isogeny.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-09-04T06:13:21Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jonathan Reynolds</name>
+    </author>
+  </entry>
+</feed>

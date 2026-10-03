@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/s2xNGN5kjhvH+uh+9yIStg2t6GY</id>
+  <title>arXiv Query: search_query=all:"rigorous" AND all:"number field sieve"&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:14:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22rigorous%22+AND+all:%22number+field+sieve%22&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1805.08873v1</id>
+    <title>Rigorous Analysis of a Randomised Number Field Sieve</title>
+    <updated>2018-05-22T21:36:24Z</updated>
+    <link href="https://arxiv.org/abs/1805.08873v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.08873v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorisation of integers $n$ is of number theoretic and cryptographic significance. The Number Field Sieve (NFS) introduced circa 1990, is still the state of the art algorithm, but no rigorous proof that it halts or generates relationships is known. We propose and analyse an explicitly randomised variant. For each $n$, we show that these randomised variants of the NFS and Coppersmith's multiple polynomial sieve find congruences of squares in expected times matching the best-known heuristic estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-22T21:36:24Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. of Number Theory Vol. 187 (2018) 92-159</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Lee</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2017.10.019</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2017.10.019" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.08198v1</id>
+    <title>Scaling up prime factorization with self-organizing gates: A memcomputing approach</title>
+    <updated>2023-09-15T07:02:54Z</updated>
+    <link href="https://arxiv.org/abs/2309.08198v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.08198v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report preliminary results on using the MEMCPU\texttrademark{} Platform to compute the prime factorization of large biprimes. The first approach, the direct model, directly returns the factors of a given biprime. The second approach, the congruence model, returns smooth congruences to address the bottleneck of standard sieve methods. The models have size-dependent structure, and the MEMCPU Platform requires structure-dependent tuning for optimal performance. Therefore, for both models, we tuned the platform on sample problems up to a given size according to available resources. Then we generated RSA-like benchmark biprimes to perform rigorous scaling analysis. The MEMCPU timings over the tuned range followed low degree polynomials in the number of bits, markedly different than other tested methods including general number field sieve. MEMCPU's congruence model was the most promising, which was scaled up to 300-bit factorization problems while following a $2^{nd}$ degree polynomial fit. We also discuss the approach to tuning the MEMCPU Platform for problems beyond the reach of today's most advanced methods. Finally, basic analysis of the acceleration expected from an ASIC implementation is provided and suggests the possibility of real time factorization of large biprimes.</summary>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.AO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-15T07:02:54Z</published>
+    <arxiv:primary_category term="cs.ET"/>
+    <author>
+      <name>Tristan Sharp</name>
+    </author>
+    <author>
+      <name>Rishabh Khare</name>
+    </author>
+    <author>
+      <name>Erick Pederson</name>
+    </author>
+    <author>
+      <name>Fabio Lorenzo Traversa</name>
+    </author>
+  </entry>
+</feed>

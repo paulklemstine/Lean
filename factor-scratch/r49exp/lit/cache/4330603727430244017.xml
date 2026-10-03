@@ -1,0 +1,1462 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/li4cC0adAwLv1HnVT6MAZDwq+ME</id>
+  <title>arXiv Query: search_query=abs:"staged" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:08Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22staged%22+AND+abs:factoring&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>4679</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1304.7038v3</id>
+    <title>Staged Self-Assembly and Polyomino Context-Free Grammars</title>
+    <updated>2013-06-29T16:54:56Z</updated>
+    <link href="https://arxiv.org/abs/1304.7038v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.7038v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Previous work by Demaine et al. (2012) developed a strong connection between smallest context-free grammars and staged self-assembly systems for one-dimensional strings and assemblies. We extend this work to two-dimensional polyominoes and assemblies, comparing staged self-assembly systems to a natural generalization of context-free grammars we call polyomino context-free grammars (PCFGs). We achieve nearly optimal bounds on the largest ratios of the smallest PCFG and staged self-assembly system for a given polyomino with n cells. For the ratio of PCFGs over assembly systems, we show the smallest PCFG can be an Omega(n/(log(n))^3)-factor larger than the smallest staged assembly system, even when restricted to square polyominoes. For the ratio of assembly systems over PCFGs, we show that the smallest staged assembly system is never more than a O(log(n))-factor larger than the smallest PCFG and is sometimes an Omega(log(n)/loglog(n))-factor larger.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-25T22:29:58Z</published>
+    <arxiv:comment>34 pages, 23 figures. An abstract version has been accepted to DNA 19</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Andrew Winslow</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.16301v1</id>
+    <title>Using Staged Tree Models for Health Data: Investigating Invasive Fungal Infections by Aspergillus and Other Filamentous Fungi</title>
+    <updated>2023-07-30T18:53:04Z</updated>
+    <link href="https://arxiv.org/abs/2307.16301v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.16301v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Machine learning models are increasingly used in the medical domain to study the association between risk factors and diseases to support practitioners in predicting health outcomes. In this paper, we showcase the use of machine-learned staged tree models for investigating complex asymmetric dependence structures in health data. Staged trees are a specific class of generative, probabilistic graphical models that formally model asymmetric conditional independence and non-regular sample spaces. An investigation of the risk factors in invasive fungal infections demonstrates the insights staged trees provide to support medical decision-making.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-30T18:53:04Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Maria Teresa Filigheddu</name>
+    </author>
+    <author>
+      <name>Manuele Leonelli</name>
+    </author>
+    <author>
+      <name>Gherardo Varando</name>
+    </author>
+    <author>
+      <name>Miguel Ángel Gómez-Bermejo</name>
+    </author>
+    <author>
+      <name>Sofía Ventura-Díaz</name>
+    </author>
+    <author>
+      <name>Luis Gorospe</name>
+    </author>
+    <author>
+      <name>Jesús Fortún</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.20071v1</id>
+    <title>A Staged Approach using Machine Learning and Uncertainty Quantification to Predict the Risk of Hip Fracture</title>
+    <updated>2024-05-30T14:01:02Z</updated>
+    <link href="https://arxiv.org/abs/2405.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite advancements in medical care, hip fractures impose a significant burden on individuals and healthcare systems. This paper focuses on the prediction of hip fracture risk in older and middle-aged adults, where falls and compromised bone quality are predominant factors. We propose a novel staged model that combines advanced imaging and clinical data to improve predictive performance. By using CNNs to extract features from hip DXA images, along with clinical variables, shape measurements, and texture features, our method provides a comprehensive framework for assessing fracture risk. A staged machine learning-based model was developed using two ensemble models: Ensemble 1 (clinical variables only) and Ensemble 2 (clinical variables and DXA imaging features). This staged approach used uncertainty quantification from Ensemble 1 to decide if DXA features are necessary for further prediction. Ensemble 2 exhibited the highest performance, achieving an AUC of 0.9541, an accuracy of 0.9195, a sensitivity of 0.8078, and a specificity of 0.9427. The staged model also performed well, with an AUC of 0.8486, an accuracy of 0.8611, a sensitivity of 0.5578, and a specificity of 0.9249, outperforming Ensemble 1, which had an AUC of 0.5549, an accuracy of 0.7239, a sensitivity of 0.1956, and a specificity of 0.8343. Furthermore, the staged model suggested that 54.49% of patients did not require DXA scanning. It effectively balanced accuracy and specificity, offering a robust solution when DXA data acquisition is not always feasible. Statistical tests confirmed significant differences between the models, highlighting the advantages of the advanced modeling strategies. Our staged approach could identify individuals at risk with a high accuracy but reduce the unnecessary DXA scanning. It has great promise to guide interventions to prevent hip fractures with reduced cost and radiation.</summary>
+    <category term="physics.med-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-30T14:01:02Z</published>
+    <arxiv:comment>29 pages, 5 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="physics.med-ph"/>
+    <author>
+      <name>Anjum Shaik</name>
+    </author>
+    <author>
+      <name>Kristoffer Larsen</name>
+    </author>
+    <author>
+      <name>Nancy E. Lane</name>
+    </author>
+    <author>
+      <name>Chen Zhao</name>
+    </author>
+    <author>
+      <name>Kuan-Jui Su</name>
+    </author>
+    <author>
+      <name>Joyce H. Keyak</name>
+    </author>
+    <author>
+      <name>Qing Tian</name>
+    </author>
+    <author>
+      <name>Qiuying Sha</name>
+    </author>
+    <author>
+      <name>Hui Shen</name>
+    </author>
+    <author>
+      <name>Hong-Wen Deng</name>
+    </author>
+    <author>
+      <name>Weihua Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.23275v1</id>
+    <title>SCULPT-VLA: Learning Structured Control through Staged Action Grounding</title>
+    <updated>2026-09-20T01:13:28Z</updated>
+    <link href="https://arxiv.org/abs/2609.23275v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.23275v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language-action (VLA) policies increasingly incorporate structured intermediate supervision beyond action labels. Yet specifying what an intermediate representation should encode leaves open how action prediction learns to depend on it. We introduce \textbf{SCULPT-VLA}, a policy that learns structured control through staged action grounding. Its action-conditioning state comprises complementary factors for task progression, scene dynamics, and spatial grounding. Training first forms these factors with teacher scaffolds, then grounds coarse action prediction through their composition as scaffold inputs are withdrawn. Direct perceptual access is subsequently restored for continuous refinement, combining the learned state with perceptual detail. The curriculum separates learning to condition actions on structure from refining continuous control. Deployment requires neither teachers nor discrete-action autoregression. SCULPT-VLA achieves higher average success than shared-backbone baselines on LIBERO, SimplerEnv-WidowX, and RoboTwin 2.0 Full. On SimplerEnv-WidowX, final success is 83.5\%, versus 71.3\% when Stage-II action learning directly accesses vision and language. Across four physical robot tasks, average success under the tested distribution shifts reaches 58.1\%, compared with 45.6\% for $π_{0.5}$. Training ablations and factor-wise interventions support the staged design and show that the learned state continues to contribute to control after direct perceptual access is restored.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-20T01:13:28Z</published>
+    <arxiv:comment>31 pages, 25 figures, 16 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Wenbo Li</name>
+    </author>
+    <author>
+      <name>Yiteng Chen</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+    <author>
+      <name>Wenhao Li</name>
+    </author>
+    <author>
+      <name>Jun Yang</name>
+    </author>
+    <author>
+      <name>Qingyao Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.00594v1</id>
+    <title>Vegetation High-Impedance Faults' High-Frequency Signatures via Sparse Coding</title>
+    <updated>2019-06-03T06:37:52Z</updated>
+    <link href="https://arxiv.org/abs/1906.00594v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.00594v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The behavior of High-Impedance Faults (HIFs) in power distribution systems depends on multiple factors, making it a challenging disturbance to model. If enough data from real staged faults is provided, signal processing techniques can help reveal patterns from a specific type of fault. Such a task is implemented herein by employing the Shift-Invariant Sparse Coding (SISC) technique on a data set of staged vegetation high-impedance faults. The technique facilitates the uncoupling of shifted and convoluted patterns present in the recorded signals from fault tests. The deconvolution of these patterns was then individually studied to identify the possible repeating fault signatures. The work is primarily focused on the investigation of the under-discussed high-frequency faults signals, especially regarding voltage disturbances created by the fault currents. Therefore, the main contribution from this paper is the resulted evidence of consistent behavior from real vegetation HIFs at higher frequencies. These results can enhance phenomena awareness and support future methodologies dealing with these disturbances.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-03T06:37:52Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Douglas P. S. Gomes</name>
+    </author>
+    <author>
+      <name>Cagil Ozansoy</name>
+    </author>
+    <author>
+      <name>Anwaar Ulhaq</name>
+    </author>
+    <arxiv:doi>10.1109/TIM.2019.2950822</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TIM.2019.2950822" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.11307v1</id>
+    <title>An Empirical Investigation of Matrix Factorization Methods for Pre-trained Transformers</title>
+    <updated>2024-06-17T08:14:23Z</updated>
+    <link href="https://arxiv.org/abs/2406.11307v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.11307v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The increasing size of transformer-based models in NLP makes the question of compressing them important. In this work, we present a comprehensive analysis of factorization based model compression techniques. Specifically, we focus on comparing straightforward low-rank factorization against the recently introduced Monarch factorization, which exhibits impressive performance preservation on the GLUE benchmark. To mitigate stability issues associated with low-rank factorization of the matrices in pre-trained transformers, we introduce a staged factorization approach wherein layers are factorized one by one instead of being factorized simultaneously. Through this strategy we significantly enhance the stability and reliability of the compression process. Further, we introduce a simple block-wise low-rank factorization method, which has a close relationship to Monarch factorization. Our experiments lead to the surprising conclusion that straightforward low-rank factorization consistently outperforms Monarch factorization across both different compression ratios and six different text classification tasks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-17T08:14:23Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ashim Gupta</name>
+    </author>
+    <author>
+      <name>Sina Mahdipour Saravani</name>
+    </author>
+    <author>
+      <name>P. Sadayappan</name>
+    </author>
+    <author>
+      <name>Vivek Srikumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.02580v1</id>
+    <title>Thinking in Blender: Staged Executable Inverse Graphics with Vision-Language Models</title>
+    <updated>2026-06-01T17:59:53Z</updated>
+    <link href="https://arxiv.org/abs/2606.02580v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.02580v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Inverse graphics is a longstanding and highly underconstrained problem that seeks to reconstruct images as editable 3D scenes which can be rendered, relit, and manipulated. In this work, we investigate whether pretrained vision-language models (VLMs) can perform executable inverse graphics directly from a single image by reconstructing a scene as an editable Blender program, without relying on specialized 2D or 3D foundation models, differentiable rendering, or multi-view supervision. We introduce Staged Executable Inverse Graphics (SEIG), an agentic framework that reconstructs a 3D scene from a single image by progressively refining scene factors including geometry, materials, composition, and lighting directly in executable Blender code space. We evaluate our framework across diverse scenes using a range of reconstruction metrics spanning pixel-level, perceptual, and semantic fidelity. Our experiments show that staged reconstruction substantially improves reconstruction fidelity, highlighting the importance of task decomposition for executable inverse graphics with general-purpose VLMs. Finally, we showcase various downstream applications enabled by the reconstructed editable Blender scenes.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-01T17:59:53Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Guangzhao He</name>
+    </author>
+    <author>
+      <name>Rundong Luo</name>
+    </author>
+    <author>
+      <name>Wei-Chiu Ma</name>
+    </author>
+    <author>
+      <name>Hadar Averbuch-Elor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.00287v1</id>
+    <title>Correction to Friis Noise Factors</title>
+    <updated>2022-09-01T08:21:22Z</updated>
+    <link href="https://arxiv.org/abs/2209.00287v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.00287v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The signal-to-noise ratio of a multistage cascade network is often estimated using Friis formulas for noise factors (or the noise figures in decibel). In this letter, the correct formulas to calculate the stage-wise noise factors and the total noise factor in terms of the stage-wise noise factors of an n-stage cascade network are derived. A comparison of our derived formulas for noise factors with Friis's formulas is presented. Contrary to Friis's total noise factor in terms of the stage-wise noise factors, we define the actual total noise factor of the n-stage cascade network as the product of its stage-wise noise factors.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-01T08:21:22Z</published>
+    <arxiv:comment>5 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Ankitha E. Bangera</name>
+      <arxiv:affiliation>Department of Electrical Engineering, Indian Institute of Technology Bombay, Mumbai, India</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.07862v2</id>
+    <title>New Geometric Algorithms for Fully Connected Staged Self-Assembly</title>
+    <updated>2016-12-31T19:52:04Z</updated>
+    <link href="https://arxiv.org/abs/1505.07862v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.07862v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider staged self-assembly systems, in which square-shaped tiles can be added to bins in several stages. Within these bins, the tiles may connect to each other, depending on the glue types of their edges. Previous work by Demaine et al. showed that a relatively small number of tile types suffices to produce arbitrary shapes in this model. However, these constructions were only based on a spanning tree of the geometric shape, so they did not produce full connectivity of the underlying grid graph in the case of shapes with holes; designing fully connected assemblies with a polylogarithmic number of stages was left as a major open problem. We resolve this challenge by presenting new systems for staged assembly that produce fully connected polyominoes in O(log^2 n) stages, for various scale factors and temperature τ = 2 as well as τ = 1. Our constructions work even for shapes with holes and uses only a constant number of glues and tiles. Moreover, the underlying approach is more geometric in nature, implying that it promised to be more feasible for shapes with compact geometric description.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-28T21:22:49Z</published>
+    <arxiv:comment>21 pages, 14 figures; full version of conference paper in DNA21</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Erik D. Demaine</name>
+    </author>
+    <author>
+      <name>Sándor P. Fekete</name>
+    </author>
+    <author>
+      <name>Christian Scheffer</name>
+    </author>
+    <author>
+      <name>Arne Schmidt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.11964v2</id>
+    <title>Accelerating Monte Carlo event generation -- rejection sampling using neural network event-weight estimates</title>
+    <updated>2022-04-28T15:17:51Z</updated>
+    <link href="https://arxiv.org/abs/2109.11964v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.11964v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The generation of unit-weight events for complex scattering processes presents a severe challenge to modern Monte Carlo event generators. Even when using sophisticated phase-space sampling techniques adapted to the underlying transition matrix elements, the efficiency for generating unit-weight events from weighted samples can become a limiting factor in practical applications. Here we present a novel two-staged unweighting procedure that makes use of a neural-network surrogate for the full event weight. The algorithm can significantly accelerate the unweighting process, while it still guarantees unbiased sampling from the correct target distribution. We apply, validate and benchmark the new approach in high-multiplicity LHC production processes, including $Z/W$+4 jets and $t\bar{t}$+3 jets, where we find speed-up factors up to ten.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-24T13:52:59Z</published>
+    <arxiv:comment>37 pages, 9 figures, version accepted for publication in SciPost Physics</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>SciPost Phys. 12, 164 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Katharina Danziger</name>
+    </author>
+    <author>
+      <name>Timo Janßen</name>
+    </author>
+    <author>
+      <name>Steffen Schumann</name>
+    </author>
+    <author>
+      <name>Frank Siegert</name>
+    </author>
+    <arxiv:doi>10.21468/SciPostPhys.12.5.164</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.21468/SciPostPhys.12.5.164" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.03340v1</id>
+    <title>Deep Learning for Real Time Crime Forecasting</title>
+    <updated>2017-07-09T17:36:53Z</updated>
+    <link href="https://arxiv.org/abs/1707.03340v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.03340v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate real time crime prediction is a fundamental issue for public safety, but remains a challenging problem for the scientific community. Crime occurrences depend on many complex factors. Compared to many predictable events, crime is sparse. At different spatio-temporal scales, crime distributions display dramatically different patterns. These distributions are of very low regularity in both space and time. In this work, we adapt the state-of-the-art deep learning spatio-temporal predictor, ST-ResNet [Zhang et al, AAAI, 2017], to collectively predict crime distribution over the Los Angeles area. Our models are two staged. First, we preprocess the raw crime data. This includes regularization in both space and time to enhance predictable signals. Second, we adapt hierarchical structures of residual convolutional units to train multi-factor crime prediction models. Experiments over a half year period in Los Angeles reveal highly accurate predictive power of our models.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-09T17:36:53Z</published>
+    <arxiv:comment>4 pages, 6 figures, NOLTA, 2017</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Bao Wang</name>
+    </author>
+    <author>
+      <name>Duo Zhang</name>
+    </author>
+    <author>
+      <name>Duanhao Zhang</name>
+    </author>
+    <author>
+      <name>P. Jeffery Brantingham</name>
+    </author>
+    <author>
+      <name>Andrea L. Bertozzi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.09900v1</id>
+    <title>Corrections to Friis noise factor formulas for cascade networks</title>
+    <updated>2025-06-11T16:15:13Z</updated>
+    <link href="https://arxiv.org/abs/2506.09900v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.09900v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The signal-to-noise ratio of a multistage cascade network is often estimated using the well-known Friis' formulas for noise factors (or the noise figures in decibels). However, this article addresses the major errors in Friis' noise factor formulas for higher stages. Additionally, we re-derive the correct formulas to calculate the stage-wise noise factors for cascade networks from the basic definition of noise factors. We then present a comparison of our derived formulas with Friis' noise factor formulas. Contrary to Friis' formula, we define the total noise factor of an n-stage cascade network as the product of its stage-wise noise factors. We further validate our derived formulas for a cascade network by correlating them with the expressions for a staircase avalanche photodiode.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-11T16:15:13Z</published>
+    <arxiv:comment>Friis' noise factor formulas for cascade networks are often used to derive other related formulas for devices involving cascade mechanism (eg. staircase APDs). However, Friis' equations for higher stages are themselves incorrect. This article points out the existing mistakes and re-derives the correct formulas for a cascade network's noise factor (10 pages, 3 figures, preprint under submission)</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Ankitha E Bangera</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.19033v3</id>
+    <title>Factor multivariate stochastic volatility models of high dimension</title>
+    <updated>2026-04-23T09:21:29Z</updated>
+    <link href="https://arxiv.org/abs/2406.19033v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.19033v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building upon factor decomposition to overcome the curse of dimensionality inherent in multivariate volatility processes, we develop a factor model-based multivariate stochastic volatility (fMSV) framework. We propose a two-stage estimation procedure for the fMSV model: in the first stage, estimators of the factor model are obtained, and in the second stage, the MSV component is estimated using the estimated common factor variables. We derive the asymptotic properties of the estimators, taking into account the estimation of the factor variables. The prediction performances are illustrated by finite-sample simulation experiments and applications to portfolio allocation.</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-27T09:39:10Z</published>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Benjamin Poignard</name>
+    </author>
+    <author>
+      <name>Manabu Asai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.07967v1</id>
+    <title>Identification of main factors affecting trust and determination of their importance in electronic businesses in Iran</title>
+    <updated>2020-06-14T18:17:57Z</updated>
+    <link href="https://arxiv.org/abs/2006.07967v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.07967v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Today, trust has become one of the main concerns of the electronic business in Iran. The role of trust especially in electronic businesses those directly deal with selling physical goods through internet is a lot more evident. Reviewing literature shows that several factors affect establishing of trust in potential customers. Since trust establishment needs to be noticed in each triple stages of an electronic purchase (before, during and finally after purchase). In this study by using field research, the importance of influential factors affecting the potential customers in three stages of an electronic purchase is determined. Based on the results from conducting the research, the certainty of traceability of the purchase with importance factor of 85.97% in pre-purchase stage, safety of transactions and the time of delivery of goods with the importance factor of 85.67% in the middle stage of the purchase and receiving a fault-free and undamaged good with the importance factor of 89.55% in the post purchase stage make up the top three most important factors.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-14T18:17:57Z</published>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Mozhdeh Sadighi</name>
+    </author>
+    <author>
+      <name>Mohammad Mahdi Ghobadi</name>
+    </author>
+    <author>
+      <name>Seyyed Hossein Hasanpour Matikolaee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1406.1469v1</id>
+    <title>Diffusion of the Adoption of Online Retailing in Saudi Arabia</title>
+    <updated>2014-06-05T18:38:29Z</updated>
+    <link href="https://arxiv.org/abs/1406.1469v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.1469v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the fact that Saudi Arabia is a leading producer of oil and natural gas, a member of G-20, has the largest and fastest growth of ICT marketplaces in the Arab region, and is very wealthy, online retailing activities are not progressing at the same speed as its growing ICT marketplace. For this reason, the attitudes of retailers in companies at different stages of e-commerce maturity were investigated to determine what factors are causing this problem. The data collection included two stages: first, interviews with 16 retailers and, then, based on the outcomes of the interviews, a quantitative study designed to test and further explore the qualitative interview findings with a sample of 153 retailers in companies at different stages of e-commerce maturity. The results showed striking differences between retailers as a function of the stage of growth of their companies in regard to factors relating to their perceptions of consumers and to organizational factors. At the same time, the results showed agreement between retailers in companies at different stages in relation to environmental factors. The investigation helped to identify the incentives and barriers for each stage of maturity and makes recommendations of what could be done to help companies move from one stage to the next.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-05T18:38:29Z</published>
+    <arxiv:comment>PhD thesis, 312 pages including appendices</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Rayed AlGhamdi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09271v4</id>
+    <title>Representation of Context-Specific Causal Models with Observational and Interventional Data</title>
+    <updated>2024-07-16T20:43:16Z</updated>
+    <link href="https://arxiv.org/abs/2101.09271v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09271v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the problem of representing context-specific causal models based on both observational and experimental data collected under general (e.g. hard or soft) interventions by introducing a new family of context-specific conditional independence models called CStrees. This family is defined via a novel factorization criterion that allows for a generalization of the factorization property defining general interventional DAG models. We derive a graphical characterization of model equivalence for observational CStrees that extends the Verma and Pearl criterion for DAGs. This characterization is then extended to CStree models under general, context-specific interventions. To obtain these results, we formalize a notion of context-specific intervention that can be incorporated into concise graphical representations of CStree models. We relate CStrees to other context-specific models, showing that the families of DAGs, CStrees, labeled DAGs and staged trees form a strict chain of inclusions. We end with an application of interventional CStree models to a real data set, revealing the context-specific nature of the data dependence structure and the soft, interventional perturbations.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-22T18:48:29Z</published>
+    <arxiv:comment>32 pages including supplementary material</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Eliana Duarte</name>
+    </author>
+    <author>
+      <name>Liam Solus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.09957v1</id>
+    <title>Mapping of Covid-19 Risk Factors of Cities and Regencies in Indonesia during the Initial Stages of the Pandemic</title>
+    <updated>2021-08-23T06:02:37Z</updated>
+    <link href="https://arxiv.org/abs/2108.09957v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.09957v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The aims of this study are to identify risk factors and develop a composite risk factor of initial stage of COVID-19 pandemic in regency level in Indonesia. Three risk factors, i.e., exposure, transmission and susceptibility, are investigated. Multivariate regression, and Canonical correlation analysis are implemented to measure the association between the risk factors and the initial stage of reported COVID -19 cases. The result reveals strong correlation between the composite risk factor and the number of COVID-19 cases at the initial stage of pandemic. The influence of population density, percentage of people commuting, international exposures, and number of public places which prone to COVID-19 transmission are observed. Large regencies and cities, mostly in Java, have high risk score. The largest risk score owned by regencies that are part of the Jakarta Metropolitan Area.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-23T06:02:37Z</published>
+    <arxiv:comment>In proceedings of the 1st Virtual Conference on Implications of Information and Digital Technologies for Development, 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Setia Pramana</name>
+    </author>
+    <author>
+      <name>Achmad Fauzi Bagus Firmansyah</name>
+    </author>
+    <author>
+      <name>Mieke Nurmalasari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.08108v1</id>
+    <title>Understanding the Video Content Creation Journey of Creators with Sensory Impairment in Kenya</title>
+    <updated>2025-09-09T19:38:24Z</updated>
+    <link href="https://arxiv.org/abs/2509.08108v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.08108v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Video content creation offers vital opportunities for expression and participation, yet remains largely inaccessible to creators with sensory impairments, especially in low-resource settings. We conducted interviews with 20 video creators with visual and hearing impairments in Kenya to examine their tools, challenges, and collaborative practices. Our findings show that accessibility barriers and infrastructural limitations shape video creation as a staged, collaborative process involving trusted human partners and emerging AI tools. Across workflows, creators actively negotiated agency and trust, maintaining creative control while bridging sensory gaps. We discuss the need for flexible, interdependent collaboration models, inclusive human-AI workflows, and diverse storytelling practices. This work broadens accessibility research in HCI by examining how technology and social factors intersect in low-resource contexts, suggesting ways to better support disabled creators globally.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-09T19:38:24Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Lan Xiao</name>
+    </author>
+    <author>
+      <name>Maryam Bandukda</name>
+    </author>
+    <author>
+      <name>Franklin Mingzhe Li</name>
+    </author>
+    <author>
+      <name>Mark Colley</name>
+    </author>
+    <author>
+      <name>Catherine Holloway</name>
+    </author>
+    <arxiv:doi>10.1145/3663547.3746356</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3663547.3746356" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.14849v1</id>
+    <title>Method for processing and analyzing tectonic earthquake aftershocks: A new look at old problem</title>
+    <updated>2024-06-21T03:38:17Z</updated>
+    <link href="https://arxiv.org/abs/2406.14849v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.14849v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The deactivation coefficient has been introduced for the source that cools down after the mainshock of the earthquake. The deactivation coefficient satisfies two conditions. First, it can be computed from observed aftershock frequency data (axiom of computability). Second, the deactivation factor is independent of time if and only if Omori law is strictly satisfied (hyperbolicity axiom). From the two axioms follows an explicit expression for calculating the source deactivation factor from observed aftershock data. A simple and efficient method for processing and analyzing aftershocks using the deactivation factor has been developed. A two-stage mode of the source relaxation to a new equilibrium state after the formation of the main rupture of rock continuity in it was discovered. In the first stage, called the Omori epoch, the Omori law is strictly followed. The duration of the first stage is tentatively 10 to 100 days. In the Omori epoch, the average frequency of aftershocks is predictable with high accuracy. At the end of the Omori epoch, a bifurcation occurs. In the second stage, the deactivation factor changes with time in an unpredictable way. The phase portrait of the source allows us to visualize the complex dynamics of seismic activity in the second stage of the source relaxation. The experiment shows that the Hirano-Utsu law is inapplicable for describing the evolution of aftershocks neither at the first nor at the second stage of the source relaxation. Keywords: deactivation factor, evolution equation, phase portrait, Omori law, Hirano-Utsu law.</summary>
+    <category term="physics.geo-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-21T03:38:17Z</published>
+    <arxiv:comment>18 pages, 3 figure</arxiv:comment>
+    <arxiv:primary_category term="physics.geo-ph"/>
+    <author>
+      <name>A. V. Guglielmi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.06385v3</id>
+    <title>Compartmental Disease Models with Time-Varying Transmission Rates: A Bayesian Generalized Hamiltonian Monte Carlo framework with Applications to COVID-19</title>
+    <updated>2026-07-20T10:36:08Z</updated>
+    <link href="https://arxiv.org/abs/2301.06385v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.06385v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Epidemic transmission is shaped by changing behaviour, interventions, and unobserved factors, while incidence data are noisy and incomplete. We develop a Bayesian statistical-mechanistic framework that combines staged SIR/SEIR-like compartmental models with a time-varying transmission rate represented by Bayesian P-splines. A Negative Binomial observation model links the latent epidemic dynamics to incidence data, and posterior inference is performed using Generalised Hamiltonian Monte Carlo with gradients obtained from ODE sensitivity equations. Synthetic experiments and an application to COVID-19 incidence in the Basque Country show that the framework can recover temporal variation in transmission and quantify uncertainty. However, different compartmental structures may fit the observed incidence similarly while producing distinct transmission-rate and reproduction-number estimates. These findings highlight the importance of convergence diagnostics, sensitivity analyses, and epidemiological knowledge when selecting and interpreting flexible compartmental models.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-16T12:14:30Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Hristo Inouzhe</name>
+    </author>
+    <author>
+      <name>María Xosé Rodríguez-Álvarez</name>
+    </author>
+    <author>
+      <name>Lorenzo Nagar</name>
+    </author>
+    <author>
+      <name>Elena Akhmatskaya</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.11323v1</id>
+    <title>Composite and Staged Trust Evaluation for Multi-Hop Collaborator Selection</title>
+    <updated>2026-01-16T14:17:07Z</updated>
+    <link href="https://arxiv.org/abs/2601.11323v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.11323v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-hop collaboration offers new perspectives for enhancing task execution efficiency by increasing available distributed collaborators for resource sharing. Consequently, selecting trustworthy collaborators becomes critical for realizing effective multi-hop collaboration. However, evaluating device trust requires the consideration of multiple factors, including relatively stable factors, such as historical interaction data, and dynamic factors, such as varying resources and network conditions. This differentiation makes it challenging to achieve the accurate evaluation of composite trust factors using one identical evaluation approach. To address this challenge, this paper proposes a composite and staged trust evaluation (CSTE) mechanism, where stable and dynamic factors are separately evaluated at different stages and then integrated for a final trust decision. First, a device interaction graph is constructed from stable historical interaction data to represent direct trust relationships between devices. A graph neural network framework is then used to propagate and aggregate these trust relationships to produce the historical trustworthiness of devices. In addition, a task-specific trust evaluation method is developed to assess the dynamic resources of devices based on task requirements, which generates the task-specific resource trustworthiness of devices. After these evaluations, CSTE integrates their results to identify devices within the network topology that satisfy the minimum trust thresholds of tasks. These identified devices then establish a trusted topology. Finally, within this trusted topology, an A* search algorithm is employed to construct a multi-hop collaboration path that satisfies the task requirements. Experimental results demonstrate that CSTE outperforms the comparison algorithms in identifying paths with the highest average trust values.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-16T14:17:07Z</published>
+    <arxiv:primary_category term="eess.SY"/>
+    <arxiv:journal_ref>IEEE GLOBECOM 2025</arxiv:journal_ref>
+    <author>
+      <name>Botao Zhu</name>
+    </author>
+    <author>
+      <name>Xianbin Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/9907079v1</id>
+    <title>Linking a Minimal Theoretical Model of Scale Factor Evolution with Observational Universe Information</title>
+    <updated>1999-07-25T17:00:18Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/9907079v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/9907079v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study several approaches for constructing a minimal model of Universe evolution by matching different stages of scale factor laws. We discuss the continuity in the transitions among the stages and the time variables involved. We develop a way to modelize these transitions without loss of observational predictability. The key is the scale factor and its connection with minimal but well stablished observational information (transition times and expansion ratii). This construction is clearly useful in metric perturbations type computations, but it can be applied in whatever subject dealing with a cosmology involving different evolution stages.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-07-25T17:00:18Z</published>
+    <arxiv:comment>LaTeX, 29 pages with 1 figure. Uses epsfig and psfrag</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>M. P. Infante</name>
+      <arxiv:affiliation>Obs. Paris-DEMIRM</arxiv:affiliation>
+      <arxiv:affiliation>DFTUZ-Univ. Zaragoza</arxiv:affiliation>
+    </author>
+    <author>
+      <name>N. Sanchez</name>
+      <arxiv:affiliation>Obs. Paris-DEMIRM</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.12610v1</id>
+    <title>Single Stage PFC Flyback AC-DC Converter Design</title>
+    <updated>2020-12-23T11:34:49Z</updated>
+    <link href="https://arxiv.org/abs/2012.12610v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.12610v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper discusses a 100 W single stage Power Factor Correction (PFC) flyback converter operating in boundary mode constant ON time methodology using a synchronous MOS-FET rectifier on the secondary side to achieve higher efficiency. Unlike conventional designs which use two stage approach such as PFC plus a LLC resonant stage or a two stage PFC plus flyback, the proposed design integrates the PFC and constant voltage regulation in a single stage without compromising the efficiency of the converter. The proposed design is advantageous as it has a lower component count. A design of 100 W flyback operating from universal input AC line voltage is demonstrated in this paper. The experimental results show that the power factor (PF) is greater than 0.92 and total harmonic distortion (iTHD) is less than 20% for a load varying from 25 % to 100 %. The experimental results show the advantages of a single stage design.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-23T11:34:49Z</published>
+    <arxiv:comment>Published in: 2020 IEEE International Conference on Electronics, Computing and Communication Technologies (CONECCT)</arxiv:comment>
+    <arxiv:primary_category term="eess.SY"/>
+    <author>
+      <name>Kali Naraharisetti</name>
+    </author>
+    <author>
+      <name>Janamejaya Channegowda</name>
+    </author>
+    <arxiv:doi>10.1109/CONECCT50063.2020.9198408</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/CONECCT50063.2020.9198408" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.03210v1</id>
+    <title>The varying importance of extrinsic factors in the success of startup fundraising: competition at early-stage and networks at growth-stage</title>
+    <updated>2019-06-07T16:17:49Z</updated>
+    <link href="https://arxiv.org/abs/1906.03210v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.03210v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the issue of the factors driving startup success in raising funds. Using the popular and public startup database Crunchbase, we explicitly take into account two extrinsic characteristics of startups: the competition that the companies face, using similarity measures derived from the Word2Vec algorithm, as well as the position of investors in the investment network, pioneering the use of Graph Neural Networks (GNN), a recent deep learning technique that enables the handling of graphs as such and as a whole. We show that the different stages of fundraising, early- and growth-stage, are associated with different success factors. Our results suggest a marked relevance of startup competition for early stage while growth-stage fundraising is influenced by network features. Both of these factors tend to average out in global models, which could lead to the false impression that startup success in fundraising would mostly if not only be influenced by its intrinsic characteristics, notably those of their founders.</summary>
+    <category term="q-fin.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-07T16:17:49Z</published>
+    <arxiv:comment>14 pages, 4 tables, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="q-fin.GN"/>
+    <author>
+      <name>Clement Gastaud</name>
+    </author>
+    <author>
+      <name>Theophile Carniel</name>
+    </author>
+    <author>
+      <name>Jean-Michel Dalle</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.12134v1</id>
+    <title>MULTI: Disentangling Camera Lens, Sensor, View, and Domain for Novel Image Generation</title>
+    <updated>2026-05-12T13:55:48Z</updated>
+    <link href="https://arxiv.org/abs/2605.12134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.12134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent text-to-image models produce high-quality images, yet text ambiguity hinders precise control when specific styles or objects are required. There have been a number of recent works dealing with learning and composing multiple objects and patterns. However, current work focuses almost entirely on image content, overlooking imaging factors such as camera lens, sensor types, imaging viewpoints, and scenes' domain characteristics. We introduce this new challenge as Imaging Factor Disentanglement and show limitations of current approaches in the regime. We, therefore, propose the new method Multi-factor disentanglement through Textual Inversion (MULTI). It consists of two stages: in the first stage, we learn general factors, and in the second stage, we extract dataset-specific ones. This setup enables the extension of existing datasets and novel factor combinations, thereby reducing distribution gaps. It further supports modifications of specific factors and image-to-image generation via ControlNets. The evaluation on our new DF-RICO benchmark demonstrates the effectiveness of MULTI and highlights the importance of Factor Disentanglement as a new direction of research.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-12T13:55:48Z</published>
+    <arxiv:comment>Accepted at ICPR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sonali Godavarthy</name>
+    </author>
+    <author>
+      <name>Matthias Neuwirth-Trapp</name>
+    </author>
+    <author>
+      <name>Tim-Felix Faasch</name>
+    </author>
+    <author>
+      <name>Maarten Bieshaar</name>
+    </author>
+    <author>
+      <name>Michael Moeller</name>
+    </author>
+    <author>
+      <name>Danda Pani Paudel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.05461v2</id>
+    <title>Long term operation with the DarkSide-50 detector</title>
+    <updated>2019-12-12T08:52:01Z</updated>
+    <link href="https://arxiv.org/abs/1912.05461v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.05461v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>DarkSide is a staged experimental project based on radiopure argon aiming at direct dark matter detection. The DarkSide-50 (DS-50) detector is currently operating underground at the Gran Sasso National Laboratory. DS-50 detector is a dual-phase, 50 kg, liquid argon time-projection-chamber readout by 38 cryogenic PMTs (Hamamatsu R11065), surrounded by an active liquid scintillator veto and contained in a water Cherenkov detector acting as a muon veto. DS-50 has been been operating continuously since 2013, first with atmospheric argon and subsequently filled in 2015 with argon from an underground source, allowing a reduction of the Ar-39 isotope by more than a factor 1000. Features of the DS-50 detector are described, long term operations and stability are reported and its performances in scintillation light detection discussed. Results on dark matter searches obtained with DarkSide-50 detector are briefly reported.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-11T17:00:29Z</published>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>N. Canci</name>
+      <arxiv:affiliation>on behalf of DarkSide-50 Collaboration</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1088/1748-0221/15/03/C03026</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1748-0221/15/03/C03026" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.6637v2</id>
+    <title>Discharge convective instability as modifier of nonlinear hydrodynamic spectrum</title>
+    <updated>2014-01-24T12:06:15Z</updated>
+    <link href="https://arxiv.org/abs/1204.6637v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.6637v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Discharge source is considered as modifier of flow hydrodynamic spectrum. Characteristic frequency of nonlinear spectrum and spectrum power were determined under conditions of arc sliding discharge in supersonic flow. Two stages of discharge were defined: sliding stage and still stage. It was found that stage transition occurs due to convective instability of discharge. Fraction of sliding stage in overall discharge duration is determined by averaged current that is general stable discharge parameter. This phenomenon gives opportunity to control power of pressure fluctuations spectrum. Theoretical insight of field and hydrodynamic factors influencing on pulsations frequency was achieved. Hydrodynamic resistance of discharge region and holding cathode electric field turned out to be basic factors of frequency modification. Corresponding experimental verification was taken. Basic frequency law was determined for several discharge regimes.</summary>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-26T09:52:33Z</published>
+    <arxiv:comment>This paper has been withdrawn by the author due to the model modification</arxiv:comment>
+    <arxiv:primary_category term="nlin.CD"/>
+    <author>
+      <name>Sergey Kamenshchikov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.12415v1</id>
+    <title>On real-time multi-stage speech enhancement systems</title>
+    <updated>2023-12-19T18:47:09Z</updated>
+    <link href="https://arxiv.org/abs/2312.12415v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.12415v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, multi-stage systems have stood out among deep learning-based speech enhancement methods. However, these systems are always high in complexity, requiring millions of parameters and powerful computational resources, which limits their application for real-time processing in low-power devices. Besides, the contribution of various influencing factors to the success of multi-stage systems remains unclear, which presents challenges to reduce the size of these systems. In this paper, we extensively investigate a lightweight two-stage network with only 560k total parameters. It consists of a Mel-scale magnitude masking model in the first stage and a complex spectrum mapping model in the second stage. We first provide a consolidated view of the roles of gain power factor, post-filter, and training labels for the Mel-scale masking model. Then, we explore several training schemes for the two-stage network and provide some insights into the superiority of the two-stage network. We show that the proposed two-stage network trained by an optimal scheme achieves a performance similar to a four times larger open source model DeepFilterNet2.</summary>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-19T18:47:09Z</published>
+    <arxiv:comment>To appear at ICASSP 2024</arxiv:comment>
+    <arxiv:primary_category term="eess.AS"/>
+    <author>
+      <name>Lingjun Meng</name>
+    </author>
+    <author>
+      <name>Jozef Coldenhoff</name>
+    </author>
+    <author>
+      <name>Paul Kendrick</name>
+    </author>
+    <author>
+      <name>Tijana Stojkovic</name>
+    </author>
+    <author>
+      <name>Andrew Harper</name>
+    </author>
+    <author>
+      <name>Kiril Ratmanski</name>
+    </author>
+    <author>
+      <name>Milos Cernak</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.23387v1</id>
+    <title>White Paper on a Novel FFA-Based CEBAF Upgrade to 22 GeV</title>
+    <updated>2026-08-24T15:33:34Z</updated>
+    <link href="https://arxiv.org/abs/2608.23387v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.23387v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a conceptual design for a cost-effective upgrade of the Continuous Electron Beam Accelerator Facility (CEBAF) to 22 GeV using non-scaling fixed-field alternating-gradient (FFA) arcs built from Halbach-style permanent magnets. Building on the eight-pass energy-recovery demonstration at the Cornell--BNL CBETA test accelerator, the design replaces the highest-energy recirculation arcs with a pair of FFA arcs that simultaneously transport six passes spanning a factor-of-two momentum range. We describe the machine layout; including the injector, recirculating linacs, spreaders and recombiners, FFA arcs, splitters, transition and extraction regions; together with beam-dynamics validation studies covering emittance growth, synchrotron-radiation-driven depolarization, and orbit correction, and we summarize permanent-magnet design, prototyping, and radiation-resiliency results. This white paper documents the accelerator physics underpinning a staged path to 22 GeV that preserves CEBAF's multi-hall, high-luminosity, polarized-beam capabilities.</summary>
+    <category term="physics.acc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-24T15:33:34Z</published>
+    <arxiv:comment>This material is based upon work supported by the U.S. DOE, Office of Science, Office of Nuclear Physics contract DE-AC05-06OR23177</arxiv:comment>
+    <arxiv:primary_category term="physics.acc-ph"/>
+    <author>
+      <name>S. A. Bogacz</name>
+    </author>
+    <author>
+      <name>R. M. Bodenstein</name>
+    </author>
+    <author>
+      <name>K. E. Deitrick</name>
+    </author>
+    <author>
+      <name>B. R. Gamage</name>
+    </author>
+    <author>
+      <name>R. Kazimi</name>
+    </author>
+    <author>
+      <name>D. Khan</name>
+    </author>
+    <author>
+      <name>E. Nissen</name>
+    </author>
+    <author>
+      <name>S. Ogur</name>
+    </author>
+    <author>
+      <name>Y. Roblin</name>
+    </author>
+    <author>
+      <name>P. Rossi</name>
+    </author>
+    <author>
+      <name>J. S. Berg</name>
+    </author>
+    <author>
+      <name>S. J. Brooks</name>
+    </author>
+    <author>
+      <name>D. Trbojevic</name>
+    </author>
+    <author>
+      <name>V. Morozov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1303.3386v1</id>
+    <title>An Optimal Randomized Online Algorithm for Reordering Buffer Management</title>
+    <updated>2013-03-14T09:47:49Z</updated>
+    <link href="https://arxiv.org/abs/1303.3386v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1303.3386v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give an $O(\log\log k)$-competitive randomized online algorithm for reordering buffer management, where $k$ is the buffer size. Our bound matches the lower bound of Adamaszek et al. (STOC 2011). Our algorithm has two stages which are executed online in parallel. The first stage computes deterministically a feasible fractional solution to an LP relaxation for reordering buffer management. The second stage "rounds" using randomness the fractional solution. The first stage is based on the online primal-dual schema, combined with a dual fitting argument. As multiplicative weights steps and dual fitting steps are interleaved and in some sense conflicting, combining them is challenging. We also note that we apply the primal-dual schema to a relaxation with mixed packing and covering constraints. We pay the $O(\log\log k)$ competitive factor for the gap between the computed LP solution and the optimal LP solution. The second stage gives an online algorithm that converts the LP solution to an integral solution, while increasing the cost by an O(1) factor. This stage generalizes recent results that gave a similar approximation factor for rounding the LP solution, albeit using an offline rounding algorithm.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-03-14T09:47:49Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Noa Avigdor-elgrabli</name>
+    </author>
+    <author>
+      <name>Yuval Rabani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.03371v2</id>
+    <title>What makes a successful rebuttal in computer science conferences? : A perspective on social interaction</title>
+    <updated>2023-07-21T04:46:26Z</updated>
+    <link href="https://arxiv.org/abs/2307.03371v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.03371v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With an exponential increase in submissions to top-tier Computer Science (CS) conferences, more and more conferences have introduced a rebuttal stage to the conference peer review process. The rebuttal stage can be modeled as social interactions between authors and reviewers. A successful rebuttal often results in an increased review score after the rebuttal stage. In this paper, we conduct an empirical study to determine the factors contributing to a successful rebuttal using over 3,000 papers and 13,000 reviews from ICLR2022, one of the most prestigious computer science conferences. First, we observe a significant difference in review scores before and after the rebuttal stage, which is crucial for paper acceptance. Furthermore, we investigate factors from the reviewer's perspective using signed social network analysis. A notable finding is the increase in balanced network structure after the rebuttal stage. Subsequently, we evaluate several quantifiable author rebuttal strategies and their effects on review scores. These strategies can help authors in improving their review scores. Finally, we used machine learning models to predict rebuttal success and validated the impact of potential factors analyzed in this paper. Our experiments demonstrate that the utilization of all features proposed in this study can aid in predicting the success of the rebuttal. In summary, this work presents a study on the impact factors of successful rebuttals from both reviewers' and authors' perspectives and lays the foundation for analyzing rebuttals with social network analysis.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-07T03:38:54Z</published>
+    <arxiv:primary_category term="cs.SI"/>
+    <arxiv:journal_ref>Volume 17, Issue 3, August 2023, 101427, Journal of Informetrics</arxiv:journal_ref>
+    <author>
+      <name>Junjie Huang</name>
+    </author>
+    <author>
+      <name>Win-bin Huang</name>
+    </author>
+    <author>
+      <name>Yi Bu</name>
+    </author>
+    <author>
+      <name>Qi Cao</name>
+    </author>
+    <author>
+      <name>Huawei Shen</name>
+    </author>
+    <author>
+      <name>Xueqi Cheng</name>
+    </author>
+    <arxiv:doi>10.1016/j.joi.2023.101427</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.joi.2023.101427" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17618v1</id>
+    <title>Two-stage Estimation of Latent Variable Regression Models: A General, Root-N Consistent Solution</title>
+    <updated>2026-01-24T22:49:49Z</updated>
+    <link href="https://arxiv.org/abs/2601.17618v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17618v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Latent variable (LV) models are widely used in psychological research to investigate relationships among unobservable constructs. When one-stage estimation of the overall LV model is challenging, two-stage factor score regression (FSR) serves as a convenient alternative: the measurement model is fitted to obtain factor scores in the first stage, which are then used to fit the structural model in the subsequent stage. However, naive application of FSR is known to yield biased estimates of structural parameters. In this paper, we develop a generic bias-correction framework for two-stage estimation of parametric statistical models and tailor it specifically to FSR. Unlike existing bias-corrected FSR solutions, the proposed method applies to a broader class of LV models and does not require computing specific types of factor scores. We establish the root-n consistency of the proposed bias-corrected two-stage estimator under mild regularity conditions. To ensure broad applicability and minimize reliance on complex analytical derivations, we introduce a stochastic approximation algorithm for point estimation and a Monte Carlo-based procedure for variance estimation. In a sequence of Monte Carlo experiments, we demonstrate that the bias-corrected FSR estimator performs comparably to the ``gold standard'' one-stage maximum likelihood estimator. These results suggest that our approach offers a straightforward yet effective alternative for estimating LV models.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-24T22:49:49Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Yang Liu</name>
+    </author>
+    <author>
+      <name>Xiaohui Luo</name>
+    </author>
+    <author>
+      <name>Jieyuan Dong</name>
+    </author>
+    <author>
+      <name>Youjin Sung</name>
+    </author>
+    <author>
+      <name>Yueqin Hu</name>
+    </author>
+    <author>
+      <name>Hongyun Liu</name>
+    </author>
+    <author>
+      <name>Daniel J. Bauer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9811072v2</id>
+    <title>Mathematical and Physical Examination of the Locality Condition in Bell's Theorem</title>
+    <updated>2012-12-10T19:19:56Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9811072v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9811072v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Using the Clauser-Horne model of Bell's theorem, the locality condition is examined and it is shown the corresponding formulation is equivalent to a factorization process consisting of three stages. The first stage is introduced based on the conditional probability definition in classical theory of probability and the other two stages are based on previously-known relations named as outcome and parameter independence conditions.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-11-25T15:35:28Z</published>
+    <arxiv:comment>5 pages pdf; Physics Essays, Volume 19, No. 4 (2006)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>H. Razmi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00094v1</id>
+    <title>Modernization and Statistical Validation of a Multilayer TRIM.SP Code for Low-Energy Muon and Ion Implantation</title>
+    <updated>2026-08-31T14:01:24Z</updated>
+    <link href="https://arxiv.org/abs/2609.00094v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.00094v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe the staged modernization of a local multilayer TRIM.SP implementation, denoted TRIM.SP-NL. The work included behavior-preserving refactoring, correction of localized bookkeeping and initialization defects, support for more than five elements per layer, reproducible build modes, and a runtime-selectable random-number-generator (RNG) interface. The RANLUX RNG remains the default reference backend, while PCG32 and xoshiro256** provide faster alternatives without changing the input-deck format. The code validation combined exact regression testing with statistical comparisons over 13 representative target multilayer configurations, comprising 143 energy-configuration points per backend and 429 simulations in total. Across the test suite, PCG32 and xoshiro256** reduced runtime by factors of 1.98 and 2.01, respectively. The implanted, backscattered, and transmitted fractions, as well as the mean implantation depths, range straggling, and representative depth profiles showed no systematic RNG dependence. Together with a Node.js-based graphical interface for setup, scans, and result collection, the Fortran engine forms the open-source TRIM.SP-NL Workbench.</summary>
+    <category term="physics.acc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-31T14:01:24Z</published>
+    <arxiv:comment>9 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.acc-ph"/>
+    <author>
+      <name>Zaher Salman</name>
+    </author>
+    <author>
+      <name>Ryan M. L. McFadden</name>
+    </author>
+    <author>
+      <name>Thomas Prokscha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.00674v1</id>
+    <title>What influences the speed of prototyping? An empirical investigation of twenty software startups</title>
+    <updated>2017-12-02T22:41:56Z</updated>
+    <link href="https://arxiv.org/abs/1712.00674v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.00674v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is essential for startups to quickly experiment business ideas by building tangible prototypes and collecting user feedback on them. As prototyping is an inevitable part of learning for early stage software startups, how fast startups can learn depends on how fast they can prototype. Despite of the importance, there is a lack of research about prototyping in software startups. In this study, we aimed at understanding what are factors influencing different types of prototyping activities. We conducted a multiple case study on twenty European software startups. The results are two folds, firstly we propose a prototype-centric learning model in early stage software startups. Secondly, we identify factors occur as barriers but also facilitators for prototyping in early stage software startups. The factors are grouped into (1) artifacts, (2) team competence, (3) collaboration, (4) customer and (5) process dimensions. To speed up a startups progress at the early stage, it is important to incorporate the learning objective into a well-defined collaborative approach of prototyping</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-02T22:41:56Z</published>
+    <arxiv:comment>This is the author's version of the work. Copyright owner's version can be accessed at doi.org/10.1007/978-3-319-57633-6_2, XP2017, Cologne, Germany</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Anh Nguyen Duc</name>
+    </author>
+    <author>
+      <name>Xiaofeng Wang</name>
+    </author>
+    <author>
+      <name>Pekka Abrahamsson</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-319-57633-6_2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-319-57633-6_2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.20508v1</id>
+    <title>MyWeekInSight: Designing and Evaluating the Use of Visualization in Self-Management of Chronic Pain by Youth</title>
+    <updated>2024-05-30T21:58:02Z</updated>
+    <link href="https://arxiv.org/abs/2405.20508v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.20508v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A teenager's experience of chronic pain reverberates through multiple interacting aspects of their lives. To self-manage their symptoms, they need to understand how factors such as their sleep, social interactions, emotions and pain intersect; supporting this capability must underlie an effective personalized healthcare solution. While adult use of personal informatics for self-management of various health factors has been studied, solutions intended for adults are rarely workable for teens, who face this complex and confusing situation with unique perspectives, skills and contexts. In this design study, we explore a means of facilitating self-reflection by youth living with chronic pain, through visualization of their personal health data. In collaboration with pediatric chronic pain clinicians and a health-tech industry partner, we designed and deployed MyWeekInSight, a visualization-based self-reflection tool for youth with chronic pain. We discuss our staged design approach with this intersectionally vulnerable population, in which we balanced reliance on proxy users and data with feedback from youth viewing their own data. We report on extensive formative and in-situ evaluation, including a three-week clinical deployment, and present a framework of challenges and barriers faced in clinical deployment with mitigations that can aid fellow researchers. Our reflections on the design process yield principles, surprises, and open questions.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-30T21:58:02Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Unma Desai</name>
+    </author>
+    <author>
+      <name>Haley Foladare</name>
+    </author>
+    <author>
+      <name>Katelynn E. Boerner</name>
+    </author>
+    <author>
+      <name>Tim F. Oberlander</name>
+    </author>
+    <author>
+      <name>Tamara Munzner</name>
+    </author>
+    <author>
+      <name>Karon E. MacLean</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.15155v2</id>
+    <title>R&amp;D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization</title>
+    <updated>2025-09-25T10:13:08Z</updated>
+    <link href="https://arxiv.org/abs/2505.15155v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.15155v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Financial markets pose fundamental challenges for asset return prediction due to their high dimensionality, non-stationarity, and persistent volatility. Despite advances in large language models and multi-agent systems, current quantitative research pipelines suffer from limited automation, weak interpretability, and fragmented coordination across key components such as factor mining and model innovation. In this paper, we propose R&amp;D-Agent for Quantitative Finance, in short RD-Agent(Q), the first data-centric multi-agent framework designed to automate the full-stack research and development of quantitative strategies via coordinated factor-model co-optimization. RD-Agent(Q) decomposes the quant process into two iterative stages: a Research stage that dynamically sets goal-aligned prompts, formulates hypotheses based on domain priors, and maps them to concrete tasks, and a Development stage that employs a code-generation agent, Co-STEER, to implement task-specific code, which is then executed in real-market backtests. The two stages are connected through a feedback stage that thoroughly evaluates experimental outcomes and informs subsequent iterations, with a multi-armed bandit scheduler for adaptive direction selection. Empirically, RD-Agent(Q) achieves up to 2X higher annualized returns than classical factor libraries using 70% fewer factors, and outperforms state-of-the-art deep time-series models on real markets. Its joint factor-model optimization delivers a strong balance between predictive accuracy and strategy robustness. Our code is available at: https://github.com/microsoft/RD-Agent.</summary>
+    <category term="q-fin.CP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-21T06:20:56Z</published>
+    <arxiv:comment>42 pages,11figures, NeurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="q-fin.CP"/>
+    <author>
+      <name>Yuante Li</name>
+    </author>
+    <author>
+      <name>Xu Yang</name>
+    </author>
+    <author>
+      <name>Xiao Yang</name>
+    </author>
+    <author>
+      <name>Minrui Xu</name>
+    </author>
+    <author>
+      <name>Xisen Wang</name>
+    </author>
+    <author>
+      <name>Weiqing Liu</name>
+    </author>
+    <author>
+      <name>Jiang Bian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0412125v1</id>
+    <title>Atomic Squeezing under Collective Emission</title>
+    <updated>2004-12-06T11:35:37Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0412125v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0412125v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Atomic squeezing is studied for the case of large systems of radiating atoms, when collective effects are well developed. All temporal stages are analyzed, starting with the quantum stage of spontaneous emission, passing through the coherent stage of superradiant emission, and going to the relaxation stage ending with stationary solutions. A method of governing the temporal behaviour of the squeezing factor is suggested. The influence of a squeezed effective vacuum on the characteristics of collective emission is also investigated.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-12-06T11:35:37Z</published>
+    <arxiv:comment>Latex file, 21 page, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>Phys. Rev. A 70 (2004) 053828-11</arxiv:journal_ref>
+    <author>
+      <name>V. I. Yukalov</name>
+    </author>
+    <author>
+      <name>E. P. Yukalova</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.70.053828</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.70.053828" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.03418v1</id>
+    <title>On factors influencing consumer preference in pipeline stages: an experiment</title>
+    <updated>2025-01-06T22:39:31Z</updated>
+    <link href="https://arxiv.org/abs/2501.03418v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.03418v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a case study on the eClinical data of Intelligent Medical Objects, which currently employs eight pipeline stages. Historically, the pipeline stage progresses inversely with the number of customers. Our objective is to identify the key factors that significantly affect consumer presences at the more advanced stages of the pipeline. Logistic regression is utilized for this analysis. This technique estimates the probability of an event occurring, enabling researchers to evaluate how various factors influence specific outcomes. Widely applied across disciplines such as medicine, finance, and social sciences, logistic regression is particularly useful for classification tasks and identifying the importance of predictors, thus supporting data-driven decision-making. In this study, logistic regression is used to model the likelihood of reaching the eighth pipeline stage as the dependent variable, revealing that only a few independent variables significantly contribute to explaining this outcome.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-06T22:39:31Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Paramahansa Pramanik</name>
+    </author>
+    <author>
+      <name>Joel Graff</name>
+    </author>
+    <author>
+      <name>Mike Decaro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.29372v2</id>
+    <title>FORESIGHT-9: Prospective and Process-Aware Evaluation of Adaptive Trading Agents</title>
+    <updated>2026-09-04T14:31:11Z</updated>
+    <link href="https://arxiv.org/abs/2608.29372v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.29372v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrospective backtests provide a limited test of adaptive trading agents: they cannot rule out historical contamination, expose sensitivity to a single realized market path, or reveal internal degeneration during long-horizon adaptation. We introduce FORESIGHT-9, a prospective and process-aware benchmark built from nine auditable counterfactual stress worldlines branching from a common July 2026 information boundary. Each worldline specifies staged macro-financial events and joint multi-asset anchors; a deterministic generator realizes the trajectories, while observations are disclosed according to in-world time. A common contract standardizes observations and execution while preserving each agent's native adaptation loop. We evaluate two adaptive trading-agent frameworks with two foundation-model backbones across 36 long-horizon runs. Agent rankings vary substantially across worldlines and backbones, and a fixed equal-weight policy outperforms 31 of 36 runs. Process telemetry exposes failures that terminal returns conceal: in one high-return run, the live factor library collapsed while executed holdings converged to the equal-weight fallback, even though decision records continued to report an active factor ensemble. FORESIGHT-9 therefore evaluates not only portfolio outcomes, but whether adaptive agent state and execution remain coherent across alternative futures. We release the worldlines, trajectories, audit traces, and regeneration scripts.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-29T17:12:49Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Xiangxin Luo</name>
+    </author>
+    <author>
+      <name>Chengtian Hong</name>
+    </author>
+    <author>
+      <name>Haohua Li</name>
+    </author>
+    <author>
+      <name>Yongyi Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.09804v1</id>
+    <title>Coevolution of relationship and interaction in cooperative dynamical multiplex networks</title>
+    <updated>2024-02-15T09:03:11Z</updated>
+    <link href="https://arxiv.org/abs/2402.09804v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.09804v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While actors in a population can interact with anyone else freely, social relations significantly influence our inclination towards particular individuals. The consequence of such interactions, however, may also form the intensity of our relations established earlier. These dynamical processes are captured via a coevolutionary model staged in multiplex networks with two distinct layers. In a so-called relationship layer the weights of edges among players may change in time as a consequence of games played in the alternative interaction layer. As an reasonable assumption, bilateral cooperation confirms while mutual defection weakens these weight factors. Importantly, the fitness of a player, which basically determines the success of a strategy imitation, depends not only on the payoff collected from interactions, but also on the individual relationship index calculated from the mentioned weight factors of related edges. Within the framework of weak prisoner's dilemma situation we explore the potential outcomes of the mentioned coevolutionary process where we assume different topologies for relationship layer. We find that higher average degree of the relationship graph is more beneficial to maintain cooperation in regular graphs, but the randomness of links could be a decisive factor in harsh situations. Surprisingly, a stronger coupling between relationship index and fitness discourage the evolution of cooperation by weakening the direct consequence of a strategy change. To complete our study we also monitor how the distribution of relationship index vary and detect a strong relation between its polarization and the general cooperation level.</summary>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.PS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-15T09:03:11Z</published>
+    <arxiv:comment>11 two-column pages, 6 figures, to be published in Chaos</arxiv:comment>
+    <arxiv:primary_category term="physics.soc-ph"/>
+    <arxiv:journal_ref>Chaos 34(2) (2024) 023118</arxiv:journal_ref>
+    <author>
+      <name>Xiaojin Xiong</name>
+    </author>
+    <author>
+      <name>Ziyan Zeng</name>
+    </author>
+    <author>
+      <name>Minyu Feng</name>
+    </author>
+    <author>
+      <name>Attila Szolnoki</name>
+    </author>
+    <arxiv:doi>10.1063/5.0188168</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/5.0188168" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.13134v1</id>
+    <title>Influencia de fatores organizacionais e sociais na etapa de levantamento de requisitos</title>
+    <updated>2025-08-18T17:49:00Z</updated>
+    <link href="https://arxiv.org/abs/2508.13134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.13134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The most critical and fragile stage of a software development project is requirements gathering. Because of this, Requirements Engineering has been evolving its techniques to minimize the challenges faced by Requirements Analysts. However, few studies consider the humanistic relationships and behaviors of those involved in this stage. This article presents a survey of some studies conducted at this stage that consider non-technical factors such as emotions, organizational environment, and social context.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-18T17:49:00Z</published>
+    <arxiv:comment>VI Workshop de Pós-Graduação e Pesquisa do Centro Paula Souza, in Portuguese language</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <arxiv:journal_ref>ISSN:2175-1897, 2011</arxiv:journal_ref>
+    <author>
+      <name>Glauber da Rocha Balthazar</name>
+    </author>
+    <author>
+      <name>Marcia Ito</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.16282v2</id>
+    <title>Limit Value in Zero-Sum Stochastic Games with Vanishing Stage Duration and Public Signals</title>
+    <updated>2024-07-24T15:05:29Z</updated>
+    <link href="https://arxiv.org/abs/2407.16282v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.16282v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the behaviour of $λ$-discounted zero-sum games as the discount factor $λ$ approaches 0 (that is, the players are more and more patient), in the context of games with stage duration. In stochastic games with stage duration h, players act at times 0, h, 2h, and so on. The payoff and leaving probabilities are proportional to h. When h tends to 0, such discrete-time games approximate games played in continuous time. The asymptotic behavior of the values (when both $λ$ and h tend to 0) was already studied in the case of stochastic games with perfect observation of the state and in the state-blind case.We consider the same question for the case of stochastic games with imperfect observation of the state. More precisely, we consider a particular case of such games, stochastic games with public signals, in which  players are given at each stage a public signal that depends only on the current state. Our main result states that there exists a stochastic game with public signals, with no limit value (as the discount factor $λ$ goes to 0) if stage duration is 1, but with a limit value when stage duration h and discount factor $λ$ both tend to 0. Informally speaking, it means that the limit value in discrete time does not exist, but the limit value in continuous time (i.e. when h approaches 0) exists. Such a situation is impossible in the case of stochastic games with perfect observation of the state.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-23T08:35:03Z</published>
+    <arxiv:comment>This was a new version of arXiv:2403.07467. It appeared due to a technical error. See arXiv:2403.07467 for this paper</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Ivan Novikov</name>
+      <arxiv:affiliation>CEREMADE</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0205207v1</id>
+    <title>Generalized Chaotic Inflation</title>
+    <updated>2002-05-14T17:49:11Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0205207v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0205207v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We investigate inflation driven by the evolution of highly excited quantum states within the framework of out of equilibrium field dynamics. The self-consistent evolution of these quantum states and the scale factor is studied analytically and numerically. It is shown that the time evolution of these quantum states lead to two consecutive stages of inflation under conditions that are the quantum analogue of slow-roll. The evolution of the scale factor during the first stage has new features that are characteristic of the quantum state. During this initial stage the quantum fluctuations in the highly excited band build up an effective homogeneous condensate with a non-perturbatively large amplitude as a consequence of the large number of quanta. The second stage of inflation is similar to the usual classical chaotic scenario but driven by this effective condensate. The excited quantum modes are already superhorizon in the first stage and do not affect the power spectrum of scalar perturbations. Thus, this novel scenario provides a field theoretical justification for chaotic scenarios driven by a classical homogeneous scalar field of large amplitude.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-05-14T17:49:11Z</published>
+    <arxiv:comment>LaTex, 4 pages, 2 .ps figures. To appear in the Proceedings of the Euro Conference Rencontres de Moriond: The Cosmological Model</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>F. J. Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/9809051v1</id>
+    <title>The Froth of the Universe</title>
+    <updated>1998-09-17T10:25:45Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/9809051v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/9809051v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider a model of the Universe based on the equation of state $p=(1/3)ρ(c/F)^2$, where $F$ is the scale factor. This model behaves as an inflationary Universe from the beginning and during its early stages, and behaves as dust matter during the stages of maximum expansion.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-09-17T10:25:45Z</published>
+    <arxiv:comment>Latex, 13 pages</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Ll. Bel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.07467v3</id>
+    <title>Asymptotic Value in Zero-Sum Stochastic Games with Vanishing Stage Duration and Public Signals</title>
+    <updated>2026-02-19T00:42:49Z</updated>
+    <link href="https://arxiv.org/abs/2403.07467v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.07467v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study $λ$-discounted zero-sum games as the discount factor $λ$ approaches $0$ (that is, the players are more and more patient), in the context of games with stage duration. In stochastic games with stage duration $h$, players act at times $0, h, 2h$, and so on. The payoff and leaving probabilities are proportional to $h$. When $h$ tends to $0$, such discrete-time games approximate games played in continuous time. The asymptotic behavior of the values (when both $λ$ and $h$ tend to $0$) has already been studied for stochastic games with full state observation and for state-blind games. We consider the same question for the case of stochastic games with deterministic public signals on the state. We construct a stochastic game with public signals, with no asymptotic value (as the discount factor $λ$ goes to $0$) if the stage duration is $1$, but with an asymptotic value when the stage duration $h$ and the discount factor $λ$ both tend to $0$. Informally, this means that the asymptotic value in discrete time does not exist, whereas it does exist in continuous time. This situation cannot occur in stochastic games with full state observation.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-12T10:02:46Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Ivan Novikov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.11311v1</id>
+    <title>A new state estimation approach-Adaptive Fading Cubature Kalman filter</title>
+    <updated>2021-08-25T16:23:44Z</updated>
+    <link href="https://arxiv.org/abs/2108.11311v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.11311v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a novel adaptive fading cubature Kalman filter (AFCKF) based on double transitive factors. The developed adaptive algorithm is explained in two stages; stage (i) a single transitive factor is used to update the predicted state error covariance, ${\bf \hat P_{k}}^{-}$ based on innovation or residual vector, whereas, in stage (ii), the measurement noise covariance matrix, ${\bf \hat R_{k}^{*}}$ is scaled by another transitive factor. Furthermore, showing the proof concept for estimation of the process noise, ${\bf \hat Q_{k}^{*}}$ and measurement noise covariance matrices by combining the innovation and residual vector in the AFCKF algorithm. It can provide reliable state estimation in the presence of unknown noise statistics. Bench-marking target tracking example is considered to show the performance improvement of the developed algorithms. As compared with existing adaptive approaches, the proposed fading algorithm can provide better estimation results.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-25T16:23:44Z</published>
+    <arxiv:comment>Page, 1-5, 3 Figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SY"/>
+    <author>
+      <name>Mundla Narasimhappa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/9907185v1</id>
+    <title>The Primordial Gravitational Wave Background in String Cosmology</title>
+    <updated>1999-07-25T17:06:05Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/9907185v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/9907185v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We find the spectrum P(w)dw of the gravitational wave background produced in the early universe in string theory. We work in the framework of String Driven Cosmology, whose scale factors are computed with the low-energy effective string equations as well as selfconsistent solutions of General Relativity with a gas of strings as source. The scale factor evolution is described by an early string driven inflationary stage with an instantaneous transition to a radiation dominated stage and successive matter dominated stage. This is an expanding string cosmology always running on positive proper cosmic time. A careful treatment of the scale factor evolution and involved transitions is made. A full prediction on the power spectrum of gravitational waves without any free-parameters is given. We study and show explicitly the effect of the dilaton field, characteristic to this kind of cosmologies. We compute the spectrum for the same evolution description with three differents approachs. Some features of gravitational wave spectra, as peaks and asymptotic behaviours, are found direct consequences of the dilaton involved and not only of the scale factor evolution. A comparative analysis of different treatments, solutions and compatibility with observational bounds or detection perspectives is made.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-07-25T17:06:05Z</published>
+    <arxiv:comment>LaTeX, 50 pages with 2 figures. Uses epsfig and psfrag</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Rev. D61 (2000) 083515</arxiv:journal_ref>
+    <author>
+      <name>M. P. Infante</name>
+      <arxiv:affiliation>Obs. Paris-DEMIRM</arxiv:affiliation>
+      <arxiv:affiliation>DFTUZ-Univ. Zaragoza</arxiv:affiliation>
+    </author>
+    <author>
+      <name>N. Sanchez</name>
+      <arxiv:affiliation>Obs. Paris-DEMIRM</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.61.083515</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.61.083515" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.08238v1</id>
+    <title>Integrated User Matching and Pricing in Round-Trip Car-Sharing</title>
+    <updated>2024-07-11T07:28:40Z</updated>
+    <link href="https://arxiv.org/abs/2407.08238v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.08238v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditional round-trip car rental systems mandate users to return vehicles to their point of origin, limiting the system adaptability to meet diverse mobility demands. This constraint often leads to fleet under-utilization and incurs high parking costs for idle vehicles. To address this inefficiency, we propose a N-user matching algorithm which is designed to facilitate one-way trips within the round-trip rental framework. Our algorithm addresses the joint problem of optimal pricing and user matching through a Two-Stage Integer Linear Programming (ILP)-based formulation. In the first stage, optimal rental prices are determined by setting a risk factor that governs the likelihood of matching a set of N-user. The second stage involves maximizing expected profit through a novel ILP-based user-matching formulation. Testing our algorithm on real-world scenarios demonstrates an approximate 35\% increase in demand fulfillment. Additionally, we assess the model robustness under uncertainty by varying factors such as the risk factor (probability of user ride acceptance at the offered price), cost factor (rental cost-to-fare ratio), and maximum chain length.</summary>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-11T07:28:40Z</published>
+    <arxiv:primary_category term="eess.SY"/>
+    <author>
+      <name>Avalpreet Singh Brar</name>
+    </author>
+    <author>
+      <name>Rong Su</name>
+    </author>
+    <author>
+      <name>Gioele Zardini</name>
+    </author>
+    <author>
+      <name>Jaskaranveer Kaur</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.03314v1</id>
+    <title>Exploring the Magnetic Field Structure of the Milky Way with Pulsars in the SKA Era</title>
+    <updated>2026-07-03T13:30:58Z</updated>
+    <link href="https://arxiv.org/abs/2607.03314v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.03314v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The magnetic field structure of the Milky Way can offer critical insights into the origin of galactic magnetic fields. Measurements of magnetic structures of the Milky Way are still sparse in far regions of the Galactic disk and halo. Pulsars are the best probes for the three-dimensional structure of the Galactic magnetic field, primarily owing to their highly polarized short-duration radio pulses, negligible intrinsic Faraday rotation compared to the contribution from the medium in front, and their widespread distribution throughout the Galaxy across the thin disk, spiral arms, and extended halo. In this article, we give an overview of Galactic magnetic field investigation using pulsars. The sensitive SKA1 design baseline (AA4) will increase the number of known pulsars by a factor of around three, and the initial staged delivery array (AA*) will probably double the total number of the current pulsar population. Polarization observations of pulsars with the AA* telescopes will give rotation measures along several thousand lines of sight, enabling detailed exploration of the magnetic structure of both the Galactic disk and the Galactic halo.</summary>
+    <category term="astro-ph.HE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-03T13:30:58Z</published>
+    <arxiv:comment>Published in Advancing Astrophysics with the SKA II (AASKAII), 2026 (arXiv:2606.20366). Report-no: AASKAII/JunXu01. Advancing Astrophysics with the SKA II (AASKAII) outlines the transformative scientific advances that will be enabled by the SKA telescopes. An earlier version of this chapter was published in The Open Journal of Astrophysics with arXiv ID: arXiv:2512.16159</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.HE"/>
+    <author>
+      <name>Jun Xu</name>
+    </author>
+    <author>
+      <name>J. L. Han</name>
+    </author>
+    <author>
+      <name>Weicong Jing</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.20969v1</id>
+    <title>Kinematic Knowledge Maps for Pattern Alignment: Structured Latent Representational Learning in Multimodal Gait Analysis</title>
+    <updated>2026-08-21T10:46:40Z</updated>
+    <link href="https://arxiv.org/abs/2608.20969v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.20969v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal clinical AI is limited by weakly aligned inputs and the absence of domain-specific interpretable representations, particularly when learning from dense video stream, structured time-series, and template-based kinematic text. Here we present ScoliDetect, an explainable framework for adolescent idiopathic scoliosis screening from monocular gait video, built around a kinematic knowledge map (KKM) and complementary template-based kinematic text derived from per-sequence pose statics. KKM is a fixed-index structured representation that encodes gait features across absolute motion, self-skeleton configuration and joint-joint signal correlation, providing anchor-referenced multimodal fusion and factor-level interpretation. We integrate video, KKM, and template-based kinematic text through bidirectional cross-attention with latent-bottleneck aggregation. In a multicenter cohort (n = 1,858 after exclusions), prespecified supervised ablations on an external screening cohort show that KKM-mediated multimodal fusion outperforms unimodal models and late concatenation. Under a staged training protocol, trimodal contrastive pretraining is applied after architecture selection as representation initialization, improving external ROC-AUC from 0.961 to 0.972. Furthermore, the structured nature of the KKM provides inherent, factor-level attributions mapped directly to specific kinematic phases and skeletal indices, offering verifiable interpretability. The results demonstrate that embedding explicit structural topologies into latent spaces significantly enhances both the generalization and explainability of multimodal pattern analysis systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-21T10:46:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chen Dong</name>
+    </author>
+    <author>
+      <name>He Zonglin</name>
+    </author>
+    <author>
+      <name>Cheung Kenneth M. C</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.16159v1</id>
+    <title>Exploring the magnetic field structure of the Milky Way with pulsars in the SKA era</title>
+    <updated>2025-12-18T04:16:42Z</updated>
+    <link href="https://arxiv.org/abs/2512.16159v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.16159v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The magnetic field structure of the Milky Way can offer critical insights into the origin of galactic magnetic fields. Measurements of magnetic structures of the Milky Way are still sparse in far regions of the Galactic disk and halo. Pulsars are the best probes for the three-dimensional structure of the Galactic magnetic field, primarily owing to their highly polarized short-duration radio pulses, negligible intrinsic Faraday rotation compared to the contribution from the medium in front, and their widespread distribution throughout the Galaxy across the thin disk, spiral arms, and extended halo. In this article, we give an overview of Galactic magnetic field investigation using pulsars. The sensitive SKA1 design baseline (AA4) will increase the number of known pulsars by a factor of around three, and the initial staged delivery array (AA*) will probably double the total number of the current pulsar population. Polarization observations of pulsars with the AA* telescopes will give rotation measures along several thousand lines of sight, enabling detailed exploration of the magnetic structure of both the Galactic disk and the Galactic halo.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-18T04:16:42Z</published>
+    <arxiv:comment>10 pages, 6 figures. Published in the Open Journal of Astrophysics</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Jun Xu</name>
+    </author>
+    <author>
+      <name>J. L. Han</name>
+    </author>
+    <author>
+      <name>Weicong Jing</name>
+    </author>
+    <author>
+      <name>The SKA Pulsar Science Working Group</name>
+    </author>
+    <arxiv:doi>10.33232/001c.154248</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.33232/001c.154248" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.13698v1</id>
+    <title>International Trade Flow Prediction with Bilateral Trade Provisions</title>
+    <updated>2024-06-23T22:13:40Z</updated>
+    <link href="https://arxiv.org/abs/2407.13698v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.13698v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a novel methodology for predicting international bilateral trade flows, emphasizing the growing importance of Preferential Trade Agreements (PTAs) in the global trade landscape. Acknowledging the limitations of traditional models like the Gravity Model of Trade, this study introduces a two-stage approach combining explainable machine learning and factorization models. The first stage employs SHAP Explainer for effective variable selection, identifying key provisions in PTAs, while the second stage utilizes Factorization Machine models to analyze the pairwise interaction effects of these provisions on trade flows. By analyzing comprehensive datasets, the paper demonstrates the efficacy of this approach. The findings not only enhance the predictive accuracy of trade flow models but also offer deeper insights into the complex dynamics of international trade, influenced by specific bilateral trade provisions.</summary>
+    <category term="q-fin.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-23T22:13:40Z</published>
+    <arxiv:primary_category term="q-fin.ST"/>
+    <author>
+      <name>Zijie Pan</name>
+    </author>
+    <author>
+      <name>Stepan Gordeev</name>
+    </author>
+    <author>
+      <name>Jiahui Zhao</name>
+    </author>
+    <author>
+      <name>Ziyi Meng</name>
+    </author>
+    <author>
+      <name>Caiwen Ding</name>
+    </author>
+    <author>
+      <name>Sandro Steinbach</name>
+    </author>
+    <author>
+      <name>Dongjin Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.10333v2</id>
+    <title>Zero-shot World Models Are Developmentally Efficient Learners</title>
+    <updated>2026-09-09T06:01:39Z</updated>
+    <link href="https://arxiv.org/abs/2604.10333v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.10333v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Young children demonstrate early abilities to understand their physical world, estimating depth, motion, object coherence, interactions, and many other aspects of physical scene understanding. Children are both data-efficient and flexible cognitive systems, creating competence despite extremely limited training data, while generalizing to myriad untrained tasks -- a major challenge even for today's best AI systems. Here we introduce a novel computational hypothesis for these abilities, the Zero-shot World Model (ZWM). ZWM is based on three principles: a sparse temporally-factored predictor that decouples appearance from dynamics; zero-shot estimation through approximate causal inference; and composition of inferences to build more complex abilities. We show that ZWM can be learned from the first-person experience of a single child, rapidly generating competence across multiple physical understanding benchmarks. It also shows progressive, staged emergence of capacities during learning and builds brain-like internal representations. Our work presents a blueprint for efficient and flexible learning from human-scale data, advancing both a computational account of children's early physical understanding and a path toward data-efficient AI systems.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-11T19:32:33Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Khai Loong Aw</name>
+    </author>
+    <author>
+      <name>Klemen Kotar</name>
+    </author>
+    <author>
+      <name>Wanhee Lee</name>
+    </author>
+    <author>
+      <name>Seungwoo Kim</name>
+    </author>
+    <author>
+      <name>Khaled Jedoui</name>
+    </author>
+    <author>
+      <name>Rahul Venkatesh</name>
+    </author>
+    <author>
+      <name>Lilian Naing Chen</name>
+    </author>
+    <author>
+      <name>Michael C. Frank</name>
+    </author>
+    <author>
+      <name>Daniel L. K. Yamins</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.18728v2</id>
+    <title>Scaling Optimization Over Uncertainty via Compilation</title>
+    <updated>2025-04-10T17:57:26Z</updated>
+    <link href="https://arxiv.org/abs/2502.18728v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.18728v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Probabilistic inference is fundamentally hard, yet many tasks require optimization on top of inference, which is even harder. We present a new optimization-via-compilation strategy to scalably solve a certain class of such problems. In particular, we introduce a new intermediate representation (IR), binary decision diagrams weighted by a novel notion of branch-and-bound semiring, that enables a scalable branch-and-bound based optimization procedure. This IR automatically factorizes problems through program structure and prunes suboptimal values via a straightforward branch-and-bound style algorithm to find optima. Additionally, the IR is naturally amenable to staged compilation, allowing the programmer to query for optima mid-compilation to inform further executions of the program. We showcase the effectiveness and flexibility of the IR by implementing two performant languages that both compile to it: dappl and pineappl. dappl is a functional language that solves maximum expected utility problems with first-class support for rewards, decision making, and conditioning. pineappl is an imperative language that performs exact probabilistic inference with support for nested marginal maximum a posteriori (MMAP) optimization via staging.</summary>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-26T00:45:13Z</published>
+    <arxiv:comment>51 pages, 23 Figures, Accepted to OOPSLA R1</arxiv:comment>
+    <arxiv:primary_category term="cs.PL"/>
+    <author>
+      <name>Minsung Cho</name>
+    </author>
+    <author>
+      <name>John Gouwar</name>
+    </author>
+    <author>
+      <name>Steven Holtzen</name>
+    </author>
+    <arxiv:doi>10.1145/3720500</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3720500" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.11593v1</id>
+    <title>Linear mixed model vs two-stage methods: Developing prognostic models of diabetic kidney disease progression</title>
+    <updated>2022-10-20T21:05:05Z</updated>
+    <link href="https://arxiv.org/abs/2210.11593v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.11593v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Identifying prognostic factors for disease progression is a cornerstone of medical research. Repeated assessments of a marker outcome are often used to evaluate disease progression, and the primary research question is to identify factors associated with the longitudinal trajectory of this marker. Our work is motivated by diabetic kidney disease (DKD), where serial measures of estimated glomerular filtration rate (eGFR) are the longitudinal measure of kidney function, and there is notable interest in identifying factors, such as metabolites, that are prognostic for DKD progression. Linear mixed models (LMM) with serial marker outcomes (e.g., eGFR) are a standard approach for prognostic model development, namely by evaluating the time and prognostic factor (e.g., metabolite) interaction. However, two-stage methods that first estimate individual-specific eGFR slopes, and then use these as outcomes in a regression framework with metabolites as predictors are easy to interpret and implement for applied researchers. Herein, we compared the LMM and two-stage methods, in terms of bias and mean squared error via analytic methods and simulations, allowing for irregularly spaced measures and missingness. Our findings provide novel insights into when two-stage methods are suitable longitudinal prognostic modeling alternatives to the LMM. Notably, our findings generalize to other disease studies.</summary>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.OT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-20T21:05:05Z</published>
+    <arxiv:primary_category term="stat.CO"/>
+    <author>
+      <name>Brian Kwan</name>
+    </author>
+    <author>
+      <name>Lin Liu</name>
+    </author>
+    <author>
+      <name>David Strong</name>
+    </author>
+    <author>
+      <name>H. Irene Su</name>
+    </author>
+    <author>
+      <name>Loki Natarajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.12458v1</id>
+    <title>Expected Shortfall Panel Regression</title>
+    <updated>2026-04-14T08:44:56Z</updated>
+    <link href="https://arxiv.org/abs/2604.12458v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.12458v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Expected Shortfall (ES) is a coherent measure of tail risk that captures the average loss beyond a quantile threshold. Despite the growing literature on ES regression conditional on covariates, no existing work considers ES modeling in panel data settings where both cross-sectional and temporal dependencies are present. This paper introduces the panel ES regression model with a latent factor structure to capture cross-sectional dependence. We develop a two-stage estimation procedure robust to heavy-tailed errors, recovering the conditional quantile in the first stage and iteratively estimating the ES factor model in the second stage. Theoretically, we establish the consistency and asymptotic normality of the proposed two-step ES estimators and derive non-asymptotic error bounds for both the panel quantile and ES estimators. We also provide a non-asymptotic normal approximation for the standardized ES regression estimator, bridging asymptotic theory and finite-sample practice. Simulation evidence shows that the proposed method delivers substantial gains in both parameter estimation and factor recovery, particularly in the presence of latent tail dependence. An empirical application further indicates that the extracted ES factors carry distinct pricing information that is not captured by conventional mean or quantile-based approaches.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-14T08:44:56Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Yujie Hou</name>
+    </author>
+    <author>
+      <name>Xinbing Kong</name>
+    </author>
+    <author>
+      <name>Yalin Wang</name>
+    </author>
+    <author>
+      <name>Bin Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0412416v1</id>
+    <title>Mergers and binary systems of SMBH in the contexts of nuclear activity and galaxy evolution</title>
+    <updated>2004-12-16T12:55:29Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0412416v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0412416v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The dynamic evolution of binary systems of supermassive black holes (SMBH) may be a key factor affecting a large fraction of the observed properties of active galactic nuclei (AGN) and galaxy evolution. Different classes of AGN can be related in general to four evolutionary stages in a binary SMBH: 1) early merger stage; 2) wide pair stage; 3) close pair stage; and 4) pre-coalescence stage. This scheme can explain a variety of properties of AGN: radio and optical luminosity differences between different classes of AGN, long-term and short-term variability, quasi-periodic nuclear flares, recurrent formation of relativistic outflows in AGN and their apparent morphology and kinematics.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-12-16T12:55:29Z</published>
+    <arxiv:comment>2 pages, no figures; to be published in Proceedings of the Conference "Growing Black Holes", Garching, Germany June 21-25, 2004, edited by A.Merloni, S.Nayakshin, R.Sunyaev (Springer-Verlag series of ESO Astrophysics</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>A. P. Lobanov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.22697v1</id>
+    <title>Canonical correlation regression with noisy data</title>
+    <updated>2025-12-27T20:08:15Z</updated>
+    <link href="https://arxiv.org/abs/2512.22697v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.22697v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study instrumental variable regression in data rich environments. The goal is to estimate a linear model from many noisy covariates and many noisy instruments. Our key assumption is that true covariates and true instruments are repetitive, though possibly different in nature; they each reflect a few underlying factors, however those underlying factors may be misaligned. We analyze a family of estimators based on two stage least squares with spectral regularization: canonical correlations between covariates and instruments are learned in the first stage, which are used as regressors in the second stage. As a theoretical contribution, we derive upper and lower bounds on estimation error, proving optimality of the method with noisy data. As a practical contribution, we provide guidance on which types of spectral regularization to use in different regimes.</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-27T20:08:15Z</published>
+    <arxiv:comment>45 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Isaac Meza</name>
+    </author>
+    <author>
+      <name>Rahul Singh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19486v4</id>
+    <title>Exploring Disentangled and Controllable Human Image Synthesis: From End-to-End to Stage-by-Stage</title>
+    <updated>2026-03-20T09:03:53Z</updated>
+    <link href="https://arxiv.org/abs/2503.19486v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19486v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Achieving fine-grained controllability in human image synthesis is a long-standing challenge in computer vision. Existing methods primarily focus on either facial synthesis or near-frontal body generation, with limited ability to simultaneously control key factors such as viewpoint, pose, clothing, and identity in a disentangled manner. In this paper, we introduce a new disentangled and controllable human synthesis task, which explicitly separates and manipulates these four factors within a unified framework. We first develop an end-to-end generative model trained on MVHumanNet for factor disentanglement. However, the domain gap between MVHumanNet and in-the-wild data produces unsatisfactory results, motivating the exploration of virtual try-on (VTON) dataset as a potential solution. Through experiments, we observe that simply incorporating the VTON dataset as additional data to train the end-to-end model degrades performance, primarily due to the inconsistency in data forms between the two datasets, which disrupts the disentanglement process. To better leverage both datasets, we propose a stage-by-stage framework that decomposes human image generation into three sequential steps: clothed A-pose generation, back-view synthesis, and pose and view control. This structured pipeline enables better dataset utilization at different stages, significantly improving controllability and generalization, especially for in-the-wild scenarios. Extensive experiments demonstrate that our stage-by-stage approach outperforms end-to-end models in both visual fidelity and disentanglement quality, offering a scalable solution for real-world tasks. Additional demos are available on the project page: https://taited.github.io/discohuman-project/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T09:23:20Z</published>
+    <arxiv:comment>A new version with additional experiments</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhengwentai Sun</name>
+    </author>
+    <author>
+      <name>Chenghong Li</name>
+    </author>
+    <author>
+      <name>Hongjie Liao</name>
+    </author>
+    <author>
+      <name>Xihe Yang</name>
+    </author>
+    <author>
+      <name>Keru Zheng</name>
+    </author>
+    <author>
+      <name>Heyuan Li</name>
+    </author>
+    <author>
+      <name>Yihao Zhi</name>
+    </author>
+    <author>
+      <name>Shuliang Ning</name>
+    </author>
+    <author>
+      <name>Shuguang Cui</name>
+    </author>
+    <author>
+      <name>Xiaoguang Han</name>
+    </author>
+  </entry>
+</feed>

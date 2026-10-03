@@ -1,0 +1,758 @@
+arXiv:1103.1493v1 [math.NT] 8 Mar 2011
+
+AN IMPROVEMENT TO THE NUMBER FIELD
+SIEVE
+Qizhi Zhang
+November 10, 2018
+Abstract
+We improve the “sieve” part of the number field sieve used in factoring integer
+and computing discrete logarithm. The runtime of our method is shorter than that
+of existing methods. Under some reasonable assumptions, we prove that it is less
+than two-thirds of the running time of the algorithm used before asymptotically with
+probability greater than 0.6.
+
+1
+
+Introduction
+
+General number field sieve is used in factoring integer or computing the discrete logarithm.
+See, for example, [1] [2] [3]. There are two time consuming parts mainly in the number field
+sieve. Namely, the part “sieving”, and the part “solving the linear equations”. The two parts
+are relatively independent and have the computational complexity in same order. In [4], the
+authors improved the step “solving the linear equations” for discrete logarithm problem. In
+this paper, we improve the step “sieve”. Our improvement work for both factoring integer
+and computing the discrete logarithm. The running time of our algorithm is less than the
+one in [5] [6] asymptotically. Under some reasonable assumptions, it is less than 23 of the
+running time of the algorithm used in [5] [6] asymptotically with probability greater than
+0.6.
+In section 2, we give the formulation of the problem which we want to solve, and describe
+the algorithm used before. In section 3, we describe our algorithm. In section 4, we prove
+that our algorithm is better than the algorithm used before.
+
+2
+
+The problem and conventional algorithm
+
+Let us consider the following problem:
+Problem 2.1. Let f (x) be a monic polynomial of degree d with integer coefficient that
+bounded by an integer m and K be an algebraic number field isomorphic to Q[x]/(f (x)). Let
+θ be the image of x in K and N m : K × −→ Q× be the norm map. Let u be a positive
+integer. We construct a table T = {T (b, a)}0<b≤u,|a|≤u of u lines and 2u + 1 cows with
+
+0
+if (a, b) = 1;
+T (b, a) =
+(a − bm)N m(a − bθ) if (a, b) 6= 1.
+1
+
+Let y be a positive real number called ”the smooth bound”. For every element in the table,
+we wish to divide out all of its divisors of the form le for all primes l bounded by y.
+The most trivial algorithm is the following:
+Algorithm 1 Sieve
+1: for prime 0 < l ≤ y, integer |a| ≤ u, 0 < b ≤ u, such that T (b, a) 6= 0 do
+2:
+while l|T (b, a) do
+3:
+T (b, a) ← T (b, a)/l
+4:
+end while
+5: end for
+The following improved algorithm is widely used in integer factoring algorithms (see [1],
+[6])or algorithms of solving the discrete logarithm problem (see [2] [3] [5]).
+Algorithm 2 Sieve
+1: for prime l ∈ (0, y] do
+2:
+ǫl ← m mod l ∈ {0, 1, · · · , l − 1}
+3:
+El ← {x ∈ {0, 1, · · · , l − 1} : f (x) ≡ 0 mod l}
+4: end for
+5: for integer b ∈ (0, u] do
+6:
+for prime l ∈ (0, y], l ∤ b do
+7:
+for a ∈ [−u, u] ∩ (bǫl + lZ) do
+8:
+while l | T (b, a) do
+9:
+T (b, a) ← T (b, a)/l
+10:
+end while
+11:
+end for
+12:
+for a ∈ [−u, u] ∩ (bEl + lZ) do
+13:
+while l | T (b, a) do
+14:
+T (b, a) ← T (b, a)/l
+15:
+end while
+16:
+end for
+17:
+end for
+18: end for
+In Algorithm 2, we do not try to divide all the elements in the table by l more, but
+divide those divisible by l we know. Then we divide the quotient by l continually as long as
+it is divisible by l. Roughly speaking, for every b, l, we solve the equations
+a − bm ≡ 0
+
+mod l
+
+or N m(a − bθ) ≡ 0 mod l
+
+of variable a, and then sieve.
+
+3
+
+Our algorithm
+
+There is unnecessary computing still in algorithm 2. In fact, we can almost know which
+T (b, a) can be divided by l again, after it divided by l first. Roughly speaking, for every b, l,
+we can almost can solve the equations
+a − bm ≡ 0
+
+mod lk
+
+or N m(a − bθ) ≡ 0 mod lk
+2
+
+of variable a, for any k, and then sieve. Our new algorithm consists of 3 parts.
+(1)
+
+First, we divide out all l-power divisors caused by the term (a − bm): Let ǫl be the
+residue for m module l. We divide T (b, a) by l and write the quotient in T (b, a) for all
+(2)
+(1)
+a ∈ [−u, u] ∩ (bǫl + lZ). Let ǫl be the residue for m module l2 . We divide T (b, a) by l
+(2)
+and write the quotient in T (b, a) for all a ∈ [−u, u] ∩ (bǫl + l2 Z). · · ·
+Second, we divide out all the l-power divisors caused by the term N m(a − bθ), for
+all a, b such that b ∈ (0, u] is coprime to l, and a mod l is a single root of the equation
+(1)
+N m(a − bθ) ≡ 0 mod l. By lemma 3.1 below we can do this as follows: Let El ⊂
+{0, 1, · · · l − 1} be the set of single roots of the equation f (x) module l. We can directly
+(1)
+compute El by solve equation. We divide T (b, a) by l and write the quotient in T (b, a) for
+(1)
+(2)
+all a ∈ [−u, u] ∩ (bEl + lZ). Let El ⊂ {0, 1, · · · l2 − 1} be the set of single roots of the
+(2)
+(1)
+equation f (x) module l2 . We can directly compute El from El by Newton’s method.
+(2)
+We divide T (b, a) by l and write the quotient in T (b, a) for all a ∈ [−u, u] ∩ (bEl + l2 Z).
+···
+Finally, we divide out all the l-power divisors caused by the term N m(a − bθ), for all
+a, b such that b ∈ (0, u] is coprime to l, and a mod l is a multiple root of the equation
+N m(a − bθ) ≡ 0 mod l. By lemma 3.1 and lemma 3.2 below we can do this as follows: Let
+(1)
+Ẽl ⊂ {0, 1, · · · l − 1} be the set of multiple roots of the equation f (x) module l, we can
+(1)
+directly compute Ẽl by solving the equation. We divide T (b, a) by l and write the quotient
+(1)
+in T (b, a) for all a ∈ [−u, u] ∩ (bẼl + lZ). Lemma 3.2 below tells us that whether a root of
+f (x) ≡ 0 mod l can be lifted to a root of f (x) ≡ 0 mod l2 is only dependent on its residue
+(2)
+(1)
+class module l. Let Ẽl be the subset of Ẽl whose elements can be lifted to solutions
+(2)
+(1)
+of f (x) ≡ 0 mod l2 . We can compute Ẽl by ♯Ẽl ’s tests. Then we divide T (b, a) by l
+(2)
+and write the quotient in T (b, a) for all a ∈ [−u, u] ∩ (bẼl + lZ) one after another until
+l ∤ T (b, a).
+Now we give statements and proofs of lemma3.1 and lemma 3.2 mentioned above.
+Lemma 3.1. If l ∤ b, there is a bijective
+{x ∈ Z/le Z; f (x) ≡ 0
+x
+
+mod le } −→ {a ∈ Z/le Z; N m(a − bθ) ≡ 0
+7→
+bx
+
+mod le }
+
+for all e > 0. Moreover, in the situation e = 1, the images of simple roots are simple, and
+the image of multiple roots are multiple.
+Proof. It is because
+a
+a
+N m(a − bθ) = (−b)d N m( − θ) = (−b)d f ( )
+b
+b
+
+Lemma 3.2. Let x, y be two integers and f be a polynomial over Z. Assume x ≡ y mod l
+is a multiple root of f (x) ≡ 0 mod l. Then x mod l2 is a root of f (x) ≡ 0 mod l2 if and
+only if y mod l2 is a root of f (x) ≡ 0 mod l2 .
+Proof. Let y = x + kl where k ∈ Z. If x mod l2 is a root of f (x) ≡ 0 mod l2 , we have
+f (y) ∈ f (x) + f ′ (x)kl + l2 Z
+3
+
+by Taylor expansion. On the other hand, we know f ′ (x) ≡ 0 mod l. Therefore
+f (y) ∈ f (x) + l2 Z
+
+
+4
+
+Complexity analysis
+
+We will compare the computational complexity of Algorithm 2 and Algorithm 3 . Considering the practical situation, we make the assumption that y ≤ Ku for some constant
+K.
+For (l, b) = 1, e > 0, Let
+Ab,s
+l := {|a| ≤ u; (a, b) = 1, a is a single root of N m(a − bθ) ≡ 0 mod l}
+Ab,m
+:= {|a| ≤ u; (a, b) = 1, a is a multiple root of N m(a − bθ) ≡ 0 mod l}
+l
+b,s
+e
+Ab,s
+le := {a ∈ Al ; N m(a − bθ) ≡ 0 mod l }
+b,m
+b,m
+Ale := {a ∈ Al ; N m(a − bθ) ≡ 0 mod le }
+Able := {|a| ≤ u; (a, b) = 1, N m(a − bθ) ≡ 0 mod le }
+Blbe := {|a| ≤ u; (a, b) = 1, a − bm ≡ 0 mod le }
+In Algorithm 2, the complexity of line 1 –line 4 is an infinitesimal of the complexity of
+line 5–line18 as u → ∞. From line 5, the complexity of sieving the elements in the b-th line
+of the table by prime l is
+Clb = ♯Blb
++♯Blb
++♯Blb2
++♯Blb3
++···
++♯Abl
++♯Abl
++♯Abl2
++♯Abl3
++···
+= ♯Blb + ♯Blb + ♯Blb2 + ♯Blb3 + · · ·
+b,s
+b,s
+b,s
++♯Ab,s
+l + ♯Al + ♯Al2 + ♯Al3 + · · ·
+b,m
++♯Ab,m
++ ♯Ab,m
++ ♯Ab,m
+l
+l
+l2 + ♯Al3 + · · ·
+1
+1
+b
+= ♯Bl (1 + 1 + l + l2 + · · · )
+1
+1
++♯Ab,s
+l (1 + 1 + l + l2 + · · · )
+b,m
+b,m
+b,m
++♯Al + ♯Al + ♯Ab,m
+l2 + ♯Al3 + · · ·
+b,s
+2l−1
+b
+= 2l−1
+l−1 ♯Bl + l−1 ♯Al
+b,m
+b,m
++2♯Al + ♯Al2 + ♯Ab,m
+l3 + · · ·
+
+(T (b, a) ← T (b, a)/l for a ∈ Blb )
+( try to divide T (b, a) by l for a ∈ Blb again )
+( try to divide T (b, a) by l for a ∈ Blb2 )
+( try to divide T (b, a) by l for a ∈ Blb3 )
+( try to divide T (b, a) by l for a ∈ Abl )
+( try to divide T (b, a) by l for a ∈ Abl again)
+( try to divide T (b, a) by l for a ∈ Abl2 )
+( try to divide T (b, a) by l for a ∈ Abl3 )
+
+Therefore the total complexity of Algorithm 2 is
+P
+P
+(1 + o(1)) integer b∈[1,u] prime l∈[2,y],l∤b Clb
+
+as u → ∞
+
+In the first part of Algorithm 3, the complexity of line 2–line 6 is an infinitesimal of the
+4
+
+Algorithm 3 sieve
+1: (First)
+2: for prime l ∈ (0, y] do
+3:
+for e = 1, 2, · · · logl [u(m + 1)] do
+(e)
+4:
+ǫl ← m mod le ∈ {0, 1, · · · , le − 1}
+5:
+end for
+6: end for
+7: for integer b ∈ (0, u] do
+8:
+for prime l ∈ (0, y], l ∤ b do
+9:
+for e = 1, 2, · · · logl [u(m + 1)] do
+(e)
+10:
+for a ∈ [−u, u] ∩ (bǫl + le Z) do
+11:
+T (b, a) → T (b, a)/l
+12:
+end for
+13:
+end for
+14:
+end for
+15: end for
+16: (Second)
+17: for prime l ∈ (0, y] do
+18:
+for e = 1, 2, · · · logl [m(d + 1)ud ] do
+(e)
+19:
+El ← {x = 0, 1, · · · le − 1 : x is a single root of f (x) ≡ 0 mod le }
+20:
+end for
+21: end for
+22: for integer b ∈ (0, u] do
+23:
+for prime l ∈ (0, y], l ∤ b do
+24:
+for e = 1, 2, · · · logl [m(d + 1)ud ] do
+(e)
+25:
+for a ∈ [−u, u] ∩ (bEl + le Z) do
+26:
+T (b, a) ← T (b, a)/l
+27:
+end for
+28:
+end for
+29:
+end for
+30: end for
+31: (Finally)
+32: for prime l ∈ (0, y] do
+(1)
+33:
+Ẽl ← {x = 0, 1, · · · l − 1 : x is a multiple root of f (x) ≡ 0 mod l}
+(2)
+(1)
+34:
+Ẽl ← {x ∈ Ẽl : f (x) ≡ 0 mod l2 }
+35: end for
+36: for integer b ∈ (0, u] do
+37:
+for prime l ∈ (0, y], l ∤ b do
+(1)
+38:
+for a ∈ [−u, u] ∩ (bẼl + lZ) do
+39:
+T (b, a) ← T (b, a)/l
+40:
+end for
+(2)
+41:
+for a ∈ [−u, u] ∩ (bẼl + lZ) do
+42:
+while l | T (b, a) do
+43:
+T (b, a) ← T (b, a)/l
+44:
+end while
+45:
+end for
+46:
+end for
+47: end for
+
+5
+
+complexity of line 7–line 15 as u → ∞. The latter is
+=
+=
+
+♯Blb + ♯Blb2 + ♯Blb3 + · · ·
+♯Blb (1 + 1l + l12 )
+l
+b
+l−1 ♯Bl
+
+The complexity of line 17–line 21 is an infinitesimal of the complexity of line 22–line 30 as
+u → ∞. The latter is
+b,s
+b,s
+♯Ab,s
+l + ♯Al2 + ♯Al3 + · · ·
+b,s
+= ♯Al (1 + 1l + l12 )
+l
+♯Ab,s
+= l−1
+l
+The complexity of line 32–line 35 is an infinitesimal of the complexity of line 36–line 47 as
+u → ∞. The latter is
+b,m
+♯Ab,m
++ ♯Ab,m
+l
+l2 + ♯Al3 + · · ·
+Therefore the total complexity of Algorithm 3 is
+X
+X
+(1 + o(1))
+Dlb
+integer b∈[1,u] prime l∈[2,y],l∤b
+where
+Dlb =
+
+as u → ∞,
+
+l
+l
+b,m
+♯B b +
+♯Ab,s + ♯Ab,m
++ ♯Ab,m
+l
+l2 + ♯Al3 + · · ·
+l−1 l
+l−1 l
+
+It is easy to see that the complexity of Algorithm 3 is less than the complexity of
+Algorithm 2 gradually. Moreover, if for any (l, b) = 1, we have ♯Ab,m
+l2 = 0 and then we have
+Dlb < 32 Clb , because
+2
+2l−1
+l
+b
+b
+for any (l, b) = 1
+l−1 ♯Bl ≤ 3 × l−1 ♯Bl
+b,s
+b,s
+l
+2
+2l−1
+♯A
+≤
+×
+♯A
+for any (l, b) = 1
+l
+l
+l−1
+3
+l−1
+b,m
+b,m
+2
+♯Al < 3 × 2♯Al
+for any (l, b) = 1
+♯Ab,m
+=
+0
+for
+any
+(l,
+b) = 1 and all e > 1
+e
+l
+
+Therefore we get
+Proposition 4.1. Let K > 0 be a constant. Let u → ∞ and y < Ku. Then the complexity
+of Algorithm 3 is less than the complexity of Algorithm 2 asymptotically. Moreover, if for
+any (l, b) = 1 we have ♯Ab,m
+= 0, then the complexity of Algorithm 3 is less than 32 of the
+l2
+complexity of Algorithm 2 asymptotically.
+
+The following proposition tolls us that the condition ”for any (b, l) = 1, ♯Ab,m
+= 0” has
+l2
+much chance to be realized.
+Proposition 4.2. Suppose f (x) is a random polynomial of degree d over Z such that f (x)
+mod l2 is uniform distribution on {h(x) ∈ Z/l2 Z[x]; deg h ≤ d} for all prime l ≤ y, and
+{Rl = φ}prime l≤y are independent random events, where Rl := {x ∈ Z/l2 Z; f (x) ≡ 0
+mod l2 , x is a multiple root of f (x) ≡ 0 mod l} for any prime l ≤ y. Then the probability
+of event (♯Ab,m
+l2 = 0, for any b ∈ (0, u], prime l ≤ y, s.t (l, b) = 1) is greater than 0.6.
+Proof. For any prime l, we have
+=
+≤
+
+P (♯Rl 6= 0)
+P (∃ i = 0, 1, · · · l − 1,
+Pl−1
+i=0 P (i ∈ Rl )
+
+s.t. i ∈ Rl ) (lemma 3.2)
+
+6
+
+For any i = 0, 1, · · · l − 1, the asuumption that f (x) mod l2 is uniform distribution on
+{h(x) ∈ Z/l2 Z[x]; deg h ≤ d} and lemma 4.3 below show
+1
+l3
+i.e. P (i ∈ Rl ) = l13 . Hence P (♯Rl 6= 0) ≤ l12 . The assumption that {Rl = φ}prime l≤y are
+independent random events implies
+P
+P ( prime l≤y ♯Rl = 0)
+Q
+=
+P (♯Rl = 0)
+Qprime l≤y
+=
+(1
+− l12 )
+Qprime l≤y
+1
+>
+l: prime (1 − l2 )
+= 1/ζ(2) > 0.6,
+P (f (i) ≡ 0
+
+mod l2 ,
+
+f ′ (i) ≡ 0
+
+mod l) =
+
+where ζ(s) is the Riemann’s Zeta function.
+Let Rlb := {a ∈ Z/l2 Z; N m(a − bθ) ≡ 0 mod l2 , a is a multiple root of N m(a − bθ) ≡ 0
+mod l}. From lemma 3.1, we know
+♯Rlb = ♯Rl
+
+for all (b, l) = 1
+
+Therefore
+≥
+=
+
+P (♯Ab,m
+l2 = 0, for any b ∈ (0, u], prime l ≤ y, s.t (l, b) = 1)
+P (♯Rlb = 0, for any b ∈ (0, u], prime l ≤ y, s.t (l, b) = 1)
+P (♯Rl = 0, for any prime l ≤ y) > 0.6
+
+
+Now we give the statement and proof of lemma 4.3 mentioned above.
+Lemma 4.3. Let l be a prime and d be a positive integer. For any i ∈ Z/l2 Z, we have
+P (h(i) ≡ 0
+
+mod l2 , h′ (i) ≡ 0
+
+mod l | h(x) ∈ Z/l2 Z[x], deg h = d, monic) =
+
+1
+l3
+
+Proof.Consider the surjective homomorphism of abelian group
+{h(x) ∈ Z/l2 Z[x]; deg h ≤ d} −→ Z/l2 Z ⊕ Z/lZ
+h(x)
+7→ (h(i) mod l2 , h′ (i) mod l).
+We have
+P (h(i) ≡ 0
+
+mod l2 , h′ (i) ≡ 0
+
+mod l | h(x) ∈ Z/l2 Z[x], deg h ≤ d) =
+
+1
+.
+l3
+
+Similarly, we have
+P (h(i) ≡ 0 mod l2 , h′ (i) ≡ 0 mod l | h(x) ∈ Z/l2 Z[x], deg h ≤ d − 1) =
+Let
+H := {h ∈ Z/l2 Z[x]; deg f ≤ d}
+H 0 := {h ∈ H; h(i) ≡ 0 mod l2 , h′ (i) ≡ 0 mod l}
+HlZ := {h ∈ H; the leading coefficient of h is in lZ}
+0
+HlZ
+:= H 0 ∩ HlZ
+Hc := {h ∈ H; the leading coefficient of h is c} for any c ∈ Z/l2 Z
+Hc0 := Hc ∩ H 0 for any c ∈ Z/l2 Z
+7
+
+1
+.
+l3
+
+It is easy to see that
+H0 = {h ∈ Z/l2 Z[x]; deg g ≤ d − 1}
+H00 = {h ∈ H0 ; h(i) ≡ 0 mod l2 , h′ (i) ≡ 0 mod l}
+Hence, we have
+P (h ∈ H00 | h ∈ H0 ) = P (h ∈ H 0 | h ∈ H) =
+
+1
+l3
+
+Let us consider the commutative diagram of abelian groups
+0
+
+/ H0
+ _lZ
+
+/ H 0
+_
+
+/ Z/l2 Z
+
+0
+
+
+/ HlZ
+
+
+/H
+
+
+/ Z/l2 Z
+
+/0
+
+id
+
+/0
+
+where the map from H to Z/l2 Z is defined by h 7→ ( the leading coefficient of h). The
+vertical map in the right side is an identity, hence we have
+0
+P (h ∈ HlZ
+| h ∈ HlZ ) = P (h ∈ H 0 | h ∈ H) =
+
+1
+l3
+
+On the other hand,
+=
+=
+=
+=
+Hence we have
+
+P (h ∈ H 0 | h ∈ HlZ )
+Pl−1 lZ
+0
+c=0 P (h ∈ HlZ | h ∈ Hcl )P (h ∈ Hcl | h ∈ HlZ )
+Pl−1
+0
+cl )P (h ∈ Hcl | h ∈ HlZ )
+c=0 P (h ∈ Hcl | h ∈ H
+P
+l−1
+[P (h ∈ H00 | h ∈ H0 ) + c=1 ] × 1l
+P
+l−1
+1 1
+0
+c=1 P (h ∈ Hcl | h ∈ Hcl )]
+l [ l3 +
+l−1
+X
+
+0
+P (h ∈ Hcl
+| h ∈ Hcl ) =
+
+c=1
+
+l−1
+l3
+
+For any c ∈ (Z/l2 Z)× , we have a commutative diagram of sets
+H 10
+_
+
+H1
+
+∼
+
+∼
+
+/ H0
+ _c
+
+/ Hc
+
+where the horizontal map is defined by h 7→ ch. Hence we have
+P (h ∈ H10 | h ∈ H1 ) = P (h ∈ Hc0 | h ∈ Hc )
+
+for any c ∈ (Z/l2 Z)×
+
+Therefore
+1
+l3 =
+
+=
+=
+=
+=
+
+0
+P
+P(h ∈ H | h ∈ H)0
+P (h ∈ H | h ∈ Hc )P (h ∈ Hc | H)
+Pc∈Z/l2 Z
+0
+P
+2
+c∈Z/l Z (h ∈ Hc | h ∈ Hc )P (Hc | H)
+P
+Pl−1
+0
+[P (h ∈ H00 | h ∈ H0 ) + c=1 P (h ∈ Hcl
+| h ∈ Hcl ) + c∈(Z/l2 Z)× P (h ∈ Hc0 | h ∈ Hc )] × l12
+1
+2
+0
+[ l13 + l−1
+l3 + (l − l)P (h ∈ H1 | h ∈ H1 )] × l2
+
+8
+
+Hence we have
+P (h ∈ H10 | h ∈ H1 ) =
+
+1
+l3
+
+
+Finally, from proposition 4.1 and proposition 4.2, we get the main conclusion of this
+paper:
+Proposition 4.4. Let K > 0 be a constant. Let u → ∞ and y < Ku, then the complexity
+of Algorithm 3 is less than the complexity of Algorithm 2 asymptotically. Moreover, suppose
+f (x) is a random polynomial of degree d over Z such that f (x) mod l2 is uniform distribution on {h(x) ∈ Z/l2 Z[x]; deg h ≤ d} for all prime l ≤ y, and {Rl = φ}prime l≤y are independent random events, where Rl := {x ∈ Z/l2 Z; f (x) ≡ 0 mod l2 , x is a multiple root of f (x) ≡
+0 mod l} for any prime l ≤ y, then the complexity of Algorithm 3 is less than 23 of the complexity of Algorithm 2 asymptotically with probability greater than 0.6.
+
+Acknowledgement. I would like to thank professor Takeshi Saito, who gave me much
+valuable advice.
+
+References
+[1] J.P. Buhler, H.W. Lenstra, Jr., C. Pomerance, Factoring Integers with the Number
+Field Sieve, in A.K. Lenstra and H.W. Lenstra, Jr. (eds), The Development of the
+Number Field Sieve, Lecture Notes in Mathematics 1554, Springer-Verlag, New York,
+1993, pp. 50-94
+[2] D. M. Gordon, ”Discrete logarithms in GF(p) using the number field sieve”, SIAM J.
+Discrete Math. 6:1 (1993), 124-138
+[3] O. Schirokauer, Discrete logarithms and local units. Philos. Trans. Roy. Soc. London
+Ser. A, vol. 345, The Royal Society, London, 1993, pp. 409-423.
+[4] A. Joux, R. Lercier, Improvements to the general number field sieve for discrete logarithms in prime fields. A comparison with the Gaussian integer method. Math. Comp.
+72 (2003), no. 242, 953967 (electronic).
+[5] O. Schirokauer, The impact of the number field sieve on the discrete logarithm problem
+in finite fields. Algorithmic number theory: lattices, number fields, curves and cryptography, 397420, Math. Sci. Res. Inst. Publ., 44, Cambridge Univ. Press, Cambridge,
+2008.
+[6] P. Stevenhagen, The number field sieve. Algorithmic number theory: lattices, number
+fields, curves and cryptography, 83100, Math. Sci. Res. Inst. Publ., 44, Cambridge Univ.
+Press, Cambridge, 2008.
+
+9
+
+

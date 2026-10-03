@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/0f4I3QhgOtyDqdHCYGxGyN19/60</id>
+  <title>arXiv Query: search_query=au:"Zalka" AND ti:"prime factorization"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-03T18:32:47Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Zalka%22+AND+ti:%22prime+factorization%22&amp;start=0&amp;max_results=10&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>0</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+</feed>

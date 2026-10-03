@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/zGsTt8oTnrGqtS80uuJhI/tL1+4</id>
+  <title>arXiv Query: search_query=abs:"Sherman" AND abs:"sieve"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:08:54Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Sherman%22+AND+abs:%22sieve%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2110.04388v2</id>
+    <title>Estimating High Dimensional Monotone Index Models by Iterative Convex Optimization1</title>
+    <updated>2023-02-21T00:49:32Z</updated>
+    <link href="https://arxiv.org/abs/2110.04388v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.04388v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we propose new approaches to estimating large dimensional monotone index models. This class of models has been popular in the applied and theoretical econometrics literatures as it includes discrete choice, nonparametric transformation, and duration models. A main advantage of our approach is computational. For instance, rank estimation procedures such as those proposed in Han (1987) and Cavanagh and Sherman (1998) that optimize a nonsmooth, non convex objective function are difficult to use with more than a few regressors and so limits their use in with economic data sets. For such monotone index models with increasing dimension, we propose to use a new class of estimators based on batched gradient descent (BGD) involving nonparametric methods such as kernel estimation or sieve estimation, and study their asymptotic properties. The BGD algorithm uses an iterative procedure where the key step exploits a strictly convex objective function, resulting in computational advantages. A contribution of our approach is that our model is large dimensional and semiparametric and so does not require the use of parametric distributional assumptions.</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-08T21:43:00Z</published>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Shakeeb Khan</name>
+    </author>
+    <author>
+      <name>Xiaoying Lan</name>
+    </author>
+    <author>
+      <name>Elie Tamer</name>
+    </author>
+    <author>
+      <name>Qingsong Yao</name>
+    </author>
+  </entry>
+</feed>

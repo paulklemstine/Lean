@@ -1,0 +1,862 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/wVpwyzUeSag4KPmw/pQKH7zCagY</id>
+  <title>arXiv Query: search_query=au:"Nitin Saxena"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T18:24:14Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Nitin+Saxena%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>35</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0703236v1</id>
+    <title>Parameters of Integral Circulant Graphs and Periodic Quantum Dynamics</title>
+    <updated>2007-03-26T09:37:12Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0703236v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0703236v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The intention of the paper is to move a step towards a classification of network topologies that exhibit periodic quantum dynamics. We show that the evolution of a quantum system, whose hamiltonian is identical to the adjacency matrix of a circulant graph, is periodic if and only if all eigenvalues of the graph are integers (that is, the graph is integral). Motivated by this observation, we focus on relevant properties of integral circulant graphs. Specifically, we bound the number of vertices of integral circulant graphs in terms of their degree, characterize bipartiteness and give exact bounds for their diameter. Additionally, we prove that circulant graphs with odd order do not allow perfect state transfer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-03-26T09:37:12Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Simone Severini</name>
+    </author>
+    <author>
+      <name>Igor Shparlinski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.1974v1</id>
+    <title>Schemes for Deterministic Polynomial Factoring</title>
+    <updated>2008-04-11T23:04:17Z</updated>
+    <link href="https://arxiv.org/abs/0804.1974v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.1974v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work we relate the deterministic complexity of factoring polynomials (over finite fields) to certain combinatorial objects we call m-schemes. We extend the known conditional deterministic subexponential time polynomial factoring algorithm for finite fields to get an underlying m-scheme. We demonstrate how the properties of m-schemes relate to improvements in the deterministic complexity of factoring polynomials over finite fields assuming the generalized Riemann Hypothesis (GRH). In particular, we give the first deterministic polynomial time algorithm (assuming GRH) to find a nontrivial factor of a polynomial of prime degree n where (n-1) is a smooth number.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-11T23:04:17Z</published>
+    <arxiv:comment>14 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0811.3161v1</id>
+    <title>An Almost Optimal Rank Bound for Depth-3 Identities</title>
+    <updated>2008-11-19T17:41:06Z</updated>
+    <link href="https://arxiv.org/abs/0811.3161v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0811.3161v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that the rank of a depth-3 circuit (over any field) that is simple, minimal and zero is at most k^3\log d. The previous best rank bound known was 2^{O(k^2)}(\log d)^{k-2} by Dvir and Shpilka (STOC 2005). This almost resolves the rank question first posed by Dvir and Shpilka (as we also provide a simple and minimal identity of rank Ω(k\log d)).
+  Our rank bound significantly improves (dependence on k exponentially reduced) the best known deterministic black-box identity tests for depth-3 circuits by Karnin and Shpilka (CCC 2008). Our techniques also shed light on the factorization pattern of nonzero depth-3 circuits, most strikingly: the rank of linear factors of a simple, minimal and nonzero depth-3 circuit (over any field) is at most k^3\log d.
+  The novel feature of this work is a new notion of maps between sets of linear forms, called "ideal matchings", used to study depth-3 circuits. We prove interesting structural results about depth-3 identities using these techniques. We believe that these can lead to the goal of a deterministic polynomial time identity test for these circuits.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-11-19T17:41:06Z</published>
+    <arxiv:comment>25 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>C. Seshadhri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0811.3165v2</id>
+    <title>Trading GRH for algebra: algorithms for factoring polynomials and related structures</title>
+    <updated>2009-02-08T17:14:49Z</updated>
+    <link href="https://arxiv.org/abs/0811.3165v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0811.3165v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper we develop techniques that eliminate the need of the Generalized Riemann Hypothesis (GRH) from various (almost all) known results about deterministic polynomial factoring over finite fields. Our main result shows that given a polynomial f(x) of degree n over a finite field k, we can find in deterministic poly(n^{\log n},\log |k|) time "either" a nontrivial factor of f(x) "or" a nontrivial automorphism of k[x]/(f(x)) of order n. This main tool leads to various new GRH-free results, most striking of which are:
+  (1) Given a noncommutative algebra over a finite field, we can find a zero divisor in deterministic subexponential time.
+  (2) Given a positive integer r such that either 8|r or r has at least two distinct odd prime factors. There is a deterministic polynomial time algorithm to find a nontrivial factor of the r-th cyclotomic polynomial over a finite field.
+  In this paper, following the seminal work of Lenstra (1991) on constructing isomorphisms between finite fields, we further generalize classical Galois theory constructs like cyclotomic extensions, Kummer extensions, Teichmuller subgroups, to the case of commutative semisimple algebras with automorphisms. These generalized constructs help eliminate the dependence on GRH.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-11-19T17:57:25Z</published>
+    <arxiv:comment>35 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Lajos Rónyai</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0904.2058v1</id>
+    <title>The Power of Depth 2 Circuits over Algebras</title>
+    <updated>2009-04-14T06:36:37Z</updated>
+    <link href="https://arxiv.org/abs/0904.2058v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0904.2058v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the problem of polynomial identity testing (PIT) for depth 2 arithmetic circuits over matrix algebra. We show that identity testing of depth 3 (Sigma-Pi-Sigma) arithmetic circuits over a field F is polynomial time equivalent to identity testing of depth 2 (Pi-Sigma) arithmetic circuits over U_2(F), the algebra of upper-triangular 2 x 2 matrices with entries from F. Such a connection is a bit surprising since we also show that, as computational models, Pi-Sigma circuits over U_2(F) are strictly `weaker' than Sigma-Pi-Sigma circuits over F.
+  The equivalence further shows that PIT of depth 3 arithmetic circuits reduces to PIT of width-2 planar commutative Algebraic Branching Programs (ABP). Thus, identity testing for commutative ABPs is interesting even in the case of width-2.
+  Further, we give a deterministic polynomial time identity testing algorithm for a Pi-Sigma circuit over any constant dimensional commutative algebra over F. While over commutative algebras of polynomial dimension, identity testing is at least as hard as that of Sigma-Pi-Sigma circuits over F.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-04-14T06:36:37Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Chandan Saha</name>
+    </author>
+    <author>
+      <name>Ramprasad Saptharishi</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0907.0774v2</id>
+    <title>Deterministic Polynomial Time Algorithms for Matrix Completion Problems</title>
+    <updated>2009-12-26T01:17:38Z</updated>
+    <link href="https://arxiv.org/abs/0907.0774v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0907.0774v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present new deterministic algorithms for several cases of the maximum rank matrix completion problem (for short matrix completion), i.e. the problem of assigning values to the variables in a given symbolic matrix as to maximize the resulting matrix rank. Matrix completion belongs to the fundamental problems in computational complexity with numerous important algorithmic applications, among others, in computing dynamic transitive closures or multicast network codings (Harvey et al SODA 2005, Harvey et al SODA 2006).
+  We design efficient deterministic algorithms for common generalizations of the results of Lovasz and Geelen on this problem by allowing linear functions in the entries of the input matrix such that the submatrices corresponding to each variable have rank one. We present also a deterministic polynomial time algorithm for finding the minimal number of generators of a given module structure given by matrices. We establish further several hardness results related to matrix algebras and modules. As a result we connect the classical problem of polynomial identity testing with checking surjectivity (or injectivity) between two given modules. One of the elements of our algorithm is a construction of a greedy algorithm for finding a maximum rank element in the more general setting of the problem. The proof methods used in this paper could be also of independent interest.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-07-04T17:10:33Z</published>
+    <arxiv:comment>14 pages, preliminary</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>LMS J. of Computation and Mathematics 17 (2014)</arxiv:journal_ref>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157013000296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157013000296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1002.0145v2</id>
+    <title>From Sylvester-Gallai Configurations to Rank Bounds: Improved Black-box Identity Test for Depth-3 Circuits</title>
+    <updated>2010-02-09T00:35:59Z</updated>
+    <link href="https://arxiv.org/abs/1002.0145v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1002.0145v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the problem of identity testing for depth-3 circuits of top fanin k and degree d. We give a new structure theorem for such identities. A direct application of our theorem improves the known deterministic d^{k^k}-time black-box identity test over rationals (Kayal-Saraf, FOCS 2009) to one that takes d^{k^2}-time. Our structure theorem essentially says that the number of independent variables in a real depth-3 identity is very small. This theorem settles affirmatively the stronger rank conjectures posed by Dvir-Shpilka (STOC 2005) and Kayal-Saraf (FOCS 2009). Our techniques provide a unified framework that actually beats all known rank bounds and hence gives the best running time (for every field) for black-box identity tests.
+  Our main theorem (almost optimally) pins down the relation between higher dimensional Sylvester-Gallai theorems and the rank of depth-3 identities in a very transparent manner. The existence of this was hinted at by Dvir-Shpilka (STOC 2005), but first proven, for reals, by Kayal-Saraf (FOCS 2009). We introduce the concept of Sylvester-Gallai rank bounds for any field, and show the intimate connection between this and depth-3 identity rank bounds. We also prove the first ever theorem about high dimensional Sylvester-Gallai configurations over any field. Our proofs and techniques are very different from previous results and devise a very interesting ensemble of combinatorics and algebra. The latter concepts are ideal theoretic and involve a new Chinese remainder theorem. Our proof methods explain the structure of any depth-3 identity C: there is a nucleus of C that forms a low rank identity, while the remainder is a high dimensional Sylvester-Gallai configuration.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-31T18:27:41Z</published>
+    <arxiv:comment>33 pages, 1 table, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>C. Seshadhri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.3234v1</id>
+    <title>Blackbox identity testing for bounded top fanin depth-3 circuits: the field doesn't matter</title>
+    <updated>2010-11-14T16:50:51Z</updated>
+    <link href="https://arxiv.org/abs/1011.3234v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.3234v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let C be a depth-3 circuit with n variables, degree d and top fanin k (called sps(k,d,n) circuits) over base field F. It is a major open problem to design a deterministic polynomial time blackbox algorithm that tests if C is identically zero. Klivans &amp; Spielman (STOC 2001) observed that the problem is open even when k is a constant. This case has been subjected to a serious study over the past few years, starting from the work of Dvir &amp; Shpilka (STOC 2005).
+  We give the first polynomial time blackbox algorithm for this problem. Our algorithm runs in time poly(nd^k), regardless of the base field. The only field for which polynomial time algorithms were previously known is F=Q (Kayal &amp; Saraf, FOCS 2009, and Saxena &amp; Seshadhri, FOCS 2010). This is the first blackbox algorithm for depth-3 circuits that does not use the rank based approaches of Karnin &amp; Shpilka (CCC 2008).
+  We prove an important tool for the study of depth-3 identities. We design a blackbox polynomial time transformation that reduces the number of variables in a sps(k,d,n) circuit to k variables, but preserves the identity structure.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-14T16:50:51Z</published>
+    <arxiv:comment>14 pages, 1 figure, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>C. Seshadhri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1102.2789v1</id>
+    <title>Algebraic Independence and Blackbox Identity Testing</title>
+    <updated>2011-02-14T15:00:16Z</updated>
+    <link href="https://arxiv.org/abs/1102.2789v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1102.2789v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Algebraic independence is an advanced notion in commutative algebra that generalizes independence of linear polynomials to higher degree. Polynomials {f_1, ..., f_m} \subset \F[x_1, ..., x_n] are called algebraically independent if there is no non-zero polynomial F such that F(f_1, ..., f_m) = 0. The transcendence degree, trdeg{f_1, ..., f_m}, is the maximal number r of algebraically independent polynomials in the set. In this paper we design blackbox and efficient linear maps φthat reduce the number of variables from n to r but maintain trdeg{φ(f_i)}_i = r, assuming f_i's sparse and small r. We apply these fundamental maps to solve several cases of blackbox identity testing:
+  (1) Given a polynomial-degree circuit C and sparse polynomials f_1, ..., f_m with trdeg r, we can test blackbox D := C(f_1, ..., f_m) for zeroness in poly(size(D))^r time.
+  (2) Define a spsp_δ(k,s,n) circuit C to be of the form \sum_{i=1}^k \prod_{j=1}^s f_{i,j}, where f_{i,j} are sparse n-variate polynomials of degree at most δ. For k = 2 we give a poly(snδ)^{δ^2} time blackbox identity test.
+  (3) For a general depth-4 circuit we define a notion of rank. Assuming there is a rank bound R for minimal simple spsp_δ(k,s,n) identities, we give a poly(snRδ)^{Rkδ^2} time blackbox identity test for spsp_δ(k,s,n) circuits. This partially generalizes the state of the art of depth-3 to depth-4 circuits.
+  The notion of trdeg works best with large or zero characteristic, but we also give versions of our results for arbitrary fields.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-02-14T15:00:16Z</published>
+    <arxiv:comment>32 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Malte Beecken</name>
+    </author>
+    <author>
+      <name>Johannes Mittmann</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.0582v1</id>
+    <title>Jacobian hits circuits: Hitting-sets, lower bounds for depth-D occur-k formulas &amp; depth-3 transcendence degree-k circuits</title>
+    <updated>2011-11-02T17:52:45Z</updated>
+    <link href="https://arxiv.org/abs/1111.0582v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.0582v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a single, common tool to strictly subsume all known cases of polynomial time blackbox polynomial identity testing (PIT) that have been hitherto solved using diverse tools and techniques. In particular, we show that polynomial time hitting-set generators for identity testing of the two seemingly different and well studied models - depth-3 circuits with bounded top fanin, and constant-depth constant-read multilinear formulas - can be constructed using one common algebraic-geometry theme: Jacobian captures algebraic independence. By exploiting the Jacobian, we design the first efficient hitting-set generators for broad generalizations of the above-mentioned models, namely:
+  (1) depth-3 (Sigma-Pi-Sigma) circuits with constant transcendence degree of the polynomials computed by the product gates (no bounded top fanin restriction), and (2) constant-depth constant-occur formulas (no multilinear restriction).
+  Constant-occur of a variable, as we define it, is a much more general concept than constant-read. Also, earlier work on the latter model assumed that the formula is multilinear. Thus, our work goes further beyond the results obtained by Saxena &amp; Seshadhri (STOC 2011), Saraf &amp; Volkovich (STOC 2011), Anderson et al. (CCC 2011), Beecken et al. (ICALP 2011) and Grenet et al. (FSTTCS 2011), and brings them under one unifying technique.
+  In addition, using the same Jacobian based approach, we prove exponential lower bounds for the immanant (which includes permanent and determinant) on the same depth-3 and depth-4 models for which we give efficient PIT algorithms. Our results reinforce the intimate connection between identity testing and lower bounds by exhibiting a concrete mathematical tool - the Jacobian - that is equally effective in solving both the problems on certain interesting and previously well-investigated (but not well understood) models of computation.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-02T17:52:45Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Manindra Agrawal</name>
+    </author>
+    <author>
+      <name>Chandan Saha</name>
+    </author>
+    <author>
+      <name>Ramprasad Saptharishi</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1202.4301v1</id>
+    <title>Algebraic Independence in Positive Characteristic -- A p-Adic Calculus</title>
+    <updated>2012-02-20T12:25:20Z</updated>
+    <link href="https://arxiv.org/abs/1202.4301v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1202.4301v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A set of multivariate polynomials, over a field of zero or large characteristic, can be tested for algebraic independence by the well-known Jacobian criterion. For fields of other characteristic p&gt;0, there is no analogous characterization known. In this paper we give the first such criterion. Essentially, it boils down to a non-degeneracy condition on a lift of the Jacobian polynomial over (an unramified extension of) the ring of p-adic integers.
+  Our proof builds on the de Rham-Witt complex, which was invented by Illusie (1979) for crystalline cohomology computations, and we deduce a natural generalization of the Jacobian. This new avatar we call the Witt-Jacobian. In essence, we show how to faithfully differentiate polynomials over F_p (i.e. somehow avoid dx^p/dx=0) and thus capture algebraic independence.
+  We apply the new criterion to put the problem of testing algebraic independence in the complexity class NP^#P (previously best was PSPACE). Also, we give a modest application to the problem of identity testing in algebraic complexity theory.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-02-20T12:25:20Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Johannes Mittmann</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Peter Scheiblechner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.5653v1</id>
+    <title>Deterministic Polynomial Factoring and Association Schemes</title>
+    <updated>2012-05-25T10:24:12Z</updated>
+    <link href="https://arxiv.org/abs/1205.5653v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.5653v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of finding a nontrivial factor of a polynomial f(x) over a finite field F_q has many known efficient, but randomized, algorithms. The deterministic complexity of this problem is a famous open question even assuming the generalized Riemann hypothesis (GRH). In this work we improve the state of the art by focusing on prime degree polynomials; let n be the degree. If (n-1) has a `large' r-smooth divisor s, then we find a nontrivial factor of f(x) in deterministic poly(n^r,log q) time; assuming GRH and that s &gt; sqrt{n/(2^r)}. Thus, for r = O(1) our algorithm is polynomial time. Further, for r &gt; loglog n there are infinitely many prime degrees n for which our algorithm is applicable and better than the best known; assuming GRH.
+  Our methods build on the algebraic-combinatorial framework of m-schemes initiated by Ivanyos, Karpinski and Saxena (ISSAC 2009). We show that the m-scheme on n points, implicitly appearing in our factoring algorithm, has an exceptional structure; leading us to the improved time complexity. Our structure theorem proves the existence of small intersection numbers in any association scheme that has many relations, and roughly equal valencies and indistinguishing numbers.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-25T10:24:12Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>LMS J. Comput. Math. 17 (2014) 123-140</arxiv:journal_ref>
+    <author>
+      <name>Manuel Arora</name>
+    </author>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157013000296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157013000296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.2333v1</id>
+    <title>Quasi-polynomial Hitting-set for Set-depth-Delta Formulas</title>
+    <updated>2012-09-11T14:39:37Z</updated>
+    <link href="https://arxiv.org/abs/1209.2333v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.2333v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We call a depth-4 formula C set-depth-4 if there exists a (unknown) partition (X_1,...,X_d) of the variable indices [n] that the top product layer respects, i.e. C(x) = \sum_{i=1}^k \prod_{j=1}^{d} f_{i,j}(x_{X_j}), where f_{i,j} is a sparse polynomial in F[x_{X_j}]. Extending this definition to any depth - we call a depth-Delta formula C (consisting of alternating layers of Sigma and Pi gates, with a Sigma-gate on top) a set-depth-Delta formula if every Pi-layer in C respects a (unknown) partition on the variables; if Delta is even then the product gates of the bottom-most Pi-layer are allowed to compute arbitrary monomials.
+  In this work, we give a hitting-set generator for set-depth-Delta formulas (over any field) with running time polynomial in exp(({Delta}^2 log s)^{Delta - 1}), where s is the size bound on the input set-depth-Delta formula. In other words, we give a quasi-polynomial time blackbox polynomial identity test for such constant-depth formulas. Previously, the very special case of Delta=3 (also known as set-multilinear depth-3 circuits) had no known sub-exponential time hitting-set generator. This was declared as an open problem by Shpilka &amp; Yehudayoff (FnT-TCS 2010); the model being first studied by Nisan &amp; Wigderson (FOCS 1995). Our work settles this question, not only for depth-3 but, up to depth epsilon.log s / loglog s, for a fixed constant epsilon &lt; 1.
+  The technique is to investigate depth-Delta formulas via depth-(Delta-1) formulas over a Hadamard algebra, after applying a `shift' on the variables. We propose a new algebraic conjecture about the low-support rank-concentration in the latter formulas, and manage to prove it in the case of set-depth-Delta formulas.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-11T14:39:37Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Manindra Agrawal</name>
+    </author>
+    <author>
+      <name>Chandan Saha</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1312.1826v1</id>
+    <title>Hitting-sets for low-distance multilinear depth-3</title>
+    <updated>2013-12-06T10:46:21Z</updated>
+    <link href="https://arxiv.org/abs/1312.1826v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1312.1826v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The depth-$3$ model has recently gained much importance, as it has become a stepping-stone to understanding general arithmetic circuits. Its restriction to multilinearity has known exponential lower bounds but no nontrivial blackbox identity tests. In this paper we take a step towards designing such hitting-sets. We define a notion of distance for multilinear depth-$3$ circuits (say, in $n$ variables and $k$ product gates) that measures how far are the partitions from a mere refinement. The $1$-distance strictly subsumes the set-multilinear model, while $n$-distance captures general multilinear depth-$3$. We design a hitting-set in time poly($n^{δ\log k}$) for $δ$-distance. Further, we give an extension of our result to models where the distance is large (close to $n$) but it is small when restricted to certain variables. This implies the first subexponential whitebox PIT for the sum of constantly many set-multilinear depth-$3$ circuits.
+  We also explore a new model of read-once algebraic branching programs (ROABP) where the factor-matrices are invertible (called invertible-factor ROABP). We design a hitting-set in time poly($\text{size}^{w^2}$) for width-$w$ invertible-factor ROABP. Further, we could do without the invertibility restriction when $w=2$. Previously, the best result for width-$2$ ROABP was quasi-polynomial time (Forbes-Saptharishi-Shpilka, arXiv 2013).
+  The common thread in all these results is the phenomenon of low-support `rank concentration'. We exploit the structure of these models to prove rank-concentration after a `small shift' in the variables. Our proof techniques are stronger than the results of Agrawal-Saha-Saxena (STOC 2013) and Forbes-Saptharishi-Shpilka (arXiv 2013); giving us quasi-polynomial-time hitting-sets for models where no subexponential whitebox algorithms were known before.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-12-06T10:46:21Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Manindra Agrawal</name>
+    </author>
+    <author>
+      <name>Rohit Gurjar</name>
+    </author>
+    <author>
+      <name>Arpita Korwar</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1401.0976v1</id>
+    <title>Progress on Polynomial Identity Testing - II</title>
+    <updated>2014-01-06T03:18:06Z</updated>
+    <link href="https://arxiv.org/abs/1401.0976v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1401.0976v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We survey the area of algebraic complexity theory; with the focus being on the problem of polynomial identity testing (PIT). We discuss the key ideas that have gone into the results of the last few years.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-01-06T03:18:06Z</published>
+    <arxiv:comment>17 pages, 1 figure, survey</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1406.7535v1</id>
+    <title>Hitting-sets for ROABP and Sum of Set-Multilinear circuits</title>
+    <updated>2014-06-29T18:36:11Z</updated>
+    <link href="https://arxiv.org/abs/1406.7535v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.7535v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a $n^{O(\log n)}$-time ($n$ is the input size) blackbox polynomial identity testing algorithm for unknown-order read-once oblivious algebraic branching programs (ROABP). The best result known for this class was $n^{O(\log^2 n)}$ due to Forbes-Saptharishi-Shpilka (STOC 2014), and that too only for multilinear ROABP. We get rid of their exponential dependence on the individual degree. With this, we match the time-complexity for the unknown order ROABP with the known order ROABP (due to Forbes-Shpilka (FOCS 2013)) and also with the depth-$3$ set-multilinear circuits (due to Agrawal-Saha-Saxena (STOC 2013)). Our proof is simpler and involves a new technique called basis isolation.
+  The depth-$3$ model has recently gained much importance, as it has become a stepping-stone to understanding general arithmetic circuits. Its restriction to multilinearity has known exponential lower bounds but no nontrivial blackbox identity tests. In this paper, we take a step towards designing such hitting-sets. We give the first subexponential whitebox PIT for the sum of constantly many set-multilinear depth-$3$ circuits. To achieve this, we define notions of distance and base sets. Distance, for a multilinear depth-$3$ circuit, measures how far are the partitions from a mere refinement. We design a hitting-set in time $n^{O(d \log n)}$ for $d$-distance. Further, we give an extension of our result to models where the distance is large but it is small when restricted to certain base sets (of variables).
+  We also explore a new model of ROABP where the factor-matrices are invertible (called invertible-factor ROABP). We design a hitting-set in time poly($n^{w^2}$) for width-$w$ invertible-factor ROABP. Further, we could do without the invertibility restriction when $w=2$. Previously, the best result for width-$2$ ROABP was quasi-polynomial time (Forbes-Saptharishi-Shpilka, STOC 2014).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-29T18:36:11Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1312.1826</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Manindra Agrawal</name>
+    </author>
+    <author>
+      <name>Rohit Gurjar</name>
+    </author>
+    <author>
+      <name>Arpita Korwar</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1411.7341v2</id>
+    <title>Deterministic Identity Testing for Sum of Read-Once Oblivious Arithmetic Branching Programs</title>
+    <updated>2015-05-16T11:36:33Z</updated>
+    <link href="https://arxiv.org/abs/1411.7341v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1411.7341v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A read-once oblivious arithmetic branching program (ROABP) is an arithmetic branching program (ABP) where each variable occurs in at most one layer. We give the first polynomial time whitebox identity test for a polynomial computed by a sum of constantly many ROABPs. We also give a corresponding blackbox algorithm with quasi-polynomial time complexity $n^{O(\log n)}$. In both the cases, our time complexity is double exponential in the number of ROABPs.
+  ROABPs are a generalization of set-multilinear depth-$3$ circuits. The prior results for the sum of constantly many set-multilinear depth-$3$ circuits were only slightly better than brute-force, i.e. exponential-time.
+  Our techniques are a new interplay of three concepts for ROABP: low evaluation dimension, basis isolating weight assignment and low-support rank concentration. We relate basis isolation to rank concentration and extend it to a sum of two ROABPs using evaluation dimension (or partial derivatives).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-11-26T19:24:14Z</published>
+    <arxiv:comment>22 pages, Computational Complexity Conference, 2015</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Rohit Gurjar</name>
+    </author>
+    <author>
+      <name>Arpita Korwar</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Thomas Thierauf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.06631v1</id>
+    <title>Polynomial Interpolation and Identity Testing from High Powers over Finite Fields</title>
+    <updated>2015-02-23T21:12:46Z</updated>
+    <link href="https://arxiv.org/abs/1502.06631v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.06631v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of recovering (that is, interpolating) and identity testing of a "hidden" monic polynomial $f$, given an oracle access to $f(x)^e$ for $x\in{\mathbb F_q}$ (extension fields access is not permitted). The naive interpolation algorithm needs $O(e\, \mathrm{deg}\, f)$ queries and thus requires $e\, \mathrm{deg}\, f&lt;q$. We design algorithms that are asymptotically better in certain cases; requiring only $e^{o(1)}$ queries to the oracle. In the randomized (and quantum) setting, we give a substantially better interpolation algorithm, that requires only $O(\mathrm{deg}\, f \log q)$ queries. Such results have been known before only for the special case of a linear $f$, called the hidden shifted power problem.
+  We use techniques from algebra, such as effective versions of Hilbert's Nullstellensatz, and analytic number theory, such as results on the distribution of rational functions in subgroups and character sum estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-23T21:12:46Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Miklos Santha</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Igor Shparlinski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.08031v2</id>
+    <title>Identity Testing for Constant-Width, and Any-Order, Read-Once Oblivious Arithmetic Branching Programs</title>
+    <updated>2018-07-10T14:47:34Z</updated>
+    <link href="https://arxiv.org/abs/1601.08031v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.08031v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give improved hitting sets for two special cases of Read-once Oblivious Arithmetic Branching Programs (ROABP). First is the case of an ROABP with known order of the variables. The best previously known hitting set for this case had size $(nw)^{O(\log n)}$ where $n$ is the number of variables and $w$ is the width of the ROABP. Even for a constant-width ROABP, nothing better than a quasi-polynomial bound was known. We improve the hitting-set size for the known-order case to $n^{O(\log w)}$. In particular, this gives the first polynomial-size hitting set for constant-width ROABP (known-order). However, our hitting set only works when the characteristic of the field is zero or large enough. To construct the hitting set, we use the concept of the rank of the partial derivative matrix. Unlike previous approaches which build up from mapping variables to monomials, we map variables to polynomials directly.
+  The second case we consider is that of polynomials computable by width-$w$ ROABPs in any order of the variables. The best previously known hitting set for this case had size $d^{O(\log w)}(nw)^{O(\log \log w)}$, where $d$ is the individual degree. We improve the hitting-set size to $(ndw)^{O(\log \log w)}$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-29T10:22:51Z</published>
+    <arxiv:comment>Published in Theory of Computing, Volume 13 (2017), Article 2; Received: June 15, 2016, Revised: April 9, 2017, Published: May 15, 2017</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>Theory of Computing 13(2):1-21, 2017</arxiv:journal_ref>
+    <author>
+      <name>Rohit Gurjar</name>
+    </author>
+    <author>
+      <name>Arpita Korwar</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.4086/toc.2017.v013a002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4086/toc.2017.v013a002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1608.00995v1</id>
+    <title>Measurement of the in-plane thermal conductivity by steady-state infrared thermography</title>
+    <updated>2016-07-28T15:26:29Z</updated>
+    <link href="https://arxiv.org/abs/1608.00995v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1608.00995v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We demonstrate a simple and quick method for the measurement of the in-plane thermal conductance of thin films via steady-state IR thermography. The films are suspended above a hole in an opaque substrate and heated by a homogeneous visible light source. The temperature distribution of the thin films is captured via infrared microscopy and fitted to the analytical expression obtained for the specific hole geometry in order to obtain the in-plane thermal conductivity. For thin films of poly(3,4-ethylenedioxythiophene):polystyrene sulfonate post-treated with ethylene glycol and of polyimide we find conductivities of 1.0 W/mK and 0.4 W/mK at room temperature, respectively. These results are in very good agreement with literature values, validating the method developed.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-28T15:26:29Z</published>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Anton Greppmair</name>
+    </author>
+    <author>
+      <name>Benedikt Stoib</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Caroline Gerstberger</name>
+    </author>
+    <author>
+      <name>Peter Müller-Buschbaum</name>
+    </author>
+    <author>
+      <name>Martin Stutzmann</name>
+    </author>
+    <author>
+      <name>Martin S. Brandt</name>
+    </author>
+    <arxiv:doi>10.1063/1.4979564</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4979564" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.00558v1</id>
+    <title>Irreducibility and r-th root finding over finite fields</title>
+    <updated>2017-02-02T07:20:18Z</updated>
+    <link href="https://arxiv.org/abs/1702.00558v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.00558v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Constructing $r$-th nonresidue over a finite field is a fundamental computational problem. A related problem is to construct an irreducible polynomial of degree $r^e$ (where $r$ is a prime) over a given finite field $\mathbb{F}_q$ of characteristic $p$ (equivalently, constructing the bigger field $\mathbb{F}_{q^{r^e}}$). Both these problems have famous randomized algorithms but the derandomization is an open question. We give some new connections between these two problems and their variants.
+  In 1897, Stickelberger proved that if a polynomial has an odd number of even degree factors, then its discriminant is a quadratic nonresidue in the field. We give an extension of Stickelberger's Lemma; we construct $r$-th nonresidues from a polynomial $f$ for which there is a $d$, such that, $r|d$ and $r\nmid\,$#(irreducible factor of $f(x)$ of degree $d$). Our theorem has the following interesting consequences: (1) we can construct $\mathbb{F}_{q^m}$ in deterministic poly(deg($f$),$m\log q$)-time if $m$ is an $r$-power and $f$ is known; (2) we can find $r$-th roots in $\mathbb{F}_{p^m}$ in deterministic poly($m\log p$)-time if $r$ is constant and $r|\gcd(m,p-1)$.
+  We also discuss a conjecture significantly weaker than the Generalized Riemann hypothesis to get a deterministic poly-time algorithm for $r$-th root finding.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-02T07:20:18Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Vishwas Bhargava</name>
+    </author>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Rajat Mittal</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.07180v1</id>
+    <title>Small hitting-sets for tiny arithmetic circuits or: How to turn bad designs into good</title>
+    <updated>2017-02-23T11:38:36Z</updated>
+    <link href="https://arxiv.org/abs/1702.07180v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.07180v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that if we can design poly($s$)-time hitting-sets for $Σ\wedge^aΣΠ^{O(\log s)}$ circuits of size $s$, where $a=ω(1)$ is arbitrarily small and the number of variables, or arity $n$, is $O(\log s)$, then we can derandomize blackbox PIT for general circuits in quasipolynomial time. This also establishes that either E$\not\subseteq$\#P/poly or that VP$\ne$VNP. In fact, we show that one only needs a poly($s$)-time hitting-set against individual-degree $a'=ω(1)$ polynomials that are computable by a size-$s$ arity-$(\log s)$ $ΣΠΣ$ circuit (note: $Π$ fanin may be $s$). Alternatively, we claim that, to understand VP one only needs to find hitting-sets, for depth-$3$, that have a small parameterized complexity. Another tiny family of interest is when we restrict the arity $n=ω(1)$ to be arbitrarily small. We show that if we can design poly($s,μ(n)$)-time hitting-sets for size-$s$ arity-$n$ $ΣΠΣ\wedge$ circuits (resp.~$Σ\wedge^aΣΠ$), where function $μ$ is arbitrary, then we can solve PIT for VP in quasipoly-time, and prove the corresponding lower bounds. Our methods are strong enough to prove a surprising {\em arity reduction} for PIT-- to solve the general problem completely it suffices to find a blackbox PIT with time-complexity $sd2^{O(n)}$. We give several examples of ($\log s$)-variate circuits where a new measure (called cone-size) helps in devising poly-time hitting-sets, but the same question for their $s$-variate versions is open till date: For eg., diagonal depth-$3$ circuits, and in general, models that have a {\em small} partial derivative space. We also introduce a new concept, called cone-closed basis isolation, and provide example models where it occurs, or can be achieved by a small shift.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-23T11:38:36Z</published>
+    <arxiv:comment>25 pages, No figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Manindra Agrawal</name>
+    </author>
+    <author>
+      <name>Michael Forbes</name>
+    </author>
+    <author>
+      <name>Sumanta Ghosh</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.03214v1</id>
+    <title>Discovering the roots: Uniform closure results for algebraic classes under factoring</title>
+    <updated>2017-10-09T17:48:20Z</updated>
+    <link href="https://arxiv.org/abs/1710.03214v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.03214v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Newton iteration (NI) is an almost 350 years old recursive formula that approximates a simple root of a polynomial quite rapidly. We generalize it to a matrix recurrence (allRootsNI) that approximates all the roots simultaneously. In this form, the process yields a better circuit complexity in the case when the number of roots $r$ is small but the multiplicities are exponentially large. Our method sets up a linear system in $r$ unknowns and iteratively builds the roots as formal power series. For an algebraic circuit $f(x_1,\ldots,x_n)$ of size $s$ we prove that each factor has size at most a polynomial in: $s$ and the degree of the squarefree part of $f$. Consequently, if $f_1$ is a $2^{Ω(n)}$-hard polynomial then any nonzero multiple $\prod_{i} f_i^{e_i}$ is equally hard for arbitrary positive $e_i$'s, assuming that $\sum_i \text{deg}(f_i)$ is at most $2^{O(n)}$.
+  It is an old open question whether the class of poly($n$)-sized formulas (resp. algebraic branching programs) is closed under factoring. We show that given a polynomial $f$ of degree $n^{O(1)}$ and formula (resp. ABP) size $n^{O(\log n)}$ we can find a similar size formula (resp. ABP) factor in randomized poly($n^{\log n}$)-time. Consequently, if determinant requires $n^{Ω(\log n)}$ size formula, then the same can be said about any of its nonzero multiples.
+  As part of our proofs, we identify a new property of multivariate polynomial factorization. We show that under a random linear transformation $τ$, $f(τ\overline{x})$ completely factors via power series roots. Moreover, the factorization adapts well to circuit complexity analysis. This with allRootsNI are the techniques that help us make progress towards the old open problems, supplementing the large body of classical results and concepts in algebraic circuit factorization (eg. Zassenhaus, J.NT 1969, Kaltofen, STOC 1985-7 \&amp; Burgisser, FOCS 2001).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-09T17:48:20Z</published>
+    <arxiv:comment>33 Pages, No figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Pranjal Dutta</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Amit Sinhababu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1801.09275v1</id>
+    <title>Algebraic dependencies and PSPACE algorithms in approximative complexity</title>
+    <updated>2018-01-28T19:56:40Z</updated>
+    <link href="https://arxiv.org/abs/1801.09275v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1801.09275v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Testing whether a set $\mathbf{f}$ of polynomials has an algebraic dependence is a basic problem with several applications. The polynomials are given as algebraic circuits. Algebraic independence testing question is wide open over finite fields (Dvir, Gabizon, Wigderson, FOCS'07). The best complexity known is NP$^{\#\rm P}$ (Mittmann, Saxena, Scheiblechner, Trans.AMS'14). In this work we put the problem in AM $\cap$ coAM. In particular, dependence testing is unlikely to be NP-hard and joins the league of problems of "intermediate" complexity, eg. graph isomorphism &amp; integer factoring. Our proof method is algebro-geometric-- estimating the size of the image/preimage of the polynomial map $\mathbf{f}$ over the finite field. A gap in this size is utilized in the AM protocols.
+  Next, we study the open question of testing whether every annihilator of $\mathbf{f}$ has zero constant term (Kayal, CCC'09). We give a geometric characterization using Zariski closure of the image of $\mathbf{f}$; introducing a new problem called approximate polynomials satisfiability (APS). We show that APS is NP-hard and, using projective algebraic-geometry ideas, we put APS in PSPACE (prior best was EXPSPACE via Grobner basis computation). As an unexpected application of this to approximative complexity theory we get-- Over any field, hitting-set for $\overline{\rm VP}$ can be designed in PSPACE. This solves an open problem posed in (Mulmuley, FOCS'12, J.AMS 2017); greatly mitigating the GCT Chasm (exponentially in terms of space complexity).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-01-28T19:56:40Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Zeyu Guo</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Amit Sinhababu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.06628v1</id>
+    <title>Efficiently factoring polynomials modulo $p^4$</title>
+    <updated>2019-01-20T06:40:43Z</updated>
+    <link href="https://arxiv.org/abs/1901.06628v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.06628v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polynomial factoring has famous practical algorithms over fields-- finite, rational \&amp; $p$-adic. However, modulo prime powers it gets hard as there is non-unique factorization and a combinatorial blowup ensues. For example, $x^2+p \bmod p^2$ is irreducible, but $x^2+px \bmod p^2$ has exponentially many factors! We present the first randomized poly(deg $f, \log p$) time algorithm to factor a given univariate integral $f(x)$ modulo $p^k$, for a prime $p$ and $k \leq 4$. Thus, we solve the open question of factoring modulo $p^3$ posed in (Sircana, ISSAC'17).
+  Our method reduces the general problem of factoring $f(x) \bmod p^k$ to that of {\em root finding} in a related polynomial $E(y) \bmod\langle p^k, \varphi(x)^\ell \rangle$ for some irreducible $\varphi \bmod p$. We could efficiently solve the latter for $k\le4$, by incrementally transforming $E(y)$. Moreover, we discover an efficient and strong generalization of Hensel lifting to lift factors of $f(x) \bmod p$ to those $\bmod\ p^4$ (if possible). This was previously unknown, as the case of repeated factors of $f(x) \bmod p$ forbids classical Hensel lifting.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-20T06:40:43Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Ashish Dwivedi</name>
+    </author>
+    <author>
+      <name>Rajat Mittal</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.07785v1</id>
+    <title>Counting basic-irreducible factors mod $p^k$ in deterministic poly-time and $p$-adic applications</title>
+    <updated>2019-02-20T21:33:43Z</updated>
+    <link href="https://arxiv.org/abs/1902.07785v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.07785v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Finding an irreducible factor, of a polynomial $f(x)$ modulo a prime $p$, is not known to be in deterministic polynomial time. Though there is such a classical algorithm that {\em counts} the number of irreducible factors of $f\bmod p$. We can ask the same question modulo prime-powers $p^k$. The irreducible factors of $f\bmod p^k$ blow up exponentially in number; making it hard to describe them. Can we count those irreducible factors $\bmod~p^k$ that remain irreducible mod $p$? These are called {\em basic-irreducible}. A simple example is in $f=x^2+px \bmod p^2$; it has $p$ many basic-irreducible factors. Also note that, $x^2+p \bmod p^2$ is irreducible but not basic-irreducible!
+  We give an algorithm to count the number of basic-irreducible factors of $f\bmod p^k$ in deterministic poly(deg$(f),k\log p$)-time. This solves the open questions posed in (Cheng et al, ANTS'18 \&amp; Kopp et al, Math.Comp.'19). In particular, we are counting roots $\bmod\ p^k$; which gives the first deterministic poly-time algorithm to compute Igusa zeta function of $f$. Also, our algorithm efficiently partitions the set of all basic-irreducible factors (possibly exponential) into merely deg$(f)$-many disjoint sets, using a compact tree data structure and {\em split} ideals.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-20T21:33:43Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Ashish Dwivedi</name>
+    </author>
+    <author>
+      <name>Rajat Mittal</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.03385v1</id>
+    <title>Utilizing machine learning to prevent water main breaks by understanding pipeline failure drivers</title>
+    <updated>2020-06-05T11:44:02Z</updated>
+    <link href="https://arxiv.org/abs/2006.03385v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.03385v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data61 and Western Water worked collaboratively to apply engineering expertise and Machine Learning tools to find a cost-effective solution to the pipe failure problem in the region west of Melbourne, where on average 400 water main failures occur per year. To achieve this objective, we constructed a detailed picture and understanding of the behaviour of the water pipe network by 1) discovering the underlying drivers of water main breaks, and 2) developing a Machine Learning system to assess and predict the failure likelihood of water main breaking using historical failure records, descriptors of pipes, and other environmental factors. The ensuing results open up an avenue for Western Water to identify the priority of pipe renewals</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-05T11:44:02Z</published>
+    <arxiv:comment>8 pages, 18 figures. Ozwater 2019 conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Dilusha Weeraddana</name>
+    </author>
+    <author>
+      <name>Bin Liang</name>
+    </author>
+    <author>
+      <name>Zhidong Li</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+    <author>
+      <name>Fang Chen</name>
+    </author>
+    <author>
+      <name>Livia Bonazzi</name>
+    </author>
+    <author>
+      <name>Dean Phillips</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.07613v1</id>
+    <title>Special-case Algorithms for Blackbox Radical Membership, Nullstellensatz and Transcendence Degree</title>
+    <updated>2020-06-13T10:50:04Z</updated>
+    <link href="https://arxiv.org/abs/2006.07613v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.07613v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Radical membership testing, and the special case of Hilbert's Nullstellensatz (HN), is a fundamental computational algebra problem. It is NP-hard; and has a famous PSPACE algorithm due to effective Nullstellensatz bounds. We identify a useful case of these problems where practical algorithms, and improved bounds, could be given, when the transcendence degree $r$ of the input polynomials is smaller than the number of variables $n$. If $d$ is the degree bound on the input polynomials, then we solve radical membership (even if input polynomials are blackboxes) in around $d^r$ time. The prior best was $&gt; d^n$ time (always, $d^n\ge d^r$). Also, we significantly improve effective Nullstellensatz degree-bound, when $r\ll n$. Structurally, our proof shows that these problems reduce to the case of $r+1$ polynomials of transcendence degree $\ge r$. This input instance (corresponding to none or a unique annihilator) is at the core of HN's hardness. Our proof methods invoke basic algebraic-geometry.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-13T10:50:04Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Abhibhav Garg</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.08926v1</id>
+    <title>Computing Igusa's local zeta function of univariates in deterministic polynomial-time</title>
+    <updated>2020-06-16T04:59:41Z</updated>
+    <link href="https://arxiv.org/abs/2006.08926v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.08926v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Igusa's local zeta function $Z_{f,p}(s)$ is the generating function that counts the number of integral roots, $N_{k}(f)$, of $f(\mathbf x) \bmod p^k$, for all $k$. It is a famous result, in analytic number theory, that $Z_{f,p}$ is a rational function in $\mathbb{Q}(p^s)$. We give an elementary proof of this fact for a univariate polynomial $f$. Our proof is constructive as it gives a closed-form expression for the number of roots $N_{k}(f)$.
+  Our proof, when combined with the recent root-counting algorithm of (Dwivedi, Mittal, Saxena, CCC, 2019), yields the first deterministic poly($|f|, \log p$) time algorithm to compute $Z_{f,p}(s)$. Previously, an algorithm was known only in the case when $f$ completely splits over $\mathbb{Q}_p$; it required the rational roots to use the concept of generating function of a tree (Zúñiga-Galindo, J.Int.Seq., 2003).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-16T04:59:41Z</published>
+    <arxiv:comment>15 pages, ANTS 2020</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ashish Dwivedi</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.11325v1</id>
+    <title>Deterministic identity testing paradigms for bounded top-fanin depth-4 circuits</title>
+    <updated>2023-04-22T05:36:12Z</updated>
+    <link href="https://arxiv.org/abs/2304.11325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.11325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polynomial Identity Testing (PIT) is a fundamental computational problem. The famous depth-$4$ reduction result by Agrawal and Vinay (FOCS 2008) has made PIT for depth-$4$ circuits an enticing pursuit. A restricted depth-4 circuit computing a $n$-variate degree-$d$ polynomial of the form $\sum_{i = 1}^{k} \prod_{j} g_{ij}$, where $°g_{ij} \leq δ$ is called $Σ^{[k]}ΠΣΠ^{[δ]}$ circuit. On further restricting $g_{ij}$ to be sum of univariates we obtain $Σ^{[k]}ΠΣ\wedge$ circuits. The largely open, special-cases of $Σ^{[k]}ΠΣΠ^{[δ]}$ for constant $k$ and $δ$, and $Σ^{[k]}ΠΣ\wedge$ have been a source of many great ideas in the last two decades. For eg. depth-$3$ ideas of Dvir and Shpilka (STOC 2005), Kayal and Saxena (CCC 2006), and Saxena and Seshadhri (FOCS 2010 and STOC 2011). Further, depth-$4$ ideas of Beecken, Mittmann and Saxena (ICALP 2011), Saha, Saxena and Saptharishi (Comput.Compl. 2013), Forbes (FOCS 2015), and Kumar and Saraf (CCC 2016). Additionally, geometric Sylvester-Gallai ideas of Kayal and Saraf (FOCS 2009), Shpilka (STOC 2019), and Peleg and Shpilka (CCC 2020, STOC 2021). Very recently, a subexponential-time blackbox PIT algorithm for constant-depth circuits was obtained via lower bound breakthrough of Limaye, Srinivasan, Tavenas (FOCS 2021). We solve two of the basic underlying open problems in this work.
+  We give the first polynomial-time PIT for $Σ^{[k]}ΠΣ\wedge$. We also give the first quasipolynomial time blackbox PIT for both $Σ^{[k]}ΠΣ\wedge$ and $Σ^{[k]}ΠΣΠ^{[δ]}$. A key technical ingredient in all the three algorithms is how the logarithmic derivative, and its power-series, modify the top $Π$-gate to $\wedge$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-22T05:36:12Z</published>
+    <arxiv:comment>A preliminary version appeared in 36th Computational Complexity Conference (CCC), 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Pranjal Dutta</name>
+    </author>
+    <author>
+      <name>Prateek Dwivedi</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.CCC.2021.11</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.CCC.2021.11" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.09535v1</id>
+    <title>VDOO: A Short, Fast, Post-Quantum Multivariate Digital Signature Scheme</title>
+    <updated>2023-12-15T04:58:10Z</updated>
+    <link href="https://arxiv.org/abs/2312.09535v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.09535v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hard lattice problems are predominant in constructing post-quantum cryptosystems. However, we need to continue developing post-quantum cryptosystems based on other quantum hard problems to prevent a complete collapse of post-quantum cryptography due to a sudden breakthrough in solving hard lattice problems. Solving large multivariate quadratic systems is one such quantum hard problem.
+  Unbalanced Oil-Vinegar is a signature scheme based on the hardness of solving multivariate equations. In this work, we present a post-quantum digital signature algorithm VDOO (Vinegar-Diagonal-Oil-Oil) based on solving multivariate equations. We introduce a new layer called the diagonal layer over the oil-vinegar-based signature scheme Rainbow. This layer helps to improve the security of our scheme without increasing the parameters considerably. Due to this modification, the complexity of the main computational bottleneck of multivariate quadratic systems i.e. the Gaussian elimination reduces significantly. Thus making our scheme one of the fastest multivariate quadratic signature schemes. Further, we show that our carefully chosen parameters can resist all existing state-of-the-art attacks. The signature sizes of our scheme for the National Institute of Standards and Technology's security level of I, III, and V are 96, 226, and 316 bytes, respectively. This is the smallest signature size among all known post-quantum signature schemes of similar security.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-15T04:58:10Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Anindya Ganguly</name>
+    </author>
+    <author>
+      <name>Angshuman Karmakar</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.20071v1</id>
+    <title>Primes via Zeros: Interactive Proofs for Testing Primality of Natural Classes of Ideals</title>
+    <updated>2025-03-25T21:13:06Z</updated>
+    <link href="https://arxiv.org/abs/2503.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A central question in mathematics and computer science is the question of determining whether a given ideal $I$ is prime, which geometrically corresponds to the zero set of $I$, denoted $Z(I)$, being irreducible. The case of principal ideals (i.e., $m=1$) corresponds to the more familiar absolute irreducibility testing of polynomials, where the seminal work of (Kaltofen 1995) yields a randomized, polynomial time algorithm for this problem. However, when $m &gt; 1$, the complexity of the primality testing problem seems much harder. The current best algorithms for this problem are only known to be in EXPSPACE.
+  In this work, we significantly reduce the complexity-theoretic gap for the ideal primality testing problem for the important families of ideals $I$ (namely, radical ideals and equidimensional Cohen-Macaulay ideals). For these classes of ideals, assuming the Generalized Riemann Hypothesis, we show that primality testing lies in $Σ_3^p \cap Π_3^p$. This significantly improves the upper bound for these classes, approaching their lower bound, as the primality testing problem is coNP-hard for these classes of ideals. Another consequence of our results is that for equidimensional Cohen-Macaulay ideals, we get the first PSPACE algorithm for primality testing, exponentially improving the space and time complexity of prior known algorithms.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T21:13:06Z</published>
+    <arxiv:comment>36 pages. Accepted in STOC 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Abhibhav Garg</name>
+    </author>
+    <author>
+      <name>Rafael Oliveira</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.1145/3717823.3718167</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3717823.3718167" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.19604v2</id>
+    <title>A primer on the closure of algebraic complexity classes under factoring</title>
+    <updated>2026-06-09T18:15:01Z</updated>
+    <link href="https://arxiv.org/abs/2506.19604v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.19604v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polynomial factorisation is a fundamental problem in computational algebra. Over the past half century, a variety of algorithmic techniques have been developed to tackle different variants of this problem. In parallel, algebraic complexity theory classifies polynomials into complexity classes based on their computational hardness. This raises a natural question: Are these complexity classes closed under factorisation?
+  In this survey, we revisit pivotal techniques in polynomial factorisation: Hensel lifting, Newton iteration, and Lagrange inversion. These techniques have played an essential role in resolving key factoring questions in algebraic complexity for more than half a century. We examine and organise the known results through the lens of these techniques, discussing their underlying mathematical equivalence while reflecting on how their applications vary depending on the problem context.
+  We focus on prominent algebraic complexity classes, including $\text{VP}$ (circuits of polynomial size and degree), its closure $\overline{\text{VP}}$, the class $\text{VNP}$ (verifier circuits of polynomial size and degree), $\text{VBP}$ (polynomial-size branching programs), $\text{VF}$ (polynomial-size formulas), and $\text{VP}_{\text{nb}}$ (circuits of polynomial size and exponential degree). We also discuss bounded-depth circuits and sparse polynomials. Along the way, we highlight several unresolved open problems.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-24T13:17:37Z</published>
+    <arxiv:comment>75 pages, 8 figures. The updated version includes an exposition of the recent breakthrough on formula and bounded-depth factoring. To appear in the Springer collection TMSC special issue of the workshop RTCA'23 Paris</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>C. S. Bhargav</name>
+    </author>
+    <author>
+      <name>Prateek Dwivedi</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02262v1</id>
+    <title>Complexity of counting points on curves and the factor $P_1(T)$ of the zeta function of surfaces</title>
+    <updated>2025-11-04T05:09:29Z</updated>
+    <link href="https://arxiv.org/abs/2511.02262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article concerns the computational complexity of a fundamental problem in number theory: counting points on curves and surfaces over finite fields. There is no subexponential-time algorithm known and it is unclear if it can be $\mathrm{NP}$-hard.
+  Given a curve, we present the first efficient Arthur-Merlin protocol to certify its point-count, its Jacobian group structure, and its Hasse-Weil zeta function. We extend this result to a smooth projective surface to certify the factor $P_{1}(T)$, corresponding to the first Betti number, of the zeta function; by using the counting oracle. We give the first algorithm to compute $P_{1}(T)$ that is poly($\log q$)-time if the degree $D$ of the input surface is fixed; and in quantum poly($D\log q$)-time in general.
+  Our technique in the curve case, is to sample hash functions using the Weil and Riemann-Roch bounds, to certify the group order of its Jacobian. For higher dimension varieties, we first reduce to the case of a surface, which is fibred as a Lefschetz pencil of hyperplane sections over $\mathbb{P}^{1}$. The formalism of vanishing cycles, and the inherent big monodromy, enable us to prove an effective version of Deligne's `theoreme du pgcd' using the hard-Lefschetz theorem and an equidistribution result due to Katz. These reduce our investigations to that of computing the zeta function of a curve, defined over a finite field extension $\mathbb{F}_{Q}/\mathbb{F}_{q}$ of poly-bounded degree. This explicitization of the theory yields the first nontrivial upper bounds on the computational complexity.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T05:09:29Z</published>
+    <arxiv:comment>25 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Diptajit Roy</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Madhavan Venkatesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.05272v1</id>
+    <title>Counting points on surfaces in polynomial time</title>
+    <updated>2025-11-07T14:34:08Z</updated>
+    <link href="https://arxiv.org/abs/2511.05272v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.05272v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a randomised algorithm to compute the local zeta function of a fixed smooth, projective surface over $\mathbb{Q}$, at any large prime $p$ of good reduction. The runtime of our algorithm is polynomial in $\log p$, resolving a conjecture of Couveignes and Edixhoven.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-07T14:34:08Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <author>
+      <name>Madhavan Venkatesh</name>
+    </author>
+  </entry>
+</feed>

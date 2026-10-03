@@ -1,0 +1,2504 @@
+Improvements to the number field sieve for non-prime finite
+fields
+Razvan Barbulescu, Pierrick Gaudry, Aurore Guillevic, François Morain
+
+To cite this version:
+Razvan Barbulescu, Pierrick Gaudry, Aurore Guillevic, François Morain. Improvements to the number field
+sieve for non-prime finite fields. 2022. ⟨hal-01052449v5⟩
+
+HAL Id: hal-01052449
+https://inria.hal.science/hal-01052449v5
+Preprint submitted on 24 Aug 2022
+
+HAL is a multi-disciplinary open access archive
+for the deposit and dissemination of scientific research documents, whether they are published or not.
+The documents may come from teaching and research
+institutions in France or abroad, or from public or private research centers.
+
+L’archive ouverte pluridisciplinaire HAL, est destinée au dépôt et à la diffusion de documents scientifiques de niveau recherche, publiés ou non, émanant
+des établissements d’enseignement et de recherche
+français ou étrangers, des laboratoires publics ou
+privés.
+
+Distributed under a Creative Commons CC BY 4.0 - Attribution - International License
+
+IMPROVEMENTS TO THE NUMBER FIELD SIEVE FOR NON-PRIME
+FINITE FIELDS
+(PRELIMINARY VERSION)
+
+RAZVAN BARBULESCU 1,2,3,4 , PIERRICK GAUDRY 1,2,3 , AURORE GUILLEVIC 4,3,2 ,
+AND FRANÇOIS MORAIN 4,3,2
+
+1
+
+2
+
+Université de Lorraine
+Institut national de recherche en informatique et en automatique (INRIA)
+3
+Centre national de la recherche scientifique (CNRS)
+4
+École Polytechnique/LIX
+
+Abstract. We propose various strategies for improving the computation of discrete logarithms
+in non-prime fields of medium to large characteristic using the Number Field Sieve. This
+includes new methods for selecting the polynomials; the use of explicit automorphisms; explicit
+computations in the number fields; and prediction that some units have ap
+zero virtual logarithm.
+On the theoretical side, we obtain a new complexity bound of Lpn (1/3, 3 96/9) in the medium
+characteristic case. On the practical side, we computed discrete logarithms in Fp2 for a prime
+number p with 80 decimal digits.
+Warning: This unpublished version contains some inexact statements.
+
+1. Introduction
+Discrete logarithm computations in finite fields is one of the important topics in algorithmic
+number theory, partly due to its relevance to public key cryptography. The complexity of
+discrete logarithm algorithms for finite fields Fpn depends on the size of the characteristic p
+with respect to the cardinality Q = pn . In order to classify the known methods, it is convenient
+to use the famous L function. If α ∈ [0, 1] and c > 0 are two constants, we set
+
+LQ (α, c) = exp (c + o(1))(log Q)α (log log Q)1−α ,
+and sometimes we simply write LQ (α) if the constant c is not made explicit. When we consider discrete logarithm computations, we treat separately families of finite fields for which the
+characteristic p can be written in the form p = LQ (α) for a given range of values for α. We say
+that we are dealing with finite fields of small characteristic if the family is such that α < 1/3;
+medium characteristic if we have 1/3 < α < 2/3; and large characteristic if α > 2/3. In this
+article, we concentrate on the cases of medium and large characteristic. This covers also the
+situation where p = LQ (2/3), that we call the medium–large characteristic boundary case. We
+start with a brief overview of the general situation, including the small characteristic case for
+completeness (all the complexities mentioned here are based on unproven heuristics).
+The case of small characteristic is the one that has been improved inpthe most dramatic way in
+the recent years. Before 2013, the best known complexity of LQ (1/3, 3 32/9) was obtained with
+the Function Field Sieve [Adl94, AH99, JL02, JL06] but a series of improvements [Jou13b, Jou14,
+BGJT14, GGMZ13, GKZ14b] has led to a quasi-polynomial complexity for fixed characteristic,
+and more generally to a complexity of LQ (α + o(1)) when p = LQ (α), with α < 1/3.
+The case of large characteristic is covered by an algorithm called the Number Field Sieve
+(NFS) that is very close to the algorithm with the same name used for factoring integers [LL93,
+Gor93, Sch93, JL02, Sch05].
+This is particularly true for prime fields, and it shares the same
+p
+complexity of LQ (1/3, 3 64/9). In the case of small extension degrees, the main reference is a
+This research was partially funded by Agence Nationale de la Recherche grant ANR-12-BS02-001-01.
+1
+
+variant by Joux, Lercier, Smart and Vercauteren [JLSV06] who showed how to get the same
+complexity in the whole range of fields of large characteristic.
+The case of medium
+characteristic was also tackled in the same article, thus getting a comp
+3
+plexity of LQ (1/3, 128/9), with another variant of NFS.
+The complexities listed above use versions of NFS where only two number fields are involved.
+It is however known that using more number fields can improve the complexity. For prime fields
+it has been done in [Mat03, CS06], while for large and medium characteristic, it has been recently
+studied in [BP14]. In all cases, the complexity remains of the form Lq
+Q (1/3, c), but the exponent
+√
+constant c is improved: in the large characteristic case we have c = 3 (92 + 26 13)/27, like for
+p
+prime fields, while in the medium characteristic case, we have c = 3 213 /36 . For the moment,
+these multiple number field variants have not been used for practical record computations (they
+have not yet been used either for records in integer factorization).
+In the medium–large characteristic boundary case, where p = LQ (2/3, cp ), the
+complexity
+p
+3
+given in [BP14] is also of the form LQ (1/3, c), where c varies between 16/9 and 213 /36 in a
+way that is non-monotonic with cp . We also mention another variant of NFS that has been
+announced [BGK14] that seems to be better in some range of cp , when using multiple number
+fields.
+In terms of practical record computations, the case of prime fields has been well studied,
+with frequent announcements [JL05, Kle07, BGI+ 14]. In the case of medium characteristic,
+there were also some large computations performed to illustrate the new methods; see Table 8
+in [JL+ 07] and [Zaj08, HAKT13]. However in the case of non-prime field of large characteristic,
+we are not aware of previous practical experiments, despite their potential interest in pairingbased cryptography.
+Summary of contributions. Our two main contributions are, on one side, new complexity
+results for the finite fields of medium characteristic, and on the other side, a practical record
+computation in a finite field of the form Fp2 .
+Key tools for these results are two new methods for selecting the number fields; the first one
+is a generalization of the method by Joux and Lercier [JL03] and we call the second one the
+conjugation method. It turned out that both of them have practical and theoretical advantages.
+On the theoretical side, the norms that must be tested for smoothness during NFS based
+on the conjugation method or the generalized Joux-Lercier method are smaller than the ones
+obtained with previous methods for certain kind of finite fields. Therefore, the probability of
+being smooth is higher, which translates into a better complexity. Depending on the type of
+finite fields, the gain is different:
+• In the medium characteristic
+finite fields, NFS with the conjugation method has
+a comp
+p
+3
+the
+complexity
+of
+L
+(1/3,
+128/9)
+plexity of LQ (1/3, 3 96/9). This is much better than
+Q
+p
+3
+13
+6
+obtained in [JLSV06] and also beats the LQ (1/3, 2 /3 ) complexity of the multiple
+number field algorithm of [BP14].
+• In the medium–large characteristic boundary case, the situation is more complicated,
+but there are also families of finite fields for which the best known complexity is obtained
+with the conjugation method or with the generalized Joux-Lercier
+method. The overall
+√
+3
+minimal complexity
+is
+obtained
+for
+fields
+with
+p
+=
+L
+(2/3,
+12),
+where
+the complexity
+Q
+p
+3
+drops to LQ (1/3, 48/9) with the conjugation method.
+On the practical side, the two polynomials generated by the conjugation method (and for one
+of the polynomials with the generalized Joux-Lercier construction) enjoy structural properties:
+it is often possible to use computations with explicit units (as was done in the early ages of
+NFS for factoring, before Adleman introduced the use of characters), thus saving the use of
+Schirokauer maps that have a non-negligible cost during the linear algebra phase. Furthermore,
+it is also often possible to impose the presence of field automorphisms which can be used to
+speed-up various stages of NFS, as shown in [JLSV06].
+2
+
+Finally, the presence of automorphisms can interact with the general NFS construction and
+lead to several units having zero virtual logarithms. This is again very interesting in practice,
+because some dense columns (explicit units or Schirokauer maps) can be erased in the matrix.
+A careful study of this phenomenon allowed us to predict precisely when it occurs.
+All these practical improvements do not change the complexity but make the computations
+faster. In fact, even though the conjugation method is at its best for medium characteristic,
+it proved to be competitive even for quadratic extensions. It was therefore used in our record
+computation of discrete logarithm in the finite field Fp2 for a random-looking prime p of 80
+decimal digits. The running time was much less than what is required to solve the discrete
+logarithm problem in a prime field of similar size, namely 160 decimal digits.
+Outline. In Section 2 we make a quick presentation of NFS, and we insist on making precise
+the definitions of virtual logarithms in the case of explicit units and in the case of Schirokauer
+maps. In Section 3 we show how to obtain a practical improvement using field automorphisms,
+again taking care of the two ways of dealing with units. Then, in Section 4 we explain how to
+predict the cases where the virtual logarithm of a unit is zero, and in Section 5 we show how
+to use this knowledge to reduce the number of Schirokauer maps if we do not use explicit units.
+Finally, in Section 6 we present our two new methods for selecting polynomials, the complexities
+of which are analyzed in Section 7. We conclude in Section 8 with a report about our practical
+computation in Fp2 .
+2. The number field sieve and virtual logarithms
+2.1. Sketch of the number field sieve algorithm. In a nutshell, the number field sieve
+for discrete logarithms in Fpn is as follows. In the first stage, called polynomial selection,
+two polynomials f, g in Z[x] are constructed (we assume that deg f ≥ deg g), such that their
+reductions modulo p have a common monic irreducible factor ϕ0 of degree n. For simplicity, we
+assume that f and g are monic. We call ϕ a monic polynomial of Z[x] whose reduction modulo
+p equals ϕ0 . Let α and β be algebraic numbers such that f (α) = 0 and g(β) = 0 and let m be
+a root of ϕ0 in Fpn , allowing us to write Fpn = Fp (m). Let Kf and Kg be the number fields
+associated to f and g respectively, and Of and Og their rings of integers.
+For the second stage of NFS, called relation collection or sieve, a smoothness bound B is
+chosen and we consider the associated factor base
+F = {prime ideals q in Of and Og of norm less than B},
+
+that we decompose into F = Ff ∪Fg according to the ring of integers to which the ideals belong.
+An integer is B-smooth if all its prime factors are less than B. For any polynomial φ(x) ∈ Z[x],
+the algebraic integer φ(α) (resp. φ(β))) in Kf (resp. Kg ) is B-smooth if the corresponding
+principal ideal φ(α)Of (resp. φ(β)Og ) factors into prime ideals that belong to Ff (resp. Fg ).
+This is almost, but not exactly equivalent to asking that the norm Res(φ, f ) (resp. Res(φ, g))
+is B-smooth.
+In the sieve stage, one collects #F polynomials φ(x) ∈ Z[x] with coprime coefficients and
+degree bounded by t − 1, for a parameter t ≥ 2 to be chosen, such that both φ(α) and φ(β) are
+B-smooth, so that we get relations of the form:
+(
+Q
+φ(α)Of = q∈Ff qvalq (φ(α))
+Q
+(1)
+φ(β)Og = r∈Fg rvalr (φ(β)) .
+The norm of φ(α) (resp. of φ(β)) is the product of the norms of the ideals in the right hand
+side and will be (crudely) bounded by the size of the finite field; therefore the number of ideals
+involved in a relation is less than log2 (pn ). One can also remark that the ideals that can occur
+in a relation have degrees that are at most equal to the degree of φ, that is t − 1. Therefore, it
+makes sense to include in F only the ideals of degree at most t − 1 (for a theoretical analysis
+of NFS one can consider the variant where only ideals of degree one are included in the factor
+base).
+3
+
+In order to estimate the probability to get a relation for a polynomial φ with given degree
+and size of coefficients, we make the common heuristic that the integer Res(φ, f ) · Res(φ, g) has
+the same probability to be B-smooth as a random integer of the same size and that the bias
+due to powers is negligible. Therefore, reducing the expected size of this product of norms is
+the main criterion when selecting the polynomials f and g.
+In the linear algebra stage, each relation is rewritten as a linear equation between the socalled virtual logarithms of the factor base elements. We recall this notion in Section 2.2. We
+make the usual heuristic that this system has a space of solutions of dimension one. Since
+the system is sparse, an iterative algorithm like Wiedemann’s [Wie86] is used to compute a
+non-zero solution in quasi-quadratic time. This gives the (virtual) logarithms of all the factor
+base elements.
+In principle, the coefficient ring of the matrix is Z/(pn − 1)Z, but it is enough to solve it
+modulo each prime divisor ` of pn − 1 and then to recombine the results using the PohligHellman algorithm [PH78]. Since one can use Pollard’s method [Pol78] for small primes `, we
+can suppose that ` is larger than Lpn (1/3). It allows us then to assume that ` is coprime to
+Disc(f ), Disc(g), the class numbers of Kf and Kg , and the orders of the roots of unity in Kf and
+Kg . These assumptions are used in many places in the rest of the article, sometimes implicitly.
+In the last P
+stage of the algorithm, called individual logarithm, the discrete logarithm of any
+i of F n in the finite field is computed. For this, we associate to z the
+element z = n−1
+p
+i=0 zi mP
+i
+algebraic number z = n−1
+i=0 zi α in Kf and check whether the corresponding principal ideal
+factors into prime ideals of norms bounded by a quantity B 0 larger than B. We also ask the
+prime ideals to be of degree at most t − 1. If z does not verify these smoothness assumptions,
+then we replace z by z e for a randomly chosen integer e and try again. This allows to obtain a
+linear equation similar to those of the linear system, in which one of the unknowns is log z. The
+second step of the individual logarithm stage consists in obtaining relations between a prime
+ideal and prime ideals of smaller norm, until all the ideals involved are in F. This allows to
+backtrack and obtain log z.
+
+2.2. Virtual logarithms. In this section, we recall the definition of virtual logarithms, while
+keeping in mind that in the rest of the article, we are going to use either explicit unit computations or Schirokauer maps. The constructions work independently in each number field, so
+we explain them for the field Kf corresponding to the polynomial f . During NFS, this is also
+applied to Kg .
+We start by fixing a notation for the “reduction modulo p” map that will be used in several
+places of the article.
+Definition 2.1 (Reduction map). Let ρf be the map from Of to Fpn defined by the reduction
+modulo the prime ideal p above p that corresponds to the factor ϕ of f modulo p. This is a
+ring homomorphism. Furthermore, if the norm of z is coprime to p, then ρf (z) is non-zero in
+Fpn . We can therefore extend ρf to the set of elements of Kf whose norm has a non-negative
+valuation at p.
+Since in this article we will often consider the discrete logarithm of the images by ρf , we
+restrict its definition to the elements of Kf whose norm is coprime to p, for which the image is
+non-zero.
+Let h be the class number Kf that we assume to be coprime to the prime ` modulo which the
+logarithms are computed. We also need to consider the group of units Uf in Of . By Dirichlet’s
+theorem it is a finitely generated abelian group of the form
+Uf ∼ Utors × Zr ,
+4
+
+where r is the unit rank given by r = r1 + r2 − 1 where r1 is the number of real roots of f and
+2r2 the number of complex roots, and Utors is cyclic. Any unit η ∈ Uf can be written
+η = εu0 0
+
+r
+Y
+u
+εj j
+
+j=1
+
+for fundamental units εj , j ≥ 1, and ε0 a root of unity.
+For each prime ideal q in the factor base Ff , the ideal qh is principal and therefore there
+exists a generator γq for it. It is not at all unique, and the definition of the virtual logarithms
+will depend on the choice of the fundamental units and of the set of generators for all the ideals
+of Ff . We denote by Γ this choice, and will use it as a subscript in our notations to remember
+the dependence in Γ. In particular, the notation logΓ used just below means that the definition
+of the virtual logarithm depends on the choice of Γ, and does not mean that the logarithm is
+given in base Γ; in fact all along the article we do not make explicit the generator used as a
+basis for the logarithm in the finite field.
+Definition 2.2 (Virtual logarithms – explicit version). Let q be an ideal in the factor base Ff ,
+and γq the generator for its h-th power, given by the choice Γ. Then the virtual logarithm of q
+w.r.t. Γ is given by
+logΓ q ≡ h−1 log(ρf (γq )) mod `,
+where the log notation on the right-hand side is the discrete logarithm function in Fpn .
+In the same manner, we define the virtual logarithms of the units by
+logΓ εj ≡ h−1 log(ρf (εj ))
+
+mod `.
+
+We now use this definition to show that for any polynomial φ yielding a relation, we can
+obtain a linear expression between the logarithm of ρf (φ(α)) in the finite field and the virtual
+logarithms of the ideals involved in the factorization of the ideal φ(α)Of :
+Y
+φ(α)Of =
+qvalq (φ(α)) .
+q∈Ff
+
+After raising this equation to the power h, we get an equation between principal ideals that can
+be rewritten as the following equation between field elements:
+Y uφ,j Y val (φ(α))
+u
+φ(α)h = ε0 φ,0
+εj
+γq q
+,
+j=1,r
+
+q∈Ff
+
+where the uφ,j are integers used to express the unit that pops up in the process. We then apply
+the map ρf , and use the fact that it is an homomorphism. We obtain therefore
+Y
+Y
+ρf (φ)h = ρf (ε0 )uφ,0
+ρf (εj )uφ,j
+ρf (γq )valq (φ(α)) ,
+j=1,r
+
+q∈Ff
+
+from which we deduce our target equation by taking logarithms on both sides:
+r
+X
+X
+(2)
+log (ρf (φ(α))) ≡
+uφ,j logΓ εj +
+valq (φ(α)) logΓ q mod `.
+j=1
+
+q∈Ff
+
+In this last step, the contribution of the root of unity ε0 has disappeared. Indeed, the following
+simple lemma states that its logarithm vanishes modulo `.
+Lemma 2.3. Let ε0 be a torsion unit of order r0 and assume that gcd(hr0 , `) = 1. Then we
+have logΓ ε0 ≡ 0 mod `.
+
+Proof. Since εr00 = 1 in Kf , we have ρf (ε0 )r0 = 1 in Fpn and we get hr0 logΓ ε0 ≡ 0 mod `.
+
+
+
+In order to make the equation 2 explicit for a given φ that yields a relation, it is necessary
+to compute the class number h of Kf , to find the generators of all the qh and to compute a set
+of fundamental units. These are reknowned to be difficult problems except for polynomials f
+with tiny coefficients.
+5
+
+We now recall an alternate definition of virtual logarithms based on the so-called Schirokauer
+maps, for which none of the above have to be computed explicitly.
+Definition 2.4 (Schirokauer maps). Let K` be the multiplicative subgroup of Kf∗ of elements
+whose norms are coprime to `.
+A Schirokauer map is an application Λ : (K` )/(K` )` → (Z/`Z)r such that
+• Λ(γ1 γ2 ) = Λ(γ1 ) + Λ(γ2 ) (Λ is linear);
+• Λ(Uf ) is surjective (Λ preserves the unit rank).
+Schirokauer [Sch93] proposed a fast-to-evaluate map satisfying these conditions that we recall
+now. Let us define first an integer, that is the LCM of the exponents required to apply Fermat’s
+theorem in each residue field modulo `:
+ = lcm{`δ − 1, such that f (x) mod ` has an irreducible factor of degree δ}.
+
+Then, by construction, for any element γ in K` , we have γ  congruent to 1 in all the residue
+fields above `. Therefore, the map
+γ(x) − 1
+mod (`, f (x)),
+`
+is well defined for γ ∈ K` . Taking the coordinates of the image of this map in the basis
+1, X, . . . , X deg f −1 , we can expect to find r independent linear combinations of these coordinates.
+They then form a Schirokauer map. In [Sch05], Schirokauer gave heuristic arguments for the
+existence of such independent linear combinations; and in practice, in most of the cases, taking
+the r first coordinates is enough.
+From now on, we work with a fixed choice of Schirokauer map that we denote by Λ. We start
+by taking another set of r independent units: for each j ∈ [1, r], we choose a unit εj such that
+γ(α) 7→
+
+(3)
+
+Λ(εj ) = (0, . . . , 0, h, 0, . . . , 0),
+
+where the coordinate h is in the j-th position. We can then refine the choice of the generators
+of the h-th power of the factor base ideals, so that we get another definition of the virtual
+logarithms.
+Definition 2.5 (Virtual logarithms – Schirokauer’s version). Let Λ be a Schirokauer map as
+described above. Let q be an ideal in the factor base Ff , and γq an (implicit) generator for its
+h-th power, such that Λ(γq ) = 0. Then the virtual logarithm of q w.r.t. Λ is given by
+logΛ q ≡ h−1 log(ρf (γq ))
+
+mod `.
+
+The virtual logarithms of the units are defined in a similar manner:
+logΛ εj ≡ h−1 log(ρf (εj ))
+
+mod `.
+
+As shown in [Sch05], by an argument similar to the case of explicit generators, one can write
+(4)
+
+log (ρf (φ(α))) ≡
+
+r
+X
+
+λj (φ(α)) logΛ εj +
+
+j=1
+
+X
+
+valq (φ(α)) logΛ q mod `,
+
+q∈Ff
+
+where λj is the j-th coordinate of Λ.
+2.3. Explicit units or Schirokauer maps? Equation (4) can be written for the two polynomials f and g and hence we obtain a linear equation relating only virtual logarithms. We
+remark that it is completely allowed to use the virtual logarithms in their explicit version for
+one of the polynomials if it is feasible, while using Schirokauer maps on the other side.
+Using explicit units requires to compute a generator for each ideal in the factor base, and
+therefore the polynomial must have small coefficients (and small class number). A lot of techniques and algorithms are well described in [LL93]. These include generating units and generators in some box or ellipsoid of small lengths, and recovery of units using floating point
+computations. These are quite easy to implement and are fast in practice. We may do some
+6
+
+simplifications when Kf has non-trivial automorphisms, since in this case the generators of
+several ideals can be computed from one another using automorphisms (see Section 3).
+In the general case, one uses Schirokauer maps whose coefficients are elements of Z/`Z for
+a large prime `. In our experiments, the values of the Schirokauer maps seem to spread in
+the full range [0, ` − 1] and must be stored on log2 ` bits. In a recent record [BGI+ 14], each
+row of the matrix consisted in average of 100 non-zero entries in the interval [−10, 10] and two
+values in [0, ` − 1], for a prime ` of several machine words. It is then worth to make additional
+computations in order to reduce the number of Schirokauer maps. This motivated our study in
+Section 5.
+3. Exploiting automorphisms
+Using automorphisms of the fields involved in a discrete logarithm computation is far from
+being a new idea. It was already proposed by Joux, Lercier, Smart and Vercauteren [JLSV06]
+and was a key ingredient in many of the recent record computations in small characteristic [Jou13a, GKZ14a]. In this section we recall the basic idea and make explicit the interaction
+with both definitions of virtual logarithms, using or not Schirokauer maps.
+3.1. Writing Galois relations. The results of this subsection apply potentially to both number fields Kf and Kg independently. Therefore, we will express all the statements with the
+notations corresponding to the polynomial f (that again, we assume to be monic for simplicity).
+We assume that Kf has an automorphism σ, and we denote by Aσ and Aσ−1 the polynomials
+of Q[x] such that σ(α) = Aσ (α) and σ −1 (α) = Aσ−1 (α). For any subset I of Kf , we denote by
+I σ the set {σ(x) | x ∈ I}.
+
+Proposition 3.1. Let q be a rational prime not dividing the index [O : Z[α]] of the polynomial f .
+Then, any prime ideal above q of degree one can be generated by two elements of the form
+I = hq, α − ri for some root r of f modulo q. If the denominators of the coefficients of Aσ and
+Aσ−1 are not divisible by q, then we have
+I σ = hq, α − Aσ−1 (r)i .
+
+Proof. Since σ −1 is an automorphism, we have f (Aσ−1 (α)) = 0. This is equivalent to f (Aσ−1 (x)) ≡
+0(modf (x)) and then f (Aσ−1 (x)) = u(x)f (x) for some polynomial u ∈ Q[x]. By evaluating in
+r we obtain f (Aσ−1 (r)) ≡ 0 (mod q). Then, by Dedekind’s Theorem, J = hq, α − Aσ−1 (r)i is a
+prime ideal of degree one.
+−1
+Since q and Aσ−1 (r) are rational, we have J σ = hq, Aσ−1 (α)−Aσ−1 (r)i. Since the polynomial
+−1
+Aσ−1 (x) − Aσ−1 (r) is divisible by x − r, J σ belongs to hq, α − ri = I. Therefore, J belongs to
+I σ . But J is prime, so J = I σ .
+
+Before stating the main result on the action of σ on the virtual logarithms, we need the
+following result on the Schirokauer maps.
+Lemma 3.2. Let Λ be a Schirokauer map modulo ` associated to Kf and let σ be an automorphism of Kf . Assume in addition that this Schirokauer map is based on the construction of
+Equation 3. Then we have
+ker Λ = ker(Λ ◦ σ).
+Proof. Let Aσ (x) ∈ Z[x] be such that Aσ (α) = σ(α). If γ = P (α) is in the kernel of Λ, then
+there exist u, v ∈ Z[x] such that
+(5)
+
+P (x) − 1 = `2 u(x) + `v(x)f (x).
+
+By substituting Aσ (x) to x, we obtain
+(6)
+
+P (Aσ (x)) − 1 = `2 u(Aσ (x)) + `v(Aσ (x))f (Aσ (x)).
+7
+
+Since σ is an automorphism of f , f (Aσ (x)) is a multiple of f (x). Hence, we obtain that
+σ(γ) = P (Aσ (α)) is in the kernel of Λ.
+
+Example 3.3. When f is an even polynomial, i.e. f (−x) = f (x), the application σ(x) = −x is
+an automorphism of the number field Kf = Q[x]/f (x). Consider the Schirokauer map as defined
+in Equation 3. We denote by Λ = (λ1 , . . . , λr ) the r first coordinates in basis 1, X, . . . , X deg f −1 ,
+and we assume that they are independent, so that Λ is indeed a Schirokauer map. Then applying
+the automorphism, we get Λ ◦ σ = (λ1 , −λ2 , λ3 , −λ4 , . . . , (−1)r+1 λr ), and we can check that its
+kernel coincides with the kernel of Λ.
+The following counter-example shows that the condition that Λ is constructed from Equation 3
+is necessary for Lemma 3.2 to hold.
+Example 3.4. Let Λ = (λ1 , . . . , λr ) be a Schirokauer map of Kf with respect to `, σ an
+automorphism of Kf and q a prime ideal. Then Λ0 = (λ1 + valq (·), λ2 , λ3 , . . . , λr ) does not
+−1
+satisfy ker Λ0 = ker Λ0 ◦ σ. Indeed, let γ be a generator of (qσ )h with Λ(γ) = 0. On the one
+hand we have Λ0 (γ) = 0. On the other hand, the first coordinate of Λ0 (σ(γ)) is the valuation in
+q of σ(γ), which is non zero because σ(γ) is in q.
+Theorem 3.5 (Galois relations). We keep the same notations as above, where in particular ϕ
+is a degree-n irreducible factor of f modulo p. Let σ be an automorphism of Kf different from
+the identity such that
+ϕ(ρf (Aσ (α))) = 0.
+Then, there exists a constant κ ∈ [1, ord(σ) − 1] such that the following holds:
+(1) Let Γ be a choice of explicit generators that is compatible with σ, i.e. such that for any
+prime ideal q the generators for the h-th powers of q and σ(q) are conjugates:
+γσ(q) = σ(γq ).
+Then we have for any prime ideal q:
+logΓ qσ ≡ pκ logΓ q (mod `).
+
+(2) For any Schirokauer map Λ which has a polynomial formula (as in Lemma 3.2) and for
+any prime ideal q, we have
+logΛ qσ ≡ pκ logΛ q (mod `).
+Proof. Since ρf (σ(α)) is a root of ϕ other than m = ρf (α), the map T (x) 7→ T (Aσ (x)) is an
+element of Gal(Fpn /Fp ) other than the identity. So, there exists a constant κ ∈ [1, ord(σ) − 1]
+κ
+such that Aσ (x) = xp for all x ∈ Fpn . In particular, if q is a prime ideal and γq is a generator
+of qh , we have
+(7)
+
+log ρf (σ(γq )) = pκ log(ρf (γq )).
+
+In the first assertion of the theorem, it is assumed that σ(γq ) is precisely the generator used
+for σ(q)h , and therefore the relation between virtual logarithms follows from their definition.
+For the second assertion, the compatibility of the generators is deduced from the definition
+of the virtual logarithms using Schirokauer maps. Indeed, for any prime ideal q, the generator
+used for the definition of logΛ q is such that Λ(γq ) = 0. By Lemma 3.2, γq is also in the kernel
+of Λ ◦ σ, that is Λ(σ(γq )) = 0, so that the conjugate of the generator is a valid generator for the
+conjugate of the ideal. The conclusion follows.
+
+We give an immediate application of the preceding results, which is useful when Kf is an
+imaginary quadratic field.
+Lemma 3.6. Let q be a rational prime which is totally ramified in Kf , and write q Of = qn .
+Assume that the unit rank of Kf is 0 and that n is coprime to `. Then we have
+log q ≡ 0 mod `.
+8
+
+Proof. Let h be the class number of Kf and γq a generator of qh such that log q = h−1 log γq .
+Then one can write q h = u(γq )n for some root of unity u. By Lemma 2.3, log u ≡ 0 mod `, so
+log(q h ) ≡ log((γq )n ) mod `.
+Since q belongs to the subgroup of Fqn given by equation xq−1 = 1 and since gcd(q − 1, `) = 1,
+Lemma 2.3 gives log q = 0. Then the results follows from the fact that n is coprime to `.
+
+3.2. Using Galois relations in NFS. Let σ and τ be automorphisms of Kf and Kg , and let
+us assume that they verify the hypothesis of Theorem 3.5. We can split Ff and Fg respectively
+in orbits (q, qσ , . . .) if q is in Ff and (q, qτ , . . .) if q is in Fg .
+This allows to reduce the number of unknowns in the linear algebra stage by a factor ord(σ)
+on the f -side and by a factor ord(τ ) on the g-side, at the price of having entries in the matrix
+that are roots of unity modulo ` instead of small integers. We collect as many relations as
+unknowns, hence reducing also the cost of the sieve.
+Note that the case where σ or τ is the identity is not excluded in our discussion (in that case,
+the orbits are singletons on the corresponding side).
+As an example, in Section 6 we will see how to construct polynomials f and g whose number
+fields have automorphisms σ and τ , both of order n. Then, the number of unknowns is reduced
+by n and the number of necessary relations is divided by n. Since the cost of the linear algebra
+stage is λN 2 , where N is the size of the matrix and λ is its average weight per row, i.e. the
+number of non-zero entries per row, we obtain the following result.
+Fact 3.7. If f and g are two polynomials with automorphisms σ and τ of order n verifying the
+hypothesis of Theorem 3.5, then we have:
+• a speed-up by a factor n in the sieve;
+• a speed-up by a factor n2 in the linear algebra stage.
+The particular case when Aσ = Aτ . In Section 6.3, we will present a method to select
+polynomials f and g with automorphisms σ and τ ; it that σ and τ are expressed by the same
+rational fraction Aσ = Aτ . Moreover, the numerator and denominator are constant or linear
+polynomials. A typical example is when both polynomials are reciprocal and then σ(α) = 1/α
+and τ (β) = 1/β.
+Let φ ∈ Z[x] be a polynomial yielding a relation. When we apply σ and τ to the corresponding
+system of equations (1), we get:
+(
+Q
+φ(Aσ (α))Of = q∈Ff (qσ )valq (φ(α))
+Q
+(8)
+φ(Aτ (τ ))Og = r∈Fg (rτ )valr (φ(β)) ,
+Since Aσ = Aτ have a simple form, there is a chance that φ ◦ Aσ has a numerator that is
+again a polynomial of the form that would be tested later. The relations being conjugates of
+each others, the second one brings no new information and should not be sieved.
+Again, we illustrate this on the example of reciprocal polynomials, where Aσ (x) = Aτ (x) =
+1/x. For polynomials φ(x) = a − bx of degree 1, the numerator of φ ◦ Aσ is b − ax. Therefore, it
+is interesting not to test the pair (b, a) for smoothness if the pair (a, b) has already been tested.
+If the sieve is implemented using the lattice sieve, e.g. in CADO-NFS [BFG+ 09], one can
+collect precisely these polynomials φ such that φ(α) is divisible by one of the ideals q in a list
+given by the user. In this case, we make a list of ideals q which contains exactly one ideal in each
+orbit {q, σ(q), . . . , σ n−1 (q)}. Hence, we do not collect at the same time φ and the numerator of
+φ ◦ Aσ except if the decomposition of φ(α) in ideals contains two ideals q and q0 which are in
+our list of ideals or conjugated to such an ideal.
+9
+
+4. Vanishing of the logarithms of units
+In this section, we are again in the case where we study the fields Kf and Kg independently.
+Therefore, we stick to the notations for the f -side, but we keep in mind that this could be
+applied to g. Furthermore, for easier reading, for this section we drop the subscript f , for
+structures related to f : K = Q(α) is the number field of f , U the unit group whose rank is
+denoted by r, and ρ is the reduction map to Fpn .
+Also, some of the results of this section depend on the fact that ` is a factor of pn − 1 that
+is in the “new” part of the multiplicative group: we will therefore always assume that ` is a
+prime factor of Φn (p). The aim of this section is to give cases where the logarithms of some or
+all fundamental units are zero, more precisely units u for which log ρ(u) ≡ 0 mod `.
+4.1. Units in subfields. The main case where we can observe units with zero virtual logarithms is when the subfield fixed by an automorphism as in Section 3 has some units.
+Theorem 4.1. With the same notations as above, assume that v1 , . . . , vr are units of K which
+form a basis modulo `. Let σ be an automorphism of K and assume that there exists an integer
+A such that A 6≡ 1 mod ` and, for all x ∈ K of norm coprime to p,
+log ρ(σ(x)) ≡ A log ρ(x)
+
+(9)
+
+mod `.
+
+Let K hσi be the subfield fixed by σ and let r0 be its unit rank. Let u01 , . . . , u0r0 be a set of units of
+K hσi which form a basis modulo `. Then, K admits a basis u1 , . . . , ur modulo ` such that the
+discrete logarithms of ρ(u1 ), . . . , ρ(ur0 ) are zero modulo `.
+Proof. For any x ∈ K hσi we have σ(x) = x, so, when ρ is defined, we have log(ρ(σ(x))) ≡
+log(ρ(x)) mod `. Using Equation (9) we obtain that log(ρ(x)) ≡ 0 mod ` for all x in K hσi of
+norm coprime to p. In particular, for 1 ≤ i ≤ r0 , we have log(ρ(u0i )) ≡ 0 mod `.
+One checks that u01 , . . . , u0r0 are units in K. Since they form a basis modulo `, there is no
+non-trivial product of powers of u01 , . . . , u0r0 which is equal to an `th power. Then, one can select
+
+r − r0 units among v1 , . . . , vr to extend u01 , . . . , u0r0 to a basis modulo `.
+Example 4.2. Consider the family of CM polynomials
+f = x4 + bx3 + ax2 + bx + 1,
+|a| < 2,
+|b| < 2 + a/2.
+
+(10)
+
+There is always the automorphism, ∀T ∈ Z[x], σ(T (x)) = T (1/x) of order 2, so that we have
+A = p ≡ −1 mod ` for use in the Theorem. We claim that r = r0 = 1. Let us call α a complex
+root of f . Since β = α + 1/α is not rational and fixed by σ, we have K hσi = Q(α + 1/α). Since
+β is a root of the equation P (Y ) = Y 2 + bY + (a − 2) = 0, whose discriminant b2 + 4(2 − a)
+hσi is real and we have r 0 = 1. The roots of f are roots of x + 1/x = y or y for
+is positive, Kp
+1
+2
+p
+y1 = −b/2 − b2 /4 + (2 − a) and y2 = −b/2 + b2 /4 + (2 − a). Since |b| < 2 + a/2, f has no
+real roots, so r = 1.
+A second proof is as follows. Note that f (X) factors over Q(β) as
+(X 2 − βX + 1)(X 2 + (b + β)X + 1).
+
+We put ϕ(X) = X 2 − βX + 1. Let p be a prime for which P (Y ) is reducible modulo p and ϕ is
+not. The following picture shows the characteristic 0 picture, as well as the one modulo p.
+K = Q(α) = Q[X]/(f (X))
+HH
+H
+
+H
+j F 2 = F [X]/(ϕ(X))
+K hσi = Q(β) = Q[Y ]/(P (Y )) XXX H
+p
+p
+XXX
+XXX
+z
+
+Q
+
+Fp
+
+Let ` | p + 1. If ε1 is the fundamental unit of K hσi (and also of K by construction), we have
+log ρ(ε1 ) ≡ 0 mod `.
+10
+
+4.2. Extra vanishing due to F` -linear action. In the previous section, we have just seen
+that with a careful choice of the basis of units, some of the basis elements can have a zero
+virtual logarithm. In general, there could be another choice for the basis that give more zero
+logarithms. We call Ropt the maximum number of units of K in a basis modulo ` that can have
+zero logarithm. With this notation, the result of Theorem 4.1 becomes Ropt ≥ r0 .
+The aim of this section it to prove a better lower bound for Ropt . By studying the F` -linear
+action of σ on the units, we will be able to choose a basis for which the number R of independent
+units with zero logarithm is (often) larger than r0 . Therefore, the notation R in this section is
+a lower bound on the maximal number of units of K in a basis modulo ` that can have zero
+logarithm; and we always have Ropt ≥ R.
+
+For the unit group U of K, consider the vector space U/U ` over F` . We assume that ` is
+large enough so that K has no roots of unity of order `; therefore the dimension of U/U ` is
+equal to r.
+We denote by σ the vector space homomorphism U/U ` → U/U ` , σ(uU ` ) = σ(u)U ` . For
+simplicity, in the sequel, we drop the bar above σ. Let µ`,σ (x) be the minimal polynomial of σ;
+it is a divisor of xn − 1, since σ has order n. Note however that, σ can have a smaller order
+than σ, as seen by Example 4.2 where σ has order two but its restriction to the unit group is
+the identity.
+Since ` is a divisor of Φn (p), Φn (x) splits completely in F` . Then, xn − 1 and µ`,σ split
+completely in F` :
+deg µ`,σ
+
+(11)
+
+µ`,σ (x) =
+
+Y
+i=1
+
+(x − ci ),
+
+where ci are distinct elements of F` . We remark at this point that as an endomorphism of
+F` -vector spaces, σ is diagonalizable. For any eigenvalue c ∈ F` of σ, we denote by Ec the
+eigenspace of c:
+o
+n
+(12)
+Ec = u ∈ U | ∃v ∈ U, σ(u) = uc v ` ,
+and since the endomorphism is diagonalizable, the whole vector space can be written as a direct
+sum of eigenspaces:
+deg µ`,σ
+
+Y
+
+U/U ` =
+
+(13)
+
+Eci .
+
+i=1
+
+The case covered by Theorem 4.1 corresponds to the units that are fixed by σ, i.e. the units
+in the eigenspace E1 . The following lemma generalizes the result to other eigenvalues.
+Lemma 4.3. If c ∈ F` is an eigenvalue distinct from A (as defined in (9)), then, for all units
+u such that the class of u in U/U ` belongs to Ec , we have log(ρ(u)) ≡ 0 mod `.
+Proof. For such a unit u, we have
+log(ρ(σ(u))) ≡ c log(ρ(u))
+
+mod `.
+
+log(ρ(σ(u))) ≡ A log(ρ(u))
+
+mod `.
+
+By assumption on A, we have
+We conclude that the logarithm of ρ(u) is zero.
+
+
+
+Corollary 4.4. Using the notations above, we have R = r − dim EA , where A is as in (9).
+At this stage, we get an expression that gives the units that have to be considered during the
+NFS algorithm. But this expression depends on `, whereas in many cases it will be inherited
+from global notions and will be the same for any ` dividing Φn (p). Therefore we consider the
+linear action of σ on the group of non-torsion units.
+11
+
+Let Utor be the torsion subgroup of U and ε0 a generator of Utor . Let ε1 , ε2 , . . . , εr be a
+system of fundamental units. Let Mσ be the matrix of the endomorphism σ on U/Utor , in basis
+ε1 Utor , . . . , εr Utor . Then Mσ belongs to GLr (Z). Since Mσ cancels the monic polynomial xn − 1,
+Mσ admits a minimal polynomial µZ,σ with integer coefficients. Note that µZ,σ does not depend
+on the system of fundamental units used. The following lemma shows that finding roots modulo
+` of µZ,σ gives local information about the vanishing of the logarithms modulo `.
+Lemma 4.5. For any root c ∈ F` of µZ,σ (x) the dimension of the eigenspace dim(Ec ) in U/U `
+is at least 1.
+Proof. Since Mσ has integer coefficients, its characteristic polynomial χMσ is monic with integer
+coefficients. We deduce that µZ,σ is monic with integer coefficients. We claim that, for all primes
+`,
+(14)
+
+µZ,σ = µ`,σ .
+
+On the one hand, µZ,σ has the same irreducible factors over Q as the characteristic polynomial
+χMσ of Mσ . Since σ cancels xn − 1, they occur with multiplicity one in µZ,σ . Hence, µZ,σ is the
+product of irreducible factors of χMσ , taken with multiplicity one.
+On the other hand, µ`,σ has the same irreducible factors as the characteristic polynomial of
+σ, which is the reduction of χMσ modulo `. Since, σ cancels xn − 1, µ`,σ is product of the
+irreducible factors of χZ,σ modulo `, taken with multiplicity one. We obtain equation (14).
+Finally, it is a classic property of minimal polynomial that all its roots have nonzero eigenspaces.
+
+We already mentioned the link between the eigenspace of 1 and Theorem 4.1. We now make
+this more precise:
+Lemma 4.6. Using the previous notations, we have dim E1 = r0 , except for a finite set of
+primes `.
+Proof. Consider a system of fundamental units. By Theorem 4.1 there exists a basis (ui ),
+1 ≤ i ≤ r, of U/Utors such that the first r0 elements are fixed by σ and, no unit in the subgroup
+V generated by ui , r0 + 1 ≤ i ≤ r, is fixed by σ. After block-diagonalization, we can assume
+that V /Vtors is stable by σ and we let Mσ be the matrix of σ on V /Vtors . The determinant of
+(Mσ − id) is an integer D. If ` is prime to D, the discriminant of σ on V /V ` is non-zero. Hence,
+dim E1 ≤ r0 , which completes the proof.
+
+As a first application, we study the case of cyclic extensions of prime degree.
+Proposition 4.7. Let n be an odd prime and K/Q a cyclic Galois extension of degree n. Let
+p and ` be two primes such that Φn (p) is divisible by `. Let ρ be a ring morphism which sends
+any element x of K with νp (x) ≥ 0 into the field Fpn . Let σ be an automorphism of K of
+order n for which there exists a constant κ such that, for all x ∈ K of positive p-valuation,
+ρ(σ(x)) = pκ ρ(x). Then we have R = n − 2.
+Proof. We want to compute µZ,σ . Since σ has order n, µZ,σ is a divisor of (xn −1) = (x−1)Φn (x).
+By Lemma 4.6, dim ker(σ − id) = r0 , the unit rank of the subfield fixed by σ. In our case, this
+subfield is Q, so r0 = 0. Then, we have µZ,σ = Φn (x).
+Let f be a defining polynomial of K. Since f has odd degree, it has at least a real root α. Since
+K is Galois, K = Q(α), so all roots of K are real, hence its unit rank is n − 1. By Lemma 4.5,
+since deg(Φn ) = n−1 = dim U/U ` , all the eigenspaces of roots of Φn have dimension one. Using
+Corollary 4.4, we have R = n − 2.
+
+4.3. Fields of small degree. We are now in position to list possible cases for fields of small
+degree. As a warm-up, we start with the case of degree 2. The imaginary case is of course
+trivial, since the unit rank is 0. For the real quadratic case, the unit rank r is 1, and one could
+12
+
+deg(K) ord(σ) sign(K), sign(K hσi )
+µZ,σ
+R
+4
+2
+(4,0), (2,0)
+(x − 1)(x + 1)
+1
+(2,1), (2,0)
+(x − 1)(x + 1)
+1
+(0,2), (0,1)
+x+1
+0
+(0,2), (2,0)
+x−1
+1
+4
+(4,0), (x + 1)(x2 + 1)
+2
+(0,2), x+1
+1
+6
+2
+(0,3), (1,1)
+(x − 1)(x + 1)
+1
+(0,3), (3,0)
+x−1
+2
+3
+(6,0), (2,0)
+(x − 1)(x2 + x + 1)
+3
+(0,3), (0,1)
+x2 + x + 1
+1
+6
+(6,0), (x + 1)(x2 + x + 1)(x2 − x + 1) 4
+(0,3), x2 + x + 1
+1
+Table 1. Table of values of R for fields of degree 4 and 6.
+
+r r−R
+3
+2
+2
+1
+1
+1
+1
+0
+3
+1
+1
+0
+2
+1
+2
+0
+5
+2
+2
+1
+5
+1
+2
+1
+
+wonder whether there are cases when we can tell in advance that the virtual logarithm of the
+unit is 0 modulo ` with our method.
+In fact, this does not occur. Indeed, the automorphism σ is of order 2 and therefore the unit
+rank r0 of the subfield is 0. By Lemma 4.6 the dimension of the eigenspace E1 is therefore 0 as
+well. This is no surprise: the fundamental unit is not defined over Q, so it is not fixed by σ.
+The next step is to study µZ,σ . Since σ as order 2, µZ,σ divides x2 − 1, and we have just seen
+that 1 is not an eigenvalue. Therefore we deduce that µZ,σ = x + 1. Hence the vector space
+U/U ` is reduced to the eigenspace E−1 . Since −1 is precisely the value A as in (9), we can not
+conclude.
+The cases of degree 3 and 5 are covered by Proposition 4.7. In Table 1, we list the cases for
+degree 4 and 6. In all cases, a classification according to the signatures of the field and of the
+fixed subfield is enough to conclude about the value of R.
+Theorem 4.8. The values of R for K/Q of degree 4 or 6 having non-trivial automorphisms
+are as given in Table 1.
+Proof. Let us consider the various cases of Tab. 1. In each case, we use a strategy of proof that
+is not so different from the real quadratic case that we mentioned in introduction. In order to
+determine the minimal polynomial µZ,σ , we consider the factors of xn − 1 in Z[x] and we use
+the fact that deg µ`,σ is at most dim(U/U ` ) = r.
+Case deg(K) = 4 and ord(σ) = 2
+• Case when sign(K)=(4,0) and sign(K hσi )=(2,0). Then, r = 3 and r0 = 1. Further, x − 1
+divides µZ,σ with multiplicity one. Since σ cancels x2 − 1, the minimal polynomial is
+µZ,σ = x2 − 1. Hence, we have dim E−1 = 2. Since A = −1, we obtain R = r0 = 1.
+• Case when sign(K)=(2,1) and sign(K hσi )=(2,0). Note first that (2,0) is the unique
+possibility for sign(K hσi ). Indeed, if α is a real root of a defining polynomial of K,
+then Q (α + σ(α)) is fixed by σ and has degree two, so it is K hσi . Since this quadratic
+field is real, its signature is (2,0). As above we have that dim E1 ≥ 1 and therefore
+µZ,σ = (x − 1)(x + 1), implying that R = 1.
+• Case when sign(K)=(0,2) and sign(K hσi )=(0,1). Here r = 1 and r0 = 0. For sufficiently
+large values of `, by Lemma 4.6, the space E1 of units fixed by σ has dimension r0 = 0.
+Since the minimal polynomial divides x2 − 1, we have µZ,σ = x + 1. We deduce that
+R = 0.
+• Case when sign(K)=(0,2) and sign(K hσi )=(2,0). Here we have r = r0 = 1. Then any
+unit is fixed by σ and E1 = U/U ` , so µZ,σ = x − 1 and R = 1. We remark that the
+fields of Example 4.2 falls in this category.
+13
+
+Case deg(K) = 4 and ord(σ) = 4 Note that K is either totally real or its defining polynomial
+has no real root. Hence we have two cases:
+• Case when sign(K)=(4,0). Here we can apply to τ = σ 2 the results on the case of degree
+four polynomials with automorphisms of order two. Hence we have dim ker(σ 2 − 1) =
+dim ker(τ − 1) = 1 and dim(σ 2 + 1) = dim(τ + 1) = 2. The fixed field has degree 1, so
+r0 = 0. Then, the minimal polynomial is µZ,σ = (x + 1)(x2 + 1), and we have R = 2.
+• Case when sign(K)=(0,2). Here the unit rank of K is r = 1, so the minimal polynomial
+is linear. Since, r0 = 0, we have dim E1 = 0, so µZ,σ = x + 1. Since A is of order 4 it is
+not −1; hence, we obtain R = 0. Note that here the group automorphism σ equals −1,
+so it has a smaller order that the field automorphism σ.
+Case deg(K) = 6 and ord(σ) = 2
+Here the signature of K can be (6, 0), (4, 1), (2, 2) and (0, 3). We only deal with the case
+(0, 3) in the present version of our work.
+The unit rank of K is r = 2 and the minimal polynomial is a factor of x2 − 1. The value of R
+is determined by the signature of the subfield fixed by σ, which is cubic and can have signature
+(3,0) or (1,1).
+• Case when sign(K hσi )=(1,1). The unit rank of the fixed subfield is r0 = 1 and R = 1.
+• Case when sign(K hσi )=(3,0). Here we have r0 = 2, so dim E1 = r and µZ,σ = x − 1.
+This shows that R = 2.
+
+Case deg(K) = 6 and ord(σ) = 3
+Note that, the signature (rR ,rC ) of K satisfies rR ≡ 0 mod 3. Indeed, if a defining polynomial
+of K has a real root α, the roots σ(α) and σ 2 (α) are also real. The two values for the signature
+are (6,0) and (0,3).
+• Case when sign(K)=(6,0). Since K is real, K hσi is also real, so r0 = 1. As in the previous
+cases, the polynomial µZ,σ is a factor of (x − 1)(x2 + x + 1). Since, dim E1 = r0 = 1 is
+neither 0 nor r, we have µZ,σ = (x − 1)(x2 + x + 1). Since, the characteristic polynomial
+over Q, of σ restricted to V = ker(σ 2 + σ + 1) has the same irreducible factors, we have
+χσ |V = (x2 + x + 1)2 . Suppose ab absurdo that, for a root c of µZ,σ modulo `, we have
+dim Ec ≥ 3. Then χσ modulo ` is divisible by (x − c)3 . It is impossible because it has
+two roots of multiplicity at least two, so, for the two roots of x2 + x + 1 modulo ` we
+have dim Ec = 2. It implies that R = 3.
+• Case when sign(K)=(0,3). The unit rank of K is r = 2, so the minimal polynomial is
+x − 1 or x2 + x + 1. The fixed subgroup has degree 2, so we cannot have r0 = 2. This
+shows that µZ,σ = x2 + x + 1. Then, r0 = 0 and R = 1.
+
+Case deg(K) = 6 and ord(σ) = 6
+As in the case of cyclic quartic Galois extensions, either K is real or has no real roots.
+
+• Case when sign(K)=(6,0). The unit rank of K is 5, so the minimal polynomial is
+equal to a factor of (x − 1)(x + 1)(x2 + x + 1)(x2 − x + 1), having degree less than
+or equal to 5. Since the fixed subgroup is Q, we have r0 = 0, so dim E1 = 0. The
+fixed subfield of σ 3 is a cubic cyclic Galois extension, so its unit rank is two. Hence
+dim ker(σ 3 − 1) = 2. Since dim E1 = 0, x2 + x + 1 divides µZ,σ . We also deduce that
+dim ker(σ 3 + 1) = 3. The subfield fixed by σ 2 has degree two, so its unit rank is at
+most one. It implies that dim(ker(σ + 1)) 6= 3, so x2 − x + 1 divides µZ,σ . Since the
+dimension of its kernel is even, dim E−1 6= 0, so (x + 1) divides µZ,σ . We conclude that
+µZ,σ = (x + 1)(x2 + x + 1)(x2 − x + 1) and R = 4.
+• Case when sign(K)=(0,3). The subfield fixed by σ 3 is a cyclic cubic extension of Q,
+so its unit rank is 2. This means that dim ker(σ 3 − 1) = 2, so the minimal polynomial
+divides x3 − 1. The fixed subgroup of σ is Q, so dim E1 = 0 and µZ,σ = x2 + x + 1. We
+obtain that R = 1.
+
+
+14
+
+4.4. Effective computations. Theorem 4.8 tells us that we do not need to consider the logarithms of all units in many cases. If we have a system of units which form a basis modulo `, we
+can make the theorem effective by solving linear systems. This is a less stronger condition than
+computing a system of fundamental units. One can investigate the use of Schirokauer maps to
+avoid any requirement of effective computations of units. Let us see a series of examples which
+illustrate Theorem 4.8.
+4.4.1. Minkowski units. A Minkowski unit for K, if it exists, is a unit ε such that a subset of
+the conjugates of ε forms a system of fundamental units. Some results on the classification of
+such fields exist, we will come back to them in the final version of this work.
+As an example, when K is totally cyclic of degree 3, it is real and there exists always a
+Minkowski unit as shown by Hasse [Has48, p. 20]. In that case, using the proof in 3.5, we see
+that
+log ρ(εσ ) ≡ pκ log ρ(ε) mod `,
+so that we need to find log ρ(ε) mod ` only. It matches Table 1, where we read that only
+r − R = 3 − 2 = 1 (well chosen) Schirokauer map is required.
+4.4.2. The degree 4 cases. When the signature is (4, 0) and the Galois group is C4 , we can
+precise the structure of UK , see [Has48, Gra79]. The first case is when K admits a Minkowski
+2
+unit, that is ε such that UK = h−1, ε, εσ , εσ i. And we use the same reasoning as in Section
+4.4.1 to reduce the number of logarithms needed to 1.
+In the second case, UK = h−1, 1 , χ , σχ i, where 1 is the fundamental unit of the quadratic
+subfield and χ is a generator of the group of relative units, that is η ∈ UK such that NK/K2 (η) =
+±1. We gain two logarithms since we can use the Galois action for log ρ(σχ ), and we know
+log ρ(1 ).
+Note that Table 1 predicts that the two cases above, with or without relative units, lead to
+the same number of Schirokauer maps: r − R = 1.
+
+For signature (0, 2), the rank of K is 1, and the fundamental unit is that from the real
+quadratic subfield, so we don’t need any logarithm at all. To be more precise, let us detail the
+case of our favorite example: f (X) = X 4 +1 which defines the 8-th roots of unity, say K = Q(ζ8 ).
+The Galois group of f is V4 and K has two automorphisms σ1 : x 7→ −x, σ2 : x 7→ 1/x. We
+compute that
+√
+√
+K hσ1 i = Q(i), K hσ2 i = Q( 2), K hσ1 σ2 i = Q( −2).
+The corresponding factorizations of f (X) are
+f (X) = (X 2 + i)(X 2 − i),
+√
+√
+f (X) = (X 2 − 2X + 1)(X 2 + 2X + 1),
+√
+√
+f (X) = (X 2 − −2X − 1)(X 2 + −2X − 1).
+Since f has signature (0, 2), we have UK = hζ8 i × hεi, where ε comes from K hσ2 i , the only real
+quadratic subfield. By Theorem 4.8, we do not need any logarithm of units for use in NFS.
+5. Reducing the number of Schirokauer maps
+
+In this section, we use the preceding Section to conclude that we can reduce the number of
+Schirokauer maps needed in NFS-DL.
+We use the notations of Section 4. A system of r units is a basis modulo ` if its image in
+U/U ` is a basis. Let p be a prime and n an integer such that the reduction of g modulo p has
+an irreducible factor of degree n. Let ` be a prime factor of pn − 1, coprime to p − 1. In order
+to reduce the number of Schirokauer maps associated to g, we follow the steps below:
+(1) We find a system of r elements in U which form a basis modulo `.
+(2) We compute an integer R ≤ r, as large as possible, and a system of r elements u1 , . . . , ur
+in U which form a basis modulo `, such that the discrete logarithms of ρ(u1 ), . . . , ρ(uR )
+are zero modulo `.
+15
+
+(3) Using any set of r Schirokauer maps and the system of fundamental units above, we
+compute a set of Schirokauer maps λ1 , . . . , λr such that the NFS algorithm can be run
+using only the last r − R Schirokauer maps λR+1 , . . . , λr .
+We do not discuss the first point here. Point (2) was studied in Section 4. Point (3) is solved
+by the corollary of the following theorem.
+Theorem 5.1. Let λ1 , . . . , λr be a set of Schirokauer maps and let u1 , . . . , ur a system of
+effectively computed units in U , whose image in U/U ` form a basis. Then there exits a set of
+effectively computable Schirokauer maps λ01 , . . . , λ0r such that, for 1 ≤ i, j ≤ r,
+
+1
+if i = j,
+0
+(15)
+λi (uj ) =
+0
+otherwise.
+Proof. Let L = (li,j ) be the r × r matrix of entries li,j = λi (uj ). Let C = (ci,j ) be the inverse
+of L. Then, we put
+r
+X
+0
+(16)
+λi =
+ci,n λn .
+n=1
+0
+0
+We have λi (uj ) = (CL)i,j , so the maps λi verify the condition in Equation (15).
+
+
+
+Corollary 5.2. Let u1 , . . . , ur be a set of units, effectively computed, which form a basis modulo `. Assume that for some integer R, 1 ≤ R ≤ r, the first R units u1 , . . . , uR are such that
+log (ρ(ui )) ≡ 0 mod `. Then, there exists a set of r effectively computable Schirokauer maps
+λ01 , . . . , λ0r such that NFS can be run with the last r − R maps instead of the complete set of r
+maps.
+Proof. Using any set of Schirokauer maps, we compute λ01 , . . . , λ0r such that Equation (15) holds.
+By Equation (4) in Section 2.2, when running NFS with the maps λ01 , . . . , λ0r , the linear
+algebra stage computes the virtual logarithms of the ideals in the factor base together with r
+constants χi , 1 ≤ i ≤ r such that
+r
+X
+X
+(17)
+log(ρ(γ)) ≡
+log q valq (γ) +
+χi λi (γ) mod `.
+i=1
+
+q∈F
+
+For 1 ≤ i ≤ r, when injecting γ = ui in Equation (17) we obtain that χi = log(ρ(ui )). For
+1 ≤ i ≤ R we have log(ρ(ui ) ≡ 0 mod `, and therefore χi ≡ 0 mod `. Hence, Equation (17)
+can be rewritten with r − R Schirokauer maps:
+r
+X
+X
+(18)
+log(ρ(γ)) ≡
+log q valq (γ) +
+χi λi (γ) mod `.
+i=R+1
+
+q∈F
+
+
+Example 5.3. (continued) The corollary above states that the polynomials in the family described in Example 4.2 do not require any Schirokauer map. Moreover, note that if f1 and f2
+are two polynomials in this family and µ1 , µ2 are two positive rationals such that µ1 + µ2 = 1,
+then µ1 f1 + µ2 f2 also belongs to this family.
+A more important example is that of cubic polynomials with an automorphism of order three.
+Then, we can effectively compute a linear combination Λ1,2 of any two Schirokauer maps Λ1
+and Λ2 so that NFS can be run with Λ1,2 as unique Schirokauer map.
+6. Two new methods of polynomial selection
+In this section, we propose two new methods to select the polynomials f and g, in the case
+of finite fields that are low degree extensions of prime fields. The first one is an extension to
+non-prime fields of the method used by Joux and Lercier [JL03] for prime fields. The second
+√
+one, which relies heavily on rational reconstruction, insists on having coefficients of size O( p)
+for g. For both methods, f has very small coefficients, of size O(log p).
+16
+
+6.1. The state-of-art methods of polynomial selection. Joux, Lercier, Smart and Vercauteren [JLSV06] introduced two methods of polynomial selection, one which is the only option
+for medium characteristic finite fields and one which is the only known for the non-prime large
+characteristic fields.
+6.1.1. The first method of JLSV. Described in [JLSV06, §2.3], this method is best adapted to
+the medium characteristic case. It produces two polynomials f, g of same degree n, which have
+√
+coefficients of size p each.
+One starts by selecting a polynomial f of the form f = fv + afu with a parameter a to
+be chosen. Then one computes a rational reconstruction (u, v) of a modulo p and one defines
+g = vfv + ufu . Note that, by construction, we have f = v · g mod p. Also note that both
+√
+polynomials have coefficients of size p.
+√
+Example 6.1. Take p = 1000001447 and a = 44723 ≥ d pe. One has f = x4 − 44723x3 −
+6x2 + 44723x + 1 and g = 22360x4 − 4833x3 − 134160x2 + 4833x + 22360 with u/v = 4833/22360
+a rational reconstruction of a modulo p.
+The norm product is Nf Ng = E 2n p = E 2n Q1/n .
+If one wants to use automorphisms as in Section 6, then one chooses f in a family of polynomials which admit automorphisms. For example when n = 4, one can take f in the family
+presented in Tab. 4, formed of degree 4 polynomials with cyclic Galois group of order four,
+having an explicit automorphism: f = (x4 − 6x2 + 1) + a(x3 − x) = fv + afu . Note that the
+second polynomial g belongs to the same family and has the same automorphisms.
+6.1.2. The second method of JLSV. The second method is described in [JLSV06, §3.2]. It starts
+by computing g of degree n then it computes f of degree deg f ≥ n. First one selects g0 of
+degree n and small coefficients. Then one chooses an integer W ∼ p1/(d+1) , but slightly larger,
+and set g = g0 (x + W ). The smallest degree coefficient of g has size W n . We need to take
+into account the skewness of the coefficients. The polynomial f is computed by reducing the
+lattice of polynomials of degree at most d, divisible by g modulo p. We do this by defining the
+matrix M in Sec. 6.2, eq. (20), with ϕ = g. We obtain a polynomial f with coefficients of size
+pn/(d+1) = Q1/(d+1) .
+Example 6.2. Consider again the case of p = 1125899906842783 and n = 4. We take g0
+a polynomial of degree four and small coefficients, for example g0 = x4 − x3 − 6x2 + x + 1.
+We can have deg(f ) = d for any value of d ≥ n, we take d = 7 for the example. We use
+W = 77 ≥ p1/(d+1) , where we emphasize that we do not use Q1/(d+1) , and we set
+g = g0 (x + W ) = x4 + 307x3 + 35337x2 + 1807422x + 34661012.
+We construct the lattice of polynomials of degree at most 7 which are divisible by g modulo p.
+We obtain
+f = 12132118x7 + 11818855x6 + 2154686x5
+−7076039x4 + 7796873x3 + 7685308x2 + 4129660x − 14538916.
+Note that f and g have coefficients of size Q1/8 .
+For comparison, we compute the norms’ product: E d+n Q2/(d+1) . However, one might obtain
+a better norms product using the skewness notion introduced by Murphy [Mur99]. Without
+entering into details, we use as a lower bound for the norms product the quantity E d+n Q3/2(d+1) .
+Indeed, the coefficients of f have size Q1/(d+1) and the coefficients of g have size Q1/(d+1) , which
+cannot be improved more than Q1/2(d+1) using skewness. This bound is optimistic, but even so
+the new methods will offer better performances.
+17
+
+6.2. The generalized Joux-Lercier method. In the context of prime fields, Joux and Lercier
+proposed a method in [JL03] to select polynomials using lattice reduction. They start with a
+polynomial f of degree d + 1 with small coefficients, such that f admits a root m modulo p.
+Then, a matrix M is constructed with rows that generate the lattice of polynomials of degree at
+most d with integer coefficients, that also admits m as a root modulo p. We denote by LLL(M )
+the matrix obtained by applying the LLL algorithm to the rows of M :
+
+
+p
+ −m
+
+M =
+..
+
+.
+−md
+
+(19)
+
+0
+1
+..
+
+.
+···
+
+···
+0
+..
+.
+0
+
+
+
+0
+g0 g1
+ ∗ ∗
+0 
+
+
+ , LLL(M ) =  . .
+ .. ..
+0 
+∗ ∗
+1
+
+···
+···
+..
+.
+···
+
+
+gd
+∗ 
+
+..  .
+. 
+∗
+
+The first row gives a polynomial g = g0 + g1 x + . . . + gd xd , that has a common root m with
+f , and the pair of polynomials (f, g) can be used for computing discrete logarithm in Fp with
+the NFS algorithm.
+In order to tackle discrete logarithms in Fpn , we generalize this to polynomials (f, g) that
+share an irreducible common factor ϕ of degree n modulo p. Let d0 be an integer parameter
+0
+that we choose below. We select f an irreducible polynomial in Z[x] of degree d + 1 P
+≥ n, with
+small coefficients, good sieving properties and an irreducible degree n factor ϕ = ni=0 ϕi xi
+modulo p, that we force to be monic. We define a (d0 + 1) × (d0 + 1) matrix M whose rows
+generate the lattice of polynomials of degree at most d0 + 1 for which ϕ is also a factor modulo
+p. Then, running the LLL algorithm on this matrix gives a matrix whose rows are generators
+with smaller coefficients. A possible choice for the matrix M is as follows, where the missing
+coefficients understand to be zero.
+
+
+(20)
+
+
+
+p
+
+
+
+
+
+M =
+ ϕ0
+
+
+
+
+..
+
+.
+
+ϕ1
+..
+.
+
+p
+···
+..
+.
+ϕ0
+
+ϕn
+..
+
+ϕ1
+
+.
+···
+
+ϕn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deg ϕ = n rows
+
+deg g + 1 − deg ϕ
+
+= d0 + 1 − n rows
+
+
+
+
+
+
+LLL(M ) = 
+
+
+
+
+g0
+
+···
+
+g1
+
+∗
+
+gd0
+
+
+
+
+
+
+ .
+
+
+
+
+One can remark that since ϕ has been made monic, the determinant of M is det(M ) = pn .
+0
+The first row of LLL(M ) gives a polynomial g of degree at most d that shares the common factor
+0
+ϕ of degree n modulo p with f . The coefficients of g have approximately a size (det M )1/(d +1) =
+0
+pn/(d +1) if we assume that the dimension stays small.
+Note that, when n = 1, this method produces the same pair (f, g) as the method of JouxLercier. Indeed, in this case ϕ = x − m and the rows of the matrix M in Equation (19) generate
+the same lattice as the rows of matrix M in Equation (20).
+Remark 6.3. By considering a smaller matrix, it is possible to produce a polynomial g whose
+degree is smaller than d0 = deg f − 1. This does not seem to be a good idea. Indeed, the size
+of the coefficients of g would be the same as the coefficients of a polynomial obtained starting
+with a polynomial f with coefficients of the same size but of a smaller degree (d0 or less).
+We now discuss the criteria to select the parameter d0 = deg f − 1 with respect to the
+bitsize of p. The most important quantity to minimize is the size of the product of the norms
+Res(φ, f ) Res(φ, g), for the typical polynomials φ that will be used. In this setting, the best
+choice is to stick to polynomials φ of degree 1, and we denote by E a bound on its two coefficients
+that we will tune later. For any polynomial P , let us denote by |P |∞ the maximum absolute
+value of the coefficients of P . Since f has been selected to have small coefficients, we obtain
+the following estimate for the product of the norms:
+
+
+
+(21)
+| Res(φ, f ) Res(φ, g)| ≈ E deg(f ) ||g||∞ E deg(g) ,
+18
+
+where we did not write factors that contribute in a negligible way. In Table 2, we list the
+possible choices for the degrees, that we expect to be practically relevant for discrete logarithms
+in Fp2 and Fp3 .
+Table 2. Size of the product of the norms, for various choices of parameters
+with the generalized Joux-Lercier method, in Fp2 and Fp3 .
+Field
+FQ = Fp2
+
+FQ = Fp3
+
+deg ϕ deg f
+2
+4
+2
+3
+3
+6
+3
+5
+3
+4
+
+||g||∞
+E deg f E deg g ||g||∞
+p1/2 = Q1/4
+Q1/4 E 7
+2/3
+1/3
+p =Q
+Q1/3 E 5
+p3/6 = Q1/6
+Q1/6 E 11
+3/5
+1/5
+p =Q
+Q1/5 E 9
+3/4
+1/4
+p =Q
+Q1/4 E 7
+
+deg g
+3
+2
+5
+4
+3
+
+As for the value of the parameter E, although the asymptotic complexity analysis can give
+hints about its value, it is usually not reliable for fixed values. Therefore we prefer to use a
+rough approximation of E using the values of the same parameter in the factoring variant of
+NFS as implemented in CADO-NFS. These values of E w.r.t. Q are collected in Table 3 and
+we will use them together with Table 2 in order to plot the estimate of the running time in
+Figure 1 to compare with other methods. Note that, a posteriori, the norms product in our case
+is smaller than in the factoring variant of NFS. Hence, one can take a slightly smaller values
+for E.
+Table 3. Practical values of E for Q from 60 to 220 decimal digits.
+
+Q(dd)
+Q(bits)
+E(bits)
+
+60 80 100 120 140 160 180 204 220
+200 266 333 399 466 532 598 678 731
+19 20 21 23 25 27 28 29 30
+
+6.3. The conjugation method. We propose another method to select polynomials for solving
+discrete logarithms in Fpn with the following features: the resulting polynomial f has degree 2n
+and small coefficients, while the polynomial g has degree n and coefficients of size bounded by
+√
+about p. In the next section, an asymptotic analysis shows that there are cases where this is
+more interesting than the generalized Joux-Lercier method; furthermore, it is also well suited
+for small degree extension that can be reached with the current implementations.
+Let us take an example.
+Example 6.4. We take the case of n = 11 and p = 134217931, which is a random prime
+congruent to 1 modulo n. The√method is very general, this case is the simplest. We enumerate
+the integers a = 1, 2, . . . until a is irrational but exists in Fp , i.e. the polynomial x2 − a splits
+in Fp . We call λ a square root of a in Fp and test if xn − λ is irreducible modulo p. If it is not
+the case, we continue and try the next√
+value of a. For example a = 5 works.
+Then we set λ = 108634777 = Fp ( 5) and we put ϕ = x11 − λ. Next, we do a rational
+√
+reconstruction of λ, i.e. we find two integers of size O( p) such that u/v ≡ λ mod p. We find
+u = 1789 and v = 10393. The conjugation method consists in setting:
+√
+√
+(1) f = (x11 − 5)(x11 + 5) = x22 − 5;
+(2) g = vx11 − u = 10393x11 − 1789.
+By construction f and g are divisible by ϕ modulo p.
+We continue with a construction that works for Fp2 when p is congruent to 7 modulo 8.
+19
+
+Example 6.5. Let p ≡ 7 mod 8 and let f = x4 + 1 that
+√ modulo p. From the
+√ is irreducible
+2 + 2x + 1)(x2 − 2x + 1) of f (x). Since
+results in Section 4.4.2, we use the factorization
+(x
+√
+2 + 2x + 1 ∈ F [x]. Now, by rational reconstruction of
+2
+is
+a
+square
+modulo
+p,
+we
+take
+ϕ
+=
+x
+p
+√
+√
+2 in Fp , we can obtain two integers u, v ∈ Z such that uv ≡ 2 mod p, and u and v have size
+√
+similar to p. We define g = vx2 + ux + v. Then f and g share a common irreducible factor of
+degree 2 modulo p, and verify the degree and size properties that we announced.
+This construction can be made general: first, it is possible to obtain pairs of polynomials
+f and g with the claimed degree and size properties for any extension field Fpn ; and second,
+in many small cases that are of practical interest, it is also possible to enforce the presence of
+automorphisms. The general construction is based on Algorithm 1.
+Algorithm 1: Polynomial selection with the conjugation method
+Input: p prime and n a small exponent
+Output: f, g ∈ Z[x] suitable for discrete logarithm computation with NFS in Fpn
+1 Select gu (x), gv (x), two polynomials with small integer coefficients, deg gu < deg gv = n ;
+2 repeat
+3
+Select µ(x) a quadratic, monic, irreducible polynomial over Z with small coefficients ;
+4 until µ(x) has a root λ in Fp and gv + λgu is irreducible in Fp ;
+5 (u, v) ← a rational reconstruction of λ ;
+6 f ← ResY (µ(Y ), gv (x) + Y gu (x)) ;
+7 g ← vgv + ugu ;
+8 return (f, g)
+Fact 6.6 (Properties of the conjugation method). The polynomials (f, g) returned by Algorithm 1 verify:
+(1) f and g have integer coefficients and degrees 2n and n respectively;
+√
+(2) the coefficients of f have size O(1) and the coefficients of g are bounded by O( p).
+(3) f and g have a common irreducible factor ϕ of degree n over Fp .
+Proof. The fact that g has integer coefficients and is of degree n is immediate by construction.
+As for f , since it is the resultant of two bivariate polynomials with integer coefficients, it is
+also with integer coefficients. Using classical properties of the resultant, f can be seen as the
+product of the polynomial gv (x) + Y gu (x) evaluated in Y at the two roots of µ(Y ), therefore
+its degree is 2n. Also, since all the coefficients of the polynomials involved in the definition
+of f have size O(1), and the degree n is assumed to be “small”, then the coefficients of f are
+also O(1).
+For the size of the coefficients of g, it follows from the output of the rational reconstruction
+√
+of λ in Fp , which is expected to have sizes in O( p) (in theory, we can not exclude that we are
+in a rare case where the sizes are larger, though).
+The polynomials f and g are suitable for NFS in Fpn , because both are divisible by ϕ =
+gv + λgu modulo p, and by construction it is irreducible of degree n.
+
+In the example above, for Fp2 with p ≡ 7 mod 8, Algorithm 1 was applied with gu = x,
+gv = x2 + 1 and µ = x2 − 2. One can check that f = ResY (Y 2 − 2, (x2 + 1) + Y x) = x4 + 1, as
+can be seen from Section 4.4.2.
+In Algorithm 1, there is some freedom in the choices of gu and gv . The key idea to exploit
+this opportunity is to base the choice on one-parameter families of polynomials for which an
+automorphism with a nice form is guaranteed to exist, in order to use the improvements of
+Section 3.
+In Table 4, we list possible choices for gu and gv in degree 2, 3, 4 and 6, such that for any
+integer λ, gv + λgu as a simple explicit cyclic automorphism. The families for 3, 4 and 6 are
+taken from [Gra79, Gra87] (see also [Fos11] references for larger degrees).
+20
+
+Table 4. Families of polynomials of degree 2, 3, 4 and 6 with cyclic Galois group.
+n
+2
+3
+4
+6
+
+coeffs of gv + agu
+(1, a, 1)
+(−1, a, 1)
+(a, 0, 1)
+(1, −a − 3, −a, 1)
+(1, −a, −6, a, 1)
+(1, −2a, −5a − 15,
+−20, 5a, 2a + 6, 1)
+
+gv
+2
+x +1
+x2 − 1
+x2
+x3 − 3x − 1
+x4 − 6x2 + 1
+6
+x + 6x5 −
+20x3 − 15x2 + 1
+
+gu
+x
+x
+1
+2
+−(x + x)
+x3 − x
+5
+2x + 5x4 −
+5x2 − 2x
+
+automorphism: θ 7→
+1/θ
+−1/θ
+−θ
+−(θ + 1)/θ
+−(θ + 1)/(θ − 1)
+−(2θ + 1)/(θ − 1)
+
+Theorem 6.7. For any prime p and n in {2, 3, 4, 6}, the polynomials f and g obtained by the
+conjugation method using gu and gv as in Table 4 generate number fields with two automorphisms
+σ and τ of order n that verify the hypothesis of Theorem 3.5.
+Proof. The polynomial g belongs to a family of Table 4, so its number field Kg has an automorphism of order n given by the formula in the last column.
+Let ω be a root of µ(x). The polynomial gv + ωgu defines a number field that is an extension
+of degree n of Q(ω) and that admits an automorphism of order n, which fixes Q(ω). Since
+f and gv + ωgu generate the same number field, this shows that the number field Kf has an
+automorphism of order n.
+The polynomial ϕ is given by gv + λgu . Therefore, it belongs to the same family as g hence it
+has the same automorphism of order n as f and g. This shows that modulo p, the automorphism
+sends a root of ϕ to another root of ϕ, as required in the hypothesis of Theorem 3.5.
+
+Example 6.8. Let us apply the conjugation method for Fp3 , where p = 231 + 11. Running
+Algorithm 1 with gu = −x2 − x and gv = x3 − 3x − 1, one sees that µ = x2 − x + 1 has a
+root λ = 2021977950 in Fp and that gv + λgu is irreducible in Fp [x]. We obtain f = x6 −
+x5 − 6x4 + 3x3 + 14x2 + 7x + 1 and g = 20413x3 + 32630x2 − 28609x + 20413. With ϕ =
+x3 + 125505709x2 + 125505706x + 2147483658 as their GCD modulo p, we can check that the
+three polynomials f , g and ϕ admit θ 7→ −(θ + 1)/θ as an automorphism of order 3.
+6.4. Estimation and comparison of the methods. We have four methods of polynomial
+selection which apply to NFS in non-prime fields:
+• the two methods of JLSV, presented in 6.1.1 and 6.1.2, denoted JLSV1 and, respectively,
+JLSV2 ;
+• the generalized Joux-Lercier method, presented in 6.2, denoted GJL;
+• the conjugation method, presented in 6.3, denoted bu Conj.
+We take the size of the product of the norms as the main quantity to minimize, and we estimate
+its value as
+(22)
+
+E deg f ||f ||∞ E deg g ||g||∞ .
+
+The starting point are the properties of the polynomials obtained with the various methods
+in Tab. 5.
+Table 5. Theoretical complexities for polynomial selection methods, n is the
+extension degree (Fpn ), Q = pn
+method deg g deg f
+||g||∞
+||f ||∞
+E deg f +deg g ||f ||∞ ||g||∞
+1/(2n)
+Conj
+n
+2n
+Q
+O(1)
+E 3n Q1/(2n)
+GJL
+≥ n > deg g Q1/(deg g+1)
+O(1)
+E deg f +deg g Q1/(deg g+1)
+1/(2n)
+1/(2n)
+JLSV1
+n
+n
+Q
+Q
+E 2n Q1/n
+JLSV2
+n
+≥ deg g Q1/(2(deg f +1)) Q1/(deg f +1) E deg f +n Q(3/2)1/(deg f +1)
+21
+
+When the best method depends on the size of the finite field in consideration, we use rough
+estimates of E taken from Table 3.
+In Table 6 we summarize all the sizes that we can get for reasonable choices of parameters
+for Fpn with n ∈ {2, 3, 4, 5, 6}, with all the methods at our disposition.
+To choose the best method, we now need to compare the values in the last column of Tab. 6.
+For that we consider in Tab. 3 practical values of E and Q for Q from 60 to 220 decimal
+digits (dd). We note that log E = 0.095 log Q for Q of 60 dd and log E = 0.041 log Q for Q of
+220 dd. We can now eliminate a few other methods in Tab. 6:
+n = 2: We discard the JLSV1 and JLSV2 methods because their complexities are worse
+than GJL complexity: E 4 Q1/2 > E 5 Q1/3 since Q1/6 > E (indeed, Q0.1 > E).
+n = 3: A second time we discard the JLSV1 method because the GJL method is better.
+Indeed E 6 Q1/3 < E 7 Q1/4 while E > Q1/12 i.e. when Q is less or around 60 dd.
+n = 4: This time we discard GJL method with (deg g, deg f ) = (5, 6) because it is less
+efficient than GJL with (4, 5) whenever E > Q1/60 . We also discard the Conj method
+because we are not in the case E < Q1/40 .
+n = 5: We discard the Conj method (E 15 Q1/10 ) which is worse than GJL with (5, 6) while
+E > Q1/60 . We also discard GJL method with (6, 7) because the same method with
+(5, 6) is more efficient whenever Q1/84 < E.
+n = 6: As for n = 5, the Conj method is not competitive because we are not in the case
+E < Q1/84 . We also discard the GJL method with (7, 8) compared with (6, 7) because
+we don’t have E < Q1/112 .
+We represent the results in Fig. 1. We can clearly see that when Q = p2 is more than 70
+decimal digits long (200 bits, i.e. log2 p = 100), it is much better to use the construction with
+deg f = 4 and deg g = 2 for computing discrete logarithms in FQ = Fp2 . For Q of more than
+220 dd, (deg f, deg g) = (3, 4) starts to be a better choice than (2, 3) but our new method with
+(2, 4) is even better, the value in (22) is about 20 bits smaller. For Q = p3 from 60 to 220 dd
+(i.e. p from 20 to 73 dd), the choice (3, 4) gives a lower value of (22). Then for Q of more
+than 220 dd, the method with (3, 6) is better. For Q of 220 dd, (22) takes the same value with
+(deg g, deg f ) = (3, 6) as with (3, 4).
+6.5. Improving the selected polynomials. We explained in Sec. 6.2 our generalized JouxLercier method and in Sec. 6.3 our method of conjugated polynomials. In both cases when
+deg ϕ ≥ 2 one obtains two distinct reduced polynomials g1 and g2 ∈ Z[x] such that g1 ≡ g2 ≡
+ϕ mod p up to a coefficient in Fp . We propose to search for a polynomial g = λ1 g1 + λ2 g2 with
+λ1 , λ2 ∈ Z small, e.g. |λ1 |, |λ2 | < 200 that maximises the Murphy E value of the pair (f, g).
+The Murphy E value is explained in [Mur99, Sec. 5.2.1, Eq. 5.7 p. 86]. This is an estimation
+of the smoothness properties of the values taken by either a single polynomial f of a pair (f, g).
+First one homogenizes f and g and defines
+uf (θi ) =
+
+log |f (cos θi , sin θi )| + α(f )
+log Bf
+
+
+π
+with θi ∈ [0, π], more precisely, θi = K
+i − 12 (with e.g. K = 2000 and i ∈ {1, . . . , K}), α(f )
+defined in [Mur99, Sec. 3.2.3] and Bf a smoothness bound set according to f . Murphy advises
+to take Bf = 1 e 7 and Bg = 5 e 6. Finally
+E(f, g) =
+
+K
+X
+
+ρ(uf (θi ))ρ(ug (θi )) .
+
+i=1
+
+We propose to search for g = λ1 g1 + λ2 g2 with |λi | < 200 and such that E(f, g) is maximal.
+In practice we obtain g with α(g) ≤ −1.5 and E(f, g) improved of 2% up to 30 %.
+22
+
+Table 6. Size of the product of norms for various choices of parameters and
+algorithms. We discard (⊗) the methods which offer sizes of norms product
+which are clearly not competitive compared to some other one, assuming that
+0.04 log Q ≤ log E ≤ 0.1 log Q (Tab. 3)
+deg g, deg f
+(2, 3)
+(3, 4)
+(2, 4)
+(2, 2)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(3, 4)
+(4, 5)
+(3, 6)
+(3, 3)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(4, 5)
+(5, 6)
+(4, 8)
+(4, 4)
+(4, 4)
+(4, 5)
+(4, 6)
+(4, 7)
+(5, 6)
+(6, 7)
+(5, 10)
+(5, 5)
+(5, 5)
+(5, 6)
+(5, 7)
+(5, 8)
+(6, 7)
+(7, 8)
+(6, 12)
+(6, 6)
+(6, 6)
+(6, 7)
+(6, 8)
+(6, 9)
+
+Q
+
+Fpn
+
+||f ||∞
+O(1)
+
+p2
+
+Fp2
+
+Q1/4
+Q1/6
+Q1/8
+Q1/5
+Q1/6
+O(1)
+
+p3
+
+Fp3
+
+Q1/6
+Q1/8
+Q1/10
+Q1/12
+Q1/7
+O(1)
+
+p4
+
+Fp4
+
+Q1/8
+Q1/10
+Q1/12
+Q1/14
+Q1/8
+O(1)
+
+p5
+
+Fp5
+
+Q1/10
+Q1/12
+Q1/14
+Q1/8
+Q1/18
+O(1)
+
+p6
+
+Fp6
+
+Q1/12
+Q1/14
+Q1/16
+Q1/18
+Q1/20
+
+g
+GJL
+GJL
+Conj
+JLSV1
+JLSV2
+JLSV2
+JLSV2
+JLSV2
+GJL
+GJL
+Conj
+JLSV1
+JLSV2
+JLSV2
+JLSV2
+JLSV2
+GJL
+GJL
+Conj
+JLSV1
+JLSV2
+JLSV2
+JLSV2
+JLSV2
+GJL
+GJL
+Conj
+JLSV1
+JLSV2
+JLSV2
+JLSV2
+JLSV2
+GJL
+GJL
+Conj
+JLSV1
+JLSV2
+JLSV2
+JLSV2
+JLSV2
+
+23
+
+||g||∞
+Q1/3
+Q1/4
+Q1/4
+Q1/4
+Q1/3
+Q1/4
+Q1/10
+Q1/12
+Q1/4
+Q1/5
+Q1/6
+Q1/6
+Q1/4
+Q1/5
+Q1/6
+Q1/14
+Q1/5
+Q1/6
+Q1/8
+Q1/8
+Q1/5
+Q1/6
+Q1/7
+Q1/16
+Q1/6
+Q1/7
+Q1/10
+Q1/10
+Q1/6
+Q1/7
+Q1/16
+Q1/9
+Q1/7
+Q1/8
+Q1/12
+Q1/12
+Q1/7
+Q1/8
+Q1/9
+Q1/10
+
+E deg f ||f ||∞ E deg g ||g||∞
+E 5 Q1/3
+E 7 Q1/4
+⊗
+E 6 Q1/4
+E 4 Q1/2
+⊗
+E 4 Q1/2
+⊗
+5
+3/8
+E Q
+⊗
+E 6 Q3/10
+⊗
+E 7 Q1/4
+⊗
+7
+1/4
+E Q
+E 9 Q1/5
+⊗
+E 9 Q1/6
+E 6 Q1/3
+⊗
+E 6 Q3/8
+⊗
+7
+3/10
+E Q
+⊗
+E 8 Q1/4
+⊗
+9
+3/14
+E Q
+⊗
+9
+1/5
+E Q
+E 11 Q1/6
+⊗
+12
+1/8
+E Q
+⊗
+E 8 Q1/4
+E 8 Q3/10
+⊗
+E 9 Q1/4
+⊗
+E 10 Q3/14
+⊗
+E 11 Q3/16
+⊗
+11
+1/6
+E Q
+E 13 Q1/7
+⊗
+15
+1/10
+E Q
+⊗
+E 10 Q1/5
+E 10 Q1/4
+⊗
+E 11 Q3/14
+⊗
+E 12 Q3/16
+⊗
+E 13 Q1/6
+⊗
+13
+1/7
+E Q
+E 15 Q1/8
+⊗
+E 18 Q1/12
+⊗
+E 12 Q1/6
+E 12 Q3/14
+⊗
+E 13 Q3/16
+⊗
+14
+1/6
+E Q
+⊗
+E 15 Q3/20
+⊗
+
+500
+log2 E deg f ||f ||∞ E deg g ||g||∞
+450
+
+
+
+400
+
+350
+
+300
+Fp6 : (6, 7) GJL
+Fp6 : (6, 6) JLSV1
+Fp5 : (5, 6) GJL
+Fp5 : (5, 5) JLSV1
+Fp4 : (4, 5) GJL
+Fp4 : (4, 4) JLSV1
+
+250
+
+200
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+180
+
+200
+
+220
+
+Q (decimal digits)
+(a) Q = p4 , p5 , p6 : JLSV1 or GJL method
+450
+log2 E deg f ||f ||∞ E deg g ||g||∞
+
+
+
+400
+
+350
+
+300
+
+250
+Fp3 : (3, 6) Conj
+Fp3 : (3, 4) GJL
+Fp2 : (2, 3) GJL
+Fp2 : (2, 4) Conj
+
+200
+
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+180
+
+200
+
+Q (decimal digits)
+(b) Q = p2 or p3 : Conjugation or GJL method
+
+Figure 1. Estimation of (22) for various pairs (deg f, deg g) selected with our
+two methods for computing discrete logarithms in Fpn with n ∈ {2, 3, 4, 5, 6}.
+24
+
+220
+
+7. Asymptotic complexity
+The two new methods of polynomial selection require a dedicated analysis of complexity.
+First, we show that the generalized Joux-Lercier method offers an alternative to the existing
+method of polynomial selection in large characteristic [JLSV06] and determine the range of
+applicability in the boundary case. When getting close to the limit, it provides the best known
+complexity. Second, we analyze the conjugation method and obtain the result announced in
+the introduction, namely the existence of a p
+family of finite fields for which the complexity of
+computing discrete logarithms is in LQ (1/3, 3 48/9).
+7.1. The generalized Joux-Lercier method. Using the generalized Joux-Lercier method,
+one constructs two polynomials f and g such that, for a parameter d ≥ n, we have deg f = d+1,
+deg g = d, |g|∞ = Q1/d and |f |∞ is very small, say O(log Q).
+We consider the variant of NFS in which one sieves on linear polynomials a − bx such that
+|a|, |b| ≤ E for a sieve parameter E, in order to collect the pairs such that the norms Res(f, a−bx)
+and Res(g, a − bx) are B-smooth.
+Since the cost of the sieve is E 2+o(1) and the cost of the linear algebra stage is B 2+o(1) ,
+we impose E = B. We set E = B = LQ (1/3, β) for a parameter β to be chosen. We write
+d = 2δ (log Q/ log log Q)1/3 , for a parameter δ to be chosen.
+Since the size of the sieving domain must be large enough so that we collect B pairs (a, b),
+we must have P −1 = B, where P is the probability that a random pair (a, b) in the sieving
+domain has B-smooth norms. We make the usual assumption that the product of the norms of
+any pair (a, b) has the same probability to be B-smooth as a random integer of the same size.
+We upper-bound the norms product by
+(23)
+
+| Res(f, a − bx) Res(g, a − bx)| ≤ (deg f )|f |∞ E deg f (deg g)|g|∞ E deg g ,
+
+and further, with the L-notation, we obtain
+(24)
+
+
+
+2
+.
+| Res(f, a − bx) Res(g, a − bx)| ≤ LQ 2/3, δβ +
+δ
+
+Using the Canfield-Erdös-Pomerance theorem, we obtain
+
+
+δ
+2
+(25)
+P = 1/LQ 1/3, +
+.
+3 3βδ
+The equality P −1 = B imposes
+(26)
+
+β=
+
+δ
+2
++
+.
+3 3βδ
+
+The optimal value
+hand member,
+p the expression in the right
+p
+p of δ is the one which minimizes
+3
+8/9. Since the
+so we take δ = 2/β and we obtain β = 2/3 2/β, or equivalently β =
+complexity of NFS is E 2 + B 2 = LQ (1/3, 2β), we obtain
+
+
+p
+(27)
+complexity(NFS with Generalized Joux-Lercier) = LQ 1/3, 3 64/9 .
+
+1/3
+p
+√
+The method requires n ≤ d. Since d = δ/2 logloglogQQ
+with δ = 2/β = 3 3, the method
+applies only to fields Fpn such that
+
+
+p
+(28)
+p ≥ LQ 2/3, 3 8/3 .
+7.2. The conjugation method. The conjugation method allows us to construct two polynomials f and g such that deg f = 2n, deg g = n, |g|∞ ≈ p1/2 and |f |∞ is very small, say O(log Q).
+We study first the case of medium characteristic and then the boundary case between medium
+and large characteristic. We start with those computations which are common for the two cases.
+25
+
+7.2.1. Common computations. We consider the higher degree variant of NFS of parameter t,
+i.e. one sieves on polynomials φ of degree t − 1, with coefficients of absolute value less than E 2/t ,
+where E is called the sieve parameter. The cost of the sieve is then E 2+o(1) . Since cost of the
+linear algebra stage is B 2+o(1) , where B is the smoothness bound, we impose E = B and we
+write E = B = LQ (1/3, β), for some parameter β to be chosen. Then the product of the norms
+of φ(α) and φ(β) for any polynomial φ in the sieve domain is
+2n/t
+|g|t−1
+| Res(φ, f ) Res(φ, g)| ≤ (deg f + t)!(deg g + t)!E 4n/t |f |t−1
+∞ .
+∞ E
+
+Since (deg f + t)!(deg f + t)! ≤ LQ (2/3, o(1)), this factor’s contribution will be negligible compared to the main term which is in LQ (2/3). Therefore we have
+
+1+o(1)
+| Res(φ, f ) Res(φ, g)| ≤ E 6n/t Q(t−1)/2n
+.
+We make the usual assumption that the norms product has the same probability to be B-smooth
+as a random integer of the same size.
+7.2.2. The medium characteristic case. Let us set the value of the number of terms in the sieve:
+
+−1/3
+log Q
+(29)
+t = ct n
+.
+log log Q
+The probability that a polynomial φ in the sieving domain has B-smooth norms is
+
+
+2β ct
+(30)
+P = 1/LQ 1/3,
+.
++
+ct
+6
+√
+We choose ct = 2 3β in order to minimize the right hand member:
+
+
+p
+(31)
+P = 1/LQ 1/3, 2 β/3 .
+In an optimal choice of parameters,
+pthe sieve produces just enough relations, so we require
+that P −1 = B, and equivalently β = 3 4/3. We obtain
+
+
+p
+(32)
+complexity(N F S with medium char.) = LQ 1/3, 3 96/9 .
+7.2.3. The boundary case. For every constant cp > 0, we consider the family of finite fields Fpn
+such that
+(33)
+
+p = Lpn (2/3, cp )1+o(1) .
+
+The parameter t is a constant, or equivalently we have a different algorithm for each value
+t = 2, 3, . . ..
+Then the probability that a polynomial φ in the sieving domain has B-smooth norms is
+
+
+cp (t − 1)
+2
+(34)
+P = 1/LQ 1/3,
++
+.
+cp t
+6β
+If the parameters are tuned to have just enough
+relations in the sieve, then one has P −1 = B.
+q
+c (t−1)
+This leads to c2p t + p 6β = β, or β = c1p t + (cp1t)2 + 16 cp (t − 1). Hence, the complexity of NFS
+with the conjugation method is:
+(35)
+s
+!
+2
+4
+2
+complexity(NFS with the conjugation method) = LQ 1/3,
++
++ cp (t − 1) .
+cp t
+(cp t)2 3
+In Figure 2, we have plotted the complexities of various methods, including the Multiple
+number field sieve variant of [BP14]. There are some ranges of the parameter cp where our
+conjugation method is the fastest and a range where the generalized Joux-Lercier method is the
+26
+
+2.2−
+2.1−
+multiple-field
+JLSV1
+
+c 2 −t → ∞
+t=3
+1.9−
+
+Conj
+
+[
+
+GJL
+
+t=3
+
+1.8−
+
+t=2
+t=2
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1.7−
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+cp
+
+Figure 2. The complexity of NFS for fields Fpn with p = LQ (2/3, cp ) is
+LQ (1/3, c). The blue curve corresponds to the multiple number field sieve
+of [BP14], the green semi-line to the generalized Joux-Lercier method and the
+red thick curve to the conjugation method.
+fastest. The best case for our new method corresponds to the case where cp = 121/3 ≈ 2.29 and
+t = 2. In that case we get:
+r !
+3 48
+.
+(36)
+complexity(best case for the conjugation method) = LQ 1/3,
+9
+8. Effective computations of discrete logarithms
+In order to test how our ideas perform in practice, we did a medium-sized practical experiment
+in a field of the form Fp2 . Since we could not find any publicly announced computation for this
+type of field, we have decided to choose a prime number p of 80 decimal digits so that Fp2 has
+size 160 digits. To demonstrate that our approach is not specific to a particular form of the
+prime, we took the first 80 decimal digits of π. Our prime number p is the next prime such that
+p ≡ 7 mod 8 and both p + 1 and p − 1 have a large prime factor: p = bπ · 1079 c + 217518.
+p
+`
+p−1
+p+1
+
+=
+=
+=
+=
+
+31415926535897932384626433832795028841971693993751058209749445923078164063079607
+3926990816987241548078304229099378605246461749218882276218680740384770507884951
+6 · h0 with h0 a 79 digit prime
+8·`
+
+We tried to solve the discrete logarithm problem in the order ` subgroup. We imposed p to be
+congruent to −1 modulo 8, so that the polynomial x4 + 1 could be used, as in Section 4.4.2, so
+that no Schirokauer map is needed. The conjugation method yields a polynomial g of degree 2
+and negative discriminant, a particular case that requires no Schirokauer map either:
+f = x4 + 1
+g = 22253888644283440595423136557267278406930 x2
++ 41388856349384521065766679356490536297931 x
++ 22253888644283440595423136557267278406930 .
+Since p is 80 digits long, the coefficients of g have almost 40 digits (precisely 41 digits). The
+polynomials f and g have the irreducible factor
+ϕ(t) = t2 + 8827843659566562900817004173601064660843646662444652921581289174137495040966990 t + 1
+27
+
+in common modulo p, and Fp2 will be taken as Fp [X]/(ϕ).
+The relation collection step was then done using the sieving software of CADO [BFG+ 09].
+More precisely, we used the special-q technique for ideals q on the g-side, since it produces
+norms that are larger than on the f -side. We sieved all the special-q larger than 40, 000, 000
+and smaller than 227 , keeping only one in each pair of conjugates, as explained in Section 3. In
+total, they produced about 15M relations. The main parameters in the sieve were the following:
+we sieved all primes below 40M, and we allowed two large primes less than 227 on each side.
+The search space for each special-q was set to 215 × 214 (the parameter I in CADO was set to
+15).
+The total CPU time for this relation collection step is equivalent to 68 days on one core of
+an Intel Xeon E5-2650 at 2 GHz. This was run in parallel on a few nodes, each with 16 cores,
+so that the elapsed time for this step was a few days, and could easily be made arbitrary small
+with enough nodes.
+The filtering step was run as usual, but we modified it to take into account the Galois action
+on the ideals: we selected a representative ideal in each orbit under the action x 7→ x−1 , and
+rewrote all the relations in terms of these representatives only. This amounts just to keep track
+of sign-change, that has to be reminded when combining two relations during the filtering, and
+when preparing the sparse matrix for the sparse linear algebra step. The output of the filtering
+step was a matrix with 839, 244 rows and columns, having on average 83.6 non-zero entries per
+row.
+Thanks to our choice of f and g, it was not necessary to add columns with Schirokauer maps.
+We used Jeljeli’s implementation of Block Wiedemann’s algorithm for GPUs [Jel14]. In fact,
+this was a small enough computation so that we did not distribute it on several cards: we used
+a non-blocked version. The total running time for this step was around 30.3 hours on an NVidia
+GTX 680 graphic card.
+At the end of the linear algebra we know the virtual logarithms of almost all prime ideals of
+degree one above primes of at most 26 bits, and of some of those above primes of 27 bits. At
+this point we could test that the logs on the f-side were correct.
+The last step is that of computing some individual logarithms. We used G = t + 2 as a
+generator for Fp2 and the following “random” element:
+s = b(π(2264 )/4)ct + b(γ · 2264 )c.
+
+We started by looking for an integer e such that z = se , seen as an element of the number field
+of f , is smooth. After a few core-hours, we found a value of e such that z = z1 /z2 with z1 and
+z2 splitting completely into prime ideals of at most 60 bits. With the lattice-sieving software
+of CADO-NFS, we then performed a ”special-q descent” for each of these prime ideals. We
+remark that one of the prime ideals in z1 was an ideal of degree 2 above 43, that had to be
+descended in a specific way, starting with a polynomial of degree 2 instead of 1. The total time
+for descending all the prime ideals was a few minutes. Finally, we found
+logG (s) = 431724646474717499532141432099069517832607980262114471597315861099398586114668 mod `.
+
+Verification scripts in various mathematical software are given in the NMBRTHRY announcement.
+References
+[Adl94]
+
+L. M. Adleman. The function field sieve. In Algorithmic Number Theory–ANTS I, volume 877 of
+Lecture Notes in Comput. Sci., pages 108–121. Springer, 1994.
+[AH99]
+L. M. Adleman and M. D. A. Huang. Function field sieve method for discrete logarithms over finite
+fields. Information and Computation, 151(1):5–16, 1999.
+[BFG+ 09] S. Bai, A. Filbois, P. Gaudry, A. Kruppa, F. Morain, E Thomé, P. Zimmermann, et al. Crible
+algébrique: Distribution, optimisation – NFS, 2009. Downloadable at http://cado-nfs.gforge.
+inria.fr/.
+[BGI+ 14] C. Bouvier, P. Gaudry, L. Imbert, H. Jeljeli, and E. Thomé. Discrete logarithms in GF(p) — 180
+digits, 2014. Announcement available at the NMBRTHRY archives, item 004703.
+28
+
+[BGJT14] R. Barbulescu, P. Gaudry, A. Joux, and E. Thomé. A heuristic quasi-polynomial algorithm for discrete
+logarithm in finite fields of small characteristic. In Advances in Cryptology–EUROCRYPT 2014, pages
+1–16. Springer, 2014.
+[BGK14] R. Barbulescu, P. Gaudry, and T. Kleinjung. Yet another variant for DLP in the upper medium-prime
+case. Talk given during the DLP Workshop, Ascona, Switzerland, 2014.
+[BP14]
+R. Barbulescu and C. Pierrot. The multiple number field sieve for medium and high characteristic
+finite fields. Cryptology ePrint Archive, Report 2014/147, 2014. preprint available at http://eprint.
+iacr.org/,accepted for publication at ANTS XI.
+[CS06]
+A. Commeine and I. Semaev. An algorithm to solve the discrete logarithm problem with the number
+field sieve. In Public Key Cryptology–PKC 2006, volume 3958 of Lecture Notes in Comput. Sci., pages
+174–190. Springer, 2006.
+[Fos11]
+K. Foster. HT90 and “simplest” number fields. Illinois Journal of Mathematics, 55(4):1621–1655,
+2011.
+[GGMZ13] F. Göloglu, R. Granger, G. McGuire, and J. Zumbrägel. On the function field sieve and the impact
+of higher splitting probabilities: Application to discrete logarithms in F21971 and F23164 . In Advances
+in Cryptology - CRYPTO 2013, Lecture Notes in Computer Science 8043, pages pp–109. SpringerVerlag, 2013.
+[GKZ14a] R. Granger, T. Kleinjung, and Z. Zumbrägel. Breaking 128-bit secure supersingular binary curves (or
+how to solve discrete logarithms in F24·1223 and F212·367 ), 2014. arXiv report 1402.3668.
+[GKZ14b] R. Granger, T. Kleinjung, and Z. Zumbrägel. On the powers of 2, 2014. IACR Eprint report 2014/300.
+[Gor93]
+D. M. Gordon. Discrete logarithms in GF(p) using the number field sieve. SIAM Journal on Discrete
+Mathematics, 6(1):124–138, 1993.
+[Gra79]
+M.-N. Gras. Classes et unités des extensions cycliques réelles de degré 4 de Q. Ann. Inst. Fourier
+(Grenoble), 29(1):xiv, 107–124, 1979.
+[Gra87]
+M.-N. Gras. Special units in real cyclic sextic fields. Math. Comp., 48(177):179–182, 1987.
+[HAKT13] K. Hayasaka, K. Aoki, T. Kobayashi, and T. Takagi. An experiment of Number Field Sieve for discrete
+logarithm problem over GF (p12 ). In Number Theory and Cryptography, pages 108–120. Springer, 2013.
+[Has48]
+H. Hasse. Arithmetische Bestimmung von Grundeinheit und Klassenzahl in zyklischent kubischen
+und biquadratischen Zahlkörpern. Abh. Deutsch. Akad. Wiss. Berlin. Math., 2:1–95, 1948.
+[Jel14]
+H. Jeljeli. An implementation of the Block-Wiedemann algorithm on NVIDIA-GPUs using the
+Residue Number System (RNS) arithmetic., 2014. Available from http://www.loria.fr/~hjeljeli/.
+[JL02]
+A. Joux and R. Lercier. The function field sieve is quite special. In Algorithmic Number Theory–ANTS
+V, volume 2369 of Lecture Notes in Comput. Sci., pages 431–445. Springer, 2002.
+[JL03]
+A. Joux and R. Lercier. Improvements to the general number field for discrete logarithms in prime
+fields. Math. Comp., 72(242):953–967, 2003. available at http://perso.univ-rennes1.fr/reynald.
+lercier/file/JL03.pdf.
+[JL05]
+A. Joux and R. Lercier. Discrete logarithms in GF(p) — 130 digits, 2005. Announcement available
+at the NMBRTHRY archives, item 002869.
+[JL06]
+A. Joux and R. Lercier. The function field sieve in the medium prime case. In Advances in Cryptology–
+EUROCRYPT 2006, volume 4005 of Lecture Notes in Comput. Sci., pages 254–270. Springer, 2006.
+[JL+ 07]
+A. Joux, R. Lercier, et al. Algorithmes pour résoudre le problème du logarithme discret dans les corps
+finis. Nouvelles Méthodes Mathématiques en Cryptographie, volume Fascicule Journées Annuelles,
+page 23, 2007.
+[JLSV06] A. Joux, R. Lercier, N. Smart, and F. Vercauteren. The number field sieve in the medium prime case.
+In Advances in Cryptology–CRYPTO 2006, volume 4117 of Lecture Notes in Comput. Sci., pages
+326–344. Springer, 2006.
+[Jou13a]
+A. Joux. Discrete logarithms in GF(2ˆ6168) [=GF((2ˆ257)ˆ24)], 2013. Announcement available at
+the NMBRTHRY archives, item 004544.
+[Jou13b]
+A. Joux. Faster index calculus for the medium prime case application to 1175-bit and 1425-bit finite
+fields. In Advances in Cryptology–EUROCRYPT 2013, volume 7881 of Lecture Notes in Comput. Sci.,
+pages 177–193. Springer, 2013.
+[Jou14]
+A. Joux. A new index calculus algorithm with complexity L(1/4 + o(1)) in small characteristic. In
+Tanja Lange, Kristin Lauter, and Petr Lisonĕk, editors, Selected Areas in Cryptography – SAC 2013,
+Lecture Notes in Computer Science, pages 355–379. Springer, 2014.
+[Kle07]
+T. Kleinjung. Discrete logarithms in GF(p) — 160 digits, 2007. Announcement available at the
+NMBRTHRY archives, item 003269.
+[LL93]
+A. K. Lenstra and H. W. Lenstra, Jr., editors. The development of the number field sieve, volume
+1554 of Lecture Notes in Math. Springer, 1993.
+[Mat03]
+D. V. Matyukhin. On asymptotic complexity of computing discrete logarithms over GF(p). Discrete
+Mathematics and Applications, 13(1):27–50, 2003.
+[Mur99]
+B. A. Murphy. Polynomial selection for the number field sieve integer factorisation algorithm. PhD
+thesis, Australian National Univers., 1999.
+29
+
+[PH78]
+[Pol78]
+[Sch93]
+[Sch05]
+[Wie86]
+[Zaj08]
+
+S. Pohlig and M. Hellman. An improved algorithm for computing logarithms over GF(p) and his
+cryptographic significance. IEEE Trans. Inform. Theory, 24(1):106–110, 1978.
+J. M. Pollard. Monte Carlo methods for index computation (mod p). Math. Comp., 32(143):918–924,
+1978.
+O. Schirokauer. Discrete logarithms and local units. Philos. Trans. Roy. Soc. London Ser. A,
+345(1676):409–423, 1993.
+O. Schirokauer. Virtual logarithms. Journal of Algorithms, 57(2):140–147, 2005.
+D. Wiedemann. Solving sparse linear equations over finite fields. IEEE Trans. Inform. Theory,
+32(1):54–62, 1986.
+P. Zajac. Discrete Logarithm Problem in Degree Six Finite Fields. PhD thesis, STU v Bratislave,
+2008. http://www.kaivt.elf.stuba.sk/kaivt/Vyskum/XTRDL.
+
+30
+
+

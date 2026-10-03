@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/bjTWsvtmOsk2loR093nR3dffIN0</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"Coppersmith"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:10Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+abs:%22Coppersmith%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2406.20071v1</id>
+    <title>SAT and Lattice Reduction for Integer Factorization</title>
+    <updated>2024-06-28T17:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2406.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The difficulty of factoring large integers into primes is the basis for cryptosystems such as RSA. Due to the widespread popularity of RSA, there have been many proposed attacks on the factorization problem such as side-channel attacks where some bits of the prime factors are available. When enough bits of the prime factors are known, two methods that are effective at solving the factorization problem are satisfiability (SAT) solvers and Coppersmith's method. The SAT approach reduces the factorization problem to a Boolean satisfiability problem, while Coppersmith's approach uses lattice basis reduction. Both methods have their advantages, but they also have their limitations: Coppersmith's method does not apply when the known bit positions are randomized, while SAT-based methods can take advantage of known bits in arbitrary locations, but have no knowledge of the algebraic structure exploited by Coppersmith's method. In this paper we describe a new hybrid SAT and computer algebra approach to efficiently solve random leaked-bit factorization problems. Specifically, Coppersmith's method is invoked by a SAT solver to determine whether a partial bit assignment can be extended to a complete assignment. Our hybrid implementation solves random leaked-bit factorization problems significantly faster than either a pure SAT or pure computer algebra approach.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T17:30:20Z</published>
+    <arxiv:comment>To appear in the 2024 Proceedings of the International Symposium on Symbolic and Algebraic Computation</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yameen Ajani</name>
+    </author>
+    <author>
+      <name>Curtis Bright</name>
+    </author>
+    <arxiv:doi>10.1145/3666000.3669712</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3666000.3669712" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.08065v1</id>
+    <title>Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials</title>
+    <updated>2016-05-25T20:38:56Z</updated>
+    <link href="https://arxiv.org/abs/1605.08065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.08065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We draw a new connection between Coppersmith's method for finding small solutions to polynomial congruences modulo integers and the capacity theory of adelic subsets of algebraic curves. Coppersmith's method uses lattice basis reduction to construct an auxiliary polynomial that vanishes at the desired solutions. Capacity theory provides a toolkit for proving when polynomials with certain boundedness properties do or do not exist. Using capacity theory, we prove that Coppersmith's bound for univariate polynomials is optimal in the sense that there are \emph{no} auxiliary polynomials of the type he used that would allow finding roots of size $N^{1/d+ε}$ for monic degree-$d$ polynomials modulo $N$. Our results rule out the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the possibility of even superpolynomial-time improvements to Coppersmith's bound. We extend this result to constructions of auxiliary polynomials using binomial polynomials, and rule out the existence of any auxiliary polynomial of this form that would find solutions of size $N^{1/d+ε}$ unless $N$ has a very small prime factor.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-25T20:38:56Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ted Chinburg</name>
+    </author>
+    <author>
+      <name>Brett Hemenway</name>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+    </author>
+    <author>
+      <name>Zachary Scherr</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.11004v1</id>
+    <title>Factorization and malleability of RSA modules, and counting points on elliptic curves modulo N</title>
+    <updated>2019-11-25T15:50:43Z</updated>
+    <link href="https://arxiv.org/abs/1911.11004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.11004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we address two different problems related with the factorization of an RSA module N. First we can show that factoring is equivalent in deterministic polynomial time to counting points on a pair of twisted Elliptic curves modulo N. Also we settle the malleability of factoring an RSA module, as described in [9], using the number of points of a single elliptic curve modulo N, and Coppersmith's algorithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-25T15:50:43Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Luis Dieulefait</name>
+    </author>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.04799v1</id>
+    <title>Drude and Superconducting Weights and Mott Transitions in Variation Theory</title>
+    <updated>2015-02-17T05:22:13Z</updated>
+    <link href="https://arxiv.org/abs/1502.04799v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.04799v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Drude weight ($D$) is a useful measure to distinguish a metal from an insulator. However, $D$ has not been justifiably estimated by the variation theory for long, since Millis and Coppersmith [Phys. Rev. B 43 (1991) 13770] pointed out that a variational wave function $Ψ_Q$, which includes the key ingredient (doublon-holon binding effect) for a Mott transition, yields a positive $D$ (namely metallic) even in the Mott-insulating regime. We argue that, to obtain a correct $D$, an imaginary part must exist in the wave function. By introducing a configuration-dependent phase factor ${\cal P}_θ$ to $Ψ_Q$, Mott transitions are successfully represented by $D$ ($D=0$ for $U&gt;U_{\rm c}$) for a normal and $d$-wave pairing states; thereby, the problem of Millis and Coppersmith is settled. Generally, ${\cal P}_θ$ plays a pivotal role in describing current-carrying states in regimes of Mott physics. On the other hand, we show using a perturbation theory, the one-body (mean-field) part of the wave function should be complex for band insulators such as antiferromagnetic states in hypercubic lattices.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-17T05:22:13Z</published>
+    <arxiv:comment>11pages, 14figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>J. Phys. Soc. Jpn. 84, 064707 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Shun Tamura</name>
+    </author>
+    <author>
+      <name>Hisatoshi Yokoyama</name>
+    </author>
+    <arxiv:doi>10.7566/JPSJ.84.064707</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.7566/JPSJ.84.064707" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.05782v2</id>
+    <title>Determining the Optimal Random-padding Size for Rabin Cryptosystems</title>
+    <updated>2019-03-17T07:09:32Z</updated>
+    <link href="https://arxiv.org/abs/1807.05782v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.05782v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rabin encryption and a secure ownership transfer protocol based on the difficulty of factorization of a public key use a small public exponent. Such encryption requires random number padding. The Coppersmith's shortpad attack works effectively on short padding, thereby allowing an adversary to extract the secret message. However, the criteria for determining the appropriate padding size remains unclear. In this paper, we derived the processing-time formula for the shortpad attack and determined the optimal random-padding size in order to achieve the desired security.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-16T10:44:39Z</published>
+    <arxiv:comment>We decided to withdraw this paper in order to significantly rewrite this paper</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Masahiro Kaminaga</name>
+    </author>
+    <author>
+      <name>Toshinori Suzuki</name>
+    </author>
+    <author>
+      <name>Masaharu Fukase</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.04047v3</id>
+    <title>An exact quantum hidden subgroup algorithm and applications to solvable groups</title>
+    <updated>2022-05-02T12:21:41Z</updated>
+    <link href="https://arxiv.org/abs/2202.04047v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.04047v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a polynomial time exact quantum algorithm for the hidden subgroup problem in $Z_{m^k}^n$. The algorithm uses the quantum Fourier transform modulo m and does not require factorization of m. For smooth m, i.e., when the prime factors of m are of size poly(log m), the quantum Fourier transform can be exactly computed using the method discovered independently by Cleve and Coppersmith, while for general m, the algorithm of Mosca and Zalka is available. Even for m=3 and k=1 our result appears to be new. We also present applications to compute the structure of abelian and solvable groups whose order has the same (but possibly unknown) prime factors as m. The applications for solvable groups also rely on an exact version of a technique proposed by Watrous for computing the uniform superposition of elements of subgroups.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-08T18:22:35Z</published>
+    <arxiv:comment>Further minor changes and corrections, further new references</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24717v2</id>
+    <title>A new attack to RSA with small private exponent and partial information</title>
+    <updated>2026-06-24T16:02:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.24717v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24717v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a new algorithm to attack RSA with small private exponent, when some partial information of $p+q$ is given.The algorithm is a very simple modification of original Wiener's attack with continued fractions, and allows to factor $n$ whenever $d&lt;n^{(1+δ)/4}$ if we know a $δ$-fraction of the most significant bits of $p+q$. The algorithm is unconditional, which is not the case in previous improvements that use Coppersmith method. As an example, ouir algorithm can be applied to break any criptosystem with modulus of $512$ bits and $d&lt;n^{0.3}$, giving an improvement in the original attack of Wiener.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T15:39:30Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0109103v1</id>
+    <title>An integral version of Shor's factoring algorithm</title>
+    <updated>2001-09-20T16:38:17Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0109103v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0109103v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider a version of Shor's quantum factoring algorithm such that the quantum Fourier transform is replaced by an extremely simple one where decomposition coefficients take only the values of $1,i,-1,-i$. In numerous calculations which have been carried out so far, our algorithm has been surprisingly stable and never failed. There are numerical indications that the probability of period finding given by the algorithm is a slowly decreasing function of the number to be factorized and is typically less than in Shor's algorithm. On the other hand, quantum computer (QC), capable of implementing our algorithm, will require a much less amount of resources and will be much less error-sensitive than standard QC. We also propose a modification of Coppersmith' Approximate Fast Fourier Transform. The numerical results show that the probability is signifacantly amplified even in the first post integral approximation. Our algorithm can be very useful at early stages of development of quantum computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-09-20T16:38:17Z</published>
+    <arxiv:comment>LaTex, 27 pages, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Felix M Lev</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.19076v1</id>
+    <title>On Factoring and Power Divisor Problems via Rank-3 Lattices and the Second Vector</title>
+    <updated>2025-12-22T06:36:44Z</updated>
+    <link href="https://arxiv.org/abs/2512.19076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.19076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a deterministic algorithm based on Coppersmith's method that employs a rank-3 lattice to address factoring-related problems. An interesting aspect of our approach is that we utilize the second vector in the LLL-reduced basis to avoid trivial collisions in the Baby-step Giant-step method, rather than the shortest vector as is commonly used in the literature. Our results are as follows:
+  1. Compared to the result by Harvey and Hittmeir (Math. Comp. 91 (2022), 1367 - 1379), who achieved a complexity of O( N^(1/5) log^(16/5) N / (log log N)^(3/5)) for factoring a semiprime N = pq, we demonstrate that in the balanced p and q case, the complexity can be improved to O( N^(1/5) log^(13/5) N / (log log N)^(3/5) ).
+  2. For factoring sums and differences of powers, that is, numbers of the form N = a^n plus or minus b^n, we improve Hittmeir's result (Math. Comp. 86 (2017), 2947 - 2954) from O( N^(1/4) log^(3/2) N ) to O( N^(1/5) log^(13/5) N ).
+  3. For the problem of finding r-power divisors, that is, finding all integers p such that p^r divides N, Harvey and Hittmeir (Proceedings of ANTS XV, Research in Number Theory 8 (2022), no. 4, Paper No. 94) recently directly applied Coppersmith's method and achieved a complexity of O( N^(1/(4r)) log^(10+epsilon) N / r^3 ). By using faster LLL-type algorithms and sieving on small primes, we improve their result to O( N^(1/(4r)) log^(7+3 epsilon) N / ((log log N minus log(4r)) r^(2+epsilon)) ). The worst-case running time for their algorithm occurs when N = p^r q with q on the order of N^(1/2). By focusing on this case and employing our rank-3 lattice approach, we achieve a complexity of O( r^(1/4) N^(1/(4r)) log^(5/2) N ).
+  In conclusion, we offer a new perspective on these problems, which we hope will provide further insights.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-22T06:36:44Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yiming Gao</name>
+    </author>
+    <author>
+      <name>Yansong Feng</name>
+    </author>
+    <author>
+      <name>Honggang Hu</name>
+    </author>
+    <author>
+      <name>Yanbin Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.14095v2</id>
+    <title>Partial Degeneration of Tensors</title>
+    <updated>2024-06-03T08:29:48Z</updated>
+    <link href="https://arxiv.org/abs/2212.14095v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.14095v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tensors are often studied by introducing preorders such as restriction and degeneration: the former describes transformations of the tensors by local linear maps on its tensor factors; the latter describes transformations where the local linear maps may vary along a curve, and the resulting tensor is expressed as a limit along this curve. In this work we introduce and study partial degeneration, a special version of degeneration where one of the local linear maps is constant whereas the others vary along a curve. Motivated by algebraic complexity, quantum entanglement and tensor networks, we present constructions based on matrix multiplication tensors and find examples by making a connection to the theory of prehomogeneous tensor spaces. We highlight the subtleties of this new notion by showing obstruction and classification results for the unit tensor. To this end, we study the notion of aided rank, a natural generalization of tensor rank. The existence of partial degenerations gives strong upper bounds on the aided rank of a tensor, which allows one to turn degenerations into restrictions. In particular, we present several examples, based on the W-tensor and the Coppersmith-Winograd tensors, where lower bounds on aided rank provide obstructions to the existence of certain partial degenerations.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-28T20:49:16Z</published>
+    <arxiv:comment>31 pages, final version</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>SIAM Journal on Matrix Analysis and Applications (SIMAX), 45(1), pp. 771-800 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Matthias Christandl</name>
+    </author>
+    <author>
+      <name>Fulvio Gesmundo</name>
+    </author>
+    <author>
+      <name>Vladimir Lysikov</name>
+    </author>
+    <author>
+      <name>Vincent Steffan</name>
+    </author>
+    <arxiv:doi>10.1137/23M1554898</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/23M1554898" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.08424v4</id>
+    <title>On algorithms to calculate integer complexity</title>
+    <updated>2018-12-18T18:00:01Z</updated>
+    <link href="https://arxiv.org/abs/1706.08424v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.08424v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider a problem first proposed by Mahler and Popken in 1953 and later developed by Coppersmith, Erdős, Guy, Isbell, Selfridge, and others. Let $f(n)$ be the complexity of $n \in \mathbb{Z^{+}}$, where $f(n)$ is defined as the least number of $1$'s needed to represent $n$ in conjunction with an arbitrary number of $+$'s, $*$'s, and parentheses. Several algorithms have been developed to calculate the complexity of all integers up to $n$. Currently, the fastest known algorithm runs in time $\mathcal{O}(n^{1.230175})$ and was given by J. Arias de Reyna and J. van de Lune in 2014. This algorithm makes use of a recursive definition given by Guy and iterates through products, $f(d) + f\left(\frac{n}{d}\right)$, for $d \ |\ n$, and sums, $f(a) + f(n - a)$, for $a$ up to some function of $n$. The rate-limiting factor is iterating through the sums. We discuss potential improvements to this algorithm via a method that provides a strong uniform bound on the number of summands that must be calculated for almost all $n$. We also develop code to run J. Arias de Reyna and J. van de Lune's analysis in higher bases and thus reduce their runtime of $\mathcal{O}(n^{1.230175})$ to $\mathcal{O}(n^{1.222911236})$. All of our code can be found online at: https://github.com/kcordwel/Integer-Complexity.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-26T15:02:26Z</published>
+    <arxiv:comment>8 pages; more details were added for the complexity analysis and a link added to the code on GitHub; minor typos corrected</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Katherine Cordwell</name>
+    </author>
+    <author>
+      <name>Alyssa Epstein</name>
+    </author>
+    <author>
+      <name>Anand Hemmady</name>
+    </author>
+    <author>
+      <name>Steven J. Miller</name>
+    </author>
+    <author>
+      <name>Eyvindur A. Palsson</name>
+    </author>
+    <author>
+      <name>Aaditya Sharma</name>
+    </author>
+    <author>
+      <name>Stefan Steinerberger</name>
+    </author>
+    <author>
+      <name>Yen Nhi Truong Vu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/9909034v2</id>
+    <title>Asymmetric particle systems on R</title>
+    <updated>1999-12-22T15:46:35Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/9909034v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/9909034v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study interacting particle systems on the real line which generalize the Hammersley process [D. Aldous and P. Diaconis, Prob. Theory Relat. Fields 103, 199-213 (1995)]. Particles jump to the right to a randomly chosen point between their previous position and that of the forward neighbor, at a rate which may depend on the distance to the neighbor. A class of models is identified for which the invariant particle distribution is Poisson. The bulk of the paper is devoted to a model where the jump rate is constant and the jump length is a random fraction $r$ of the distance to the forward neighbor, drawn from a probability density $φ(r)$ on the unit interval. This is a special case of the random average process of Ferrari and Fontes [El. J. Prob. 3, Paper no. 6 (1998)]. The discrete time version of the model has been considered previously in the context of force propagation in granular media [S.N. Coppersmith et al., Phys. Rev. E 53, 4673 (1996)]. We show that the stationary two-point function of particle spacings factorizes for any choice of $φ(r)$. Under the assumption that this implies pairwise independence, the invariant density of interparticle spacings for the case of uniform $φ(r)$ is found to be a gamma distribution with parameter $ν$, where $ν= 1/2$, 1 and 2 for continuous time, backward sequential and discrete time dynamics, respectively. A heuristic derivation of a nonlinear diffusion equation is presented, and the tracer diffusion coefficient is computed for arbitrary $φ(r)$ and different types of dynamics.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-09-02T15:34:58Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>J. Stat. Phys. 99, 31-55 (2000)</arxiv:journal_ref>
+    <author>
+      <name>J. Krug</name>
+    </author>
+    <author>
+      <name>J. Garcia</name>
+    </author>
+    <arxiv:doi>10.1023/A:1018688421856</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1023/A:1018688421856" title="doi"/>
+  </entry>
+</feed>

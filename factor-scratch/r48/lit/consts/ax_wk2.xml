@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/FFrWGfOWFw0+MJIvuvcMOVp0reQ</id>
+  <title>arXiv Query: search_query=all:"Shor" AND all:"runtime" AND all:"factoring"&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T18:38:27Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Shor%22+AND+(all:%22runtime%22+AND+all:%22factoring%22)&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>8</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2603.28627v1</id>
+    <title>Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits</title>
+    <updated>2026-03-30T16:10:08Z</updated>
+    <link href="https://arxiv.org/abs/2603.28627v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.28627v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers have the potential to perform computational tasks beyond the reach of classical machines. A prominent example is Shor's algorithm for integer factorization and discrete logarithms, which is of both fundamental importance and practical relevance to cryptography. However, due to the high overhead of quantum error correction, optimized resource estimates for cryptographically relevant instances of Shor's algorithm require millions of physical qubits. Here, by leveraging advances in high-rate quantum error-correcting codes, efficient logical instruction sets, and circuit design, we show that Shor's algorithm can be executed at cryptographically relevant scales with as few as 10,000 reconfigurable atomic qubits. Increasing the number of physical qubits improves time efficiency by enabling greater parallelism; under plausible assumptions, the runtime for discrete logarithms on the P-256 elliptic curve could be just a few days for a system with 26,000 physical qubits, while the runtime for factoring RSA-2048 integers is one to two orders of magnitude longer. Recent neutral-atom experiments have demonstrated universal fault-tolerant operations below the error-correction threshold, computation on arrays of hundreds of qubits, and trapping arrays with more than 6,000 highly coherent qubits. Although substantial engineering challenges remain, our theoretical analysis indicates that an appropriately designed neutral-atom architecture could support quantum computation at cryptographically relevant scales. More broadly, these results highlight the capability of neutral atoms for fault-tolerant quantum computing with wide-ranging scientific and technological applications.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-30T16:10:08Z</published>
+    <arxiv:comment>7+15 pages, 3+4 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Madelyn Cain</name>
+    </author>
+    <author>
+      <name>Qian Xu</name>
+    </author>
+    <author>
+      <name>Robbie King</name>
+    </author>
+    <author>
+      <name>Lewis R. B. Picard</name>
+    </author>
+    <author>
+      <name>Harry Levine</name>
+    </author>
+    <author>
+      <name>Manuel Endres</name>
+    </author>
+    <author>
+      <name>John Preskill</name>
+    </author>
+    <author>
+      <name>Hsin-Yuan Huang</name>
+    </author>
+    <author>
+      <name>Dolev Bluvstein</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.4934v1</id>
+    <title>Requirements for fault-tolerant factoring on an atom-optics quantum computer</title>
+    <updated>2012-12-20T06:36:51Z</updated>
+    <link href="https://arxiv.org/abs/1212.4934v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.4934v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum information processing and its associated technologies has reached an interesting and timely stage in their development where many different experiments have been performed establishing the basic building blocks. The challenge moving forward is to scale up to larger sized quantum machines capable of performing tasks not possible today. This raises a number of interesting questions like: How big will these machines need to be? how many resources will they consume? This needs to be urgently addressed. Here we estimate the resources required to execute Shor's factoring algorithm on a distributed atom-optics quantum computer architecture. We determine the runtime and requisite size of the quantum computer as a function of the problem size and physical error rate. Our results suggest that once experimental accuracy reaches levels below the fault-tolerant threshold, further optimisation of computational performance and resources is largely an issue of how the algorithm and circuits are implemented, rather than the physical quantum hardware</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-20T06:36:51Z</published>
+    <arxiv:comment>18 Pages, 17 Figs. Comments Welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Nature (communications) 4, 2524 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Simon J. Devitt</name>
+    </author>
+    <author>
+      <name>Ashley M. Stephens</name>
+    </author>
+    <author>
+      <name>William J. Munro</name>
+    </author>
+    <author>
+      <name>Kae Nemoto</name>
+    </author>
+    <arxiv:doi>10.1038/ncomms3524</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/ncomms3524" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0301141v2</id>
+    <title>Shor's discrete logarithm quantum algorithm for elliptic curves</title>
+    <updated>2004-01-22T16:33:36Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0301141v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0301141v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show in some detail how to implement Shor's efficient quantum algorithm for discrete logarithms for the particular case of elliptic curve groups. It turns out that for this problem a smaller quantum computer can solve problems further beyond current computing than for integer factorisation. A 160 bit elliptic curve cryptographic key could be broken on a quantum computer using around 1000 qubits while factoring the security-wise equivalent 1024 bit RSA modulus would require about 2000 qubits. In this paper we only consider elliptic curves over GF($p$) and not yet the equally important ones over GF($2^n$) or other finite fields. The main technical difficulty is to implement Euclid's gcd algorithm to compute multiplicative inverses modulo $p$. As the runtime of Euclid's algorithm depends on the input, one difficulty encountered is the ``quantum halting problem''.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-01-25T21:28:15Z</published>
+    <arxiv:comment>34 pages Latex, essentially published version, but not using Journal style file</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>QIC 3 (No. 4) (2003) pp.317-344</arxiv:journal_ref>
+    <author>
+      <name>John Proos</name>
+    </author>
+    <author>
+      <name>Christof Zalka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.12449v1</id>
+    <title>Constant-time hybrid compilation of Shor's algorithm with quantum just-in-time compilation</title>
+    <updated>2025-04-16T19:30:10Z</updated>
+    <link href="https://arxiv.org/abs/2504.12449v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.12449v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Continuous improvements in quantum computing hardware are exposing the need for simultaneous advances in software. Large-scale implementation of quantum algorithms requires rapid and automated compilation routines such as circuit synthesis and optimization. As systems move towards fault-tolerance, programming frameworks and compilers must also be capable of compiling and optimizing programs comprising both classical and quantum code. This work takes a step in that direction by providing an implementation of Shor's factoring algorithm, compiled to elementary quantum gates using PennyLane and Catalyst, a library for quantum just-in-time (QJIT) compilation of hybrid workflows. We demonstrate that with QJIT compilation, the algorithm is compiled once per bit width of $N$, the integer being factored, even when $N$-specific optimizations are applied to circuit generation based on values determined at runtime. The implementation is benchmarked up to 32-bit $N$, and both the size of the compiled program and the pure compilation time are found to be constant (under 3 seconds on a laptop computer), meaning code generation becomes tractable even for realistic problem sizes.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-16T19:30:10Z</published>
+    <arxiv:comment>7 pages, 6 figures. Code available on GitHub</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>David Ittah</name>
+    </author>
+    <author>
+      <name>Jackson Fraser</name>
+    </author>
+    <author>
+      <name>Josh Izaac</name>
+    </author>
+    <author>
+      <name>Olivia Di Matteo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.18006v4</id>
+    <title>Fast quantum integer multiplication with zero ancillas</title>
+    <updated>2024-11-14T17:31:40Z</updated>
+    <link href="https://arxiv.org/abs/2403.18006v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.18006v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The multiplication of superpositions of numbers is a core operation in many quantum algorithms. The standard method for multiplication (both classical and quantum) has a runtime quadratic in the size of the inputs. Quantum circuits with asymptotically fewer gates have been developed, but generally exhibit large overheads, especially in the number of ancilla qubits. In this work, we introduce a new paradigm for sub-quadratic-time quantum multiplication with zero ancilla qubits -- the only qubits involved are the input and output registers themselves. Our algorithm achieves an asymptotic gate count of $\mathcal{O}(n^{1+ε})$ for any $ε&gt; 0$; with practical choices of parameters, we expect scalings as low as $\mathcal{O}(n^{1.3})$. Used as a subroutine in Shor's algorithm, our technique immediately yields a factoring circuit with $\mathcal{O}(n^{2+ε})$ gates and only $2n + \mathcal{O}(\log n)$ qubits; to our knowledge, this is by far the best qubit count of any factoring circuit with a sub-cubic number of gates. Used in Regev's recent factoring algorithm, the gate count is $\mathcal{O}(n^{1.5+ε})$. Finally, we demonstrate that our algorithm has the potential to outperform previous proposals at problem sizes relevant in practice, including yielding the smallest circuits we know of for classically-verifiable quantum advantage.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-26T18:00:03Z</published>
+    <arxiv:comment>Main text: 10 pages, 3 tables, 1 figure; appendix: 11 pages, 3 tables, 2 figures. v2, v3: minor corrections; no changes to main results. v4: expanded discussion and analysis of circuit depth</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gregory D. Kahanamoku-Meyer</name>
+    </author>
+    <author>
+      <name>Norman Y. Yao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.01487v1</id>
+    <title>quAssert: Automatic Generation of Quantum Assertions</title>
+    <updated>2023-03-02T18:49:14Z</updated>
+    <link href="https://arxiv.org/abs/2303.01487v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.01487v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Functional validation is necessary to detect any errors during quantum computation. There are promising avenues to debug quantum circuits using runtime assertions. However, the existing approaches rely on the expertise of the verification engineers to manually design and insert the assertions in suitable locations. In this paper, we propose automated generation and placement of quantum assertions based on static analysis and random sampling of quantum circuits. Specifically, this paper makes two important contributions. We automatically uncover special properties of a quantum circuit, such as purely classical states, superposition states, and entangled states using statistical methods. We also perform automated placement of quantum assertions to maximize the functional coverage as well as minimize the hardware overhead. We demonstrate the effectiveness of the generated assertions in error detection using a suite of quantum benchmarks, including Shor's factoring algorithm and Grover's search algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-02T18:49:14Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Hasini Witharana</name>
+    </author>
+    <author>
+      <name>Daniel Volya</name>
+    </author>
+    <author>
+      <name>Prabhat Mishra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0909.4119v3</id>
+    <title>Fast Equivalence-checking for Quantum Circuits</title>
+    <updated>2013-04-30T06:37:28Z</updated>
+    <link href="https://arxiv.org/abs/0909.4119v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0909.4119v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We perform formal verification of quantum circuits by integrating several techniques specialized to particular classes of circuits. Our verification methodology is based on the new notion of a reversible miter that allows one to leverage existing techniques for circuit simplification of quantum circuits. For reversible circuits which arise as runtime bottlenecks of key quantum algorithms, we develop several verification techniques and empirically compare them.
+  We also combine existing quantum verification tools with the use of SAT-solvers. Experiments with circuits for Shor's number-factoring algorithm, containing thousands of gates, show improvements in efficiency by 3-4 orders of magnitude.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-09-23T02:09:40Z</published>
+    <arxiv:comment>Minor change of some wording</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quant. Inf. and Comp., vol. 9, no. 9,10 (2010), pp. 721-734</arxiv:journal_ref>
+    <author>
+      <name>Shigeru Yamashita</name>
+    </author>
+    <author>
+      <name>Igor L. Markov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.08290v2</id>
+    <title>Theory and Architecture of Syndrome-Resolved Logical Gates</title>
+    <updated>2026-06-25T05:49:44Z</updated>
+    <link href="https://arxiv.org/abs/2510.08290v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.08290v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a general framework for weak transversal gates, namely syndrome-resolved implementation of logical unitaries realized by local physical unitaries, and demonstrate its wide impact in three applications: partial fault-tolerant architecture, short-depth state preparation, and magic state distillation. Our theoretical contribution is to prove a sufficient condition for a general Calderbank-Shor-Steane code to admit weak transversal gates, and to present an efficient algorithm to determine the physical multiqubit Pauli rotations. To demonstrate the practicality of weak transversal gates in the near future, we propose a partially fault-tolerant Clifford+$φ$ architecture that implements in-place Pauli rotations via a repeat-until-success strategy. Numerical simulations indicate that a rotation of 0.001 attains a logical error of $9.6\times10^{-5}$ on a surface code with $d=7$ at a physical error rate of $p=10^{-4}$, while avoiding the spacetime overheads of magic state factories, small angle synthesis, and routing. Resource estimates on surface and [[144,12,12]] bivariate bicycle codes for a Trotter-like circuit with $N=108$ logical qubits indicate runtime reductions of factors of 778 and 45, respectively, relative to the conventional method, due to the natural parallelism of rotation gates. Looking further ahead, we consider state-preparation tasks allowing postselection. We show that weak transversal gadgets prepare high-level equatorial magic states with a substantially improved cost-accuracy tradeoff, achieving up to a $10^3$-fold reduction in spacetime cost for a magic state at the 11th level of the Clifford hierarchy. Furthermore, we integrate weak transversal gates into magic state distillation pipelines, reducing the logical error rate of level-2 distillation of the $\sqrt{T}$ state by up to a factor of 94 with a small increase in spacetime cost.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-09T14:42:35Z</published>
+    <arxiv:comment>36 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Nobuyuki Yoshioka</name>
+    </author>
+    <author>
+      <name>Alireza Seif</name>
+    </author>
+    <author>
+      <name>Peter Groszkowski</name>
+    </author>
+    <author>
+      <name>Andrew Cross</name>
+    </author>
+    <author>
+      <name>Ali Javadi-Abhari</name>
+    </author>
+  </entry>
+</feed>

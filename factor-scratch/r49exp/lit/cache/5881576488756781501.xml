@@ -1,0 +1,893 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/oj+j8Y8w+C9scBdk1d00VZMb+F4</id>
+  <title>arXiv Query: search_query=all:"integer factorization" AND cat:cs.CR&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:05:09Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22integer+factorization%22+AND+cat:cs.CR&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>47</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1703.03768v2</id>
+    <title>Integer Factorization with a Neuromorphic Sieve</title>
+    <updated>2018-04-23T18:55:29Z</updated>
+    <link href="https://arxiv.org/abs/1703.03768v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.03768v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The bound to factor large integers is dominated by the computational effort to discover numbers that are smooth, typically performed by sieving a polynomial sequence. On a von Neumann architecture, sieving has log-log amortized time complexity to check each value for smoothness. This work presents a neuromorphic sieve that achieves a constant time check for smoothness by exploiting two characteristic properties of neuromorphic architectures: constant time synaptic integration and massively parallel computation. The approach is validated by modifying msieve, one of the fastest publicly available integer factorization implementations, to use the IBM Neurosynaptic System (NS1e) as a coprocessor for the sieving stage.</summary>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-10T17:15:29Z</published>
+    <arxiv:comment>Fixed typos in equation for modular roots (Section II, par. 6; Section III, par. 2) and phase calculation (Section IV, par 2)</arxiv:comment>
+    <arxiv:primary_category term="cs.NE"/>
+    <arxiv:journal_ref>Monaco, John V., and Manuel M. Vindiola. "Integer factorization with a neuromorphic sieve." Circuits and Systems (ISCAS), 2017 IEEE International Symposium on. IEEE, 2017</arxiv:journal_ref>
+    <author>
+      <name>John V. Monaco</name>
+    </author>
+    <author>
+      <name>Manuel M. Vindiola</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.21168v1</id>
+    <title>A Summation-Based Algorithm For Integer Factorization</title>
+    <updated>2025-04-29T20:35:43Z</updated>
+    <link href="https://arxiv.org/abs/2504.21168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.21168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Numerous methods have been considered to create a fast integer factorization algorithm. Despite its apparent simplicity, the difficulty to find such an algorithm plays a crucial role in modern cryptography, notably, in the security of RSA encryption. Some approaches to factoring integers quickly include the Trial Division method, Pollard's Rho and p-1 methods, and various Sieve algorithms.
+  This paper introduces a new method that converts an integer into a sum in base-2. By combining a base-10 and base-2 representation of the integer, an algorithm on the order of $\sqrt{n}$ time complexity can convert that sum to a product of two integers, thus factoring the original number.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-29T20:35:43Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Justin Friedlander</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.3458v2</id>
+    <title>A New Efficient Asymmetric Cryptosystem Based on the Integer Factorization Problem</title>
+    <updated>2012-10-23T15:15:37Z</updated>
+    <link href="https://arxiv.org/abs/1209.3458v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.3458v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new asymmetric cryptosystem based on the Integer Factorization Problem is proposed. It posses an encryption and decryption speed of $O(n^2)$, thus making it the fastest asymmetric encryption scheme available. It has a simple mathematical structure. Thus, it would have low computational requirements and would enable communication devices with low computing power to deploy secure communication procedures efficiently.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-16T04:22:07Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1207.1157</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>M. R. K. Ariffin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.09814v2</id>
+    <title>Canonical form of modular hyperbolas with an application to integer factorization</title>
+    <updated>2020-04-15T20:14:48Z</updated>
+    <link href="https://arxiv.org/abs/2001.09814v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.09814v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a composite $n$ and an odd $c$ with $c$ not dividing $n$, the number of solutions to the equation $n+a\equiv b\mod c$ with $a,b$ quadratic residues modulus $c$ is calculated. We establish a direct relation with those modular solutions and the distances between points of a modular hyperbola. Furthermore, for certain composite moduli $c$, an asymptotic formula for quotients between the number of solutions and $c$ is provided. Finally, an algorithm for integer factorization using such solutions is presented.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-23T14:41:53Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Juan Di Mauro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.17233v1</id>
+    <title>A Geometric Square-Based Approach to RSA Integer Factorization</title>
+    <updated>2025-06-01T08:55:25Z</updated>
+    <link href="https://arxiv.org/abs/2506.17233v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.17233v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a new approach to RSA factorization inspired by geometric interpretations and square differences. This method reformulates the problem in terms of the distance between perfect squares and provides a recurrence relation that allows rapid convergence when the RSA modulus has closely spaced prime factors. Although this method is efficient for small semiprimes, it does not yet succeed in factoring large challenges like RSA-100 in practical time, highlighting both its potential and current limitations.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-01T08:55:25Z</published>
+    <arxiv:comment>3 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Akihisa Yorozu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16355v3</id>
+    <title>Integer Factorization via Tensor Network Schnorr's Sieving</title>
+    <updated>2026-01-26T21:21:04Z</updated>
+    <link href="https://arxiv.org/abs/2410.16355v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16355v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical public-key cryptography standards rely on the Rivest-Shamir-Adleman (RSA) encryption protocol. The security of this protocol is based on the exponential computational complexity of the most efficient classical algorithms for factoring large semiprime numbers into their two prime components. Here, we address RSA factorization building on Schnorr's mathematical framework where factorization translates into a combinatorial optimization problem. We solve the optimization task via tensor network methods, a quantum-inspired classical numerical technique. This tensor network Schnorr's sieving algorithm displays numerical evidence of polynomial scaling of resources with the bit-length of the semiprime. We factorize RSA numbers up to 100 bits and assess how computational resources scale through numerical simulations up to 130 bits, encoding the optimization problem in quantum systems with up to 256 qubits. Only the high-order polynomial scaling of the required resources limits the factorization of larger numbers. Although these results do not currently undermine the security of the present communication infrastructure, they strongly highlight the urgency of implementing post-quantum cryptography or quantum key distribution.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T18:00:00Z</published>
+    <arxiv:comment>Accepted version. Change title, implement review suggestions and comment, and improve statistical analysis of the resource scaling</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Phys. Rev. A 113, 032418 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Marco Tesoro</name>
+    </author>
+    <author>
+      <name>Ilaria Siloi</name>
+    </author>
+    <author>
+      <name>Daniel Jaschke</name>
+    </author>
+    <author>
+      <name>Giuseppe Magnifico</name>
+    </author>
+    <author>
+      <name>Simone Montangero</name>
+    </author>
+    <arxiv:doi>10.1103/d9dl-ctt4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/d9dl-ctt4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.20071v1</id>
+    <title>SAT and Lattice Reduction for Integer Factorization</title>
+    <updated>2024-06-28T17:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2406.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The difficulty of factoring large integers into primes is the basis for cryptosystems such as RSA. Due to the widespread popularity of RSA, there have been many proposed attacks on the factorization problem such as side-channel attacks where some bits of the prime factors are available. When enough bits of the prime factors are known, two methods that are effective at solving the factorization problem are satisfiability (SAT) solvers and Coppersmith's method. The SAT approach reduces the factorization problem to a Boolean satisfiability problem, while Coppersmith's approach uses lattice basis reduction. Both methods have their advantages, but they also have their limitations: Coppersmith's method does not apply when the known bit positions are randomized, while SAT-based methods can take advantage of known bits in arbitrary locations, but have no knowledge of the algebraic structure exploited by Coppersmith's method. In this paper we describe a new hybrid SAT and computer algebra approach to efficiently solve random leaked-bit factorization problems. Specifically, Coppersmith's method is invoked by a SAT solver to determine whether a partial bit assignment can be extended to a complete assignment. Our hybrid implementation solves random leaked-bit factorization problems significantly faster than either a pure SAT or pure computer algebra approach.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T17:30:20Z</published>
+    <arxiv:comment>To appear in the 2024 Proceedings of the International Symposium on Symbolic and Algebraic Computation</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yameen Ajani</name>
+    </author>
+    <author>
+      <name>Curtis Bright</name>
+    </author>
+    <arxiv:doi>10.1145/3666000.3669712</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3666000.3669712" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.10076v1</id>
+    <title>Applications of Quantum Annealing in Cryptography</title>
+    <updated>2022-11-18T08:08:46Z</updated>
+    <link href="https://arxiv.org/abs/2211.10076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.10076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a new method to reduce the optimization of a pseudo-Boolean function to QUBO problem which can be solved by quantum annealer. The new method has two aspects, one is coefficient optimization and the other is variable optimization. The former is an improvement on the existing algorithm in a special case. The latter is realized by means of the maximal independent point set in graph theory. We apply this new method in integer factorization on quantum annealers and achieve the largest integer factorization (4137131) with 93 variables, the range of coefficients is [-1024,1024] which is much smaller than the previous results. We also focus on the quantum attacks on block ciphers and present an efficient method with smaller coefficients to transform Boolean equation systems into QUBO problems.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-18T08:08:46Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Anpeng Zhang</name>
+    </author>
+    <author>
+      <name>Xiutao Feng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.4077v2</id>
+    <title>A Digital Signature Scheme for Long-Term Security</title>
+    <updated>2015-08-24T03:24:53Z</updated>
+    <link href="https://arxiv.org/abs/1203.4077v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.4077v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we propose a signature scheme based on two intractable problems, namely the integer factorization problem and the discrete logarithm problem for elliptic curves. It is suitable for applications requiring long-term security and provides a more efficient solution than the existing ones.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-19T11:03:42Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Dimitrios Poulakis</name>
+    </author>
+    <author>
+      <name>Robert Rolland</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.11616v2</id>
+    <title>An integer factorization algorithm which uses diffusion as a computational engine</title>
+    <updated>2023-01-23T18:07:56Z</updated>
+    <link href="https://arxiv.org/abs/2104.11616v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.11616v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article we develop an algorithm which computes a divisor of an integer $N$, which is assumed to be neither prime nor the power of a prime. The algorithm uses discrete time heat diffusion on a finite graph. If $N$ has $m$ distinct prime factors, then the probability that our algorithm runs successfully is at least $p(m) = 1-(m+1)/2^{m}$. We compute the computational complexity of the algorithm in terms of classical, or digital, steps and in terms of diffusion steps, which is a concept that we define here. As we will discuss below, we assert that a diffusion step can and should be considered as being comparable to a quantum step for an algorithm which runs on a quantum computer. With this, we prove that our factorization algorithm uses at most $O((\log N)^{2})$ deterministic steps and at most $O((\log N)^{2})$ diffusion steps with an implied constant which is effective. By comparison, Shor's algorithm is known to use at most $O((\log N)^{2}\log (\log N) \log (\log \log N))$ quantum steps on a quantum computer.
+  As an example of our algorithm, we simulate the diffusion computer algorithm on a desktop computer and obtain factorizations of $N=33$ and $N=1363$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-23T14:11:33Z</published>
+    <arxiv:comment>30 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Carlos A. Cadavid</name>
+    </author>
+    <author>
+      <name>Paulina Hoyos</name>
+    </author>
+    <author>
+      <name>Jay Jorgenson</name>
+    </author>
+    <author>
+      <name>Lejla Smajlović</name>
+    </author>
+    <author>
+      <name>Juan D. Vélez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.02268v1</id>
+    <title>Breaking RSA Security With A Low Noise D-Wave 2000Q Quantum Annealer: Computational Times, Limitations And Prospects</title>
+    <updated>2020-05-05T15:04:45Z</updated>
+    <link href="https://arxiv.org/abs/2005.02268v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.02268v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The RSA cryptosystem could be easily broken with large scale general purpose quantum computers running Shor's factorization algorithm. Being such devices still in their infancy, a quantum annealing approach to integer factorization has recently gained attention. In this work, we analyzed the most promising strategies for RSA hacking via quantum annealing with an extensive study of the low noise D-Wave 2000Q computational times, current hardware limitations and challenges for future developments.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-05T15:04:45Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Riccardo Mengoni</name>
+    </author>
+    <author>
+      <name>Daniele Ottaviani</name>
+    </author>
+    <author>
+      <name>Paolino Iorio</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1202.4285v2</id>
+    <title>Finding ECM-friendly curves through a study of Galois properties</title>
+    <updated>2012-09-04T09:09:11Z</updated>
+    <link href="https://arxiv.org/abs/1202.4285v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1202.4285v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we prove some divisibility properties of the cardinality of elliptic curves modulo primes. These proofs explain the good behavior of certain parameters when using Montgomery or Edwards curves in the setting of the elliptic curve method (ECM) for integer factorization. The ideas of the proofs help us to find new families of elliptic curves with good division properties which increase the success probability of ECM.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-02-20T10:33:55Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Algorithmic Number Theory Symposium (2012)</arxiv:journal_ref>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Joppe W. Bos</name>
+      <arxiv:affiliation>LACAL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Cyril Bouvier</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Thorsten Kleinjung</name>
+      <arxiv:affiliation>LACAL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Peter L. Montgomery</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.13153v1</id>
+    <title>A new idea for RSA backdoors</title>
+    <updated>2022-01-31T11:57:43Z</updated>
+    <link href="https://arxiv.org/abs/2201.13153v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.13153v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article proposes a new method to inject backdoors in RSA and other cryptographic primitives based on the Integer Factorization problem for balanced semi-primes. The method relies on mathematical congruences among the factors of the semi-primes modulo a large prime number, which acts as a "designer key" or "escrow key". In particular, two different backdoors are proposed, one targeting a single semi-prime and the other one a pair of semi-primes. The article also describes the results of tests performed on a SageMath implementation of the backdoors.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-31T11:57:43Z</published>
+    <arxiv:comment>19 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Marco Cesati</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0910.4179v1</id>
+    <title>Revisiting Fermat's Factorization for the RSA Modulus</title>
+    <updated>2009-10-21T21:13:55Z</updated>
+    <link href="https://arxiv.org/abs/0910.4179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0910.4179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We revisit Fermat's factorization method for a positive integer $n$ that is a product of two primes $p$ and $q$. Such an integer is used as the modulus for both encryption and decryption operations of an RSA cryptosystem. The security of RSA relies on the hardness of factoring this modulus. As a consequence of our analysis, two variants of Fermat's approach emerge. We also present a comparison between the two methods' effective regions. Though our study does not yield a new state-of-the-art algorithm for integer factorization, we believe that it reveals some interesting observations that are open for further analysis.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-10-21T21:13:55Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Sounak Gupta</name>
+    </author>
+    <author>
+      <name>Goutam Paul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1403.0184v2</id>
+    <title>Some mathematical remarks on the polynomial selection in NFS</title>
+    <updated>2014-03-12T16:34:21Z</updated>
+    <link href="https://arxiv.org/abs/1403.0184v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1403.0184v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we consider the proportion of smooth (free of large prime factors) values of a binary form $F(X_1,X_2)\in\Z[X_1,X_2]$. In a particular case, we give an asymptotic equivalent for this proportion which depends on $F$. This is related to Murphy's $α$ function, which is known in the cryptographic community, but which has not been studied before from a mathematical point of view. Our result proves that, when $α(F)$ is small, $F$ has a high proportion of smooth values. This has consequences on the first step, called polynomial selection, of the Number Field Sieve, the fastest algorithm of integer factorization.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-03-02T10:28:03Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Armand Lachand</name>
+      <arxiv:affiliation>IECL</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.03811v1</id>
+    <title>Efficient ECM factorization in parallel with the Lyness map</title>
+    <updated>2020-02-05T14:14:59Z</updated>
+    <link href="https://arxiv.org/abs/2002.03811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.03811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lyness map is a birational map in the plane which provides one of the simplest discrete analogues of a Hamiltonian system with one degree of freedom, having a conserved quantity and an invariant symplectic form. As an example of a symmetric Quispel-Roberts-Thompson (QRT) map, each generic orbit of the Lyness map lies on a curve of genus one, and corresponds to a sequence of points on an elliptic curve which is one of the fibres in a pencil of biquadratic curves in the plane. Here we present a version of the elliptic curve method (ECM) for integer factorization, which is based on iteration of the Lyness map with a particular choice of initial data. More precisely, we give an algorithm for scalar multiplication of a point on an elliptic curve, which is represented by one of the curves in the Lyness pencil. In order to avoid field inversion, and require only field multiplication (${\bf M}$), squaring (${\bf S}$) and addition, projective coordinates in $\mathbb{P}^1 \times \mathbb{P}^1$ are used. Neglecting multiplication by curve constants (assumed small), each addition of the chosen point uses $2{\bf M}$, while each doubling step requires $15{\bf M}$. We further show that the doubling step can be implemented efficiently in parallel with four processors, dropping the effective cost to $4{\bf M}$. Our scalar multiplication algorithm should require, on average, roughly twice as many multiplications per bit as the fastest state of the art methods using twisted Edwards curves with small constants, but it can be applied to any elliptic curve over $\mathbb{Q}$, whereas twisted Edwards curves (equivalent to Montgomery curves) correspond to only a subset of all elliptic curves. Hence, if implemented in parallel, our method may have potential advantages for integer factorization or elliptic curve cryptography.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-05T14:14:59Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrew N. W. Hone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.09772v2</id>
+    <title>Implementation and Analysis of Regev's Quantum Factorization Algorithm</title>
+    <updated>2025-07-09T19:14:35Z</updated>
+    <link href="https://arxiv.org/abs/2502.09772v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.09772v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing represents a significant advancement in computational capabilities. Of particular concern is its impact on asymmetric cryptography through, notably, Shor's algorithm and the more recently developed Regev's algorithm for factoring composite numbers. We present our implementation of the latter. Our analysis encompasses both quantum simulation results and classical component examples, with particular emphasis on comparative cases between Regev's and Shor's algorithms. Our experimental results reveal that Regev's algorithm indeed outperforms Shor's algorithm for certain composite numbers in practice. However, we observed significant performance variations across different input values. Despite Regev's algorithm's theoretical asymptotic efficiency advantage, our implementation exhibited execution times longer than Shor's algorithm for small integer factorization in both quantum and classical components. These findings offer insights into the practical challenges and performance characteristics of implementing Regev's algorithm in realistic quantum computing scenarios.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-13T21:02:15Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Information &amp; Computation, vol. 26, no. 1, pp. 230-252, 2026</arxiv:journal_ref>
+    <author>
+      <name>Przemysław Pawlitko</name>
+    </author>
+    <author>
+      <name>Natalia Moćko</name>
+    </author>
+    <author>
+      <name>Marcin Niemiec</name>
+    </author>
+    <author>
+      <name>Piotr Chołda</name>
+    </author>
+    <arxiv:doi>10.2478/qic-2026-0012</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2478/qic-2026-0012" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.02087v1</id>
+    <title>A survey about Hidden Subgroup Problem from a mathematical and cryptographic perspective</title>
+    <updated>2025-12-01T12:48:34Z</updated>
+    <link href="https://arxiv.org/abs/2512.02087v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.02087v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a survey on the Hidden Subgroup Problem (HSP), which plays an important role in studying the security of public-key cryptosystems. We first review the abelian case, where Kitaev's algorithm yields an efficient quantum solution to the HSP, recalling how classical problems (such as order finding, integer factorization, and discrete logarithm) can be formulated as abelian HSP instances. We then examine the current state of the art for non-abelian HSP, where no general efficient quantum solution is known, focusing on some relevant groups including dihedral group (connected to the shortest vector problem), symmetric groups (connected to the graph isomorphism problem), and semidirect product constructions (connected, in a special case, to the code equivalence problem). We also describe the main techniques for addressing the HSP in non-abelian cases, namely Fourier sampling and the black-box approach. Throughout the paper, we highlight the mathematical notions required and exploited in this context, providing a cryptography-oriented perspective.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-01T12:48:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Simone Dutto</name>
+    </author>
+    <author>
+      <name>Pietro Mercuri</name>
+    </author>
+    <author>
+      <name>Nadir Murru</name>
+    </author>
+    <author>
+      <name>Lorenzo Romano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.04956v1</id>
+    <title>Maximizing the practical achievability of quantum annealing attacks on factorization-based cryptography</title>
+    <updated>2024-10-07T11:55:23Z</updated>
+    <link href="https://arxiv.org/abs/2410.04956v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.04956v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work focuses on quantum methods for cryptanalysis of schemes based on the integer factorization problem and the discrete logarithm problem. We demonstrate how to practically solve the largest instances of the factorization problem by improving an approach that combines quantum and classical computations, assuming the use of the best publicly available special-class quantum computer: the quantum annealer. We achieve new computational experiment results by solving the largest instance of the factorization problem ever announced as solved using quantum annealing, with a size of 29 bits. The core idea of the improved approach is to leverage known sub-exponential classical method to break the problem down into many smaller computations and perform the most critical ones on a quantum computer. This approach does not reduce the complexity class, but it assesses the pragmatic capabilities of an attacker. It also marks a step forward in the development of hybrid methods, which in practice may surpass classical methods in terms of efficiency sooner than purely quantum computations will.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-07T11:55:23Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Olgierd Żołnierczyk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1704.07238v1</id>
+    <title>Post-Quantum Cryptography: S381 Cyclic Subgroup of High Order</title>
+    <updated>2017-04-24T13:57:40Z</updated>
+    <link href="https://arxiv.org/abs/1704.07238v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1704.07238v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Currently there is an active Post-Quantum Cryptography (PQC) solutions search, which attempts to find cryptographic protocols resistant to attacks by means of for instance Shor polynomial time algorithm for numerical field problems like integer factorization (IFP) or the discrete logarithm (DLP). The use of non-commutative or non-associative structures are, among others, valid choices for these kinds of protocols. In our case, we focus on a permutation subgroup of high order and belonging to the symmetric group S381. Using adequate one-way functions (OWF), we derived a Diffie-Hellman key exchange and an ElGamal ciphering procedure that only relies on combinatorial operations. Both OWF pose hard search problems which are assumed as not belonging to BQP time-complexity class. Obvious advantages of present protocols are their conceptual simplicity, fast throughput implementations, high cryptanalytic security and no need for arithmetic operations and therefore extended precision libraries. Such features make them suitable for low performance and low power consumption platforms like smart cards, USB-keys and cellphones.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-24T13:57:40Z</published>
+    <arxiv:comment>9 pages, 13 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Pedro Hecht</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15330v3</id>
+    <title>Practical Challenges in Executing Shor's Algorithm on Existing Quantum Platforms</title>
+    <updated>2026-01-13T15:01:53Z</updated>
+    <link href="https://arxiv.org/abs/2512.15330v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15330v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers pose a fundamental threat to widely deployed public-key cryptosystems, such as RSA and ECC, by enabling efficient integer factorization using Shor's algorithm. Theoretical resource estimates suggest that 2048-bit RSA keys could be broken using Shor's algorithm with fewer than a million noisy qubits. Although such machines do not yet exist, the availability of smaller, cloud-accessible quantum processors and open-source implementations of Shor's algorithm raises the question of what key sizes can realistically be factored with today's platforms. In this work, we experimentally investigate Shor's algorithm on several cloud-based quantum computers using publicly available implementations. Our results reveal a substantial gap between the capabilities of current quantum hardware and the requirements for factoring cryptographically relevant integers. In particular, we observe that circuit constructions still need to be highly specific for each modulus, and that machine fidelities are unstable, with high and fluctuating error rates.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T11:26:17Z</published>
+    <arxiv:comment>v3: corrected minor typographical errors; no change to results</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Paul Bagourd</name>
+    </author>
+    <author>
+      <name>Julian Jang-Jaccard</name>
+    </author>
+    <author>
+      <name>Vincent Lenders</name>
+    </author>
+    <author>
+      <name>Alain Mermoud</name>
+    </author>
+    <author>
+      <name>Torsten Hoefler</name>
+    </author>
+    <author>
+      <name>Cornelius Hempel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1408.6226v3</id>
+    <title>A Public Key Cryptoscheme Using Bit-pairs and Probabilistic Mazes</title>
+    <updated>2017-04-30T03:13:54Z</updated>
+    <link href="https://arxiv.org/abs/1408.6226v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.6226v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper gives the definition and property of a bit-pair shadow, and devises the three algorithms of a public key cryptoscheme called JUOAN that is based on a multivariate permutation problem and an anomalous subset product problem to which no subexponential time solutions are found so far, and regards a bit-pair as a manipulation unit. The authors demonstrate that the decryption algorithm is correct, deduce the probability that a plaintext solution is nonunique is nearly zero, analyze the security of the new cryptoscheme against extracting a private key from a public key and recovering a plaintext from a ciphertext on the assumption that an integer factorization problem, a discrete logarithm problem, and a low-density subset sum problem can be solved efficiently, and prove that the new cryptoscheme using random padding and random permutation is semantically secure. The analysis shows that the bit-pair method increases the density D of a related knapsack to a number more than 1, and decreases the modulus length lgM of the new cryptoscheme to 464, 544, or 640.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-08-26T09:34:17Z</published>
+    <arxiv:comment>16 Pages. arXiv admin note: text overlap with arXiv:1408.5999</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Theoretical Computer Science, v654, Nov 2016, pp.113-127</arxiv:journal_ref>
+    <author>
+      <name>Shenghui Su</name>
+    </author>
+    <author>
+      <name>Shuwang Lu</name>
+    </author>
+    <author>
+      <name>Maozhi Xu</name>
+    </author>
+    <author>
+      <name>Tao Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.19542v2</id>
+    <title>Shallow Depth Factoring Based on Quantum Feasibility Labeling and Variational Quantum Search</title>
+    <updated>2023-10-22T02:42:52Z</updated>
+    <link href="https://arxiv.org/abs/2305.19542v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.19542v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large integer factorization is a prominent research challenge, particularly in the context of quantum computing. This holds significant importance, especially in information security that relies on public key cryptosystems. The classical computation of prime factors for an integer has exponential time complexity. Quantum computing offers the potential for significantly faster computational processes compared to classical processors. In this paper, we propose a new quantum algorithm, Shallow Depth Factoring (SDF), to factor a biprime integer. SDF consists of three steps. First, it converts a factoring problem to an optimization problem without an objective function. Then, it uses a Quantum Feasibility Labeling (QFL) method to label every possible solution according to whether it is feasible or infeasible for the optimization problem. Finally, it employs the Variational Quantum Search (VQS) to find all feasible solutions. The SDF utilizes shallow-depth quantum circuits for efficient factorization, with the circuit depth scaling linearly as the integer to be factorized increases. Through minimizing the number of gates in the circuit, the algorithm enhances feasibility and reduces vulnerability to errors.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-31T04:18:04Z</published>
+    <arxiv:comment>10 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Imran Khan Tutul</name>
+    </author>
+    <author>
+      <name>Sara Karimi</name>
+    </author>
+    <author>
+      <name>Mohammadreza Soltaninia</name>
+    </author>
+    <author>
+      <name>Junpeng Zhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.13352v1</id>
+    <title>Key Exchange in the Quantum Era: Evaluating a Hybrid System of Public-Key Cryptography and Physical-Layer Security</title>
+    <updated>2024-12-17T21:56:04Z</updated>
+    <link href="https://arxiv.org/abs/2412.13352v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.13352v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Today's information society relies on cryptography to achieve security goals such as confidentiality, integrity, authentication, and non-repudiation for digital communications. Here, public-key cryptosystems play a pivotal role to share encryption keys and create digital signatures. However, quantum computers threaten the security of traditional public-key cryptosystems as they can tame computational problems underlying the schemes, i.e., discrete logarithm and integer factorization. The prospective arrival of capable-enough quantum computers already threatens today's secret communication in terms of their long-term secrecy when stored to be later decrypted. Therefore, researchers strive to develop and deploy alternative schemes.
+  In this work, evaluate a key exchange protocol based on combining public-key schemes with physical-layer security, anticipating the prospect of quantum attacks. If powerful quantum attackers cannot immediately obtain private keys, legitimate parties have a window of short-term secrecy to perform a physical-layer jamming key exchange (JKE) to establish a long-term shared secret. Thereby, the protocol constraints the computation time available to the attacker to break the employed public-key cryptography. In this paper, we outline the protocol, discuss its security, and point out challenges to be resolved.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-17T21:56:04Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Paul Staat</name>
+    </author>
+    <author>
+      <name>Meik Dörpinghaus</name>
+    </author>
+    <author>
+      <name>Azadeh Sheikholeslami</name>
+    </author>
+    <author>
+      <name>Christof Paar</name>
+    </author>
+    <author>
+      <name>Gerhard Fettweis</name>
+    </author>
+    <author>
+      <name>Dennis Goeckel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.09592v1</id>
+    <title>On speeding up factoring with quantum SAT solvers</title>
+    <updated>2019-10-21T18:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1910.09592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.09592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There have been several efforts to apply quantum SAT solving methods to factor large integers. While these methods may provide insight into quantum SAT solving, to date they have not led to a convincing path to integer factorization that is competitive with the best known classical method, the Number Field Sieve. Many of the techniques tried involved directly encoding multiplication to SAT or an equivalent NP-hard problem and looking for satisfying assignments of the variables representing the prime factors. The main challenge in these cases is that, to compete with the Number Field Sieve, the quantum SAT solver would need to be superpolynomially faster than classical SAT solvers. In this paper the use of SAT solvers is restricted to a smaller task related to factoring: finding smooth numbers, which is an essential step of the Number Field Sieve. We present a SAT circuit that can be given to quantum SAT solvers such as annealers in order to perform this step of factoring. If quantum SAT solvers achieve any speedup over classical brute-force search, then our factoring algorithm is faster than the classical NFS.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-21T18:33:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+    <author>
+      <name>João Marcos Vensi Basso</name>
+    </author>
+    <author>
+      <name>Sebastian R. Verschoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1903.03733v2</id>
+    <title>A Lightweight McEliece Cryptosystem Co-processor Design</title>
+    <updated>2019-08-25T21:05:47Z</updated>
+    <link href="https://arxiv.org/abs/1903.03733v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1903.03733v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Due to the rapid advances in the development of quantum computers and their susceptibility to errors, there is a renewed interest in error correction algorithms. In particular, error correcting code-based cryptosystems have reemerged as a highly desirable coding technique. This is due to the fact that most classical asymmetric cryptosystems will fail in the quantum computing era. Quantum computers can solve many of the integer factorization and discrete logarithm problems efficiently. However, code-based cryptosystems are still secure against quantum computers, since the decoding of linear codes remains as NP-hard even on these computing systems. One such cryptosystem is the McEliece code-based cryptosystem. The original McEliece code-based cryptosystem uses binary Goppa code, which is known for its good code rate and error correction capability. However, its key generation and decoding procedures have a high computation complexity. In this work we propose a design and hardware implementation of an public-key encryption and decryption co-processor based on a new variant of McEliece system. This co-processor takes the advantage of the non-binary Orthogonal Latin Square Codes to achieve much smaller computation complexity, hardware cost, and the key size.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-03-09T04:35:16Z</published>
+    <arxiv:comment>2019 Boston Area Architecture Workshop (BARC'19)</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Lake Bu</name>
+    </author>
+    <author>
+      <name>Rashmi Agrawal</name>
+    </author>
+    <author>
+      <name>Hai Cheng</name>
+    </author>
+    <author>
+      <name>Michel A. Kinsy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.11004v1</id>
+    <title>Enhancing the Practical Reliability of Shor's Quantum Algorithm via Generalized Period Decomposition: Theory and Large-Scale Empirical Validation</title>
+    <updated>2025-12-11T00:06:25Z</updated>
+    <link href="https://arxiv.org/abs/2512.11004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.11004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work presents a generalized period decomposition approach, significantly improving the practical reliability of Shor's quantum factoring algorithm. Although Shor's algorithm theoretically enables polynomial-time integer factorization, its real-world performance heavily depends on stringent conditions related to the period obtained via quantum phase estimation. Our generalized decomposition method relaxes these conditions by systematically exploiting arbitrary divisors of the obtained period, effectively broadening the applicability of each quantum execution. Extensive classical simulations were performed to empirically validate our approach, involving over one million test cases across integers ranging from 2 to 8 digits. The proposed method achieved near-perfect success rates, exceeding 99.998% for 7-digit numbers and 99.999% for 8-digit numbers, significantly surpassing traditional and recently improved variants of Shor's algorithm. Crucially, this improvement is achieved without compromising the algorithm's polynomial-time complexity and integrates seamlessly with existing quantum computational frameworks. Moreover, our method enhances the efficiency of quantum resource usage by minimizing unnecessary repetitions, making it particularly relevant for quantum cryptanalysis with noisy intermediate-scale quantum (NISQ) devices. This study thus provides both theoretical advancements and substantial practical benefits, contributing meaningfully to the field of quantum algorithm research and the broader field of quantum information processing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-11T00:06:25Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chih-Chen Liao</name>
+    </author>
+    <author>
+      <name>Chia-Hsin Liu</name>
+    </author>
+    <author>
+      <name>Yun-Cheng Tsai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.05534v3</id>
+    <title>BloQBench: A Blockchain Benchmarking Framework for Quantum Supremacy</title>
+    <updated>2026-07-31T21:41:34Z</updated>
+    <link href="https://arxiv.org/abs/2601.05534v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.05534v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As quantum computing matures, characterizing its practical workloads and verifying quantum supremacy presents a significant challenge. Current benchmarking and claims rely on trust-based verification methods that lack public auditability. We propose a decentralized benchmarking framework implemented via an Ethereum smart contract to provide verifiable assurance in these claims. This framework generates classically intractable puzzles that, crucially, require absolutely no pre-computed secrets. By utilizing the blockchain as an immutable public ledger, independent observers can mathematically verify that any provided solution to the puzzle must have been computationally derived via quantum hardware rather than classically spoofed. Furthermore, we demonstrate how this verifiable benchmarking metric can be utilized as an automation trigger. As a practical example of such a trigger, we focus on the ability for blockchains to automatically switch to quantum-secure signature schemes upon the successful demonstration of cryptographic quantum supremacy. We demonstrate these principles with BloQBench, which implements the concept using integer factorization as the generated puzzle and Lamport signatures as the trigger-based effect. This approach demonstrates a novel use of distributed ledgers for quantum workload characterization, providing a transparent, automated metric for measuring quantum supremacy while managing the performance and complexity trade-offs of post-quantum technology transitions.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-09T05:20:02Z</published>
+    <arxiv:comment>14 pages, 3 figures, 1 table, accepted to IISWC 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nicholas J. C. Papadopoulos</name>
+    </author>
+    <author>
+      <name>Ramin Ayanzadeh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.22644v1</id>
+    <title>On the Intractability of Chaotic Symbolic Walks: Toward a Non-Algebraic Post-Quantum Hardness Assumption</title>
+    <updated>2025-05-28T17:56:00Z</updated>
+    <link href="https://arxiv.org/abs/2505.22644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.22644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most classical and post-quantum cryptographic assumptions, including integer factorization, discrete logarithms, and Learning with Errors (LWE), rely on algebraic structures such as rings or vector spaces. While mathematically powerful, these structures can be exploited by quantum algorithms or advanced algebraic attacks, raising a pressing need for structure-free alternatives. To address this gap, we introduce the Symbolic Path Inversion Problem (SPIP), a new computational hardness assumption based on symbolic trajectories generated by contractive affine maps with bounded noise over Z2. Unlike traditional systems, SPIP is inherently non-algebraic and relies on chaotic symbolic evolution and rounding-induced non-injectivity to render inversion computationally infeasible. We prove that SPIP is PSPACE-hard and #P-hard, and demonstrate through empirical simulation that even short symbolic sequences (e.g., n = 3, m = 2) can produce over 500 valid trajectories for a single endpoint, with exponential growth reaching 2256 paths for moderate parameters. A quantum security analysis further shows that Grover-style search offers no practical advantage due to oracle ambiguity and verification instability. These results position SPIP as a viable foundation for post-quantum cryptography that avoids the vulnerabilities of algebraic symmetry while offering scalability, unpredictability, and resistance to both classical and quantum inversion.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-28T17:56:00Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mohamed Aly Bouke</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.11606v1</id>
+    <title>QDBFT: A Dynamic Consensus Algorithm for Quantum-Secured Blockchain</title>
+    <updated>2026-02-12T05:53:51Z</updated>
+    <link href="https://arxiv.org/abs/2602.11606v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.11606v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The security foundation of blockchain system relies primarily on classical cryptographic methods and consensus algorithms. However, the advent of quantum computing poses a significant threat to conventional public-key cryptosystems based on computational hardness assumptions. In particular, Shor's algorithm can efficiently solve discrete logarithm and integer factorization problems in polynomial time, thereby undermining the immutability and security guarantees of existing systems. Moreover, current Practical Byzantine Fault Tolerance (PBFT) protocols, widely adopted in consortium blockchains, suffer from high communication overhead and limited efficiency when coping with dynamic node reconfigurations, while offering no intrinsic protection against quantum adversaries.
+  To address these challenges, we propose QDBFT, a quantum-secured dynamic consensus algorithm, with two main contributions: first,we design a primary node automatic rotation mechanism based on a consistent hash ring to enable consensus under dynamic membership changes, ensuring equitable authority distribution; second, we integrate Quantum Key Distribution (QKD) networks to provide message authentication for inter-node communication, thereby achieving information-theoretic security in the consensus process. Experimental evaluations demonstrate that QDBFT achieves performance comparable to traditional PBFT while delivering strong resilience against quantum attacks, making it a promising solution for future quantum-secure decentralized infrastructures.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-12T05:53:51Z</published>
+    <arxiv:comment>24 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Fei Xu</name>
+    </author>
+    <author>
+      <name>Cheng Ye</name>
+    </author>
+    <author>
+      <name>Jie OuYang</name>
+    </author>
+    <author>
+      <name>Ziqiang Wu</name>
+    </author>
+    <author>
+      <name>Haoze Chen</name>
+    </author>
+    <author>
+      <name>An Hua</name>
+    </author>
+    <author>
+      <name>Meifeng Gao</name>
+    </author>
+    <author>
+      <name>Qiandong Zhang</name>
+    </author>
+    <author>
+      <name>Minghan Li</name>
+    </author>
+    <author>
+      <name>Feilong Li</name>
+    </author>
+    <author>
+      <name>Yajun Miao</name>
+    </author>
+    <author>
+      <name>Wei Qi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.03587v2</id>
+    <title>Post-Quantum Cryptography(PQC): Generalized ElGamal Cipher over GL(8,F251)</title>
+    <updated>2024-12-29T12:42:36Z</updated>
+    <link href="https://arxiv.org/abs/1702.03587v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.03587v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Post-quantum cryptography (PQC) attempts to find cryptographic protocols resistant to attacks using for instance Shor's polynomial time algorithm for numerical field problems like integer factorization (IFP) or the discrete logarithm (DLP). Other aspects are the backdoors discovered in deterministic random generators or recent advances in solving some instances of DLP. Using alternative algebraic structures like non-commutative or non-associative partial groupoids, magmas, monoids, semigroups, quasigroups or groups, are valid choices for these new protocols. This paper focuses on an asymmetric cipher based on a generalized ElGamal non-arbitrated protocol using a non-commutative general linear group. The developed protocol forces a hard subgroup membership search problem into a non-commutative structure. The protocol involves at first a generalized Diffie-Hellman key interchange and further on the private and public parameters are recursively updated each time a new cipher session is launched. Security is based on a hard variation of the Generalized Symmetric Decomposition Problem (GSDP). Working with GL(8, F251) 64-bit security is achieved, and if GL(16, F251) is chosen, the security rises to 127-bit. An appealing feature is that there is no need for big number libraries as all arithmetic is performed in Z_251. Therefore the new protocol is particularly useful for computational platforms with very limited capabilities like smartphones or smartcards.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-12T22:50:28Z</published>
+    <arxiv:comment>6 pages, 6 Tables, 14 Figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Pedro Hecht</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.01448v2</id>
+    <title>Factoring semi-primes with (quantum) SAT-solvers</title>
+    <updated>2019-10-23T02:21:38Z</updated>
+    <link href="https://arxiv.org/abs/1902.01448v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.01448v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The assumed computationally difficulty of factoring large integers forms the basis of security for RSA public-key cryptography, which specifically relies on products of two large primes or semi-primes. The best-known factoring algorithms for classical computers run in sub-exponential time. Since integer factorization is in NP, one can reduce this problem to any NP-hard problem, such as Boolean Satisfiability (SAT). While reducing factoring to SAT has proved to be useful for studying SAT solvers, attempting to factor large integers via such a reduction has not been found to be successful.
+  Shor's quantum factoring algorithm factors any integer in polynomial time, although large-scale fault-tolerant quantum computers capable of implementing Shor's algorithm are not yet available, so relevant benchmarking experiments for factoring via Shor's algorithm are not yet possible. In recent years, however, several authors have attempted factorizations with the help of quantum processors via reductions to NP-hard problems. While this approach may shed some light on some algorithmic approaches for quantum solutions to NP-hard problems, in this paper we study and question the practical effectiveness of this approach for factoring large numbers. We find no evidence that this is a viable path toward factoring large numbers, even for scalable fault-tolerant quantum computers, as well as for various quantum annealing or other special purpose quantum hardware.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-04T20:06:44Z</published>
+    <arxiv:comment>Update: typos, included reference to abs/1910.09592</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+    <author>
+      <name>Sebastian R. Verschoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.05321v1</id>
+    <title>Quantum solutions to possible challenges of Blockchain technology</title>
+    <updated>2021-10-11T14:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2110.05321v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.05321v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Technological advancements of Blockchain and other Distributed Ledger Techniques (DLTs) promise to provide significant advantages to applications seeking transparency, redundancy, and accountability. Actual adoption of these emerging technologies requires incorporating cost-effective, fast, QoS-enabled, secure, and scalable design. With the recent advent of quantum computing, the security of current blockchain cryptosystems can be compromised to a greater extent. Quantum algorithms like Shor's large integer factorization algorithm and Grover's unstructured database search algorithm can provide exponential and quadratic speedup, respectively, in contrast to their classical counterpart. This can put threats on both public-key cryptosystems and hash functions, which necessarily demands to migrate from classical cryptography to quantum-secure cryptography. Moreover, the computational latency of blockchain platforms causes slow transaction speed, so quantum computing principles might provide significant speedup and scalability in transaction processing and accelerating the mining process. For such purpose, this article first studies current and future classical state-of-the-art blockchain scalability and security primitives. The relevant quantum-safe blockchain cryptosystem initiatives which have been taken by Bitcoin, Ethereum, Corda, etc. are stated and compared with respect to key sizes, hash length, execution time, computational overhead, and energy efficiency. Post Quantum Cryptographic algorithms like Code-based, Lattice-based, Multivariate-based, and other schemes are not well suited for classical blockchain technology due to several disadvantages in practical implementation. Decryption latency, massive consumption of computational resources, and increased key size are few challenges that can hinder blockchain performance.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-11T14:41:04Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nivedita Dey</name>
+    </author>
+    <author>
+      <name>Mrityunjay Ghosh</name>
+    </author>
+    <author>
+      <name>Amlan Chakrabarti</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21349v1</id>
+    <title>Onion-Routed Multi-Circuit Key Establishment for Quantum-Resilient Sessions</title>
+    <updated>2026-05-20T16:14:07Z</updated>
+    <link href="https://arxiv.org/abs/2605.21349v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21349v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Public-key primitives that today anchor session-key establishment - RSA, Diffie-Hellman, and elliptic-curve cryptography - reduce to integer factorization or discrete logarithm and are therefore vulnerable to Shor's algorithm on a sufficiently capable quantum computer. The harvest-now, decrypt-later (HNDL) threat model turns this future capability into a present liability: ciphertext archived today can be decrypted retrospectively once a cryptographically relevant quantum computer becomes available. We propose a session-key establishment scheme that distributes a freshly generated key as multiple, independently encrypted fragments across distinct, ephemeral Tor circuits between an onion-service proxy and an onion-service client. Reconstruction requires every fragment; each fragment travels its own per-bundle circuit established via a NEWNYM signal. The security argument rests on the standard end-to-end correlation bound for onion routing: an adversary controlling a fraction of Tor relays must independently deanonymize every fresh circuit to correlate the fragments belonging to one session, and the per-fragment probability of success decays multiplicatively in the number of fragments. We implement the design as a Flask-based prototype on AWS EC2, with both the proxy and the client deployed as Tor onion services, and measure end-to-end key-establishment latency. The implemented prototype completes a key establishment in 13-20 s on average (7-50 s including tails), of which approximately 88% is attributable to Tor-related delay - a cost we discuss in the context of the privacy-versus-responsiveness trade-off.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T16:14:07Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Tushin Mallick</name>
+    </author>
+    <author>
+      <name>Ashish Kundu</name>
+    </author>
+    <author>
+      <name>Ramana Kompella</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.01211v1</id>
+    <title>GPU Acceleration of Learning With Errors KEMs Using OpenACC for Post-Quantum Cryptography</title>
+    <updated>2026-05-31T13:01:18Z</updated>
+    <link href="https://arxiv.org/abs/2606.01211v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.01211v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm proved that asymmetric cryptographic protocols based on the integer factorization and discrete logarithm problems are no longer safe in a world with large-scale quantum computers. As a result, Post-Quantum Cryptography (PQC) has been developed over the last few years, seeking cryptographic primitives resistant to quantum attacks. One of the main hard problems underlying PQC schemes is the Learning with Errors (LWE) problem, which is significantly more computationally intensive than its classical predecessors. In this work, we present a Key Encapsulation Mechanism (KEM) based on plain LWE and develop a GPU-oriented implementation using OpenACC. We evaluate the performance of our accelerated application in terms of both time-to-solution and energy-to-solution, considering bare-metal and containerized executions across multiple NVIDIA GPU models and generations. Our implementation achieves significant acceleration across all tested GPU platforms. In particular, on the NVIDIA Grace Hopper Superchip, it attains up to a $208\times$ speedup over a multithreaded CPU baseline and enables the execution of problem sizes that are impractical on CPU architectures due to memory and synchronization constraints. Energy consumption analysis also shows $\approx 2\times$ better efficiency when using the Superchip compared to systems equipped with x86-based CPUs and NVIDIA H100 GPUs. These results highlight the effectiveness of GPU acceleration for computationally demanding LWE-based cryptographic workloads.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-31T13:01:18Z</published>
+    <arxiv:comment>Pre-print version of the manuscript submitted to NUMTA2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Tiziana Liberati</name>
+    </author>
+    <author>
+      <name>Nitin Shukla</name>
+    </author>
+    <author>
+      <name>Matteo Barbieri</name>
+    </author>
+    <author>
+      <name>Gabriella Bettonte</name>
+    </author>
+    <author>
+      <name>Elisabetta Boella</name>
+    </author>
+    <author>
+      <name>Simone Rizzo</name>
+    </author>
+    <author>
+      <name>Daniele Gregori</name>
+    </author>
+    <author>
+      <name>Marco Pedicini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.00950v1</id>
+    <title>Decomposition of RSA modulus applying even order elliptic curves</title>
+    <updated>2025-03-02T16:09:07Z</updated>
+    <link href="https://arxiv.org/abs/2503.00950v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.00950v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An efficient integer factorization algorithm would reduce the security of all variants of the RSA cryptographic scheme to zero. Despite the passage of years, no method for efficiently factoring large semiprime numbers in a classical computational model has been discovered. In this paper, we demonstrate how a natural extension of the generalized approach to smoothness, combined with the separation of $2$-adic point orders, leads us to propose a factoring algorithm that finds (conjecturally) the prime decomposition $N = pq$ in subexponential time $L(\sqrt 2+o(1), \min(p,q))$. This approach motivated by the papers \cite{Len}, \cite{MMV} and \cite{PoZo} is based on a more careful investigation of pairs $(E,Q)$, where $Q$ is a point on an elliptic curve $E$ over $\Z _N$. Specifically, in contrast to the familiar condition that the largest prime divisor $P^+(\ord Q_p)$ of the reduced order $\ord Q_p$ does not divide $\#E(\F_q)$ we focus on the relation between $P^+(\ord Q_r)$ and the smallest prime number $l_{\min}(E,Q)$ separating the orders $\ord Q_p$ and $\ord Q_q$. We focus on the ${\calE}_2$ family of even order elliptic curves over $\Z_N$ since then the condition $l_{\min}(E,Q)\le 2$ holds true for large fraction of points $(x,y)\in E(\Z_N)$. Moreover if we know the pair $(E,Q)$ such that $P^+(\ord Q_r)\le t&lt;l_{\min}(E,Q)$ and $d=\max_{r\in \{p,q\}}(\ord Q_r)$ is large in comparison to $\min_{r\in \{p,q\}}|a_r(E)|\neq 0$ then we can decompose $N$ in deterministic time $t^{1+o(1)}$ by representing $N$ in base $d$.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-02T16:09:07Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Jacek Pomykała</name>
+    </author>
+    <author>
+      <name>Mariusz Jurkiewicz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.02518v1</id>
+    <title>Diffusion Computation versus Quantum Computation: A Comparative Model for Order Finding and Factoring</title>
+    <updated>2026-01-05T19:45:38Z</updated>
+    <link href="https://arxiv.org/abs/2601.02518v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.02518v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study a hybrid computational model for integer factorization in which the only non-classical resource is access to an \emph{iterated diffusion process} on a finite graph. Concretely, a \emph{diffusion step} is defined to be one application of a symmetric stochastic matrix (the half-lazy walk operator) to an $\ell^{1}$--normalized state vector, followed by an optional readout of selected coordinates.
+  Let $N\ge 3$ be an odd integer which is neither prime nor a prime power, and let $b\in(\mathbb{Z}/N\mathbb{Z})^\ast$ have odd multiplicative order $r={\rm ord}_N(b)$. We construct, without knowing $r$ in advance, a weighted Cayley graph whose vertex set is the cyclic subgroup $\langle b\rangle$ and whose edges correspond to the powers $b^{\pm 2^t}$ for $t\le \lfloor \log_2 N\rfloor+1$. Using an explicit spectral decomposition together with an elementary doubling lemma, we show that $r$ can be recovered from a single heat-kernel value after at most $O((\log_2 N)^2)$ diffusion steps, with an effective bound.
+  We then combine this order-finding model with the standard reduction from factoring to order finding (in the spirit of Shor's framework) to obtain a randomized factorization procedure whose success probability depends only on the number $m$ of distinct prime factors of $N$. Our comparison with Shor's algorithm is \emph{conceptual and model-based}. We replace unitary $\ell^2$ evolution by Markovian $\ell^1$ evolution, and we report complexity in two cost measures: digital steps and diffusion steps. Finally, we include illustrative examples and discussion of practical implementations.</summary>
+    <category term="math.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T19:45:38Z</published>
+    <arxiv:comment>This is a major revision of arXiv:2104.11616</arxiv:comment>
+    <arxiv:primary_category term="math.SP"/>
+    <author>
+      <name>Carlos A. Cadavid</name>
+    </author>
+    <author>
+      <name>Paulina Hoyos</name>
+    </author>
+    <author>
+      <name>Jay Jorgenson</name>
+    </author>
+    <author>
+      <name>Lejla Smajlović</name>
+    </author>
+    <author>
+      <name>J. D. Vélez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.08432v3</id>
+    <title>Parallel Spooky Pebbling Makes Regev Factoring More Practical</title>
+    <updated>2026-07-03T02:58:51Z</updated>
+    <link href="https://arxiv.org/abs/2510.08432v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.08432v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pebble games, an abstraction from classical reversible computing, have found use in the design of quantum circuits for inherently sequential tasks. Gidney showed that allowing Hadamard basis measurements during pebble games can dramatically improve costs -- an extension termed "spooky pebble games" because the measurements leave temporary phase errors called ghosts. Separately, previous work by Blocki et al. studied the benefits of parallelism in pebble games. In this work we define and study parallel spooky pebble games, showing that parallelism and spookiness can yield impressive gains when used together. First, we show by construction that a line graph of length $\ell$ can be pebbled in depth $2\ell$ (exactly optimal) using space $\leq 2.47\log \ell$. Then, to explore pebbling schemes using even less space, we use a highly optimized $A^*$ search implemented in Julia to find the lowest-depth parallel spooky pebbling possible for a range of concrete line graph lengths $\ell$ given a constant number of pebbles $s$.
+  We then show that these techniques can significantly reduce the cost of the arithmetic in Regev's factoring algorithm. For example, we find that 4096-bit integers $N$ can be factored in multiplication depth 193, which outperforms the 680 required of previous variants of Regev and the 444 reported by Ekerå and Gärtner for Shor's algorithm. While the space required for Shor's algorithm is considerably less than any variant of Regev's algorithm including ours, and thus Shor likely remains the best candidate for the first quantum factorization of large integers, our results show that implementations of Regev's algorithm are far from fully optimized, and Regev's algorithm may have practical importance in the future. We also believe our pebbling techniques are applicable in quantum cryptanalysis beyond integer factorization, and in quantum circuit compilation more broadly.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-09T16:45:58Z</published>
+    <arxiv:comment>Eurocrypt 2026. 25 pages (incl. references and appendices: 46 pages). v2: improvements to exposition, discussion, and comparison to other factoring algorithms</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Gregory D. Kahanamoku-Meyer</name>
+    </author>
+    <author>
+      <name>Seyoon Ragavan</name>
+    </author>
+    <author>
+      <name>Katherine Van Kirk</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-032-25291-3_14</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-032-25291-3_14" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.01026v3</id>
+    <title>Generalized Uncertainty Principles for Quantum Cryptography</title>
+    <updated>2023-02-19T13:33:42Z</updated>
+    <link href="https://arxiv.org/abs/2302.01026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.01026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We know the classical public cryptographic algorithms are based on certain NP-hard problems such as the integer factoring in RSA and the discrete logarithm in Diffie-Hellman. They are going to be vulnerable with fault-tolerant quantum computers. We also know that the uncertainty principle for quantum bits or qubits such as quantum key distribution or QKD based on the quantum uncertainty principle offers the information theoretical security. The interesting implication with the paradigm shifts from classical computing to quantum computing is that the NP-hardness used for classical cryptography may shift to the uncertainty principles for quantum cryptography including quantum symmetric encryption, post-quantum cryptography, as well as quantum encryption in phase space for coherent optical communications. This paper would like to explore those so-called generalized uncertainty principles and explain what their implications are for quantum security. We identified three generalized uncertainty principles offering quantum security: non-commutability between permutation gates, non-commutability between the displacement and phase shift operators for coherent states, and the modular Diophantine Equation Problem in general linear algebra for post-quantum cryptography.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-02T11:40:32Z</published>
+    <arxiv:comment>7 pages, 5 figures, conference invited speech at ICCCAS, then to be published by JCM</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Randy Kuang</name>
+    </author>
+  </entry>
+</feed>

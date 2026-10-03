@@ -1,0 +1,1478 @@
+J. Cryptology (1997) 10: 233–260
+
+
+
+                                                                       © 1997 International Association for
+                                                                       Cryptologic Research
+
+
+
+
+         Small Solutions to Polynomial Equations, and
+             Low Exponent RSA Vulnerabilities
+                                          Don Coppersmith
+                              IBM Research, T. J. Watson Research Center,
+                                 Yorktown Heights, NY 10598, U.S.A.
+
+
+                                   Communicated by Andrew M. Odlyzko
+
+                        Received 21 December 1995 and revised 11 August 1996
+
+
+          Abstract. We show how to find sufficiently small integer solutions to a polynomial
+          in a single variable modulo N , and to a polynomial in two variables over the integers.
+          The methods sometimes extend to more variables. As applications: RSA encryption
+          with exponent 3 is vulnerable if the opponent knows two-thirds of the message, or if
+          two messages agree over eight-ninths of their length; and we can find the factors of
+          N = P Q if we are given the high order 14 log2 N bits of P.
+
+          Key words. Polynomial, RSA, Factoring.
+
+
+                                          1. Introduction
+
+It is easy to compute the integer roots of a polynomial in a single variable over the
+integers
+                                               p(x) = 0.
+But two related problems can be hard:
+  (1) finding integer roots of a modular polynomial in one variable:
+
+                                             p(x) = 0 (mod N );
+
+  (2) finding integer roots of a polynomial in several variables:
+
+                                                  p(x, y) = 0.
+
+   In this paper we restrict these problems to the case where there exists a solution small
+enough (with respect to N or to the coefficients of p), and we can solve the problems in
+these special cases, using lattice basis reduction techniques.
+   Let N be a large composite integer of unknown factorization. Let
+
+                      p(x) = x δ + pδ−1 x δ−1 + · · · + p2 x 2 + p1 x + p0
+
+                                                   233
+234                                                                            D. Coppersmith
+
+
+be a monic integer polynomial of degree δ in a single variable x. Suppose there is an
+integer solution x0 to
+                                    p(x0 ) = 0 (mod N )
+satisfying
+                                       |x0 | < N 1/δ .
+We will show how to find such a solution x0 , in time polynomial in (log N , 2δ ).
+ Suppose next that
+                                          X
+                               p(x, y) =        pi j x i y j
+                                                ij
+
+is an irreducible integer polynomial in two variables over the integers (not modulo N
+this time), with degree δ in each variable separately. Let X and Y be upper bounds on
+the desired integer solution (x0 , y0 ), and set
+
+                                   W = max| pi j |X i Y j .
+                                           ij
+
+We will find an integer solution (x0 , y0 ) satisfying p(x0 , y0 ) = 0 if one exists with
+|x0 | ≤ X , |y0 | ≤ Y , provided
+                                      X Y < W 3/(2δ) .
+     The techniques used in the two cases are similar. We use the coefficients of the
+polynomial p to build a matrix M, whose rows give the basis of an integer lattice.
+We will consider a row vector r whose entries are powers of the desired solutions: x0i or
+       j
+x 0i y0 . The vector s = rM will be a relatively short lattice element. Using lattice basis
+reduction techniques such as those due to Lovász [9] to analyze M, we find a hyperplane
+containing all the short lattice elements. The equation of this hyperplane translates to
+a linear relation on the elements of r, and then to a polynomial equation c(x0 ) = 0 or
+c(x0 , y0 ) = 0 over Z. In the univariate modular case we solve c(x0 ) = 0 directly for x0 .
+In the bivariate integer case we combine c(x0 , y0 ) with p(x0 , y0 ) and solve.
+     An important application of the univariate modular case is to RSA encryption [12]
+with small exponent, when most of the message is fixed or “stereotyped.” Suppose the
+plaintext m consists of two pieces, a known piece B and an unknown piece x: m = B + x.
+Suppose m is RSA-encrypted with an exponent of 3, so the ciphertext c is given by
+c = m 3 = (B + x)3 (mod N ). If we know B, c, and N , we can apply the present results
+to the modular polynomial equation
+
+                           p(x) = (B + x)3 − c = 0 (mod N ),
+
+and recover x as long as |x| < N 1/3 , that is, x has fewer than one-third of the bits of the
+message, and these bits are consecutive.
+  A second application of the univariate modular case to RSA encryption with small
+exponent concerns random padding. Suppose a message m is padded with a random
+value r1 before encrypting with exponent 3, giving the ciphertext
+
+                                 c1 = (m + r1 )3 (mod N ).
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities               235
+
+
+Suppose m is encrypted again with different random padding:
+
+
+                                    c2 = (m + r2 )3 (mod N ).
+
+
+We will show how to recover m from c1 , c2 , N , as long as the random padding ri is less
+than one-ninth of the bits of N . This is completely different from Hastad’s [7] attack
+on low-exponent RSA; he used encryptions under several different moduli, and we use
+only one modulus.
+   The bivariate integer case can be applied to the problem of factoring an integer when
+we know its high-order bits. If we know N = P Q and we know the high-order 14 log2 N
+bits of P, then by solving the equation (P0 + x)(Q 0 + y) − N over a suitable range of x
+and y we can find the factorization of N . By comparison, Rivest and Shamir [13] need
+about 13 log2 N bits of P, and a recent work of the present author [4] required 10 3
+                                                                                     log2 N
+bits. This has applications to some RSA-based cryptographic schemes; see, for example,
+Vanstone and Zuccherato [15].
+   The rest of the paper is organized as follows. In Section 2 we recall the necessary facts
+about lattice basis reduction. In Section 3 we present a heuristic approach, which does
+not quite work, but whose ideas will be refined in the present work. For the univariate
+modular case, we show in Section 4 how to build the matrix M, the rows of which
+generate our lattice. In Section 5 we analyze the determinant of this matrix, and compare
+to the length of the relevant vector. We complete the solution of the modular univariate
+polynomial in Section 6. Applications to RSA encryption with low exponent and partial
+information are given in Section 7 (where most of a message is known beforehand)
+and Section 8 (where two messages agree over most of their length). In Section 10 we
+develop the bivariate integer case, and apply it in Section 11 to the problem of factoring
+integers with partial information. Section 12 investigates the extension of these results
+to two or more variables modulo N or three or more variables over the integers. We give
+concluding remarks and an open problem in Section 13.
+   This paper, containing material from the author’s papers [2] and [3], grew out of the
+joint work with Franklin, Patarin, and Reiter [5], which in turn was inspired Franklin
+and Reiter’s Crypto ’95 rump session talk [6].
+
+
+                                  2. Lattice Basis Reduction
+
+We recall here some basic facts about lattice basis reduction. The reader is referred to
+[9] for further information.
+   Suppose M is a square n × n matrix with rational entries and with full rank. The rows
+of M generate a lattice L, a collection of vectors closed under addition and subtraction;
+in fact the rows form a basis of L.
+   From [9] we learn how to compute a reduced basis (b1 , b2 , . . . , bn ) for L. The matrix
+B with rows bi is related to M by a series of elementary row operations; equivalently,
+B = K M where K is an invertible matrix, and both K and K −1 have integer entries. The
+computation of B is done in time polynomial in n and in log(max{|n i j |, |di j |}), where n i j
+and di j are the numerator and denominator of the matrix element Mi, j in lowest terms.
+236                                                                                  D. Coppersmith
+
+
+Remark. Lattice reduction works more efficiently with integer entries, but our lattice
+is easier to describe with rational entries. Converting between the two is not difficult.
+
+   The basis elements bi are relatively short. The Euclidean norm |b1 | is within a mul-
+tiplicative factor of 2(n−1)/2 of the norm of the smallest nonzero lattice element, and
+similar estimates hold for the other bi . Setting D = | det(M)| = | det(B)|, we have
+                                     Y
+                                D≤        |bi | ≤ 2n(n−1)/4 D.
+
+The first inequality is Hadamard’s inequality. The second is a property of the reduced
+basis; see [9, equation (1.8)].
+  Let bi∗ denote the component of bi orthogonal to the span of b1 , b2 , . . . , bi−1 . We
+know that
+                                         Y
+                                     D=       |bi∗ |.
+From the discussion in [9] we know that the last basis element bn satisfies
+
+                                     |b∗n | ≥ D 1/n 2−(n−1)/4 .
+                                                                          ∗ 2       ∗
+Q ∗ the direction of the inequality.) This follows from |bi | ≤ 2|bi+1 | and D =
+                                                                                        2
+(Note
+   |bi |.                                                       P
+   Each lattice element s can be expressed as s =                 si bi , where the si are integers.
+Further, |s| ≥ |sn | × |b∗n |. So if s satisfies |s| < |b∗n |, then sn must be 0, and s must lie in
+the hyperplane spanned by b1 , b2 , . . . , bn−1 . Thus we have proved:
+
+Lemma 1. If a lattice element s satisfies |s| < D 1/n 2−(n−1)/4 then s lies in the hyper-
+plane spanned by b1 , b2 , . . . , bn−1 .
+
+   In our applications, we are not necessarily looking for the shortest nonzero vector
+in the lattice, but for a relatively short vector, and Lemma 1 serves to confine all such
+short vectors to a hyperplane. Lemma 2 generalizes this concept from a hyperplane to a
+subspace of smaller dimension.
+
+Lemma 2. If a lattice element s satisfies |s| < |bi∗ | for all i = k + 1, . . . , n, then s lies
+in the space spanned by b1 , b2 , . . . , bk .
+
+   Lemma 2 will be useful when we wish to develop more than one equation. This will
+be necessary when solving a modular polynomial with more than one variable, or an
+integer polynomial with more than two variables. See Section 12.
+
+
+                                         3. Motivation
+
+Lattice reduction techniques seem inherently linear. It is not immediately obvious how
+to apply these techniques to the nonlinear problem of solving polynomial equations.
+   To motivate the present work, we start with a heuristic approach to solving a modular
+polynomial equation by lattice basis reduction techniques. This approach does not quite
+work, but it gives ideas upon which we can build the algorithms which do work.
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities             237
+
+
+  Given a monic univariate modular polynomial equation
+
+              p(x) = x δ + pδ−1 x δ−1 + · · · + p2 x 2 + p1 x + p0 = 0 (mod N )
+
+to which we wish to find a small root x0 , we could proceed as follows:
+   Establish a suitable upper bound X on the size of the desired root x0 . Build a (δ +
+2) × (δ + 2) matrix M, with diagonal elements given by 1, X −1 , X −2 , . . . , X −δ , N , and
+with right-hand column p0 , p1 , p2 , . . . , pδ−1 , pδ = 1, N ; all other entries are 0.
+                                                                       
+                              1      0         0      ···    0     p0
+                            0 X −1            0      ···    0     p1 
+                                                                       
+                            0       0        X  −2
+                                                      · · ·  0     p    
+                                                                     2 
+                      M = .                                              .
+                            ..
+                                     .
+                                     ..         .
+                                                ..    . ..   .
+                                                             ..     .. 
+                                                                    .
+                                                                        
+                                                                       
+                            0       0         0      · · · X −δ pδ 
+                              0      0         0      ···    0     N
+
+  Suppose p(x0 ) = y0 N for unknown integers x0 and y0 with |x0 | < X . Consider the
+row vector r consisting of powers of x0 and y0 :
+
+                              r = (1, x0 , x02 , . . . , x0δ−1 , x0δ , −y0 ).
+
+  Consider the row vector
+                        µ µ ¶ µ ¶2       µ ¶δ−1 µ ¶δ ¶
+                           x0   x0        x0     x0
+             s = rM = 1,      ,    ,...,       ,    ,0 .
+                           X    X         X      X
+
+Its last element is p(x0 ) − y0 N = 0. The vector s is √
+                                                       an element of the lattice spanned by
+the rows of M. Its Euclidean norm is bounded by δ + 1 since each entry (x0 / X )i is
+bounded by 1. If s is among the shorter vectors of this lattice, we might find it by lattice
+basis reduction techniques.
+   From the discussion in Section 2, we need to compare |s| to the δ + 2 root of the
+determinant of the matrix M. If
+
+                                      |s| < |det(M)|1/(δ+2) ,
+
+then s will be among the shorter vectors, and the lattice basis reduction techniques might
+find it. (For the present discussion we ignore factors like 2−(n−1)/4 dependent only on
+the size of the matrix. We will take account of them later.)
+   We can easily evaluate det(M) because M is upper triangular:
+
+                  det(M) = (1)(X −1 )(X −2 ) · · · (X −δ )N = N X −δ(δ+1)/2 .
+
+Ignoring factors like 2−(n−1)/4 and δ + 1, we require roughly that det(M) > 1, and so
+we require roughly that
+                                           X (δ +δ)/2 < N ,
+                                               2
+
+
+
+
+                                           X < N 2/(δ +δ) ,
+                                                         2
+238                                                                           D. Coppersmith
+
+
+quite a small bound on X , especially for moderately large values of δ. By contrast, the
+present paper will develop a more reasonable bound of (roughly)
+
+                                        X < N 1/δ .
+
+    One problem with this heuristic approach is that, although the entries ri of the vector
+r are supposed to represent powers of x0 , there is no way (within the lattice struc-
+ture) to enforce that relationship, for example, to enforce the requirement ri+1 /ri =
+r j+1 /r j .
+    A second, related, problem is that we have many unknowns ri and only one relation
+p(x0 ) = y0 N . Each unknown ri contributes a factor X −i to det(M), and the lone relation
+p(x0 ) = y0 N contributes a factor N . The resulting imbalance, and the requirement
+det(M) > 1, lead to the stringent requirement X δ(δ+1)/2 < N .
+    In the new approach we will work with several relations: for example, x0i p(x0 ) j =
+0 (mod N j ). This allows us to reuse the unknowns ri and amortize their “cost” over the
+several relations. Each relation, meanwhile, contributes a factor of N j to det(M). Because
+det(M) now contains several powers of N , the requirement det(M) > 1 translates to a
+much looser requirement on X .
+    The fact that the equations x0i p(x0 ) j = 0 (mod N j ) hold mod N j (rather than just
+mod N ) improves this situation, by contributing larger powers of N to det(M). Using
+only equations of the form x i p(x) = 0 (mod N ), we could find solutions x0 up to about
+X 0 = N 1/(2δ−1) . With the additional equations x i p(x) j = 0 (mod N j ), we are able to
+improve this bound to X = N 1/δ .
+    Notice that the ri satisfy several equations that differ only by shifts in the powers of
+x0 . If p(x) = x 3 + Ax 2 + Bx + C, then two equations derived from p(x0 ) = 0 (mod N )
+and x0 p(x0 ) = 0 (mod N ) are
+
+                         r3 + Ar2 + Br1 + Cr0 = 0 (mod N ),
+                         r4 + Ar3 + Br2 + Cr1 = 0 (mod N ).
+
+The present approach allows us to recapture the flavor of the requirement that the various
+ri should be related by (for example) r3 /r2 = r4 /r3 , since the roles played by r3 and r2
+in the first equation are the same as the roles played by r4 and r3 in the second equation.
+This is offered only as an intuitive explanation for the success of the present approach;
+it will not be used in the technical discussions that follow.
+   The use of Lemma 1 allows a qualitative innovation in the application of lattice
+basis reduction techniques, which may be of interest in its own right. We can state
+with certainty that the present algorithm will find all sufficiently small solutions, in all
+cases; by contrast, many applications of lattice basis reduction techniques can only be
+guaranteed to work in a large proportion of problem instances. By looking at the last
+element of the reduced basis (rather than the first), we can confine all sufficiently short
+lattice elements to a hyperplane whose equation we compute. In particular, the rela-
+tively short vector s, corresponding to the desired solution, lies in this hyperplane. The
+equation of that hyperplane, together with the interpretation ri = x0i , gives a poly-
+nomial equation which x0 is guaranteed to satisfy. This guarantee is a new aspect of
+the present work.
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities           239
+
+
+                   4. Building the Matrix: Univariate Modular Case
+
+In this section we show how to build the appropriate lattice for the case of a univariate
+modular polynomial. N is a large composite integer of unknown factorization. We are
+given the polynomial
+
+             p(x) = x δ + pδ−1 x δ−1 + · · · + p2 x 2 + p1 x + p0 = 0 (mod N ),
+
+which we assume to be monic, that is, pδ = 1.
+  Suppose there is an integer x0 satisfying
+
+                                       p(x0 ) = 0 (mod N )
+
+with
+                                                   N (1/δ)−ε
+                                         |x0 | <
+                                                       2
+for some ε > 0. We wish to find x0 .
+   Begin by selecting an integer
+                                             µ          ¶
+                                          δ − 1 + εδ 7
+                                  h ≥ max           ,     .
+                                             εδ 2     δ
+
+The first condition ensures that
+                                         h−1     1
+                                                ≥ − ε.
+                                         hδ − 1  δ
+The second condition ensures that hδ ≥ 7.
+  For each pair of integers i, j satisfying 0 ≤ i < δ, 1 ≤ j < h, we define the
+polynomial
+                                        qi j (x) = x i p(x) j .
+For the desired solution x0 we know that p(x0 ) = y0 N for some integer y0 , so that
+
+                                     qi j (x0 ) = 0 (mod N j ).
+
+   We will build a rational matrix M of size (2hδ − δ) × (2hδ − δ), using the coefficients
+of the polynomials qi j (x), in such a way that an integer linear combination of the rows of
+M corresponding to powers of x and y will give a vector with relatively small Euclidean
+norm. Multiplying by least common denominator will produce an integer matrix on
+which lattice basis reduction can be applied.
+   The matrix M is broken into blocks. The upper right block, of size (hδ) × (hδ − δ),
+has rows indexed by the integer g with 0 ≤ g < hδ, and columns indexed by γ (i, j) =
+hδ + i + ( j − 1)δ with 0 ≤ i < δ and 1 ≤ j < h, so that hδ ≤ γ (i, j) < 2hδ − δ. The
+entry at (g, γ (i, j)) is the coefficient of x g in the polynomial qi j (x).
+   The lower right (hδ − δ) × (hδ − δ) block is a diagonal matrix, with the value N j in
+each column γ (i, j).
+240                                                                                             D. Coppersmith
+
+
+   The upper left (hδ)×(hδ)
+                         √ block is a diagonal matrix, whose value in row g is a rational
+approximation to X −g / hδ, where X = 12 N (1/δ)−ε is an upper bound to the solutions
+|x| of interest.
+   The lower left (hδ − δ) × (hδ) block is zero.
+   We illustrate the matrix M in the case h = 3, δ = 2. Assume that p(x) = x 2 +√ ax + b
+and p(x)2 = x 4 + cx 3 + d x 2 + ex + f . For simplicity we write τ instead of 1/ hδ.
+                                                                               
+                 τ    0       0       0       0        0    b 0        f    0
+             0 τ X −1        0       0       0        0    a b        e     f 
+                                                                               
+             0       0     τ X −2
+                                      0       0        0    1    a    d     e   
+                                                                               
+             0       0       0     τ X −3
+                                              0        0    0    1     c    d   
+                                                                               
+             0       0       0       0     τ X −4
+                                                       0    0    0     1    c   
+      M =                                                                     .
+                 0    0       0       0       0     τ X −5
+                                                            0    0     0    1   
+                                                                               
+             0       0       0       0       0        0    N    0     0    0   
+                                                                               
+             0       0       0       0       0        0    0 N 0           0 
+                                                                               
+             0       0       0       0       0        0    0 0 N2 0 
+                 0    0       0       0       0        0    0 0        0 N2
+
+   The rows of M span a lattice. Of interest to us is one vector s in that lattice, related to
+the unknown solution x 0 . Consider a row vector r whose left-hand elements are powers
+of x0 :
+                                                                 g
+                                                          rg = x0 ,
+and whose right-hand elements are the negatives of powers of x0 and y0 :
+                                                                      j
+                                                   rγ (i, j) = −x0i y0 ,
+
+ r = (1, x0 , x02 , . . . , x0hδ−1 , −y0 , −x0 y0 , . . . , −x0δ−1 y0 , −y02 , −x0 y02 , . . . , −x0δ−1 y0h−1 ).
+  The product s = rM is a row vector with left-hand elements given by
+                                                            (x0 / X )g
+                                                    sg =      √
+                                                                 hδ
+and right-hand elements by
+                                                                         j
+                                   sγ (i, j) = qi j (x0 ) − x0i y0 N j = 0.
+
+The Euclidean norm of s is estimated by
+                                  "                #1/2     " µ      #1/2
+                                   X                         X 1 ¶2
+                          |s| =           sg   2
+                                                          <     √         = 1.
+                                      g                      g    hδ
+
+   Because the right-hand elements hδ − δ of the desired vector s are 0, we can restrict
+our attention to the sublattice M̂ of M consisting of points with right-hand elements
+0, namely M ∩ (Rhδ × {0}hδ−δ ). To do this computationally, we take advantage of the
+fact that p(x) and hence qi j (x) are monic polynomials, so that certain hδ − δ rows of
+the upper right block of M form an upper triangular matrix with 1 on the diagonal.
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities      241
+
+
+This implies that we can do elementary row operations on M to produce a block matrix
+M̃ whose lower-right (hδ − δ) × (hδ − δ) block is the identity and whose upper-right
+(hδ) × (hδ − δ) block is zero.
+  The upper-left (hδ) × (hδ) block M̂ of M̃ represents the desired sublattice: an hδ-
+dimensional lattice, of which s is one relatively short element.
+
+
+                               5. Analysis of the Determinant
+
+M is an upper triangular matrix, so its determinant is just the product of the diagonal
+elements:
+                                 Y       1    Y
+                    det(M) =             √       Nj
+                                     X g   hδ
+                                  g           ij
+
+                                     N δh(h−1)/2 X −(hδ)(hδ−1)/2
+                                   =           √ hδ
+                                                 hδ
+                                   = [N (h−1)/2 X −(hδ−1)/2 (hδ)−1/2 ]hδ .
+   By construction,
+                     det(M) = det( M̃) = det( M̂) × det(I ) = det( M̂).
+  We will be invoking Lemma 1 on the smaller matrix M̂, whose dimension is n = hδ.
+Since we know
+                                              |s| < 1,
+the required condition is
+                                  1 ≤ | det( M̂)|1/ hδ 2−(hδ−1)/4 .
+Since
+                         det( M̂) = (N (h−1)/2 X −(hδ−1)/2 (hδ)−1/2 )hδ ,
+this holds if
+                         1 ≤ N (h−1)/2 X −(hδ−1)/2 (hδ)−1/2 2−(hδ−1)/4 ,
+that is, if
+                             X ≤ N (h−1)/(hδ−1) (hδ)−1/(hδ−1) 2−1/2 .
+So the hypothesis of Lemma 1 will hold if
+                             X ≤ N (h−1)/(hδ−1) (hδ)−1/(hδ−1) 2−1/2 .
+By our choice of h we have hδ ≥ 7, so that (by a computation)
+                                       (hδ)−1/(hδ−1) > 2−1/2 .
+Also by our choice of h we know
+                                         h−1     1
+                                                ≥ − ε.
+                                         hδ − 1  δ
+242                                                                             D. Coppersmith
+
+
+So if we select
+                                      X ≤ 12 N (1/δ)−ε ,
+we will have
+                              |s| < 1 ≤ det( M̂)1/n 2−(n−1)/4 ,
+as required.
+
+
+                                6. Finishing the Solution
+
+Now we can tie the pieces together.
+  Apply a lattice basis reduction routine to the row basis of the matrix M̂, producing a
+basis b1 , b2 , . . . , bn , satisfying
+
+                                |b∗n | ≥ det( M̂)1/n 2−(n−1)/4 ,
+
+where, as before, n = hδ = dim( M̂).
+  By the calculation in the previous section, we have
+
+                                          |b∗n | ≥ 1.
+
+  By Lemma 1, any vector in the lattice generated by the rows of M̂ with length less
+than 1 must lie in the hyperplane spanned by b1 , b2 , . . . , bn−1 .
+   In terms of the larger matrix M and the vectors r, s with rM = s, there is an hδ-
+dimensional space of vectors r such that rM = s has 0’s in its right-hand hδ − δ entries.
+By Lemma 1, those integer vectors r which additionally satisfy |s| < 1 must lie in a
+space of dimension one smaller, namely dimension hδ − 1. This gives rise to a linear
+equation on the entries r g , 0 ≤ g < hδ. That is, we compute coefficients cg , not all zero,
+such that:
+
+   For any integer vector r = (r g , rγ (i, j) ) such that s = rM has right-hand entries 0 and
+|s| < 1, we must have
+                                         X
+                                                 cg r g = 0.
+
+  This holds for all short vectors s in the lattice with right-hand side 0. In particular, it
+holds for the vector obtained from r where
+                                      g                            j
+                              rg = x0 ,       rγ (i, j) = −x0i y0 .
+
+  Thus we have computed coefficients cg of a polynomial C(x) such that the small
+solution x0 satisfies
+                                     X       g
+                           C(x0 ) =      cg x0 = 0.
+  This is a polynomial equation holding in Z, not just modulo N . We can solve this
+polynomial for x0 easily, using known techniques for solving univariate polynomial
+equations over Z. (The Sturm sequence [14] will suffice.) Thus we have produced the
+desired solution x0 .
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities           243
+
+
+Remark. If there are several short solutions x0 , this procedure will find all of them
+simultaneously. All will be roots of the polynomial
+                                          X       g
+                                C(x0 ) =      cg x0 = 0.
+
+  We have proved:
+
+Theorem 1. Let p(x) be a polynomial of degree δ in one variable modulo an integer
+N of unknown factorization. Let X be the bound on the desired solution x0 . If
+
+                                          X < 12 N 1/δ−ε ,
+
+then in time polynomial in (log N , δ, 1/ε), we can find all integers x0 with p(x0 ) =
+0 (mod N ) and |x0 | < X .
+
+Proof. The lattice basis reduction step operated on a matrix of size hδ = O(δ/ε), and
+the matrix entries are not too large. By [9] this step is done in polynomial time. The rest
+of the algorithm is also polynomial time.
+
+Corollary 1. With the hypothesis of Theorem 1, except that
+
+                                            X ≤ N 1/δ ,
+
+then in time polynomial in (log N , 2δ ), we can find all integers x0 such that p(x0 ) =
+0 (mod N ) and |x0 | ≤ X .
+
+Proof. Cover the interval [−N 1/δ , N 1/δ ] by four intervals Ii of length 12 N 1/δ , each
+centered at some integer xi . For each value i, apply Theorem 1 with ε = 1/log N to the
+polynomial pi (x) = p(x + xi ) to find all solutions x0 = x + xi within the interval Ii , in
+time polynomial in (log N , 2δ ).
+
+                           7. Application: Stereotyped Messages
+
+An important application of the univariate modular case is to RSA encryption [12] with
+small exponent, when most of the message is fixed or “stereotyped.” Suppose the plaintext
+m consists of two pieces:
+  (1) A known piece B = 2k b, such as the ASCII representation of “October 19, 1995.
+      The secret key for the day is.”
+  (2) An unknown piece x, such as “Squeamish Ossifrage,” whose length is less than
+      one-third the length of N .
+Suppose this is RSA-encrypted with an exponent of 3, so the ciphertext c is given by
+c = m 3 = (B + x)3 (mod N ). If we know B, c and N , we can apply the present results
+to the polynomial p(x) = (B + x)3 − c, and recover x0 satisfying
+
+                             p(x0 ) = (B + x0 )3 − c = 0 (mod N )
+244                                                                                D. Coppersmith
+
+
+as long as such an x0 exists with |x0 | < N 1/3 , that is, the length of x0 is less than one-third
+of the length of N .
+   This is obvious when B = 0: if the plaintext is just x0 < N 1/3 , then x03 < N , and the
+ciphertext is c = x03 as integers, so that we could recover x0 = c1/3 by taking the integer
+cube root. But the present paper makes it possible for nonzero B as well.
+
+Remark. The bound X on recoverable values x0 depends on the modulus N . If x0 has
+250 bits and N has 512 bits, and an RSA exponent of 3 is used, the present techniques
+fail to recover x 0 because x0 > N 1/3 . But if we upgrade to a 1024-bit modulus N
+while keeping the unknown x0 at 250 bits, these x0 are now vulnerable to attack because
+x0 < N 1/3 .
+
+  The attack works equally well if the unknown x0 lies in the most significant bits of the
+message m rather than the least significant bits—we are just multiplying x by a known
+constant 2k .
+  An interesting variant occurs when the unknown x is split between two blocks:
+            “TODAY’S KEY IS swordfish AND THE PASSWORD IS joe.”
+   We can view this as two unknowns: x = “swordfish” and y = “joe,” and one known
+piece B = “TODAY’S KEY IS ——– AND THE PASSWORD IS —,” presuming that
+we know (or correctly guess) the lengths of x and y. The plaintext message is
+
+                                      m = B + 2k x + y,
+
+the ciphertext is
+                                       c = m 3 (mod N ),
+and the polynomial which we wish to solve is
+
+                       p(x, y) = c − (B + 2k x + y)3 = 0 (mod N ),
+
+with a solution (x0 , y0 ) suitably bounded.
+  We defer consideration of this case until Section 12.
+
+            8. Application to RSA with Random Padding: Two Messages
+
+To introduce the second application (which was actually the starting point of the present
+investigation), we recall the recent result of Franklin and Reiter [6].
+   Suppose two messages m and m 0 satisfy a known affine relation, say
+
+                                          m0 = m + r
+
+with r known. Suppose we know the RSA-encryptions of the two messages with an
+exponent of 3:
+
+                     c = m 3 (mod N ),
+                    c0 = (m 0 )3 = m 3 + 3m 2r + 3mr 2 + r 3 (mod N ).
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities             245
+
+
+Then we can recover m from c, c0 , r , and N :
+
+                      r (c0 + 2c − r 3 )   r (3m 3 + 3m 2r + 3mr 2 )
+                m=                       =                           (mod N ).
+                        c0 − c + 2r 3         3m 2r + 3mr 2 + 3r 3
+   What if we do not know the exact relation between m and m 0 , but we do know that r
+is small, say
+
+                                          m 0 = m + r,
+                                          |r | < N 1/9 .
+
+Can we still find m?
+  One can imagine a protocol in which messages M are subjected to random padding
+before being RSA-encrypted with an exponent of 3. Perhaps M is left-shifted by k bits,
+and a random k-bit quantity R is added, to form a plaintext m; the ciphertext c is then
+the cube of m (mod N ):
+
+                               c = m 3 = (2k M + R)3 (mod N ).
+
+   Now suppose the same unknown message M is encrypted twice, but with a different
+random pad each time. Let the second random pad be R 0 = R + r so that the second
+plaintext is m 0 = m + r . Then we see the two ciphertexts
+
+                      c = m 3 = (2k M + R)3 (mod N ),
+                     c0 = (m 0 )3 = (2k M + R 0 )3 = (m + r )3 (mod N ).
+
+Can we recover r and m, given knowledge of c, c0 , and N ?
+  We can eliminate m from the two equations above by taking their resultant:
+
+     Resultantm (m 3 − c, (m + r )3 − c0 )
+        = r 9 + (3c − 3c0 )r 6 + (3c2 + 21cc0 + 3(c0 )2 )r 3 + (c − c0 )3 = 0 (mod N ).
+
+This is a univariate polynomial in r of degree 9 (mod N ). If its solution r satisfies
+|r | < N 1/9 , we can apply the present work to recover r . We can then apply Franklin and
+Reiter’s result to recover m, and strip off the padding to get M.
+    As before, this works just as well if the padding goes in the high-order bits, or in the
+middle; just divide each plaintext by the appropriate power of 2 to move the random bits
+to the low-order bits.
+    The warning is clear: If the message is subject to random padding of length less than
+one-ninth the length of N , and then encrypted with an exponent of 3, multiple encryptions
+of the same message will reveal the message.
+    Notice that for a 1024-bit RSA key, this attack tolerates 100 bits of padding fairly
+easily.
+    Some possible steps to avoid this attack.
+  (1) Randomize the message in other ways; for example, by the methods of Bellare
+and Rogaway [1]. This spreads the randomization throughout the message in a nonlinear
+manner, and completely blocks the present attack.
+246                                                                                 D. Coppersmith
+
+
+    (2) Spread the random padding into several blocks (not one contiguous block). Then
+the present attack needs to be modified. The padding could be two small blocks r and
+s, positioned so that the encryption is c = (2l r + 2k m + s)3 (mod N ). Two encryptions
+of the same message would yield a resultant which is a single equation in two small
+integer variables r and s. The generalized attack of Section 12 might work, provided that
+|r | and |s| are subject to bounds R and S with RS < N 1/9 . The computation is more
+complicated and results are not guaranteed.
+    (3) Spread the padding throughout the message: two bits out of each eight-bit byte,
+for example. This seems to be a much more effective defense against the present attack.
+    (4) Increase the amount of padding. This decreases efficiency; also if the padding is
+less than one-sixth the length of N , an alternate solution shown in Appendix 1 might
+still recover the message if multiple encryptions have been done.
+    (5) Make the “random” padding depend on the message deterministically. For example,
+we could subject the message to a hashing function, and append that hash value as the
+random padding. Then two encryptions would be identical, because the random padding
+would be identical. A possible weakness still exists: suppose a time-stamp is included
+in each message, and this time-stamp occupies the low-order bits, next to the padding.
+Then two plaintexts for the same message (with different time stamps) will differ in the
+time-stamp and the pad; just let r combine these two fields and proceed as before.
+    (6) Use larger exponents for RSA encryption. If the exponent is e, the attack apparently
+tolerates random padding of length up to 1/e2 times the length of N . So already for e = 7
+the attack is useless: on a 1024-bit RSA key with e = 7, the attack would tolerate only
+21 bits of padding, and this would be better treated by exhaustion.
+
+
+                                      9. RSA Signatures
+
+The present work does not not show any weaknesses in the RSA signature scheme
+with a small validating exponent. For example, using the exponent e = 3, and using
+several related messages m i = m 0 + i, i = 0, 1, 2, . . . , 100, the knowledge of signatures
+  1/3
+m i (mod N ) for m 0 , m 1 , . . . , m 99 does not help us deduce the signature for m 100 .
+   A crude analogy might illustrate the situation. Knowledge of the real cube roots
+101/3 , 111/3 , 121/3 , 131/3 does not help us to compute 141/3 , since the five quantities are
+linearly independent over the rationals; in fact, 141/3 is not in Q(101/3 , 111/3 , 121/3 , 131/3 ).
+But given the real cubes 103 , 113 , 123 , 133 , we can easily compute 143 from
+
+                      103 − 4 × 113 + 6 × 123 − 4 × 133 + 143 = 0.
+
+
+                                 10. Bivariate Integer Case
+
+We consider next the case of a single polynomial equation in two variables over the
+integers (not mod N ):
+                                       X
+                           p(x, y) =        pi j x i y j = 0
+                                            0≤i, j≤δ
+
+for which we wish to find small integer solutions (x0 , y0 ). We assume that p(x, y) has
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities               247
+
+
+maximum degree δ in each variable separately, and that p(x, y) is irreducible over the
+integers. In particular, its coefficients are relatively prime as a set.
+   The basic outline is the same as before.
+   We create several polynomials
+
+                                    qi j (x, y) = x i y j p(x, y)
+
+satisfied by the desired solution (x0 , y0 ), and build from these a matrix M representing a
+lattice. There will be a sublattice, represented by a smaller matrix M̂, corresponding to
+                                                                               g
+vectors with right-hand side equal to 0. One vector r with entries r gh = x0 y0h will give
+rise to a short vector s = rM in the sublattice. By lattice basis reduction techniques we
+confine all such short vectors to a hyperplane, whose equation,
+                                       X
+                                             cgh r gh = 0,
+
+for our special vector r, translates to a polynomial equation on x0 and y0 :
+                                            X        g
+                              C(x0 , y0 ) =     cgh x0 y0h = 0.
+
+We will see that C(x, y) is not a multiple of p(x, y), so that since p is irreducible, the
+resultant of C and p gives us enough information to find (x0 , y0 ).
+   There are some technical differences between this bivariate integer case and the earlier
+univariate modular case.
+   In the modular case, we expressed the bound X in terms of the modulus N and the
+degree of p. Here, instead of N , we express bounds X and Y in terms of the coefficients
+of p. Define a polynomial p̃(x, y) = p(x X, yY ), so that p̃i j = pi j X i Y j . Define W =
+maxi j | p̃i j | as the largest possible term in p(x, y) in the region of interest. Then we will
+find a solution (x0 , y0 ) bounded in absolute values by (X, Y ) (if one exists) provided
+that
+                                        X Y < W {2/(3δ)}−ε .
+    The matrices M1 and M̂ are rectangular rather than square, so that we are dealing with
+a k-dimensional lattice in Zn with k < n. The lattice basis reduction routines handle this
+easily enough, but the quantity analogous to det(M) is harder to analyze in this case.
+    A minor difference is that we use polynomials qi j (x, y) = x i y j p(x, y) rather than
+qi jk (x, y) = x i y j p(x, y)k to build our matrix M. It turns out that using powers of p
+would not help us, because we no longer gain the advantage that came from introducing
+moduli N j instead of N .
+    We begin by selecting an integer k > 2/(3ε).
+    For all pairs of integers (i, j) with 0 ≤ i < k and 0 ≤ j < k, form the polynomial
+qi j (x, y) = x i y j p(x, y). Obviously qi j (x0 , y0 ) = 0.
+    Form a matrix M1 with (k + δ)2 rows, indexed by γ (g, h) = (k + δ)g + h with
+0 ≤ g, h < k + δ. M1 has (k + δ)2 + k 2 columns, the left-hand columns indexed
+by γ (g, h) and the right-hand columns indexed by β(i, j) = (k + δ)2 + ki + j with
+0 ≤ i, j < k. The left-hand block is a diagonal matrix whose (γ (g, h), γ (g, h)) entry is
+given by X −g Y −h . The (γ (g, h), β(i, j)) entry of the right-hand block is the coefficient
+of x g y h in the polynomial qi j (x, y).
+248                                                                                     D. Coppersmith
+
+
+   Perform elementary row operations on M1 to produce a matrix M2 whose right-hand
+block has the k 2 × k 2 identity matrix on the bottom and the (2kδ + δ 2 ) × k 2 zero matrix
+on the top. We can do this because the greatest common divisor of the coefficients of p
+is 1 ( p being irreducible). The lattice formed by these top (2kδ + δ 2 ) rows of M2 is the
+sublattice of the original lattice obtained by setting to 0 all the right-hand columns.
+   Now do lattice basis reduction on the top 2kδ +δ 2 rows of M2 ; let the resulting 2kδ +δ 2
+rows form a new matrix M3 .
+                                                                         g
+   Consider the (k + δ)2 -long row vector r whose γ (g, h) entry is x0 y0h . The row vector
+s of length (k + δ) + k given by s = rM1 satisfies
+                    2     2
+
+                                              µ ¶ g µ ¶h
+                                                 x0         y0
+                                  sγ (g,h) =                     ,
+                                                  X         Y
+                                |sγ (g,h) | ≤ 1,
+                                   sβ(i, j) = qi j (x0 , y0 ) = 0,
+                                       |s| < k + δ.
+
+   Because its right-hand side is 0, s is one of the vectors in the row lattice spanned by
+M3 . We will show that it is a “relatively short” vector in the lattice. To do this, we need
+to estimate the sizes of the other vectors in M3 .
+   To that end, let M4 be the matrix obtained from M1 by multiplying the γ (g, h) row
+by X g Y h and multiplying the β(i, j) column by X −i Y − j . So M4 = 11 M1 12 where
+11 and 12 are diagonal matrices. The left-hand block of M4 is the (k + δ)2 × (k + δ)2
+identity matrix. Each column in the right-hand block represents the coefficients of the
+polynomial x i y j p(x X, yY ) = x i y j p̃(x, y): If g = i + a and h = j + b, then
+
+                                     (M1 )γ (g,h),β(i, j) = pab ,
+
+                 (M4 )γ (g,h),β(i, j) = pab X g Y h X −i Y − j = pab X a Y b = p̃ab .
+The right-hand columns are all shifted versions of one fixed column vector v, representing
+the coefficients of the polynomial p̃(x, y), namely
+
+                                   vγ (a,b) = pab X a Y b = p̃ab .
+
+The largest element of each has absolute value W . These columns are selected columns
+of a Toeplitz matrix.
+   A lemma, whose proof is given in Appendix 2, says that these columns are nearly
+orthogonal.
+
+Lemma 3. There is a k 2 × k 2 submatrix of M4 with determinant at least
+
+                                          W k 2−6k δ −2k
+                                              2     2 2    2
+
+
+
+
+(in absolute value). If the largest coefficient of p̃ is one of p̃00 , p̃0δ , p̃δ0 , or p̃δδ , then the
+             2
+bound is W k .
+
+  The lemma finds a k 2 ×k 2 matrix of the right-hand block of M4 with large determinant.
+Select 2kδ + δ 2 columns of the left-hand block of M4 (the identity matrix) to extend
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities                                249
+
+
+this to an (k + δ)2 × (k + δ)2 submatrix of M4 with the same determinant. Let T be
+the ((k + δ)2 + k 2 ) × (k + δ)2 permutation matrix selecting the appropriate (k + δ)2 =
+(2kδ + δ 2 ) + (k 2 ) columns. So we have
+
+                             |det(11 M1 12 T )| ≥ W k 2−6k δ −2k .
+                                                              2            2 2           2
+
+
+
+
+   Now 12 T = T 13 where 13 is a diagonal matrix differing from 12 by the deletion
+of K 1’s on the diagonal, so that
+
+                             |det(11 M1 T 13 )| ≥ W k 2−6k δ −2k .
+                                                              2            2 2           2
+
+
+
+
+We compute the determinants of 1i :
+                          Y
+                              X g Y h = (X Y )(k+δ) (k+δ−1)/2 ,
+                                                    2
+              det(11 ) =
+                                       Y
+                                          X −i Y − j = (X Y )−k (k−1)/2 .
+                                                                2
+              det(12 ) = det(13 ) =
+
+Remark. Much cancellation goes on between det(11 ) and det(12 ): all the factors X i Y j
+with 0 ≤ i < k and 0 ≤ j < k are cancelled, leaving only those factors X g Y h with
+(g, h) ∈ {0, . . . , k + δ − 1}2 − {0, . . . , k − 1}2 . Thus the shape of the boundary of the
+region of applicable (g, h) is important, and must be considered when designing the
+algorithm.
+
+  Multiplying the two determinants, we get
+
+                     det(11 ) det(12 ) = (X Y )[(k+δ) (k+δ−1)−k (k−1)]/2
+                                                              2                          2
+
+
+
+                                           = (X Y )[3k δ+k(3δ −2δ)+(δ −δ )]/2 ,
+                                                          2            2                     3   2
+
+
+
+
+and since
+                                                   W k 2−6k δ −2k
+                                                      2           2 2            2
+
+                               |det(M1 T )| ≥                       ,
+                                                  det(11 ) det(12 )
+we obtain
+
+               |det(M1 T )| ≥ W k 2−6k δ −2k (X Y )−[3k δ+k(3δ −2δ)+(δ −δ )]/2 .
+                                     2      2 2   2                2                 2               3   2
+
+
+
+
+Let this lower bound be called E. M3 T is obtained from M1 T by elementary row
+operations, so
+                                |det(M3 T )| = |det(M1 T )| ≥ E.
+  The row sT in M3 T obtained from s by deleting columns has Euclidean length bounded
+by that of s:
+                                         |sT | ≤ |s| < k + δ.
+   M3 T has a block lower triangular structure, with a k 2 × k 2 identity matrix in the lower
+right. Let M̂ denote the upper-left block of M3 T , with dimension 2kδ + δ 2 on each side.
+We have
+                                 |det( M̂)| = |det(M3 T )| ≥ E.
+250                                                                                D. Coppersmith
+
+
+  We wish to apply Lemma 1 to M̂ and sT , with n = 2kδ + δ 2 . If we can guarantee
+
+                                  k + δ ≤ E 1/n 2−(n−1)/4 ,
+
+then from
+
+                                          |sT | < k + δ,
+                                             E ≤ det( M̂),
+
+we will have
+                                 |sT | < det( M̂)1/n 2−(n−1)/4
+as required by Lemma 1.
+   This requirement translates to
+
+                                (k + δ)n ≤ E × 2−n(n−1)/4 .
+
+Recalling
+
+                  n = 2kδ + δ 2 ,
+                  E = W k 2−6k δ −2k (X Y )−[3k δ+k(3δ −2δ)+(δ −δ )]/2 ,
+                            2       2 2     2             2            2   3   2
+
+
+
+
+and omitting some tedious computations, we translate the requirement to
+                                                      0
+                                X Y ≤ W 2/3δ−ε 2−(14δ/3)−o(δ) ,
+
+where
+                                                  µ            ¶
+                                              2           2
+                                    ε0 ≈           1−              .
+                                             3k           3δ
+  The rest of the construction proceeds as before. Assume X Y satisfies this bound.
+Then from Lemma 1, applying lattice basis reduction to M̂ will produce a hyperplane
+containing all lattice vectors as short as sT . The equation of this hyperplane, and the
+construction of s, yield the polynomial equation
+                                             X       g
+                              C(x 0 , y0 ) =    cgh x0 y0h = 0.
+
+Further, C(x, y) is not a multiple of p(x, y), since all the multiples of p(x, y) of suf-
+ficiently low degree were already used to define the sublattice M̂. Since p(x, y) is
+irreducible,
+                         Q(x) = Resultant y (C(x, y), p(x, y))
+gives a nontrivial integer polynomial. We can easily compute its roots, which include
+x0 . Finally, given x0 , we can easily find those y solving p(x0 , y) = 0.
+   Tying this all together, we have:
+
+Theorem 2. Let p(x, y) be an irreducible polynomial in two variables over Z, of
+maximum degree δ in each variable separately. Let X , Y be bounds on the desired
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities                251
+
+
+solutions x0 , y0 . Define p̃(x, y) = p(x X, yY ) and let W be the absolute value of the
+largest coefficient of p̃. If
+                                    X Y < W {2/(3δ)}−ε 2−14δ/3
+then in time polynomial in (log W, δ, 1/ε), we can find all integer pairs (x0 , y0 ) with
+p(x 0 , y0 ) = 0, |x0 | < X , and |y0 | < Y .
+
+Proof. The lattice basis reduction step operated on a matrix of size 2kδ + δ 2 , where
+k = O(1/ε). By [9] this step is done in polynomial time. The rest of the algorithm is
+also polynomial time.
+
+Corollary 2. With the hypothesis of Theorem 2, except that
+
+                                          X Y ≤ W 2/(3δ) ,
+
+then in time polynomial in (log W, 2δ ), we can find all integer pairs (x0 , y0 ) with
+p(x0 , y0 ) = 0, |x0 | ≤ X , and |y0 | ≤ Y .
+
+Proof. Set ε = 1/log W , and do exhaustive search on the high-order O(δ) unknown
+bits of x. The running time is still polynomial, but of higher degree in (log W ).
+
+Remark. Theorem 2 was developed for the case where p had degree δ independently in
+each variable. If the set of indices of nonzero coefficients of p (that is, its Newton polygon)
+has a different shape, it is useful to select the indices of the polynomials qi j (x, y) and
+monomials x g y h in a different manner. The shape of the region of allowable monomials
+(g, h), and in particular its boundary, interacts with the shape of the Newton polygon of
+p in determining the efficiency of the algorithm.
+
+Theorem 3. With the hypothesis of Theorem 2, except that p has total degree δ, the
+appropriate bound is
+                                       X Y < W 1/δ 2−13δ/2 .
+
+Proof (Sketch). We use polynomials qi j = x i y j p(x, y) where i + j < k (rather than
+i < k and j < k independently as before). The set of indices (i, j) now forms a triangle
+rather than a square. The relevant determinant is now
+
+  W k(k+1)/2 (X Y )−{(k+δ+1)(k+δ)(k+δ−1)−(k+1)k(k−1)}/6 2−3(2δ )((1/2)k )−(kδ) /4−o(k )
+                                                                  2       2     2   2
+
+
+
+                                = W k(k+1)/2 (X Y )−{3k δ+3kδ +δ −δ}/6 2−3δ k −(kδ) /4−o(k ) .
+                                                         2     2   3           2 2    2   2
+
+
+
+
+Solve for X Y to get
+                                     X Y < W (1/δ)−ε 2−13δ/2 ,
+where ε = O(1/k). As in Corollary 2, set ε = 1/log W and exhaust on high-order bits
+while maintaining polynomial time.
+252                                                                      D. Coppersmith
+
+
+Remark. This shows how the shape of the region of indices (g, h) of monomials, and
+particularly the boundary of that shape, affects the outcome. Theorem 3 is better than
+Theorem 2 if p is a general polynomial of total degree δ, but Theorem 2 is better if p
+has degree δ in each variable independently.
+   As another example, if p(x, y) has degree G in x and H in y (independently), then
+for any positive parameter α we can tolerate ranges X and Y satisfying
+                              W >> X G+(α H/2) Y H +(G/(2α))
+by allowing 0 ≤ i ≤ kα and 0 ≤ j ≤ k.
+
+
+                         11. Factoring with High Bits Known
+
+We can apply the present techniques to the problem of factoring an integer when we
+know the high-order bits of one of the factors.
+  Suppose we know N = P Q and we know the high-order 14 log2 N bits of P. By
+division we know the high-order 14 log2 N bits of Q as well.
+  We write
+                                      P = P0 + x0 ,
+                                      Q = Q 0 + y0 ,
+where P0 and Q 0 are known, while P, Q, x0 , and y0 are unknown. Define the bounds X
+and Y on the unknowns x0 and y0 by
+                                 |x0 | < P0 N −1/4 = X,
+                                 |y0 | < Q 0 N −1/4 = Y.
+
+
+Define the polynomial
+                     p(x, y) = (P0 + x)(Q 0 + y) − N
+                               = (P0 Q 0 − N ) + Q 0 x + P0 y + x y,
+where x and y are dummy variables. One integer solution of p(x, y) = 0 is given by the
+desired (x0 , y0 ), namely,
+                                p(x0 , y0 ) = P Q − N = 0.
+  We have δ = 1, and the quantity W is given by
+                        W = max(| pi j |X i Y j )
+                                ij
+                           = max(|P0 Q 0 − N |, Q 0 X, P0 Y, X Y )
+                           = N 3/4 .
+An easy computation gives
+                               X Y = P0 Q 0 N −1/2 ≈ N 1/2
+                                     = W 2/(3δ) ,
+so that the hypothesis of Corollary 2 is satisfied. Thus we have:
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities        253
+
+
+Theorem 4. In polynomial time we can find the factorization of N = P Q if we know
+the high-order ( 14 log2 N ) bits of P.
+
+   By comparison, Rivest and Shamir [13] need about ( 13 log2 N ) bits of P, and a recent
+paper by the present author [4] used a lattice-based method (less efficient than that of
+this paper) to factor N using ( 10
+                                 3
+                                    log2 N ) bits of P.
+   Theorem 4 has applications to some RSA-based cryptographic schemes. For example,
+Vanstone and Zuccherato [15] design an ID-based RSA encryption scheme, where a
+person’s identity is encoded in his RSA modulus N = P Q. In one variant of the scheme
+(Section 3.1 of [15]), a 1024-bit N is created by specifying (in a public manner) the
+high-order 512 − 248 = 264 bits of P and hence of Q. By the present techniques, this
+is enough information to allow the attacker to factor N .
+   If we know the low-order bits of P instead of the high-order bits, we get the same
+results, but a twist in the proof is worth noticing.
+
+Theorem 5. In polynomial time we can find the factorization of N = P Q if we know
+the low-order ( 14 log2 N ) bits of P.
+
+  Let k = b 14 log2 N c, so that
+                                            2k ≈ N 1/4 .
+Write
+                                        P = 2k x0 + P0 ,
+                                        Q = 2k y0 + Q 0 ,
+where P0 and Q 0 are known, while P, Q, x0 , and y0 are unknown. Iterate over possible
+values of
+                                         ` = dlog2 (P)e,
+and define bounds X and Y by
+                              |x0 | < X = 2`−k ≈ P N −1/4 ,
+                              |y0 | < Y = N 21−`−k ≈ Q N −1/4 .
+Define the polynomial
+                    p(x, y) = [(2k x + P0 )(2k y + Q 0 ) − N ]/2k
+                            = 2k x y + Q 0 x + P0 y + [(P0 Q 0 − N )/2k ],
+so that (x0 , y0 ) is a root of the equation
+                                                   PQ − N
+                                   p(x0 , y0 ) =          = 0.
+                                                     2k
+   The term (P0 Q 0 − N )/2k is an integer by construction. We needed to define p(x, y)
+as above, rather than the apparent choice
+                           p 0 (x, y) = (2k x + P0 )(2k y + Q 0 ) − N ,
+254                                                                              D. Coppersmith
+
+
+because the coefficients of p 0 all have the common factor 2k , so that p 0 would be reducible
+over Z, namely, p 0 = 2k × p, violating the hypothesis of Theorem 2. In particular, the
+construction in Section 10 would fail when we tried to create matrix M2 from M1 .
+   The rest of the proof continues as before, with X Y = O(N 1/2 ) and W = 2(N 3/4 ).
+(The fact that X Y differs from W 2/3 by a constant multiple merely means that we have
+to do some trial and error.)
+
+
+                            12. Extension to More Variables
+
+Suppose we have a polynomial p(x, y, z) in three variables over the integers. (The
+following remarks, suitably adapted, will also apply to a polynomial p(x, y) in two
+variables modulo N .)
+   We could try to mimic the present approach. If the ranges X, Y, Z are small enough,
+we will end up with a polynomial relation C(x, y, z), not a multiple of p, which is
+satisfied by (x0 , y0 , z 0 ). Then the resultant of p(x, y, z) and C(x, y, z) with respect to z
+will give a polynomial r (x, y) in two variables. We can then try to solve r (x, y) = 0 by
+the current methods. But the degree of r (x, y) will be quite high, so that the ranges X
+and Y which can be tolerated will be quite small.
+   A much more promising approach, which works often but not always, is as follows. If
+the ranges X, Y, Z are small enough, we are guaranteed to find a space of codimension 1
+(a hyperplane) containing all the short vectors of the lattice M̂. But we might easily find
+a space of larger codimension. (There is a good possibility that for many basis vectors
+bi the orthogonal component |bi∗ | exceeds our known upper bound on |s|, and each one
+increases the codimension of the space containing all the short vectors.) We develop
+several polynomial equations Ci (x, y, z) satisfying Ci (x0 , y0 , z 0 ) = 0; the number of
+such equations is equal to the codimension of this space. We can then take resultants and
+g.c.d.s of the various Ci (x, y, z) and p(x, y, z) and hope to produce a single polynomial
+equation in a single variable r (x) = 0, which we solve over the reals.
+   This is only a heuristic approach, which might or might not work for a given polynomial
+p. One potential obstacle is that we might not obtain enough equations Ci (x, y, z) = 0.
+A related concern is that the equations we obtain might be redundant: for example, we
+might have C1 (x, y, z) = xC2 (x, y, z). We see no way to guarantee that we will gather
+enough independent equations to enable a solution.
+   Indeed, certain counterexamples show that this procedure must fail for some polynomi-
+als. In the case p(x, y) = 0 (mod N ), we adapt an example of Manders and Adleman [10].
+Let n = q1 q2 . . . qm be the product of the first m odd primes. Then log n ≈ m log m. Also
+the modular equation x 2 = 1 (mod n) has 2m solutions. Let N = n h for a sufficiently
+large integer h. Look for solutions to
+
+                          p(x, y) = x 2 − yn − 1 = 0 (mod N ),
+                              |x| < n = X,
+                              |y| < n = Y.
+
+There are at least 2m+1 pairs (x0 , y0 ) satisfying these equations. We cannot hope to
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities        255
+
+
+produce them all in time polynomial in log N . And yet we can arrange that any criterion
+                                             XY < Nε
+such as the hypothesis of Theorem 1 can be satisfied by proper choice of h > 2/ε.
+  If faced with this problem, our algorithm will probably return the equation
+                                  p(x, y) = x 2 − yn − 1 = 0
+(moving it from a modular equation to an integer equation), but then be unable to proceed
+further (if we maintain X = n) because the appropriate bounds X Y < W c or X < n c
+are not satisfied. If we allow X = n 1/2 it may still be able to proceed, but we will not
+have exponentially many solutions in this case.
+   However, we need not overemphasize the negative. The extended algorithm will often
+work, even in cases when it is not guaranteed.
+   An important application of the extended algorithm was alluded to in Section 7.
+Suppose a plaintext message m, consists of two unknown blocks of bits and a known
+piece, is subjected to RSA encryption with exponent 3. The message may be:
+
+          m = “TODAY’S KEY IS swordfish AND THE PASSWORD IS joe.”
+
+   We can view this as two unknowns: x = “swordfish” and y = “joe,” and one known
+piece,
+
+            B = “TODAY’S KEY IS ——– AND THE PASSWORD IS —.”
+
+  We presume that we know the lengths of x and y, or can iterate over their possible
+values.
+  The plaintext message is
+                                       m = B + 2k x + y,
+the ciphertext is
+                                        c = m 3 (mod N ),
+and the polynomial which we wish to solve is
+                        p(x, y) = c − (B + 2k x + y)3 = 0 (mod N ),
+with a solution (x0 , y0 ) suitably bounded, and with c, k, B, N known and x, y unknown.
+   The polynomial p(x, y) has total degree 3. We select a bound 3t on the degree of the
+monomials in our algorithm, so that we have monomials x g y h with g + h < 3t. We
+introduce polynomial equations
+                          qi jk (x, y) = x i y j p(x, y)k = 0 (mod N k ),
+with j ≤ 2, k ≥ 1, and i + j + 3k < 3t.
+  The determinant of the related matrix has powers of N totaling
+                    µ ¶ µ ¶              µ        ¶
+                     4       7             3t − 2     3t 2 (t − 1)
+                         +       + ··· +            =              .
+                     2       2                2              2
+256                                                                          D. Coppersmith
+
+
+The powers of 1/ X come to
+            µ ¶ µ ¶ µ ¶              µ ¶ µ        ¶
+              1      2     3          3t   3t + 1     27t 3 − 1
+                 +      +    + ··· +     =          =
+              2      2     2          2       3           6
+as do the powers of 1/Y . So our requirement becomes
+
+                                (X Y )27t −1 < N 9t −9t ,
+                                        3           3   2
+
+
+
+                                      (X Y ) < N 1/3−ε ,
+
+with ε ≈ 1/(3t).
+  If this requirement is met we will get at least one equation C(x, y) = 0.
+  We tried an experiment on a scaled-down version of this. Rather than a cubic equation,
+we used a quadratic equation of the form
+
+                             (B0 + 2k x + y)2 = c (mod N ).
+
+We had variables x0 , y0 bounded by 223 , and a modulus N ≈ 2150 . We used monomials
+of total degree bounded by 5, so that there were 21 monomials and ten polynomial
+equations. The resulting requirement, (X Y )35 < N 13 , was met handily: 21610 < 21950 .
+The matrix was represented as integers, and was scaled in such a way that the desired
+solution s had Euclidean length about 1038 . We ran basis reduction on the resulting
+21 × 21 matrix. The results were much better than expected: For each i = 2, 3, . . . , 21
+we had |bi∗ | ≈ 1041 > |s|, while |b1 | = |s| ≈ 1038 , so that instead of confining the
+short vectors to a hyperplane the algorithm actually confined them to a one-dimensional
+subspace—we could just read off the answer s. The computation time was disappointing
+though: the lattice basis reduction required 45 hours. Clearly much experimentation
+needs to be done yet with more optimized lattice basis reduction algorithms.
+
+
+                          13. Conclusion and Open Problem
+
+We have shown algorithms for finding solutions to univariate modular polynomial equa-
+tions p(x) = 0 (mod N ), and bivariate integer polynomial equations p(x, y) = 0, as
+long as the solutions are suitably bounded with respect to N or to the coefficients of p,
+respectively.
+   We used the coefficients of p to build a lattice containing a short vector based on the
+unknown solution (x0 , y0 ); this need not be the shortest vector. We then used a novel
+application of lattice basis reduction methods: rather than search for the shortest vector,
+we confine all relatively short vectors to a hyperplane. The equation of this hyperplane,
+when applied to our special short vector, gives a polynomial over the integers satisfied
+by (x0 , y0 ), from which the solution follows.
+   We showed several applications to RSA with small encryption exponent, and to integer
+factorization with partial knowledge. We believe that other applications will arise. For
+example, Patarin [11] pointed out that the method of padding a message by repetition:
+(“Attack at dawn . . . Attack at dawn . . . ”) amounts to multiplying a short message (x
+= “Attack at dawn . . . ”) by 2k + 1. If the message is short enough, and RSA with small
+exponent is used, the present techniques can derive the message again.
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities                    257
+
+
+   Joye and Quisquater [8] give many other cryptographic applications of the techniques
+presented here.
+   The present paper shows several potential exposures concerning RSA with small
+exponent. Specific implementations of RSA should be examined with regard to these
+exposures.
+   Conventional wisdom states that RSA should not be applied directly to messages,
+but rather that the messages should be randomized in some way prior to encryption, for
+example, by the methods of Bellare and Rogaway [1]. The results of the present paper
+give particular reinforcement to this wisdom in the case of small encrypting exponent.
+   The paper does not show any weaknesses in the RSA signature scheme with a small
+validating exponent.
+
+
+                                       Acknowledgments
+
+The author gratefully acknowledges enlightening discussions with Andrew Odlyzko.
+Matt Franklin and Mike Reiter’s Crypto ’95 rump session paper and subsequent discus-
+sions were useful. Jacques Patarin was independently working on the idea of unknown
+offsets in the RSA setting. Barry Trager helped the experimental effort by coding up an
+implementation the Lovász basis reduction algorithm for Axiom. Suggestions from the
+anonymous referees greatly improved the presentation of the material.
+
+
+               Appendix 1.       Another Solution for Multiple Encryptions
+
+This material is related to the application in Section 8, but only tangentially to the main
+paper.
+   In Section 8 we had two encryptions of the same message with different random pads.
+If instead of two encryptions we have several, say k + 1, then we can mount other attacks
+which might tolerate larger fields of random padding. We sketch here an attack which
+(heuristically) seems to tolerate random padding up to α times the length of N where
+
+                                               k−2    1
+                                        α<           < .
+                                              6k − 3  6
+
+  Let the ciphertexts be
+
+                                A0 = m 3 (mod N ),
+                                Ai = (m + ri )3 (mod N ),
+                      ci = Ai − A0 = 3m 2ri + 3mri2 + ri3 (mod N ),
+
+so that we know A0 , Ai , ci , and N , but not m or ri . We assume the padding is small:
+
+                                            |ri | < N α .
+
+    For indices i < j < p define di j = ri r j (ri − r j ) and ei j p = −ri r j r p (ri − r j )(r j −
+                               ¡¢
+r p )(r p − ri ). The C(k, 2) = k2 linearly independent quantities di j each satisfy |di j | <
+258                                                                                        D. Coppersmith
+
+
+N 3α , and the C(k, 3) linearly independent quantities ei j p each satisfy |ei j p | < N 6α . One
+can check the following identity:
+                             di j c p + d j p ci − di p c j = ei j p (mod N ).
+    This suggests lattice basis reduction on the row basis of the following matrix. M is a
+square upper triangular integer matrix of dimension (C(k, 2) + C(k, 3)). Its upper-left
+C(k, 2) × C(k, 2) block is the identity times an integer approximation to N 3α . Its lower-
+left C(k, 3) × C(k, 2) block is 0. Its lower-right C(k, 3) × C(k, 3) block is N times the
+identity. Its upper-right C(k, 2) × C(k, 3) block has rows indexed by pairs of indices
+(i, j), i < j, and columns indexed by triples of indices (i, j, p), i < j < p. Column
+(i, j, p) has three nonzero entries: c p at row (i, j), ci at row ( j, p), and −c j at row (i, p).
+    Consider the integer row vector r whose first C(k, 2) entries are di j , and whose last
+C(k, 3) entries are the integers (ei j p − (di j c p + d j p ci − di p c j ))/N . The product rM = s
+has left-hand elements di j N 3α and right-hand elements ei j p ; all its entries are bounded
+by N 6α . We hope that lattice basis reduction will find this row.
+    The determinant of M is N 3αC(k,2)+C(k,3) . This is larger than (N 6α )C(k,2)+C(k,3) because
+of our choice of α. So s is among the shorter elements of the lattice generated by the
+rows of M.
+    Contrary to the rest of this paper, we actually want to find s, not just confine it to a
+hyperplane. The difficulty in finding s depends on its rank among the short elements. If
+|ri | are much smaller than N α , then we can hope that s is the shortest lattice element,
+and that lattice basis reduction methods can recover it efficiently. We do not here supply
+efficiency estimates or probabilities of success; we treat this as a heuristic attack.
+    Assuming that we can actually find s, we will be able to recover the values ri by taking
+g.c.d. of elements of r = sM −1 :
+  g.c.d.{d1,2 , d1,3 , . . . , d1,k } = g.c.d.{r1r2 (r1 − r2 ), r1r3 (r1 − r3 ), . . . , r1rk (r1 − rk )}
+                                      = r1 × g.c.d.{r2 (r1 − r2 ), r3 (r1 − r3 ), . . . , rk (r1 − rk )},
+and hopefully the latter g.c.d. will be small enough to discover by exhaustive search.
+Having found ri , we can recover m by Franklin and Reiter’s technique.
+  If we have 14 encryptions of the same message (k = 13), then we can tolerate a
+random padding of about 150 bits in a 1024-bit RSA message.
+
+                   Appendix 2.        Nearly Orthogonal Toeplitz Columns
+
+In this Appendix we give a proof of the technical result needed in Section 10: that several
+columns of the matrix M4 are “nearly orthogonal.” A modification of this proof would
+apply to any Toeplitz matrix.
+
+Proof of Lemma 3. Let W = |vγ (a,b) | = | p̃ab | be the largest coefficient of p̃. Select
+indices (c, d) to maximize the quantity
+                                         8(c−a) +(d−b) | p̃cd |.
+                                                2        2
+
+
+
+Select the rows
+                               γ (c + i, d + j),             0 ≤ i, j < k,
+Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities                                                 259
+
+
+of M4 to create the desired submatrix M̃. Define an index function µ(i, j) = ki + j.
+Then the matrix element M̃µ(g,h),µ(i, j) is the coefficient of x c+g y d+h in x i y j p̃(x, y),
+namely
+                                  M̃µ(g,h),µ(i, j) = p̃g−i+c,h− j+d .
+Multiply the µ(g, h) row of M̃ by 82(c−a)g+2(d−b)h , and multiply the µ(i, j) column
+by 8−2(c−a)i−2(d−b) j , to create a new matrix M 0 with the same determinant. Its typical
+element is
+                     0
+                                 j) = p̃g−i+c,h− j+d 8                          .
+                                                       2(c−a)(g−i)+2(d−b)(h− j)
+                    Mµ(g,h),µ(i,
+From maximality of (c, d) we find
+
+                | p̃g−i+c,h− j+d |8(g−i+c−a) +(h− j+d−b) ≤ | p̃cd |8(c−a) +(d−b) ,
+                                                  2                      2                                2           2
+
+
+
+
+from which
+
+               | p̃g−i+c,h− j+d |82(g−i)(c−a)+2(h− j)(d−b) ≤ | p̃cd |8−(g−i) −(h− j) .
+                                                                                                              2           2
+
+
+
+
+Thus each diagonal entry of M 0 is p̃cd , and each off-diagonal entry is bounded by
+| p̃cd |8−(g−i) −(h− j) . This implies that M 0 is diagonally dominant, because the absolute
+               2       2
+
+
+values of the off-diagonal entries in its µ(i, j) row sum to at most
+                                 X
+                                        8−(g−i) −(h− j)
+                                                2      2
+                      | p̃cd | ×
+                              (g,h)6=(i, j)
+                                                  X
+                                                             8−a −b
+                                                                     2           2
+                             = | p̃cd | ×
+                                              (a,b)6=(0,0)
+                                              "                                              #
+                                                           X
+                                                                     8−a −b
+                                                                                 2       2
+                             = | p̃cd | × −1 +
+                                                        (a,b)
+                                                          Ã                !2 
+                                                               X
+                             = | p̃cd | × −1 +                          8−a  < 3 | p̃cd |.
+                                                                                     2
+
+                                                                                                     4
+                                                                 a
+
+
+Each eigenvalue of M 0 is within 34 | p̃cd | of p̃cd , and so exceeds 14 | p̃cd | in absolute value.
+By choice of (c, d) we know
+
+                   8(c−a) +(d−b) | p̃cd | ≥ 80 | p̃ab | = W,
+                         2        2
+
+
+
+                                      | p̃cd | ≥ 8−2δ W,
+                                                       2
+
+
+
+                               det(M 0 ) ≥ ( 14 8−2δ W )k = W k 2−6k δ −2k .
+                                                             2               2                   2       2 2      2
+
+
+
+
+   For the second claim of the lemma: If the largest coefficient of p̃ is either p̃00 or p̃δδ ,
+set (c, d) = (a, b) and notice that M̃ is a triangular matrix whose diagonal entries have
+absolute value W . If the largest coefficient is either p̃0δ or p̃δ0 , redefine the indexing
+function as µ(i, j) = ki + (k − 1 − j) so that again M̃ is a triangular matrix whose
+diagonal entries have absolute value W . Similar results hold if (a, b) is any corner of the
+Newton polygon associated with p̃.
+260                                                                                           D. Coppersmith
+
+
+                                                References
+
+ [1] M. Bellare and P. Rogaway, Optimal asymmetric encryption, Advances in Cryptology—EUROCRYPT
+     ’94 (A. De Santis, ed.), pp. 92–111, LNCS, 950, Springer-Verlag, Berlin, 1995.
+ [2] D. Coppersmith, Finding a small root of a univariate modular equation, Advances in Cryptology—
+     EUROCRYPT ’96 (U. Maurer, ed.), pp. 155–165, LNCS, 1070, Springer-Verlag, Berlin, 1996.
+ [3] D. Coppersmith, Finding a small root of a bivariate integer equation; factoring with high bits known,
+     Advances in Cryptology—EUROCRYPT ’96 (U. Maurer, ed.), pp. 178–189, LNCS, 1070, Springer-
+     Verlag, Berlin, 1996.
+ [4] D. Coppersmith, Factoring with a hint, IBM Research Report RC 19905, January 16, 1995.
+ [5] D. Coppersmith, M. Franklin, J. Patarin, and M. Reiter, Low-exponent RSA with related messages,
+     Advances in Cryptology—EUROCRYPT ’96 (U. Maurer, ed.), pp. 1–9, LNCS, 1070, Springer-Verlag,
+     Berlin, 1996.
+ [6] M. Franklin and M. Reiter, A linear protocol failure for RSA with exponent three, Rump Session, Crypto
+     ’95 (not in proceedings).
+ [7] J. Hastad. Solving simultaneous modular equations of low degree, SIAM J. Comput. 17 (1988), 336–341.
+ [8] M. Joye and J.-J. Quisquater, Protocol failures for RSA-like functions using Lucas sequences and elliptic
+     curves, Presented at the Cambridge Workshop on Cryptographic Protocols, Cambridge, April 14–18,
+     1996.
+ [9] A. K. Lenstra, H. W. Lenstra, Jr., and L. Lovász, Factoring polynomials with rational coefficients, Math.
+     Ann. 261 (1982), 515–534.
+[10] K. Manders and L. Adleman, NP-complete decision problems for binary quadratics, J. Comput. System
+     Sci. 16 (1978), 168–184.
+[11] J. Patarin, Personal communication, 1995.
+[12] R. L. Rivest, A. Shamir, and L. Adleman. A method for obtaining digital signatures and public-key
+     cryptosystems. Comm. ACM 21(2) (1978), 120–126.
+[13] R. L. Rivest and A. Shamir, Efficient factoring based on partial information, Advances in Cryptology—
+     EUROCRYPT ’85, pp. 31–34, LNCS, 219, Springer-Verlag, Berlin, 1986.
+[14] D. E. Knuth, The Art of Computer Programming, vol. 2, 2nd edn., Section 4.6.1, Addison-Wesley,
+     Reading, Massachusetts, 1981.
+[15] S. A. Vanstone and R. J. Zuccherato, Short RSA keys and their generation, J. Cryptology 8(2) (1995),
+     101–114.
+

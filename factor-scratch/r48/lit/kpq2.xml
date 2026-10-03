@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/wUL2PgGnG1XIOj90BZDCJkEMcvs</id>
+  <title>arXiv Query: search_query=au:"Konyagin" AND au:"Pomerance"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T18:22:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Konyagin%22+AND+au:%22Pomerance%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/math/0507374v3</id>
+    <title>Sieving by large integers and covering systems of congruences</title>
+    <updated>2006-08-09T15:49:43Z</updated>
+    <link href="https://arxiv.org/abs/math/0507374v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0507374v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  An old question of Erdos asks if there exists, for each number N, a finite set S of integers greater than N and residue classes r(n) mod n for n in S whose union is all the integers. We prove that if $\sum_{n\in S} 1/n$ is bounded for such a covering of the integers, then the least member of S is also bounded, thus confirming a conjecture of Erdos and Selfridge. We also prove a conjecture of Erdos and Graham, that, for each fixed number K&gt;1, the complement in the integers of any union of residue classes r(n) mod n, for distinct n in (N,KN], has density at least d_K for N sufficiently large. Here d_K is a positive number depending only on K. Either of these new results implies another conjecture of Erdos and Graham, that if S is a finite set of moduli greater than N, with a choice for residue classes r(n) mod n for n in S which covers the integers, then the largest member of S cannot be O(N). We further obtain stronger forms of these results and establish other information, including an improvement of a related theorem of Haight.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-07-18T22:09:34Z</published>
+    <arxiv:comment>v3. 28 pages. Minor corrections and notational improvements. Added reference to recent discovery by Gibson of a covering system with least modulus 25. To appear in J. Amer. Math. Soc</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. Amer. Math. Soc. 20 (2007), 495-517.</arxiv:journal_ref>
+    <author>
+      <name>Michael Filaseta</name>
+    </author>
+    <author>
+      <name>Kevin Ford</name>
+    </author>
+    <author>
+      <name>Sergei Konyagin</name>
+    </author>
+    <author>
+      <name>Carl Pomerance</name>
+    </author>
+    <author>
+      <name>Gang Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.01078v2</id>
+    <title>Residue classes free of values of Euler's function</title>
+    <updated>2020-05-05T12:22:27Z</updated>
+    <link href="https://arxiv.org/abs/2005.01078v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.01078v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We characterize which residue classes contain infinitely many totients (values of Euler's function) and which do not. We show that the union of all residue classes that are totient-free has asymptotic density 3/4, that is, almost all numbers that are 2 mod 4 are in a residue class that is totient-free. In the other direction, we show the existence of a positive density of odd numbers m, such that for any $s\ge0$ and any even number $a$, the residue class $a\pmod{2^sm}$ contains infinitely many totients.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-03T13:04:32Z</published>
+    <arxiv:comment>Published in 1999, for Andrzej Schinzel's 60-th birthday. v2 - corrects a processing error that cut off the bottom of every page</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>In the book Number Theory in Progress (Zakopane, Poland 1997; Kálmán Györy, Henryk Iwaniec, Jerzy Urbanowicz, eds), de Gruyter (1999), 805-812</arxiv:journal_ref>
+    <author>
+      <name>Kevin Ford</name>
+    </author>
+    <author>
+      <name>Sergei Konyagin</name>
+    </author>
+    <author>
+      <name>Carl Pomerance</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1802.07604v4</id>
+    <title>Long gaps in sieved sets</title>
+    <updated>2022-09-19T14:40:23Z</updated>
+    <link href="https://arxiv.org/abs/1802.07604v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1802.07604v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For each prime $p$, let $I_p \subset \mathbb{Z}/p\mathbb{Z}$ denote a collection of residue classes modulo $p$ such that the cardinalities $|I_p|$ are bounded and about $1$ on average. We show that for sufficiently large $x$, the sifted set $\{ n \in \mathbb{Z}: n \pmod{p} \not \in I_p \hbox{ for all }p \leq x\}$ contains gaps of size at least $x (\log x)^δ $ where $δ&gt;0$ depends only on the density of primes for which $I_p\ne \emptyset$. This improves on the "trivial" bound of $\gg x$. As a consequence, for any non-constant polynomial $f:\mathbb{Z}\to \mathbb{Z}$ with positive leading coefficient, the set $\{ n \leq X: f(n) \hbox{ composite}\}$ contains an interval of consecutive integers of length $\ge (\log X) (\log\log X)^δ$ for sufficiently large $X$, where $δ&gt;0$ depends only on the degree of $f$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-02-21T15:03:21Z</published>
+    <arxiv:comment>Corrects a number of errors in the published version pointed out to us by Mikhail Gabdullin. The specific corrections are listed in an Appendix. One of these causes a slight degradation of the numerical values for the exponents of log log x in Theorem 1 and Corollaries</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. European Math. Soc. 23 (2021), 667-700. Corrigendum: J. European Math. Soc. (JEMS) 25 (2023), no. 6, 2483--2485</arxiv:journal_ref>
+    <author>
+      <name>Kevin Ford</name>
+    </author>
+    <author>
+      <name>Sergei Konyagin</name>
+    </author>
+    <author>
+      <name>James Maynard</name>
+    </author>
+    <author>
+      <name>Carl Pomerance</name>
+    </author>
+    <author>
+      <name>Terence Tao</name>
+    </author>
+    <arxiv:doi>10.4171/JEMS/1020</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4171/JEMS/1020" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0712.1080v1</id>
+    <title>On the Distribution of Pseudopowers</title>
+    <updated>2007-12-07T04:56:58Z</updated>
+    <link href="https://arxiv.org/abs/0712.1080v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0712.1080v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  An $x$-pseudopower to base $g$ is a positive integer which is not a power of $g$ yet is so modulo $p$ for all primes $p\le x$. We improve an upper bound for the least such number due to E. Bach, R. Lukes, J. Shallit, and H. C. Williams. The method is based on a combination of some bounds of exponential sums with new results about the average behaviour of the multiplicative order of $g$ modulo prime numbers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-12-07T04:56:58Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Can. J. Math.-J. Can. Math. 62 (2010) 582-594</arxiv:journal_ref>
+    <author>
+      <name>Sergei V. Konyagin</name>
+    </author>
+    <author>
+      <name>Carl Pomerance</name>
+    </author>
+    <author>
+      <name>Igor E. Shparlinski</name>
+    </author>
+    <arxiv:doi>10.4153/CJM-2010-020-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4153/CJM-2010-020-4" title="doi"/>
+  </entry>
+</feed>

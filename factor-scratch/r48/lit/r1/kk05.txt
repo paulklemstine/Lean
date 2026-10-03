@@ -1,0 +1,612 @@
+       On the Complexity of Factoring Bivariate Supersparse
+                    (Lacunary) Polynomials*
+
+                                  Erich Kaltofen                                                              Pascal Koiran
+                             Dept. of Mathematics                                                            Laboratoire LIP
+                         North Carolina State University                                            École Normale Supérieure de Lyon
+                            Raleigh, North Carolina                                                          46, Allée d’Italie,
+                                27695-8205, USA                                                        69364 Lyon Cedex 07, France
+                           kaltofen@math.ncsu.edu                                                      Pascal.Koiran@ens-lyon.fr
+
+
+
+ABSTRACT                                                                                   lacunary† polynomials. A supersparse polynomial
+We present algorithms that compute the linear and quadratic                                                                     t
+                                                                                                                                           α           α
+                                                                                                                                X
+factors of supersparse (lacunary) bivariate polynomials over                                           f (X1 , . . . , Xn ) =         ai X1 i,1 · · · Xn i,n
+the rational numbers in polynomial-time in the input size.                                                                      i=1
+In supersparse polynomials, the term degrees can have hun-                                 is input by a list of its coefficients and corresponding term
+dreds of digits as binary numbers. Our algorithms are Monte                                degree vectors. One defines the size of f as
+Carlo randomized for quadratic factors and deterministic for
+linear factors. Our approach relies on the results by H. W.                                                 t 
+                                                                                                            X                                             
+Lenstra, Jr., on computing factors of univariate supersparse                                   size(f ) =         size(ai ) + dlog2 (αi,1 · · · αi,n + 2)e ,   (1)
+polynomials over the rational numbers. Furthermore, we                                                      i=1
+
+show that the problem of determining the irreducibility of                                 where size(ai ) is the bit-size of the scalar coefficients. One
+a supersparse bivariate polynomial over a large finite field                               thus allows very high degrees, say with hundreds of digits
+of any characteristic is co-NP-hard via randomized reduc-                                  as binary numbers, in distinction to the usual sparse repre-
+tions.                                                                                     sentation [28, 16]. If the coefficients are integers, one can-
+                                                                                           not evaluate a supersparse polynomial at integer values in
+Categories and Subject Descriptors                                                         polynomial-time in its size, because the value of the poly-
+                                                                                           nomial can have exponential size, say 2100 digits. Impor-
+I.1.2 [Computing Methodologies]: Symbolic and Alge-
+                                                                                           tant exceptions are evaluating at 0 or ±1. A supersparse
+braic Manipulation—Algorithms; F.1.2 [Theory of Com-
+                                                                                           polynomial can be represented by a straight-line program
+putation]: Analysis of Algorithms and Problem Complex-
+                                                                                           [13] of size O(sizef ) via evaluating its terms with repeated
+ity—Nonnumerical Algorithms and Problems
+                                                                                           squaring. It is NP-hard to test if two integral univariate su-
+                                                                                           persparse polynomials have a non-trivial greatest common
+General Terms                                                                              divisor [22].
+algorithms, theory                                                                             A breakthrough polynomial-time result is in [3]. Any in-
+                                                                                           tegral root of a univariate supersparse polynomial with inte-
+                                                                                           gral coefficients can be found in (sizef )O(1) bit operations.
+Keywords                                                                                   H. W. Lenstra, Jr., [19, 20] has generalized the result to
+sparse polynomials, lacunary polynomials, multivariate poly-                               computing factors of fixed degree in an algebraic extension
+nomials, polynomial factorizations, polynomial-time com-                                   of fixed degree, in particular to computing rational roots in
+plexity, NP-hardness                                                                       polynomial-time. Using interpolation and divisibility testing
+                                                                                           à la [1] in connection with Lenstra’s algorithm, in section 3
+1. INTRODUCTION                                                                            we present an algorithm for computing linear and quadratic
+  The algorithms in this paper take as inputs “super”sparse                                rational factors of integral bivariate (n = 2) supersparse
+polynomials, which A. Schinzel and H. W. Lenstra, Jr., call                                polynomials in (sizef )O(1) bit operations. Our algorithm is
+                                                                                           randomized of the Monte Carlo kind, and in section 4 we
+∗
+ This material is based on work supported in part by the National                          show how the linear bivariate factors can be found deter-
+Science Foundation under Grant No. CCR-0305314 (Kaltofen).                                 ministically.
+                                                                                               Several hardness results for supersparse polynomials over
+                                                                                           finite fields have been derived from Plaisted’s approach [7,
+                                                                                           17]. For example, Plaisted’s hardness of GCD 6= 1 extends
+Permission to make digital or hard copies of all or part of this work for
+                                                                                           to polynomials over Zp [7] and can be used to show NP-
+personal or classroom use is granted without fee provided that copies are
+not made or distributed for profit or commercial advantage and that copies                 hardness (via randomized reduction) of the irreducibility of
+bear this notice and the full citation on the first page. To copy otherwise, to            supersparse bivariate polynomials for sufficiently large p (cf.
+republish, to post on servers or to redistribute to lists, requires prior specific         [17, Proof of Theorem 1]). In section 5 we summarize those
+permission and/or a fee.                                                                   †
+ISSAC’05, July 24–27, 2005, Beijing, China.                                                 A lacuna is a hole as in the word ‘lake;’ the polynomials have, so to
+Copyright 2005 ACM 1-59593-095-705/0007 ...$5.00.                                          speak, “lagoons of zero coefficients.”
+
+
+
+                                                                                     208
+                                                                                                         O(D)
+results and generalize them to finite fields of any character-            of size t + log kf k + log kϕk       , which is independent of
+istic.                                                                    deg(f ).
+   For all problems that we consider there are deterministic                 For example, for ϕ = ζ−1, that is, K = Q, and d = 1 = D,
+and/or probabilistic algorithms whose bit complexity is of                Lenstra’s algorithm finds all rational roots of a supersparse
+order (size(f ) + deg(f ))O(1) [14, 15]. We remark that our               integral polynomial f in polynomial-time in size(f ).
+representation of the coefficients of f and the modulus p is
+by dense vectors of digits, not by supersparse lists of non-              3.   LINEAR AND QUADRATIC FACTORS
+zero digits and their positions in the integers (cf. [25]).                 We now present our randomized algorithm for comput-
+   We note that Barvinok’s representation by short ratio-                 ing linear and quadratic factors (and their multiplicities)
+nal generating functions [2] is related to our supersparse                of bivariate supersparse polynomials. For simplicity, we
+representation, and short rational functions have been suc-               shall consider polynomials with rational coefficients only, al-
+cessfully employed to solve combinatorial counting problems               though our method would allow coefficients in an algebraic
+[4].                                                                      number field. Our algorithm calls the univariate algorithm
+                                                                          by H. W. Lenstra, Jr. [19]. For simplicity (see Remark 1
+2. THE RESULTS BY CUCKER ET AL. AND                                       below), we assume that the input polynomial is monic in X.
+   LENSTRA                                                                Algorithm Supersparse Factorization
+                                                                          Input: a supersparse f (X, Y ) = ti=1 ai X αi Y βi ∈ Z[X, Y ]
+                                                                                                            P
+   In [3] it is shown how to compute an integer root of a
+supersparse polynomial f (X) = a1 + a2 X α2 + · · · + at X αt ∈           that is monic in X and an error probability  = 1/2l .
+Z[X] in polynomial time in the size of the polynomial. The                Output: a list of polynomials gj (X, Y ) with degX (gj ) ≤ 2
+result has a short proof based on finding gaps: suppose that              and degY (gj ) ≤ 2 and corresponding multiplicities, which
+f (X) = g(X) + X u h(X) with g 6= 0, h 6= 0, deg(g) ≤ k and               with probability no less than 1− are all linear and quadratic
+let u − k ≥ δ = log2 kf k1 = log2 (|a1 | + · · · + |at |). For an         irreducible factors of f over Q together with their true mul-
+integer a 6= ±1, we have f (a) = 0 =⇒ g(a) = h(a) = 0.                    tiplicities.
+Assume the contrary, namely that a 6= 0, ±1 and h(a) 6= 0.
+Then                                                                      Step 0. Factor out the maximum powers of X and Y that
+                        k     u−k      k      u     u                         divide f . The non-zero coefficients of f do not change.
+   |g(a)| < kf k1 · |a| ≤ 2         · |a| ≤ |a| ≤ |a h(a)|,   (2)             Compute all linear and quadratic irreducible factors
+                 u
+thus |f (a)| ≥ |a h(a)| − |g(a)| > 0. Note the similarity of                  of f that are in Q[Y ] by applying Lenstra’s method
+(2) with the proof of Cauchy’s root bound. The estimate                       to the coefficients of X αi . The multiplicities are also
+for δ can be sharpened [3, Proposition 2]. The polynomial                     provided by Lenstra’s algorithm.
+time algorithm can now proceed by computing the integer
+                                                                          Step 1. Compute all linear and quadratic irreducible fac-
+roots of those polynomial segments ai X αi +· · ·+aj X αj in f
+                                                                              tors in Q[X] of f (X, 0), f (X, 1) and f (X, −1) by Len-
+whose terms have degree differences αl − αl−1 < δ, for all
+                                                                              stra’s method. The algorithm will also provide the
+i < l ≤ j. After dividing out X αi , we have polynomials
+                                                                              multiplicities of those factors.
+of degree ≤ (t − 1)(δ − 1), whose common integer roots are
+found by p-adic lifting [21]. In section 4 we give a variant of           Step 2. Interpolate all factor combinations.
+the gap technique for high degree sums of linear forms.                       Test if a factor candidate g(X, Y )µ of candidate multi-
+  H. W. Lenstra, Jr. has used the gap method to computing                     plicities µ divides f (X, Y ) by testing if 0 ≡ f (X, a) mod
+rational roots and low degree factors of supersparse ratio-                   (g(X, a)µ , p) where a ∈ S ⊂ Z, and p ≤ B a prime in-
+nal polynomials via the height of an algebraic number (see                    teger are randomly selected. The cardinality |S| of S
+section 4). The algorithm presented in   P[19] receives as in-                and the bound B are chosen in dependence of f and
+put a supersparse polynomial f (X) = ti=1 ai X αi ∈ K[X],                     the input error probability  (see below). The algo-
+where the algebraic number field K is represented as K =                      rithm may fail to sample a prime p ≤ B and return
+Q[ζ]/(ϕ(ζ)) with a monic irreducible minimum polynomial                       “failure,” which is interpreted as an incorrect answer
+ϕ(ζ) ∈ Z[ζ]. Furthermore, a factor degree bound d is in-                      in the output specification of the probability of cor-
+put. The algorithm produces a list of all irreducible factors                 rectness.       2
+of f over K of degree ≤ d and their multiplicities. Let
+D = d · deg(ϕ). There are at most                                            We now show that our algorithm Supersparse Factoriza-
+                                                                          tion can be implemented as to run in
+                     O(t2 · 2D · D · log(2D t))               (3)
+                                                                                                                          O(1)
+                                                                                     t + log(deg f ) + log kf k + log 1/       (5)
+irreducible factors of degree ≤ d [20, Theorem 1], each of
+which, with the exception of the possible factor X, has mul-              bit operations. Note that the measure (5) is polynomial in
+tiplicity at most t [19, Proposition 3.2]. The algorithm fin-             size(f ) and l = − log .
+ishes in                                                                     By (3) in section 2 and our restriction to D ≤ 2, the poly-
+                                                 O(D)                    nomials f (X, 0), f (X, −1) and f (X, 1) each have no more
+            t + log(deg f ) + log kf k + log kϕk          (4)
+                                                                          than O(t2 log t) linear or irreducible quadratic factors. In
+bit operations. Here kϕk is the (infinity) norm of the co-                Step 2, one interpolates factors that are monic in X and
+efficient vector of ϕ and kf k is the norm of the vector of               whose coefficients have size (t + log kf k)O(1) . There are
+norms of the coefficients ai (ζ). We assume that a common                 O(t4 (log t)2 ) combinations of linear factors and O(t12 (log t)6 )
+denominator has been multiplied through and all coefficients              combinations of quadratic factors, the latter because we
+of the ai (ζ) are integers. We note that by standard factor               must also consider products of univariate linear factors as
+coefficient bound techniques [6], all factors have coefficients           images of bivariate quadratic factors. In practice, of course,
+
+
+                                                                    209
+the number of combinations can be much smaller. At least                        Remark 1. Our algorithm can be extended to compute
+one of the univariate factors in each combination is 6= X in                 in polynomial time all irreducible factors gj with degX (gj ) =
+the linear case and 6= X 2 in the quadratic case, because the                O(1), i.e., of constant degree in X, and simultaneously of
+interpolated bivariate factor cannot be X or X 2 . Therefore                 degY (gj ) ≤ 2. The input condition of monicity of f can be
+the multiplicity m of one of the univariate factors satisfies                relaxed to accept polynomials with a leading coefficient (or
+m ≤ t, and we need to check all µ ≤ m.                                       trailing coefficient) in X that does not vanish for Y = 0, Y =
+   For each candidate factor G(X, Y ) = g(X, Y )µ we con-                    −1 or Y = 1. One imposes a factor of the leading coefficient
+sider the division with remainder in X,                                      on the interpolated polynomials, which is a technique from
+                                                                             sparse Hensel lifting [11]. One may also switch the roles
+  f (X, Y ) − q(X, Y )G(X, Y ) = h(X, Y ),                                   of X and Y . However, at this time we do not know at all
+                           where degX (h) < degX (G).            (6)         how to interpolate the factors of polynomials such as
+                                                                                            X 2d
+By considering (6) as a (unimodular) linear system over                                         (X i − 1)(Y 2ei − 1)fi (X, Y )          (11)
+Q(Y ) with degX (f ) + 1 equations and variables, we obtain                                  i
+bounds for degY (h) and khk [8]:
+                                                                             where the fi are supersparse.
+   degY (h) ≤ degY (f ) + degY (G)×
+                                                                               However, in the next section, we can show how to compute
+              (degX (f ) + 1 − degX (G)) = O(t deg(f ))          (7)         in deterministic polynomial time all factors of total degree 1
+and                                                                          of any supersparse bivariate rational polynomial, including
+                                                                             those of the form (11).
+  khk2∞ ≤ t · kf k21 ×
+              ((degX (G) + 1) · kGk21 )degX (f )+1−degX (G) .    (8)         4.    DETERMINISTIC LINEAR FACTORS
+                                                                                In this section we give a deterministic polynomial time al-
+From (7) and  we derive a bound for |S| in Step 2, and                      gorithm that finds the linear factors of a supersparse polyno-
+from (8) and  a bound for B in Step 2. Suppose G does not                   mial. In contrast to the randomized algorithm of section 3,
+divide f , that is there is a coefficient hi (Y ) 6= 0 of X i in h.          this deterministic algorithm can handle all (bivariate) su-
+   First, we wish to have 0 6= hi (a) with probability ≥                     persparse polynomials. Our approach is based on the obser-
+1 − η/3, where η = /A with A = O(t13 (log t)6 ) being the                   vation that a polynomial g(X, Y ) is divisible by Y − bX − a
+number of factor combinations and multiplicities that have                   iff g(X, a + bX) = 0. We will first give an algorithm that
+to be tested. The probability to pick a root of hi (Y ) among                decides whether a polynomial of the form
+the elements in S ⊂ Z is no more than degY (h)/|S|. By (7),
+                                                                                                  t
+for a set S of cardinality                                                                        X
+                                                                                                         aj X αj (a + bX)βj                 (12)
+                                            O(1)
+                  |S| = (t + deg f + 1/)                        (9)                               j=0
+
+we can succeed with probability ≥ 1 − η/3. Let H = hi (a)                    is identically equal to zero. Here a and b and the aj are
+for a ∈ S. We get by (9) and again by (7) and (8) that                       rational numbers; the αj and βj are non-negative integers.
+H = (t + deg f + kf k + 1/)O(t deg f ) .                                    This algorithm can be used to check with certainty whether
+   Second, we choose B such that 0 6≡ H (mod p) with prob-                   a “candidate factor” Y − bX − a (for instance generated
+ability ≥ 1 − η/3. By facts on the prime number distribu-                    by an interpolation technique asPin section 3) really is a
+tion (see [23] for explicit estimates), there is a constant γ1               factor of the bivariate polynomial j aj X αj Y βj . In general,
+such that H has at most γ1 log H/ loglog H distinct prime                    deciding deterministically whether a straight-line program
+factors. Since there are no fewer than γ2 B/ log B primes                    computes the identically zero polynomial is a notorious open
+≤ B, the probability that 0 ≡ H (mod p) is no more than                      problem. It turns out, however, that for polynomials of the
+γ3 (log H/ loglog H)/(B/ log B) for some constants γ2 and                    form (12) this problem has an efficient solution. We will then
+γ3 . Because one has                                                         see that this verification algorithm can be easily converted
+                                                                             into an algorithm that actually finds all linear factors.
+         log H/ loglog H            3A log H      B
+    γ3                   ≤    ⇐⇒ γ3            ≤       ,                        Even though our input polynomials have rational coeffi-
+             B/ log B      3A        loglog H   log B                       cients as in the remainder of the paper, the results of this
+one may choose                                                               section rely heavily on algebraic number theory.‡ We re-
+                                                                             view the necessary material in section 4.1. A suitable gap
+                   B = (A · log H · 1/)O(1)                    (10)         theorem is established in section 4.2. Here, some crucial
+and achieve failure probability ≤ η/3. Note that the number                  ideas are borrowed from Lenstra’s [19] paper. In particular,
+of digits in p is of order (t+log(deg f )+log kf k+log 1/)O(1) .            Proposition 1 closely follows Proposition 2.3 of [19]. Finally,
+   The algorithm must succeed to pick a prime p ≤ B. By it-                  our deterministic algorithms are presented in section 4.3.
+erating the prime selection process O(log(A/) · log B) times
+we can assume that to happen with probability ≥ 1 − η/3.
+                                                                             4.1    Heights of algebraic numbers
+Thus a single false factor combination is eliminated with                       In this section we quickly recall some number theoretic
+probability ≥ (1 − η/3)3 ≥ 1 − 1/η. Therefore no false fac-                  background. For any prime number p, the p-adic abso-
+tor combination or multiplicity is accepted with probability                 lute value on Q is characterized by the following properties:
+≥ (1 − η)A ≥ 1 − Aη ≥ 1 − .                                                 |p|p = 1/p, and |q|p = 1 if q is a prime number different from
+   The bit complexity measure (5) follows from the bounds                    p. For any x ∈ Q \ {0}, |x|p can be computed as follows:
+(9) and (10) together with the repeated squaring algorithm                   ‡
+                                                                              It is an interesting open problem whether they have more elementary
+and a polynomial primality test used in Step 2.                              proofs such as the one given in section 2.
+
+
+
+                                                                       210
+write x = pα y where p is relatively prime to the numera-                        prime integers. Computing H(f ) in the general case aj ∈ Q
+tor and denominator of y, and α ∈ Z. Then |x|p = 1/pα                            is therefore quite easy: reduce to the same denominator to
+(and of course |0|p = 0). We denote by MQ the union of the                       obtain integer coefficients, divide by their gcd and take the
+set of p-adic absolute values and of the usual (archimedean)                     maximum of the absolute values of the resulting integers (so
+absolute value on Q.                                                             in particular H(f ) ∈ Z>0 for any f ). Finally, a word of
+   Let d, e ∈ Z be two non-zero relatively prime integers. By                    caution: our notion of height is not intrinsic to the given
+definition, the height of the rational number d/e is max(|d|,                    polynomial in X, since it is not invariant of the particular
+|e|). There is an equivalent definition
+                                Q        in terms of absolute                    representation (12). Given a bivariate polynomial g(X, Y )
+values: for x ∈ Q, H(x) = ν∈MQ max(1, |x|ν ). Note in                            one could, however, define an intrinsic height H(G) as done
+particular that H(0) = 1.                                                        above (i.e., as the projective height of its tuple of coeffi-
+   More generally, let K be a number field (an extension                         cients), and we would have H(f (X, a + bX)) = H(G).
+of Q of finite degree). The set MK of normalized absolute
+values is the set of absolute values on K which extend an                           Theorem 1. Let f (X) be a polynomial of the form (12)
+absolute value of MQ . For ν ∈ MK , we write ν|∞ if ν                            where (a, b) is a pair of rational numbers different from the
+extends the usual absolute value, and ν|p if ν extends the                       five pairs (0, 0), (±1, 0), (0, ±1). Assume without loss of
+p-adic absolute value. One defines a “relative height” HK                        generality that the sequence (βj ) is nondecreasing, and as-
+on K by the formula                                                              sume also that there exists l such that
+                           Y                                                                     βl+1 − βl > log(t H(f ))/ log κ,
+                HK (x) =        max(1, |x|ν )dν .         (13)
+                             ν∈MK                                                where κ > 1 is an absolute constant definedPin Lemma 2. If
+                                                                                 f is identically zero, the polynomials g = lj=0 aj X αj (a +
+Here dν is the so-called
+                     P “local degree”. For every p (either                       bX)βj and h = tj=l+1 aj X αj (a+bX)βj are both identically
+                                                                                                 P
+prime or infinite),     ν|p dν = [KQ: Q]. Sometimes, instead
+                                                                                 zero.
+of (13) one just writes HK (x) = ν max(1, |x|ν ) if it is un-
+derstood that each absolute value may occur several times                           Proof. Let U (a, b) be the set of roots of unity defined
+(in fact, dν times) in the product. The absolute height H(x)                     in Lemma 2 below. By hypothesis, f (θ) = 0 for each θ ∈
+of x is HK (x)1/n , where n = [K : Q]. It is independent of                      U (a, b). By Proposition 1 below, g and h are both identically
+the choice of K.                                                                 zero on U (a, b). The result follows since U (a, b) is an infinite
+   There is a nice connection between the height of algebraic                    set.
+numbers and the Mahler measure of polynomials. Recall
+that the Mahler measure M (f ) of a polynomial of degree d:                        We denote by U the set of complex roots of unity of prime
+                                                                                 order, and by U≥5 the set of complex roots of unity of prime
+                                                   d
+                                                   Y                             order ≥ 5.
+      f (X) = ad X d + · · · + a1 X + a0 = ad            (X − αi )
+                                                   i=1                              Lemma 1. There is an absolute constant κ1 > 1.045 such
+                                  Qd                                             that the following holds. For any θ ∈ U≥5 , if a ∈ Z \ {0} and
+is by definition equal to |ad | i=1 max(1, |αi |). It turns out                  b ∈ Z \ {0} then H(a + bθ) ≥ κ1 .
+that if α is an algebraic number of degree d and f ∈ Z[X]
+its minimal polynomial, M (f ) = H(α)d ([27], section 3.3).                         Remark 2. The hypothesis that θ is of order at least 5
+This connection is often helpful when one has to estimate                        is necessary. Indeed, if θ is of order 3 then H(1 + θ) = 1
+heights, but here we will use directly the definition of height                  since 1 + θ = −θ 2 . Moreover, the restriction to roots of
+in terms of absolute values. In Proposition 1 we will also                       prime order can probably be removed with some additional
+use the product formula:                                                         work.
+                         Y
+                               |x|dνν = 1                  (14)                     Proof of Lemma 1. Note that |a + bθ|ν ≤ 1 for any
+                          ν∈MK                                                   ultrametric absolute value. Indeed,
+for any x ∈ K \ {0}. More details on absolute values and                                 |a + bθ|ν ≤ max(|a|ν , |bθ|ν ) = max(|a|ν , |b|ν ).
+height functions can be found for instance in [18] or [27].
+                                                                                 Hence we only need to take the archimedean absolute values
+4.2 A gap theorem                                                                into account to estimate the height. Recall that if θ is of
+                                                                                 order d, its conjugates are the other roots of unity of order
+  We define a notion of height for an expression of the
+                                                                                 d. Hence
+form (12) by the formula
+                            Y                                                                                d−1
+                                                                                                             Y
+                    H(f ) =    |f |ν ,                                                    H(a + bθ)d−1 =           max(1, |a + be2ikπ/d |).
+                                   ν∈MQ                                                                      k=1
+
+where |f |ν = max0≤j≤t |aj |ν . There is a classical notion of                   Assume first that a and b are of the same sign, and for
+height for a point in projective space ([10], section B.2) and                   instance positive. Then |a + be2ikπ/d | ≥ a + b cos(2ikπ/d) ≥
+in fact H(f ) is simply the height of the point (a0 , a1 , . . . , at ).         1 + cos(2π/5) if k ≤ d/5. Hence
+A nice feature of H(f ) is its invariance by scalar multiplica-
+                                                                                            H(a + bθ) ≥ (1 + cos(2π/5))bd/5c/(d−1) .
+tion: if λ ∈ Q \ {0}, H(λf ) = H(f ). Indeed, if we multiply
+a polynomial by pα where p is prime, the archimedean abso-                       This lower bound is always > 1.045 since d ≥ 5, and its limit
+lute value is multiplied by pα and the p-adic absolute value                     as d → +∞, which is equal to (1 + cos(2π/5))1/5 , is > 1.055.
+is divided by pα . The other absolute values are unchanged.                        To complete the proof, we now consider the case where a
+Note also that H(f ) = maxj |aj | if the aj are relatively                       and b have opposite signs. Assume for instance that a ≥ 1
+
+
+                                                                           211
+and b ≤ −1. Then |a + be2ikπ/d | ≥ a + b cos(2ikπ/d) ≥ 3/2                       Since |dn − cn |ν = 1, we must have |y|ν ≥ 1 (so that
+if d/3 ≤ k ≤ 2d/3. Hence H(a + bθ) ≥ (3/2)bd/3c/(d−1) .                          in fact |y|ν = 1). We conclude that H(x) ≥ p ≥ 2 if
+This lower bound is again always > 1.10 and its limit as                         θ ∈ U (a, b).
+d → +∞, which is equal to (3/2)1/3 , is > 1.14.
+                                                                          (iii) The last subcase occurs when c 6= d and p | d − c. We
+  We now deal with the case where a and b are rational                          can write y = dθ −c = c(θ −1)+(c−d). By hypothesis
+numbers.                                                                        |c − d|ν ≤ 1/p, and by subcase (i) |c(θ − 1)|ν = 1 if θ
+                                                                                belongs to the set U (a, b) defined in that subcase. We
+   Lemma 2. There is an absolute constant κ > 1.045 such                        may therefore take the same U (a, b), and we conclude
+that the following holds: for any pair (a, b) of rational num-                  again that H(x) ≥ 2 if θ ∈ U (a, b).
+bers, different from the 5 excluded pairs of Theorem 1, there             We have shown that H(x) ≥ 2 whenever θ ∈ U (a, b) and
+exists an infinite set U (a, b) of roots of unity such that H(a+          a 6∈ Z \ {0}, b 6∈ Z \ {0}, a = 0 or b = 0. One may therefore
+bθ) ≥ κ for any θ ∈ U (a, b).                                             take κ = min(2, κ1 ) (so in fact κ = κ1 ).
+   Proof. Let (a, b) be a pair of rational numbers different
+                                                                             Proposition 1. Let (a, b) be a pair of rational numbers
+from the 5 excluded pairs. If b = 0, H(a + bθ) = H(a) ≥ 2
+                                                                          different from the five excluded pairs of Theorem 1. Let f be
+since a 6∈ {−1, 0, 1}. If a = 0, H(a + bθ) = H(bθ) = H(b) ≥
+                                                                          a polynomial of the form (12), and let k ≥ 1 be an integer.
+2 since b 6∈ {−1, 0, 1} (indeed, for any ν we have |bθ|ν =
+                                                                          Write f = g + h where g collects all the terms of f with
+|b|ν |θ|ν = |b|ν ). One may therefore take for U (a, b) the set
+                                                                          βj ≤ k and h collects all the terms of f with βj > k. Let
+of all roots of unity if a = 0 or b = 0.
+                                                                          u = min{βj ; βj > k}. Assume that θ is a zero of f , and
+   Also, we have shown in Lemma 1 that one may take
+                                                                          that θ belongs to the set U (a, b) of Lemma 2. If
+U (a, b) = U≥5 if a ∈ Z \ {0} and b ∈ Z \ {0}. We there-
+fore assume for the remainder of the proof that a and b are                                  u − k > log(t H(f ))/ log κ,                   (16)
+both nonzero, and that they are not both integers.
+                                                                          where κ is as in Lemma 2, then θ is a common zero of g
+   By reduction to the same denominator one finds integers
+                                                                          and h.
+c, d, e ∈ Z\{0} such that e ≥ 2, gcd(c, d, e) = 1, and a+bθ =
+(dθ − c)/e for any root of unity θ. Let x = a + bθ, let p be                 Proof. We may assume that each of the two polynomials
+a prime factor of e, and fix any ν such that ν|p. Since                   g and h collects at most t of the t + 1 terms of f (otherwise,
+|x|ν ≥ p|y|ν where y = dθ − c, it remains to lower bound                  the result is clear). Assume by contradiction that g(θ) 6= 0.
+|y|ν (note that we have the upper bound |y|ν ≤ 1). If θ is a              Let K = Q[θ] and ν ∈ MK . If |a + bθ|ν ≥ 1, each term of
+n-th root of unity, we have                                               g(θ) satisfies |aj θαj (a + bθ)βj | ≤ |f |ν |a + bθ|kν , therefore
+                        (y + c)n = dn .                     (15)                |g(θ)|ν ≤ max(1, |t|ν )|f |ν |a + bθ|kν if |a + bθ|ν ≥ 1.
+We first assume that p divides c. In this case p cannot divide            A similar argument shows that
+d since gcd(c, d, e) = 1. Hence (15) implies that |y|ν = 1, so
+                                                                                |h(θ)|ν ≤ max(1, |t|ν )|f |ν |a + bθ|uν if |a + bθ|ν ≤ 1.
+that |x|ν ≥ p. Since this is true for any ν such that ν|p, we
+have H(x) ≥ p ≥ 2. If p divides c, one may therefore take                 We have |g(θ)|ν = |h(θ)|ν , so we can combine these two
+U (a, b) equal to the set of all roots of unity.                          statements in
+  We now examine the case p - c. We assume that θ 6= 1 is
+a n-th root of unity, and distinguish 3 subcases.                         max(1, |a + bθ|ν |)u−k · |g(θ)|ν ≤ max(1, |t|ν ) · |f |ν · |a + bθ|uν .
+                                                                          Raise this to the power dν /[K : Q] and take the product over
+  (i) If c = d, we shall see that |y|ν = 1 whenever p - n.                ν ∈ MK . Using the fact that H(t) = t, and applying (14) to
+      Indeed, |y|ν = |c|ν |θ − 1|ν = |θ − 1|ν . Set z = θ − 1.            g(θ) and a+bθ (which are both supposed to be nonzero) one
+      Since (z + 1)n = 1 and z 6= 0, it follows from the                  finds that H(a + bθ)u−k ≤ t · H(f ). However, H(a + bθ) ≥ κ
+      binomial formula that                                               by Lemma 2. This is in contradiction with (16).
+           z n−1 + nz n−2 + n2 z n−3 + · · · + n2 z = −n.
+                                                
+                                                                          4.3      Deterministic algorithms
+      Hence |z|ν = 1 since |n|ν = 1. We conclude that                        Theorem 2. We have a polynomial-time deterministic
+      H(x) ≥ p ≥ 2, and one may take U (a, b) equal to                    algorithm for deciding whether a polynomial of the form (12)
+      the union for all integers n such that p - n of the set             is identically zero.
+      of n-th roots of unity different from 1.
+                                                                          Note that there is a trivial algorithm which deals with the
+ (ii) The second subcase (c 6= d and p - d − c) is similar,               case where (a, b) is one of the five excluded pairs of The-
+      but slightly more involved. Let U (a, b) be the set of              orem 1. In the following we therefore assume that (a, b)
+      positive integers n such that p - (dn − cn ). Note that             is not one of these five excluded pairs, and we fix a ra-
+      U (a, b) is infinite since n ∈ U (a, b) or n + 1 ∈ U (a, b)         tional number  > 0 such that one may take κ = 2 in
+      for any n ≥ 1 , as is shown as follows: assume the                  Lemma 2. Set δ = dn/e, where n is the unique integer such
+      contrary, namely that p | dn+1 − cn+1 and p | dn − cn .             that 2n−1 ≤ t H(f ) < 2n . Assume that the βj ’s are sorted
+      It follows that p | (dn+1 −cn+1 )−d(dn −cn ) = cn (d−c).            by nondecreasing order as in Theorem 1. There is a unique
+      This is impossible since p - c.                                     integer s ≥ 1 and a unique partition of the set {0, 1, . . . , t}
+      Let n ∈ U (a, b). Using again the binomial formula, it              in subsets U1 , . . . , Us of consecutive integers with the fol-
+      follows from (15) that                                              lowing property: if an integer j belongs to Ul then j + 1
+                                                                          also belongs to Ul if βj+1 < βj + δ, otherwise j + 1 be-
+       y n + ncy n−1 + n2 c2 y n−2 + · · · + ncn−1 y = dn − cn .
+                         
+                                                                          longs to Ul+1 (to obtain this partition, just sweep the list
+
+
+                                                                    212
+of the βj ’s from left to right and create a new subset when-            is different from the five excluded pairs. As in Theorems 1
+ever Pan element βj such that βj+1 − βj ≥ δ is found).  P Let            and 2, we assume that the βj are sorted by nondecreasing
+fl = j∈Ul aj X αj (a + bX)βj . By construction f = sj=1 fl               order.
+and by Theorem 1, f is identically zero iff all the fl are iden-            The idea is to use Theorem 1 to reduce this problem to
+tically zero. Indeed, we have δ > log(t H(f ))/ log κ, where             several factoring problems about dense polynomials. Let
+κ = 2 . Furthermore, we can write fl = (a + bX)γl gl where              U1 , . . . , Us be the partition of the set of indices {0, 1, . . . , t}
+                       X                                                 which is constructed when the algorithm of Theorem 2 is
+                 gl =       aj X αj (a + bX)δj,l ,          (17)         run on the polynomial f (X) = g(X, a + bX). Crucially,
+                      j∈Ul                                               this partition is in fact independent of the pair      P(a, b). As
+γl = min{βj ; j ∈ Ul }, and δj,l = βj − γl . Each exponent δj,l          in the proof of Theorem 2, one can write g = sj=1 Y γl gl ,
+                                                                                          P            αj δj,l
+satisfies 0 ≤ δj,l < δ. The gl are all identically zero iff f is         where gl =          j∈Ul aj X   Y     , γl = min{βj ; j ∈ Ul }, and
+identically zero. We can now describe our main algorithm.                δj,l = βj − γl . By Theorem 1, the linear factors of g are
+                                                                         (excluding excluded pairs!) the common linear factors of
+  1. Compute H(f ) as explained before Theorem 1 and the                 the gl . We have therefore reduced our initial problem to the
+     integer δ defined above.                                            computation of the linear factors of each gl . This progress
+  2. Construct the list (g1 , . . . , gs ) defined by (17).              is significant since, as shown in the proof of Theorem 2, in
+                                                                         every gl the exponents δj,l of variable Y are “small” (poly-
+  3. Express each polynomial (a + bX)δj,l as a sum of pow-               nomially bounded in the size of the input polynomial g).
+     ers of X.                                                           The exponents of X may still be large, however. To deal
+                                                                         with this problem we run the same factoring algorithm on
+  4. Substitute in (17) to express each gl as a sum of powers            input gl instead of g, with the roles of variables X and Y
+     of X, and decide whether the gl are all identically zero.           interchanged. This reduces the problem to the computation
+     If so, output “f = 0”. Otherwise, output “f 6= 0”.                  of the linear factors of polynomials where the exponents of
+The correctness of this algorithm follows from the discussion            X and Y are all “small”. One can then use any determin-
+after Theorem 2, and it is clear that steps 1 and 2 run in               istic polynomial time algorithm that finds the linear factors
+polynomial time. Step 3 also runs in polynomial time since               of a dense polynomial.
+δj,l < δ and δ is bounded by a polynomial in the input
+size (so we can simply expand (a + bX)δj,l by brute force).              5.      NP-HARDNESS OF SUPERSPARSE BI-
+Finally, in step 4 we express gl as a sum of at most δ|Ul | ≤                    VARIATE IRREDUCIBILITY
+δ(t + 1) terms. This completes the proof of the running time                In [22] and the earlier papers cited there, NP-hardness
+estimate, and of Theorem 2.                                              results are derived for supersparse polynomials over the in-
+                                                                         tegers. In [7, 17] several hard problems are extended for
+  Remark 3. One can deal at no additional expense with
+                                                                         supersparse polynomials over finite fields. We give similar
+polynomials of the slightly more general form:
+                                                                         NP-hard problems over finite fields, but now for finite fields
+                      t
+                      X                                                  of arbitrary characteristic.
+            f (X) =         aj (c + dX)αj (a + bX)βj .                      Figure 1 shows D. Plaisted’s model for 3-SAT in n Boolean
+                      j=0                                                variables z1Q, . . . , zn . Clauses correspond to factors of X N −1
+Indeed, the change of variable Y = c + dX yields a poly-                 with N = n     j=1 pj , where pj distinct primes. We note that
+nomial g(Y ) of form (12). The only case which cannot be                 all Poly(Ci ) are supersparse polynomials for any clause Ci
+handled in this way is the seemingly trival one b = d =                  with one, two or three literals. An immediate consequence of
+0. Here one has to decide whether the rational number                    the construction, justified by the rootsets in Figure 1 that
+P t        αj β j                                                        are associated with the polynomials, is that the conjunc-
+  j=0 aj c   a is equal to zero. It is not clear whether this
+can be done in deterministic polynomial time, even if a, c               tive normal form C1 ∧ · · · ∧ Cs is satisfiable if and only if
+and the aj are all integers.                                             GCD(Poly(C1 ), . . ., Poly(Cs )) 6= 1. We first generalize that
+                                                                         reduction to coefficients from an arbitrary field.
+  Theorem 2 yields a deterministic algorithm for Step 2 with                Let p - N be a fresh prime and let
+µ = 1 in algorithm Supersparse Factorization in Section 3.                                             Y
+However, that variant still fails to compute linear factors of                  ΨN (y) =                         (X − e2bπi/N ) ∈ Z[y]
+polynomials of the form (11), which we remedy next.                                         1≤b<N,GCD(b,N )=1
+
+                                                                         be the cyclotomic equation of order N .
+   Theorem 3. We have a polynomial-time deterministic                       Since ζ = (y mod ΨN (y)) is a representation for a primi-
+algorithm that finds
+                   Pall linear factors of a supersparse poly-            tive N -th root of unity, we have over the integers
+nomial g(X, Y ) = tj=0 aj X αj Y βj .
+                                                                             X N −1 ≡ (X −y 1 )(X −y 2 ) · · · (X −y N ) mod (ΨN (y)). (18)
+   Proof. We first find all linear factors of f that are in
+Q[X] by applying Lenstra’s method to the coefficients of                 Let Fq ⊇ Zp be the splitting field of ΨN (y) mod p (one has
+Y βj (this is similar to step 0 of the algorithm of section 3).          q = pλ where λ is the multiplicative order of p modulo N )
+After that, it remains to find all factors of the form Y −               and let ζ ∈ Fq with ΨN (ζ) = 0 in Fq . Taking (18) modulo p
+bX − a. There are five special cases for the pair (a, b), which          and evaluating the resulting polynomial identity at y = ζ,
+correspond to the five excluded pairs of Theorem 1. As                   that is, taking it modulo y − ζ | ΨN (y), one obtains
+pointed out in the proof of Theorem 2, one can check easily
+                                                                             X N − 1 = (X − ζ 1 )(X − ζ 2 ) · · · (X − ζ N ) in Fq [X].§ (19)
+for each of these five pairs whether g(X, a + bX) = 0. In the
+                                                                         §
+following we therefore look for factors Y −bX −a where (a, b)                With N = pµ − 1, 1 ≤ µ, we have proven that the multiplicative
+
+
+
+                                                                   213
+                 Formula                                    Polynomial                                             Rootset
+                    zj                                   X N/pj − 1                                   {(e2πi/N )a | a ≡ 0 (mod pj )}
+                                                    N
+                   ¬zk                            X − 1 = Ppk −1 X iN /pk                              {(e2πi/N )b | b 6≡ 0 (mod pk )}
+                                                                i=0
+                                                 X N/pk − 1
+                                                                                                              S3
+             L1 ∨ L 2 ∨ L 3                LCM(Poly(L1 ), Poly(L2 ), Poly(L3 ))                                 j=1 Roots(Lj )
+                                     N/pj
+                                  (X      − 1)(X N/pk − 1)(X N/pl − 1)(X N/(pj pk pl ) − 1)
+              zj ∨ z k ∨ z l             N/(pk pj )
+                                      (X            − 1)(X N/(pk pl ) − 1)(X N/(pj pl ) − 1)
+                                            N/(pj pk )
+                                         (X            − 1)(X N − 1)(X N/(pk pl ) − 1)
+              zj ∨ ¬zk ∨ zl                         N/pk
+                                               (X        − 1)(X N/(pj pk pl ) − 1)
+                                                 (X − 1)(X N/(pj pk pl ) − 1)
+                                                     N
+             ¬zj ∨ ¬zk ∨ zl
+                                                         X N/(pj pk ) − 1
+            ¬zj ∨ ¬zk ∨ ¬zl                                 XN − 1
+                                                          N/(pj pk pl )
+                                                        X               −1
+                                                                                                              Ts
+             C1 ∧ · · · ∧ C s                  GCD(Poly(C1 ), . . . , Poly(Cs ))                                i=1 Roots(Ci )
+                                                                                                                     Qn
+                   Figure 1: D. Plaisted’s polynomials for literals, clauses and CNFs (N =                              j=1 pj ).
+
+
+
+
+Since p - N , the polynomial X N − 1 mod p has no multi-                           Proof. Reduction to two polynomials follows from Propo-
+ple roots, and we can replace e2πi/N by ζ in D. Plaisted’s                      sition 2 and Lemma 3 (cf. [7]). NP-hardness of P  squarefree-
+construction. We thus have established the following.                           ness follows by considering the product f1 (f2 + si=3 ci fi ).
+                                                                                Since D. Plaisted’s polynomials fi = Poly(Ci ) are divisors
+  Proposition 2. The set of tuples of relatively prime su-                      of X N − 1 and therefore are squarefree, with high probabil-
+persparse polynomials in Fq [X] is co-NP-hard for arbitrary                     ity both factors will be squarefree. Therefore their product
+q = pµ .                                                                        is not squarefee if and only if the two factors have a com-
+                                                                                mon GCD, which is NP-hard under randomized reduction.
+  In [22], co-NP-hardness is shown for pairs of supersparse
+                                                                                NP-hardness of irreducibility follows by considering the pol-
+relatively prime polynomials over Z. However, D. Plaisted’s
+                                                                                ynomial
+pairs do not remain relatively prime modulo all primes p.
+                                                                                                                               s
+We overcome that deficiency via randomized reductions.                                                                         X
+                                                                                     F (X, Y ) = X u f1 (X) + Y (f2 (X) + X            ci fi (X))
+  Lemma 3. Let fi (X) ∈ K[X] be nonzero polynomials for                                                                          i=3
+i = 1, . . . , s, s ≥ 2, K a field, d = deg(f1 ) and S ⊂ K.                     for sufficiently large u to make F (X, Y ) monic in X (cf. [17,
+Then for randomly chosen ci ∈ S, 3 ≤ i ≤ s, we have the                         Proof of Theorem 1]). Note that D. Plaisted’s polynomials
+probability estimate                                                            fi = Poly(Ci ) are not divisible by X. Shifting f3 , . . . , fs
+                                   Xs                                         by a factor of X ensures that f2 + c3 Xf3 + · · · + cs Xfs is
+                                                                                relatively prime to X u . Clearly,
+                                                    
+ Prob GCD(fi ) = GCD(f1 , f2 +         ci fi ) ≥ 1−d |S| (20)                                                           F (X, Y ) is irreducible if
+         1≤i≤s
+                                                                                and only if GCD(f1 , f2 + X si=3 ci fi ) = 1, that if and only
+                                                                                                                 P
+                                       i=3
+
+Furthermore, if f2 is squarefree and e = deg(f2 ) ≥ deg(fi )                    if GCD(f1 , . . . , fs ) = 1 with high probability.
+for i ≥ 3, then with probability no less than 1 − (2e − 1)/|S|                    For example, co-NP-hardness of supersparse bivariate ir-
+the polynomial f2 + si=3 ci fi will remain squarefree.
+                     P
+                                                                                reducibility yields via [1] the following reduction to integer
+   Proof. The estimate (20) is Lemma 2 in [5]. Square-                          factoring.
+freeness follows by the same techniques as P
+                                           given there by
+                                                                                   Corollary 1. Suppose we have a Monte Carlo polyno-
+considering the discriminant of F = f2 + si=3 yi fi as a
+                                                                                mial-time irreducibility test for supersparse polynomials in
+Sylvester resultant of F and ∂F/∂X with symbolic yi .
+                                                                                F2m [X, Y ] for sufficiently large m. Then large integers can
+  We obtain the following NP-hardness problems under ran-                       be factored in Las Vegas polynomial-time.
+domized reduction, which generalize the results in [17] to                         Already in [17], Hilbert irreducibility is mentioned as a
+arbitrary characteristic.                                                       means to establish NP-hardness of irreducibility of super-
+   Theorem 4. The set of pairs of relatively prime super-                       sparse polynomials in Z[X]. Note that one can evaluate the
+sparse polynomials in K[X], the set of squarefree supersparse                   linear variable Y at a polynomial-sized integer. However, no
+polynomials in K[X], and the set of irreducible supersparse                     proven effective versions seem to be known that would yield
+polynomials in K[X, Y ] are co-NP-hard under randomized                         a randomized polynomial reduction (cf. [26, 24]). Nonethe-
+reduction for K = Q and K = Fq with arbitrary p and                             less, if a fast irreducibility test of supersparse polynomials
+sufficiently large q = pm . Co-NP-hardness of irreducibility                    in Z[X] were discovered, we believe that Hilbert irreducibil-
+remains valid if we assume that the supersparse bivariate                       ity would yield fast algorithms for NP-complete problems,
+polynomials are monic in X.                                                     thus resulting in what we call a “good heuristic” for NP-
+                                                                                completeness [15]. Of course, the Hilbert irreducibility the-
+group of a finite field Fpµ is cyclic. For that proof the only property
+of ΨN needed is that it is the monic integral minimum polynomial of             orem is not valid over Fq and the hardness of supersparse
+a primitive N -th root of unity in C.                                           irreducibility in Fq [X] remains open.
+
+
+                                                                          214
+   In addition, the complexity of root finding of supersparse               Lect. Notes Comput. Sci., Springer Verlag, pp. 4–17.
+polynomials over finite fields is open. In [15], we have posed              Proofs in [12].
+two open problems: Given a prime number p and integers                 [12] Kaltofen, E. Sparse Hensel lifting. Tech. Rep. 85-12,
+b, c ∈ Zp and α, β with with p − 1 > α > β > 0, compute                     Rensselaer Polytechnic Instit., Dept. Comput. Sci.,
+a ∈ Zp such that aα + baβ + c ≡ 0 (mod p) in (log p)O(1) bit                Troy, N. Y., 1985.
+operations. Alternatively, prove that computing a root in              [13] Kaltofen, E. Greatest common divisors of
+Zp of a polynomial given by straight-line program over Zp                   polynomials given by straight-line programs. J. ACM
+is NP-hard.                                                                 35, 1 (1988), 231–264.
+Acknowledgments: Pascal Koiran would like to thank                     [14] Kaltofen, E. Polynomial factorization 1987-1991. In
+Nicolas Brisebarre for useful number-theoretic discussions                  Proc. LATIN ’92 (Heidelberg, Germany, 1992),
+on Lemma 1. We thank Joachim von zur Gathen and Igor                        I. Simon, Ed., vol. 583 of Lect. Notes Comput. Sci.,
+Shparlinksi for pointing out their work on NP-hardness to                   Springer Verlag, pp. 294–313.
+us. The authors would like to thank the referees whose com-            [15] Kaltofen, E. Polynomial factorization: a success
+ments where very useful for improving the final version of                  story. URL: http://www.math.ncsu.edu/~kaltofen/
+this paper.                                                                 bibliography/04/issac.pdf, Aug. 2003. Screens for
+                                                                            an invited talk given at the 2003 Internat. Symp.
+6. REFERENCES                                                               Symbolic Algebraic Comput. at Drexel University.
+ [1] Agrawal, M., Kayal, N., and Saxena, N.                            [16] Kaltofen, E., and Lee, W. Early termination in
+     PRIMES is in P. Manuscript, 2002. Available from                       sparse interpolation algorithms. J. Symbolic Comput.
+     http://www.cse.iitk.ac.in/news/primality.pdf.                          36, 3–4 (2003), 365–400. Special issue Internat. Symp.
+ [2] Barvinok, A. I., and Woods, K. Short rational                          Symbolic Algebraic Comput. (ISSAC 2002). Guest
+     generating functions for lattice point problems. J.                    editors: M. Giusti & L. M. Pardo.
+     Amer. Math. Soc. 16 (2003), 957–979.                              [17] Karpinski, M., and Shparlinski, I. On the
+ [3] Cucker, F., Koiran, P., and Smale, S. A                                computational hardness of testing square-freeness of
+     polynomial time algorithm for diophantine equations                    sparse polynomials. In Proc. AAECC-13 (Heidelberg,
+     in one variable. J. Symbolic Comput. 27, 1 (1999),                     Germany, 1999), vol. 1719 of Lect. Notes Comput.
+     21–29.                                                                 Sci., Springer Verlag, pp. 492–497.
+ [4] De Loera, J. A., Hemmecke, R., Huggins, P.,                       [18] Lang, S. Algebra. Addison-Wesley, 1993.
+     Sturmfels, B., and Yoshida, R. Short rational                     [19] Lenstra, Jr., H. W. Finding small degree factors of
+     functions for toric algebras and applications. J.                      lacunary polynomials. In Győry et al. [9], pp. 267–276.
+     Symbolic Comput. 38, 2 (2004), 959–973.                           [20] Lenstra, Jr., H. W. On the factorization of
+ [5] Dı́az, A., and Kaltofen, E. On computing greatest                      lacunary polynomials. In Győry et al. [9], pp. 277–291.
+     common divisors with polynomials given by black                   [21] Loos, R. Computing rational zeros of integral
+     boxes for their evaluation. In Proc. 1995 Internat.                    polynomials by p-adic expansion. SIAM J. Comput.
+     Symp. Symbolic Algebraic Comput. (ISSAC’95) (New                       12, 2 (1983), 286–293.
+     York, N. Y., 1995), A. H. M. Levelt, Ed., ACM Press,              [22] Plaisted, D. A. New NP-hard and NP-complete
+     pp. 232–239.                                                           polynomial and integer divisibility problems.
+ [6] von zur Gathen, J., and Gerhard, J. Modern                             Theoretical Comput. Sci. 13 (1984), 125–138.
+     Computer Algebra. Cambridge University Press,                     [23] Rosser, J. B., and Schoenfeld, L. Approximate
+     Cambridge, New York, Melbourne, 1999. Second                           formulas of some functions of prime numbers. Illinois
+     edition 2003.                                                          J. Math. 6 (1962), 64–94.
+ [7] von zur Gathen, J., Karpinski, M., and                            [24] Schinzel, A., and Zannier, U. The least admissible
+     Shparlinski, I. Counting curves and their                              value of the parameter in Hilbert’s Irreducibility
+     projections. Computational Complexity 6, 1                             Theorem. Acta Arithm. 65 (1995), 371–391.
+     (1996/1997), 64–99.                                               [25] Shparlinski, I. E. Computing Jacobi symbols
+ [8] Goldstein, A. J., and Graham, R. L. A                                  modulo sparse integers and polynomials and some
+     Hadamard-type bound on the coefficients of a                           applications. J. Algorithms, 36 (2000), 241–252.
+     determinant of polynomials. SIAM Rev. 16 (1974),                       Manuscript.
+     394–395.                                                          [26] Sprindžuk, V. G. Arithmetic specializations in
+ [9] Győry, K., Iwaniec, H., and Urbanowicz, J., Eds.                      polynomials. J. reine angew. Math. 340 (1983), 26–52.
+     Number Theory in Progress (1999), vol. 1 Diophantine              [27] Waldschmidt, M. Diophantine approximation on
+     Problems and Polynomials, Stefan Banach Internat.                      linear algebraic groups. Springer Verlag, Heidelberg,
+     Center, Walter de Gruyter Berlin/New York. Proc.                       Germany, 2000.
+     Internat. Conf. Number Theory in Honor of the 60th                [28] Zippel, R. E. Probabilistic algorithms for sparse
+     Birthday of Andrzej Schinzel, Zakopane, Poland June                    polynomials. PhD thesis, Massachusetts Inst. of
+     30–July 9, 1997.                                                       Technology, Cambridge, USA, Sept. 1979.
+[10] Hindry, M., and Silverman, J. H. Diophantine
+     Geometry: an Introduction, vol. 201 of Graduate Texts
+     in Mathematics. Springer, 2000.
+[11] Kaltofen, E. Sparse Hensel lifting. In EUROCAL 85
+     European Conf. Comput. Algebra Proc. Vol. 2
+     (Heidelberg, Germany, 1985), B. F. Caviness, Ed.,
+
+
+                                                                 215
+

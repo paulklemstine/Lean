@@ -1,0 +1,500 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/+frK5FrMLTCxd2GxrWqigdYfULw</id>
+  <title>arXiv Query: search_query=abs:"multivariate" AND abs:factoring AND abs:lattice&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:05Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22multivariate%22+AND+(abs:factoring+AND+abs:lattice)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>22</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2012.12168v1</id>
+    <title>Hahn polynomials for hypergeometric distribution</title>
+    <updated>2020-12-22T17:01:47Z</updated>
+    <link href="https://arxiv.org/abs/2012.12168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.12168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Orthogonal polynomials for the multivariate hypergeometric distribution are defined on lattices in polyhedral domains in $\RR^d$. Their structures are studied through a detailed analysis of classical Hahn polynomials with negative integer parameters. Factorization of the Hahn polynomials is explored and used to explain the relation between the index set of orthogonal polynomials and the lattice set in polyhedral domain. In the multivariate case, these constructions lead to nontrivial families of hypergeometric polynomials vanishing on lattice polyhedra. The generating functions and bispectral properties of the orthogonal polynomials are also discussed.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-22T17:01:47Z</published>
+    <arxiv:primary_category term="math.CA"/>
+    <arxiv:journal_ref>Adv. in Appl. Math. 139 (2022), Paper No. 102364, 34pp</arxiv:journal_ref>
+    <author>
+      <name>Plamen Iliev</name>
+    </author>
+    <author>
+      <name>Yuan Xu</name>
+    </author>
+    <arxiv:doi>10.1016/j.aam.2022.102364</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.aam.2022.102364" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.13264v2</id>
+    <title>MDFEM: Multivariate decomposition finite element method for elliptic PDEs with uniform random diffusion coefficients using higher-order QMC and FEM</title>
+    <updated>2021-07-08T07:18:30Z</updated>
+    <link href="https://arxiv.org/abs/1810.13264v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.13264v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce the multivariate decomposition finite element method (MDFEM) for solving elliptic PDEs with uniform random diffusion coefficients. We show that the MDFEM can be used to reduce the computational complexity of estimating the expected value of a linear functional of the solution of the PDE. The proposed algorithm combines the multivariate decomposition method (MDM), to compute infinite dimensional integrals, with the finite element method (FEM), to solve different instances of the PDE. The strategy of the MDFEM is to decompose the infinite-dimensional problem into multiple finite-dimensional ones which lends itself to easier parallelization than to solve a single large dimensional problem. Our first result adjusts the analysis of the multivariate decomposition method to incorporate the log-factor which typically appears in error bounds for multivariate quadrature, i.e., cubature, methods; and we take care of the fact that the number of points $n$ needs to come, e.g., in powers of 2 for higher order approximations. For the further analysis we specialize the cubature methods to be two types of quasi-Monte Carlo (QMC) rules, being digitally shifted polynomial lattice rules and interlaced polynomial lattice rules. The second and main contribution then presents a bound on the error of the MDFEM and shows higher-order convergence w.r.t. the total computational cost in case of the interlaced polynomial lattice rules in combination with a higher-order finite element method.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-31T13:04:39Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Numer. Math. (2021)</arxiv:journal_ref>
+    <author>
+      <name>Dong T. P. Nguyen</name>
+    </author>
+    <author>
+      <name>Dirk Nuyens</name>
+    </author>
+    <arxiv:doi>10.1007/s00211-021-01212-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00211-021-01212-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1409.0570v4</id>
+    <title>Multivariate orthogonal polynomial and integrable systems</title>
+    <updated>2015-03-05T12:12:31Z</updated>
+    <link href="https://arxiv.org/abs/1409.0570v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1409.0570v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multivariate orthogonal polynomials in $D$ real dimensions are considered from the perspective of the Cholesky factorization of a moment matrix. The approach allows for the construction of corresponding multivariate orthogonal polynomials, associated second kind functions, Jacobi type matrices and associated three term relations and also Christoffel-Darboux formulæ. The multivariate orthogonal polynomials, its second kind functions and the corresponding Christoffel-Darboux kernels are shown to be quasi-determinants --as well as Schur complements-- of bordered truncations of the moment matrix; quasi-tau functions are introduced. It is proven that the second kind functions are multivariate Cauchy transforms of the multivariate orthogonal polynomials. Discrete and continuous deformations of the measure lead to Toda type integrable hierarchy, being the corresponding flows described through Lax and Zakharov-Shabat equations; bilinear equations are found. Varying size matrix nonlinear partial difference and differential equations of the 2D Toda lattice type are shown to be solved by matrix coefficients of the multivariate orthogonal polynomials. The discrete flows lead to expressions for the multivariate orthogonal polynomials and its second kind functions in terms of shifted quasi-tau matrices, which generalize to the multidimensional realm those that relate the Baker and adjoint Baker functions with ratios of Miwa shifted $τ$-functions in the 1D scenario. In this context, the multivariate extension of the elementary Darboux transformation is given in terms of quasi-determinants of matrices built up by the evaluation, at a poised set of nodes lying in an appropriate hyperplane in $\mathbb R^D$, of the multivariate orthogonal polynomials. The multivariate Christoffel formula for the iteration of $m$ elementary Darboux transformations is given as a quasi-determinant.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-09-01T21:42:24Z</published>
+    <arxiv:comment>In this third version we correct a typo</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <arxiv:journal_ref>Advances in Mathematics 302 (2016) 628-739</arxiv:journal_ref>
+    <author>
+      <name>Gerardo Ariznabarreta</name>
+    </author>
+    <author>
+      <name>Manuel Mañas</name>
+    </author>
+    <arxiv:doi>10.1016/j.aim.2016.06.029</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.aim.2016.06.029" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.07230v2</id>
+    <title>Constructing spatial discretizations for sparse multivariate trigonometric polynomials that allow for a fast discrete Fourier transform</title>
+    <updated>2017-11-17T16:06:25Z</updated>
+    <link href="https://arxiv.org/abs/1703.07230v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.07230v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The paper discusses the construction of high dimensional spatial discretizations for arbitrary multivariate trigonometric polynomials, where the frequency support of the trigonometric polynomial is known. We suggest a construction based on the union of several rank-1 lattices as sampling scheme and call such schemes multiple rank-1 lattices. This approach automatically makes available a fast discrete Fourier transform (FFT) on the data.
+  The key objective of the construction of spatial discretizations is the unique reconstruction of the trigonometric polynomial using the sampling values at the sampling nodes. We develop construction methods for multiple rank-1 lattices that allow for this unique reconstruction and for estimates of the number $M$ of distinct sampling nodes within the resulting spatial discretizations. Assuming that the multivariate trigonometric polynomial under consideration is a linear combination of $T$ trigonometric monomials, the oversampling factor $M/T$ is independent of the spatial dimension and, roughly speaking, with high probability only logarithmic in $T$, which is much better than the oversampling factor that is expected when using one single rank-1 lattice.
+  The newly developed approaches for the construction of spatial discretizations are probabilistic methods. The arithmetic complexity of these algorithms depend only linearly on the spatial dimension and, with high probability, only linearly on $T$ up to some logarithmic factors.
+  Furthermore, we analyze the computational complexities of the resulting FFT algorithms in detail and obtain upper bounds in $\mathcal{O}\left(M\log M\right)$, where the constants depend only linearly on the spatial dimension. With high probability, we construct spatial discretizations where $M/T\le C\log T$ holds, which implies that the complexity of the corresponding FFT converts to $\mathcal{O}\left(T\log^2 T\right)$.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-21T14:06:36Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Lutz Kämmerer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1303.2915v2</id>
+    <title>Modeling US housing prices by spatial dynamic structural equation models</title>
+    <updated>2013-12-20T14:34:33Z</updated>
+    <link href="https://arxiv.org/abs/1303.2915v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1303.2915v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article proposes a spatial dynamic structural equation model for the analysis of housing prices at the State level in the USA. The study contributes to the existing literature by extending the use of dynamic factor models to the econometric analysis of multivariate lattice data. One of the main advantages of our model formulation is that by modeling the spatial variation via spatially structured factor loadings, we entertain the possibility of identifying similarity "regions" that share common time series components. The factor loadings are modeled as conditionally independent multivariate Gaussian Markov Random Fields, while the common components are modeled by latent dynamic factors. The general model is proposed in a state-space formulation where both stationary and nonstationary autoregressive distributed-lag processes for the latent factors are considered. For the latent factors which exhibit a common trend, and hence are cointegrated, an error correction specification of the (vector) autoregressive distributed-lag process is proposed. Full probabilistic inference for the model parameters is facilitated by adapting standard Markov chain Monte Carlo (MCMC) algorithms for dynamic linear models to our model formulation. The fit of the model is discussed for a data set of 48 States for which we model the relationship between housing prices and the macroeconomy, using State level unemployment and per capita personal income.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-03-12T15:23:05Z</published>
+    <arxiv:comment>Published in at http://dx.doi.org/10.1214/12-AOAS613 the Annals of Applied Statistics (http://www.imstat.org/aoas/) by the Institute of Mathematical Statistics (http://www.imstat.org)</arxiv:comment>
+    <arxiv:primary_category term="stat.AP"/>
+    <arxiv:journal_ref>Annals of Applied Statistics 2013, Vol. 7, No. 2, 763-798</arxiv:journal_ref>
+    <author>
+      <name>Pasquale Valentini</name>
+    </author>
+    <author>
+      <name>Luigi Ippoliti</name>
+    </author>
+    <author>
+      <name>Lara Fontanella</name>
+    </author>
+    <arxiv:doi>10.1214/12-AOAS613</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1214/12-AOAS613" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.13502v1</id>
+    <title>Bernstein-Sato ideals and hyperplane arrangements</title>
+    <updated>2020-05-27T17:25:21Z</updated>
+    <link href="https://arxiv.org/abs/2005.13502v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.13502v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the relation between zero loci of Bernstein-Sato ideals and roots of b-functions and obtain a criterion to guarantee that roots of b-functions of a reducible polynomial are determined by the zero locus of the associated Bernstein-Sato ideal. Applying the criterion together with a result of Maisonobe we prove that the set of roots of the b-function of a free hyperplane arrangement is determined by its intersection lattice.
+  We also study the zero loci of Bernstein-Sato ideals and the associated relative characteristic cycles for arbitrary central hyperplane arrangements. We prove the multivariable n/d conjecture of Budur for complete factorizations of arbitrary hyperplane arrangements, which in turn proves the strong monodromy conjecture for the associated multivariable topological zeta functions.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-27T17:25:21Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Lei Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.03281v1</id>
+    <title>Constructing efficient spatial discretizations of spans of multivariate Chebyshev polynomials</title>
+    <updated>2024-06-05T13:54:43Z</updated>
+    <link href="https://arxiv.org/abs/2406.03281v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.03281v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an arbitrary given span of high-dimensional multivariate Chebyshev polynomials, an approach to construct spatial discretizations is presented, i.e., the construction of a sampling set that allows for the unique reconstruction of each polynomial of this span.
+  The approach presented here combines three different types of efficiency. First, the construction of the spatial discretization should be efficient with respect to the dimension of the span of the Chebyshev polynomials. Second, the number of sampling nodes within the constructed discretizations should be efficient, i.e., the oversampling factors should be reasonable. Third, there should be an efficient method for the unique reconstruction of a polynomial from given sampling values at the sampling nodes of the discretization.
+  The first two mentioned types of efficiency are also present in constructions based on random sampling nodes, but the lack of structure here causes the inefficiency of the reconstruction method. Our approach uses a combination of cosine transformed rank-1 lattices whose structure allows for applications of univariate fast Fourier transforms for the reconstruction algorithm and is thus a priori efficiently realizable.
+  Besides the theoretical estimates of numbers of sampling nodes and failure probabilities due to a random draw of the used lattices, we present several improvements of the basic design approach that significantly increases its practical applicability. Numerical tests, which discretize spans of multivariate Chebyshev polynomials depending on up to more than 50 spatial variables, corroborate the theoretical results and the significance of the improvements.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-05T13:54:43Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Lutz Kämmerer</name>
+    </author>
+    <arxiv:doi>10.1016/j.acha.2025.101761</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.acha.2025.101761" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.03309v1</id>
+    <title>Multiplex Recurrence Networks</title>
+    <updated>2020-03-06T16:47:43Z</updated>
+    <link href="https://arxiv.org/abs/2003.03309v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.03309v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We have introduced a novel multiplex recurrence network (MRN) approach by combining recurrence networks with the multiplex network approach in order to investigate multivariate time series. The potential use of this approach is demonstrated on coupled map lattices and a typical example from palaeobotany research. In both examples, topological changes in the multiplex recurrence networks allow for the detection of regime changes in their dynamics. The method goes beyond classical interpretation of pollen records by considering the vegetation as a whole and using the intrinsic similarity in the dynamics of the different regional vegetation elements. We find that the different vegetation types behave more similar when one environmental factor acts as the dominant driving force.</summary>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.dis-nn" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-06T16:47:43Z</published>
+    <arxiv:primary_category term="physics.data-an"/>
+    <arxiv:journal_ref>Physical Review E, 97, 012312, 2018</arxiv:journal_ref>
+    <author>
+      <name>Deniz Eroglu</name>
+    </author>
+    <author>
+      <name>Norbert Marwan</name>
+    </author>
+    <author>
+      <name>Martina Stebich</name>
+    </author>
+    <author>
+      <name>Jürgen Kurths</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevE.97.012312</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevE.97.012312" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.20290v2</id>
+    <title>A note on approximation in weighted Korobov spaces via multiple rank-1 lattices</title>
+    <updated>2026-04-02T04:52:43Z</updated>
+    <link href="https://arxiv.org/abs/2601.20290v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.20290v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the multivariate approximation of functions in weighted Korobov spaces using multiple rank-1 lattice rules. It has been shown by Kämmerer and Volkmer (2019) that algorithms based on multiple rank-1 lattices achieve the optimal convergence rate for the $L_{\infty}$ error in Wiener-type spaces, up to logarithmic factors. While this result was translated to weighted Korobov spaces in the recent monograph by Dick, Kritzer, and Pillichshammer (2022), the analysis requires the smoothness parameter $α$ to be greater than $1$ and is restricted to product weights. In this paper, we extend this result for multiple rank-1 lattice-based algorithms to the case where $1/2&lt;α\le 1$ and for general weights, covering a broader range of periodic functions with low smoothness and general relative importance of variables. We also provide a summability condition on the weights to ensure strong polynomial tractability for any $α&gt;1/2$. Furthermore, by incorporating random shifts into multiple rank-1 lattice-based algorithms, we prove that the resulting randomized algorithm achieves a nearly optimal convergence rate in terms of the worst-case root mean squared $L_2$ error, while retaining the same tractability property.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-28T06:11:41Z</published>
+    <arxiv:comment>revision, 26 pages, no figure</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Mou Cai</name>
+    </author>
+    <author>
+      <name>Takashi Goda</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.09753v1</id>
+    <title>A Deterministic Algorithm for Constructing Multiple Rank-1 Lattices of Near-Optimal Size</title>
+    <updated>2020-03-21T21:09:13Z</updated>
+    <link href="https://arxiv.org/abs/2003.09753v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.09753v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we present the first known deterministic algorithm for the construction of multiple rank-1 lattices for the approximation of periodic functions of many variables. The algorithm works by converting a potentially large reconstructing single rank-1 lattice for some $ d $-dimensional frequency set $ I \subset [N]^d $ into a collection of much smaller rank-1 lattices which allow for accurate and efficient reconstruction of trigonometric polynomials with coefficients in $ I $ (and, therefore, for the approximation of multivariate periodic functions). The total number of sampling points in the resulting multiple rank-1 lattices is theoretically shown to be less than $ \mathcal{O}\left( |I| \log^{ 2 }(N |I|) \right) $ with constants independent of $d$, and by performing one-dimensional fast Fourier transforms on samples of trigonometric polynomials with Fourier support in $ I $ at these points, we obtain exact reconstruction of all Fourier coefficients in fewer than $ \mathcal{O}\left(d\,|I|\log^4 (N|I|)\right) $ total operations.
+  Additionally, we present a second multiple rank-1 lattice construction algorithm which constructs lattices with even fewer sampling points at the cost of only being able to reconstruct exact trigonometric polynomials rather than having additional theoretical approximation. Both algorithms are tested numerically and surpass the theoretical bounds. Notably, we observe that the oversampling factors #samples$/|I|$ appear to grow only logarithmically in $ |I| $ for the first algorithm and appear near-optimally bounded by four in the second algorithm.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-21T21:09:13Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Craig Gross</name>
+    </author>
+    <author>
+      <name>Mark A. Iwen</name>
+    </author>
+    <author>
+      <name>Lutz Kämmerer</name>
+    </author>
+    <author>
+      <name>Toni Volkmer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1809.01377v1</id>
+    <title>The Lecture Hall Cone as a toric deformation</title>
+    <updated>2018-09-05T08:22:10Z</updated>
+    <link href="https://arxiv.org/abs/1809.01377v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.01377v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lecture Hall cone is a simplicial cone whose lattice points naturally correspond to Lecture Hall partitions. The celebrated Lecture Hall Theorem of Bousquet-Mélou and Eriksson states that a particular specialization of its multivariate Ehrhart series factors in a very nice and unexpected way. Over the years, several proofs of this result have been found, but it is still not considered to be well-understood from a geometric perspective. In this note we propose two conjectures which aim at clarifying this result. Our main conjecture is that the Ehrhart ring of the Lecture Hall cone is actually an initial subalgebra $A_n$ of a certain subalgebra of a polynomial ring, which is itself isomorphic to a polynomial ring. As passing to initial subalgebras does not affect the Hilbert function, this explains the observed factorization. We give a recursive definition of certain Laurent polynomials, which generate the algebra $A_n$. Our second conjecture is that these Laurent polynomials are in fact polynomials. We computationally verified that both conjectures hold for Lecture Hall partitions of length at most 12.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-05T08:22:10Z</published>
+    <arxiv:comment>10 pages, To appear in the proceedings of the 2018 Summer Workshop on Lattice Polytopes at Osaka University</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Lukas Katthän</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.0643v2</id>
+    <title>Faster Algorithms for Multivariate Interpolation with Multiplicities and Simultaneous Polynomial Approximations</title>
+    <updated>2015-02-13T16:26:30Z</updated>
+    <link href="https://arxiv.org/abs/1402.0643v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.0643v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The interpolation step in the Guruswami-Sudan algorithm is a bivariate interpolation problem with multiplicities commonly solved in the literature using either structured linear algebra or basis reduction of polynomial lattices. This problem has been extended to three or more variables; for this generalization, all fast algorithms proposed so far rely on the lattice approach. In this paper, we reduce this multivariate interpolation problem to a problem of simultaneous polynomial approximations, which we solve using fast structured linear algebra. This improves the best known complexity bounds for the interpolation step of the list-decoding of Reed-Solomon codes, Parvaresh-Vardy codes, and folded Reed-Solomon codes. In particular, for Reed-Solomon list-decoding with re-encoding, our approach has complexity $\mathcal{O}\tilde{~}(\ell^{ω-1}m^2(n-k))$, where $\ell,m,n,k$ are the list size, the multiplicity, the number of sample points and the dimension of the code, and $ω$ is the exponent of linear algebra; this accelerates the previously fastest known algorithm by a factor of $\ell / m$.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-04T07:23:14Z</published>
+    <arxiv:comment>Version 2: Generalized our results about Problem 1 to distinct multiplicities. Added Section 4 which details several applications of our results to the decoding of Reed-Solomon codes (list-decoding with re-encoding technique, Wu algorithm, and soft-decoding). Reorganized the sections, added references and corrected typos</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Muhammad F. I. Chowdhury</name>
+      <arxiv:affiliation>ORCCA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Claude-Pierre Jeannerod</name>
+      <arxiv:affiliation>LIP, Inria Grenoble Rhône-Alpes / LIP Laboratoire de l'Informatique du Parallélisme</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Vincent Neiger</name>
+      <arxiv:affiliation>ORCCA, LIP, Inria Grenoble Rhône-Alpes / LIP Laboratoire de l'Informatique du Parallélisme</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Eric Schost</name>
+      <arxiv:affiliation>ORCCA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gilles Villard</name>
+      <arxiv:affiliation>LIP, Inria Grenoble Rhône-Alpes / LIP Laboratoire de l'Informatique du Parallélisme</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.08708v2</id>
+    <title>Multivariate orthogonal Laurent polynomials and integrable systems</title>
+    <updated>2015-06-30T13:00:50Z</updated>
+    <link href="https://arxiv.org/abs/1506.08708v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.08708v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An ordering for Laurent polynomials in the algebraic torus $(\mathbb C^*)^D$, inspired by the Cantero-Moral-Velázquez approach to orthogonal Laurent polynomials in the unit circle, leads to the construction of a moment matrix for a given Borel measure in the unit torus $\mathbb T^D$. The Gauss-Borel factorization of this moment matrix allows for the construction of multivariate biorthogonal Laurent polynomials in the unit torus which can be expressed as last quasi-determinants of bordered truncations of the moment matrix.
+  Christoffel type perturbations of the measure given by the multiplication by Laurent polynomials are studied. Sample matrices on poised sets of nodes, which belong to the algebraic hypersurface of the perturbing Laurent polynomial, are used for the finding of a Christoffel formula that expresses the perturbed orthogonal Laurent polynomials in terms of a last quasi-determinant of a bordered sample matrix constructed in terms of the original orthogonal Laurent polynomials. Poised sets exist only for nice Laurent polynomials which are analyzed from the perspective of Newton polytopes and tropical geometry.
+  Discrete and continuous deformations of the measure lead to a Toda type integrable hierarchy, being the corresponding flows described through Lax and Zakharov-Shabat equations; bilinear equations and vertex operators are found. Varying size matrix nonlinear partial difference and differential equations of the 2D Toda lattice type are shown to be solved by matrix coefficients of the multivariate orthogonal polynomials.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-29T16:07:52Z</published>
+    <arxiv:comment>Second version: Two minor misprints have been corrected</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Gerardo Ariznabarreta</name>
+    </author>
+    <author>
+      <name>Manuel Mañas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.05271v1</id>
+    <title>Worst-case $L_p$-approximation of periodic functions using median lattice algorithms</title>
+    <updated>2026-03-05T15:20:42Z</updated>
+    <link href="https://arxiv.org/abs/2603.05271v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.05271v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the worst-case approximation of multivariate periodic functions from the weighted Korobov space $H_{d,α,γ}$ with smoothness $α&gt;1/2$ in the Lebesgue norm $L_p([0,1]^d)$ for $1\le p\le\infty$. We analyze a \emph{median lattice algorithm} that reconstructs a truncated Fourier series by approximating the coefficients on a hyperbolic-cross-type index set using $R$ rank-1 lattice sampling rules with independent randomly chosen generating vectors, and then aggregating the resulting coefficient estimators via the componentwise median. For an odd number of repetitions $R&gt;1$ and an odd prime lattice size $N$, we prove high-probability error bounds in both $L_\infty$ and $L_2$. Interpolation then yields the result for all $1 \le p\le\infty$. In particular, with a high probability, the algorithm satisfies \[ \mathrm{err}(H_{d,α,γ},L_p,A)\ \le\ C_{d,α,β,\boldsymbolγ,p}\, N^{- α+ (\frac12 - \frac1p)_+ + β}, \qquad 1 \le p\le\infty,\ β&gt;0, \] where $(x)_+ = \max\{x, 0\}$, $N$ is the number of function evaluations, and the weights $\boldsymbolγ$ and the constant $C_{d,α,β,\boldsymbolγ,p}$ are independent of $N$. For $p=\infty$, $C_{d,α,β,\boldsymbolγ,\infty}$ is dimension-independent under the summability condition $\sum_{j=1}^\infty γ_j^{1/(2α)}&lt;\infty$. These results extend recent analyses of median-based lattice approximation in $L_2$ and complement related multiple-shift lattice approaches, showing that median aggregation yields nearly optimal $L_p$-approximation rates (up to logarithmic factors and an arbitrarily small loss) in weighted Korobov spaces.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-05T15:20:42Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Zexin Pan</name>
+    </author>
+    <author>
+      <name>Mou Cai</name>
+    </author>
+    <author>
+      <name>Josef Dick</name>
+    </author>
+    <author>
+      <name>Takashi Goda</name>
+    </author>
+    <author>
+      <name>Peter Kritzer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.0649v1</id>
+    <title>A complete algorithm to find exact minimal polynomial by approximations</title>
+    <updated>2010-01-05T08:44:31Z</updated>
+    <link href="https://arxiv.org/abs/1001.0649v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.0649v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a complete algorithm for finding an exact minimal polynomial from its approximate value by using an improved parameterized integer relation construction method. Our result is superior to the existence of error controlling on obtaining an exact rational number from its approximation. The algorithm is applicable for finding exact minimal polynomial of an algebraic number by its approximate root. This also enables us to provide an efficient method of converting the rational approximation representation to the minimal polynomial representation, and devise a simple algorithm to factor multivariate polynomials with rational coefficients.
+  Compared with the subsistent methods, our method combines advantage of high efficiency in numerical computation, and exact, stable results in symbolic computation. we also discuss some applications to some transcendental numbers by approximations. Moreover, the Digits of our algorithm is far less than the LLL-lattice basis reduction technique in theory. In this paper, we completely implement how to obtain exact results by numerical approximate computations.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-05T08:44:31Z</published>
+    <arxiv:comment>17</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Xiaolin Qin</name>
+    </author>
+    <author>
+      <name>Yong Feng</name>
+    </author>
+    <author>
+      <name>Jingwei Chen</name>
+    </author>
+    <author>
+      <name>Jingzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.00793v2</id>
+    <title>Construction of interlaced polynomial lattice rules for infinitely differentiable functions</title>
+    <updated>2016-12-14T03:53:03Z</updated>
+    <link href="https://arxiv.org/abs/1602.00793v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.00793v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study multivariate integration over the $s$-dimensional unit cube in a weighted space of infinitely differentiable functions. It is known from a recent result by Suzuki that there exists a good quasi-Monte Carlo (QMC) rule which achieves a super-polynomial convergence of the worst-case error in this function space, and moreover, that this convergence behavior is independent of the dimension under a certain condition on the weights.
+  In this paper we provide a constructive approach to finding a good QMC rule achieving such a dimension-independent super-polynomial convergence of the worst-case error. Specifically, we prove that interlaced polynomial lattice rules, with an interlacing factor chosen properly depending on the number of points $N$ and the weights, can be constructed using a fast component-by-component algorithm in at most $O(sN(\log N)^2)$ arithmetic operations to achieve a dimension-independent super-polynomial convergence. The key idea for the proof of the worst-case error bound is to use a variant of Jensen's inequality with a purposely-designed concave function.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-02T05:33:09Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <arxiv:journal_ref>Numerische Mathematik, Volume 137, Issue 2, 257-288, 2017</arxiv:journal_ref>
+    <author>
+      <name>Josef Dick</name>
+    </author>
+    <author>
+      <name>Takashi Goda</name>
+    </author>
+    <author>
+      <name>Kosuke Suzuki</name>
+    </author>
+    <author>
+      <name>Takehito Yoshiki</name>
+    </author>
+    <arxiv:doi>10.1007/s00211-017-0882-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00211-017-0882-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.0646v1</id>
+    <title>Smoothed ANOVA with spatial effects as a competitor to MCAR in multivariate spatial smoothing</title>
+    <updated>2010-11-02T15:39:57Z</updated>
+    <link href="https://arxiv.org/abs/1011.0646v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.0646v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rapid developments in geographical information systems (GIS) continue to generate interest in analyzing complex spatial datasets. One area of activity is in creating smoothed disease maps to describe the geographic variation of disease and generate hypotheses for apparent differences in risk. With multiple diseases, a multivariate conditionally autoregressive (MCAR) model is often used to smooth across space while accounting for associations between the diseases. The MCAR, however, imposes complex covariance structures that are difficult to interpret and estimate. This article develops a much simpler alternative approach building upon the techniques of smoothed ANOVA (SANOVA). Instead of simply shrinking effects without any structure, here we use SANOVA to smooth spatial random effects by taking advantage of the spatial structure. We extend SANOVA to cases in which one factor is a spatial lattice, which is smoothed using a CAR model, and a second factor is, for example, type of cancer. Datasets routinely lack enough information to identify the additional structure of MCAR. SANOVA offers a simpler and more intelligible structure than the MCAR while performing as well. We demonstrate our approach with simulation studies designed to compare SANOVA with different design matrices versus MCAR with different priors. Subsequently a cancer-surveillance dataset, describing incidence of 3-cancers in Minnesota's 87 counties, is analyzed using both approaches, showing the competitiveness of the SANOVA approach.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-02T15:39:57Z</published>
+    <arxiv:comment>Published in at http://dx.doi.org/10.1214/09-AOAS267 the Annals of Applied Statistics (http://www.imstat.org/aoas/) by the Institute of Mathematical Statistics (http://www.imstat.org)</arxiv:comment>
+    <arxiv:primary_category term="stat.AP"/>
+    <arxiv:journal_ref>Annals of Applied Statistics 2009, Vol. 3, No. 4, 1805-1830</arxiv:journal_ref>
+    <author>
+      <name>Yufen Zhang</name>
+    </author>
+    <author>
+      <name>James S. Hodges</name>
+    </author>
+    <author>
+      <name>Sudipto Banerjee</name>
+    </author>
+    <arxiv:doi>10.1214/09-AOAS267</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1214/09-AOAS267" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.00067v3</id>
+    <title>Masking Gaussian Elimination at Arbitrary Order, with Application to Multivariate- and Code-Based PQC</title>
+    <updated>2025-01-23T16:53:50Z</updated>
+    <link href="https://arxiv.org/abs/2411.00067v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.00067v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Digital signature schemes based on multivariate- and code-based hard problems are promising alternatives for lattice-based signature schemes, due to their small signature size. Gaussian Elimination (GE) is a critical operation in the signing procedure of these schemes. In this paper, we provide a masking scheme for GE with back substitution to defend against first- and higher-order attacks. To the best of our knowledge, this work is the first to analyze and propose masking techniques for multivariate- or code-based DS algorithms. We propose a masked algorithm for transforming a system of linear equations into row-echelon form. This is realized by introducing techniques for efficiently making leading (pivot) elements one while avoiding costly conversions between Boolean and multiplicative masking at all orders. We also propose a technique for efficient masked back substitution, which eventually enables a secure unmasking of the public output. All novel gadgets are proven secure in the $t$-probing model. Additionally, we evaluate the overhead of our countermeasure for several post-quantum candidates and their different security levels at first-, second-, and third-order, including UOV, MAYO, SNOVA, QR-UOV, and MQ-Sign. Notably, the operational cost of first-, second-, and third-order masked GE is 2.3$\times$ higher, and the randomness cost is 1.2$\times$ higher in MAYO compared to UOV for security levels III and V. In contrast, these costs are similar in UOV and MAYO for one version of level I. We also show detailed performance results for masked GE implementations for all three security versions of UOV on the Arm Cortex-M4 and compare them with unmasked results. Our masked implementation targeting UOV parameters has an overhead of factor 15.1$\times$, 15.2$\times$, and 15.4$\times$ compared to the unprotected implementation for NIST security level I, III, and V.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-31T14:01:02Z</published>
+    <arxiv:comment>31 pages, 9 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Quinten Norga</name>
+    </author>
+    <author>
+      <name>Suparna Kundu</name>
+    </author>
+    <author>
+      <name>Uttam Kumar Ojha</name>
+    </author>
+    <author>
+      <name>Anindya Ganguly</name>
+    </author>
+    <author>
+      <name>Angshuman Karmakar</name>
+    </author>
+    <author>
+      <name>Ingrid Verbauwhede</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1903.01395v3</id>
+    <title>Multivariate extensions of isotonic regression and total variation denoising via entire monotonicity and Hardy-Krause variation</title>
+    <updated>2020-06-09T20:07:34Z</updated>
+    <link href="https://arxiv.org/abs/1903.01395v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1903.01395v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of nonparametric regression when the covariate is $d$-dimensional, where $d \geq 1$. In this paper we introduce and study two nonparametric least squares estimators (LSEs) in this setting---the entirely monotonic LSE and the constrained Hardy-Krause variation LSE. We show that these two LSEs are natural generalizations of univariate isotonic regression and univariate total variation denoising, respectively, to multiple dimensions. We discuss the characterization and computation of these two LSEs obtained from $n$ data points. We provide a detailed study of their risk properties under the squared error loss and fixed uniform lattice design. We show that the finite sample risk of these LSEs is always bounded from above by $n^{-2/3}$ modulo logarithmic factors depending on $d$; thus these nonparametric LSEs avoid the curse of dimensionality to some extent. We also prove nearly matching minimax lower bounds. Further, we illustrate that these LSEs are particularly useful in fitting rectangular piecewise constant functions. Specifically, we show that the risk of the entirely monotonic LSE is almost parametric (at most $1/n$ up to logarithmic factors) when the true function is well-approximable by a rectangular piecewise constant entirely monotone function with not too many constant pieces. A similar result is also shown to hold for the constrained Hardy-Krause variation LSE for a simple subclass of rectangular piecewise constant functions. We believe that the proposed LSEs yield a novel approach to estimating multivariate functions using convex optimization that avoid the curse of dimensionality to some extent.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-03-04T17:43:42Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Billy Fang</name>
+    </author>
+    <author>
+      <name>Adityanand Guntuboyina</name>
+    </author>
+    <author>
+      <name>Bodhisattva Sen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.29658v1</id>
+    <title>Copula Geometry and Second-Order Calibration of Heavily Right Aggregation</title>
+    <updated>2026-08-30T02:01:10Z</updated>
+    <link href="https://arxiv.org/abs/2609.29658v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.29658v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Heavy-tailed $p$-value combination tests are attractive under unknown dependence because their null tails can be first-order robust even when the exact dependent null distribution is unavailable. That robustness does not resolve calibration: $\Pr\{T&gt;q(α)\}=α+o(α)$ neither quantifies the remaining size error nor determines its sign. We develop a second-order calibration theory for positive Half-Cauchy and reciprocal, or harmonic-mean, aggregation.
+  After exact marginal standardization, extremal dependence is represented by an index-one exponent measure on the coordinate-face lattice. Its support separates axial, full-interior, proper-face, and mixed geometries. A Möbius decomposition shows how the noncompact weighted half-space probes every face, while quantitative face limits determine whether the correction is integrable, critically amplified, or nonintegrable. With common-factor inversion and a tail-to-calibration map, this yields machinery applicable beyond individual parametric copula families.
+  The results include an integrable hidden-face transfer theorem, a sharp fixed-dimensional local-corner theorem with explicit higher-face control, a common-heavy-factor theorem, and size and critical-value expansions relative to independence. Gaussian, standard multivariate-$t$, positive Clayton, and max-linear pair-shock models exhibit distinct power, logarithmic, radial--angular, and proper-face mechanisms; the Gaussian weighted-half-space transfer is conditional on explicit face-boundary hypotheses. Thus dependence geometry determines the rate, coefficient, and direction of the calibration error left unresolved by first-order validity. Asymptotics use $t\to\infty$, equivalently vanishing significance levels.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-30T02:01:10Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Tianle Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.05321v1</id>
+    <title>Quantum solutions to possible challenges of Blockchain technology</title>
+    <updated>2021-10-11T14:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2110.05321v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.05321v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Technological advancements of Blockchain and other Distributed Ledger Techniques (DLTs) promise to provide significant advantages to applications seeking transparency, redundancy, and accountability. Actual adoption of these emerging technologies requires incorporating cost-effective, fast, QoS-enabled, secure, and scalable design. With the recent advent of quantum computing, the security of current blockchain cryptosystems can be compromised to a greater extent. Quantum algorithms like Shor's large integer factorization algorithm and Grover's unstructured database search algorithm can provide exponential and quadratic speedup, respectively, in contrast to their classical counterpart. This can put threats on both public-key cryptosystems and hash functions, which necessarily demands to migrate from classical cryptography to quantum-secure cryptography. Moreover, the computational latency of blockchain platforms causes slow transaction speed, so quantum computing principles might provide significant speedup and scalability in transaction processing and accelerating the mining process. For such purpose, this article first studies current and future classical state-of-the-art blockchain scalability and security primitives. The relevant quantum-safe blockchain cryptosystem initiatives which have been taken by Bitcoin, Ethereum, Corda, etc. are stated and compared with respect to key sizes, hash length, execution time, computational overhead, and energy efficiency. Post Quantum Cryptographic algorithms like Code-based, Lattice-based, Multivariate-based, and other schemes are not well suited for classical blockchain technology due to several disadvantages in practical implementation. Decryption latency, massive consumption of computational resources, and increased key size are few challenges that can hinder blockchain performance.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-11T14:41:04Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Nivedita Dey</name>
+    </author>
+    <author>
+      <name>Mrityunjay Ghosh</name>
+    </author>
+    <author>
+      <name>Amlan Chakrabarti</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.08576v2</id>
+    <title>Exact Conditional Distributions of Chi-Square-Family Statistics for Two-Way Contingency Tables, by Cell-Separable Dynamic Programming</title>
+    <updated>2026-08-11T05:47:34Z</updated>
+    <link href="https://arxiv.org/abs/2608.08576v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.08576v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Every chi-square-family statistic for a two-way contingency table (Pearson's X^2, the power-divergence members, the variance-stabilized T_root) is referred to an approximate null distribution (chi-square, moment-matched chi-square, saddlepoint, or bootstrap) that miscalibrates on sparse or heterogeneous tables, where the exact distribution is a lattice of atoms rather than a continuous curve. The exact reference conditions on both margins (the multivariate Fisher noncentral hypergeometric law) but is usually treated as uncomputable, because the number of tables sharing a margin is astronomical. We show that the exact conditional moments and the exact conditional distribution of any chi-square-family statistic are computable without enumerating tables, because the statistic is additive over cells and the margin-conditional law factorizes cell by cell: a dynamic program walks the table one cell at a time, carrying per row-capacity state either a few moment accumulators, a map from statistic value to probability, or one complex number (the characteristic function), at a cost set by the number of margin states rather than the number of tables. The moment engine computes the exact conditional moments of a 5x5 table at three per cell (about 79 billion tables on the margin fibre) in three seconds; the distribution engine returns the exact tail, verified against enumeration to machine precision, where a three-moment chi-square fit misses it by up to 0.28. The engine furnishes Monte-Carlo-free ground truth against which any approximate reference can be measured, extends to the non-null alternative, and is the computational substrate beneath the exact conditional interval and reporting tools of the companion papers.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-09T08:39:07Z</published>
+    <arxiv:comment>25 pages, 5 figures, 4 tables. Reproducible code, data, and the derivation companion (DH1-DH8) are openly archived on Zenodo: https://doi.org/10.5281/zenodo.21831680 . Part of a contingency-table methodology series (companions on the honest effect size, the exact conditional interval for Cramer's V, and reporting)</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>William J. Dwyer</name>
+    </author>
+  </entry>
+</feed>

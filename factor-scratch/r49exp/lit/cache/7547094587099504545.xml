@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Wi8m1JDaPHSQNGdB5k6xvgJbdF0</id>
+  <title>arXiv Query: search_query=abs:"Pollard" AND abs:"p-1" AND abs:factor&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:38Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Pollard%22+AND+(abs:%22p-1%22+AND+abs:factor)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1004.3366v1</id>
+    <title>Some integer factorization algorithms using elliptic curves</title>
+    <updated>2010-04-20T07:18:03Z</updated>
+    <link href="https://arxiv.org/abs/1004.3366v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1004.3366v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lenstra's integer factorization algorithm is asymptotically one of the fastest known algorithms, and is ideally suited for parallel computation. We suggest a way in which the algorithm can be speeded up by the addition of a second phase. Under some plausible assumptions, the speedup is of order log(p), where p is the factor which is found. In practice the speedup is significant. We mention some refinements which give greater speedup, an alternative way of implementing a second phase, and the connection with Pollard's "p-1" factorization algorithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-04-20T07:18:03Z</published>
+    <arxiv:comment>Corrected version of a paper that appeared in Australian Computer Science Communications 8 (1986), with postscript added 1998. For further details see http://wwwmaths.anu.edu.au/~brent/pub/pub102.html</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Australian Computer Science Communications 8 (1986), 149-163</arxiv:journal_ref>
+    <author>
+      <name>Richard P. Brent</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.21168v1</id>
+    <title>A Summation-Based Algorithm For Integer Factorization</title>
+    <updated>2025-04-29T20:35:43Z</updated>
+    <link href="https://arxiv.org/abs/2504.21168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.21168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Numerous methods have been considered to create a fast integer factorization algorithm. Despite its apparent simplicity, the difficulty to find such an algorithm plays a crucial role in modern cryptography, notably, in the security of RSA encryption. Some approaches to factoring integers quickly include the Trial Division method, Pollard's Rho and p-1 methods, and various Sieve algorithms.
+  This paper introduces a new method that converts an integer into a sum in base-2. By combining a base-10 and base-2 representation of the integer, an algorithm on the order of $\sqrt{n}$ time complexity can convert that sum to a product of two integers, thus factoring the original number.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-29T20:35:43Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Justin Friedlander</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0707.4102v5</id>
+    <title>A deterministic version of Pollard's p-1 algorithm</title>
+    <updated>2009-05-12T12:11:14Z</updated>
+    <link href="https://arxiv.org/abs/0707.4102v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.4102v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this article we present applications of smooth numbers to the unconditional derandomization of some well-known integer factoring algorithms.
+  We begin with Pollard's $p-1$ algorithm, which finds in random polynomial time the prime divisors $p$ of an integer $n$ such that $p-1$ is smooth. We show that these prime factors can be recovered in deterministic polynomial time. We further generalize this result to give a partial derandomization of the $k$-th cyclotomic method of factoring ($k\ge 2$) devised by Bach and Shallit.
+  We also investigate reductions of factoring to computing Euler's totient function $φ$. We point out some explicit sets of integers $n$ that are completely factorable in deterministic polynomial time given $φ(n)$. These sets consist, roughly speaking, of products of primes $p$ satisfying, with the exception of at most two, certain conditions somewhat weaker than the smoothness of $p-1$. Finally, we prove that $O(\ln n)$ oracle queries for values of $φ$ are sufficient to completely factor any integer $n$ in less than $\exp\Bigl((1+o(1))(\ln n)^{1/3} (\ln\ln n)^{2/3}\Bigr)$ deterministic time.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-27T15:35:56Z</published>
+    <arxiv:comment>Expanded and heavily revised version, to appear in Mathematics of Computation, 21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Bartosz Zralek</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-09-02262-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-09-02262-5" title="doi"/>
+  </entry>
+</feed>

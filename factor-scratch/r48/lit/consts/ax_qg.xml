@@ -1,0 +1,891 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/yIzC1PciQqHMzgnDwYIdXKBUOdA</id>
+  <title>arXiv Query: search_query=abs:"quantum" AND abs:"factoring" AND abs:"Grover"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T18:41:40Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22quantum%22+AND+(abs:%22factoring%22+AND+abs:%22Grover%22)&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>125</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2004.11347v2</id>
+    <title>Multi-layer quantum search and inclusion of NP into BQP</title>
+    <updated>2020-04-25T11:16:14Z</updated>
+    <link href="https://arxiv.org/abs/2004.11347v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.11347v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we present a multi-layer quantum search method that generates an exponential speedup of the standard Grover's algorithm. As direct applications, any NP problems can be solved efficiently on a quantum circuit with only polynomial gate complexity. In particular, such multi-layer search can solve the factoring problem with an exponential speedup, providing an alternative to Shor's algorithm. Our results show that the exponential speedup of quantum circuits is ubiquitous, and Grover's search is much more powerful than that has been demonstrated. With no contradiction to the quadratic optimality of single-layer query complexity, the great potential of Grover's search is fully released by such multi-layer search design.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-23T17:44:51Z</published>
+    <arxiv:comment>We found an error in the proof. The main conclusion of the paper does not hold</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Shan Jin</name>
+    </author>
+    <author>
+      <name>Xiaoting Wang</name>
+    </author>
+    <author>
+      <name>Bo Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0509153v1</id>
+    <title>Lower Bounds on Quantum Query Complexity</title>
+    <updated>2005-09-21T16:46:09Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0509153v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0509153v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor's and Grover's famous quantum algorithms for factoring and searching show that quantum computers can solve certain computational problems significantly faster than any classical computer. We discuss here what quantum computers_cannot_ do, and specifically how to prove limits on their computational power. We cover the main known techniques for proving lower bounds, and exemplify and compare the methods.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-09-21T16:46:09Z</published>
+    <arxiv:comment>survey, 23 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Bulletin of the European Association for Theoretical Computer Science, Volume 87, pp. 78-103, Oct. 2005</arxiv:journal_ref>
+    <author>
+      <name>Peter Hoyer</name>
+      <arxiv:affiliation>U Calgary</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Robert Spalek</name>
+      <arxiv:affiliation>CWI</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9605034v1</id>
+    <title>Tight bounds on quantum searching</title>
+    <updated>1996-05-23T18:26:36Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9605034v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9605034v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We provide a tight analysis of Grover's recent algorithm for quantum database searching. We give a simple closed-form formula for the probability of success after any given number of iterations of the algorithm. This allows us to determine the number of iterations necessary to achieve almost certainty of finding the answer. Furthermore, we analyse the behaviour of the algorithm when the element to be found appears more than once in the table and we provide a new algorithm to find such an element even when the number of solutions is not known ahead of time. Using techniques from Shor's quantum factoring algorithm in addition to Grover's approach, we introduce a new technique for approximate quantum counting, which allows to estimate the number of solutions. Finally we provide a lower bound on the efficiency of any possible quantum database searching algorithm and we show that Grover's algorithm nearly comes within a factor 2 of being optimal in terms of the number of probes required in the table.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1996-05-23T18:26:36Z</published>
+    <arxiv:comment>8 pages, LaTeX2e, PhysComp 96 submission</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Fortsch.Phys.46:493-506,1998</arxiv:journal_ref>
+    <author>
+      <name>Michel Boyer</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gilles Brassard</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Peter Hoeyer</name>
+      <arxiv:affiliation>Odense University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Alain Tapp</name>
+      <arxiv:affiliation>Universite de Montreal</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1002/(SICI)1521-3978(199806)46:4/5&lt;493::AID-PROP493&gt;3.0.CO;2-P</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/(SICI)1521-3978(199806)46:4/5&lt;493::AID-PROP493&gt;3.0.CO;2-P" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0311017v3</id>
+    <title>Universality of Entanglement and Quantum Computation Complexity</title>
+    <updated>2004-04-02T09:27:42Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0311017v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0311017v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study the universality of scaling of entanglement in Shor's factoring algorithm and in adiabatic quantum algorithms across a quantum phase transition for both the NP-complete Exact Cover problem as well as the Grover's problem. The analytic result for Shor's algorithm shows a linear scaling of the entropy in terms of the number of qubits, therefore difficulting the possibility of an efficient classical simulation protocol. A similar result is obtained numerically for the quantum adiabatic evolution Exact Cover algorithm, which also shows universality of the quantum phase transition the system evolves nearby. On the other hand, entanglement in Grover's adiabatic algorithm remains a bounded quantity even at the critical point. A classification of scaling of entanglement appears as a natural grading of the computational complexity of simulating quantum phase transitions.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-11-05T14:53:28Z</published>
+    <arxiv:comment>30 pages, 17 figures, accepted for publication in PRA</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys.Rev. A69 (2004) 052308</arxiv:journal_ref>
+    <author>
+      <name>Roman Orus</name>
+    </author>
+    <author>
+      <name>Jose I. Latorre</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.69.052308</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.69.052308" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0605003v1</id>
+    <title>Solving mathematical problems with quantum search algorithm</title>
+    <updated>2006-04-29T00:02:24Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0605003v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0605003v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Quantum computation has attracted much attention since it was shown by Shor and Grover the possibility to implement quantum algorithms able to realize, respectively, factoring and searching in a faster way than any other known classical algorithm. It is possible to use Grover algorithm, taking profit of its ability to find a specific value in a unordered database, to find, for example, the zero of a logical function; the minimal or maximal value in a database or to recognize if an odd number is prime or not. Here we show quantum algorithms to solve those cited mathematical problems. The solution requires the use of a quantum bit string comparator being used as oracle. This quantum circuit compares two quantum states and identifies if they are equal or, otherwise, which of them is the largest. Moreover, we also show the quantum bit string comparator allow us to implement conditional statements in quantum computation, a fundamental structure for designing of algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-04-29T00:02:24Z</published>
+    <arxiv:comment>9 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Rubens Viana Ramos</name>
+    </author>
+    <author>
+      <name>Paulo Benicio de Sousa</name>
+    </author>
+    <author>
+      <name>David Sena Oliveira</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0011415v2</id>
+    <title>Quantum Computing in Molecular Magnets</title>
+    <updated>2001-06-07T21:37:41Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0011415v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0011415v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Shor and Grover demonstrated that a quantum computer can outperform any classical computer in factoring numbers and in searching a database by exploiting the parallelism of quantum mechanics. Whereas Shor's algorithm requires both superposition and entanglement of a many-particle system, the superposition of single-particle quantum states is sufficient for Grover's algorithm. Recently, the latter has been successfully implemented using Rydberg atoms. Here we propose an implementation of Grover's algorithm that uses molecular magnets, which are solid-state systems with a large spin; their spin eigenstates make them natural candidates for single-particle systems. We show theoretically that molecular magnets can be used to build dense and efficient memory devices based on the Grover algorithm. In particular, one single crystal can serve as a storage unit of a dynamic random access memory device. Fast electron spin resonance pulses can be used to decode and read out stored numbers of up to 10^5, with access times as short as 10^{-10} seconds. We show that our proposal should be feasible using the molecular magnets Fe8 and Mn12.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-11-23T21:43:36Z</published>
+    <arxiv:comment>13 pages, 2 figures, PDF, version published in Nature, typos corrected</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Nature 410, 789 (2001)</arxiv:journal_ref>
+    <author>
+      <name>Michael N. Leuenberger</name>
+      <arxiv:affiliation>Basel, Switzerland</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Daniel Loss</name>
+      <arxiv:affiliation>Basel, Switzerland</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1038/35071024</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/35071024" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0505057v3</id>
+    <title>Macroscopic entanglement in Quantum Computation</title>
+    <updated>2006-08-21T07:13:53Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0505057v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0505057v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We investigate macroscopic entanglement of quantum states in quantum computers, where we say a quantum state is entangled macroscopically if the state has superposition of macroscopically distinct states. The index $p$ of the macroscopic entanglement is calculated as a function of the step of the computation, for Grover's quantum search algorithm and Shor's factoring algorithm. It is found that whether macroscopically entangled states are used or not depends on the numbers and properties of the solutions to the problem to be solved. When the solutions are such that the problem becomes hard in the sense that classical algorithms take more than polynomial steps to find a solution, macroscopically entangled states are always used in Grover's algorithm and almost always used in Shor's algorithm. Since they are representative algorithms for unstructured and structured problems, respectively, our results support strongly the conjecture that quantum computers utilize macroscopically entangled states when they solve hard problems much faster than any classical algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-05-09T10:07:27Z</published>
+    <arxiv:comment>16 pages, 8 figures, Typos in Sec. III are fixed</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Akihisa Ukena</name>
+    </author>
+    <author>
+      <name>Akira Shimizu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1009.5180v3</id>
+    <title>Necessity of Superposition of Macroscopically Distinct States for Quantum Computational Speedup</title>
+    <updated>2013-04-05T08:25:57Z</updated>
+    <link href="https://arxiv.org/abs/1009.5180v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1009.5180v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For quantum computation, we investigate the conjecture that the superposition of macroscopically distinct states is necessary for a large quantum speedup. Although this conjecture was supported for a circuit-based quantum computer performing Shor's factoring algorithm [A. Ukena and A. Shimizu, Phys. Rev. A69 (2004) 022301], it needs to be generalized for it to be applicable to a large class of algorithms and/or other models such as measurement-based quantum computers. To treat such general cases, we first generalize the indices for the superposition of macroscopically distinct states. We then generalize the conjecture, using the generalized indices, in such a way that it is unambiguously applicable to general models if a quantum algorithm achieves exponential speedup. On the basis of this generalized conjecture, we further extend the conjecture to Grover's quantum search algorithm, whose speedup is large but quadratic. It is shown that this extended conjecture is also correct. Since Grover's algorithm is a representative algorithm for unstructured problems, the present result further supports the conjecture.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-09-27T07:57:28Z</published>
+    <arxiv:comment>18 pages, 5 figures. Fixed typos throughout the manuscript. This version has been published</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>J. Phys. Soc. Jpn., Vol.82, No.5, 054801-1--054801-16 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Akira Shimizu</name>
+      <arxiv:affiliation>Department of Basic Science, University of Tokyo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yuichiro Matsuzaki</name>
+      <arxiv:affiliation>Department of Basic Science, University of Tokyo</arxiv:affiliation>
+      <arxiv:affiliation>NTT Basic Research Laboratories, NTT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Akihisa Ukena</name>
+      <arxiv:affiliation>Department of Basic Science, University of Tokyo</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.7566/JPSJ.82.054801</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.7566/JPSJ.82.054801" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0508153v2</id>
+    <title>On the Role of Hadamard Gates in Quantum Circuits</title>
+    <updated>2006-03-30T13:40:31Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0508153v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0508153v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study a reduced quantum circuit computation paradigm in which the only allowable gates either permute the computational basis states or else apply a "global Hadamard operation", i.e. apply a Hadamard operation to every qubit simultaneously. In this model, we discuss complexity bounds (lower-bounding the number of global Hadamard operations) for common quantum algorithms : we illustrate upper bounds for Shor's Algorithm, and prove lower bounds for Grover's Algorithm. We also use our formalism to display a gate that is neither quantum-universal nor classically simulable, on the assumption that Integer Factoring is not in BPP.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-08-22T15:45:39Z</published>
+    <arxiv:comment>16 pages, last section clarified, typos corrected, references added, minor rewording</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Dan Shepherd</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.11668v1</id>
+    <title>Quadratic Sieve Factorization Quantum Algorithm and its Simulation</title>
+    <updated>2020-05-24T07:14:19Z</updated>
+    <link href="https://arxiv.org/abs/2005.11668v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.11668v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing is a winsome field that concerns with the behaviour and nature of energy at the quantum level to improve the efficiency of computations. In recent years, quantum computation is receiving much attention for its capability to solve difficult problems efficiently in contrast to classical computers. Specifically, some well-known public-key cryptosystems depend on the difficulty of factoring large numbers, which takes a very long time. It is expected that the emergence of a quantum computer has the potential to break such cryptosystems by 2020 due to the discovery of powerful quantum algorithms (Shor's factoring, Grover's search algorithm and many more). In this paper, we have designed a quantum variant of the second fastest classical factorization algorithm named "Quadratic Sieve". We have constructed the simulation framework of quantized quadratic sieve algorithm using high-level programming language Mathematica. Further, the simulation results are performed on a classical computer to get a feel of the quantum system and proved that it is more efficient than its classical variants from computational complexity point of view.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-24T07:14:19Z</published>
+    <arxiv:comment>8 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Amandeep Singh Bhatia</name>
+    </author>
+    <author>
+      <name>Ajay Kumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9903008v1</id>
+    <title>Classical computing, quantum computing, and Shor's factoring algorithm</title>
+    <updated>1999-03-02T16:27:04Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9903008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9903008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This is an expository talk written for the Bourbaki Seminar. After a brief introduction, Section 1 discusses in the categorical language the structure of the classical deterministic computations. Basic notions of complexity icluding the P/NP problem are reviewed. Section 2 introduces the notion of quantum parallelism and explains the main issues of quantum computing. Section 3 is devoted to four quantum subroutines: initialization, quantum computing of classical Boolean functions, quantum Fourier transform, and Grover's search algorithm. The central Section 4 explains Shor's factoring algorithm. Section 5 relates Kolmogorov's complexity to the spectral properties of computable function. Appendix contributes to the prehistory of quantum computing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-03-02T16:27:04Z</published>
+    <arxiv:comment>27 pp., no figures, amstex</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Yuri I. Manin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0503202v2</id>
+    <title>Theoretical Analyses of Quantum Counting against Decoherence Errors</title>
+    <updated>2005-03-28T15:25:10Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0503202v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0503202v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this paper, we analyze the quantum counting under the decoherence, which can find the number of solutions satisfying a given oracle. We investigate probability distributions related to the first order term of the error rate on the quantum counting with the depolarizing channel. We also implement two circuits for the quantum counting -- the ascending-order circuit and the descending-order circuit -- by reversing ordering of application of controlled-Grover operations. By theoretical and numerical calculations for probability distributions, we reveal the difference of probability distributions on two circuits in the presence of decoherence and show that the ascending-order circuit is more robust against the decoherence than the descending-order circuit. This property of the robustness is applicable to the phase estimation such as the factoring.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-03-25T11:29:11Z</published>
+    <arxiv:comment>22 pages, 21 figures, submitted to Journal of Physics A</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jun Hasegawa</name>
+    </author>
+    <author>
+      <name>Fumitaka Yura</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9910115v3</id>
+    <title>A Comment on Fisher Information and Quantum Algorithms</title>
+    <updated>2000-02-16T23:26:03Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9910115v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9910115v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show that Grover's algorithm defines a geodesic in quantum Hilbert space with the Fubini-Study metric. From statistical point of view Grover's algorithm is characterized by constant Fisher's function. Quantum algorithms changing complexity class as Shor's factorization does not preserve constant Fisher's information. An adiabatic quantum factorization algorithm in non polynomial time is presented to exemplify the result.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-10-27T22:54:18Z</published>
+    <arxiv:comment>5 pages, LaTex file, Shor's factoring algorithm discussion added (new sections 5 and 6)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>J. J. Alvarez</name>
+    </author>
+    <author>
+      <name>C. Gomez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.03835v1</id>
+    <title>A Theorem Prover for Quantum Hoare Logic and Its Applications</title>
+    <updated>2016-01-15T08:34:04Z</updated>
+    <link href="https://arxiv.org/abs/1601.03835v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.03835v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum Hoare Logic (QHL) was introduced in Ying's work to specify and reason about quantum programs. In this paper, we implement a theorem prover for QHL based on Isabelle/HOL. By applying the theorem prover, verifying a quantum program against a specification is transformed equivalently into an order relation between matrices. Due to the limitation of Isabelle/HOL, the calculation of the order relation is solved by calling an outside oracle written in Python. To the best of our knowledge, this is the first theorem prover for quantum programs. To demonstrate its power, the correctness of two well-known quantum algorithms, i.e., Grover Quantum Search and Quantum Phase Estimation (the key step in Shor's quantum algorithm of factoring in polynomial time) are proved using the theorem prover. These are the first mechanized proofs for both of them.</summary>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-15T08:34:04Z</published>
+    <arxiv:primary_category term="cs.LO"/>
+    <author>
+      <name>Tao Liu</name>
+    </author>
+    <author>
+      <name>Yangjia Li</name>
+    </author>
+    <author>
+      <name>Shuling Wang</name>
+    </author>
+    <author>
+      <name>Mingsheng Ying</name>
+    </author>
+    <author>
+      <name>Naijun Zhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0006136v1</id>
+    <title>Finding Matches between Two Databases on a Quantum Computer</title>
+    <updated>2000-06-30T18:31:19Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0006136v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0006136v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Given two unsorted lists each of length N that have a single common entry, a quantum computer can find that matching element with a work factor of $O(N^{3/4}\log N)$ (measured in quantum memory accesses and accesses to each list). The amount of quantum memory required is $O(N^{1/2})$. The quantum algorithm that accomplishes this consists of an inner Grover search combined with a partial sort all sitting inside of an outer Grover search.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2000-06-30T18:31:19Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Mark Heiligman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.10855v1</id>
+    <title>Quantum Advantage of Noisy Grover's Algorithm</title>
+    <updated>2023-06-19T11:17:32Z</updated>
+    <link href="https://arxiv.org/abs/2306.10855v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.10855v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum advantage is the core of quantum computing. Grover's search algorithm is the only quantum algorithm with proven advantage to any possible classical search algorithm. However, realizing this quantum advantage in practice is quite challenging since Grover's algorithm is very sensitive to noise. Here we present a noise-tolerant method that exponentially improves the noise threshold of Grover's algorithm. We present a lower bound for average fidelity of any quantum circuit with O(log D log D) cost under time-independent noise, where D is the dimension of Hilbert space. According to this bound value, we determine the number of iterates which will be applied in Grover's algorithm. Numerical simulation shows that the noise threshold of quantum advantage of Grover's algorithm by our noise-tolerant method is improved by an exponential factor with qubit amount rise.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-19T11:17:32Z</published>
+    <arxiv:comment>6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Jian Leng</name>
+    </author>
+    <author>
+      <name>Fan Yang</name>
+    </author>
+    <author>
+      <name>Xiang-Bin Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0311118v2</id>
+    <title>Localization of Two-Dimensional Quantum Walks</title>
+    <updated>2003-11-19T06:57:03Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0311118v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0311118v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Grover walk, which is related to the Grover's search algorithm on a quantum computer, is one of the typical discrete time quantum walks. However, a localization of the two-dimensional Grover walk starting from a fixed point is striking different from other types of quantum walks. The present paper explains the reason why the walker who moves according to the degree-four Grover's operator can remain at the starting point with a high probability. It is shown that the key factor for the localization is due to the degeneration of eigenvalues of the time evolution operator. In fact, the global time evolution of the quantum walk on a large lattice is mainly determined by the degree of degeneration. The dependence of the localization on the initial state is also considered by calculating the wave function analytically.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-11-18T13:51:30Z</published>
+    <arxiv:comment>21 pages RevTeX, 4 figures eps</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Norio Inui</name>
+    </author>
+    <author>
+      <name>Yoshinao Konishi</name>
+    </author>
+    <author>
+      <name>Norio Konno</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.69.052323</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.69.052323" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.01487v1</id>
+    <title>quAssert: Automatic Generation of Quantum Assertions</title>
+    <updated>2023-03-02T18:49:14Z</updated>
+    <link href="https://arxiv.org/abs/2303.01487v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.01487v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Functional validation is necessary to detect any errors during quantum computation. There are promising avenues to debug quantum circuits using runtime assertions. However, the existing approaches rely on the expertise of the verification engineers to manually design and insert the assertions in suitable locations. In this paper, we propose automated generation and placement of quantum assertions based on static analysis and random sampling of quantum circuits. Specifically, this paper makes two important contributions. We automatically uncover special properties of a quantum circuit, such as purely classical states, superposition states, and entangled states using statistical methods. We also perform automated placement of quantum assertions to maximize the functional coverage as well as minimize the hardware overhead. We demonstrate the effectiveness of the generated assertions in error detection using a suite of quantum benchmarks, including Shor's factoring algorithm and Grover's search algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-02T18:49:14Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Hasini Witharana</name>
+    </author>
+    <author>
+      <name>Daniel Volya</name>
+    </author>
+    <author>
+      <name>Prabhat Mishra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.04999v1</id>
+    <title>Factorization of large tetra and penta prime numbers on IBM quantum processor</title>
+    <updated>2023-04-11T06:05:55Z</updated>
+    <link href="https://arxiv.org/abs/2304.04999v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.04999v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The factorization of a large digit integer in polynomial time is a challenging computational task to decipher. The exponential growth of computation can be alleviated if the factorization problem is changed to an optimization problem with the quantum computation process with the generalized Grover's algorithm and a suitable analytic algebra. In this article, the generalized Grover's protocol is used to amplify the amplitude of the required states and, in turn, help in the execution of the quantum factorization of tetra and penta primes as a proof of concept for distinct integers, including 875, 1269636549803, and 4375 using 3 and 4 qubits of IBMQ Perth (7-qubit processor). The fidelity of quantum factorization with the IBMQ Perth qubits was near unity.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-11T06:05:55Z</published>
+    <arxiv:comment>12 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ritu Dhaulakhandi</name>
+    </author>
+    <author>
+      <name>Bikash K. Behera</name>
+    </author>
+    <author>
+      <name>Felix J. Seo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.03286v1</id>
+    <title>Bridging HPC and Quantum Systems using Scientific Workflows</title>
+    <updated>2023-10-05T03:28:32Z</updated>
+    <link href="https://arxiv.org/abs/2310.03286v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.03286v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum Computers offer an intriguing challenge in modern Computer Science. With the inevitable physical limitations to Moore's Law, quantum hardware provides avenues to solve grander problems faster by utilizing Quantum Mechanical properties at subatomic scales. These futuristic devices will likely never replace traditional HPC, but rather work alongside them to perform complex tasks, utilizing the best of decades of HPC and quantum computing research. We leverage the capabilities of scientific workflows to make traditional HPC and Quantum Computers work together. To demonstrate this capability, we implemented three algorithms: Grover's Search Algorithm, Shor's Factoring Algorithm, and a 4-node Traveling Salesman Algorithm. The algorithms' implementation and generated inputs are sent from ORNL HPC to IBMQ, the algorithms run on IBMQ, and the results return. The entire process is automated as a workflow by encoding it into the Parsl parallel scripting and workflow platform.</summary>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-05T03:28:32Z</published>
+    <arxiv:comment>15 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.ET"/>
+    <author>
+      <name>Samuel T. Bieberich</name>
+    </author>
+    <author>
+      <name>Ketan C. Maheshwari</name>
+    </author>
+    <author>
+      <name>Sean R. Wilkinson</name>
+    </author>
+    <author>
+      <name>Prasanna Date</name>
+    </author>
+    <author>
+      <name>In-Saeng Suh</name>
+    </author>
+    <author>
+      <name>Rafael Ferreira da Silva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.05733v1</id>
+    <title>A programmable two-qubit solid-state quantum processor under ambient conditions</title>
+    <updated>2018-08-17T02:48:02Z</updated>
+    <link href="https://arxiv.org/abs/1808.05733v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.05733v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers, which take advantage of the superposition and entanglement of physical states, could outperform their classical counterparts in solving problems with technological impact, such as factoring large numbers and searching databases. A quantum processor executes algorithms by applying a programmable sequence of gates to an initialized state of qubits, which coherently evolves into a final state containing the result of the computation. Although quantum processors with a few qubits have been demonstrated on multiple quantum computing platforms, realization of solid-state programmable quantum processor under ambient conditions remains elusive. Here we report a programable quantum processor that can be programmed with fifteen parameters to realize arbitrary unitary transformations on two spin-qubits in a nitrogen-vacancy (NV) center in diamond. We implemented the Deutsch-Jozsa and Grover search algorithms with average success rates above 80\%. This programmable two-qubit processor could form a core component of a large-scale quantum processor, and the methods used here are suitable for such a device.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-17T02:48:02Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Yang Wu</name>
+    </author>
+    <author>
+      <name>Ya Wang</name>
+    </author>
+    <author>
+      <name>Xi Qin</name>
+    </author>
+    <author>
+      <name>Xing Rong</name>
+    </author>
+    <author>
+      <name>Jiangfeng Du</name>
+    </author>
+    <arxiv:doi>10.1038/s41534-019-0129-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41534-019-0129-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9701001v1</id>
+    <title>Strengths and Weaknesses of Quantum Computing</title>
+    <updated>1997-01-01T13:55:07Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9701001v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9701001v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recently a great deal of attention has focused on quantum computation following a sequence of results suggesting that quantum computers are more powerful than classical probabilistic computers. Following Shor's result that factoring and the extraction of discrete logarithms are both solvable in quantum polynomial time, it is natural to ask whether all of NP can be efficiently solved in quantum polynomial time. In this paper, we address this question by proving that relative to an oracle chosen uniformly at random, with probability 1, the class NP cannot be solved on a quantum Turing machine in time $o(2^{n/2})$. We also show that relative to a permutation oracle chosen uniformly at random, with probability 1, the class $NP \cap coNP$ cannot be solved on a quantum Turing machine in time $o(2^{n/3})$. The former bound is tight since recent work of Grover shows how to accept the class NP relative to any oracle on a quantum computer in time $O(2^{n/2})$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-01-01T13:55:07Z</published>
+    <arxiv:comment>18 pages, latex, no figures, to appear in SIAM Journal on Computing (special issue on quantum computing)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>SIAM Journal on Computing 26(5):1510-1523, 1997</arxiv:journal_ref>
+    <author>
+      <name>Charles H. Bennett</name>
+    </author>
+    <author>
+      <name>Ethan Bernstein</name>
+    </author>
+    <author>
+      <name>Gilles Brassard</name>
+    </author>
+    <author>
+      <name>Umesh Vazirani</name>
+    </author>
+    <arxiv:doi>10.1137/S0097539796300933</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/S0097539796300933" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.02826v1</id>
+    <title>Post Quantum Cryptography: Techniques, Challenges, Standardization, and Directions for Future Research</title>
+    <updated>2022-02-06T18:12:54Z</updated>
+    <link href="https://arxiv.org/abs/2202.02826v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.02826v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The development of large quantum computers will have dire consequences for cryptography. Most of the symmetric and asymmetric cryptographic algorithms are vulnerable to quantum algorithms. Grover's search algorithm gives a square root time boost for the searching of the key in symmetric schemes like AES and 3DES. The security of asymmetric algorithms like RSA, Diffie Hellman, and ECC is based on the mathematical hardness of prime factorization and discrete logarithm. The best classical algorithms available take exponential time. Shor's factoring algorithm can solve the problems in polynomial time. Major breakthroughs in quantum computing will render all the present-day widely used asymmetric cryptosystems insecure. This paper analyzes the vulnerability of the classical cryptosystems in the context of quantum computers discusses various post-quantum cryptosystem families, discusses the status of the NIST post-quantum cryptography standardization process, and finally provides a couple of future research directions in this field.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-06T18:12:54Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ritik Bavdekar</name>
+    </author>
+    <author>
+      <name>Eashan Jayant Chopde</name>
+    </author>
+    <author>
+      <name>Ashutosh Bhatia</name>
+    </author>
+    <author>
+      <name>Kamlesh Tiwari</name>
+    </author>
+    <author>
+      <name>Sandeep Joshua Daniel</name>
+    </author>
+    <author>
+      <name> Atul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.01224v2</id>
+    <title>Factoring Discrete Quantum Walks on Distance Regular Graphs into Continuous Quantum Walks</title>
+    <updated>2022-10-16T22:15:08Z</updated>
+    <link href="https://arxiv.org/abs/2008.01224v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.01224v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider a discrete-time quantum walk, called the Grover walk, on a distance regular graph $X$. Given that $X$ has diameter $d$ and invertible adjacency matrix, we show that the square of the transition matrix of the Grover walk on $X$ is a product of at most $d$ commuting transition matrices of continuous-time quantum walks, each on some distance digraph of the line digraph of $X$. We also obtain a similar factorization for any graph $X$ in a Bose Mesner algebra.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-03T22:15:01Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Linear Algebra and its Applications (2022), 648: pp 88103</arxiv:journal_ref>
+    <author>
+      <name>Hanmeng Zhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.10054v3</id>
+    <title>Efficient Quantum Oracle for Solving Bilinear Diophantine Equations on Digital Quantum Computers</title>
+    <updated>2026-05-09T09:55:09Z</updated>
+    <link href="https://arxiv.org/abs/2312.10054v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.10054v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a concrete oracle construction for bilinear Diophantine equations of the form $f(x,y) = Axy + Bx + Cy + D$, together with its application as a scalable, hardware-agnostic benchmark for digital quantum computers. The oracle can be used in a Grover search algorithm in two variants suitable for both noisy-intermediate scale quantum devices and early fault-tolerant quantum processors. Applied to integer factoring via a residue-class encoding, the circuit requires $2n-5$ qubits or fewer to factor an $n$-bit biprime $N = pq$; for $N = 143$ requiring as few as 7 qubits and 135 two-qubit gates compared to 19 qubits and 51,048 two-qubit gates for a qubit-efficient variant of Shor's algorithm. Large-scale simulations confirm a success probability approaching 100\% for $&gt;$800 randomly selected biprimes with $5 \leq n \leq 35$. The circuit family provides a scalable, deterministically convergent and easily verifiable benchmark in a range accessible to near term quantum hardware.</summary>
+    <category term="physics.gen-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-03T14:27:01Z</published>
+    <arxiv:comment>Majorly revised manuscript</arxiv:comment>
+    <arxiv:primary_category term="physics.gen-ph"/>
+    <author>
+      <name>S. Whitlock</name>
+    </author>
+    <author>
+      <name>T. D. Kieu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1406.4481v2</id>
+    <title>Five Quantum Algorithms Using Quipper</title>
+    <updated>2014-06-18T14:34:12Z</updated>
+    <link href="https://arxiv.org/abs/1406.4481v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.4481v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quipper is a recently released quantum programming language. In this report, we explore Quipper's programming framework by implementing the Deutsch's, Deutsch-Jozsa's, Simon's, Grover's, and Shor's factoring algorithms. It will help new quantum programmers in an instructive manner. We choose Quipper especially for its usability and scalability though it's an ongoing development project. We have also provided introductory concepts of Quipper and prerequisite backgrounds of the algorithms for readers' convenience. We also have written codes for oracles (black boxes or functions) for individual algorithms and tested some of them using the Quipper simulator to prove correctness and introduce the readers with the functionality. As Quipper 0.5 does not include more than \ensuremath{4 \times 4} matrix constructors for Unitary operators, we have also implemented \ensuremath{8 \times 8} and \ensuremath{16 \times 16} matrix constructors.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-17T19:08:13Z</published>
+    <arxiv:comment>27 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Safat Siddiqui</name>
+    </author>
+    <author>
+      <name>Mohammed Jahirul Islam</name>
+    </author>
+    <author>
+      <name>Omar Shehab</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0607046v1</id>
+    <title>Quantum Hidden Subgroup Algorithms: An Algorithmic Toolkit</title>
+    <updated>2006-07-06T18:50:51Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0607046v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0607046v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  One of the most promising and versatile approaches to creating new quantum algorithms is based on the quantum hidden subgroup (QHS) paradigm, originally suggested by Alexei Kitaev. This class of quantum algorithms encompasses the Deutsch-Jozsa, Simon, Shor algorithms, and many more.
+  In this paper, our strategy for finding new quantum algorithms is to decompose Shor's quantum factoring algorithm into its basic primitives, then to generalize these primitives, and finally to show how to reassemble them into new QHS algorithms. Taking an "alphabetic building blocks approach," we use these primitives to form an "algorithmic toolkit" for the creation of new quantum algorithms, such as wandering Shor algorithms, continuous Shor algorithms, the quantum circle algorithm, the dual Shor algorithm, a QHS algorithm for Feynman integrals, free QHS algorithms, and more.
+  Toward the end of this paper, we show how Grover's algorithm is most surprisingly "almost" a QHS algorithm, and how this result suggests the possibility of an even more complete "algorithmic tookit" beyond the QHS algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-07-06T18:50:51Z</published>
+    <arxiv:comment>34 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Samuel J. Lomonaco</name>
+    </author>
+    <author>
+      <name>Louis H. Kauffman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.00878v1</id>
+    <title>Conditions for Advantageous Quantum Bitcoin Mining</title>
+    <updated>2021-10-02T21:08:07Z</updated>
+    <link href="https://arxiv.org/abs/2110.00878v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.00878v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Our aim is to determine conditions for quantum computing technology to give rise to security risks associated with quantum Bitcoin mining. Specifically, we determine the speed and energy efficiency a quantum computer needs to offer an advantage over classical mining. We analyze the setting in which the Bitcoin network is entirely classical except for a single quantum miner who has small hash rate compared to that of the network. We develop a closed-form approximation for the probability that the quantum miner successfully mines a block, with this probability dependent on the number of Grover iterations the quantum miner applies before making a measurement. Next, we show that, for a quantum miner that is "peaceful", this success probability is maximized if the quantum miner applies Grover iterations for 16 minutes before measuring, which is surprising as the network mines blocks every 10 minutes on average. Using this optimal mining procedure, we show that the quantum miner outperforms a classical computer in efficiency (cost per block) if the condition $Q &lt; Crb$ is satisfied, where $Q$ is the cost of a Grover iteration, $C$ is the cost of a classical hash, $r$ is the quantum miner's speed in Grover iterations per second, and $b$ is a factor that attains its maximum if the quantum miner uses our optimal mining procedure. This condition lays the foundation for determining when quantum mining, and the known security risks associated with it, will arise.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-02T21:08:07Z</published>
+    <arxiv:comment>16 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Robert R. Nerem</name>
+    </author>
+    <author>
+      <name>Daya R. Gaur</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1102.3628v1</id>
+    <title>Test-State Approach to the Quantum Search Problem</title>
+    <updated>2011-02-17T16:43:42Z</updated>
+    <link href="https://arxiv.org/abs/1102.3628v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1102.3628v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The search for "a quantum needle in a quantum haystack" is a metaphor for the problem of finding out which one of a permissible set of unitary mappings---the oracles---is implemented by a given black box. Grover's algorithm solves this problem with quadratic speed-up as compared with the analogous search for "a classical needle in a classical haystack." Since the outcome of Grover's algorithm is probabilistic---it gives the correct answer with high probability, not with certainty---the answer requires verification. For this purpose we introduce specific test states, one for each oracle. These test states can also be used to realize "a classical search for the quantum needle" which is deterministic---it always gives a definite answer after a finite number of steps---and faster by a factor of 3.41 than the purely classical search. Since the test-state search and Grover's algorithm look for the same quantum needle, the average number of oracle queries of the test-state search is the classical benchmark for Grover's algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-02-17T16:43:42Z</published>
+    <arxiv:comment>11 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 83, 052311 (2011)</arxiv:journal_ref>
+    <author>
+      <name>Arun Sehrawat</name>
+    </author>
+    <author>
+      <name>Le Huy Nguyen</name>
+    </author>
+    <author>
+      <name>Berthold-Georg Englert</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.83.052311</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.83.052311" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.16560v2</id>
+    <title>On the bias in iterative quantum amplitude estimation</title>
+    <updated>2024-06-28T09:00:52Z</updated>
+    <link href="https://arxiv.org/abs/2311.16560v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.16560v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum amplitude estimation (QAE) is a pivotal quantum algorithm to estimate the squared amplitude $a$ of the target basis state in a quantum state $|Φ\rangle$. Various improvements on the original quantum phase estimation-based QAE have been proposed for resource reduction. One of such improved versions is iterative quantum amplitude estimation (IQAE), which outputs an estimate $\hat{a}$ of $a$ through the iterated rounds of the measurements on the quantum states like $G^k|Φ\rangle$, with the number $k$ of operations of the Grover operator $G$ (the Grover number) and the shot number determined adaptively. This paper investigates the bias in IQAE. Through the numerical experiments to simulate IQAE, we reveal that the estimate by IQAE is biased and the bias is enhanced for some specific values of $a$. We see that the termination criterion in IQAE that the estimated accuracy of $\hat{a}$ falls below the threshold is a source of the bias. Besides, we observe that $k_\mathrm{fin}$, the Grover number in the final round, and $f_\mathrm{fin}$, a quantity affecting the probability distribution of measurement outcomes in the final round, are the key factors to determine the bias, and the bias enhancement for specific values of $a$ is due to the skewed distribution of $(k_\mathrm{fin},f_\mathrm{fin})$. We also present a bias mitigation method: just re-executing the final round with the Grover number and the shot number fixed.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-28T07:02:29Z</published>
+    <arxiv:comment>13 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>EPJ Quantum Technology 11, 42 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Koichi Miyamoto</name>
+    </author>
+    <arxiv:doi>10.1140/epjqt/s40507-024-00253-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1140/epjqt/s40507-024-00253-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.02435v1</id>
+    <title>Formal Modeling and Verification of Grover's Algorithm</title>
+    <updated>2026-01-05T06:56:21Z</updated>
+    <link href="https://arxiv.org/abs/2601.02435v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.02435v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Grover's algorithm relies on the superposition and interference of quantum mechanics, which is more efficient than classical computing in specific tasks such as searching an unsorted database. Due to the high complexity of quantum mechanics, the correctness of quantum algorithms is difficult to guarantee through traditional simulation methods. By contrast, the fundamental concepts and mathematical structure of Grover's algorithm can be formalized into logical expressions and verified by higher-order logical reasoning. In this paper, we formally model and verify Grover's algorithm in the HOL Light theorem prover. We focus on proving key properties such as the unitarity of its oracle and diffusion operators, the monotonicity of the success probability with respect to the number of iterations, and an exact expression for the optimal iteration count. By analyzing a concrete application to integer factorization, we demonstrate the practicality and prospects of our work.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T06:56:21Z</published>
+    <arxiv:comment>18 pages, 3 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>H. Sun</name>
+    </author>
+    <author>
+      <name>Z. Shi</name>
+    </author>
+    <author>
+      <name>S. Chen</name>
+    </author>
+    <author>
+      <name>G. Wang</name>
+    </author>
+    <author>
+      <name>X. Li</name>
+    </author>
+    <author>
+      <name>Y. Guan</name>
+    </author>
+    <author>
+      <name>Q. Zhang</name>
+    </author>
+    <author>
+      <name>Z. Shao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.02125v1</id>
+    <title>Impact of qubit connectivity on quantum algorithm performance</title>
+    <updated>2018-11-06T02:06:56Z</updated>
+    <link href="https://arxiv.org/abs/1811.02125v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.02125v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computing hardware is undergoing rapid development from proof-of-principle devices to scalable machines that could eventually challenge classical supercomputers on specific tasks. On platforms with local connectivity, the transition from one- to two-dimensional arrays of qubits is seen as a natural technological step to increase the density of computing power and to reduce the routing cost of limited connectivity. Here we map and schedule representative algorithmic workloads - the Quantum Fourier Transform (QFT) relevant to factoring, the Grover diffusion operator relevant to quantum search, and Jordan-Wigner parity rotations relevant to simulations of quantum chemistry and materials science - to qubit arrays with varying connectivity. In particular we investigate the impact of restricting the ideal all-to-all connectivity to a square grid, a ladder and a linear array of qubits. Our schedule for the QFT on a ladder results in running time close to that of a system with all-to-all connectivity. Our results suggest that some common quantum algorithm primitives can be optimized to have execution times on systems with limited connectivities, such as a ladder and linear array, that are competitive with systems that have all-to-all connectivity</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-06T02:06:56Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Sci. Technol. 5 025009 (2020)</arxiv:journal_ref>
+    <author>
+      <name>Adam Holmes</name>
+    </author>
+    <author>
+      <name>Sonika Johri</name>
+    </author>
+    <author>
+      <name>Gian Giacomo Guerreschi</name>
+    </author>
+    <author>
+      <name>James S. Clarke</name>
+    </author>
+    <author>
+      <name>A. Y. Matsuura</name>
+    </author>
+    <arxiv:doi>10.1088/2058-9565/ab73e0</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/2058-9565/ab73e0" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.05712v1</id>
+    <title>Faster quantum searching with almost arbitrary operators</title>
+    <updated>2015-03-19T11:12:17Z</updated>
+    <link href="https://arxiv.org/abs/1503.05712v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.05712v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Grover search algorithm drives a quantum system from an initial state to a desired final state by using selective phase inversions of these two states. In (1), we studied a generalization of Grover algorithm which relaxes the assumption of the efficient implementation of the selective phase inversion of the initial state, also known as diffusion operator. This assumption is known to become a serious handicap in cases of physical interest (2,3,4,5). Our general search algorithm works with almost arbitrary diffusion operator with only restriction of having the initial state as one of its eigenstates. The price that we pay for using arbitrary operator is an increase in the number of oracle queries by a factor of order of B, where B is a characteristic of the eigenspectrum of diffusion operator and it can be large in some situations. Here we show that by using quantum fourier transform, we can regain the optimal query complexity of Grover algorithm without losing the freedom of using arbitrary diffusion operators for quantum searching. However, the total number of operators required by algorithm is still order of B times more than that of Grover algorithm. So our algorithm offers advantage only if oracle operator is computationally more expensive than diffusion operator, which is true in most search problems.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-19T11:12:17Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Avatar Tulsi</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.91.052307</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.91.052307" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.04370v1</id>
+    <title>Quantum Approximate Counting with Nonadaptive Grover Iterations</title>
+    <updated>2020-10-09T04:48:14Z</updated>
+    <link href="https://arxiv.org/abs/2010.04370v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.04370v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Approximate Counting refers to the problem where we are given query access to a function $f : [N] \to \{0,1\}$, and we wish to estimate $K = #\{x : f(x) = 1\}$ to within a factor of $1+ε$ (with high probability), while minimizing the number of queries. In the quantum setting, Approximate Counting can be done with $O\left(\min\left(\sqrt{N/ε}, \sqrt{N/K}/ε\right)\right)$ queries. It has recently been shown that this can be achieved by a simple algorithm that only uses "Grover iterations"; however the algorithm performs these iterations adaptively. Motivated by concerns of computational simplicity, we consider algorithms that use Grover iterations with limited adaptivity. We show that algorithms using only nonadaptive Grover iterations can achieve $O\left(\sqrt{N/ε}\right)$ query complexity, which is tight.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-09T04:48:14Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ramgopal Venkateswaran</name>
+    </author>
+    <author>
+      <name>Ryan O'Donnell</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.01951v1</id>
+    <title>Tree Search and Quantum Computation</title>
+    <updated>2015-02-06T16:55:10Z</updated>
+    <link href="https://arxiv.org/abs/1502.01951v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.01951v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditional tree search algorithms supply a blueprint for modeling problem solving behaviour. A diverse spectrum of problems can be formulated in terms of tree search. Quantum computation, in particular Grover's algorithm, has aroused a great deal of interest since it allows for a quadratic speedup to be obtained in search procedures. In this work we consider the impact of incorporating classical search concepts alongside Grover's algorithm into a hybrid quantum search system. Some of the crucial points examined include: (1) the reverberations of contemplating the use of non-constant branching factors; (2) determining the consequences of incorporating an heuristic perspective into a quantum tree search model.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-06T16:55:10Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>Quantum Information Processing, 2011, 10:4, 475-500</arxiv:journal_ref>
+    <author>
+      <name>Luís Tarrataca</name>
+    </author>
+    <author>
+      <name>Andreas Wichert</name>
+    </author>
+    <arxiv:doi>10.1007/s11128-010-0212-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11128-010-0212-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9809016v2</id>
+    <title>An Introduction to Quantum Computing for Non-Physicists</title>
+    <updated>2000-01-19T01:48:39Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9809016v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9809016v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Richard Feynman's observation that quantum mechanical effects could not be simulated efficiently on a computer led to speculation that computation in general could be done more efficiently if it used quantum effects. This speculation appeared justified when Peter Shor described a polynomial time quantum algorithm for factoring integers.
+  In quantum systems, the computational space increases exponentially with the size of the system which enables exponential parallelism. This parallelism could lead to exponentially faster quantum algorithms than possible classically. The catch is that accessing the results, which requires measurement, proves tricky and requires new non-traditional programming techniques.
+  The aim of this paper is to guide computer scientists and other non-physicists through the conceptual and notational barriers that separate quantum computing from conventional computing. We introduce basic principles of quantum mechanics to explain where the power of quantum computers comes from and why it is difficult to harness. We describe quantum cryptography, teleportation, and dense coding. Various approaches to harnessing the power of quantum parallelism are explained, including Shor's algorithm, Grover's algorithm, and Hogg's algorithms. We conclude with a discussion of quantum error correction.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-09-08T19:02:58Z</published>
+    <arxiv:comment>45 pages. To appear in ACM Computing Surveys. LATEX file. Exposition improved throughout thanks to reviewers' comments</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>ACM Comput.Surveys 32:300-335,2000</arxiv:journal_ref>
+    <author>
+      <name>Eleanor G. Rieffel</name>
+    </author>
+    <author>
+      <name>Wolfgang Polak</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0708.1882v2</id>
+    <title>The role of symmetries in adiabatic quantum algorithms</title>
+    <updated>2009-04-29T08:45:29Z</updated>
+    <link href="https://arxiv.org/abs/0708.1882v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0708.1882v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Exploiting the similarity between adiabatic quantum algorithms and quantum phase transitions, we argue that second-order transitions -- typically associated with broken or restored symmetries -- should be advantageous in comparison to first-order transitions. Guided by simple examples we construct an alternative adiabatic algorithm for the NP-complete problem {\em Exact Cover 3}. We show numerically that its average performance (for the considered cases up to ${\cal O}\{20\}$ qubits) is better than that of the conventional scheme. The run-time of adiabatic algorithms is not just determined by the minimum value of the fundamental energy gap (between the ground state and the exited states), but also by its curvature at the critical point. The proposed symmetry-restoring adiabatic quantum algorithm only contains contributions linear and quadratic in the Pauli matrices and can be generalized to other problem Hamiltonians which are decomposed of terms involving one and two qubits. We show how the factoring problem can be cast into such a quadratic form. These findings suggest that adiabatic quantum algorithms can solve a large class of NP problems much faster than the Grover search routine (which corresponds to a first-order transition and yields a quadratic enhancement only).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-08-14T13:35:01Z</published>
+    <arxiv:comment>18 pages, 16 figures, 4 tables; some reviewer suggestions included, comments welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Information &amp; Computation 10, 0109-0140 (2010)</arxiv:journal_ref>
+    <author>
+      <name>Gernot Schaller</name>
+    </author>
+    <author>
+      <name>Ralf Schützhold</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0902.0699v1</id>
+    <title>Qcmpi: A Parallel Environment for Quantum Computing</title>
+    <updated>2009-02-04T11:16:25Z</updated>
+    <link href="https://arxiv.org/abs/0902.0699v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0902.0699v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  QCMPI is a quantum computer (QC) simulation package written in Fortran 90 with parallel processing capabilities. It is an accessible research tool that permits rapid evaluation of quantum algorithms for a large number of qubits and for various "noise" scenarios. The prime motivation for developing QCMPI is to facilitate numerical examination of not only how QC algorithms work, but also to include noise, decoherence, and attenuation effects and to evaluate the efficacy of error correction schemes. The present work builds on an earlier Mathematica code QDENSITY, which is mainly a pedagogic tool. In QCMPI, the stress is on state vectors, in order to employ a large number of qubits. The parallel processing feature is implemented by using the Message-Passing Interface (MPI) protocol.
+  Codes for Grover's search and Shor's factoring algorithms are provided as examples. A major feature of this work is that concurrent versions of the algorithms can be evaluated with each version subject to alternate noise effects, which corresponds to the idea of solving a stochastic Schrödinger equation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-02-04T11:16:25Z</published>
+    <arxiv:comment>Package webpage http://www.pitt.edu/~tabakin/QCMPI</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Computer Physics Communications 180 (2009) 948</arxiv:journal_ref>
+    <author>
+      <name>F. Tabakin</name>
+    </author>
+    <author>
+      <name>B. Julia-Diaz</name>
+    </author>
+    <arxiv:doi>10.1016/j.cpc.2008.11.021</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.cpc.2008.11.021" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.01973v2</id>
+    <title>On the Quantum Complexity of Closest Pair and Related Problems</title>
+    <updated>2020-08-06T15:00:28Z</updated>
+    <link href="https://arxiv.org/abs/1911.01973v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.01973v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The closest pair problem is a fundamental problem of computational geometry: given a set of $n$ points in a $d$-dimensional space, find a pair with the smallest distance. A classical algorithm taught in introductory courses solves this problem in $O(n\log n)$ time in constant dimensions (i.e., when $d=O(1)$). This paper asks and answers the question of the problem's quantum time complexity. Specifically, we give an $\tilde{O}(n^{2/3})$ algorithm in constant dimensions, which is optimal up to a polylogarithmic factor by the lower bound on the quantum query complexity of element distinctness. The key to our algorithm is an efficient history-independent data structure that supports quantum interference.
+  In $\mathrm{polylog}(n)$ dimensions, no known quantum algorithms perform better than brute force search, with a quadratic speedup provided by Grover's algorithm. To give evidence that the quadratic speedup is nearly optimal, we initiate the study of quantum fine-grained complexity and introduce the Quantum Strong Exponential Time Hypothesis (QSETH), which is based on the assumption that Grover's algorithm is optimal for CNF-SAT when the clause width is large. We show that the naïve Grover approach to closest pair in higher dimensions is optimal up to an $n^{o(1)}$ factor unless QSETH is false. We also study the bichromatic closest pair problem and the orthogonal vectors problem, with broadly similar results.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-05T18:01:23Z</published>
+    <arxiv:comment>46 pages, 3 figures, presentation improved</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proceedings of the 35th Computational Complexity Conference (CCC), pages 16:1--16:43, 2020</arxiv:journal_ref>
+    <author>
+      <name>Scott Aaronson</name>
+    </author>
+    <author>
+      <name>Nai-Hui Chia</name>
+    </author>
+    <author>
+      <name>Han-Hsuan Lin</name>
+    </author>
+    <author>
+      <name>Chunhao Wang</name>
+    </author>
+    <author>
+      <name>Ruizhe Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.01519v1</id>
+    <title>Additive decomposition of iterative quantum search operations in the Grover-type algorithm</title>
+    <updated>2017-06-05T19:58:16Z</updated>
+    <link href="https://arxiv.org/abs/1706.01519v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.01519v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the Grover-type quantum search process a search operator is iteratively applied, say, k times, on the initial database state. We present an additive decomposition scheme such that the iteration process is expressed, in the computational space, as a linear combination of k operators, each of which consists of a single Grover-search followed by an overall phase-rotation. The value of k and the rotation phase are the same as those determined in the framework of the search with certainty. We further show that the final state can be expressed in terms of a single oracle operator of the Grover-search and phase-rotation factors. We discuss how the additive form can be utilized so that it effectively reduces the computational load of the iterative search, and we propose an effective shortcut gate that realizes the same outcome as the iterative search.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-05T19:58:16Z</published>
+    <arxiv:comment>11 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>F. M. Toyama</name>
+    </author>
+    <author>
+      <name>W. van Dijk</name>
+    </author>
+  </entry>
+</feed>

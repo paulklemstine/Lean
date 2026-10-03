@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/4cNveZEmykuc2qMbTyL3mKaHjJ8</id>
+  <title>arXiv Query: search_query=abs:"prime factor" AND abs:"random" AND abs:proven&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:43Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22prime+factor%22+AND+(abs:%22random%22+AND+abs:proven)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.26258v1</id>
+    <title>CRT-Decomposed $Σ$-Protocols for CSIDH</title>
+    <updated>2026-08-13T09:55:26Z</updated>
+    <link href="https://arxiv.org/abs/2609.26258v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.26258v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a zero-knowledge proof of knowledge for the CSIDH group action that exploits the Chinese Remainder Theorem (CRT) structure of the ideal class group, available whenever the group structure is known exactly, as for CSIDH-512. We prove perfect completeness, perfect special honest-verifier zero-knowledge, and 2-special soundness, in which the secret is recovered from two accepting transcripts by one subtraction and one modular inversion per CRT component; no rewinding loop, lattice reduction, or heuristic sampling appears in the extractor. Because each round admits exactly two responses, Unruh's transform yields a non-interactive proof with straight-line extraction in the quantum random oracle model (QROM), removing the multiplicative forking-lemma loss. We instantiate the scheme on the CSIDH-512 class group, verify the algebraic layer by machine over the exact 258-bit modulus ($10^4$ random instances, all passing), and report protocol-level simulations in the exponent model: Monte Carlo soundness rates matching the proven $2^{-t}$ bound within 95\% confidence at every tested $t$, serialized signature sizes within 1.6\% of the formulas, instrumented action counts, and a scaled meet-in-the-middle attack whose measured cost follows the predicted $\sqrt{q}$ law. We further prove two delimiting results: CRT decomposition cannot enlarge the per-round challenge space, and publishing the CRT hop curves lowers classical key-recovery cost from about $2^{128.6}$ to about $2^{67.3}$ group action evaluations. The construction is therefore correct and structurally complete today, but quantitatively secure only on future parameters whose class number has large prime factors. We compare against CSI-FiSh, CSI-Otter, and Tanuki; a tightly secure blind signature from this proof of knowledge is left to future work.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T09:55:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>I. Dey</name>
+    </author>
+    <author>
+      <name>I. Cherkaoui</name>
+    </author>
+  </entry>
+</feed>

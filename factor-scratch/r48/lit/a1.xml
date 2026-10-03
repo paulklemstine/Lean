@@ -1,0 +1,949 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ibQDRtRZdpfbTksDFRfOdFI4Ma4</id>
+  <title>arXiv Query: search_query=all:"elliptic curve" AND all:"factorization"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-10-03T18:16:54Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22elliptic+curve%22+AND+all:%22factorization%22&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>262</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1201.0266v1</id>
+    <title>Elliptic curves with large torsion and positive rank over number fields of small degree and ECM factorization</title>
+    <updated>2011-12-31T14:20:58Z</updated>
+    <link href="https://arxiv.org/abs/1201.0266v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.0266v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we present several methods for construction of elliptic curves with large torsion group and positive rank over number fields of small degree. We also discuss potential applications of such curves in the elliptic curve factorization method (ECM).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-12-31T14:20:58Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Period. Math. Hungar. 65 (2012), 193-203</arxiv:journal_ref>
+    <author>
+      <name>Andrej Dujella</name>
+    </author>
+    <author>
+      <name>Filip Najman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.11004v1</id>
+    <title>Factorization and malleability of RSA modules, and counting points on elliptic curves modulo N</title>
+    <updated>2019-11-25T15:50:43Z</updated>
+    <link href="https://arxiv.org/abs/1911.11004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.11004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we address two different problems related with the factorization of an RSA module N. First we can show that factoring is equivalent in deterministic polynomial time to counting points on a pair of twisted Elliptic curves modulo N. Also we settle the malleability of factoring an RSA module, as described in [9], using the number of points of a single elliptic curve modulo N, and Coppersmith's algorithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-25T15:50:43Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Luis Dieulefait</name>
+    </author>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.04835v2</id>
+    <title>Factoring Numbers with elliptic curves</title>
+    <updated>2022-10-14T16:07:43Z</updated>
+    <link href="https://arxiv.org/abs/2210.04835v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.04835v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the present paper we provide a probabilistic polynomial time algorithm that reduces the complete factorization of any squarefree integer $n$ to counting points on elliptic curves modulo $n$, succeeding with probability $1-\varepsilon$, for any $\varepsilon&lt;0$ .</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-10T16:50:00Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jorge Jimenez Urroz</name>
+    </author>
+    <author>
+      <name>Jacek Pomykala</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0208038v2</id>
+    <title>Fast Elliptic Curve Arithmetic and Improved Weil Pairing Evaluation</title>
+    <updated>2003-01-22T21:39:11Z</updated>
+    <link href="https://arxiv.org/abs/math/0208038v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0208038v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an algorithm which speeds scalar multiplication on a general elliptic curve by an estimated 3.8 % to 8.5 % over the best known general methods when using affine coordinates. This is achieved by eliminating a field multiplication when we compute 2P+Q from given points P, Q on the curve. We give applications to simultaneous multiple scalar multiplication and to the Elliptic Curve Method of factorization. We show how this improvement together with another idea can speed the computation of the Weil and Tate pairings by up to 7.8 %.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-08-05T23:41:54Z</published>
+    <arxiv:comment>12 pages, added some consequences for computing the Weil Pairing, to appear in Proceedings of RSA-CT 2003</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kirsten Eisentraeger</name>
+    </author>
+    <author>
+      <name>Kristin Lauter</name>
+    </author>
+    <author>
+      <name>Peter L. Montgomery</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.07046v1</id>
+    <title>Big prime factors in orders of elliptic curves over finite fields</title>
+    <updated>2021-12-13T22:25:08Z</updated>
+    <link href="https://arxiv.org/abs/2112.07046v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.07046v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $E$ be an elliptic curve over the finite field $\mathbb F_q$. We prove that, when $n$ is a sufficiently large positive integer, $\#E(\mathbb F_{q^n})$ has a prime factor exceeding $n\exp(c\log n/\log\log n)$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-13T22:25:08Z</published>
+    <arxiv:comment>14 pages. arXiv admin note: text overlap with arXiv:2108.09857</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yuri Bilu</name>
+    </author>
+    <author>
+      <name>Haojie Hong</name>
+    </author>
+    <author>
+      <name>Florian Luca</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.02383v1</id>
+    <title>Selmer-Inspired Elliptic Curve Generation</title>
+    <updated>2025-09-30T17:33:36Z</updated>
+    <link href="https://arxiv.org/abs/2510.02383v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.02383v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Elliptic curve cryptography (ECC) is foundational to modern secure communication, yet existing standard curves have faced scrutiny for opaque parameter-generation practices. This work introduces a Selmer-inspired framework for constructing elliptic curves that is both transparent and auditable. Drawing from $2$- and $3$-descent methods, we derive binary quartics and ternary cubics whose classical invariants deterministically yield candidate $(c_4,c_6)$ parameters. Local solubility checks, modeled on Selmer admissibility, filter candidates prior to reconciliation into short-Weierstrass form over prime fields. We then apply established cryptographic validations, including group-order factorization, cofactor bounds, twist security, and embedding-degree heuristics. A proof-of-concept implementation demonstrates that the pipeline functions as a retry-until-success Las Vegas algorithm, with complete transcripts enabling independent verification. Unlike seed-based or purely efficiency-driven designs, our approach embeds arithmetic structure into parameter selection while remaining compatible with constant-time, side-channel resistant implementations. This work broadens the design space for elliptic curves, showing that descent techniques from arithmetic geometry can underpin trust-enhancing, standardization-ready constructions.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-30T17:33:36Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Awnon Bhowmik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.06752v3</id>
+    <title>Quantum resource estimates for computing elliptic curve discrete logarithms</title>
+    <updated>2017-10-31T01:08:21Z</updated>
+    <link href="https://arxiv.org/abs/1706.06752v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.06752v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give precise quantum resource estimates for Shor's algorithm to compute discrete logarithms on elliptic curves over prime fields. The estimates are derived from a simulation of a Toffoli gate network for controlled elliptic curve point addition, implemented within the framework of the quantum computing software tool suite LIQ$Ui|\rangle$. We determine circuit implementations for reversible modular arithmetic, including modular addition, multiplication and inversion, as well as reversible elliptic curve point addition. We conclude that elliptic curve discrete logarithms on an elliptic curve defined over an $n$-bit prime field can be computed on a quantum computer with at most $9n + 2\lceil\log_2(n)\rceil+10$ qubits using a quantum circuit of at most $448 n^3 \log_2(n) + 4090 n^3$ Toffoli gates. We are able to classically simulate the Toffoli networks corresponding to the controlled elliptic curve point addition as the core piece of Shor's algorithm for the NIST standard curves P-192, P-224, P-256, P-384 and P-521. Our approach allows gate-level comparisons to recent resource estimates for Shor's factoring algorithm. The results also support estimates given earlier by Proos and Zalka and indicate that, for current parameters at comparable classical security levels, the number of qubits required to tackle elliptic curves is less than for attacking RSA, suggesting that indeed ECC is an easier target than RSA.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-21T06:21:39Z</published>
+    <arxiv:comment>24 pages, 2 tables, 11 figures. v2: typos fixed and reference added. ASIACRYPT 2017</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Martin Roetteler</name>
+    </author>
+    <author>
+      <name>Michael Naehrig</name>
+    </author>
+    <author>
+      <name>Krysta M. Svore</name>
+    </author>
+    <author>
+      <name>Kristin Lauter</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.02429v1</id>
+    <title>Finding the complement of an elliptic curve inside a Jacobian</title>
+    <updated>2026-06-01T16:04:44Z</updated>
+    <link href="https://arxiv.org/abs/2606.02429v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.02429v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This note gives a simple algorithm for the following effectivity problem: given a genus $2$ curve $X$ together with a nonconstant map $π:X\to E$ to an elliptic curve, determine an elliptic curve $E'$ and a map $π':X\to E'$ independent of $π$. Equivalently, we compute the complementary elliptic factor in the decomposition of $\operatorname{Jac}(X)$ up to isogeny. While the problem has been studied extensively, and more general ones have been solved by deep and powerful techniques, we are not aware of a reference for the simple explicit procedure described here.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-01T16:04:44Z</published>
+    <arxiv:comment>13 pages, comments welcome</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrea Gallese</name>
+    </author>
+    <author>
+      <name>Davide Lombardo</name>
+    </author>
+    <author>
+      <name>Francesco Naccarato</name>
+    </author>
+    <author>
+      <name>Umberto Zannier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.21601v2</id>
+    <title>The Smallest Invariant Factor of Elliptic Curves, and Coincidences</title>
+    <updated>2026-06-05T16:53:23Z</updated>
+    <link href="https://arxiv.org/abs/2604.21601v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.21601v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an elliptic curve E over Q and a natural number j, Cojocaru has shown that there is an explicit constant C_E,j giving (under GRH) the density of primes p of good reduction such that the smallest invariant factor of E(F_p) is j. For E without complex multiplication, we study the question of when C_E,j is positive (a necessary and, on GRH, sufficient condition for there to be infinitely many such p), strengthening a result by Kim. Our arguments are group-theoretic using the image of the adelic Galois representation of E. Experimentally, C_E,j appears to vanish only when there is a coincidence of division fields; we document a number of families of such coincidences arising from abelian division fields.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-23T12:23:04Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexander Milner</name>
+    </author>
+    <author>
+      <name>Jack Shotton</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.10932v1</id>
+    <title>Watkins' conjecture for elliptic curves over function fields</title>
+    <updated>2022-03-21T12:52:35Z</updated>
+    <link href="https://arxiv.org/abs/2203.10932v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.10932v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 2002 Watkins conjectured that given an elliptic curve defined over $\mathbb{Q}$, its Mordell-Weil rank is at most the $2$-adic valuation of its modular degree. We consider the analogous problem over function fields of positive characteristic, and we prove it in several cases. More precisely, every modular semi-stable elliptic curve over $\mathbb{F}_q(T)$ after extending constant scalars, and every quadratic twist of a modular elliptic curve over $\mathbb{F}_q(T)$ by a polynomial with sufficiently many prime factors satisfy the analogue of Watkins' conjecture. Furthermore, for a well-known family of elliptic curves with unbounded rank due to Ulmer, we prove the analogue of Watkins' conjecture.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-21T12:52:35Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jerson Caro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1111.2321v4</id>
+    <title>Disparity in Selmer ranks of quadratic twists of elliptic curves</title>
+    <updated>2022-10-09T14:58:43Z</updated>
+    <link href="https://arxiv.org/abs/1111.2321v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1111.2321v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the parity of 2-Selmer ranks in the family of quadratic twists of an arbitrary elliptic curve E over an arbitrary number field K. We prove that the fraction of twists (of a given elliptic curve over a fixed number field) having even 2-Selmer rank exists as a stable limit over the family of twists, and we compute this fraction as an explicit product of local factors. We give an example of an elliptic curve E such that as K varies, these fractions are dense in [0, 1]. More generally, our results also apply to p-Selmer ranks of twists of 2-dimensional self-dual F_p-representations of the absolute Galois group of K by characters of order p.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-11-09T20:28:56Z</published>
+    <arxiv:comment>The proof of Example 7.11 in the published version of this paper was incorrect, because we applied [5, Theorem 1.3] incorrectly. The statement and proof here have been corrected. We thank Lilybelle Cowland Kellock for pointing out the error</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Annals of Math. 178 (2013) 287-320</arxiv:journal_ref>
+    <author>
+      <name>Zev Klagsbrun</name>
+    </author>
+    <author>
+      <name>Barry Mazur</name>
+    </author>
+    <author>
+      <name>Karl Rubin</name>
+    </author>
+    <arxiv:doi>10.4007/annals.2013.178.1.5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4007/annals.2013.178.1.5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1107.3631v1</id>
+    <title>A Review on Elliptic Curve Cryptography for Embedded Systems</title>
+    <updated>2011-07-19T06:19:59Z</updated>
+    <link href="https://arxiv.org/abs/1107.3631v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1107.3631v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Importance of Elliptic Curves in Cryptography was independently proposed by Neal Koblitz and Victor Miller in 1985.Since then, Elliptic curve cryptography or ECC has evolved as a vast field for public key cryptography (PKC) systems. In PKC system, we use separate keys to encode and decode the data. Since one of the keys is distributed publicly in PKC systems, the strength of security depends on large key size. The mathematical problems of prime factorization and discrete logarithm are previously used in PKC systems. ECC has proved to provide same level of security with relatively small key sizes. The research in the field of ECC is mostly focused on its implementation on application specific systems. Such systems have restricted resources like storage, processing speed and domain specific CPU architecture.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-07-19T06:19:59Z</published>
+    <arxiv:comment>Review Article</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>International Journal of Computer Science &amp; Information Technology (IJCSIT), Vol 3, No 3, June 2011, Pp 84-103</arxiv:journal_ref>
+    <author>
+      <name>Rahat Afreen</name>
+    </author>
+    <author>
+      <name>S. C. Mehrotra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.08776v1</id>
+    <title>Dedekind zeta functions of non-Galois torsion fields of elliptic curves</title>
+    <updated>2026-04-09T21:25:10Z</updated>
+    <link href="https://arxiv.org/abs/2604.08776v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.08776v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give an algorithm to determine factorization types of primes in the number fields generated by a single point of odd order on an elliptic curve. We apply this to compute coefficients of the Dedekind zeta function of the field.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-09T21:25:10Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Robert Pollack</name>
+    </author>
+    <author>
+      <name>Tom Weston</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1009.3230v1</id>
+    <title>Vector bundles on elliptic curves and factors of automorphy</title>
+    <updated>2010-09-16T17:29:00Z</updated>
+    <link href="https://arxiv.org/abs/1009.3230v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1009.3230v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We translate the Atiyah's results on classification of vector bundles on elliptic curves to the language of factors of automorphy.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-09-16T17:29:00Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Oleksandr Iena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0210173v2</id>
+    <title>Computing the cardinality of CM elliptic curves using torsion points</title>
+    <updated>2004-07-23T13:04:19Z</updated>
+    <link href="https://arxiv.org/abs/math/0210173v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0210173v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let E be an elliptic curve having complex multiplication by a given quadratic order of an imaginary quadratic field K. The field of definition of E is the ring class field Omega of the order. If the prime p splits completely in Omega, then we can reduce E modulo one the factors of p and get a curve Ep defined over GF(p). The trace of the Frobenius of Ep is known up to sign and we need a fast way to find this sign. For this, we propose to use the action of the Frobenius on torsion points of small order built with class invariants a la Weber, in a manner reminiscent of the Schoof-Elkies-Atkin algorithm for computing the cardinality of a given elliptic curve modulo p. We apply our results to the Elliptic Curve Primality Proving algorithm (ECPP).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-10-11T15:00:45Z</published>
+    <arxiv:comment>Revised and shortened version, including more material using discriminants of curves and division polynomials</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>F. Morain</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1207.0274v3</id>
+    <title>Factoring integer using elliptic curves over rational number field $\mathbb{Q}$</title>
+    <updated>2013-01-06T01:44:39Z</updated>
+    <link href="https://arxiv.org/abs/1207.0274v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1207.0274v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For the integer $ D=pq$ of the product of two distinct odd primes, we construct an elliptic curve $E_{2rD}:y^2=x^3-2rDx$ over $\mathbb Q$, where $r$ is a parameter dependent on the classes of $p$ and $q$ modulo 8, and show, under the parity conjecture, that the elliptic curve has rank one and $v_p(x([k]Q))\not=v_q(x([k]Q))$ for odd $k$ and a generator $Q$ of the free part of $E_{2rD}(\mathbb Q)$. Thus we can recover $p$ and $q$ from the data $D$ and $ x([k]Q))$. Furthermore, under the Generalized Riemann hypothesis, we prove that one can take $r&lt;c\log^4D$ such that the elliptic curve $E_{2rD}$ has these properties, where $c$ is an absolute constant.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-07-02T03:44:22Z</published>
+    <arxiv:comment>10</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Xiumei Li</name>
+    </author>
+    <author>
+      <name>Jinxiang Zeng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.23212v1</id>
+    <title>Resource analysis of Shor's elliptic curve algorithm with an improved quantum adder on a two-dimensional lattice</title>
+    <updated>2025-10-27T11:02:10Z</updated>
+    <link href="https://arxiv.org/abs/2510.23212v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.23212v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum computers have the potential to break classical cryptographic systems by efficiently solving problems such as the elliptic curve discrete logarithm problem using Shor's algorithm. While resource estimates for factoring-based cryptanalysis are well established, comparable evaluations for Shor's elliptic curve algorithm under realistic architectural constraints remain limited. In this work, we propose a carry-lookahead quantum adder that achieves Toffoli depth $\log n + \log\log n + O(1)$ with only $O(n)$ ancillas, matching state-of-the-art performance in depth while avoiding the prohibitive $O(n\log n)$ space overhead of existing approaches. Importantly, our design is naturally compatible with the two-dimensional nearest-neighbor architectures and introduce only a constant-factor overhead. Further, we perform a comprehensive resource analysis of Shor's elliptic curve algorithm on two-dimensional lattices using the improved adder. By leveraging dynamic circuit techniques with mid-circuit measurements and classically controlled operations, our construction incorporates the windowed method, Montgomery representation, and quantum tables, and substantially reduces the overhead of long-range gates. For cryptographically relevant parameters, we provide precise resource estimates. In particular, breaking the NIST P-256 curve, which underlies most modern public-key infrastructures and the security of Bitcoin, requires about $4300$ logical qubits and logical Toffoli fidelity about $10^{-9}$. These results establish new benchmarks for efficient quantum arithmetic and provide concrete guidance toward the experimental realization of Shor's elliptic curve algorithm.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-27T11:02:10Z</published>
+    <arxiv:comment>41 pages, 31 figures, comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Quan Gu</name>
+    </author>
+    <author>
+      <name>Han Ye</name>
+    </author>
+    <author>
+      <name>Junjie Chen</name>
+    </author>
+    <author>
+      <name>Xiongfeng Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.2827v2</id>
+    <title>Computing the Mazur and Swinnerton-Dyer critical subgroup of elliptic curves</title>
+    <updated>2015-01-16T22:35:31Z</updated>
+    <link href="https://arxiv.org/abs/1412.2827v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.2827v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $E$ be an optimal elliptic curve defined over $\mathbb{Q}$. The critical subgroup of $E$ is defined by Mazur and Swinnerton-Dyer as the subgroup of $E(\mathbb{Q})$ generated by traces of branch points under a modular parametrization of $E$. We prove that for all rank two elliptic curves with conductor smaller than 1000, the critical subgroup is torsion. First, we define a family of critical polynomials attached to $E$ and describe two algorithms to compute such polynomials. We then give a sufficient condition for the critical subgroup to be torsion in terms of the factorization of critical polynomials. Finally, a table of critical polynomials is obtained for all elliptic curves of rank two and conductor smaller than 1000, from which we deduce our result.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-09T01:41:09Z</published>
+    <arxiv:comment>fixed typos; added definition of degree of a rational function in section 2; deleted first remark after lemma 2.8</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Hao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0511729v1</id>
+    <title>Constructing elliptic curves in almost polynomial time</title>
+    <updated>2005-11-30T07:16:29Z</updated>
+    <link href="https://arxiv.org/abs/math/0511729v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0511729v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an algorithm that, on input of a positive integer N together with its prime factorization, constructs a finite field F and an elliptic curve E over F for which E(F) has order N. Although it is unproved that this can be done for all N, a heuristic analysis shows that the algorithm has an expected run time that is polynomial in 2^omega(N) log N, where omega(N) is the number of distinct prime factors of N. In the cryptographically relevant case where N is prime, an expected run time O((log N)^{4+epsilon}) can be achieved. We illustrate the efficiency of the algorithm by constructing elliptic curves with point groups of order N=10^2004 and N=nextprime(10^{2004})=10^{2004}+4863.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-11-30T07:16:29Z</published>
+    <arxiv:comment>20 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Reinier Broker</name>
+    </author>
+    <author>
+      <name>Peter Stevenhagen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.04834v2</id>
+    <title>Tamagawa numbers of elliptic curves with prescribed torsion subgroup or isogeny</title>
+    <updated>2021-06-08T08:03:50Z</updated>
+    <link href="https://arxiv.org/abs/2102.04834v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.04834v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study Tamagawa numbers of elliptic curves with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over cubic fields and of elliptic curves with an $n-$isogeny over $\mathbb{Q}$, for $n\in\{6,8,10,12,14,16,17,18,19,37,43,67,163\}$. Bruin and Najman proved that every elliptic curve with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over a cubic field is a base change of an elliptic curve defined over $\mathbb{Q}$. We find that Tamagawa numbers of elliptic curves defined over $\mathbb{Q}$ with torsion $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ over a cubic field are always divisible by $14^2$, with each factor $14$ coming from a rational prime with split multiplicative reduction of type $I_{14k},$ one of which is always $p=2.$ The only exception is the curve 1922.e2, with $c_E=c_2=14.$ The same curves defined over cubic fields over which they have torsion subgroup $\mathbb{Z}/2\mathbb{Z}\oplus \mathbb{Z}/14\mathbb{Z}$ turn out to have the Tamagawa number divisible by $14^3$. As for $n-$isogenies, Tamagawa numbers of elliptic curves with an $18-$isogeny must be divisible by 4, while elliptic curves with an $n-$isogeny for the remaining $n$ from the mentioned set must have Tamagawa numbers divisible by 2, except for finite sets of specified curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-09T14:13:04Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Antonela Trbović</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.04154v1</id>
+    <title>Character sums for elliptic curve densities</title>
+    <updated>2017-03-12T18:10:33Z</updated>
+    <link href="https://arxiv.org/abs/1703.04154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.04154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>If $E$ is an elliptic curve over $\mathbb{Q}$, then it follows from work of Serre and Hooley that, under the assumption of the Generalized Riemann Hypothesis, the density of primes $p$ such that the group of $\mathbb{F}_p$-rational points of the reduced curve $\tilde{E}(\mathbb{F}_p)$ is cyclic can be written as an infinite product $\prod δ_\ell$ of local factors $δ_\ell$ reflecting the degree of the $\ell$-torsion fields, multiplied by a factor that corrects for the entanglements between the various torsion fields. We show that this correction factor can be interpreted as a character sum, and the resulting description allows us to easily determine non-vanishing criteria for it. We apply this method in a variety of other settings. Among these, we consider the aforementioned problem with the additional condition that the primes $p$ lie in a given arithmetic progression. We also study the conjectural constants appearing in Koblitz's conjecture, a conjecture which relates to the density of primes $p$ for which the cardinality of the group of $\mathbb{F}_p$-points of $E$ is prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-12T18:10:33Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Julio Brau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0404333v1</id>
+    <title>Modular Parametrizations of Neumann-Setzer Elliptic Curves</title>
+    <updated>2004-04-19T13:44:25Z</updated>
+    <link href="https://arxiv.org/abs/math/0404333v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0404333v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Suppose $p$ is a prime of the form $u^2+64$ for some integer $u$, which we take to be 3 mod 4. Then there are two Neumann--Setzer elliptic curves $E_0$ and $E_1$ of prime conductor $p$, and both have Mordell--Weil group $\Z/2\Z$. There is a surjective map $X_0(p)\xrightarrowπ E_0$ that does not factor through any other elliptic curve (i.e., $π$ is optimal), where $X_0(p)$ is the modular curve of level $p$. Our main result is that the degree of $π$ is odd if and only if $u \con 3\pmod{8}$. We also prove the prime-conductor case of a conjecture of Glenn Stevens, namely that that if $E$ is an elliptic curve of prime conductor $p$ then the optimal quotient of $X_1(p)$ in the isogeny class of $E$ is the curve with minimal Faltings height. Finally we discuss some conjectures and data about modular degrees and orders of Shafarevich--Tate groups of Neumann--Setzer curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-04-19T13:44:25Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>IMRN 2004, no. 27, 1395-1405</arxiv:journal_ref>
+    <author>
+      <name>William Stein</name>
+    </author>
+    <author>
+      <name>Mark Watkins</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.00176v2</id>
+    <title>On the Lang-Trotter conjecture for two elliptic curves</title>
+    <updated>2017-11-11T02:22:32Z</updated>
+    <link href="https://arxiv.org/abs/1711.00176v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.00176v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Following Lang and Trotter we describe a probabilistic model that predicts the distribution of primes $p$ with given Frobenius traces at $p$ for two fixed elliptic curves over $\mathbb{Q}$. In addition, we propose explicit Euler product representations for the constant in the predicted asymptotic formula and describe in detail the universal component of this constant. A new feature is that in some cases the $\ell$-adic limits determining the $\ell$-factors of the universal constant, unlike the Lang-Trotter conjecture for a single elliptic curve, do not stabilize. We also prove the conjecture on average over a family of elliptic curves following the work of David, Koukoulopoulos, and Smith.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-01T02:52:37Z</published>
+    <arxiv:comment>A new reference is added</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Amir Akbary</name>
+    </author>
+    <author>
+      <name>James Parks</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1509.08748v2</id>
+    <title>Computing Canonical Heights on Elliptic Curves in Quasi-Linear Time</title>
+    <updated>2015-12-22T11:56:19Z</updated>
+    <link href="https://arxiv.org/abs/1509.08748v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1509.08748v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce an algorithm that can be used to compute the canonical height of a point on an elliptic curve over the rationals in quasi-linear time. As in most previous algorithms, we decompose the difference between the canonical and the naive height into an archimedean and a non-archimedean term. Our main contribution is an algorithm for the computation of the non-archimedean term that requires no integer factorization and runs in quasi-linear time.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-09-29T13:47:35Z</published>
+    <arxiv:comment>15 pages. v2: Fixed an inaccuracy in Algorithm 6.1 pointed out by E. Wells. Minor changes in Sections 4 and 6. Updated timings</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>LMS J. Comput. Math. 19 (2016) 391-405</arxiv:journal_ref>
+    <author>
+      <name>J. Steffen Müller</name>
+    </author>
+    <author>
+      <name>Michael Stoll</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157016000139</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157016000139" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0707.3179v1</id>
+    <title>Combinatorial Aspects of Elliptic Curves</title>
+    <updated>2007-07-23T18:38:01Z</updated>
+    <link href="https://arxiv.org/abs/0707.3179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.3179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Given an elliptic curve C, we study here $N_k = #C(F_{q^k})$, the number of points of C over the finite field F_{q^k}. This sequence of numbers, as k runs over positive integers, has numerous remarkable properties of a combinatorial flavor in addition to the usual number theoretical interpretations. In particular we prove that $N_k = - W_k(q, - N_1)$ where W_k(q,t) is a (q,t)-analogue of the number of spanning trees of the wheel graph. Additionally we develop a determinantal formula for N_k where the eigenvalues can be explicitly written in terms of q, N_1, and roots of unity. We also discuss here a new sequence of bivariate polynomials related to the factorization of N_k, which we refer to as elliptic cyclotomic polynomials because of their various properties.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-23T18:38:01Z</published>
+    <arxiv:comment>29 pages, Section 2 presented at FPSAC 2006</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Seminaire Lotharingien de Combinatoire, vol. 56 (2007) Art. B56f</arxiv:journal_ref>
+    <author>
+      <name>Gregg Musiker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0301141v2</id>
+    <title>Shor's discrete logarithm quantum algorithm for elliptic curves</title>
+    <updated>2004-01-22T16:33:36Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0301141v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0301141v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We show in some detail how to implement Shor's efficient quantum algorithm for discrete logarithms for the particular case of elliptic curve groups. It turns out that for this problem a smaller quantum computer can solve problems further beyond current computing than for integer factorisation. A 160 bit elliptic curve cryptographic key could be broken on a quantum computer using around 1000 qubits while factoring the security-wise equivalent 1024 bit RSA modulus would require about 2000 qubits. In this paper we only consider elliptic curves over GF($p$) and not yet the equally important ones over GF($2^n$) or other finite fields. The main technical difficulty is to implement Euclid's gcd algorithm to compute multiplicative inverses modulo $p$. As the runtime of Euclid's algorithm depends on the input, one difficulty encountered is the ``quantum halting problem''.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-01-25T21:28:15Z</published>
+    <arxiv:comment>34 pages Latex, essentially published version, but not using Journal style file</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>QIC 3 (No. 4) (2003) pp.317-344</arxiv:journal_ref>
+    <author>
+      <name>John Proos</name>
+    </author>
+    <author>
+      <name>Christof Zalka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1007.0535v3</id>
+    <title>The Ising model: from elliptic curves to modular forms and Calabi-Yau equations</title>
+    <updated>2010-12-10T18:08:22Z</updated>
+    <link href="https://arxiv.org/abs/1007.0535v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1007.0535v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that almost all the linear differential operators factors obtained in the analysis of the n-particle contribution of the susceptibility of the Ising model for $\, n \le 6$, are operators "associated with elliptic curves". Beyond the simplest factors which are homomorphic to symmetric powers of the second order operator associated with the complete elliptic integral E, the second and third order differential operators can actually be interpreted as modular forms of the elliptic curve of the Ising model. A last order-four globally nilpotent operator is not reducible to this elliptic curve, modular forms scheme. It is shown to actually correspond to a natural generalization of this elliptic curve, modular forms scheme, with the emergence of a Calabi-Yau equation, corresponding to a selected $_4F_3$ hypergeometric function which can also be seen as a Hadamard product of the complete elliptic integral K, with a remarkably simple algebraic pull-back, the corresponding Calabi-Yau fourth-order differential operator having a symplectic differential Galois group SP(4,C). The associated mirror maps and higher order Schwarzian ODEs has an exact (isogenies) representation of the generators of the renormalization group, extending the modular group SL(2,Z) to a GL(2, Z) symmetry group.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-07-04T09:42:44Z</published>
+    <arxiv:comment>46 pages</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>A. Bostan</name>
+    </author>
+    <author>
+      <name>S. Boukraa</name>
+    </author>
+    <author>
+      <name>S. Hassani</name>
+    </author>
+    <author>
+      <name>M. van Hoeij</name>
+    </author>
+    <author>
+      <name>J. -M. Maillard</name>
+    </author>
+    <author>
+      <name>J-A. Weil</name>
+    </author>
+    <author>
+      <name>N. Zenine</name>
+    </author>
+    <arxiv:doi>10.1088/1751-8113/44/4/045204</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1751-8113/44/4/045204" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0712.2022v1</id>
+    <title>Constructing elliptic curves of prime order</title>
+    <updated>2007-12-12T19:37:47Z</updated>
+    <link href="https://arxiv.org/abs/0712.2022v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0712.2022v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present a very efficient algorithm to construct an elliptic curve E and a finite field F such that the order of the point group E(F) is a given prime number N. Heuristically, this algorithm only takes polynomial time Otilde((\log N)^3), and it is so fast that it may profitably be used to tackle the related problem of finding elliptic curves with point groups of prime order of prescribed size. We also discuss the impact of the use of high level modular functions to reduce the run time by large constant factors and show that recent gonality bounds for modular curves imply limits on the time reduction that can be obtained.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-12-12T19:37:47Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Reinier Broker</name>
+    </author>
+    <author>
+      <name>Peter Stevenhagen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.02235v1</id>
+    <title>Optimized Point Addition Circuits for Elliptic Curve Discrete Logarithms</title>
+    <updated>2026-06-01T13:29:30Z</updated>
+    <link href="https://arxiv.org/abs/2606.02235v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.02235v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm represents the main threat of quantum computers to cryptography. In order to precisely understand its feasibility, many authors have worked towards reducing its costs, either at the logical level (assuming a fault-tolerant architecture), or at the physical level (taking into account the constraints of envisioned hardware). In particular, recent works by Chevignard et al. (CRYPTO 2024) and Gidney (arXiv 2025) used improved arithmetic to significantly reduce the qubit cost of factoring RSA public keys.
+  Even more recently, Babbush et al. (arXiv 2026) improved the cost of computing elliptic curve discrete logarithms, with a reduction of a factor 2 to 3 in gate count and qubit count compared to a previous work by Litinski (arXiv 2023). Their result relies on optimized point addition circuits on elliptic curves over prime fields. However they did not reveal their logical quantum circuits, relying instead on a zero-knowledge proof.
+  In this paper, we detail a quantum logical circuit architecture which gives similar results as Babbush et al., with a slightly higher number of qubits (around 1.5% increase) and a slightly smaller Toffoli gate count (between 6.5% and 10% reduction) for the curve secp256k1. We also give gate counts for a generic variant of the circuit, which is valid for any prime field.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-01T13:29:30Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>André Schrottenloher</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.03804v1</id>
+    <title>An Elliptic Curve Analogue to the Fermat Numbers</title>
+    <updated>2017-08-12T18:25:17Z</updated>
+    <link href="https://arxiv.org/abs/1708.03804v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.03804v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Fermat numbers have many notable properties, including order universality, coprimality, and definition by a recurrence relation. We use arbitrary elliptic curves and rational points of infinite order to generate sequences that are analogous to the Fermat numbers. We demonstrate that these sequences have many of the same properties as the Fermat numbers, and we discuss results about the prime factors of sequences generated by specific curves and points.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-12T18:25:17Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Involve 12 (2019) 427-449</arxiv:journal_ref>
+    <author>
+      <name>Skye Binegar</name>
+    </author>
+    <author>
+      <name>Randy Dominick</name>
+    </author>
+    <author>
+      <name>Meagan Kenney</name>
+    </author>
+    <author>
+      <name>Jeremy Rouse</name>
+    </author>
+    <author>
+      <name>Alex Walsh</name>
+    </author>
+    <arxiv:doi>10.2140/involve.2019.12.427</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/involve.2019.12.427" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1202.3695v4</id>
+    <title>Deterministic elliptic curve primality proving for a special sequence of numbers</title>
+    <updated>2015-03-16T23:58:54Z</updated>
+    <link href="https://arxiv.org/abs/1202.3695v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1202.3695v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a deterministic algorithm that very quickly proves the primality or compositeness of the integers N in a certain sequence, using an elliptic curve E/Q with complex multiplication by the ring of integers of Q(sqrt(-7)). The algorithm uses O(log N) arithmetic operations in the ring Z/NZ, implying a bit complexity that is quasi-quadratic in log N. Notably, neither of the classical "N-1" or "N+1" primality tests apply to the integers in our sequence. We discuss how this algorithm may be applied, in combination with sieving techniques, to efficiently search for very large primes. This has allowed us to prove the primality of several integers with more than 100,000 decimal digits, the largest of which has more than a million bits in its binary representation. At the time it was found, it was the largest proven prime N for which no significant partial factorization of N-1 or N+1 is known.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-02-16T20:57:44Z</published>
+    <arxiv:comment>16 pages, corrected a minor sign error in 5.1</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Proceedings of the Tenth Algorithmic Number Theory Symposium (ANTS X), Open Book Series Vol. 1, Mathematical Sciences Publishers, 2013, pp. 1-20</arxiv:journal_ref>
+    <author>
+      <name>Alexander Abatzoglou</name>
+    </author>
+    <author>
+      <name>Alice Silverberg</name>
+    </author>
+    <author>
+      <name>Andrew V. Sutherland</name>
+    </author>
+    <author>
+      <name>Angela Wong</name>
+    </author>
+    <arxiv:doi>10.2140/obs.2013.1.1</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/obs.2013.1.1" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.05390v3</id>
+    <title>Mahler measure of a non-reciprocal family of elliptic curves</title>
+    <updated>2023-10-25T22:00:50Z</updated>
+    <link href="https://arxiv.org/abs/2301.05390v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.05390v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article, we study the logarithmic Mahler measure of the one-parameter family \[Q_α=y^2+(x^2-αx)y+x,\] denoted by $m(Q_α)$. The zero loci of $Q_α$ generically define elliptic curves $E_α$ which are $3$-isogenous to the family of Hessian elliptic curves. We are particularly interested in the case $α\in (-1,3)$, which has not been considered in the literature due to certain subtleties. For $α$ in this interval, we establish a hypergeometric formula for the (modified) Mahler measure of $Q_α$, denoted by $\tilde{n}(α).$ This formula coincides, up to a constant factor, with the known formula for $m(Q_α)$ with $|α|$ sufficiently large. In addition, we verify numerically that if $α^3$ is an integer, then $\tilde{n}(α)$ is a rational multiple of $L'(E_α,0)$. A proof of this identity for $α=2$, which is corresponding to an elliptic curve of conductor $19$, is given.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-13T04:47:49Z</published>
+    <arxiv:comment>Corrigendum: sign error in Theorem 1 and miscalculation in the proof of Lemma 9 fixed</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Q. J. Math. 74 (2023), 1187--1208</arxiv:journal_ref>
+    <author>
+      <name>Detchat Samart</name>
+    </author>
+    <arxiv:doi>10.1093/qmath/haad016</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/qmath/haad016" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.08336v1</id>
+    <title>A Survey on Hardware Implementations of Elliptic Curve Cryptosystems</title>
+    <updated>2017-10-19T17:46:43Z</updated>
+    <link href="https://arxiv.org/abs/1710.08336v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.08336v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the past two decades, Elliptic Curve Cryptography (ECC) have become increasingly advanced. ECC, with much smaller key sizes, offers equivalent security when compared to other asymmetric cryptosystems. In this survey, an comprehensive overview of hardware implementations of ECC is provided. We first discuss different elliptic curves, point multiplication algorithms and underling finite field operations over binary fields F2m and prime fields Fp which are used in the literature for hardware implementation. Then methods, steps and considerations of ECC implementation are presented. The implementations of the ECC are categorized in two main groups based on implementation technologies consist of field programmable gate array (FPGA) based implementations and application specific integrated circuit (ASIC) implementations. Therefore, in these categories to have a better presentation and comparison, the implementations are presented and distinguished based on type of finite fields. The best and newest structures in the literature are described in more details for overall presentation of architectures and approaches in each group of implementations. High-speed implementation is an important factor in the ECC applications such as network servers. Also in smart cards, Wireless Sensor Networks (WSN) and Radio Frequency Identification (RFID) tags require to low-cost and lightweight implementations. Therefore, implementation methods related to these applications are explored. In addition, a classification of the previous works in terms of scalability, flexibility, performance and cost effectiveness is provided. Finally, some words and techniques about future works that should be considered are provided.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-19T17:46:43Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Bahram Rashidi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09151v1</id>
+    <title>Probability Analysis and Comparison of Well-Known Integer Factorization Algorithms</title>
+    <updated>2021-01-21T06:50:05Z</updated>
+    <link href="https://arxiv.org/abs/2101.09151v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09151v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Two prominent methods for integer factorization are those based on general integer sieve and elliptic curve. The general integer sieve method can be specialized to quadratic integer sieve method. In this paper, a probability analysis for the success of these methods is described, under some reasonable conditions. The estimates presented are specialized for the elliptic curve factorization. These methods are compared through heuristic estimates. It is shown that the elliptic curve method is a probabilistic polynomial time algorithm under the assumption of uniform probability distribution for the arising group orders and clearly more likely to succeed, faster asymptotically.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-21T06:50:05Z</published>
+    <arxiv:primary_category term="math.GM"/>
+    <arxiv:journal_ref>Global Journal of Pure and Applied Mathematics, Volume 17, Number 1 (2021), pp. 1-8 (ISSN 0973-1768)</arxiv:journal_ref>
+    <author>
+      <name>Duggirala Meher Krishna</name>
+    </author>
+    <author>
+      <name>Duggirala Ravi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0403374v3</id>
+    <title>Elliptic curves of large rank and small conductor</title>
+    <updated>2004-05-11T13:28:23Z</updated>
+    <link href="https://arxiv.org/abs/math/0403374v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0403374v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  For r=6,7,...,11 we find an elliptic curve E/Q of rank at least r and the smallest conductor known, improving on the previous records by factors ranging from 1.0136 (for r=6) to over 100 (for r=10 and r=11). We describe our search methods, and tabulate, for each r=5,6,...,11, the five curves of lowest conductor, and (except for r=11) also the five of lowest absolute discriminant, that we found.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-03-22T22:03:04Z</published>
+    <arxiv:comment>16 pages, including tables and one .eps figure; to appear in the Proceedings of ANTS-6 (June 2004, Burlington, VT). Revised somewhat after comments by J.Silverman on the previous draft, and again to get the correct page breaks</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Noam D. Elkies</name>
+    </author>
+    <author>
+      <name>Mark Watkins</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.11798v2</id>
+    <title>The Birch--Swinnerton-Dyer exact formula for quadratic twists of elliptic curves</title>
+    <updated>2025-12-31T07:36:16Z</updated>
+    <link href="https://arxiv.org/abs/2102.11798v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.11798v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the present paper, we obtain a general lower bound for the $2$-adic valuation of the algebraic part of the central value of the complex $L$-series for the quadratic twists of any elliptic curve over $\mathbb{Q}$, showing that when the $2$-part of the product of Tamagawa factors grows, the $2$-part of the algebraic central $L$-value grows as well, in accordance with the Birch--Swinnerton-Dyer exact formula. This generalises a result of Coates--Kim--Liang--Zhao to all elliptic curves defined over $\mathbb{Q}$. We also prove the existence of an explicit infinite family of quadratic twists with analytic rank $0$ for a large family of elliptic curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-23T17:07:55Z</published>
+    <arxiv:comment>Dedicated to the memory of John Coates, to appear in PAMQ</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Shuai Zhai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/9809208v1</id>
+    <title>Steinitz class of Mordell groups of elliptic curves with complex multiplication</title>
+    <updated>1998-09-03T00:00:00Z</updated>
+    <link href="https://arxiv.org/abs/math/9809208v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/9809208v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Let E be an elliptic curve having Complex Multiplication by the full ring O_K of integers of K=Q(\sqrt{-D}), let H=K(j(E)) be the Hilbert class field of K. Then the Mordell-Weil group E(H) is an O_K-module, and its structure denpends on its Steinitz class St(E), which is studied here. In partucular, when D is a prime number, it is proved that St(E)=1 if D\equiv 3 (mod 4); and St(E)=[P]^t if D\equiv 1 (mod 4), where [P] is the ideal class of K represented by prime factor P of 2 in K, t is a fixed integer. General structures are also discussed for St(E) and for modules over Dedekind domain. These results develop the results by D. Dummit and W. Miller for D=10 and some elliptic curves to more general D and general elliptic curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-09-03T00:00:00Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Tong Liu</name>
+    </author>
+    <author>
+      <name>Xianke Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.11768v3</id>
+    <title>Irreducibility of the Cuboid Polynomial $P_{a,u}(t)$ via a Rank-Zero Elliptic Curve</title>
+    <updated>2026-03-15T19:25:59Z</updated>
+    <link href="https://arxiv.org/abs/2510.11768v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.11768v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we study the even monic degree-8 cuboid polynomial $P_{a,u}(t)$ introduced by R.A. Sharipov in the first-cuboid specialization of his cuboid equations. For nonzero integers $a,u$ with $u^2\neq a^2$ we prove that $P_{a,u}(t)$ is irreducible in $\mathbb{Z}[t]$ (equivalently, in $\mathbb{Q}[t]$), thus confirming Sharipov's irreducibility conjecture in this two-parameter case. Over $K=\mathbb{Q}(\sqrt2)$ we have a factorization $P_{a,u}(t)=H_-(t)H_+(t)$ into two conjugate quartics. We show that any further factorization of $H_\pm$ would force the discriminant of a certain quadratic in $S=t^2$ to be a square in $K$, which in turn implies (via $τ=(au/Δ)^2$) the existence of a rational point $(y,v)\in\mathcal{C}(\mathbb{Q})$ on the genus-one quartic $\mathcal{C}:\ v^2=16y^4+136y^2+1$ with $y^2=τ$. We give an explicit isomorphism $\overline{\mathcal{C}}\simeq E$ with the elliptic curve $E:\ Y^2=X(X-8)(X-9)$, whose Mordell-Weil group has rank $0$ and conductor $48$. Enumerating $E(\mathbb{Q})$ and tracing back to $\mathcal{C}(\mathbb{Q})$ rules out the only possible values $τ\in\{0,\tfrac14\}$, and hence excludes any factorization in $K[t]$. A quadratic Galois descent then yields the irreducibility of $P_{a,u}(t)$ over $\mathbb{Q}$ and $\mathbb{Z}$.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-13T17:13:24Z</published>
+    <arxiv:comment>A complete short proof of the first perfect cuboid conjecture (Sharipov's first conjecture)</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Valery Asiryan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1511.02388v1</id>
+    <title>Orders of reductions of elliptic curves with many and few prime factors</title>
+    <updated>2015-11-07T19:07:27Z</updated>
+    <link href="https://arxiv.org/abs/1511.02388v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1511.02388v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we investigate extreme values of $ω(E(\mathbb{F}_p))$, where $E/\mathbb{Q}$ is an elliptic curve with complex multiplication and $ω$ is the number-of-distinct-prime-divisors function. For fixed $γ&gt; 1$, we prove that \[ \#\{p \leq x : ω(E(\mathbb{F}_p)) &gt; γ\log\log x\} = \frac{x}{(\log x)^{2 + γ\logγ- γ+ o(1)}}. \] The same result holds for the quantity $\#\{p \leq x : ω(E(\mathbb{F}_p)) &lt; γ\log\log x\}$ when $0 &lt; γ&lt; 1$. The argument is worked out in detail for the curve $E : y^2 = x^3 - x$, and we discuss how the method can be adapted for other CM elliptic curves.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-11-07T19:07:27Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Lee Troupe</name>
+    </author>
+    <arxiv:doi>10.1142/S1793042117501147</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S1793042117501147" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.13119v2</id>
+    <title>On totally split primes in high-degree torsion fields of elliptic curves</title>
+    <updated>2021-10-01T14:26:25Z</updated>
+    <link href="https://arxiv.org/abs/2009.13119v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.13119v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Analogously to primes in arithmetic progressions to large moduli, we can study primes that are totally split in extensions of $\mathbb{Q}$ of high degree. Motivated by a question of Kowalski we focus on the extensions $\mathbb{Q}(E[d])$ obtained by adjoining the coordinates of $d$-torsion points of a non-CM elliptic curve $E/\mathbb{Q}$. A prime $p$ is said to be an outside prime of $E$ if it is totally split in $\mathbb{Q}(E[d])$ for some $d$ with $p&lt;|\text{Gal}(\mathbb{Q}(E[d])/\mathbb{Q})| = d^{4-o(1)}$ (so that $p$ is not accounted for by the expected main term in the Chebotarev Density Theorem). We show that for almost all integers $d$ there exists a non-CM elliptic curve $E/\mathbb{Q}$ and a prime $p&lt;|\text{Gal}(\mathbb{Q}(E[d])/\mathbb{Q})|$ which is totally split in $\mathbb{Q}(E[d])$. Furthermore, we prove that for almost all $d$ that factorize suitably there exists a non-CM elliptic curve $E/\mathbb{Q}$ and a prime $p$ with $p^{0.2694} &lt; d$ which is totally split in $\mathbb{Q}(E[d])$.
+  To show this we use work of Kowalski to relate the question to the distribution of primes in certain residue classes modulo $d^2$. Hence, the barrier $p &lt; d^4$ is related to the limit in the classical Bombieri-Vinogradov Theorem. To break past this we make use of the assumption that $d$ factorizes conveniently, similarly as in the works on primes in arithmetic progression to large moduli by Bombieri, Friedlander, Fouvry, and Iwaniec, and in the more recent works of Zhang, Polymath, and the author. In contrast to these works we do not require any of the deep exponential sum bounds (ie. sums of Kloosterman sums or Weil/Deligne bound). Instead, we only require the classical large sieve for multiplicative characters. We use Harman's sieve method to obtain a combinatorial decomposition for primes.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-28T08:02:59Z</published>
+    <arxiv:comment>v2: rearranged some sections and small corrections</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jori Merikoski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.04133v4</id>
+    <title>Serre's constant of elliptic curves over the rationals</title>
+    <updated>2019-10-22T15:38:50Z</updated>
+    <link href="https://arxiv.org/abs/1812.04133v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.04133v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $E$ be an elliptic curve without complex multiplication defined over the rationals. The purpose of this article is to define a positive integer $A(E)$, that we call the {\it Serre's constant associated to $E$}, that gives necessary conditions to conclude that $ρ_{E,m}$, the mod m Galois representation associated to $E$, is non-surjective. In particular, if there exists a prime factor $p$ of $m$ satisfying ${\rm val}_p(m) &gt; {\rm val}_p(A(E))&gt;0$ then $ρ_{E,m}$ is non-surjective. {Conditionally under Serre's Uniformity Conjecture, w}e determine all the Serre's constants of elliptic curves without complex multiplication over the rationals that occur infinitely often. Moreover, we give all the possible combination of mod $p$ Galois representations that occur for infinitely many non-isomorphic classes of non-CM elliptic curves over $\mathbb{Q}$, and the known cases that appear only finitely. We obtain similar results for the possible combination of maximal non-surjective subgroups of ${\rm GL}_2(\mathbb{Z}_p)$. Finally, we conjecture all the possibilities of these combinations and in particular all the possibilities of these Serre's constant.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-10T22:27:26Z</published>
+    <arxiv:comment>To appear in Exp. Math</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Exp. Math. 31 (2022), no. 2, 518-536</arxiv:journal_ref>
+    <author>
+      <name>Harris B. Daniels</name>
+    </author>
+    <author>
+      <name>Enrique González-Jiménez</name>
+    </author>
+    <arxiv:doi>10.1080/10586458.2019.1655816</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1080/10586458.2019.1655816" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1209.5706v1</id>
+    <title>A note on rational and elliptic curves associated with the cuboid factor equations</title>
+    <updated>2012-09-25T18:05:06Z</updated>
+    <link href="https://arxiv.org/abs/1209.5706v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1209.5706v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A rational perfect cuboid is a rectangular parallelepiped whose edges and face diagonals are given by rational numbers and whose space diagonal is equal to unity. It is described by a system of four equations with respect to six variables. The cuboid factor equations were derived from these four equations by symmetrization procedure. They constitute a system of eight polynomial equations, which has been solved parametrically. In the present paper its parametric solution is expressed through intersections or rational and elliptic curves arranged into parametric families.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-09-25T18:05:06Z</published>
+    <arxiv:comment>AmSTeX, 15 pages, amsppt style, 1 ancillary file. arXiv admin note: substantial text overlap with arXiv:1209.0723</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ruslan Sharipov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.00854v1</id>
+    <title>Rational points on elliptic curves and representations of rational numbers as the product of two rational factors</title>
+    <updated>2019-10-02T10:03:27Z</updated>
+    <link href="https://arxiv.org/abs/1910.00854v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.00854v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper I demonstrate that any pair (m, n) of non-zero and distinct rational numbers may have, at most, four representations as the product of two rational factors such that the sum of factors of m coincides with the sum of factors of n. In the second part of the paper I derive the properties of elliptic curves such that the cubic has rational roots that satisfy this property</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-02T10:03:27Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Francesco Trimarchi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.21261v1</id>
+    <title>ECCFROG522PP: An Enhanced 522 bit Weierstrass Elliptic Curve</title>
+    <updated>2026-04-23T04:08:26Z</updated>
+    <link href="https://arxiv.org/abs/2604.21261v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.21261v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents ECCFROG522PP, a 522-bit prime-field elliptic curve in short Weierstrass form, designed with a focus on deterministic generation and public reproducibility. The central design principle is that all critical parameters are derived from a fixed public seed through a transparent and verifiable procedure. While many deployed systems rely on NIST P-256 and secp256k1, which target approximately 128-bit classical security, higher security applications typically consider curves such as NIST P-521, Curve448, and Brainpool P512. ECCFROG522PP is intended for the same general classical security range as P-521, with emphasis on transparency, auditability, and reproducibility rather than performance optimization.
+  The curve parameters are generated through a BLAKE3-based deterministic pipeline with publicly specified indices. The resulting construction has prime order, cofactor one, and a deterministically derived base point of full order. The quadratic twist has a large proven prime factor, and the construction includes a documented lower bound on the embedding degree together with standard sanity checks against low embedding degree reductions and basic CM discriminant anomalies.
+  The full generation and validation procedure can be reproduced end to end from public artifacts and reference scripts, enabling independent verification of all parameters and checks.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-23T04:08:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Victor Duarte Melo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.2325v1</id>
+    <title>Factorization with genus 2 curves</title>
+    <updated>2009-05-14T13:19:57Z</updated>
+    <link href="https://arxiv.org/abs/0905.2325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.2325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The elliptic curve method (ECM) is one of the best factorization methods available. It is possible to use hyperelliptic curves instead of elliptic curves but it is in theory slower. We use special hyperelliptic curves and Kummer surfaces to reduce the complexity of the algorithm. Our implementation GMP-HECM is faster than GMP-ECM for factoring big numbers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-14T13:19:57Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Romain Cosset</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-09-02295-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-09-02295-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.09076v3</id>
+    <title>ECM factorization with QRT maps</title>
+    <updated>2020-07-15T06:51:13Z</updated>
+    <link href="https://arxiv.org/abs/2001.09076v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.09076v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quispel-Roberts-Thompson (QRT) maps are a family of birational maps of the plane which provide the simplest discrete analogue of an integrable Hamiltonian system, and are associated with elliptic fibrations in terms of biquadratic curves. Each generic orbit of a QRT map corresponds to a sequence of points on an elliptic curve. In this preliminary study, we explore versions of the elliptic curve method (ECM) for integer factorization based on iterating three different QRT maps with particular initial data. Pseudorandom number generation and other possible applications are briefly discussed.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-24T16:30:32Z</published>
+    <arxiv:comment>14 pages, full version for FCS'20 proceedings</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrew N. W. Hone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.04097v3</id>
+    <title>ECCFROG522PP: An Enhanced 522-bit Weierstrass Elliptic Curve</title>
+    <updated>2026-04-20T11:51:45Z</updated>
+    <link href="https://arxiv.org/abs/2509.04097v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.04097v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Whilst many key exchange and digital signature systems still rely on NIST P-256 (secp256r1) and secp256k1, offering around 128-bit security, there is an increasing demand for transparent and reproducible curves at the 256-bit security level. Standard higher-security options include NIST P-521, Curve448, and Brainpool-P512. This paper presents ECCFROG522PP ("Presunto Powered"), a 522-bit prime-field elliptic curve that delivers security in the same classical approx 260-bit ballpark as NIST P-521, but with a fundamentally different design philosophy. All of the curve parameters are deterministically derived from a fixed public seed via BLAKE3, with zero hidden choices. The curve has prime order (cofactor = 1), a verified twist with a proven approx 505-bit prime factor, safe embedding degree (greater than or equal to 14), and passes anti-MOV checks up to k less than or equal to 200 and CM discriminant sanity up to 100k. Unlike prior opaque or ad-hoc constructions, ECCFROG522PP is fully reproducible: anyone can regenerate and verify it byte-for-byte using the published scripts. The intent is not to outperform NIST P-521 in raw speed, but to maximise trust, verifiability, and long-term auditability in a practical curve of equivalent security level</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-04T10:57:26Z</published>
+    <arxiv:comment>Further analysis is required on the curve parameters</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Víctor Duarte Melo</name>
+    </author>
+    <author>
+      <name>William J. Buchanan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.0252v1</id>
+    <title>Ranks of elliptic curves with prescribed torsion over number fields</title>
+    <updated>2011-12-31T12:22:42Z</updated>
+    <link href="https://arxiv.org/abs/1201.0252v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.0252v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the structure of the Mordell--Weil group of elliptic curves over number fields of degree 2, 3, and 4. We show that if $T$ is a group, then either the class of all elliptic curves over quadratic fields with torsion subgroup $T$ is empty, or it contains curves of rank~0 as well as curves of positive rank. We prove a similar but slightly weaker result for cubic and quartic fields. On the other hand, we find a group $T$ and a quartic field $K$ such that among the elliptic curves over $K$ with torsion subgroup $T$, there are curves of positive rank, but none of rank~0. We find examples of elliptic curves with positive rank and given torsion in many previously unknown cases. We also prove that all elliptic curves over quadratic fields with a point of order 13 or 18 and all elliptic curves over quartic fields with a point of order 22 are isogenous to one of their Galois conjugates and, by a phenomenon that we call \emph{false complex multiplication}, have even rank. Finally, we discuss connections with elliptic curves over finite fields and applications to integer factorization.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-12-31T12:22:42Z</published>
+    <arxiv:comment>25 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Int. Math. Res. Not. IMRN 2014 (11) (2014), 2885-2923</arxiv:journal_ref>
+    <author>
+      <name>Johan Bosman</name>
+    </author>
+    <author>
+      <name>Peter Bruin</name>
+    </author>
+    <author>
+      <name>Andrej Dujella</name>
+    </author>
+    <author>
+      <name>Filip Najman</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rnt013</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rnt013" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.08473v2</id>
+    <title>Elliptic Curve Fast Fourier Transform (ECFFT) Part I: Fast Polynomial Algorithms over all Finite Fields</title>
+    <updated>2021-10-12T12:52:28Z</updated>
+    <link href="https://arxiv.org/abs/2107.08473v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.08473v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For smooth finite fields $F_q$ (i.e., when $q-1$ factors into small primes) the Fast Fourier Transform (FFT) leads to the fastest known algebraic algorithms for many basic polynomial operations, such as multiplication, division, interpolation and multi-point evaluation. However, the same operations over fields with no smooth order root of unity suffer from an asymptotic slowdown. The classical algorithm of Schonhage and Strassen incurred a multiplicative slowdown factor of $\log \log n$ on top of the smooth case. Recent remarkable results of Harvey, van der Hoeven and Lecerf dramatically reduced this multiplicative overhead to $\exp(\log^* (n))$.
+  We introduce a new approach to fast algorithms for polynomial operations over all large finite fields. The key idea is to replace the group of roots of unity with a set of points $L \subset F$ suitably related to a well-chosen elliptic curve group (the set $L$ itself is not a group). The key advantage of this approach is that elliptic curve groups can be of any size in the Hasse-Weil interval $[q+1 \pm 2\sqrt{q}]$ and thus can have subgroups of large, smooth order, which an FFT-like divide and conquer algorithm can exploit. Compare this with multiplicative subgroups over whose order must divide $q-1$.
+  For polynomials represented by their evaluation over subsets of $L$, we show that multiplication, division, degree-computation, interpolation, evaluation and Reed-Solomon encoding (also known as low-degree extension) with fixed evaluation points can all be computed with arithmetic circuits of size similar to what is achievable with the classical FFTs when the field size is special. For several problems, this yields the asymptotically smallest known arithmetic circuits even in the standard monomial representation of polynomials.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-18T15:27:37Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Eli Ben-Sasson</name>
+    </author>
+    <author>
+      <name>Dan Carmon</name>
+    </author>
+    <author>
+      <name>Swastik Kopparty</name>
+    </author>
+    <author>
+      <name>David Levit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.07822v5</id>
+    <title>Jacobian varieties with many elliptic curves</title>
+    <updated>2019-10-16T13:16:31Z</updated>
+    <link href="https://arxiv.org/abs/1507.07822v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.07822v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years there has been an interest in constructing examples of closed Riemann surfaces whose jacobian varieties are isogenous to a product of many elliptic factors and some other jacobian varieties. The first ones, provided by Ekedahl and Serre, are examples for which the isogenous decomposition has all factors being elliptic curves. It is well known that given two elliptic curves $E_{1}$ and $E_{2}$, there is a closed Riemann surface $X$ of genus two, with equations in terms of the elliptic curves, and whose jacobian variety $JX$ is isogenous to $E_{1} \times E_{2}$. In this paper, given $s \geq 3$ elliptic curves $E_{1},\ldots, E_{s}$, we provide an explicit construction of a closed Riemann surface $X$ of genus $g=1+2^{s-2}(s-2)$, with $JX$ isogenous to $E_{1} \times \cdots \times E_{s} \times A$, where $A$ is the product of some elliptic curves and jacobian varieties of hyperelliptic Riemann surfaces, all of them explicitly in terms of the given elliptic curves. In particular, for $s=3$, this provides explicit Riemann surface of genus three whose jacobian variety is isogenous to $E_{1} \times E_{2} \times E_{3}$, for given elliptic curves.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-28T15:50:19Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Ruben A. Hidalgo</name>
+    </author>
+  </entry>
+</feed>

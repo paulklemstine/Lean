@@ -1,0 +1,904 @@
+Integer factoring using small algebraic
+dependencies∗
+Manindra Agrawal1 , Nitin Saxena2 , and Shubham Sahai Srivastava3
+
+1       Indian Institute of Technology, Kanpur, INDIA
+        manindra@cse.iitk.ac.in
+2       Indian Institute of Technology, Kanpur, INDIA
+        nitin@cse.iitk.ac.in
+3       Indian Institute of Technology, Kanpur, INDIA
+        ssahai@cse.iitk.ac.in
+
+
+        Abstract
+    Integer factoring is a curious number theory problem with wide applications in complexity and
+cryptography. The best known algorithm to factor a number n takes time, roughly, exp(2 log1/3 n·
+log2/3 log n) (number field sieve, 1989). One basic idea used is to find two squares, possibly in a
+number field, that are congruent modulo n. Several variants of this idea have been utilized to
+get other factoring algorithms in the last century. In this work we intend to explore new ideas
+towards integer factoring. In particular, we adapt the AKS primality test (2004) ideas for integer
+factoring.
+    In the motivating case of semiprimes n = pq, i.e. p < q are primes, we exploit the difference
+in the two Frobenius morphisms (one over Fp and the other over Fq ) to factor n in special
+cases. Specifically, our algorithm is polynomial time (on number theoretic conjectures) if we
+know a small algebraic dependence between p, q. We discuss families of n where our algorithm is
+significantly faster than the algorithms based on known techniques.
+
+1998 ACM Subject Classification Primary: F.2.1 ; Secondary: I.1.2
+
+Keywords and phrases integer, factorization, factoring integers, algebraic dependence, depend-
+encies
+
+Digital Object Identifier 10.4230/LIPIcs.MFCS.2016.7
+
+
+    1    Introduction
+Factoring a positive integer n is the process of finding a positive integer m (1 < m < n) that
+divides n. Integer factorization has been fascinating mathematicians for centuries [9]. There
+has been continuous attempts to expand our abilities to factor larger and larger integers (see
+[14], [3]).
+    In general, factoring a composite number is widely believed to be a “hard" problem, with
+no efficient general purpose algorithms known. There are several special purpose factoring
+algorithms which can factor composites efficiently, provided some specific property is satisfied.
+Some of the algorithms being: Trial division (or Eratosthenes sieve, see [12]), Fermat’s
+factorization [15], Euler’s factorization [20][22], Pollard’s rho algorithm [24], Pollard’s p − 1
+algorithm [23], Williams’ p + 1 algorithm [30], Lenstra’s elliptic curve factorization [18],
+quadratic sieve [10], and the number field sieve [6]. Sieve ideas have been the most successful
+ones in factoring, see an excellent survey in [26].
+
+
+∗
+    N.S. is supported by DST/SJF/MSA-01/2013-14.
+             © Manindra Agrawal, Nitin Saxena and Shubham Sahai Srivastava;
+             licensed under Creative Commons License CC-BY
+41st International Symposium on Mathematical Foundations of Computer Science (MFCS 2016).
+Editors: Piotr Faliszewski, Anca Muscholl, and Rolf Niedermeier; Article No. 7; pp. 7:1–7:15
+                    Leibniz International Proceedings in Informatics
+                    Schloss Dagstuhl – Leibniz-Zentrum für Informatik, Dagstuhl Publishing, Germany
+7:2   Integer factoring using small algebraic dependencies
+
+
+          The “hardness” of integer factorization has no known proof, but, the belief hinges only on
+      our inability to factor a general composite efficiently. However this belief is so strong, that
+      the most widely used public key cryptosystems (eg. RSA [5]) are based on this “inherent”
+      difficulty to factorize integers. Such applications in cryptography make integer factorization
+      problem even more interesting. Giving a polynomial time algorithm to factorize any given
+      integer, might result in breaking most widely used cryptosystems. On the other hand, proving
+      (or giving evidence) that no efficient algorithm exists for factoring a general composite would
+      further strengthen the trust on these cryptosystems.
+          This does not mean that no progress was made in the direction, to come up with a
+      general purpose algorithm. Although there is no algorithm that can factor (even heuristically)
+      all integers in “polynomial time" (i.e. polynomial in the bit-size of the input number),
+      yet there are several algorithms that run in subexponential time (i.e. exp(O(log n)) time
+      for  < 1). These are faster than the simple “high school” method (i.e. trial division
+      algorithm, having exponential running time). The fastest general purpose algorithm for
+            p a number n, is the general
+      factoring
+                                      1
+                                             number
+                                                  2
+                                                     field sieve (see [16]), with heuristic running time
+               3
+      exp        64/9 + o(1) (log n) (log log n) . The other widely used algorithm in practice is
+                                      3           3
+
+                                                                                  √              
+      the quadratic sieve algorithm [25], having running time exp (1 + o(1)) log n log log n , which
+      is a modification
+              √          of Dixon’s algorithm   [8], that had a (rigorously provable) running time of
+                          √               
+      exp (2 2 + o(1)) log n log log n .
+          In 1997, Peter Shor discovered the first polynomial time algorithm for factoring integers
+      on a quantum computer [28]. To factor an integer n, it takes O((log n)2 log log n log log log n)
+      time1 on quantum computer and O(log n) post-processing time on classical computer for
+      converting the output of quantum computer to factors of n. If one day quantum computation
+      becomes feasible for large inputs, then this will have serious implications in cryptography [4].
+          One common thread in these, increasingly complex, algorithms is the trick of finding
+      two squares in some number field, such that the difference of the squares, say a2 − b2 , is a
+      multiple of n. Then we can hope that the factors (a − b), (a + b) would also lead us to the
+      factors of n. The origins of this trick dates back atleast to Fermat, and was also exploited
+      by Gauss, Seelhoff and Kraitchik (see the early history of factoring in [31]). One wonders
+      whether other natural tricks or ideas could be discovered for factoring integers.
+          In this work we propose a method for factoring semiprimes n = pq (i.e. p < q are primes)
+      using the difference in the Frobenius morphisms over the finite fields Fp and Fq . We do this
+                                                                              r
+                                                                        −1
+      by working in a cyclotomic ring extension (Z/nZ)[ζ] := Z[X]/ n, XX−1 . We pick a random
+      element u(ζ) ∈ (Z/nZ)[ζ] and compute the exponentiation ue , for a carefully chosen positive
+      integer e. For example, when e = n we can invoke the Frobenius morphisms to deduce
+      u(ζ)n = u(ζ p )q (mod p) and u(ζ)n = u(ζ q )p (mod q). A similar line of thought has been
+      explored in [7], where they viewed the problem from the perspective of AKS [1] polynomial.
+      Although no family of n was identified in that work to be particularly good. The asymptotic
+      complexity of the algorithm was also not analyzed, but some supporting experimental data
+      was included.
+          We identify certain families of n where this idea gives a fast factoring algorithm. Especially,
+      in our main result we pick e corresponding to a known algebraic dependency of p and q.
+      In this case, we show that the ring computations in (Z/nZ)[ζ] are expected to factorize n.
+      We believe that such computations in the cyclotomic ring have a good chance in further
+      improving the state of the art in factoring. Similar techniques were utilized in [1] to give the
+
+
+      1
+          We can shorten this using the soft-Oh notation as Õ(log2 n).
+M. Agrawal, N. Saxena and S. S. Srivastava                                                                     7:3
+
+
+first deterministic poly-time primality test. Moreover, for integer factoring even “heuristic”
+algorithms that are expected to run in poly-time (in the worst-case) would be of great
+interest.
+    Our notion of “small” algebraic dependence and the proof of its existence is captured in
+the following proposition. We say that a bivariate polynomial f (X, Y ) is nondegenerate if
+there appears, with a nonzero coefficient, a monomial X i Y j in f such that i 6= j.
+I Proposition 1.1 (Small dependency exists). For numbers d, a < b ∈ N, there exists a
+degree ≤ d nondegenerate integral polynomial f (X, Y ) of sparsity 2γ and coefficients ci ’s of
+                                                P2γ
+magnitude at most bd/(γ−1) such that: f (a, b) = i=1 ci aαi bβi = 0. (Note that 2γ ≤ d+2   2
+as 0 ≤ αi + βi ≤ d.)
+     It is proven in Section 3. Recall that Fermat’s factoring algorithm works fast when the
+primes p, q are really close2 ; formally, when there is an f (x, y) = y − x − α, for a small α,
+such that f (p, q) = 0. We generalize the condition of Fermat’s factoring algorithm to higher
+degree dependencies (and with more general coefficients). The above proposition gives the
+parameters for such f to exist. Our algorithms will require the knowledge of such an f
+(unfortunately, in general, it may be hard to find f given only n).
+     One such interesting dependence is addressed in Section 4.2. For n = pq, p < q, we
+represent q in base p as q = a0 + a1 .p + a2 .p2 + a3 .p3 + · · · . We define the pth norm of
+               Q
+q as |q|p := i (ai + 1). Given a small bound B on |q|p , our algorithm factors n in time
+O(B 2 log2 n). This immediately gives us a family of n which can be factored efficiently
+(under certain number theory conjectures) using our algorithm. This family is a natural
+generalization of the family of numbers (n = ab, where b − a is small) that can be factored
+efficiently using Fermat’s factoring algorithm.
+     Our general approach works in polynomial time, assuming that a suitable dependency
+is provided (and that certain number theory conjectures hold). The algorithm presented
+in this paper runs in Õ(γ 3 d log2 n) time, where d is the degree bound of the dependency,
+γ is its sparsity, and n is the number to be factored. Observe that once such a bivariate
+nondegenerate dependency f (X, Y ), of degree d is given, we can easily transform it to get a
+univariate polynomial X d f (X, n/X) which has p as a root. Notice, that it is important here
+that the dependency is nondegenerate. For degenerate dependency of the form f (X, Y ) =
+             i i
+P
+   i≤d ai X Y the substitution f (X, n/X) will give us a number instead of a univariate
+polynomial, and we could not proceed further.
+     Now, once we get a univariate polynomial f 0 := X d f (X, n/X) which has p as a root, we
+could simply try to find its integral roots by factoring it using Schönhage’s algorithm [27]
+having time complexity Õ(d4 · (d2 + log2 |f 0 |)), where |f 0 | upper bounds the coefficients in f 0 .
+On the other hand, our new approach is sensitive to sparsity γ and tolerates bigger coefficients.
+So, for dependencies, having ‘small’ γ and ‘large’ d, our algorithm will outperform Schönhage’s
+algorithm by several orders. For example, given dependence f (x, y) = y + c1 xd + c0 , where
+|c1 | = |c0 | = nO(d) , our algorithm will factor it in time Õ(d log2 n), whereas Schönhage’s
+algorithm will take time Õ(d4 · (d2 + d2 log2 n)) = Õ(d6 log2 n).
+     The main result established is presented in Section 5. The section presents the algorithm
+to factor n when a small dependency is provided. The result is summarized by the following
+theorem.
+I Theorem 1.2 (Main Result). For an integer n = p·q (p < q are primes), given a nondegenerate
+                                                  Pγ
+integral (p, q) dependency of the form f (X, Y ) = i=1 ci X αi Y βi , where ∀i, 0 ≤ αi + βi ≤ d,
+
+
+2
+    Essentially, one tries to find q − p by brute-force.
+
+
+
+
+                                                                                                          M FC S 2 0 1 6
+7:4   Integer factoring using small algebraic dependencies
+
+
+      |ci | = nO(d) := A we can factor n in Õ(γ 3 d log2 n) time. (Assuming Artin’s conjecture & 3.)
+          We also present an alternate analysis of this algorithm in Section 6. This section also
+      generalizes the result for integers of the form n = p · n0 , where p is a prime smaller than the
+      largest prime factor of n. The following theorem presents the result of that section.
+      I Theorem 1.3. For an integer n = p · n0 (where p is a prime smaller than the largest
+      prime factor of n), given a nondegenerate integral (p, n0 ) dependency of the form f (X, Y ) =
+      Pγ
+        i=1 ci X
+                 αi
+                    Y βi , where ∀i, 0 ≤ αi + βi ≤ d, |ci | < nd , we can factor n in Õ(µ3 · γd4 log2 n)
+      time. Here µ := i ei for the prime factorization n = i pei i . (Assuming Artin’s conjecture
+                         P                                        Q
+
+      & 4.)
+          Here as well, for µ, γ = O(1) the time complexity is better than that of simply factoring
+      X d f (X, n/X) by Schönhage’s algorithm. Also, the algorithm seems simpler than the soph-
+      isticated lattice computations that underlie Schönhage’s polynomial factoring algorithm (see
+      [13]).
+          The paper is organized into following sections: Section 2 talks about the notations and
+      results used in the paper. Section 3 proves the existence of small dependence. In Section
+      4, we discuss two simple dependencies as motivating examples, and explore the idea of
+      exponentiation in the cyclotomic ring to factor n. Section 5 presents the main result of the
+      paper. An alternate analysis of the algorithm is presented in Section 6.
+
+
+       2      Notation and Preliminaries
+      This section states the notations and number theory results that we will use later.
+      Polynomial notation. The form of polynomials that we compute in this work is exponen-
+      tiation; motivated by the AKS polynomial (see [1]) used for primality testing:
+
+           P = a(x)e     (mod n, xr − 1), where a(x) is a polynomial.                                (1)
+
+      For technical reasons we will actually work modulo the r-th cyclotomic polynomial ϕr (x).
+      Then, we represent exponentiation by the following shorthand notation
+
+           P = a(ζr )e   (mod n), and might drop r when clear from the context.                      (2)
+
+      Formally, this arithmetic happens in the ring (Z/nZ)[ζr ] := Z[X]/(n, ϕr (X)), where every
+      element can be written as a (Z/nZ)-linear-combination of the monomials {X i | 0 ≤ i ≤
+      ϕ(r) − 1}, where ϕ(r) is the Euler totient function (also, the degree of the cyclotomic
+      polynomial). This will be our standard representation.
+          In this paper we assume r to be a prime, mainly, to simplify the analysis since ϕr (x) =
+      (xr − 1)/(x − 1). Also for composite r’s the cyclotomic extension is quite well structured.
+      For the basic properties of the cyclotomics see [29, Chap.2].
+      Artin’s conjecture. Emil Artin (1927, see [21]) conjectured: For any non-square a ∈
+      Q \ {−1} there exist infinitely many primes p such that a is a primitive root modulo p, i.e. the
+      multiplicative order ordp (a) = p − 1.
+          There has been impressive positive progress towards this conjecture [11]. Moreover, a
+      quantitative version of this conjecture is also believed to be true.
+      I Conjecture (Artin’s conjecture, see [21]). For any non-square a ∈ Q \ {−1}, the number
+      of primes p ≤ x with ordp (a) = p − 1 is asymptotically at least CArtin · π(x). (π(x) is the
+      number of primes in the interval [1, x] and CArtin = 0.3739558136192 · · · .)
+M. Agrawal, N. Saxena and S. S. Srivastava                                                                  7:5
+
+
+Frobenius morphism. For a prime p consider the polynomial ring R := Fp [X] over the
+finite field Fp . Consider the map φ : R → R given by the exponentiation a(X) 7→ a(X)p . It
+is easy to see that φ is actually a (ring) endomorphism of R, and the trivial3 automorphism
+of Fp . In other words, we have the useful identity: ∀a(X) ∈ R, a(X)p = a(X p ).
+
+Other notations. We use [n] to denote the set {1, 2 · · · , n}. The notation logq,r p is used
+to denote, the discrete log, logq p in the field Fr , i.e. it is the exponent i ∈ {0, . . . , r − 2}
+such that p = q i (mod r). Here, we assumed that r is a prime, and q is a primitive root
+modulo r. (We hope to get such an r corresponding to a q as the density of r’s is high as per
+Artin’s conjecture.) Bold faced symbols (e.g. α) represent vectors. Fq [ζ] represents some
+ring Fq [X]/(ϕr (X)).
+    We recall a useful standard property of cyclotomic polynomials. This is the main reason
+why Artin’s conjecture appears in this work.
+I Lemma 2.1. Let q 6= r be primes. The integral polynomial ϕr (x) = (xr − 1)/(x − 1) is
+irreducible over Fq iff q is a primitive root modulo r.
+
+Proof. Let q generate F∗r . Wlog assume r > 2, as ϕr (x) is linear for r = 2. Suppose ϕr (x)
+is reducible and has a degree d factor g(x), where d ∈ [r − 2]. Let α be a root of g(x) in
+the (splitting) field Fq [x]/(g(x)). As this is the field Fqd , the multiplicative order ord(α) will
+divide q d − 1. Since α is a root of xr − 1, we also have ord(α)|r. Thus, ord(α) is 1 or r. It
+cannot be 1 as q 6= r. So,
+                                            ord(α) = r.
+
+
+        Consequently, r | q d − 1
+                       qd = 1    (mod r)
+                 (r − 1) | d    [∵ q generates F∗r ] .
+
+
+This contradicts d ∈ [r − 2]. Hence, ϕr (x) is irreducible modulo q.
+    For the converse note that ϕr (x) being irreducible modulo q, means that it divides
+   r−1                     i
+xq     − x, and no other xq − x for a smaller i. Equivalently, r | q r−1 − 1 and no other q i − 1
+for a smaller i. Thus, q generates F∗r .                                                       J
+
+
+    3      Existence of small dependencies
+Our basic idea is based on the following elementary property of numbers.
+
+Proof for Proposition 1.1. Clearly, 2γ ≤ d+2
+                                                      
+                                                    2     =: γ0 which is the upper bound for the
+number of exponents (αi , βi ) in f .
+    Let A := 2bd/(γ−1) . Consider a set S of nondegenerate combinations (i.e. i1 6= i2 for at
+least one monomial in each sum),
+                                                                                                 
+          X                                                   A                                  
+    S :=            αi1 ,i2 · ai1 bi2 αi1 ,i2 ∈ Z, |αi1 ,i2 | ≤ , at most γ αi1 ,i2 ’s are nonzero .
+                                                              2                                  
+               0≤i1 +i2 ≤d
+
+
+
+3
+    Fermat’s little theorem (1640).
+
+
+
+
+                                                                                                       M FC S 2 0 1 6
+7:6   Integer factoring using small algebraic dependencies
+
+
+      Then, we have
+                           A d
+              ∀β ∈ S, |β| ≤ γ ·
+                              ·b .
+                            2
+         Consider the set V comprising the coefficient-vectors α corresponding to every element
+      of S. Then the cardinality of V can be lower bounded (by doing a sum over the possible
+      supports of α) as,
+                                                 
+                 γ0      γ      γ0      γ−1          γ0
+         |V| ≥       ·A +            ·A     + ··· +       ·A+1
+                 γ             γ−1                    1
+                γ
+                 γ0
+             >         · Aγ         [Simple binomial estimate]
+                  γ
+      Clearly, if |V| = |S| is greater than max{|β| | β ∈ S}, then by the pigeon-hole principle
+      there will be atleast two distinct vectors α, α0 ∈ V that correspond to the same number
+      β ∈ S. This gives us the desired dependency,
+                   X
+         0 =             (αi1 ,i2 − αi0 1 ,i2 ) · ai1 bi2 .
+                   0≤i1 +i2 ≤d
+
+      Hence, for the desired small dependency it suffices to ensure that,
+                       |V| > max{|β|}
+                      γ
+                  γ0 A           A
+              or           ≥ γ · · bd
+                   γ             2
+                              γ
+                                γ     γbd
+                 or Aγ−1 ≥          ·
+                               γ0      2
+                              γ/(γ−1)  
+                                γ           γ 1/(γ−1) d/(γ−1)
+                     or A ≥               ·          ·b
+                               γ0           2
+                       or A ≥ 2 · bd/(γ−1)                                                                 (3)
+      Clearly, for our A, Equation 3 is satisfied. Hence, the required dependency exists.                   J
+
+         Hence, there is a trade-off between the sparsity (γ) and the magnitude (ci ) of the
+      dependency polynomial.
+      I Remark. This bound is not optimal. Eg. if we allow f to have sparsity γ0 then a slightly
+      better bound of A = 2bd/(γ0 −1) can be shown; which for d = 1 seems optimal.
+          For a nonconstant γ, or a superpolynomial coefficient-bound A, it would be quite expensive
+      to search for such a dependency f in general. So, our algorithms would be interesting only
+      for those n = pq where it is relatively easy to find an f such that f (p, q) = 0.
+
+          4      Motivating Dependencies
+      In the previous section we have shown that a “small" dependency will always exist (Proposition
+      1.1). Although, in general this dependency could be hard to find, but in special cases there
+      are several natural dependencies. Some of them have already been witnessed and worked
+      upon. An example of one such naturally occurring dependency is, when the two factors are
+      very close to each other. In other words, for n = pq, q − p = α, where α is some small 4
+
+      4
+          The term “small" is used vaguely here. The running time of the algorithm is proportional to α. Hence,
+          we could work with α according to the running time we aim for. For polynomial time algorithm, we
+          want α = poly log n.
+M. Agrawal, N. Saxena and S. S. Srivastava                                                                           7:7
+
+                                                                         √
+constant. Consequently, in such cases both p and q will be close to n. Hence, to factor
+                                                                      √
+n, we can simply use the trial division algorithm, starting from n, which would work
+efficiently as α is small. A more sophisticated and faster way to factor a number having such
+a dependency (q − p = α) would be to use Fermat’s factorization method. We propose a new
+method to factor numbers having such a dependency.
+
+
+4.1      Factoring numbers having dependency of the form q − p = α
+Assuming that we have n and a bound B such that q − p = α ≤ B the idea is to pick an
+element (x + a) ∈ (Z/nZ)[x]/(n, xr − 1) and compute P := (x + a)n , for an r slightly bigger
+than B. The hope is that the two (underlying) polynomials, Pq = (xq + a)p (mod q, xr − 1)
+and Pp = (xp + a)q (mod p, xr − 1) would have different supports (i.e. there is a monomial
+xi , i ∈ [0, 1, · · · , r − 1], that appears with zero coefficient in exactly one of the polynomials5 ).
+We can clearly see, that r ≤ q is the trivial upper bound. But we can likely improve this
+upper bound further.
+     For r < p < q it seems likely that for most a’s, (x + a)p (mod q, xr − 1) will have each of
+the r monomials (i.e. xi , i ∈ [0, 1, · · · , r − 1]) appearing with nonzero coefficient6 . We pose
+this formally.
+
+I Conjecture 1. For primes p < q, 1 ≤ r < p and a random a ∈ Z/qZ, (x + a)p (mod q, xr − 1)
+is full support with high (i.e. constant) probability.
+
+The rationale for this conjecture is that we expect (x + a)p to be a “random” element
+in the cyclotomic ring. So, it will be rare that there is a zero coefficient in its standard
+representation.
+    On the other hand (x + a)q (mod p, xr − 1), for r ≥ 2B + 3, has proper support as we
+now show.
+
+I Theorem 4.1. For primes p < q and r ≥ 2(q − p) + 3, (x + a)q (mod xr − 1, p) is proper
+support.
+
+
+Proof. Consider the polynomial,
+
+     Pp = (x + a)q       (mod p)
+         = (x + a) (x + a)q−p
+                     p
+                                      (mod p)
+               p                q−p
+         = (x + a)(x + a)             (mod p)
+               p          q−p
+         = (x )(x + a)                +   a · (x + a)q−p    (mod p) .
+           |     {z         }             |      {z    }
+             Sparsity≤q−p+1               Sparsity≤q−p+1
+
+
+Hence, Sparsity(Pp ) ≤ 2(q − p + 1). So, taking r ≥ 2(q − p + 1) + 1 will ensure that atleast
+one monomial in (x + a)q (mod xr − 1, p) has the zero coefficient.                         J
+
+
+     These observations motivate the following algorithm.
+
+
+5
+    It is easy to see that this implies that one of the coefficients in P will share a nontrivial gcd with n.
+6
+    Such a polynomial we call full support, and its opposite is proper support.
+
+
+
+
+                                                                                                                M FC S 2 0 1 6
+7:8   Integer factoring using small algebraic dependencies
+
+
+      Algorithm 1 Factoring Integer : F AC1 (n, B)
+      Require: Odd n = pq (p < q are primes) and a parameter B ≥ (q − p).
+       1: r ← 2
+       2: while r ≤ 2B + 3 and n is not factored do
+       3:   Choose a random number a < n
+       4:   Compute P = (x + a)n (mod xr − 1, n)
+       5:   Take gcd of n with ra, and with the coefficients of P.
+       6:   if n is factored then
+       7:      return f actor
+       8: return 0
+
+
+          Time complexity. The polynomial computation in step 4, takes time Õ(r log2 n) using
+      fast arithmetic. Taking GCD in step 5, takes similar time. Hence, the overall time complexity
+      of the algorithm is Õ(B 2 log2 n). Note that it is a probabilistic algorithm based on Conjecture
+      1. It can be seen as an alternative (albeit slower) to Fermat’s factoring algorithm.
+
+      4.2    Bound based on pth norm of q
+      This subsection discusses a more general, yet natural, dependency and presents the algorithm
+      to factor n in such cases.
+          Let us represent q in base p (so that ai ’s are in [0, · · · , p − 1]),
+
+         q = a0 + a1 .p + a2 .p2 + a3 .p3 + · · · .
+
+          We define the pth norm of q as |q|p := i (ai + 1). It is defined as a ‘measure’ for the size
+                                                  Q
+
+      of the coefficients in base p representation of q.
+          Can we factor n = pq (primes p < q) if we have an upper bound B on |q|p ? We can
+      generalize the methods of the last section.
+          By Conjecture 1 we expect (x + a)p (mod xr − 1, q) to be full support, for random a.
+      The other modulus is covered by the following simple observation.
+      I Theorem 4.2. For primes p < q and r > |q|p , (x + a)q (mod xr − 1, p) is proper support.
+
+      Proof. By using the base-p representation of q we have,
+                                                                   2      3
+                                 (x + a)q = (x + a)a0 +a1 .p+a2 .p +a3 .p +···
+                                            Y              i
+                                          =    (x + a)ai .p
+                                               i
+                                             Y i
+                                           =  (xp + a)ai        (mod p)
+                                               i
+                                              Y
+         ∴ Sparsity((x + a)q      mod p) ≤     (ai + 1)
+                                               i
+
+                                           = |q|p .
+
+      Hence, for r > |q|p , (x + a)q (mod xr − 1, p) is proper support.                              J
+
+          Remark. For dependency of the form q − p = α, where 0 < α < p, the pth norm of q
+      is 2(α + 1). Hence, we get a natural generalization of numbers n that are good for Fermat
+      factorization.
+          These observations again motivate the following algorithm.
+M. Agrawal, N. Saxena and S. S. Srivastava                                                              7:9
+
+
+Algorithm 2 Factoring Integer : F AC2 (n, B)
+Require: Odd n = pq (p < q are primes) and a parameter B > |q|p .
+ 1: r ← 2
+ 2: while r ≤ B and n is not factored do
+ 3:   Choose a random number a < n
+ 4:   Compute P = (x + a)n (mod xr − 1, n)
+ 5:   Take gcd of n with ra, and with the coefficients of P.
+ 6:   if n is factored then
+ 7:      return f actor
+ 8: return 0
+
+
+
+   Time complexity. The overall time complexity of the algorithm is Õ(B 2 log2 n), as in
+the previous subsection. Note that it is a probabilistic algorithm based on Conjecture 1. It
+can be seen as a natural generalization (albeit slower) of Fermat’s factoring algorithm.
+
+
+4.3     Relaxing conjecture 1
+In the previous subsections the proofs of factoring depend on Conjecture 1. In this section
+we relax the conjecture; which might make it easier to prove.
+    The point is that we just need to prove, that for a random a(x), with high probability
+there is a difference in the supports of the two polynomials:
+
+     a(xp )q   (mod xr − 1, p) and,
+     a(xq )p   (mod xr − 1, q)                                                              (4)
+
+in the case when r > |q|p . The rationale is again that the first polynomial is proper support,
+while the second polynomial is likely to have a support different from the first.
+
+I Conjecture 2. For primes p < q, r > |q|p and a random a(x) ∈ (Z/nZ)[x]/(xr − 1, n), the
+two polynomials in Equation 4 have, with high probability, different support.
+
+   It can be seen that based on this conjecture, an algorithm similar to Algorithm 2 can be
+designed to factor n (in probabilistic time Õ(B 2 log2 n)).
+
+
+ 5      General dependencies
+
+The previous section addressed dependencies of specific forms. In this section, we move to
+the case of more general dependencies between the two factors. For n = pq, primes p < q,
+we consider a nondegenerate dependency f (x, y) of degree bound d with at most γ nonzero
+                                Pγ
+coefficients. So, 0 = f (p, q) = i=1 ci pαi q βi = 0, where ∀i, 0 ≤ αi + βi ≤ d, |ci | = nO(d) .
+Proposition 1.1 gives the almost optimal parameters for its existence in general.
+    When we are given n and f , our idea is to compute AKS exponentiation (Eqn.2) in a
+cyclotomic ring extension over Z/nZ and try distinguishing the two Frobenius morphisms.
+We give the details in the form of an algorithm and then the proof. The key step will be
+                                   Qγ          αi −βi      βi
+the computation of an expression i=1 a(ζ p            )ci n , for a random element a(ζ). Note
+                                                     Pγ
+that modulo p it is the same as exponentiation by i=1 ci pαi q βi = 0. Also, note that pαi −βi
+exists modulo r, when r and p are coprime.
+
+
+
+                                                                                                   M FC S 2 0 1 6
+7:10   Integer factoring using small algebraic dependencies
+
+
+       Algorithm 3 Factoring Integer : F AC3 (n, f )
+       Require: Odd n = pq (p < q are primes), and a nondegenerate dependency f =
+           Pγ        αi βi                                     O(d)
+             i=1 ci x y , where ∀i, 0 ≤ αi + βi ≤ d, |ci | = n      .
+        1: Choose a random prime r ≤ 10γ log γ and verify that gcd(r, n) = 1.
+        2: for t ∈ [r − 1] do
+        3:   count ← 0
+        4:   while count < 5 log log nr do
+        5:      Choose a random element a(ζ) := a(x) ∈ Z[x]/(ϕr (x), n).
+                                Qγ       αi −βi      βi
+        6:      Compute P := i=1 a(ζ t          )ci n .
+        7:      Take gcd of n with the coefficients of P.
+        8:      if n is factored then
+        9:         return f actor
+       10: return 0
+
+
+           To study this algorithm we would need a qualitative conjecture about the distribution of
+       discrete logarithms.
+       I Conjecture 3. For a fixed p, q, f as before and R > 10γ, the function logq,r p takes almost
+       random values e as we vary r ∈ [R] such that, with a constant probability,
+                               γ
+                                                                q r−1 − 1
+                             X                                           
+                                 ci pβi q eαi +(1−e)βi 6= 0 mod             .
+                             i=1
+                                                                   q−1
+
+           The rationale for this conjecture is that as we vary r in a range bigger than [γ] we
+       expect e to be “random” enough so that the two γ-dimensional vectors ci pβi | i ∈ [γ]
+       and q eαi +(1−e)βi | i ∈ [γ] are not orthogonal (mod (q r−1 − 1)/(q − 1)). One necessary
+       condition for this is: {eαi + (1 − e)βi | i ∈ [γ]} be a set of distinct functions in e, with
+       at least one of them being nontrivially dependent on e. The distinctness holds because
+       eαi + (1 − e)βi = eαj + (1 − e)βj iff (αi , βi ) = (αj , βj ) iff i = j. (Note : We use that, for
+       some i, αi 6= βi as f is nondegenerate.)
+           Now we are ready to prove the correctness of the algorithm.
+
+       Proof for Theorem 1.2. By Artin’s conjecture we can deduce that we will get a prime r,
+       with constant probability, such that: q generates the unit group of Fr . In this case Lemma
+       2.1 asserts that ϕr (x) is irreducible over Fq . Hence, Fq [ζ] := Fq [x]/(ϕr (x)) is a field.
+           We are interested in the iteration when the variable t equals p (mod r). Then we can
+       write,
+               γ
+               Y             αi −βi          βi
+          P=         a(ζ p            )ci n .                                                       (5)
+               i=1
+
+          Going modulo p, and using the “first” Frobenius morphism, we get:
+               γ
+               Y                αi βi
+          P=         a(ζ)ci p     q
+                                              (mod p)
+               i=1
+                      Pγ
+                               ci pαi q βi
+             = a(ζ)     i=1                       (mod p) = a(ζ)0   (mod p)
+             =1      (mod p).                                                                       (6)
+          Now let e := logq,r p. So, we can replace p with q e in Equation 5, to get
+               γ
+               Y             e(αi −βi )           βi
+          P=         a(ζ q                )ci n .
+               i=1
+M. Agrawal, N. Saxena and S. S. Srivastava                                                                7:11
+
+
+   Going modulo q, and using the “second” Frobenius morphism, we get:
+          γ
+          Y                βi e(αi −βi )
+   P=           a(ζ)ci n     q
+                                             (mod q)
+          i=1
+           γ
+          Y                βi eαi +(1−e)βi
+      =         a(ζ)ci p     q
+                                                 (mod q)
+          i=1
+                Pγ
+                         ci pβi q eαi +(1−e)βi
+      = a(ζ)       i=1                            (mod q)                                        (7)
+                                     Pγ
+    Let us call the exponent m := i=1 ci pβi q eαi +(1−e)βi .
+    If we can show that a(ζ)m ∈   / Fq then, by Equation 6, we get different supports in the
+polynomials P (mod p) and P (mod q). This means that step 7 would factor n. So, it
+suffices to ensure that a(ζ)m(q−1) = 6 1 (mod q), in other words, the multiplicative order of
+a(ζ) in the field Fq [ζ], denoted ord(a(ζ), Fq [ζ]) satisfies:
+
+   ord(a(ζ), Fq [ζ]) 6 | m(q − 1) .                                                              (8)
+
+   From step 5 (of the algorithm) we can treat a(ζ) as a random element in Fq [ζ]. From
+the initial discussion we have that Fq [ζ] is the field Fqr−1 . From this we can estimate the
+probability of a(ζ) having the largest multiplicative order.
+                                                                                 1
+I Claim 5.1. ord(a(ζ), Fq [ζ]) = (q r−1 − 1), with probability at least 3 log log(q r−1 −1) , when
+
+r > 7.
+
+Proof. See full version of the paper.                                                             J
+
+   Thus, the repetitions in step 4 ensure that with a high probability we will pick a generator
+a(ζ) of Fq [ζ]. Now Equation 8 can be rewritten as:
+                               γ
+                                                                             q r−1 − 1
+                               X                                                        
+                                      ci pβi q eαi +(1−e)βi 6= 0       mod                   .
+                                i=1
+                                                                                q−1
+
+Conjecture 3 ensures this with high probability (for a random r). Hence, step 7 will factor
+with high (i.e. constant) probability.
+
+Time Complexity. The ‘for’ loop of Step 2-9, runs for r − 1 = Õ(γ) times. The ‘while’
+loop in Step 4-9, runs O(log log(nr )) = Õ(1) times.
+   The polynomial computation in step 6 is the expensive part. We would use repeated
+squaring and fast ring arithmetic. It multiplies γ many factors. The exponent of each factor
+can be bounded by And , so, by repeated squaring it takes O(d log n + log A) = O(d log n)
+time (∵ A := nO(d) ). Also, in each step of repeated squaring there will be two polynomials
+multiplied in the cyclotomic ring; we can compute the product in Õ(r log n) time. Hence,
+step 6 takes Õ(γ · d log n · r log n) = Õ(γ 2 d log2 n) time.
+   So, the overall time complexity of the Algorithm 3 is Õ(γ 3 d log2 n).
+                                                                                          J
+
+     Clearly, the running time of the algorithm depends on the sparsity. For sparse dependency
+f , i.e. γ = Õ(1), the running time becomes Õ(d log2 n) which is only linear in d. If the given
+dependency has sparsity γ = O(d1.6 ) then the running time is a much slower Õ(d5.8 log2 n),
+but it is a simple algorithm and still faster than the known methods.
+
+
+
+                                                                                                       M FC S 2 0 1 6
+7:12   Integer factoring using small algebraic dependencies
+
+
+        6      Alternate Analysis
+       In this section we present an alternate analysis and a corresponding algorithm to factor n.
+       The algorithm presented is just a slightly modified version of Algorithm 3, and it will not
+       need n/p to be a prime. The conjecture that our analysis relies on will be different from
+       Conjecture 3.
+
+       Algorithm 4 Factoring Integer : F AC4 (n, f, µ)
+       Require: Odd n = pn0 (prime p is not the largest prime factor q of n), and a nondegenerate
+                                    Pγ
+           (p, n0 ) dependency f = i=1 ci xαi y βi where ∀i, 0 ≤ αi +βi ≤ d, |ci | ≤ nd . Let µ := i ei
+                                                                                                  P
+                                             Q ei
+           for the prime factorization n = i pi .
+        1: r ← 7µd.
+        2: while r ≤ 10µd log(d + 1) do
+        3:    Choose the next prime r, and verify that gcd(r, n) = 1.
+        4:    for t in range [r − 1] do
+        5:       Choose a random element a(ζ) := a(x) ∈ Z[x]/(ϕr (x), n).
+                                 Qγ       αi −βi      βi
+        6:       Compute P := i=1 a(ζ t          )ci n .
+        7:       Take gcd of n with the coefficients of P.
+        8:       if n is factored then
+        9:          return f actor
+       10: return 0
+
+
+            To study this algorithm we will need a conjecture about discrete logarithm.
+       I Conjecture 4. For f, p, q, d, µ as before, there exists a prime r ∈ [7µd, 10µd log(d + 1)] such
+                                                r
+       that: ordr (q) = r − 1, e := logq,r p < 2d  and f (q e , n/q e ) 6= 0.
+           The rationale behind this conjecture is Artin’s conjecture together with the feeling that
+       the function logq,r p should take “random” values in {0, . . . , r − 1}, in particular, values as
+                 r
+       small as 2d  . Also, since the interval is large enough we expect to get several such (r, e); one
+       of these q e is expected to not be a root of f (X, n/X).
+           We now state our theorem.
+
+       Proof for Theorem 1.3. See full version of the paper.                                          J
+
+          Given a sparse dependence of degree d, (small or constant γ and µ) our algorithm’s
+       performance is better than Schönhage’s univariate polynomial factoring algorithm.
+
+        7      Conclusion
+       We initiate a new factoring idea using the AKS-type cyclotomic computation [1]. It uses
+       the two Frobenius morphisms and we have been able to analyze it for specific families of n
+       (based on some “reasonable” conjectures). It is a simple algorithm and, in special cases, it
+       performs better than applying the previously known techniques. The outstanding question is
+       what do we do when there is no dependency f (x, y) readily available for n?
+          In this (general) case we could compute several (say, poly(log n)-many) AKS-type poly-
+       nomials
+                              S := {a(ζr )e | r, a, e carefully chosen given n}
+       and try to apply easy algebraic operations on S. For example, view S as a lattice generator
+       and apply the famous LLL basis reduction algorithm on it [17]. Or, compute other linear
+       algebra operations on S. Do these operations lead us to a factor of n ?
+M. Agrawal, N. Saxena and S. S. Srivastava                                                           7:13
+
+
+     References
+ 1   Manindra Agrawal, Neeraj Kayal, and Nitin Saxena. PRIMES is in P. Annals of Math,
+     160(2):781–793, 2004.
+ 2   Eric Bach and Jeffrey Outlaw Shallit. Algorithmic Number Theory: Efficient Algorithms,
+     volume 1. MIT press, 1996.
+ 3   Shi Bai, Pierrick Gaudry, Alexander Kruppa, Emmanuel Thome, and Paul Zimmermann.
+     Factorization of RSA-220 with CADO-NFS. 2016.
+ 4   Daniel Julius Bernstein. Introduction to post-quantum cryptography. In Post-quantum
+     cryptography, pages 1–14. Springer, 2009.
+ 5   Dan Boneh et al. Twenty years of attacks on the RSA cryptosystem. Notices of the AMS,
+     46(2):203–213, 1999.
+ 6   Joe Peter Buhler, Hendrik Willem Lenstra Jr, and Carl Pomerance. Factoring integers
+     with the number field sieve. In The development of the number field sieve, pages 50–94.
+     Springer, 1993.
+ 7   Yingpu Deng and Yanbin Pan. An algorithm for factoring integers. Cryptology ePrint
+     Archive, Report 2012/097, 2012.
+ 8   John D Dixon. Asymptotically fast factorization of integers. Mathematics of computation,
+     36(153):255–260, 1981.
+ 9   Carl Friedrich Gauss. Disquisitiones Arithmeticae. 1801. Article 329.
+10   Joseph Gerver. Factoring large numbers with a quadratic sieve. Mathematics of Computa-
+     tion, 41(163):287–294, 1983.
+11   Rajiv Gupta and Maruti Ram Murty. A remark on artin’s conjecture. Inventiones math-
+     ematicae, 78(1):127–130, 1984.
+12   F.R.S. Horsley, Rev. Samuel. The sieve of eratosthenes. being an account of his method of
+     finding all the prime numbers. Philosophical Transactions (1683-1775), 62:327–347, 1772.
+13   Ravi Kannan. Algorithmic geometry of numbers. Annual review of computer science,
+     2(1):231–267, 1987.
+14   Thorsten Kleinjung, Kazumaro Aoki, Jens Franke, Arjen Klaas Lenstra, Emmanuel Thomé,
+     Joppe W Bos, Pierrick Gaudry, Alexander Kruppa, Peter Lawrence Montgomery, Dag Arne
+     Osvik, et al. Factorization of a 768-bit RSA modulus. In Advances in Cryptology–
+     CRYPTO’10, pages 333–350. 2010.
+15   R Sherman Lehman. Factoring large integers. Mathematics of Computation, 28(126):637–
+     646, 1974.
+16   Arjen Klaas Lenstra, Hendrik Willem Lenstra Jr., Mark Steven Manasse, and John M. Pol-
+     lard. The number field sieve. In Proceedings of the Twenty-second Annual ACM Symposium
+     on Theory of Computing, pages 564–572, 1990.
+17   Arjen Klaas Lenstra, Hendrik Willem Lenstra, and Lászlo Lovász. Factoring polynomials
+     with rational coefficients. Math. Ann., 261:515–534, 1982.
+18   Hendrik Willem Lenstra Jr. Factoring integers with elliptic curves. Annals of mathematics,
+     pages 649–673, 1987.
+19   Calvin T Long. Elementary introduction to number theory. Prentice Hall, 1987.
+20   James McKee. Turning euler’s factoring method into a factoring algorithm. Bulletin of the
+     London Mathematical Society, 28(133):351–355, 1996.
+21   Pieter Moree. Artin’s primitive root conjecture—a survey. INTEGERS, 10(6):1305–1416,
+     2012.
+22   Oystein Ore. Number theory and its history. Courier Corporation, 2012.
+23   John M Pollard. Theorems on factorization and primality testing. In Mathematical Pro-
+     ceedings of the Cambridge Philosophical Society, volume 76 of Cambridge Univ Press, pages
+     521–528, 1974.
+
+
+
+
+                                                                                                  M FC S 2 0 1 6
+7:14   Integer factoring using small algebraic dependencies
+
+
+       24     John M Pollard. A monte carlo method for factorization. BIT Numerical Mathematics,
+              15(3):331–334, 1975.
+       25     Carl Pomerance. The quadratic sieve factoring algorithm. In Advances in cryptology, pages
+              169–182, 1985.
+       26     Carl Pomerance. A tale of two sieves. Biscuits of Number Theory, 85, 2008.
+       27     Arnold Schönhage. Factorization of univariate integer polynomials by diophantine approx-
+              imation and improved basis reduction algorithm. ICALP, 172:436–447, 1984.
+       28     Peter Williston Shor. Polynomial-time algorithms for prime factorization and discrete
+              logarithms on a quantum computer. SIAM J. Comput., 26(5):1484–1509, 1997.
+       29     Lawrence Clinton Washington. Introduction to cyclotomic fields, volume 83. Springer, 2012.
+       30     Hugh Cowie Williams. A p + 1 method of factoring. Mathematics of Computation,
+              39(159):225–234, 1982.
+       31     Hugh Cowie Williams and Jeffrey Outlaw Shallit. Factoring integers before computers.
+              Mathematics of computation, 48:481–531, 1994. (1943-1993, Fifty Years of Computational
+              Mathematics (W. Gautschi, ed.), Proc. Sympos. Appl. Math.).
+
+
+        A       Proofs
+       A.1      Claim 5.1
+                                                                                    1
+       I Claim. ord(a(ζ), Fq [ζ]) = (q r−1 − 1), with probability at least 3 log log(q r−1 −1) , when r > 7.
+
+
+
+       Proof. Clearly, the number of generators in Fq [ζ]∗ is ϕ(q r−1 − 1), using the Euler’s totient
+       function [19, p.85]. Hence, if we choose a random element a(ζ) in Fq [ζ] then,
+
+                                                            ϕ(q r−1 − 1)
+            Pr [ a(ζ) generates Fq [ζ]∗ ] =
+                                                             (q r−1 − 1)
+                                                                      1
+                                                          >                      , for r > 7.
+                                                            3 log log(q r−1 − 1)
+
+       The last line follows from the result: ϕ(n)
+                                               n > (1.79 log log n + 3/ log log n)
+                                                                                  −1
+                                                                                     for n > 2, see [2,
+       thm.8.8.7].                                                                                  J
+
+       A.2      Theorem 1.3
+       I Theorem. For an integer n = p · n0 (where p is a prime smaller than the largest prime factor
+                                                                                      Pγ
+       q of n), given a nondegenerate (p, n0 ) dependency of the form f (X, Y ) = i=1 ci X αi Y βi ,
+       where ∀i, 0 ≤ αi + βi ≤ d, |ci | ≤ nd , Algorithm 4 factors n in Õ(µ3 · γd4 log2 n) time. Here
+       µ := i ei for the prime factorization n = i pei i . (Assuming Artin’s conjecture & 4.)
+            P                                        Q
+
+       Proof. From the proof of Theorem 1.2 we know that, when t = p (mod r) in step 6, then
+       P = 1 (mod p).
+          Consider the prime factor q. Let e := logq,r p. From the “second” Frobenius morphism
+       we get:
+                  γ
+                  Y             e(αi −βi )           βi
+            P=          a(ζ q                )ci n
+                  i=1
+                   γ
+                                   e(αi −βi )
+                                                nβi
+                  Y
+              =         a(ζ)ci q                          (mod q)
+                  i=1
+                        Pγ
+                                  ci q e(αi −βi ) nβi
+              = a(ζ)       i=1                              (mod q) .                                   (9)
+M. Agrawal, N. Saxena and S. S. Srivastava                                                             7:15
+
+                             Pγ
+Let us call the exponent m := i=1 ci q e(αi −βi ) nβi .
+   Using the r promised by Conjecture 4 we can upper bound m as:
+                 γ
+                 X
+   0 < |m| =           ci q e(αi −βi ) nβi
+                 i=1
+                γ
+                X
+            <         n02d q e(αi −βi ) nβi   [Bound ci ]
+                i=1
+                Xγ
+            <         q 2(µ−1)d q r/2 q µβi
+                i=1
+                 3µd+r/2
+            <q
+                q r−1 − 1
+            <             .
+                   q−1
+
+    Thus, 0 < |m| · (q − 1) < q r−1 − 1 = |Fq [ζ]∗ |. Consequently, the set {a(ζ)|a(ζ)m(q−1) = 1}
+is a proper subgroup of Fq [ζ]∗ , and so on randomly picking a(ζ) we will get, with high
+probability, P ∈
+               / Fq .
+    Thus, step 7 is likely to factor n.
+    Time Complexity. In Algorithm 4, the while loop in step 2-9, runs Õ(µd) times. The
+for loop in Step 4-9, runs O(r) = Õ(µd) times.
+    The expensive step is the AKS polynomial computation in step 6. We would use repeated
+squaring and fast ring arithmetic. It multiplies γ many factor polynomials, where each
+polynomial has exponent bounded by nO(d) , so, by repeated squaring it takes O(d log n)
+time. Also, in each step of repeated squaring, there will be two polynomials multiplied,
+which requires Õ(r log n) ring operations. Hence, step 6 would take Õ(γ · d log n · µd log n)
+= Õ(γµd2 log2 n) time.
+    So, the overall time complexity of Algorithm 4 is Õ(γµ3 d4 log2 n).                     J
+
+
+
+
+                                                                                                    M FC S 2 0 1 6
+

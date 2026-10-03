@@ -1,0 +1,1273 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/aMtxRa5Q1q2fzyQ8mP/OiYO5WBk</id>
+  <title>arXiv Query: search_query=abs:"factoring" AND abs:"smooth" AND abs:"complexity"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:30Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factoring%22+AND+(abs:%22smooth%22+AND+abs:%22complexity%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>697</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/0804.1974v1</id>
+    <title>Schemes for Deterministic Polynomial Factoring</title>
+    <updated>2008-04-11T23:04:17Z</updated>
+    <link href="https://arxiv.org/abs/0804.1974v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0804.1974v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this work we relate the deterministic complexity of factoring polynomials (over finite fields) to certain combinatorial objects we call m-schemes. We extend the known conditional deterministic subexponential time polynomial factoring algorithm for finite fields to get an underlying m-scheme. We demonstrate how the properties of m-schemes relate to improvements in the deterministic complexity of factoring polynomials over finite fields assuming the generalized Riemann Hypothesis (GRH). In particular, we give the first deterministic polynomial time algorithm (assuming GRH) to find a nontrivial factor of a polynomial of prime degree n where (n-1) is a smooth number.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-04-11T23:04:17Z</published>
+    <arxiv:comment>14 pages, preliminary version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.01053v3</id>
+    <title>Decentralized Accelerated Gradient Methods With Increasing Penalty Parameters</title>
+    <updated>2020-08-18T13:11:48Z</updated>
+    <link href="https://arxiv.org/abs/1810.01053v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.01053v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study the communication and (sub)gradient computation costs in distributed optimization and give a sharp complexity analysis for the proposed distributed accelerated gradient methods. We present two algorithms based on the framework of the accelerated penalty method with increasing penalty parameters. Our first algorithm is for smooth distributed optimization and it obtains the near optimal $O\left(\sqrt{\frac{L}{ε(1-σ_2(W))}}\log\frac{1}ε\right)$ communication complexity and the optimal $O\left(\sqrt{\frac{L}ε}\right)$ gradient computation complexity for $L$-smooth convex problems, where $σ_2(W)$ denotes the second largest singular value of the weight matrix $W$ associated to the network and $ε$ is the target accuracy. When the problem is $μ$-strongly convex and $L$-smooth, our algorithm has the near optimal $O\left(\sqrt{\frac{L}{μ(1-σ_2(W))}}\log^2\frac{1}ε\right)$ complexity for communications and the optimal $O\left(\sqrt{\frac{L}μ}\log\frac{1}ε\right)$ complexity for gradient computations. Our communication complexities are only worse by a factor of $\left(\log\frac{1}ε\right)$ than the lower bounds for the smooth distributed optimization. %As far as we know, our method is the first to achieve both communication and gradient computation lower bounds up to an extra logarithm factor for smooth distributed optimization. Our second algorithm is designed for non-smooth distributed optimization and it achieves both the optimal $O\left(\frac{1}{ε\sqrt{1-σ_2(W)}}\right)$ communication complexity and $O\left(\frac{1}{ε^2}\right)$ subgradient computation complexity, which match the communication and subgradient computation complexity lower bounds for non-smooth distributed optimization.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-02T03:38:58Z</published>
+    <arxiv:comment>The previous name of this paper was "A Sharp Convergence Rate Analysis for Distributed Accelerated Gradient Methods". The contents are consistent</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Huan Li</name>
+    </author>
+    <author>
+      <name>Cong Fang</name>
+    </author>
+    <author>
+      <name>Wotao Yin</name>
+    </author>
+    <author>
+      <name>Zhouchen Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.06763v3</id>
+    <title>Oracle Complexity in Nonsmooth Nonconvex Optimization</title>
+    <updated>2022-10-27T11:31:47Z</updated>
+    <link href="https://arxiv.org/abs/2104.06763v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.06763v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well-known that given a smooth, bounded-from-below, and possibly nonconvex function, standard gradient-based methods can find $ε$-stationary points (with gradient norm less than $ε$) in $\mathcal{O}(1/ε^2)$ iterations. However, many important nonconvex optimization problems, such as those associated with training modern neural networks, are inherently not smooth, making these results inapplicable. In this paper, we study nonsmooth nonconvex optimization from an oracle complexity viewpoint, where the algorithm is assumed to be given access only to local information about the function at various points. We provide two main results: First, we consider the problem of getting near $ε$-stationary points. This is perhaps the most natural relaxation of finding $ε$-stationary points, which is impossible in the nonsmooth nonconvex case. We prove that this relaxed goal cannot be achieved efficiently, for any distance and $ε$ smaller than some constants. Our second result deals with the possibility of tackling nonsmooth nonconvex optimization by reduction to smooth optimization: Namely, applying smooth optimization methods on a smooth approximation of the objective function. For this approach, we prove under a mild assumption an inherent trade-off between oracle complexity and smoothness: On the one hand, smoothing a nonsmooth nonconvex function can be done very efficiently (e.g., by randomized smoothing), but with dimension-dependent factors in the smoothness parameter, which can strongly affect iteration complexity when plugging into standard smooth optimization methods. On the other hand, these dimension factors can be eliminated with suitable smoothing methods, but only by making the oracle complexity of the smoothing process exponentially large.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-14T10:42:45Z</published>
+    <arxiv:comment>Accepted to Journal of Machine Learning Research (JMLR); some minor edits following reviews</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Guy Kornowski</name>
+    </author>
+    <author>
+      <name>Ohad Shamir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1606.01497v3</id>
+    <title>Epsilon factors as algebraic characters on the smooth dual of $\mathrm{GL}_n$</title>
+    <updated>2019-06-19T10:00:03Z</updated>
+    <link href="https://arxiv.org/abs/1606.01497v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1606.01497v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $K$ be a non-archimedean local field and let $G = \mathrm{GL}_n(K)$. We have shown in previous work that the smooth dual $\mathbf{Irr}(G)$ admits a complex structure: in this article we show how the epsilon factors interface with this complex structure. The epsilon factors, up to a constant term, factor as invariant characters through the corresponding complex tori. For the arithmetically unramified smooth dual of $\mathrm{GL}_n$, we provide explicit formulas for the invariant characters.</summary>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-06-05T11:50:54Z</published>
+    <arxiv:comment>12 pages. Minor improvements, new title</arxiv:comment>
+    <arxiv:primary_category term="math.RT"/>
+    <author>
+      <name>Roger Plymen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.5001v4</id>
+    <title>On Lower Complexity Bounds for Large-Scale Smooth Convex Optimization</title>
+    <updated>2018-11-28T03:09:25Z</updated>
+    <link href="https://arxiv.org/abs/1307.5001v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.5001v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We derive lower bounds on the black-box oracle complexity of large-scale smooth convex minimization problems, with emphasis on minimizing smooth (with Holder continuous, with a given exponent and constant, gradient) convex functions over high-dimensional ||.||_p-balls, 1&lt;=p&lt;=\infty. Our bounds turn out to be tight (up to logarithmic in the design dimension factors), and can be viewed as a substantial extension of the existing lower complexity bounds for large-scale convex minimization covering the nonsmooth case and the 'Euclidean' smooth case (minimization of convex functions with Lipschitz continuous gradients over Euclidean balls). As a byproduct of our results, we demonstrate that the classical Conditional Gradient algorithm is near-optimal, in the sense of Information-Based Complexity Theory, when minimizing smooth convex functions over high-dimensional ||.||_\infty-balls and their matrix analogies -- spectral norm balls in the spaces of square matrices.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-18T16:29:21Z</published>
+    <arxiv:comment>Submitted version (minor changes)</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Cristobal Guzman</name>
+    </author>
+    <author>
+      <name>Arkadi Nemirovski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.01778v1</id>
+    <title>Thinking Inside the Ball: Near-Optimal Minimization of the Maximal Loss</title>
+    <updated>2021-05-04T21:49:15Z</updated>
+    <link href="https://arxiv.org/abs/2105.01778v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.01778v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We characterize the complexity of minimizing $\max_{i\in[N]} f_i(x)$ for convex, Lipschitz functions $f_1,\ldots, f_N$. For non-smooth functions, existing methods require $O(Nε^{-2})$ queries to a first-order oracle to compute an $ε$-suboptimal point and $\tilde{O}(Nε^{-1})$ queries if the $f_i$ are $O(1/ε)$-smooth. We develop methods with improved complexity bounds of $\tilde{O}(Nε^{-2/3} + ε^{-8/3})$ in the non-smooth case and $\tilde{O}(Nε^{-2/3} + \sqrt{N}ε^{-1})$ in the $O(1/ε)$-smooth case. Our methods consist of a recently proposed ball optimization oracle acceleration algorithm (which we refine) and a careful implementation of said oracle for the softmax function. We also prove an oracle complexity lower bound scaling as $Ω(Nε^{-2/3})$, showing that our dependence on $N$ is optimal up to polylogarithmic factors.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-04T21:49:15Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yair Carmon</name>
+    </author>
+    <author>
+      <name>Arun Jambulapati</name>
+    </author>
+    <author>
+      <name>Yujia Jin</name>
+    </author>
+    <author>
+      <name>Aaron Sidford</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.5653v1</id>
+    <title>Deterministic Polynomial Factoring and Association Schemes</title>
+    <updated>2012-05-25T10:24:12Z</updated>
+    <link href="https://arxiv.org/abs/1205.5653v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.5653v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of finding a nontrivial factor of a polynomial f(x) over a finite field F_q has many known efficient, but randomized, algorithms. The deterministic complexity of this problem is a famous open question even assuming the generalized Riemann hypothesis (GRH). In this work we improve the state of the art by focusing on prime degree polynomials; let n be the degree. If (n-1) has a `large' r-smooth divisor s, then we find a nontrivial factor of f(x) in deterministic poly(n^r,log q) time; assuming GRH and that s &gt; sqrt{n/(2^r)}. Thus, for r = O(1) our algorithm is polynomial time. Further, for r &gt; loglog n there are infinitely many prime degrees n for which our algorithm is applicable and better than the best known; assuming GRH.
+  Our methods build on the algebraic-combinatorial framework of m-schemes initiated by Ivanyos, Karpinski and Saxena (ISSAC 2009). We show that the m-scheme on n points, implicitly appearing in our factoring algorithm, has an exceptional structure; leading us to the improved time complexity. Our structure theorem proves the existence of small intersection numbers in any association scheme that has many relations, and roughly equal valencies and indistinguishing numbers.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-25T10:24:12Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>LMS J. Comput. Math. 17 (2014) 123-140</arxiv:journal_ref>
+    <author>
+      <name>Manuel Arora</name>
+    </author>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Marek Karpinski</name>
+    </author>
+    <author>
+      <name>Nitin Saxena</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157013000296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157013000296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1703.03768v2</id>
+    <title>Integer Factorization with a Neuromorphic Sieve</title>
+    <updated>2018-04-23T18:55:29Z</updated>
+    <link href="https://arxiv.org/abs/1703.03768v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1703.03768v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The bound to factor large integers is dominated by the computational effort to discover numbers that are smooth, typically performed by sieving a polynomial sequence. On a von Neumann architecture, sieving has log-log amortized time complexity to check each value for smoothness. This work presents a neuromorphic sieve that achieves a constant time check for smoothness by exploiting two characteristic properties of neuromorphic architectures: constant time synaptic integration and massively parallel computation. The approach is validated by modifying msieve, one of the fastest publicly available integer factorization implementations, to use the IBM Neurosynaptic System (NS1e) as a coprocessor for the sieving stage.</summary>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-03-10T17:15:29Z</published>
+    <arxiv:comment>Fixed typos in equation for modular roots (Section II, par. 6; Section III, par. 2) and phase calculation (Section IV, par 2)</arxiv:comment>
+    <arxiv:primary_category term="cs.NE"/>
+    <arxiv:journal_ref>Monaco, John V., and Manuel M. Vindiola. "Integer factorization with a neuromorphic sieve." Circuits and Systems (ISCAS), 2017 IEEE International Symposium on. IEEE, 2017</arxiv:journal_ref>
+    <author>
+      <name>John V. Monaco</name>
+    </author>
+    <author>
+      <name>Manuel M. Vindiola</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.17770v2</id>
+    <title>Lower Complexity Bounds of First-order Methods for Affinely Constrained Composite Non-convex Problems</title>
+    <updated>2025-05-13T01:34:40Z</updated>
+    <link href="https://arxiv.org/abs/2502.17770v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.17770v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many recent studies on first-order methods (FOMs) focus on \emph{composite non-convex non-smooth} optimization with linear and/or nonlinear function constraints. Upper (or worst-case) complexity bounds have been established for these methods. However, little can be claimed about their optimality as no lower bound is known, except for a few special \emph{smooth non-convex} cases. In this paper, we make the first attempt to establish lower complexity bounds of FOMs for solving a class of composite non-convex non-smooth optimization with linear constraints. Assuming two different first-order oracles, we establish lower complexity bounds of FOMs to produce a (near) $ε$-stationary point of a problem (and its reformulation) in the considered problem class, for any given tolerance $ε&gt;0$. Our lower bounds indicate that the existence of a non-smooth convex regularizer can evidently increase the difficulty of an affinely constrained regularized problem over its nonregularized counterpart. In addition, we show that our lower bound of FOMs with the second oracle is tight, with a difference of up to a logarithmic factor from an upper complexity bound established in the extended arXiv version of this paper.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-25T02:03:38Z</published>
+    <arxiv:comment>accepted by Mathematics of operations research</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Qihang Lin</name>
+    </author>
+    <author>
+      <name>Yangyang Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.07605v1</id>
+    <title>First-order Methods for Affinely Constrained Composite Non-convex Non-smooth Problems: Lower Complexity Bound and Near-optimal Methods</title>
+    <updated>2023-07-14T19:59:18Z</updated>
+    <link href="https://arxiv.org/abs/2307.07605v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.07605v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many recent studies on first-order methods (FOMs) focus on \emph{composite non-convex non-smooth} optimization with linear and/or nonlinear function constraints. Upper (or worst-case) complexity bounds have been established for these methods. However, little can be claimed about their optimality as no lower bound is known, except for a few special \emph{smooth non-convex} cases. In this paper, we make the first attempt to establish lower complexity bounds of FOMs for solving a class of composite non-convex non-smooth optimization with linear constraints. Assuming two different first-order oracles, we establish lower complexity bounds of FOMs to produce a (near) $ε$-stationary point of a problem (and its reformulation) in the considered problem class, for any given tolerance $ε&gt;0$. In addition, we present an inexact proximal gradient (IPG) method by using the more relaxed one of the two assumed first-order oracles. The oracle complexity of the proposed IPG, to find a (near) $ε$-stationary point of the considered problem and its reformulation, matches our established lower bounds up to a logarithmic factor. Therefore, our lower complexity bounds and the proposed IPG method are almost non-improvable.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-14T19:59:18Z</published>
+    <arxiv:comment>Key words: non-convex optimization, non-smooth optimization, first-order methods, proximal gradient method, information-based complexity, lower complexity bound, worst-case complexity</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Qihang Lin</name>
+    </author>
+    <author>
+      <name>Yangyang Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.06884v2</id>
+    <title>Near-Optimal Convergence of Accelerated Gradient Methods under Generalized and $(L_0, L_1)$-Smoothness</title>
+    <updated>2026-05-21T04:59:24Z</updated>
+    <link href="https://arxiv.org/abs/2508.06884v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.06884v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study first-order methods for convex optimization problems with functions $f$ satisfying the recently proposed $\ell$-smoothness condition $||\nabla^{2}f(x)|| \le \ell\left(||\nabla f(x)||\right),$ which generalizes the $L$-smoothness and $(L_{0},L_{1})$-smoothness. While accelerated gradient descent AGD is known to reach the optimal complexity $O(\sqrt{L} R / \sqrt{\varepsilon})$ under $L$-smoothness, where $\varepsilon$ is an error tolerance and $R$ is the distance between a starting and an optimal point, existing extensions to $\ell$-smoothness either incur extra dependence on the initial gradient, suffer exponential factors in $L_{1} R$, or require costly auxiliary sub-routines, leaving open whether an AGD-type $O(\sqrt{\ell(0)} R / \sqrt{\varepsilon})$ rate is possible for small-$\varepsilon$, even in the $(L_{0},L_{1})$-smoothness case.
+  We resolve this open question. Leveraging a new Lyapunov function and designing new algorithms, we achieve $O(\sqrt{\ell(0)} R / \sqrt{\varepsilon})$ oracle complexity for small-$\varepsilon$ and virtually any $\ell$. For instance, for $(L_{0},L_{1})$-smoothness, our bound $O(\sqrt{L_0} R / \sqrt{\varepsilon})$ is provably optimal in the small-$\varepsilon$ regime and removes all non-constant multiplicative factors present in prior accelerated algorithms.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-09T08:28:06Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Alexander Tyurin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.09523v1</id>
+    <title>Uniqueness of Hahn--Banach extensions and inner ideals in real C$^*$-algebras and real JB$^*$-triples</title>
+    <updated>2025-09-11T15:04:40Z</updated>
+    <link href="https://arxiv.org/abs/2509.09523v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.09523v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that every closed (resp., weak$^*$-closed) inner ideal $I$ of a real JB$^*$-triple (resp. a real JBW$^*$-triple) $E$ is Hahn--Banach smooth (resp., weak$^*$-Hahn--Banach smooth). Contrary to what is known for complex JB$^*$-triples, being (weak$^*$-)Hahn--Banach smooth does not characterise (weak$^*$-)closed inner ideals in real JB(W)$^*$-triples. We prove here that a closed (resp., weak$^*$-closed) subtriple of a real JB$^*$-triple (resp., a real JBW$^*$-triple) is Hahn-Banach smooth (resp., weak$^*$-Hahn-Banach smooth) if, and only if, it is a hereditary subtriple. If we assume that $E$ is a reduced and atomic JBW$^*$-triple, every weak$^*$-closed subtriple of $E$ which is also weak$^*$-Hahn-Banach smooth is an inner ideal.\smallskip
+  In case that $C$ is the realification of a complex Cartan factor or a non-reduced real Cartan factor, we show that every weak$^*$-closed subtriple of $C$ which is weak$^*$-Hahn-Banach smooth and has rank $\geq 2$ is an inner ideal. The previous conclusions are finally combined to prove the following: Let $I$ be a closed subtriple of a real JB$^*$-triple $E$ satisfying the following hypotheses:
+  $(a)$ $I^*$ is separable.
+  $(b)$ $I$ is weak$^*$-Hahn-Banach smooth.
+  $(c)$ The projection of $I^{**}$ onto each real or complex Cartan factor summand in the atomic part of $E^{**}$ is zero or has rank $\geq 2$.
+  Then $I$ is an inner ideal of $E$.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-11T15:04:40Z</published>
+    <arxiv:primary_category term="math.OA"/>
+    <author>
+      <name>Lei Li</name>
+    </author>
+    <author>
+      <name>Antonio M. Peralta</name>
+    </author>
+    <author>
+      <name>Shanshan Su</name>
+    </author>
+    <author>
+      <name>Jiayin Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.12453v2</id>
+    <title>Efficient First Order Method for Saddle Point Problems with Higher Order Smoothness</title>
+    <updated>2024-12-07T05:12:58Z</updated>
+    <link href="https://arxiv.org/abs/2304.12453v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.12453v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the complexity of finding approximate stationary points for the smooth nonconvex-strongly-concave (NC-SC) saddle point problem: $\min_x\max_yf(x,y)$. Under the standard first-order smoothness conditions where $f$ is $\ell$-smooth in both arguments and $μ_y$-strongly concave in $y$, existing literature shows that the optimal complexity for first-order methods to obtain an $ε$-stationary point is $\tilde{O}\big(\sqrt{κ_y}\ellε^{-2}\big)$, where $κ_y=\ell/μ_y$ is the condition number. However, when $Φ(x):=\max_y f(x,y)$ has $L_2$-Lipschitz continuous Hessian in addition, we derive a first-order algorithm with an $\tilde{O}\big(\sqrt{κ_y}\ell^{1/2}L_2^{1/4}ε^{-7/4}\big)$ complexity by designing an accelerated proximal point algorithm enhanced with the "Convex Until Proven Guilty" technique. Moreover, an improved $Ω\big(\sqrt{κ_y}\ell^{3/7}L_2^{2/7}ε^{-12/7}\big)$ lower bound for first-order method is also derived for sufficiently small $ε$. As a result, given the second-order smoothness of the problem, the complexity of our method improves the state-of-the-art result by a factor of $\tilde{O}\big(\big(\frac{\ell^2}{L_2ε}\big)^{1/4}\big)$, while almost matching the lower bound except for a small $\tilde{O}\big(\big(\frac{\ell^2}{L_2ε}\big)^{1/28}\big)$ factor.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-24T21:14:10Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Nuozhou Wang</name>
+    </author>
+    <author>
+      <name>Junyu Zhang</name>
+    </author>
+    <author>
+      <name>Shuzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.02628v1</id>
+    <title>Distributed MST: A Smoothed Analysis</title>
+    <updated>2019-11-06T21:05:52Z</updated>
+    <link href="https://arxiv.org/abs/1911.02628v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.02628v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study smoothed analysis of distributed graph algorithms, focusing on the fundamental minimum spanning tree (MST) problem. With the goal of studying the time complexity of distributed MST as a function of the "perturbation" of the input graph, we posit a {\em smoothing model} that is parameterized by a smoothing parameter $0 \leq ε(n) \leq 1$ which controls the amount of {\em random} edges that can be added to an input graph $G$ per round. Informally, $ε(n)$ is the probability (typically a small function of $n$, e.g., $n^{-\frac{1}{4}}$) that a random edge can be added to a node per round. The added random edges, once they are added, can be used (only) for communication.
+  We show upper and lower bounds on the time complexity of distributed MST in the above smoothing model. We present a distributed algorithm that, with high probability,\footnote{Throughout, with high probability (whp) means with probability at least $1 - n^{-c}$, for some fixed, positive constant $c$.} computes an MST and runs in $\tilde{O}(\min\{\frac{1}{\sqrt{ε(n)}} 2^{O(\sqrt{\log n})}, D + \sqrt{n}\})$ rounds\footnote{The notation $\tilde{O}$ hides a $\polylog(n)$ factor and $\tildeΩ$ hides a $\frac{1}{\polylog{(n)}}$ factor, where $n$ is the number of nodes of the graph.} where $ε$ is the smoothing parameter, $D$ is the network diameter and $n$ is the network size. To complement our upper bound, we also show a lower bound of $\tildeΩ(\min\{\frac{1}{\sqrt{ε(n)}}, D+\sqrt{n}\})$. We note that the upper and lower bounds essentially match except for a multiplicative $2^{O(\sqrt{\log n})} \polylog(n)$ factor.
+  Our work can be considered as a first step in understanding the smoothed complexity of distributed graph algorithms.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-06T21:05:52Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Soumyottam Chatterjee</name>
+    </author>
+    <author>
+      <name>Gopal Pandurangan</name>
+    </author>
+    <author>
+      <name>Nguyen Dinh Pham</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.10192v2</id>
+    <title>Lefschetz Defect in Families</title>
+    <updated>2026-06-11T09:29:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.10192v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.10192v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a cohomological characterization of the Lefschetz defect of smooth complex projective varieties. As a consequence, we deduce that the Lefschetz defect of a smooth Fano variety is invariant under smooth deformation. We also characterize the Lefschetz defect of an abelian variety in terms of its isogeny factors, and study it in families.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-17T13:38:15Z</published>
+    <arxiv:comment>16 pages, published in Manuscripta Mathematica. Fixed a mistake in the main theorem, found by an anonymous referee (Remark 2.6), by improving the results of Subsection 3.2. Last subsection on families of abelian varieties from previous version has been removed</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Matteo Verni</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.10733v4</id>
+    <title>The complexity of smooth words over binary alphabets</title>
+    <updated>2026-06-16T09:44:13Z</updated>
+    <link href="https://arxiv.org/abs/2603.10733v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.10733v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Smooth words over an alphabet of non-negative integers $\{a,b\}$ are infinite words that are infinitely derivable, the emblematic example being the Oldenburger-Kolakoski word over $\{1,2\}$. The main way to study their language is to consider a finite version of smooth words that we call f-smooth words. In this paper we prove that the f-smooth words are exactly the factors of smooth words, and we make progress towards the conjecture of Sing that the complexity of f-smooth words over $\{a,b\}$ grows like $Θ\left(n^{\log(a+b)/\log((a+b)/2)}\right)$: we prove it over even alphabets, we prove the lower bound over any binary alphabet and we improve the known upper bound over odd alphabets.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-11T13:06:44Z</published>
+    <arxiv:primary_category term="cs.FL"/>
+    <author>
+      <name>Julien Cassaigne</name>
+    </author>
+    <author>
+      <name>Raphaël Henry</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.0891v1</id>
+    <title>Uniqueness of the direct decomposition of toric manifolds</title>
+    <updated>2013-04-03T09:46:57Z</updated>
+    <link href="https://arxiv.org/abs/1304.0891v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.0891v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study the uniqueness of the direct decomposition of a toric manifold. We first observe that the direct decomposition of a toric manifold as \emph{algebraic varieties} is unique up to order of the factors. An algebraically indecomposable toric manifold happens to decompose as smooth manifold and no criterion is known for two toric manifolds to be diffeomorphic, so the unique decomposition problem for toric manifolds as \emph{smooth manifolds} is highly nontrivial and nothing seems known for the problem so far. We prove that this problem is affirmative if the complex dimension of each factor in the decomposition is less than or equal to two. A similar argument shows that the direct decomposition of a smooth manifold into copies of $\mathbb{C}P^1$ and simply connected closed smooth 4-manifolds with smooth actions of $(S^1)^2$ is unique up to order of the factors.</summary>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-03T09:46:57Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AT"/>
+    <arxiv:journal_ref>Osaka J. of Math. 52, (2015), 439-453</arxiv:journal_ref>
+    <author>
+      <name>Miho Hatanaka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.10406v1</id>
+    <title>Minimization of nonsmooth nonconvex functions using inexact evaluations and its worst-case complexity</title>
+    <updated>2019-02-27T09:19:09Z</updated>
+    <link href="https://arxiv.org/abs/1902.10406v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.10406v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An adaptive regularization algorithm using inexact function and derivatives evaluations is proposed for the solution of composite nonsmooth nonconvex optimization. It is shown that this algorithm needs at most $O(|\log(ε)|\,ε^{-2})$ evaluations of the problem's functions and their derivatives for finding an $ε$-approximate first-order stationary point. This complexity bound therefore generalizes that provided by [Bellavia, Gurioli, Morini and Toint, 2018] for inexact methods for smooth nonconvex problems, and is within a factor $|\log(ε)|$ of the optimal bound known for smooth and nonsmooth nonconvex minimization with exact evaluations. A practically more restrictive variant of the algorithm with worst-case complexity $O(|\log(ε)|+ε^{-2})$ is also presented.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-27T09:19:09Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>S. Gratton</name>
+    </author>
+    <author>
+      <name>E. Simon</name>
+    </author>
+    <author>
+      <name>Ph. L. Toint</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03246v1</id>
+    <title>Optimal Deterministic Oracle Complexity for Weakly Convex Optimization</title>
+    <updated>2026-08-04T07:15:54Z</updated>
+    <link href="https://arxiv.org/abs/2608.03246v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03246v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the oracle complexity of finding $ε$-stationary points of $ρ$-weakly convex and $G$-Lipschitz functions, where stationarity is measured by the gradient of the Moreau envelope. We consider a first-order oracle that returns both the function value and the full subdifferential at every query point. We prove that every deterministic first-order algorithm requires $ Ω({ρG^2Δ}/{ε^4})$ oracle queries whenever $Δ\leq {G^2}/ρ$, where $f(\bz)-\inf f \leq Δ$. This lower bound matches the best known deterministic and stochastic first-order upper bounds, up to universal constants, and establishes the optimal deterministic oracle complexity. The result reveals a fundamental complexity separation between smooth nonconvex and nonsmooth weakly convex optimization. While smooth nonconvex minimization admits a $Θ(ε^{-2})$ oracle complexity, nonsmooth weakly convex optimization incurs an intrinsic additional $ε^{-2}$ factor arising from nonsmooth geometry rather than stochasticity.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T07:15:54Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Jiajin Li</name>
+    </author>
+    <author>
+      <name>Siyu Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.15598v3</id>
+    <title>An Accelerated Method For Decentralized Distributed Stochastic Optimization Over Time-Varying Graphs</title>
+    <updated>2022-11-09T10:49:43Z</updated>
+    <link href="https://arxiv.org/abs/2103.15598v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.15598v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider a distributed stochastic optimization problem that is solved by a decentralized network of agents with only local communication between neighboring agents. The goal of the whole system is to minimize a global objective function given as a sum of local objectives held by each agent. Each local objective is defined as an expectation of a convex smooth random function and the agent is allowed to sample stochastic gradients for this function. For this setting we propose the first accelerated (in the sense of Nesterov's acceleration) method that simultaneously attains optimal up to a logarithmic factor communication and oracle complexity bounds for smooth strongly convex distributed stochastic optimization. We also consider the case when the communication graph is allowed to vary with time and obtain complexity bounds for our algorithm, which are the first upper complexity bounds for this setting in the literature.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-29T13:21:05Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Alexander Rogozin</name>
+    </author>
+    <author>
+      <name>Mikhail Bochko</name>
+    </author>
+    <author>
+      <name>Pavel Dvurechensky</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+    <author>
+      <name>Vladislav Lukoshkin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.03815v2</id>
+    <title>Homotopy Smoothing for Non-Smooth Problems with Lower Complexity than $O(1/ε)$</title>
+    <updated>2016-11-03T16:06:16Z</updated>
+    <link href="https://arxiv.org/abs/1607.03815v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.03815v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we develop a novel {\bf ho}moto{\bf p}y {\bf s}moothing (HOPS) algorithm for solving a family of non-smooth problems that is composed of a non-smooth term with an explicit max-structure and a smooth term or a simple non-smooth term whose proximal mapping is easy to compute. The best known iteration complexity for solving such non-smooth optimization problems is $O(1/ε)$ without any assumption on the strong convexity. In this work, we will show that the proposed HOPS achieved a lower iteration complexity of $\widetilde O(1/ε^{1-θ})$\footnote{$\widetilde O()$ suppresses a logarithmic factor.} with $θ\in(0,1]$ capturing the local sharpness of the objective function around the optimal solutions. To the best of our knowledge, this is the lowest iteration complexity achieved so far for the considered non-smooth optimization problems without strong convexity assumption. The HOPS algorithm employs Nesterov's smoothing technique and Nesterov's accelerated gradient method and runs in stages, which gradually decreases the smoothing parameter in a stage-wise manner until it yields a sufficiently good approximation of the original function. We show that HOPS enjoys a linear convergence for many well-known non-smooth problems (e.g., empirical risk minimization with a piece-wise linear loss function and $\ell_1$ norm regularizer, finding a point in a polyhedron, cone programming, etc). Experimental results verify the effectiveness of HOPS in comparison with Nesterov's smoothing algorithm and the primal-dual style of first-order methods.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-13T16:20:52Z</published>
+    <arxiv:comment>This is a long version of the paper accepted by NIPS 2016</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yi Xu</name>
+    </author>
+    <author>
+      <name>Yan Yan</name>
+    </author>
+    <author>
+      <name>Qihang Lin</name>
+    </author>
+    <author>
+      <name>Tianbao Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.08846v1</id>
+    <title>Accelerated first-order methods for large-scale convex minimization</title>
+    <updated>2016-04-29T14:19:52Z</updated>
+    <link href="https://arxiv.org/abs/1604.08846v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.08846v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper discusses several (sub)gradient methods attaining the optimal complexity for smooth problems with Lipschitz continuous gradients, nonsmooth problems with bounded variation of subgradients, weakly smooth problems with Hölder continuous gradients. The proposed schemes are optimal for smooth strongly convex problems with Lipschitz continuous gradients and optimal up to a logarithmic factor for nonsmooth problems with bounded variation of subgradients. More specifically, we propose two estimation sequences of the objective and give two iterative schemes for each of them. In both cases, the first scheme requires the smoothness parameter and the Hölder constant, while the second scheme is parameter-free (except for the strong convexity parameter which we set zero if it is not available) at the price of applying a nonmonotone backtracking line search. A complexity analysis for all the proposed schemes is given. Numerical results for some applications in sparse optimization and machine learning are reported, which confirm the theoretical foundations.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-29T14:19:52Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Masoud Ahookhosh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1107.2848v1</id>
+    <title>Iteration Complexity of Randomized Block-Coordinate Descent Methods for Minimizing a Composite Function</title>
+    <updated>2011-07-14T15:25:31Z</updated>
+    <link href="https://arxiv.org/abs/1107.2848v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1107.2848v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we develop a randomized block-coordinate descent method for minimizing the sum of a smooth and a simple nonsmooth block-separable convex function and prove that it obtains an $ε$-accurate solution with probability at least $1-ρ$ in at most $O(\tfrac{n}ε \log \tfrac{1}ρ)$ iterations, where $n$ is the number of blocks. For strongly convex functions the method converges linearly. This extends recent results of Nesterov [Efficiency of coordinate descent methods on huge-scale optimization problems, CORE Discussion Paper #2010/2], which cover the smooth case, to composite minimization, while at the same time improving the complexity by the factor of 4 and removing $ε$ from the logarithmic term. More importantly, in contrast with the aforementioned work in which the author achieves the results by applying the method to a regularized version of the objective function with an unknown scaling factor, we show that this is not necessary, thus achieving true iteration complexity bounds. In the smooth case we also allow for arbitrary probability vectors and non-Euclidean norms. Finally, we demonstrate numerically that the algorithm is able to solve huge-scale $\ell_1$-regularized least squares and support vector machine problems with a billion variables.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-07-14T15:25:31Z</published>
+    <arxiv:comment>33 pages, 7 figures, 10 tables</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Peter Richtárik</name>
+    </author>
+    <author>
+      <name>Martin Takáč</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0512241v1</id>
+    <title>The Quantum Query Complexity of Elliptic PDE</title>
+    <updated>2005-12-27T17:10:27Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0512241v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0512241v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The complexity of the following numerical problem is studied in the quantum model of computation: Consider a general elliptic partial differential equation of order 2m in a smooth, bounded domain Q\subset \R^d with smooth coefficients and homogeneous boundary conditions. We seek to approximate the solution on a smooth submanifold M\subseteq Q of dimension 0\le d_1 \le d. With the right hand side belonging to C^r(Q), and the error being measured in the L_\infty(M) norm, we prove that the n-th minimal quantum error is (up to logarithmic factors) of order n^{-min((r+2m)/d_1,r/d+1)}. For comparison, in the classical deterministic setting the n-th minimal error is known to be of order n^{-r/d}, for all d_1, while in the classical randomized setting it is (up to logarithmic factors) n^{-min((r+2m)/d_1,r/d+1/2)}.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-12-27T17:10:27Z</published>
+    <arxiv:comment>45 pages, submitted to the Journal of Complexity</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Stefan Heinrich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09740v2</id>
+    <title>On the oracle complexity of smooth strongly convex minimization</title>
+    <updated>2021-06-14T19:53:52Z</updated>
+    <link href="https://arxiv.org/abs/2101.09740v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09740v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a family of functions suitable for establishing lower bounds on the oracle complexity of first-order minimization of smooth strongly-convex functions. Based on this construction, we derive new lower bounds on the complexity of strongly-convex minimization under various inaccuracy criteria. The new bounds match the known upper bounds up to a constant factor, and when the inaccuracy of a solution is measured by its distance to the solution set, the new lower bound exactly matches the upper bound obtained by the recent Information-Theoretic Exact Method by the same authors, thereby establishing the exact oracle complexity for this class of problems.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-24T16:20:53Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yoel Drori</name>
+    </author>
+    <author>
+      <name>Adrien Taylor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04884v1</id>
+    <title>A Few Accelerated Algorithms for Convex Optimization under $(H_0,H_1)$-Smoothness</title>
+    <updated>2026-08-05T14:09:13Z</updated>
+    <link href="https://arxiv.org/abs/2608.04884v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04884v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop accelerated algorithms for convex $(H_0,H_1)$-smooth optimization, where $\|\nabla^2 f(x)\|\le H_0+H_1(f(x)-f^*)$. This class generalizes standard smoothness and contains the $(L_0,L_1)$-smooth class. Combining a Nesterov-type accelerated gradient scheme with small-dimensional relaxation and phase restarts, we obtain a full-gradient method with iteration complexity $\widetilde O(\sqrt{H_0\widetilde R^2/\varepsilon}+\sqrt{H_1\widetilde R^2}\log(F_0/\varepsilon))$. We extend the same approach to randomized coordinate optimization, obtaining a coordinate method with uniform sampling whose iteration complexity carries the standard factor $d$, and a coordinate method with non-uniform sampling whose iteration complexity is governed by $S_{1/2}^{(j)}=\sum_i\sqrt{H_{j,i}}$. These results provide, to our knowledge, the first accelerated full-gradient and coordinate guarantees for this convex class. We also provide practical implementation recommendations. Experiments confirm the predicted acceleration, gains from non-uniform sampling, and the viability of inexact relaxation.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-05T14:09:13Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Aleksandr Lobanov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.21717v2</id>
+    <title>On sample complexity for covariance estimation via the unadjusted Langevin algorithm</title>
+    <updated>2026-02-13T07:43:32Z</updated>
+    <link href="https://arxiv.org/abs/2601.21717v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.21717v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish sample complexity guarantees for estimating the covariance matrix of a strongly log-concave smooth distribution using the unadjusted Langevin algorithm (ULA). We quantitatively compare our complexity estimates on single-chain ULA with embarrassingly parallel ULA and derive that the sample complexity of the single-chain approach is smaller than that of embarrassingly parallel ULA by a logarithmic factor in the dimension and the reciprocal of the prescribed precision, with the difference arising from effective bias reduction through burn-in. The key technical contribution is a concentration bound for the sample covariance matrix around its expectation, derived via a log-Sobolev inequality for the joint distribution of ULA iterates.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-29T13:43:21Z</published>
+    <arxiv:comment>21 pages; minor corrections</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Shogo Nakakita</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.15244v2</id>
+    <title>A Stochastic Quasi-Newton Method for Non-convex Optimization with Non-uniform Smoothness</title>
+    <updated>2024-09-26T15:56:30Z</updated>
+    <link href="https://arxiv.org/abs/2403.15244v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.15244v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Classical convergence analyses for optimization algorithms rely on the widely-adopted uniform smoothness assumption. However, recent experimental studies have demonstrated that many machine learning problems exhibit non-uniform smoothness, meaning the smoothness factor is a function of the model parameter instead of a universal constant. In particular, it has been observed that the smoothness grows with respect to the gradient norm along the training trajectory. Motivated by this phenomenon, the recently introduced $(L_0, L_1)$-smoothness is a more general notion, compared to traditional $L$-smoothness, that captures such positive relationship between smoothness and gradient norm. Under this type of non-uniform smoothness, existing literature has designed stochastic first-order algorithms by utilizing gradient clipping techniques to obtain the optimal $\mathcal{O}(ε^{-3})$ sample complexity for finding an $ε$-approximate first-order stationary solution. Nevertheless, the studies of quasi-Newton methods are still lacking. Considering higher accuracy and more robustness for quasi-Newton methods, in this paper we propose a fast stochastic quasi-Newton method when there exists non-uniformity in smoothness. Leveraging gradient clipping and variance reduction, our algorithm can achieve the best-known $\mathcal{O}(ε^{-3})$ sample complexity and enjoys convergence speedup with simple hyperparameter tuning. Our numerical experiments show that our proposed algorithm outperforms the state-of-the-art approaches.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-22T14:40:29Z</published>
+    <arxiv:comment>Paper accepted by CDC 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zhenyu Sun</name>
+    </author>
+    <author>
+      <name>Ermin Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.06549v1</id>
+    <title>Stochastic Non-Smooth Non-Convex Optimization with Decision-Dependent Distributions</title>
+    <updated>2026-05-07T16:46:07Z</updated>
+    <link href="https://arxiv.org/abs/2605.06549v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.06549v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study stochastic zeroth-order optimization with decision-dependent distributions, where the sampling law depends on the current decision and only noisy function values are available. For the non-smooth non-convex setting, we establish an explicit convergence guarantee for finding a $(δ,ε)$-Goldstein stationary point with stochastic zeroth-order oracle (SZO) complexity of $\mathcal{O}(d^2δ^{-3}ε^{-3})$. In addition, we show that the above complexity can be achieved with single SZO feedback per iteration. We further extend the analysis to smooth and Hessian-Lipschitz objectives, obtaining complexities $\mathcal{O}(d^2ε^{-6})$ and $\mathcal{O}(d^2ε^{-9/2})$, respectively. In the Hessian-Lipschitz case, this improves the best-known dependence on $ε$ for decision-dependent zeroth-order methods by a factor of $ε^{-1/2}$.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-07T16:46:07Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Chengchang Liu</name>
+    </author>
+    <author>
+      <name>Zongqi Wan</name>
+    </author>
+    <author>
+      <name>Haishan Ye</name>
+    </author>
+    <author>
+      <name>John C. S. Lui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.13496v3</id>
+    <title>Revisiting Randomized Smoothing: Nonsmooth Nonconvex Optimization Beyond Global Lipschitz Continuity</title>
+    <updated>2025-09-09T02:01:10Z</updated>
+    <link href="https://arxiv.org/abs/2508.13496v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.13496v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Randomized smoothing is a widely adopted technique for optimizing nonsmooth objective functions. However, its efficiency analysis typically relies on global Lipschitz continuity, a condition rarely met in practical applications. To address this limitation, we introduce a new subgradient growth condition that naturally encompasses a wide range of locally Lipschitz functions, with the classical global Lipschitz function as a special case. Under this milder condition, we prove that randomized smoothing yields a differentiable function that satisfies certain generalized smoothness properties. To optimize such functions, we propose novel randomized smoothing gradient algorithms that, with high probability, converge to $(δ, ε)$-Goldstein stationary points and achieve a sample complexity of $\tilde{\mathcal{O}}(d^{5/2}δ^{-1}ε^{-4})$. By incorporating variance reduction techniques, we further improve the sample complexity to $\tilde{\mathcal{O}}(d^{3/2}δ^{-1}ε^{-3})$, matching the optimal $ε$-bound under the global Lipschitz assumption, up to a logarithmic factor. Experimental results validate the effectiveness of our proposed algorithms.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-19T04:10:38Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Jingfan Xia</name>
+    </author>
+    <author>
+      <name>Zhenwei Lin</name>
+    </author>
+    <author>
+      <name>Qi Deng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.06557v3</id>
+    <title>An Optimal High-Order Tensor Method for Convex Optimization</title>
+    <updated>2020-04-17T07:05:03Z</updated>
+    <link href="https://arxiv.org/abs/1812.06557v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.06557v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper is concerned with finding an optimal algorithm for minimizing a composite convex objective function. The basic setting is that the objective is the sum of two convex functions: the first function is smooth with up to the d-th order derivative information available, and the second function is possibly non-smooth, but its proximal tensor mappings can be computed approximately in an efficient manner. The problem is to find -- in that setting -- the best possible (optimal) iteration complexity for convex optimization. Along that line, for the smooth case (without the second non-smooth part in the objective), Nesterov (1983) proposed an optimal algorithm for the first-order methods (d=1) with iteration complexity O( 1 / k^2 ). A high-order tensor algorithm with iteration complexity of O( 1 / k^{d+1} ) was proposed by Baes (2009) and Nesterov (2018). In this paper, we propose a new high-order tensor algorithm for the general composite case, with the iteration complexity of O( 1 / k^{(3d+1)/2} ), which matches the lower bound for the d-th order methods as established in Nesterov (2018), and Shamir et al. (2018), and hence is optimal. Our approach is based on the Accelerated Hybrid Proximal Extragradient (A-HPE) framework proposed in Monteiro and Svaiter (2013), where a bisection procedure is installed for each A-HPE iteration. At each bisection step a proximal tensor subproblem is approximately solved, and the total number of bisection steps per A-HPE iteration is bounded by a logarithmic factor in the precision required.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-16T23:49:08Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Bo Jiang</name>
+    </author>
+    <author>
+      <name>Haoyue Wang</name>
+    </author>
+    <author>
+      <name>Shuzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.33021v1</id>
+    <title>Decentralized Optimization with Cross-Coupled Mixed Affine Constraints</title>
+    <updated>2026-09-26T23:36:42Z</updated>
+    <link href="https://arxiv.org/abs/2609.33021v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.33021v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study decentralized optimization with cross-coupled mixed affine constraints, where local and shared variables interact through two affine channels. We show that the intrinsic difficulty of combining separately well-conditioned channels is governed by their Friedrichs angle. This geometry induces a cross-coupling factor that cannot be removed by channelwise preconditioning and governs the additional affine-oracle and communication complexity. We develop an accelerated decentralized method with matching minimax guarantees in the smooth strongly convex regime and extend the framework to smooth and nonsmooth convex objectives. Experiments confirm the predicted dependence on cross-channel geometry and network conditioning.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-26T23:36:42Z</published>
+    <arxiv:comment>43 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Ewsey Obzherin</name>
+    </author>
+    <author>
+      <name>Ilya Khomchenko</name>
+    </author>
+    <author>
+      <name>Natalia Shelegeda</name>
+    </author>
+    <author>
+      <name>Nhat Trung Nguyen</name>
+    </author>
+    <author>
+      <name>Demyan Yarmoshik</name>
+    </author>
+    <author>
+      <name>Alexander Rogozin</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.19764v2</id>
+    <title>Inexact Moreau Envelope Lagrangian Method for Non-Convex Constrained Optimization under Local Error Bound Conditions on Constraint Functions</title>
+    <updated>2026-01-30T00:24:12Z</updated>
+    <link href="https://arxiv.org/abs/2502.19764v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.19764v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we investigate how structural properties of the constraint system impact the oracle complexity of smooth non-convex optimization problems with convex inequality constraints over a simple polytope. In particular, we show that, under a local error bound condition with exponent $d\in[1,2]$ on constraint functions, an inexact Moreau envelope Lagrangian method can attain an $ε$-Karush--Kuhn--Tucker point with $\tilde O(ε^{-2d})$ gradient oracle complexity. When $d=1$, this result matches the best-known complexity in literature up to logarithmic factors. Importantly, the assumed error bound condition with any $d\in[1,2]$ is strictly weaker than the local linear independence constraint qualification that is required to achieve the best-known complexity. Our results clarify the interplay between error bound conditions of constraints and algorithmic complexity, and extend complexity guarantees to a broader class of constrained non-convex problems.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-27T05:04:27Z</published>
+    <arxiv:comment>40 pages, 1 figure, 1 table</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yankun Huang</name>
+    </author>
+    <author>
+      <name>Qihang Lin</name>
+    </author>
+    <author>
+      <name>Yangyang Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.14452v2</id>
+    <title>Stochastic Gradient Methods with Compressed Communication for Decentralized Saddle Point Problems</title>
+    <updated>2023-04-14T07:14:46Z</updated>
+    <link href="https://arxiv.org/abs/2205.14452v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.14452v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop two compression based stochastic gradient algorithms to solve a class of non-smooth strongly convex-strongly concave saddle-point problems in a decentralized setting (without a central server). Our first algorithm is a Restart-based Decentralized Proximal Stochastic Gradient method with Compression (C-RDPSG) for general stochastic settings. We provide rigorous theoretical guarantees of C-RDPSG with gradient computation complexity and communication complexity of order $\mathcal{O}( (1+δ)^4 \frac{1}{L^2}{κ_f^2}κ_g^2 \frac{1}ε )$, to achieve an $ε$-accurate saddle-point solution, where $δ$ denotes the compression factor, $κ_f$ and $κ_g$ denote respectively the condition numbers of objective function and communication graph, and $L$ denotes the smoothness parameter of the smooth part of the objective function. Next, we present a Decentralized Proximal Stochastic Variance Reduced Gradient algorithm with Compression (C-DPSVRG) for finite sum setting which exhibits gradient computation complexity and communication complexity of order $\mathcal{O} \left((1+δ) \max \{κ_f^2, \sqrtδκ^2_fκ_g,κ_g \} \log\left(\frac{1}ε\right) \right)$. Extensive numerical experiments show competitive performance of the proposed algorithms and provide support to the theoretical results obtained.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-28T15:17:19Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Chhavi Sharma</name>
+    </author>
+    <author>
+      <name>Vishnu Narayanan</name>
+    </author>
+    <author>
+      <name>P. Balamurugan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.08280v5</id>
+    <title>Lower Complexity Bounds of Finite-Sum Optimization Problems: The Results and Construction</title>
+    <updated>2023-01-06T11:07:15Z</updated>
+    <link href="https://arxiv.org/abs/2103.08280v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.08280v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study the lower complexity bounds for finite-sum optimization problems, where the objective is the average of $n$ individual component functions. We consider Proximal Incremental First-order (PIFO) algorithms which have access to the gradient and proximal oracles for each component function. To incorporate loopless methods, we also allow PIFO algorithms to obtain the full gradient infrequently. We develop a novel approach to constructing the hard instances, which partitions the tridiagonal matrix of classical examples into $n$ groups. This construction is friendly to the analysis of PIFO algorithms. Based on this construction, we establish the lower complexity bounds for finite-sum minimax optimization problems when the objective is convex-concave or nonconvex-strongly-concave and the class of component functions is $L$-average smooth. Most of these bounds are nearly matched by existing upper bounds up to log factors. We can also derive similar lower bounds for finite-sum minimization problems as previous work under both smoothness and average smoothness assumptions. Our lower bounds imply that proximal oracles for smooth functions are not much more powerful than gradient oracles.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-15T11:20:31Z</published>
+    <arxiv:comment>We fix some typos</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yuze Han</name>
+    </author>
+    <author>
+      <name>Guangzeng Xie</name>
+    </author>
+    <author>
+      <name>Zhihua Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.12309v5</id>
+    <title>On the Lipschitz Constant of Deep Networks and Double Descent</title>
+    <updated>2025-07-23T16:41:45Z</updated>
+    <link href="https://arxiv.org/abs/2301.12309v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.12309v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing bounds on the generalization error of deep networks assume some form of smooth or bounded dependence on the input variable, falling short of investigating the mechanisms controlling such factors in practice. In this work, we present an extensive experimental study of the empirical Lipschitz constant of deep networks undergoing double descent, and highlight non-monotonic trends strongly correlating with the test error. Building a connection between parameter-space and input-space gradients for SGD around a critical point, we isolate two important factors -- namely loss landscape curvature and distance of parameters from initialization -- respectively controlling optimization dynamics around a critical point and bounding model function complexity, even beyond the training data. Our study presents novels insights on implicit regularization via overparameterization, and effective model complexity for networks trained in practice.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-28T23:22:49Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Matteo Gamba</name>
+    </author>
+    <author>
+      <name>Hossein Azizpour</name>
+    </author>
+    <author>
+      <name>Mårten Björkman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.01954v2</id>
+    <title>Federated Optimization of Smooth Loss Functions</title>
+    <updated>2024-01-04T01:46:17Z</updated>
+    <link href="https://arxiv.org/abs/2201.01954v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.01954v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we study empirical risk minimization (ERM) within a federated learning framework, where a central server minimizes an ERM objective function using training data that is stored across $m$ clients. In this setting, the Federated Averaging (FedAve) algorithm is the staple for determining $ε$-approximate solutions to the ERM problem. Similar to standard optimization algorithms, the convergence analysis of FedAve only relies on smoothness of the loss function in the optimization parameter. However, loss functions are often very smooth in the training data too. To exploit this additional smoothness, we propose the Federated Low Rank Gradient Descent (FedLRGD) algorithm. Since smoothness in data induces an approximate low rank structure on the loss function, our method first performs a few rounds of communication between the server and clients to learn weights that the server can use to approximate clients' gradients. Then, our method solves the ERM problem at the server using inexact gradient descent. To show that FedLRGD can have superior performance to FedAve, we present a notion of federated oracle complexity as a counterpart to canonical oracle complexity. Under some assumptions on the loss function, e.g., strong convexity in parameter, $η$-Hölder smoothness in data, etc., we prove that the federated oracle complexity of FedLRGD scales like $φm(p/ε)^{Θ(d/η)}$ and that of FedAve scales like $φm(p/ε)^{3/4}$ (neglecting sub-dominant factors), where $φ\gg 1$ is a "communication-to-computation ratio," $p$ is the parameter dimension, and $d$ is the data dimension. Then, we show that when $d$ is small and the loss function is sufficiently smooth in the data, FedLRGD beats FedAve in federated oracle complexity. Finally, in the course of analyzing FedLRGD, we also establish a result on low rank approximation of latent variable models.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-06T07:40:51Z</published>
+    <arxiv:comment>31 pages, double column format, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>IEEE Transactions on Information Theory, vol. 69, no. 12, Dec. 2023</arxiv:journal_ref>
+    <author>
+      <name>Ali Jadbabaie</name>
+    </author>
+    <author>
+      <name>Anuran Makur</name>
+    </author>
+    <author>
+      <name>Devavrat Shah</name>
+    </author>
+    <arxiv:doi>10.1109/TIT.2023.3317168</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TIT.2023.3317168" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.09437v1</id>
+    <title>$L$-smooth factorization for Noetherian $F$-finite rings</title>
+    <updated>2025-01-16T10:09:09Z</updated>
+    <link href="https://arxiv.org/abs/2501.09437v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.09437v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that any homomorphism between Noetherian $F$-finite rings can be factored into a regular morphism between Noetherian $F$-finite rings followed by a surjection. This result establishes an analog of the 'smooth-by-surjective' factorization for finite type maps. As part of our analysis, we observe that for maps of Noetherian $F$-finite rings, regularity and formal smoothness are both equivalent to $L$-smoothness, meaning that the cotangent complex, as in the smooth case, is a locally free module of finite rank concentrated in degree zero.
+  Our findings may also be viewed as a relative version of Gabber's final remark in \citep{Gab04}, which states that any Noetherian $F$-finite ring is a quotient of a regular Noetherian $F$-finite ring.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-16T10:09:09Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Manuel Blickle</name>
+    </author>
+    <author>
+      <name>Daniel Fink</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.13240v2</id>
+    <title>Unipotent Factorization of Vector Bundle Automorphisms</title>
+    <updated>2021-01-17T10:14:21Z</updated>
+    <link href="https://arxiv.org/abs/1911.13240v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.13240v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide unipotent factorizations of vector bundle automorphisms of real and complex vector bundles over smooth manifolds. This generalises work of Thurston-Wasserstein and Wasserstein for trivial vector bundles. We also address two symplectic cases and propose a complex geometric analog of the problem in the setting of holomorphic vector bundles over Stein manifolds.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-29T17:39:04Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Jakob Hultgren</name>
+    </author>
+    <author>
+      <name>Erlend F. Wold</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1804.02394v2</id>
+    <title>An Accelerated Directional Derivative Method for Smooth Stochastic Convex Optimization</title>
+    <updated>2020-09-21T09:02:49Z</updated>
+    <link href="https://arxiv.org/abs/1804.02394v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1804.02394v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider smooth stochastic convex optimization problems in the context of algorithms which are based on directional derivatives of the objective function. This context can be considered as an intermediate one between derivative-free optimization and gradient-based optimization. We assume that at any given point and for any given direction, a stochastic approximation for the directional derivative of the objective function at this point and in this direction is available with some additive noise. The noise is assumed to be of an unknown nature, but bounded in the absolute value. We underline that we consider directional derivatives in any direction, as opposed to coordinate descent methods which use only derivatives in coordinate directions. For this setting, we propose a non-accelerated and an accelerated directional derivative method and provide their complexity bounds. Our non-accelerated algorithm has a complexity bound which is similar to the gradient-based algorithm, that is, without any dimension-dependent factor. Our accelerated algorithm has a complexity bound which coincides with the complexity bound of the accelerated gradient-based algorithm up to a factor of square root of the problem dimension. We extend these results to strongly convex problems.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-04-08T11:36:35Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:1802.09022</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Pavel Dvurechensky</name>
+    </author>
+    <author>
+      <name>Eduard Gorbunov</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+    <arxiv:doi>10.1016/j.ejor.2020.08.027</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ejor.2020.08.027" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.0882v2</id>
+    <title>Exotic smooth R^4, noncommutative algebras and quantization</title>
+    <updated>2010-01-27T09:34:50Z</updated>
+    <link href="https://arxiv.org/abs/1001.0882v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.0882v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The paper shows deep connections between exotic smoothings of small R^4, noncommutative algebras of foliations and quantization. At first, based on the close relation of foliations and noncommutative C*-algebras we show that cyclic cohomology invariants characterize some small exotic R^4. Certain exotic smooth R^4's define a generalized embedding into a space which is K-theoretic equivalent to a noncommutative Banach algebra. Furthermore, we show that a factor III von Neumann algebra is naturally related with nonstandard smoothing of a small R^4 and conjecture that this factor is the unique hyperfinite factor III_1. We also show how an exotic smoothing of a small R^4 is related to the Drinfeld-Turaev (deformation) quantization of the Poisson algebra (X(S,SL(2,C),{,}) of complex functions on the space of flat connections X(S,SL(2,C) over a surface S, and that the result of this quantization is the skein algebra (K_t(S),[,]) for the deformation parameter t=exp(h/4). This skein algebra is retrieved as a II_1 factor of horocycle flows which is Morita equivalent to the II_infty factor von Neumann algebra which in turn determines the unique factor III_1 as crossed product. Moreover, the structure of Casson handles determine the factor II_1 algebra too. Thus, the quantization of the Poisson algebra of closed circles in a leaf of the codimension 1 foliation of S^3 gives rise to the factor III_1 associated with exotic smoothness of R^4. Finally, the approach to quantization via exotic 4-smoothness is considered as a fundamental question in dimension 4 and compared with the topos approach to quantum theories.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-06T12:52:17Z</published>
+    <arxiv:comment>31 pages, 6 figures, svjour style, argumentation about closed transversals modified (sec. 4.2)</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Torsten Asselmeyer-Maluga</name>
+    </author>
+    <author>
+      <name>Jerzy Krol</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1607.03157v1</id>
+    <title>Characteristic cycle of the exterior product of constructible sheaves</title>
+    <updated>2016-07-11T20:37:03Z</updated>
+    <link href="https://arxiv.org/abs/1607.03157v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1607.03157v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the characteristic cycle of the exterior product of constructible complexes is the exterior product of the characteristic cycles of factors. This implies the compatibility of characteristic cycles with smooth pull-back which is a first step in the proof of the index formula.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-07-11T20:37:03Z</published>
+    <arxiv:comment>9 pages. This article is a new version of the second part of "Notes on the characteristic cycle of a constructible sheaf" arXiv:1603.07865 which has been withdrawn</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>Manuscripta Mathematica, 154, Issue 1-2, 2017, pp 1-12</arxiv:journal_ref>
+    <author>
+      <name>Takeshi Saito</name>
+    </author>
+    <arxiv:doi>10.1007/s00229-016-0913-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00229-016-0913-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.35946v2</id>
+    <title>Gradient-Free Methods for Stochastic Convex Optimization with Stochastic Functional Constraints</title>
+    <updated>2026-10-01T10:44:50Z</updated>
+    <link href="https://arxiv.org/abs/2609.35946v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.35946v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish the optimal query complexity of smooth convex quadratic optimization from exact function values. For dimension $d$, smoothness $L$, and minimizer radius $R$, the sharp rate at small relative error is $Θ(d\min\{d,\sqrt{LR^2/\varepsilon}\})$. The lower bound has no logarithmic loss and holds even for adaptive randomized algorithms with unrestricted query locations, precision, and computation. It also matches upper bounds for general smooth convex objectives at moderate accuracy. We obtain, to our knowledge, the first lower bounds matching known smooth and nonsmooth rates, up to logarithmic factors, under Euclidean regularity and $\ell_p$ localization or feasibility, $1\le p&lt;2$. These bounds determine the optimal polynomial dimension dependence in these geometries. A geometric framework covers arbitrary norms and known regularizers; exploiting regularizer sublevels can strengthen lower bounds by an unbounded factor. For convex-concave saddle-point problems with unequal block dimensions, we isolate coupling costs even with known, perfectly conditioned block Hessians. Separate reductions show that scalar evaluations remain necessary despite unlimited access to one block's partial gradients.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-28T16:52:47Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Vadim Abronin</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+    <author>
+      <name>Darina Dvinskikh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1802.09022v3</id>
+    <title>An Accelerated Method for Derivative-Free Smooth Stochastic Convex Optimization</title>
+    <updated>2020-09-20T14:37:34Z</updated>
+    <link href="https://arxiv.org/abs/1802.09022v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1802.09022v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider an unconstrained problem of minimizing a smooth convex function which is only available through noisy observations of its values, the noise consisting of two parts. Similar to stochastic optimization problems, the first part is of stochastic nature. The second part is additive noise of unknown nature, but bounded in absolute value. In the two-point feedback setting, i.e. when pairs of function values are available, we propose an accelerated derivative-free algorithm together with its complexity analysis. The complexity bound of our derivative-free algorithm is only by a factor of $\sqrt{n}$ larger than the bound for accelerated gradient-based algorithms, where $n$ is the dimension of the decision variable. We also propose a non-accelerated derivative-free algorithm with a complexity bound similar to the stochastic-gradient-based algorithm, that is, our bound does not have any dimension-dependent factor except logarithmic. Notably, if the difference between the starting point and the solution is a sparse vector, for both our algorithms, we obtain a better complexity bound if the algorithm uses an $1$-norm proximal setup, rather than the Euclidean proximal setup, which is a standard choice for unconstrained problems</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-02-25T15:27:30Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Eduard Gorbunov</name>
+    </author>
+    <author>
+      <name>Pavel Dvurechensky</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16189v1</id>
+    <title>Quantum Algorithms for Non-smooth Non-convex Optimization</title>
+    <updated>2024-10-21T16:52:26Z</updated>
+    <link href="https://arxiv.org/abs/2410.16189v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16189v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper considers the problem for finding the $(δ,ε)$-Goldstein stationary point of Lipschitz continuous objective, which is a rich function class to cover a great number of important applications. We construct a zeroth-order quantum estimator for the gradient of the smoothed surrogate. Based on such estimator, we propose a novel quantum algorithm that achieves a query complexity of $\tilde{\mathcal{O}}(d^{3/2}δ^{-1}ε^{-3})$ on the stochastic function value oracle, where $d$ is the dimension of the problem. We also enhance the query complexity to $\tilde{\mathcal{O}}(d^{3/2}δ^{-1}ε^{-7/3})$ by introducing a variance reduction variant. Our findings demonstrate the clear advantages of utilizing quantum techniques for non-convex non-smooth optimization, as they outperform the optimal classical methods on the dependency of $ε$ by a factor of $ε^{-2/3}$.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T16:52:26Z</published>
+    <arxiv:comment>Accepted by NeurIPS 2024</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chengchang Liu</name>
+    </author>
+    <author>
+      <name>Chaowen Guan</name>
+    </author>
+    <author>
+      <name>Jianhao He</name>
+    </author>
+    <author>
+      <name>John C. S. Lui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/9911154v2</id>
+    <title>Smoothness of the uniformization of two-dimensional linear foliation on torus with nonstandard metric</title>
+    <updated>2000-03-01T14:53:56Z</updated>
+    <link href="https://arxiv.org/abs/math/9911154v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/9911154v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Consider a parallel plane foliation on real finite-dimensional linear vector space. It induces a foliation on the torus obtained by factorization of the space by the integer lattice (let us denote the latter foliation by F). Let g be arbitrary metric on the torus. It induces a complex structure on each leaf of F such that all the leaves are parabolic: each individual leaf admits a conformal flat complete metric. We show that for any foliation F as above and arbitrary smooth metric g the correspondent complete conformal flat metric on the leaves, which is smooth on individual leaf, can be chosen to be smooth in the whole torus (in particular, in transversal parameter). We show that under appropriate Diophantine condition on the foliation for arbitrary smooth metric g there exists a smooth Euclidean metric on the torus conformal on the leaves such that the latters are totally geodesic; in other terms, the correspondent triple consisting of the torus, the foliation and the complex structure on the leaves is isomorphic to a triple correspondent to a linear foliation on another torus equipped with the standard complex structure on the leaves. This Diophantine condition is exact. We state and prove the analytic versions of these statements.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1999-11-19T20:42:31Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>A. A. Glutsuk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.02522v1</id>
+    <title>Gradient-Based Empirical Risk Minimization using Local Polynomial Regression</title>
+    <updated>2020-11-04T20:10:31Z</updated>
+    <link href="https://arxiv.org/abs/2011.02522v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.02522v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider the problem of empirical risk minimization (ERM) of smooth, strongly convex loss functions using iterative gradient-based methods. A major goal of this literature has been to compare different algorithms, such as gradient descent (GD) or stochastic gradient descent (SGD), by analyzing their rates of convergence to $ε$-approximate solutions. For example, the oracle complexity of GD is $O(n\log(ε^{-1}))$, where $n$ is the number of training samples. When $n$ is large, this can be expensive in practice, and SGD is preferred due to its oracle complexity of $O(ε^{-1})$. Such standard analyses only utilize the smoothness of the loss function in the parameter being optimized. In contrast, we demonstrate that when the loss function is smooth in the data, we can learn the oracle at every iteration and beat the oracle complexities of both GD and SGD in important regimes. Specifically, at every iteration, our proposed algorithm performs local polynomial regression to learn the gradient of the loss function, and then estimates the true gradient of the ERM objective function. We establish that the oracle complexity of our algorithm scales like $\tilde{O}((p ε^{-1})^{d/(2η)})$ (neglecting sub-dominant factors), where $d$ and $p$ are the data and parameter space dimensions, respectively, and the gradient of the loss function belongs to a $η$-Hölder class with respect to the data. Our proof extends the analysis of local polynomial regression in non-parametric statistics to provide interpolation guarantees in multivariate settings, and also exploits tools from the inexact GD literature. Unlike GD and SGD, the complexity of our method depends on $d$ and $p$. However, when $d$ is small and the loss function exhibits modest smoothness in the data, our algorithm beats GD and SGD in oracle complexity for a very broad range of $p$ and $ε$.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-04T20:10:31Z</published>
+    <arxiv:comment>34 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ali Jadbabaie</name>
+    </author>
+    <author>
+      <name>Anuran Makur</name>
+    </author>
+    <author>
+      <name>Devavrat Shah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.12016v3</id>
+    <title>Accelerated-gradient-based generalized Levenberg--Marquardt method with oracle complexity bound and local quadratic convergence</title>
+    <updated>2024-01-11T01:25:27Z</updated>
+    <link href="https://arxiv.org/abs/2204.12016v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.12016v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Minimizing the sum of a convex function and a composite function appears in various fields. The generalized Levenberg--Marquardt (LM) method, also known as the prox-linear method, has been developed for such optimization problems. The method iteratively solves strongly convex subproblems with a damping term. This study proposes a new generalized LM method for solving the problem with a smooth composite function. The method enjoys three theoretical guarantees: iteration complexity bound, oracle complexity bound, and local convergence under a Hölderian growth condition. The local convergence results include local quadratic convergence under the quadratic growth condition; this is the first to extend the classical result for least-squares problems to a general smooth composite function. In addition, this is the first LM method with both an oracle complexity bound and local quadratic convergence under standard assumptions. These results are achieved by carefully controlling the damping parameter and solving the subproblems by the accelerated proximal gradient method equipped with a particular termination condition. Experimental results show that the proposed method performs well in practice for several instances, including classification with a neural network and nonnegative matrix factorization.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-26T00:57:48Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <arxiv:journal_ref>Mathematical Programming, volume 213, pages 771--822, (2025)</arxiv:journal_ref>
+    <author>
+      <name>Naoki Marumo</name>
+    </author>
+    <author>
+      <name>Takayuki Okuno</name>
+    </author>
+    <author>
+      <name>Akiko Takeda</name>
+    </author>
+    <arxiv:doi>10.1007/s10107-024-02154-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10107-024-02154-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.03465v13</id>
+    <title>Degeneration of families of projective hypersurfaces and Hodge conjecture</title>
+    <updated>2024-10-07T13:26:22Z</updated>
+    <link href="https://arxiv.org/abs/2401.03465v13" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.03465v13" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove by induction on dimension the Hodge conjecture for smooth complex projective varieties. Let $X$ be a smooth complex projective variety. Then $X$ is birational to a possibly singular projective hypersurface, hence to a smooth projective variety $E_0$ which is a component of a normal crossing divisor $E=\cup_{i=0}^rE_i\subset Y$ which is the singular fiber of a pencil $f:Y\to\mathbb A^1$ of smooth projective hypersurfaces. Using the smooth hypersurface case by a previous result of the autor, the nearby cycle functor on mixed Hodge module with rational de Rham factor, and the induction hypothesis, we prove that an Hodge class of $E_0$ is absolute Hodge, more precisely the locus of Hodge classes inside the algebraic vector bundle given the De Rham cohomology the rational deformation of $E_0$ is defined over $\mathbb Q$. By another previous result of the autor, we get the Hodge conjecture for $E_0$. By the induction hypothesis we also have the Hodge conjecture for $X$.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-07T12:23:46Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:2312.09268</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Johann Bouali</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.05753v2</id>
+    <title>Zeroth-order Optimization with Weak Dimension Dependency</title>
+    <updated>2023-08-02T11:32:16Z</updated>
+    <link href="https://arxiv.org/abs/2307.05753v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.05753v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zeroth-order optimization is a fundamental research topic that has been a focus of various learning tasks, such as black-box adversarial attacks, bandits, and reinforcement learning. However, in theory, most complexity results assert a linear dependency on the dimension of optimization variable, which implies paralyzations of zeroth-order algorithms for high-dimensional problems and cannot explain their effectiveness in practice. In this paper, we present a novel zeroth-order optimization theory characterized by complexities that exhibit weak dependencies on dimensionality. The key contribution lies in the introduction of a new factor, denoted as $\mathrm{ED}_α=\sup_{x\in \mathbb{R}^d}\sum_{i=1}^dσ_i^α(\nabla^2 f(x))$ ($α&gt;0$, $σ_i(\cdot)$ is the $i$-th singular value in non-increasing order), which effectively functions as a measure of dimensionality. The algorithms we propose demonstrate significantly reduced complexities when measured in terms of the factor $\mathrm{ED}_α$. Specifically, we first study a well-known zeroth-order algorithm from Nesterov and Spokoiny (2017) on quadratic objectives and show a complexity of $\mathcal{O}\left(\frac{\mathrm{ED}_1}{σ_d}\log(1/ε)\right)$ for the strongly convex setting. Furthermore, we introduce novel algorithms that leverages the Heavy-ball mechanism. Our proposed algorithm exhibits a complexity of $\mathcal{O}\left(\frac{\mathrm{ED}_{1/2}}{\sqrt{σ_d}}\cdot\log{\frac{L}μ}\cdot\log(1/ε)\right)$. We further expand the scope of the method to encompass generic smooth optimization problems under an additional Hessian-smooth condition. The resultant algorithms demonstrate remarkable complexities which improve by an order in $d$ under appropriate conditions. Our analysis lays the foundation for zeroth-order optimization methods for smooth functions within high-dimensional settings.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-11T19:20:26Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Pengyun Yue</name>
+    </author>
+    <author>
+      <name>Long Yang</name>
+    </author>
+    <author>
+      <name>Cong Fang</name>
+    </author>
+    <author>
+      <name>Zhouchen Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.04542v2</id>
+    <title>Decomposition rules for the ring of representations of non-Archimedean $GL_n$</title>
+    <updated>2021-04-01T19:33:44Z</updated>
+    <link href="https://arxiv.org/abs/1609.04542v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.04542v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{R}$ be the Grothendieck ring of complex smooth finite-length representations of the sequence of p-adic groups $\{GL_n(F)\}_{n=0}^\infty$, with multiplication defined through parabolic induction. We study the problem of the decomposition of products of irreducible representations in $\mathcal{R}$.
+  We obtain a necessary condition on irreducible factors of a given product by introducing a width invariant. Width $1$ representations form the previously studied class of ladder representations.
+  We later focus on the case of a product of two ladder representations, for which we establish that all irreducible factors appear with multiplicity one.
+  Finally, we propose a general rule for the composition series of a product of two ladder representations and prove its validity for cases in which the irreducible factors correspond to smooth Schubert varieties.</summary>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-15T09:20:32Z</published>
+    <arxiv:comment>33 pages, contains the results of the previous note arXiv:1604.07333</arxiv:comment>
+    <arxiv:primary_category term="math.RT"/>
+    <arxiv:journal_ref>IMRN 2020 (2019) 20 6815-6855</arxiv:journal_ref>
+    <author>
+      <name>Maxim Gurevich</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rnz006</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rnz006" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.11224v1</id>
+    <title>Lower Bounds for Smooth Nonconvex Finite-Sum Optimization</title>
+    <updated>2019-01-31T06:16:45Z</updated>
+    <link href="https://arxiv.org/abs/1901.11224v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.11224v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Smooth finite-sum optimization has been widely studied in both convex and nonconvex settings. However, existing lower bounds for finite-sum optimization are mostly limited to the setting where each component function is (strongly) convex, while the lower bounds for nonconvex finite-sum optimization remain largely unsolved. In this paper, we study the lower bounds for smooth nonconvex finite-sum optimization, where the objective function is the average of $n$ nonconvex component functions. We prove tight lower bounds for the complexity of finding $ε$-suboptimal point and $ε$-approximate stationary point in different settings, for a wide regime of the smallest eigenvalue of the Hessian of the objective function (or each component function). Given our lower bounds, we can show that existing algorithms including KatyushaX (Allen-Zhu, 2018), Natasha (Allen-Zhu, 2017), RapGrad (Lan and Yang, 2018) and StagewiseKatyusha (Chen and Yang, 2018) have achieved optimal Incremental First-order Oracle (IFO) complexity (i.e., number of IFO calls) up to logarithm factors for nonconvex finite-sum optimization. We also point out potential ways to further improve these complexity results, in terms of making stronger assumptions or by a different convergence analysis.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-31T06:16:45Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Dongruo Zhou</name>
+    </author>
+    <author>
+      <name>Quanquan Gu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.19691v2</id>
+    <title>Smoothness Adaptivity in Constant-Depth Neural Networks: Optimal Rates via Smooth Activations</title>
+    <updated>2026-02-28T11:33:36Z</updated>
+    <link href="https://arxiv.org/abs/2602.19691v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.19691v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Smooth activation functions are ubiquitous in modern deep learning, yet their theoretical advantages over non-smooth counterparts remain poorly understood. In this work, we study both approximation and statistical properties of neural networks with smooth activations for learning functions in the Sobolev space $W^{s,\infty}([0,1]^d)$ with $s&gt;0$. We prove that constant-depth networks equipped with smooth activations achieve smoothness adaptivity: increasing width alone suffices to attain the minimax-optimal approximation and estimation error rates (up to logarithmic factors). In contrast, for non-smooth activations such as ReLU, smoothness adaptivity is fundamentally limited by depth: the attainable approximation order is bounded by depth, and higher-order smoothness requires proportional depth growth. These results identify activation smoothness as a fundamental mechanism, complementary to depth, for achieving optimal rates over Sobolev function classes. Technically, our analysis is based on a multi-scale approximation framework that yields explicit neural network approximators with controlled parameter norms and model size. This complexity control ensures statistical learnability under empirical risk minimization (ERM) and avoids the impractical $\ell^0$-sparsity constraints commonly required in prior analyses.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-23T10:38:12Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Yuhao Liu</name>
+    </author>
+    <author>
+      <name>Zilin Wang</name>
+    </author>
+    <author>
+      <name>Lei Wu</name>
+    </author>
+    <author>
+      <name>Shaobo Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.11613v3</id>
+    <title>Nonlinear conjugate gradient for smooth convex functions</title>
+    <updated>2024-01-03T15:17:19Z</updated>
+    <link href="https://arxiv.org/abs/2111.11613v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.11613v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The method of nonlinear conjugate gradients (NCG) is widely used in practice for unconstrained optimization, but it satisfies weak complexity bounds at best when applied to smooth convex functions. In contrast, Nesterov's accelerated gradient (AG) method is optimal up to constant factors for this class. However, when specialized to quadratic function, conjugate gradient is optimal in a strong sense among function-gradient methods. Therefore, there is seemingly a gap in the menu of available algorithms: NCG, the optimal algorithm for quadratic functions that also exhibits good practical performance for general functions, has poor complexity bounds compared to AG. We propose an NCG method called C+AG ("conjugate plus accelerated gradient") to close this gap, that is, it is optimal for quadratic functions and still satisfies the best possible complexity bound for more general smooth convex functions. It takes conjugate gradient steps until insufficient progress is made, at which time it switches to accelerated gradient steps, and later retries conjugate gradient. The proposed method has the following theoretical properties: (i) It is identical to linear conjugate gradient (and hence terminates finitely) if the objective function is quadratic; (ii) Its running-time bound is $O(\eps^{-1/2})$ gradient evaluations for an $L$-smooth convex function, where $\eps$ is the desired residual reduction, (iii) Its running-time bound is $O(\sqrt{L/\ell}\ln(1/\eps))$ if the function is both $L$-smooth and $\ell$-strongly convex. In computational tests, the function-gradient evaluation count for the C+AG method typically behaves as whichever is better of AG or classical NCG. In some test cases it outperforms both.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-23T02:27:37Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Sahar Karimi</name>
+    </author>
+    <author>
+      <name>Stephen Vavasis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.03524v2</id>
+    <title>Theoretically Better and Numerically Faster Distributed Optimization with Smoothness-Aware Quantization Techniques</title>
+    <updated>2022-10-12T22:13:35Z</updated>
+    <link href="https://arxiv.org/abs/2106.03524v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.03524v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To address the high communication costs of distributed machine learning, a large body of work has been devoted in recent years to designing various compression strategies, such as sparsification and quantization, and optimization algorithms capable of using them. Recently, Safaryan et al. (2021) pioneered a dramatically different compression design approach: they first use the local training data to form local smoothness matrices and then propose to design a compressor capable of exploiting the smoothness information contained therein. While this novel approach leads to substantial savings in communication, it is limited to sparsification as it crucially depends on the linearity of the compression operator. In this work, we generalize their smoothness-aware compression strategy to arbitrary unbiased compression operators, which also include sparsification. Specializing our results to stochastic quantization, we guarantee significant savings in communication complexity compared to standard quantization. In particular, we prove that block quantization with $n$ blocks theoretically outperforms single block quantization, leading to a reduction in communication complexity by an $\mathcal{O}(n)$ factor, where $n$ is the number of nodes in the distributed system. Finally, we provide extensive numerical evidence with convex optimization problems that our smoothness-aware quantization strategies outperform existing quantization schemes as well as the aforementioned smoothness-aware sparsification strategies with respect to three evaluation metrics: the number of iterations, the total amount of bits communicated, and wall-clock time.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-07T11:30:05Z</published>
+    <arxiv:comment>To appear in NeurIPS 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Bokun Wang</name>
+    </author>
+    <author>
+      <name>Mher Safaryan</name>
+    </author>
+    <author>
+      <name>Peter Richtárik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.13364v2</id>
+    <title>Low-Rank Matrix Recovery with Scaled Subgradient Methods: Fast and Robust Convergence Without the Condition Number</title>
+    <updated>2021-04-22T15:09:42Z</updated>
+    <link href="https://arxiv.org/abs/2010.13364v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.13364v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many problems in data science can be treated as estimating a low-rank matrix from highly incomplete, sometimes even corrupted, observations. One popular approach is to resort to matrix factorization, where the low-rank matrix factors are optimized via first-order methods over a smooth loss function, such as the residual sum of squares. While tremendous progresses have been made in recent years, the natural smooth formulation suffers from two sources of ill-conditioning, where the iteration complexity of gradient descent scales poorly both with the dimension as well as the condition number of the low-rank matrix. Moreover, the smooth formulation is not robust to corruptions. In this paper, we propose scaled subgradient methods to minimize a family of nonsmooth and nonconvex formulations -- in particular, the residual sum of absolute errors -- which is guaranteed to converge at a fast rate that is almost dimension-free and independent of the condition number, even in the presence of corruptions. We illustrate the effectiveness of our approach when the observation operator satisfies certain mixed-norm restricted isometry properties, and derive state-of-the-art performance guarantees for a variety of problems such as robust low-rank matrix sensing and quadratic sampling.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-26T06:21:14Z</published>
+    <arxiv:comment>Accepted to IEEE Transaction on Signal Processing</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Tian Tong</name>
+    </author>
+    <author>
+      <name>Cong Ma</name>
+    </author>
+    <author>
+      <name>Yuejie Chi</name>
+    </author>
+    <arxiv:doi>10.1109/TSP.2021.3071560</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TSP.2021.3071560" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1311.4316v1</id>
+    <title>Varieties with vanishing holomorphic Euler characteristic II</title>
+    <updated>2013-11-18T10:18:49Z</updated>
+    <link href="https://arxiv.org/abs/1311.4316v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1311.4316v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We continue our study on smooth complex projective varieties $X$ of maximal Albanese dimension and of general type satisfying $χ(X, ω_X)=0$. We formulate a conjectural characterization of such varieties and prove this conjecture when the Albanese variety has only three simple factors.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-11-18T10:18:49Z</published>
+    <arxiv:comment>27 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Jungkai A. Chen</name>
+    </author>
+    <author>
+      <name>Zhi Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.04220v1</id>
+    <title>$N_K=1$ SUSY structure of chiral de Rham complex from the factorization structure</title>
+    <updated>2024-09-06T12:22:13Z</updated>
+    <link href="https://arxiv.org/abs/2409.04220v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.04220v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We elucidate the comment in (Kapranov-Vasserot, Adv.\ Math., 2011, Remark 5.3.4) that the $1|1$-dimensional factorization structure of the formal superloop space of a smooth algebraic variety $X$ induces the $N_K=1$ SUSY vertex algebra structure of the chiral de Rham complex of $X$.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-06T12:22:13Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.QA"/>
+    <author>
+      <name>Takumi Iwane</name>
+    </author>
+    <author>
+      <name>Shintarou Yanagida</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.16892v2</id>
+    <title>Smooth numbers are orthogonal to nilsequences</title>
+    <updated>2024-10-09T15:18:23Z</updated>
+    <link href="https://arxiv.org/abs/2211.16892v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.16892v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The aim of this paper is to study distributional properties of integers without large or small prime factors. Define an integer to be $[y',y]$-smooth if all of its prime factors belong to the interval $[y',y]$. We identify suitable weights $g_{[y',y]}(n)$ for the characteristic function of $[y',y]$-smooth numbers that allow us to establish strong asymptotic results on their distribution in short arithmetic progressions. Building on these equidistribution properties, we show that (a $W$-tricked version of) the function $g_{[y',y]}(n) - 1$ is orthogonal to nilsequences. Our results apply in the almost optimal range $(\log N)^{K} &lt; y \leq N$ of the smoothness parameter $y$, where $K \geq 2$ is sufficiently large, and to any $y' &lt; \min(\sqrt{y}, (\log N)^c)$.
+  As a first application, we establish for any $y&gt; N^{1/\sqrt{\log_9 N}}$ asymptotic results on the frequency with which an arbitrary finite complexity system of shifted linear forms $ψ_j (\mathbf{n}) + a_j \in \mathbb{Z}[n_1, \dots, n_s]$, $1 \leq j \leq r$, simultaneously takes $[y',y]$-smooth values as the $n_i$ vary over integers below $N$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-30T10:45:17Z</published>
+    <arxiv:comment>71 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Alg. Number Th. 19 (2025) 1881-1946</arxiv:journal_ref>
+    <author>
+      <name>Lilian Matthiesen</name>
+    </author>
+    <author>
+      <name>Mengdi Wang</name>
+    </author>
+    <arxiv:doi>10.2140/ant.2025.19.1881</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/ant.2025.19.1881" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.08374v2</id>
+    <title>IntSGD: Adaptive Floatless Compression of Stochastic Gradients</title>
+    <updated>2022-03-20T23:21:09Z</updated>
+    <link href="https://arxiv.org/abs/2102.08374v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.08374v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a family of adaptive integer compression operators for distributed Stochastic Gradient Descent (SGD) that do not communicate a single float. This is achieved by multiplying floating-point vectors with a number known to every device and then rounding to integers. In contrast to the prior work on integer compression for SwitchML by Sapio et al. (2021), our IntSGD method is provably convergent and computationally cheaper as it estimates the scaling of vectors adaptively. Our theory shows that the iteration complexity of IntSGD matches that of SGD up to constant factors for both convex and non-convex, smooth and non-smooth functions, with and without overparameterization. Moreover, our algorithm can also be tailored for the popular all-reduce primitive and shows promising empirical performance.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-16T18:58:57Z</published>
+    <arxiv:comment>Spotlight at ICLR 2022. 27 pages, 6 figures, 3 algorithms</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>International Conference on Learning Representations (2022)</arxiv:journal_ref>
+    <author>
+      <name>Konstantin Mishchenko</name>
+    </author>
+    <author>
+      <name>Bokun Wang</name>
+    </author>
+    <author>
+      <name>Dmitry Kovalev</name>
+    </author>
+    <author>
+      <name>Peter Richtárik</name>
+    </author>
+  </entry>
+</feed>

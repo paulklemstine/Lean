@@ -1,0 +1,127 @@
+              10.3 Generating random primes using the Miller–Rabin test            315
+
+                     10.3.2 Trial division up to a small bound
+In generating a random prime, most candidates will in fact be composite, and so it
+makes sense to cast these out as quickly as possible. Significant efficiency gains can
+be achieved by testing if a given candidate n is divisible by any prime up to a given
+bound s, before we subject n to a Miller–Rabin test. This strategy makes sense,
+since for a small, “single precision” prime p, we can test if p | n essentially in time
+O(len(n)), while a single iteration of the Miller–Rabin test takes time O(len(n)3 ).
+   To be more precise, let us define the following algorithm:
+Algorithm MRS. On input n, k, s, where n, k, s ∈ Z, and n > 1, k ≥ 1, and s > 1,
+do the following:
+       for each prime p ≤ s do
+             if p | n then
+                    if p = n then return true else return false
+       repeat k times
+            α ← Z+
+                ¢
+                    n
+            if α ∈/ L0n return false
+       return true
+   In an implementation of the above algorithm, one would most likely use the
+sieve of Eratosthenes (see §5.4) to generate the small primes.
+   Note that MRS(n, k, 2) is equivalent to MR(n, k). Also, it is clear that the
+probability that MRS(n, k, s) makes a mistake is no more than the probability that
+MR(n, k) makes a mistake. Therefore, using MRS in place of MR will not increase
+the probability that the output of Algorithm RP is a composite — indeed, it is likely
+that this probability decreases significantly.
+   Let us now analyze the impact on the running time Algorithm RP. To do this, we
+need to estimate the probability σ(m, s) that a randomly chosen integer between 2
+and m is not divisible by any prime up to s. If m is sufficiently large with respect to
+s, the following heuristic argument can be made rigorous, as we will discuss below.
+The probability that a random integer is divisible by a prime p is about 1/p, so the
+probability that it is not divisible by p is about 1 − 1/p. Assuming that these events
+are essentially independent for different values of p (this is the heuristic part), we
+estimate
+                                            Y
+                                 σ(m, s) ≈     (1 − 1/p).                       (10.8)
+                                         p≤s
+
+Assuming for the time being that the approximation in (10.8) is sufficiently accu-
+rate, then using Mertens’ theorem (Theorem 5.13), we may deduce that
+                               σ(m, s) = O(1/ log s).                           (10.9)
+316                            Probabilistic primality testing
+
+Later, when we make this argument more rigorous, we shall see that (10.9) holds
+provided s is not too large relative to m, and in particular, if s = O((log m)c ) for
+some constant c.
+   The estimate (10.9) gives us a bound on the probability that a random integer
+passes the trial division phase, and so must be subjected to Miller–Rabin; how-
+ever, performing the trial division takes some time, so we also need to estimate the
+expected number κ(m, s) of trial divisions performed on a random integer between
+2 and m. Of course, in the worst case, we divide by all primes up to s, and so
+κ(m, s) ≤ π(s) = O(s/ log s), but we can get a better bound, as follows. Let
+p1 , p2 , . . . , pr be the primes up to s, and for i = 1, . . . , r, let qi be the probability
+that we perform at least i trial divisions. By Theorem 8.17, we have
+                                                  r
+                                                  X
+                                      κ(m, s) =         qi .
+                                                  i=1
+
+Moreover, q1 = 1, and qi = σ(m, pi−1 ) for i = 2, . . . , r. From this, and (10.9), it
+follows that
+                             r
+                             X                   X                
+               κ(m, s) = 1 +    σ(m, pi−1 ) = O            1/ log p .
+                                    i=2                        p≤s
+
+As a simple consequence of Chebyshev’s theorem (in particular, see Exercise 5.3),
+we obtain
+                                 κ(m, s) = O(s/(log s)2 ).                            (10.10)
+   We now derive a bound on the running time of Algorithm RP, assuming that
+IsPrime(·) is implemented using MRS(·, k, s). Let ` := len(m). Our argument
+follows the same lines as was used to derive the estimate (10.6). Let us define
+random variables measuring various quantities during the first iteration of the main
+loop in Algorithm RP: N1 is the value of n; K1 is the number of Miller–Rabin tests
+actually performed; Z1 is the running time. Also, let C1 be the event that N1 is
+composite, and let D1 be the event that N1 passes the trial division check. Then we
+have
+         E[K1 ] = E[K1 | C1 ∩ D1 ] P[C1 ∩ D1 ] + E[K1 | C1 ∩ D1 ] P[C1 ∩ D1 ]
+                      + E[K1 | C 1 ] P[C 1 ]
+                ≤ 4/3 · P[C1 ∩ D1 ] + 0 · P[C1 ∩ D1 ] + k · P[C 1 ]
+                ≤ 4/3 · P[D1 ] + k · P[C 1 ].
+By (10.9) and Chebyshev’s theorem, it follows that
+                               E[K1 ] = O(1/ len(s) + k/`).                           (10.11)
+              10.3 Generating random primes using the Miller–Rabin test             317
+
+Let us write Z1 = Z10 + Z100 , where Z10 is the amount of time spent performing
+the Miller–Rabin test, and Z100 is the amount of time spent performing trial divi-
+sion. By (10.11), we have E[Z10 ] = O(`3 / len(s) + k`2 ). Further, assuming
+that each individual trial division step takes time O(`), then by (10.10) we have
+E[Z100 ] = O(`s/ len(s)2 ). Hence,
+
+                    E[Z1 ] = O(`3 / len(s) + k `2 + `s/ len(s)2 ).
+
+It follows that if Z is the total running time of Algorithm RP, then
+                    E[Z ] = O(`4 / len(s) + k `3 + `2 s/ len(s)2 ).
+
+Clearly, we want to choose the parameter s so that the time spent performing trial
+division is dominated by the time spent performing the Miller–Rabin test. To this
+end, let us assume that ` ≤ s ≤ `2 . Then we have
+                             E[Z ] = O(`4 / len(`) + k `3 ).                    (10.12)
+This estimate does not take into account the time to generate the small primes
+using the sieve of Eratosthenes. These values might be pre-computed, in which
+case this time is zero, but even if we compute them on the fly, this takes time
+O(s len(len(s))), which is dominated by the running time of the rest of the algo-
+rithm for the values of s under consideration.
+   Thus, by sieving up to a bound s, where ` ≤ s ≤ `2 , then compared to (10.6),
+we effectively reduce the running time by a factor proportional to len(`), which is
+a very real and noticeable improvement in practice.
+   As we already mentioned, the above analysis is heuristic, but the results are
+correct. We shall now discuss how this analysis can be made rigorous; however,
+we should remark that any such rigorous analysis is mainly of theoretical interest
+only — in any practical implementation, the optimal choice of the parameter s is
+best determined by experiment, with the analysis being used only as a rough guide.
+Now, to make the analysis rigorous, we need prove that the estimate (10.8) is suf-
+ficiently accurate. Proving such estimates takes us into the realm of “sieve theory.”
+The larger m is with respect to s, the easier it is to prove such estimates. We shall
+prove only the simplest and most naive such estimate, but it is still good enough
+for our purposes.
+   Before stating any results, let us restate the problem slightly differently. For a
+given real number y ≥ 0, let us call a positive integer “y-rough” if it is not divisible
+by any prime p up to y. For all real numbers x ≥ 0 and y ≥ 0, let us define R(x, y)
+to be the number of y-rough positive integers up to x. Thus, since σ(m, s) is the
+probability that a random integer between 2 and m is s-rough, and 1 is by definition
+s-rough, we have σ(m, s) = (R(m, s) − 1)/(m − 1).
+

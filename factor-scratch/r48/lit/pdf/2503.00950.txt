@@ -1,0 +1,745 @@
+                                            Decomposition of RSA modulus applying even
+                                                        order elliptic curves
+
+                                                       Jacek Pomykała[0000−0002−6480−5751] and Mariusz
+                                                               Jurkiewicz1[0000−0002−6314−4381]
+arXiv:2503.00950v1 [cs.CR] 2 Mar 2025
+
+
+
+
+                                                   Military University of Technology, Kaliski 9, Warsaw, Poland
+                                                      {jacek.pomykala,mariusz.jurkiewicz}@wat.edu.pl
+
+
+
+                                              Abstract. An eﬃcient integer factorization algorithm would reduce the
+                                              security of all variants of the RSA cryptographic scheme to zero. Despite
+                                              the passage of years, no method for eﬃciently factoring large semiprime
+                                              numbers in a classical computational model has been discovered. In this
+                                              paper, we demonstrate how a natural extension of the generalized ap-
+                                              proach to smoothness, combined with the separation of 2-adic point
+                                              orders, leads us to propose a factoring algorithm that ﬁnds (conjec-  √
+                                              turally) the prime decomposition N = pq in subexponential time L( 2 +
+                                              o(1), min(p, q)). This approach motivated by the papers [21], [22] and
+                                              [24] is based on a more careful investigation of pairs (E, Q), where Q
+                                              is a point on an elliptic curve E over ZN . Speciﬁcally, in contrast to
+                                              the familiar condition that the largest prime divisor P + (ordQp ) of the
+                                              reduced order ordQp does not divide #E(Fq ) we focus on the relation
+                                              between P + (ordQr ) and the smallest prime number lmin (E, Q) separat-
+                                              ing the orders ordQp and ordQq . We focus on the E2 family of even
+                                              order elliptic curves over ZN since then the condition lmin (E, Q) ≤ 2
+                                              holds true for large fraction of points (x, y) ∈ E(ZN ). Moreover if we
+                                              know the pair (E, Q) such that P + (ordQr ) ≤ t < lmin (E, Q) and d =
+                                              maxr∈{p,q} (ordQr ) is large in comparison to minr∈{p,q} |ar (E)| =
+                                                                                                                6 0 then
+                                              we can decompose N in deterministic time t1+o(1) by representing N in
+                                              base d.
+
+                                              Keywords: Elliptic curves · Frobenius traces modulo primes · Integer
+                                              factorization.
+
+
+                                        1    Introduction
+
+                                        Nearly ﬁfty years after RSA gained widespread recognition, it remains one of the
+                                        most widely used public-key cryptographic schemes in the world. For instance,
+                                        one of the well-known solutions for establishing a secret key between two parties
+                                        without prior shared information is the handshake protocol used in SSL [13] and
+                                        TLS [9] (which we will collectively refer to as TLS). Among the various schemes
+                                        supported by these protocols, the handshake algorithm is speciﬁcally based on
+                                        the RSA-PKCS-1v1.5 encryption scheme introduced in the PKCS #1 v1.5 spec-
+                                        iﬁcation [15]. RSA can be utilized in two ways during the TLS handshake: as
+2       J. Pomykała et al.
+
+a key exchange method and as a signature scheme. As a key exchange method,
+RSA enables one party to encrypt a random value using the public key of the
+other party and transmit it securely. On the other hand, as a signature scheme,
+RSA enables one party to sign a hash of the handshake messages using their
+private key and transmit it securely. Another critical aspect of TLS security is
+authentication, which involves verifying the identity of the involved parties. This
+authentication is typically achieved through certiﬁcates issued by trusted author-
+ities, known as certiﬁcate authorities (CAs). These CAs vouch for the validity
+and authenticity of the certiﬁcates. RSA can be used to sign and verify these
+certiﬁcates, as well as to sign and verify handshake messages. Another example is
+the SSH protocol, which is widely used for ﬁle transfer, communication in cloud
+services, and other computer-dependent tasks. SSH employs digital signature
+schemes to facilitate both server and client authentication. Alongside DSA and
+ECDSA, RSA DSS remains a widely adopted choice for securing this process
+(see [1] for details).
+    Since its invention in 1976, RSA has been one of the most extensively studied
+cryptographic schemes, yet no eﬃcient and feasible attack has been discovered
+so far. Consequently, it is not surprising that RSA has become the foundation
+for a new computationally hard problem called the RSA problem, which involves
+computing [y 1/e (mod N )] for a uniformly chosen y ∈ Z∗N , an integer e ∈ Z>2
+coprime to φ(N ), and a modulus N that is a product of two primes.This implies
+that RSA is secure as long as the RSA problem remains hard, and vice versa.
+It is worth noting that the RSA problem serves as the basis for the security of
+numerous cryptographic solutions, though a detailed discussion of this topic is
+beyond the scope of this paper. In fact, there exists a class of algorithms that
+exploit certain vulnerabilities in RSA parameters to break the RSA problem, and
+as a side eﬀect, factor the associated modulus. For example, Michael J. Wiener
+[26] observed that if the secret key satisﬁes sk < (1/3)·N 0.25 , then there exists an
+eﬃcient algorithm that solves both problems in polynomial time. Approximately
+10 years later, Boneh and Durfee [3] improved Wiener’s attack by demonstrating
+that the same result holds for sk < N 0.293 . The seminal work of Boneh and
+Durfee is one of the earliest heuristic extensions of Coppersmith’s methods [7,6,8]
+(see also Jutla [14] and Bleichenbacher [2]). The idea behind this method is to
+construct a lattice related to RSA and then exploit the LLL algorithm to reduce
+the basis to an ordered short basis whose shortest vectors possess certain required
+properties. It is worth noting that Coppersmith’s factoring method, presented
+in [6], is also used in this paper.
+    On the other hand, a hard computational problem that is commonly viewed
+as inherently tied to RSA is integer factorization. Obviously, the connection be-
+tween the security of RSA and factoring is indisputable. However, it is important
+to bear in mind that the equivalence between factoring and the RSA problem
+does not hold. Speciﬁcally, access to an oracle solving the RSA problem does not
+imply the ability to solve the integer factorization problem. Consequently, factor-
+ing is much more general than the RSA problem and, in fact, inﬂuences (directly
+or indirectly) a much broader set of cryptographic schemes than just those based
+          Decomposition of RSA modulus applying even order elliptic curves          3
+
+on the hardness of the RSA assumption. A good example is the DLP over ﬁnite
+ﬁelds, where an eﬃcient factoring algorithm would signiﬁcantly improve the in-
+dex method. It turns out that, despite being one of the oldest mathematical
+problems, factoring cannot be solved eﬃciently by any known classical comput-
+ing algorithm. In fact, the best algorithm for integer factorization depends on
+the size of the integer to be factored. For smaller integers, sieve methods and
+Pollard’s rho algorithm [23,4] are commonly used. For larger integers, the gen-
+eral number ﬁeld sieve (GNFS) [19] and the elliptic curve factorization (ECM)
+method [21] are more eﬃcient. However, these algorithms have subexponential
+complexity. It should be noted that, although ECM is not the best-known algo-
+rithm in terms of complexity, it has opened up new     √ perspectives for factoring
+arbitrary integers in time L(α0 , r), where α0 = 1/ 2 and p | N is the smallest
+prime dividing N . ECM, in particular, serves as the foundation for the consid-
+erations presented in this work.
+    In this paper, we present a new approach to ECM factoring based on the con-
+cept of compositeness witnesses, adapted to Pollard’s p−1 algorithm by B. Źrałek
+[27] and further developed in [25]. Our approach builds on the notion of admissi-
+ble elliptic curves and elliptic witnesses in the context of integer factorization, as
+previously explored in [12] and [24]. However, we reﬁne this method by focusing
+on separating pairs (E, Q) with distinct 2-adic orders ord Qr for r ∈ {p, q}, as
+well as utilizing twisted elliptic curves E τ to handle non-separating pairs (E, Q).
+This leads to a more eﬃcient computation of the orders of reduced points ord Qr
+in terms of tmin (E, Q) whenever (E, Q) is not a separating pair.
+    More speciﬁcally, we conduct an in-depth investigation of pairs (E, Q) in
+the factorization of N that are not t-separating, meaning that Mt Q is not a
+ﬁnite point on E over ZN and that lmin > t. This property can be veriﬁed
+in deterministic time t(log N )O(1) . We then focus on the corresponding set of
+t-consistent pairs (E, Q) that satisfy condition (5) below.
+    To summarize, we isolate the case lmin (E, Q) = 2, as in this scenario, we
+always encounter a separating decomposition and can establish a precise char-
+acterization of the related pairs (E, Q) in terms of Jacobi symbols. Rather than
+considering points Q = (x, y) lying on the elliptic curve E over ZN , as studied
+in [22,11], we ﬁnd it more relevant to generate triples (x, y, b1 ) ∈ Z3N . We then
+state two theorems on separating and non-separating decompositions, respec-
+tively, and propose the algorithm A for factoring the RSA modulus N under the
+Generalized Riemann Hypothesis (GRH) and a suitable conjecture regarding the
+distribution of #E(Fr ) values with large B-smooth divisors in the interval Ir ,
+which lies within the Hasse interval Hr .
+    The algorithm applies to cases involving B-separating pairs (E, Q), as well
+as those that are not B-separating but are B-consistent. Additionally, it applies
+to pairs (E, Q) that are not B-consistent but satisfy the following condition:
+
+                          gcd (MB (E, Q), Er ) ≥ N 1/2 /B,                        (1)
+
+for some r ∈ {p, q}, where the multiplier Mt (E, Q) is deﬁned as the product of
+suitable powers of primes not exceeding t.
+4        J. Pomykała et al.
+
+2    Elliptic curves over ZN
+
+In this section, we recall basic facts about elliptic curves over ZN , where N =
+   s                                                                   2
+   i=1 pi is coprime to 6 (see [20,21]). The projective plane P (ZN ) is deﬁned as
+Q
+                                                               3
+the set of equivalence classes of primitive triples in ZN (i.e., triples (x, y, z) with
+gcd(x, y, z, N ) = 1) under the equivalence relation (x1 , y1 , z1 ) ∼ (x2 , y2 , z2 ) iﬀ
+(x1 , y1 , z1 ) = u(x2 , y2 , z2 ) for some unit u ∈ Z∗N . The equivalence class of (x, y, z)
+is denoted by (x : y : z) and is often simply referred to as a point. An elliptic curve
+over ZN is given by the short Weierstrass equation E : y 2 z = x3 + axz 2 + bz 3 ,
+where a, b ∈ ZN and the discriminant −16(4a3 + 27b2 ) is an element of Z∗N . The
+set of points satisfying this equation is denoted by E(ZN ), where, in particular,
+the points (x : y : z) ∈ E(ZN ), with z ∈ Z∗N , can be written as (x/z : y/z : 1)
+and are called ﬁnite points. Meanwhile, the point O = (0 : 1 : 0), called the zero
+point, also belongs to E(ZN ). If V (E(ZN )) is the set of points (x : y : z) in
+E(ZN ) such that z 6∈ Z∗N , then for each point (x : y : z) ∈ E(ZN ) \ V (E(ZN )),
+the value gcd(z, N ) is a nontrivial divisor of N .
+     Let E(Fpi ) be the group of Fpi -rational points on the reduction E mod pi
+for primes pi | N . If E(ZN ) is the set of points in P2 (ZN ) satisfying the equation
+of E, then by the Chinese Remainder Theorem, there exists a bijection
+                                                s
+                                                Y
+                                 ϕ : E(ZN ) →         E(Fpi )                            (2)
+                                                i=1
+
+induced by the reductions mod pi . The set E(ZN ) forms a group under addition,
+for which ϕ is a group isomorphism. In general, this addition can be deﬁned
+using the so-called complete set of addition laws on E (see [20]).
+    To add two ﬁnite points P, Q ∈ E(ZN ), we can also use the same formulas as
+for elliptic curves over ﬁelds
+                            Q in the following case: for ϕ(P ) = (P1 , . . . , Ps ) and
+ϕ(Q) = (Q1 , . . . , Qs ) ∈ i E(Fpi ), either Qi 6= ±Pi for each i, or Qi = Pi and
+Qi 6= −Pi for each i. Then
+                           (
+                             xP +Q = λ2 − xP − xQ
+                                                                                     (3)
+                             yP +Q = λ(xP − xP +Q ) − yP ,
+
+where                
+                      yQ −yP     if Qi 6= ±Pi for each i
+                       xQ −xP
+                λ=
+                      3x2P +a    if Qi = Pi and Qi 6= −Pi for each i.
+                        2yP
+
+ Let P, Q ∈ E(ZN ). If R = P + Q is ﬁnite, then the formulas (3) give the
+coordinates of the resulting point R. Otherwise, either we ﬁnd a nontrivial divisor
+of N , or we prove that all local orders ordRi are equal for i = 1, 2, ..., s (see e.g.
+[21], [11] for details).
+    In what follows, we assume that N = pq has two distinct prime divisors (both
+> 3) and that B = B(N ) is ﬁxed. We apply the above formulas to compute the
+point mQ ∈ E(ZN ). The computation of the ﬁnite point mQ takes O(log m)
+          Decomposition of RSA modulus applying even order elliptic curves        5
+
+addition operations in E(ZN ). For B-smooth number M = MB represented as
+m = pekk . . . 3e3 2e2 , wherepei = ei (m) is the highest exponent such that pi does
+not exceed min(p, q) + 2 min(p, q) + 1, the computation of MB Q requires
+                                  X
+                        ≪ log N         log(pi ) = O (B log N )                  (4)
+                                  i≤k
+
+addition operations in E(ZN ) in view of the Prime Number Theorem.
+    Let N = pq be an RSA modulus, and assume that p < q < ϑp. Since the
+most diﬃcult variant√ of the two-prime factorization problem arises when both p
+and q are close to N , we accordingly restrict our consideration to primes that
+satisfy this condition. Consequently, for r ∈ {p, q}, there exists a constant c(ϑ)
+such that r = c(ϑ)N 1/2 .
+
+
+2.1   Minimal decomposition t-multipliers for (E, Q)
+
+Recall that the l-adic valuation is deﬁned as νl (m) = max{k ∈ Z | lk divides m},
+that is, νl (m) represents the exponent of l in the prime factorization of m.
+We extend the concept√ of the l-adic valuation to the Hasse interval Hr =
+{k ∈ Z | |k| ≤ r + 1 + 2 r}, where r = c(ϑ)N 1/2 . To this end, we introduce
+the set function νl , expressed as νl (Hr ) = max{k ∈ Z | lk ∈ Hr ∩ Z≥0 }, while
+preserving the notation used for the l-adic valuation.
+Definition 1. For Q ∈ E(ZN ), r = c(ϑ)N 1/2 and t ∈ Z>1 , we define the
+number Mt = Mt (E, Q, r) such that the following two conditions hold
+
+ 1. Mt := l∈Pt lνl (Hr ) , where Pt denotes the set of all primes less than or equal
+          Q
+    to t;
+ 2. Mt Q is not a finite point of E over ZN .
+
+Such an Mt is referred to as the decomposition N multiplier for the pair (E, Q),or
+equivalently, as the t-multiplier for the pair (E, Q).
+     By lmin (E, Q), we denote the smallest prime number l for which the exponents
+νl (ordQp ) 6= νl (ordQq ).
+
+Definition 2. By tmin (E, Q), we define the smallest t for which Mt is the de-
+composition N multiplier for (E, Q).
+
+Definition 3. The pair (E, Q) is called B-separating if both tmin (N, E, Q) = B
+and lmin (N, E, Q) ≤ B hold.
+
+    In the application, we consider randomly selected pairs (E, Q) and choose the
+related (admissible) decomposition pairs (E, Q) for N , with an emphasis on the
+associated separating and non-separating t-multipliers satisfying tmin (E, Q) ≤
+B. In the non-separating case, it leads to the deﬁnition of B-consistent pairs
+(E, Q) and the pairs (E, Q) which do not satisfy the condition (5) but satisfy
+the condition (1).
+6       J. Pomykała et al.
+
+Definition 4. The pair (E, Q) is called B-consistent if tmin (N, E, Q) = B, lmin (N, E, Q) >
+B and the following condition holds:
+                                                                    
+                                   1/4           1/8
+     d := ordQp = ordQq ≥ c(ϑ)N         · max N , min |ar (E)| 6= 0,           (5)
+                                                        r∈{p,q}
+
+where ar (E) is the Frobenius trace of E at r ∈ {p, q}.
+
+Remark 1. It is easy to note that the condition (5) implies the following
+                                                                   
+        1 ≤ min |ar (E)| ≤ c(ϑ)N −1/4 max max ordQr , N 3/8 .                    (6)
+              r∈{p,q}                              r∈{p,q}
+
+
+
+3     Results on the separating decomposition
+In this section we focus on the separating decomposition of n and prove the
+signiﬁcant complexity bound for searching the separation pairs (E, Q) for the
+family of elliptic curves E2 . The motivation to consider this family
+                                                                  √ of elliptic
+curves comes from the [22], where the lower bound cN (1 + O(1/ N )) for the
+number of points (x, y) ∈ E(ZN ) was proved with c = 41/225. The stronger
+bound with c = 27/80 was obtained in [11].
+
+3.1   Result on searching the orders of reduced points in E(Fr )
+In the paper [12], a deterministic algorithm for ﬁnding the decomposition N = pq,
+given the t-multiplier for the pair (E, Q) (i.e. the decomposition N multiplier)
+with lmin (E, Q) ≤ t, was presented with a deterministic runtime of t2+o(1) . In the
+next section, we improve this result to a deterministic runtime of t1+o(1) . This
+implies fast computation (in terms of t) of the orders of reduced points, given
+the t-multiplier for the pair (E, Q), provided that lmin (E, Q) ≤ t. Let E be an
+elliptic curve over Zn . The result is based on the following lemma:
+Lemma 1. Assume that we are given t-multiplier Mt for the pair (E, Q) for
+some t ≤ B. Then, in deterministic time B, one can compute the decomposition
+N = pq or find both reduced orders ordQp and ordQq , which must be equal.
+
+Proof. Let r | N and Mt be the multiplier for (E, Q), where t ≤ B. Assume
+                                            +
+that ordQr = 2ν2 · · · pνuu , where pu = Pmin   := minr∈{p,q} P + (ordQr ) ≤ B. In
+                      1+o(1)
+deterministic time B          , we ﬁnd the smallest t such that Mt Q is not a ﬁnite
+                                                      +          +
+point in E over ZN . It is clear that t = pu := Pmin     . Let Pmin  := P0 pu−1 :=
+P1 , pu−2 = P2 , and so on.
+    We will show how to ﬁnd P1 ∈ [2, P0 ] := I1 (if exists) in the related exponent
+ν1 , which divides exactly the related order ordQr , in deterministic time B 1+o(1) .
+Following an analogous procedure for the intervals [2, P1 ), then [2, P2 ), and so
+on, the algorithm will terminate in deterministic time ω(Er )B 1+o(1) = B 1+o(1) ,
+since Er ≤ 2r ≪ log N/ log log N . The computation resembles a binary search.
+We know that I1 = I1− ∪ I1+ , split by the median point t1 of I1 . If P2 lies in
+           Decomposition of RSA modulus applying even order elliptic curves                 7
+
+I + , then the point Mt1 P1ν1 Q ∈ E(Zn ) is ﬁnite; otherwise it is not. Thus, we can
+determine the correct case in deterministic time
+                                                                      √ 
+(log N )O(1) log (Mt1 P1 ) ≪ (log N )O(1) (t1 B ν1 ) ≪ (log N )O(1) t1 n ≪ B 1+o(1) ,
+
+provided B ≫ (log N )O(1) . Then, we ﬁnd the appropriate exponent such that P2ν2
+divides the suitable order ordPr , checking all possible cases where ν2 ≤ log2 N .
+The correct values of P2 and ν2 ≤ log2 N will be determined after at most
+O(log2 N ) trials, since the length of the subintervals Ii (for i ≤ log2 N ) tends to
+1. This completes the proof by continuing the search of Piνi for i ≤ log2 N .
+
+3.2    2-adic separation for the family E2
+From now on, we assume that N is suﬃciently large positive integer coprime to
+6. In what follows, we consider the elliptic curves over ZN given by either the
+Weierstrass equation y 2 = fB̄ (x) or y 2 = fb̄ (x), where B̄ is either an element of
+(B1 , B2 ) ∈ Z2n or b̄ = (b1 , b2 ), with (b1 , b2 ) ∈ Z2n and either
+
+                                fB̄ (x) = x3 + B1 x + B2 ,
+
+or
+
+                         fb̄ (x) = (x − b1 )(x − b2 )(x + b1 + b2 ).
+
+   It is clear that the elliptic curve Eb̄ over ZN has the short Weierstrass form
+EB̄ over ZN with suitable B1 = B1 (b1 , b2 ) and B2 = B2 (b1 , b2 ).
+
+Lemma 2. (see Theorem 4.2, [16]) Let E be an elliptic curve over the field Fr
+of characteristic 6= 2, 3, given by the equation
+
+                           y 2 = (x − b1 )(x − b2 )(x + b1 + b2 )
+
+with b1 , b2 ∈ Fr . For (x2 , y2 ) ∈ E(Fq ), there exists (x1 , y1 ) ∈ E(Fr ) with 2(x1 , y1 ) =
+(x2 , y2 ) if and only if both x2 − b1 , x2 − b2 and x2 + b1 + b2 are squares in Fr .
+
+Theorem 1. Let N = pq, E is elliptic curve over ZN and ν2 (Ep ) ≥ ν2 (Eq ).
+Furthermore, assume that
+                                  
+                            x − b1
+                                      = −1,                            (7)
+                              N
+
+and that b2 (mod N ) satisfies the quadratic equation
+
+                        y2
+                             = (x − b2 )(x + b1 + b2 ) (mod N ) .                         (8)
+                      x − b1
+Moreover, if
+
+                      gcd ((b2 − b1 )(2b1 + b2 )(2b2 + b1 ), N ) = 1,                     (9)
+ 8       J. Pomykała et al.
+
+ and
+                                                                
+                              x − b1                      x − b1
+                                           = −1,                       = 1.       (10)
+                                p                           q
+
+Then we have
+
+                                 ν2 (ordQp ) > ν2 (ordQq ),                       (11)
+
+ if and only if                                     
+                                            x − b2
+                                                         = 1.                     (12)
+                                              q
+
+Proof. Assume that b̄ satisﬁes the equation y 2 = fb̄ (x, y) (mod N ), that is,
+(x, y) ∈ Eb̄ (ZN ), and b1 satisﬁes the equation (7). Assume further that b2 satisﬁes
+the equation (8). Then, by Lemma 2, we conclude that the equation 2(x0 , y0 ) =
+(x, y) has a solution in F2r if and only if at least one of the numbers (x − b1 ), (x −
+b2 ), (x + b1 + b2 ) is a square in Fr . Hence, (x, y) has maximal 2-adic order in Fp ,
+but does not when x − b2 is a square modulo p (by the condition on b2 , it follows
+that x + b1 + b2 must also be a square in this case). Now, using the assumption
+that ν2 (Ep ) ≥ ν2 (Eq ), we arrive at the desired conclusion.
+
+ The results of the above theorem justify the following deﬁnition.
+
+ Definition 5. We define a triple T = (x, y, b1 ) ∈ Z3N as admissible if it satisfies
+ the following conditions:
+
+  (i) The coefficient b1 satisfies the equality (7) for all x, y, b1 ∈ ZN .
+ (ii) The element b2 modulo N satisfies the equation (8) for given values of x, y,
+      and b1 modulo N .
+(iii) The condition (9) holds with b2 = u as a solution of equation (13) modulo
+      N.
+
+ Remark 2. It should be noted that b2 = b2 (b1 ). Thus, due to this, instead of
+ E(b1 ,b2 ) (ZN ) we will write Eb1 .
+
+Theorem 2. Let N = pq and assume that ν2 (Ep ) ≥ ν2 (Eq ). Then, the prob-
+ability that a randomly chosen triple T = (x, y, b1 ) ∈ Z3N is admissible and
+additionally satisfies the condition that the point Q = P     (x, y) ∈ Eb̄ (ZN ) has
+ν2 (ordQp ) 6= ν2 (ordQq ), is greater than or equal to N −3 · T ∈S 1. Here, S con-
+sists of all admissible triples that satisfy
+                                            (10) and for which ∆ = ∆(x, y, b1 ) :=
+(2x − b1 )2 − 4 x2 + xb1 − y 2 (x − b1 )−1 is a quadratic residue modulo N . Addi-
+tionally, a solution u to the quadratic equation
+
+             f (u) := u2 + b1 u − x2 + xb1 − y 2 (x − b1 )−1 = 0 mod q           (13)
+                                                            
+
+                 
+                  u
+ must satisfy     q   = 1. Furthermore, the condition (9) holds for b2 = u mod N .
+          Decomposition of RSA modulus applying even order elliptic curves        9
+
+Proof. The existence of a solution to equation (13) follows from the fact √
+                                                                          that ∆
+                                                                1
+is a square modulo N . Moreover,
+                                at least one of the roots u = 2 (−b 1 ±  ∆) of
+                             u
+(13) satisﬁes the equation   q   = 1. Furthermore, by assumption, the condition
+(9) holds. This completes the proof of the theorem.
+
+Lemma 3. (Coppersmith) (see [6]) If we know N and the highest-order (1/4)(log2 N )+
+Oϑ (1) bits of q, where p < q < ϑp, then we can determine p and q in polynomial
+time in log N .
+
+As a corollary, we deduce:
+Corollary 1. Assume that MB is the multiplier for (E, Q) and assume that
+                                  log B
+ordQr ≥ Erβ for some β > 1 − 2 log    N . Then, the decomposition of N can be
+computed in deterministic time B(log N )O(1) .
+
+Proof. If |E|r is known, then 12 log r = 41 log2 N + Oϑ (1) is also known, allowing
+us to apply the aforementioned lemma to reach the conclusion. We now have
+
+                              |E|r             1−β
+                                   ≤ Er1−β < 2N 2
+                             ordQr
+
+for some r ∈ {p, q}. Using the inequality for β, the above expression is O(B),
+and thus the conclusion follows.
+
+    We recall that in factoring with the oracle OrdEll, the result proved in [10]
+states that given the decomposition of EN one can ﬁnd p and q in randomized
+polynomial time with probability 1 − ε for arbitrary ﬁxed ε > 0.
+
+
+4   Results on non-separating decomposition of N
+
+In this section, we prove the related results on the non-separating decomposition
+by proving that if tmin (E, Q) := B is not a separating multiplier, but is B-
+consistent, then N = pq can be decomposed in the similar time as before, i.e.,
+B(log N )O(1) under the assumption of Generalized Riemann Hypothesis (GRH).
+
+Lemma 4. Assume that B = tmin (E, Q). Then in deterministic time B(log N )O(1)
+we either find a nontrivial divisor of N , or compute
+
+                d := sB (ordQp ) = ordQp = sB (ordQq ) = ordQq .               (14)
+
+Here, sB (m) denotes the largest B-smooth factor of m.
+
+Proof. Assume that B = tmin (E, Q). Referring to Section 2, we compute MB Q
+where MB = 2ν2 · · · pνuu Q. This computation yields two possibilities: the greatest
+common divisor (GCD) is either a nontrivial divisor of N , or the GCD is equal
+to N . In the latter case, the pair (E, Q) does not separate, hence the conclusion
+follows. This requirement is supported by Lemma 1.
+10      J. Pomykała et al.
+
+Definition 6. Let E be an elliptic curve over ZN given by the short Weierstrass
+equation
+                             y 2 = x3 + b1 x + b2 .
+where 4b31 + 27b22 6= 0 mod n and τ 6= 0 mod n. Then the twisted elliptic curve
+E τ over Zn is defined by the equation
+
+                               y 2 = x3 + τ 2 b1 x + τ 3 b2 .
+
+Lemma 5. (see Theorem 1.4 in [18]) Assume GRH. Let E be an elliptic curve
+E over ZN , and let (µ1 , µ2 ) be an arbitrary pair in {(±1, ±1)}. Then there exists
+τ ≪ log2 N such that for the twisted elliptic curve E τ , we have (ap (E τ ), aq (E τ )) =
+(µ1 ap (E), µ2 aq (E)), where ap (E) and aq (E) are the Frobenius traces of E at
+primes p and q, respectively.
+
+Theorem 3. Assume GRH.    √      Let N be an RSA modulus with sufficiently large
+prime factors p, q = O( N ). Let (E, Q), B = tmin (E, Q), and d be as specified
+in Lemma 4, and assume that lmin (E, Q) > B. Then, there exists a determin-
+istic algorithm A that decomposes N = pq, in deterministic polynomial time
+(log N )O(1) , provided that the pair (E, Q) is B-consistent.
+
+Proof. We will prove that one can decompose N = pq in deterministic time
+B(log N )O(1) where B = tmin (E, Q), either if lmin (E, Q) ≤ B or if lmin (E, Q) >
+B and the pair (E, Q) is B−consistent. The ﬁrst case is straightforward since
+the pair (E, Q) is then a B−separating pair. Assume that (E, Q) is not a B-
+separating pair, and let d be speciﬁed in Lemma 4. We will demonstrate that
+the decomposition N = pq can be computed in deterministic polynomial time
+(log N )O(1) if the condition (5) holds true.
+    In view of Lemma 5 for given E over ZN , we will determine in deterministic
+time O(log2 N ) the twisted parameter τ such that
+                                                                 
+                                    1/4         1/8             τ
+     d := ordQp = ordQq ≥ c(ϑ)N         · max N , max ar (E ) 6= 0,            (15)
+                                                            r∈{p,q}
+
+
+where c(ϑ) = max(2c′ (ϑ), c′′ (ϑ)) (see below) depends only on ϑ. Hence d ≥
+                                           d
+c(ϑ)N 3/8 and 1 ≤ minr∈{p,q} ar (E τ ) ≤ c(ϑ) N −1/4 , placing us in a position to
+apply a similar argument as in [24]. Speciﬁcally, by representing N in base d, we
+have
+
+                                N = c0 + c1 d + c2 d2 ,
+
+where ci ∈ [0, d − 1] and c2 6= 0. Moreover, since d | gcd(Epτ , Eqτ ), we can write
+
+             Epτ = p + 1 − ap (E τ ) = drp , Eqτ = q + 1 − aq (E τ ) = drq ,
+
+and letting tr := ar − 1 ≥ 1 for r ∈ {p, q}, it follows that
+
+                 N = pq = (drp + tp )(drq + tq ) = c0 + c1 d + c2 d2 .              (16)
+            Decomposition of RSA modulus applying even order elliptic curves            11
+
+ If the representation of N in base d is unique (i.e., the coeﬃcients ci ∈ [0, d−1])),
+ then we can recover (see below) the values rp , rq , tp , tq and consequently p and
+ q, in deterministic polylog(N ) time.
+                                                                             √
+     The condition 0 ≤ rp rq ≤ d − 1 follows from the inequality (p − 2 p)(q −
+  √
+ 2 q) ≤ Ep Eq ≤ d2 (d − 1) < d3 , along with the fact that d ≥ c(ϑ)N 3/8 > N 1/3 .
+ The remaining two conditions follow from the B-consistency of the pair (E, Q).
+ Namely, by B-consistency of a pair (E, Q) we have
+
+                          1 ≤ tp tq ≤ c′ (ϑ)(d/N 1/4 )N 1/4 ≤ d,
+
+ as required. Moreover we have that
+                                        
+                                 Ep + Eq
+ rp tq + rq tp ≤ max(tp , tq )             ≤ c′′ (ϑ)N 1/4 (N 1/2 /d) ≤ c′′ (ϑ)N 3/4 /d ≤ d,
+                                    d
+
+ since d ≥ c(ϑ)N 3/8 . Therefore, the polynomial f (x) = c0 + c1 x + c2 x2 = (xrp +
+                                   t        k1 t∗             t       k2 t∗
+ tp )(xrq + tq ) has roots x1 = − rpp = − k1 rp∗ and x2 = − rqq = − k2 rq∗ , where ki are
+                                               p                         q
+ the greatest common divisors of tp /rp and tq /rq for i = 1, 2 respectively.
+      We will prove that ki = 1 for i = 1, 2. Suppose, on the contrary, that 2 ≤ k1 |
+ drp + tp = p or 2 | drq + tq = q in view of (16). This would imply that pq must be
+ even which, contradicts the assumption that N is odd. Hence, we conclude that
+           t               t
+ x1 = − rpp and x2 = − rqq are irreducible. Therefore, we can recover the values
+ of rp , rq from the denominators of x1 and x2 and tp , tq from their numerators.
+ Finally, we we compute p = drp + tp and q = drq + tq , as required.
+
+
+ 5     Algorithm A and possible acceleration of decomposition
+       N = pq
+ Here we propose an algorithm factoring the RSA numbers and make the brief
+ analysis computational savings in case when (E, Q) is not separating pair for N .
+
+ 5.1   Description of algorithm A
+ It is clear that in applications, B cannot be too large, as it is the minimal
+ non-separating multiplier for (E, Q), nor can it be too small, since the maximal
+ B-smooth divisor of ordQr must be large. We begin with the following deﬁnition:
+
+ Definition 7. The pair (E, Q) is called B-decomposition pair for N if at least
+ one of the following conditions holds:
+  (i) max (tmin (E, Q, N ), lmin(E, Q, N )) ≤ B;
+ (ii) tmin (E, Q, N ) ≤ B < lmin (E, Q, N ) and (E, Q) is B-consistent pair;
+(iii) gcd(MB (E, Q), Er ) ≥ |E|r /B for some r ∈ {p, q}.
+
+ Remark 3. It must be emphasized that (ii) implies ordQp = ordQq and, further-
+ more, it is equivalent to d ≥ c(ϑ) · n1/2 /B, where c(ϑ) is a constant.
+12      J. Pomykała et al.
+
+The knowledge of B-decomposition pair (E, Q) implies that one can determine
+the factorization N = pq in deterministic time (log N )O(1) B. The choice of an
+optimal B should balance the cost of computing the minimal B−multiplier for
+N and the probability of ﬁnding the B-decomposition pair (E, Q) for N .
+
+Algorithm A
+The randomized algorithm A for decomposing N performs the following steps:
+Input: The number N to be factored.
+Output: Decomposition N = pq.
+ 1. Randomly choose a triple T = (x, y, b1 ) ∈ Z3N until it is an admissible triple.
+ 2. Select an admissible pair (E, Q) and all the twists E τ , where τ = O(log 2 N )
+    is generated as described in [18].
+ 3. Compute tmin (E, Q) := B as presented in Section (2.1).
+ 4. Return the nontrivial divisor d | N if tmin (E, Q) is a separating multiplier;
+    otherwise, proceed to Step 4.
+ 5. Compute the reduced orders ordQp , ordQq satisfying the conditions:
+
+                                  d := ordQp = ordQq .
+
+ 6. If d ≤ N 3/8 , (i.e. consistency does not occur), then return to step 1; otherwise,
+    go to step 6.
+ 7. Represent n = c0 + c1 d + c2 d2 and perform the computations described in
+    Theorem√ 1 to search the decomposition N = pq. If this fails, go to step 7.
+ 8. If d > N /B, then for all k ≤ B compute kd and apply the Coppersmith
+    method to search for the decomposition of N as N = pq. If it fails, return
+    to step 1.
+
+5.2   Assumed conjecture and analysis of algorithm complexity
+Assume that the triples T = (x, y, b1 ) are generated with uniform distribution
+and that the orders of√curves Eb1√(Fr ) are almost uniformly distributed in the
+interval Ir := (r + 1 − r, r + 1 + r) ⊂ Hr (see√[21,5] and Theorem 5.2 in [17]).
+More precisely let α > 0, B = L(α, x) := exp(α log x log log x). We assume the
+following
+Conjecture. Let
+                                                 √
+     v = v(x, B, β) := #{m ∈ Z : |m − (x + 1)| < x and sB (m) ≥ mβ } ≥ 3
+                   v(x,B,β)
+and f (x, B, β) = (2[ √
+                       x]+1)
+                             denotes the probability that a random integer in Ix
+is (B, β)-smooth number. Then we conjecture that
+                                                            
+                                              1 − θ(1 − β)
+                    f (r, L(α, r), β) ≥ L−1                ,r ,
+                                                   2α
+
+for some θ ≥ 0, as prime r tends to inﬁnity. We indicate that this time θ does
+not depend on β.
+          Decomposition of RSA modulus applying even order elliptic curves        13
+
+    For our purposes, we consider two cases β = 1 and β = 3/4. The ﬁrst case
+applies when we count the elliptic curves Eb1 of B-smooth order over Fr , while
+the second applies when |Eb1 |r is a (B, 3/4)-smooth number for each r ∈ {p, q}.
+In the ﬁrst case, we perform the standard evaluation, searching for the separat-
+                                                      1
+ing pair (E, Q) for N with computational costs L( 2α    + o(1), r) (the algorithm
+terminates at step 3). In the second case, we aim to discover the B-consistent
+pair (E, Q) with a probability not exceeding f (r, B, 3/4)2 . This conclusion is
+drawn from the fact that if (E, Q) is not a separating pair, then both reduced
+orders ordQr are greater than or equal to N 3/8 . Consequently, the related group
+orders |E|r must possess the same B-smooth factor, not less then N 3/8 , yielding
+the the upper bound f (r, B, 3/4)2 for the related probability . We encounter this
+situation in step 6 of the algorithm A with additional polynomial-time compu-
+tational overhead. Finally, in step 7, the additional computational overhead is
+equivalent to B 1+o(1) as r tends to inﬁnity.
+
+Example 1. We aim to factorize the number N = 3839985129719. To achieve
+this, we deﬁne E = Eb̄ , where b̄ = (1594604, 450302) and Q = (540525859015,
+1621377667969). It is straightforward toQverify that the pair (E, Q) is B-consistent
+for B = 3. Next, we compute Mt=B := l∈PB lνl (Hr ) = 557256278016. Determin-
+ing the minimal multiplier, we ﬁnd that d = ordQp = ordQq = 27 37 . Expressing
+N in base d, we obtain N = 49d2 + 504d + 1271. Now solving the system of
+equations
+               
+                tp tq
+               
+               
+                               = 1271,
+               r t + r t = 504,
+                  p q     q p
+               rp rq
+                              = 49,
+               
+                 N             = (279936rp + tp )(279936rq + tq ).
+               
+
+We compute rp = rq = 7, tp = 31, tq = 41 and recover p = 1959583 = drp + tp
+and q = drq + tq = 1959593. Consequently, we obtain the factorization N =
+1959583 · 1959593.
+
+
+6    Conclusions
+We examine the relationship between the largest prime divisor P + (ordQr ) of the
+reduced order ordQr and the smallest prime lmin (E, Q) that separates ordQp and
+ordQq . Unlike the usual condition that P + (ordQp ) does not divide #E(Fq ), our
+focus is on the E2 family of even-order elliptic curves over ZN , where lmin (E, Q) ≤
+2 holds for a large fraction of points (x, y) ∈ E(ZN ). Furthermore, given a pair
+(E, Q) such that P + (ordQr ) ≤ t < lmin (E, Q) and d = maxr∈{p,q} (ordQr ) is
+large relative to minr∈{p,q} |ar (E)| 6= 0, we can deterministically factor N in
+time t1+o(1) by expressing N in base d.
+
+Acknowledgments. The authors would like to thank Olgierd Żołnierczyk, a
+PhD student, for his contributions to Example 1.
+14      J. Pomykała et al.
+
+References
+ 1. Bider, D.: RFC 8332: Use of RSA Keys with SHA-256 and SHA-512 in the Secure
+    Shell (SSH) Protocol (2018)
+ 2. Bleichenbacher, D.: On the security of the KMOV public key cryptosystem. In:
+    Annual International Cryptology Conference. pp. 235–248. Springer (1997)
+ 3. Boneh, D., Durfee, G.: Cryptanalysis of RSA with private key d less than N 0.292 .
+    In: Advances in Cryptology—EUROCRYPT’99: International Conference on the
+    Theory and Application of Cryptographic Techniques Prague, Czech Republic, May
+    2–6, 1999 Proceedings 18. pp. 1–11. Springer (1999)
+ 4. Brent, R.P.: An improved Monte Carlo factorization algorithm. BIT Numerical
+    Mathematics 20(2), 176–184 (1980)
+ 5. Clozel, L., Harris, M., Shepherd-Barron, N., Taylor, R.: Automorphy for some l-
+    adic lifts of automorphic mod l galois representations. Publications Mathématiques
+    de l’IHÉS 108, 1–181 (2008). https://doi.org/10.1007/s10240-008-0016-1
+ 6. Coppersmith, D.: Finding a small root of a bivariate integer equation; factoring
+    with high bits known. In: International Conference on the Theory and Applications
+    of Cryptographic Techniques. pp. 178–189. Springer (1996)
+ 7. Coppersmith, D.: Finding a small root of a univariate modular equation. In: Inter-
+    national Conference on the Theory and Applications of Cryptographic Techniques.
+    pp. 155–165. Springer (1996)
+ 8. Coppersmith, D.: Small solutions to polynomial equations, and low exponent RSA
+    vulnerabilities. Journal of cryptology 10(4), 233–260 (1997)
+ 9. Dierks, T., Rescorla, E.: RFC 5246: The transport layer security (TLS) protocol
+    version 1.2 (2008)
+10. Dieulefait, L.V., Urroz, J.: Factorization and malleability of rsa moduli, and count-
+    ing points on elliptic curves modulo n. Mathematics 8(12), 2126 (2020)
+11. Dryło, R., Pomykała, J.: Integer factoring problem and elliptic curves over the ring
+    Zn . In: Colloquium Mathematicum. vol. 159, pp. 259–284. Instytut Matematyczny
+    Polskiej Akademii Nauk (2020)
+12. Dryło, R., Pomykała, J.: Smooth factors of integers and elliptic curve based factor-
+    ing with an oracle. Banach Center Publications 126, 73–88 (2023)
+13. Freier, A.O.: The SSL protocol version 3.0. http://www. netscape.
+    com/eng/ssl3/draft302. txt (1996)
+14. Jutla, C.S.: On ﬁnding small solutions of modular multivariate polynomial equa-
+    tions. In: International Conference on the Theory and Applications of Crypto-
+    graphic Techniques. pp. 158–170. Springer (1998)
+15. Kaliski, B., Jonsson, J., Rusch, A.: RFC 8017: PKCS # 1: RSA Cryptography
+    Speciﬁcations Version 2.2 (2016)
+16. Knapp, A.W.: Elliptic curves, vol. 40. Princeton University Press (1992)
+17. Konyagin, S., Pomerance, C.: On primes recognizable in deterministic polynomial
+    time. The Mathematics of Paul Erdös I pp. 176–198 (1997)
+18. Lamzouri, Y., Li, X., Soundararajan, K.: Conditional bounds for the least quadratic
+    non-residue and related problems. Mathematics of Computation 84(295), 2391–
+    2412 (2015). https://doi.org/10.1090/mcom/2961
+19. Lenstra, A.K., Lenstra Jr, H.W., Manasse, M.S., Pollard, J.M.: The number ﬁeld
+    sieve. In: Proceedings of the twenty-second annual ACM symposium on Theory of
+    computing. pp. 564–572 (1990)
+20. Lenstra, H.W., et al.: Elliptic curves and number-theoretic algorithms. Universiteit
+    van Amsterdam Mathematisch Instituut (1986)
+           Decomposition of RSA modulus applying even order elliptic curves            15
+
+21. Lenstra Jr, H.W.: Factoring integers with elliptic curves. Annals of mathematics
+    pp. 649–673 (1987)
+22. Martín, S., Morillo, P., Villar, J.: Title of the article. Applied Mathematics Letters
+    14(3), 341–346 (April 2001)
+23. Pollard, J.M.: A Monte Carlo method for factorization, bit 15 (1975), 331–334. MR
+    52, 13611
+24. Pomykała, J., Żołnierczyk, O.: Elliptic curve-integer factorizatiin and witnesses. In:
+    Accepted for the conference ICCS 24, (2024)
+25. Pomykała, J., Radziejewski, M.: Integer factoring and compositeness
+    witnesses. Journal of Mathematical Cryptology 14(1), 1–15 (2020).
+    https://doi.org/10.1515/jmc-2019-0023
+26. Wiener, M.J.: Cryptanalysis of short RSA secret exponents. IEEE Transactions on
+    Information theory 36(3), 553–558 (1990)
+27. Źrałek, B.: A deterministic version of pollard’s p-1 algorithm. Mathematics of
+    computation 79(269), 513–533 (2010)
+

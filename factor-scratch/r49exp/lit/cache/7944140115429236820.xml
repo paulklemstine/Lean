@@ -1,0 +1,1416 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/hNdUO7iI6OHZFQCvyno+HQ+u3s0</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"partial" AND abs:"bits"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:15Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22partial%22+AND+abs:%22bits%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>60</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0204096v2</id>
+    <title>A tight lower bound on the classical communication cost of entanglement dilution</title>
+    <updated>2002-06-28T16:15:20Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0204096v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0204096v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Entanglement concentration requires no classical communication, but the best prior art result for diluting to N copies of a partially entangled state requires an amount of communication on the order of sqrt(N) bits. Our main result is to prove this prior art result optimal up to a constant factor; any procedure for creating N partially entangled states from singlets requires Omega(sqrt(N)) bits of classical communication. Previously not even a constant bound was known for approximate entanglement transforms.
+  We also prove a lower bound on the inefficiency of the process: to dilute singlets to N copies of a partially entangled state, the entropy of entanglement must decrease by Omega(sqrt(N)).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-04-17T19:53:17Z</published>
+    <arxiv:comment>10 pages, 2 figures, RevTeX. v2 improved presentation, added remarks</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>IEEE Trans. Inf. Theory, Vol. 50, No. 2, (2004) p.319-327</arxiv:journal_ref>
+    <author>
+      <name>Aram Harrow</name>
+    </author>
+    <author>
+      <name>Hoi-Kwong Lo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.20071v1</id>
+    <title>SAT and Lattice Reduction for Integer Factorization</title>
+    <updated>2024-06-28T17:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2406.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The difficulty of factoring large integers into primes is the basis for cryptosystems such as RSA. Due to the widespread popularity of RSA, there have been many proposed attacks on the factorization problem such as side-channel attacks where some bits of the prime factors are available. When enough bits of the prime factors are known, two methods that are effective at solving the factorization problem are satisfiability (SAT) solvers and Coppersmith's method. The SAT approach reduces the factorization problem to a Boolean satisfiability problem, while Coppersmith's approach uses lattice basis reduction. Both methods have their advantages, but they also have their limitations: Coppersmith's method does not apply when the known bit positions are randomized, while SAT-based methods can take advantage of known bits in arbitrary locations, but have no knowledge of the algebraic structure exploited by Coppersmith's method. In this paper we describe a new hybrid SAT and computer algebra approach to efficiently solve random leaked-bit factorization problems. Specifically, Coppersmith's method is invoked by a SAT solver to determine whether a partial bit assignment can be extended to a complete assignment. Our hybrid implementation solves random leaked-bit factorization problems significantly faster than either a pure SAT or pure computer algebra approach.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T17:30:20Z</published>
+    <arxiv:comment>To appear in the 2024 Proceedings of the International Symposium on Symbolic and Algebraic Computation</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yameen Ajani</name>
+    </author>
+    <author>
+      <name>Curtis Bright</name>
+    </author>
+    <arxiv:doi>10.1145/3666000.3669712</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3666000.3669712" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.01726v3</id>
+    <title>Average-case analysis of the Gaussian Elimination with Partial Pivoting</title>
+    <updated>2024-03-06T13:47:46Z</updated>
+    <link href="https://arxiv.org/abs/2206.01726v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.01726v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Gaussian Elimination with Partial Pivoting (GEPP) is a classical algorithm for solving systems of linear equations. Although in specific cases the loss of precision in GEPP due to roundoff errors can be very significant, empirical evidence strongly suggests that for a {\it typical} square coefficient matrix, GEPP is numerically stable. We obtain a (partial) theoretical justification of this phenomenon by showing that, given the random $n\times n$ standard Gaussian coefficient matrix $A$, the {\it growth factor} of the Gaussian Elimination with Partial Pivoting is at most polynomially large in $n$ with probability close to one. This implies that with probability close to one the number of bits of precision sufficient to solve $Ax = b$ to $m$ bits of accuracy using GEPP is $m+O(\log n)$, which improves an earlier estimate $m+O(\log^2 n)$ of Sankar, and which we conjecture to be optimal by the order of magnitude. We further provide tail estimates of the growth factor which can be used to support the empirical observation that GEPP is more stable than the Gaussian Elimination with no pivoting.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-22T22:12:07Z</published>
+    <arxiv:comment>a revised version</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Han Huang</name>
+    </author>
+    <author>
+      <name>Konstantin Tikhomirov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.07074v1</id>
+    <title>Robust Mean Estimation under Quantization</title>
+    <updated>2026-01-11T21:42:46Z</updated>
+    <link href="https://arxiv.org/abs/2601.07074v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.07074v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of mean estimation under quantization and adversarial corruption. We construct multivariate robust estimators that are optimal up to logarithmic factors in two different settings. The first is a one-bit setting, where each bit depends only on a single sample, and the second is a partial quantization setting, in which the estimator may use a small fraction of unquantized data.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-11T21:42:46Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Pedro Abdalla</name>
+    </author>
+    <author>
+      <name>Junren Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.09780v1</id>
+    <title>BitParticle: Partializing Sparse Dual-Factors to Build Quasi-Synchronizing MAC Arrays for Energy-efficient DNNs</title>
+    <updated>2025-07-13T20:27:27Z</updated>
+    <link href="https://arxiv.org/abs/2507.09780v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.09780v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Bit-level sparsity in quantized deep neural networks (DNNs) offers significant potential for optimizing Multiply-Accumulate (MAC) operations. However, two key challenges still limit its practical exploitation. First, conventional bit-serial approaches cannot simultaneously leverage the sparsity of both factors, leading to a complete waste of one factor' s sparsity. Methods designed to exploit dual-factor sparsity are still in the early stages of exploration, facing the challenge of partial product explosion. Second, the fluctuation of bit-level sparsity leads to variable cycle counts for MAC operations. Existing synchronous scheduling schemes that are suitable for dual-factor sparsity exhibit poor flexibility and still result in significant underutilization of MAC units. To address the first challenge, this study proposes a MAC unit that leverages dual-factor sparsity through the emerging particlization-based approach. The proposed design addresses the issue of partial product explosion through simple control logic, resulting in a more area- and energy-efficient MAC unit. In addition, by discarding less significant intermediate results, the design allows for further hardware simplification at the cost of minor accuracy loss. To address the second challenge, a quasi-synchronous scheme is introduced that adds cycle-level elasticity to the MAC array, reducing pipeline stalls and thereby improving MAC unit utilization. Evaluation results show that the exact version of the proposed MAC array architecture achieves a 29.2% improvement in area efficiency compared to the state-of-the-art bit-sparsity-driven architecture, while maintaining comparable energy efficiency. The approximate variant further improves energy efficiency by 7.5%, compared to the exact version. Index-Terms: DNN acceleration, Bit-level sparsity, MAC unit</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-13T20:27:27Z</published>
+    <arxiv:comment>9 pages, 13 figures, 3 Tables</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Feilong Qiaoyuan</name>
+    </author>
+    <author>
+      <name>Jihe Wang</name>
+    </author>
+    <author>
+      <name>Zhiyu Sun</name>
+    </author>
+    <author>
+      <name>Linying Wu</name>
+    </author>
+    <author>
+      <name>Yuanhua Xiao</name>
+    </author>
+    <author>
+      <name>Danghui Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24717v2</id>
+    <title>A new attack to RSA with small private exponent and partial information</title>
+    <updated>2026-06-24T16:02:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.24717v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24717v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a new algorithm to attack RSA with small private exponent, when some partial information of $p+q$ is given.The algorithm is a very simple modification of original Wiener's attack with continued fractions, and allows to factor $n$ whenever $d&lt;n^{(1+δ)/4}$ if we know a $δ$-fraction of the most significant bits of $p+q$. The algorithm is unconditional, which is not the case in previous improvements that use Coppersmith method. As an example, ouir algorithm can be applied to break any criptosystem with modulus of $512$ bits and $d&lt;n^{0.3}$, giving an improvement in the original attack of Wiener.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T15:39:30Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.05295v1</id>
+    <title>Discrete Denoising Diffusion Approach to Integer Factorization</title>
+    <updated>2023-09-11T08:26:08Z</updated>
+    <link href="https://arxiv.org/abs/2309.05295v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.05295v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a famous computational problem unknown whether being solvable in the polynomial time. With the rise of deep neural networks, it is interesting whether they can facilitate faster factorization. We present an approach to factorization utilizing deep neural networks and discrete denoising diffusion that works by iteratively correcting errors in a partially-correct solution. To this end, we develop a new seq2seq neural network architecture, employ relaxed categorical distribution and adapt the reverse diffusion process to cope better with inaccuracies in the denoising step. The approach is able to find factors for integers of up to 56 bits long. Our analysis indicates that investment in training leads to an exponential decrease of sampling steps required at inference to achieve a given success rate, thus counteracting an exponential run-time increase depending on the bit-length.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-11T08:26:08Z</published>
+    <arxiv:comment>International Conference on Artificial Neural Networks ICANN 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Karlis Freivalds</name>
+    </author>
+    <author>
+      <name>Emils Ozolins</name>
+    </author>
+    <author>
+      <name>Guntis Barzdins</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1904.04528v2</id>
+    <title>Partial Enumerative Sphere Shaping</title>
+    <updated>2019-11-29T15:05:36Z</updated>
+    <link href="https://arxiv.org/abs/1904.04528v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1904.04528v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The dependency between the Gaussianity of the input distribution for the additive white Gaussian noise (AWGN) channel and the gap-to-capacity is discussed. We show that a set of particular approximations to the Maxwell-Boltzmann (MB) distribution virtually closes most of the shaping gap. We relate these symbol-level distributions to bit-level distributions, and demonstrate that they correspond to keeping some of the amplitude bit-levels uniform and independent of the others. Then we propose partial enumerative sphere shaping (P-ESS) to realize such distributions in the probabilistic amplitude shaping (PAS) framework. Simulations over the AWGN channel exhibit that shaping 2 amplitude bits of 16-ASK have almost the same performance as shaping 3 bits, which is 1.3 dB more power-efficient than uniform signaling at a rate of 3 bit/symbol. In this way, required storage and computational complexity of shaping are reduced by factors of 6 and 3, respectively.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-04-09T08:37:14Z</published>
+    <arxiv:comment>6 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Yunus Can Gültekin</name>
+    </author>
+    <author>
+      <name>W. J. van Houtum</name>
+    </author>
+    <author>
+      <name>Arie Koppelaar</name>
+    </author>
+    <author>
+      <name>Frans M. J. Willems</name>
+    </author>
+    <arxiv:doi>10.1109/VTCFall.2019.8891195</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/VTCFall.2019.8891195" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.00034v2</id>
+    <title>PB-LLM: Partially Binarized Large Language Models</title>
+    <updated>2023-11-07T20:41:22Z</updated>
+    <link href="https://arxiv.org/abs/2310.00034v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.00034v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper explores network binarization, a radical form of quantization, compressing model weights to a single bit, specifically for Large Language Models (LLMs) compression. Due to previous binarization methods collapsing LLMs, we propose a novel approach, Partially-Binarized LLM (PB-LLM), which can achieve extreme low-bit quantization while maintaining the linguistic reasoning capacity of quantized LLMs. Specifically, our exploration first uncovers the ineffectiveness of naive applications of existing binarization algorithms and highlights the imperative role of salient weights in achieving low-bit quantization. Thus, PB-LLM filters a small ratio of salient weights during binarization, allocating them to higher-bit storage, i.e., partially-binarization. PB-LLM is extended to recover the capacities of quantized LMMs, by analyzing from the perspective of post-training quantization (PTQ) and quantization-aware training (QAT). Under PTQ, combining the concepts from GPTQ, we reconstruct the binarized weight matrix guided by the Hessian matrix and successfully recover the reasoning capacity of PB-LLM in low-bit. Under QAT, we freeze the salient weights during training, explore the derivation of optimal scaling factors crucial for minimizing the quantization error, and propose a scaling mechanism based on this derived scaling strategy for residual binarized weights. Those explorations and the developed methodologies significantly contribute to rejuvenating the performance of low-bit quantized LLMs and present substantial advancements in the field of network binarization for LLMs.The code is available at https://github.com/hahnyuan/BinaryLLM.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-29T14:35:27Z</published>
+    <arxiv:comment>Frist work using network binarization for large language model compression</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuzhang Shang</name>
+    </author>
+    <author>
+      <name>Zhihang Yuan</name>
+    </author>
+    <author>
+      <name>Qiang Wu</name>
+    </author>
+    <author>
+      <name>Zhen Dong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.00998v2</id>
+    <title>Hybrid scheme for factorization: Factoring 551 using a 3-qubit NMR quantum adiabatic processor</title>
+    <updated>2016-11-16T11:33:36Z</updated>
+    <link href="https://arxiv.org/abs/1611.00998v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.00998v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum processors are potentially superior to their classical counterparts for many computational tasks including factorization. Circuit methods as well as adiabatic methods have already been proposed and implemented for finding the factors of a given composite number. The main challenge in scaling it to larger numbers is the unavailability of large number of qubits. Here we propose a hybrid scheme that involves both classical and quantum computation, which reduces the number of qubits required for factorization. The classical part involves setting up and partially simplifying a set of bit-wise factoring equations and the quantum part involves solving these coupled equations using a quantum adiabatic process. We demonstrate the hybrid scheme by factoring 551 using a three qubit NMR quantum register.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-03T13:22:07Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Pramana J. Phys. (2019) 92:26</arxiv:journal_ref>
+    <author>
+      <name>Soham Pal</name>
+    </author>
+    <author>
+      <name>Saranyo Moitra</name>
+    </author>
+    <author>
+      <name>V. S. Anjusha</name>
+    </author>
+    <author>
+      <name>Anil Kumar</name>
+    </author>
+    <author>
+      <name>T. S. Mahesh</name>
+    </author>
+    <arxiv:doi>10.1007/s12043-018-1684-0</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s12043-018-1684-0" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.00377v4</id>
+    <title>Stochastic p-bits for Invertible Logic</title>
+    <updated>2017-07-21T17:50:43Z</updated>
+    <link href="https://arxiv.org/abs/1610.00377v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.00377v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conventional logic and memory devices are built out of deterministic units such as transistors, or magnets with energy barriers in excess of 40-60 kT. We show that stochastic units, p-bits, can be interconnected to create robust correlations that implement Boolean functions with impressive accuracy, comparable to standard circuits. Also they are invertible, a unique property that is absent in digital circuits. When operated in the direct mode, the input is clamped, and the network provides the correct output. In the inverted mode, the output is clamped, and the network fluctuates among possible inputs consistent with that output. We present an implementation of an invertible gate to bring out the key role of a three-terminal building block to enable the construction of correlated p-bit networks. The results for this implementation agree well with those from a universal model, showing that p-bits need not be magnet-based: any three-terminal tunable random bit generator should be suitable. We present an algorithm for designing a Boltzmann machine (BM) with symmetric connections that implements a given truth table. We then show how BM Full Adders can be interconnected in a partially directed manner to implement large operations such as 32-bit addition. Hundreds of p-bits get precisely correlated such that the correct answer out of 2^33 possibilities can be extracted by looking at the mode of a number of time samples. With perfect directivity a small number of samples is enough, while for less directed connections more samples are needed, but even in the former case invertibility is largely preserved. This combination of accuracy and invertibility is enabled by the hybrid design that uses bidirectional units to construct circuits with partially directed connections. We establish this result with examples including a 4-bit multiplier which in inverted mode functions as a factorizer.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-03T00:46:33Z</published>
+    <arxiv:comment>This is the third in a series of papers on probabilistic spin logic (PSL). The other papers are: arXiv:1606.00130, arXiv:1608.00679, arXiv:1611.05477</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Phys. Rev. X 7, 031014 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Kerem Yunus Camsari</name>
+    </author>
+    <author>
+      <name>Rafatul Faria</name>
+    </author>
+    <author>
+      <name>Brian M. Sutton</name>
+    </author>
+    <author>
+      <name>Supriyo Datta</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevX.7.031014</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevX.7.031014" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.05166v2</id>
+    <title>Space-Efficient Data Structures for Lattices</title>
+    <updated>2020-06-16T04:59:57Z</updated>
+    <link href="https://arxiv.org/abs/1902.05166v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.05166v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A lattice is a partially-ordered set in which every pair of elements has a unique meet (greatest lower bound) and join (least upper bound). We present new data structures for lattices that are simple, efficient, and nearly optimal in terms of space complexity.
+  Our first data structure can answer partial order queries in constant time and find the meet or join of two elements in $O(n^{3/4})$ time, where $n$ is the number of elements in the lattice. It occupies $O(n^{3/2}\log n)$ bits of space, which is only a $Θ(\log n)$ factor from the $Θ(n^{3/2})$-bit lower bound for storing lattices. The preprocessing time is $O(n^2)$. This structure admits a simple space-time tradeoff so that, for any $c \in [\frac{1}{2}, 1]$, the data structure supports meet and join queries in $O(n^{1-c/2})$ time, occupies $O(n^{1+c}\log n)$ bits of space, and can be constructed in $O(n^2 + n^{1+3c/2})$ time.
+  Our second data structure uses $O(n^{3/2}\log n)$ bits of space and supports meet and join in $O(d \frac{\log n}{\log d})$ time, where $d$ is the maximum degree of any element in the transitive reduction graph of the lattice. This structure is much faster for lattices with low-degree elements.
+  This paper also identifies an error in a long-standing solution to the problem of representing lattices. We discuss the issue with this previous work.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-13T23:47:23Z</published>
+    <arxiv:comment>Accepted in SWAT 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>J. Ian Munro</name>
+    </author>
+    <author>
+      <name>Bryce Sandlund</name>
+    </author>
+    <author>
+      <name>Corwin Sinnamon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.13940v3</id>
+    <title>A Majorization-Minimization Gauss-Newton Method for 1-Bit Matrix Completion</title>
+    <updated>2024-09-23T23:20:44Z</updated>
+    <link href="https://arxiv.org/abs/2304.13940v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.13940v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1-bit matrix completion, the aim is to estimate an underlying low-rank matrix from a partial set of binary observations. We propose a novel method for 1-bit matrix completion called Majorization-Minimization Gauss-Newton (MMGN). Our method is based on the majorization-minimization principle, which converts the original optimization problem into a sequence of standard low-rank matrix completion problems. We solve each of these sub-problems by a factorization approach that explicitly enforces the assumed low-rank structure and then apply a Gauss-Newton method. Using simulations and a real data example, we illustrate that in comparison to existing 1-bit matrix completion methods, MMGN outputs comparable if not more accurate estimates. In addition, it is often significantly faster, and less sensitive to the spikiness of the underlying matrix. In comparison with three standard generic optimization approaches that directly minimize the original objective, MMGN also exhibits a clear computational advantage, especially when the fraction of observed entries is small.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-27T03:16:52Z</published>
+    <arxiv:comment>30 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Xiaoqian Liu</name>
+    </author>
+    <author>
+      <name>Xu Han</name>
+    </author>
+    <author>
+      <name>Eric C. Chi</name>
+    </author>
+    <author>
+      <name>Boaz Nadler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.07842v2</id>
+    <title>Column-wise Quantization of Weights and Partial Sums for Accurate and Efficient Compute-In-Memory Accelerators</title>
+    <updated>2025-03-13T11:32:19Z</updated>
+    <link href="https://arxiv.org/abs/2502.07842v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.07842v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Compute-in-memory (CIM) is an efficient method for implementing deep neural networks (DNNs) but suffers from substantial overhead from analog-to-digital converters (ADCs), especially as ADC precision increases. Low-precision ADCs can reduce this overhead but introduce partial-sum quantization errors degrading accuracy. Additionally, low-bit weight constraints, imposed by cell limitations and the need for multiple cells for higher-bit weights, present further challenges. While fine-grained partial-sum quantization has been studied to lower ADC resolution effectively, weight granularity, which limits overall partial-sum quantized accuracy, remains underexplored. This work addresses these challenges by aligning weight and partial-sum quantization granularities at the column-wise level. Our method improves accuracy while maintaining dequantization overhead, simplifies training by removing two-stage processes, and ensures robustness to memory cell variations via independent column-wise scale factors. We also propose an open-source CIM-oriented convolution framework to handle fine-grained weights and partial-sums efficiently, incorporating a novel tiling method and group convolution. Experimental results on ResNet-20 (CIFAR-10, CIFAR-100) and ResNet-18 (ImageNet) show accuracy improvements of 0.99%, 2.69%, and 1.01%, respectively, compared to the best-performing related works. Additionally, variation analysis reveals the robustness of our method against memory cell variations. These findings highlight the effectiveness of our quantization scheme in enhancing accuracy and robustness while maintaining hardware efficiency in CIM-based DNN implementations. Our code is available at https://github.com/jiyoonkm/ColumnQuant.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-11T05:32:14Z</published>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Jiyoon Kim</name>
+    </author>
+    <author>
+      <name>Kang Eun Jeon</name>
+    </author>
+    <author>
+      <name>Yulhwa Kim</name>
+    </author>
+    <author>
+      <name>Jong Hwan Ko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.11553v1</id>
+    <title>Efficiera Residual Networks: Hardware-Friendly Fully Binary Weight with 2-bit Activation Model Achieves Practical ImageNet Accuracy</title>
+    <updated>2024-10-15T12:43:28Z</updated>
+    <link href="https://arxiv.org/abs/2410.11553v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.11553v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The edge-device environment imposes severe resource limitations, encompassing computation costs, hardware resource usage, and energy consumption for deploying deep neural network models. Ultra-low-bit quantization and hardware accelerators have been explored as promising approaches to address these challenges. Ultra-low-bit quantization significantly reduces the model size and the computational cost. Despite progress so far, many competitive ultra-low-bit models still partially rely on float or non-ultra-low-bit quantized computation such as the input and output layer. We introduce Efficiera Residual Networks (ERNs), a model optimized for low-resource edge devices. ERNs achieve full ultra-low-bit quantization, with all weights, including the initial and output layers, being binary, and activations set at 2 bits. We introduce the shared constant scaling factor technique to enable integer-valued computation in residual connections, allowing our model to operate without float values until the final convolution layer. Demonstrating competitiveness, ERNs achieve an ImageNet top-1 accuracy of 72.5pt with a ResNet50-compatible architecture and 63.6pt with a model size less than 1MB. Moreover, ERNs exhibit impressive inference times, reaching 300FPS with the smallest model and 60FPS with the largest model on a cost-efficient FPGA device.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-15T12:43:28Z</published>
+    <arxiv:comment>11pages, 2 figures, the model implementation is available at https://github.com/LeapMind/ERN</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shuntaro Takahashi</name>
+    </author>
+    <author>
+      <name>Takuya Wakisaka</name>
+    </author>
+    <author>
+      <name>Hiroyuki Tokunaga</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.02063v3</id>
+    <title>Connectivity Properties of Factorization Posets in Generated Groups</title>
+    <updated>2019-06-12T08:48:45Z</updated>
+    <link href="https://arxiv.org/abs/1710.02063v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.02063v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider three notions of connectivity and their interactions in partially ordered sets coming from reduced factorizations of an element in a generated group. While one form of connectivity essentially reflects the connectivity of the poset diagram, the other two are a bit more involved: Hurwitz-connectivity has its origins in algebraic geometry, and shellability in topology. We propose a framework to study these connectivity properties in a uniform way. Our main tool is a certain linear order of the generators that is compatible with the chosen element.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-05T15:05:50Z</published>
+    <arxiv:comment>35 pages, 17 figures. Comments are very welcome. Final version</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>Order 37 (2020), pages 115-149</arxiv:journal_ref>
+    <author>
+      <name>Henri Mühle</name>
+    </author>
+    <author>
+      <name>Vivien Ripoll</name>
+    </author>
+    <arxiv:doi>10.1007/s11083-019-09496-1</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11083-019-09496-1" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.00421v1</id>
+    <title>Categorical Matrix Completion</title>
+    <updated>2015-07-02T03:58:47Z</updated>
+    <link href="https://arxiv.org/abs/1507.00421v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.00421v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of completing a matrix with categorical-valued entries from partial observations. This is achieved by extending the formulation and theory of one-bit matrix completion. We recover a low-rank matrix $X$ by maximizing the likelihood ratio with a constraint on the nuclear norm of $X$, and the observations are mapped from entries of $X$ through multiple link functions. We establish theoretical upper and lower bounds on the recovery error, which meet up to a constant factor $\mathcal{O}(K^{3/2})$ where $K$ is the fixed number of categories. The upper bound in our case depends on the number of categories implicitly through a maximization of terms that involve the smoothness of the link functions. In contrast to one-bit matrix completion, our bounds for categorical matrix completion are optimal up to a factor on the order of the square root of the number of categories, which is consistent with an intuition that the problem becomes harder when the number of categories increases. By comparing the performance of our method with the conventional matrix completion method on the MovieLens dataset, we demonstrate the advantage of our method.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-02T03:58:47Z</published>
+    <arxiv:comment>Submitted</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Yang Cao</name>
+    </author>
+    <author>
+      <name>Yao Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.03063v1</id>
+    <title>Mixed Precision Photonic Computing with 3D Electronic-Photonic Integrated Circuits</title>
+    <updated>2025-08-05T04:24:36Z</updated>
+    <link href="https://arxiv.org/abs/2508.03063v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.03063v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose advancing photonic in-memory computing through three-dimensional photonic-electronic integrated circuits using phase-change materials (PCM) and AlGaAs-CMOS technology. These circuits offer high precision (greater than 12 bits), scalability (greater than 1024 by 1024), and massive parallelism (greater than 1 million operations) across the wavelength, spatial, and temporal domains at ultra-low power (less than 1 watt per PetaOPS). Monolithically integrated hybrid PCM-AlGaAs memory resonators handle coarse-precision iterations (greater than 5-bit most significant bit precision) through reversible PCM phase transitions. Electro-optic memristive tuning enables fine-precision updates (greater than 8-bit least significant bit precision), resulting in over 12-bit precision for in-memory computing. The use of low-loss PCM (less than 0.01 dB per cm) and electro-optical tuning yields memristive optical resonators with high Q-factors (greater than 1 million), low insertion loss, and low tuning power. A W by W photonic tensor core composed of PCM-AlGaAs memresonators performs general matrix multiplication (GEMM) across W wavelengths from optical frequency combs, with minimal crosstalk and loss. Hierarchical scaling in the wavelength domain (K) and spatial domain (L) enables this system to address high-dimensional (N) scientific partial differential equation (PDE) problems in a single constant-time operation, compared to the conventional quadratic-time (N squared) computational complexity.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-05T04:24:36Z</published>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Georgios Charalampous</name>
+    </author>
+    <author>
+      <name>Rui Chen</name>
+    </author>
+    <author>
+      <name>Mehmet Berkay On</name>
+    </author>
+    <author>
+      <name>Aslan Nasirov</name>
+    </author>
+    <author>
+      <name>Chun-Yi Cheng</name>
+    </author>
+    <author>
+      <name>Mahmoud AbdelGhany</name>
+    </author>
+    <author>
+      <name>Arka Majumdar</name>
+    </author>
+    <author>
+      <name>Ji Wang</name>
+    </author>
+    <author>
+      <name>Jennifer A. Black</name>
+    </author>
+    <author>
+      <name>Rajkumar Chinnakonda Kubendran</name>
+    </author>
+    <author>
+      <name>Caglar Oskay</name>
+    </author>
+    <author>
+      <name>Zhaojun Bai</name>
+    </author>
+    <author>
+      <name>Sam Palermo</name>
+    </author>
+    <author>
+      <name>Scott B. Papp</name>
+    </author>
+    <author>
+      <name>S. J. Ben Yoo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1202.3695v4</id>
+    <title>Deterministic elliptic curve primality proving for a special sequence of numbers</title>
+    <updated>2015-03-16T23:58:54Z</updated>
+    <link href="https://arxiv.org/abs/1202.3695v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1202.3695v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a deterministic algorithm that very quickly proves the primality or compositeness of the integers N in a certain sequence, using an elliptic curve E/Q with complex multiplication by the ring of integers of Q(sqrt(-7)). The algorithm uses O(log N) arithmetic operations in the ring Z/NZ, implying a bit complexity that is quasi-quadratic in log N. Notably, neither of the classical "N-1" or "N+1" primality tests apply to the integers in our sequence. We discuss how this algorithm may be applied, in combination with sieving techniques, to efficiently search for very large primes. This has allowed us to prove the primality of several integers with more than 100,000 decimal digits, the largest of which has more than a million bits in its binary representation. At the time it was found, it was the largest proven prime N for which no significant partial factorization of N-1 or N+1 is known.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-02-16T20:57:44Z</published>
+    <arxiv:comment>16 pages, corrected a minor sign error in 5.1</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Proceedings of the Tenth Algorithmic Number Theory Symposium (ANTS X), Open Book Series Vol. 1, Mathematical Sciences Publishers, 2013, pp. 1-20</arxiv:journal_ref>
+    <author>
+      <name>Alexander Abatzoglou</name>
+    </author>
+    <author>
+      <name>Alice Silverberg</name>
+    </author>
+    <author>
+      <name>Andrew V. Sutherland</name>
+    </author>
+    <author>
+      <name>Angela Wong</name>
+    </author>
+    <arxiv:doi>10.2140/obs.2013.1.1</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2140/obs.2013.1.1" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.05832v1</id>
+    <title>On-demand quantum state transfer and entanglement between remote microwave cavity memories</title>
+    <updated>2017-12-15T20:56:56Z</updated>
+    <link href="https://arxiv.org/abs/1712.05832v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.05832v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modular quantum computing architectures require fast and efficient distribution of quantum information through propagating signals. Here we report rapid, on-demand quantum state transfer between two remote superconducting cavity quantum memories through traveling microwave photons. We demonstrate a quantum communication channel by deterministic transfer of quantum bits with 76% fidelity. Heralding on errors induced by experimental imperfection can improve this to 87% with a success probability of 0.87. By partial transfer of a microwave photon, we generate remote entanglement at a rate that exceeds photon loss in either memory by more than a factor of three. We further show the transfer of quantum error correction code words that will allow deterministic mitigation of photon loss. These results pave the way for scaling superconducting quantum devices through modular quantum networks.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-15T20:56:56Z</published>
+    <arxiv:comment>main text 7 pages, 4 figures; supplement 16 pages, 16 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Christopher Axline</name>
+    </author>
+    <author>
+      <name>Luke Burkhart</name>
+    </author>
+    <author>
+      <name>Wolfgang Pfaff</name>
+    </author>
+    <author>
+      <name>Mengzhen Zhang</name>
+    </author>
+    <author>
+      <name>Kevin Chou</name>
+    </author>
+    <author>
+      <name>Philippe Campagne-Ibarcq</name>
+    </author>
+    <author>
+      <name>Philip Reinhold</name>
+    </author>
+    <author>
+      <name>Luigi Frunzio</name>
+    </author>
+    <author>
+      <name>S. M. Girvin</name>
+    </author>
+    <author>
+      <name>Liang Jiang</name>
+    </author>
+    <author>
+      <name>M. H. Devoret</name>
+    </author>
+    <author>
+      <name>R. J. Schoelkopf</name>
+    </author>
+    <arxiv:doi>10.1038/s41567-018-0115-y</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41567-018-0115-y" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.02967v2</id>
+    <title>Synthesis of Distributed Protocols by Enumeration Modulo Isomorphisms</title>
+    <updated>2023-07-28T15:21:21Z</updated>
+    <link href="https://arxiv.org/abs/2306.02967v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.02967v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Synthesis of distributed protocols is a hard, often undecidable, problem. Completion techniques provide partial remedy by turning the problem into a search problem. However, the space of candidate completions is still massive. In this paper, we propose optimization techniques to reduce the size of the search space by a factorial factor by exploiting symmetries (isomorphisms) in functionally equivalent solutions. We present both a theoretical analysis of this optimization as well as empirical results that demonstrate its effectiveness in synthesizing both the Alternating Bit Protocol and Two Phase Commit. Our experiments show that the optimized tool achieves a speedup of approximately 2 to 10 times compared to its unoptimized counterpart.</summary>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-05T15:30:13Z</published>
+    <arxiv:comment>Moved proofs into the main text. Added link to publicly available artifact</arxiv:comment>
+    <arxiv:primary_category term="cs.LO"/>
+    <author>
+      <name>Derek Egolf</name>
+    </author>
+    <author>
+      <name>Stavros Tripakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.02449v1</id>
+    <title>Investigation of Channel Estimation Techniques with 1-bit Quantization and Oversampling for Multiple-Antenna Systems</title>
+    <updated>2019-10-06T13:38:30Z</updated>
+    <link href="https://arxiv.org/abs/1910.02449v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.02449v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale multiple-antenna systems have been identified as a promising technology for the next generation of wireless systems. However, by scaling up the number of receive antennas the energy consumption will also increase. One possible solution is to use low-resolution analog-to-digital converters at the receiver. This paper considers large-scale multiple-antenna uplink systems with 1-bit analog-to-digital converters on each receive antenna. Since oversampling can partially compensate for the information loss caused by the coarse quantization, the received signals are firstly oversampled by a factor M. We then propose a low-resolution aware linear minimum mean-squared error channel estimator for 1-bit oversampled systems. Moreover, we characterize analytically the performance of the proposed channel estimator by deriving an upper bound on the Bayesian Cramér-Rao bound. Numerical results are provided to illustrate the performance of the proposed channel estimator.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-06T13:38:30Z</published>
+    <arxiv:comment>6</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Z. Shao</name>
+    </author>
+    <author>
+      <name>L. Landau</name>
+    </author>
+    <author>
+      <name>R. C. de Lamare</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.00431v2</id>
+    <title>Every Bit Counts in Consensus</title>
+    <updated>2023-08-07T12:32:41Z</updated>
+    <link href="https://arxiv.org/abs/2306.00431v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.00431v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consensus enables n processes to agree on a common valid L-bit value, despite t &lt; n/3 processes being faulty and acting arbitrarily. A long line of work has been dedicated to improving the worst-case communication complexity of consensus in partial synchrony. This has recently culminated in the worst-case word complexity of O(n^2). However, the worst-case bit complexity of the best solution is still O(n^2 L + n^2 kappa) (where kappa is the security parameter), far from the Ω(n L + n^2) lower bound. The gap is significant given the practical use of consensus primitives, where values typically consist of batches of large size (L &gt; n).
+  This paper shows how to narrow the aforementioned gap while achieving optimal linear latency. Namely, we present a new algorithm, DARE (Disperse, Agree, REtrieve), that improves upon the O(n^2 L) term via a novel dispersal primitive. DARE achieves O(n^{1.5} L + n^{2.5} kappa) bit complexity, an effective sqrt{n}-factor improvement over the state-of-the-art (when L &gt; n kappa). Moreover, we show that employing heavier cryptographic primitives, namely STARK proofs, allows us to devise DARE-Stark, a version of DARE which achieves the near-optimal bit complexity of O(n L + n^2 poly(kappa)). Both DARE and DARE-Stark achieve optimal O(n) latency.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-01T08:18:16Z</published>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Pierre Civit</name>
+    </author>
+    <author>
+      <name>Seth Gilbert</name>
+    </author>
+    <author>
+      <name>Rachid Guerraoui</name>
+    </author>
+    <author>
+      <name>Jovan Komatovic</name>
+    </author>
+    <author>
+      <name>Matteo Monti</name>
+    </author>
+    <author>
+      <name>Manuel Vidigueira</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25289v1</id>
+    <title>Combining Self-Embedding Audio Watermarking with Ultra-Low-Bitrate Neural Codecs</title>
+    <updated>2026-08-26T01:55:15Z</updated>
+    <link href="https://arxiv.org/abs/2608.25289v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25289v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Partial manipulation of speech recordings, where only localized segments of an utterance are altered, poses a significant challenge for content integrity verification, as reliable detection and localization of such edits becomes harder as the manipulated proportion decreases. Watermarking offers a proactive defense alternative by embedding auxiliary information prior to distribution; classical hash-based schemes achieve near-perfect detection and localization under ideal conditions, but the original content cannot be recovered once a segment is manipulated. Building on a prior self-embedding audio steganography framework, this work presents an initial exploration of proactive defense performance under ideal conditions, extending the investigation along three axes: frame-level localization, multi-bit least significant bit variants, and evaluation across multiple ultra-low-bitrate neural codec representations. By embedding a compact neural codec representation rather than a cryptographic hash, the framework additionally enables recovery of the manipulated regions, while supporting training-free detection and localization without spoofed examples. Experiments across four controlled manipulation types under ideal channel conditions show that the embedded payload, and hence an approximate reconstruction of the authentic content, is always fully recovered without bit errors. The results also indicate that the choice of neural codec is the dominant factor for detection and localization performance.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-26T01:55:15Z</published>
+    <arxiv:comment>6 pages; 1 figure; 2 tables; submitted to WIFS 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Yigitcan Özer</name>
+    </author>
+    <author>
+      <name>Xin Wang</name>
+    </author>
+    <author>
+      <name>Zhe Zhang</name>
+    </author>
+    <author>
+      <name>Junichi Yamagishi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1904.12008v1</id>
+    <title>Analog Weights in ReRAM DNN Accelerators</title>
+    <updated>2019-04-26T18:25:16Z</updated>
+    <link href="https://arxiv.org/abs/1904.12008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1904.12008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Artificial neural networks have become ubiquitous in modern life, which has triggered the emergence of a new class of application specific integrated circuits for their acceleration. ReRAM-based accelerators have gained significant traction due to their ability to leverage in-memory computations. In a crossbar structure, they can perform multiply-and-accumulate operations more efficiently than standard CMOS logic. By virtue of being resistive switches, ReRAM switches can only reliably store one of two states. This is a severe limitation on the range of values in a computational kernel. This paper presents a novel scheme in alleviating the single-bit-per-device restriction by exploiting frequency dependence of v-i plane hysteresis, and assigning kernel information not only to the device conductance but also partially distributing it to the frequency of a time-varying input. We show this approach reduces average power consumption for a single crossbar convolution by up to a factor of x16 for an unsigned 8-bit input image, where each convolutional process consumes a worst-case of 1.1mW, and reduces area by a factor of x8, without reducing accuracy to the level of binarized neural networks. This presents a massive saving in computing cost when there are many simultaneous in-situ multiply-and-accumulate processes occurring across different crossbars.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-04-26T18:25:16Z</published>
+    <arxiv:comment>2019 IEEE International Conference on Artificial Intelligence Circuits and Systems, 5 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Jason K. Eshraghian</name>
+    </author>
+    <author>
+      <name>Sung-Mo Kang</name>
+    </author>
+    <author>
+      <name>Seungbum Baek</name>
+    </author>
+    <author>
+      <name>Garrick Orchard</name>
+    </author>
+    <author>
+      <name>Herbert Ho-Ching Iu</name>
+    </author>
+    <author>
+      <name>Wen Lei</name>
+    </author>
+    <arxiv:doi>10.1109/AICAS.2019.8771550</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/AICAS.2019.8771550" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.30992v2</id>
+    <title>Deterministic Linear-Time Modular Subset Sum</title>
+    <updated>2026-09-29T08:53:02Z</updated>
+    <link href="https://arxiv.org/abs/2609.30992v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.30992v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a deterministic $O(m)$-time algorithm for exact modular subset sum over every modulus $m$ on compact input: distinct residues with multiplicities. It reports all reachable residues and answers one target query, returning a witness when the target is reachable. The algorithm uses $O(m)$ auxiliary words on an arithmetic word-RAM. This improves Potępa's deterministic $O(m\log mα(m))$-time bound under the same input convention. The running time matches the cost of explicitly reporting all $m$ reachability bits.
+  We represent reachable residues as runs along cycles of repeated addition. Newly reached residues pay for scans of partial runs, and processing prime factors in increasing order makes cycle rebuilding linear. A theorem on subset sums of distinct units limits the number of adaptive boundary batches to $O(m^{3/4})$; radix sorting their $O(m)$ total keys also takes $O(m)$ time.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-25T08:38:19Z</published>
+    <arxiv:comment>19 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Phuoc Dinh Le</name>
+    </author>
+    <author>
+      <name>Kha Le</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.11356v1</id>
+    <title>Taming Bitwise Behavior in GPU Kernels with Tensor Core: Black-Box Reconstruction, Compiler Enforcement, and Static Verification</title>
+    <updated>2026-09-10T10:39:21Z</updated>
+    <link href="https://arxiv.org/abs/2609.11356v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.11356v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Determinism and numerical reproducibility are increasingly required of GPU kernels in machine learning systems, yet deterministic implementations of the same kernel can still differ bit for bit. Floating-point reduction order is the primary cause, alongside partial-sum precision, fused multiply-add operations, and rounding placement. These choices may be hand-coded, selected by a block-level language such as Triton, or hidden inside a closed-source library such as cuBLAS or rocBLAS. A tile shape chosen for performance therefore also determines the arithmetic, potentially breaking batch invariance. Preserving a fixed order can cost up to 20 percent, while an autotuner cannot identify which configurations are bitwise equivalent.
+  We characterize the factors determining the bitwise behavior of reductions and general matrix multiplication (GEMM). First, we introduce a descriptor of GEMM reduction order, including the partitioning of K in split-K GEMM. Using it, we perform the first black-box reconstruction of a closed-source library's arithmetic for bit-level correctness. Our family of Triton GEMMs matches NVIDIA cuBLAS in all tested cases on Blackwell and Hopper. For realistic LLM shapes with fused epilogues, it matches or exceeds torch.compile performance. Second, we enforce balanced-tree reduction during Triton lowering and introduce a data-layout optimization that brings 19 of 27 kernels on GB300 and H100 within 10 percent of free-order performance. Third, we develop sound static checkers for bitwise equivalence between compiled GPU kernels, including the first checker spanning NVIDIA PTX and AMD GCN. Integrated into Triton's autotuner, the checker restricts search to a single bit-equivalence class.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-10T10:39:21Z</published>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Ziteng Yang</name>
+    </author>
+    <author>
+      <name>Nicholas J. Riasanovsky</name>
+    </author>
+    <author>
+      <name>Warren Deng</name>
+    </author>
+    <author>
+      <name>Vivek Sarkar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.09802v2</id>
+    <title>Inductive Reasoning for Coinductive Types</title>
+    <updated>2023-04-07T02:45:35Z</updated>
+    <link href="https://arxiv.org/abs/2301.09802v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.09802v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present AlgCo (Algebraic Coinductives), a practical framework for inductive reasoning over commonly used coinductive types such as conats, streams, and infinitary trees with finite branching factor. The key idea is to exploit the notion of algebraic complete partial order from domain theory to define continuous operations over coinductive types via primitive recursion on ``dense'' collections of their elements, enabling a convenient strategy for reasoning about algebraic coinductives by straightforward proofs by induction. We implement the AlgCo framework in Coq and demonstrate its power by verifying a stream variant of the sieve of Eratosthenes, a regular expression library based on coinductive trie encodings of formal languages, and expected value semantics for coinductive sampling processes over discrete probability distributions in the random bit model.</summary>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-24T03:55:47Z</published>
+    <arxiv:primary_category term="cs.LO"/>
+    <author>
+      <name>Alexander Bagnall</name>
+    </author>
+    <author>
+      <name>Gordon Stewart</name>
+    </author>
+    <author>
+      <name>Anindya Banerjee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1704.00830v1</id>
+    <title>Locally Self-Adjusting Skip Graphs</title>
+    <updated>2017-04-03T22:53:58Z</updated>
+    <link href="https://arxiv.org/abs/1704.00830v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1704.00830v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a distributed self-adjusting algorithm for skip graphs that minimizes the average routing costs between arbitrary communication pairs by performing topological adaptation to the communication pattern. Our algorithm is fully decentralized, conforms to the $\mathcal{CONGEST}$ model (i.e. uses $O(\log n)$ bit messages), and requires $O(\log n)$ bits of memory for each node, where $n$ is the total number of nodes. Upon each communication request, our algorithm first establishes communication by using the standard skip graph routing, and then locally and partially reconstructs the skip graph topology to perform topological adaptation. We propose a computational model for such algorithms, as well as a yardstick (working set property) to evaluate them. Our working set property can also be used to evaluate self-adjusting algorithms for other graph classes where multiple tree-like subgraphs overlap (e.g. hypercube networks). We derive a lower bound of the amortized routing cost for any algorithm that follows our model and serves an unknown sequence of communication requests. We show that the routing cost of our algorithm is at most a constant factor more than the amortized routing cost of any algorithm conforming to our computational model. We also show that the expected transformation cost for our algorithm is at most a logarithmic factor more than the amortized routing cost of any algorithm conforming to our computational model.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-04-03T22:53:58Z</published>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Sikder Huq</name>
+    </author>
+    <author>
+      <name>Sukumar Ghosh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.13577v1</id>
+    <title>HCiM: ADC-Less Hybrid Analog-Digital Compute in Memory Accelerator for Deep Learning Workloads</title>
+    <updated>2024-03-20T13:23:57Z</updated>
+    <link href="https://arxiv.org/abs/2403.13577v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.13577v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Analog Compute-in-Memory (CiM) accelerators are increasingly recognized for their efficiency in accelerating Deep Neural Networks (DNN). However, their dependence on Analog-to-Digital Converters (ADCs) for accumulating partial sums from crossbars leads to substantial power and area overhead. Moreover, the high area overhead of ADCs constrains the throughput due to the limited number of ADCs that can be integrated per crossbar. An approach to mitigate this issue involves the adoption of extreme low-precision quantization (binary or ternary) for partial sums. Training based on such an approach eliminates the need for ADCs. While this strategy effectively reduces ADC costs, it introduces the challenge of managing numerous floating-point scale factors, which are trainable parameters like DNN weights. These scale factors must be multiplied with the binary or ternary outputs at the columns of the crossbar to ensure system accuracy. To that effect, we propose an algorithm-hardware co-design approach, where DNNs are first trained with quantization-aware training. Subsequently, we introduce HCiM, an ADC-Less Hybrid Analog-Digital CiM accelerator. HCiM uses analog CiM crossbars for performing Matrix-Vector Multiplication operations coupled with a digital CiM array dedicated to processing scale factors. This digital CiM array can execute both addition and subtraction operations within the memory array, thus enhancing processing speed. Additionally, it exploits the inherent sparsity in ternary quantization to achieve further energy savings. Compared to an analog CiM baseline architecture using 7 and 4-bit ADC, HCiM achieves energy reductions up to 28% and 12%, respectively</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-20T13:23:57Z</published>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Shubham Negi</name>
+    </author>
+    <author>
+      <name>Utkarsh Saxena</name>
+    </author>
+    <author>
+      <name>Deepika Sharma</name>
+    </author>
+    <author>
+      <name>Kaushik Roy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21873v1</id>
+    <title>One-Bit Clustering for Two Component Sub-Gaussian Mixture Models</title>
+    <updated>2026-06-20T04:18:08Z</updated>
+    <link href="https://arxiv.org/abs/2606.21873v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21873v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Clustering is a fundamental problem in statistics and machine learning. We propose the first one-bit clustering method for two-component sub-Gaussian mixture models. The method uses only one bit per entry of each sample obtained via a dithered quantizer. Under a mild non-spikiness condition on the cluster centers, we show that a variant of Lloyd's algorithm achieves a misclassification rate that decays exponentially with a signal-to-noise ratio comparable to that in the unquantized setting. This result further implies exact recovery under an explicit separation condition, which exceeds the optimal threshold for unquantized data by only a logarithmic factor. When the dimension $p$ is sufficiently large, the non-spikiness condition can be enforced by applying a random rotation using a Haar distributed matrix prior to quantization. In particular, it holds with high probability when $p \gtrsim 1$ for partial recovery and $p \gtrsim \log n \log\log n$ for exact recovery, where $n$ is the sample size. We also establish a minimax lower bound, showing that the misclassification rate and separation condition exhibit sharp constants in general. Numerical results are provided to corroborate the theory and demonstrate the efficacy of the proposed method.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-20T04:18:08Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Junren Chen</name>
+    </author>
+    <author>
+      <name>Yun Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.03813v3</id>
+    <title>Partial Number Theoretic Transform Masking in Post-Quantum Cryptography (PQC) Hardware: A Security Margin Analysis</title>
+    <updated>2026-09-06T22:57:14Z</updated>
+    <link href="https://arxiv.org/abs/2604.03813v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.03813v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Adams Bridge, a hardware accelerator for ML-DSA and ML-KEM designed for the Caliptra root of trust, masks 1 of its Inverse Number Theoretic Transform (INTT) layers and relies on shuffling for the remainder, claiming per-butterfly Correlation Power Analysis (CPA) complexities of 2^46 (ML-DSA) and 2^96 (ML-KEM). We evaluate these claims across seven tracks with confidence-rated evidence. Register-Transfer Level (RTL) analysis confirms the design's Random Start Index (RSI) shuffling provides 6 bits of entropy per layer (64 orderings), not the 296 bits of a full random permutation. Under corrected test stimulus, the masked INTT round's butterfly register group fails first-order Test Vector Leakage Assessment (TVLA) at the RTL level, inverting the earlier verdict; the security margins are not re-derived from that result. A soft-analytical attack pipeline demonstrates a 37-bit attack-model gap, not a reduction in total work: it follows from the RSI structure alone, is independent of BP gains and measured SNR, and achieves no key recovery. Full-scale BP on the complete ML-KEM INTT factor graph achieves 100% coefficient recovery at SNRxN = 3,000; that graph decomposes into two independent 128-coefficient components. Layer-ablation over all 35 four-layer subsets shows observation topology sets the trace budget for BP convergence, not necessary conditions: input-adjacency and gap raise that budget by up to roughly 10x and by roughly 4x; output-anchoring and layer count are not priced. Four spread layers recover the full key in 78 of 80 seeds at SNRxN = 5,000; four consecutive need ~100x that. Masking 3 consecutive mid-layers (43% overhead) defers full recovery to SNRxN = 20,000 rather than preventing it; partial masking bounds attacker cost. We contribute an audit methodology assembled from established practice into a reproducible critique of partially masked NTT accelerators.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-04T17:38:34Z</published>
+    <arxiv:comment>48 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ray Iskander</name>
+    </author>
+    <author>
+      <name>Khaled Kirah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12550v4</id>
+    <title>A JoLT for the KV cache: Near-Lossless KV Cache Compression via Joint Rank-bit Allocation</title>
+    <updated>2026-09-24T15:49:22Z</updated>
+    <link href="https://arxiv.org/abs/2607.12550v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12550v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The key-value (KV) cache is the dominant memory bottleneck in long-context language model inference. Existing compression methods apply low-rank factorization or quantization independently, without jointly allocating rank and precision under a shared storage budget. We introduce JoLT, a training-free compressor that treats grouped prefill caches as fourth-order tensors and applies partial Tucker decomposition along the token and feature modes, the two axes that carry low-rank structure, while leaving the head and layer modes intact. A rotated low-bit quantizer captures the truncation residual, and a single Lagrangian dual allocates per-group Tucker ranks and residual bit-widths under a global byte constraint. FlashJoLT replaces the exact token-mode SVD with a randomized approximation that matches JoLT within the free zone at a fraction of the compression cost, and a fused Triton decode kernel evaluates attention directly over the stored factors without materializing dense KV tensors. Across five models from four architecture families, covering multi-head attention, grouped-query attention, and mixture-of-experts architecture, JoLT achieves 2 - 3x compression with less than 0.2% perplexity degradation, without retraining. On RULER at 64K context with LLaMA-3.1-8B, retrieval accuracy remains near-lossless through 3x and declines by only 0.90 and 2.40pp at 4x and 5x, respectively. JoLT demonstrates that tensor-aware low-rank decomposition and quantized residuals, unified under a single storage budget, achieve near-lossless KV-cache compression across diverse model architectures without retraining.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T09:23:20Z</published>
+    <arxiv:comment>9 pages, 5 figures, 16 tables. Under review at ICLR 2027</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Rahul Krishnan</name>
+    </author>
+    <author>
+      <name>Volker Schulz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1002.2440v3</id>
+    <title>Optimal Lower Bounds for Projective List Update Algorithms</title>
+    <updated>2012-03-08T19:00:15Z</updated>
+    <link href="https://arxiv.org/abs/1002.2440v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1002.2440v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The list update problem is a classical online problem, with an optimal competitive ratio that is still open, known to be somewhere between 1.5 and 1.6. An algorithm with competitive ratio 1.6, the smallest known to date, is COMB, a randomized combination of BIT and the TIMESTAMP algorithm TS. This and almost all other list update algorithms, like MTF, are projective in the sense that they can be defined by looking only at any pair of list items at a time. Projectivity (also known as "list factoring") simplifies both the description of the algorithm and its analysis, and so far seems to be the only way to define a good online algorithm for lists of arbitrary length. In this paper we characterize all projective list update algorithms and show that their competitive ratio is never smaller than 1.6 in the partial cost model. Therefore, COMB is a best possible projective algorithm in this model.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-02-11T21:48:07Z</published>
+    <arxiv:comment>Version 3 same as version 2, but date in LaTeX \today macro replaced by March 8, 2012</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>ACM Transactions on Algorithms (TALG) Volume 9, Issue 4, September 2013, Article 31, 18 pages</arxiv:journal_ref>
+    <author>
+      <name>Christoph Ambuehl</name>
+    </author>
+    <author>
+      <name>Bernd Gaertner</name>
+    </author>
+    <author>
+      <name>Bernhard von Stengel</name>
+    </author>
+    <arxiv:doi>10.1145/2500120</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/2500120" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.05187v2</id>
+    <title>A Complete Proof for Tu-Deng Conjecture</title>
+    <updated>2026-08-12T07:37:55Z</updated>
+    <link href="https://arxiv.org/abs/2608.05187v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.05187v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $N=2^k-1$ and let $\operatorname{wt}(n)$ denote the binary Hamming weight. The Tu-Deng conjecture asserts that, for every $1\le t\le N-1$, at most $2^{k-1}$ pairs $(a,b)\in\{0,\ldots,N-1\}^2$ satisfy $a+b\equiv t\pmod N$ and $\operatorname{wt}(a)+\operatorname{wt}(b)&lt;k$. Partial results are known. We give a complete proof of this conjecture. We first show that the Tu-Deng counts equals the number of cyclic carry solutions for which $\operatorname{wt}(B)-\operatorname{wt}(A)&lt;0$ and $A+t\equiv B\pmod N$. The enumerator of the cyclic carry solutions factors as $$C_v = 1+(X+Y-1)J_v+X^{\operatorname{z}(v)+1}Y^{\operatorname{o}(v)+1},$$ where $t=10v$ is the binary expansion of $t$(least significant bits first) and $J_v$ enumerates the language $$\operatorname{Sub}(v)\mathbin{\dot\cup}\{u\in\partial_1\operatorname{Sub}(v):u&lt;_{\rm lex}v\}.$$ Estimating the strict negative half-plane mass of $C_v$ gives the desired bound.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T05:44:27Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Renzhang Liu</name>
+    </author>
+    <author>
+      <name>Hengyi Luo</name>
+    </author>
+    <author>
+      <name>Tianyuan Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.05417v1</id>
+    <title>On the Anti-Jamming Performance of the NR-DCSK System</title>
+    <updated>2017-11-15T05:57:14Z</updated>
+    <link href="https://arxiv.org/abs/1711.05417v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.05417v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates the anti-jamming performance of the NR-DCSK system. We consider several practical jamming environments including broad-band jamming (BBJ), partial-time jamming (PTJ), tone jamming (TJ) consisting of both single-tone and multi-tone, and sweep jamming (SWJ). We first analytically derived the bit error rates of the considered system under the BBJ and the PTJ environments in closed-form expressions. Our derived results show that the system performances under these two jamming environments are enhanced as $P$ increases, where $P$ is the parameter of the NR-DCSK modulation scheme denoting the number of times a chaotic sample is repeated. In addition, our results demonstrate that for the PTJ, the optimal value of the jamming factor is close to zero when the jamming power is small, however, it increases and approaches one as the jamming power enlarges. We then investigate the performance of the considered system under the TJ and the SWJ environments via Monte-Carlo simulations. Our simulations show that single-tone jamming causes a more significant performance degradation than that provided by multi-tone jamming counterparts. Moreover, we point out that the system performance is significantly degraded when the starting frequency of the sweep jammer is close to the carrier frequency of the transmitted chaotic signals, the sweep bandwidth is small, and the sweep time is half of the transmitted bit duration.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-15T05:57:14Z</published>
+    <arxiv:comment>7 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Binh Van Nguyen</name>
+    </author>
+    <author>
+      <name>Hyoyoung Jung</name>
+    </author>
+    <author>
+      <name>Kiseon Kim</name>
+    </author>
+    <arxiv:doi>10.1155/2018/7963641</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1155/2018/7963641" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.09067v2</id>
+    <title>Computing Puiseux series : a fast divide and conquer algorithm</title>
+    <updated>2018-12-03T20:27:22Z</updated>
+    <link href="https://arxiv.org/abs/1708.09067v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.09067v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $F\in \mathbb{K}[X, Y ]$ be a polynomial of total degree $D$ defined over a perfect field $\mathbb{K}$ of characteristic zero or greater than $D$. Assuming $F$ separable with respect to $Y$ , we provide an algorithm that computes the singular parts of all Puiseux series of $F$ above $X = 0$ in less than $\tilde{\mathcal{O}}(Dδ)$ operations in $\mathbb{K}$, where $δ$ is the valuation of the resultant of $F$ and its partial derivative with respect to $Y$. To this aim, we use a divide and conquer strategy and replace univariate factorization by dynamic evaluation. As a first main corollary, we compute the irreducible factors of $F$ in $\mathbb{K}[[X]][Y ]$ up to an arbitrary precision $X^N$ with $\tilde{\mathcal{O}}(D(δ+ N ))$ arithmetic operations. As a second main corollary, we compute the genus of the plane curve defined by $F$ with $\tilde{\mathcal{O}}(D^3)$ arithmetic operations and, if $\mathbb{K} = \mathbb{Q}$, with $\tilde{\mathcal{O}}((h+1)D^3)$ bit operations using a probabilistic algorithm, where $h$ is the logarithmic heigth of $F$.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-30T00:16:24Z</published>
+    <arxiv:comment>27 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Adrien Poteaux</name>
+    </author>
+    <author>
+      <name>Martin Weimann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1010.4981v2</id>
+    <title>Using TPA to count linear extensions</title>
+    <updated>2017-06-30T17:58:02Z</updated>
+    <link href="https://arxiv.org/abs/1010.4981v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1010.4981v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A linear extension of a poset $P$ is a permutation of the elements of the set that respects the partial order. Let $L(P)$ denote the number of linear extensions. It is a #P complete problem to determine $L(P)$ exactly for an arbitrary poset, and so randomized approximation algorithms that draw randomly from the set of linear extensions are used. In this work, the set of linear extensions is embedded in a larger state space with a continuous parameter ?. The introduction of a continuous parameter allows for the use of a more efficient method for approximating $L(P)$ called TPA. Our primary result is that it is possible to sample from this continuous embedding in time that as fast or faster than the best known methods for sampling uniformly from linear extensions. For a poset containing $n$ elements, this means we can approximate $L(P)$ to within a factor of $1 + ε$ with probability at least $1 - δ$ using an expected number of random bits and comparisons in the poset which is at most $O(n^3(ln n)(ln L(P))ε^{-2}\ln δ^{-1}).$</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-10-24T16:59:33Z</published>
+    <arxiv:comment>12 pages, 4 algorithms</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Jacqueline Banks</name>
+    </author>
+    <author>
+      <name>Scott Garrabrant</name>
+    </author>
+    <author>
+      <name>Mark L. Huber</name>
+    </author>
+    <author>
+      <name>Anne Perizzolo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1702.03587v2</id>
+    <title>Post-Quantum Cryptography(PQC): Generalized ElGamal Cipher over GL(8,F251)</title>
+    <updated>2024-12-29T12:42:36Z</updated>
+    <link href="https://arxiv.org/abs/1702.03587v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1702.03587v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Post-quantum cryptography (PQC) attempts to find cryptographic protocols resistant to attacks using for instance Shor's polynomial time algorithm for numerical field problems like integer factorization (IFP) or the discrete logarithm (DLP). Other aspects are the backdoors discovered in deterministic random generators or recent advances in solving some instances of DLP. Using alternative algebraic structures like non-commutative or non-associative partial groupoids, magmas, monoids, semigroups, quasigroups or groups, are valid choices for these new protocols. This paper focuses on an asymmetric cipher based on a generalized ElGamal non-arbitrated protocol using a non-commutative general linear group. The developed protocol forces a hard subgroup membership search problem into a non-commutative structure. The protocol involves at first a generalized Diffie-Hellman key interchange and further on the private and public parameters are recursively updated each time a new cipher session is launched. Security is based on a hard variation of the Generalized Symmetric Decomposition Problem (GSDP). Working with GL(8, F251) 64-bit security is achieved, and if GL(16, F251) is chosen, the security rises to 127-bit. An appealing feature is that there is no need for big number libraries as all arithmetic is performed in Z_251. Therefore the new protocol is particularly useful for computational platforms with very limited capabilities like smartphones or smartcards.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-02-12T22:50:28Z</published>
+    <arxiv:comment>6 pages, 6 Tables, 14 Figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Pedro Hecht</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1504.04555v1</id>
+    <title>Hypergeometric/Difference-Equation-Based Separability Probability Formulas and Their Asymptotics for Generalized Two-Qubit States Endowed with Random Induced Measure</title>
+    <updated>2015-04-17T16:24:30Z</updated>
+    <link href="https://arxiv.org/abs/1504.04555v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1504.04555v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We find equivalent hypergeometric- and difference-equation-based formulas, $Q(k,α)= G_1^k(α) G_2^k(α)$, for $k = -1, 0, 1,\ldots,9$, for that (rational-valued) portion of the total separability probability for generalized two-qubit states endowed with random induced measure, for which the determinantal inequality $|ρ^{PT}| &gt;|ρ|$ holds. Here $ρ$ denotes a $4 \times 4$ density matrix and $ρ^{PT}$, its partial transpose, while $α$ is a Dyson-index-like parameter with $α= 1$ for the standard (15-dimensional) convex set of two-qubit states. The dimension of the space in which these density matrices is embedded is $4 \times (4 +k)$. For the symmetric case of $k=0$, we obtain the previously reported Hilbert-Schmidt formulas, with (the two-re[al]bit case) $Q(0,\frac{1}{2}) = \frac{29}{128}$, (the standard two-qubit case) $Q(0,1)=\frac{4}{33}$, and (the two-quater[nionic]bit case) $Q(0,2)= \frac{13}{323}$. The factors $G_2^k(α)$ can be written as the sum of weighted hypergeometric functions $_{p}F_{p-1}$, $p \geq 7$, all with argument $\frac{27}{64} =(\frac{3}{4})^3$. We find formulas for the upper and lower parameter sets of these functions and, then, equivalently express $G_2^k(α)$ in terms of first-order difference equations. The factors $G_1^k(α)$ are equal to $(\frac{27}{64})^{α-1}$ times ratios of products of six Pochhammer symbols involving the indicated parameters. Some remarkable $α-$ and $k$-specific invariant asymptotic properties (again, involving $\frac{27}{64}$ and related quantities) of separability probability formulas emerge.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-04-17T16:24:30Z</published>
+    <arxiv:comment>20 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Paul B. Slater</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.38521v1</id>
+    <title>ShamAN-Q: Shampoo Augmented NanoQuant for Sub-1-bit LLM Weights</title>
+    <updated>2026-09-29T20:39:47Z</updated>
+    <link href="https://arxiv.org/abs/2609.38521v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.38521v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce ShamAN-Q, a sub-1-bit post-training quantization method that extends NanoQuant by replacing each its diagonal reconstruction geometry with a tractable dense curvature metric, using a general paradigm popularized by the Shampoo optimizer. For each linear weight, ShamAN-Q fits a Kronecker product to the empirical Fisher information matrix of a small calibration set by Kullback--Leibler minimization, forming a Mahalanobis reconstruction loss from the result. The continuous ADMM updates from NanoQuant become solutions to Sylvester equations, while its discrete projection and deployment format remain unchanged. Because the curvature is local to a given set of weights, ShamAN-Q re-measures the input curvature statistic for each layer immediately before layer factorization, periodically refreshing all statistics on the partially quantized model. ShamAN-Q also redistributes the uniform rank from NanoQuant across layers at the same total number of bits. On Qwen3-Base, ShamAN-Q lowers WikiText-2 perplexity at $\approx$1 bpw from 27.56 to 22.96 (0.6B), 19.21 to 16.72 (1.7B), and 14.29 to 13.80 (4B) while matching or improving zero-shot accuracy on the Eleuther LM Evaluation Harness. On 0.6B, ShamAN-Q at $\approx$0.8 bpw matches the published perplexity of NanoQuant at $\approx$1.0 bpw.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-29T20:39:47Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jonathan Mei</name>
+    </author>
+    <author>
+      <name>Sang Hyub Kim</name>
+    </author>
+    <author>
+      <name>Oliver Knitter</name>
+    </author>
+    <author>
+      <name>Chi Chen</name>
+    </author>
+    <author>
+      <name>Martin Roetteler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.07124v3</id>
+    <title>Information-Theoretic Bounds for Sparse Covariance Estimation in the Vertical-Split Distributed Model</title>
+    <updated>2026-09-25T07:48:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.07124v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.07124v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the minimax estimation error for distributed covariance matrix estimation in the vertical-split (feature-split) setting, where two agents each observe different coordinates of~$m$ i.i.d.\ sub-Gaussian samples and communicate a limited number of bits to a central server. While \cite{rahmani2025fundamental} established nearly tight bounds for dense (unstructured) cross-covariance matrices, we investigate whether imposing elementwise $s$-sparsity on the cross-covariance $C_{21}$ can reduce the required communication and sample complexity. We show that sparsity can reduce the communication required for cross-covariance estimation in the vertical split at a fixed target distortion.
+  Specifically, for sufficiently large $d_1d_2/s'$ and $0&lt;\varepsilon&lt;σ^2\sqrt{s'}/32$, any scheme achieving expected Frobenius distortion at most $\varepsilon$ must satisfy $B_k = Ω(σ^4 d_k\, s' \log(d_1 d_2/s')/\varepsilon^2)$ and $m = Ω(σ^4\, s' \log(d_1 d_2/s')/\varepsilon^2)$ for cross-covariance estimation, where $s' = s \wedge d_{\min}$. For the $1$-sparse case, our achievable scheme reduces the $d_1d_2$ factor in the dense communication rate to $\log(d_1d_2)$, up to polylogarithmic factors, for the cross-covariance communication component in the matching regime. Our lower bounds are established via Fano's method with an explicit sparse packing using a Varshamov--Gilbert-type argument for signed partial permutation matrices combined with the Conditional Strong Data Processing Inequality of \cite{rahmani2025fundamental}. We show that the communication lower bound is tight up to polylogarithmic factors under the conditions of Remark 4.9, using an achievable scheme based on covering-net quantization and entry-wise hard thresholding.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-05T10:25:12Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Jing Yee Tan</name>
+    </author>
+    <author>
+      <name>Guangyue Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.14302v1</id>
+    <title>Exact Online Rank Recycling in Floyd's Uniform Subset Sampler</title>
+    <updated>2026-07-15T19:05:30Z</updated>
+    <link href="https://arxiv.org/abs/2607.14302v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.14302v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A uniformly random $m$-subset of $[n]=\{0,\ldots,n-1\}$ has entropy $\log_2\binom{n}{m}$. Standard without-replacement procedures often expose an additional ordering coordinate that is absent from the returned set. We show that Floyd's subset sampler admits an exact round-local factorization of this coordinate. In round $r$, let $S$ be an $(r-1)$-subset of $[j]$, let $T\sim\operatorname{Unif}([j+1])$, and let $S'$ be the result of Floyd's transition. If $D$ is the zero-based rank of the original draw $T$ in $S'$, then $(S,T)\leftrightarrow(S',D)$ is a bijection between $\binom{[j]}{r-1}\times[j+1]$ and $\binom{[j+1]}{r}\times[r]$. Consequently, $S'$ and $D$ are independent and uniform on their respective spaces. The digit $D$ can therefore be merged immediately into a residual uniform random state; an induction shows that the partial subset remains independent of that state after every round. For $k=\min(m,n-m)$, the sampling phase uses $O(k\log k)$ time and $O(k)$ auxiliary space with an order-statistic tree; explicitly materializing a complement incurs the unavoidable output cost. The combinatorial layer avoids binomial-coefficient arithmetic and recovers the complete $k!$ state-space factor exactly. We also give a finite counterexample showing that analogous immediate rank recycling in a partial Fisher-Yates array is invalid because the unselected suffix retains a correlated ordering. A 64-bit Rust implementation is checked by exhaustive state-space enumeration for all $n\leq 8$ and by an entropy-accounting trace for choosing $20{,}000$ of $30{,}000$ items. We make no claim of runtime superiority over existing subset samplers.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-15T19:05:30Z</published>
+    <arxiv:comment>12 pages, 0 figures, 2 algorithms, 2 tables. Rust implementation and exact finite-state tests: https://github.com/yingqi-z20/entropy-pool/tree/v1.0.0</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Yingqi Zhang</name>
+      <arxiv:affiliation>Department of Computer Science and Technology, Tsinghua University, Beijing, China</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.05976v1</id>
+    <title>Distributed Shor's algorithm</title>
+    <updated>2022-07-13T06:00:03Z</updated>
+    <link href="https://arxiv.org/abs/2207.05976v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.05976v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Shor's algorithm is one of the most important quantum algorithm proposed by Peter Shor [Proceedings of the 35th Annual Symposium on Foundations of Computer Science, 1994, pp. 124--134]. Shor's algorithm can factor a large integer with certain probability and costs polynomial time in the length of the input integer. The key step of Shor's algorithm is the order-finding algorithm. Specifically, given an $L$-bit integer $N$, we first randomly pick an integer $a$ with $gcd(a,N)=1$, the order of $a$ modulo $N$ is the smallest positive integer $r$ such that $a^r\equiv 1 (\bmod N)$. The order-finding algorithm in Shor's algorithm first uses quantum operations to obtain an estimation of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$, then $r$ is obtained by means of classical algorithms. In this paper, we propose a distributed Shor's algorithm. The difference between our distributed algorithm and the traditional order-finding algorithm is that we use two quantum computers separately to estimate partial bits of $\dfrac{s}{r}$ for some $s\in\{0, 1, \cdots, r-1\}$. To ensure their measuring results correspond to the same $\dfrac{s}{r}$, we need employ quantum teleportation. We integrate the measuring results via classical post-processing. After that, we get an estimation of $\dfrac{s}{r}$ with high precision. Compared with the traditional Shor's algorithm that uses multiple controlling qubits, our algorithm reduces nearly $\dfrac{L}{2}$ qubits and reduces the circuit depth of each computer.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-13T06:00:03Z</published>
+    <arxiv:comment>15 pages, 3 Figures, comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ligang Xiao</name>
+    </author>
+    <author>
+      <name>Daowen Qiu</name>
+    </author>
+    <author>
+      <name>Le Luo</name>
+    </author>
+    <author>
+      <name>Paulo Mateus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.09983v1</id>
+    <title>Dependency-Aware ROM/CBD Correctness Bounds for ML-KEM-768 at the Heuristic Failure Scale</title>
+    <updated>2026-09-09T10:13:10Z</updated>
+    <link href="https://arxiv.org/abs/2609.09983v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.09983v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We certify an honest-decapsulation failure upper bound for ML-KEM-768 in an explicit random-function/centered-binomial (ROM/CBD) abstraction. Domain-separated public-matrix streams are modeled as independent uniform ring elements and secret/noise polynomials as independent CBD2 primitives; this is not an information-theoretic statement about the fixed SHAKE instantiation of FIPS 203. Recent formal assessments identify rigorous justification of ML-KEM's heuristic decapsulation-failure scale as an open problem; within the explicit ROM/CBD abstraction studied here, we obtain a dependency-preserving certified upper bound at that scale. The analysis preserves dependencies induced by the public matrix and by both ciphertext-compression terms. Its terminal chain has three components: an exact graph-coupled full-ideal reference for the joint c_u/c_v residual; a proper-ideal bivariate Fourier transport whose rare |T|&gt;=3 branch is closed by an exhaustive three-factor anti-concentration replay; and exact bit-specific FIPS decoding events followed only by a 256-coordinate union bound. A formal partial-Fourier lemma makes the spectral-to-total-variation step explicit. The reduced rational certificate satisfies Pr[K' != K] &lt;= P_* &lt;= 2^-164.81, with -log2(P_*) = 164.810716201343121.... The 164.81 threshold is exact but numerically tight: the certified exponent exceeds it by only about 0.0007162 bit, and 164.82 is not certified. The result is an upper bound for an arbitrary message fixed independently of the public and secret randomness, under honest encryption and decapsulation. It is not an exact DFR, not a fixed-SHAKE equivalence theorem, not a new IND-CCA reduction, and not an adaptive delta-correctness result.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-09T10:13:10Z</published>
+    <arxiv:comment>34 pages, 0 figures. Includes a deterministic verification capsule and an exact rational terminal certificate; result is in an explicit fixed-message ROM/CBD abstraction and is not an exact fixed-SHAKE DFR</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aurélie Duriez</name>
+      <arxiv:affiliation>netHsys SARL, Lille, France</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Christophe Tommasini</name>
+      <arxiv:affiliation>Tommasini Conseil, Lille, France</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.26413v1</id>
+    <title>Quantum Gatekeeper: Multi-Factor Context-Bound Image Steganography with VQC Based Key Derivation on Quantum Hardware</title>
+    <updated>2026-04-29T08:25:18Z</updated>
+    <link href="https://arxiv.org/abs/2604.26413v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.26413v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents Quantum Gatekeeper, a context-bound image steganography framework where successful payload recovery depends on both cryptographic decryption and the reconstruction of a precise extraction path. The system integrates lossless least significant bit (LSB) embedding with a deterministic variational quantum circuit (VQC)-derived gate key, multi-factor contextual binding, and authenticated encryption. Payload extraction is contingent upon four requisite factors: a password, a shared secret, a user-supplied context string, and a reference image signature. Any deviation in these factors causes the system to read from an incorrect pixel sequence or fail authentication, resulting in silent rejection rather than partial disclosure. The proposed method derives a gatecontrolled extraction key from a seed-conditioned variational circuit, with parameters generated via cryptographic hash expansion and context-dependent image features. To ensure encode/decode consistency, the cryptographic key path is generated via exact statevector simulation; concurrently, IBM superconducting quantum hardware is utilized to evaluate the statistical behavior of the circuit family under physical noise. We introduce a dual-region image layout to resolve the nonce bootstrapping dependency, separating header recovery from payload recovery through independently derived keys. Experimental results confirm successful end-to-end message embedding and recovery on PNG images, demonstrating deterministic success under correct conditions and failure otherwise. The framework supports both text and image payloads; in the image-in-image configuration, a secret image is resized to a fixed resolution prior to embedding, enabling exact pixel-level recovery under correct contextual reconstruction.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-29T08:25:18Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Sahil Tomar</name>
+    </author>
+    <author>
+      <name>Sandeep Kumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.16666v1</id>
+    <title>Reconfigurable Intelligent Surface-Enabled Green and Secure Offloading for Mobile Edge Computing Networks</title>
+    <updated>2025-07-22T14:58:40Z</updated>
+    <link href="https://arxiv.org/abs/2507.16666v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.16666v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates a multi-user uplink mobile edge computing (MEC) network, where the users offload partial tasks securely to an access point under the non-orthogonal multiple access policy with the aid of a reconfigurable intelligent surface (RIS) against a multi-antenna eavesdropper. We formulate a non-convex optimization problem of minimizing the total energy consumption subject to secure offloading requirement, and we build an efficient block coordinate descent framework to iteratively optimize the number of local computation bits and transmit power at the users, the RIS phase shifts, and the multi-user detection matrix at the access point. Specifically, we successively adopt successive convex approximation, semi-definite programming, and semidefinite relaxation to solve the problem with perfect eavesdropper's channel state information (CSI), and we then employ S-procedure and penalty convex-concave to achieve robust design for the imperfect CSI case. We provide extensive numerical results to validate the convergence and effectiveness of the proposed algorithms. We demonstrate that RIS plays a significant role in realizing a secure and energy-efficient MEC network, and deploying a well-designed RIS can save energy consumption by up to 60\% compared to that without RIS. We further reveal impacts of various key factors on the secrecy energy efficiency, including RIS element number and deployment position, user number, task scale and duration, and CSI imperfection.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-22T14:58:40Z</published>
+    <arxiv:comment>15 pages, 9 figures, accepted by IEEE Internet of Things Journal</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Tong-Xing Zheng</name>
+    </author>
+    <author>
+      <name>Xinji Wang</name>
+    </author>
+    <author>
+      <name>Xin Chen</name>
+    </author>
+    <author>
+      <name>Di Mao</name>
+    </author>
+    <author>
+      <name>Jia Shi</name>
+    </author>
+    <author>
+      <name>Cunhua Pan</name>
+    </author>
+    <author>
+      <name>Chongwen Huang</name>
+    </author>
+    <author>
+      <name>Haiyang Ding</name>
+    </author>
+    <author>
+      <name>Zan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.15868v1</id>
+    <title>Low-Stack HAETAE for Memory-Constrained Microcontrollers</title>
+    <updated>2026-04-17T09:18:04Z</updated>
+    <link href="https://arxiv.org/abs/2604.15868v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.15868v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a low-stack implementation of the module-lattice signature scheme HAETAE, targeting microcontrollers with 8 kB-16 kB of available SRAM. On such devices, peak stack usage is often the binding constraint, and HAETAE's hyperball-based sampler, large transient polynomial vectors, and variable-length signature payloads (hint and high-bits arrays) pose a particular challenge. To address this we introduce (i) Rejection-aware pass decomposition, which isolates encoding to the post-acceptance path; (ii) Component-level early rejection, which short-circuits the response computation when a partial norm already exceeds the bound; and (iii) Reverse-order streaming entropy coding using range Asymmetric Numeral Systems (rANS), which eliminates full hint and high-bits staging buffers. Combined with streamed matrix generation, a two-pass hyperball sampler with streaming Gaussian backend, and row-streamed verification, these techniques bring Signing stack from 71 kB-141 kB in the reference implementation down to 5.8 kB-6.0 kB, key generation to 4.7 kB-5.7 kB, and verification to 4.7 kB-4.8 kB across all three security levels. Our pure C implementation covers all three security levels (HAETAE-2/3/5), whose optimization paths differ due to the public-key domain (d&gt;0 vs. d=0) and rejection structure. We implement our optimization on a Nucleo-L4R5ZI and compare to the reference pqm4 (for HAETAE-2 and -3) and a recently published memory-optimized implementation (targeting HAETAE-5 only). We reduce HAETAE-2, -3, and -5 stack by respectively 75, 86 and 8 % for key generation, 92, 95 and 24 % for signature generation, and 85, 91 and 22 % for verification. Depending on the parameter set, this impacts performance by at most a factor 1.8 and 3.4 for key and signature generation respectively, while even offering a performance improvement up to 18 % for verification. Verification at all security levels fits within 8 kB of RAM (signature buffer + stack) and is 2.34-3.34x faster than ML-DSA m4fstack at each comparable security level. We additionally validate portability under RIOT-OS on ARM Cortex-M4 and RISC-V targets.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-17T09:18:04Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Gustavo Banegas</name>
+      <arxiv:affiliation>LIX, GRACE</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Kim Youngbeom</name>
+    </author>
+    <author>
+      <name>Seo Seog Chung</name>
+    </author>
+    <author>
+      <name>Vredendaal Christine Van</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.07440v3</id>
+    <title>Limits on Support Recovery with Probabilistic Models: An Information-Theoretic Framework</title>
+    <updated>2016-08-30T10:47:09Z</updated>
+    <link href="https://arxiv.org/abs/1501.07440v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.07440v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The support recovery problem consists of determining a sparse subset of a set of variables that is relevant in generating a set of observations, and arises in a diverse range of settings such as compressive sensing, and subset selection in regression, and group testing. In this paper, we take a unified approach to support recovery problems, considering general probabilistic models relating a sparse data vector to an observation vector. We study the information-theoretic limits of both exact and partial support recovery, taking a novel approach motivated by thresholding techniques in channel coding. We provide general achievability and converse bounds characterizing the trade-off between the error probability and number of measurements, and we specialize these to the linear, 1-bit, and group testing models. In several cases, our bounds not only provide matching scaling laws in the necessary and sufficient number of measurements, but also sharp thresholds with matching constant factors. Our approach has several advantages over previous approaches: For the achievability part, we obtain sharp thresholds under broader scalings of the sparsity level and other parameters (e.g., signal-to-noise ratio) compared to several previous works, and for the converse part, we not only provide conditions under which the error probability fails to vanish, but also conditions under which it tends to one.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-29T13:04:11Z</published>
+    <arxiv:comment>Accepted to IEEE Transactions on Information Theory; presented in part at ISIT 2015 and SODA 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Jonathan Scarlett</name>
+    </author>
+    <author>
+      <name>Volkan Cevher</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.00658v1</id>
+    <title>Emotion recognition techniques with rule based and machine learning approaches</title>
+    <updated>2021-02-28T23:21:27Z</updated>
+    <link href="https://arxiv.org/abs/2103.00658v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.00658v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Emotion recognition using digital image processing is a multifarious task because facial emotions depend on warped facial features as well as on gender, age, and culture. Furthermore, there are several factors such as varied illumination and intricate settings that increase complexity in facial emotion recognition. In this paper, we used four salient facial features, Eyebrows, Mouth opening, Mouth corners, and Forehead wrinkles to identifying emotions from normal, occluded and partially-occluded images. We have employed rule-based approach and developed new methods to extract aforementioned facial features similar to local bit patterns using novel techniques. We propose new methods to detect eye location, eyebrow contraction, and mouth corners. For eye detection, the proposed methods are Enhancement of Cr Red (ECrR) and Suppression of Cr Blue (SCrB) which results in 98% accuracy. Additionally, for eyebrow contraction detection, we propose two techniques (1) Morphological Gradient Image Intensity (MGII) and (2) Degree of Curvature Line (DCL). Additionally, we present a new method for mouth corners detection. For classification purpose, we use an individual classifier, majority voting (MV) and weighted majority voting (WMV) methods which mimic Human Emotions Sensitivity (HES). These methods are straightforward to implement, improve the accuracy of results, and work best for emotion recognition using partially occluded images. It is ascertained from the results that our method outperforms previous approaches. Overall accuracy rates are around 94%. The processing time on one image using processor core i5 is ~0.12 sec.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-28T23:21:27Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aasma Aslam</name>
+    </author>
+    <author>
+      <name>Babar Hussian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.20889v1</id>
+    <title>Implementation of QR factorization of tall and very skinny matrices on current GPUs</title>
+    <updated>2026-03-21T17:30:58Z</updated>
+    <link href="https://arxiv.org/abs/2603.20889v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.20889v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of computing a QR (or QZ) decomposition of a real, dense, tall and very skinny matrix. That is, the number of columns is tiny compared to the number of rows, rendering most computations completely or partially memory-bandwidth limited. The paper focuses on recent NVIDIA GPGPUs still supporting 64-bit floating-point arithmetic, but the findings carry over to AMD GPUs as well. We discuss two basic algorithms: Methods based on the normal equations (Gram matrix), in particular Cholesky-QR2 and SVQB, and the "tall-skinny QR" (TSQR), based on Householder transformations in a tree-reduction scheme. We propose two primary optimization techniques: Avoiding the write-back of the Q factor ("Q-less QR"), and exploiting fast local memory (shared memory on GPUs). We compare a straight-forward implementation of Gramian-based methods, and a more sophisticated TSQR implementation, in terms of performance achieved, time-to-solution, and implementation complexity. By performance modelling and numerical experiments with our own code and a vendor-optimized library routine, we demonstrate the crucial need for specialized methods and implementations in this memory-bound to transitional (memory/compute-bound) regime, and that TSQR is competitive in terms of time-to-solution, but at the cost of an investment in low-level code optimization.</summary>
+    <category term="cs.MS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-21T17:30:58Z</published>
+    <arxiv:comment>submitted to the Euro-Par 2026 proceedings</arxiv:comment>
+    <arxiv:primary_category term="cs.MS"/>
+    <author>
+      <name>Jonas Thies</name>
+    </author>
+    <author>
+      <name>Melven Röhrig-Zöllner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.29554v1</id>
+    <title>Accelerating Multiple-Precision LU Decomposition with Ozaki Scheme II</title>
+    <updated>2026-08-28T11:29:06Z</updated>
+    <link href="https://arxiv.org/abs/2609.29554v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.29554v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Solving ill-conditioned linear systems needs LU decomposition in precisions beyond binary64. The standard approaches -- GMP/MPFR, or multi-component arithmetic such as double-double -- leave every scalar multiply-add inside the O(n^3) update in multiple precision, and so cannot exploit the low-precision matrix engines that dominate current hardware. We build a blocked, partially pivoted LU decomposition on Ozaki scheme II, which replaces the multiple-precision GEMM by exact integer modular products followed by an explicit CRT reconstruction, and implement it for multi-component (DD/TD/QD) and arbitrary precision, on CPUs and GPUs. Two contributions make this practical: a direct conversion between the non-overlapping expansion format and the internal fixed-point representation, which removes the MPFR round trip and is worth a factor of 2.4--4.7; and new FP16, FP8 and binary64 GPU back-ends, the FP8 one using a balanced base-17 two-digit encoding that keeps the full 362.8-bit CRT capacity of INT8. On an Arm/GB10 and an x86/H100 the fastest back-end changes with the machine: INT8 wins on GB10, whereas on H100 binary64 is fastest for QD, beating both the native implementation and INT8. The essential point of Ozaki scheme II is thus not to use a low-precision engine but to choose the format maximising bits-per-modulus times engine throughput. For the Lotkin matrix at p ~ 1.2 log2 cond(A) we reach relative errors of 10^-645 at n=2048, up to 2.84x faster than a fully OpenMP-parallel multiple-precision LU. We also show by measurement that the O(p) advantage of scheme II over scheme I applies only to the GEMM term: modular reduction and CRT grow as O(p^2) and dominate the runtime at the matrix sizes considered here. The implementation is released as open source.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-28T11:29:06Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Tomonori Kouya</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1104.0739v1</id>
+    <title>Potent Tree Codes and their applications: Coding for Interactive Communication, revisited</title>
+    <updated>2011-04-05T06:10:01Z</updated>
+    <link href="https://arxiv.org/abs/1104.0739v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1104.0739v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the fundamental problem of reliable interactive communication over a noisy channel. In a breakthrough sequence of papers published in 1992 and 1993, Schulman gave non-constructive proofs of the existence of general methods to emulate any two-party interactive protocol such that: (1) the emulation protocol takes a constant-factor longer than the original protocol, and (2) if the emulation protocol is executed over a noisy channel, then the probability that the emulation protocol fails is exponentially small in the total length of the protocol. Unfortunately, Schulman's emulation procedures either only work in a model with a large amount of shared randomness, or are non-constructive in that they rely on the existence of good tree codes. The only known proofs of the existence of good tree codes are non-constructive, and finding an explicit construction remains an important open problem. Indeed, randomly generated tree codes are not good tree codes with overwhelming probability.
+  In this work, we revisit the problem of reliable interactive communication, and obtain the following results: We introduce a new notion of goodness for a tree code, and define the notion of a potent tree code. We believe that this notion is of independent interest. We prove the correctness of an explicit emulation procedure based on any potent tree code. We show that a randomly generated tree code (with suitable constant alphabet size) is a potent tree code with overwhelming probability. Furthermore we are able to partially derandomize this result using only O(n) random bits, where $n$ is the depth of the tree.
+  These results allow us to obtain the first fully explicit emulation procedure for reliable interactive communication over noisy channels with a constant communication overhead, and exponentially small failure probability.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-04-05T06:10:01Z</published>
+    <arxiv:comment>26 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Ran Gelles</name>
+    </author>
+    <author>
+      <name>Amit Sahai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29581v2</id>
+    <title>The Joint Effect of Quantization and Sampling Temperature on LLM Safety Alignment: A Factorial Analysis</title>
+    <updated>2026-07-15T10:24:21Z</updated>
+    <link href="https://arxiv.org/abs/2606.29581v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29581v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern LLM deployments often combine quantization with higher sampling temperatures to reduce cost, latency, or repetition, yet safety evaluations usually treat these as fixed implementation details. We test whether models that are safe at FP16 with greedy decoding remain safe after quantization and stochastic sampling, or whether the two factors amplify each other. We evaluate 8 instruction-tuned models from five families across 3 precisions and 6 temperatures, covering 144 configurations on 7 harmfulness benchmarks and generating about 2.0 million responses, which are scored by a six-judge safety ensemble. Contrary to concerns that low-bit deployment erodes alignment, we find that standard quantization is approximately safety-neutral: for 7 of 8 models, AWQ INT4 keeps attack success within about 1.6 percentage points of FP16 or lowers it, with clear degradation only for SmolLM3-3B (34.5% to 44.1%). However, the larger risk comes from sampling: higher temperatures sharply increase decision instability, with DFR reaching 41.9% at T = 1.0, even when average ASR changes only modestly. The two factors do not compound: our Compound Degradation Index remains sub-additive (-0.071 to +0.018), indicating that quantization partially offsets rather than amplifies temperature-induced degradation. Finally, a per-benchmark breakdown shows that single-benchmark evaluation badly understates risk: several models scoring 0% on AdvBench exceed 80% on ManyHarm. Standard INT4/INT8 quantization can therefore be reasonable for well-aligned models, but safety claims should report multi-sample stability across multiple benchmarks rather than rely on a single benchmark at greedy decoding.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-28T19:52:25Z</published>
+    <arxiv:comment>11 pages, 5 Figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hari Prasad</name>
+    </author>
+    <author>
+      <name>Ritam Pal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.05977v1</id>
+    <title>Breaking a Barrier in Constructing Compact Indexes for Parameterized Pattern Matching</title>
+    <updated>2023-08-11T07:24:13Z</updated>
+    <link href="https://arxiv.org/abs/2308.05977v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.05977v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A parameterized string (p-string) is a string over an alphabet $(Σ_{s} \cup Σ_{p})$, where $Σ_{s}$ and $Σ_{p}$ are disjoint alphabets for static symbols (s-symbols) and for parameter symbols (p-symbols), respectively. Two p-strings $x$ and $y$ are said to parameterized match (p-match) if and only if $x$ can be transformed into $y$ by applying a bijection on $Σ_{p}$ to every occurrence of p-symbols in $x$. The indexing problem for p-matching is to preprocess a p-string $T$ of length $n$ so that we can efficiently find the occurrences of substrings of $T$ that p-match with a given pattern. Extending the Burrows-Wheeler Transform (BWT) based index for exact string pattern matching, Ganguly et al. [SODA 2017] proposed the first compact index (named pBWT) for p-matching, and posed an open problem on how to construct it in compact space, i.e., in $O(n \lg |Σ_{s} \cup Σ_{p}|)$ bits of space. Hashimoto et al. [SPIRE 2022] partially solved this problem by showing how to construct some components of pBWTs for $T$ in $O(n \frac{|Σ_{p}| \lg n}{\lg \lg n})$ time in an online manner while reading the symbols of $T$ from right to left. In this paper, we improve the time complexity to $O(n \frac{\lg |Σ_{p}| \lg n}{\lg \lg n})$. We remark that removing the multiplicative factor of $|Σ_{p}|$ from the complexity is of great interest because it has not been achieved for over a decade in the construction of related data structures like parameterized suffix arrays even in the offline setting. We also show that our data structure can support backward search, a core procedure of BWT-based indexes, at any stage of the online construction, making it the first compact index for p-matching that can be constructed in compact space and even in an online manner.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-11T07:24:13Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Kento Iseri</name>
+    </author>
+    <author>
+      <name>Tomohiro I</name>
+    </author>
+    <author>
+      <name>Diptarama Hendrian</name>
+    </author>
+    <author>
+      <name>Dominik Köppl</name>
+    </author>
+    <author>
+      <name>Ryo Yoshinaka</name>
+    </author>
+    <author>
+      <name>Ayumi Shinohara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.05294v1</id>
+    <title>The Orthogonal Vectors Conjecture for Branching Programs and Formulas</title>
+    <updated>2017-09-15T16:26:34Z</updated>
+    <link href="https://arxiv.org/abs/1709.05294v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.05294v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the Orthogonal Vectors (OV) problem, we wish to determine if there is an orthogonal pair of vectors among $n$ Boolean vectors in $d$ dimensions. The OV Conjecture (OVC) posits that OV requires $n^{2-o(1)}$ time to solve, for all $d=ω(\log n)$. Assuming the OVC, optimal time lower bounds have been proved for many prominent problems in $P$.
+  We prove that OVC is true in several computational models of interest:
+  * For all sufficiently large $n$ and $d$, OV for $n$ vectors in $\{0,1\}^d$ has branching program complexity $\tildeΘ(n\cdot \min(n,2^d))$. In particular, the lower bounds match the upper bounds up to polylog factors.
+  * OV has Boolean formula complexity $\tildeΘ(n\cdot \min(n,2^d))$, over all complete bases of $O(1)$ fan-in.
+  * OV requires $\tildeΘ(n\cdot \min(n,2^d))$ wires, in formulas comprised of gates computing arbitrary symmetric functions of unbounded fan-in.
+  Our lower bounds basically match the best known (quadratic) lower bounds for any explicit function in those models. Analogous lower bounds hold for many related problems shown to be hard under OVC, such as Batch Partial Match, Batch Subset Queries, and Batch Hamming Nearest Neighbors, all of which have very succinct reductions to OV.
+  The proofs use a certain kind of input restriction that is different from typical random restrictions where variables are assigned independently. We give a sense in which independent random restrictions cannot be used to show hardness, in that OVC is false in the "average case" even for $AC^0$ formulas:
+  * For every fixed $p \in (0,1)$ there is an $ε_p &gt; 0$ such that for every $n$ and $d$, OV instances where input bits are independently set to $1$ with probability $p$ (and $0$ otherwise) can be solved with $AC^0$ formulas of size $O(n^{2-ε_p})$, on all but a $o_n(1)$ fraction of instances.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-15T16:26:34Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Daniel Kane</name>
+    </author>
+    <author>
+      <name>Ryan Williams</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.07120v2</id>
+    <title>Communication Complexity of Private Simultaneous Quantum Messages Protocols</title>
+    <updated>2026-09-26T22:59:27Z</updated>
+    <link href="https://arxiv.org/abs/2105.07120v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.07120v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The private simultaneous messages model is a non-interactive version of the multiparty secure computation, which has been intensively studied to examine the communication cost of the secure computation. We consider its quantum counterpart, the private simultaneous quantum messages (PSQM) model, and examine the advantages of quantum communication and prior entanglement of this model. In the PSQM model, $k$ parties $P_1,\ldots,P_k$ initially share a common random string (or entangled states in a stronger setting), and they have private classical inputs $x_1,\ldots, x_k$. Every $P_i$ generates a quantum message from the private input $x_i$ and the shared random string (entangled states), and then sends it to the referee $R$. Receiving the messages, $R$ computes $F(x_1,\ldots,x_k)$. Then, $R$ learns nothing except for $F(x_1,\ldots,x_k)$ as the privacy condition. We obtain the following results for this PSQM model. (1) We demonstrate that the privacy condition inevitably increases the communication cost in the two-party PSQM model as well as in the classical case presented by Applebaum, Holenstein, Mishra, and Shayevitz. In particular, we prove a lower bound $(3-o(1))n$ of the communication complexity in two-party PSQM protocols with a shared random string for random Boolean functions of $2n$-bit input, which is larger than the trivial upper bound $2n$ of the communication complexity without the privacy condition. (2) We demonstrate a factor two gap between the communication complexity of PSQM protocols with shared entangled states and with shared random strings by designing a multiparty PSQM protocol with shared entangled states for a total function that extends the two-party equality function. (3) We demonstrate an exponential gap between the communication complexity of PSQM protocols with shared entangled states and with shared random strings for a two-party partial function.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-15T03:08:01Z</published>
+    <arxiv:comment>The first version contained technical errors in the proofs of Lemma 5 and Theorem 12. This version corrects the errors, as well as minor errors elsewhere. The main results of the first version remain valid</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Akinori Kawachi</name>
+    </author>
+    <author>
+      <name>Harumichi Nishimura</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.20762v2</id>
+    <title>4D Fresnel Space-Time Modulation for Near-Field ELAA: Kinematic Multiplexing and O(N log N) Precoding at Sub-THz Frequencies</title>
+    <updated>2026-09-16T15:53:55Z</updated>
+    <link href="https://arxiv.org/abs/2603.20762v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.20762v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Extremely Large Antenna Arrays (ELAA) operating at sub-terahertz frequencies introduce a regime where near-field Fresnel propagation and high-mobility carrier Doppler interact simultaneously, creating a four-dimensional signal space that existing schemes exploit only partially. This paper proposes \textbf{4D Fresnel Space-Time Modulation (4D-FSM)}, a unified framework encoding information jointly across angle, depth, synthetic velocity, and QAM amplitude through a structured symbol manifold $\mathcal{S}$. Synthetic velocity is introduced via Space-Time Modulation (STM): a linear phase ramp $u(ξ,t) = \exp(j[Ωt + g_kξ])$ induces a Doppler-equivalent shift without physical motion, creating velocity-orthogonal bubbles that resolve co-located users. We derive the joint orthogonality surface governing simultaneous user separability in depth and velocity, revealing that users separated in depth require strictly less velocity separation to remain orthogonal -- a multiplexing gain with no counterpart in OTFS or LDMA. The Discrete Fresnel Transform (DFnT) factorization $\mathbf{H} = \mathbf{F}_D \mathbf{C}(z) \mathbf{P}$ reduces precoder complexity from $\mathcal{O}(N^3)$ to $\mathcal{O}(N\log N)$, completing within \SI{500}{\nano\second} against a \SI{5.4}{\micro\second} coherence window. Monte Carlo evaluation at $f_c = \SI{140}{\giga\hertz}$, $N = 4096$ confirms $ρ\approx 0.998$ across the full velocity range, \SI{6.16}{\bit\per\second\per\hertz} spectral efficiency where all baselines collapse, and $K_{\max} = 64$ orthogonal users -- a $248\times$ sum-rate advantage over TTD at $K = 50$.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-21T11:25:37Z</published>
+    <arxiv:comment>The paper contains inconsistencies in the proposed 4D-FSM communication framework that affect the formulation and interpretation of the numerical results. These issues require further technical investigation and revision to ensure the consistency and correctness of the presented analysis</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Rahul Gulia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20793v2</id>
+    <title>Fresh Masking Makes NTT Pipelines Composable: Machine-Checked Proofs for Arithmetic Masking in PQC Hardware</title>
+    <updated>2026-04-25T05:32:07Z</updated>
+    <link href="https://arxiv.org/abs/2604.20793v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20793v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Post-quantum cryptographic (PQC) accelerators for ML-KEM (FIPS 203) and ML-DSA (FIPS 204) rely on pipelined Number Theoretic Transform (NTT) stages over $\mathbb{Z}_q$. Our prior work established structural dependency analysis at scale [1] and quantified the security margin of partial NTT masking [2]. Whether per-stage arithmetic masking guarantees pipeline-level security had no prior machine-checked answer for the r-bearing case: composition frameworks (ISW, t-SNI, PINI, DOM) were formalized exclusively for Boolean masking over $\mathrm{GF}(2)$; no proof assistant artifact addresses the NTT butterfly over $\mathbb{Z}_q$. We present three machine-checked results in Lean 4 with Mathlib, all zero sorry. First, we close a stated limitation of prior work: value-independence implies constant marginal distribution under fresh randomness (via an algebraic MutualInfoZero proxy). Second, butterfly per-context uniformity: for any Cooley-Tukey butterfly with fresh output mask over $\mathbb{Z}/q\mathbb{Z}$ ($q &gt; 0$), each output wire has exactly one mask value producing each output, a uniform marginal independent of secrets, universal over all moduli, twiddle factors, and inputs. Third, a k-stage NTT pipeline with fresh per-stage masking satisfies per-context uniformity at every stage under the ISW first-order probing model. We document a named warning: pointwise value-independence is false for butterfly outputs. The Adams Bridge accelerator (CHIPS Alliance Caliptra) fails the fresh masking hypothesis, masking active only in INTT round 0, architecturally explaining its structural insecurity. Artifact: nine theorems, 1,738 build jobs, zero sorry. Composition for nonlinear gadgets (Barrett) is addressed in forthcoming manuscripts proving Barrett's PF-PINI(2) satisfaction (one-bit barrier) [3] and k-stage composition for PF-PINI gadgets under fresh-mask renewal [4].</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:19:22Z</published>
+    <arxiv:comment>15 pages, 0 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ray Iskander</name>
+    </author>
+    <author>
+      <name>Khaled Kirah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.13632v1</id>
+    <title>Computing and Compressing Electron Repulsion Integrals on FPGAs</title>
+    <updated>2023-03-23T19:39:56Z</updated>
+    <link href="https://arxiv.org/abs/2303.13632v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.13632v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The computation of electron repulsion integrals (ERIs) over Gaussian-type orbitals (GTOs) is a challenging problem in quantum-mechanics-based atomistic simulations. In practical simulations, several trillions of ERIs may have to be computed for every time step.
+  In this work, we investigate FPGAs as accelerators for the ERI computation. We use template parameters, here within the Intel oneAPI tool flow, to create customized designs for 256 different ERI quartet classes, based on their orbitals. To maximize data reuse, all intermediates are buffered in FPGA on-chip memory with customized layout. The pre-calculation of intermediates also helps to overcome data dependencies caused by multi-dimensional recurrence relations. The involved loop structures are partially or even fully unrolled for high throughput of FPGA kernels. Furthermore, a lossy compression algorithm utilizing arbitrary bitwidth integers is integrated in the FPGA kernels. To our best knowledge, this is the first work on ERI computation on FPGAs that supports more than just the single most basic quartet class. Also, the integration of ERI computation and compression it a novelty that is not even covered by CPU or GPU libraries so far.
+  Our evaluation shows that using 16-bit integer for the ERI compression, the fastest FPGA kernels exceed the performance of 10 GERIS ($10 \times 10^9$ ERIs per second) on one Intel Stratix 10 GX 2800 FPGA, with maximum absolute errors around $10^{-7}$ - $10^{-5}$ Hartree. The measured throughput can be accurately explained by a performance model. The FPGA kernels deployed on 2 FPGAs outperform similar computations using the widely used libint reference on a two-socket server with 40 Xeon Gold 6148 CPU cores of the same process technology by factors up to 6.0x and on a new two-socket server with 128 EPYC 7713 CPU cores by up to 1.9x.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-23T19:39:56Z</published>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Xin Wu</name>
+    </author>
+    <author>
+      <name>Tobias Kenter</name>
+    </author>
+    <author>
+      <name>Robert Schade</name>
+    </author>
+    <author>
+      <name>Thomas D. Kühne</name>
+    </author>
+    <author>
+      <name>Christian Plessl</name>
+    </author>
+  </entry>
+</feed>

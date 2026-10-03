@@ -1,0 +1,176 @@
+12
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+We may now put
+g(t) = G(At + z) = ((At + z)k − B)/A ∈ Z[t],
+Q
+and we deduce that f (g(t)) = C d|k hd (At + z). Thus, on recalling (4.1), we
+infer that f (g(t)) factors as a product of polynomials of degree at most
+Y
+max deg(hd ) = max 2φ(d) = 2k (1 − 1/p) ≍ 2k/ log log k.
+d|k
+
+d|k
+
+p|k
+
+By Gauss’ Lemma, moreover, there is no loss in supposing that these polynomial factors lie in Z[t]. In particular, the polynomial f exhibits polysmoothness
+ε for any ε > 0. By construction, moreover, the polynomial g has odd degree
+k, and so the proof of Theorem 1.1 is complete.
+
+Unfortunately, the construction applied here in the proof of Theorem 1.1 is
+less successful for higher degree polynomials. When f = at3 +bt2 +ct+d ∈ Z[t]
+is cubic, for example, and α is a root of f in its splitting field, then one cannot
+expect that there is an integer k > 1 for which
+(maα + n)k = Aα + B,
+for appropriate integers m, n, A and B with A 6= 0. Instead, one can find
+integers A, B and C for which
+(maα + n)k = Aα2 + Bα + C.
+A plausible plan is then to obtain a relation of the type
+λ(maα + n)2k + µ(maα + n)k = Aα + B,
+for suitable integers A, B, λ, µ. At best, such an approach would deliver a
+polynomial g of the shape
+g(t) = (λ(At + z)2k + µ(At + z)k − B)/A ∈ Z[t]
+having the property that f (g(t)) factors as a product of the shape
+Y
+Ch0 (At + z)
+hd (At + z),
+d|k
+
+wherein h0 has degree 3k. A priori, this might ensure polysmoothness 21 at
+best, and so is not inherently stronger than the approach of Schinzel.
+5. Relatives of Aurifeuillian factorisations
+We next describe the proof of Theorem 1.5. This will not detain us for long.
+Suppose in the first instance that f (t) = tk + atk−1 − b, with a, b ∈ Z and
+b 6= 0. We rearrange f in order to engineer a cyclotomic construction, writing
+f (t) = (t + a)tk−1 − b. Thus, if we set g(t) = bk tk−1 − a, we find that
+
+
+Y
+k−1
+f (g(t)) = b (btg(t))
+−1 =b
+Φd (btg(t)).
+d|(k−1)
+
+SMOOTH VALUES OF POLYNOMIALS
+
+13
+
+The polynomial f (g) has degree K = k(k − 1), whilst each irreducible factor
+of f (g) has degree at most
+max φ(d)k ⩽ Kφ(k − 1)/(k − 1).
+
+d|(k−1)
+
+Then f admits polysmoothness φ(k − 1)/(k − 1). This establishes part (i) of
+Theorem 1.5.
+Suppose next that f (t) = atk − t + b, with a, b ∈ Z and ab 6= 0. With the
+same plan in mind as above, we set g(t) = ak+1 tk + b, and arrive at the relation
+Y
+
+f (g(t)) = a g(t)k − (at)k = a (at)φ(d) Φd (g(t)/(at)).
+d|k
+
+The term in the product here indexed by d is a polynomial of degree kφ(d).
+Thus, the polynomial f (g) has degree K = k 2 , whilst each irreducible factor of
+f (g) has degree at most maxd|k φ(d)k ⩽ Kφ(k)/k. Then f admits polysmoothness φ(k)/k. This establishes part (ii) of Theorem 1.5, and completes the proof
+of the theorem.
+We remark that Harrington [6, Theorem 1] has investigated the irreducibility
+of polynomials f (t) of the shape tn ±ctn−1 ±d over Z[t]. Thus, such polynomials
+are irreducible when n, c, d ∈ N satisfy
+n ⩾ 3,
+
+d 6= c,
+
+d ⩽ 2(c − 1),
+
+(n, c) 6= (3, 3) and f (±1) 6= 0.
+
+Moreover, Ljunggren [7, Theorem 3] has shown that all of the polynomials
+t3n ± t ± 1,
+
+t3n+1 ± t ± 1,
+
+t6n+5 − t ± 1 and t6n+2 ± t − 1
+
+are irreducible for all natural numbers n.
+
+6. Polynomials resisting polysmoothness
+We finish with an account of some examples demonstrating limitations to
+the most ambitious results one might imagine concerning polysmoothness. We
+concentrate on irreducible polynomials fd ∈ Z[t] of degree d. In view of the
+conclusion of Theorem 1.1, it makes sense to restrict attention to degrees d
+exceeding 2. One might optimistically hope that for each such polynomial,
+there should exist a quadratic polynomial g ∈ Z[t] having the property that
+fd (g(t)) = h1 (t)h2 (t), for some polynomials hi ∈ Z[t] irreducible of degree d.
+Note here that fd (g(t)) cannot be divisible by a polynomial h ∈ Z[t] of degree
+smaller than d, for then a root β of this polynomial in its splitting field would
+supply a root g(β) of fd with [Q(g(β)) : Q] < d, contradicting the irreducibility
+of fd . Thus, if the polynomial fd (g(t)) is reducible, then necessarily it factors
+in precisely the shape h1 (t)h2 (t) asserted.
+As we have already discussed in the introduction, the construction of Schinzel
+[9, Lemma 10] shows that in the cubic case d = 3, quadratic polynomials
+g ∈ Z[x] can be found for which f3 (g(x)) = h1 (x)h2 (x), with h1 and h2 both
+cubic. The corresponding situation for quartic polynomials is rather less clear.
+Consider, for example, the irreducible quartic polynomial
+f4 (t) = t4 + t2 + 2t + 3.
+
+14
+
+J. W. BOBER, D. FRETWELL, G. MARTIN, AND T. D. WOOLEY
+
+One may computationally confirm that for every non-trivial integral choice
+of coefficients a, b, c ∈ Z with absolute value at most 1000, the polynomial
+f4 (ax2 + bx + c) is irreducible, so that no decomposition of the form sought
+is available in this range. This does not rule out the possibility, of course,
+that there might be a quadratic with very large coefficients that does deliver
+the sought after polysmoothness. On the other hand, if instead one works
+over Q[t] instead of Z[t], then obstructions are possible only for biquadratic
+quartics. Indeed, one has
+ 2
+
+x +x+3
+1
+f4 −
+= (x4 + 2x3 + 7x2 + 2x + 9)(x4 + 2x3 + 7x2 + 10x + 13).
+2
+16
+This example shows that the problem of finding integral polynomial substitutions delivering well-factorability is in general very much more challenging
+than finding corresponding rational polynomial substitutions.
+More generally, by completing the fourth power in the usual manner, it
+is apparent that decompositions similar to that of the last paragraph may
+be obtained for arbitrary quartic polynomials provided such is the case for
+irreducible quartics of the shape f4 (t) = At4 + Bt2 + Ct + D. If, in addition,
+one has C 6= 0, then we may put
+g(x) = −
+
+Ax2 + Bx + D
+,
+C
+
+and we deduce that
+f4 (g(x)) = h1 (x)h2 (x),
+for suitable quartic irreducible polynomials h1 , h2 ∈ Q[x]. The point here
+is that, if α is a root of f in its splitting field, then α = g(α2), and so α2
+is a root of f4 (g(x)). Thus the minimal polynomial of α2 over Q divides
+f4 (g(x)). A straightforward exercise confirms that this minimal polynomial is
+not quadratic, whence [Q(α2 ) : Q] = [Q(α) : Q] = 4 and the assertion that h1
+and h2 are quartic follows.
+For degrees d exceeding 4, obstructions to these quadratic-based decompositions appear, as can be seen from the following criterion.
+Theorem 6.1. Let fd ∈ Z[t] be an irreducible polynomial of degree d with
+lead coefficient A, and define φd (x, y) = y d fd (x/y). Suppose that there exists
+a quadratic polynomial g ∈ Q[t] having the property that fd (g(t)) is reducible.
+Then the equation Az 2 = φd (x, y) possesses a solution (x, y, z) ∈ Q3 with
+yz 6= 0.
+Proof. By a now familiar argument, it is apparent that if fd (g(t)) = h1 (t)h2 (t)
+is a factorisation of fd (g(t)) with hi ∈ Q[t] and deg(hi ) ⩾ 1 (i = 1, 2), then
+one must have deg(hi ) ⩾ d. It follows, in particular, that h1 and h2 are both
+constant multiples of irreducible polynomials of degree d. Let α be a root
+of fd in its splitting field, and let β be a root of the polynomial g(t) − α
+in its splitting field. Then since f (g(β)) = 0, one must have hi (β) = 0 for
+either i = 1 or i = 2. Also, one has Q(α) = Q(g(β)) ⊆ Q(β), and yet
+[Q(β) : Q] = deg(hi ) = d = [Q(α) : Q], so that Q(β) = Q(α).
+
+

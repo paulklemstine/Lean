@@ -1,0 +1,6616 @@
+Number Field Sieve with provable complexity
+Barry van Leeuwen
+
+arXiv:2007.02689v2 [math.NT] 11 Jul 2020
+
+Supervisor: Dr. A.R. Booker
+
+Chair: Dr. T. Dokchitser (University of Bristol)
+Examiners: Dr. J. Bober (University of Bristol)
+Dr. S. Siksek (University of Warwick)
+
+A dissertation submitted to the
+
+University of Bristol
+in accordance with the requirements for award of the degree of
+
+Master of Science by Research in Mathematics
+at the
+
+Faculty of Science
+
+School of Mathematics
+July 14, 2020
+
+Word count: 28557
+
+Abstract
+In this thesis we give an in-depth introduction to the General Number Field Sieve, as it was used
+by Buhler, Lenstra, and Pomerance, [17], before looking at one of the modern developments of
+this algorithm: A randomized version with provable complexity. This version was posited in
+2017 by Lee and Venkatesan, [14], and will be preceded by ample material from both algebraic
+and analytic number theory, Galois theory, and probability theory.
+
+Page 1 of 114
+
+Dedication and Acknowledgements
+I want to thank Dr. Andrew Booker, who as my supervisor managed to find what I needed even
+though it may not have been what I wanted. I also want to thank Dr. James Milne, Dr. Florian
+Bouyer, and Dr. Lynne Walling for providing some of the material used. I also want to thank
+Dr. Dan Fretwell, who helped me find my footing when I just started (which feels very long ago)
+and my mother, Cokky van Leeuwen, who with her sorcery managed to find typos that I could
+not.
+
+To my wife, Sarah van Leeuwen, who with her continued support and
+motivation made possible what I thought impossible.
+
+Page 2 of 114
+
+Declaration
+I declare that the work in this dissertation was carried out in accordance with the requirements
+of the University’s Regulations and Code of Practice for Research Degree Programmes and that
+it has not been submitted for any other academic award. Except where indicated by specific
+reference in the text, the work is the candidate’s own work. Work done in collaboration with,
+or with the assistance of, others, is indicated as such. Any views expressed in the dissertation
+are those of the author.
+
+Signed: Barry van Leeuwen
+Date: July 14, 2020
+
+Page 3 of 114
+
+Contents
+Abstract
+
+1
+
+Contents
+
+5
+
+Notation
+
+6
+
+1 Introduction
+
+7
+
+2 Algebraic fundamentals
+
+9
+
+2.1
+
+Field extensions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+2.2
+
+Algebraic number fields and Dedekind domains . . . . . . . . . . . . . . . . . .
+
+12
+
+2.3
+
+Galois theory and the Frobenius element . . . . . . . . . . . . . . . . . . . . . .
+
+17
+
+2.4
+
+Norms, discriminants, and ramification . . . . . . . . . . . . . . . . . . . . . . .
+
+20
+
+2.4.1
+
+Norms and Traces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+20
+
+2.4.2
+
+Discriminants and Minkowski’s bound . . . . . . . . . . . . . . . . . . .
+
+23
+
+2.4.3
+
+Relativity and Transitivity . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+24
+
+Dirichlet’s Unit Theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+26
+
+2.5
+
+3 The General Number Field Sieve
+
+28
+
+3.1
+
+Introducing the algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+29
+
+3.2
+
+The algorithm Explained . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+31
+
+3.2.1
+
+Choosing a polynomial . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+31
+
+3.2.2
+
+Sieving over Z . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+33
+
+3.2.3
+
+Sieving over Z[α] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+35
+
+3.3
+
+Dealing with obstructions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+43
+
+3.4
+
+Computational efficiency . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+49
+
+4 Preparing for randomness
+4.1
+
+52
+
+Zeta function and the Prime Number Theorem . . . . . . . . . . . . . . . . . . .
+
+Page 4 of 114
+
+52
+
+4.2
+
+4.3
+
+4.4
+
+Generalizing the Riemann zeta function . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+
+4.2.1
+
+Dirichlet characters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+
+4.2.2
+
+Dirichlet L-functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+58
+
+4.2.3
+
+Dedekind zeta functions and Siegel zeroes . . . . . . . . . . . . . . . . .
+
+60
+
+4.2.4
+
+Siegel zeroes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+62
+
+Arithmetic progressions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+63
+
+4.3.1
+
+Extensions and Refinements . . . . . . . . . . . . . . . . . . . . . . . . .
+
+64
+
+4.3.2
+
+Smooth numbers on Arithmetic Progressions . . . . . . . . . . . . . . . .
+
+65
+
+Probability measures and moments . . . . . . . . . . . . . . . . . . . . . . . . .
+
+68
+
+5 The Randomized Number Field Sieve
+
+72
+
+5.1
+
+Introducing the algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+72
+
+5.2
+
+Randomizing the polynomial . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+75
+
+5.2.1
+
+Uniform distribution of the polynomial . . . . . . . . . . . . . . . . . . .
+
+76
+
+5.2.2
+
+Uniform Distribution of Smooth Numbers . . . . . . . . . . . . . . . . .
+
+83
+
+5.2.3
+
+Proof of theorem 5.2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+89
+
+Algebraic obstructions Vol. 2: The congruence . . . . . . . . . . . . . . . . . . .
+
+94
+
+5.3.1
+
+Quadratic characters . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+95
+
+5.3.2
+
+Proof of lemma 5.19 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+97
+
+5.3.3
+
+Proof of lemma 5.23 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104
+
+5.3.4
+
+Proof of theorem 5.3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107
+
+5.3
+
+5.4
+
+Computational efficiency . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 109
+
+5.5
+
+Riemann and the future of factorization . . . . . . . . . . . . . . . . . . . . . . . 110
+
+References
+
+112
+
+Page 5 of 114
+
+Notation
+A brief introduction to some of the notation used. Most of the notation listed will be formally
+introduced, but this can be used as a reference guide.
+
+R[α]
+F (α)
+OK
+f.f.(R)
+irrF (a)
+[a] ∈ B
+hai ⊂ B
+L(s, χ)
+a∼B
+π(X)
+
+-
+
+A ring extended by an element α
+A field extended by an element α
+The ring of algebraic integers in a field extension K
+The field of fractions generated by a ring R
+The minimal polynomial of a over F
+The coset of a in structure B
+The ideal generated by a in structure B
+Dirichlet L-function with character χ and exponent s
+Draw a accoridng to distribution B
+The number of primes below X
+
+In this paper we use Bachmann–Landau Big-O notation extended by Knuth Big-Ω notation,
+such that for functions f (x) and g(x) and N ∈ N:
+f (x) = o (g(x))
+f (x) = O (g(x))
+f (x) = ω (g(x))
+f (x) = Ω (g(x))
+
+-
+
+∀k ∈ R>0 ∃N such that ∀x ≥ N : |f (x)| ≤ k · g(x)
+∃k ∈ R>0 ∃N such that ∀x ≥ N : |f (x)| ≤ k · g(x)
+∀k ∈ R>0 ∃N such that ∀x ≥ N : |f (x)| ≥ k · g(x)
+∃k ∈ R>0 ∃N such that ∀x ≥ N : |f (x)| ≥ k · g(x)
+
+Page 6 of 114
+
+1
+
+Introduction
+
+In 1988 Pollard introduced a brand new factorization algorithm: The Number Field Sieve (NFS).
+This saw a first implementation in 1994 by Lenstra et al. and was used to factor the ninth Fermat number, F9 .
+
+The grandure of this algorithm was in the conjectured complexity of
+
+Ln
+
+
+
+r
+
+1 3 64
+,
++ o(1) ,
+3
+9
+
+where n ∈ N and for a, b, x ∈ R:
+Lx (a, b) = exp(b((log n)a (log log n)1−a ).
+
+This was a major improvement to the best algorithms at the time, such as the quadratic sieve,
+which were of complexity Ln ( 21 , b) for some constant b.
+
+Despite abundant heuristics indicating the bound and copious research poured into a proof
+it was very difficult to show the complexity of the two major parts of the sieve:
+1. Using the concept of smoothness to find a factor base.
+2. Reducing this factor base to a factorization of a given n ∈ N.
+In chapter 3 we will be looking at the General Number Field Sieve (GNFS) how it was explicitly
+described in [17] and how the sieve is structured.
+
+It wasn’t until 2017 that Lee and Venkatesan, [14]. used a probabilistic and combinatorial
+approach to alter the algorithm in such a way that they managed to prove the following, ([14],
+theorem 2.1 & 2.3):
+
+Page 7 of 114
+
+Theorem 1.1. There is a randomised variant of the Number Field Sieve which for each n finds
+congruences of squares x2 ≡ y 2 mod n in expected time:
+Ln
+
+
+
+r
+
+1 3 64
+,
++ o(1)
+3
+9
+
+Remark. Note that no claims are made regarding the factorization of n. This theorem only
+proves that there exists an algorithm for which the sieving process up until finding a congruence
+of squares, i.e. a pair (x, y) for which x2 ≡ y 2 mod n, with a non-zero probability in the
+complexity bound given in the theorem above.
+This version of the algorithm will be extensively studied in chapter 5 and finishes by proving
+the theorem above.
+
+To do this we need to use a strong basis in analytic number theory, which we will introduce
+in chapter 4 along with a review of some probability theory. In chapter 2 we will recall the
+necessary concepts from algebraic number theory and Galois theory, but for those familiar with
+these subjects this chapter can be skipped.
+
+Page 8 of 114
+
+2
+
+Algebraic fundamentals
+
+2.1
+
+Field extensions
+
+The reason the General Number Field Sieve is so effective is that it uses strong algebraic constructions to get a factorization, which allows for far fewer computations to be made to get an
+effective result. The discussion starts by considering these constructions and concepts, such as
+field extensions, in all generality, but will swiftly collapse down to the specific cases needed for
+this sieve. We begin by introducing some notation that we will use throughout.
+Definition 2.1.
+• Let K and L be fields such that K ⊂ L, then L is called a field extension of K and is
+denoted L/K.
+• K(α) is the smallest field extension of K that contains α. If α ∈ K then K(α) = K.
+• K[x] is the polynomial extension of K, such that
+K[x] =
+
+∞
+nX
+i=0
+
+i
+
++
+
+o
+
+ai x | ∀i ∈ Z : ai ∈ K .
+
+Remark. To prevent confusion ⊂ and ⊃ are proper sub- and super-constructions, while ⊆ and
+⊇ can have equality.
+A field extension L/K can be seen as a K-vector space and when considered as such it
+becomes a natural next step to think about the dimension of L as a K-vectorspace. This is called
+the degree and is denoted [L : K] = dimK (L). If there are multiple extensions, L ⊇ M ⊇ K,
+called a tower of extensions, called a tower of extensions then the degrees of these extensions are
+very well behaved.
+Theorem 2.2. Tower Law
+Let Kn ⊇ Kn−1 ⊇ . . . ⊇ K0 be fields. Then
+[Kn : K] = [Kn : Kn−1 ] . . . [K1 : K0 ] .
+Page 9 of 114
+
+If [L : K] < ∞ the extension is called finite, else it is infinite. To use the sieve it is important
+to understand when such an extension is finite and when it isn’t. Let f (x) be an irreducible
+monic monovariate polynomial with coefficients in K of degree deg(f ) = d. As f (x) is irreducible
+it has no roots in K, but it might have roots over other fields that contain K.
+Definition 2.3. An irreducible polynomial f over a field K is said to be separable over K if it
+has no multiple zeros in a splitting field. That is there exists a field L ⊃ K such that
+f (x) = (x − α1 )(x − α2 ) . . . (x − αd )
+in L, where f (αi ) = 0.
+This definition is not extremely helpful and in practice it will be more useful to consider [[4],
+proposition 9.14] instead:
+Proposition 2.4. If K is a subfield of C then every irreducible polynomial over K is separable.
+By the fundamental theorem of algebra it is known that a polynomial f (x) with deg(f ) = d
+has exactly d roots in C. These roots are not exclusive, and a root α is the root of many
+polynomials. However there is a unique monic polynomial of lowest degree that is of specific
+importance:
+Definition 2.5. Let f ∈ K[x] be a polynomial with coefficients in a field K for which α is a
+root. Then f is the minimal polynomial of α in K if
+• f is monic.
+• f is irreducible.
+• ∀g ∈ K[x] such that g(α) = 0, f divides g.
+This polynomial is unique up to units.
+Throughout this text we adopt the convention to denote the minimal polynomial for α ∈ K
+over K as irrK (α). The minimal polynomial gives rise to the following equivalencies, which are
+vital in the background throughout.
+Page 10 of 114
+
+Theorem 2.6. Let f ∈ K[x] with deg(f ) = d be a monic irreducible monovariate polynomial
+with root α. Let hf (x)i denote the ideal generated by f (x).Then the following are equivalent:
+1. f (x) is the minimal polynomial for α in K[x]; f (x) = irrK (α).
+2. K(α) ∼
+= K[x]/hf (x)i.
+3. K(α) is a field.
+4. [K(α) : K] = d and {1, α, α2, . . . , αd−1 } is a basis for K(α) over K.
+The above theorem reveals a condition for which the extensions K(α) is a finite degree
+extension of K. This condition is called algebraicity and for an extension L/K an element
+α ∈ L is called algebraic exactly if it is a root for a polynomial f (x) ∈ K[x].
+Remark. There are two special cases to consider:
+• A complex number, α ∈ C, that is the root of a polynomial with coefficients in Z is called
+an algebraic integer.
+• A complex number, α ∈ C, that is the root of a polynomial with coefficients in Q is called
+an algebraic number
+It turns out that the structure of the algebraic numbers is very simple to describe.
+Theorem 2.7. Every algebraic number is of the form αb where α is algebraic over Z and b ∈
+Z\{0}.
+As just discussed: If irrK (α) has degree d, then it is only natural to ask about the other roots
+of irrK (α). These are called the conjugates of α and have some interesting properties.
+Definition 2.8. Let α ∈ C be algebraic over K ⊆ C. The conjugates of α, α = α1 , . . . , αd are
+the roots of irrK (α).
+As K ⊂ C proposition 2.4 shows that any irreducible polynomial over K is separable, hence
+each αi is distinct:
+irrK (α) = (x − α1 )(x − α2 ) . . . (x − αd ).
+Page 11 of 114
+
+Using the conjugates [[1], theorem 5.6.1] proves that we only need to consider extensions by a
+singular algebraic number:
+Theorem 2.9. Let K ⊆ C and let α, β ∈ C be algebraic over K. Then there exists γ ∈ C
+algebraic over K such that
+K(α, β) = K(γ).
+This can easily be extended to any finite extension K(α1 , . . . , αn ) by using the fact that
+K(α1 , α2 ) = (K(α1 )) (α2 ).
+
+2.2
+
+Algebraic number fields and Dedekind domains
+
+To work effectively with the general number field sieve there are some restrictions we place on
+our extensions. The first restriction placed upon the extensions is the restriction that they be
+finite. Hence, from now on, every extension L/K ⊆ C is assumed finite. Special focus will be
+on algebraic number fields:
+Definition 2.10. Let K ⊆ C, then K is an algebraic number field if K = Q(α1 , . . . , αn ) such
+that for all i ∈ N, αi is an algebraic number.
+By theorem 2.9 we can equate K = Q(α) for some algebraic number α ∈ C. Moreover we
+know that any algebraic number can be written as α = βb where β is an algebraic integer and
+b ∈ Z\{0}, but Q( βb ) ∼
+= Q(β) as 1b ∈ Q so it is safe to assume that α is in fact an algebraic
+integer.
+Definition 2.11. Let A be the set of all algebraic integers and let K be an algebraic number
+field. Then the set OK = A ∩ K is called the ring of algebraic integers over K.
+As the name suggests, OK is a ring. In fact, by [[1], theorem 6.1.4 and 6.1.6],
+Theorem 2.12. Let K be an algebraic number field, then OK is integrally closed. i.e.
+1. OK is an integral domain.
+Page 12 of 114
+
+2. ∀α: α algebraic over OK ⇒ α ∈ OK .
+In generality OK is surprisingly well behaved allowing for some interesting properties, including that it’s field of fractions is K:
+
+f.f.(OK ) =
+
+nα
+β
+
+α, β ∈ OK
+
+o
+
+= K.
+
+Another of the properties which is important is [[1], theorem 6.5.3]:
+Theorem 2.13. Let K be an algebraic number field. Then OK is a Noetherian domain.
+Remark. A terribly inconvenient, yet common, convention is that the ideals I ⊆ OK are just
+called ideals of K. Despite the confusion this might causes it will not pose a large problem, and
+will be clear from context, as in practice K will be a number field, hence only has trivial ideals.
+It is nearly by definition that a maximal ideal of an integral domain is a prime ideal, but in
+general the converse is not true. However, in the case of OK for an algebraic number field K
+this converse is true.
+Theorem 2.14. Let K = Q(α) be an algebraic number field. Let P ⊆ OK be a prime ideal of
+OK , then P is a maximal ideal of OK .
+Now we have shown that OK is integrally closed, is a Noetherian domain, and each prime
+ideal of OK is a maximal ideal. These three define an important class of domains, which are
+very useful for the General Number Field Sieve.
+Definition 2.15. An integral domain D that satisfies the following properties:
+• D is a Noetherian domain.
+• D is integrally closed.
+• Each prime ideal of D is a maximal ideal.
+is called a Dedekind domain.
+Page 13 of 114
+
+Dedekind domains admit a very interesting property, as they generalize the idea of unique
+factorization into primes which we know by the fundamental theorem of arithmetic holds for
+all z ∈ Z up to units, ±1. In Dedekind domains this holds as well, however we must use the
+equivalent construction for number fields.
+Theorem 2.16. Let D be a Dedekind domain. Any non-trivial integral ideal is a product of
+prime ideals and this factorization is unique up to order, i.e. for I ⊂ D an ideal with factorization
+I=
+
+Y
+i∈I
+
+Pei i =
+
+Y
+
+f
+
+Qj j ,
+
+j∈J
+
+with prime ideals Pi , Qj then there exists a permutation σ : I → J such that Pi = Qj and
+ei = fj .
+To prove this we need some auxiliary measures:
+Proposition 2.17. Let D be a Dedekind domain. Then every non-zero ideal I ∈ OK contains
+a product of one or more prime ideals.
+Definition 2.18. Let D be an integral domain and let K be the quotient field of D. For each
+prime ideal P of D we define the set P̄ by
+
+P̄ = {α ∈ K : αP ⊆ D}.
+This set is an ideal and is called a fractional ideal of D.
+Proposition 2.19. Let D be a Dedekind domain. Let P be a prime ideal of D. Then
+
+PP̄ = D.
+
+With these facts recorded we proceed with the proof of theorem 2.16:
+Proof. This proof will come in two parts: Existence and Uniqueness. Let D be a Dedekind
+domain such that there exists a non-trivial ideal of D that is not a product of prime ideals.
+Page 14 of 114
+
+Existance: As D is a Dedekind domain, it is Noetherian, and so by the maximality principle there is a non-trivial ideal A of D that is maximal with respect to the property of not being
+a product of prime ideals. Then by proposition 2.17 there exists prime ideals P1 , . . . , Pk of D
+such that
+P1 . . . Pk ⊆ A.
+Now let k be the smallest positive integer for which such a product exists. If k = 1 then
+P1 ⊆ A ⊂ D is a prime ideal, hence it is maximal. So A = P1 . This contradicts our assumption
+that A was not a product of prime ideals. Hence k ≥ 2. By proposition 2.19 we have that
+P̄1 P1 = D and so
+P̄1 P1 . . . Pk = DP2 . . . Pk .
+Hence we have that P̄2 A ⊇ P2 . . . Pk . Moreover by proposition 2.19 we also have that A ⊆ P̄1 A.
+Now assume that A = P̄1 A, then
+A ⊇ P2 . . . Pk .
+Which contradicts the minimality of k. Now assume A ⊂ P̄1 A, then as the latter is an ideal of
+D, by the maximality property of A, we get
+
+P̄1 A = Q2 . . . Ql ,
+
+for some prime ideals Qj , j ∈ {2, . . . , l}. But then
+A = AD = AP̄1 P1 = P1 Q2 . . . Ql ,
+
+which contradicts the way A was chosen. Hence every ideal of D is a product of prime ideals.
+
+Page 15 of 114
+
+Uniqueness: Suppose now that there exists a maximal ideal A of D, such that
+
+A = P1 . . . Pk = Q1 . . . Ql .
+
+By the maximality principle this is a choice we can make. Then as P1 . . . Pk ⊆ Q1 and Q1 is a
+prime ideal we have that Pi = Qi for some i ∈ {1, . . . , k}. Relabelling Qi as Q1 we get Q1 = P1
+as P1 is a prime, hence maximal, ideal of D. Thus
+
+Q̄1 Q1 . . . Ql = AQ1 = AP̄1 = P̄1 P1 . . . Pk = P2 . . . Pk .
+
+Now assume that A = AP̄1 , then AP̄1 P1 = AP1 and so A = AP1 . Define the fractional ideal
+of A as
+Ā = P̄1 . . . P̄k .
+Then
+AĀ = P1 . . . Pk P̄1 . . . P̄k .
+and so
+D = ĀA = AP̄1 Ā = P1 .
+but this contradicts the primality of P1 , so our equality assumption was faulty. Hence A ⊂ AP̄1 .
+Since AP̄1 is a maximal ideal of D, AP̄1 has exactly one factorization as a product of prime
+ideals. Thus we deduce that k − 1 = l − 1 and so k = l. Relabbeling this gives that for all
+i ∈ {1, . . . , k}
+Pi = Qi ,
+proving that the decomposition into prime ideals is unique.
+
+Page 16 of 114
+
+2.3
+
+Galois theory and the Frobenius element
+
+In this section we give a very concise introduction to a few ideas from Galois Theory. If you
+have a basic understanding of finite Galois theory then there is no loss in simply skipping this
+section.
+Definition 2.20. Let L/K be number fields. Then L is said to be normal over K if every
+irreducible polynomial f ∈ K[x] that has a zero in L splits over L.
+Normality is easily checked under certain conditions:
+Definition 2.21. Let L/K be number fields. Then L is a splitting field for K if for the
+polynomial f ∈ K[x]:
+• f splits over L.
+• There is no M, L/M/K, such that M 6= L and f splits over M.
+Theorem 2.22. A field extension L/K is normal and finite if and only if L is a splitting field
+for some polynomial f ∈ K[x].
+We can also speak of seperable extensions
+Definition 2.23. Let K be a number field. Then a polynomial f ∈ K[x] is said to be separable
+if it splits into linear terms in K.
+Definition 2.24. Let L/K be number fields. Then F is said to be a seperable extension of K
+if for every α ∈ K, irrK (α) is seperable over L.
+Remark. A finite, normal, and seperable extension of a number field is also called a Galois
+extension.
+For seperable extensions we have an equivalence allowing us to reduce to one irreducible
+polynomial.:
+Proposition 2.25. For an extensions L/K the following are equivalent:
+Page 17 of 114
+
+1. L is a Galois extension of K.
+2. L is the splitting field of a seperable polynomial f ∈ K[x].
+With this in place we will now start talking about automorphisms. First we define the Galois
+group:
+Definition 2.26. Let L/K be number fields. Then the Galois group of L over K is defined
+as the group of K-automorphisms, i.e. the group of automorphisms π : L → L that is fixed
+for all elements in K. The group operation is composition of maps and the group is denoted
+Gal(L/K).
+The existance of such a group is trivial as the identity function on L is a K-autmorphism,
+so will always lie in the Galois group. We make a distinction between real and complex Kautomorphisms: A K-automorphism σ ∈ Gal(L/K) is real if σ : L → R and complex if
+σ : L → C.
+Definition 2.27. Let L/K be number fields with Galois group Gal(L/K) such that |Gal(L/K)| =
+n. Then the signature of Gal(L/K) is sign (Gal(L/K)) = (r, s), where r is the number of real
+K-automorphisms and s is half the number of complex K-automorphisms in Gal(L/K) such
+that n = r + 2s.
+There is one element of the Galois group that is particularly interesting, which is the Frobenius element. The idea of this comes from the Frobenius automorphism, which we recall for
+good measure.
+Definition 2.28. If K is a field of characteristic p > 0, the map φ : K → K defined by
+k 7→ k p is called the Frobenius monomorphism of K. When K is finite, φ is called the Frobenius
+automorphism.
+To be able to define the Frobenius elements over extensions we have a little setting up to do.
+For this let L/K be a Galois extension with Galois group Gal(L/K). Let P ⊆ OL lying over
+Page 18 of 114
+
+p ⊆ OK . Then we can define the decomposition group D(P | p) as the set of automorphisms in
+Gal(L/K) which fix P:
+
+D(P | p) = {σ ∈ Gal(L/K) | σ(P) = P}.
+Definition 2.29. Let L/K be a Galois extension with Galois group Gal(L/K), let P ⊆ OL be
+a prime ideal unramified in L/K lying over p ∈ OK . Then the Frobenius element, FrobP , is
+the element of D(P | p) that acts as the Frobenius automorphism on the residue field. I.e. the
+unique FrobP ∈ D(P | p) such that
+• FrobP ∈ D(P | p).
+• For all α ∈ OL , FrobP (α) ≡ aq mod P, where q = |OK /p|.
+This Frobenius element for P is uniquelly determined, but is not unrelated. For example, if
+P and P′ both lie over p ⊂ OK then the Frobenius elements are conjugate. This means that
+each prime ideal in OK gives rise to a conjugacy class of Frobenius elements in Gal(L/K).
+Proposition 2.30. Let L/K be a Galois extension with Galois group Gal(L/K), let P, P′ ⊆ OL
+be prime ideals unramified in L/K, both lying over p ∈ OK . Then there exists σ ∈ Gal(L/K)
+such that
+FrobP = σFrob′P σ −1 .
+Proof. Let α ∈ OL . Then
+
+σ FrobP σ −1 (α) = σ (σ −1 (α))q + a ,
+for some a ∈ P, and
+
+σ (σ −1 (α))q + a = αq + σ(a) ≡ αq
+
+Page 19 of 114
+
+mod σP.
+
+This is all we need for now, but in chapter 5 we will be expand our theory a little more.
+
+2.4
+
+Norms, discriminants, and ramification
+
+2.4.1
+
+Norms and Traces
+
+Let K = Q(α) be a number field with Galois group Gal(K/Q). Let OK be the ring of algebraic
+integers of K. It will prove useful in what is to come that we can relate the elements of a number
+field to rational number in Q. There are two natural maps to consider:
+Definition 2.31. Let L/K be an extension of number fields with [L : K] = n. Let σ1 , . . . , σn
+be the K-automorphisms of L in C. For any α ∈ L we define the following maps:
+1. The trace of an element α:
+TrL/K (α) : L → C,
+α 7→
+
+n
+X
+
+σi (α).
+
+i=1
+
+2. The field norm of an element α:
+NL/K : L → C,
+α 7→
+
+n
+Y
+
+σi (α)[L:K(α)] .
+
+i=1
+
+Remark. If it is clear from context what field we are taking the norm over we will often just
+write NL/K = N.
+We will mostly be concerned with Galois extensions which makes the field norm far simpler.
+For this consider L/K with Galois group Gal(L/K), then for any α ∈ L the norm becomes
+NL/K (α) =
+
+Y
+
+σ(α).
+
+σ∈Gal(L/K)
+
+These two maps have a few important properties we will make use of throughout.
+Proposition 2.32.
+Page 20 of 114
+
+1. NL/K and TrL/K are homomorphisms from L → K.
+2. If α ∈ OL then NL/K (α) ∈ OK and TrL/K (α) ∈ OK .
+3. Let α, β ∈ OL such that α | β, then NL/K (α) | NL/K (β).
+4. If k ∈ K, then NL/K (k) = k n and TrL/K (k) = nk, where [L : K] = n.
+Remark. Note that (2) implies that for all α ∈ OL : α ∈ OL∗ ⇔ NL/Q (α) = ±1 as OQ = Z and
+Z∗ = ±1.
+Despite the usefulness of the trace and field norm maps they are rather limited in that they
+are only defined for elements in the number field. We can also define the norm of an ideal.1
+Definition 2.33. Let K be a number field of finite degree. Let OK be the ring of algebraic
+integers of K. Let I ⊂ OK be a non-trivial ideal of OK . Then
+N(I) = |OK /I|.
+However these definitions are not completely independent from eachother, as they are related
+for principal ideals. In fact, for principal ideals the field and ideal norm overlap.
+Theorem 2.34. Let K be a number field of finite degree. Let I = hαi ⊂ OK . Then
+|OK /I| = N(I) = N(hαi) = |N(α)|.
+It will not come as a surprise that the ideal norm is also a homomorphism, such that for
+every two non-zero integral ideals A, B ∈ OK , N(AB) = N(A)N(B). This is absolutely not
+trivial, but intuitive enough for us to understand to leave the proof to [[1], theorem 9.3.2]. Now
+we have a definition for the ideal norm and an explicit, and reasonably simple, way to compute
+this for principal ideals. Up until now we do not have a general way to compute the ideal norm,
+1
+
+There are multiple ways to define the norm of an ideal. The definition we adopt has the benefit of being
+completely algebraic, which is why we use it.
+
+Page 21 of 114
+
+but we can get closer by recalling theorem 2.16 as the ideal norm is a homomorphism, so we
+just have to consider how to compute the ideal norm for prime ideals.
+Theorem 2.35. Let K be an algebraic number field. Let P ⊂ OK . Then there exists a unique
+prime p ∈ Z, such that
+P | hpi.
+As this p ∈ Z is unique we say P lies over p, or equivalently p lies below P. This has an
+immediate effect on the ideal norm, as can be seen in the following theorem:
+Theorem 2.36. Let K be an algebraic number field with [K : Q] = n. Let P ⊂ OK be a prime
+ideal lying over p ∈ Z. Then
+N(P) = pf ,
+for some integer f ∈ {1, . . . , n}.
+Proof. As P lies above p we have that P | hpi. Hence hpi = PQ for some integral ideal Q ⊂ OK .
+As the norm is multiplicative we have that
+
+N(hpi) = N(P)N(Q).
+
+As the K-conjugates of p comprise p n times we have
+N(p) = pn ,
+
+and so
+N(hpi) = |N(p)| = N(P)N(Q) = pn .
+
+The f in the theorem is called the inertial degree and is used to define one of the most
+interesting objects in number theory, the ideal class group, which will define momentarily. First
+we need some preliminary definitions and properties.
+Page 22 of 114
+
+Definition 2.37. Let K be an algebraic number field with [K : Q] = n. Let p ∈ Z be prime
+such that
+hpi =
+
+g
+Y
+
+Pei i .
+
+i=1
+
+Then g is called the decomposition number, ei is the ramification index for P, and the following
+properties hold:
+1. The inertia degree, fi , can be computed as f = [OK /Pi : Z/hpi].
+2. p is said to be ramified in K if, for some i, ei > 1.
+3. p is said to be unramified in K if for all i: ei = 1.
+4. The following equation holds:
+
+g
+X
+
+ei fi = n.
+
+i=1
+
+5. P is said to be (totally) split if for all i: ei = fi = 1, equivalently g = n.
+Remark. This can also be defined generally for extensions L/K, and follows naturally from the
+above definition. For our purposes the above will suffice however.
+2.4.2
+
+Discriminants and Minkowski’s bound
+
+We now define the concept of the (absolute) discriminant of a number field and immediately
+apply it to a theorem by Dedekind:
+Definition 2.38. Let K be a number field of finite degree with ring of algebraic integers OK .
+Let {a1 , . . . , an } be an integral basis for OK and let {σ1 , . . . , σn } be the set of K-automorphisms
+into C. Then the (absolute) discriminant of K is
+
+
+2
+
+ σ1 (a1 ) . . . σ1 (an ) 
+ .
+.. 
+..
+..
+∆K = det 
+.
+. 
+ .
+
+
+
+σn (a1 ) . . . σn (an )
+Page 23 of 114
+
+Theorem 2.39. Let K be an algebraic number field. Then the prime p ∈ Z ramifies in K if
+and only if p | ∆K .
+Now we define the ideal class group:
+Definition 2.40. Let K be an algebraic number field and let A, B ⊂ OK be non-zero ideals.
+Then we say that A ∼ B, that is they are equivalent, if there exists α, β ∈ OK \{0} such that
+hbiA = haiB. The equivalence classes under ∼ are called ideal classes and the set of ideal classes
+of K, denoted ClK , is called the ideal class group. Moreover, the cardinality of the ideal class
+group, |ClK | = hK , is called the class number of K.
+It is well known that hK is finite and that ClK is an abelian group for K an algebraic number
+field. More can be said, especially about the generation of ClK , and we will record these in quick
+succession.
+Theorem 2.41. Let I ⊆ OK be a non-zero ideal. Then there exists a non-zero α ∈ I with
+NK/Q (α) ≤ cK N(I),
+for
+  r2
+n! p
+4
+|∆K |,
+cK =
+π
+nn
+
+where 2r2 = |{σi | σi a Q-automorphism, σi (K) 6⊆ R}|.
+Remark. cK is called the Minkowski bound.
+
+Theorem 2.42. Any ideal class c ∈ ClK contains an ideal I such that N(I) ≤ cK .
+Theorem 2.43. Let K be a number field. Then ClK is generated by the classes of the prime
+ideals [P], satisfying N(P) ≤ cK . In particular, any such P must lie above a prime p ≤ cK .
+2.4.3
+
+Relativity and Transitivity
+
+In the last section we defined the absolute discriminant. It will not surprise the reader that there
+then also is a relative discriminant. To do this we need to consider the following:
+Page 24 of 114
+
+Definition 2.44. Let L/K be number field with rings of integers OL and OK respectively. The
+fractional ideal ,
+COL |OK = {x ∈ L | Tr(xOL ) ⊂ OK },
+is called Dedekind’s complementary module. It’s inverse,
+DOL |OK = C−1
+OL |OK ,
+is called the different of OL /OK .
+Remark. With the usual abuse of notation we will write DL/K for the different DOL |OK
+By definition Dedekind’s complementary module contains OL and so DL/K is in fact an
+integral ideal. The different is well-behaved in towers of number fields:
+Proposition 2.45. For a tower of fields L/M/K/Q: DL/K = DL/M DM/K .
+This different ideal, or simply ‘different’, is key in the definition of the relative discriminant;
+Definition 2.46. Let L/K be number fields. The relative discriminant ∆L/K is the ideal of OK
+defined by the relative norm of the different:
+
+∆L/K = NL/K (DL/K ).
+
+This allows us to define a transitivity condition for the discriminant
+Lemma 2.47. Let L/M/K be a tower of number fields. Then
+[L:M ]
+
+∆L/K = ∆M/K NM/K (∆L/M ).
+Proof. Applying to DL/K = DL/M DM/K the norm NL/K = NM/K ◦ NL/M we obtain
+[L:M ]
+
+[L:M ]
+
+∆L/K = NM/K (∆L/M )NM/K (DM/K ) = NM/K (∆L/M )∆M/K .
+
+Page 25 of 114
+
+2.5
+
+Dirichlet’s Unit Theorem
+
+In this last preliminary section we want to get an idea of how OK looks. Specifically, we want
+to get an idea of the units in OK . Note that the units of a ring form a group called the unit
+×
+group and is denoted OK
+.
+
+Definition 2.48. Let n ∈ N and ζn = e2πi/n . Then ζn is a nth root of unity and the number
+field Q(ζn ) is called the nth cyclotomic field.
+These cyclotomic fields are in many ways the easiest number fields to work with because
+they behave especially nicely when n is an odd prime. To emphasize this let p ∈ Z be an odd
+prime for the remainder of the section.
+Theorem 2.49. Let K = Q(ζp ), then OK = Z[ζp ].
+With that little note we return to what is at hand. Let µ(K) be the group of units contained
+in a number field K. Note that µ(K) is a cyclic group of order n under multiplication. The
+following proposition is then a tautology:
+×
+Proposition 2.50. Let K be a number field. Then µ(K) ⊂ OK
+.
+×
+The question now becomes: What are the other elements in OK
+? Recall from 2.3 that the
+
+signature of a field, sign(K) = (r, s), where r is the number of real Q-embeddings and 2s the
+number of complex Q-embeddings.
+Theorem 2.51. Let K be a number field. There exists a map l : K → Rr+s−1 such that ker(l)
+
+is finite and cyclic, and ker(l) ∼
+= µ(K). Moreover
+
+× ∼ r+s−1
+l(OK
+.
+)=Z
+
+This immediately leads us to the concluding theorem:
+Theorem 2.52. Dirichlet’s Unit Theorem Let K be a number field and let sign(K) = (r, s).
+Then
+× ∼
+OK
+= µ(K) × Zr+s−1 .
+
+Page 26 of 114
+
+Proof. From theorem 2.51 we have that there exists a map l such that ker(l) ∼
+= µ(K) hence by
+the isomorphism theorems
+K/µ(K) = K/ ker(l) ∼
+= im(l) = Zr+s−1 ,
+and as µ(K) is an abelian group and Zr+s−1 is free we get that K ∼
+= µ(K) × Zr+s−1 .
+
+Page 27 of 114
+
+3
+
+The General Number Field Sieve
+
+For the entirety of this section let n ∈ N be a given integer that we wish to factor. Without loss
+of generality assume that this n is odd, else we could simply consider m ∈ N where n = 2s m,
+and that n is composite, else a primality test, which can be done in polynomial time, such as
+the AKS Primality Test [18], will show that n does not need factoring. The General Number
+Field Sieve (GNFS) then uses a congruence of squares modulo n to perform integer factorization.
+Assume that (x, y) is a pair that admits a congruence of squares modulo n so that
+x2 ≡ y 2
+
+mod n,
+
+where x 6= ±y. Then we can use (x, y) to find a non-trivial factorization by using the wellestablished fact that x2 − y 2 = (x + y)(x − y). We then compute gcd(x + y, n) = d1 and
+gcd(x − y, n) = d2 , in the hope that this gives a non-trivial factorization, that is d1 , d2 6= 1 or n.
+Assume that we are able to produce random integers x and y such that the above congruence
+holds. Then for the hardest case, n = pq semiprime, Table 1 shows an exhaustive truth table:
+
+p| x+y
+T
+T
+T
+T
+T
+T
+F
+F
+F
+
+Table 1: Factorization cases for n = pq
+p | x − y q | x + y q | x − y gcd(x + y, n) gcd(x − y, n) Factor?
+T
+T
+T
+n
+n
+F
+T
+T
+F
+n
+p
+T
+T
+F
+T
+p
+n
+T
+F
+T
+T
+n
+q
+T
+F
+T
+F
+n
+1
+F
+F
+F
+T
+p
+q
+T
+T
+T
+T
+q
+n
+T
+T
+T
+F
+q
+p
+T
+T
+F
+T
+1
+n
+F
+
+It can be seen that we only have failure if p and q have the same conditions on the factorization
+of x + y and x − y. This is because that means that x ≡ ±y mod n. If that is not the case then
+we always find a non-trivial factorization. How the NFS operates to find such congruent pairs
+(x, y) is the goal of this section.
+
+Page 28 of 114
+
+3.1
+
+Introducing the algorithm
+
+The Number Field Sieve is so named because of a sieving process happening both over Z and
+a ring Z[α] which are contained in the field Q and the number field Q(α) respectively. In this
+section we will give a description on how this is done, while we go into detail, introducing formal
+definitions and rigor, in Section 3.3. However, the following commuting diagram captures the
+whole process:
+Z[x]
+mod f
+
+x7→m
+
+Z[x]/(f ) ∼
+= Z[α]
+
+Z
+mod n
+
+x7→m
+
+mod n
+
+Z/nZ
+Before we can discuss how the NFS obtains a congruence we introduce the concept of smooth
+numbers.
+Definition 3.1. Let z ∈ Z and let B ∈ N. Then z is said to be B-smooth if in the prime
+factorization of z,
+z=±
+
+n
+Y
+
+pei i ,
+
+i=1
+
+it holds that pi ≤ B for all i = 1, . . . , n.
+It is clear that this definition is insufficient for OQ(α) as this ring does not solely consist of
+integers, however that is easily amended.
+
+For the sake of exposition we will consider OQ(α) = Z[α]. This is rarely the case for number fields in general as this only happens for monogenic fields, but in section 3.3 we will see that
+this assumption can be dealt with algebraically so we only need to concern ourselves with this
+case. Let a − bα ∈ Z[α] and let ha − bαi be the ideal generated by it. As Q(α) is an algebraic
+number field we get by that Z[α] is a Dedekind domain, hence any ideal splits uniquely into a
+product of prime ideals:
+ha − bαi =
+
+n
+Y
+
+Pηi i ,
+
+i=1
+
+Page 29 of 114
+
+Moreover by theorem 2.36 we know that any prime ideal of Z[α] evaluates to a prime power
+under the norm map. This allows us to define an analogy to smoothness over Z:
+Definition 3.2. Let a − bα ∈ Z[α] and let B ∈ N. Consider ha − bαi ⊆ Z[α] with factorization
+into prime ideals
+ha − bαi =
+
+n
+Y
+
+Pηi i .
+
+i=1
+
+Then a − bα is said to be B-smooth if for all N(Pi ) = pfi i it holds that
+pi ≤ B,
+where N : Q(α) → Q is the field norm.
+Using these definitions we can, for some fixed m to be defined later, define sets SZ and SZ[α]
+with smoothness bounds B and B ′ respectively, as follows:
+
+SZ = (a, b) ∈ Z2 | gcd(a, b) = 1, a − bm is B-smooth as in Definition 3.1
+
+SZ[α] = (a, b) ∈ Z2 | gcd(a, b) = 1, a − bα is B ′ -smooth as in Definition 3.2
+
+The bulk of the work done in the GNFS is done in determining these sets and we will go in
+much more detail in the next section. If we succeed in finding a set S ⊆ SZ ∩ SZ[α] , such that
+|S| ≥ π(B) + π(B ′ ) + 1, then the GNFS uses the remainder of its computation time to find a
+set T ⊂ S such that
+Y
+
+(a − bm) is a square in Z,
+
+(1)
+
+Y
+
+(a − bα) is a square in Z[α].
+
+(2)
+
+(a,b)∈T
+
+(a,b)∈T
+
+It is not a certainty that such a set T fulfilling these equations can be found. If it is not then
+Page 30 of 114
+
+the GNFS can be restarted with larger smoothness bounds B and B ′ . For now assume we have
+found such a set T . From here completion of the algorithm is nearly trivial:
+
+First we observe that f ′ (m)2
+
+(a,b)∈T (a−bm) must give a square in Z, z
+
+Q
+
+2
+
+say, and f ′ (α)2
+
+Q
+
+(a,b)∈T (a−
+
+bα) must give a square in Z[α], ξ 2 say, for which there exist elementary methods to find the
+square roots z and ξ.
+Remark. We have multiplied equation (1) and (2) by the square of the derivative of a polynomial
+at m and α respectively. This is to ensure that z ∈ Z and ξ ∈ Z[α]. A more thorough discussion
+of this follows in 3.3.
+From here we compute gcd(z − N(ξ), n) and gcd(z + N(ξ), n). If this is non-trivial, then
+the result is a prime factor of n. Else we have to conclude failure and start again with different
+parameters.
+This describes the algorithm in grand lines. Now it is time some mathematical rigor is introduced.
+
+3.2
+
+The algorithm Explained
+
+3.2.1
+
+Choosing a polynomial
+1
+
+The first step of the NFS is that we must choose a d ∈ N, d 6= 1 and define m = ⌊n d ⌋ s.t.
+gcd(m, n) = 1. This choice of m gives rise to a polynomial f ∈ Z[x] such that n | f (m).
+Over the years there have been many attempts at making the choice of polynomial as effective
+as possible, but the simplest and effectively cheapest2 way to do this is to use the “base-m”
+method. For each integer m ∈ Z we can write n as a linear combinations of powers of m such
+that
+n=
+
+d
+X
+
+ci mi .
+
+i=0
+
+2
+
+When we say “cheapest” we mean computationally most effective.
+
+Page 31 of 114
+
+Then we can define a polynomial f ∈ Z[x] such that
+f (x) =
+
+d
+X
+
+ci xi ,
+
+i=0
+
+where the ci ∈ {0, . . . , m − 1} are the same as the base-m expansion of n. This guarantees that
+n | f (m), in fact f (m) = n, and deg(f ) = d. By [[17], prop. 3.2] we have that the leading
+coefficient cd = 1, such that f ∈ Z[x] is in fact monic.
+1
+
+Remark. Note that as |ci | ∈ {0, . . . , m − 1} hence ci < m < n d we can see that the discriminant
+of f satisfies that
+3
+
+|∆(f )| < d2d n2− d .
+We may also assume that f ∈ Z[x] is irreducible. To see this assume, to the contrary, that
+f ∈ Z[x] is reducible. This means that there exist non-trivial polynomials g, h ∈ Z[x] such that
+f (x) = g(x)h(x).
+
+So a simple computation gives a non-trivial factorization, as g(x) and h(x) are assumed to
+be non-trivial. As we may now assume f (x) to be monic and irreducible we have shown the
+following:
+Proposition 3.3. Let f (x) be a monovariate, monic, irreducible polynomial, with deg(f ) = d,
+in Z[x] with roots α1 , . . . , αd , not necessarily in Z. Then for all i = 1, . . . , d,
+
+f (x) = irrZ (αi ).
+Note that by assumption deg(f ) = d > 1. As f is an irreducible polynomial over Z[x] we
+have that none of the roots of f lie in Z, for else f would split into linear factors over Z. This
+root, α say, lies in C and as f (α) = 0 this means that α is an algebraic integer. Moreover, by
+
+theorem 2.6 we have that Q(α) is a field and has basis 1, α, . . . , αd−1 over Q.
+Page 32 of 114
+
+3.2.2
+
+Sieving over Z
+
+Now that we have defined a polynomial f ∈ Z[x] and we have defined a field extension Q(α) we
+can start sieving for pairs (a, b) such that equation (1) and (2) hold. For the sake of exposition
+we will focus on the mathematical aspects and therefore consider the pairs (a, b) over Z and Z[α]
+separately.
+Definition 3.4. Let u ∈ Z, then the set of integer pairs defined by
+
+U = (a, b) ∈ Z | |a| ≤ u, 0 < b < u, gcd(a, b) = 1
+is called the universe of sieving.
+Now let u be a large integer dependent on the to-factor n and define
+
+
+
+B = p ∈ Z | p prime, p ≤ B ∪ ± 1
+as the rational factor base of the sieve3 , fully dependent on the chosen smoothness bound B.
+Then there is a standard procedure to work through to fill up the set SZ :
+3
+
+The rational factor base, normally, only contains the primes p ≤ B. In our case, however, appending ±1
+improves the effectivity as we can now deal with a − bm < 0.
+
+Page 33 of 114
+
+Algorithm 1 Procedure to populate SZ
+Input: Universe U of (a, b) pairs, smoothness bound B
+Output: Set SZ = {(a, b) ∈ U | a − bm is B-smooth, gcd(a, b) = 1}
+Initialize array comprised of a − mb for all (a, b) ∈ U
+for each element in the array do
+compute the set, P(a,b) , of primes p, p ≤ B, such that a ≡ bm mod p
+for each p ∈ P(a,b) do divide a − bm by the maximal power of p, such that p does not
+divide the quotient, and replace a − bm by this quotient
+end for
+if the the element in the array is ±1 and gcd(a, b) = 1 then
+add (a, b) to SZ
+end if
+end for
+We will accept that this algorithm terminates by choosing B large enough and returns the
+set SZ such that |SZ | ≥ π(B) + 1. As we have recorded the vectors {ep (a − bm)}p≤B of pexponents for all p ≤ B prime for each a − bm we now define M ∈ M|SZ |×π(B) (Z) given by:
+∀(ai , bi ) ∈ SZ , ∀pj ∈ B :
+
+
+
+
+ep1 (a1 − b1 m)
+···
+epπ(B) (a1 − b1 m) 
+ sign(a1 − b1 m)
+
+
+,
+M =
+·
+·
+·
+·
+·
+·
+·
+·
+·
+·
+·
+·
+
+
+
+
+sign(a|SZ | − b|SZ | m) ep1 (a|SZ | − b|SZ | m) · · · epπ(B) (a|SZ | − b|SZ | m)
+where the sign-bit is defined as:
+
+sign(ai − bi m) =
+
+
+
+
+1 ai − bi m < 0
+
+.
+
+
+
+0 otherwise
+
+To achieve the situation in which equation (1) holds we now want to find an independent subset
+of SZ . For this we first consider a pair a − bm ∈ SZ , then it is easily observed that for this to be
+Page 34 of 114
+
+a square in Z we must have that
+2
+
+x = a − bm =
+
+Y
+
+p
+
+e(p)
+
+=
+
+p∈B
+
+Y
+
+p
+
+e(p)
+2
+
+p∈B
+
+2
+
+.
+
+Hence
+x=±
+
+Y
+
+pe(p) .
+
+p∈B
+
+So it suffices for us to look for the independent subset of SZ modulo F2 , the finite field of
+characteristic 2. Hence we define
+
+M2 = M
+
+mod 2 = (mi,j
+
+mod 2)i∈{1,...,|SZ |},j∈{1,...,π(B)} .
+
+Let f (ai + bi m) be the ith row of M2 . As |SZ | > π(B) we have that there is a linearly dependent
+subset in M2 and hence there is a non-trivial solution TZ ⊂ SZ to the linear equation:
+X
+
+(a,b)∈TZ
+
+f (a − bm) = 0.
+
+With this set we obtain (1):
+Y
+
+(a,b)∈TZ
+
+3.2.3
+
+(a − bm) is a square in Z.
+
+Sieving over Z[α]
+
+To sieve over Z[α] we will attempt to have a similar construction as the process used for Z, but
+to do this we will first have to deal with a few of the obstructions that arise. First recall from
+theorem 2.36 that for a prime ideal P we have that
+N(P) = pf ,
+
+Page 35 of 114
+
+where p ∈ Z is prime and f ∈ N. Then p is called the prime lying below P and f is called
+the inertia degree of P. Moreover a prime ideal for which f = 1 is called a first degree prime.
+For a first degree prime ideal, P, we have that the index [Z[α] : P] = p, hence gives rise to the
+isomorphism
+Z[α]/P ∼
+= Z/pZ,
+hence Z[α]/P is a field. This gives us a direct link between Z[α] and Z/pZ:
+Theorem 3.5. Let f (x) be a monic irreducible polynomial with coefficients in Z. Let α be a
+root of f (x), then there is a bijective correspondence between the set P1 of first degree prime
+ideals and the set
+{(p, m) : p prime, m ∈ Z/pZ, f (m) ≡ 0 mod p}.
+Proof. Let p be a first degree prime ideal of Z[α]. then [Z[α] : p] = p for some prime integer
+p so that Z[α]/p ∼
+= Z/pZ. There is a canonical ring epimorphism θ : Z[α] → Z[α]/p such that
+ker(θ) = p, hence for z ∈ p : p | θ(z), moreover for n ∈ Z such that p | n there is a z ∈ p so
+θ(z) = n. As θ is a homomorphism θ(1) = 1 and so ∀n ∈ Z : θ(n) ≡ n mod p.
+Pd
+
+i
+i=0 ai x with ad = 1 and ai
+
+Now let m = θ(α) ∈ Z/pZ. If f (x) =
+mod p as f (α) = 0, and so
+
+0 ≡ θ(f (α)) ≡ θ
+
+d
+X
+i=1
+
+i
+
+ai x
+
+!
+
+≡
+
+d
+X
+i=1
+
+i
+
+ai θ(x) ≡
+
+d
+X
+i=1
+
+∈ Z then θ(f (α)) ≡ 0
+
+ai k i ≡ f (m)
+
+mod p,
+
+hence f (m) ≡ 0 mod p and p determines the unique pair (p, m).
+Conversely, let p be a prime integer and m ∈ Z/pZ with f (r) ≡ 0 mod p. Then there is
+a natural ring epimorphism that maps polynomials in α to polynomials in r. In particular
+θ(a) ≡ a mod p for all a ∈ Z and θ(α) ≡ m mod p. Let p = ker(θ) so that p is an ideal of Z[α].
+
+Since θ is surjective that means that Z[α]/p ∼
+= Z/pZ and so [Z[α] : p] = p. This implication is
+
+Page 36 of 114
+
+unique, hence we have the two unique implications,
+
+(p, m) ֒→ p ֒→ (p, m),
+
+proving the theorem.
+Hence finding these first degree prime ideals is equivalent to finding roots
+
+mod p for the
+
+minimal polynomial irrK (α). Finding roots of polynomials over finite fields has a well documented background [5], for example Berlekamp’s algorithm or Cantor-Zassenhaus. We may
+therefore assume that finding first degree prime ideals is easy4 and therefore assume we can find
+sufficient first degree prime ideals.
+
+Now that we have restricted our prime ideals we may generalize the smoothness test for Z[α].
+Buhler et. al suggested the following algorithm in [17]: For a smoothness bound B ′ ∈ Z, for
+now further undefined, SZ[α] as defined above, and the polynomial f with root α = t.
+4
+
+And with easy we mean effective, and in that not adding to our overall complexity, as the size of deg(f ) is
+far smaller than the size of n.
+
+Page 37 of 114
+
+Algorithm 2 Procedure to populate SZ[α]
+Input: Universe U, polynomial f , smoothness bound B ′
+Output: Set SZ[α] = {(a, b) | a − bα is B ′ -smooth, gcd(a, b) = 1}
+for each prime p ≤ B ′ do
+for each (a, b) ∈ U such that b 6≡ 0 mod p do
+initialize an array populated by N(a − bα)
+end for
+for each r ∈ Z/pZ do
+compute the set R(p) = {r | f (r) ≡ 0 mod p}
+end for
+for each r ∈ R(p) do
+if a ≡ br mod p then
+retrieve N(a − bα)
+divide N(a − bα) by the maximal power of p, such that p does not divide the
+quotient, and replace N(a − bα) by this quotient.
+end if
+end for
+end for
+for each element in the array corresponding to the pair (a, b) do
+if the element is ±1 then
+add the pair (a, b) to SZ[α]
+end if
+end for
+
+Remark. It is clear that if b ≡ 0 mod p then there are no integers with (a, b) ∈ U and N(ha −
+bαi) = N(a − bα) ≡ 0 mod p.
+What is left to us is to find the square in Z[α] that we wish to use. However following the
+
+Page 38 of 114
+
+same procedure as the rational sieve would leave us, not with (2), but with
+
+
+Y
+
+N
+
+(a,b)∈SZ[α]
+
+
+
+(a − bα) is a square in Z.
+
+This is clearly a necessary condition for (2), but it is not sufficient. To combat this obstruction
+we recall the pairs (p, R(p)) as defined in algorithm 3.2.3 and define the following:
+Proposition 3.6. Let a, b ∈ Z, gcd(a, b) = 1, and p ∈ Z prime. Let r ∈ R(p). Then the
+function
+e(p,r) (a − bα) =
+
+
+
+
+ordp (N(a − bα)) a − br ≡ 0
+
+
+0
+
+mod p
+
+.
+
+otherwise
+
+, where for z ∈ Z : ordp (z) = f if pf || z, is well defined. Moreover
+N (a − bα) =
+
+Y
+
+(p,r)
+
+
+pe(p,r) (a−bα) .
+
+To see how this can be used to produce the square in Z[α] we need the last theorem of this
+section
+Theorem 3.7. Let S ′ be a finite set of coprime integer pairs (a, b) fulfilling equation (2). Then
+for each prime number p and each r ∈ R(p) we have
+X
+
+(a,b)∈SZ [α]
+
+e(p,r) (a − bα) ≡ 0
+
+mod 2
+
+Proof. For each prime ideal P ∈ Z[α] define the group homomorphism ϕP : Q[α]∗ → Z such
+that
+1. ϕP (β) ≥ 0 for all β ∈ Z[α], β 6= 0
+2. if β ∈ Z[α], β 6= 0, then ϕP (β) > 0 if and only if β ∈ P
+
+Page 39 of 114
+
+3. for each β ∈ Q[α]∗ one has ϕP (β) = 0 for all but finitely many P, and
+|N(β)| =
+
+Y
+
+N(P)ϕP (β) .
+
+P
+
+Then ϕP is a P-adic valuation from a multiplicative group of units to an additive group of
+integers , hence, for gcd(a, b) = 1, if P is not a first degree prime then ϕP (a − bα) = 0 and if P
+corresponds to the pair (p, m) as defined in theorem 3.6 then ϕP (a − bα) = ep,r (a − bα).
+Now let Pi ∈ Z[α] be a first degree prime ideal and let
+Y
+
+(a − bα) = ξ 2 .
+
+(a,b)∈SZ [α]
+
+Then, as ϕP is a homomorphism, we get that
+
+X
+
+(a,b)∈SZ [α]
+
+e(p,r) (a − bα) =
+
+X
+
+(a,b)∈SZ [α]
+
+
+
+ϕPi (a − bα) = ϕPi 
+
+Y
+
+(a,b)∈SZ [α]
+
+
+
+(a − bα)
+
+= ϕPi (ξ 2 ) = 2ϕPi (ξ) ≡ 0 mod 2.
+
+If our assumptions hold that means we can now use this outcome to do a similar process as
+we did for the rational factor base and find the final set SZ[α] and use this to explicitly define
+the set S = SZ ∩ SZ[α] . However these have not been inconsequential and will all be explained
+in the following section. If we, however, suspend our disbelief for a moment longer we can finish
+the algorithm.
+
+Assume that we have found (z 2 , ξ 2 ) ∈ Z × Z[α] such that they fulfil equations (1) and (2).
+Then all that rests us to do is finding the square roots. First consider the rational case, so z 2
+
+Page 40 of 114
+
+and Z. Then, by the sieving process, we know the prime factorization of z 2 :
+z2 =
+
+Y
+
+pei i ,
+
+Y
+
+pi2 .
+
+pi ∈Z
+
+but then it is trivial to find z:
+z=
+
+ei
+
+pi ∈Z
+
+In the algebraic case, i.e. ξ 2 and Z[α], there is a bigger challenge, as there is no simple way to
+consider factorize ξ 2 . One naive approach would be to compute the root of x2 − ξ 2 , but this
+is usually not efficiently achievable. We instead take a theoretical approach, with an eye on
+computational efficiency, and let q be an odd prime. If f mod q is irreducible in Fq [x], then
+Z[α]/qZ[α] ∼
+= Fq [x]/(f mod q). It can be shown that with significant probability there exists
+an odd q such that f mod q is irreducible. To see this consider
+Theorem 3.8. Let f ∈ Z[x] be an irreducible polynomial of degree d, d > 1. Then the density,
+inside the set of all prime numbers, of the set of prime numbers q for which f mod q factors in
+Fq [x] into distinct irreducible non-linear factors exists and is at least d1
+To prove this we need the following proposition:
+Proposition 3.9. Let G be a finite group that acts transitively on a finite set Ω, with #Ω =
+d > 1. Then there are at least #G
+elements of G that act without fixed points on Ω.
+d
+Now we prove the theorem.
+Proof. Let Γ = Gal(f /Q), viewed as a permutation group of the set A = {α1 , . . . , αd } with roots
+of f . For each prime number q that does not divide the discriminant of f , there is a Frobenius
+element σq ∈ Γ with the property that the degrees of the irreducible factors of f mod q are the
+same as the lengths of the cycles of the permutation σq . Hence, we are interested in those q
+for which σq acts without fixed points on A. Then by the Chebotarev Density Theorem, 4.31,
+every subset S ⊂ G that is closed under conjugation, the set of prime numbers σq belongs to
+#C
+. The theorem follows from proposition 3.9.
+has density #G
+
+Page 41 of 114
+
+So except for the extremely small probability that we can not choose any f for a specific n
+this means we can assume that there exists a q so f mod q is irreducible in Fq [x]. The following
+theorem completes the square root finding process.
+Theorem 3.10. Let q = qZ[α] be an ideal of Z[α]/qZ[α]. Then there exists a δ ∈ Z[α] such
+that
+δ2ξ 2 ≡ 1
+
+mod q.
+
+Proof. As Z[α]/qZ[α] ∼
+= Fq [x]/f mod q we know that |Z[α]/qZ[α]| = q d , where d = deg(f ).
+Now consider
+I = qZ[α] =
+
+X
+d−1
+i=1
+
+i
+
+
+
+ai α : q | ai ,
+
+which is a degree d prime ideal in Z[α]. As f mod q is assumed irreducible it follows that
+f ′ (α) 6∈ I and for each (a, b) ∈ SZ[α] we have that a − bα 6∈ I since gcd(a, b) = 1. Therefore
+Q
+ξ 2 = f ′ (α)2 (a,b)∈SZ[α] (a − bα) 6∈ I.
+Using Berlekamp’s algorithm, [5], we find an element δ mod I such that δ 2 ξ 2 ≡ 1 mod I,
+completing the proof.
+Hence there exists an element δ that is the inverse of a square modulo q. Now we can apply
+Newton–Rhapson iteration ([5],[17]) to find approximations such that
+
+δj ≡
+
+2
+δj−1 (3 − δj−1
+ξ 2)
+2
+
+mod (qZ[α])2 .
+
+In a finite number of steps we will find a γ such that
+
+γ ≡ δj ξ
+
+mod (qZ[α])2 ,
+
+where γ = ξ in Z[α]. To complete the algorithm we compute gcd(z−N(ξ), n) and gcd(z+N(ξ), n)
+to find a factorization as described in section 3.1.
+
+Page 42 of 114
+
+3.3
+
+Dealing with obstructions
+
+So far the technique we have been trying to describe can be captured in the following two
+bi-implications:
+
+Equation (1) ⇔
+
+Y
+
+(a,b)∈T
+
+Equation (2) ⇔
+
+(a − bm) has non-negative even exponents at all primes p ≤ B,
+
+(3)
+
+Y
+
+(4)
+
+(a,b)∈T
+
+(a − bα) has even exponents at all prime ideals P ∈ Z[α].
+
+It is clear to see that the first of these bi-implications holds, as we can find the root by simply
+dividing all exponents by 2. The second of these is not completely clear however. One of the first
+assumptions we made was that OQ(α) = Z[α], but this is rarely the case. In fact this is something
+that was believed true until in the 19’th century and even featured in (eventually disproven)
+proposed proofs of Fermat’s Last Theorem [6]. This assumption leads to four obstructions that
+Q
+have to be mitigated. For this let ω = (a,b)∈T (a − bα).
+1. Z[α] is not necessarily OQ(α) . At best we know that Z[α] ⊆ OQ(α) , hence we can not assume
+that Z[α] is a Dedekind domain so ωOQ(α) might not be the square of an ideal in Z[α].
+2. If ωOQ(α) is the square of some ideal I, it is not certain that I is a principal ideal.
+3. If ωOQ(α) is the square of some principal ideal γOQ(α) , it is not certain that ω = γ 2 as ω
+agrees with γ 2 only up to units of OQ(α) .
+4. And even if ω = γ 2 , then we are not assured that γ ∈ Z[α]
+Clearly these are obstructions that break the number field sieve. To deal with obstruction 4
+recall the standard fact that for any θ ∈ OQ(α) and f (x) = irrQ (α) we have that
+f ′ (α) · θ ∈ Z[α].
+
+Page 43 of 114
+
+So we simply multiply equation (2) by f ′ (α)2 and equation (1) by f ′ (m)2 . The only condition
+we must apply is that gcd(f ′ (m), n) = 1 or else the resulting element given by equation (1) may
+not be invertible, however this is simply checked and if this is not the case then we have found
+a factorization of n so we may simply assume that f ′ (m) and n are coprime.
+
+Now we attempt to subvert obstruction 1, which consequently allows us to negate both obstructions 2 and 3 as well. To do this we will consider the following chain:
+V ⊃ V1 ⊃ V2 ⊃ V3 = V ∩ Q(α)×
+
+2
+
+,
+
+where V is the group generated by Q(α)× with even exponents, i.e. e(p,r) (v) ≡ 0 mod 2 for all
+v ∈ V . This is a group with the following subgroups:
+V1 = {v ∈ V | vOQ(α) = I2 for some I ⊂ OQ(α) },
+V2 = {v ∈ V1 | vOQ(α) = hϑi2 for some hϑi ⊂ OQ(α) },
+2
+
+V3 = V ∩ (Q(α)× ) .
+We attempt to bound the index [V : V3 ]. Considered as a Z-module OQ(α) is free of rank d =
+deg(f ) and by definition Z[α] ⊂ OQ(α) . It is a well-known identity in algebraic number theory
+
+2
+that ∆(f ) = OQ(α) : Z[α] · ∆. and as [Q(α) : Q] > 1 it automatically follows that ∆ > 0
+p
+
+
+hence OQ(α) : Z[α] is bounded by ∆(f ).
+Remark. Recall that ∆ is the discriminant of the number field as in Definition 2.38
+
+As we have factorization into prime ideals in OQ(α) there is a bijection between the prime
+
+
+ideals Q of OQ (α) coprime to OQ(α) : Z[α] and the ideals I ⊂ Z[α] coprime to this index. In
+fact if we only consider the prime ideals P ⊂ Z[α] we get an isomorphism of local rings:
+
+Z[α]P → OQ(α) Q ,
+Page 44 of 114
+
+Q 7→ P = Q ∩ Z[α].
+This allows us to generalize the definition of the map e(p,r) of proposition 3.6.
+Proposition 3.11. Let P ∈ Z[α] be a prime ideal of Z[α]. Then
+eP (a − bα) =
+
+X
+
+Q⊃P
+
+f (Q/P)e(q,r) (a − bα),
+
+where Q lies over a prime q ∈ Z.
+
+
+In the case that P does not divide the index OQ(α) : Z[α] , eP (a − bα) = e(q,r) (a − bα) as
+
+there will only be one Q such that P ⊂ Q and f (Q/P) = 1.
+Now consider the following map
+
+V /V1 →
+
+M
+
+Z/2Z,
+
+Q|[OQ(α) :Z[α]]
+
+x 7→ (eQ (x)
+
+mod 2)Q .
+
+This is an injective homomorphism, hence V /V1 is a F2 -vectorspace of dimension bounded by
+
+
+
+Q | Q | OQ(α) : Z[α]
+. As the number of rational primes dividing the index is no more than
+1
+|∆(f )| and for each of these primes there are at most deg(f ) prime ideals Q ⊂ OQ(α)
+2
+
+that
+
+divide it, we obtain
+dimF2 (V /V1 ) ≤
+
+d
+log ∆(f ).
+2
+
+This inequality is the first step to resolving the first obstruction. Further we will bound the
+dimensions dimF2 (V1 /V2 ) and finally dimF2 (V2 /V3 ) to obtain our final result.
+
+As the class group, ClQ(α) , is a finite abelian group and that its order h is, [13], bounded
+by
+h<
+
+p
+
+d − 1 + log|∆(f )|d−1
+|∆(f )|
+.
+(d − 1)!
+Page 45 of 114
+
+Define the map κ : V1 → ClQ(α) by x 7→ I where xOQ(α) = I2 . By definition ker(κ) = V2 , hence
+dimF2 (V1 /V2 ) ≤
+
+log h
+.
+log 2
+
+Not that V2 consists of elements that are squares in Q(α)× up to units in OQ(α) , hence by [[13],
+8.3]
+∗
+∗
+/ OQ(α)
+|V2 /V3 | ≤ OQ(α)
+
+This leads to the following theorem:
+
+2
+
+≤ d.
+
+2
+
+Theorem 3.12. Let V be as above and suppose that n > d2d > 1. Then the subgroup
+2
+
+V3 = V ∩ (Q(α)× ) of squares in V satisfies
+3
+
+dimF2 (V /V3 ) ≤ log(n) 2
+
+This shows that the general number field sieve algorithm is certain to generate an element
+in V , however we are not sure yet that this is also a square, hence is in V3 . To obtain this
+we introduce the concept of quadratic characters. Let us start by proposing the idea over Z:
+Assume x, y ∈ Z then x is a quadratic residue modulo a prime p if
+x ≡ y2
+
+mod p.
+
+This is easily tested by the Legendre symbol:
+ 
+p−1
+p−1
+x
+= x 2 ≡ (y 2 ) 2 = y p−1 ≡ 1 mod p.
+p
+Now assume that x is a square, then it is also a square modulo p for every prime p such that
+p ∤ x. This means that for all p ∈ Z, p prime:
+ 
+x
+=1
+p
+Page 46 of 114
+
+So if there is at least one p for which( xp ) = −1 then x is not a square modulo p and by extension
+not a square element. This generalizes well to Q(α).
+
+Let P be a first degree prime ideal of Z[α] lying over p and let (p, R(p)) be the set as defined in
+algorithm 3.2.3. As there exists a ring homomorphism: π : Z[α] → Z/pZ with ker(π) = P by
+definition this gives rise to a Legendre symbol:
+
+
+·
+P
+
+
+
+: Z[α] → Z/pZ → {±1, 0},
+
+such that for a non-square x ∈ Z[α] we have
+
+ 
+x
+P
+
+= −1 with probability 12 . Restricting to
+
+Legendre symbols coming from P over a prime p ∈ Z such that p > B ′ we avoid the character
+value 0, and as a consequence of Chebotarev’s Density Theorem we have that the Legendre
+symbols coming from P are equidistributed over the space of homomorphisms from V /V3 to
+{±1}, denoted Hom(V /V3 ), {±1}).
+Now let χP =
+
+ 
+·
+P
+
+and consider the following lemma.
+
+Lemma 3.13. Let k, r be non-negative integers, and let E be a k-dimensional F2 vector space.
+Then the probability that k + r elements that are uniformly at random drawn from E form a
+spanning set for E is at least 1 − 2−r
+Then the equidistribution over Hom(V /V3 , {±1}) with the obtained bound on the dimension
+of V /V3 as a F2 vector space from theorem 3.12 makes it overwhelmingly likely5 that a set of
+n)
+B ′′ = ⌊ 3(log
+⌋ quadratic characters span the homomorphism space. If they do, then the converse
+log 2
+
+to the final theorem of this section shows that if β ∈ Z[α]\{0} satisfies χQ (β) = 1 for all first
+degree primes Q with 2β 6∈ Q, then β is in fact a square in Z[α]. Furthermore, there can be a
+finite number of exceptions which is explored greater in [17].
+Theorem 3.14. Let S be a finite set of integer pairs (a, b) such that gcd(a, b) = 1 fulfilling that
+5
+
+See [17] for details.
+
+Page 47 of 114
+
+for some γ ∈ Q[α]:
+ω = γ 2.
+Moreover let q be a first degree prime ideal corresponding to the pair (s, q) that does not divide
+ha − bαi for any pair (a, b) and for which f ′ (s) 6≡ 0 mod q. Then we have
+Y  a − bs 
+= 1.
+q
+
+(a,b)∈S
+
+Proof. Let ϕ : Z[α] → Z/qZ be the ring homomorphism given by ϕ(α) = r mod q and let
+ker(ϕ) = Q. Then Q is a first degree prime ideal corresponding to the pair (q, r). Let χQ : Zα →
+{±1} and let ψQ : Z[α]/Q → Z/qZ\{0}, such that χQ = LegQ ◦ψQ where LegQ : Z/qZ → {±1}
+is the Legendre symbol. Then
+χQ (a − bα) =
+
+
+
+a − br
+q
+
+
+
+.
+
+Letting, as discussed,
+ξ 2 = f ′ (α)2
+
+Y
+
+(a,b)∈S
+
+(a − bα),
+
+for some ξ ∈ Z[α]. By the hypothesis the factors on the left are not in Q, so we have that ξ 6∈ Q.
+However
+χQ (ξ 2) = 1,
+χQ (f ′ (α)2 ) = 1,
+so
+
+
+
+
+Y  a − br 
+ = 1.
+χq 
+q
+(a,b)∈S
+
+This completes the proof.
+
+So now we can be almost certain that we can find a square in Z[α] and therefore have
+mitigated all obstructions. The only question left is: What is the complexity?
+
+Page 48 of 114
+
+3.4
+
+Computational efficiency
+
+Let us record the number field sieve algorithm step-by-step:
+Algorithm 3 General Number Field Sieve
+Input: n ∈ N, n odd composite, degree d > 1, universe U, smoothness bounds B and B ′
+Output: A factor of n or ¬ for failure.
+1
+
+Choose m = ⌊n d ⌋.
+Define f (x) ∈ Z[x] as the polynomial with coefficient corresponding to the base-m expansion
+of n.
+for each (a, b) ∈ U do
+Run algorithm 3.2.2 to find SZ
+Run algorithm 3.2.3 to find SZ[α]
+Use the techniques from section 3.3 to find quadratic character base SQ such that |SQ | =
+B ′′ .
+end for
+if SZ ∩ SZ[α] > |B| + |B ′ | + 1 then
+Use a reduction algorithm over F2 to find an dependent subset S ⊂ SZ ∩ SZ[α]
+Q
+Compute z 2 = (a,b)∈S (a − bm) and use its known prime factorization to find z
+Q
+Compute ζ 2 = (a,b)∈S (a − bα) and use Newton–Rhapson iteration to find ζ
+if z ∈ Z and ζ ∈ Z[α] then
+
+return gcd(z − ζ, n), gcd(z + ζ, n)
+else find a new dependent subset S. If all such sets produce no result return ¬
+end if
+else return ¬
+end if
+
+It is generally considered difficult to do a complexity analysis on the number field sieve as
+it is stated in all its generality. Already when it was analysed in [17] there was a conjectured
+
+Page 49 of 114
+
+complexity of
+Ln
+
+!
+r
+1 3 64
+,
++ o(1) ,
+3
+9
+
+and over the 30 years that followed it showed that the conjectured complexity held up heuristically, however there are some things that we are able to say. Following [13] we are able to
+carefully choose f and thereby deg(f ) to optimize the smoothness bound B ∗ = max B, B ′ and
+parameter u for the universe of sieving U. The “basic” cost of the algorithm is computed to be
+u2+o(1) + y 2+o(1) .
+
+First we will address step 6. As the binary matrix that is formed will be sparse, i.e. there will
+be significantly more zeroes than ones, it allows us to use fast algorithms to find dependencies.
+Two of these extremely fast algorithms are Block–Lanczos ([19],[20]) and Block–Wiedemann [21]
+which both have similar complexity. The size of these matrices are at most B ∗ × B ∗ , and by
+choosing log B ∗ ≈ log u we balance the contributions of U and the matrix reduction.
+Looking at the sieving procedure we can see that a pair (a, b) is B ∗ -smooth if (a−bm)N(a−bα) is
+√
+B ∗ -smooth, and thus, using that the size of m is approximately d n, we may bound this product
+by
+√
+√
+2
+u d n(d + 1)ud d n ≈ n d ud+1 ,
+by choosing d optimally, namely
+d≈
+
+
+
+3 log n
+log log n
+
+ 13
+
+.
+
+The probability that a number x, of the right size, is smooth can be approximated by r −r where
+x
+. In order to maximize this probability we choose
+r = log
+log y
+
+d′2
+log x
+≈ ′ + d′ + 1,
+r=
+log u
+d
+for d′ =
+
+q
+
+2 log n
+.
+log u
+
+Page 50 of 114
+
+This means we get dependency in the matrix if we have at least y ≈ u2 r −r (a, b) pairs. As
+we have assumed log y ≈ log u taking logarithms we get log u ≈ r log r, equivalently r ≈ logloglogu u .
+Hence, by taking 32 powers:
+1
+
+1
+
+log u(log log u) 3 ≈ 2(log n) 3 .
+As we have, for a, s, t ∈ R, that s = t(log t)a goes to t = (1 + o(1)s(log s)−a as t goes to infinity,
+we get that
+
+log y ≈ log u ≈ 2(log n)
+
+1
+3
+
+
+
+ 32   31
+2
+1
+1
+8
+=
+(log n) 3 (log log n) 3 .
+log log n
+3
+9
+
+The final GCD computation, which even with the most simple implementation: Euclid’s algorithm, has a complexity at most O(log n) and as such can be completely disregarded in the
+complexity analysis.
+
+1
+3 log n 3
+Hence, with this choice of basic parameters u, y and d ≈ d′ ≈ log
+we get the conjeclog n
+
+ q
++ o(1) , however this is fully heuristic and very little strong can be
+tured runtime of Ln 13 , 3 64
+9
+proven rigorously for this particular form of the number field sieve even with modern techniques.
+
+Page 51 of 114
+
+4
+
+Preparing for randomness
+
+4.1
+
+Zeta function and the Prime Number Theorem
+
+Before now we have been able to suffice with elementary and algebraic number theory and some
+Galois theory. To introduce randomness we will be drawing strongly on analytic number theory.
+It was Riemann who really gave analytic number theory a kickstart by introducing the Riemann
+zeta function.
+Remark. Unless otherwise noted p, q ∈ Z are prime numbers.
+Definition 4.1. Let s ∈ C and n ∈ N, then the Riemann zeta function is defined as
+ζ(s) =
+
+∞
+X
+1
+n=1
+
+ns
+
+.
+
+This converges for all s such that Re(s) > 1, has an analytic continuation to C except for a
+simple pole at s = 1, and admits a functional equation
+
+π
+
+where Γ(s) =
+
+− 2s
+
+Γ
+
+s
+2
+
+ζ(s) = π
+
+− 1−s
+2
+
+Γ
+
+
+
+1−s
+2
+
+
+
+ζ(1 − s),
+
+R ∞ −t s−1
+e t dt. Moreover for Re(s) > 1, ζ(s) admits an Euler product:
+0
+ζ(s) =
+
+Y
+p
+
+1
+1 − p−s
+
+
+
+.
+
+Remark. The proofs for all the properties listed in the definition can be found in any undergraduate analytic number theory book. We suggest [8] or [10].
+One of the first results of analytic number theory is the prime number theorem.
+Theorem 4.2. Let π(x) =
+a > 0 such that
+
+P
+
+p≤x 1 be the prime counting function. Then there exists a constant
+
+π(x) = Li(x) + O
+
+
+
+
+ p
+x
+x
+=
+exp −a log x
+(1 + o(1)) ,
+log x
+log x
+Page 52 of 114
+
+where
+Li(x) =
+
+Z x
+2
+
+1
+x
+dt =
+log t
+log x
+
+
+
+1+O
+
+
+
+1
+log x
+
+
+
+is the logarithmic integral.
+One of the most influential open questions in mathematics is related to the zeta function:
+The Riemann Hypothesis.
+Proposition 4.3.
+
+[Riemann Hypothesis] Let ζ(s) be the Riemann zeta function. For
+
+Re(s) > 0, if ζ(s) = 0 then Re(s) = 12 .
+This hypothesis has been so extensively tested that it is often accepted as true in the mathematical community. Doing so there is a whole section of number theory that is considered
+‘conditional’, which will become unconditional the moment that the Riemann Hypothesis is
+proven. There is a very interesting result by Hardy, proven in 1914, which we will record for
+good measure, [theorem 14.8, [8]].
+Theorem 4.4. [Hardy’s Theorem] There exist infinitely many t ∈ R such that
+ζ
+
+
+
+
+1
++ it = 0.
+2
+
+However for the Riemann Hypothesis to be true this is not enough, as we want all the zeroes
+to be on the critical line of ℜ(s) = 12 . This is still one of the major research areas in analytic
+number theory, but there are some results. The first such was by Selberg in 1942, who showed
+that there is some non-zero fraction of zeroes on the critical strip. This was later improved by
+Levinson who showed that at least 34.7% of the zeroes lie on this line in 1974-1975, and this
+was improved to 40% by Conrey in 1989. Since then there have been, to my knowledge, no
+significant improvements leaving this topic wide open for future research.
+
+Page 53 of 114
+
+4.2
+
+Generalizing the Riemann zeta function
+
+4.2.1
+
+Dirichlet characters
+
+The Riemann zeta function is not the only function of its kind. The idea of the Riemann
+zeta function was generalized in two directions each with their own implications. Dirichlet
+introduced a generalization through the use of multiplicative character functions and Dirichlet
+series to define a whole family of meromorphic analytic arithmetic functions. Dedekind on the
+other hand chose the algebraic route and defined the Dedekind zeta functions, which are defined
+over number fields. For the former we shall introduce Dirichlet characters, which extends the
+idea behind quadratic characters.
+Definition 4.5. Let G be a group. A character on G is a group homomorphism χ : G → C×
+and the set of characters of G is denoted Ĝ.
+Generally characters possess a few properties:
+Proposition 4.6. Let χ be a G-character, then:
+1. As χ is a homomorphism: ∀g, g ′ ∈ G : χ(gg ′) = χ(g)χ(g ′)
+2. ∀G, ∀χ : χ(eG ) = 1
+3. ∀G∃χ0 s.t. ∀g ∈ G : χ0 (g) = 1. This is called the trivial or principal character.
+These properties reveal that Ĝ might have a group structure, and this is true for the finite
+case:
+Lemma 4.7. If G is a finite group then so is Ĝ.
+There is one more property to consider for general characters before we can introduce Dirichlet characters and that is orthogonality:
+
+Page 54 of 114
+
+Definition 4.8. Let G be a finite group with set (and as G is finite: group) of characters Ĝ.
+Then G is said to have the orthogonality property if the following two equations hold:
+
+X
+
+χ(g) =
+
+g∈G
+
+X
+
+χ(g) =
+
+χ∈Ĝ
+
+
+
+
+#G, χ = χ0
+
+
+0,
+
+χ 6= χ0
+
+
+
+0
+
+, g 6= eG
+
+
+
+
+#Ĝ , g = eG
+
+Remark. For the sake of clarity: Note that the first sum requires a fixed character and sums
+over all elements, while the second requires a fixed element and sums over all characters of G.
+It is an elementary result from representation theory that the orthogonality property holds
+for all finite groups, and in particular finite cyclic groups, which is of importance as we shall
+now see:
+Definition 4.9.
+1. Let q ∈ N. Then a Dirichlet character mod q is a character of the form χ : (Z/qZ)× → C.
+2. Let χ be a Dirichlet character
+as
+χ(n) =
+
+mod q, we extend χ to an arithmetic function χ : Z → C
+
+
+
+χ(n
+
+mod q) , gcd(n, q) = 1
+
+
+
+0
+
+.
+
+, gcd(n, q) > 1
+
+Moreover a Dirichlet character mod q has the orthogonality property:
+
+d
+X
+
+n=1
+gcd(n,q)=1
+
+χ(n) =
+
+
+
+
+φ(q) , χ = χ0
+
+
+0
+
+Page 55 of 114
+
+, χ 6= χ0
+
+,
+
+and
+
+χ
+
+X
+
+mod q
+
+χ(n) =
+
+
+
+
+φ(q) , n ≡ 1
+
+
+0
+
+mod q
+
+.
+
+, otherwise
+
+As the Dirichlet characters are defined over Z/qZ, and we will often consider q a prime, we
+have a vested interest in how characters of cyclic groups behave. It turns out that these are
+rather well-behaved:
+Theorem 4.10. Assume that G is a finite cyclic group such that |G| = n and hai = G. Then:
+1. Ĝ has exactly n elements:
+χk (am ) = ζnkm, k ∈ {1, . . . , n}.
+2πi
+
+where ζn = e n is the n’th root of unity.
+2. G has the orthogonality property (either as defined in Definition 4.8 or as a Dirichlet
+character
+3. Ĝ is cyclic with generator χ1 , hence G ∼
+= Ĝ.
+Proof. Let χ ∈ Ĝ. Then χ(a) = ζnk for some k ∈ {1, . . . , n}. Hence
+χ(am ) = χ(a)m = ζnkm,
+proving part (1). By (1) Ĝ is cyclic and generated by χ1 , so G ≡ Ĝ as required. To see that G
+has orthogonality of characters it is simple to see that χ follows the definition of orthogonality.
+To illustrate we show it according to Definition 4.8. Note that
+X
+g∈G
+
+χ0 (g) = |G|
+
+Page 56 of 114
+
+is trivial. Hence assume that k ∈ {1, . . . , n − 1}. Then
+X
+g∈G
+
+χ(g) =
+
+n−1
+X
+
+m=0
+
+χk (am ) =
+
+n−1
+X
+
+ζnkm =
+
+m=0
+
+1 − ζnkn
+= 0.
+1 − ζnk
+
+By the duality of this identity the identity of Ĝ holds too, hence we have shown (2).
+If q is not prime we will still be dealing with a special group, as (Z/qZ)× will still be abelian,
+hence can be written as a direct product of cyclic groups. Therefore we can use theorem 4.10 to
+say the following:
+Lemma 4.11. Let G1 , G2 be finite cyclic groups and let G ∼
+= G1 × G2 . Let χi ∈ Ĝi for i = 1, 2
+and define χ : G → C× via χ(g1 , g2 ) = χ1 (g1 )χ2 (g2 ). This is a character. Conversely, if χ ∈ Ĝ
+then there exists a unique choice of χ1 ∈ Ĝ1 and χ2 ∈ Ĝ2 such that χ(g) = χ1 (g1 )χ2 (g2 ).
+Furthermore Ĝ ∼
+= Ĝ1 × Ĝ2 and G has orthogonality of characters and if G is finite abelian then
+G∼
+= Ĝ.
+
+It is clear that if q is an odd prime, then we can define
+ 
+n
+,
+χ(n) =
+p
+where the right hand side is the Legendre symbol. This is a character, and it is easy to show that
+this is, in fact, a Dirichlet character. It is therefore that Dirichlet characters are a generalization
+of quadratic characters, which will be extremely useful when we randomize the number field sieve.
+Another very useful property is that, by definition, Dirichlet characters are (quasi-)periodic.
+Definition 4.12. Let χ be a Dirichlet character
+
+mod q. We say that d ∈ N is a quasi-period
+
+if for all m ≡ n mod d such that gcd(mn, q) = 1: χ(m) = χ(n). Moreover the least such d is
+called the conductor.
+It is obvious from the definition that if there are two quasi-periods d1 , d2 then there is a third:
+gcd(d1 , d2 ). As q is always a quasi-period we have that the conductor of a Dirichlet character
+mod q is at most q. We can however say something much stronger about the conductor of q:
+Page 57 of 114
+
+Proposition 4.13. Let χ be a Dirichlet character
+
+mod q with conductor d. Then d | q.
+
+Proof. Let g = gcd(d, q). Suppose m ≡ n mod g and gcd(mn, q) = 1. By Euclid’s algorithm
+there exists x, y ∈ Z such that m − n = dx + qy, thus
+χ(m) = χ(m − qy) = χ(dx + n) = χ(n).
+Hence g is a quasiperiod of χ. As d is the conductor that means d | g and since g = gcd(d, q)
+we have that d | q.
+As per usual we have now found a way to consider characters “prime”:
+Definition 4.14. A Dirichlet character modulo q is called primitive if it has conductor q.
+Remark. Convention dictates that the trivial character χ0 is not primitive.
+This idea of primitive characters is especially useful when you are working with induced
+characters. Taking inspiration from the notation as it is used in representation theory consider
+d | q and consider χ∗ , a character
+
+mod d, and define
+
+χ(n) =
+
+
+
+
+χ∗ (n) , gcd(n, q) = 1
+
+
+0
+
+.
+
+, otherwise
+
+Then χ(n) is a multiplicative character and has period q, so it is a Dirichlet character
+This is called the Dirichlet character
+
+mod q induced by a Dirichlet character
+
+mod q.
+
+mod d and
+
+we will denote it Indqd (χ). We conclude with the following theorem about induced Dirichlet
+characters:
+Theorem 4.15. Let χ be a Dirichlet character
+
+mod q with conductor d. Then there exists a
+
+unique character χ∗ mod d such that χ(n) = Indqd (χ∗ (n)).
+4.2.2
+
+Dirichlet L-functions
+
+The definition of Dirichlet characters leads directly to the definition of Dirichlet L-functions:
+Page 58 of 114
+
+Definition 4.16. Let q ∈ N and let χ be a Dirichlet character modulo q. Then the Dirichlet
+L-function associated to χ, denoted L(s, χ), is defined as
+L(s, χ) =
+
+∞
+X
+χ(n)
+n=1
+
+ns
+
+,
+
+for R(s) > 1.
+As χ is a completely multiplicative character function we can immediately conclude that
+L(s, χ) is absolutely convergent for R(s) > 1 and admits an Euler product in this region:
+−1
+Y
+χ(p)
+,
+L(s, χ) =
+1− s
+p
+p
+where p is prime. The behaviour of the trivial character and the non-trivial characters is quite
+different. In the case of the trivial character we can rewrite the Euler product:
+
+L(s, χ0 ) =
+
+Y
+p
+
+
+1 − p−s ζ(s).
+
+This means L(s, χ0 ) behaves like ζ(s) and allows for a meromorphic continuation with a single
+simple pole at s = 1. When χ is not trivial the behaviour changes radically.
+Theorem 4.17. Let q ∈ N and let χ be a Dirichlet character modulo q such that χ 6= χ0 . Then
+L(s, χ) converges and is holomorphic for R(s) > 0.
+Remark. R(s) = 0 is the abscissa of convergence for L(s, χ), but despite the convergence we can
+not extend the definition of the Euler product of L(s, χ) to R(s) < 1.
+Knowing that we have convergence for R(s) = 1 in this case one might be interested in what
+these values actually are. This has been a problem for analytic number theorists for quite some
+time, but we can say the following:
+
+Page 59 of 114
+
+Theorem 4.18. Let Q ∈ N and let χ be a Dirichlet character mod q. Then
+Y
+
+χ6=χ0
+
+L(1, χ) 6= 0.
+
+This is absolutely not trivial and a particularly concise proof is presented in [[8], theorem
+4.9]. The first of two jewels in this is the following theorem by Dirichlet.
+Theorem 4.19. Let q ∈ N and let a ∈ Z such that gcd(a, q) = 1. Then there are infinitely
+many primes p ≡ a mod q
+Remark. Despite not denoting the proof explicitly one the important step is that we show that
+X
+
+p≡a
+
+mod q
+
+1
+p
+
+diverges. The theorem follows immediately.
+It might not surprise that with the generalization of the Riemann zeta function there follows
+a generalization of the Riemann Hypothesis:
+Proposition 4.20.
+
+[Generalized Riemann Hypothesis] Let L(s, χ) be a Dirichlet L-
+
+function with χ a primitive character
+
+mod q, q > 1. Then for Re(s) ∈ (0, 1), if L(s, χ) = 0
+
+then Re(s) = 21 .
+We will come back to Dirichlet L-functions when we adapt the prime number theorem to
+arithmetic progressions in Section 4.3.
+4.2.3
+
+Dedekind zeta functions and Siegel zeroes
+
+Now we consider the other generalization of the zeta function, though it can in this case very
+accurately be called an extension.
+Definition 4.21. Let K be an algebraic number field and let I ⊂ K be an ideal. Then the
+
+Page 60 of 114
+
+Dedekind zeta function over K is defined as
+
+ζK (s) =
+
+X
+
+I⊆OK
+
+1
+.
+(NK (I))s
+
+The Dedekind zeta function is for R(s) > 1 and even admits an Euler product for that region.
+To see this let P ⊆ K be a prime ideal, then:
+ζK (s) =
+
+Y
+
+P⊆OK
+
+
+1 − NK (P)−s .
+
+It was proven by Hecke that the Dedekind zeta function admits an analytic continuation to the
+whole complex plane and also admits a functional equation, so it is clear that in many ways the
+Dedekind zeta function behaves like the Riemann zeta function. This correlation is so close that
+it culminates in the following theorem:
+Theorem 4.22. Landau, 1903 - Prime Ideal Theorem
+Let K be an algebraic number field and let P ⊆ OK be a prime ideal and define πK (x) =
+|{P ∈ OK | N(P) ≤ x}|. Then for x → ∞,
+πK (x) ≍
+
+x
+.
+log x
+
+For our purposes it is sufficient to realize that the Dedekind zeta function over K behaves a
+lot like the Riemann zeta function, and that the same language can be used to talk about the
+Dedekind zeta function as what we use for the Riemann zeta function. In fact, there is also a
+Riemann Hypothesis for the Dedekind zeta functions:
+Proposition 4.23.
+
+[Extended Riemann Hypothesis]
+
+Let K be a number field. For
+
+Re(s) ∈ (0, 1), if ζK (s) = 0, then Re(s) = 21 .
+Remark. As the statements are equivalent for the Dirichlet L-functions and the Dedekind zeta
+functions it is not uncommon to see the Extended Riemann Hypothesis be called the Generalized
+
+Page 61 of 114
+
+Riemann Hypothesis for number fields. We will in this paper refer to both as the Generalized
+Riemann Hypothesis, GRH, and let context infer which version we are referring to.
+4.2.4
+
+Siegel zeroes
+
+One of the main problems that we encounter when we consider both Dirichlet L-functions and
+Dedekind zeta functions is that we can not generalize the zero free region. Especially, for the
+Riemann zeta function we were able to extend the zero-free region just past the R(s) = 1 line,
+and this may not be true for Dedekind zeta functions and Dirichlet L-functions. In fact:
+Theorem 4.24. There is a constant c > 0 such that if L(σ + it, χ) = 0 for some primitive
+complex Dirichlet character χ mod q then
+
+σ <1−
+
+c
+.
+log q(|t| + 2)
+
+If χ is a real primitive character then this holds for all zeroes of L(s, χ) with at most one
+exception. The exceptional zero, if it exists is real and simple.
+Later we will see a result by Landau, 5.29, which develops on this idea. It is clear to see that
+this theorem is formulated for Dirichlet L-functions, but a similar result exists for Dedekind zeta
+function. We therefore introduce the following concept:
+Definition 4.25. Let L(s, χ) be a Dirichlet L-function, then the hypothetical value 1 − ν for
+ν ∈ (0, 21 ), such that
+L(1 − ν, χ) = 0,
+for a Dirichlet character modulo q, χ, is called a Siegel-zero of L(s, χ).
+
+Equivalently, for ζK (s), if there exists a ν ∈ 0, 21 such that
+ζK (1 − ν) = 0,
+
+Page 62 of 114
+
+for a number field K, is called a Siegel-zero of ζK (s).
+The culminating theorem from Siegel on ‘his’ zeroes was
+Theorem 4.26. Siegel’s theorem For any ǫ > 0 there exists a positive number c(ǫ) such that,
+if χ is a real primitive character
+
+mod q, then
+
+L (1, χ) >
+
+c(ǫ)
+.
+q −ǫ
+
+Even in the definition we elude to these zeroes as hypothetical, as the assumption of the
+(Generalized) Riemann Hypothesis has as an immediate consequence that such zeroes do not
+exist. For the sake of this paper [14] does not assume the Riemann Hypothesis in any way, hence
+we must always concern ourselves with possible Siegel zeroes.
+
+4.3
+
+Arithmetic progressions
+
+Now we turn to the next topic, which is a main factor in the Randomized Number Field Sieve:
+Smooth numbers on arithmetic progressions. To be able to do this we first need to know a little
+bit about prime numbers on arithmetic progressions and their distribution. First we note that
+it would be beneficial for us to have a prime counting function for arithmetic progressions. This
+turns out to be a simple modification:
+Definition 4.27. For gcd(a, q) = 1 the prime counting function for arithmetic progressions is
+defined as
+π(a,q) (x) = π(x, a, q) =
+
+X
+
+1.
+
+p≤x
+p≡a mod q
+
+The first question that comes to mind is one that was answered by Dirichlet: Are there
+infinitely many primes of that form? This is the case, as we stated in theorem 4.19:
+Theorem 4.28. Let x ∈ R and a, q ∈ Z such that gcd(a, q) = 1. Then there are infinitely many
+primes of the form p ≡ a mod q.
+Page 63 of 114
+
+This immediately shows that just like for π(x) we have that π(x, a, q) diverges. Therefore, we
+infer, there must be something interesting to say about the asymptotic behaviour of the prime
+counting function. Not only is there something interesting to say, there is a whole lot to say as
+well:
+Theorem 4.29. Let x ∈ R, a, q ∈ Z such that gcd(a, q) = 1, and let φ(x) be Euler’s totient
+function. Then
+π(x, a, q) ∼
+
+1
+x
+.
+log x φ(q)
+
+This immediately shows that the density is independent of a as long as gcd(a, q) = 1.
+4.3.1
+
+Extensions and Refinements
+
+Before we start to talk about smooth numbers we want to consider if anything better than
+Dirichlet’s function can be said, and we can if we allow for an ineffective bound. For this we
+define
+ψ(x, a, q) =
+
+X
+
+Λ(n),
+
+n≤x
+n≡a mod q
+
+where Λ(n) is the von Mangoldt function:
+
+Λ(n) =
+
+
+
+
+log p ∃k ∈ N : n = pk
+
+
+0
+
+.
+
+otherwise
+
+Theorem 4.30. Siegel-Walfisz theorem Let ψ(x, a, q) and Λ(n) be as defined above. Given
+q ∈ N there exists a positive constant c(q) such that
+ψ(x, a, q) =
+
+
+
+
+p
+x
++ O x exp −c(q) log x .
+φ(q)
+
+The reason this is ineffective is because it is based on Siegel’s theorem, 4.26, and this theorem
+gives no way to compute c(n). Another way to go about this is looking at average cases. This
+probabilistic approach will be explored later and will lead to effective constant and a far stronger
+Page 64 of 114
+
+bound.
+
+It may not come as a surprise that the idea of prime numbers along arithmetic progressions
+can be expanded to number fields, as we have done with the Prime Ideal Theorem. For this
+we first consider what an ‘arithmetic progression’ is on a number field. This does not come
+intuitively, but the answer lies in Galois Theory. Let L/K be a Galois extension with Galois
+group G = Gal(L/K). As L/K is a Galois extension the Frobenius element, FrobP , defines a
+conjugacy class
+
+C=
+
+
+
+
+FrobQ | Q ⊂ L s.t. Q is a prime ideal and Q | P .
+
+It can be shown that this abides the rules of modular arithmetic and therefore can be used as
+an extension of the idea of arithmetic progressions. Using this we get the following result:
+Theorem 4.31. Chebotarev Density Theorem Let L/K be Galois and let P ⊆ K be a
+prime ideal. Moreover let C ⊆ G be the conjugacy class defined above. Then
+{P | P ∤ ∆L/K , FrobP ∈ C}
+|C|
+.
+has density |G|
+
+This has long been the best result available, but over the years it has been strengthened both
+under the GRH assumption and without. Later we will see a version which will be of particular
+interest to us as it is both unconditional and has effectively defined constants.
+4.3.2
+
+Smooth numbers on Arithmetic Progressions
+
+Lastly, before we move onto a different topic, we discuss how smooth numbers behave on arithmetic progressions. First we need some definitions:
+
+Page 65 of 114
+
+Definition 4.32. For x, y, a, q ∈ N and a Dirichlet character χ, we define:
+Ψ(x, y) = |{z ∈ N | z < x, z is y-smooth}|,
+Ψr (x, y) = |{z ∈ N | z < x, z is y-smooth, gcd(z, r) = 1}|,
+Ψ(x, y, a, r) = |{z ∈ N | z < x, z is y-smooth, z ≡ a
+Ψ(x, y, χ) =
+
+X
+
+mod r}|,
+
+1{z ′ |z ′ is y-smooth} (z)χ(z), and
+
+z<x
+
+ρ(x, y) = Ψ(x, y)x−1.
+For many the ‘Holy Grail’ in this work is showing the following, [29]:
+Conjecture 4.33. Let A be a given positive real number. Let y and q be large with q ≤ y A .
+x
+Then as log
+→ ∞ we have
+log y
+
+Ψ(x, y, a, q) ∼
+
+1
+Ψq (x, y).
+φ(q)
+
+√
+Soundararajan proved in [29] that the above holds for A ≥ 4 e − ǫ given a certain bound on
+y. The latter restriction was later removed by Harper, [30]. We will see more of Harper’s work
+later as we use these results.
+
+We now introduce some bounds based on Hildebrand and Tenenbaum’s work, which will be
+presented proof-less here. For those especially interested in this we suggest [25],[26],[22]. We
+will avidly be working with these sets later on, but to do so we will first need a few results
+starting with [[14], fact 3.11]:
+Proposition 4.34. Let ǫ > 0 be arbitrary and let 3 ≤ u ≤ (1 − ǫ) logloglogx x Then:
+
+
+
+
+
+
+1
+log log2 u
+log log u − 1
+u
+Ψ x, x = x exp −u log u + log log u − 1 +
++ Oǫ
+.
+log u
+log2 u
+A very rough result that we use is a direct result of this fact
+
+Page 66 of 114
+
+Corollary 4.35. Fix 0 < a < b ≤ 1. Then uniformly in c, d > 0:
+
+−1+o(1)
+d(b − a)
+ρ(Lx (b, d), Lx (a, c)) = Lx b − a,
+.
+c
+Proof. Let
+d
+log Lx (b, d)
+=
+u=
+log Lx (a, c)
+c
+
+
+Then u → ∞ and u = log logloglogx x . Hence
+
+
+
+log x
+log log x
+
+b−a
+
+.
+
+ρ (Lx (b, d), Lx (a, c)) = exp(−(1 + o(1))u log u)
+
+
+d(b − a)
+b−a
+b−a
+log (x)(log log x)
+= exp −(1 + o(1))
+c
+
+−1+o(1)
+d(b − a)
+= Lx b − a,
+.
+c
+
+If we are substantially more careful however there are tighter results, whose proofs go beyond
+the scope of this paper, by Hildebrand and Tenenbaum. These results allow short intervals to
+be sieved for smooth numbers effectively:
+5
+
+5
+
+Theorem 4.36. Fix any ǫ > 0. For any x ≥ 3, log x ≥ log y ≥ (log log x) 3 +ǫ , z ≤ y 12 , the
+following estimate holds uniformly:
+
+Ψ x 1+z
+
+−1
+
+
+
+
+
+
+Ψ(x, y)
+log(u + 1)
+, y − Ψ(x, y) =
+1+O
+.
+z
+log y
+
+
+x
+Theorem 4.37. For any x, y, we set u = log
+. There exists a saddle-point, α = α(x, y), such
+log y
+
+that for any 1 ≤ c ≤ y:
+Ψ(cx, y) = Ψ(x, y)c
+
+α(x,y)
+
+
+
+1+O
+
+
+
+Page 67 of 114
+
+1 log y
++
+u
+y
+
+
+
+, with
+
+log
+α(x, y) =
+
+
+
+y
++1
+log x
+
+log y
+
+
+
+
+
+1 + Oc
+
+
+
+log log(y + 1)
+log y
+
+
+
+.
+
+Theorem 4.38. Let c > 0 be a constant. Let n ∈ N such that ω(n) is the number of prime
+factors of n (without multiplicity). Let n be a y-smooth number with 2 ≤ y ≤ x such that
+−1
+
+ω(n) ≤ y c(log(1+u)) . Then:
+
+
+
+φ(n)
+log(1 + u) log(1 + ω(n))
+Ψn (x, y) =
+.
+Ψ(x, y) 1 + O
+n
+log y
+This final theorem induces the following corollary which will prove crucial to us:
+Corollary 4.39. Take c > 0 an arbitrary constant, and retain ω as in 4.38. Let 2 ≤ y ≤ x and
+−1
+
+with ω(n) ≤ y c(log(1+u)) . Then:
+ 
+
+
+
+
+φ(n)
+ω(n)
+log(1 + u) log(1 + ω(n))
+Ψn (x, y) =
+1+O
+.
+Ψ(x, y) 1 + Oc
+n
+log(y)
+y
+Proof. Let n = sr for s y-smooth and r with no prime factor less than y. Then Ψs (x, y) =
+Q
+Ψr (x, y), φ(n) = φ(r)φ(s) and, for p prime, φ(r)r −1 = p|r (1 − p−1 ) = 1 + O (ω(n)y −1), which
+implies the given bound.
+
+4.4
+
+Probability measures and moments
+
+The Randomized Number Field Sieve is a probabilistic algorithm and makes extensive use of
+the discrete uniform distribution. Define for x ∈ [a, b] and for y ∈ S, where S is a finite set, the
+discrete uniform distribution as
+P(x) =
+
+1
+, or
+b−a+1
+
+P(y) =
+
+1
+|S|
+
+This is in many ways one of the simplest distributions to work with and overall we will only
+need a limited amount of probability theory. There is however a need to understand how a
+distribution can be used to define a measure. For this recall the following definition:
+Page 68 of 114
+
+Definition 4.40. A set function µ : F → R, for a field F, is a probability measure if it satisfies
+these conditions:
+1. 0 ≤ µ(A) ≤ 1 for A ⊆ F.
+2. µ(∅) = 0, µ(F) = 1.
+3. µ (A1 , A2 , . . . , An ), for a disjoint sequence of F-sets, such that
+∞
+[
+
+µ
+
+Ai
+
+i=1
+
+!
+
+=
+
+∞
+X
+
+S∞
+
+i=1 Ai ∈ F, then
+
+µ(Ai ).
+
+i=1
+
+Remark. Note that if µ is a probability measure then the support of µ is any set A ⊂ F for
+which µ(A) = 1. It is clear that this always exists by the second condition.
+We can confirm that for any finite set S we can define a uniform measure. To see this let µ
+be the uniform distribution of some finite set S = {s1 , . . . , sn } such that |S| = n. Then for any
+V ⊂ S with order |V | we have that
+µ(V ) =
+
+|V |
+.
+|S|
+
+Especially we have that
+µ(∅) = 0, µ(S) = 1,
+and
+0 ≤ µ(V ) ≤ 1.
+Lastly for any collection of disjoint subsets V1 , . . . , Vm ⊂ S:
+µ
+
+∞
+[
+
+i=1
+
+Vi
+
+!
+
+=µ
+
+m
+[
+
+i=1
+
+Vi
+
+!
+
+=
+
+Pm
+
+i=1 |Vi |
+
+|S|
+
+=
+
+m
+X
+|Vi |
+i=1
+
+|S|
+
+=
+
+m
+X
+
+µ (Vi ) .
+
+i=1
+
+Similarly we can confirm that for any continuous interval [a, b] we can define a uniform measure.
+Definition 4.41. For any finite set S, we denote the uniform measure over S by
+
+U(S).
+Page 69 of 114
+
+One of the things we are going to use our uniform measure on are the zero-centered half-open
+integer intervals of length L, which we will denote as follows:
+
+
+1 1
+I(L) = − L, L ∩ Z.
+2 2
+We note here, for good measure, that this is in fact a finite set. In the section above we already
+discussed the Dirichlet convolution of arithmetic functions, but there is also a convolution of
+measures, which is normally defined as an integral, but we are interested in the discrete uniform
+measures as defined above. This allows us to restate the convolution of measures as follows:
+Definition 4.42. For any two measures µ, ν over an additive group G we define the convolution
+of measures as
+(µ ⋆ ν) (x) =
+
+X
+y∈G
+
+µ(y)ν(x − y).
+
+Remark. Note that it is convention to denote the convolution of measures by ∗, but to be distinct
+we will denote the convolution of measures by ⋆ and the Dirichlet convolution by ∗.
+One of the big concepts in the RNFS is the avoidance of the General Riemann Hypothesis,
+and for this we need to consider the moments of a probability distribution. We will recognize
+the first two moments, mean and variance, of the discrete uniform distribution:
+Definition 4.43. Let U be a discrete uniform distribution with support S, then the first moment,
+or mean, is defined as
+E(U) =
+
+X
+
+PU (s).
+
+s∈S
+
+Remark. By convention we denote subscripted to the probability, P, the fixed variables. In this
+case we fix the distribution, but this is usually dropped when the distribution is clear from
+context.
+Definition 4.44. Let U be a discrete uniform distribution with support S, then the second
+moment, or variance, of x ∈ S is defined as
+Var(x) = E(x − E(x))2 .
+Page 70 of 114
+
+The idea of the RNFS is to remove the dependence of the analysis of number field sieve-type
+algorithms on the second moment, for which certain bounds on the complexity exist. To do this
+we consider a probabilistic technique which Lee and Venkatesan, in [14], have dubbed stochastic
+deepening. The core idea is as follows:
+Lemma 4.45. Let x be a random variable with E(x) = µ. Given there exists a K ≥ 1 such
+that 0 ≤ x ≤ Kµ uniformly, then there exists i ∈ {0, . . . , ⌈log2 K⌉} such that:
+
+P x≥
+
+2i µ
+1 + ⌈log2 K⌉
+
+
+
+≥
+
+1
+2i+1
+
+.
+
+This lemma states that for non-negative random variables which are not too erratic, there
+is a substantial set where the value is large and whose contribution to the mean is large. This
+allows us to provide a search algorithm whose run times are shown to be near optimal without
+establishing variance bounds.
+
+The explicit statement of such a search algorithm is not too important for us, as we are analysing
+the theoretical complexity, so we will not define such an algorithm explicitly. It will however
+become important in the proof of one of the key theorems, 5.2.
+
+Page 71 of 114
+
+5
+
+The Randomized Number Field Sieve
+
+5.1
+
+Introducing the algorithm
+
+Recalling the GNFS algorithm, algorithm 3, we will focus in this section on giving a description
+of the differences between the sieve from chapter 3 and a randomized version with provable complexity. It is well known that the Number Field Sieve’s runtime is dominated by two problems:
+1. Finding a set S of sufficient (a, b)-pairs such that a − bm is B-smooth and a − bα is
+B ′ -smooth.
+2. Collapsing these (a, b)-pairs to find a subset T ⊆ S such that a congruence of squares
+modulo the to-factor integer n arises.
+In this version of the Number Field Sieve these two steps are randomized cleverly to produce a
+provable complexity. To do this there is one more change that needs to be made, and that is the
+choice of polynomial. It will be shown that by randomizing the choice of polynomial a rigorous
+bound can be obtained for the search. To start we consider the constants δ, κ, σ, β, β ′ under the
+conditions that
+κ > δ −1 , 2σ > max (β, β ′) +
+
+σδ + κ
+δ −1
+(1 + o(1)) +
+(1 + o(1)),
+3β
+3β ′
+
+(5)
+
+σδ + κ
+,
+2
+
+(6)
+
+
+
+
+1 ′
+1
+′
+, β , B = Ln , β .
+3
+3
+
+(7)
+
+δ −1 <
+
+and fix the smoothness bounds
+
+B = Ln
+
+
+
+The culminating theorem of the randomized number field sieve is as follows:
+
+Page 72 of 114
+
+Theorem 5.1. Let δ, κ, σ, β, β ′ be constants as defined in (1) and (2). Then for any n, the
+randomized number field sieve runs in expected time
+
+Ln
+
+
+
+r
+
+1 3 64
+,
++ o(1) ,
+3
+9
+
+and produces a pair x, y with x2 ≡ y 2 mod n.
+It is important to stress that this is a NFS-style algorithm, so we can not be sure that the
+congruence found does not give a trivial factorization. The algorithm is started in the same way
+as the GNFS by finding a polynomial, however in this randomized version we will insist that the
+polynomial is a bivariate homogeneous monic irreducible polynomial of bounded degree, that is:
+f (x, y) ∈ Z[x, y] : f (x, y) = fˆm,n (x, y) + R(x, y),
+where fˆm,n (x, y) is the polynomial given by n and m, such that fˆm,n (m, 1) is the base-m expansion
+of n and
+R(x, y) =
+
+d−1
+X
+i=0
+
+ci (x − ym)xd−i−1 y i ,
+q
+
+such that every ci is determined uniformly at random and deg(f ) = d = δ 3 logloglogn n , d odd.
+Moreover we bound the choice of m by md ≤ n < 2md .
+
+Remark. The harshness of these bounds are all necessary to show a provable complexity, so we
+will often refer back to this introduction as “the defined parameters” without restating the exact
+parameters again.
+Remark. We will, like [14], freely switch between considering the polynomial f (x, y) as a bivariate
+polynomial and it’s monovariate equivalent f (x) = f (x, 1).
+The changes made to the polynomial selection method and the consequences from using
+random variables lead us to conclude the following theorem:
+Theorem 5.2. Take δ, κ, σ, β, and β ′ with the defined parameters. For any n, the randomized
+number field sieve can almost surely find an irreducible polynomial f of degree d and height at
+Page 73 of 114
+
+most Ln ( 32 ), with α a root of f , n | f (m), and
+1
+Ln ( , max(β, β ′) + o(1))
+3
+distinct pairs a < |b| ≤ Ln ( 31 , σ) such that (a − bm) is B-smooth and a − bα is B ′ smooth, in
+expected time at most Ln ( 13 , λ) for any
+λ > max(β, β ′) +
+
+σδ + κ
+δ −1
+(1 + o(1)) +
+(1 + o(1)).
+3β
+3β ′
+
+In particular, the probability that the randomized number field sieve fails to produce such a set
+is bounded above by Ln ( 32 , κ − δ −1 )−1+o(1) .
+The key purpose for the randomization of the polynomial selection process has to do with
+the sieving process over the number field, as it will cause the norm of a pair, N(a − bα), to
+become a random variable in Z. This allows the consideration of smoothness over Z and Z[α] to
+be completely independent. We will explain this idea in more detail when we look at the sieving
+process over the number field.
+
+This also leads us to question what the quadratic characters will then look like, and this is
+the second part where the RNFS differs significantly from the GNFS. Where in the GNFS we
+
+defined the quadratic characters as the Legendre symbols pr modulo a a prime p, we now
+
+have to account for our randomization and instead will have to choose maps from Z[α] into Fpk
+
+stochastically and close to uniformly across all k log(p) < Ln ( 31 ). This exponentially increases
+the sizes of the fields, but we will see they are necessary for the unconditional equidistribution
+of the characters. Once the sieving process is finished we are, with the exception of a set of bad
+f , guaranteed a reduction to a congruence of squares:
+Theorem 5.3. Let B, B ′ be with the defined parameters. Let f be irreducible of degree d and
+−1
+
+height at most Ln ( 23 , κ), and let α be a root of f . Then for all but a Ln ( 32 , κ−δ2 (1 + o(1)))−1
+
+Page 74 of 114
+
+fraction of the set of f , if we are given
+
+Ln
+
+
+
+
+1
+′
+, max(β, β ) Ω(log log n)
+3
+
+pairs a < b ≤ Ln ( 13 ) such that a − mb is B-smooth and a − bα is B ′ -smooth, we can find a
+congruence of squares modulo n in expected time at most
+
+Ln
+
+
+
+1+o(1)
+
+2δ
+1
+′
+, 2 max
+, β, β
+.
+3
+3
+
+Let’s dive into the details.
+
+5.2
+
+Randomizing the polynomial
+
+As we mentioned the algorithm is a GNFS based algorithm with two major differences: How
+the polynomial is chosen and how the quadratic characters are chosen. To start we will look at
+how the polynomial is chosen, and consequences related to that, before proving theorem 5.2. To
+do this let β, β ′, κ, σ, δ, B, and B ′ be as defined in (5), (6), and (7).
+
+To begin we make a few restrictions:
+Definition 5.4. Let X be the set of tuples (f, m, n, a, b) such that the following conditions hold:
+h 1
+1. m ∈ Z and m ∈ 2− d Ln
+
+2
+, δ −1
+3
+
+
+
+, Ln
+
+2
+, δ −1
+3
+
+i
+
+.
+
+q
+2. f ∈ Z[x, y], deg(f ) = d = δ 3 logloglogn n , 2 ∤ d, with coefficients bounded by L
+
+2
+,κ
+3
+
+Moreover let the coefficients {ci }i∈I be drawn uniformly at random such that
+
+
+
+(1 + o(1)).
+
+
+
+
+2
+−1
+.
+,κ− δ
+ci ∈ I 2Ln
+3
+3. a, b ∈ Z, 0 ≤ a < |b| ∈
+
+1
+
+L
+2 n
+
+1
+,σ
+3
+
+
+, with a − bm B-smooth and f (a, b) B ′ -smooth.
+
+Moreover let Xf,m,n = {(a, b) ∈ Z2 : (f, m, n, a, b) ∈ X }. The first thing we note from this
+Page 75 of 114
+
+definition and the definition of our parameters is that f (x, y) is not generated uniformly at
+random as it has a component solely determined by m and n, fˆm,n (x, y), which is a problem as
+we try to obtain that f (a, b) is as likely to be B ′ -smooth as a uniformly random integer of the
+same size. To mitigate this we shall use the observation that ci is much larger than m to prove
+that the randomized part of f (x, y) dominates and that f (a, b) therefore can be considered as a
+uniformly distributed along any arithmetic progression of common difference (a − mb).
+Once we have achieved this we shall show that for most B-smooth moduli a − mb, the B ′ smooth numbers are approximately uniformly distributed modulo (a − mb). It is only then that
+we can show that f (a, b) is as likely to be B ′ -smooth as a random integer of the same size.
+Once we have shown this we shall venture to prove that there are sufficient (a, b)-pairs such that
+a − mb is B-smooth and f (a, b) is B ′ -smooth, which will lead to a proof of theorem 5.2. A key
+in this is the observation that f (a, b) lies on the arithmetic progression given by
+ 
+
+
+2
+−1
+bd .
+,κ− δ
+fˆm,n (a, b) + (a − mb)z : |z| ≤ dLn
+3
+5.2.1
+
+Uniform distribution of the polynomial
+
+Continuing our exposition using the definitions and parameters we have set up until now we
+recall the following:
+
+
+d !
+2
+I 2Ln
+, κ − δ −1
+3
+
+∀i ∈ {1, . . . , d − 1} : (ci ) ∼ µ = U
+and denote c = (ci ) to be the coefficient vector of f .
+
+Note that for f (a, b) to be B ′ -smooth it is necessary for a − bm to be B-smooth, however
+this is not something we can simply assume. Therefore we consider the definition of f (x, y) and
+note that
+f (a, b) ≡ fˆm,n (a, b)
+
+mod a − bm.
+
+Page 76 of 114
+
+As gcd(a, b)d | f (a, b)fˆm,n (a, b) we have that gcd(a, b)d (a − bm) | R(a, b). Now let a and b be
+uniform in their ranges, then we can give an explicit description of the probability that a − mb
+is B-smooth:
+Proposition 5.5. Fix b in its interval. If a, m are uniformly random, then:
+
+Pa,m (a − bm is B-smooth) = Ln
+
+
+
+1 δ −1
+,
+(1 + o(1))
+3 3β
+
+−1
+
+.
+
+Proof. We fix b. Note that a is uniformly random on an interval of length b, and m is uniformly
+random over an interval of length comparable to its largest value. In particular:
+
+
+a − bm ∼ U −bLn
+
+for x = Ln
+
+2
+, δ −1 (1 + o(1))
+3
+
+
+
+
+
+
+
+
+
+
+1
+2 −1
+2 −1
+− 2d
+, −b 2 Ln
++1
+,δ
+,δ
+3
+3
+
+
+
+
+= U −x 1 + z −1 , −x ,
+
+and z ≈ 2
+
+1
+2d
+
+
+− 1 = O(d ). Note that d = log B , and that
+
+
+−1
+
+5
+12
+
+log log B = O(log log x). Hence from theorem 4.36 the number of smooth values of a − mb is:
+
+
+
+Ψ(x, B)
+log(u + 1)
+1+O
+.
+z
+log B
+Since the range of values is of length xz ,
+
+
+
+log(u + 1)
+.
+Pa,m (a − bm is B-smooth) = ρ(x, B) 1 + O
+log B
+Recall that B = Ln
+
+1
+,β
+3
+
+
+
+and x = Ln
+
+log log n = o(log B). Hence by corollary 4.35
+
+ρ Ln
+
+
+
+2 −1
+,δ
+3
+
+1+o(1)
+
+
+2
+−1 −1+log(1)
+,
+δ
+.
+3
+
+,B
+
+!
+
+= Ln
+
+Page 77 of 114
+
+
+
+Furthermore, note that log u <
+
+1 δ −1
+,
+3 3β
+
+−1+o (1)
+
+.
+
+Absorbing the multiplicative 1 + o(1) into the o(1) error term in the exponent to obtain
+
+Pa,m (a − bm is B-smooth) = Ln
+
+
+
+−1
+1 δ −1
+,
+(1 + o(1))
+.
+3 3β
+
+Now we can fix the residue of f (a, b) mod a − mb and consider only how the randomness
+of our coefficients ci affect the polynomial. Therefore we will also want to be explicit about
+the coefficient vector, c = (ci )i∈{1,...,d−1} , for f (x, y), hence we will, when when we need to be
+explicit, denote f (x, y) = fc (x, y).
+
+Now we are set up to show that f (a, b) can be considered as uniformly distributed along progressions of common difference (a − mb).
+Lemma 5.6. Let a < b, with gcd(a, b) = 1, define ϕ = ϕa,b : Zd → Z by the following
+ϕ ((v0 , . . . , vd−1 )) =
+
+d−1
+X
+
+vi ad−i−1 bi .
+
+i=0
+
+There exists a set S ⊆ I 4Ln
+
+1
+,σ
+3
+
+d
+
+
+such that ϕ bijects S and I bd−1 .
+
+Proof. For each i ≥ 0, we claim that for any |t| ≤ bi + ai+1 there exists a representation
+t = ai x0 + ai−1 bx1 + . . . + bi xi ,
+
+with |x0 |, . . . , |xi | ≤ a + b. We proceed by induction on the number of terms. If i = 0 then the
+conclusion is trivial as |t| ≤ b0 + a1 = a + 1 and so
+t = a0 x0 = x0 ,
+
+for |x0 | ≤ a + b, and as a + 1 ≤ a + b the result follows. Now let i > 0, then we may choose
+
+Page 78 of 114
+
+|y| < a such that
+t − yai ≤ bi .
+Letting z ∈ {0, . . . , b − 1} such that zai ≡ t − yai mod b we can set x0 = y + z and as |y| < a
+and |z| < b it follows that |x0 | ≤ a + b. By construction b | t − x0 ai and
+(t − yai ) − zai
+t − x0 ai
+=
+≤ bi−1 + ai .
+b
+b
+Hence by the induction hypotheses such a representation exists for every t with |t| ≤ bi + ai+1 .
+Now we show the existence of S directly. Let t ∈ I(bd−1 ), then for any such t: |t| ≤ bd−1 and
+so the conditions of the above hold with i = d − 1. Hence there exists a sequence (xi )i∈{0,...,d−1}
+such that
+
+d−1
+X
+
+xi ad−i−1 bi = t,
+
+i=0
+
+with |xi | < a + b for all i. Hence the vector given by the sequence, xt = (xi ), fulfills that
+d
+ϕ(xt ) = t. Moreover, xt ∈ I (2(a + b))d and by Defn 2.4.3 this means xt ∈ I 4Ln ( 31 , σ) .
+
+Hence, taking S = {xt : t ∈ I bd−1 gives the construction of a single vector xt , hence ϕ is
+
+bijective on S.
+
+Remark. Note that we have presupposed that gcd(a, b) = 1, but it is a simple exercise to show
+that this is trivial. By the definition of (a, b) ∈ Xf,m,n we know that a − mb is B-smooth, hence
+gcd(a, b) is B-smooth. Since we will only be interested in looking at B-smoothness to show the
+uniform randomness of f (x, y) we can assume without loss of generality that gcd(a, b) = 1 as
+division of two B-smooth numbers preserves B-smoothness.
+We can now reformulate f (x, y) using the map ϕ. For this consider m, n fixed and observe
+that:
+f (a, b) = fc (a, b) = fc′ (a, b) + (a − mb)ϕ(a,b) (c − c′ ).
+This motivates the following:
+Definition 5.7. Let S be the set given by the lemma 5.6 . For any l ≤ bd−1 , we define a set Sl
+Page 79 of 114
+
+and a measure νl as follows:
+Sl = {v ∈ S | ϕ(v) = I(l)},
+νl = U(Sl ).
+Particularly, νl gives a uniformly random element of S whose image under ϕ is in I(l).
+It is clear to see that if v ∼ νl , then we can write
+fv (a, b) ∼ f0 (a, b) + (a − mb)U(I(l)).
+This allows the consideration that for the measures νl with support Sl give us additive alterations
+to c which change f (a, b) additively by a − mb times a uniformly random value. This means
+that if f is indeed uniformly random, then we can replace the randomness of c over cosets of Sl
+with randomness of fc (a, b) over arithmetic progressions.
+Definition 5.8. For µ̄ : X → R+ a measure and F : X → Y a function, we define the measure
+F µ̄ : Y → R+ given by
+
+F µ̄ (y) = µ̄ {F −1 (y)} =
+
+X
+
+µ̄(x).
+
+x:F (x)=y
+
+Remark. It will be left to the reader to prove that this is in fact a measure. Moreover note that
+if F is bijective then F µ̄ (y) = µ̄(x), for some unique x ∈ X.
+Now consider c ∼ νl such that we can write
+fc (a, b) ∼ f0 (a, b) + (a − mb)U(I(l)).
+As µ is a uniform distribution on a cube of side 2Ln
+
+2
+, κ − δ −1
+3
+
+
+
+and we have a bijective func-
+
+tion ϕ : S → I(bd−1 ) we can now show that ϕµ is actually close to a convolution of uniform
+distributions on intervals. In fact, by convolving with several distributions, νli , we can treat
+each coefficient in f as if it were independent and uniformly random. This is made rigorous in
+the following proposition:
+Page 80 of 114
+
+Proposition 5.9. Fix a, b. There is a distribution ϑ such that ϑ is the convolution of uniform
+
+distribution on intervals of lengths Ln 23 , κ − δ −1 ai bd−1−i for i ∈ {0, . . . , d − 1} with
+kϕµ − ϑk1 = O Ln
+
+
+
+2
+, (κ − δ −1 )(1 + o(1))
+3
+
+−1 !
+
+,
+
+and
+|E(ϑ)| ≤
+
+d−1
+X
+
+ai bd−i−1 .
+
+i=0
+
+Proof. Recall that the convolution of distributions, given by ⋆, is defined by Definition 4.42 and
+define
+
+
+ν = µ ⋆ ⋆d−1
+i=0 νai bd−i−1 .
+
+
+From lemma 5.6, the support of νai bd−i−1 is contained in a cube of side 4Ln 13 , σ . Hence
+
+1
+the support of P of ⋆d−1
+i=0 νai bd−i−1 is contained in a cube of side 4dLn 3 , σ . When kxk∞ <
+
+
+Ln 32 , κ − δ −1 − 4dLn 13 , σ and p ∈ P :
+µ(x − p) = µ(x) = |sup(µ)|−1 ,
+so ν(x) is a convex combination of values in {µ(x − p) : p ∈ P } = {µ(x)}. Hence ν(x) = µ(x) on
+
+
+
+
+the l∞ ball of radius Ln 32 , o(κ − δ −1 − 4dLn 13 , σ . Then since Ln 13 , σ is Ln 32 , o(κ − δ −1 ) :
+Px∼µ (ν(x) − µ(x)) ≥
+
+2
+
+≥ 1 − 4d Ln
+
+
+
+2
+, κ − δ −1
+3
+
+1 − 4dLn
+
+−1+o(1)
+
+
+
+2
+, κ − δ−1
+3
+
+= 1 − Ln
+
+
+
+−1+o(1) !d
+
+2
+, κ − δ −1
+3
+
+In particular, we have a bound on the l1 distance between µ and ν:
+
+kµ − νk1 =
+
+X
+
+x∈Zd
+
+|ν(x) − µ(x)|
+
+≤ Px∼µ (ν(x) 6= µ(x)) (kµk∞ + kνk∞ )
+Page 81 of 114
+
+−1+o(1)
+
+.
+
+= O Ln
+
+
+
+
+2
+, κ − δ −1 (1 + o(1))
+3
+
+−1 !
+
+.
+
+Now for fixed a, b we apply the map ϕ to µ and ν to obtain
+kϕµ − ϕν k1 ≤ kµ − νk1 ≤ O Ln
+
+
+
+2
+, (κ − δ −1 )(1 + o(1))
+3
+
+−1 !
+
+,
+
+and so the l1 difference of the distributions ϕ(µ) and ϕ(ν) on Z is small. From definition 5.7
+ϕνl = U (I(l)). Since applying our map ϕ to a measure commutes with convolution of measures:
+
+
+i d−i−1
+ϕν = ϕµ ⋆ ⋆d−1
+U
+I
+a
+b
+.
+i=0
+2
+, κ − δ −1
+3
+
+Since ci ∼ U I Ln
+
+
+
+are independent random variables,
+ci ai bd−i−1 + U I ai bd−i−1
+
+is uniformly distributed along an interval of length Ln
+Hence there is a constant C such that for all x ∈ Z:
+ν
+
+ϕ (x) ∼ ⋆d−1
+i=0
+
+
+
+2
+, κ − δ −1
+3
+
+ i d−i−1
+ab
+. Note that c ∼ µ.
+
+   
+
+
+2
+i d−i−1
+−1
+U I Ln
+(x − C).
+ab
+,κ− δ
+3
+
+The shift C accounts for the difference in expectation caused by the fact that the intervals
+associated with the independent random variables are not centred. However the centre of each
+Pd−1 i d−i−1
+. We take
+of these intervals has modulus at most 21 ai bd−i−1 + 21 , and so |C| ≤
+i=0 a b
+
+ϑ = ϕν to complete the proof.
+
+Hence, this convolution allows us to replace R(a, b) by a − mb times some convolution of
+uniform measures on intervals. This proves that f (a, b) is close to uniformly distributed along
+arithmetic progressions of common difference (a−mb), so it rests to show that for most B-smooth
+moduli a − mb, the B ′ -smooth numbers are almost uniformly distributed modulo a − mb. To do
+this we introduce an estimation of smoothness, which is called goodness:
+Page 82 of 114
+
+Definition 5.10. Fix a smoothness bound B = Ln
+
+1
+3
+
+
+
+and F = Ln ( 23 ). Define ǫ (F, B, r, a) =
+
+on (1). We then say that a modulus r is B-good for F if uniformly over all (a, r) = 1:
+
+Ψ(F, B, r, a) =
+
+
+
+Ψr (F, B)
+φ(r)
+
+1+ǫ
+
+,
+
+where φ is the Euler phi-function.
+Remark. Recall from Definition 4.32
+
+Ψ(x, y, r, a) = |{z ∈ N : z < x, z is y-smooth, z ≡ a
+
+mod r}|
+
+and
+Ψr (x, y) = |{z ∈ N : z < x, z is y-smooth, gcd(z, r) = 1}|.
+We will often supress the ǫ as we are only interested in an error exponent up to o(1). Moreover, we will say r is B-bad for F if it is not B-good for F and that r is B-good (dropping the
+
+
+
+F ) if r is B-good for all F ∈ Ln 32 ω −1, Ln 32 for ω = Ln ( 13 ).
+With this notion we can start constraining the behaviour of f (a, b) mod a − mb for this we
+will need to characterise the moduli for which the smooth numbers are uniformly distributed
+across their residue classes. Once we have that it doesn’t matter which residue class fc (a, b) lies
+in as it does not affect its probability of being smooth as c varies.
+5.2.2
+
+Uniform Distribution of Smooth Numbers
+
+From Section 4.3 we have a result of [30] proving that, under some conditions, y-smooth numbers
+≤ x are uniformly distributed over the φ(q) residue classes a mod q with gcd(a, q) = 1. However
+the conditions prevent us from concluding uniform distribution directly, hence if we can show that
+the distribution of B ′ -good numbers is close enough to uniform assuming a − mb is B-smooth,
+to be considered as such then we are done. To do this we consider a Bombieri–Vinogradov style
+theorem proposed by Harper, [23]:
+Page 83 of 114
+
+Theorem 5.11. Let c and K be fixed and effective constants. Then or any log K F < B < F
+p
+log F
+,
+and
+Q
+≤
+Ψ(F, B):
+with u = log
+B
+X
+
+r≤Q
+
+max Ψ(F, B, r, s) =
+
+(s,t)=1
+
+Ψr (F, B)
+φ(r)
+
+
+ −cu
+p
+≪ Ψ (F, B) e log2 (u) + B −c + Q Ψ(F, B) log7/2 F,
+with an implied effective constant C = C(c, k).
+Remark. We remark that the definition of “effective” differs per application. For our purpose
+we may simply claim that c < K are chosen fittingly for the to-factor n.
+If we consider
+Qmax = max|a + bm| = Ln
+b,m
+
+
+
+
+2 −1
+, δ (1 + o(1)) ,
+3
+
+we can reconsider our question to the equivalent notion of bounding the probability that a Bsmooth modulus less than Qmax is B ′ -bad. This would immediately follow from showing that
+the number of B ′ -bad moduli below the Q-bound is much smaller than Ψ(Qmax , B). We will,
+for our specific needs, bound the sum in theorem 5.11 as we know that the common difference
+in the arithmetic progression is known to be y-smooth. For this let q = a − mb, then:
+Proposition 5.12. Let ǫ > 0 be fixed. Then there exists effective constants K, c such that for
+p
+1
+x
+ǫ
+any logK x < y < x log log x with u = log
+,
+x
+≤
+Q
+≤
+Ψ(x, y) and ω = ω(1) with ω = y O(1) :
+log y
+X
+
+r∈[Qω −1 ,Q]
+r is y-smooth
+
+max
+
+gcd(a,r)=1
+
+Ψ(x, y, r, a) −
+
+Ψr (x, y)
+φ(r)
+
+
+
+p
+− cu
+−c
+2u
+log
+≪ Ψ(x, y)ρ(Q, y) e
++ Q Ψ(x, y) log7/2 x,
++y
+for some effective implied constant.
+Remark. The proof for this is mostly an exercise in restating Harper’s [23] and is therefore
+omitted. The full proof can be found in [14].
+Page 84 of 114
+
+Now we return to what we set out to prove: For most B-smooth moduli a − mb, the B ′ smooth numbers are uniformly distributed. This follows immediately from the following two
+propositions:
+Proposition 5.13. Fix a, b, m, n in their intervals and let f be uniformly random as before.
+Then:
+′
+
+′
+
+Pf (f (a, b) is B -smooth | (a − mb) is B -good) = Ln
+
+
+
+1 κ + σδ
+,
+(1 + o(1))
+3 3β ′
+
+−1
+
+.
+
+Proof. Let a − bm = r. By proposition 5.9:
+
+
+Pn,f (fn,m (a, b) is B ′ -smooth) = Pn,c fˆm,n (a, b) + rϕ(a,b) (c) is B ′ -smooth
+−1 !
+
+
+
+2
+, (κ − δ −1 )(1 + o(1))
+.
+= Pn,ϑ fˆm,n (a, b) + rϑ is B ′ -smooth + O Ln
+3
+By the definition of the parameters we have κ > δ −1 and therefore κ − δ −1 > 0. Now recall,
+P
+i d−i−1
+and is sampled according to the convolution
+from proposition 5.9, ϑ has |E(ϑ)| ≤ d−1
+i=0 a b
+
+of uniform measures on intervals of length Ln 32 , κ − δ − 1 ai bd−i−1 for i = 0, . . . , d − 1. Hence ϑ
+is unimodal with mode at some M satisfying
+
+|M| ≤
+
+d−1
+X
+
+i d−i−1
+
+ab
+
+d−i−1
+
+< db
+
+= Ln
+
+i=0
+
+
+
+
+2
+, σδ(1 + o(1)) .
+3
+
+Now define
+Fmax = Ln
+
+
+
+
+d−1
+X
+2
+−1
+(a − mb)
+ai bd−i−1 ,
+,κ−δ
+3
+i=0
+
+
+
+then the support of ϑ is contained in M − Fmax |r|−1 , M + Fmax |r|−1 . We choose an ω =
+
+Ln 23 , o(1) , such that ω → ∞, and set
+Y = Ln
+
+e
+
+3
+
+,κ− δ
+
+−1
+
+
+
+d−1
+
+b
+
+ω
+
+−1
+
+= Ln
+
+
+
+
+2
+−1
+, κ − δ + σδ − o(1) .
+3
+
+Page 85 of 114
+
+Now we define a measure ϑ′ to be
+
+ϑ′ (x) =
+
+
+
+
+ϑ(max(x, Y ))
+
+x≥0
+
+.
+
+
+
+ϑ(min(x, −Y )) x < 0
+
+Then
+′
+
+kϑ − ϑk1 ≤ Oz∼ϑ (|z| < Y ) ≤ 2Y
+
+
+
+Ln
+
+
+
+−1
+
+2
+d−1
+−1
+= 2ω −1 ,
+b
+,κ−δ
+3
+
+from the definition of Y . Note that Y is much larger than M and so ϑ′ is monotone decreasing
+away from 0; hence there are non-negative weights Wy for y ∈ Z, with Wy = 0 for |y| > Fmax |r|−1
+such that:
+ϑ′ =
+
+X
+
+y≥Y
+
+and 1 −
+
+P
+
+y Wy
+
+Wy U([0, y]) + W−y U([−y, 0)),
+
+≤ 2ω −1 . Hence we have:
+Pf (fm,n (a, b) is B ′ -smooth) = O (ω)−1 +
+Fmax |r|−1
+
+X
+
+y=Y
+
+
+
+Wy P fˆm,n (a, b) + rU ([0, y]) is B ′ -smooth
+
+
+
+′
+ˆ
++W−y P fm,n (a, b) + rU ([−y, 0)) is B -smooth .
+We note that O (ω −1 ) = Ln
+
+−1
+2
+, o(1)
+terms can be absorbed into our o(1) terms, and so it
+3
+
+
+
+
+
+suffices to show that for any fixed, B ′ -good r and any y ∈ Y, Fmax |r|−1 :
+
+
+−1+o(1)
+
+
+1
+κ
++
+σδ
+′
+P fˆm,n (a, b) + rU ([0, y]) is B -smooth = Ln
+,
+,
+3 3β ′
+
+−1+o(1)
+
+
+
+κ
++
+σδ
+1
+′
+,
+.
+P fˆm,n (a, b) + rU ([−y, 0)) is B -smooth = Ln
+3 3β ′
+Since fˆm,n (a, b) ≤ F̂max := Y Ln
+
+
+2 −1
+, we can absorb the probability that the value on the left
+3
+
+is negative or positive (respectively) in the above two equations. From the definition of B ′ -good
+
+Page 86 of 114
+
+h
+i
+and corollary 4.39 , for any x ∈ |r|Y − F̂max , Fmax + F̂max :
+Φr (x, B ′ )
+Ψ(x, B , r, s) =
+Ln
+φ(r)
+′
+
+
+
+1
+, o(1)
+3
+
+
+
+Ψ(x, B ′ )
+=
+Ln
+r
+
+
+
+
+1
+, o(1) ,
+3
+
+h
+i
+and so to finish the estimate we observe that for any x ∈ |r|Y − F̂max , Fmax + F̂max :
+
+
+
+−1+o(1)
+ 
+1 κ + σδ
+2
+′
+, κ + σδ , B = Ln
+,
+ρ(x, B ) = ρ Ln
+.
+3
+3 3β ′
+′
+
+Now there is only one thing left to do: Show that a − bm is B ′ -good significantly often when
+a − bm is B-smooth, which we have assumed from the start and have a significant probability
+for from proposition 5.5.
+Proposition 5.14. Fix any b. Then
+Pa,m (a − mb is B ′ -good | a − mb is B-smooth) = 1 − o(1).
+Proof. We begin by bounding the number of moduli which are F -bad for some
+#
+ −1
+1
+, Fmax .
+F ∈ Fmax Ln
+3
+"
+
+We fix ω = B ′ for concreteness. Observe that Ψ(F, B ′ ) = F Ln
+p
+Q ≤ Ψ (F, B ′ )Ln
+
+
+
+2 ǫ
+,
+3 4
+
+−1
+
+
+1 −1
+. Since Ln
+3
+
+2
+3
+
+
+
+= ω Ln
+
+1
+3
+
+
+
+.
+
+.
+
+
+
+
+1
+Furthermore, for any K fixed, ω logK F = B ′ = o F log log F . Hence we can apply proposition
+
+5.12. Suppose that a modulus r is B-smooth and also B ′ -bad for F . Then for some residue a
+
+Page 87 of 114
+
+with gcd (a, r) = 1, the contribution to the LHS of proposition 5.12 for this r is at least
+Ψ(F, B ′ )
+Ψ(F, B ′ )
+Ψ(F, B ′ )
+(1 + o(1)) =
+≥
+,
+φ(r)
+r
+Q
+where for the first equality we use corollary 4.39, noting that B ≤ B ′ so r is B ′ -smooth, u <
+log log n and the number of divisors of r sis bounded by log r so that the multiplicative error is
+1 + o(1). Now
+X
+
+max
+
+r∈[Qmax ω −1 ,Qmax ]
+r is y-smooth
+
+gcd(a,r)=1
+
+Ψ(F, B ′ , r, a) −
+
+Ψr (F, B ′ )
+φ(r)
+
+
+
+′
+p
+− cu2
+′−c
+≤ CΨ(F, B )ρ(Qmax , B ) e log u + B
++ Qmax Ψ(F, B ′) log7/2 F
+′
+
+′
+
+
+
+′
+1
+1
+− cu2
+′−c
+= CF ρ(F, B )ρ(Qmax , B ) e log u + B
++ Qmax F 2 ρ(F c, B ′ ) 2 log7/2 F.
+′
+
+′
+
+
+First, we observe that F and Qmax are Ln (23), whilst B ′ is Ln 13 . Hence both densities
+−1
+. From the definition of Qmax and Fmax we have
+ρ(Qmax , B ′ ) and ρ(F, B ′ ) are Ln 13
+Qmax = Ln
+
+
+
+
+
+
+2
+2 −1
+, δ (1 + o(1) , Fmax = Ln
+, (κ + σδ) (1 + o(1) ,
+3
+3
+
+
+2
+and from the parameters defined in equation (2) we have 2δ −1 < κ+ δσ. Hence F Q−2
+max = Ln 3 .
+o(1)
+1
+Since up to order Ln 23
+, the first term is F and the second is Qmax F 2 , we deduce that the first
+term dominates the second. If r is B ′ -bad for F it contributes at least Ψ(F, B ′ )Q−1
+max (1 + o(1))
+
+to the sum on the left hand side. Hence the number of moduli which are in [Qmax ω −1 , Qmax ],
+are B-smooth and B ′ -bad for F is at most
+
+
+′
+Qmax
+− cu
+′
+′
+′−c
+2 u′
+log
+Ψ(F, B )ρ(Qmax , B ) (C + o(1)) e
+,
++B
+Ψ(F, B ′)
+
+
+′
+− cu
+′−c
+2
+′
+= Ψ (Qmax , B ) (C + o(1)) e log u + B
+.
+′
+
+Page 88 of 114
+
+If a modulus is B ′ -bad near Fmax , it must be B ′ -bad for some
+
+F ∈
+
+
+
+ −1
+
+ 
+
+ 
+1
+1
+i
+i
+Fmax Ln
+, Fmax ,
+, Fmax ∪ 2 : 2 ∈ Fmax Ln
+3
+3
+
+which is a set of logarithmic size. We can absorb a logarithmic factor into the constants c, C, so
+the number of moduli which are in [Qmax ω −1 , Qmax ], are B-smooth and B ′ -bad is at most:
+′
+
+
+
+−
+
+Ψ(Qmax , B ) (C + o(1)) e
+
+cu′
+log2 u′
+
++B
+
+′−c
+
+
+
+= o (Ψ (Qmax B ′ )) .
+
+Hence even assuming that every B-smooth number below Qmax ω −1 is B ′ -bad gives:
+Pa,m (a − mb is B ′ -good | a − mb is B-smooth)
+Ψ (Qmax ω −1 , B ′ ) + Ψ (Qmax , B ′ ))
+≥1−
+= 1 − o(1).
+Ψ (Qmax , B ′ )
+
+Hence the probability of a B-smooth modulus to be B ′ -good is nearing 1 and the probability
+for f (a, b) to be B ′ -smooth given that a − mb is a B-smooth modulus is comparable to a random
+integer of similar size to be B ′ -smooth under the same conditions. Hence we can now prove
+theorem 5.2.
+5.2.3
+
+Proof of theorem 5.2
+
+Now that we have shown that the changes that randomization causes are controllable we are able
+to conclude that they are also sufficient to give a provable complexity. For this let us quickly
+reflect on our choice compared to the general number field sieve. Consider (f, m, n, a, b) ∈ X and
+let α ∈ C be a root of the first coordinate of f , f (α, 1) = 0. Then there is a ring homomorphism
+Z[α] → Z/nZ, (a − bα) 7→ (a − bm)
+
+Page 89 of 114
+
+mod n.
+
+From the field norm we also have a multiplicative map from OQ(α) → Z, as we would expect
+from the general number field sieve. Moreover, denoting fd for the leading coefficient of f , the
+field norm is guaranteed to be in f1d Z for any element of Z + αZ. Hence the only thing that
+we can’t be sure about is that f is irreducible as f is considered uniformly at random. If f
+was irreducible then we can apply the strategy from the general number field sieve to obtain a
+congruence of squares modulo n.
+Lemma 5.15.
+P( f is reducible) ≤ LN
+Proof. Fix m, n and let H = 2Ln
+
+2
+, κ − δ −1
+3
+
+
+
+
+
+2 κ − δ −1 + o(1)
+,
+3
+3
+
+−1
+
+.
+
+be the range of each coefficient of the random part
+
+of our polynomial f . Note that if a polynomial over Z is reducible if it is reducible modulo every
+prime. Hence if we bound the number of reducible polynomials modulo Fp for each prime p and
+bound how often a polynomial is reducible modulo several primes p, we can get good bounds on
+the number of irreducible polynomials f . We count the reducible polynomials f with the Turán
+sieve, [11]. Let A = {(cd−1 , . . . , c0 ) ∈ Zd , |ci | < H} which we equate with the set of polynomials f (x, y) = fˆm,n (x, y) + R(x, y) with f and fˆm,n are both homogeneous of degree d with (ci )
+the coefficients of R. For any prime r, let Ar correspond to the subset of A corresponding to
+irreducible polynomials
+
+mod r. Note that for any f to correspond to g mod r we must have
+
+(x − my) | fˆm,n − g ∈ Fr [x, y] or equivalently g(m, q) ≡ n mod r. We do not insist that G is
+monic, although any irreducible g must be a scalar multiple of a monic irreducible. To estimate
+the number of irreducibles we accept the following fact, [[7], Chapter 2]:
+
+For any 0 < i < r, the number of monic irreducible g of degree D such that g(m) ≡ i mod r is
+r D−1
++ O(r D/2 ).
+D(D−1)
+
+√
+
+H, there are
+
+
+
+d−1 !
+
+Note that for any g over Fr , such that g(m) ≡ n with r ≪
+
+
+H
++ O(1)
+r
+
+d
+
+=
+
+
+
+H
+r
+
+d
+
++O
+
+Page 90 of 114
+
+H
+r
+
+polynomials lying over g in A, and none if g(m) 6≡ n mod r. Hence by a union bound over the
+irreducibles
+
+mod r:
+
+ d 
+
+Hd
+H
++ O H d−1 r ,
+|Ar | ≤
++O
+d
+−1
+d(d − 1)
+r2
+ d 
+ d 
+H
+Hd
+H
++O
+|Ar ∩ Ar′ | ≤ 2 2
++O
++ O(H d−1 rr ′).
+d
+d
+′
+−1
+−1
+d (d − 1)
+r2
+r2
+√
+From the Turán sieve, considering all primes r ≤ p for any p much smaller than H, the number
+of reducible polynomials f is much smaller than H d p−1 log p+H d−1 p2 , which for p ∼ H 1/3 log1/3 H
+1
+
+2
+
+is H d− 3 log 3 H. Then the number of potential f for fixed n, m is H d , and so the probability
+that f is reducible is at most
+
+H
+
+− 31
+
+2
+3
+
+log H = Ln
+
+
+
+2 κ − δ −1 + o(1)
+,
+3
+3
+
+−1
+
+.
+
+Remark. If f is reducible we immediately assume that the algorithm fails, hence by sampling at
+
+most Ln 31 polynomials the probability that any of them are reducible is o(1).
+Now assume that f is irreducible. Then the following theorem gives us the last ingredient
+
+we need to prove theorem 5.2:
+Theorem 5.16. With β = β ′ , δ, σ, κ chosen subject to (5), (6), (7), and Definition 5.4:
+
+Em,f (|Xf,m,n |) ≥ Ln
+
+
+
+1
+,τ
+3
+
+
+
+,
+
+with
+τ = 2σ −
+
+σδ + κ
+δ −1
+(1
++
+o(1))
++
+(1 + o(1)).
+3β ′
+3β
+
+Proof. As proposition 5.5 and proposition 5.12 randomise over a, m for any fixed b, and uniformly
+over n, f , for any b, n, f :
+′
+
+Pa,m (a − bm is B-smooth and B -good) = Ln
+Page 91 of 114
+
+
+
+1 δ −1
+,
+(1 + o(1))
+3 3β
+
+−1
+
+.
+
+Since proposition 5.11 randomizes over f for any fixed a, b, m, we have for each fixed b that
+Pa,m,f (a − bm is B-smooth and B ′ -good, f (a, b) is B ′ -smooth)
+= Ln
+
+
+
+1 δ −1 κ + σδ
+,
++
+3 3β
+3β ′
+
+−1+o(1)
+
+,
+
+as multiplicative factors of 1 + o(1) may be absorbed into the o(1) in the exponent of the Ln
+2
+terms. Summing over the Ln 13 , σ choices for a fixed pair (a, b):
+Em,f (|Xf,m,n |) =
+
+= Ln
+
+
+
+1
+,σ
+3
+
+X
+b
+
+X
+a,b
+
+1
+3
+
+
+
+Pf,m,n ((f, n, m, a, b) ∈ X )
+
+
+
+ (a − bm) is B-smooth
+Pf,m,n,a 
+
+′
+∧f (a, b) is B -smooth
+
+
+ (a − bm) is B-smooth
+X
+
+
+
+1
+
+
+,σ
+Pf,m,n,a  ∧(a − bm) is B ′ -good
+≥ Ln
+
+
+3
+b
+
+
+∧f (a, b) is B ′ -smooth
+
+
+≥ Ln
+
+
+
+1
+, 2σ −
+3
+
+
+
+
+ − 
+σδ + κ
+δ 1
+(1 + o(1)) +
+(1 + o(1)) .
+3β
+3β ′
+
+−1
+
+, and note that:
+Proof of theorem 5.2. Let τ = 2σ − δ3β ′ − σδ+κ
+3β
+λ ≥ max(β, β ′) +
+
+δ −1 (1 + o(1) (σδ + κ)(1 + o(1))
++
+= max(β, β ′) + 2σ − τ + o(1).
+3β
+3β ′
+
+For any fixed pair (m, f ), we can use the hyper-elliptic curve method to examine any pair (a, b)
+for a suitable smoothness of a − mb and f (a, b) in max(B, B ′ )o(1) time. Hence we can determine
+
+whether a pair (a, b) is in Xf,m,n in time Ln 13 , o(1) .
+Page 92 of 114
+
+
+By lemma 5.15 the probability that f is reducible is Ln 23 , and we have an unconditional
+
+uniform bound |Xf,m,n | ≤ Ln 13 , 2σ . Hence from theorem 5.16 we deduce that
+Ef,m (|Xf,m,n | | f irreducible) ≥ Ln
+
+
+
+
+1
+, τ + o(1) .
+3
+
+By using lemma 4.45 we can use stochastic deepening to consider |Xf,m,n | as a random variable
+
+ 1
+
+2
+1
+3
+3
+of (f, m), with K ≤ Ln 3 , 2σ − τ . Hence for some j ≤ 1 + ⌈log2 K⌉ = O log n(log log n) ,
+
+we have
+
+
+
+j
+
+Pf,m |Xf,m,n | ≥ 2 Ln
+
+
+
+1
+, τ + log(1)
+3
+
+
+
+> 2−j ,
+
+absorbing logarithmic terms where appropriate.
+
+Now consider the following: To find a collection of pairs the algorithm iterates through each
+i ∈ {0, . . . , 1 + ⌈log2 K⌉}, and for each i generates 2i pairs (f, m), and for each pair (f, m) gen
+erates 2−i Ln 13 , max (β, β ′) + 2σ − τ + o(1) pairs (a, b) and tests for smoothness of a − mb and
+
+
+f (a, b). So if |Xf,m,n | > 2i Ln 31 , τ + o(1) then the algorithm finds Ln 31 , max (β, β ′) + o(1)
+pairs as required. Furthermore if
+
+
+
+
+1
+i
+Pf,m |Xf,m,n | ≥ 2 Ln
+, τ + log(1)
+> 2−i ,
+3
+then with constant probability at least one of the pairs (m, f ) satisfies this condition.
+
+Since the time taken for a single i is Ln
+
+1
+, max(β, β ′)
+3
+
+
+
++ 2σ = τ + o(1) we can absorb the
+
+logarithmic number of iterations into the o(1) term. Hence, iterating it at most a logarithmic
+
+number of time reduces the probability of failure to Ln 32 , κ − δ −1 . Hence the expected time
+
+taken to complete the algorithm is
+
+Ln
+
+
+
+
+1
+′
+, max(β, β ) + 2σ − τ + o(1) .
+3
+Page 93 of 114
+
+5.3
+
+Algebraic obstructions Vol. 2: The congruence
+
+Let S be the set of (a, b) pairs such that a − mb is B-smooth and f (a, b) is B ′ -smooth. The
+previous section provides a way to find a sufficient amount of (a, b) pairs in a sufficiently short
+time, which we now will assume to be fulfilled. Identically to the General Number Field Sieve
+algorithm we now start on the next procedure: sieving for the congruence. In Chapter 3 we were
+interested in finding a subset Si such that
+f ′ (m)2
+
+Y
+
+a − bm is a square in Z,
+
+Y
+
+a − bα is a square in Z[α].
+
+(a,b)∈Si
+
+f ′ (α)2
+
+(a,b)∈Si
+
+In the RNFS there will be a similar approach, but it can be recalled that we used particularly
+broad observations to avoid having to work with the ring of algebraic integers OQ[α] for which
+the structure might be unknown or especially difficult. In this section we will not only tackle the
+procedure to find these squares, but in particular how we can avoid similar algebraic obstructions
+as we saw in section 3.3.
+
+One of the first things to observe is that, given a set S such that for every (a, b)-pair a − bm
+is B-smooth is that there is no reason for us not to use the standard method from the general
+Q
+number field sieve to find a square. Given an element z ∈ Z with prime factorization di=1 pηi i
+
+it is easy to check if it is a square by ensuring that ∀i ∈ {1, . . . , d} : 2 | ηi . So given the factor-
+
+izations of a − mb for B + 1 (a, b)-pairs we can find a dependent subset in the same way we did
+with the general number field sieve in Step 3.
+
+Once again it would be optimal if we could approach the Z[α] problem in the same way, but
+as we saw in Chapter 3 this requires some justification. This justification is only made more
+Page 94 of 114
+
+complex as we are now dealing with a uniformly random polynomial. We start in much the
+same fashion as we did with the general number field sieve by defining a set of pairs (p, r) such
+that f (r, 1) ≡ 0 mod p for prime p and r ∈ {1, . . . , p − 1}. Recall that the pairs (p, r) such that
+p is prime, 0 < r < p coprime to p, p | f (r, 1) is in direct correspondence with the first degree
+prime ideals P ⊆ OQ(α) such that P | hpi, N(P) = p. Then from proposition 3.8 we get that the
+following function is well defined:
+
+e(p,r) (a − bα) =
+
+
+
+
+ordr (N(a − bα)) a − br ≡ 0 mod p
+
+
+0
+
+.
+
+otherwise
+
+From the proof of theorem 3.7 we know that this map is well defined from Q(α)× → Z. Hence,
+as we assumed that we have found sufficient (a, b)-pairs we can use the same sieving techniques
+Q
+as in Section 3 to find a subset S such that P (α) = (a,b)∈S (a − bα) ∈ Z[α]. Moreover we can
+
+again be sure that er,s (P (α)) ≡ 0 mod 2. Now it rests to us to show that we can, again by the
+
+use of characters, guarantee with high probability that the element found by P (α) is a square in
+Z[α]. To give a three line summary of our technique: we will apply the pigeonhole principle to
+a set H, to show that for a randomized field with a stochastic collection of characters with large
+conductor the number of ways in which an element might appear square and not be square is
+limited.
+5.3.1
+
+Quadratic characters
+
+Now define the set we eluded to above:
+H = {z ∈ Q(α)× : ∀s < r, e(p,r) (z) ≡ 0 mod 2}/{z 2 : z ∈ Q(α)× }.
+Because we attempt to use the pigeon hole principle we start by considering the size of this set,
+in fact a near-immediate result is the bounded dimension of H as a vector space:
+
+Page 95 of 114
+
+Proposition 5.17. H is an F2 vector space of dimension at most
+4
+
+δ2κ
+(log(n)) 3
+.
+(δκ + o(1)) log2 (n) +
+2 log(2) (log log(n)) 31
+The proof of this follows, bar a few modifications, from the argument in [[17], theorem 6.7].
+The full proof can be found in [[14], p. 129-131], but we will accept this as a fact. To see that
+H is a vector space we only need to observe that Q(α)× is commutative, hence every element
+of h ∈ H can be represented as a coset [h0 ] = h0 · {z 2 : z ∈ Q(α)× }. This means that for any
+h ∈ H, h2 is the identity since it is equivalent to h20 · {z 2 : z ∈ (Q(α)× } and h0 ∈ Q(α)× .
+The next step is to find a significant amount of quadratic characters. For this let P ⊂ OQ(α) be
+a prime ideal, as N(P) = pk and OQ(α) is a Dedekind Domain we have that
+OQ(α) /P = Fpk .
+Hence we can identify P with a degree k monic irreducible polynomial pP over Fr . We can say
+more: Given an irreducible polynomial g of degree k over Fp , if gcd(f, g) = 1 then the quotient
+Q(α)/hg(α)i sends everything to 0, hence hg(α)i is not prime. So we may assume gcd(f, g) > 1,
+and since g is irreducible over Fp that means that g is one of the irreducible factors of f mod hpi.
+In what follows we will regularly shift between following three equivalent concepts:
+1. Prime ideal P ⊆ OQ(α) .
+2. The irreducible polynomial divisor pP of f (x, 1) mod p.
+3. Pair (p, r), p prime and r s.t. pP (r, 1) ≡ 0 mod p for pP defined over Fpk .
+The following definition extends the Legendre symbol.
+Definition 5.18. Let K be a field and let f (x) ∈ K[x] be a polynomial. Let p(x) ∈ K[x] be an
+
+Page 96 of 114
+
+irreducible polynomial, p(x) ∤ f (x). Then the polynomial Legendre symbol is defined as follows:
+
+
+
+f (x)
+p(x)
+
+
+
+L
+
+=
+
+
+
+
+1,
+
+∃g(x) ∈ K[x] s.t. f (x) ≡ g(x)2
+
+mod p(x)
+
+
+
+−1, ∄g(x) ∈ K[x] s.t. f (x) ≡ g(x)2
+
+mod p(x)
+
+.
+
+This gives a very natural extension to a Dirichlet character, χP , defined by the following:
+
+χP : OQ(α) → Fpk ,
+
+ha − bαi 7→
+
+
+
+a − bx
+pP
+
+
+
+(8)
+L
+
+All that remains now is finding P, for which we will seek to factorize f (x, 1) mod p and look
+at the irreducible divisors. Given a set F of these characters χP = χ(p,r) , we can define the
+
+|F |
+map ΨF : H → F2 6 sending x to the tuple χ(p,r) | χ(p,r) ∈ F . We will rely on the random
+
+production of such a set F to show that this almost surely makes ker(ΨF ) small.
+
+Lemma 5.19. There is a sampleable distribution Υ for pairs (p, r) such that χ(p,r) is a character
+as in 8, such that for all but log log n of the h ∈ H, considering map as a map from H to F2 :
+ 1 + o(1)
+.
+PΥ χ(p,r) = −1 ≥
+2
+Sampling according to Υ takes at most Ln
+
+1
+,c
+3
+
+
+
+time for a to-define c. Furthermore, each
+
+character, χ(p,r) , can be evaluated in time at most Ln 31 , 2c .
+5.3.2
+
+Proof of lemma 5.19
+
+To start assume that we have the finite-degree tower of number fields L ⊃ K ⊃ Q, where L/K
+is a Galois extension with Galois group Gal(L/K). Recall that ∆L , ∆K are the discriminants of
+L and K respectively, and let dL/K = [L : K], dL = [L : Q] and dK = [K : Q]. Let P ⊆ K be a
+prime ideal and let Q = {Q ⊆ L | Q lies over P}, then from proposition 2.30 we know that the
+Frobenius elements of all Q ∈ Q are conjugate, which allows us to give the following definition:
+6
+
+b
+Implicitly we are assuming F2 ∼
+= C2 by the map b 7→ (−1)
+
+Page 97 of 114
+
+Definition 5.20. Let L ⊃ K ⊃ Q be a finite degree tower of number fields with L/K Galois.
+Let P ⊂ K be a prime ideal which is unramified in L and let FrobP be the Frobenius element
+h
+i
+of P in Gal(L/K). Then the Artin symbol, L/K
+, is defined as the conjugacy class of the
+P
+
+Frobenius automorphisms of L/K corresponding to the prime ideals Q ⊂ L dividing P:
+
+
+
+L/K
+= {FrobQ ∈ Gal(L/K) | Q | P}.
+P
+
+Remark. It is a common abuse of notation to write FrobP for any of the elements in
+just consider the element well defined up to conjugacy.
+
+h
+
+L/K
+P
+
+i
+
+and
+
+This allows us to define the set
+
+πC (x) =
+
+
+
+
+
+L/K
+∈C ,
+P | P ⊂ K prime, NK/Q (P) < x,
+P
+
+
+where C ⊆ Gal(L/K) s.t. for all g ∈ Gal(L/K): gCg −1 = C. Now let K = Q(α) and let h ∈ OK
+√
+be an element of minimal norm representing a non-trivial element of H. Let L = K( h), then
+by definition [L : K] = 2, dK = d, dL = 2d and Gal(L/K) = C2 . Since Gal(L/K) is abelian, we
+i
+h
+i
+h
+L/K
+only
+contains
+one
+element.
+Hence
+the
+value
+corresponds exactly to the
+have that L/K
+P
+P
+
+action of χP on h.
+
+As h has minimal norm it fulfills the Minkowski bound, 2.41, hence:
+d
+
+ 2
+p
+4
+d!
+NK/Q (h) ≤ cK/Q = ∆K
+= nδκ(1+o(1) .
+n
+dd
+By construction the different is generated by 2h, and so is an integral ideal. As the relative
+discriminant is the norm of the different we get that:
+∆L/Q ≤ NK/Q (2h)∆2K/Q ≤ nδκ(5+o(1)) .
+We now need an improved version of Chebotarev’s Density Theorem which we alluded to before.
+Page 98 of 114
+
+Theorem 5.21. Unconditional Effective Chebotarev Density Th. Let L/K/Q be a tower
+of number fields with L/K Galois with G = Gal(L/K). Let C ⊆ G be a union of conjugacy
+classes such that gCg −1 = C for all g ∈ G. Let C̄ be the total number of conjugacy classes in
+G. Lastly let 1 − ν be a Siegel zero of ζL if it exists and 0 otherwise. Then there exists c > 0
+such that if log x ≥ 10dL log2 (∆L ):
+|C|
+|C|
+πG′ (x) −
+Li(x) ≤
+Li(x1−ν ) + O x C̄ exp(−c1
+|G|
+|G|
+
+r
+
+!
+
+log x
+dL
+
+.
+
+Using the unconditional effective Chebotarev Density Theorem on the degree 2 extension
+L/K, then for P chosen uniformly at random with N(P) ≤ x:
+1
+< x−ν(1+o(1)) + O 2 log x exp −c1
+P (χP (h) = 1) −
+2
+
+r
+
+log x
+dL
+
+!!
+
+,
+
+where 1 − ν is a possible Siegel zero of the Dedekind zeta function over L, ζL . Ensuring that
+P(χP (h) = 1) = 21 + log(1) requires us to insist that log(x) = ω(dL (log log x)2 ) and, if ζL has a
+Siegel zero, log(x) = ω(ν −1 ).
+
+Note that, for each non-trivial coset, we can choose a representative h ∈ OK of minimal norm
+and then run through the previous paragraph for each of these. Despite the element h being
+different every time we can get a similar result each time, dependent on h. Hence we make the
+following definition:
+Definition 5.22. For a field K and h a minimal norm representative of an element of H, we
+√
+define Lh = K( h). For ǫ > 0 we define the exceptional set:
+
+EK,ǫ =
+
+
+
+2
+
+×
+
+h · {z | z ∈ K } ∈ H s.t. ∃ν : ζLh (1 − ν) = 0, ν
+
+−1
+
+> Ln
+
+
+
+
+1
+,ǫ
+.
+3
+
+It is clear that if h ∈ K × and k ∈ K × represent the same coset in H, then Lh = Lk . To
+justify this we only have to note that representing the same coset means that h and k differ by
+
+Page 99 of 114
+
+a square:
+h = kz 2 ,
+hence
+
+√
+
+h=
+
+√
+
+kz 2 =
+
+√
+
+√
+√
+kz, since z ∈ K × we get that irrK ( h) = irrK ( k) and so Lh = Lk .
+
+The exceptional set EK,ǫ is the subset of H which cannot be reliably distinguished from 0
+by characters induced by primes of size eLn ( 3 ,ǫ) . This means that if a Siegel zero of the form
+1
+
+specified exists, then almost every prime ideal of this size induces a character which vanishes for
+some element of H. However we can limit the size of the exceptional set.
+Lemma 5.23. Suppose that K = Q(α) is a number field where α is a root of an irreducible
+
+f = fˆ + (x − m)R where R is uniformly random. Then for ǫ = 13 + o(1) δ,
+Pf
+
+
+
+
+
+−1
+4
+2 κ − δ−1
+|EK,ǫ | > log log n ≤ Ln
+,
+(1 + o(1)
+.
+3
+3
+3
+
+For now we accept this lemma as fact, as this will allow us to prove lemma 5.19. The proof
+for this lemma is based on the sparseness of Siegel zeros for Dedekind zeta functions defined
+over Lh and will be shown in Section 5.3.3. Accepting the lemma, we know there exists an x
+such that log(x) = ω(dL (log log x)2 ) and, if there is a Siegel zero for ζLh , log(x) = ω(ν −1 ) for
+−1
+
+of our maximum Ln 13
+all but 43 log log n of the h ∈ H. Moreover for all but at most Ln 32
+
+polynomials f we have log x < Ln 13 , ǫ . Choosing to acccept failure on all these polynomials
+still guarantees that the algorithm fails with probability o(1).
+
+Now we turn to the sampleable distribution Υ. Recall that any prime for which N(P) < x
+√
+is guaranteed to divide a prime p with p < x. Moreover, if P is of degree k, then p < k x.
+Equivalently, a kth degree prime ideal dividing p corresponds to a simple k’th degree divisor of
+f mod p. The following algorithm samples Υ in such a way that it outputs ideals of which all
+but a small fraction are prime.
+
+Page 100 of 114
+
+Algorithm 4 Sampling Υ for (prime) ideals.
+Input: A polynomial f of degree d
+Output: A pair (p, r)
+Uniformly at random sample k ∈ Z/dZ
+
+
+−1
+−1
+Uniformly at random sample p ∈ x(k+1) , xk
+
+Test for primality of p with the Miller–Rabin test
+if r is prime then
+factor f mod p and find the irreducible and unrepeated factors ri of degree < k
+if |{ri }| ≥ j then
+Uniformly at random sample one ri and define ri = r
+else Sample a new k and repeat the algorithm
+end if
+end if
+
+Remark. We will now make a few remarks regarding the runtime of the algorithm. First note
+that to obtain the required runtime of the sieve we need this algorithm to have runtime at most
+
+O log4 (n) . Let’s see how we obtain this:
+• First note that the runtime-bound immediately means log x = L
+
+1
+3
+
+
+
+. This means we
+
+can not use deterministic primality tests, such as the AKS primality test we used for the
+GNFS. Especially we note that discarding a composite p using the Miller–Rabin primality
+test takes O(log3 (x) log log x).
+• The Miller–Rabin primality test discards composite p with probability 1 − O(log−1 (x))
+and so p is prime with probability Ω ((log x)−1 ) and so any p produced here is prime with
+probability 1 − O (d(log x)−1 ).
+
+• Factoring f mod p is possible in time O (d log x)3 probabilistically.
+
+• If p is composite, but slips through the cracks of the Miller–Rabin primality test, then the
+factorisation of f mod p may fail. If it does not fail, then this p still induced a quadratic
+Page 101 of 114
+
+character and therefore vanishes on the squares. Since we obtain at most one character
+from each p and are guaranteed to find a character if k = d and p is prime, the fraction of
+characters which are not induced by primes is o(1).
+To finish the proof we need to show that this algorithm is sufficiently fast and that characters
+can be evaluated quickly. Moreover we, once again, have to show that these characters are
+sufficiently uniformly distributed that the bounds on P(χP = 1) hold.
+Proposition 5.24. The expected time taken to sample (p, r) ∼ Υ as above is at most
+Ln
+
+
+
+
+1
+, (4 + o(1)) ǫ .
+3
+
+Proof. We noted in our remark that each attempt from the start of the algorithm takes time
+O((d log x)3 ) as the factorization of f mod r is slowest. We are guaranteed to find a factor
+if our degree bound k is d, which happens with probability d1 , the integer r is prime with
+
+probability Ω( log1 x ), and we successfully take an ideal in the final step with probability Ω d1 if
+k = d. Hence the number of attempts needed to output a prime is bounded in expectation by
+
+O (d2 log x). Hence the time taken to find an ideal is bounded in expectation by O(d5 log4 (x)) =
+
+Ln 31 , (4 + o(1))ǫ .
+1
+Proposition 5.25. For any fixed h, PΥ (χ(p,r) (h) = −1) ≥ 2d
+(1 + o(1)).
+
+
+
+−1
+−1
+Proof. The distribution of primes P generated is uniform over P mod hpi for p ∈ x(k+1) , xk
+of degree at most k by the Prime Ideal Theorem, 4.22. This property also holds for a uniform
+
+distribution over primes of norm ≤ x by an adaptation of Dirichlet’s theorem of primes in arithmetic progressions, 4.28. Thus the difference between Υ and a uniform distribution over primes
+of norm ≤ x is the distribution of the degree of these primes. The probability that Υ samples
+P with N(P) ≤ x and P | hpi for p is each of these intervals is d1 . Hence Υ pointwise dominates
+d−1 times the uniform distribution over all primes of norm below x. Therefore
+1
+1
+PΥ (χ(p,r) (h) = −1) ≥ PN (P)≤x (χP (h) = −1) = (1 + o(1)).
+d
+2d
+Page 102 of 114
+
+The final proposition immediately completes the proof of lemma 5.19, however it is quite
+technical as the logarithms we are interested in are quite large. We, therefore, have to track the
+arithmetic carefully.
+Proposition 5.26. Evaluating the characters χ(p,r) associated with the ideal P sampled as
+
+above on a term a − bα takes time at most Ln 31 , (2 + o(1)) ǫ .
+Proof. Let p = 2, then χ(p,r) = 1. Hence we may assume p > 2. For any polynomial P ∈ Fp [x]
+let |P | = pdeg(P ) . Recall
+χ(p,r) (a − bα) =
+
+
+
+a − bx
+r(x)
+
+
+
+.
+
+L
+
+Any constant c can reduce the computation to finding a Legendre symbol mod p:
+c
+P
+
+L
+
+=c
+
+|P |−1
+2
+
+k −1
+ k
+  pr−1
+c
+c
+=
+.
+=
+p
+p
+
+From [7] we call attention to the law of quadratic reciprocity for function fields by noting that
+for any two relatively prime monic irreducible polynomials over Fp :
+  
+|P |−1 |Q|−1
+P
+Q
+2
+= (−1) 2
+.
+Q
+P
+Hence
+
+χ(p,r) (a − bα) =
+
+=
+
+
+
+−b
+p
+
+k
+
+(−1)
+
+
+
+−b
+p
+
+k 
+
+p−1 pdeg(r) −1
+2
+2
+
+x − ab−1
+r(x)
+
+
+
+
+
+r(ab−1 )
+x − ab−1
+
+=
+
+
+
+=
+
+
+
+L
+
+
+
+−b
+p
+
+k
+
+−b
+p
+
+k
+
+(−1)
+
+p−1 pdeg(r) −1
+2
+2
+
+
+
+p−1 pdeg(r) −1
+2
+2
+
+
+
+(−1)
+
+r(x)
+x − ab−1
+
+
+
+r(ab−1 )
+p
+
+.
+
+
+
+k
+
+and p 2−1 are easily computed. Hence to compute χ(p,r) (a − bα) it suffices
+The parities of p−1
+2
+to compute r(ab−1 ) and two legendre symbols modulo p in O(log p) additions or subtractions of
+numbers of size at most p.
+To compute b−1 mod p requires the extended Euclidean algorithm to be run, which requires
+Page 103 of 114
+
+O(log p) additions of numbers of size at most p.
+To compute ab−1 mod p requires one multiplication.
+To compute s (ab−1 ) mod p requires at most O(d) addition and multiplications modulo p.
+Addition or subtraction of numbers of size p or modulo p takes O(log p) steps, while multiplica
+tion modulo p takes O log2 (p) steps by iterative addition and doubling. Hence the computation
+
+time in total requires time
+
+2
+
+O(d log (p)) = O(d
+
+−1
+
+2
+
+log (x)) = Ln
+
+
+
+
+1
+, (2 + o(1)) ǫ .
+3
+
+To complete the proof of the lemma we now simply take c = (4 + o(1)) ǫ.
+5.3.3
+
+Proof of lemma 5.23
+
+As we remarked earlier this proof is dependent on the sparseness of Siegel zeroes over Dedekind
+zeta functions. To start this we need the following proposition, [[14], fact 6.22 and corollary
+6.23], which we will state without proof.
+Proposition 5.27. Let K be a number field and let K be the normal closure of K. Let c(K) = 4
+if K/Q is normal and c(K) = 4[K : Q] otherwise. Assume that there is a real Siegel zero of ζK ,
+denoted 1 − ν, such that
+1 − (c(K) log|∆K |)−1 ≤ 1 − ν ≤ 1.
+Then there is a quadratic field F ⊂ K such that ζF (1 − ν) = 0.
+Now we start the proof of lemma 5.23. To do this we may assume that f (x) ∈ Q(α)[x] is an
+irreducible polynomial, as the probability that f is reducible can be absorbed in the error term
+by 5.15
+Proposition 5.28. If Lh ⊃ Lh is the normal closure of Lh = K
+
+Page 104 of 114
+
+√ 
+
+
+h , then Lh : Q ≤ 2d d!.
+
+Proof. Let K be the splitting field of K. By construction, K/Q is normal, especially that means
+it is Galois, and [K : Q] ≤ d!. Let G = Gal(K/Q). Given h ∈ OK , let Oh be the orbit of h
+under the action of G. Then |Oh | ≤ d. We adjoin square roots of each element of Oh to K to
+obtain a field L. Then [L : Q] ≤ 2d d!.
+Since degree 2 extensions are normal, the compositum of normal extensions is normal, and
+L/K is a compositum of at most d degree 2 extensions, hence the extension L/K and K/Q are
+normal. As any σ ∈ AutQ (K) acts on Oh as a permutation we can extend σ to an element of
+AutQ (L). So L/Q is normal and Lh ⊆ L, concluding our hypothesis.
+Hence from proposition 5.27, if ν −1 > 2d+2 d! log ∆Lh /Q , then 1 − ν must be a zero of some
+quadratic field Fh = Q(sh ) ⊆ Lh . By assumption 2 ∤ [K : Q], hence K has no quadratic subfields,
+which means that Fh ∩ K = Q and so Fh is the only quadratic subfield of Lh . Moreover, Lh is
+the smallest field containing both Fh and K and since the h ∈ H are not related by squares of
+K it holds that Lh doesn’t contain any h′ ∈ H from another class. This assures that the Lh
+produced as h varies are all distinct fields and so all sh must be distinct.
+
+By the transitivity of the discriminant, lemma 2.47, we have, for the towers of number field
+Lh /Fh /Q and Lh /K/Q that
+∆dFh /Q NFh /Q (∆Lh /Fh ) = ∆2K/Q NK/Q (∆Lh /K ).
+As ∆Lh /K is the relative discriminant, hence is an ideal, we can use the Minkowski Bound:
+NK/Q (∆Lh /K ) ≤
+Since ∆K/Q ≤ Ln
+
+4 1 2
+, δ κ
+3 2
+
+
+
+p
+
+ d  
+p
+4
+d!
+∆K/Q
+∆K/Q .
+≤
+π
+dd
+
+and ∆Lh /Q ≤ Ln
+
+4 5 2
+, δ κ , we can conclude that
+3 4
+
+
+
+
+ 
+4 5
+, δκ
+.
+∆Fh /Q = O Ln
+3 4
+Page 105 of 114
+
+By the contribution of the Euler product of the Dedekind zeta function:
+ 
+
+∆Fh /Q
+ζFh/Q (s) = ζ(s)L s,
+,
+·
+and by reciprocity j 7→
+
+∆
+
+Fh /Q
+
+j
+
+
+
+is a Dirichlet character modulo ∆Fh /Q .
+
+Now we invoke [[14], fact 6.24]:
+Proposition 5.29. There is an effective constant c > 0 such that given two characters χr , χr′
+of moduli r, r ′ respectively, with χr χr′ non-principal, then the product of Dirichlet L-functions
+
+
+c
+L(s, χr )L(s, χr′ ) has at most one real zero in 1 − log rr′ , 1 .
+So if there are two characters modulo q and q ′ respectively there is at most one L-function
+with a zero 1 − ν and ν −1 > c log qq ′ for some effective c. It immediately follows that there is at
+most one character with modulus in [q, q e ] with a zero at 1 − ν and ν −1 > (e + 1)c log q.
+Since ∆Fh /Q < Ln
+
+4
+,
+3
+
+5
++ o(1)
+4
+
+
+
+
+δκ and ∆Fh /Q ∈ Z it follows that all possible discriminants
+
+can be covered by 34 log log n ranges of form [x, xe ]. Hence there are at most 43 log log n exceptional characters with exceptional zeroes such that
+
+ν
+
+−1
+
+
+
+> (e + 1)c log Ln
+
+
+
+4
+,
+3
+
+
+
+ 
+
+
+4
+1
+5
++ o(1) δκ
+= O δκ log 3 (n) log log(n)− 3 ,
+4
+
+as required. This bound is far weaker than the required bound of ν −1 > 2d+2 d! log ∆Lh /Q , and so
+there are at most 43 log log n extensions Lh /Q with exceptional zeroes and ν −1 > 2d+2 d! log ∆Lh /Q .
+Finally:
+2
+
+d+2
+
+d! log ∆Lh /Q ≤ d
+
+d(1+o(1)
+
+log
+
+O(1)
+
+(n) = Ln
+
+This completes the proof of the lemma.
+
+Page 106 of 114
+
+
+
+
+1 δ
+, (1 + o(1)) .
+3 3
+
+5.3.4
+
+Proof of theorem 5.3
+
+We have now removed all obstructions that were needed. It is therefore that we can now prove
+theorem 5.3. Recall that for a set of characters F we define the map
+|F |
+
+Ψ F : H → F2 ,
+
+x 7→ χ(p,r) (x) : χ(p,r) ∈ F .
+
+With the work we have done up to now we are ready to produce our linear ΨF with small kernel,
+and this to produce a congruence of squares. Due to the size of some of the numbers involved,
+
+having Ln 13 bits, we track the arithmetic very closely. First, using lemma 5.19, we sample
+
+
+4
+δ2 κ log 3 (n)
+4d δκ log n + 2 log 2
+pairs (pi , ri ) from Υ independently.
+1
+log log n 3
+
+
+Note that this sample is of size o(log2 (n)) = Ln 31 , o(1) and each individual sample takes
+
+
+at most Ln 31 , c , so we can produce the complete sample in Ln 13 , c + o(1) . After this process
+
+
+4
+δ2 κ log 3 (n)
+′
+we have M = 1+B +dB +4d δκ log n + 2 log 2
+pairs from Section 5.2.1 and the sample
+1
+log log n 3
+1+o(1)
+from Υ. Note that M = Ln 13 , max (β, β ′)
+. For each of these, we need to evaluate each
+
+of our characters and as each character evaluates in Ln 31 , 2c we get that this process takes
+1+o(1)
+Ln 31 , 2c + max(β, β ′ )
+.
+Fix some h ∈ H\{1} such that h is not in the exceptional set of size log log n. Each map
+χ(pi ,ri ) is independent and induces a map in Hom(H, F2 ) such that
+
+1 + o(1)
+.
+P(h 6∈ ker χ(pi ,ri ) ) ≥
+2d
+As a corollary it follows that:
+
+P(h ∈ ker(ΨF )) ≤
+
+
+
+1 + o(1)
+1−
+2d
+
+M −(1+B+dB′ )
+
+Page 107 of 114
+
+≤ |H|−2+o(1) .
+
+Hence by the union bound over the non-trivial elements of H the probability that any of these
+non-exceptional and non-zero elements is in the kernel is o(1). Hence with high probability the
+kernel of ΨF has size at most 43 log log n.
+
+From here we proceed as normal. With the M pairs representing linear polynomials we use
+a fast kernel finding algorithm for sparse matrices, such as Block–Wiedemann, [21], to find a
+suitable subset Si to construct a polynomial Pi in time
+2
+
+O(M ) = Ln
+
+
+
+
+1
+′
+, 2 max(β, β )(1 + o(1) ,
+3
+
+such that Pi (m) is a square in Z and Pi (α) is a square in OQ(α) multiplied by one of at most
+4
+log log n elements of H. Repeating the algorithm l = 34 log log n times to generate polynomials
+3
+
+P1 , . . . , Pl , we are able to guarantee that for some i < j, Pi and Pj lie over the same element h,
+
+hence Pi Pj is a square in OQ(α) . In what follows we consider the 2l ∼ 89 (log log n)2 polynomials
+separately.
+
+Now if γ ∈ OQ(α and γ 2 ∈ Z[α], then γ · f ′ (α) ∈ Z[α]. Let S = Si ∆Sj and fix the polynomial
+
+
+∂f
+(x, 1)
+P =
+∂x
+
+2 Y
+
+(a,b)∈S
+
+
+Y
+∂f
+(a − bx), and so u =
+(x, y) (m, 1)2
+(a − mb)
+∂x
+2
+
+
+
+a,b∈S
+
+is a square in Z. Hence u can be found by taking the product modulo n over all p < B of p raised
+to half the total order of p in the terms (a − mb) for (a, b) ∈ S and multiplying by f ′ (m, 1).7
+The reason for computing the square root in this fashion is to ensure we need only M log n
+additions and divisions and at most M log n modular multiplications to compute u mod n from
+the exponents. This ensures polynomial running time.
+
+7
+
+This technique differs minimally from the technique for Z in the GNFS
+
+Page 108 of 114
+
+Similarly, for at least one of the
+
+l
+2
+
+
+
+polynomials considered, there exists v ∈ Z[α] such that
+
+
+
+
+Y
+∂f
+v =
+(x, y) (α, 1)2
+(a − bα).
+∂x
+2
+
+(a,b∈S
+
+Using [24] we can compute square roots in the number field to find v(m, 1) mod n in time
+O(M 2 ). We abuse notation and write v(m) for the element of Z/nZ obtained by substituting
+m for α. By the definition of f we have f (m, 1) = n and so:
+
+v(m)2
+
+
+
+
+
+Y
+∂f
+mod f (m, 1) = 
+(x, y) (α, 1)2
+(a − bα) mod f (α, 1) (m)
+∂x
+(a,b)∈S
+
+
+Y
+∂f
+=
+(x, y) (m, 1)2
+(a − mb) mod (f (m, 1))
+∂x
+(a,b)∈S
+
+= u2
+
+mod n,
+
+and so we have constructed a congruence of squares in time
+
+Ln
+
+
+
+1
+c
+, max(2 max(β, β ′), max(β, β ′) + , c)
+3
+2
+
+1+o(1)
+
+.
+
+δ, we can insist that we have at most 34 log log n exceptional values of h, and
+−1
+
+−1
+our f lies off a set of probability at most Ln 32 , κ−δ3 (1 + o(1))
+the run time bound is as
+As c ≤
+
+4
++ o(1)
+3
+
+
+
+claimed, finishing the proof.
+
+5.4
+
+Computational efficiency
+
+The computational efficiency boils down to proving theorem 5.1. For this we fix n, β, β ′ , σ, δ,
+and κ satisfying the conditions of equations 5 and 6. Then by theorem 5.3 we can extract a
+
+congruence of squares mod n from Ln 13 , max(β, β ′ ) + o(1) pairs (a, b) ∈ Xf,m,n for a fixed
+(m, f ) in expected time
+
+Ln
+
+
+
+
+
+
+1
+2δ
+′
+, 2 max
+, β, β (1 + o(1)) .
+3
+3
+
+Page 109 of 114
+
+Theorem 5.2 tells us that a fixed (m, f ) and this many pairs (a, b) ∈ Xf,m,n will be found in
+expected time
+Ln
+
+
+
+
+1
+δ −1
+σδ + κ
+′
+, max (β, β ) +
+(1 + o(1)) +
+(1 + o(1)) .
+3
+3β
+3β ′
+
+Hence we can run the RNFS to obtain a congruence of squares mod n with the expected time
+bounded by
+
+Ln
+
+
+
+
+ −1
+
+
+
+
+1
+δ
+2δ
+κ + σδ
+′
+′
+, λ(1 + o(1) , λ = max 2 max
+, β, β , max (β, β ) +
++
+.
+3
+3
+3β
+3β ′
+
+Having chosen β, β ′, σ, δ, κ satisfying the conditions of 5 and 6 we can optimize the constants.
+Note that increasing the lesser of β and β ′ cannot increase λ or cause the conditions on the
+constants to be violated, so we can assume β = β ′ . We then compute:
+!
+r
+√
+
+
+2δ −1 + σδ + o(1)
+8σ + o(1)
+4 8σ
+2σ ≥ λ ≥ min β +
+≥ min β +
+≥2
++ o(1).
+β,δ
+β
+3β
+3β
+9
+Fix any ǫ > 0 such that ǫ = o(1). If we take β = β
+
+′
+
+= σ = 2δ
+=
+3
+
+q
+3
+
+8
++ ǫ and κ =
+9
+
+q
+3
+
+1
++ ǫ then
+3
+
+q
+
+the above are all equalities. Furthermore all the conditions are satisfied, giving λ = 2 3 89 + o(1).
+This proves a runtime of
+Ln
+
+5.5
+
+!
+r
+1 3 64
+,
++ o(1) .
+3
+9
+
+Riemann and the future of factorization
+
+As a final note we want to have a short discussion on some of the ways that the Generalized Riemann Hypothesis could impact the analysis performed on the Randomized number field sieve.
+As discussed: Until now we have not made any assumption regarding the GRH and only limited
+assumptions on the heuristics, but if we were to accept the GRH then much of our discussion
+becomes a lot simpler.
+
+One of the main reasons it becomes simpler is because the Generalized Riemann Hypothesis
+
+Page 110 of 114
+
+allows us to assume that there are no Siegel zeroes. This makes the discussion around algebraic
+obstructions a lot simpler. For example we obtain the following:
+1
+
+Proposition 5.30. Conditional on GRH, for ǫ = log− 4 (n) = o(δ),
+
+Pf (|EK,ǫ | > 0) = 0.
+This follows automatically from our discussion of the size of this set and the fact there are
+
+no Siegel zeroes. This makes lemma 5.23 vacuous and allows us to sharpen the Ln 13 bounds
+
+in lemma 5.19 polynomial in log n.
+
+The GRH also allows us to have far tighter effective bounds on the prime numbers in arithmetic progressions. Without going into details it would allow us to subvert the use of the
+adapted Bombieri–Vinogradov theorems and use an effective version of Chebotarev’s Density
+Theorem which is completely dependent on the GRH holding.
+
+It is obvious that in a discussion like this it could easily be assumed that the GRH holds,
+but that would make the whole duscussion conditional and the beauty of this is that we make
+no grand assumptions whatsoever. To obtain a complexity that is equivalent to the heuristic
+complexity without relying on any conditions makes this the best possible outcome.
+
+Does this mean we are done with the number field sieve after thirty years? No, definitely not.
+Over the years many different versions have found their way into mathematics and cryptography
+to solve other problems than factorization. For example the Tower Number Field Sieve which
+is an adapted algorithm to solve Discrete Logarithm Problems ([27], [28]) has been worked on
+for many years and it will be interesting to see if a similar randomization leads to a provable
+complexity for that as well.
+
+Page 111 of 114
+
+References
+Books
+[1] S. Alaca, K.S. Williams, Introductory Algebraic Number Theory Cambridge University Press,
+First edition, 2004.
+[2] R. Crandall, C. Pomerance, Prime numbers, a computational perspective Springer Verlag,
+First edition - corrected printing, 2002.
+[3] A.K. Lenstra, H.W. Lenstra Jr., Development of the Number Field Sieve Springer Verlag,
+1993. Which is the source used for the papers [15], [16] cited below
+[4] I. Stewart, Galois Theory, CRC Press, Fourth edition, 2015
+[5] H. Cohen, A Course in Computational Algebraic Number Theory Springer Verlag, Fourth
+Edition, 2000
+[6] L. C. Washington, Introduction to Cyclotomic Fields Springer Verlag, Second edition, 1997
+[7] M. Rosen, Number Theory in Function Fields, Springer Verlag, 2002.
+[8] H.L. Montgomery, R.C. Vaughan, Multiplicative Number Theory 1: Classical Theory, Cambridge University Press, 2010.
+[9] J. Milne, Clasds Field Theory, Self-publised, Version 4.02, viewed January-March 2020,
+www.jmilne.org/math/CourseNotes/
+[10] H. Davenport, Multiplicative Number Theory, Springer Verlag, Second edition, 1980
+[11] G. Greaves, Sieve in Number Theory Springer Verlag, First Edition, 2001
+
+Papers
+[12] M.A. Morrison, J. Brillhart, A Method of Factoring and the Factorization of F7 Mathematics
+of Computation, American Mathematical Society, Volume 29, 1975.
+Page 112 of 114
+
+[13] P. Stevenhagen, The number field sieve Algorithmic Number Theory, MSRI Publications,
+Volume 44, 2008.
+[14] J.D. Lee, R. Venkatesan, Rigorous analysis of a randomised number field sieve Journal of
+Number Theory, Volume 187, 2018
+[15] J.M. Pollard, Factoring with cubic integers As printed in [3], Springer Verlag, 1993.
+[16] A.K. Lenstra, H.W. Lenstra Jr., M.S. Manasse, J.M. Pollard The Number Field Sieve As
+printed in [3], Springer Verlag, 1993
+[17] J.P. Buhler, H.W. Lenstra Jr., C. Pomerance Factoring integers with the number field sieve
+As printed in [3], Springer Verlag, 1993
+[18] A. Granville, It is easy to determine whether a given integer is prime Bull. Amer. Math.
+Soc., Volume 42, 2005
+[19] D. Coppersmith, Solving linear equations over GF(2): Block–Lanczos Algorithm , Linear
+Algebra Applications, 1991.
+[20] P. Montgomery, A Block–Lanczos Algorithm for Finding Dependencies over GF(2) Adv. in
+Cryptology - Eurocrypt ’95, 1995
+[21] D. Wiedemann Solving sparse linear equations over finite fields , IEEE Trans. Inform.
+Theory, Volume 32, 1986
+[22] A. Hildebrand, G. Tenenbaum, Integers without large prime factors , Jour. Th. des Nom.
+de Bordeaux, Volume 5, 1993
+[23] A.J. Harper, Bombieri–Vinogradov and Barban-Davenport-Halberstam type theores for
+smooth numbers , arXiv:1208.5992 [math.NT]
+[24] E. Thomé, Square root algorithms for the number field sieve , Proc. of the 4th Int. Workshop
+on Arith. in Finite Fields, Springer, 2012
+
+Page 113 of 114
+
+[25] A. Hildebrand, On the number of positive integers ≤ x and free of prime factors > y,
+J.Number Theory, 1986, Volume 22, p. 289–307
+[26] A. Hildebrand, G. Tenenbaum, On integers free of large prime factors , Trans. Amer. Math.
+Soc., 1986, Volume 296, p. 265–290
+[27] O. Schirokauer, The impact of the number field sieve on the Discrete Logarithm Problem ,
+Algorithmic Number Theory, MSRI Publications, 2008, Volume 44
+[28] R. Barbulescu, et. al, The Tower Number Field Sieve , Advances in Cryptology, ASIACRYPT 2015, 2015, Volume 9453
+[29] K. Soundararajan, The Distribution of Smooth Numbers in Arithmetic Progressions CRM
+Proceedings and Lecture notes, American Mathematical Society, 2008, Volume 46, p. 115-128
+[30] A. Harper, On a paper of K. Soundararajan on smooth numbers in arithmetic progressions
+, Journal of Number Theory, Elsevier, 2012, Volume 132, p. 182-199.
+
+Page 114 of 114
+
+

@@ -1,0 +1,1823 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/css/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Search results</title>
+    <link rel="stylesheet" href="/css/eprint.css?v=10">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon-180x180.png" />
+    <meta name="tdm-reservation" content="1">
+    
+<style>
+ input {
+   background-color: #e8e8e8 !important;
+ }
+ mark {
+   font-weight: 600;
+   padding: .2em 0px .2em 0px;
+   color: black;
+ }
+ span.term {
+   font-weight: 700 !important;
+   font-family: var(--bs-font-monospace), monospace !important;
+ }
+ form {
+   background-color:#fff;
+ }
+ @media (min-width: 768px) {
+   form {
+     position:sticky;top:6rem;
+   }
+ }
+
+</style>
+<meta name="description" content="Search the Cryptology ePrint Archive">
+
+  </head>
+
+  <body>
+    <noscript>
+      <h1 class="text-center">What a lovely hat</h1>
+      <h4 class="text-center">Is it made out of <a href="https://iacr.org/tinfoil.html">tin foil</a>?</h4>
+    </noscript>
+    <div class="fixed-top" id="topNavbar">
+      <nav class="navbar navbar-custom navbar-expand-lg">
+        <div class="container px-0 justify-content-between justify-content-lg-evenly">
+          <div class="order-0 align-items-center d-flex">
+            <button class="navbar-toggler btnNoOutline" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
+              <span class="icon-bar top-bar"></span>
+              <span class="icon-bar middle-bar"></span>
+              <span class="icon-bar bottom-bar"></span>
+            </button>
+            <a class="d-none me-5 d-lg-inline" href="https://iacr.org/"><img class="iacrlogo" src="/img/iacrlogo_small.png" alt="IACR Logo" style="max-width:6rem;"></a>
+          </div>
+          <a class="ePrintname order-1" href="/">
+            <span class="longNavName">Cryptology ePrint Archive</span>
+          </a>
+          <div class="collapse navbar-collapse order-3" id="navbarContent">
+            <ul class="navbar-nav me-auto ms-2 mb-2 mb-lg-0 justify-content-end w-100">
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Papers
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="navbarDropdown">
+                  <span class="text-dark mx-3" style="white-space:nowrap;">Updates from the last:</span>
+                  <li><a class="dropdown-item ps-custom" href="/days/7">7 days</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/31">31 days</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/183">6 months</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/365">365 days</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/byyear">Listing by year</a></li>
+                  <li><a class="dropdown-item" href="/complete">All papers</a></li>
+                  <li><a class="dropdown-item" href="/complete/compact">Compact view</a></li>
+                  <li><a class="dropdown-item" href="https://www.iacr.org/news/subscribe">Subscribe</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/citation.html">How to cite</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/rss">Harvesting metadata</a></li>
+                </ul>
+              </li>
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="submissionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Submissions
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="submissionsDropdown">
+                  <li><a class="dropdown-item" href="/submit">Submit a paper</a></li>
+                  <li><a class="dropdown-item" href="/revise">Revise or withdraw a paper</a></li>
+                  <li><a class="dropdown-item" href="/operations.html">Acceptance and publishing conditions</a></li>
+                </ul>
+              </li>
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  About
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="aboutDropdown">
+                  <li><a class="dropdown-item" href="/about.html">Goals and history</a></li>
+                  <li><a class="dropdown-item" href="/news.html">News</a></li>
+                  <li><a class="dropdown-item" href="/stats">Statistics</a></li>
+                  <li><a class="dropdown-item" href="/contact.html">Contact</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown ps-md-2 text-right order-2 order-lg-last">
+            <button class="btn btnNoOutline" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/img/search.svg" class="searchIcon" alt="Search Button"/>
+            </button>
+            <div id="searchDd" class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuButton1">
+              <form action="/search" method="GET">
+                <div class="input-group">
+                  <input id="searchbox" name="q" type="search" class="form-control" autocomplete="off">
+                  <button class="btn btn-secondary border input-group-append ml-2">
+                    Search
+                  </button>
+                </div>
+              </form>
+              <div class="ms-2 p-1 d-none"><a href="/search">Advanced search</a></div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <main id="eprintContent" class="container px-3 py-4 p-md-4">
+<div class="row">
+    <div class="alert alert-info" role="alert">
+      We have switched the default sort to relevance (instead of chronological order) based on a straw poll at Eurocrypt.
+      Let us know how this affects your search experience!
+    </div>
+    <div class="col-12 col-lg-4">
+      <form class="p-2 pt-md-4 align-items-end  needs-validation" novalidate onsubmit="return validateForm()" method="GET" action="/search">
+        <label for="anything" class="mt-2 form-label">Match anything</label>
+        <input type="text" name="q" class="form-control form-control-sm" id="anything" aria-label="Match anything" value="Jacobian hyperelliptic">
+        <label for="title" class="mt-4 form-label">Match title</label>
+        <input type="text" name="title" class="form-control form-control-sm" id="title" aria-label="Match title" value="">
+        <label for="authors" class="mt-4 form-label">Match authors</label>
+        <input type="text" name="authors" class="form-control form-control-sm" id="authors" aria-label="Match authors" value="">
+        <label for="category" class="mt-4 form-label">Category</label><br>
+        <select class="form-select form-select-sm" id="category" name="category" aria-label="Category">
+          <option value="">All categories</option>
+          
+          <option value="APPLICATIONS" >Applications</option>
+          
+          <option value="PROTOCOLS" >Cryptographic protocols</option>
+          
+          <option value="FOUNDATIONS" >Foundations</option>
+          
+          <option value="IMPLEMENTATION" >Implementation</option>
+          
+          <option value="SECRETKEY" >Secret-key cryptography</option>
+          
+          <option value="PUBLICKEY" >Public-key cryptography</option>
+          
+          <option value="ATTACKS" >Attacks and cryptanalysis</option>
+          
+        </select>
+        <div class="row d-none d-lg-flex">
+          <div class="col-6">
+            <label for="submittedafter" class="mt-4 form-label">Submitted after</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="submittedafter" name="submittedafter" aria-label="Submitted after" value="None" placeholder="Enter a year">
+          </div>
+          <div class="col-6">
+            <label for="submittedbefore" class="mt-4 form-label">Submitted before</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="submittedbefore" name="submittedbefore" aria-label="Submitted before" value="None" placeholder="Enter a year">
+            <div class="invalid-feedback">
+              Dates are inconsistent
+            </div>
+          </div>
+        </div>
+        <div class="row d-none d-lg-flex">
+          <div class="col-6">
+            <label for="revisedafter" class="mt-4 form-label">Revised after</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="revisedafter" name="revisedafter" aria-label="Revised after" placeholder="Enter a year" value="None">
+            <div class="invalid-feedback">
+              Dates are inconsistent
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="revisedbefore" class="mt-4 form-label">Revised before</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="revisedbefore" name="revisedbefore" aria-label="Revised before" value="None" placeholder="Enter a year">
+          </div>
+        </div>
+        <div class="d-none d-lg-flex mt-3">
+          <div class="form-check">
+            <input type="checkbox" id="relevance" name="relevance" >
+            <label for="relevance" class="form-check-label ms-2">Sort by relevance</label>
+          </div>
+        </div>
+        <div class="mt-3 d-flex">
+          <button class="btn btn-primary btn-sm" type="submit">Search</button>
+          <button id="clearButton" class="btn btn-secondary btn-sm ms-2" type="button">Clear</button>
+          <button id="helpButton" class="btn btn-info btn-sm ms-auto" type="button" data-bs-toggle="modal" data-bs-target="#helpModal">Help</button>
+        </div>
+      </form>
+      <div class="modal" tabindex="-1" id="helpModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Search Help</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                You can search for a phrase by enclosing it in double quotes, e.g.,
+                <span class="term text-nowrap"><a href="/search?q=%22differential%20privacy%22">"differential privacy"</a></span>.
+              </p>
+              <p>
+                You can require or exclude specific terms using + and -. For example, to search for papers that contain the term elliptic
+                but not the term factoring, use
+                <span class="term text-nowrap"><a href="/search?q=%2Belliptic%20-factoring">+elliptic -factoring</a></span>
+              </p>
+              <p>
+                To search in a title or for author name, use
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20author%3Aboneh">title:isogeny author:boneh</a></span>.
+                If you want to require both, you can use
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20AND%20author%3Aboneh">title:isogeny AND author:boneh</a></span>
+                because it recognizes logical operators <span class="term">AND</span> and <span class="term">OR</span>.
+                This is equivalent to <a href="/search?title=isogeny&authors=boneh">using the individual fields</a> for author and title.
+                You can also use NOT to negate a condition, as with
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20AND%20NOT%20author%3Aboneh">title:isogeny AND NOT author:boneh</a></span> to search for papers with an author other than Boneh.
+              </p>
+              <p>
+                To find documents containing a term starting with the string
+                <span class="term">differe</span>, use
+                <span class="term"><a href="/search?q=differe%2A">differe*</a></span>.
+                This will match the terms difference, different, and differential
+              </p>
+              <p>
+                Note that search applies stemming, so that if you search for <span class="term">yield</span> it will also match terms
+                <span class="term">yields</span> and <span class="term">yielding</span>. If you want to disable
+                stemming, capitalize the term. A search for <span class="term">Adam</span> will not match the term 'Adams'.
+              </p>
+              <p>
+                The system attempts to recognize possible misspellings. This is perhaps a source of amusement more than anything else.
+              </p>
+              <p>
+                This currently searches the text in titles, authors, abstracts, and keywords, but does not search in the PDF or PS itself.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Parsed query: Query(((jacobian@1 AND Zhyperellipt@2) AND_MAYBE PostingSource(Xapian::ValueWeightPostingSource(slot=2)))) -->
+    </div>
+  <div class="col-12 col-lg-8" style="min-height:80vh">
+    
+    
+    
+    
+    <h4 class="mt-3 ms-4">61 results sorted by ID</h5>
+      
+    <div class="ms-lg-4 mt-3 results">
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/546" class="paperlink" href="/2026/546">2026/546</a>
+          <span class="ms-2"><a href="/2026/546.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-03-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Hyperelliptic Gluing Isogeny Diffie–Hellman (HGIDH): A Genus-2 Gluing Isogeny Key-Exchange</strong>
+              <div class="mt-1"><span class="fst-italic">Nouhou Abdou Idris, Mustapha Hedabou</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this work, we propose Hyperelliptic Gluing Isogeny Diffie–
+Hellman (HGIDH), a key-exchange protocol built from gluing isogenies
+between the product of two supersingular elliptic curves and the Jacobian
+of a genus-2 hyperelliptic curve. The protocol leverages the Frey–Kani
+correspondence, using maximal isotropic subgroups of (E1 × E2)[N] to
+construct principally polarized abelian surfaces. Private keys are encoded
+as four scalars defining a non-cyclic, two-dimensional kernel,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/110" class="paperlink" href="/2026/110">2026/110</a>
+          <span class="ms-2"><a href="/2026/110.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-01-23</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Logarithmic density of rank $\geq1$ and $\geq2$ genus-2 Jacobians and applications to hyperelliptic curve cryptography</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Mugurel Barcau, Vicentiu Pasol, George Turcas</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-ATTACKS">Attacks and cryptanalysis</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this work we study quantitative existence results for genus-$2$ curves over $\mathbb{Q}$ whose Jacobians have Mordell-Weil rank at least $1$ or $2$, ordering the curves by the naive height of their integral Weierstrass models. We use geometric techniques to show that asymptotically the Jacobians of almost all integral models with two rational points at infinity have rank $r \geq 1$. Since there are $\asymp X^{\frac{13}{2}}$ such models among the $X^7$ curves $y^2=f(x)$ of height $\leq X$,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2025/1590" class="paperlink" href="/2025/1590">2025/1590</a>
+          <span class="ms-2"><a href="/2025/1590.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2025-09-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The AIIP Problem:  Toward a Post-Quantum Hardness Assumption from Affine Iterated  Inversion over Finite Fields</strong>
+              <div class="mt-1"><span class="fst-italic">MINKA MI NGUIDJOI Thierry Emmanuel</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We introduce the Affine Iterated Inversion Problem (AIIP), a new candidate hard problem
+ for post-quantum cryptography, based on inverting iterated polynomial maps over finite fields.
+ Given a polynomial f ∈ Fq[x] of degree d ≥ 2, an iteration parameter n, and a target y ∈ Fq,
+ AIIP requires finding an input x such that f(n)(x) = y, where f(n) denotes the n-fold composi
+tion of f. We establish the computational hardness of AIIP through two independent analytical
+ frameworks: first, by...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2024/623" class="paperlink" href="/2024/623">2024/623</a>
+          <span class="ms-2"><a href="/2024/623.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2024-04-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Complete group law for genus 2 Jacobians on Jacobian coordinates</strong>
+              <div class="mt-1"><span class="fst-italic">Elif Ozbay Gurler, Huseyin Hisil</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This manuscript provides complete, inversion-free, and explicit group law formulas in Jacobian coordinates for the genus 2 hyperelliptic curves of the form $y^2 = x^5 + a_3 x^3 + a_2 x^2 + a_1 x + a_0$ over a field $K$ with $char(K) \ne 2$. The formulas do not require the use of polynomial arithmetic operations such as resultant, mod, or gcd computations but only operations in $K$.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2022/1107" class="paperlink" href="/2022/1107">2022/1107</a>
+          <span class="ms-2"><a href="/2022/1107.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-10-13</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Projective Geometry of Hessian Elliptic Curves and Genus 2 Triple Covers of Cubics</strong>
+              <div class="mt-1"><span class="fst-italic">Rémy Oudompheng</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The existence of finite maps from hyperelliptic curves to elliptic curves has been studied for more than a century and their existence has been related to isogenies between a product of elliptic curves and their Jacobian surface.
+Such finite covers, sometimes named gluing maps have recently appeared in cryptography in the context of genus 2 isogenies and more spectacularly, in the work of Castryck and Decru about the cryptanalysis of SIKE.
+Computation methods include the use of algebraic...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2022/349" class="paperlink" href="/2022/349">2022/349</a>
+          <span class="ms-2"><a href="/2022/349.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-04-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Hard Homogeneous Spaces from the Class Field Theory of Imaginary Hyperelliptic Function Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Antoine Leudière, Pierre-Jean Spaenlehauer</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We explore algorithmic aspects of a free and transitive commutative group action
+coming from the class field theory of imaginary hyperelliptic function fields.
+Namely, the Jacobian of an imaginary hyperelliptic curve defined over
+$\mathbb{F}_q$ acts on a subset of isomorphism classes of Drinfeld modules.  We
+describe an algorithm to compute the group action efficiently. This is a
+function field analog of the Couveignes-Rostovtsev-Stolbunov group action. Our
+proof-of-concept C++/NTL...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/676" class="paperlink" href="/2021/676">2021/676</a>
+          <span class="ms-2"><a href="/2021/676.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-06-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Extending the GLS endomorphism to speed up GHS Weil descent using Magma</strong>
+              <div class="mt-1"><span class="fst-italic">Jesús-Javier Chi-Domínguez, Francisco Rodríguez-Henríquez, Benjamin Smith</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Let \(q~=~2^n\), and let \(\mathcal{E} / \mathbb{F}_{q^{\ell}}\) be a generalized
+Galbraith--Lin--Scott (GLS) binary curve, with $\ell \ge 2$ and \((\ell, n) = 1\).
+We show that the GLS endomorphism on \(\mathcal{E} / \mathbb{F}_{q^{\ell}}\) induces an efficient
+endomorphism on the Jacobian \(\mathrm{Jac}_\mathcal{H}(\mathbb{F}_q)\) of the genus-\(g\) hyperelliptic
+curve \(\mathcal{H}\) corresponding to the image of the GHS Weil-descent attack applied to
+\(\mathcal{E} /...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/090" class="paperlink" href="/2021/090">2021/090</a>
+          <span class="ms-2"><a href="/2021/090.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-05-12</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A New Twofold Cornacchia-Type Algorithm and Its Applications</strong>
+              <div class="mt-1"><span class="fst-italic">Bei Wang, Yi Ouyang, Honggang Hu, Songsong Li</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We focus on exploring more potential of Longa and Sica&#39;s algorithm (ASIACRYPT 2012), which is an elaborate iterated Cornacchia algorithm that can compute short bases for 4-GLV decompositions. The algorithm consists of two sub-algorithms, the first one in the ring of integers $\mathbb{Z}$ and the second one in the Gaussian integer ring $\mathbb{Z}[i]$. We observe that $\mathbb{Z}[i]$ in the second sub-algorithm can be replaced by another Euclidean domain $\mathbb{Z}[\omega]$...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/012" class="paperlink" href="/2021/012">2021/012</a>
+          <span class="ms-2"><a href="/2021/012.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-01-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Automorphisms and isogeny graphs of abelian varieties, with applications to the superspecial Richelot isogeny graph</strong>
+              <div class="mt-1"><span class="fst-italic">Enric Florit, Benjamin Smith</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We investigate special structures due to automorphisms in isogeny graphs of principally polarized abelian varieties, and abelian surfaces in particular. We give theoretical and experimental results on the spectral and statistical properties of (2, 2)-isogeny graphs of superspecial abelian surfaces, including stationary distributions for random walks, bounds on eigenvalues and diameters, and a proof of the connectivity of the Jacobian subgraph of the (2, 2)-isogeny graph. Our results improve...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/1619" class="paperlink" href="/2020/1619">2020/1619</a>
+          <span class="ms-2"><a href="/2020/1619.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-01-04</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Getting Rid of Linear Algebra in Number Theory Problems</strong>
+              <div class="mt-1"><span class="fst-italic">Paul Kirchner, Pierre-Alain Fouque</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We revisit some well-known cryptographic problems in a black box modular ring model of computation. This model allows us to compute with black box access to the ring $\mathbb{Z}/m\mathbb{Z}$. We develop new generic ring algorithms to recover $m$ even if it is unknown. At the end, Maurer&#39;s generic algorithm allows to recover an element from its black box representation. However, we avoid Maurer&#39;s idealized model with CDH oracle for the multiplication in the hidden ring by introducing a new...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/289" class="paperlink" href="/2020/289">2020/289</a>
+          <span class="ms-2"><a href="/2020/289.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-03-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The security of Groups of Unknown Order based on Jacobians of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Jonathan Lee</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PROTOCOLS">Cryptographic protocols</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Recent work using groups of unknown order to construct verifiable delay functions, polynomial commitment schemes and non interactive zero knowledge proofs have provoked fresh interest in the construction of efficient cryptographic groups of unknown order. It has been suggested that the Jacobian of hyperelliptic curves of genus 3 could be suitable for this purpose. Regrettably, efficient algorithms to compute the order of the Jacobian of a hyperelliptic curve are known. Concretely, it is...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2017/006" class="paperlink" href="/2017/006">2017/006</a>
+          <span class="ms-2"><a href="/2017/006.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-01-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Reduced Mumford divisors of a genus 2 curve through its jacobian function field</strong>
+              <div class="mt-1"><span class="fst-italic">Eduardo Ruiz Duarte</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We explore the function field of the jacobian JH of a hyperelliptic
+curve H of genus 2 in order to find reduced coordinates to represent
+points of JH and do arithmetic.
+We show how this relates to the usual Mumford representation of points
+of JH. Moreover we identify the open subsets of JH where our reduced coordinates are defined, characterizing the elements which can be reduced and we discuss the group operation with them.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/777" class="paperlink" href="/2016/777">2016/777</a>
+          <span class="ms-2"><a href="/2016/777.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-08-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast, uniform scalar multiplication for genus 2 Jacobians with fast Kummers</strong>
+              <div class="mt-1"><span class="fst-italic">Ping Ngai Chung, Craig Costello, Benjamin Smith</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We give one- and two-dimensional scalar multiplication algorithms for
+Jacobians of genus~2 curves that operate by
+projecting to Kummer surfaces, where we can
+exploit faster and more uniform pseudomultiplication, before
+recovering the proper &#34;signed&#34; output back on the Jacobian.
+This extends the work of Lopez and Dahab, Okeya and Sakurai,
+and Brier and Joye to genus 2, and also to two-dimensional scalar
+multiplication.    The technique is especially interesting in genus 2, because Kummer...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/366" class="paperlink" href="/2016/366">2016/366</a>
+          <span class="ms-2"><a href="/2016/366.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-01-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>\(\mu\)Kummer: efficient hyperelliptic signatures and key exchange on microcontrollers</strong>
+              <div class="mt-1"><span class="fst-italic">Joost Renes, Peter Schwabe, Benjamin Smith, Lejla Batina</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We describe the design and implementation of efficient signature and key-exchange schemes for the AVR~ATmega and ARM Cortex~M0 microcontrollers, targeting the 128-bit security level. Our algorithms are based on an efficient Montgomery ladder scalar multiplication on the Kummer surface of Gaudry and Schost&#39;s genus-2 hyperelliptic curve, combined with the Jacobian point recovery technique of Chung, Costello, and Smith. Our results are the first to show the feasibility of software-only...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/328" class="paperlink" href="/2016/328">2016/328</a>
+          <span class="ms-2"><a href="/2016/328.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-27</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Constructing genus 3 hyperelliptic Jacobians with CM</strong>
+              <div class="mt-1"><span class="fst-italic">Jennifer Balakrishnan, Sorina Ionica, Kristin Lauter, Christelle Vincent</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Given a sextic CM field K, we give an explicit method for finding all genus 3 hyperelliptic curves defined over the complex whose Jacobians are simple and have complex multiplication by the maximal order of this field, via an approximation of their Rosenhain invariants. Building on the work of Weng, we give an algorithm which works in complete generality, for any CM sextic field K, and computes minimal polynomials of the Rosenhain invariants for any period matrix of the Jacobian.  This...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/983" class="paperlink" href="/2015/983">2015/983</a>
+          <span class="ms-2"><a href="/2015/983.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-10-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast, uniform, and compact scalar multiplication for elliptic curves and genus 2 Jacobians with applications to signature schemes</strong>
+              <div class="mt-1"><span class="fst-italic">Ping Ngai Chung, Craig Costello, Benjamin Smith</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We give a general framework for uniform, constant-time one- and two-dimensional scalar multiplication algorithms for elliptic curves and Jacobians of genus~2 curves that operate by projecting to the \(x\)-line or Kummer surface, where we can exploit faster and more uniform pseudomultiplication, before recovering the proper ``signed&#39;&#39; output back on the curve or Jacobian.
+This extends the work of López and Dahab, Okeya and Sakurai, and Brier and Joye to genus~2, and also to two-dimensional...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/805" class="paperlink" href="/2015/805">2015/805</a>
+          <span class="ms-2"><a href="/2015/805.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-09-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A classification of elliptic curves with respect to the GHS attack in odd characteristic</strong>
+              <div class="mt-1"><span class="fst-italic">Tsutomu Iijima, Fumiyuki Momose, Jinhui Chao</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The GHS attack is known to solve discrete logarithm problems (DLP) in the Jacobian of a curve C_0 defined over the d degree extension field k_d of k:=GF(q) by mapping it to the DLP in the Jacobian of a covering curve C of C_0 over k. Recently, classifications for all elliptic curves and hyperelliptic curves C_0/k_d of genus 2,3 which possess (2,...,2)-covering C/k of P^1 were shown under an isogeny condition (i.e. when g(C) = d * g(C_0)). This paper presents a systematic classification...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/815" class="paperlink" href="/2014/815">2014/815</a>
+          <span class="ms-2"><a href="/2014/815.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-12-30</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A New Method for Decomposition in the Jacobian of Small Genus Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Decomposing a divisor over a suitable factor basis in the Jacobian of a hyperelliptic curve is a crucial step in an
+index calculus algorithm for the discrete log problem in the Jacobian. For small genus curves, in the year 2000, Gaudry had proposed
+a suitable factor basis and a decomposition method. In this work, we provide a new method for decomposition over the same factor
+basis. The advantage of the new method is that it admits a sieving technique which removes smoothness checking of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/385" class="paperlink" href="/2014/385">2014/385</a>
+          <span class="ms-2"><a href="/2014/385.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-05-31</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Jacobian Coordinates on Genus 2 Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Huseyin Hisil, Craig Costello</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper presents a new projective coordinate system and new explicit algorithms which together boost the speed of arithmetic in the divisor class group of genus 2 curves. The proposed formulas generalise the use of Jacobian coordinates on elliptic curves, and their application improves the speed of performing cryptographic scalar multiplications in Jacobians of genus 2 curves over prime fields by an approximate factor of 1.25x. For example, on a single core of an Intel Core i7-3770M (Ivy...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/359" class="paperlink" href="/2014/359">2014/359</a>
+          <span class="ms-2"><a href="/2014/359.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-05-23</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Explicit endomorphism of the Jacobian of a hyperelliptic function field of genus 2 using base field operations</strong>
+              <div class="mt-1"><span class="fst-italic">Eduardo Ruiz Duarte, Octavio Páez Osuna</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We present an efficient endomorphism for the Jacobian of a curve $C$ of genus 2 for divisors having a Non disjoint support. This extends the work of Costello in ~\cite{Costello} who calculated explicit formul\ae\space for divisor doubling and addition of divisors with disjoint support in $\jacobian(C)$ using only base field operations. Explicit formul\ae\space is presented for this third case and a different approach for divisor doubling.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/532" class="paperlink" href="/2013/532">2013/532</a>
+          <span class="ms-2"><a href="/2013/532.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2019-04-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On a Relation between the Ate Pairing and the Weil Pairing for Supersingular Elliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Takakazu Satoh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The hyperelliptic curve Ate pairing provides an efficient way to compute a
+bilinear pairing on the Jacobian variety of a hyperelliptic curve.
+We prove that, for supersingular elliptic curves with embedding degree
+two, square of the Ate pairing is nothing but the Weil pairing.
+Using the formula, we develop an X-coordinate only pairing inversion method.
+However, the algorithm is still infeasible for cryptographic size problems.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/487" class="paperlink" href="/2013/487">2013/487</a>
+          <span class="ms-2"><a href="/2013/487.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-02-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Classification of Elliptic/hyperelliptic Curves with Weak Coverings against the GHS attack under an Isogeny Condition</strong>
+              <div class="mt-1"><span class="fst-italic">Tsutomu Iijima, Fumiyuki Momose, Jinhui Chao</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The GHS attack is known to map the discrete logarithm problem(DLP) in the Jacobian of a curve $C_{0}$ defined over the $d$ degree extension $k_{d}$ of a finite field $k$ to the DLP in the Jacobian of a new curve $C$ over $k$ which is a covering curve of $C_0$, then solve the DLP of curves $C/k$ by variations of index calculus algorithms. It is therefore important to know which curve $C_0/k_d$ is subjected to the GHS attack, especially those whose covering $C/k$ have the smallest genus...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/427" class="paperlink" href="/2012/427">2012/427</a>
+          <span class="ms-2"><a href="/2012/427.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-08-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Constructing Pairing-Friendly  Genus 2 Curves with  Split Jacobian</strong>
+              <div class="mt-1"><span class="fst-italic">Robert Drylo</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Genus 2 curves with  simple but not absolutely simple jacobians  can be used to construct  pairing-based cryptosystems more efficient than for a generic genus 2 curve.  We show that there is a full analogy between  methods for constructing  ordinary pairing-friendly elliptic curves and simple abelian varieties, which are iogenous over some extension to a product of elliptic curves. We extend   the notion of complete, complete with variable discriminant, and  sparse families introduced in by...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/604" class="paperlink" href="/2011/604">2011/604</a>
+          <span class="ms-2"><a href="/2011/604.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-05-12</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Genus 2 Hyperelliptic Curve Families with Explicit Jacobian Order Evaluation and Pairing-Friendly Constructions</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic, Damien Vergnaud</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The use of (hyper)elliptic curves in cryptography relies on the ability to compute the Jacobian order of a given curve. Recently, Satoh proposed a probabilistic polynomial time algorithm to test whether the Jacobian -- over a finite field $\mathbb{F}_q$ -- of a hyperelliptic curve of the form $Y^2 = X^5 + aX^3 + bX$ (with $a,b \in \mathbb{F}_q^*$) has a large prime factor. His approach is to obtain candidates for the zeta function of the Jacobian over $\mathbb{F}_q^*$ from its zeta function...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/306" class="paperlink" href="/2011/306">2011/306</a>
+          <span class="ms-2"><a href="/2011/306.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2011-09-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Group Law Computations on Jacobians of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Craig Costello, Kristin Lauter</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We derive an explicit method of computing the composition step in Cantor&#39;s algorithm for group operations on Jacobians of hyperelliptic curves. Our technique is inspired by the geometric description of the group law and applies to hyperelliptic curves of arbitrary genus.
+
+While Cantor&#39;s general composition involves arithmetic in the polynomial ring $F_q[x]$, the algorithm we propose solves a linear system over the base field which can be written down directly from the Mumford coordinates of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/098" class="paperlink" href="/2011/098">2011/098</a>
+          <span class="ms-2"><a href="/2011/098.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2011-02-28</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computing Discrete Logarithms in the Jacobian of High-Genus Hyperelliptic Curves over Even Characteristic Finite Fields</strong>
+              <div class="mt-1"><span class="fst-italic">M.  D.  Velichka, M.  J.  Jacobson Jr., A.  Stein</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We describe improved versions of index-calculus algorithms for solving discrete logarithm problems in Jacobians of high-genus hyperelliptic curves defined over even characteristic fields. Our first improvement is to incorporate several ideas for the low-genus case by Gaudry and Theriault, including the large prime variant and using a smaller factor base, into the large-genus algorithm of Enge and Gaudry. We extend the analysis in [24] to our new algorithm, allowing us to predict accurately...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/601" class="paperlink" href="/2010/601">2010/601</a>
+          <span class="ms-2"><a href="/2010/601.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-11-25</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast Endomorphism for any Genus 2 Hyperelliptic Curve over a Finite Field of Even Characteristic</strong>
+              <div class="mt-1"><span class="fst-italic">Lei Li, Siman Yang</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In EUROCRYPT 2009, Galbraith, Lin and Scott constructed an efficiently computable endomorphism for a large family of elliptic curves defined over finite fields of large characteristic. They demonstrated that the endomorphism can be used to accelerate scalar multiplication in the elliptic curve cryptosystem based on these curves. In this paper we extend the method to any genus 2 hyperelliptic curve defined over a finite field of even characteristic. We propose an efficient algorithm to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/498" class="paperlink" href="/2010/498">2010/498</a>
+          <span class="ms-2"><a href="/2010/498.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-04-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Co-Z Divisor Addition Formulae in Jacobian of Genus 2 Hyperelliptic Curves over Prime Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Vladislav Kovtun, Sergey Kavun</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper we proposed a new approach to divisor scalar multiplication in Jacobian of genus 2 hyperelliptic curves over fields with odd characteristic, without field inversion. It is based on improved addition formulae of the weight 2 divisors in projective divisor representation in most frequent case that suit very well to scalar multiplication algorithms based on Euclidean addition chains.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/382" class="paperlink" href="/2010/382">2010/382</a>
+          <span class="ms-2"><a href="/2010/382.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-09-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Deterministic Encoding and Hashing to Odd Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Pierre-Alain Fouque, Mehdi Tibouchi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper we propose a very simple and efficient encoding function from F_q to points of a hyperelliptic curve over F_q of the form H: y^2=f(x) where f is an odd polynomial. Hyperelliptic curves of this type have been frequently considered in the literature to obtain Jacobians of good order and pairing-friendly curves.
+
+Our new encoding is nearly a bijection to the set of F_q-rational points on H. This makes it easy to construct well-behaved hash functions to the Jacobian J of H, as well...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/294" class="paperlink" href="/2010/294">2010/294</a>
+          <span class="ms-2"><a href="/2010/294.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-05-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computing genus 2 curves from invariants on the Hilbert moduli space</strong>
+              <div class="mt-1"><span class="fst-italic">Kristin Lauter, Tonghai Yang</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We give a new method for generating genus 2 curves over a finite field with a given number of points on the Jacobian of the curve.  We define two new invariants for genus 2 curves as values of modular functions on the Hilbert moduli space and show how to compute them. We relate them to the usual three Igusa invariants on the Siegel moduli space and give an algorithm to construct curves using these new invariants.  Our approach simplifies the complex analytic method for computing genus 2...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/156" class="paperlink" href="/2010/156">2010/156</a>
+          <span class="ms-2"><a href="/2010/156.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-03-24</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Genus 2 Curves with Complex Multiplication</strong>
+              <div class="mt-1"><span class="fst-italic">Eyal Z.  Goren, Kristin E.  Lauter</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Genus 2 curves are useful in cryptography for both discrete-log based and pairing-based systems, but a method is required to compute genus 2 curves with Jacobian with a given number of points.  Currently, all known methods involve constructing genus 2 curves with complex multiplication via computing their 3 Igusa class polynomials. These polynomials have rational coefficients and require extensive computation and precision to compute.  Both the computation and the complexity analysis of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2009/613" class="paperlink" href="/2009/613">2009/613</a>
+          <span class="ms-2"><a href="/2009/613.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-11-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Classification of Elliptic/hyperelliptic Curves with Weak Coverings against GHS Attack without Isogeny Condition</strong>
+              <div class="mt-1"><span class="fst-italic">Tsutomu Iijima, Fumiyuki Momose, Jinhui Chao</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The GHS attack is known as a method to map the discrete logarithm problem(DLP) in the Jacobian of a curve C_{0} defined over the d degree extension k_{d} of a finite field k to the DLP in the Jacobian of a new curve C over k which is a covering curve of C_{0}.
+Recently, classification and density analysis were shown for all elliptic and hyperelliptic curves C_{0}/k_d of genus 2, 3 which possess (2, \ldots ,2) covering C/k of {\mathbb{P}^{1}} under the isogeny condition (i.e. when g(C)=d...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2009/103" class="paperlink" href="/2009/103">2009/103</a>
+          <span class="ms-2"><a href="/2009/103.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2009-11-27</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Constructing pairing-friendly hyperelliptic curves using Weil restriction</strong>
+              <div class="mt-1"><span class="fst-italic">David Mandell Freeman, Takakazu Satoh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">A pairing-friendly curve is a curve over a finite field whose Jacobian has small embedding degree with respect to a large prime-order subgroup.  In this paper we construct pairing-friendly genus 2 curves over finite fields $\mathbb{F}_q$ whose Jacobians are ordinary and simple, but not absolutely simple.  We show that constructing such curves is equivalent to constructing elliptic curves over $\mathbb{F}_q$ that become pairing-friendly over a finite extension of $\mathbb{F}_q$.  Our main...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/491" class="paperlink" href="/2008/491">2008/491</a>
+          <span class="ms-2"><a href="/2008/491.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-05-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A CM construction for curves of genus 2 with p-rank 1</strong>
+              <div class="mt-1"><span class="fst-italic">Laura Hitt O&#39;Connor, Gary McGuire, Michael Naehrig, Marco Streng</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We construct Weil numbers corresponding to genus-2 curves with $p$-rank 1 over the finite field $\F_{p^2}$ of $p^2$ elements. The corresponding curves can be constructed using explicit CM constructions. In one of our algorithms, the group of $\F_{p^2}$-valued points of the Jacobian has prime order, while another allows for a prescribed embedding degree with respect to a subgroup of prescribed order. The curves are defined over $\F_{p^2}$ out of necessity: we show that curves of $p$-rank 1...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/398" class="paperlink" href="/2008/398">2008/398</a>
+          <span class="ms-2"><a href="/2008/398.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2008/398.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2008-10-31</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Generating genus two hyperelliptic curves over large characteristic finite fields</strong>
+              <div class="mt-1"><span class="fst-italic">Takakazu Satoh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In hyperelliptic curve cryptography, finding a suitable
+hyperelliptic curve is an important fundamental problem.
+One of necessary conditions is that the order of its Jacobian
+is a product of a large prime number and a small number.
+In the paper, we give a probabilistic polynomial
+time algorithm to test whether the Jacobian of the given hyperelliptic curve of the form $Y sup 2 = X sup 5 + u X sup 3 + v X$
+satisfies the condition and, if so, gives the largest prime factor.
+Our algorithm...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/265" class="paperlink" href="/2008/265">2008/265</a>
+          <span class="ms-2"><a href="/2008/265.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-06-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Hyperelliptic Arithmetic using Balanced Representation for Divisors</strong>
+              <div class="mt-1"><span class="fst-italic">Steven D.  Galbraith, Michael Harrison, David J.   Mireles Morales</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We discuss arithmetic in the Jacobian of a
+hyperelliptic curve $C$ of genus $g$. The traditional approach is to
+fix a point $P_\infty \in C$ and represent divisor classes in the
+form $E - d(P_\infty)$ where $E$ is effective and $0 \le d \le g$.
+We propose a different representation which is balanced at infinity.
+The resulting arithmetic is more efficient than previous approaches
+when there are 2 points at infinity.
+
+This is a corrected and extended version of the article presented in ANTS...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/215" class="paperlink" href="/2008/215">2008/215</a>
+          <span class="ms-2"><a href="/2008/215.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-05-23</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On Implementation of GHS Attack against Elliptic Curve Cryptosystems over Cubic Extension Fields of Odd Characteristics</strong>
+              <div class="mt-1"><span class="fst-italic">Naoki Hashizume, Fumiyuki Momose, Jinhui Chao</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper, we present algorithms for implementation of the GHS attack to Elliptic curve cryptosystems (ECC). In particular, we consider two large classes of elliptic curves over cubic extension fields of odd characteristics which have weak covering curves against GHS attack, whose  existence have been shown recently.
+We show an algorithm to find definition equation of the covering curve and an algorithm to transfer DLP of the elliptic curve to Jacobian of the covering curve. An algorithm...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/070" class="paperlink" href="/2008/070">2008/070</a>
+          <span class="ms-2"><a href="/2008/070.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2008/070.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2008-02-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Generators of Jacobians of Genus Two Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshoj</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We prove that in most cases relevant to cryptography, the Frobenius endomorphism on the Jacobian of a genus two curve is represented by a diagonal matrix with respect to an appropriate basis of the subgroup of l-torsion points. From this fact we get an explicit description of the Weil-pairing on the subgroup of l-torsion points. Finally, the
+explicit description of the Weil-pairing provides us with an efficient, probabilistic algorithm to find generators of the subgroup of l-torsion points...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/056" class="paperlink" href="/2008/056">2008/056</a>
+          <span class="ms-2"><a href="/2008/056.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-02-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast explicit formulae for genus 2 hyperelliptic curves using projective coordinates (Updated)</strong>
+              <div class="mt-1"><span class="fst-italic">Vladislav Kovtun, Thomas Wollinger</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This contribution proposes a modification of method of divisors group operation in the Jacobian of hyperelliptic curve over even and odd characteristic fields in projective coordinate. The hyperelliptic curve cryptosystem (HECC), enhances cryptographic security efficiency in e.g. information and telecommunications systems.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/026" class="paperlink" href="/2008/026">2008/026</a>
+          <span class="ms-2"><a href="/2008/026.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-06-02</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Pairing-friendly Hyperelliptic Curves with Ordinary Jacobians of Type $y^2=x^5+ax$</strong>
+              <div class="mt-1"><span class="fst-italic">Mitsuru Kawazoe, Tetsuya Takahashi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">An explicit construction of pairing-friendly hyperelliptic curves with ordinary Jacobians
+was firstly given by D.~Freeman. In this paper, we give other explicit constructions of pairing-friendly hyperelliptic curves with ordinary Jacobians based on the closed formulae
+for the order of the Jacobian of a hyperelliptic curve of type $y^2=x^5+ax$. We present two methods in this paper. One is an analogue of the Cocks-Pinch method and the other is a cyclotomic method. By using these methods, we...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/025" class="paperlink" href="/2008/025">2008/025</a>
+          <span class="ms-2"><a href="/2008/025.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2008/025.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2008-01-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Non-Cyclic Subgroups of Jacobians of Genus Two Curves with Complex Multiplication</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshoj</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Let E be an elliptic curve defined over a finite field. Balasubramanian and Koblitz have proved that if the l-th roots of unity m_l is not contained in the ground field, then a field extension of the ground
+field contains m_l if and only if the l-torsion points of E are rational over the same field extension. We generalize this result to Jacobians of genus two curves with complex multiplication. In particular, we show that the Weil- and the Tate-pairing on such a Jacobian are non-degenerate...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/365" class="paperlink" href="/2007/365">2007/365</a>
+          <span class="ms-2"><a href="/2007/365.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/365.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2007-09-13</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Pairings on Jacobians of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshoj</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Consider the jacobian of a hyperelliptic genus two curve defined over a finite field. Under certain restrictions on the endomorphism ring of the jacobian we give an explicit description all non-degenerate, bilinear, anti-symmetric and Galois-invariant pairings on the jacobian. From this description it follows that no such pairing can be computed more efficiently than the Weil pairing.
+
+To establish this result, we need an explicit description of the representation of the Frobenius...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/175" class="paperlink" href="/2007/175">2007/175</a>
+          <span class="ms-2"><a href="/2007/175.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2007-05-20</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Embedding Degree of Hyperelliptic Curves with Complex Multiplication</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshoj</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Consider the Jacobian of a genus two curve defined over a finite field and with complex multiplication. In this paper we show that if the l-Sylow subgroup of the Jacobian is not cyclic, then the embedding degree of the Jacobian with respect to l is one.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/150" class="paperlink" href="/2007/150">2007/150</a>
+          <span class="ms-2"><a href="/2007/150.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/150.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2007-04-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Generators of Jacobians of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshoj</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper provides a probabilistic algorithm to determine generators of the m-torsion subgroup of the Jacobian of a hyperelliptic curve of genus two.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/112" class="paperlink" href="/2007/112">2007/112</a>
+          <span class="ms-2"><a href="/2007/112.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-02-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Decomposed Attack for the Jacobian of a Hyperelliptic Curve over an Extension Field</strong>
+              <div class="mt-1"><span class="fst-italic">Koh-ichi Nagao</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We study the solution of the discrete logarithm problem for
+the Jacobian of a curve of genus g defined over an extension field Fqn, by
+decomposed attack, considering a external elements B0 given by points
+of the curve whose x-coordinates are defined in Fq. In the decomposed
+attack, an element of the group which is written by a sum of some elements
+of external elements is called (potentially) decomposed and the
+set of the terms, that appear in the sum, is called decomposed factor. In
+order...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/097" class="paperlink" href="/2007/097">2007/097</a>
+          <span class="ms-2"><a href="/2007/097.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/097.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2007-03-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Large Cyclic Subgroups of Jacobians of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Christian Robenhagen Ravnshøj</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper we obtain conditions on the divisors of the group order of the Jacobian of a hyperelliptic genus 2 curve, generated by the complex multiplication method described by Weng (2003) and Gaudry (2005). Examples, where these conditions imply that the Jacobian has a large cyclic subgroup, are given.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/010" class="paperlink" href="/2007/010">2007/010</a>
+          <span class="ms-2"><a href="/2007/010.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2007-05-30</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computing endomorphism rings of Jacobians of genus 2 curves over finite fields</strong>
+              <div class="mt-1"><span class="fst-italic">David Freeman, Kristin Lauter</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We present probabilistic algorithms which, given a genus 2 curve C defined over a finite field and a quartic CM field K, determine whether the endomorphism ring of the Jacobian J of C is the full ring of integers in K.  In particular, we present algorithms for computing the field of definition of, and the action of Frobenius on, the subgroups J[l^d] for prime powers l^d.  We use these algorithms to create the first implementation of Eisentrager and Lauter&#39;s algorithm for computing Igusa...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/001" class="paperlink" href="/2007/001">2007/001</a>
+          <span class="ms-2"><a href="/2007/001.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/001.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2009-02-13</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Families of genus 2 curves with small embedding degree</strong>
+              <div class="mt-1"><span class="fst-italic">Laura Hitt</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Hyperelliptic curves of small genus have the advantage of
+providing a group of comparable size as that of elliptic curves,
+while working over a field of smaller size.  Pairing-friendly
+hyperelliptic curves are those whose order of the Jacobian is
+divisible by a large prime, whose embedding degree is small enough
+for computations to be feasible, and whose minimal embedding field
+is large enough for the discrete logarithm problem in it to be
+difficult. We give a sequence of $\F_q$-isogeny...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2006/114" class="paperlink" href="/2006/114">2006/114</a>
+          <span class="ms-2"><a href="/2006/114.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2006/114.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2008-01-09</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Tate pairing for $y^{2}=x^{5}-\alpha x$  in Characteristic Five</strong>
+              <div class="mt-1"><span class="fst-italic">Ryuichi Harasawa, Yutaka Sueyoshi, Aichi Kudo</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper, for the genus-$2$ hyperelliptic curve
+$y^{2}=x^{5} -\alpha x$ ($\alpha = \pm2$) defined over finite fields of characteristic five,
+we construct a distortion map explicitly, and show the map indeed
+gives an input for which the value of the Tate pairing is not trivial.
+Next we describe a computation of the Tate pairing
+by using the proposed distortion map.
+Furthermore, we also see that this type of curve
+is equipped with a simple quintuple operation on the Jacobian group,
+which...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2005/228" class="paperlink" href="/2005/228">2005/228</a>
+          <span class="ms-2"><a href="/2005/228.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2005/228.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2005-07-20</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Doubling on Genus 3 Curves over Binary Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Xinxin Fan, Thomas Wollinger, Yumin Wang</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The most important and expensive operation in a hyperelliptic curve
+cryptosystem (HECC) is scalar multiplication by an integer k, i.e., computing an integer k times a divisor D on the Jacobian. Using some recoding algorithms for scalar $k$, we can reduce a number of divisor class additions during the process of computing scalar multiplication. So divisor doubling will account for the main part in all kinds of scalar multiplication algorithms. In order to accelerate the genus 3 HECC over...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/241" class="paperlink" href="/2004/241">2004/241</a>
+          <span class="ms-2"><a href="/2004/241.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2004-09-27</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A Comparison of Point Counting methods for Hyperelliptic Curves over Prime Fields and Fields of Characteristic 2</strong>
+              <div class="mt-1"><span class="fst-italic">Colm O hEigeartaigh</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Computing the order of the Jacobian of a hyperelliptic curve remains a
+hard problem. It is usually essential to calculate the order of the
+Jacobian to prevent certain sub-exponential attacks on the cryptosystem.
+This paper reports on the viability of implementations of various
+point-counting techniques. We also report on the scalability of the
+algorithms as the fields grow larger.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/161" class="paperlink" href="/2004/161">2004/161</a>
+          <span class="ms-2"><a href="/2004/161.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2004/161.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2004-07-09</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Improvement of Thériault Algorithm of Index Calculus for Jacobian of Hyperelliptic Curves of Small Genus</strong>
+              <div class="mt-1"><span class="fst-italic">Ko-ichi Nagao</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Gaudry present a variation of index calculus attack for solving the
+DLP in the Jacobian of hyperelliptic curves. Harley and Thériault
+improve these kind of algorithm. Here, we will present a variation of
+these kind of algorithm, which is faster than previous ones.
+Its complexity is $O(2-\frac{2}{g}+\epsilon)$.
+Recently, P. Gaudry and E. Thomé
+http://eprint.iacr.org/2004/153/
+present the algorithm, whose complexity is same as our results.
+So I submit my manuscript to this eprint archive.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/151" class="paperlink" href="/2004/151">2004/151</a>
+          <span class="ms-2"><a href="/2004/151.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2004-07-16</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Suitable Curves for Genus-4 HCC over Prime Fields: Point Counting Formulae for Hyperelliptic Curves of type $y^2=x^{2k+1}+ax$</strong>
+              <div class="mt-1"><span class="fst-italic">Mitsuhiro Haneda, Mitsuru Kawazoe, Tetsuya Takahashi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Computing the order of the Jacobian group of a hyperelliptic curve
+over a finite field is very important to construct
+a hyperelliptic curve cryptosystem (HCC), because
+to construct secure HCC, we need Jacobian groups of order in the form
+$l(J\(Bcdot c$ where $l$ is a prime greater than about $2^{160}$ and
+$c$ is a very small integer.
+But even in the case of genus two,
+known algorithms to compute the order of a Jacobian group for a general curve
+need a very long running time over a large...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/118" class="paperlink" href="/2004/118">2004/118</a>
+          <span class="ms-2"><a href="/2004/118.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2004/118.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2004-05-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast addition on non-hyperelliptic genus $3$ curves</strong>
+              <div class="mt-1"><span class="fst-italic">Stéphane Flon, Roger Oyono, Christophe Ritzenthaler</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We present a fast addition algorithm in the Jacobian of a genus $3$ non-hyperelliptic curve over a field of any characteristic. When the curve has a rational flex and $\textrm{char}(k) &gt; 5$, the computational cost for addition is $148M+15SQ+2I$ and $165M+20SQ+2I$ for doubling. An appendix focuses on the computation of flexes in all characteristics. For large odd $q$, we also show that the set of rational points of a non-hyperelliptic curve of genus $3$ can not be an arc.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/107" class="paperlink" href="/2004/107">2004/107</a>
+          <span class="ms-2"><a href="/2004/107.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2004/107.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2004-05-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Classification of genus 2 curves over $\mathbb{F}_{2^n}$ and optimization of their arithmetic</strong>
+              <div class="mt-1"><span class="fst-italic">Bertrand BYRAMJEE, Sylvain DUQUESNE</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">To obtain efficient cryptosystems based on hyperelliptic curves, we studied genus 2 isomorphism classes of hyperelliptic curves in characteristic 2. We found general and optimal form for these curves, just as the short Weierstrass form for elliptic curves. We studied the security and the arithmetic on their jacobian. We also rewrote and optimized the formulas of Lange in characteristic 2, and we introduced a new system of coordinate. Therefore, we deduced the best form of hyperelliptic...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/073" class="paperlink" href="/2004/073">2004/073</a>
+          
+          <span class="ms-2"><a href="/2004/073.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2004-03-04</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Index calculus for abelian varieties and the elliptic curve discrete logarithm problem</strong>
+              <div class="mt-1"><span class="fst-italic">Pierrick Gaudry</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We propose an index calculus algorithm for the discrete logarithm problem on general abelian varieties. The main difference with the previous approaches is that we do not make use of any embedding into the Jacobian of a well-suited curve. We apply this algorithm to the Weil restriction of elliptic curves and hyperelliptic curves over small degree extension fields. In particular, our attack can solve all elliptic curve discrete logarithm problems defined over $GF(q^3)$ in time $O(q^{10/7})$,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2003/180" class="paperlink" href="/2003/180">2003/180</a>
+          
+          <span class="ms-2"><a href="/2003/180.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-09-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Parallelizing Explicit Formula for Arithmetic in the Jacobian of Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Pradeep Kumar Mishra, Palash Sarkar</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">One of the recent thrust areas in research on hyperelliptic curve cryptography has been to obtain explicit formulae for performing arithmetic in the Jacobian of such curves. We continue this line of research by obtaining parallel versions of such formulae. Our first contribution is to develop a general methodology for obtaining parallel algorithm of any explicit formula. Any parallel algorithm obtained using our methodology is provably optimal in the number of multiplication rounds. We next...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2003/094" class="paperlink" href="/2003/094">2003/094</a>
+          <span class="ms-2"><a href="/2003/094.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2003/094.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-05-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Trace Zero Subvariety for Cryptosystems</strong>
+              <div class="mt-1"><span class="fst-italic">Tanja Lange</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We present a kind of group suitable for cryptographic
+applications: the trace zero subvariety. The construction is
+based on Weil descent from curves of genus two over
+extension fields $\F_{p^n}$, $n=3$.
+On the Jacobian of the curve the group can be seen as a prime order
+subgroup, however, considering the construction as Weil descent we
+can argue that the security is equivalent to that of groups based on
+low-genus hyperelliptic curves over prime fields.
+The advantage is that the complexity to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2003/058" class="paperlink" href="/2003/058">2003/058</a>
+          <span class="ms-2"><a href="/2003/058.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2003/058.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-04-01</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>An Elliptic Curve Trapdoor System</strong>
+              <div class="mt-1"><span class="fst-italic">Edlyn Teske</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We propose an elliptic curve trapdoor system which is of interest in
+key escrow applications. In this system, a pair
+($E_{\rm s}, E_{\rm pb}$) of elliptic curves over $\F_{2^{161}}$ is constructed with the following properties: (i) the Gaudry-Hess-Smart Weil descent attack reduces the  elliptic curve discrete logarithm problem  (ECDLP) in $E_{\rm s}(\F_{2^{161}})$ to a hyperelliptic curve DLP in the Jacobian of a curve of genus 7 or 8, which is computationally feasible, but by far not...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2002/181" class="paperlink" href="/2002/181">2002/181</a>
+          <span class="ms-2"><a href="/2002/181.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2002/181.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-05-12</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Counting Points for Hyperelliptic Curves of type $y^2=x^5+ax$ over Finite Prime Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Eisaku Furukawa, Mitsuru Kawazoe, Tetsuya Takahashi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Counting rational points on Jacobian varieties of hyperelliptic curves
+over finite fields is very important for constructing
+hyperelliptic curve cryptosystems (HCC),
+but known algorithms for general curves over given large prime
+fields need very long running times.
+In this article, we propose an extremely fast point counting algorithm for
+hyperelliptic curves of type $y^2=x^5+ax$ over given large
+prime fields $\Fp$, e.g. 80-bit fields.
+For these curves, we also determine the necessary...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2002/107" class="paperlink" href="/2002/107">2002/107</a>
+          <span class="ms-2"><a href="/2002/107.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2002/107.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-12-15</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Arithmetic on Hyperelliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Tanja Lange</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Using the Frobenius endomorphism the operation of computing
+scalar-mulitples in the Jacobian of a hyperelliptic curve is sped-up
+considerably. The kind of curves considered are Kobiltz i.e. subfield
+curves, defined over a small finite field which are then considered
+over a large extension field. We deal with computation of
+the group order over various extension fields, algorithms to obtain
+the mentioned speed-up, and experimental results concerning both
+issues. Additionally an alternative...</p>
+        </div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  </div>
+</div>
+      <script>
+       document.getElementById('clearButton').addEventListener('click', function(ev) {
+         document.querySelectorAll('input').forEach(el => {
+           el.value = '';
+         });
+         document.getElementById('category').selectedIndex = "0";
+       });
+
+       function validateForm() {
+         // check that dates are compatible.
+         let submittedAfter = document.getElementById('submittedafter');
+         let submittedBefore = document.getElementById('submittedbefore');
+         let revisedAfter = document.getElementById('revisedafter');
+         let revisedBefore = document.getElementById('revisedbefore');
+         if (submittedAfter.value &&
+             submittedBefore.value &&
+             submittedAfter.value > submittedBefore.value) {
+           submittedAfter.classList.add('is-invalid');
+           submittedBefore.classList.add('is-invalid');
+           return false;
+         }
+         if (revisedAfter.value &&
+             revisedBefore.value &&
+             revisedAfter.value > revisedBefore.value) {
+           revisedAfter.classList.add('is-invalid');
+           revisedBefore.classList.add('is-invalid');
+           return false;
+         }
+         if (revisedBefore.value &&
+             submittedAfter.value &&
+             revisedBefore.value < submittedAfter.value) {
+           revisedBefore.classList.add('is-invalid');
+           submittedAfter.classList.add('is-invalid');
+           return false;
+         }
+         return true;
+       }
+
+      </script>
+      <script src="/js/mark.min.js"></script>
+      <script>
+       var instance = new Mark("div.results");
+       let urlParams = new URLSearchParams(window.location.search);
+       if (urlParams.get('q')) {
+         instance.mark(urlParams.get('q'));
+       }
+       if (urlParams.get('title')) {
+         instance.mark(urlParams.get('title'));
+       }
+       if (urlParams.get('authors')) {
+         instance.mark(urlParams.get('authors'));
+       }
+      </script>
+<!--  -->
+</main>
+<div class="container-fluid mt-auto" id="eprintFooter">
+  <a href="https://iacr.org/">
+    <img id="iacrlogo" src="/img/iacrlogo_small.png" class="img-fluid d-block mx-auto" alt="IACR Logo">
+  </a>
+  <div class="colorDiv"></div>
+  <div class="alert alert-success w-75 mx-auto">
+    Note: In order to protect the privacy of readers, eprint.iacr.org
+    does not use cookies or embedded third party content.
+  </div>
+</div>
+<script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+   var topNavbar = document.getElementById('topNavbar');
+   if (topNavbar) {
+     document.addEventListener('scroll', function(e) {
+       if (window.scrollY > 100) {
+         topNavbar.classList.add('scrolled');
+       } else {
+         topNavbar.classList.remove('scrolled');
+       }
+     })
+   }
+  </script>
+
+
+</body>
+</html>

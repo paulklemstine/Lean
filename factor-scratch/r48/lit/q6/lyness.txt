@@ -1,0 +1,527 @@
+                                          Efficient ECM factorization in parallel with the Lyness map
+
+                                                                                                                                     ∗
+                                                                                                                  Andrew Hone
+                                                                                       School of Mathematics, Statistics & Actuarial Science
+                                                                                                       University of Kent
+                                                                                                    Canterbury CT2 7FS, UK
+                                                                                                         A.N.W.Hone@kent.ac.uk
+arXiv:2002.03811v1 [math.NT] 5 Feb 2020
+
+
+
+
+                                          ABSTRACT                                                                             Keywords
+                                          The Lyness map is a birational map in the plane which pro-                           Lyness map, elliptic curve method, scalar multiplication
+                                          vides one of the simplest discrete analogues of a Hamilto-
+                                          nian system with one degree of freedom, having a conserved
+                                          quantity and an invariant symplectic form. As an example of
+                                                                                                                               1.    INTRODUCTION
+                                          a symmetric Quispel-Roberts-Thompson (QRT) map, each                                   In 1942 it was observed by Lyness [23] that iterating the
+                                          generic orbit of the Lyness map lies on a curve of genus one,                        recurrence relation
+                                          and corresponds to a sequence of points on an elliptic curve
+                                                                                                                                                        un+2 un = a un+1 + a2                       (1)
+                                          which is one of the fibres in a pencil of biquadratic curves
+                                          in the plane.                                                                        with an arbitrary pair of initial values u0 , u1 produces the
+                                             Here we present a version of the elliptic curve method                            sequence
+                                          (ECM) for integer factorization, which is based on iteration
+                                          of the Lyness map with a particular choice of initial data.                                        a(u1 + a) a2 (u0 + u1 + a) a(u0 + a)
+                                                                                                                                u0 , u 1 ,            ,                ,          , u 0 , u1 , . . . ,
+                                          More precisely, we give an algorithm for scalar multiplica-                                           u0           u0 u1         u1
+                                          tion of a point on an elliptic curve, which is represented
+                                                                                                                               which is periodic with period five. The Lyness 5-cycle also
+                                          by one of the curves in the Lyness pencil. In order to avoid
+                                                                                                                               arises in a frieze pattern [10], or as a simple example of
+                                          field inversion (I), and require only field multiplication (M),
+                                                                                                                               Zamolodchikov periodicity in integrable quantum field the-
+                                          squaring (S) and addition, projective coordinates in P1 × P1
+                                                                                                                               ories [29], which can be explained in terms of the associahe-
+                                          are used. Neglecting multiplication by curve constants (as-
+                                                                                                                               dron K4 and the cluster algebra defined by the A2 Dynkin
+                                          sumed small), each addition of the chosen point uses 2M,
+                                                                                                                               quiver [15], leading to a connection with Abel’s pentagon
+                                          while each doubling step requires 15M. We further show
+                                                                                                                               identity for the dilogarithm [24]. Moreover, the map corre-
+                                          that the doubling step can be implemented efficiently in par-
+                                                                                                                               sponding to a = 1, that is
+                                          allel with four processors, dropping the effective cost to 4M.
+                                             In contrast, the fastest algorithms in the literature, using
+                                                                                                                                                                     
+                                                                                                                                                                y+1
+                                          twisted Edwards curves with small curve constants, use 8M                                                (x, y) 7→ y,         ,                (2)
+                                                                                                                                                                  x
+                                          for point addition and 4M + 4S for point doubling, both of
+                                          which can be run in parallel with four processors to yield                           appears in the theory of the Cremona group: as proved by
+                                          effective costs of 2M and 1M + 1S, respectively. Thus our                            Blanc [8], the birational transformations of the plane that
+                                          scalar multiplication algorithm should require, on average,                          preserve the symplectic form
+                                          roughly twice as many multiplications per bit as state of                                                               1
+                                          the art methods using twisted Edwards curves, but it can                                                          ω=      dx ∧ dy,                        (3)
+                                                                                                                                                                 xy
+                                          be applied to any elliptic curve over Q, whereas twisted Ed-
+                                          wards curves (equivalent to Montgomery curves) correspond                            are generated by SL(2, Z), the torus and transformation (2).
+                                          to only a subset of all elliptic curves. Hence, if implemented                         More generally, the name Lyness map is given to
+                                          in parallel, our method may have potential advantages for                                                                     
+                                          integer factorization or elliptic curve cryptography.                                                                   ay + b
+                                                                                                                                               ϕ : (x, y) 7→ y,            ,            (4)
+                                                                                                                                                                     x
+                                          ∗Work begun on leave in the School of Mathematics &
+                                          Statistics, UNSW, Sydney, Australia.                                                 which contains two parameters a, b (and there are also higher
+                                                                                                                               order analogues [27]). The parameter a 6= 0 can be removed
+                                                                                                                               by rescaling (x, y) → (ax, ay), so that this is really a one-
+                                                                                                                               parameter family, referred to in [14] as “the simplest singular
+                                                                                                                               map of the plane.” However, we will usually retain a below
+                                          Permission to make digital or hard copies of all or part of this work for            for bookkeeping purposes.
+                                          personal or classroom use is granted without fee provided that copies are              Unlike the special case b = a2 , corresponding to (1), in
+                                          not made or distributed for profit or commercial advantage and that copies           general the orbits of (4) do not all have the same period, and
+                                          bear this notice and the full citation on the first page. To copy otherwise, to      over an infinite field (e.g. Q, R or C) generic orbits are not
+                                          republish, to post on servers or to redistribute to lists, requires prior specific
+                                          permission and/or a fee.                                                             periodic. However, the general map still satisfies ϕ∗ (ω) =
+                                          Copyright 200X ACM X-XXXXX-XX-X/XX/XX ...$10.00.                                     ω, i.e. the symplectic form (3) is preserved, and there is a
+Figure 1: A family of rational orbits of (4) in the               Figure 2: The Lyness curve xy(x + y) − 5(x + y)2 +
+positive quadrant, iterated for a = 1, b = 2 with ini-            54(x + y) − 145 = 6xy in R2 .
+tial values (x, y) = (2 + 0.2k, 2 + 0.2k) for k = 0, . . . , 9.
+
+                                                                  for the case a = 1, b = 2 shows points on the fibres corre-
+conserved quantity K = K(x, y) given by                           sponding to the values
+        xy(x + y) + a(x + y)2 + (a2 + b)(x + y) + ab                                 2(k3 + 40k2 + 575k + 2875)
+   K=                                                .      (5)                K=                                            (7)
+                            xy                                                               5(10 + k)2
+Since ϕ∗ (K) = K, each orbit lies on a fixed curve K =            for k = 0, . . . , 9.
+const. Thus the Lyness map is a simple discrete analogue of          In the next section we describe the group law on the in-
+a Hamiltonian system with one degree of freedom, and (4)          variant curves of the Lyness map. Section 3 describes an
+also commutes with the flows of the Hamiltonian vector field      algorithm, first outlined in [18], for carrying out the ellip-
+ẋ = {x, K}, ẏ = {y, K}, where {, } is the Poisson bracket       tic curve method (ECM) of integer factorization using the
+defined by (3). Moreover, generic level curves of K have          Lyness map in projective coordinates. In section 4 we ex-
+genus one, so that (real or complex) iterates of the Lyness       plain how this algorithm can be implemented efficiently in
+map can be expressed in terms of elliptic functions [7].          parallel, while the final section contains some conclusions.
+   The origin of the conserved quantity (5) may seem mys-
+terious, but becomes less so when one observes that (4) is a
+particular example of a symmetric QRT map [25, 26], and           2.    LYNESS CURVES AS ELLIPTIC CURVES
+as such it can be derived by starting from a pencil of bi-          The affine curve defined by fixing K in (5), that is
+quadratic curves, in this case
+                                                                    xy(x + y) + a(x + y)2 + (a2 + b)(x + y) + ab = Kxy. (8)
+  xy(x + y) + a(x + y)2 + (a2 + b)(x + y) + ab + λxy = 0,   (6)
+                                                                  is both cubic (total degree three) and biquadratic in x, y,
+which by symmetry admits the involution ι : (x, y) 7→ (y, x).
+                                                                  and (subject to a discriminant condition, described below)
+On each curve λ = −K = const there are also the horizon-
+                                                                  it extends to a smooth projective cubic in P2 , or a smooth
+tal/vertical switches, obtained by swapping a point on the
+                                                                  curve of bidegree (2, 2) in P1 × P1 . See Figure 2 for a plot
+curve with the other intersection with a horizontal/vertical
+                                                                  of a smooth Lyness curve in R2 . An example of a singular
+line. Using the Vieta formula for the product of roots of a
+                                                                  Lyness curve is given by
+quadratic, the horizontal switch can be written explicitly as
+the birational involution ιh : (x, y) 7→ (x−1 (ay + b), y), and                                                    23
+                                                                         xy(x + y) + (x + y)2 + 3(x + y) + 2 =        xy,
+then the Lyness map (4) is just the composition ϕ = ι ◦ ιh .                                                        2
+Standard results about elliptic curves then imply that ap-        which is the case k = 0 of (7), and contains the fixed point
+plying the map to a point P0 = (x, y) corresponds to a
+                                                                  at (x, y) = (2, 2) in Figure 1.
+translation P0 7→ P0 + P in the group law of the curve,             In order to consider a Lyness curve (8) as an elliptic curve,
+where the shift P is independent of P0 .                          we must define the group law, in terms of addition of pairs of
+   There is an associated elliptic fibration of the plane over    points, with a distinguished point O as the identity element.
+P1 , defined by (x, y) 7→ λ = −K(x, y), so that each point        One way to do this is to show birational equivalence with
+(x, y) in the plane lies on precisely one of the fibres, apart    a Weierstrass cubic curve, and then use the standard chord
+from the base points where xy(x+y)+a(x+y)2 +(a2 +b)(x+            and tangent formulae for a Weierstrass curve.
+y) + ab and xy vanish simultaneously. (For more details on          Given a choice of point (ν, ξ) on the Weierstrass cubic
+the geometry QRT maps see [19, 20, 28], or the book [12],         curve
+where the Lyness map is analysed in detail in chapter 11.)
+   Part of one such fibration can be seen in Figure 1, which                        (y 0 )2 = (x0 )3 + Ax0 + B,              (9)
+one obtains an arbitrary point (x, y) on the Lyness curve (8)                   (ay1 − ay2 − x1 y2 + x2 y1 )(ax1 y2 − ax2 y1 − by1 + by2 )
+                                                                           x3 =                                                            ,
+in terms of the coordinates (x0 , y 0 ) of a point on (9) by                              y1 y2 (x1 − x2 )(x1 − x2 + y1 − y2 )
+                                                                                (ax1 − ax2 + x1 y2 − x2 y1 )(ax2 y1 − ax1 y2 − bx1 + bx2 )
+                 β(αu + β)                                                 y3 =                                                            .
+            x=−             − a, y = −βuv − a,         (10)                               x1 x2 (y1 − y2 )(x1 − x2 + y1 − y2 )
+                    uv                                                    The elliptic involution that sends any point P to its inverse
+where x, y are expressed using the intermediate quantities                −P is the symmetry ι : (x, y) 7→ (y, x).
+                               4ξy 0 + Ju − α                                The above addition law is not unified, in the sense that
+              u = ν − x0 ,        v=          ,                    (11)   it cannot be applied when the two points to be added are
+                                     2u2
+                                                                          the same; nor does it make sense if one of the points is O.
+and the parameters are connected by the relations                         However, for adding (x1 , y1 ) to either of the other two points
+  a = −α2 − βJ, b = 2a2 + aβJ − β 3 , K = −2a − βJ, (12)                  at infinity, which are P = (∞, −a) and −P = (−a, ∞), this
+                                                                          addition formula does make sense: taking the limit x2 → ∞
+with                                                                      with y2 → −a, we see that
+                                                   J2
+                                                                                                                          
+        α = 4ξ 2 ,     J = 6ν 2 + 2A,      β=         − 12νξ 2 .                        (x1 , y1 ) + (∞, −a) = ϕ (x1 , y1 ) ,         (15)
+                                                   4
+  The inverse of the transformation (10) can be written                   so on each level curve K = const an iteration of the Lyness
+                                                                        map (4) corresponds to addition of the point P.
+                           u 2(y + a)           α                           In the case (x1 , y1 ) = (x2 , y2 ), either by transforming the
+   x0 = ν − u,     y0 = −              +J +        ,  (13)
+                          4ξ      β             4ξ                        doubling formula for the Weierstrass curve (9), or by com-
+                                                                          puting the tangent to (8) the formula for doubling (x, y) 7→
+where u is given in terms of the coordinates x, y for (8) by
+                                                                        2(x, y) is found to be
+                    1 (x + a)(y + a)                                                                                        
+               u=                     −  β   .                                          ψ : (x, y) 7→ R(x, y), R(y, x) ,               (16)
+                    α         β2
+If (9) is defined over Q, with a rational point (ν, ξ) ∈ Q2 ,             where
+then it is clear from (12) that a, b, K are all rational numbers.                          (xy − ay − b)(x2 y − a2 x − by − ab)
+However, for the inverse transformation, given arbitrary ra-                   R(x, y) =                                        ,       (17)
+                                                                                                 x(x − y)(y 2 − ax − b)
+tional a, b, K, in general it is necessary to take a twist of
+(9) with the coefficients A, B relaced by Ā = α2 β 4 A, B̄ =             and satisfies ψ ∗ (ω) = 2ω, so that the symplectic form is
+α3 β 6 B, respectively.                                                   doubled by this transformation.
+   By rewriting Ā, B̄ in terms of a, b, K via the above rela-              Apart from combinations involving exceptional points, such
+tions, one can compute the discriminant ∆ = −16(4Ā3 +                    as O, the formulae (14) and (16) define the abelian group
+27B̄ 2 ), such that ∆ 6= 0 gives the condition for the curve              law on the curve (8).
+(8) to be nonsingular. The j-invariant of the Lyness curve is
+given by                                                                  3.   ECM USING LYNESS
+                               −2
+                    (K + a) (Ka + b) (ĝ2 )   −3      3                      In order to factor a composite integer N , for finding small
+       j=                                                ,                factors one can use trial division, Pollard’s rho method or the
+            (Ka3 − 8a4 + K 2 b − 10Kab + 13a2 b − 16b2 )
+                                                                          p − 1 method, while for the large prime factors of a modulus
+where the numerator has the cube of                                       N used in RSA cryptography the number field sieve (NFS) is
+                                                                          most effective [11]. However, for finding many medium-sized
+ĝ2 = K 4 − 8K 3 a + 16Ka3 + 16a4 − 16K 2 b − 8Kab − 16a2 b + 16b2 .
+                                                                          primes, the ECM is the method of choice, and is commonly
+  The preceding formulae follow from a sequence of transfor-              used as a first stage in the NFS.
+mations described in [18]: there is a birational equivalence                 To implement the original version of the ECM, due to
+between (9) and the biquadratic curve associated with the                 Lenstra [22], one should pick a random elliptic curve E,
+Somos-4 QRT map, that is the curve                                        defined over Q by a Weierstass cubic (9), and a random
+                                                                          point P ∈ E, then compute the scalar multiple sP in the
+                     u2 v 2 + α(u + v) + β = Juv                          group law of the curve, using arithmetic in the ring Z/N Z.
+                                                                          The method succeeds if, at some stage in the computation of
+on which the intermediate quantities (11) lie; then the lat-
+                                                                          this scalar multiple sP, the denominator D of the coordinate
+ter is birationally equivalent to another intermediate curve
+                                                                          x0 has a has a non-trivial common factor with N , that is
+which is omitted here, namely the biquadratic cubic asso-
+                                                                          g = gcd(D, N ) with 1 < g < N .
+ciated with the Somos-5 QRT map [17] (which is the same
+                                                                             Typically s is chosen as a prime power less than some
+as the invariant curve for the screensaver map [14]), and
+                                                                          bound B1 , or the product of all such prime powers. For
+finally the Somos-5 curve is connected to (8) by an affine
+                                                                          composite N , the curve is no longer a group, but rather
+linear transformation applied to the coordinates (x, y).
+                                                                          is a group scheme (or pseudocurve [11]) over Z/N Z, mean-
+   With the above equivalence, the group law on the Lyness
+                                                                          ing that the addition law P1 + P2 does not give a point
+curve, with identity element given by the point O = (∞, ∞),
+                                                                          in (Z/N Z)2 for every pair of points P1 , P2 . The success
+can be found by translating the standard Weierstrass addi-
+                                                                          of the method is an indication that, for some prime factor
+tion formulae for (x0 , y 0 ) into the corresponding expressions
+                                                                          p|N , sP = O in the group law of the genuine elliptic curve
+for the coordinates (x, y). Alternatively, since the curve (8)
+                                                                          E(Fp ), which happens whenever s is a multiple of the order
+is cubic, the usual chord and tangent method can be applied
+                                                                          #E(Fp ).
+directly, yielding the formula for affine addition as
+                                                                             The computation of the scalar multiple sP is usually re-
+                  (x1 , y1 ) + (x2 , y2 ) = (x3 , y3 ),            (14)   garded as the first stage of the ECM. If it is unsuccessful,
+then a second stage can be implemented, which consists of
+calculating multiples `sP for small primes ` less than some                     Table 1: 2-Processor Lyness addition
+bound B2 > B1 . If the second stage fails, then one can                       Cost Step Processor 1       Processor 2
+either increase the value of B1 , or start again with a new                    1C      1    R1 ← a · Y    R2 ← b · Z
+curve E and point P. Here we are primarily concerned with                              2    R1 ← R1 + R2 idle
+calculating the scalar multiple sP in stage 1.                                         3    X∗ ← Y        W∗ ← Z
+                                                                                             ∗
+   The x-coordinate on a Weierstrass curve can be replaced                    1M       4    Y ← W · R1    Z∗ ← X · Z
+with any rational function on the curve with a pole at O.
+In particular, the x-coordinate on the Lyness curve (8) has
+a pole at O. Since, from (15), any sequence of iterates               The affine maps ϕ and ψ are not computationally efficient
+(un , un+1 ) of the Lyness map (4), satisfying the recurrence         because they both involve costly inversions (I), but inver-
+                                                                      sions can be avoided by working with projective coordi-
+                     un+2 un = a un+1 + b,                     (18)   nates, as is commonly done with Montgomery curves us-
+                                                                      ing the Montgomery ladder [6, 9], or with twisted Edwards
+corresponds to a sequence of points Pn = P0 + nP lying on
+                                                                      curves in EECM-MPFQ [3]. In the ECM this means that
+a curve (8) with a value of K fixed by P0 = (u0 , u1 ) and
+                                                                      the only arithmetic needed is multiplication (M), squaring
+P = (∞, −a), we can implement the ECM by choosing an
+                                                                      (S), multiplication by constants (C), and addition in Z/N Z.
+orbit that starts with P0 = O = (∞, ∞).
+                                                                      These operations are listed in order of decreasing cost: S is
+   The point (∞, ∞) is not a suitable initial value for the
+                                                                      cheaper than M, multiplication by constants is even cheaper
+affine map (4), but by using the isomorphism (10) with a
+                                                                      and may be neglected if they are suitably small, while the
+Weierstrass curve, which identifies the point (ν, ξ) on (9)
+                                                                      cost of addition is negligible compared with the rest.
+with P on (8), or by using elliptic divisibility sequences as
+                                                                         For an addition chain starting from 4P, we may write
+in [18], we can compute the first few multiples of P as
+                                                                       s = 2km (2km−1 (· · · (2k1 (4+δ0 )+δ1 ) · · · )+δm−1 )+δm , (21)
+      P = (∞, −a) = (u1 , u2 ),   2P = (−a, 0) = (u2 , u3 ),
+                                                                      corresponding to δ0 steps of adding P, followd by k1 dou-
+                  3P = (0, −b/a) = (u3 , u4 ),                        bling steps, then |δ1 | steps of adding or subtracting P, etc.
+                                                                      To avoid the base points we require δ0 ≥ 0, and typically one
+and                                                                   might restrict to δj = ±1 for 1 ≤ j ≤ m − 1, with δm = 0 or
+                                                                      ±1, if subtraction of P is used, or only allow addition of P
+                                  
+                 b       b(Ka + b)
+           4P = − , −a −             = (u4 , u5 )              (19)   and take 0 ≤ δ0 ≤ 3, δj = 1 for 1 ≤ j ≤ m − 1 and δm = 0
+                 a       a(a2 − b)
+                                                                      or 1 only. So for instance we could use 28 = 22 × (2 × 4 − 1)
+The points O, ±P, ±2P, ±3P are precisely the base points              in the former case (m = 2, δ0 = δ2 = 0, δ1 = −1, k1 = 1,
+in the pencil (6), where the Lyness map is undefined, but             k2 = 2), or 22 × (4 + 1 + 1 + 1) in the latter (m = 1, δ0 = 3,
+the point 4P (which depends on the value of K) is a suitable          δ1 = 0, k1 = 2). As we shall see, the cost of each projective
+starting point for the iteration.                                     addition or subtraction step is so low that using both may
+   In terms of the choice of elliptic curve data, there are two       lead to savings in the total number of operations.
+ways to implement the ECM using the Lyness map: one                      To work with projective coordinates in P1 × P1 , we write
+can pick a Weierstrass curve (9) defined over Q (most con-            the sequence of points generated by (18) as
+veniently, with A, B ∈ Z) together with a choice of rational                                                         
+point (x0 , y 0 ) = (ν, ξ), and then use the birational equiva-                    nP = (un , un+1 ) =
+                                                                                                          Xn Xn+1
+                                                                                                              ,         ,
+lence given by (10) and (11) to find the corresponding point                                              Wn Wn+1
+P on a Lyness curve with parameters specified by (12); or
+                                                                      and then each addition of P or doubling can be written as
+instead, one can just pick the parameters a, b, K at ran-
+                                                                      a polynomial map for the quadruple
+dom and proceed to calculate sP starting from the point 4P
+given by (19). One should exclude the case b = a2 , in order                     (X, W, Y, Z) = (Xn , Wn , Xn+1 , Wn+1 ),
+to avoid the 5-cycle (1), when P is a 5-torsion point.
+   In fact, as already mentioned, it suffices to set a → 1 be-        where an addition step sends
+fore carrying out the iteration, since orbits with other values         (Xn , Wn , Xn+1 , Wn+1 ) 7→ (Xn+1 , Wn+1 , Xn+2 , Wn+2 ),
+of a are equivalent to the case a = 1 by rescaling. In the first
+case, where one starts with a point on a Weierstrass cubic,           and doubling sends
+one can calculate a, b, K from (12) and then replace these
+                                                                         (Xn , Wn , Xn+1 , Wn+1 ) 7→ (X2n , W2n , X2n+1 , W2n+1 ).
+values by 1, b/a2 , K/a, respectively; while in the second case
+it is sufficient to set a = 1 and just choose b, K at random,           Taking projective coordinates in P1 × P1 , from the affine
+or even more simply one can just pick the values b, u5 at             coordinates x = X/W , y = Y /Z the Lyness map (4) be-
+random and then iterate from the point 4P = (−b, u5 ).                comes
+   In order to have an efficient implementation of scalar mul-                                                          
+tiplication, one should use an addition chain to calculate sP               (X : W ), (Y : Z) 7→ (X ∗ : W ∗ ), (Y ∗ : Z ∗ ) , (22)
+from 4P by a sequence of addition steps nP 7→ (n + 1)P,
+                                                                      where
+corresponding to (4), and doubling steps nP 7→ 2nP, cor-
+responding to (16), so that sP can be obtained in a time                   X ∗ = Y, W ∗ = Z, Y ∗ = (aY + bZ)W, Z ∗ = XZ
+O(log s). One can also subtract P using the inverse map
+                                                                    with a included for completeness. If we set a → 1 for con-
+                                     ax + b                           venience then each addition step, adding the point P using
+                  ϕ−1 : (x, y) 7→           ,x .           (20)
+                                       y                              (22), requires 2M + 1C, that is, two multiplications plus a
+multiplication by the constant parameter b. One can also          Now we compute gcd(W28 , N ) = 6645979, and the method
+try to choose b to be small enough, so that the effective cost    has succeeded in finding a prime factor of N . The projec-
+reduces to 2M. If one wishes to include subtraction of P, i.e.    tive coordinate W29 has the same common factor with N ,
+nP 7→ (n − 1)P, then this is achieved using the projective        although here we do not need the coordinates X29 , W29 at
+version of the inverse (20), for which the cost is the same as    the final step; but if the method had failed then these would
+for ϕ.                                                            be needed for stage 2 of the ECM (computing multiples `sP
+   The doubling map ψ for the Lyness case, given by the           for small primes `).
+affine map (16) with R defined by (17), lifts to the projective      It is worth comparing Lyness scalar multiplication with
+version                                                           the most efficient state of the art method, which uses twisted
+                                                              Edwards curves, given by
+          (X : W ), (Y : Z) 7→ (X̂ : Ŵ ), (Ŷ : Ẑ) ,     (23)
+                                                                                      ax2 + y 2 = 1 + dx2 y 2 ,              (24)
+where
+                                                                                               2
+                                                                  with projective points in P , or with extended coordinates
+   X̂ = A1 B1 ,   Ŷ = A2 B2 ,    Ŵ = C1 D1 ,    Ẑ = C2 D2 ,    in P3 : with standard projective points, adding a generic
+with                                                              pair of points uses 10M + 1S + 2C, while doubling uses only
+                                                                  3M+4S+1C [3]; while with extended Edwards it is possible
+ A1 = A+ + A− ,                           A2 = A+ − A− ,          to achieve 8M + 1C for addition of two points, or just 8M
+ B1 = B+ + B− ,                           B2 = B+ − B− ,          in the case a = −1, and 4M + 4S + 1C for doubling [16].
+ C1 = 2XT,                                C2 = −2Y T,                Clearly addition using the Lyness map is extremely effi-
+ D1 = ZA2 + C2 ,                          D2 = W A1 + C1 ,        cient, compared with other methods. In contrast, Lyness
+ A+ = 2G − aS − 2H 0 ,                    A− = aT,                doubling is approximately twice as costly as doubling with
+ B+ = S(G − a2 H − H 0 ) − 2aHH 0 ,       S = E + F,              Edwards curves. Moreover, using (22) only allows addi-
+ B− = T (G − a2 H + H 0 ),                T = E − F,              tion of P to any other point, rather than adding an arbi-
+ E = XZ, F = Y W, G = XY,                 H = W Z, H 0 = bH.      trary pair of points, which would be much more costly us-
+Setting a → 1 once again for convenience, and using the           ing a projective version of (14). Since any addition chain
+above formulae, we see that doubling can be achieved with         is asymptotically dominated by doubling, with roughly as
+15M + 1C, or 15M if multiplication by b is ignored. (Note         many doublings as the number of bits of s, this means that,
+that multiplication by 2 is equivalent to addition: 2X =          without any further simplification of the projective formu-
+X + X.)                                                           lae, scalar multiplication with Lyness curves should use on
+  We can illustrate the application of the ECM via the Ly-        average rougly twice as many multiplications per bit as with
+ness map with a simple example, taking                            twisted Edwards curves.
+                                                                     However, as we shall see, using ideas from [16], it is possi-
+  N = 3595474639, s = 28, a = 1, b = −u4 = 2, u5 = 17.            ble to make Lyness scalar multiplication much more efficient
+                                                                  if parallel processors are used, as described in the next sec-
+From (19) this means that
+                                                                  tion.
+                       a2
+                         
+                                      b
+            K = 1−          (u5 + a) − = 7,
+                        b             a                           4.   DOUBLING IN PARALLEL
+but we shall not need this. Writing s as 28 = 22 (2×4−1), we         In [16] it was shown that if four processors are used in
+compute 28P via the chain 4P 7→ 8P 7→ 7P 7→ 14P 7→ 28P.           parallel in the case a = −1 of twisted Edwards curves (24),
+As initial projective coordinates, we start with the quadruple    then with extended coordinates in P3 each addition step can
+                                                                  be achieved with an algorithm that has an effective cost of
+              (X4 , W4 , X5 , W5 ) = (−2, 1, 17, 1),              only 2M+1C, reducing to just 2M if the constant d is small,
+and then after one projective doubling step using (23), the       i.e. an improvement in speed by a full factor of 4 better than
+quadruple (X8 , W8 , X9 , W9 ) is found to be                     the sequential case, while doubling can be achieved with
+                                                                  an effective cost of just 1M + 1C. (Similarly, versions of
+           (3595467431, 43928, 80648, 3595455259).                these algorithms with two processors give an effective speed
+                                                                  increase by a factor of 2.) Practical details of implementing
+To obtain 7P we use the projective version of the inverse         the ECM in parallel with different types of hardware are
+map (20), which gives                                             discussed in [4].
+    Xn−1 = (aXn + bWn )Wn+1 ,            Wn−1 = Xn+1 Wn              Using two parallel processors, based on (22), each pro-
+                                                                  jective addition or subtraction step can be carried out in
+for any n, so we get                                              parallel with an effective cost of just 1M + 1C. An algo-
+                                                                  rithm with two processors is presented in Table 1 (where
+            (X7 , W7 ) = (2032516399, 3542705344).
+                                                                  the parameter a has been included for reasons of symmetry,
+Then applying doubling to the quadruple (X7 , W7 , X8 , W8 )      but can be set to 1). Spreading the addition step over four
+we find that (X14 , W14 , X15 , W15 ) is                          processors does not lead to any saving in cost.
+                                                                     For Lyness curves, the large amount of symmetry in the
+       (160913035, 3261908647, 3049465821, 760206673),            doubling formula (16) means that its projective version (23)
+and one final doubling step produces the projective coordi-       can naturally be distributed over four processors in parallel,
+nates of 28P, that is (X28 , W28 , X29 , W29 ) given by           resulting in the algorithm presented in Table 2. This means
+                                                                  that each Lyness doubling step is achieved with an effective
+       (558084862, 1754538456, 252369828, 1216214157).            cost of 4M + 1C, or just 4M if b is small.
+                                          Table 2: 4-Processor Lyness doubling
+                    Cost    Step     Processor 1    Processor 2    Processor 3                 Processor 4
+                    1M        1      R1 ← X · Z     R2 ← Y · W     R3 ← X · Y                  R4 ← W · Z
+                     1C       2      R5 ← R1 + R2   R6 ← R1 − R2   R7 ← b · R4                 idle
+                    1M        3      R1 ← X · R6    R2 ← Y · R6    R8 ← R4 · R7                R9 ← R3 − R7
+                              4      R1 ← 2R1       R2 ← −2R2      R3 ← R3 + R7                R10 ← 2R9
+                              5      R3 ← R3 − R4   R7 ← R10 − R5 R8 ← 2R8                     R11 ← R9 − R4
+                              6      R9 ← R7 + R6   R10 ← R7 − R6 idle                         idle
+                     1M       7      R3 ← R3 · R6   R4 ← W · R9    R7 ← Z · R10                R11 ← R11 · R5
+                              8      R5 ← R2 + R7   R6 ← R1 + R4   R11 ← R11 − R8              idle
+                              9      R7 ← R11 + R3 R8 ← R11 − R3 idle                          idle
+                     1M      10      X̂ ← R7 · R9   Ŵ ← R1 · R5   Ŷ ← R8 · R10               Ẑ ← R2 · R6
+
+
+   In an addition chain (21) for Lyness, starting from 4P with     the probability of smoothness of the group order #E(Fp ) in
+                                                                                                 √                √
+intermediate δj = ±1, each step of adding or subtracting           the Hasse interval [p + 1 − 2 p, p + 1 + 2 p], making success
+P is followed by a doubling. Thus a combined addition-             more likely. Twisted Edwards curves, which are birationally
+doubling or subtraction-doubling step can be carried out in        equivalent to Montgomery curves, do not cover all possible
+parallel with four processors, resulting in an effective cost      elliptic curves over Q. In particular, it is known from [3]
+of 5M + 2C, but no cost saving is achieved by combining            that for twisted Edwards curves with the special parame-
+them.                                                              ter choice a = −1 (which gives the fastest addition step)
+   It is also clear that the algorithm in Table 2 can be adapted   the torsion subgroups Z/10Z, Z/12Z, Z/2Z × Z/8Z are not
+to the case of two processors in parallel. This leads to an        possible, nor is Z/2Z × Z/6Z possible for any choice of a.
+effective cost of 8M + 1C per Lyness doubling.                        In the case of Lyness curves (8), there is no such restriction
+   Thus we have seen that implementing scalar multiplica-          on the choice of torsion subgroups that are allowed over Q.
+tion in the ECM with Lyness curves can be made efficient if        It would be interesting to look for families of Lyness curves
+implemented in parallel with two or four processors. In the        having large torsion and rank at least one, employing a com-
+concluding section that follows we weigh up the pros and           bination of empirical and theoretical approaches similar to
+cons of using Lyness curves for scalar multiplication.             [1, 2].
+                                                                      Another potentially useful feature of scalar multiplication
+5.   CONCLUSIONS                                                   with Lyness curves is that, since there is no loss of generality
+                                                                   in setting a → 1, to be carried out it requires the choice
+   We have presented an algorithm for scalar multiplication
+                                                                   of only two parameters b, K (or, perhaps better, b, u5 ), and
+using Lyness curves, which can be applied to any rational
+                                                                   these at the same time fix an elliptic curve E and a point P ∈
+point on a Weierstrass curve defined over Q, and have shown
+                                                                   E. Moreover, both parameters can be chosen small. This
+how it can be used to implement ECM factorization effi-
+                                                                   parsimony is aesthetically pleasing because the moduli space
+ciently in parallel with four processors.
+                                                                   of elliptic curves with a marked point is two-dimensional.
+   Each addition step, based on the Lyness map, has a re-
+                                                                      On the other hand, if one wishes to start from a given
+markably low cost: only 2M +1C if carried out sequentially,
+                                                                   Weierstrass curve (9) with a point on it, then in general
+or an effective cost of just 1M + 1C in parallel with two pro-
+                                                                   the formula in (12) produces a Lyness curve with a value of
+cessors. We believe that this sets a new record for elliptic
+                                                                   a 6= 1, so if the other parameters are subsequently rescaled
+curve addition, since the previous best known version us-
+                                                                   to fix a → 1 then typicallyl the requirement of smallness will
+ing twisted Edwards curves (24) with the special parameter
+                                                                   need to be sacrificed for the new parameter b so obtained.
+choice a = −1 requires 8M, or an effective cost of 2M with
+                                                                      We have concentrated on scalar multiplication in stage 1 of
+four parallel processors.
+                                                                   the ECM, but for stage 2 one usually computes `1 sP, `2 `1 P,
+   At 15M + 1C, the cost of sequential Lyness doubling is
+                                                                   etc. for a sequence of primes `1 , `2 , . . . all smaller than some
+much higher, and essentially twice the cost of sequential dou-
+                                                                   bound B2 . This can be carried out effectively using a baby-
+bling with twisted Edwards curves [3]. Since asymptotically
+                                                                   step-giant-step method [3], requiring addition of essentially
+scalar multiplication consists entirely of doubling steps, it
+                                                                   arbitrary multiples of P. For the latter approach, using
+appears that on average using the Lyness map should re-
+                                                                   addition with the Lyness map has the disadvantage that one
+quire about twice as many multiplications per bit compared
+                                                                   can only add P at each step, so to add some other multiple
+with the twisted Edwards version.
+                                                                   of P one would need to redefine the parameters a, b, K (and
+   However, if it is performed in parallel with four processors,
+                                                                   then rescale a → 1 if desired), leading to extra intermediate
+as in Table 2, then the effective cost of Lyness doubling is
+                                                                   computations.
+reduced to 4M + 1C, and this becomes only 4M in the case
+                                                                      Scalar multiplication is an essential feature of elliptic curve
+that the parameter b is small. This is still higher than the
+                                                                   cryptography: in particular, it is required for Alice and Bob
+speed record for doubling with four processors (1M + 1C),
+                                                                   to perform the elliptic curve version of Diffie-Hellman key ex-
+which is achieved in [16] with the a = −1 case of twisted
+                                                                   change [21]. In that context, one requires a curve E(Fq ) with
+Edwards curves. Nevertheless, performing Lyness addition
+                                                                   non-smooth order, to make the discrete logarithm problem
+and doubling in parallel is still very efficient, and may have
+                                                                   as hard as possible. It would be interesting to see if Lyness
+other possible advantages, which we now consider.
+                                                                   curves can offer advantages in a cryptographic setting.
+   For the ECM it is desirable to have a curve with large tor-
+sion over Q, since for an unknown prime p|N this increases
+6.   ACKNOWLEDGMENTS                                               of the plane preserving biquadratic invariant curves, J.
+   Funded by EPSRC fellowship EP/M004333/1. Thanks to              Phys. A: Math. Gen. 34 (2001) 6617–36.
+the School of Mathematics and Statistics, UNSW for fund-      [20] A. Iatrou and J. A. G. Roberts, Integrable mappings
+ing from the Distinguished Researcher Visitor Scheme, to           of the plane preserving biquadratic invariant curves II,
+John Roberts and Wolfgang Schief for providing additional          Nonlinearity 15 (2002) 459–489.
+financial support, and to Reinout Quispel and Igor Shpar-     [21] N. Koblitz, Algebraic Aspects of Cryptography,
+linski for helpful comments.                                       Springer, 1998.
+                                                              [22] H. W. Lenstra, Jr., Factoring integers with elliptic
+7.   REFERENCES                                                    curves, Ann. Math. 126 (1987) 649–673.
+ [1] R. Barbulescu, J. W. Bos, C. Bouvier, T. Kleinjung       [23] R. C. Lyness, Cycles, Math. Gaz. 26 (1942) 62.
+     and P. L. Montgomery, Finding ECM-friendly curves        [24] T. Nakanishi, Periodicities in cluster algebras and
+     through a study of Galois properties, in ANTS X, The          dilogarithm identities, in Representations of Algebras
+     Open Book Series 1 (2013) 63–86.                              and Related Topics EMS Series of Congress Reports,
+ [2] D. J. Bernstein, P. Birkner and T. Lange, Starfish on         European Mathematical Society (2011) 407–444.
+     strike, in LATINCRYPT 2010, Springer LNCS 6212           [25] G. R. W. Quispel, J. A. G. Roberts and C. J.
+     (2010) 61–80.                                                 Thompson, Integrable mappings and soliton
+ [3] D. J. Bernstein, P. Birkner, T. Lange and C. Peters,          equations, Phys. Lett. A 126 (1988) 419–421.
+     ECM using Edwards curves, Math. Comput. 82               [26] G. R. W. Quispel, J. A. G. Roberts and C. J.
+     (2013) 1139–1179.                                             Thompson, Integrable mappings and soliton equations
+ [4] D. J. Bernstein, T.-R. Chen, C.-M. Cheng, T. Lange            II, Physica D 34 (1989) 183–192.
+     and B.-Y. Yang, ECM on Graphics Cards, in                [27] D. T. Tran, P. H. van der Kamp and G. R. W.
+     EUROCRYPT 2009, Lecture Notes in Computer                     Quispel, Sufficient number of integrals for the
+     Science, vol Springer LNCS 5479 (2009) 483–501.               pth-order Lyness equation, J. Phys. A: Math. Theor.
+ [5] D. J. Bernstein and T. Lange, Faster addition and             43 (2010) 302001.
+     doubling on elliptic curves, in ASIACRYPT 2007,          [28] T. Tsuda, Integrable mappings via rational elliptic
+     Springer LNCS 4833 (2007) 29–50.                              surfaces, J. Phys. A: Math. Gen. 37 (2004) 2721–2730.
+ [6] D. J. Bernstein and T. Lange, Montgomery Curves          [29] Al. B. Zamolodchikov, On the thermodynamic Bethe
+     and the Montgomery Ladder, in Topics in                       ansatz equations for reflectionless ADE scattering
+     Computational Number Theory Inspired by Peter L.              theories, Phys. Lett. B 253 (1991) 391–394.
+     Montgomery (J. W. Bos and A. K. Lenstra, eds.),
+     Cambridge, 2017, pp. 82–115.
+ [7] F. Beukers and R. Cushman, Zeeman’s monotonicity
+     conjecture, J. Differ. Equ. 143 (1998) 191–200.
+ [8] J. Blanc, Symplectic birational transformations of the
+     plane, Osaka J. Math. 50 (2013) 573–590.
+ [9] C. Costello and B. Smith, Montgomery curves and
+     their arithmetic, J. Cryptogr. Eng. 8 (2018) 227–240.
+[10] H. Coxeter, Frieze patterns, Acta Arithmetica 18
+     (1971) 297–310.
+[11] R. Crandall and C. Pomerance, Prime Numbers - A
+     Computational Perspective, 2nd edition, Springer,
+     2005.
+[12] J. J. Duistermaat, Discrete Integrable Systems: QRT
+     Maps and Elliptic Surfaces, Springer, 2010.
+[13] H. M. Edwards, A normal form for elliptic curves,
+     Bull. Amer. Math. Soc. 44 (2007) 393–422.
+[14] J. Esch and T. D. Rogers, The screensaver map:
+     dynamics on elliptic curves arising from polygonal
+     folding, Discrete Comput. Geom. 25 (2001) 477–502.
+[15] S. Fomin and A. Zelevinsky, Y-systems and
+     generalized associahedra, Ann. of Math. 158 (2003)
+     977–1018.
+[16] H. Hisil, K. K.-H. Wong, G. Carter and E. Dawson,
+     Twisted Edwards curves revisited, in ASIACRYPT
+     2008, Springer LNCS 5350 (2008) 326–343.
+[17] A. N. W. Hone, Sigma function solution of the initial
+     value problem for Somos 5 sequences, Trans. Amer.
+     Math. Soc. 359 (2007) 5019–5034.
+[18] A. N. W. Hone, ECM factorization with QRT maps,
+     arXiv:2001.09076
+[19] A. Iatrou and J. A. G. Roberts, Integrable mappings
+

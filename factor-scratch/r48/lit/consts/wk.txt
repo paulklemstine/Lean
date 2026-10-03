@@ -1,0 +1,1179 @@
+                                            Transformer Grammars: Augmenting Transformer Language Models
+                                                         with Syntactic Inductive Biases at Scale
+                                                                                 1                  2                           1,2
+                                                     Laurent Sartran Samuel Barrett Adhiguna Kuncoro
+                                                                           1              2        1
+                                                          Miloš Stanojević Phil Blunsom Chris Dyer
+                                                                 1           2
+                                                                   DeepMind, University of Oxford
+                                                 {lsartran,akuncoro,stanojevic,cdyer}@deepmind.com
+                                             samuelbarrett1234@btinternet.com, phil.blunsom@cs.ox.ac.uk
+
+                                                             Abstract                           et al., 2019; Kim et al., 2019; Hu et al., 2020; Noji
+                                                                                                and Oseki, 2021, inter alia), it remains an open
+                                             We introduce Transformer Grammars (TGs),           question whether—and to what extent—a similar
+                                             a novel class of Transformer language mod-         design principle is still beneficial for Transformer
+                                             els that combine (i) the expressive power,
+                                                                                                LMs at larger scales.
+arXiv:2203.00633v2 [cs.CL] 6 Dec 2022
+
+
+
+
+                                             scalability, and strong performance of Trans-
+                                             formers and (ii) recursive syntactic composi-         In this paper, we aim to answer these questions
+                                             tions, which here are implemented through          by introducing Transformer Grammars (TGs)—
+                                             a special attention mask and deterministic         a novel class of Transformer language models that
+                                             transformation of the linearized tree. We          combine: (i) the expressive power, scalability, and
+                                             find that TGs outperform various strong base-
+                                                                                                strong performance of Transformer-XL (Dai et al.,
+                                             lines on sentence-level language modeling
+                                             perplexity, as well as on multiple syntax-
+                                                                                                2019); (ii) joint modeling of surface strings x and
+                                             sensitive language modeling evaluation met-        their corresponding phrase-structure trees y, i.e.,
+                                             rics. Additionally, we find that the recur-        p(x, y); and (iii) an inductive bias that constrains
+                                             sive syntactic composition bottleneck which        the model to explain the data through built-in re-
+                                             represents each sentence as a single vec-          cursive syntactic composition operations. By im-
+                                             tor harms perplexity on document-level lan-        plementing these recursive compositions through a
+                                             guage modeling, providing evidence that a          novel modification of the Transformer-XL attention
+                                             different kind of memory mechanism—one
+                                                                                                mask, TGs retain the computational efficiency of
+                                             that is independent of composed syntactic
+                                             representations—plays an important role in         standard Transformer-XLs, enabling them to avoid
+                                             current successful models of long text.            the limitations of LSTM-based recurrent neural net-
+                                                                                                work grammars (Dyer et al., 2016, RNNGs), which
+                                                                                                have been proven difficult to scale (Kuncoro et al.,
+                                        1   Introduction                                        2019; Noji and Oseki, 2021).
+                                        Transformer language models (LMs) that are                 TGs are related to the recent work of Qian et al.
+                                        trained on vast amounts of data have achieved           (2021) that similarly aims to augment generative
+                                        remarkable success at various NLP benchmarks            Transformer language models with a stronger mod-
+                                        (Peters et al., 2018; Devlin et al., 2019; Brown        eling of syntactic structures, albeit with two key
+                                        et al., 2020, inter alia). Intriguingly, this success   differences. First, whereas Qian et al. (2021) used
+                                        is achieved by models that lack an explicit model-      syntactic structure to restrict the behavior of a sub-
+                                        ing of hierarchical syntactic structures, which were    set of attention heads (Strubell et al., 2018; As-
+                                        hypothesized by decades of linguistic research to       tudillo et al., 2020), TGs incorporate a stronger
+                                        be necessary for good generalization (Chomsky,          form of syntactic inductive bias by using recursive
+                                        1957; Everaert et al., 2015). This naturally leaves     syntactic compositions to create an explicit com-
+                                        a question: To what extent can we further improve       posed representation for each constituent, in a sim-
+                                        the performance of Transformer LMs, through an          ilar fashion as RNNGs. Hence, our approach sheds
+                                        inductive bias that encourages the model to ex-         light into whether, and to what extent, the recursive
+                                        plain the data by the means of recursive syntactic      syntactic composition hypothesis—which has been
+                                        compositions? Although the benefits of modeling         shown to be valuable at the small data and model
+                                        recursive syntax have been shown at the small data      scale in the case of RNNGs—continues to offer
+                                        and model scales, such as in the case of recurrent      additional benefits, beyond specializing a subset
+                                        neural network grammars (Dyer et al., 2016; Futrell     of attention heads for syntax. Second, in contrast
+to prior work, which has been limited to modeling            cated LMs in existence.
+sentences independently of document context, this
+                                                         • When modeling full documents and evaluating
+work explores whether syntactic composition also
+                                                           perplexity, we again find that the TXL (trees)
+benefits document-level language modeling.
+                                                           model outperforms the terminal-only TXL (ter-
+   We evaluate Transformer Grammars against
+                                                           minals) baseline. However, TGs substantially
+baseline models on three metrics: (i) perplexity,
+                                                           underperform both the TXL (terminals) and TXL
+(ii) syntactic generalization, and (iii) parse rerank-
+                                                           (trees) models. The failure of TGs, which repre-
+ing, and on two training datasets: (i) the small-
+                                                           sent prior-sentence context purely in terms of a
+scale Penn Treebank (Marcus et al., 1993, PTB)
+                                                           composed syntactic representation, suggests that
+and (ii) the medium-scale BLLIP-LG (Charniak
+                                                           a different memory mechanism—that works in
+et al., 2000) datasets, with ∼1M and ∼40M words,
+                                                           part independently of syntactic structures—may
+respectively. We find that:
+                                                           play a role in the processing of long-form text.
+• Transformer Grammars (TGs) achieve better
+                                                            All in all, our findings show that—under compa-
+  (i) single-sentence language modeling perplex-
+                                                         rable experimental conditions—LMs with notions
+  ity, (ii) syntactic generalization, and (iii) parse
+                                                         of syntactic structures (both TXL (trees) & TG)
+  reranking performance than RNNGs—all the
+                                                         outperform those without on multiple evaluation
+  while being much faster to train than the batched
+                                                         metrics. We further demonstrate that encouraging
+  RNNG of Noji and Oseki (2021).
+                                                         the model to explain the data through the means
+• In single-sentence language modeling perplex-          of recursive syntactic compositions—as is the case
+  ity, the terminal-only Transformer XL base-            for TGs—is a valuable inductive bias for achieving
+  line (TXL (terminals)) is outperformed by both         an even stronger human-like syntactic competence,
+  TGs and a Transformer XL that predicts sen-            outperforming prior work that also incorporates
+  tences as joint sequences of terminals and tree-       syntactic biases, albeit without recursive composi-
+  building nonterminal symbols (TXL (trees)) but         tions (Qian et al., 2021), in addition to some of the
+  without the TG’s attention restrictions (Choe and      largest non-syntactic LMs to date. Lastly, our find-
+  Charniak, 2016; Qian et al., 2021).                    ings motivate the development of scalable LMs—
+• Although modeling structure improves perplex-          that nevertheless incorporate stronger notions of
+  ity compared to terminal-only models, the              syntactic structures—as a promising (albeit rela-
+  TXL (trees) model slightly outperforms the more        tively under-explored) area of NLP research.
+  biased TG models. Using a regression analy-
+  sis, we show that while TG’s recursive syntac-         2    Model
+  tic compositions benefit syntactic generalization,     TGs are syntactic language models: they jointly
+  their implementation in terms of attention re-         model the probability of syntactic phrase-structure
+  striction interferes with Transformers’ lexical        trees y and strings of words x, using the predicted
+  copying ability, which turns out to play a role        structures to determine the structure of the com-
+  in obtaining low perplexities. This result indi-       putations of model states. Following a line of re-
+  cates a partial dissociation between perplexity        cent work in parsing and syntactic language models
+  and syntactic generalization, both of which are        (Vinyals et al., 2015; Dyer et al., 2016; Choe and
+  important metrics for assessing LM success.            Charniak, 2016), the generation problem is decom-
+• On the benchmark of Hu et al. (2020) that is           posed into modeling a sequence of actions that con-
+  a carefully controlled test of syntactic general-      struct (x, y) in a top-down, left-to-right fashion, by
+  ization ability, TGs substantially outperform the      interleaving nonterminal nodes and their children,
+  syntax-free TXL (terminals) baseline, as well as       as shown in Figure 1. The linearized representation
+  the much stronger TXL (trees) model. Perhaps           of (x, y) consists of three types of actions: (i) open-
+  even more remarkably, TGs outperform the GPT-          ing nonterminals (action type ONT), marking the
+  2-small (Radford et al., 2019), Gopher (Rae et al.,    opening of a new constituent; (ii) generating ter-
+  2021), and Chinchilla (Hoffmann et al., 2022)          minal symbols/leaf nodes (i.e., words or subword
+  models, which are between 250× and 1, 000×             tokens), henceforth denoted as T; and (iii) clos-
+  larger than the TG model, trained on vastly more       ing the most recent open constituent/incomplete
+  data, and arguably represent the most sophisti-        nonterminal symbol, henceforth denoted as CNT.
+                                                                                                                                                                                                                                                                                          of composed phrases and is inspired by a similar de-
+                                                                                                                                                                                       S                                                                                                  sign principle as RNNGs and other tree-structured
+                                                                                                                                                                                                                                                                                          architectures. In the stack, the restriction is instanti-
+      ( the blue bird sings,                                                                                                                                 NP                                       VP )
+        ÍÒÒ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò ÒÑ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ï                                                                                                                                                                      ated by popping the indices for the child nodes and
+                                                       string x                                                                              . . . .                                                                                                                                      then pushing the index of the composed constituent.
+                                                                                                                                           ÍÒÒ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ñ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ï
+                                                                                                                                                       syntax tree y                                                                                                                      We refer to this process as COMPOSE attention.
+        (S (NP the blue bird NP) (VP sings VP) S)                                                                                                                                                                                                                                              In addition to COMPOSE attention, at each po-
+        ÍÒÒ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ñ Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ò Ï   sition i, we apply STACK attention, where i is
+                                                                                                                         actions a
+                                                                                                                                                                                                                                                                                          pushed onto the stack attention, and attention is
+                                                                                                                                                                                                                                                                                          restricted to positions on the stack. Both STACK
+Figure 1: An example that represents a pair of                                                                                                                                                                                                                                            and COMPOSE attention use the same parameters
+string x and its phrase-structure tree y, which are                                                                                                                                                                                                                                       and attention heads—what distinguishes them is
+then represented as a sequence of actions that con-                                                                                                                                                                                                                                       only the rule for computing the set of positions
+struct (x, y) in a top-down, left-to-right fashion                                                                                                                                                                                                                                        that the model can attend to. Importantly, as we
+(Dyer et al., 2016; Choe and Charniak, 2016).                                                                                                                                                                                                                                             need to (i) perform both COMPOSE and STACK for
+                                                                                                                                                                                                                                                                                          a closing nonterminal (e.g., to first compute a com-
+   Let a = (a0 , a1 , . . . , aT −1 ) be a sequence of                                                                                                                                                                                                                                    posed representation based on its parts/children,
+actions (of length T ) that generates (x, y), where                                                                                                                                                                                                                                       and then add the composed representation onto
+each action is part of the action vocabulary V. TGs                                                                                                                                                                                                                                       the stack), while (ii) performing exactly one atten-
+define a probability distribution over a through a                                                                                                                                                                                                                                        tion operation per token, we transform the orig-
+left-to-right factorization, i.e., p(x, y) = p(a) =                                                                                                                                                                                                                                       inal sequence a by duplicating all closing non-
+                                                                                                                                                                                                                                                                                                                                     ′
+∏i p(ai ∣ a<i ).                                                                                                                                                                                                                                                                          terminals. This yields a sequence a of length
+                                                                                                                                                                                                                                                                                             ′
+                                                                                                                                                                                                                                                                                          T , e.g., (S (NP the blue bird NP) NP)
+2.1                Recursive syntactic composition via                                                                                                                                                                                                                                    (VP sings VP) VP) S) S). The first clos-
+                   attention                                                                                                                                                                                                                                                              ing nonterminal of each pair is given the type
+                                                                                                                                                                                                                                                                                          CNT1, and implements COMPOSE, whereas the
+In Transformer language models, when generat-                                                                                                                                                                                                                                             second is given the type CNT2, and implements
+ing ai conditionally on a<i , attention is the only                                                                                                                                                                                                                                       STACK . To keep the number of prediction events
+mechanism by which information from other po-                                                                                                                                                                                                                                             (i.e., the number of times a probability distribution
+sitions j < i is incorporated. The rules governing                                                                                                                                                                                                                                        is emitted by the model) constant, no final predic-
+this information flow—i.e., which positions can                                                                                                                                                                                                                                           tion is made for COMPOSE positions (see Figure 2).
+attend to which other positions—are defined by the
+                                                                                                                                                                                                                                                                                               The exact procedure for STACK/COMPOSE is de-
+attention mask. We design TGs to use recursive
+                                                                                                                                                                                                                                                                                          scribed in Algorithm 1. The positions that may be
+syntactic compositions, which have been shown to
+                                                                                                                                                                                                                                                                                          attended are represented as a binary attention mask
+lead to better generalisation in the LSTM-based                                                                                                                                                                                                                                                     ′
+                                                                                                                                                                                                                                                                                                  T ×T
+                                                                                                                                                                                                                                                                                                         ′
+
+RNNG model, and we implement them through the                                                                                                                                                                                                                                             A∈R           (see Figure 2), such that Aij = 1 iff
+Transformer attention mechanism.                                                                                                                                                                                                                                                          the position j may be attended from i, and 0 oth-
+   In TGs, the action sequence is generated from                                                                                                                                                                                                                                          erwise. Note that the computation of the attention
+left-to-right, and each symbol ai can be thought of                                                                                                                                                                                                                                       mask is causal, i.e., no information from positions
+as updating a stack of indices. When the current ai                                                                                                                                                                                                                                       j > i is used to compute the positions that can be
+is a closing nonterminal (i.e., a constituent has just                                                                                                                                                                                                                                    attended from i.
+ended) its index i will be represented by a single-
+vector-sized composed representation obtained by                                                                                                                                                                                                                                          Relative positional encoding. In Transformer-
+attending to the child positions of the currently end-                                                                                                                                                                                                                                    XL, the positional information presented to the
+ing constituent. Subsequent positions (> i) may                                                                                                                                                                                                                                           model is based on the difference between the at-
+attend to this composed position, but they may not                                                                                                                                                                                                                                        tending position i and the attended position j, i.e.,
+attend directly to the constituent positions, and this                                                                                                                                                                                                                                    i − j. This distance does not reflect nor use the
+restriction imposes a syntactic bottleneck, since                                                                                                                                                                                                                                         topology of the tree. We thus generalize how rel-
+everything inside the constituent that influences                                                                                                                                                                                                                                         ative positions are provided to the attention mech-
+                                                                                                                                                                                                                                                                                                                                     ′     ′
+                                                                                                                                                                                                                                                                                                                                    T ×T
+subsequent predictions must become part of the                                                                                                                                                                                                                                            anism such that any matrix R ∈ Z          can be
+composed representation. This bottleneck encour-                                                                                                                                                                                                                                          used, where Rij is the relative position between
+ages the model to learn informative representations                                                                                                                                                                                                                                       i and j. For TGs, we define Rij = δ(i) − δ(j),
+       i
+                     ′
+              Input ai   Type       Attn. op.       Label                                                         Attended token
+                                                                                               <s> (S (NP the blue bird NP) NP) (VP sings VP) VP) S) S)
+       0      <s>        ONT        STACK           (S
+                                                                                   <s>
+       1      (S         ONT        STACK           (NP                               (S
+       2      (NP        ONT        STACK           the                             (NP
+       3      the        T          STACK           blue                            the
+       4      blue       T          STACK           bird                           blue
+
+
+
+
+                                                                 Attending token
+       5      bird       T          STACK           NP)                             bird
+       6      NP)        CNT1       COMPOSE         –                               NP)
+       7      NP)        CNT2       STACK           (VP                             NP)
+                                                                                    (VP
+       8      (VP        ONT        STACK           sings
+                                                                                   sings
+       9      sings      T          STACK           VP)
+                                                                                    VP)
+       10     VP)        CNT1       COMPOSE         –                               VP)
+       11     VP)        CNT2       STACK           S)                                S)
+       12     S)         CNT1       COMPOSE         –                                 S)
+       13     S)         CNT2       STACK           –
+  (a) Example of a (transformed) sequence with its cor-          (b) Attention mask with STACK/COMPOSE attention.
+  responding token types, type of attention operations,          STACK is represented in blue, whereas COMPOSE is de-
+  and labels. No prediction is done for positions 6, 10,         noted in orange.
+  12 (where COMPOSE is performed), nor for position
+  13 as no end-of-sequence token is required to model
+  linearized trees.
+
+            Figure 2: Processing of an example sentence: (S (NP the blue bird NP) (VP sings VP) S)
+
+
+where δ(i) is the depth of the i-th token in the tree.
+Note that the relative distance Rij will only be com-
+puted if Aij = 1 (i.e., j may be attended from i).               Algorithm 1 STACK/COMPOSE attention
+For instance, for the action sequence in Figure 1,                                         ′
+                                                                 Input: a sequence of tokens
+the relative distance between (the positions corre-                                                      ′
+                                                                                                       T ×T
+                                                                                                              ′
+
+sponding to) the words sings and bird is never                   Output: A ∈ R             attention mask
+                                                                  1: S ← []                                ▷ Empty stack
+computed, but it will be computed between sings
+                                                                  2: A ← 0
+and its sibling NP covering the blue bird.                        3: for i ← 0 to T do
+                                                                                       ′
+
+                                                                         if type(a [i]) = CNT1 then
+                                                                                     ′
+                                                                  4:                                         ▷ COMPOSE
+2.2    Segmentation and recurrence                                5:          j←i
+                                                                              while type(a [j]) ≠ ONT do
+                                                                                              ′
+                                                                  6:
+In the same manner as Transformer-XL, Trans-                      7:               Aij ← 1
+former Grammars are recurrent neural networks                     8:               j ← S.pop()
+that can process arbitrarily long sequences as
+                                                      1           9:          end while
+                                                                 10:          Aij ← 1
+consecutive segments that contain a fixed num-
+                                                                 11:          S.push(i)
+ber of tokens L, maintaining and updating a mem-                 12:     else                                   ▷ STACK
+ory of temporal dimension M from one segment                                  if type(a [i]) ≠ CNT2 then
+                                                                                         ′
+                                                                 13:
+                                                ′
+to the next. With 0 ≤ τ ≤ ⌈ TL ⌉, aτ =
+                                                      ′
+                                                                 14:               S.push(i)
+(aτ L , aτ L+1 , . . . , aτ (L+1)−1 ) is the τ + 1-th seg-       15:          end if
+                                                                 16:          for j ∈ S do
+ment. Token embeddings are obtained from an em-
+                              ∣V∣×d                              17:               Aij ← 1
+bedding matrix E ∈ R                 to form a sequence of       18:          end for
+                   d      (0)         (0)      (0)
+L vectors in R : hτ = (hτ L , . . . , hτ (L+1)−1 ).              19:     end if
+                                                                 20: end for
+   The core of the model is composed of K stacked                21: return A                            ▷ Attention mask
+
+   1
+     This desirable property of Transformer-XL is the main
+justification for our using it as baseline and starting point.
+recurrent layers, i.e., for 1 ≤ k ≤ K:                                 The mask A (§2.1) is applied element-wise on
+                                                                    the scores, which sets masked entries to −∞. The
+   (k)         (k)            (k)        (k−1)      (k)
+ hτ , mτ +1 = Layer                 (hτ          , mτ , Aτ , Rτ )   normalized attention weights are then obtained
+                                                                    by applying a softmax activation function to the
+where for each segment τ :                                          scores; the final attention outputs are the product
+         (k)         L×d
+                                                                    of the attention weights and the values. In practice,
+   • hτ ∈ R        is the sequence of hidden states,                we use multiple heads—the outputs of each are con-
+     which forms the input for layer k + 1,                         catenated and passed onto a linear transformation.
+          (k)          M ×d
+   • mτ          ∈ R          is the memory,                        Memory update. In Transformer-XLs, the mem-
+                                                                    ory is updated by shifting the current input into
+                     L×(M +L)
+   • Aτ ∈ R           is the attention mask from                    it. Here we take advantage of the fact that posi-
+     the current segment to the current segment                     tions within a subtree that have been COMPOSEd
+     and the memory,                                                are never attended to in the future, and a fortiori
+                           L×(M +L)
+                                                                    in the following segments. Hence, only positions
+   • and Rτ ∈ Z               is the corresponding                  that may be attended need to be added or kept in
+     relative positions matrix.                                     the memory. This requires careful book-keeping
+                                                                    of which position in the memory corresponds to
+All layers receive the same attention mask and rel-
+                                                                    which original position in the input sequence, both
+ative positions matrix. Each layer k is composed
+                                                                    (i) to perform the update, and (ii) to compute the
+of a multi-head self-attention (SelfAttn) sub-layer
+                                                                    correct attention mask and relative positions.
+and a position-wise feed-forward network (FFN)
+sub-layer (with residual connections followed by                    2.3   Properties
+layer normalization—omitted for clarity), as well                   Recursive composition. Transformer Grammars
+as an update to the memory for the next segment:                    accomplish recursive compositions via a custom
+    (k− 12 )                                                        attention mask that reflects the hierarchical phrase
+                                     (k−1)         (k)
+   hτ           = SelfAttnk (hτ               , mτ , Aτ , Rτ )      structures within natural language. Although the
+         (k)                  (k− 12 )                              mask at a position i + 1 depends on the mask at
+        hτ      = FFNk (hτ               )
+                                                                    position i, during training the entire attention mask
+         (k)                                     (k−1)       (k)
+    mτ +1 = MemoryUpdate(hτ                              , mτ )     matrix can be precomputed in advance, and then
+                                                                    applied independently to compute multiple syntac-
+                                             (K)                    tic compositions in parallel for the whole segment.
+The output of the last layer, hτ , is multiplied by
+                                           T                        For instance, in the example sequence from Fig-
+the transpose of the embedding matrix E to get
+the unnormalized next-token log probabilities.                      ure 2, during training the representations of NP
+                                                                    and VP are computed in parallel, even though their
+Self-attention. Using the notation of Dai et al.                    closing nonterminals are at different positions (6
+(2019), let Wq , Wk,E , Wk,R , Wv , and u and v                     and 10, respectively) in the sequence. Every fol-
+be the trainable model parameters. Let [⋅, ⋅] denote                lowing layer of Transformer Grammars then takes
+a concatenation operation along the time dimension.                 the composed representations at previous layers,
+For a single head, we have:                                         and composes them further. For instance, at po-
+                                                                    sition 12, the second layer will form a composed
+q = hWq k = [m, h] Wk,E v = [m, h] Wv .                             representation of a sentence constituent S) by us-
+                                                                    ing as input the first layer representations of NP)
+The attention score for an attending position i and
+                                                                    and VP). A consequence of this approach is that
+an attended position j is
+                                                                    at least d layers are needed for tokens of depth d
+                              T                          T          to affect the topmost composed representation, a
+          sij = (qi + u) kj + (qi + v) rij ,
+                                                                    property it shares with conventional Transformers
+                      d                                             applied to trees (Hahn, 2020).
+where rij ∈ R is an embedding of the integer
+relative position Rij (row from Wk,R ). Much like                   Context-modulated composition. TGs’ compo-
+in Transformer-XL, the second term can be com-                      sition steps use a COMPOSE attention mask at each
+puted efficiently as the relative positions take val-               closing nonterminal of type CNT1, and all other
+ues within a small interval [Rmin , Rmax ].                         actions use a STACK attention mask. The stack
+mask makes available the representations of the           3   Experiments
+completed constituents, words, and open nonter-
+minals on the stack. Thus, in the example in Fig-         We compare Transformer Grammars with two
+ure 2, the word sings can attend to the closed            Transformer-XL baselines: (i) one trained only on
+constituent NP), as well as ancestor nonterminals         the terminal word sequences (TXL (terminals)),
+(S and (VP. But, importantly, at sings, informa-          and (ii) another trained on the linearized tree se-
+tion about all preceding words is accessible only         quence as done by Choe and Charniak (2016),
+through the composed NP) representation, thus             henceforth denoted as TXL (trees). We remark
+enforcing the compressive effect of syntactic com-        that model (i) is a word-level language model that
+position.                                                 estimates the probability of surface strings p(x),
+                                                          whereas model (ii) is a syntactic language model
+   At higher layers, STACK and COMPOSE atten-
+                                                          that estimates p(x, y). We additionally compare
+tions have a subtle interaction worth making ex-
+                                                          against two prior syntactic LMs: (i) the “generative
+plicit. The STACK attention that is used to compute
+                                                          parsing as language modeling” approach of Qian
+the representation for sings can look at the com-
+                                                          et al. (2021), which operates in a similar fashion as
+posed representation of the preceding subject NP),
+                                                          the linearized Choe and Charniak (2016) baseline,
+meaning that a certain amount of “outside informa-
+                                                          albeit with two attention heads that are special-
+tion” can enter into the computation of the com-
+                                                          ized for syntax (though differently from TGs’ ex-
+posed VP. The availability of outside information
+                                                          plicit recursive syntactic compositions); and (ii) the
+deviates from the strict bottom-up compositionality
+                                                          batched RNNG model of Noji and Oseki (2021).
+of RNNGs and similar models.
+
+   How does this outside information impact com-          Datasets. We conduct experiments on both the
+position? In TGs (in contrast to Transformer-XLs),        Penn Treebank (Marcus et al., 1993, PTB) dataset
+the influence of outside context on composed rep-         (≈ 1M words), and the BLLIP- LG (Charniak et al.,
+resentations is indirect, and we therefore argue that     2000) dataset according to the split by Hu et al.
+the TG learner has a bias against capturing such          (2020) (≈ 40M words). We use the parsed, pre-
+outside information in the composed representation.       processed, sentence-level PTB dataset of Dyer et al.
+Our argument relies on two facts: (i) that learning       (2016), where unseen words and singletons on the
+to compose a representation of a constituent end-         training set are mapped according to a special set
+ing at position i is driven by predictions/prediction     of unknown word symbols as proposed by Petrov
+failures of a subsequent symbol aj , where j > i          and Klein (2007). For BLLIP- LG, we use the parse
+and (ii) that if aj ’s prediction does crucially depend   trees provided by Hu et al. (2020). Tokenization is
+information outside of the constituent ending at i,       performed with SentencePiece (Kudo and Richard-
+then there will always be a more direct attention         son, 2018) using a unigram language model sub-
+path than the one via the composed representation         word algorithm (Kudo, 2018) and a vocabulary of
+at ai . The existence of two paths with different         32K word-pieces. For BLLIP- LG, we consider two
+numbers of operations—a more direct one (directly         settings: (i) we model each sentence independently
+via attention) and a less direct one (via composition     and (ii) we model each document—each of which
+followed by attention)—explains the bias against          is composed of multiple sentences—independently.
+including outside information in composed repre-
+sentations, and in favor of bottom-up information.
+                                                          Experimental details. To account for training
+   Finally, we remark that questions of whether and       variance, for each model (TGs, TXL (terminals),
+how contextual information plays a role in compo-         and TXL (trees)), we train 100 models of the same
+sition are complex and unresolved. Bowman et al.          size with independent random initializations. On
+(2016) showed that allowing outside information           PTB, we use 16-layer models with 12M parameters;
+to modulate compositional computations leads to           whereas on BLLIP- LG, we use 16-layer models
+better composed representations, and justified this       with 252M parameters. We select for each training
+design on the grounds that outside information may        run the model checkpoint with the lowest validation
+play a crucial disambiguating role in the composi-        loss, computed using with a single gold proposal
+tion function.                                            tree for each sentence.
+3.1   Language modeling perplexity                           BLLIP sent.          BLLIP sent.           BLLIP doc.
+Experimental setup Whereas the probability of
+a string x can be computed directly by left-to-right
+decomposition for models operating on strings, for
+models operating on the joint distribution of strings
+and syntax trees, we define p(x) as the marginal
+                                                            30.0   32.5      75      80    85      22      24    26
+distribution: p(x) = ∑y∈Yx p(x, y) where Yx is              Perplexity ( )        SG score ( )      Perplexity ( )
+the set of possible trees for x. As the cardinality of           PTB                  PTB
+this set is infinite, exact computation of this prob-
+                                                                                                           TG
+ability is intractable. However, we can compute a                                                          TXL (trees)
+lower bound on p(x) by approximately marginal-
+izing over a much smaller set of proposal trees
+           (1)        (N )
+Y x = {y , ⋯, y } ⊂ Yx .
+  ′
+                                       ′
+    For a given x, we would want Y x to be the set            61     62            93.5     94.0
+of trees for which p(y ∣ x) is largest. As this             Perplexity ( )   Bracketing F1 ( )
+parsing distribution is unavailable, we approximate
+it with a proposal model q(y ∣ x). The better            Figure 3: Distributions of the metrics of interest
+this approximation is, the tighter the upper lower       on the test sets, with 100 random initializations
+bound on p(x) is. We use as q(y ∣ x) a separately-       for each model. All the differences in means are
+                                         ′                                                −3
+trained discriminative RNNG, and Y x is a set of         statistically significant (p < 10 ).
+N = 300 trees, sampled without replacement, as
+an approximation to the set of N trees with largest
+p(y ∣ x). Naturally, regardless of how Y x is
+                                                 ′
+                                                         tree sequences (TXL (trees)) and the proposed TG
+chosen, the approximate marginal ∑y∈Y ′ x p(x, y)        model achieve a lower perplexity—even though the
+computed on a subset of Yx is a lower bound of           reported perplexity is in fact only an upper bound—
+the true probability p(x).                               than a Transformer-XL trained only on terminals
+    We compute the word perplexity of the valida-        (TXL (terminals))—for which the perplexity cal-
+tion and test splits of the datasets under the models    culation is exact—on PTB and the sentence-level
+                                − 1                      BLLIP. This shows that joint modeling of syntac-
+as PPL(D) = (∏x∈D p(x)) Nw , where Nw is
+the total number of words in the dataset D. It is        tic structures and surface strings in Transformers—
+exact for the models operating on words, and a con-      even without any explicit inductive bias for making
+servative approximation (an upper bound) for the         use of the syntactic information (e.g., TXL (trees)),
+models operating on the joint distribution of strings    is still helpful for improving perplexity. We con-
+and syntax trees.                                        jecture that the next-token prediction task is made
+   For the document-level language models, given         easier by the presence of nonterminals within the
+a document that consists of Ns sentences, for each       context, which restricts the word classes that may
+sentence i in the document, we need to marginalize       appear next. Although there are more such predic-
+over all possible syntax trees for every single i − 1    tion events for the linearized tree sequences than
+preceding sentence in that document. We approxi-         for the words-only model, the predictions of the
+mate this by greedily picking the single most likely     nonterminals are marginalized out at evaluation
+syntax tree under the model for the first i − 1 sen-     time. At training time, it might seem that the learn-
+tences, before concatenating this single-path prefix     ing demands placed on the model are higher, and
+with the 300 tree proposals for the last sentence.       that having to predict the syntactic structures could
+                                                         produce an interference and reduce the available
+Discussion We report the mean and sample stan-           model capacity for predicting the words. Here we
+dard deviation of perplexity (first 3 columns) in        do not find this to be the case, as evidenced by both
+Table 1, and plot their distributions in Figure 3.       syntactic language models’ better perplexity.
+  Although all three models share the exact                 Comparing TGs to TXL (trees), perplexity suf-
+same number of model parameters and training             fers by about 0.5 points (1%-1.7% increase relative
+dataset, our very first observation is that both the     to the TXL (trees) model’s perplexity) on the two
+Transformer-XL baseline trained on the linearized        sentence-level datasets, and by about 4 points (19%
+                                                           Perplexity (↓)                 SG (↑)        F1 (↑)
+                                                PTB        BLLIP sent. BLLIP doc.       BLLIP sent.      PTB
+      †
+  TG                                         61.8 ± 0.2     30.3 ± 0.5    26.3 ± 0.1     82.5 ± 1.6   93.7 ± 0.1
+             †
+  TXL (trees)                                61.2 ± 0.3     29.8 ± 0.4    22.1 ± 0.1     80.2 ± 1.6   93.6 ± 0.1
+  TXL (terminals)                            62.6 ± 0.2     31.2 ± 0.4    23.1 ± 0.1     69.5 ± 2.1       n/a
+            ♢
+  RNNG (Dyer et al., 2016)                      105.2           n/a           n/a            n/a         93.3
+            ♢                                                 ♣,†
+  PLM-Mask (Qian et al., 2021)                   n/a       49.1 ± 0.3         n/a           74.8          n/a
+              ♢                                                   ♡,†                       ♥
+  Batched RNNG (Noji and Oseki, 2021)            n/a          62.9            n/a       81.4 ± 2.7        n/a
+                                                                                               ♠
+  GPT-2 (Radford et al., 2019)                   n/a           n/a            n/a          78.4           n/a
+  Gopher (Rae et al., 2021)                      n/a           n/a            n/a           79.5          n/a
+  Chinchilla (Hoffmann et al., 2022)             n/a           n/a            n/a           79.7          n/a
+
+Table 1: Results on the test sets obtained for 100 models of TG, TXL (trees) and TXL. The results marked
+♢
+   are directly taken from prior work, which may not directly comparable due to differences in model
+                                   †                                   ♣
+sizes, inference procedures, etc. are upper bounds of perplexities, are from personal correspondence
+                      ♠                                                               ♡     ♥
+with Qian et al., and was computed from results by Hu et al. (2020). Results with and are obtained
+                                                     ♡
+by personal correspondence with Noji and Oseki; we select the best perplexity results for the batched
+                                                   ♥
+RNNG (35M parameters, beam size of 1,000), model trained on 100M Wikipedia tokens. The PTB
+parsing results of the batched RNNG (Noji and Oseki, 2021, Table 2) are not directly comparable since
+they reported results with beam search inference, whereas we use a parse reranking setup. Perplexities of
+the large LMs (last 3 rows) are not reported because of likely test data contamination (Brown et al., 2020).
+
+
+relative increase) at the document-level on BLLIP-         ples obey an inequality (or conjunctions thereof)
+LG . We investigate the causes of this degredation         justified by how humans process language. We
+in the Analysis section below (§4).                        use models trained on independent sentences from
+                                                           BLLIP- LG, evaluate on parse trees provided by Hu
+3.2       Parse reranking                                  et al. (2020) and generated using an RNNG pro-
+As human-annotated syntax trees are available for          posal model, and we report the average syntactic
+the PTB test split, we also compare models in their        generalization (SG) score across the same set of 31
+parsing accuracy by reranking the 300 candidate            test suites.
+samples produced by RNNG for each sentence.                Discussion We report the mean and standard de-
+   We report the mean and sample standard                  viation of the average SG score in Table 1, and plot
+deviation of bracketing F1 as computed with                its distribution in Figure 3. Our first observation is
+EVALB (Sekine and Collins, 1997) in Table 1, and           that the average SG score is substantially higher for
+plot its distribution in Figure 3. We observe that         models trained on linearized trees than on words
+TG does slightly better (+0.1%) than TXL (trees)           alone—both TG and TXL (trees) outperform TXL
+on this task; the small difference in mean is never-       (terminals). Interestingly, this also extends to mod-
+theless statistically significant (two-sided Welch’s       els that are orders of magnitude larger and trained
+                                   −3
+unequal variances t-test, p < 10 ).                        on much more data, such as GPT-2, Gopher (Rae
+                                                           et al., 2021, 280B params.), and Chinchilla (Hoff-
+3.3       Syntactic generalization                         mann et al., 2022, 70B params). We believe that
+Experimental setup Hu et al. (2020) developed              this result can be explained in three steps. First,
+a series of test suites that probe the syntactic ability   the modeling of the structure via the nonterminals
+of language models on a large set of syntactic phe-        by TG and TXL (trees) can be seen, during train-
+nomena. The aim of this task is to comprehensively         ing, as providing additional syntactic supervision.
+assess the ability of language models to syntacti-         This enables them to pick, from a large number of
+cally generalize in a human-like fashion, which            candidate trees, good parses for a sentence. Sec-
+constitutes a key feature of human linguistic ability.     ond, as the SG score is computed from inequalities
+A model succeeds on a given test case when the             involving model surprisals on words, we perform
+probabilities it assigns to specifically crafted exam-     an approximate marginalization step for TG and
+TXL (trees). In this approximate marginalization,                                   100
+valid parses are therefore heavily weighted. Finally,                                80
+
+
+
+
+                                                                     SG score ( )
+when the model has a strong preference for syntac-                                   60
+tically correct parses, the tasks from the test suite
+                                                                                     40                     TG
+become easier, accounting for these models’ higher                                                          TXL (trees)
+                                                                                     20
+scores. The results of the large LMs show model                                                             TXL (terminals)
+scale alone is insufficient to offset this effect.                                    0
+
+
+
+
+                                                                                                      ts th
+
+
+
+
+                                                                                                       cie e
+                                                                                                            nt
+
+
+
+
+                                                                                                             g
+
+                                                                                                    en nc
+                                                                                                         sin
+                                                                                               Stantac ss
+                                                                                                   ec -Pa
+                                                                                                        me
+
+
+                                                                                              Ga ding
+
+
+
+                                                                                                    te tic
+
+
+
+
+                                                                                                          s
+                                                                                                     d r
+   Our second observation is that—comparing
+
+
+
+
+                                                                                                 be nte
+
+
+
+
+                                                                                               nd sta
+                                                                                               Sy Gro
+
+
+                                                                                                      en
+                                                                                              Eff en
+                                                                                                    ree
+
+                                                                                             Em Ce
+
+
+
+
+                                                                                             pe -Di
+                                                                                                  Lic
+                                                                                                    d
+                                                                                                Ag
+Transformer Grammars to TXL (trees)—our ap-
+
+
+
+
+                                                                                                  r
+
+
+
+
+                                                                                          De ong
+                                                                                            L
+proach is most beneficial on tasks that are most
+related to modeling structure, i.e., parse reranking,
+in addition to the comprehensive SG test suite. On                  Figure 4: Per-circuit breakdown of the SG scores.
+both tasks, Transformer Grammars achieve higher
+bracketing F1 and average SG scores with a sta-                     4               Analysis
+tistically significant difference. We believe that
+this performance is explained by the restricted at-                 To better understand what is causing the pattern of
+tention in Transformer Grammars, thus preventing                    results in the previous section, we perform a series
+the model from attending to syntactically irrele-                   of analysis experiments: ablations, comparative
+vant parts of the input, and encouraging it to learn                analysis of emitted probabilities, and probing of
+informative composed representations of subtrees.                   the representations.
+   In Figure 4, we present a breakdown of the SG                    4.1              Ablation experiments
+results. As expected from the average SG score, the
+                                                                    As TGs jointly model the words and syntax tree,
+TXL (terminals) performs worse than both the TXL
+                                                                    we perform ablations experiments where the words
+(trees) and TG, except for Gross Syntactic State
+                                                                    are preserved, but where the syntactic structure is
+where it nearly reaches 100%. TG and TXL (trees)
+                                                                    transformed. The aim of this experiment is to bet-
+have very similar scores on all circuits except li-
+                                                                    ter understand to what extent is having access to
+censing, where TG substantially outperforms TXL
+        2                                                           the “right” syntactic structures at training time an
+(trees). Altogether, these results demonstrate the
+                                                                    important factor behind TGs’ success? Would TGs
+benefits of recursive syntactic compositions for im-
+                                                                    still do just as well when they are trained with triv-
+proving LM performance at syntax-sensitive bench-
+                                                                    ial or deterministically transformed syntax trees?
+marks of human linguistic competence, even in
+                                                                    We also study the effect of different kinds of posi-
+the case of powerful Transformer-based language
+                                                                    tion information on our metrics.
+models that are trained at the medium data scale
+(≈ 40M words). Furthermore, our findings shed                       4.1.1 Transformed structures
+more light on which syntactic constructions benefit                 We transform a syntax tree into a binary
+the most from explicit syntactic compositions.                      left-branching one by moving the opening
+                                                                    nonterminals to the left without reordering them,
+                                                                    and, after the first two terminals, placing the
+   2
+     One might wonder why Licensing and Gross syntactic             required closing nonterminal after each terminal.
+state deviate from the pattern of results seen in other circuits.   For instance, (S (NP the blue bird NP)
+Licensing, where TGs excel, involves evaluating restrictions
+on pairs of words that are linearly separated, but “structurally    (VP sings VP) S) is transformed into
+local” (specifically, they stand in a c-command relationship).      (S (NP (VP the blue VP) bird NP)
+Since TGs are strongly biased to learn to make predictions          sings S). Symmetrically, we form a binary
+in terms of such structurally local relations, it is unsurprising   right-branching tree from this example, (S the
+to find success in Licensing. On the other hand, success
+in Gross Syntactic State requires tracking whether an initial
+                                                                    (NP blue (VP bird sings VP) NP)
+clause is subordinate (in which case a main clause should           S). Lastly, we define the reversed trees where
+follow), or a main clause (in which case the sentence should        the structure is reversed, i.e., the children of a
+end). Since subordinate clauses are introduced by one of a few      node are put in reverse order, but the order of the
+subordinating conjunctions, and the content of a main clause is
+relatively independent of its subordinate, a syntax-free learner
+                                                                    terminals is preserved, in this case (S (VP the
+will easily learn that the subordinating conjunction determines     VP) (NP blue bird sings NP) S). In
+the Gross syntactic state, explaining the result.                   all three transformations, the apparent syntactic
+                                                       Perplexity (↓)                  SG (↑)        F1 (↑)
+                                            PTB         BLLIP sent.     BLLIP doc.   BLLIP sent.      PTB
+       †
+   TG                                    76.1 ± 0.3      31.5 ± 0.6     26.9 ± 0.1    82.5 ± 1.6   92.4 ± 0.1
+                           †
+   TG (no position info.)                77.5 ± 0.3      31.9 ± 0.4     27.2 ± 0.1    82.8 ± 1.4   92.3 ± 0.1
+   TG (diff. in linear positions)        76.3 ± 0.3      31.5 ± 0.6     26.2 ± 0.1    82.6 ± 1.8   92.4 ± 0.1
+                        †
+   TG (left-branching)                   134.0 ± 0.8     45.4 ± 0.6     41.3 ± 0.2    57.2 ± 2.2       n/a
+                          †
+   TG (right-branching)                  91.2 ± 0.4      34.2 ± 0.6     29.2 ± 0.1    52.1 ± 3.8       n/a
+                        †
+   TG (reversed trees)                  239.7 ± 11.5     49.3 ± 2.5     43.7 ± 0.6    53.9 ± 3.2   82.0 ± 0.2
+               †
+   TXL (trees)                           74.9 ± 0.3      30.9 ± 0.4     22.3 ± 0.1    80.2 ± 1.6   92.3 ± 0.1
+                                   †
+   TXL (trees, no position info.)        80.4 ± 0.3      31.9 ± 0.3     31.5 ± 0.6    80.2 ± 1.8   92.0 ± 0.1
+                                †
+   TXL (trees, left-branching)           101.0 ± 0.9     34.3 ± 0.2     25.2 ± 0.2    64.3 ± 3.2       n/a
+                                  †
+   TXL (trees, right-branching)          97.4 ± 0.4      33.6 ± 0.3     24.4 ± 0.1    53.4 ± 3.6       n/a
+                               †
+   TXL (trees, reversed trees)           129.3 ± 1.4     38.5 ± 2.6     28.3 ± 0.2    57.3 ± 3.4   87.3 ± 0.2
+   TXL (terminals)                       77.3 ± 0.3      32.2 ± 0.5     23.3 ± 0.1    69.5 ± 2.1       n/a
+   TXL (terminals, no position info.)    80.5 ± 0.3      32.9 ± 0.2     25.7 ± 0.2    68.7 ± 2.0       n/a
+
+                                                              †
+Table 2: Results on the validation split of the datasets. Perplexities reported for TG (all variants) and
+TXL (trees) are upper bounds, derived from approximately marginalizing over a set of proposal trees.
+
+
+structure, as indicated by the nonterminals, is no         to account for its distribution. This explains why
+longer the true syntactic structure of the sentence.       performance degradation the TXL (trees) perfor-
+   We train and evaluate (on the validation sets) TG       mance is harmed by the tree transformations, but
+and TXL (trees) on such transformed trees, and re-         less than the TG performance.
+port our results in Table 2. For TG, perplexity, syn-
+                                          3
+tactic generalization, and bracketing F1 are much          4.1.2    Positional information
+worse, regardless of the transformation, compared          As observed by Haviv et al. (2022), not using po-
+to using the original trees. This is unsurprising con-     sitional information for TXL (terminals) and TXL
+sidering that the operations performed by the model        (trees) has a negative but small impact on perplex-
+mechanically depend on the syntactic structure rep-        ity, which the authors conjecture is due to the ability
+resented by the nonterminals. An apparent struc-           of the model to learn positional information using
+ture that does not correspond to the sentence will         the causal mask. Under this hypothesis, it follows
+therefore lead to an unsuitable sequence of opera-         that the impact on the syntactic generalization and
+tions. More precisely, perplexity is most impacted         the bracketing F1 scores should be small, which
+on reversed trees than on left-branching trees, and        is what we observe. The most impacted model is
+right-branching trees have the least impact. In-           TXL (trees) on BLLIP-LG documents, which we
+deed, left-branching trees are comparatively easier        conjecture is due to the long sequences of tokens,
+to model, because these sequences are formed of            including repeated identical nonterminals, making
+a prefix of opening nonterminals, followed by an           access to a good positional signal important. For
+interleaved sequence of terminals and closing non-         TG, the results are similar, and the same mecha-
+terminals. Right-branching trees are similarly easy,       nism can be posited to be at play. Its attention
+and furthermore, the COMPOSE operations specific           mask is not only causal, but also very sparse. Be-
+to TG only happen when the closing nonterminals            cause there are few tokens that can be attended to,
+are encountered towards the end of the sequence,           position-based querying is at the same time less
+which is deterministically determined by its left          critical and easier to learn.
+context.
+                                                              We train and evaluate a variant of TG using dif-
+   Unlike TG, TXLs (trees) have no constraints to
+                                                           ference in linear position as relative position func-
+use the syntactic information to model terminals,
+                                                           tion, instead of difference in tree depth, and find
+and thus they are free to use it or not. However, it
+                                                           almost no impact on performance. This is read-
+is training data, and model capacity must be used
+                                                           ily explained by the same reasons as above—as
+   3
+   Here, we do not use the DELETE_LABEL directives from    TG’s attention mask is so sparse, position-based
+COLLINS.prm.                                               querying matters little. Given the same empirical
+performance, we solely ground our choice in its        4.2.2   Copying
+theoretical justification (see §2.1).                  Likewise, we hypothesize that TXL (trees) is better
+4.2 Regression analysis of probabilities               at copying words from the context than are TGs.
+                                                          We define three binary variables, indicating
+To determine when TGs are more or less successful      (i) whether the true terminal to predict appears in
+than the unrestricted TXL (trees) model, we pre- the context in a previous sentence, but not in the
+dict the differences in log probabilities of the true  current one; (ii) whether it appears in the context
+terminal ai under the two models:                      in the current sentence; or (iii) does not appear in
+                                                       the context at all. We use these in a new ordinary
+∆i = log pTG (ai ∣ a<i )−log pTXL(trees) (ai ∣ a<i ).
+                                                       least squares model to predict the difference in log
+                                                       probabilities: ∆ ∼ InContextPrevSentences +
+To reduce variance stemming from model initial-
+                                                       InContextCurSentence + NotInContext.
+ization, we use an ensemble of 100 Transformer                                     2
+Grammars and an ensemble of 100 TXLs (trees).             We find an adjusted R value of 0.010, and
+                                                       coefficients βInContextPrevSentences = −0.2871,
+4.2.1 Terminal frequencies                             βInContextCurSentence = −0.1003, βNotInContext =
+We hypothesize that the syntactically-restricted at- −0.1340, all statistically different from 0 with a
+                                                                      −3
+tention pattern of TGs—where subsequent predic- p-value < 10 . This finding suggests that TGs
+tions can only attend to composed representations— perform worse than TXL (trees) on all three condi-
+prevents it from learning the non-syntactic dimen- tions, although the difference is most pronounced
+sions of the data distribution, such as rare co- for terminals appearing in a previous sentence (but
+occurrences, to the same extent as TXLs (trees). not in the current one). This observation suggests
+Based on this hypothesis, we expect the TGs’ pre- that TXLs (trees) benefit from a priming effect—
+dictions to be worse for rare tokens.                  previously seen tokens becoming more likely—
+   We therefore compute the empirical unigram          whereas this effect is diminished in TGs.
+distribution of the terminals in the training split of
+BLLIP-LG documents, and partition terminals into       4.3 Probing analysis of representations
+                            −3
+high-frequency (f ≥ 10 ), medium-frequency             Experimental setup To quantify how well the
+    −5           −3                                −5
+(10 ≤ f < 10 ), and low-frequency (f < 10 ) representations learnt by TG, TXL (trees) and TXL
+buckets. We then define three binary variables, (terminals) encode syntactic information, we use
+indicating whether the terminal at a given position    the information-theoretic probing framework devel-
+has a high, medium, or low frequency, and use          oped by Voita and Titov (2020), capturing in a prin-
+these in an ordinary least squares model to predict    cipled way how well the probes explain the labels
+the difference in log probabilities on the BLLIP-LG    given the representations, as well as how readily
+validation set: ∆ ∼ HighFreq + MediumFreq +            available the information is in the representations
+LowFreq.                                               (i.e., how complex the probes are). If the probe
+                           2
+   We find an adjusted R value of 0.039, and co- labels can be easily predicted from the model’s
+efficients βHighFreq = −0.0488, βMediumFreq =          hidden state activations, even with a simple probe,
+−0.2419, βLowFreq = −0.5481, all statistically dif- then this provides an indication that the probed
+                                    −3
+ferent from 0 with a p-value < 10 .                    phenomenon is more saliently encoded within the
+   This shows that—although TGs can predict the        model’s learnt vector representations. Here we
+terminals appearing most frequently almost as well     used four probing tasks. The first two probing tasks
+as TXLs (trees) do—they struggle to predict rarer      are taken from Liu et al. (2019), where we predict
+ones. We hypothesize that lexical co-occurrences       (i) the part-of-speech tag of each terminal, and (ii)
+that cross syntactic units can be learnt directly by   the grandparent constituent tag of each completed
+TXLs (trees), whereas this is more difficult to do for phrase/subtree, which requires an understanding of
+TGs. Indeed, a consequence of STACK/COMPOSE            the relevant phrase-structure information. We then
+attention is that a terminal A can only attend to      use two other probing tasks from Conneau et al.
+another terminal B iff B is in A’s left-context, and   (2018): (iii) Predicting the top constituent of the
+B is A’s sibling. Our result suggests that this is not syntax tree and (iv) word-content tagging. We train
+happening sufficiently often for TGs to predict rare   the probes on the activations output by each layer
+terminals as well as TXLs (trees) do.                  on the training set of BLLIP-LG, then evaluate the
+code length on the validation set. For the POS tag-   est. While bidirectional encoders do learn a great
+ging task, we use a single representation for each    deal about syntax from pretraining (Manning et al.,
+word. For the three other tasks, we use the repre-    2020), long-tail syntactic phenomena continue to
+sentation corresponding to the closing nonterminal    pose a problem, and may be implicated in system-
+for each subtree—for TG, two such representations     atic semantic failures (Ettinger, 2020). Prior work
+are available due to the closing nonterminal dupli-   has devised multiple strategies for injecting syntac-
+cation (§2.1), and we consider them separately; for   tic inductive biases into Transformers (Wang et al.,
+TXL (terminals), we aggregate the representations     2020; Sundararaman et al., 2019; Kuncoro et al.,
+of the first and last words of the phrase/subtree.    2020; Sachan et al., 2021; Bai et al., 2021). How-
+                                                      ever, improved syntactic awareness is not found
+Discussion We report in Figure 5 the code length
+                                                      to be beneficial for some language understanding
+of the probing labels given the model representa-
+                                                      tasks (Warstadt et al., 2020; Kuncoro et al., 2020;
+tions on the four probing tasks. We observe that
+                                                      Pruksachatkun et al., 2020; Sachan et al., 2021).
+the representations from TG and TXL (trees) ex-
+                                                          Our approach to injecting syntactic biases into
+plain equally well the POS tags. Predicting the
+                                                      generative transformer language models combines
+ancestor constituents is much easier using the rep-
+                                                      two modeling traditions: (i) syntactic language
+resentations from the closing nonterminals in the
+                                                      models that estimate the joint probability of strings
+STACK positions in TG compared to TXL (trees),
+                                                      and trees (Jurafsky et al., 1995; Chelba and Jelinek,
+which is expected considering that the ancestors,
+                                                      2000; Roark, 2001; Henderson, 2004; Mirowski
+by construction of the tree, are still on the stack
+                                                      and Vlachos, 2015; Choe and Charniak, 2016; Kim
+when the subtree is closed. Conversely, predicting
+                                                      et al., 2019), and (ii) constraining attention patterns
+the top constituents (i.e., the sequence of imme-
+                                                      in accordance with syntactic structures (Strubell
+diate children) is easy to do from the COMPOSE
+                                                      et al., 2018; Wang et al., 2019; Peng et al., 2019;
+representations, which precisely attend over them.
+                                                      Zhang et al., 2020; Nguyen et al., 2020; Astudillo
+On these three syntactic tasks, TXL (terminals),
+                                                      et al., 2020). TGs are perhaps most closely related
+which does not benefit from syntactic supervision,
+                                                      to the model proposed in Qian et al. (2021), who
+does predictably worse. Finally, it is much easier
+                                                      similarly combined syntactic language modeling
+to predict whether a subtree contains a word from
+                                                      with syntax-based attention constraints. We differ
+a given set from the representations from TXLs
+                                                      from this model in two primary ways. First, TGs
+(trees) compared to either type of representations
+                                                      use a new kind of typed-attention mask with dupli-
+from TG, and even from the TXL (terminals), sug-
+                                                      cated closing nonterminal symbols that implement
+gesting that TXL (trees) models retain which words
+                                                      recursive syntactic compositions, which was iden-
+appear in the context better than TGs do, echoing
+                                                      tified as a critical component of RNN-based syntax
+our regression analysis results.
+                                                      models (Dyer et al., 2016; Kim et al., 2019; Wilcox
+5   Related Work                                      et al., 2019; Futrell et al., 2019). Second, this paper
+                                                      explores an extension of sentence-level syntactic
+A variety of work has augmented language models       models to models of full documents. Modeling of
+with syntactic or hierarchical biases. The RNNG       multi-sentence sequences has been a key feature be-
+model (Dyer et al., 2016; Kuncoro et al., 2017)       hind recent language modeling successes (Radford
+jointly models trees and strings and uses recursive   et al., 2019; Brown et al., 2020), and thus under-
+networks to build representations of phrases (sim-    standing how syntax interacts with this modeling
+ilar to the approach taken here); however, scal-      problem is of considerable interest.
+ing RNNG training is nontrivial (Noji and Oseki,
+2021). Other forms of structural bias that do not     6   Conclusion
+use observed syntax trees have come in the form of
+stack-structured memory (Yogatama et al., 2018),      Transformer Grammars are a new syntactic lan-
+running RNNs at multiple scales (Chung et al.,        guage model that implements recursive syntactic
+2017), and structuring the “forget” gates in LSTMs    composition of phrase representations through at-
+to encourage hierarchy (Shen et al., 2019).           tention. Experiments show that TGs outperform
+   With the advent of Transformers and large-scale    prior work on two syntax-sensitive language model-
+pretraining, the question of whether syntax and       ing evaluation metrics. On sentence-level language
+hierarchy “is still needed” received renewed inter-   modeling, TGs outperform a strong Transformer-
+                                       POS tag                      Ancestor constituent                   Top constituent                      Word content
+                                                                                                                                     15M
+                            4.5M
+   Codelength in nats ( )
+                                           TG                                 TG (COMPOSE)                        TG (COMPOSE)                        TG (COMPOSE)
+                                           TXL (trees)       100M             TG (STACK)         15M              TG (STACK)        12.5M             TG (STACK)
+                              4M           TXL (terminals)
+                                                              80M             TXL (trees)                         TXL (trees)                         TXL (trees)
+                                                                              TXL (terminals)
+                                                                                                 10M              TXL (terminals)    10M              TXL (terminals)
+                            3.5M                              60M                                                                    7.5M
+                              3M                              40M                                5M                                    5M
+                            2.5M                              20M                                                                    2.5M
+                                                                                                   0
+                                   1   6        11      16          1     6        11      16          1      6        11      16           1     6        11      16
+                                        Layer                              Layer                               Layer                               Layer
+
+                               Figure 5: Code length of the labels given the model representations on probing tasks.
+
+
+XL that operates only on the word sequences, al-                                                  rian. 2020. Transition-based Parsing with Stack-
+though we find that they perform worse at the                                                     Transformers. In Findings of EMNLP.
+document-level, when restricted to use a single
+composed representation for each previous sen-                                                  Jiangang Bai, Yujing Wang, Yiren Chen, Yam-
+tence. We also find that the presence of structural                                                ing Yang, Jing Bai, Jing Yu, and Yunhai Tong.
+information is strictly better on all metrics than in                                              2021. Syntax-BERT: Improving Pre-trained
+Transformers trained on words alone. While just                                                    Transformers with Syntax Trees. In Proceedings
+as efficient to sample from as any autoregressive                                                  of the 16th Conference of the European Chapter
+language model, TGs however do not provide prob-                                                   of the Association for Computational Linguis-
+ability estimates as easily, and using it where these                                              tics: Main Volume, pages 3011–3020, Online.
+are needed requires accepting more computation,                                                    Association for Computational Linguistics.
+or further research into efficient methods for proba-
+                                                                                                Samuel R. Bowman, Jon Gauthier, Abhinav Ras-
+bility estimation. Taken more broadly, our findings
+                                                                                                  togi, Raghav Gupta, Christopher D. Manning,
+emphasize the ongoing importance of finding better
+                                                                                                  and Christopher Potts. 2016. A Fast Unified
+and scalable ways to encourage language models
+                                                                                                  Model for Parsing and Sentence Understanding.
+to internalize the structural properties of language.
+                                                                                                  In Proceedings of the 54th Annual Meeting of the
+Our implementation is available upon request.
+                                                                                                  Association for Computational Linguistics (Vol-
+                                                                                                  ume 1: Long Papers), pages 1466–1477, Berlin,
+Acknowledgements                                                                                  Germany. Association for Computational Lin-
+                                                                                                  guistics.
+We wish to thank the anonymous reviewers for their
+feedback and suggestions, as well as the action edi-                                            Tom Brown, Benjamin Mann, Nick Ryder, Melanie
+tors. We would also like to thank Jennifer Hu and                                                 Subbiah, Jared Kaplan, Prafulla Dhariwal,
+Peng Qian for providing us with the BLLIP-LG                                                      Arvind Neelakantan, Pranav Shyam, Girish Sas-
+reparsed data, the partial trees used for the syntac-                                             try, Amanda Askell, Sandhini Agarwal, Ariel
+tic models evaluated in Hu et al. (2020), and for                                                 Herbert-Voss, Gretchen Krueger, Tom Henighan,
+their answers to our many questions. We also thank                                                Rewon Child, Aditya Ramesh, Daniel Ziegler,
+Hiroshi Noji and Yohei Oseki for providing a de-                                                  Jeffrey Wu, Clemens Winter, Chris Hesse, Mark
+tailed result breakdown of their efficiently batched                                              Chen, Eric Sigler, Mateusz Litwin, Scott Gray,
+RNNG model. Finally, we are grateful to Mark                                                      Benjamin Chess, Jack Clark, Christopher Berner,
+Johnson, Kris Cao, Laura Rimell, Nando de Fre-                                                    Sam McCandlish, Alec Radford, Ilya Sutskever,
+itas, and our colleagues in the DeepMind Language                                                 and Dario Amodei. 2020. Language Models are
+team for their insightful thoughts and comments.                                                  Few-Shot Learners. In Advances in Neural In-
+                                                                                                  formation Processing Systems, volume 33, pages
+                                                                                                  1877–1901. Curran Associates, Inc.
+References
+                                                                                                Eugene Charniak, Don Blaheta, Niyu Ge, Keith
+Ramón Fernandez Astudillo, Miguel Ballesteros,                                                    Hall, John Hale, and Mark Johnson. 2000.
+  Tahira Naseem, Austin Blodgett, and Radu Flo-                                                   BLLIP 1987–89 WSJ Corpus Release 1,
+  LDC2000T43. LDC2000T43. Linguistic Data             Martin B.H. Everaert, Marinus A.C. Huybregts,
+  Consortium, 36.                                      Noam Chomsky, Robert C. Berwick, and Johan J.
+                                                       Bolhuis. 2015. Structures, Not Strings: Linguis-
+Ciprian Chelba and Frederick Jelinek. 2000. Struc-
+                                                       tics as Part of the Cognitive Sciences. Trends in
+  tured language modeling. Computer Speech &
+                                                       Cognitive Sciences, 19(12):729–743.
+  Language, 14(4):283–332.
+Do Kook Choe and Eugene Charniak. 2016. Pars-         Richard Futrell, Ethan Wilcox, Takashi Morita,
+  ing as Language Modeling. In Proceedings of           Peng Qian, Miguel Ballesteros, and Roger Levy.
+  the 2016 Conference on Empirical Methods in           2019. Neural language models as psycholinguis-
+ Natural Language Processing, pages 2331–2336,          tic subjects: Representations of syntactic state.
+ Austin, Texas. Association for Computational           In Proceedings of the 2019 Conference of the
+  Linguistics.                                          North American Chapter of the Association for
+                                                        Computational Linguistics: Human Language
+Noam Chomsky. 1957. Syntactic Structures. Mou-          Technologies, Volume 1 (Long and Short Papers),
+  ton, The Hague/Paris.                                 pages 32–42, Minneapolis, Minnesota. Associa-
+                                                        tion for Computational Linguistics.
+Junyoung Chung, Sungjin Ahn, and Yoshua Bengio.
+  2017. Hierarchical Multiscale Recurrent Neural      Michael Hahn. 2020. Theoretical Limitations
+  Networks. In Proc. of ICLR.                          of Self-Attention in Neural Sequence Models.
+Alexis Conneau, German Kruszewski, Guillaume           Transactions of the Association for Computa-
+  Lample, Loïc Barrault, and Marco Baroni. 2018.       tional Linguistics, 8:156–171.
+  What you can cram into a single $&!#* vec-          Adi Haviv, Ori Ram, Ofir Press, Peter Izsak, and
+  tor: Probing sentence embeddings for linguistic       Omer Levy. 2022. Transformer Language Mod-
+  properties. In Proceedings of the 56th Annual         els without Positional Encodings Still Learn Po-
+  Meeting of the Association for Computational          sitional Information. (arXiv:2203.16634).
+  Linguistics (Volume 1: Long Papers), pages
+  2126–2136, Melbourne, Australia. Association        James Henderson. 2004. Discriminative Training
+  for Computational Linguistics.                        of a Neural Network Statistical Parser. In Pro-
+                                                        ceedings of the 42nd Annual Meeting of the Asso-
+Zihang Dai, Zhilin Yang, Yiming Yang, Jaime
+                                                        ciation for Computational Linguistics (ACL-04),
+  Carbonell, Quoc Le, and Ruslan Salakhutdi-
+                                                        pages 95–102, Barcelona, Spain.
+  nov. 2019. Transformer-XL: Attentive Language
+  Models beyond a Fixed-Length Context. In Proc.      Jordan Hoffmann, Sebastian Borgeaud, Arthur
+  of ACL.                                               Mensch, Elena Buchatskaya, Trevor Cai, Eliza
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and           Rutherford, Diego de Las Casas, Lisa Anne
+  Kristina Toutanova. 2019. BERT: Pre-training          Hendricks, Johannes Welbl, Aidan Clark, Tom
+  of Deep Bidirectional Transformers for Lan-           Hennigan, Eric Noland, Katie Millican, George
+  guage Understanding. In Proc. of NAACL.               van den Driessche, Bogdan Damoc, Aurelia Guy,
+                                                        Simon Osindero, Karen Simonyan, Erich Elsen,
+Chris Dyer, Adhiguna Kuncoro, Miguel Balles-            Jack W. Rae, Oriol Vinyals, and Laurent Sifre.
+  teros, and Noah A. Smith. 2016. Recurrent Neu-        2022. Training Compute-Optimal Large Lan-
+  ral Network Grammars. In Proceedings of the           guage Models. CoRR, abs/2203.15556v1.
+  2016 Conference of the North American Chapter
+  of the Association for Computational Linguistics:   Jennifer Hu, Jon Gauthier, Peng Qian, Ethan
+  Human Language Technologies, pages 199–209,           Wilcox, and Roger Levy. 2020. A Systematic
+  San Diego, California. Association for Compu-         Assessment of Syntactic Generalization in Neu-
+  tational Linguistics.                                 ral Language Models. In Proceedings of the 58th
+                                                        Annual Meeting of the Association for Compu-
+Allyson Ettinger. 2020. What BERT Is Not:               tational Linguistics, pages 1725–1744, Online.
+  Lessons from a New Suite of Psycholinguistic          Association for Computational Linguistics.
+  Diagnostics for Language Models. Transactions
+  of the Association for Computational Linguis-       Daniel Jurafsky, Chuck Wooters, Jonathan Segal,
+  tics.                                                 Andreas Stolcke, Eric Fosler, Gary N. Tajchman,
+  and Nelson Morgan. 1995. Using a stochastic           Linguistic knowledge and transferability of con-
+  context-free grammar as a language model for          textual representations. In Proceedings of the
+  speech recognition. In Proc. of ICASSP.               2019 Conference of the North American Chapter
+                                                        of the Association for Computational Linguistics:
+Yoon Kim, Alexander Rush, Lei Yu, Adhiguna
+                                                        Human Language Technologies, Volume 1 (Long
+  Kuncoro, Chris Dyer, and Gábor Melis. 2019.
+                                                        and Short Papers), pages 1073–1094, Minneapo-
+  Unsupervised Recurrent Neural Network Gram-
+                                                        lis, Minnesota. Association for Computational
+  mars. In Proc. of NAACL.
+                                                        Linguistics.
+Taku Kudo. 2018. Subword Regularization: Im-
+                                                      Christopher D. Manning, Kevin Clark, John He-
+  proving Neural Network Translation Models
+                                                        witt, Urvashi Khandelwal, and Omer Levy. 2020.
+  with Multiple Subword Candidates. In Proceed-
+                                                        Emergent linguistic structure in artificial neu-
+  ings of the 56th Annual Meeting of the Associ-
+                                                        ral networks trained by self-supervision. Pro-
+  ation for Computational Linguistics (Volume 1:
+                                                        ceedings of the National Academy of Sciences,
+  Long Papers), pages 66–75, Melbourne, Aus-
+                                                       117(48).
+  tralia. Association for Computational Linguis-
+  tics.                                               Mitchell P. Marcus, Beatrice Santorini, and
+                                                       Mary Ann Marcinkiewicz. 1993. Building
+Taku Kudo and John Richardson. 2018. Senten-
+                                                       a Large Annotated Corpus of English: The
+  cePiece: A simple and language independent
+                                                       Penn Treebank. Computational Linguistics,
+  subword tokenizer and detokenizer for Neural
+                                                       19(2):313–330.
+  Text Processing. In Proceedings of the 2018
+  Conference on Empirical Methods in Natural          Piotr Mirowski and Andreas Vlachos. 2015. De-
+  Language Processing: System Demonstrations,           pendency Recurrent Neural Language Models
+  pages 66–71, Brussels, Belgium. Association for       for Sentence Completion. In Proc. of ACL-
+  Computational Linguistics.                            IJCNLP.
+Adhiguna Kuncoro, Miguel Ballesteros, Lingpeng        Xuan-Phi Nguyen, Shafiq R. Joty, Steven C. H.
+  Kong, Chris Dyer, Graham Neubig, and Noah A.          Hoi, and Richard Socher. 2020. Tree-Structured
+  Smith. 2017. What Do Recurrent Neural Net-           Attention with Hierarchical Accumulation. In
+ work Grammars Learn About Syntax? In Pro-              8th International Conference on Learning Rep-
+  ceedings of the 15th Conference of the European       resentations, ICLR 2020, Addis Ababa, Ethiopia,
+ Chapter of the Association for Computational          April 26-30, 2020. OpenReview.net.
+  Linguistics: Volume 1, Long Papers, pages 1249–
+ 1258, Valencia, Spain. Association for Computa-      Hiroshi Noji and Yohei Oseki. 2021. Effective
+  tional Linguistics.                                   Batching for Recurrent Neural Network Gram-
+                                                        mars. In Findings of the ACL-IJCNLP.
+Adhiguna Kuncoro, Chris Dyer, Laura Rimell,
+  Stephen Clark, and Phil Blunsom. 2019. Scal-        Hao Peng, Roy Schwartz, and Noah A. Smith. 2019.
+  able Syntax-Aware Language Models Using               PaLM: A Hybrid Parser and Language Model.
+  Knowledge Distillation. In Proceedings of the         In Proc. of EMNLP-IJCNLP.
+ 57th Annual Meeting of the Association for Com-
+                                                      Matthew E. Peters, Mark Neumann, Mohit Iyyer,
+  putational Linguistics, pages 3472–3484, Flo-
+                                                       Matt Gardner, Christopher Clark, Kenton Lee,
+  rence, Italy. Association for Computational Lin-
+                                                       and Luke Zettlemoyer. 2018. Deep Contextual-
+  guistics.
+                                                       ized Word Representations. In Proc. of NAACL.
+Adhiguna Kuncoro, Lingpeng Kong, Daniel Fried,
+                                                      Slav Petrov and Dan Klein. 2007. Improved Infer-
+  Dani Yogatama, Laura Rimell, Chris Dyer, and
+                                                        ence for Unlexicalized Parsing. In Human Lan-
+  Phil Blunsom. 2020. Syntactic Structure Dis-
+                                                        guage Technologies 2007: The Conference of
+  tillation Pretraining for Bidirectional Encoders.
+                                                        the North American Chapter of the Association
+ Transactions of the Association for Computa-
+                                                        for Computational Linguistics; Proceedings of
+  tional Linguistics, 8:776–794.
+                                                        the Main Conference, pages 404–411, Rochester,
+Nelson F. Liu, Matt Gardner, Yonatan Belinkov,          New York. Association for Computational Lin-
+  Matthew E. Peters, and Noah A. Smith. 2019.           guistics.
+Yada Pruksachatkun, Jason Phang, Haokun Liu,           Hassabis, Koray Kavukcuoglu, and Geoffrey Irv-
+  Phu Mon Htut, Xiaoyi Zhang, Richard Yuanzhe          ing. 2021. Scaling Language Models: Meth-
+  Pang, Clara Vania, Katharina Kann, and               ods, Analysis & Insights from Training Gopher.
+  Samuel R. Bowman. 2020. Intermediate-Task            CoRR, abs/2112.11446v2.
+  Transfer Learning with Pretrained Language
+  Models: When and Why Does It Work? In              Brian Roark. 2001. Probabilistic Top-Down Pars-
+  Proc. of ACL.                                        ing and Language Modeling. Computational
+                                                       Linguistics, 27(2):249–276.
+Peng Qian, Tahira Naseem, Roger Levy, and            Devendra Sachan, Yuhao Zhang, Peng Qi, and
+  Ramón Fernandez Astudillo. 2021. Structural          William L. Hamilton. 2021. Do Syntax Trees
+  Guidance for Transformer Language Models. In         Help Pre-trained Transformers Extract Informa-
+  Proceedings of the 59th Annual Meeting of the        tion? In Proc. of EACL.
+  Association for Computational Linguistics and
+  the 11th International Joint Conference on Nat-    Satoshi Sekine and Michael John Collins. 1997.
+  ural Language Processing (Volume 1: Long Pa-         Evalb - bracket scoring program.
+  pers), pages 3735–3745, Online. Association for
+  Computational Linguistics.                         Yikang Shen, Shawn Tan, Alessandro Sordoni, and
+                                                       Aaron Courville. 2019. Ordered Neurons: In-
+Alec Radford, Jeff Wu, Rewon Child, David              tegrating Tree Structures into Recurrent Neu-
+  Luan, Dario Amodei, and Ilya Sutskever. 2019.        ral Networks. In International Conference on
+  Language Models are Unsupervised Multitask           Learning Representations.
+  Learners.                                          Emma Strubell, Patrick Verga, Daniel Andor,
+                                                      David Weiss, and Andrew McCallum. 2018.
+Jack W. Rae, Sebastian Borgeaud, Trevor Cai,          Linguistically-Informed Self-Attention for Se-
+  Katie Millican, Jordan Hoffmann, H. Fran-           mantic Role Labeling. In Proceedings of the
+  cis Song, John Aslanides, Sarah Henderson,          2018 Conference on Empirical Methods in Nat-
+  Roman Ring, Susannah Young, Eliza Ruther-           ural Language Processing, pages 5027–5038,
+  ford, Tom Hennigan, Jacob Menick, Albin Cas-        Brussels, Belgium. Association for Computa-
+  sirer, Richard Powell, George van den Driess-       tional Linguistics.
+  che, Lisa Anne Hendricks, Maribeth Rauh, Po-
+  Sen Huang, Amelia Glaese, Johannes Welbl,          Dhanasekar Sundararaman, Vivek Subramanian,
+  Sumanth Dathathri, Saffron Huang, Jonathan           Guoyin Wang, Shijing Si, Dinghan Shen, Dong
+  Uesato, John Mellor, Irina Higgins, Antonia         Wang, and Lawrence Carin. 2019. Syntax-
+  Creswell, Nat McAleese, Amy Wu, Erich Elsen,         Infused Transformer and BERT models for Ma-
+  Siddhant M. Jayakumar, Elena Buchatskaya,            chine Translation and Natural Language Under-
+  David Budden, Esme Sutherland, Karen Si-             standing. arXiv preprint arXiv:1911.06156v1.
+  monyan, Michela Paganini, Laurent Sifre, Lena
+  Martens, Xiang Lorraine Li, Adhiguna Kun-          Oriol Vinyals, Łukasz Kaiser, Terry Koo, Slav
+  coro, Aida Nematzadeh, Elena Gribovskaya,            Petrov, Ilya Sutskever, and Geoffrey Hinton.
+  Domenic Donato, Angeliki Lazaridou, Arthur           2015. Grammar as a Foreign Language. In
+  Mensch, Jean-Baptiste Lespiau, Maria Tsim-           Advances in Neural Information Processing Sys-
+  poukelli, Nikolai Grigorev, Doug Fritz, Thibault     tems, volume 28. Curran Associates, Inc.
+  Sottiaux, Mantas Pajarskas, Toby Pohlen, Zhi-      Elena Voita and Ivan Titov. 2020. Information-
+  tao Gong, Daniel Toyama, Cyprien de Mas-             Theoretic Probing with Minimum Description
+  son d’Autume, Yujia Li, Tayfun Terzi, Vladimir       Length. In Proceedings of the 2020 Conference
+  Mikulik, Igor Babuschkin, Aidan Clark, Diego         on Empirical Methods in Natural Language Pro-
+  de Las Casas, Aurelia Guy, Chris Jones, James        cessing (EMNLP), pages 183–196, Online. As-
+  Bradbury, Matthew Johnson, Blake A. Hecht-           sociation for Computational Linguistics.
+  man, Laura Weidinger, Iason Gabriel, William S.
+  Isaac, Edward Lockhart, Simon Osindero, Laura      Wei Wang, Bin Bi, Ming Yan, Chen Wu, Zuyi
+  Rimell, Chris Dyer, Oriol Vinyals, Kareem Ay-       Bao, Liwei Peng, and Luo Si. 2020. Struct-
+  oub, Jeff Stanway, Lorrayne Bennett, Demis          BERT: Incorporating Language Structures into
+  Pre-training for Deep Language Understanding.
+  In Proc. of ICLR.
+
+Yaushian Wang, Hung-Yi Lee, and Yun-Nung
+  Chen. 2019. Tree Transformer: Integrating
+  Tree Structures into Self-Attention. In Proc. of
+  EMNLP-IJCNLP.
+
+Alex Warstadt, Alicia Parrish, Haokun Liu, Anhad
+  Mohananey, Wei Peng, Sheng-Fu Wang, and
+  Samuel R. Bowman. 2020. BLiMP: The Bench-
+  mark of Linguistic Minimal Pairs for English.
+  TACL.
+
+Ethan Wilcox, Peng Qian, Richard Futrell, Miguel
+  Ballesteros, and Roger Levy. 2019. Structural
+  Supervision Improves Learning of Non-Local
+  Grammatical Dependencies. In Proceedings
+  of the 2019 Conference of the North Ameri-
+  can Chapter of the Association for Computa-
+  tional Linguistics: Human Language Technolo-
+  gies, Volume 1 (Long and Short Papers), pages
+  3302–3312, Minneapolis, Minnesota. Associa-
+  tion for Computational Linguistics.
+
+Dani Yogatama, Yishu Miao, Gabor Melis, Wang
+  Ling, Adhiguna Kuncoro, Chris Dyer, and Phil
+  Blunsom. 2018. Memory Architectures in Re-
+  current Neural Network Language Models. In
+  Proc. of ICLR.
+
+Zhuosheng Zhang, Yuwei Wu, Junru Zhou, Sufeng
+  Duan, Hai Zhao, and Rui Wang. 2020. SG-Net:
+  Syntax-Guided Machine Reading Comprehen-
+  sion. In The Thirty-Fourth AAAI Conference on
+  Artificial Intelligence, AAAI 2020, The Thirty-
+  Second Innovative Applications of Artificial In-
+  telligence Conference, IAAI 2020, The Tenth
+  AAAI Symposium on Educational Advances in
+  Artificial Intelligence, EAAI 2020, New York, NY,
+  USA, February 7-12, 2020, pages 9636–9643.
+  AAAI Press.
+

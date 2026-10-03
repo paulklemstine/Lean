@@ -1,0 +1,574 @@
+    Finding a Small Root of a Bivariate Integer
+    Equation; Factoring with High Bits Known
+
+                                     Don Coppersmit,h
+
+                                       IBM Research
+                               T.,J. Watson Research Center
+                            'forktown Heights, NY 10598, IJSA
+
+
+       Abstract. We present a method to solve integrr polynomial equations
+       in two variables, provided that the solution is suitably bounded. As an
+       application, we show h o w tu find the factors of N = PQ if we are given
+       the high order ((1/4) log, N) bits of P. This compares with Rivest and
+       Shamit's requirement of (( 1/3) log, N ) bills.
+
+
+1    Introduction
+
+We present a method t,o solve a polynoniialequa.tioiip ( x , y) = 0 over Z,provided
+     t>liesolution is suitably bounded: Is/< X and 1y1 < Y , with X,Y depending
+t8ha.t8
+on the coefficient$sand degree of p .
+    Our algorithm uses lattice basis methods [2]. It is similar in spirit to [I],
+which solved quat.ions in one variable in (H mod N ) , but, t,hc present algorithm
+requires a dilferent analysis.
+    We require bounds A- and E' on the absolute values of e a,nd y in our solution.
+Suppose p ( x , y) has degree S iri each variable, and p ( x , y) = C . .p i j x i $ . Define
+                                                                     a?
+D = nia.s;j lpijl,YiYj as t,he largest possible term in p(z,y) in the region of
+interest. Then we will find a bounded solution ( 2 ,y) (if it exist,s) provided that
+                                      x y < /y/t:j6J
+
+For fixed degree 6, t81walgorit,hm runs in t,inie polynomial in (log 11).
+    Similar nir:lliods ca.n be applied to the mult8ivariatjecase hut' are not, assured
+of si~ccess;t,lie proof breaks down a t a crit>icalpoint.
+    Our ir~imediat~c        application, and the framework in which the algorit,hm is
+described, is t8heproblem of factoring an irikger when we know the high order
+bits of it,s fa.ctors. If we know N = PQ and we know tmhehigh order                 (i log, N )
+hits of P , then b y solving t,he equation (PO+ .r)(Qo + y) - N = 0 over a suitable
+range of c and y we can find the factorization of N . By comparison, Rivest
+and Shamir [5] need about        (4         log, N ) bits of P . This has applications to some
+RSA-based crypt,ogrxphic schemes; see for example [7].
+    wc give here a sket,ch of our algorithm. Define integer variables l'gh represent-
+ing zg yh . Form the lattice of those values of { r g h } sat,isfying several polynomial
+rrla,t,ions g i j ( s , y) = x i $ p ( z , y) = 0 under this interprctat.iori. Claim that the
+lattice elernent s corresponding t o our desired solution is rclat,ively short (less
+U. Maurer (Ed.): Advances in Cryptology - EUROCRYPT '96, LNCS 1070, pp. 178-189, 1996.
+0Springer-Verlag Berlin Heidelberg 1996
+                                            179
+
+
+than the nth root of the determinant of a certain mabrix). The expression of s in
+terms of a. reduced basis of our lattice cannot involve the longest basis element
+(because s is short), so s is confined to the hyperplane spanned by the other
+basis elements. Tliis gives a linear equation 011 { r y h = zgyh}, which we interpret
+as a polynomialequation on z and y. We combine this with p ( z ,y) = 0 and solve
+for .c(l and yo.
+    The remainder of the paper is organized as follows. In Section 2 the algo-
+rithm is developed, concenhating on the coiicrele case where y ( z , y) has degree
+1 in each variable. Section 3 gives a brief discussion of linear la,ttice methods as
+a.pplied to the non1inea.r problem of solving polyiiomia.ls. In Section 4 we extend
+tBliealgorithm to other bivariate polynoiiiials, and discuss the dependence on the
+size paranirtnr L) and degree 6 of the polynomial p. We comment on possible
+extmsions t,o three or more variables in Scction 5. In Sections 6 and 7 we com-
+pare t,he current algorit,lim with previous ones. An applicat,ion to Vanstone and
+Zuccherato’s RSA variant is given in Sectiori 8. The appeiidix proves a technical
+result 011 Toeplit#zmatrices.
+
+
+2    Factoring with high order bits known
+
+We present the algorithm in terms of the problem of fact,oring an integer when
+we know t,ht: high-order bits of one of the factors.
+    Suppose we know N = P Q , and suppose t>hatfor some E > 0 we know the
+                +
+high order ( f ‘)(log2 N ) bits of P . (We will dispense with t,he c later.) By
+division we know the high order bits of Q as well.
+
+                            P=Po+.uo
+                              Q=&o+Yo
+                          1x01    < x = P,/N(’/4)+<
+                            l ~ o <l Y = Qo/N (1/4)+c
+                      P ( X , Y) = (Po + .,(Qo  -I-Y) - N
+                                                  +
+                                  = (PoQo- N ) &or + Poy + zy
+                            , = PQ - N = 0
+                    ~ ( z oYO)
+Here Po and Qo are known, while zo and yo a.re unknown, and z and y are
+dummy variables. p ( ;6, y) is an irreducible po1ynomia.l with integer coefficients,
+and its coefficients share ILO common faclor.
+   We will relak t,he bounds ,X and E’ t,o the qriaiit,it,y
+
+                     D = max{ 1 PoQO - N 1, Qo-Y, POY, XY} .
+
+This is t,he largest possible size of an individual term of p ( x , y) with bounded z
+and y. For our methods to work, we will require (,YY)‘/’ < D. In the case of
+a more general polynomial p ( z , y) =      cij
+                                             p ; j z i f , of degree 6 separately in each
+variable, we would define
+
+                                 D = ?ax{ lpdj ISSZ’’}
+                                       ZJ
+                                                180
+
+
+and dernaticl (S’I’)3*/’        < D . (The definitions of A-, E; D a.ppear circular, h i t
+it’s all right; t’he condition is equivalent, to existence of indices i , j 5 5 such
+that 1y(3*/’)-iy(3”’)-j < lpij 1, and t,hc exponents (36/2) - i arid (35/2) - j are
+strict 1y positive .)
+        We are t,rying tlofind a bounded pa.ir of int,egers (ZO,       yo) solving p(z0,YO) = 0.
+We hegirl by select,ing ail int,eger k > 1 / ( 4 ~ )For . each pa.ir of integers ( i , j ) with
+0 5 i < k arid 0 5 j < k , form the polynorriial q;j(.c, y) = s i $ p ( z , y). Obviously
+q i j ( z 0 , YO) = 0.
+                                                                          + +
+        Form a matrix M I with ( k + 1)’ rows, indexed by r ( g l h ) = (k l)g h wit8h
+                                       +
+0 5 g , h < k+ 1. MI has ( k + 1)’ k’ columns, t,he left-hand columns indexed by
+7 , ( g ,h ) , and t,he right-hand columns indexed by p ( i , j ) = ( k + + +   1)’ ki j with
+0 5 i , j < k. The left-harid block is a diagonal matrix whose (y(g, It), y(g, h ) )
+mt,ry is given by X - g Y - h . T h e (y(g, h.),,fj’(i,j)) entry of t,hc right-ha.nd block is
+t8hecoefficient, of r g y h i n the polynomial qaj(z, y).
+        An explariat,ion of A41 is in order. T h e y(g, h ) row corresponds to an integer
+uiiktiowti l’gh, which rc~prcsctits.r:yyoh. In the left-hand block, the diagonal entry
+ y - g 11- h will tw used t,o bound IrShI by approximat,ely S g Y t L .We will be con-
+cent,rat>ingon t,he suhlallice in which the right-tiand columtts are zero; a zero in
+coliinin D ( i , j ) will correspond t,o the contlit,ion q i j ( z 0 , yo) = 0.
+        I’crforin clcincntmy row operat,ions on M I to produce a matrix Ad2 whose
+right,-liand hlock lias (,lie k’ x k’ identity mat.rix on t,he bot,torn arid the ( 2 k       +
+I) x  k T 2    zero matrix 011 t,he top. We can do t.his because Ihe corficient of zy in
+p is 1, so t,liat, t,he right,-hand block of Ail, contains an upper triangular matrix
+with 1 on t,he diagonal. (For a. more general polynomial p ( z , y ) , we require t h a t
+the coefficient-s of 1’ slia.re 110 nontrivial common fa,c,t,or; in otJher words, p(r, y)
+does not fact,or a,s k x u(.r,y) over Z.)
+       The lat,t,ice forincd by t,hese t,op 2k     +
+                                                   1 rows of AT, is the sublatt,ice of t h e
+original 1allic.e got,len by forcing t,o 0 all the right-hand colu~nns.Call it M3.
+                       +
+        C!onsidrr t.he ( A : l)’-long row vector r whose ~ ( gh,) crit,ry is ziyt.‘I’he row
+                        +       +
+vcct,or s of Irngth ( k I)’ k’ given by s = rMl satisfies
+
+                                 S y ( g , h ) = (z,l/~qy(yo/)’)h
+                               ISr(y,h)l   51
+                                 SP(i,J)   = Q 7 j ( ~ o , ? / o )= 0
+                                      Is1 < k    +1
+     B m m e it,s right-hand sidc is 0, s is one of tfhe vectors in t,he lattice spanned
+by the rows of h.13. We will show that, it is a “relat,ively short” vector in the
+lat.t.ice,wliich will enable us t.o confine it, to a hyperplane, tshiisproducing a linear
+equat.iori relabing its coefficients. This will tjransla.t,edirectly to a polynomial
+eqnat.ion on zo and yo: u ( z g , yo) = 0, where u(z, y) is not, a multiple of p ( z ,y).
+We can t.hen take the resultant of u ( z , y) with p ( s ,y) t,o find a single polynomial
+equation ~ ( s=) 0 satisfied by zo, and solve this equation over Z to find 20.
+     We proceed t,o est.iinate the sizes of the vectors in row lat,t,icespanned by M3,
+by cut.iniat8ingthe det,ertnina,nt of a square submatrix of M 3 . Define t8hediagonal
+                                 +                +
+matrix W of tlirrierision ( k I)‘ x ( k I)’, with ( ~ ( y/ I,. ) , y(g, 1 1 ) ) entry given
+                                                       181
+
+
+by S S Y " . III the matrix W M 1 , the Icft,-liand block is the identity. In the p(i,j)
+column of the righ,-hand side of W M 1 , the largest, elemcnt, has absolute value
+Xzl'j D . T h a t is, the element a t (y(g, h ) ,p(i,j ) )is
+                 l ~ g ~ ' h ~ p s - j , h - j g i + n Y j t b pa,$ L iyiy3(.ynyb$?,t,)
+
+where a = y - i and h = h, - j . Further, t,he right-hand columns are "nearly
+orthogonal", because they are part, of a Toeplit,z array. (A formal statement and
+proof appear in the appendix.) Associnted wit,h this nea,r orthogonality, there is
+a. specific set, of Ic2 columns in the left,-haritl block. Whenever we del
+columns froiii a. rectarigular niat,rix h.l , we denot8ct,he rcsult,ing square matrix as
+M . Delct,iiig l>liesecolumns from W MI leaves R mairix IVM1 wliose determinant
+sat.isfies
+                         I det,(WA?,)I = f 2 ( n i J ( * Y i Y j D ) )
+                                               - Q((2yy)kw
+                                                         1/2[]k2)
+
+blie c o i ~ s h i iiriplicit
+                   t~         in R depending 011 Ic and tlic pa.t8tcniof nonzero cocfficients
+in t,lic polynoinial p(x, y ) , as shown iii t.he appendix. For t.he polynomial in our
+example, t.he const,ant. is 1 (sce appendix) so we drop t,he "Q":
+
+                            I det(l.l/Ajl)l = (Ll-l..)k21k-1)/2,@'
+    Since
+                        det(W) = I J ( X W ~ )= (SYyk t l ) 2 k / 2
+                                                                                         3
+
+                                          gh
+
+we can cadc,iilate
+
+      I ctct,(hJ1)l= I det,(Whf~)l/clet(W)>
+                                         - gkL('\.1..)1k2(k-1)/2}-{(k+l)2k/2}
+                  - Dkz(,y y ) - k ( 3 k + l ) / Z = ( I l k ( ' i - y ) - l 3 k t
+                  -                                                                  1 ,/a k
+                                                                                         >     '
+                                                182
+
+
+     The saiiie cst,iiiiat>eapplies t80 I det( nil,)\ because M a was gotten from M I
+by elementary row oprat,ioiis. Also, because the lower right k 2 x lc2 submatrix
+of         is t.lw idciit>ibynod t,hc upper right siibma.trix is zero, t.he same estimate
+                                                           +           +
+applies t30t,he tlct~r\rniinaiitof t8heiipper left (2k I ) x ( 2 k 1) submatrix of M 2 ,
+naincly t,hc left,-hantl ( 2 k + 1) x (2lc+1) square subrnat#rixo f M3. For the following
+discussion, we call t,ha.t,squa,re submatrix L and its dimension n = 2k 1. SO            +
+1 clet( I,)] > N"/".
+     We a,pply la.t,ticc. basis rcdiiction t40tlie row hasis of L , as prescribed in [2],
+to produce a reduced h i s hl, bz, . . . , bS. From the discussion in [a], tthe last
+elcment b,, of t.his reduced basis satisfies
+
+
+where b:, clmotes t.he component of b,, orthogonal to the subspace spanned by
+the vect,ors h l , . . b,- 1. As long its
+                       ~
+
+
+
+
+                                1
+                           k < - logz N - 210g2 log, N - Q(1) ,
+                               4
+we will havc t1ia.t. Ib:] I > Is!:
+                1bE.l 3 I dct,( /,)11/n2-[71-1)/4     > N("/'~)(1/12"+1"2-~"4
+                      -
+                      N "l/R'-('l'l"k))2-"/2          > k + I > Is(
+     Assiiiiic this inequality holds. For any row v&or              t in thc latt,ice spanned
+Ily L , if t is not, in tlhe lat,tice spanned by b l , . . . , b,L-l,t,heii it8sexpression as
+a.n iiit,c.gc,r conibiiia.tion of t,hc bi involves b,, nont8rivia.lly.Tlius we have It I 2
+           +
+lb:l > k 1 > Is[. Looked at. the other way, for ariy t in t,he lat,tice spanned by
+L , if It( 5 Isl, then t is in t h e lattice spanned by b l , . . . , bn-l.
+                                         +
+     Chisitler s it,self. Tlie n. = 2 k 1 entries of s corresponding to those columns
+in t,lit>left,-hand side tsliatjremain when we t>ransforrnh1 t,o A?, form a row vector
+s in t.lic lat.tice spanned Iiy L (since t,he right,-hand eleuieiits of s are 0). Also,
+Is1 5 Is!.T h u s 6 is in t,he la.ttt,icespanned by b l , . . . , b7%-1.
+      N f m i l m s l i i p in t,liis subspace gives us a linear relat,ion 011 t8he coefficients
+l'gh  = x;yi expressing s as a linear coinbination of the rows of Ad1. T h i s relation
+is linearly intlcptwdtnt of t,lic k 2 relations given by t,hr polynomials q i j ( x , y)
+which tlet,eriiiinetl t.Iiat#s Itad right,-hand side 0 arid t81iiiswas in t,lie la.tt<iceof hf3
+to st.art. wit.11. So t.his reIa.t,ion tra,risla.t,esto a polynoiiiial relation u ( x 0 , yo) = 0
+where u ( . e ,y) is iiot, a polynomial multiple of p(r,y).
+      Ta-kc t h e resulitnnt8of p(.c, y) and U ( T , y) with respect, t.0 y. Because p(x, y)
+is irret1iicil)lc arid 7 i . ( x , y) is not, a. polynomial Iiiult8ipleof y ( x ,y), we have t h a t
+Result,ant, ( p ( s y, ) , ? I ( sy,) ) = ~ ( 2is) a nontrivial int,eger polynomial v ( x ) in one
+variable T sat'isfied hy : I - [ ) : P J ( S ~ ) = 0. Since ~ ( cy ), has degree at, most k in each
+variable a n d p ( s , y ) has degree 1 in cach variable, ~ ( shas          ) degree at, most 2 k .
+Solve ~ ( 2 : )= U over B to find a small number of ca.ndidates for 211, namely those
+intcgvr solut,ions satisfying the bound ( s o (< X .
+      Each ca.Jididat,e value of xo can be substit,ut,ed into p t.0 get a n equation
+p ( z o , y) = 0 which we can solve for y over Z,and select t,hose int,eger solut,ions
+sat.isfying the bound \yo 1 < E'.
+                                                  183
+
+
+    ’rhus we have proven:
+
+Theorem 1. If u v knoru an znteger N = PQ nrid 7uc h o w the hzgh nrdcr (1/4+
+c)(log2 N ) bzts of P , wzth c > 2/(1og, N ) , i h f n zn izinc p o l y n o n t z a l an log N a n d
+1 / c we con dzscovrr P a n d Q
+
+Proof. l h e contlition 011 6 insures that k c a n IF choscn to satisfy
+                              1
+                             - - < k < - - lo&          O(l0g log N )
+                             46               4
+The coniplexi1,y is due to invocation of laltice basis reduction on a matrix of
+size 2k  +  1    I/(2c), whose elelnetits are infegcrs with hit lengt,li hounded by
+a polynomial in log N . (We have to transforin our rat tonal matrices to integer
+iiiatricrq hy inultiplying liy s m i e iiitcgrr )
+
+Corollary2. I f we know a n znteger N = P& and wc know the hzgh order
+(1/4)(log, N ) bzts of P , then In t u n e p o l y n o m a n l an log N we ran dascover P
+a n d Q.
+
+Proof Set c = 4/ log, N and do exhaustive search on O( I ) unknown high order
+bits of .xo (or middle bits of P ) .
+
+
+3    Discussion on lattice methods
+‘l’he lat,t,ice hasis reduct8ionniet41iodis inlirrent.ly liiimr. If’ w c want, t,o relate sev-
+eral linknowits hy a polynomial cquation p ( , c , y) = Cgh           py,L.rg?yh= 0, one nntJiiral
+approacli is t,o replace each monomial s g y h Iiy a new independent variable r g h ,
+and Ict, 1) brconir a 1iriea.r rrlat,ion among s ~ v c r a indepeiideiit
+                                                               l              boiindetl variables:
+x y h 2)g11rg11     = 0, l r g h l 5 S ~ =Y    H.q ~ ~
+                                                     , .In order t80get, results, we would need
+t h e tlcsiretl vr>ctor to be among t,hc shortest, of t . 1 ~Ia.t.t,ice; we would need its
+lcngt,li t30be smaller Ihan the root of the dct8erminant,of t,he a p p r o p i a t r esquare
+rna1,rix. ’I‘his requirement t8raiislat,esto (approxIina,tely)           n   Rgh 5 D , and t,his
+would imply severe rest#rictiorison S and I ? , namely (,YY)‘6+1)a’/2                5 U , where
+p ( z , y) has degree 6 i n each va.riable. This is esseritmiallybhe t>echniqueuscd by
+[6] in t,he iriodular sehting.
+      In the present, paper we have extended tjliis approach by usiiig several poly-
+noiilials (4ij hut, reusing the satlie iridrptwdent I)ounded variables r g h . we are
+a.blr to ainort.izc t,hP cost, of t,he several variables ovcr several equations. This
+a.ccounts for t,lie success of the prcsciit, niet81iotl in increa.sing the feasible sizes
+of s and Y.Specifically, each unknown l‘gh corrt8rit>ut8es               a factor of X - . ~ Y - ” tjo
+d e t 8 ( M I ) , while each equation q i j ( r , y) = U contjrihut8esa factfor of SiE’jD. In
+order for our t.ec1iniqucs t,o work, we require (let ( M l ) >> I , which yields a bound
+o n S a,nd I - in berms of I I . B e c a u s ~we ha.ve several polynoniial equations, each
+cotitribut~ingpositively to llie det8erniinant,,t,liis bound is relatively mild; we can
+toleratmelarger ranges X , 1’ on our varia.bles (in terms of D ) than with other
+inet,hotls, namely ( S Y ) 3 6 / 2< D , as we will see i i i t,he next, sect,ion.
+                                               184
+
+
+4    Other bivariate polynomials
+
+Similar techniques can be applied successfully t80 other polynomial equations
+besidcs t,hc givcri p ( z ,y) = 0. They a.re not guaranteed for polyiioinials of more
+t.han tlwo varkbles; see Sect,ion 5.
+      Evcw i u tmhecase of t,wo variables, t,he present, t.echnique is sensitive to the
+foriri o f t h e polynoinial p ( z ,y). For a n arbit,rary quadratic polyrioiiiial wc could
+not, t,olera.l,r>ranges ,\, I' for the unknowns z, y q u i k as largc as wc did Iiere. In
+i,hc casc t,liat, w e used for our example, a.lthoiigh !)(.I., y ) Iixs degree two, it does
+not, have t,crrris involviiig e2 or y 2 , only 221.
+      We sket(c11 hcrc liow t81irbounds S and 1' dcpend on D and t8he forin of
+p . Wlieii we t d i i i a t , e d I dct8(MI )I by dividing t,he est,imat,e of I det( LVM1 )I by
+det(U'), tlierr w a s considerable cancellation in the powers of X and Y . The
+term I det8(Lt'Mj)1 had a fact,or ,Y'J'jD for cach pair ( i , j ) with 0 5 i , j < k ;
+t81irsepairs rrpresent,ed t,hc nioiioriiials ziy' by which p(e,y) was inult8iplied.T h e
+                                                                                   +
+Lerm d e t < ( W )had a factor X g Y " for each pair ( g , h ) with 0 5 g , h < k I ; these
+pairs rcprwxit8etl Ihe iiioiiomials d y " appcaring in these product>s z i y J p ( x ,y).
+'I'lie range on g rxcerds t.lie range on i by 1 bcca.nsc p has degree 1 in z. If p
+had a.n x2 t.erin, we would have nceded to eiilarge Lhe range of g. ?'lie powers of
+ S a n d Y appcariiig i n the ratio I det( WM,)I/dct(W) arise from the pairs ( g , h )
+out8sitle(,lie ra.nge of ( i ,j ) ,namely
+
+
+
+'I'hc inclusion of ail .r2 term would have enlargeti that region by ariotlier layer.
+This would have lctl directly to a stricter reqiiireinent on the sizes of S and Y
+                                        l has degree S in r. and T 111 y, then we can tolerate
+     If our ~ ~ ~ l y i i o ~pi (i ir a,y)
+ranges X and 1 satisfjiiig
+
+
+
+                               , in the raiigc 0 5 i , j < k . More generally, for any
+by using polynomials q z 3 ( sy)
+positive value of tlie parameter (1 me can tolerate X arid Y with
+
+                                ,~-~+icrr/2)~.'+16/('U))   < JT,
+
+by allowing O 5 i < krr and 0 5 j < k .
+   If p ( z ,y ) has total dcgree 0 then wc can tolcrate about
+
+                                          D > (,l-Y)h
+
+                                                           +
+by allowing pairs ( i , j )wit,li i >_ 0, j 2 0, aiid i j < k . 'I'his is better t.han t,he
+previous appron.rh if 1-1 is a general bivariat,e polynomia.1 of tot8aldegree 6, but
+worse if (like (#liecurrent, example) it, is really of degree 5/2 separately in cach
+variable.
+   Wc suiiiiiiarize t,liesc results:
+                                            185
+
+
+
+
+Iir tame pulynornaal 211 6 , T a n d log, D , our algorzthin wall produce all anteger
+pairs ( T n , yo) uuth IcoI < X , Iyol <          a n d p ( t o , yo) = 0.
+    Let p ( r , y) he CIS before, b u l walh l o t a l degree 6 . A s m i n e
+
+
+
+
+Prooj. The proof will he given in thc full payer, but is quite siinilar to t h a t of
+Tlieorem 1 arid Corollary 2.                                                        0
+
+
+
+5    More variables
+
+Suppose wc have a polyiioniial p ( ~y,, z ) in h e c variables. We can niiinic the
+presciit, a,pproach. If thc ranges S ,      E', Z arc sinall tnough, we will end up with a
+polynomial relation u ( x , y, z ) , not, a miilt,iple of p , satisfied by ( x o ,yo, zo). Then
+t,lie rcsult>a.ntof p and 11 with rcspcct, t,o z will givc a polyiioiiiial v(x, y) in two
+va.rial)les. We c a n t8hentry t,o solve 1' by t,hP current, mclhods. But, t,he degree of
+   will hc ciiiit,c high, YO t,lia.l t.he ranges S a n d Y which can he t,olerat,ed will bc
+quit,e sniall. This a.pproach will be unsa.tisfact#oryin geiiera.1.
+     We still 1ia.vca heurist,ic procediire which inigh,f work for a given multivariate
+polynomia.1. We are guaranteed to find a space of codirnension 1 (a hyperplane)
+conbairiing all the short, vect.ors of thc lat,tice M 3 . But we might easily find a
+space of la.rger codimension. (There is a good possihility t h a t for many basis
+vcct,ors hi, t,he ortliogoiial coniponent Ib: I exceeds o w known upper hound on
+IsI, and each one increases the c.odimensiori of the space which contains all the
+short vcct80rs.) We develop several polynomial equat,ioiis u i ( x , y, z ) sat>isfying
+ui(eo,YO, 2 " ) = 0; the number of such cquat,ions is equal to the codirnension of
+t,his spact'. We can t8hen take resultant,s and gcd's of t,he va.rious ui and p a n d
+hope t,o prodnce a singlc polynomial equation in a single variable v ( z 0 ) = 0,
+which we solve over Z.This is only a heurist>icapproa,ch, which might or might
+not work for a, given polynomial p . (Even if we can geiicratc sevcral equations,
+t,liey may not be independent .)
+     There mustmbe h i t s to the su                of t,liis approa.ch in general. Manders
+a.nd Rdlcnian [3] show t,lial firiding s u i h b l y bounded soliit,ioiis to p ~ ( sy,, z ) =
+x 2 - y N - z = 0 is NP-hard. Nonet,heless t,hc q>proa,chmight work for a particiilar
+polynomial, and it is worth trying.
+                                               186
+
+
+6    Comparison with t h e uiiivariate modular algorithm
+In a. companion paper El], t.he aubhor applies a very similar algorit,hin for the
+solut'ioii of a ~ i i i v a r i a t ~modular
+                                      e       polynomial.
+       'I'wo differences helween the a.lgorithms are worth not.icing. In t5hemodular
+rase, t.lre size X of the acceptable solutions 20 was relat.ed to the modulus N . In
+Ilie present, integer case, there is no such natiiral measure as N , and we needed
+t,o develop a hound in terms of L),
+       A second difference is that in the modular case, we were able to define poly-
+noniials q ; j ( . r ) = ~ : ' p ( x ) and
+                                       j   assert t,hat*qij(.ro) = 0 (iiiod N.7); the extra in-
+forinat,ioii ( m o d N J versus mod N ) improved our bound on S from N1/(2"-')
+t,o N ' l ' . In t,hc\ present8iiikger c x w , using tlic polynomial tquat,ions q i j k ( x , y) =
+.r'yJ7>(r,y ) k = 0 would not. help, because (for t,lie appropria.t,e ranges of indices
+i , j , k ) t,lw i n k g r r linear conihiiiatioris of t,he polyiioinials q i j are exactly t,he same
+as t,host, of t.hc pulynoiiiials q i j k . For example, with i,hc given p ( 2 , y), 1; = 1, and
+sett,ing k = 1,t,he int,eger lirwar combinatmionsof
+
+
+
+
+so t,hat, wc cnd u1) defining the same mat,rix M I ( u p t,o element2ary roliimn
+operat,ioiis). ( I f y is iiot monic, we appear 00 gain aomethiitg froin t.he high
+coefficient of p , but we act.ually lose a corresponding amount. in the proof, so t'hat,
+using powers of 1) st,ill ririther helps nor hurts us.) 'I'his 1niic.h is also t,rue in the
+modu1a.r case; however, trlicre we gain the extra a.dvaiit,a.geof working mod N3 a.s
+opposed t,o working iiiodN, and here in [.he int,eger case we ca.n derive no such
+a.dva11t.agr.
+
+
+7     Comparison with previous work
+R.ivesl and Shamir [5] solve t,tie probleni of fa,rt,oriza.tioiiif given (log2 N ) / 3 hit>s
+rat1it.r t.lraii (log2N ) / 4 bits as we do. They too lisp la.tt.ice iiiet,liods, but, o d y
+m e po1ynoniia.l q,,,,(s, y) = p ( z ,y).
+    Valldr et, al. [B] employ a met,hod similar to [5] in the case of 1nodula.r p l y -
+noinials, agaiii rising only ULK polynomial.
+    Rlaurer [4] uses a differcnt approach, relatcd to factoring algorithms based
+on smoot81iinkgers, 1.0 ask (c log, N ) yes/no oracle questions and determine the
+                                                     o
+fact,orizat.ioti of A! with failure proiiability (I-'/').
+
+
+8     Application t o RSA variant
+Vaiistoiie arid Zucclicrato [7] propose an identity-based variant of RSA in which
+the user's rrrotlulus N i c related to his identity For examplc, ttic htgli order hits
+of N m a y he thc u w r ' s iinnie encoded i i i ASCII.
+                                           187
+
+
+      lJnfortuiiately, the modulus N is generated in such a way t h a t somewhat
+more than the high order ((1/4)log2 N ) bits of Y are revealed to t h e public.
+T h i s enables the prcscnt attack to discover the factorization of each modulus
+and break t(he scheme.
+
+
+9    Acknowledgenients
+
+Ma,t.t,Fra.nklin and Mike Reiter’s Crypto 95 r u m p sessioii ta.lk opened this whole
+line of investigatiori; subsequent discussions were also i~sefiil.T h e author grate-
+fully acknowledges enlightening discussions with Andrew Odlyzko. Barry Trager
+helped the experimentd effort by coding up in Axioiii a n implementation of
+t,he Lenst’ra Lcnstrs Lovasz latticr hasis rcduct.ion algorit,hiri. The Eiirocrypt
+program commit,tec made suggestions which improvrd t,he presentation of t h e
+pitper.
+
+
+References
+
+ 1 . D. Coppersniith. “Finding a Small Root of a Univariate Moditlar Equation,” Pro-
+     cectliugs of Eurocrypt 96.
+ 2 . A. k.I,enst,ra, 11. W. Lenst8raand L. Lovasz, “Factoring Polynomials with Integer
+     Cociflicieril s,” Mat,emat,ische Annalen 261 (1982), 513- 534.
+ 3 . l i . M a.nclers and I,. Adlernan, “NP-coniplet,e decision problems for binary quadrat-
+     ics,” ./. (‘omput. Systtrn Scz. lG, 168-184.
+ 4. 11. M. Maurer, “Factoring with an Oracle,” Advances in Crypt,ologg - EURO-
+     CRYPT‘ ’92, Springer LNCS 658 (1993) 429 436.
+ 5. R . I,. Rivrst. arid A. Sharnir, ‘‘Efficient factoring based on partial information,”
+     Adva.nces in (.kgpt,ology - ELJROCIIYP‘I’ ’85, Springer L N C S 219 (1986) 31-34.
+ 6. B. VallGe, M.Girault and P. Toffin, “How to Guess Q-t,hR0ot.s Modulo n by Reduc-
+     ing Lat,ticc. Rases,” Procrrdiugs of A A E C C 6, Springer LNCS 357 (1988) 427-442.
+ 7. S. A. Vanstorica aud R . J . Zuc-chcrato, “Short. RSA K c y s aud Their Generation,”
+     Journal of Ckyptologg 8 number 2 (Spring 1995) 1 0 1 -1 14.
+
+
+
+10     Appendix
+
+In this appendix wr give a proof of the technical result needecl in Section 2: t h a t
+several coluiiiris of the matrix W M 1 are ‘‘nearly orthogonal” A modification of
+this proof would apply to any Toeplitz matrix.
+    We develop the corresponding result for a general bivariate polynomial. Let
+M t Iw thc right-hand hlock of K’M1 Let p(s,y ) have degree 6 in each variable
+separately. Define indexing functions y and p for ,444: ‘I’he rows of h44 are indexed
+hy~(~,Ir)=(Ic+6)g+hforO~g,h<Ic+6,andtliecoluninsl~y~(i,j)=Ici+j
+for 0 5 i , j < k . Define 1J(.c,y) = y ( S x , I - y ) , so t h a t @ o b = S a l ” p , ~ a n d
+Illax,b lpabl   = n.
+                                               188
+
+
+L e m m a 4 . There is a k2 x k2 subrnatrix of M\ whose determinant has absolute
+value at least
+
+
+If the largest coefficient ofp is one ofpoo, pat,, pta orp^, then the absolute value
+of the determinant is exactly Dk .
+
+Proof. Select indices (a,b) so that D = \pai,\ is the largest coefficient ofp. Select
+indices {c,d) to maximize the quantity
+
+
+
+Select the rows
+                                 ~f{c + i,d + j ) , 0 < ij   < k
+
+of M4 to create the desired submatrix M. The rows and columns of M are
+indexed by f.i(i,j) ~ hi + j . The matrix element M^gih),n[i,j) ' s ^he coefficient
+of xc+gyd+h  in r'y3 p(x,y), namely
+
+                               Mn(g,h),n(i,j) = Pg-i + c,h—j+d
+Multiply the ft(y,h) row of M by tf{c-*)9+it,d-b)h^ a n d rnll itiply the n{i,j) col-
+umn by ft-i(r-a)'-2(<i-l>)j^ t o create a new matrix M' with the same determinant.
+Its typical element is
+
+
+
+From maximally of (c, d) we find
+
+
+
+from which
+
+
+
+Thus each diagonal entry of M' is pcrf- a n d each off-diagonal entry is bounded
+in absolute value by \pcd\8~[-g~l) "C 1 "^ . This implies that M' is diagonally
+dominant, because the absolute values of the off-diagonal entries in its fi(i,j)
+row sum to at most
+
+
+     = \Pr*\ X ["I + E ( n , ) ) ) 8 - a 2 -
+
+Each eigenvalue of M' is within ||p C d| of pC(j, and so exceeds ^|pcrf| in absolute
+value. By choice of (c, d) we know
+                                               189
+
+
+
+
+                                                                               fi
+    For t81iesecond chin1 of t,hc lerniiia,:If t,he largest, cweficient of is either f i 0 0 or
+       , (c, d ) = ( a ,b ) and not8icetlmt M is an (upper or lower) triangular matrix
+~ n n set.
+whose dia.gona1 crit8rieshave absolute value U . If the largest coefficient is either
+    or $ 6 0 , re_clrfine the indexing function on columns its p ( i , j ) = k i + ( k - l - j ) so
+that) a.gairi M is a triangular matrix whose diagonal entries have absolute value
+D . Siniilar resulk hold if ( a ,b ) is any corner of the Newt,on polygon associated
+wit,li i,.
+                                                  +          +
+    For the parlicular case p(x,y) = (Po x)(Qo y) - N , we have 6 = 1, and
+tmheonly non-zero coefficierits of fi are i;oo, 6 0 6 , 660 arid Fns;t,hus the second claim
+rllust~holcl.                                                                             0
+
+      T h e Ieinma gives a k 2 x k 2 suhniatrix M of h f 4 , where M4 is the right-hand
+(k*+ b ) 2 x k 2 hlock of W M 1 To apply thc Icmma, wc nccd to find k 2 column
+inclices in t h e left-hand block of WM1 whose deletion leaves a ( k + 6)’ x ( k + 6)2
+subniatrix W h l l of IVM1 with I det(WAdl)l = 1 cict(K1)I Wc simply delete those
+coliiriiris whose indices match those of the k 2 rows accepted in       Recall that the
+left-hand side of W M 1 IS the ideritity inat rix, 50 each reIiiaimig left-hand column
+has R single 1 among the O’s, and expansion hy minors gives Idet(LVM1)I =
+I (let I as dcsircd
+      (G)
+

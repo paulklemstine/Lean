@@ -1,0 +1,1220 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/fUFTPL8RbK5snlUhiv6Veqq0QYY</id>
+  <title>arXiv Query: search_query=abs:"p+1" AND abs:"p-1" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:09:22Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22p%2B1%22+AND+(abs:%22p-1%22+AND+abs:factoring)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>687</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.35610v3</id>
+    <title>On the largest prime factors of $p-1$ and $p+1$</title>
+    <updated>2026-10-01T00:47:47Z</updated>
+    <link href="https://arxiv.org/abs/2609.35610v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.35610v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that each of the inequalities $P^{+}(p+1)&gt;P^{+}(p-1)$ and $P^{+}(p-1)&gt;P^{+}(p+1)$ holds for a positive proportion of primes. The argument combines a logarithmic balance identity with a uniform Selberg sieve over a thin cofactor strip. The same transfer mechanism applies to either shift and converts a one-sided large-prime-factor reservoir into an unconditional ordering result in both directions.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-28T16:55:04Z</published>
+    <arxiv:comment>This work has already been finished by Ding and Wang in Aug 4th</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Genheng Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.4495v2</id>
+    <title>Examples of Matrix Factorizations from SYZ</title>
+    <updated>2012-08-16T05:03:22Z</updated>
+    <link href="https://arxiv.org/abs/1205.4495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.4495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We find matrix factorization corresponding to an anti-diagonal in ${\mathbb C}P^1 \times {\mathbb C}P^1$, and circle fibers in weighted projective lines using the idea of Chan and Leung of Strominger-Yau-Zaslow transformations. For the tear drop orbifolds, we apply this idea to find matrix factorizations for two types of potential, the usual Hori-Vafa potential or the bulk deformed (orbi)-potential. We also show that the direct sum of anti-diagonal with its shift, is equivalent to the direct sum of central torus fibers with holonomy $(1,-1)$ and $(-1,1)$ in the Fukaya category of ${\mathbb C}P^1 \times {\mathbb C}P^1$, which was predicted by Kapustin and Li from B-model calculations.</summary>
+    <category term="math.SG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-21T06:24:27Z</published>
+    <arxiv:primary_category term="math.SG"/>
+    <arxiv:journal_ref>SIGMA 8 (2012), 053, 24 pages</arxiv:journal_ref>
+    <author>
+      <name>Cheol-Hyun Cho</name>
+    </author>
+    <author>
+      <name>Hansol Hong</name>
+    </author>
+    <author>
+      <name>Sangwook Lee</name>
+    </author>
+    <arxiv:doi>10.3842/SIGMA.2012.053</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3842/SIGMA.2012.053" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0107153v1</id>
+    <title>On factorization of operators through the spaces $l^p.$</title>
+    <updated>2001-07-20T21:02:15Z</updated>
+    <link href="https://arxiv.org/abs/math/0107153v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0107153v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We give conditions on a pair of Banach spaces $X$ and $Y,$ under which each operator from $X$ to $Y,$ whose second adjoint factors compactly through the space $l^p,$ $1\le p\le+\infty$, itself compactly factors through $l^p.$ The conditions are as follows: either the space $X^*,$ or the space $Y^{***}$ possesses the Grothendieck approximation property. Leaving the corresponding question for parameters $p&gt;1, p\neq 2,$ still open, we show that for $p=1$ the conditions are essential.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-07-20T21:02:15Z</published>
+    <arxiv:comment>8 pages, AMSTeX; for the next paper see math.FA/0107113</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <arxiv:journal_ref>Vestnik SPb GU, ser. Matematika, 2 (2000), 27-32 (in Russian)</arxiv:journal_ref>
+    <author>
+      <name>Oleg I. Reinov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19752v2</id>
+    <title>Understanding Memory-Regret Trade-Off for Streaming Stochastic Multi-Armed Bandits</title>
+    <updated>2024-07-06T13:43:21Z</updated>
+    <link href="https://arxiv.org/abs/2405.19752v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19752v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the stochastic multi-armed bandit problem in the $P$-pass streaming model. In this problem, the $n$ arms are present in a stream and at most $m&lt;n$ arms and their statistics can be stored in the memory. We give a complete characterization of the optimal regret in terms of $m, n$ and $P$. Specifically, we design an algorithm with $\tilde O\left((n-m)^{1+\frac{2^{P}-2}{2^{P+1}-1}} n^{\frac{2-2^{P+1}}{2^{P+1}-1}} T^{\frac{2^P}{2^{P+1}-1}}\right)$ regret and complement it with an $\tilde Ω\left((n-m)^{1+\frac{2^{P}-2}{2^{P+1}-1}} n^{\frac{2-2^{P+1}}{2^{P+1}-1}} T^{\frac{2^P}{2^{P+1}-1}}\right)$ lower bound when the number of rounds $T$ is sufficiently large. Our results are tight up to a logarithmic factor in $n$ and $P$.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-30T06:56:48Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuchen He</name>
+    </author>
+    <author>
+      <name>Zichun Ye</name>
+    </author>
+    <author>
+      <name>Chihao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.12220v3</id>
+    <title>Limiting measures of supersingularities</title>
+    <updated>2021-03-08T16:51:50Z</updated>
+    <link href="https://arxiv.org/abs/1911.12220v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.12220v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p$ be a prime number and let $k\geq 2$ be an integer. In this article we study the semi-simple reductions modulo $p$ of two-dimensional irreducible crystalline $p$-adic Galois representations with Hodge-Tate weights $0$ and $k-1$ and large slopes. Berger--Li--Zhu proved by using the theory of $(\varphi,Γ)$-modules that this reduction is constant when the slope is larger than $\lfloor\frac{k-2}{p-1}\rfloor$. Recently, Bergdall--Levin improved this bound to $\lfloor\frac{k-1}{p}\rfloor$ by using the theory of Kisin modules. In this article, under the extra assumptions $p&gt;3$ and $p+1\nmid k-1$, we asymptotically improve this bound further to $\lfloor\frac{k-1}{p+1}\rfloor+\lfloor\log_p(k-1)\rfloor$, which is off from the predicted optimal bound $\approx\frac{k-1}{p+1}$ only by a factor of $\mathsf{O}\left(\log_p k\right)$ rather than by a factor that is linear in $k$. As a consequence we deduce a partial result towards a conjecture by Gouvêa: that the measures of supersingularities of level $Np$ oldforms tend to the zero measure on the interval $(\frac{1}{p+1},\frac{p}{p+1})$ when $p$ is coprime to $6N$ and $Γ_0(N)$-regular. It is very likely that our methods extend to the cases $p\in\{2,3\}$ and $p+1\nmid k-1$ as well, and therefore can be adapted to eliminate the extra assumptions $p&gt;3$ and $p+1\nmid k-1$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-27T15:32:16Z</published>
+    <arxiv:comment>Edited and improved</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Bodan Arsovski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.08506v1</id>
+    <title>Holomorphic maps sharing preimages over finitely generated fields</title>
+    <updated>2025-11-11T17:40:14Z</updated>
+    <link href="https://arxiv.org/abs/2511.08506v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.08506v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $ R$ be a compact Riemann surface, and let $ P: R \to \mathbb P^1(\mathbb C) $ and $ Q: R \to \mathbb P^1(\mathbb C) $ be holomorphic maps. In this paper, we investigate the following problem: under what conditions do the preimages $ P^{-1}(K) $ and $ Q^{-1}(K) $ coincide for some infinite set $K$ contained in $\mathbb P^1(k)$, where $k$ is a finitely generated subfield of $\mathbb C$ (e.g., a number field)? Equivalently, we study holomorphic correspondences that admit an infinite completely invariant set contained in $\mathbb P^1(k)$. We show that if such a set exists, then there is a holomorphic Galois covering $Θ: R_0 \to \mathbb P^1(\mathbb C)$, where $R_0$ has genus zero or one, such that $ P $ and $ Q $ are ``compositional left factors" of $ Θ.$ We also consider a more general equation $ P^{-1}(K_1) = Q^{-1}(K_2),$ where $K_1$ and $K_2$ are infinite subsets of $\mathbb P^1(k)$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-11T17:40:14Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Fedor Pakovich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.04645v1</id>
+    <title>Incidence Geometries and the Pass Complexity of Semi-Streaming Set Cover</title>
+    <updated>2015-07-16T16:42:09Z</updated>
+    <link href="https://arxiv.org/abs/1507.04645v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.04645v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Set cover, over a universe of size $n$, may be modelled as a data-streaming problem, where the $m$ sets that comprise the instance are to be read one by one. A semi-streaming algorithm is allowed only $O(n\, \mathrm{poly}\{\log n, \log m\})$ space to process this stream. For each $p \ge 1$, we give a very simple deterministic algorithm that makes $p$ passes over the input stream and returns an appropriately certified $(p+1)n^{1/(p+1)}$-approximation to the optimum set cover. More importantly, we proceed to show that this approximation factor is essentially tight, by showing that a factor better than $0.99\,n^{1/(p+1)}/(p+1)^2$ is unachievable for a $p$-pass semi-streaming algorithm, even allowing randomisation. In particular, this implies that achieving a $Θ(\log n)$-approximation requires $Ω(\log n/\log\log n)$ passes, which is tight up to the $\log\log n$ factor. These results extend to a relaxation of the set cover problem where we are allowed to leave an $\varepsilon$ fraction of the universe uncovered: the tight bounds on the best approximation factor achievable in $p$ passes turn out to be $Θ_p(\min\{n^{1/(p+1)}, \varepsilon^{-1/p}\})$. Our lower bounds are based on a construction of a family of high-rank incidence geometries, which may be thought of as vast generalisations of affine planes. This construction, based on algebraic techniques, appears flexible enough to find other applications and is therefore interesting in its own right.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-16T16:42:09Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Amit Chakrabarti</name>
+    </author>
+    <author>
+      <name>Anthony Wirth</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.15166v1</id>
+    <title>On the largest prime factors less than $y$ of consecutive shifted primes</title>
+    <updated>2026-09-14T07:50:22Z</updated>
+    <link href="https://arxiv.org/abs/2609.15166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.15166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an integer $n &gt; 1$, let $P^+(n)$ be the largest prime factor of $n$, and let $P_y^+(n)$ denote the largest prime factor of $n$ not exceeding $y$. One of Erdős and Turán's conjectures asserts that the asymptotic density of integers $n$ satisfying $P^+(n)&lt;P^+(n+1)$ is $1/2$. Furthermore, Wang conjectures that for $x\rightarrow\infty$, one has $\#\{p\leq x:P^+(p-1)&lt;P^+(p+1)\}\sim π(x)/2$. In this paper, we show the following results. For any $3\leq y\ll x^{o(1)}$, for $x\rightarrow\infty$, we have
+  \begin{align*}
+  &amp;\#\{n\leq x:P^+_y(n)&lt;P^+_y(n+1)\}\sim \frac{1}{2}x, \\&amp;\#\{p\leq x:P^+_y(p-1)&lt;P^+_y(p+1)\}\sim \frac{1}{2}π(x).
+  \end{align*} For any $0&lt;α&lt;17/32$, let $y=x^α$. Then there exists $h(α)&gt;0$ such that
+  \begin{align*}
+  \#\{p\leq x:P_y^+(p-1)&lt;P_y^+(p+1)\}\geq(h(α)+o(1))π(x).
+  \end{align*} In particular, the function $h$ satisfies $\lim_{α\rightarrow 0^+}h(α)=1/2$. Similar result also holds for $\#\{n\leq x:P_y^+(n)&lt;P_y^+(n+1)\}$.
+  These improve Rivat's result (2001) and Wang's result (2019).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-14T07:50:22Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Zhiyuan Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1311.2527v1</id>
+    <title>On shifted primes with large prime factors and their products</title>
+    <updated>2013-11-11T18:49:10Z</updated>
+    <link href="https://arxiv.org/abs/1311.2527v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1311.2527v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We estimate from below the lower density of the set of prime numbers p such that p-1 has a prime factor of size at least p^c, where c lies in between 1/4 and 1/2. We also establish upper and lower bounds on the counting function of the set of positive integers n up to x with exactly k prime factors, counted with or without multiplicity, such that the largest prime factor of gcd(p-1 : p | n) exceeds n^{1/2k}.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-11-11T18:49:10Z</published>
+    <arxiv:comment>Most welcome!</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Bulletin of the Belgian Mathematical Society Simon Stevin, 22, 1, 39-47, 2015</arxiv:journal_ref>
+    <author>
+      <name>Florian Luca</name>
+    </author>
+    <author>
+      <name>Ricardo Menares</name>
+    </author>
+    <author>
+      <name>Amalia Pizarro-Madariaga</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0405087v1</id>
+    <title>On the orders of generators of capable $p$-groups</title>
+    <updated>2004-05-05T21:06:47Z</updated>
+    <link href="https://arxiv.org/abs/math/0405087v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0405087v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A group is called capable if it is a central factor group. For each prime $p$ and positive integer $c$, we prove the existence of a capable $p$-group of class $c$ minimally generated by an element of order $p$ and an element of order $p^{1+\lfloor\frac{c-1}{p-1}\rfloor}$. This is best possible.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-05-05T21:06:47Z</published>
+    <arxiv:comment>4 pp</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <arxiv:journal_ref>Bull. Austral. Math. Soc. 70 no. 3, 391-395 (2004)</arxiv:journal_ref>
+    <author>
+      <name>Arturo Magidin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0707.4102v5</id>
+    <title>A deterministic version of Pollard's p-1 algorithm</title>
+    <updated>2009-05-12T12:11:14Z</updated>
+    <link href="https://arxiv.org/abs/0707.4102v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0707.4102v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this article we present applications of smooth numbers to the unconditional derandomization of some well-known integer factoring algorithms.
+  We begin with Pollard's $p-1$ algorithm, which finds in random polynomial time the prime divisors $p$ of an integer $n$ such that $p-1$ is smooth. We show that these prime factors can be recovered in deterministic polynomial time. We further generalize this result to give a partial derandomization of the $k$-th cyclotomic method of factoring ($k\ge 2$) devised by Bach and Shallit.
+  We also investigate reductions of factoring to computing Euler's totient function $φ$. We point out some explicit sets of integers $n$ that are completely factorable in deterministic polynomial time given $φ(n)$. These sets consist, roughly speaking, of products of primes $p$ satisfying, with the exception of at most two, certain conditions somewhat weaker than the smoothness of $p-1$. Finally, we prove that $O(\ln n)$ oracle queries for values of $φ$ are sufficient to completely factor any integer $n$ in less than $\exp\Bigl((1+o(1))(\ln n)^{1/3} (\ln\ln n)^{2/3}\Bigr)$ deterministic time.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-07-27T15:35:56Z</published>
+    <arxiv:comment>Expanded and heavily revised version, to appear in Mathematics of Computation, 21 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Bartosz Zralek</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-09-02262-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-09-02262-5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.20440v2</id>
+    <title>On some connections between braces and pre-Lie rings outside of the context of Lazard's correspondence</title>
+    <updated>2025-03-29T03:52:06Z</updated>
+    <link href="https://arxiv.org/abs/2410.20440v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.20440v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $p&gt;3$ be a prime number and let $A$ be a brace whose additive group is a direct sum of cyclic groups of cardinalities larger than $p^{α}$ for some $α$. Suppose that either (i) $A^{\lfloor{\frac {p-1}4}\rfloor}\subseteq pA$ or that (ii) the additive group of brace $A$ has rank smaller than ${\lfloor{\frac {p-1}4}\rfloor}$. It is shown that for every natural number $i\leq α- {\frac {4α}{p-1}}$ the factor brace $A/p^{i}A$ is obtained by a formula similar to the group of flows from a left nilpotent pre-Lie ring.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-27T13:36:18Z</published>
+    <arxiv:comment>Some new results have been added</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <author>
+      <name>Agata Smoktunowicz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.02615v1</id>
+    <title>Optimality of empirical measures as quantizers</title>
+    <updated>2025-08-04T17:05:20Z</updated>
+    <link href="https://arxiv.org/abs/2508.02615v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.02615v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A common way to discretize a probability measure is to use an empirical measure as a discrete approximation. But how far from being optimal is this approximation in the p-Wasserstein distance? In this paper, we study this question in two contexts: (1) optimality among all uniform quantizers and (2) optimality among all (non-uniform) quantizers. In the first context, for p=1, we provide a complete answer to this question up to a polylog(n) factor. From the probabilistic point of view, this resolves, up to a polylog(n) factor, the problem of characterizing the expected 1-Wasserstein distance between a probability measure and its empirical measure in terms of non-random quantities. We also obtain some partial results for p&gt;1 in the first context and for p&gt;=1 in the second context.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-04T17:05:20Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>March T. Boedihardjo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.05367v1</id>
+    <title>Linear dependent subsets of Segre varieties</title>
+    <updated>2020-02-13T06:56:28Z</updated>
+    <link href="https://arxiv.org/abs/2002.05367v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.05367v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the linear algebra of finite subsets $S$ of a Segre variety $X$. In particular we classify the pairs $(S,X)$ with $S$ linear dependent and $\#(S)\le 5$. We consider an additional condition for linear dependent sets (no two of their points are contained in a line of $X$) and get far better lower bounds for $\#(S)$ in term of the dimension and number of the factors of $X$. In this discussion and in the classification of the case $\#(S)= 5$, $X\cong \mathbb {P}^1\times \mathbb {P}^1\times \mathbb {P}^1$ we use the rational normal curves</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-13T06:56:28Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Edoardo Ballico</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.14748v1</id>
+    <title>On the growth of the $L^p$ norm of the Riemann zeta-function on the line Re$(s)=1$</title>
+    <updated>2021-07-30T16:47:55Z</updated>
+    <link href="https://arxiv.org/abs/2107.14748v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.14748v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that if $δ&gt;0$ and $p$ is real then $$ \sup_T \int_T^{T+δ} |ζ(1+it)|^p dt &lt;\infty,$$ if and only if $-1&lt;p&lt;1$. Furthermore, we show the omega estimates $$
+  \int_T^{T+δ} |ζ(1+it)|^{\pm 1} dt = Ω(\log \log \log T),$$ $$ \int_T^{T+δ} |ζ(1+it)|^{\pm p} dt = Ω((\log \log T)^{p-1}), \qquad (p&gt;1) $$ which with the exception of an additional $\log \log \log T$ factor in the second estimate coincides with conditional (under the Riemann hypothesis) order estimates. We also prove weaker unconditional order estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-30T16:47:55Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Johan Andersson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.0471v1</id>
+    <title>Using the smoothness of p-1 for computing roots modulo p</title>
+    <updated>2008-03-04T15:07:08Z</updated>
+    <link href="https://arxiv.org/abs/0803.0471v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.0471v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We prove, without recourse to the Extended Riemann Hypothesis, that the projection modulo $p$ of any prefixed polynomial with integer coefficients can be completely factored in deterministic polynomial time if $p-1$ has a $(\ln p)^{O(1)}$-smooth divisor exceeding $(p-1)^{{1/2}+δ}$ for some arbitrary small $δ$. We also address the issue of computing roots modulo $p$ in deterministic time.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-04T15:07:08Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Bartosz Zralek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0205128v1</id>
+    <title>A form factor approach to finite temperature correlation functions in $c=1$ CFT</title>
+    <updated>2002-05-07T12:20:41Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0205128v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0205128v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The excitation spectrum of specific conformal field theories (CFT) with central charge $c=1$ can be described in terms of quasi-particles with charges $Q=-p,+1$ and fractional statistics properties. Using the language of Jack polynomials, we compute form factors of the charge density operator in these CFTs. We study a form factor expansion for the finite temperature density-density correlation function, and find that it shows a quick convergence to the exact result. The low-temperature behavior is recovered from a form factor with $p+1$ particles, while the high-temperature limit is recovered from states containing no more than 3 particles.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-05-07T12:20:41Z</published>
+    <arxiv:comment>15 pp, 6 fig</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>J.Phys.A35:6471-6488,2002</arxiv:journal_ref>
+    <author>
+      <name>S. Peysson</name>
+    </author>
+    <author>
+      <name>K. Schoutens</name>
+    </author>
+    <arxiv:doi>10.1088/0305-4470/35/30/318</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/0305-4470/35/30/318" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.07900v3</id>
+    <title>Parameterized Inapproximability of the Minimum Distance Problem over all Fields and the Shortest Vector Problem in all $\ell_p$ Norms</title>
+    <updated>2024-02-27T01:38:50Z</updated>
+    <link href="https://arxiv.org/abs/2211.07900v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.07900v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that the Minimum Distance Problem (MDP) on linear codes over any fixed finite field and parameterized by the input distance bound is W[1]-hard to approximate within any constant factor. We also prove analogous results for the parameterized Shortest Vector Problem (SVP) on integer lattices. Specifically, we prove that SVP in the $\ell_p$ norm is W[1]-hard to approximate within any constant factor for any fixed $p &gt;1$ and W[1]-hard to approximate within a factor approaching $2$ for $p=1$. (We show hardness under randomized reductions in each case.)
+  These results answer the main questions left open (and explicitly posed) by Bhattacharyya, Bonnet, Egri, Ghoshal, Karthik C. S., Lin, Manurangsi, and Marx (Journal of the ACM, 2021) on the complexity of parameterized MDP and SVP. For MDP, they established similar hardness for binary linear codes and left the case of general fields open. For SVP in $\ell_p$ norms with $p &gt; 1$, they showed inapproximability within some constant factor (depending on $p$) and left open showing such hardness for arbitrary constant factors. They also left open showing W[1]-hardness even of exact SVP in the $\ell_1$ norm.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-15T05:04:28Z</published>
+    <arxiv:comment>40 pages. Revised exposition. To appear at SICOMP. Short conference version in STOC 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Huck Bennett</name>
+    </author>
+    <author>
+      <name>Mahdi Cheraghchi</name>
+    </author>
+    <author>
+      <name>Venkatesan Guruswami</name>
+    </author>
+    <author>
+      <name>João Ribeiro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1606.00668v2</id>
+    <title>Unified Scalable Equivalent Formulations for Schatten Quasi-Norms</title>
+    <updated>2016-11-27T17:09:52Z</updated>
+    <link href="https://arxiv.org/abs/1606.00668v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1606.00668v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Schatten quasi-norm can be used to bridge the gap between the nuclear norm and rank function, and is the tighter approximation to matrix rank. However, most existing Schatten quasi-norm minimization (SQNM) algorithms, as well as for nuclear norm minimization, are too slow or even impractical for large-scale problems, due to the SVD or EVD of the whole matrix in each iteration. In this paper, we rigorously prove that for any p, p1, p2&gt;0 satisfying 1/p=1/p1+1/p2, the Schatten-p quasi-norm of any matrix is equivalent to minimizing the product of the Schatten-p1 norm (or quasi-norm) and Schatten-p2 norm (or quasi-norm) of its two factor matrices. Then we present and prove the equivalence relationship between the product formula of the Schatten quasi-norm and its weighted sum formula for the two cases of p1 and p2: p1=p2 and p1\neq p2. In particular, when p&gt;1/2, there is an equivalence between the Schatten-p quasi-norm of any matrix and the Schatten-2p norms of its two factor matrices, where the widely used equivalent formulation of the nuclear norm can be viewed as a special case. That is, various SQNM problems with p&gt;1/2 can be transformed into the one only involving smooth, convex norms of two factor matrices, which can lead to simpler and more efficient algorithms than conventional methods.
+  We further extend the theoretical results of two factor matrices to the cases of three and more factor matrices, from which we can see that for any 0&lt;p&lt;1, the Schatten-p quasi-norm of any matrix is the minimization of the mean of the Schatten-(p3+1)p norms of all factor matrices, where p3 denotes the largest integer not exceeding 1/p. In other words, for any 0&lt;p&lt;1, the SQNM problem can be transformed into an optimization problem only involving the smooth, convex norms of multiple factor matrices.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-06-02T13:29:49Z</published>
+    <arxiv:comment>21 pages. CUHK Technical Report CSE-ShangLC20160307, March 7, 2016</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Fanhua Shang</name>
+    </author>
+    <author>
+      <name>Yuanyuan Liu</name>
+    </author>
+    <author>
+      <name>James Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.04649v1</id>
+    <title>Primes with small primitive roots</title>
+    <updated>2024-10-06T23:11:00Z</updated>
+    <link href="https://arxiv.org/abs/2410.04649v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.04649v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $δ(p)$ tend to zero arbitrarily slowly as $p\to\infty$. We exhibit an explicit set $\mathcal{S}$ of primes $p$, defined in terms of simple functions of the prime factors of $p-1$, for which the least primitive root of $p$ is $\le p^{1/4-δ(p)}$ for all $p\in \mathcal{S}$, where $\#\{p\leq x: p\in \mathcal{S}\} \sim π(x)$ as $x\to\infty$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-06T23:11:00Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kevin Ford</name>
+    </author>
+    <author>
+      <name>Mikhail R. Gabdullin</name>
+    </author>
+    <author>
+      <name>Andrew Granville</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.19184v2</id>
+    <title>The Euler Stratification for $\mathbb{P}^1 \times \mathbb{P}^1 \times \mathbb{P}^n$</title>
+    <updated>2026-04-27T13:57:16Z</updated>
+    <link href="https://arxiv.org/abs/2603.19184v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.19184v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the Euler characteristic of a hypersurface in $(\mathbb{C}^*)^2 \times (\mathbb{C}^*)^n$ defined by a polynomial whose monomial support corresponds to lattice points in $Δ_1 \times Δ_1 \times Δ_n$ as the coefficients of the defining polynomial vary. Each member of this hypersurface family corresponds to a three-way independence model from algebraic statistics, and the (signed) Euler characteristic is equal to the maximum likelihood degree (ML degree) of the model. We show in the case of $Δ_1 \times Δ_1 \times Δ_1$ this Euler characteristic depends only on the vanishing patterns of the factors of the principal $A$-determinant, but this fails for $Δ_1 \times Δ_1 \times Δ_n$ with $n \geq 2$. We prove that, for all $n\geq 1$, all positive integers up to the maximum possible ML degree can be realized as the Euler characteristic. Furthermore, we completely determine the Euler stratification for $\mathbb{P}^1 \times \mathbb{P}^1 \times \mathbb{P}^1$ and provide partial information for $\mathbb{P}^1 \times \mathbb{P}^1 \times \mathbb{P}^2$.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-19T17:42:05Z</published>
+    <arxiv:comment>31 pages, 7 figures, minor revisions to section 4, added new figure</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Serkan Hoşten</name>
+    </author>
+    <author>
+      <name>Vadym Kurylenko</name>
+    </author>
+    <author>
+      <name>Elke Neuhaus</name>
+    </author>
+    <author>
+      <name>Nikolas Rieke</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/0512245v1</id>
+    <title>Branes, Black Holes and Topological Strings on Toric Calabi-Yau Manifolds</title>
+    <updated>2005-12-19T22:43:18Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/0512245v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/0512245v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We develop means of computing exact degerenacies of BPS black holes on toric Calabi-Yau manifolds. We show that the gauge theory on the D4 branes wrapping ample divisors reduces to 2D q-deformed Yang-Mills theory on necklaces of P^1's. As explicit examples we consider local P^2, P^1 x P^1 and A_k type ALE space times C. At large N the D-brane partition function factorizes as a sum over squares of chiral blocks, the leading one of which is the topological closed string amplitude on the Calabi-Yau. This is in complete agreement with the recent conjecture of Ooguri, Strominger and Vafa.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-12-19T22:43:18Z</published>
+    <arxiv:comment>50 pages, 6 figures, harvmac</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>JHEP0612:018,2006</arxiv:journal_ref>
+    <author>
+      <name>M. Aganagic</name>
+    </author>
+    <author>
+      <name>D. Jafferis</name>
+    </author>
+    <author>
+      <name>N. Saulina</name>
+    </author>
+    <arxiv:doi>10.1088/1126-6708/2006/12/018</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1126-6708/2006/12/018" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.34042v1</id>
+    <title>The monodromy of Xiao's genus-two fibrations in degrees 3, 4 and 5</title>
+    <updated>2026-09-28T00:08:42Z</updated>
+    <link href="https://arxiv.org/abs/2609.34042v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.34042v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We determine the vanishing cycles of Xiao's genus-two fibrations $X_d\to P^1$, $d=3,4,5$, whose fibers admit degree-$d$ maps to a fixed elliptic curve $E$. We tile the base $P^1$ by triangles and realize the surface $X_d$ as a degree-$d$ branched cover of $P^1\times E$. The covering description gives an explicit algorithm for the vanishing cycles. A vanishing path is recorded by the sides it crosses in the tiling; each crossing changes a labelled picture of the fiber by a local hexagon move, and the vanishing cycle is read from the terminal picture. We obtain the $7$, $13$, and $31$ vanishing cycles as explicit curves in a marked reference fiber. For $d=4,5$, these give new positive factorizations of the identity in the genus-two mapping class group, of types $(6,7)$ and $(12,19)$.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-28T00:08:42Z</published>
+    <arxiv:comment>24 pages, 23 figures</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Zoltán Szabó</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1001.2830v3</id>
+    <title>GIT Compactifications of $M_{0,n}$ from Conics</title>
+    <updated>2015-01-11T20:46:45Z</updated>
+    <link href="https://arxiv.org/abs/1001.2830v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1001.2830v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study GIT quotients parametrizing n-pointed conics that generalize the GIT quotients $(\mathbb{P}^1)^n//SL2$. Our main result is that $\overline{M}_{0,n}$ admits a morphism to each such GIT quotient, analogous to the well-known result of Kapranov for the simpler $(\mathbb{P}^1)^n$ quotients. Moreover, these morphisms factor through Hassett's moduli spaces of weighted pointed rational curves, where the weight data comes from the GIT linearization data.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-01-16T14:37:45Z</published>
+    <arxiv:comment>15 pages, 5 figures; corrected inequality in Lemma 5.1, Int. Math. Res. Notices Vol. 2010</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Noah Giansiracusa</name>
+    </author>
+    <author>
+      <name>Matthew Simpson</name>
+    </author>
+    <arxiv:doi>10.1093/imrn/rnq228</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/imrn/rnq228" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.0182v3</id>
+    <title>Space-filling Latin Hypercube Designs based on Randomization Restrictions in Factorial Experiments</title>
+    <updated>2014-07-21T14:10:23Z</updated>
+    <link href="https://arxiv.org/abs/1305.0182v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.0182v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Latin hypercube designs (LHDs) with space-filling properties are widely used for emulating computer simulators. Over the last three decades, a wide spectrum of LHDs have been proposed with space-filling criteria like minimum correlation among factors, maximin interpoint distance, and orthogonality among the factors via orthogonal arrays (OAs). Projective geometric structures like spreads, covers and stars of PG(p-1,q) can be used to characterize the randomization restriction of multistage factorial experiments. These geometric structures can also be used for constructing OAs and nearly OAs (NOAs). In this paper, we present a new class of space-filling LHDs based on NOAs derived from stars of PG(p-1, 2).</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-01T14:31:51Z</published>
+    <arxiv:comment>16 pages (accepted in SPL)</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Pritam Ranjan</name>
+    </author>
+    <author>
+      <name>Neil Spencer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.08262v1</id>
+    <title>Almost primes of the form $[p^{1/γ}]$</title>
+    <updated>2024-06-12T14:30:34Z</updated>
+    <link href="https://arxiv.org/abs/2406.08262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.08262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{P}_r$ denote an almost-prime with at most $r$ prime factors, counted according to multiplicity. In this paper, it is proved that, for $0.989&lt;γ&lt;1$, there exist infinitely many primes $p$ such that $[p^{1/γ}]=\mathcal{P}_7$, which constitutes an improvement upon the previous result of Banks-Guo-Shparlinski [4] who showed that there exist infinitely many primes $p$ such that $[p^{1/γ}]=\mathcal{P}_8$ for $γ$ near to one.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-12T14:30:34Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Fei Xue</name>
+    </author>
+    <author>
+      <name>Jinjiang Li</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1611.08372v1</id>
+    <title>A Unified Convex Surrogate for the Schatten-$p$ Norm</title>
+    <updated>2016-11-25T08:03:31Z</updated>
+    <link href="https://arxiv.org/abs/1611.08372v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1611.08372v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Schatten-$p$ norm ($0&lt;p&lt;1$) has been widely used to replace the nuclear norm for better approximating the rank function. However, existing methods are either 1) not scalable for large scale problems due to relying on singular value decomposition (SVD) in every iteration, or 2) specific to some $p$ values, e.g., $1/2$, and $2/3$. In this paper, we show that for any $p$, $p_1$, and $p_2 &gt;0$ satisfying $1/p=1/p_1+1/p_2$, there is an equivalence between the Schatten-$p$ norm of one matrix and the Schatten-$p_1$ and the Schatten-$p_2$ norms of its two factor matrices. We further extend the equivalence to multiple factor matrices and show that all the factor norms can be convex and smooth for any $p&gt;0$. In contrast, the original Schatten-$p$ norm for $0&lt;p&lt;1$ is non-convex and non-smooth. As an example we conduct experiments on matrix completion. To utilize the convexity of the factor matrix norms, we adopt the accelerated proximal alternating linearized minimization algorithm and establish its sequence convergence. Experiments on both synthetic and real datasets exhibit its superior performance over the state-of-the-art methods. Its speed is also highly competitive.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-11-25T08:03:31Z</published>
+    <arxiv:comment>The paper is accepted by AAAI-17. We show that multi-factor matrix factorization enjoys superiority over the traditional two-factor case</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Chen Xu</name>
+    </author>
+    <author>
+      <name>Zhouchen Lin</name>
+    </author>
+    <author>
+      <name>Hongbin Zha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.00125v2</id>
+    <title>Small cap decoupling for the parabola with logarithmic constant</title>
+    <updated>2025-01-28T21:30:16Z</updated>
+    <link href="https://arxiv.org/abs/2305.00125v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.00125v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We note that the subpolynomial factor for the $\ell^qL^p$ small cap decoupling constants for the truncated parabola $\mathbb{P}^1=\{(t,t^2):|t|\leq 1\}$ may be controlled by a suitable power of $\log R$. This is achieved by considering a suitable amplitude-dependent wave envelope estimate, as was introduced in a recent paper of Guth and Maldague to demonstrate a small cap decoupling for the $(2+1)$ cone; we demonstrate that the version for $\mathbb{P}^1$ may be taken with a loss controlled by a power of $\log R$ as well.</summary>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-28T23:41:14Z</published>
+    <arxiv:comment>34 pages. This version includes a broad/narrow step missing in a previous version. Wave packets have been tweaked. Improved exposition in overview. Various small numerical changes. Central claims are unchanged, except for updated numerology. The author thanks Zane Li and Po-Lam Yung for pointing out the major error to be corrected in previous version. Comments on current version are welcome</arxiv:comment>
+    <arxiv:primary_category term="math.CA"/>
+    <author>
+      <name>Ben Johnsrude</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.02925v1</id>
+    <title>Classification of genus-$1$ holomorphic Lefschetz pencils</title>
+    <updated>2020-08-07T01:19:40Z</updated>
+    <link href="https://arxiv.org/abs/2008.02925v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.02925v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we classify relatively minimal genus-$1$ holomorphic Lefschetz pencils up to smooth isomorphism. We first show that such a pencil is isomorphic to either the pencil on $\mathbb{P}^1\times \mathbb{P}^1$ of bi-degree $(2,2)$ or a blow-up of the pencil on $\mathbb{P}^2$ of degree $3$, provided that no fiber of a pencil contains an embedded sphere. (Note that one can easily classify genus-$1$ Lefschetz pencils with an embedded sphere in a fiber.) We further determine the monodromy factorizations of these pencils and show that the isomorphism class of a blow-up of the pencil on $\mathbb{P}^2$ of degree $3$ does not depend on the choice of blown-up base points. We also show that the genus-$1$ Lefschetz pencils constructed by Korkmaz-Ozbagci (with nine base points) and Tanaka (with eight base points) are respectively isomorphic to the pencils on $\mathbb{P}^2$ and $\mathbb{P}^1\times \mathbb{P}^1$ above, in particular these are both holomorphic.</summary>
+    <category term="math.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-07T01:19:40Z</published>
+    <arxiv:comment>41 pages, many figures</arxiv:comment>
+    <arxiv:primary_category term="math.GT"/>
+    <author>
+      <name>Noriyuki Hamada</name>
+    </author>
+    <author>
+      <name>Kenta Hayano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.18555v1</id>
+    <title>Three Brillhart-Lehmer-Selfridge primality proofs for Wagstaff numbers</title>
+    <updated>2026-05-18T15:35:56Z</updated>
+    <link href="https://arxiv.org/abs/2605.18555v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.18555v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Wagstaff numbers $W_p = (2^p + 1)/3$ for odd primes $p$ are the natural $+1$ companions of the Mersenne numbers. Known primality proofs for $W_p$ with $p \geq 2617$ rely on the elliptic-curve primality proving algorithm of Atkin-Morain; Chebyshev/Lucas-type tests, while available as compositeness criteria, remain conjectural on the sufficiency side. We present fully verified primality proofs of $W_{2617}$ (788 digits), $W_{10501}$ (3161 digits), and $W_{12391}$ (3730 digits), independent of ECPP and relying only on classical $N-1$ machinery. The proofs apply the Brillhart-Lehmer-Selfridge (BLS) $N-1$ criterion to the cyclotomic decomposition $2^{p-1} - 1 = \prod_{d \mid p-1} Φ_d(2)$, harvesting factored content from the Cunningham project tables (used as evidence) and FactorDB (used only as a discovery aid, with every retrieved factor re-certified). As an independent check on the $\mathbb{Z}[\sqrt{2}]$ arithmetic implementation, the Chua $N+1$ congruence $ω_3^{(W_p + 1)/2} \equiv -1 \pmod{W_p}$ -- the $a=3$ case of the Chua framework with $ω_3 = 3 + 2\sqrt{2}$, a necessary condition for Wagstaff primality -- is verified at each $W_p$.
+  BLS $N-1$ requires $p-1$ sufficiently smooth that enough cyclotomic factors $Φ_d(2)$ are fully factored. On the factorisation data consulted (Cunningham project tables and FactorDB, January-April 2026), $p = 10501$ and $p = 12391$ are the only exponents above $2617$ in the known Wagstaff prime/probable-prime list meeting this ceiling. Every cofactor primality is certified unconditionally by APR-CL; the method is independent of the Chebyshev sufficiency conjecture, and every step is reproducible from the archived scripts.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-18T15:35:56Z</published>
+    <arxiv:comment>11 pages. Code and certificates: https://doi.org/10.5281/zenodo.19645478</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Alexey Dolotov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1601.06318v2</id>
+    <title>Massey products &lt;y,x,x,...,x,x,y&gt; in Galois cohomology via rational points</title>
+    <updated>2016-09-12T14:27:27Z</updated>
+    <link href="https://arxiv.org/abs/1601.06318v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1601.06318v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For $x$ an element of a field other than $0$ or $1$, we compute the order $n$ Massey products $$\langle (1-x)^{-1}, x^{-1}, \ldots, x^{-1}, (1-x)^{-1} \rangle$$ of $n-2$ factors of $x^{-1}$ and two factors of $(1-x)^{-1}$ by embedding $\mathbb{P}^1 - \{0,1,\infty\}$ into its Picard variety and constructing $\operatorname{Gal}(k^s/k)$ equivariant maps from $π_1$ applied to this embedding to unipotent matrix groups. This method produces obstructions to $π_1$-sections of $\mathbb{P}^1 - \{0,1,\infty\}$, partial computations of obstructions of Jordan Ellenberg, and also computes the Massey products $$\langle x^{-1} , (-x)^{-1}, \ldots, (-x)^{-1}, x^{-1} \rangle.$$</summary>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-01-23T22:49:01Z</published>
+    <arxiv:comment>To appear in the Journal of Pure and Applied Algebra's special issue in honor of Chuck Weibel, edited by Guillermo Cortiñas, Eric Friedlander, and Christian Haesemeyer. 26 pages. This paper continues arXiv:1011.0655 and arXiv:1107.1790</arxiv:comment>
+    <arxiv:primary_category term="math.AT"/>
+    <author>
+      <name>Kirsten Wickelgren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0807.4753v1</id>
+    <title>Counterexamples to the maximal p-norm multiplicativity conjecture for all p &gt; 1</title>
+    <updated>2008-07-30T14:29:28Z</updated>
+    <link href="https://arxiv.org/abs/0807.4753v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0807.4753v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  For all p &gt; 1, we demonstrate the existence of quantum channels with non-multiplicative maximal output p-norms. Equivalently, for all p &gt;1, the minimum output Renyi entropy of order p of a quantum channel is not additive. The violations found are large; in all cases, the minimum output Renyi entropy of order p for a product channel need not be significantly greater than the minimum output entropy of its individual factors. Since p=1 corresponds to the von Neumann entropy, these counterexamples demonstrate that if the additivity conjecture of quantum information theory is true, it cannot be proved as a consequence of any channel-independent guarantee of maximal p-norm multiplicativity. We also show that a class of channels previously studied in the context of approximate encryption lead to counterexamples for all p &gt; 2.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-07-30T14:29:28Z</published>
+    <arxiv:comment>Merger of arXiv:0707.0402 and arXiv:0707.3291 containing new and improved analysis of counterexamples. 17 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Comm. Math. Phys. 284(1):263-280, 2008.</arxiv:journal_ref>
+    <author>
+      <name>Patrick Hayden</name>
+    </author>
+    <author>
+      <name>Andreas Winter</name>
+    </author>
+    <arxiv:doi>10.1007/s00220-008-0624-0</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00220-008-0624-0" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.08548v1</id>
+    <title>Adaptive estimation of a time-varying phase with coherent states: smoothing can give an unbounded improvement over filtering</title>
+    <updated>2017-10-23T23:21:01Z</updated>
+    <link href="https://arxiv.org/abs/1710.08548v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.08548v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of measuring a time-varying phase, even when the statistics of the variation is known, is considerably harder than that of measuring a constant phase. In particular, the usual bounds on accuracy - such as the $1/(4\bar{n})$ standard quantum limit with coherent states - do not apply. Here, restricting to coherent states, we are able to analytically obtain the achievable accuracy - the equivalent of the standard quantum limit - for a wide class of phase variation. In particular, we consider the case where the phase has Gaussian statistics and a power-law spectrum equal to $κ^{p-1}/|ω|^p$ for large $ω$, for some $p&gt;1$. For coherent states with mean photon flux ${\cal N}$, we give the Quantum Cramér-Rao Bound on the mean-square phase error as $[p \sin (π/p)]^{-1}(4{\cal N}/κ)^{-(p-1)/p}$. Next, we consider whether the bound can be achieved by an adaptive homodyne measurement, in the limit ${\cal N}/κ\gg 1$ which allows the photocurrent to be linearized. Applying the optimal filtering for the resultant linear Gaussian system, we find the same scaling with ${\cal N}$, but with a prefactor larger by a factor of $p$. By contrast, if we employ optimal smoothing we can exactly obtain the Quantum Cram{é}r-Rao Bound. That is, contrary to previously considered ($p=2$) cases of phase estimation, here the improvement offered by smoothing over filtering is not limited to a factor of 2 but rather can be unbounded by a factor of $p$. We also study numerically the performance of these estimators for an adaptive measurement in the limit where ${\cal N}/κ$ is not large, and find a more complicated picture.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-23T23:21:01Z</published>
+    <arxiv:comment>12 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 97, 042334 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Kiarn T. Laverick</name>
+    </author>
+    <author>
+      <name>Howard M. Wiseman</name>
+    </author>
+    <author>
+      <name>Hossien T. Dinani</name>
+    </author>
+    <author>
+      <name>Dominic W. Berry</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.97.042334</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.97.042334" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.01150v1</id>
+    <title>Dynamic Algorithm for Explainable k-medians Clustering under lp Norm</title>
+    <updated>2025-12-01T00:01:47Z</updated>
+    <link href="https://arxiv.org/abs/2512.01150v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.01150v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of explainable k-medians clustering introduced by Dasgupta, Frost, Moshkovitz, and Rashtchian (2020). In this problem, the goal is to construct a threshold decision tree that partitions data into k clusters while minimizing the k-medians objective. These trees are interpretable because each internal node makes a simple decision by thresholding a single feature, allowing users to trace and understand how each point is assigned to a cluster. We present the first algorithm for explainable k-medians under lp norm for every finite p &gt;= 1. Our algorithm achieves an O(p(log k)^{1 + 1/p - 1/p^2}) approximation to the optimal k-medians cost for any p &gt;= 1. Previously, algorithms were known only for p = 1 and p = 2. For p = 2, our algorithm improves upon the existing bound of O(log^{3/2}k), and for p = 1, it matches the tight bound of log k + O(1) up to a multiplicative O(log log k) factor. We show how to implement our algorithm in a dynamic setting. The dynamic algorithm maintains an explainable clustering under a sequence of insertions and deletions, with amortized update time O(d log^3 k) and O(log k) recourse, making it suitable for large-scale and evolving datasets.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-01T00:01:47Z</published>
+    <arxiv:comment>36 pages, 3 figures, to appear in NeurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Konstantin Makarychev</name>
+    </author>
+    <author>
+      <name>Ilias Papanikolaou</name>
+    </author>
+    <author>
+      <name>Liren Shan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.03497v1</id>
+    <title>Carmichael numbers and the sieve</title>
+    <updated>2015-06-10T22:43:00Z</updated>
+    <link href="https://arxiv.org/abs/1506.03497v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.03497v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Using the sieve, we show that there are infinitely many Carmichael numbers whose prime factors all have the form $p = 1 + a^2 + b^2$ with $a,b \in{\mathbb Z}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-10T22:43:00Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>William D. Banks</name>
+    </author>
+    <author>
+      <name>Tristan Freiberg</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2016.01.012</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2016.01.012" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.13299v2</id>
+    <title>Convolution-type Bombieri-Vinogradov theorem with well-factorable weights, and its applications</title>
+    <updated>2026-09-03T07:35:53Z</updated>
+    <link href="https://arxiv.org/abs/2608.13299v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.13299v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider the asymptotic density of $\#\{p\leq x:P^+(p-1)\geq p^c\}$ and $\#\{n\leq x:P^+(n)&lt;P^+(n+1)\}$, where $P^+(n)$ denote the largest prime factor of $n$. We show that for $x\rightarrow\infty$, one has
+  \begin{align*}
+  \mathop{\lim\sup}_{x\rightarrow\infty} \frac{1}{π(x)}\#\{p\leq x:P^+(p-1)\geq p^c\}\leq\frac{16}{5}\log\frac{1}{c}
+  \end{align*}
+  where $e^{-5/16}&lt;c&lt;1$, and
+  \begin{align*}
+  \#\{n\leq x:P^+(n)&lt;P^+(n+1)\}&gt;0.299x.
+  \end{align*} The first result constitutes an improvement upon that of Ding and Wang (2025), who obatined $\mathop{\lim\sup}_{x\rightarrow\infty} \frac{1}{π(x)}\#\{p\leq x:P^+(p-1)\geq p^c\}\leq \frac{7}{2}\log\frac{1}{c}$. The second result improves a previous result $0.280$ by the author (2026).
+  The key to the proof is that for a special class of convolution forms equipped with well-factorable weights, we may use the level \(x^{5/8-o(1)}\) for Pascadi's prime-distribution result with triple-well-factorable weights. We also use Pascadi's estimation of incomplete Kloosterman sums.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T14:30:57Z</published>
+    <arxiv:comment>27 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Zhiyuan Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.0222v5</id>
+    <title>The non-commutative Khintchine inequalities for p&lt;1</title>
+    <updated>2016-01-06T15:29:15Z</updated>
+    <link href="https://arxiv.org/abs/1412.0222v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.0222v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a proof of the Khintchine inequalities in non-commutative $L_p$-spaces for all $0&lt; p&lt;1$. These new inequalities are valid for the Rademacher functions or Gaussian random variables, but also for more general sequences, e.g. for the analogues of such random variables in free probability. We also prove a factorization for operators from a Hilbert space to a non commutative $L_p$-space, which is new for $0&lt;p&lt;1$. We end by showing that Mazur maps are Hölder on semifinite von Neumann algebras. The main tool is a new form of Hölder inequality for non commutative Lp spaces with weights.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-11-30T14:59:52Z</published>
+    <arxiv:comment>Minor improvements (Remark 2.10 which was mistakenly omitted from previous version, is added to the current version). Paper will appear in J. Inst. Math Jussieu (unfortunately without Remark 2.10)</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <arxiv:journal_ref>J. Inst. Math. Jussieu (2017)</arxiv:journal_ref>
+    <author>
+      <name>Gilles Pisier</name>
+    </author>
+    <author>
+      <name>Eric Ricard</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19739v1</id>
+    <title>On Haagerup noncommutative quasi $H^p(\A)$ spaces</title>
+    <updated>2024-05-30T06:36:04Z</updated>
+    <link href="https://arxiv.org/abs/2405.19739v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19739v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{M}$ be a $σ$-finite von Neumann algebra, equipped with a normal faithful state $\varphi$, and let $\mathcal{A}$ be a maximal subdiagonal subalgebra of $\mathcal{M}$.
+  We have proved that for $0&lt; p&lt;1$, $H^p(\mathcal{A})$ is independent of $\varphi$. Furthermore, in the case that $\mathcal{A}$ is a type 1 subdiagonal subalgebra, we have extended the most recent results about the Riesz type factorization to the case $0&lt;p&lt;1$ and have proved an interpolation theorem for $H^p(\mathcal{A})$ in the case where $0 &lt; p_0, p_1 \le \infty$.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-30T06:36:04Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <author>
+      <name>Turdebek N. Bekjan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.11549v1</id>
+    <title>Positive Rokhlin Entropy Implies Infinite $L^1$-Orbit Multiplicity: A Negative Answer to Thouvenot's Question</title>
+    <updated>2026-07-13T13:33:53Z</updated>
+    <link href="https://arxiv.org/abs/2607.11549v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.11549v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that every free ergodic measure-preserving action of a countably infinite amenable group with positive Rokhlin entropy has infinite complex $L^1$-orbit multiplicity, both on $L^1$ and on its mean-zero subspace $L^1_0$. This gives a negative answer to a question of J.-P. Thouvenot recorded by Iwanik and establishes the corresponding endpoint statement at $p=1$ of Iwanik's theorem that positive entropy implies infinite $L^p$-multiplicity for every $p&gt;1$. The proof combines Malykhin's rigidity theorem for independent random variables, Seward's Bernoulli factor theorem, and a Følner set argument.</summary>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-13T13:33:53Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DS"/>
+    <author>
+      <name>Zongrui Hu</name>
+    </author>
+    <author>
+      <name>Leiye Xu</name>
+    </author>
+    <author>
+      <name>Shuhao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1706.03985v1</id>
+    <title>W\lowercase{eyl} \lowercase {bound for $p$-power twist of} $GL(2)$ L-\lowercase{functions }</title>
+    <updated>2017-06-13T10:13:31Z</updated>
+    <link href="https://arxiv.org/abs/1706.03985v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1706.03985v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $f$ be a cuspidal eigenform (holomorphic or Maass) on the full modular group $SL(2, \mathbb{Z})$ . Let $χ$ be a primitive character of modulus $P$. We shall prove the following results:
+ 1. Suppose $P = p^r$, where $p$ is a prime and $r\equiv 0 (\textrm{mod} \ 3)$. Then we have \[ L\left( f \otimes χ, \frac{1}{2}\right) \ll_{f, ε} P^{1/3 +ε}, \] where $ε&gt; 0$ is any positive real number.
+  2.   Suppose $χ$ factorizes as $χ= χ_1 χ_2$, where $ χ_i$'s are primitive character modulo $P_i$, where $P_i$ are primes, $P^{1/2 -ε} \ll P_i \ll P^{1/2 + ε}$ for $i=1,2$ and $P=P_1 P_2$. We have the Burgess bound \[ L\left( f \otimes χ, \frac{1}{2}\right) \ll_{f, ε} P^{3/8 +ε}, \] where $ε&gt; 0$ is any positive real number.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-06-13T10:13:31Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Ritabrata Munshi</name>
+    </author>
+    <author>
+      <name>Saurabh Kumar Singh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.09829v2</id>
+    <title>On a conjecture on shifted primes with large prime factors, II</title>
+    <updated>2024-03-27T15:20:58Z</updated>
+    <link href="https://arxiv.org/abs/2402.09829v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.09829v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{P}$ be the set of primes and $π(x)$ the number of primes not exceeding $x$. Let also $P^+(n)$ be the largest prime factor of $n$ with convention $P^+(1)=1$ and $$ T_c(x)=\#\left\{p\le x:p\in \mathcal{P},P^+(p-1)\ge p^c\right\}. $$ Motivated by a 2017 conjecture of Chen and Chen, we show that for any $8/9\le c&lt;1$ $$ \limsup_{x\rightarrow\infty}T_c(x)/π(x)\le 8(1/c-1), $$ which clearly means that $$ \limsup_{x\rightarrow\infty}T_c(x)/π(x)\rightarrow 0, \quad \text{as}~c\rightarrow1. $$</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-15T09:46:19Z</published>
+    <arxiv:comment>The expositions on the history of this topic is updated in the new version</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Bull. Aust. Math. Soc. 111 (2025) 48-55</arxiv:journal_ref>
+    <author>
+      <name>Yuchen Ding</name>
+    </author>
+    <arxiv:doi>10.1017/S0004972724000534</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1017/S0004972724000534" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.08994v6</id>
+    <title>Arithmetic Bias in the Distribution of Mersenne Prime Exponents and the Divisor Structure of p-1</title>
+    <updated>2026-09-28T16:35:42Z</updated>
+    <link href="https://arxiv.org/abs/2603.08994v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.08994v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The classical Wagstaff heuristic models the primality of $M_p=2^p-1$ primarily through the size of the prime exponent $p$, at the aggregate scale $C\log p/p$. We test whether the divisor structure of $p-1$ produces detectable secondary variation, using $S(p)=\frac{\logτ(p-1)}{\log\log p}$. Known Mersenne-prime exponents $p\ge 13$ show systematically elevated values of $S$ relative to nearby prime exponents. An exact population-level conditional randomization over all $5{,}761{,}450$ prime exponents $13\le p&lt;10^8$ places $32$ of the $47$ known cases in higher-$S$ Wagstaff-balanced regions, with two-sided reference value $p_{\mathrm{two}}=0.0115$. We then construct an explicitly heuristic density benchmark built on the exact cyclotomic and CRT constraints generated by the divisors of $p-1$. We evaluate the resulting modular census without using $S(p)$ or $τ(p-1)$ as summary predictors, and without using Mersenne-prime labels. Using the detailed census response to define a Wagstaff-scale allocation over population-defined higher-/lower-$S$ regions gives $28.61/18.39$, before average-factor reduction and reference anchoring. A low-dimensional Wagstaff-normalized reduction of this census gives $32.28/14.72$, compared with the observed $32/15$. This agreement is a quantitative consistency check, not a derivation or mechanism-identification result. For the prospectively fixed interval $10^8\le p&lt;10^9$, the same global reduction assigns $73.88\%$ of its conditioned mass to the higher-$S$ region.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-09T22:29:55Z</published>
+    <arxiv:comment>Major replacement (38 pages, 15 tables). Versions v3-v5 are superseded and should not be relied upon: the heuristic model used in those versions was found to be incorrect and has been completely replaced. The empirical analysis has been re-audited, and a reproducibility archive has been added</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jesus Dominguez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.11300v2</id>
+    <title>Analyzing lepton flavor universality in the decays $Λ_b\toΛ_c^{(\ast)}(\frac12^\pm,\frac32^-) + \ell\,\barν_\ell$</title>
+    <updated>2018-09-12T14:07:16Z</updated>
+    <link href="https://arxiv.org/abs/1807.11300v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.11300v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lepton flavor universality can be tested in the semileptonic decays $Λ_b\to Λ_c^{(\ast)}$ where $Λ_c^{(\ast)}$ denotes either the ground state $Λ_c(2286)$ (with $J^P=1/2^+$) or its orbital excitations $Λ_c(2595)$ (with $J^P=1/2^-$) and $Λ_c(2625)$ (with $J^P=3/2^-$). We calculate the differential decay rates as well as the branching fractions of these decays for both tauonic and muonic modes with form factors obtained from a covariant confined quark model previously developed by us. We present results for the rate ratios of the tauonic and muonic modes which provide important tests of lepton flavor universality in forthcoming experiments.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-30T11:53:35Z</published>
+    <arxiv:comment>some references added</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>Phys. Rev. D 98, 053003 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Thomas Gutsche</name>
+    </author>
+    <author>
+      <name>Mikhail A. Ivanov</name>
+    </author>
+    <author>
+      <name>Jürgen G. Körner</name>
+    </author>
+    <author>
+      <name>Valery E. Lyubovitskij</name>
+    </author>
+    <author>
+      <name>Pietro Santorelli</name>
+    </author>
+    <author>
+      <name>Chien-Thang Tran</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.98.053003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.98.053003" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.11196v12</id>
+    <title>The shifted-prime Erdős-Wintner law for primitive-root determinant densities: extremal order, dimension zero, and Fourier decay</title>
+    <updated>2026-09-24T17:17:35Z</updated>
+    <link href="https://arxiv.org/abs/2603.11196v12" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.11196v12" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For a prime $p$, let $c(p)=\frac{\varphi(p-1)}{p-1}\prod_{j\ge1}(1-p^{-j})$, the limiting density of matrices over $\mathbb F_p$ with primitive-root determinant. Its limiting law over the primes is the classical continuous shifted-totient law on $[0,1/2]$. We prove Hausdorff dimension zero and vanishing lower and upper dyadic $L^q$ dimensions for $q&gt;1$. Its image $μ_f$ under $x\mapsto-\log x$ is Rajchman. As $T\to\infty$, for $U_T$ uniform on $[0,T]$, $\log|\widehat{μ_f}(U_T)|/\log\log T\to-1$ in probability. For every $A&gt;0$, $|\widehat{μ_f}(τ)|\le(\log\log T)^4/\log T$ outside a subset of $[0,T]$ of relative measure $O_A((\log T)^{-A})$. As $h\downarrow0$, $\sup_aμ_f([a,a+h])=\mathfrak S_2e^{-γ}/\log(1/h)+O(\log^{-2}(1/h))$, where $\mathfrak S_2$ is the twin-prime singular series; maximizing left endpoints lie within $h$ of $\log3$ for small $h$. We prove $\min_{p\le x}c(p)\sim e^{-γ}/\log\log x$ and $\limsup_{p\to\infty}(c(p)\log\log p)^{-1}=e^γ$. The limiting law of $\log(\varphi(p+1)/\varphi(p-1))$ has support $\mathbb R$ and Hausdorff dimension zero. For the classical law of $σ(p-1)/(p-1)$ on $[3/2,\infty)$, we prove dimension zero, a sharp left-endpoint asymptotic, and a Rajchman logarithmic image. Its odd-prime component has an entire Mellin transform of order one. Partial-factorization bounds yield certified asymptotic searches for fully splitting negacyclic number-theoretic transform primes with prescribed reciprocal-density bounds at fixed power-of-two length. We determine the second distinct squared norm of $A_{n_1}\otimes\cdots\otimes A_{n_k}$ for $k,n_i\ge2$, yielding exact cyclotomic codifferent shell gaps and a uniform smoothing asymptotic at $ε=2^{-c\varphi(m)}$ for $c&gt;2\log_2(1+\sqrt6)$. These results are unconditional. An explicit unproved exponent-pair hypothesis yields $|\widehat{μ_f}(τ)|=O(1/\log\log|τ|)$.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-11T18:04:48Z</published>
+    <arxiv:comment>Substantial revision: sharp minimum-density asymptotic; two-sided typical Fourier decay and stronger exceptional-set bounds; sharper $σ$-endpoint remainder; revised prior-work attribution and applications. Removed the standalone $σ$-extremal section</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Vipin Singh Sehrawat</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0809.3866v1</id>
+    <title>Semileptonic $B_{q}\to D^{\ast}_{q}lν$ $(q=s, d, u)$ transitions in QCD</title>
+    <updated>2008-09-23T08:39:58Z</updated>
+    <link href="https://arxiv.org/abs/0809.3866v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0809.3866v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The form factors relevant to $B_{q}\to D^{\ast}_{q}(J^{P}=1^{-})\ellν$ $(q=s, d, u)$ decays are calculated in the framework of the three point QCD sum rules approach. The heavy quark effective theory prediction of the form factors are obtained. The total decay width and branching ratio for these decays are also evaluated using the $q^2$ dependencies of these form factors.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-09-23T08:39:58Z</published>
+    <arxiv:comment>4 pages, 4 figures and 3 tables. To be published in the proceedings of the 14th International QCD Conference (QCD 08), Montpellier, France, 7-12 July 2008</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>M. Bayar</name>
+    </author>
+    <author>
+      <name>K. Azizi</name>
+    </author>
+    <arxiv:doi>10.1016/j.nuclphysbps.2008.12.089</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nuclphysbps.2008.12.089" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1701.03217v1</id>
+    <title>Optimal stretching for lattice points under convex curves</title>
+    <updated>2017-01-12T02:56:34Z</updated>
+    <link href="https://arxiv.org/abs/1701.03217v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1701.03217v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Suppose we count the positive integer lattice points beneath a convex decreasing curve in the first quadrant having equal intercepts. Then stretch in the coordinate directions so as to preserve the area under the curve, and again count lattice points. Which choice of stretch factor will maximize the lattice point count? We show the optimal stretch factor approaches $1$ as the area approaches infinity. In particular, when $0&lt;p&lt;1$, among $p$-ellipses $|sx|^p+|s^{-1}y|^p=r^p$ with $s&gt;0$, the one enclosing the most first-quadrant lattice points approaches a $p$-circle ($s=1$) as $r \to \infty$.
+  The case $p=2$ was established by Antunes and Freitas, with generalization to $1&lt;p&lt;\infty$ by Laugesen and Liu. The case $p=1$ remains open, where the question is: which right triangles in the first quadrant with two sides along the axes will enclose the most lattice points, as the area tends to infinity?
+  Our results for $p&lt;1$ lend support to the conjecture that in all dimensions, the rectangular box of given volume that minimizes the $n$-th eigenvalue of the Dirichlet Laplacian will approach a cube as $n \to \infty$. This conjecture remains open in dimensions four and higher.</summary>
+    <category term="math.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-01-12T02:56:34Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:1609.06172</arxiv:comment>
+    <arxiv:primary_category term="math.SP"/>
+    <author>
+      <name>Sinan Ariturk</name>
+    </author>
+    <author>
+      <name>Richard S. Laugesen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1904.10536v1</id>
+    <title>Frequency measurement of the $^{1}\mathrm{S}_{0}, F=5/2\leftrightarrow\,^{3}\mathrm{P}_{1}, F=7/2$ transition of $^{27}$Al$^{+}$ via quantum logic spectroscopy with $^{40}$Ca$^{+}$</title>
+    <updated>2019-04-23T21:05:58Z</updated>
+    <link href="https://arxiv.org/abs/1904.10536v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1904.10536v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We perform quantum logic spectroscopy with a $^{27}$Al$^{+}$/$^{40}$Ca$^{+}$ mixed ion crystal in a linear Paul trap for a measurement of the $(3s^{2})\,^{1}\mathrm{S}_{0} \leftrightarrow \, (3s3p)\,^{3}\mathrm{P}_{1}, F=7/2$ intercombination transition in $^{27}$Al$^{+}$. Towards this end, Ramsey spectroscopy is used for probing the transition in $^{27}$Al$^{+}$ and the $(4s^{2})\,\mathrm{S}_{1/2} \leftrightarrow \, (4s3d)\,\mathrm{D}_{5/2}$ clock transition in $^{40}$Ca$^{+}$ in interleaved measurements. By using the precisely measured frequency of the clock transition in $^{40}$Ca$^{+}$ as a frequency reference, we determine the frequency of the intercombination line to be $ν_{^{1}\mathrm{S}_{0} \leftrightarrow \,^{3}\mathrm{P}_{1},F=7/2}$=1122 842 857 334 736(93) Hz and the Landé g-factor of the excited state to be $g_{^{3}\mathrm{P}_{1}, F=7/2}$=0.428132(2).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-04-23T21:05:58Z</published>
+    <arxiv:comment>18 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>New Journal of Physics, October 2019</arxiv:journal_ref>
+    <author>
+      <name>Michael Guggemos</name>
+    </author>
+    <author>
+      <name>Milena Guevara-Bertsch</name>
+    </author>
+    <author>
+      <name>Daniel Heinrich</name>
+    </author>
+    <author>
+      <name>Óscar Andrey Herrera-Sancho</name>
+    </author>
+    <author>
+      <name>Yves Colombe</name>
+    </author>
+    <author>
+      <name>Rainer Blatt</name>
+    </author>
+    <author>
+      <name>Christian Felix Roos</name>
+    </author>
+    <arxiv:doi>10.1088/1367-2630/ab447a</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1367-2630/ab447a" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0609756v1</id>
+    <title>Integral and fractional Quantum Hall Ising ferromagnets</title>
+    <updated>2006-09-29T10:00:56Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0609756v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0609756v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We compare quantum Hall systems at filling factor 2 to those at filling factors 2/3 and 2/5, corresponding to the exact filling of two lowest electron or composite fermion (CF) Landau levels. The two fractional states are examples of CF liquids with spin dynamics. There is a close analogy between the ferromagnetic (spin polarization P=1) and paramagnetic (P=0) incompressible ground states that occur in all three systems in the limits of large and small Zeeman spin splitting. However, the excitation spectra are different. At filling factor 2, we find spin domains at half-polarization (P=1/2), while antiferromagnetic order seems most favorable in the CF systems. The transition between P=0 and 1, as seen when e.g. the magnetic field is tilted, is also studied by exact diagonalization in toroidal and spherical geometries. The essential role of an effective CF-CF interaction is discussed, and the experimentally observed incompresible half-polarized state is found in some models.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-09-29T10:00:56Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Phys. Rev. B 75, 045434 (2007)</arxiv:journal_ref>
+    <author>
+      <name>K. Vyborny</name>
+    </author>
+    <author>
+      <name>O. Certik</name>
+    </author>
+    <author>
+      <name>D. Pfannkuche</name>
+    </author>
+    <author>
+      <name>D. Wodzinski</name>
+    </author>
+    <author>
+      <name>A. Wojs</name>
+    </author>
+    <author>
+      <name>J. J. Quinn</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.75.045434</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.75.045434" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.05320v2</id>
+    <title>Robust Estimation for Random Graphs</title>
+    <updated>2022-02-15T08:12:36Z</updated>
+    <link href="https://arxiv.org/abs/2111.05320v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.05320v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of robustly estimating the parameter $p$ of an Erdős-Rényi random graph on $n$ nodes, where a $γ$ fraction of nodes may be adversarially corrupted. After showing the deficiencies of canonical estimators, we design a computationally-efficient spectral algorithm which estimates $p$ up to accuracy $\tilde O(\sqrt{p(1-p)}/n + γ\sqrt{p(1-p)} /\sqrt{n}+ γ/n)$ for $γ&lt; 1/60$. Furthermore, we give an inefficient algorithm with similar accuracy for all $γ&lt;1/2$, the information-theoretic limit. Finally, we prove a nearly-matching statistical lower bound, showing that the error of our algorithms is optimal up to logarithmic factors.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-09T18:43:25Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Jayadev Acharya</name>
+    </author>
+    <author>
+      <name>Ayush Jain</name>
+    </author>
+    <author>
+      <name>Gautam Kamath</name>
+    </author>
+    <author>
+      <name>Ananda Theertha Suresh</name>
+    </author>
+    <author>
+      <name>Huanyu Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/9302213v1</id>
+    <title>A factorization constant for $l^n_p</title>
+    <updated>1993-02-11T18:51:47Z</updated>
+    <link href="https://arxiv.org/abs/math/9302213v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/9302213v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We prove that if PT is a factorization of the identity operator on \ell_p^n through \ell_{\infty}^k, then ||P|| ||T|| \geq Cn^{1/p-1/2}(log n)^{-1/2}. This is a corollary of a more general result on factoring the identity operator on a quasi-normed space through \ell_{\infty}^k.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1993-02-11T18:51:47Z</published>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>N. Tenney Peck</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1310.7891v1</id>
+    <title>Quantization of borderline Levi conjugacy classes of orthogonal groups</title>
+    <updated>2013-10-29T17:38:26Z</updated>
+    <link href="https://arxiv.org/abs/1310.7891v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1310.7891v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct equivariant quantization of a special family of Levi conjugacy classes of the complex orthogonal group $SO(N)$, whose stabilizer contains a Cartesian factor $SO(2)\times SO(P)$, $1\leqslant P&lt;N$, $P\equiv N \mod 2$.</summary>
+    <category term="math.QA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-10-29T17:38:26Z</published>
+    <arxiv:comment>23 pages, no figures</arxiv:comment>
+    <arxiv:primary_category term="math.QA"/>
+    <author>
+      <name>Thomas Ashton</name>
+    </author>
+    <author>
+      <name>Andrey Mudrov</name>
+    </author>
+    <arxiv:doi>10.1063/1.4902381</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.4902381" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.27765v1</id>
+    <title>Restoring the Sweet Spot: Pass-Rate Weighted Self-Distillation for LLM Reasoning</title>
+    <updated>2026-05-26T23:30:01Z</updated>
+    <link href="https://arxiv.org/abs/2605.27765v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.27765v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Self-Distillation Policy Optimization (SDPO) provides dense token-level credit assignment for reinforcement learning with large language models by leveraging the model's own feedback-conditioned predictions as a self-teacher. Unlike GRPO, however, whose group-relative advantage naturally concentrates learning on a sweet spot of intermediate-difficulty questions, SDPO's KL-based advantage lacks an implicit notion of difficulty awareness.
+  We analyze this gap through the lens of GRPO's advantage normalization. Extending the learnability framework to normalized rewards, we show that normalization absorbs the variance term $p(1-p)$, equalizing leading-order learnability across questions and leaving $\sqrt{p(1-p)}$ as the sole residual scaling factor in the per-question gradient. This analysis yields a simple prescription: weight each question's SDPO loss by $[\hat{p}(1-\hat{p})]^{1/2}$, resulting in SC-SDPO, a scale-consistent variant of SDPO.
+  The proposed weights are obtained as a zero-cost byproduct of on-policy rollouts with batch-adaptive normalization, inducing an implicit curriculum that dynamically tracks the model's evolving competence. Experiments on scientific reasoning and tool-use benchmarks demonstrate that SC-SDPO consistently improves over SDPO, yielding gains of +3.2/+4.3 (mean@16/maj@16) on Qwen3-8B and +1.8/+3.0 on OLMo-3-7B, while preserving stable training dynamics throughout optimization.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T23:30:01Z</published>
+    <arxiv:comment>18 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zehao Liu</name>
+    </author>
+    <author>
+      <name>Yuanpu Cao</name>
+    </author>
+    <author>
+      <name>Jinghui Chen</name>
+    </author>
+    <author>
+      <name>Vasant G. Honavar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.09634v1</id>
+    <title>On almost primes in Piatetski-Shapiro sequences</title>
+    <updated>2025-05-04T00:27:46Z</updated>
+    <link href="https://arxiv.org/abs/2505.09634v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.09634v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The author proves that for $0.9985 &lt; γ&lt; 1$, there exist infinitely many primes $p$ such that $[p^{1/γ}]$ has at most 5 prime factors counted with multiplicity. This gives an improvement upon the previous results of Banks-Guo-Shparlinski and Xue-Li-Zhang.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-04T00:27:46Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Runbo Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.01321v1</id>
+    <title>On the finiteness of Carmichael numbers with Fermat factors and $L=2^αP^2$</title>
+    <updated>2017-10-03T18:01:07Z</updated>
+    <link href="https://arxiv.org/abs/1710.01321v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.01321v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $m$ be a Carmichael number and let $L$ be the least common multiple of $p-1$, where $p$ runs over the prime factors of $m$. We determine all the Carmichael numbers $m$ with a Fermat prime factor such that $L=2^αP^2$, where $k\in \mathbb{N}$ and $P$ is an odd prime number. There are eleven such Carmichael numbers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-03T18:01:07Z</published>
+    <arxiv:comment>42 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yu Tsumura</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.13078v1</id>
+    <title>Palindromic factorization of rich words</title>
+    <updated>2021-10-25T16:14:55Z</updated>
+    <link href="https://arxiv.org/abs/2110.13078v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.13078v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A finite word $w$ is called \emph{rich} if it contains $\vert w\vert+1$ distinct palindromic factors including the empty word. For every finite rich word $w$ there are distinct nonempty palindromes $w_1, w_2,\dots,w_p$ such that $w=w_pw_{p-1}\cdots w_1$ and $w_i$ is the longest palindromic suffix of $w_pw_{p-1}\cdots w_i$, where $1\leq i\leq p$. This palindromic factorization is called \emph{UPS-factorization}. Let $luf(w)=p$ be \emph{the length of UPS-factorization} of $w$.
+  In 2017, it was proved that there is a constant $c$ such that if $w$ is a finite rich word and $n=\vert w\vert$ then $luf(w)\leq c\frac{n}{\ln{n}}$. We improve this result as follows: There are constants $μ, π$ such that if $w$ is a finite rich word and $n=\vert w\vert$ then \[luf(w)\leq μ\frac{n}{e^{π\sqrt{\ln{n}}}}\mbox{.}\] The constants $c,μ,π$ depend on the size of the alphabet.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-25T16:14:55Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Josef Rukavicka</name>
+    </author>
+    <arxiv:doi>10.1016/j.dam.2022.03.030</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.dam.2022.03.030" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.30138v1</id>
+    <title>High frequency wave propagation for the viscoelastic wave equation with singular memory</title>
+    <updated>2026-08-31T01:45:12Z</updated>
+    <link href="https://arxiv.org/abs/2608.30138v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.30138v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study high-frequency propagation for a viscoelastic wave equation with spatially dependent hereditary memory in relative-history form. The kernel may have the integrable singularity $\mathfrak m(s,x)=s^{p-1}m(s,x)$, $0&lt;p&lt;1$; the regular case $p=1$ is included. Using the half-amplitude propagation distance and corresponding travel time as units, the wavelength $h\ll1$ yields the memory factor $\varepsilon=h^{1-p}$. We construct exact solutions with full two-scale geometric-optics expansions in powers $h^{k+(1-p)\ell}$. Memory modifies the propagation geometry through the instantaneous modulus $σ+\varepsilon\int_0^\infty\mathfrak m(s,\cdot)\,d s$, while the kernel singularity contributes $C_p=Γ(p)e^{iπp/2}$ to the leading transport equation. For $0&lt;p&lt;1$, this produces fractional scales, frequency-dependent attenuation, and a dispersive phase correction; for $p=1$, the fractional hierarchy disappears, attenuation is frequency independent, and the transport phase correction vanishes.
+  We also derive a local damped wave equation whose incoming high-frequency solutions approximate the hereditary solutions with $O(h)$ error in semiclassical $C^k$ norms. Exterior observations for all incident directions and $0&lt;h\ll1$ uniquely recover $σ_{\mathfrak m}$ and the full temporal jet of $m$ at $s=0$, which determine the expansion modulo $O(h^\infty)$.
+  Finally, a contraction-semigroup argument gives well-posedness and arbitrary finite-order Sobolev regularity for spatially dependent weakly singular kernels and prescribed full prehistory, with explicit compatibility conditions and estimates uniform in $\varepsilon$. These estimates justify the geometric-optics construction.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-31T01:45:12Z</published>
+    <arxiv:primary_category term="math.AP"/>
+    <author>
+      <name>Haim Grebnev</name>
+    </author>
+    <author>
+      <name>Plamen Stefanov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.04920v1</id>
+    <title>Computing the Canonical Height of a Point in Projective Space</title>
+    <updated>2016-02-16T06:08:47Z</updated>
+    <link href="https://arxiv.org/abs/1602.04920v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.04920v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give an algorithm which requires no integer factorization for computing the canonical height of a point in $\mathbb{P}^1(\mathbb{Q})$ relative to a morphism $φ: \mathbb{P}_{\mathbb{Q}}^1 \rightarrow \mathbb{P}_{\mathbb{Q}}^1$ of degree $d \geq 2$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-16T06:08:47Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Elliot Wells</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.05599v3</id>
+    <title>Inequalities for $L^p$-norms that sharpen the triangle inequality and complement Hanner's Inequality</title>
+    <updated>2018-12-07T20:37:11Z</updated>
+    <link href="https://arxiv.org/abs/1807.05599v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.05599v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 2006 Carbery raised a question about an improvement on the naïve norm inequality $\|f+g\|_p^p \leq 2^{p-1}(\|f\|_p^p + \|g\|_p^p)$ for two functions in $L^p$ of any measure space. When $f=g$ this is an equality, but when the supports of $f$ and $g$ are disjoint the factor $2^{p-1}$ is not needed. Carbery's question concerns a proposed interpolation between the two situations for $p&gt;2$. The interpolation parameter measuring the overlap is $\|fg\|_{p/2}$. We prove an inequality of this type that is stronger than the one Carbery proposed. Moreover, our stronger inequalities are valid for all $p$.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-15T19:33:06Z</published>
+    <arxiv:comment>18 pages. This version has added material on cases of equality</arxiv:comment>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Eric A. Carlen</name>
+    </author>
+    <author>
+      <name>Rupert L. Frank</name>
+    </author>
+    <author>
+      <name>Paata Ivanisvili</name>
+    </author>
+    <author>
+      <name>Elliott H. Lieb</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1206.1835v1</id>
+    <title>The product structure of the equivariant K-theory of the based loop group of SU(2)</title>
+    <updated>2012-06-08T18:51:22Z</updated>
+    <link href="https://arxiv.org/abs/1206.1835v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1206.1835v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let G=SU(2) and let ΩG denote the space of continuous based loops in G, equipped with the pointwise conjugation action of G. It is a classical fact in topology that the ordinary cohomology H^*(ΩG) is a divided polynomial algebra Γ[x]. The algebra Γ[x] can be described as an inverse limit as k goes to infinity of the symmetric subalgebra in the exterior algebra Λ(x_1, ...,x_k) in the variables x_1, ..., x_k. We compute the R(G)-algebra structure of the G-equivariant K-theory of ΩG in a way which naturally generalizes the classical computation of the ordinary cohomology ring of ΩG as a divided polynomial algebra Γ[x]. Specifically, we prove that K^*_G(ΩG) is an inverse limit of the symmetric (S_{2r}-invariant) subalgebra of K^*_G((P^1)^{2r}), where the symmetric group S_{2r} acts in the natural way on the factors of the 2r-fold product (P^1)^{2r} and G acts diagonally via the standard action on each complex projective line P^1.</summary>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-06-08T18:51:22Z</published>
+    <arxiv:comment>34 pages</arxiv:comment>
+    <arxiv:primary_category term="math.KT"/>
+    <author>
+      <name>Megumi Harada</name>
+    </author>
+    <author>
+      <name>Lisa C. Jeffrey</name>
+    </author>
+    <author>
+      <name>Paul Selick</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.06751v2</id>
+    <title>The Chebotarev density theorem for function fields -- incomplete intervals</title>
+    <updated>2020-07-04T15:03:38Z</updated>
+    <link href="https://arxiv.org/abs/1901.06751v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.06751v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a Polya-Vinogradov type variation of the the Chebotarev density theorem for function fields over finite fields valid for "incomplete intervals" $I \subset \mathbb{F}_p$, provided $(p^{1/2}\log p)/|I| = o(1)$. Applications include density results for irreducible trinomials in $\mathbb{F}_p[x]$, i.e. the number of irreducible polynomials in the set $\{ f(x) = x^{d} + a_{1} x + a_{0} \in \mathbb{F}_p[x] \}_{a_{0} \in I_{0}, a_{1}\in I_{1}}$ is $\sim |I_{0}|\cdot |I_{1}|/d$ provided $|I_{0}| &gt; p^{1/2+ε}$, $|I_{1}| &gt; p^ε$, or $|I_{1}| &gt; p^{1/2+ε}$, $|I_{0}| &gt; p^ε$, and similarly when $x^{d}$ is replaced by any monic degree $d$ polynomial in $\mathbb{F}_p[x]$. Under the above assumptions we can also determine the distribution of factorization types, and find it to be consistent with the distribution of cycle types of permutations in the symmetric group $S_{d}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-20T23:43:30Z</published>
+    <arxiv:comment>Minor revision</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Pär Kurlberg</name>
+    </author>
+    <author>
+      <name>Lior Rosenzweig</name>
+    </author>
+  </entry>
+</feed>

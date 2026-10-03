@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/fUz3t+I98WMX0zIYqpfPYoVHq+U</id>
+  <title>arXiv Query: search_query=all:"sum of two squares" AND all:"graph" AND all:factoring&amp;id_list=&amp;start=0&amp;max_results=25</title>
+  <updated>2026-10-03T22:13:39Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22sum+of+two+squares%22+AND+(all:%22graph%22+AND+all:factoring)&amp;start=0&amp;max_results=25&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>25</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1907.06350v1</id>
+    <title>A Constructive Proof of Jacobi's Identity for the Sum of Two Squares</title>
+    <updated>2019-07-15T07:10:41Z</updated>
+    <link href="https://arxiv.org/abs/1907.06350v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.06350v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a constructive proof of Jacobi's identity for the sum of two squares. We present a combinatorial proof of the Jacobi Triple Product and combine with a proof of Hirschhorn to define an algorithm. The input is a factorization $n=dN$ with $d \equiv1\mod 4$ plus two bits of data, and whose output is either another factorization $n=d'N'$ and $d' \equiv3\mod 4$ with two more bits of data, or a pair of integers whose squares sum to $n$. We phrase this algorithm in terms of integer partitions and matchings on an infinite graph.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-15T07:10:41Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Mario DeFranco</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,1029 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/os17tco7jBsMHqtLAZWTQbTdMQI</id>
+  <title>arXiv Query: search_query=abs:"factoring" AND abs:"1/3" AND cat:quant-ph&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T18:52:09Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factoring%22+AND+(abs:%221/3%22+AND+cat:quant-ph)&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>53</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1505.04584v1</id>
+    <title>Analogue algorithm for parallel factorization of an exponential number of large integers II. Optical implementation</title>
+    <updated>2015-05-18T10:33:44Z</updated>
+    <link href="https://arxiv.org/abs/1505.04584v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.04584v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report a detailed analysis of the optical realization [1, 3, 2, 4] of the analogue algorithm described in the first paper of this series [5] for the simultaneous factorization of an exponential number of integers. Such an analogue procedure, which scales exponentially in the context of first order interference, opens up the horizon to polynomial scaling by exploiting multi-particle quantum interference.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-18T10:33:44Z</published>
+    <arxiv:comment>to be published in Quantum Information Processing (QIP)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>V. Tamma, Quantum Inf Process 11128:1189, 2015</arxiv:journal_ref>
+    <author>
+      <name>Vincenzo Tamma</name>
+    </author>
+    <arxiv:doi>10.1007/s11128-015-1189-4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11128-015-1189-4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0508007v3</id>
+    <title>Rapid State-Reduction of Quantum Systems Using Feedback Control</title>
+    <updated>2006-01-24T22:55:19Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0508007v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0508007v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We consider using Hamiltonian feedback control to increase the speed at which a continuous measurement purifies (reduces) the state of a quantum system, and thus to increase the speed of the preparation of pure states. For a measurement of an observable with N equispaced eigenvalues, we show that there exists a feedback algorithm which will speed up the rate of state-reduction by at least a factor of 2(N+1)/3.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-08-01T13:44:07Z</published>
+    <arxiv:comment>4 pages, revtex4, 1 eps figure. v2: improved presentation; v3: published version, some typos corrected</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 96, 010504 (2006)</arxiv:journal_ref>
+    <author>
+      <name>Joshua Combes</name>
+    </author>
+    <author>
+      <name>Kurt Jacobs</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.96.010504</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.96.010504" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9503007v1</id>
+    <title>Quantum Computers, Factoring, and Decoherence</title>
+    <updated>1995-03-08T16:39:04Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9503007v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9503007v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a quantum computer any superposition of inputs evolves unitarily into the corresponding superposition of outputs. It has been recently demonstrated that such computers can dramatically speed up the task of finding factors of large numbers -- a problem of great practical significance because of its cryptographic applications. Instead of the nearly exponential ($\sim \exp L^{1/3}$, for a number with $L$ digits) time required by the fastest classical algorithm, the quantum algorithm gives factors in a time polynomial in $L$ ($\sim L^2$). This enormous speed-up is possible in principle because quantum computation can simultaneously follow all of the paths corresponding to the distinct classical inputs, obtaining the solution as a result of coherent quantum interference between the alternatives. Hence, a quantum computer is sophisticated interference device, and it is essential for its quantum state to remain coherent in the course of the operation. In this report we investigate the effect of decoherence on the quantum factorization algorithm and establish an upper bound on a ``quantum factorizable'' $L$ based on the decoherence suffered per operational step.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1995-03-08T16:39:04Z</published>
+    <arxiv:comment>7 pages,LaTex + 2 postcript figures in a uuencoded file</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>I. Chuang</name>
+    </author>
+    <author>
+      <name>Raymond Laflamme</name>
+    </author>
+    <author>
+      <name>P. Shor</name>
+    </author>
+    <author>
+      <name>W. Zurek</name>
+    </author>
+    <arxiv:doi>10.1126/science.270.5242.1633</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.270.5242.1633" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0701506v3</id>
+    <title>Fractional Spin Hall Effect in Atomic Bose Gases</title>
+    <updated>2009-03-26T01:21:26Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0701506v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0701506v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We propose fractional spin hall effect (FSHE) by coupling pseudospin states of cold bosonic atoms to optical fields. The present scheme is an extension to interacting bosonic system of the recent work \cite{liu,zhu} on optically induced spin hall effect in non-interacting atomic system. The system has two different types of ground states. The 1st type of ground state is a 1/3-factor Laughlin function, and has the property of chiral - anti-chiral interchange antisymmetry, while the 2nd type is shown to be a 1/4-factor wave function with chiral - anti-chiral symmetry. The fractional statistics corresponding to the fractional spin Hall states are studied in detail, and are discovered to be different from that corresponding to the fractional quantum Hall (FQH) states. Therefore the present FSHE can be distinguished from FQH regime in the measurement.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-01-22T16:37:41Z</published>
+    <arxiv:comment>8 pages, 2 figures, to appear in Phys. Rev. B</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Phys. Rev. B 79, 165301 (2009)</arxiv:journal_ref>
+    <author>
+      <name>Xiong-Jun Liu</name>
+    </author>
+    <author>
+      <name>Xin Liu</name>
+    </author>
+    <author>
+      <name>L. C. Kwek</name>
+    </author>
+    <author>
+      <name>C. H. Oh</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.79.165301</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.79.165301" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.07921v1</id>
+    <title>Superconducting nanowire single-photon detectors at a wavelength of 940 nm</title>
+    <updated>2015-06-25T23:24:32Z</updated>
+    <link href="https://arxiv.org/abs/1506.07921v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.07921v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop single-photon detectors comprising single-mode fiber-coupled superconducting nanowires, with high system detection efficiencies at a wavelength of 940 nm. The detector comprises a 6.5-nm-thick, 110-nm-wide NbN nanowire meander fabricated onto a Si substrate with a distributed Bragg reflector for enhancing the optical absorptance. We demonstrate that, via the design of a low filling factor (1/3) and active area (Φ = 10 μm), the system reaches a detection efficiency of ~60% with a dark count rate of 10 Hz, a recovery time &lt;12 ns, and a timing jitter of ~50 ps.</summary>
+    <category term="cond-mat.supr-con" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-06-25T23:24:32Z</published>
+    <arxiv:comment>12 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.supr-con"/>
+    <arxiv:journal_ref>AIP Advances 5(6): 067129. (2015)</arxiv:journal_ref>
+    <author>
+      <name>W. J. Zhang</name>
+    </author>
+    <author>
+      <name>H. Li</name>
+    </author>
+    <author>
+      <name>L. X. You</name>
+    </author>
+    <author>
+      <name>Y. H. He</name>
+    </author>
+    <author>
+      <name>L. Zhang</name>
+    </author>
+    <author>
+      <name>X. Y. Liu</name>
+    </author>
+    <author>
+      <name>X. Y. Yang</name>
+    </author>
+    <author>
+      <name>J. J. Wu</name>
+    </author>
+    <author>
+      <name>Q. Guo</name>
+    </author>
+    <author>
+      <name>S. J. Chen</name>
+    </author>
+    <author>
+      <name>Z. Wang</name>
+    </author>
+    <author>
+      <name>X. M. Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0802.1816v2</id>
+    <title>A note on quantum algorithms and the minimal degree of epsilon-error polynomials for symmetric functions</title>
+    <updated>2008-02-15T16:47:22Z</updated>
+    <link href="https://arxiv.org/abs/0802.1816v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0802.1816v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The degrees of polynomials representing or approximating Boolean functions are a prominent tool in various branches of complexity theory. Sherstov recently characterized the minimal degree deg_{\eps}(f) among all polynomials (over the reals) that approximate a symmetric function f:{0,1}^n--&gt;{0,1} up to worst-case error \eps: deg_{\eps}(f) = ~Θ(deg_{1/3}(f) + \sqrt{n\log(1/\eps)}). In this note we show how a tighter version (without the log-factors hidden in the ~Θ-notation), can be derived quite easily using the close connection between polynomials and quantum algorithms.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-02-13T16:36:15Z</published>
+    <arxiv:comment>7 pages LaTeX. 2nd version: corrected a few small inaccuracies</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Ronald de Wolf</name>
+      <arxiv:affiliation>CWI Amsterdam</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.14969v1</id>
+    <title>Effect of parallel magnetic field on Klein tunneling in $pn$ and $pnp$ graphene trilayer junctions</title>
+    <updated>2022-08-31T17:10:01Z</updated>
+    <link href="https://arxiv.org/abs/2208.14969v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.14969v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The effect of a parallel magnetic field $B$ and a potential substrate on the transmission, conductivity, and Fano factor of a biased ABC-stacked $pn$ and $pnp$ trilayer graphene junction (ABC-TLG) is investigated theoretically at low energy. We discovered that, in the presence of a high magnetic field $B=1400$T, the ABC-TLG can exhibit new Klein tunneling at two new incidence $k_y$ values, in addition to the usual value of $k_y=0$ and whatever the energy value is. Indeed, the transmission of ABC-TLG via $ pn $ and $ pnp $ junctions is transformed into a three-separate transmission of single-like graphene (SLG), with Klein tunneling appearing at $k_y=0$ and $k_y=\pmκ$ ($κ$ is highly dependent on $B$). Furthermore, the conductivity $σ$ and Fano factor $F$ behave similarly to SLG, with ABC-TLG having the lowest $σ=3g_0/π$ and highest $F=1/3$ at $B=1400$T and $σ_{\text{TLG}}=3σ_{\text{SLG}}$.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-31T17:10:01Z</published>
+    <arxiv:comment>7 pages, 10 figures, two-column</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Abderrahim El Mouhafid</name>
+    </author>
+    <author>
+      <name>Ahmed Jellal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.14931v1</id>
+    <title>Toward a new theory of the fractional quantum Hall effect: The many-body spectra and energy gaps at $ν&lt;1$</title>
+    <updated>2023-06-25T22:40:03Z</updated>
+    <link href="https://arxiv.org/abs/2306.14931v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.14931v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a recent paper (arXiv:2206.05152v4), using the exact diagonalization technique, I calculated the energy and other physical properties (electron density, pair correlation function) of a system of $N\le 7$ two-dimensional electrons at the Landau level filling factor $ν=1/3$, and showed that the variational many-body wave function proposed for this filling factor by Laughlin is far from the true ground state. In this paper I continue to study exact properties of a small ($N\le 7$) system of two-dimensional electrons lying on the lowest Landau level. I analyze the energies and electron densities of the systems with $N\le 7$ electrons continuously as a function of the magnetic field in the range $1/4\lesssimν&lt;1$. The physical mechanisms of the appearance of energy gaps in many-particle electron spectra are elucidated. The results obtained clarify the true nature of the ground and excited states of the considered systems.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-25T22:40:03Z</published>
+    <arxiv:comment>22 pages, 15 figures, 10 tables. Part II of the theory of the fractional quantum Hall effect; for the first part see arXiv:2206.05152v4</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Nanomaterials 14, 297 (2024)</arxiv:journal_ref>
+    <author>
+      <name>S. A. Mikhailov</name>
+    </author>
+    <arxiv:doi>10.3390/nano14030297</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/nano14030297" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/0604187v2</id>
+    <title>Shot Noise of Spin-Decohering Transport in Spin-Orbit Coupled Nanostructures</title>
+    <updated>2006-11-17T00:24:33Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/0604187v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/0604187v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We generalize the scattering theory of quantum shot noise to include the full spin-density matrix of electrons injected from a spin-filtering or ferromagnetic electrode into a quantum-coherent nanostructure governed by various spin-dependent interactions. This formalism yields the spin-resolved shot noise power for different experimental measurement setups--with ferromagnetic source and ferromagnetic or normal drain electrodes--whose evaluation for the diffusive multichannel quantum wires with the Rashba (SO) spin-orbit coupling shows how spin decoherence and dephasing lead to substantial enhancement of charge current fluctuations (characterized by Fano factors $&gt; 1/3$). However, these processes and the corresponding shot noise increase are suppressed in narrow wires, so that charge transport experiments measuring the Fano factor $F_{\uparrow \to \uparrow \downarrow}$ in a ferromagnet/SO-coupled-wire/paramagnet setup also quantify the degree of phase-coherence of transported spin--we predict a one-to-one correspondence between the magnitude of the spin polarization vector and $F_{\uparrow \to \uparrow \downarrow}$.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.dis-nn" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-04-06T23:44:57Z</published>
+    <arxiv:comment>8 pages, 3 figure; enhanced with 2 new figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Phys. Rev. B 75, 085328 (2007).</arxiv:journal_ref>
+    <author>
+      <name>Ralitsa L. Dragomirova</name>
+    </author>
+    <author>
+      <name>Branislav K. Nikolic</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.75.085328</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.75.085328" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1011.3197v1</id>
+    <title>Quantum-limited metrology in the presence of collisional dephasing</title>
+    <updated>2010-11-14T09:00:43Z</updated>
+    <link href="https://arxiv.org/abs/1011.3197v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1011.3197v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Including collisional decoherence explicitly, phase sensitivity for estimating effective scattering strength $χ$ of a two-component Bose-Einstein condensate is derived analytically. With a measurement of spin operator $\hat{J}_{x}$, we find that the optimal sensitivity depends on initial coherent spin state. It degrades by a factor of $(2γ)^{1/3}$ below super-Heisenberg limit $\propto 1/N^{3/2}$ for particle number $N$ and the dephasing rate $1&lt;\!&lt;γ&lt;N^{3/4}$. With a $\hat{J}_y$ measurement, our analytical results confirm that the phase $φ=χt\sim 0$ can be detected at the limit even in the presence of the dephasing.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.quant-gas" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-11-14T09:00:43Z</published>
+    <arxiv:comment>3.2 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 82,045601(2010)</arxiv:journal_ref>
+    <author>
+      <name>Y. C. Liu</name>
+    </author>
+    <author>
+      <name>G. R. Jin</name>
+    </author>
+    <author>
+      <name>L. You</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.82.045601</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.82.045601" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.03872v1</id>
+    <title>Electron correlation effects and spin-liquid state in the Herbertsmithite Kagome lattice</title>
+    <updated>2024-11-06T12:37:24Z</updated>
+    <link href="https://arxiv.org/abs/2411.03872v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.03872v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We employ real-space variational quantum Monte Carlo methods with resonating valence bond many-body wave functions to investigate electron correlation effects in the Kagome system $Zn_xCu_{4-x}O_6$. Using three trial wave functions of the Slater-Jastrow type, where (i) only the Jastrow correlation factor is optimized and the orbitals obtained by density functional theory, (ii) both the Jastrow factor and the Slater determinant are optimized, and (iii) additionally the Slater determinant is substituted by an antisymmetrized-geminal power wave function, we analyze static and dynamic correlation energies across concentrations $x=0, \frac{1}{3}, \frac{2}{3}, 1$. Our results show that the correlation energy increases with the concentration of $Zn_x$. Optimizing the Slater determinant significantly enhances the correlation energy by approximately $\sim -73(4) mHa$ per electron. Eventually, the emergence of a quantum spin liquid state driven by a long-range correlation energy is discussed.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-06T12:37:24Z</published>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. Research 7, 013165 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Sam Azadi</name>
+    </author>
+    <author>
+      <name> Kühne</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevResearch.7.013165</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevResearch.7.013165" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/physics/9812009v2</id>
+    <title>How to Describe Photons as (3+1)-Solitons?</title>
+    <updated>1999-12-17T13:39:10Z</updated>
+    <link href="https://arxiv.org/abs/physics/9812009v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/physics/9812009v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper aims to present the pure field part of the newly developed nonlinear {\it Extended Electrodynamics} [1]-[3] in non-relativistic terms, i.e. in terms of the electric and magnetic vector fields (${\mathbf E},{\mathbf B}$), and to give explicitly those (3+1)-soliton solutions of the new equations which have the integral properties of photons. The set of solutions to the new equations contains all solutions to Maxwell's equations as a subclass, as well as, new solutions, called nonlinear. The important characteristics {\it scale factor}, {\it amplitude function}, and {\it phase function} of a nonlinear solution are defined in a coordinate free way and effectively used. The nonlinear solutions are identified through the non-zero values of two appropriately defined vector fields $\vec{\cal F}$ and $\vec{\cal M}$, as well as, through the finite values of the corresponding scale factors. The intrinsic angular momentum (spin) is also defined. A limited superposition principle (interference of nonlinear solutions), yielding the well known classical {\it coherence} conditions, is found to exist.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.PS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-12-07T13:13:47Z</published>
+    <arxiv:comment>Latex, 15 pages (17 x 24cm text), no figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <arxiv:journal_ref>Aspects of Complex Analysis, Differential Geometry, Mathematical Physics and Applications, p. 246-61, Eds: S. Dimiev and K. Sekigawa, W. Scientific, 1999</arxiv:journal_ref>
+    <author>
+      <name>S. Donev</name>
+      <arxiv:affiliation>Institute for Nuclear Research, Sofia</arxiv:affiliation>
+    </author>
+    <author>
+      <name>D. Trifonov</name>
+      <arxiv:affiliation>Institute for Nuclear Research, Sofia</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.01898v1</id>
+    <title>Which role does multiphoton interference play in small phase estimation in quantum Fourier transform interferometers?</title>
+    <updated>2017-12-05T20:10:59Z</updated>
+    <link href="https://arxiv.org/abs/1712.01898v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.01898v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, quantum Fourier transform interferometers have been demonstrated to allow a quantum metrological enhancement in phase sensitivity for a small number n of identical input single photons [1-3]. However, multiphoton distinguishability at the detectors can play an important role from an experimental point of view [4]. This raises a fundamental question: How is the phase sensitivity affected when the photons are completely distinguishable at the detectors and therefore do not interfere? In other words, which role does multiphoton interference play in these schemes? Here, we show that for small phase values the phase sensitivity achievable in the proposed schemes with indistinguishable photons is enhanced only by a constant factor with respect to the case of completely distinguishable photons at the detectors. Interestingly, this enhancement arises from the interference of only a polynomial number (in n) of the total n! multiphoton path amplitudes in the n-port interferometer. These results are independent of the number n of single photons and of the phase weight factors employed at each interferometer channel.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-05T20:10:59Z</published>
+    <arxiv:comment>accepted for publication in International Journal of Quantum Information on Nov 27, 2017</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>International Journal of Quantum Information Vol. 15, No. 8 1740020 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Olaf Zimmermann</name>
+    </author>
+    <author>
+      <name>Vincenzo Tamma</name>
+    </author>
+    <arxiv:doi>10.1142/S0219749917400202</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S0219749917400202" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0306055v2</id>
+    <title>Non-Ergodic Nuclear Depolarization in Nano-Cavities</title>
+    <updated>2003-06-07T08:48:28Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0306055v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0306055v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Recently, it has been observed that the effective dipolar interactions between nuclear spins of spin-carrying molecules of a gas in a closed nano-cavities are independent of the spacing between all spins. We derive exact time-dependent polarization for all spins in spin-1/2 ensemble with spatially independent effective dipolar interactions. If the initial polarization is on a single (first) spin,$P_1(0)= 1$ then the exact spin dynamics of the model is shown to exhibit a periodical short pulses of the polarization of the first spin, the effect being typical of the systems having a large number, $N$, of spins. If $N \gg 1$, then within the period $4π/g$ ($2π/g$) for odd (even) $N$-spin clusters, with $g$ standing for spin coupling, the polarization of spin 1 switches quickly from unity to the time independent value, 1/3, over the time interval about $(g\sqrt{N})^{-1}$, thus, almost all the time, the spin 1 spends in the time independent condition $P_1(t)= 1/3$. The period and the width of the pulses determine the volume and the form-factor of the ellipsoidal cavity. The formalism is adopted to the case of time varying nano-fluctuations of the volume of the cavitation nano-bubbles. If the volume $V(t)$ is varied by the Gaussian-in-time random noise then the envelope of the polarization peaks goes irreversibly to 1/3. The polarization dynamics of the single spin exhibits the Gaussian (or exponential) time dependence when the correlation time of the fluctuations of the nano-volume is larger (or smaller) than the $&lt;(δg)^2 &gt;^{-1/2} $, where the $&lt;(δg)^2&gt;$ is the variance of the $g(V(t))$ coupling. Finally, we report the exact calculations of the NMR line shape for the $N$-spin gaseous aggregate.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-06-06T18:58:27Z</published>
+    <arxiv:comment>26 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>JETP V98 N2 (2004) pp 207-219</arxiv:journal_ref>
+    <author>
+      <name>E. B. Fel'dman</name>
+    </author>
+    <author>
+      <name>M. G. Rudavets</name>
+    </author>
+    <arxiv:doi>10.1134/1.1675888</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1134/1.1675888" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/9810341v3</id>
+    <title>Disorder effects and electronic conductance in metallic carbon nanotubes</title>
+    <updated>1998-11-07T17:16:30Z</updated>
+    <link href="https://arxiv.org/abs/cond-mat/9810341v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/cond-mat/9810341v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Disorder effects on the density of states and electronic conduction in metallic carbon nanotubes are analyzed by a tight binding model with Gaussian bond disorder. Metallic armchair and zigzag nanotubes are considered. We obtain a conductance which becomes smaller by the factor 1/2 ~ 1/3 from that of the clean nanotube. This decrease mainly comes from lattice fluctuations of the width which is comparable to thermal fluctuations. We also find that suppression of electronic conductance around the Fermi energy due to disorder is smaller than that of the inner valence (and conduction) band states. This is a consequence of the extended nature of electronic states around the Fermi energy between the valence and conduction bands, and is a property typical of the electronic structures of metallic carbon nanotubes.</summary>
+    <category term="cond-mat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-10-26T13:18:14Z</published>
+    <arxiv:comment>PACS numbers: 72.80.Rj, 72.15.Eb, 73.61.Wp, 73.23.Ps; Figures should be requested to the author. Related preprints could be found at http://www.etl.go.jp/~harigaya/welcome_E.html</arxiv:comment>
+    <arxiv:primary_category term="cond-mat"/>
+    <arxiv:journal_ref>in "Electronic Properties of Novel Materials - Science and Technology of Molecular Nanostructures", (American Institute of Physics, 1999), pp. 342-345</arxiv:journal_ref>
+    <author>
+      <name>K. Harigaya</name>
+      <arxiv:affiliation>ETL &amp; NIMC - Tsukuba, KIT - Kanazawa</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1063/1.59806</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1063/1.59806" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1308.6563v1</id>
+    <title>Attainment of the multiple quantum Chernoff bound for certain ensembles of mixed states</title>
+    <updated>2013-08-29T19:13:12Z</updated>
+    <link href="https://arxiv.org/abs/1308.6563v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1308.6563v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of detecting the true quantum state among r possible ones, based on measurements performed on n of copies of a finite dimensional quantum system. It is known that the exponent for the rate of decrease of the averaged error probability cannot exceed the multiple quantum Chernoff bound (MQCB) defined as the worst case (smallest) quantum Chernoff distance between any possible pair of the r states. This error exponent is attainable for r pure states, but for the general case of mixed states only attainability up to a factor 1/3 is known. Here we show that the MQCB is attainable for mixed states if there is a pair which is closer in quantum Chernoff distance than 1/6 times the distance between all other pairs.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-08-29T19:13:12Z</published>
+    <arxiv:comment>5 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>In: Proceedings of the First International Workshop on Entangled Coherent States and Its Application to Quantum Information Science, (Usuda, T.S., Kato, K., Eds.), Tamagawa University, Tokyo, Japan, 77-81 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Michael Nussbaum</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00741v1</id>
+    <title>Quantum Speedups for Testing Similar Means</title>
+    <updated>2026-08-01T16:23:28Z</updated>
+    <link href="https://arxiv.org/abs/2608.00741v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.00741v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Property testing of distributions is a central topic in information theory, learning theory, and statistics. While quantum algorithms are known to offer significant speedups for property testing of a single distribution or a pair of distributions, it is unclear whether quantum algorithms provide speedups for property testing of $m$ ($m\geq 3$) distributions. This work focuses on quantum algorithms for testing whether $m$ distributions have similar means or are $ε$-far from mean similarity under two models. In the query model, the algorithm can choose which distribution to sample from, whereas in the sampling model, the distributions are selected uniformly. We design quantum algorithms with complexities $\tilde{O}(1/ε)$ (the $\tilde{O}$ notation hides poly-logarithmic factors) and $\tilde{O}(\sqrt{m}/ε)$ in the query and sampling models, respectively, achieving quadratic speedups over the classical counterparts. We further establish quantum lower bounds of $Ω\left(1/ε\right)$ and $Ω\rbra{m^{1/3}+\frac{m^{1/4}}ε}$ for the query model and the sampling model, demonstrating the optimality of our quantum algorithms in terms of the dependence on $ε$ up to logarithmic factors.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-01T16:23:28Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chengshen Gao</name>
+    </author>
+    <author>
+      <name>Yongzhen Xu</name>
+    </author>
+    <author>
+      <name>Shenggen Zheng</name>
+    </author>
+    <author>
+      <name>Lvzhou Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1008.4114v1</id>
+    <title>Optimal Gaussian squeezed states for atom-interferometry in the presence of phase diffusion</title>
+    <updated>2010-08-24T19:24:15Z</updated>
+    <link href="https://arxiv.org/abs/1008.4114v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1008.4114v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We optimize the signal-to-noise ratio of a Mach-Zehnder atom interferometer with Gaussian squeezed input states, in the presence interactions. For weak interactions, our results coincide with Phys. Rev. Lett. {\bf 100}, 250406 (2008), with optimal initial number-variance $σ_o\propto N^{1/3}$ and optimal signal-to-noise ratio $s_o\propto N^{2/3}$ for total atom number $N$. As the interaction strength $u$ increases past unity, phase-diffusion becomes dominant, leading to a transition in the optimal squeezing from initial number-squeezing to initial {\it phase}-squeezing with $σ_o\propto\sqrt{uN}$ and $s_o\propto\sqrt{N/u}$ shot-noise scaling. The initial phase-squeezing translates into hold-time number-squeezing, which is less sensitive to interactions than coherent states and improves $s_o$ by a factor of $\sqrt{u}$.</summary>
+    <category term="cond-mat.quant-gas" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-08-24T19:24:15Z</published>
+    <arxiv:comment>8 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.quant-gas"/>
+    <arxiv:journal_ref>Phys. Rev. A 82, 043624 (2010)</arxiv:journal_ref>
+    <author>
+      <name>Igor Tikhonenkov</name>
+    </author>
+    <author>
+      <name>Michael G. Moore</name>
+    </author>
+    <author>
+      <name>Amichay Vardi</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.82.043624</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.82.043624" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1306.2698v2</id>
+    <title>Violation of Entanglement-Area Law in Bosonic Systems with Bose Surfaces: Possible Application to Bose Metals</title>
+    <updated>2013-10-30T16:52:51Z</updated>
+    <link href="https://arxiv.org/abs/1306.2698v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1306.2698v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show the violation of the entanglement-area law for bosonic systems with Bose surfaces. For bosonic systems with gapless factorized energy dispersions on a N^d Cartesian lattice in d-dimension, e.g., the exciton Bose liquid in two dimension, we explicitly show that a belt subsystem with width L preserving translational symmetry along d-1 Cartesian axes has leading entanglement entropy (N^{d-1}/3)ln L. Using this result, the strong subadditivity inequality, and lattice symmetries, we bound the entanglement entropy of a rectangular subsystem from below and above showing a logarithmic violation of the area law. For subsystems with a single flat boundary we also bound the entanglement entropy from below showing a logarithmic violation, and argue that the entanglement entropy of subsystems with arbitrary smooth boundaries are similarly bounded.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-06-12T02:42:32Z</published>
+    <arxiv:comment>4.5 pages, 4 figures. Accepted version in Physical Review Letter</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. Lett. 111, 210402 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Hsin-Hua Lai</name>
+    </author>
+    <author>
+      <name>Kun Yang</name>
+    </author>
+    <author>
+      <name>N. E. Bonesteel</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.111.210402</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.111.210402" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1205.0367v1</id>
+    <title>Imaging fractional incompressible stripes in integer quantum Hall systems</title>
+    <updated>2012-05-02T10:17:23Z</updated>
+    <link href="https://arxiv.org/abs/1205.0367v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1205.0367v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transport experiments provide conflicting evidence on the possible existence of fractional order within integer quantum Hall systems. In fact integer edge states sometimes behave as monolithic objects with no inner structure, while other experiments clearly highlight the role of fractional substructures. Recently developed low-temperature scanning probe techniques offer today an opportunity for a deeper-than-ever investigation of spatial features of such edge systems. Here we use scanning gate microscopy and demonstrate that fractional features were unambiguously observed in every integer quantum Hall constriction studied. We present also an experimental estimate of the width of the fractional incompressible stripes corresponding to filling factors 1/3, 2/5, 3/5, and 2/3. Our results compare well with predictions of the edge-reconstruction theory.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-05-02T10:17:23Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Physical Review Letters 108, 246801 (2012)</arxiv:journal_ref>
+    <author>
+      <name>Nicola Paradiso</name>
+    </author>
+    <author>
+      <name>Stefan Heun</name>
+    </author>
+    <author>
+      <name>Stefano Roddaro</name>
+    </author>
+    <author>
+      <name>Lucia Sorba</name>
+    </author>
+    <author>
+      <name>Fabio Beltram</name>
+    </author>
+    <author>
+      <name>Giorgio Biasiol</name>
+    </author>
+    <author>
+      <name>L. N. Pfeiffer</name>
+    </author>
+    <author>
+      <name>K. W. West</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevLett.108.246801</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevLett.108.246801" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.01752v1</id>
+    <title>Near-optimal quantum query lower bounds on bipartiteness and expansion testing in the bounded-degree graph model</title>
+    <updated>2026-10-01T14:18:02Z</updated>
+    <link href="https://arxiv.org/abs/2610.01752v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.01752v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we study bipartiteness and expansion testing, two canonical problems in graph property testing in the bounded-degree model through the lens of quantum query complexity. In the classical setting, it is known that $\widetildeΘ(\sqrt{N})$ queries are necessary and sufficient for both these testing problems (Goldreich and Ron, 1999, 2000 &amp; 2002), where $N$ denotes the number of vertices of the input graph. Due to their significance, (Ambainis, Childs, and Liu, 2011) initiated the study of these problems in the quantum setting and designed quantum algorithms for bipartiteness and expansion testing that perform $\widetilde{O}(N^{1/3})$ queries, showing a polynomial speedup. They also proved that $\widetildeΩ(N^{1/4})$ queries are necessary for expansion testing, but the possibility of an exponential quantum advantage for bipartiteness testing remained open. Despite significant effort, there has been no improvement in these results in the last decade and a half. In this work, we prove essentially tight $\widetildeΩ(N^{1/3})$ quantum query lower bounds for both bipartiteness and expansion testing, thereby completely characterizing the quantum query complexity of these problems up to polylogarithmic factors. While our proofs use the polynomial method similarly to Ambainis, Childs, and Liu, we use intermediate problems that we relate to the main problems via reductions, and perform a more precise analysis of the resulting polynomials, leading to the near-optimal lower bounds.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-01T14:18:02Z</published>
+    <arxiv:comment>38 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Chandrima Kayal</name>
+    </author>
+    <author>
+      <name>Sayantan Sen</name>
+    </author>
+    <author>
+      <name>Dániel Szabó</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1709.06797v1</id>
+    <title>Rovibrational optical cooling of a molecular beam</title>
+    <updated>2017-09-20T10:15:31Z</updated>
+    <link href="https://arxiv.org/abs/1709.06797v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1709.06797v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cooling the rotation and the vibration of molecules by broadband light sources was possible for trapped molecular ions or ultracold molecules. Because of a low power spectral density, the cooling timescale has never fell below than a few milliseconds. Here we report on rotational and vibrational cooling of a supersonic beam of barium monofluoride molecules in less than 440 $μ$s. Vibrational cooling was optimized by enhancing the spectral power density of a semiconductor light source at the underlying molecular transitions allowing us to transfer all the populations of $v''=1-3$ into the vibrational ground state ($v''=0$). Rotational cooling, that requires an efficient vibrational pumping, was then achieved. According to a Boltzmann fit, the rotation temperature was reduced by almost a factor of 10. In this fashion, the population of the lowest rotational levels increased by more than one order of magnitude.</summary>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-09-20T10:15:31Z</published>
+    <arxiv:primary_category term="physics.atom-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 97, 031401 (2018)</arxiv:journal_ref>
+    <author>
+      <name>A. Cournol</name>
+    </author>
+    <author>
+      <name>P. Pillet</name>
+    </author>
+    <author>
+      <name>H. Lignier</name>
+    </author>
+    <author>
+      <name>D. Comparat</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevA.97.031401</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevA.97.031401" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.09721v2</id>
+    <title>Discovery of entanglement generation by elastic collision to realise the original Einstein-Podolsky-Rosen thought experiment</title>
+    <updated>2025-06-19T08:41:29Z</updated>
+    <link href="https://arxiv.org/abs/2505.09721v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.09721v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The amazing quantum effect of `entanglement' was discovered in the 1935 thought experiment by Albert Einstein, Boris Podolsky and Nathan Rosen (`EPR'). The ensuing research opened up fundamental questions and led to experiments that proved that quantum theory cannot be completed by local hidden variables. Remarkably, EPR did not discuss how to create the entanglement in their thought experiment. Here I add this part. What is required in the original EPR thought experiment is a simple elastic particle collision, an unbalanced mass ratio of e.g. 1:3 and initial states that are position and momentum squeezed, respectively. In the limiting case of infinite squeeze factors, the measurement of the position or momentum of one particle allows an absolutely precise conclusion to be drawn about the value of the same quantity of the other particle. The EPR idea has never been tested in this way. I outline a way to do this.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.pop-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-14T18:28:26Z</published>
+    <arxiv:comment>Supplementary information included</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>npj Quantum Inf. 11, 76 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Roman Schnabel</name>
+    </author>
+    <arxiv:doi>10.1038/s41534-025-01028-7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41534-025-01028-7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.22856v3</id>
+    <title>Algebraic Obstructions and the Collapse of Elementary Structure in the Kronecker Problem</title>
+    <updated>2025-12-20T14:12:07Z</updated>
+    <link href="https://arxiv.org/abs/2511.22856v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.22856v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Kronecker coefficients $g(λ,μ,ν)$ with bounded rows are polynomial-time computable via lattice-point methods, no explicit closed-form formulas have been obtained for genuinely three-row cases in the 87 years since Murnaghan's foundational work. This paper provides such formulas for the first time and identifies a universal structural boundary at parameter value 5 where elementary combinatorial patterns collapse.
+  We analyze two independent families of genuinely three-row coefficients and establish that for $k \leq 4$, the formulas exhibit elementary structure: oscillation bounds follow the triangular-Hogben pattern, and polynomial expressions factor completely over $\mathbb{Z}$. At the critical threshold $k=5$, this structure collapses: the triangular pattern fails, and algebraic obstructions -- irreducible quadratic factors with negative discriminant -- emerge.
+  We develop integer forcing, a proof technique exploiting the tension between continuous asymptotics and discrete integrality. As concrete results, we prove that $g((n,n,1)^3) = 2 - (n \mod 2)$ for all $n \geq 3$ -- the first explicit formula for a genuinely three-row Kronecker coefficient -- derive five explicit polynomial formulas for staircase-hook coefficients, and verify Saxl's conjecture for 132 three-row partitions.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-28T03:21:01Z</published>
+    <arxiv:comment>This paper requires significant revision to address mathematical gaps identified by expert reviewers. The claim of a complete proof is not justified in its current form. I am withdrawing to properly address these issues. arXiv admin note: arXiv has been notified that the listed author affiliation is incorrect</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Soong Kyum Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1505.03110v1</id>
+    <title>Near-optimal bounds on bounded-round quantum communication complexity of disjointness</title>
+    <updated>2015-05-12T18:23:54Z</updated>
+    <link href="https://arxiv.org/abs/1505.03110v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1505.03110v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a near optimal round-communication tradeoff for the two-party quantum communication complexity of disjointness. For protocols with $r$ rounds, we prove a lower bound of $\tildeΩ(n/r + r)$ on the communication required for computing disjointness of input size $n$, which is optimal up to logarithmic factors. The previous best lower bound was $Ω(n/r^2 + r)$ due to Jain, Radhakrishnan and Sen [JRS03]. Along the way, we develop several tools for quantum information complexity, one of which is a lower bound for quantum information complexity in terms of the generalized discrepancy method. As a corollary, we get that the quantum communication complexity of any boolean function $f$ is at most $2^{O(QIC(f))}$, where $QIC(f)$ is the prior-free quantum information complexity of $f$ (with error $1/3$).</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-12T18:23:54Z</published>
+    <arxiv:comment>41 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Mark Braverman</name>
+    </author>
+    <author>
+      <name>Ankit Garg</name>
+    </author>
+    <author>
+      <name>Young Kun Ko</name>
+    </author>
+    <author>
+      <name>Jieming Mao</name>
+    </author>
+    <author>
+      <name>Dave Touchette</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.11380v1</id>
+    <title>Toward Quantum Utility in Correlated Topological Matter: Variational Preparation of Fractional Quantum Hall Manifolds</title>
+    <updated>2026-07-13T10:42:07Z</updated>
+    <link href="https://arxiv.org/abs/2607.11380v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.11380v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the use of variational quantum algorithms to prepare and characterize fractional quantum Hall states on near-term quantum processors. Focusing on the $ν=1/3$ Laughlin phase described by the $V_1$ Haldane pseudopotential, we formulate the lowest-Landau-level problem in second quantization, and implement particle-number-preserving variational circuits combined with the variational quantum eigensolver (VQE) and variational quantum deflation (VQD). We benchmark the approach in two complementary geometries: Haldane sphere and torus shape. On the Haldane sphere, the target state is a unique zero-energy Laughlin ground state, providing a controlled test of the variational workflow and of excited-state reconstruction. On the torus, the problem retains the genuinely two-dimensional periodic character of the quantum Hall liquid and exhibits the threefold topological ground-state degeneracy expected for the $ν=1/3$ fractional filling factor. This feature makes the torus a more demanding benchmark than the quasi-one-dimensional cylinder or thin-torus limits commonly exploited in state-preparation quantum protocols. We benchmark the hardware-optimized variational states against exact diagonalization using energy estimates, error-mitigated observables, and subspace-containment diagnostics. Our results show that hybrid quantum algorithms can approximately reconstruct the low-energy structure of small fractional quantum Hall systems, including the topological ground-state manifold on the torus. Beyond serving as a benchmark for quantum hardware, this geometry-resolved approach provides a route toward quantum simulations of fractional Chern insulators and strongly correlated topological phases in realistic two-dimensional materials.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-13T10:42:07Z</published>
+    <arxiv:comment>13 pages, 4 figures, 4 tables, 1 supplemental material in pdf</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Sergio F. Expósito</name>
+    </author>
+    <author>
+      <name>Unai Aseginolaza</name>
+    </author>
+    <author>
+      <name>Raúl Guerrero-Avilés</name>
+    </author>
+    <author>
+      <name>Joaquim Jornet-Somoza</name>
+    </author>
+    <author>
+      <name>Francisco Guinea</name>
+    </author>
+    <author>
+      <name>Juan Borge</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.05292v3</id>
+    <title>Quantum Many-body Scars in a Landau Level on a Thin Torus</title>
+    <updated>2020-11-30T23:09:54Z</updated>
+    <link href="https://arxiv.org/abs/1906.05292v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.05292v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study a kinetically constrained pair hopping model that arises within a Landau level in the quantum Hall effect. At filling $ν= 1/3$, the model exactly maps onto the so-called "PXP model", a constrained model for the Rydberg atom chain that is numerically known to exhibit ETH-violating states in the middle of the spectrum or quantum many-body scars. Indeed, particular charge density wave configurations exhibit the same revivals seen in the PXP model. We generalize the mapping to fillings factors $ν= p/(2p+1)$, and show that the model is equivalent to non-integrable spin-chains within particular constrained Krylov Hilbert spaces. These lead to new examples of quantum many-body scars which manifest as revivals and slow thermalization of particular charge density wave states. Finally, we investigate the stability of the quantum scars under certain Hamiltonian perturbations motivated by the fractional quantum Hall physics.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-12T18:00:01Z</published>
+    <arxiv:comment>31 pages, 5 figures v3: minor clarifications, updated figure showing revivals for ν= 3/7</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. B 102, 195150 (2020)</arxiv:journal_ref>
+    <author>
+      <name>Sanjay Moudgalya</name>
+    </author>
+    <author>
+      <name>B. Andrei Bernevig</name>
+    </author>
+    <author>
+      <name>Nicolas Regnault</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.102.195150</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.102.195150" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0405018v2</id>
+    <title>Improved Bounds on the Randomized and Quantum Complexity of Initial-Value Problems</title>
+    <updated>2005-06-11T10:02:55Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0405018v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0405018v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We deal with the problem, initiated in [8], of finding randomized and quantum complexity of initial-value problems. We showed in [8] that a speed-up in both settings over the worst-case deterministic complexity is possible. In the present paper we prove, by defining new algorithms, that further improvement in upper bounds on the randomized and quantum complexity can be achieved. In the Hölder class of right-hand side functions with r continuous bounded partial derivatives, with r-th derivative being a Hölder function with exponent ρ, the ε-complexity is shown to be O((1/ε)^{1/(r+ρ+1/3)}) in the randomized setting, and O((1/ε)^{1/(r+ρ+1/2)}) on a quantum computer (up to logarithmic factors). This is an improvement for the general problem over the results from [8]. The gap still remaining between upper and lower bounds on the complexity is further discussed for a special problem. We consider scalar autonomous problems, with the aim of computing the solution at the end point of the interval of integration. For this problem, we fill up the gap by establishing (essentially) matching upper and lower complexity bounds. We show that the complexity in this case is of order (1/ε)^{1/(r+ρ+1/2)} in the randomized setting, and (1/ε)^{1/(r+ρ+1)} in the quantum setting (again up to logarithmic factors).</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-05-04T14:21:32Z</published>
+    <arxiv:comment>17 pages, extended version (new section added), to appear in the Journal of Complexity</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Journal of Complexity 21 (2005), 740-756</arxiv:journal_ref>
+    <author>
+      <name>Boleslaw Kacewicz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.08685v1</id>
+    <title>Time-domain braiding of anyons</title>
+    <updated>2024-09-13T10:06:55Z</updated>
+    <link href="https://arxiv.org/abs/2409.08685v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.08685v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrary to fermions and bosons, anyons are quasiparticles that keep a robust memory of particle exchanges via a braiding phase factor. This provides them with unique dynamical properties so far unexplored. When an anyon excitation is emitted toward a quantum point contact (QPC) in a fractional quantum Hall (FQH) fluid, this memory translates into tunneling events that may occur long after the anyon excitation has exited the QPC. Here, we use triggered anyon pulses incident on a QPC in a $ν= 1/3$ FQH fluid to investigate anyon tunneling in the time domain. We observe that braiding increases the tunneling timescale, which is set by the temperature and the anyon scaling dimension that characterizes the edge state dynamics. This contrasts with the electron behavior where braiding is absent and the tunneling timescale is set by the temporal width of the generated electron pulses. Our experiment introduces time-domain measurements for characterizing the braiding phase and scaling dimension of anyons.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-13T10:06:55Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Mélanie Ruelle</name>
+    </author>
+    <author>
+      <name>Elric Frigerio</name>
+    </author>
+    <author>
+      <name>Emmanuel Baudin</name>
+    </author>
+    <author>
+      <name>Jean-Marc Berroir</name>
+    </author>
+    <author>
+      <name>Bernard Plaçais</name>
+    </author>
+    <author>
+      <name>Benoit Grémaud</name>
+    </author>
+    <author>
+      <name>Thibaut Jonckheere</name>
+    </author>
+    <author>
+      <name>Thierry Martin</name>
+    </author>
+    <author>
+      <name>Jérôme Rech</name>
+    </author>
+    <author>
+      <name>Antonella Cavanna</name>
+    </author>
+    <author>
+      <name>Ulf Gennser</name>
+    </author>
+    <author>
+      <name>Yong Jin</name>
+    </author>
+    <author>
+      <name>Gerbold Ménard</name>
+    </author>
+    <author>
+      <name>Gwendal Fève</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00247v3</id>
+    <title>Spectra of Magnetoroton and Chiral Graviton Modes of Fractional Chern Insulator</title>
+    <updated>2025-06-05T01:28:34Z</updated>
+    <link href="https://arxiv.org/abs/2501.00247v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00247v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Employing the state-of-the-art time-dependent variational principle (TDVP) algorithm, we compute the spectra of charge-neutral excitations in the $ν=1/2$ (bosonic) \updated{ and $1/3$ (fermionic) fractional Chern insulator (FCI)} on the Haldane honeycomb lattice model. The magnetoroton visualized from the dynamic density structure factor acquires a minimum gap at finite momentum that can go soft with increasing interaction and give rise to a charge density wave (CDW) at the same wavevector. As the system approaches the FCI-to-CDW transition point, we observe a pronounced sharpening of the roton mode, suggesting that the magnetoroton behaves more like a quasiparticle as it softens. Notably, this occurs while the single-particle gap remains finite. Besides the magnetoroton at finite momentum, we also construct quadrupolar chiral operators in a discrete lattice and resolve the chiral graviton mode around the $Γ$ point of the Brillouin zone. Furthermore, we show the different chiralities of the gravitons of FCIs with opposite-sign Hall conductance for the first time.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-31T03:34:20Z</published>
+    <arxiv:comment>5+5pages, 4+8 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Physical Review B 113, L041108 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Min Long</name>
+    </author>
+    <author>
+      <name>Hongyu Lu</name>
+    </author>
+    <author>
+      <name>Han-Qing Wu</name>
+    </author>
+    <author>
+      <name>Zi Yang Meng</name>
+    </author>
+    <arxiv:doi>10.1103/bjrf-b8s9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/bjrf-b8s9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1112.1529v2</id>
+    <title>An asymptotic error bound for testing multiple quantum hypotheses</title>
+    <updated>2012-05-11T12:21:44Z</updated>
+    <link href="https://arxiv.org/abs/1112.1529v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1112.1529v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of detecting the true quantum state among $r$ possible ones, based of measurements performed on $n$ copies of a finite-dimensional quantum system. A special case is the problem of discriminating between $r$ probability measures on a finite sample space, using $n$ i.i.d. observations. In this classical setting, it is known that the averaged error probability decreases exponentially with exponent given by the worst case binary Chernoff bound between any possible pair of the $r$ probability measures. Define analogously the multiple quantum Chernoff bound, considering all possible pairs of states. Recently, it has been shown that this asymptotic error bound is attainable in the case of $r$ pure states, and that it is unimprovable in general. Here we extend the attainability result to a larger class of $r$-tuples of states which are possibly mixed, but pairwise linearly independent. We also construct a quantum detector which universally attains the multiple quantum Chernoff bound up to a factor 1/3.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-12-07T11:40:15Z</published>
+    <arxiv:comment>Published in at http://dx.doi.org/10.1214/11-AOS933 the Annals of Statistics (http://www.imstat.org/aos/) by the Institute of Mathematical Statistics (http://www.imstat.org)</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Annals of Statistics 2011, Vol. 39, No. 6, 3211-3233</arxiv:journal_ref>
+    <author>
+      <name>Michael Nussbaum</name>
+    </author>
+    <author>
+      <name>Arleta Szkoła</name>
+    </author>
+    <arxiv:doi>10.1214/11-AOS933</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1214/11-AOS933" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.05249v5</id>
+    <title>Quantum dual extended Hamming code immune to collective coherent errors</title>
+    <updated>2025-11-13T01:45:14Z</updated>
+    <link href="https://arxiv.org/abs/2503.05249v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.05249v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Collective coherent (CC) errors are inevitable, as every physical qubit undergoes free evolution under its kinetic Hamiltonian. These errors can be more damaging than stochastic Pauli errors because they affect all qubits coherently, resulting in high-weight errors that standard quantum error-correcting (QEC) codes struggle to correct. In quantum memories and communication systems, especially when storage durations are long, CC errors often dominate over stochastic noise. Trapped-ion platforms, for example, exhibit strong CC errors with minimal stochastic Pauli components. In this work, we address the regime where immunity to CC errors, high code rate (due to limited qubit availability), and moderate distance (sufficient for correcting low-weight errors) are all essential. We construct a family of constant-excitation (CE) stabilizer codes with parameters $[[2^{r+1}, 2^r - (r+1), 3]]$. The smallest instance, the $[[8,1,3]]$ code, improves the code rate and error threshold of the best previously known CE code by factors of approximately two and four, respectively.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-07T09:05:43Z</published>
+    <arxiv:comment>4 pages, 1 figure, 2 tables. Erratum: The code distance should be 3 instead of 4 and the explanation is added</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Rev. A 112, 052410 (2025)</arxiv:journal_ref>
+    <author>
+      <name>En-Jui Chang</name>
+    </author>
+    <arxiv:doi>10.1103/qzd2-b2mx</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/qzd2-b2mx" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.06722v2</id>
+    <title>Quantum cloning transformation unlocks the potential of W class of states in a quantum secure direct communication protocol</title>
+    <updated>2025-02-26T09:37:25Z</updated>
+    <link href="https://arxiv.org/abs/2408.06722v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.06722v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In a controlled quantum secure direct communication (Controlled QSDC) protocol between three parties, the sender sends the encoded secured message to one of the two receivers, which can be decoded only when the other receiver agrees to cooperate. A lot of studies have been done on it using the three-qubit GHZ state, and only a few works have involved the W state. In this work, we introduce a controlled QSDC protocol exploiting a three-qubit W class of state shared between three parties, Alice (Sender), Bob (Controller), and Charlie (Receiver). In the proposed protocol, the shared state parameters and the secret are linked in such a way that it is very difficult to factor them. We will show that these parameters can be factored out easily if the receiver uses a quantum cloning machine (QCM) and thus can retrieve the secret. We find that the protocol is probabilistic and have calculated the probability of success of the protocol. Further, we establish the relation between the success probability and the efficiency of the QCM. In general, we find that the efficiency of the constructed QCM is greater than or equal to $\frac{1}{3}$, but we have shown that its efficiency can be enhanced when the parameters of the shared state are used as the parameters of the QCM. Moreover, we derived the linkage between the probability of success and the amount of entanglement in the shared W class of state. We analyzed the obtained result and found that even a less entangled W class of state can also play a vital role in the proposed controlled QSDC scheme.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-13T08:27:58Z</published>
+    <arxiv:comment>25 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Phys. Scr. 100, 035113(2025)</arxiv:journal_ref>
+    <author>
+      <name>Rashi Jain</name>
+    </author>
+    <author>
+      <name>Satyabrata Adhikari</name>
+    </author>
+    <arxiv:doi>10.1088/1402-4896/adb35c</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1402-4896/adb35c" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.07658v2</id>
+    <title>Entanglement spectroscopy on a quantum computer</title>
+    <updated>2017-10-20T18:30:48Z</updated>
+    <link href="https://arxiv.org/abs/1707.07658v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.07658v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a quantum algorithm to compute the entanglement spectrum of arbitrary quantum states. The interesting universal part of the entanglement spectrum is typically contained in the largest eigenvalues of the density matrix which can be obtained from the lower Renyi entropies through the Newton-Girard method. Obtaining the $p$ largest eigenvalues ($λ_1&gt;λ_2\ldots&gt;λ_p$) requires a parallel circuit depth of $\mathcal{O}(p(λ_1/λ_p)^p)$ and $\mathcal{O}(p\log(N))$ qubits where up to $p$ copies of the quantum state defined on a Hilbert space of size $N$ are needed as the input. We validate this procedure for the entanglement spectrum of the topologically-ordered Laughlin wave function corresponding to the quantum Hall state at filling factor $ν=1/3$. Our scaling analysis exposes the tradeoffs between time and number of qubits for obtaining the entanglement spectrum in the thermodynamic limit using finite-size digital quantum computers. We also illustrate the utility of the second Renyi entropy in predicting a topological phase transition and in extracting the localization length in a many-body localized system.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-24T17:33:36Z</published>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. B 96, 195136 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Sonika Johri</name>
+    </author>
+    <author>
+      <name>Damian S. Steiger</name>
+    </author>
+    <author>
+      <name>Matthias Troyer</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.96.195136</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.96.195136" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.09133v3</id>
+    <title>On the complexity of implementing Trotter steps</title>
+    <updated>2023-05-11T19:09:09Z</updated>
+    <link href="https://arxiv.org/abs/2211.09133v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.09133v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum dynamics can be simulated on a quantum computer by exponentiating elementary terms from the Hamiltonian in a sequential manner. However, such an implementation of Trotter steps has gate complexity depending on the total Hamiltonian term number, comparing unfavorably to algorithms using more advanced techniques. We develop methods to perform faster Trotter steps with complexity sublinear in the number of terms. We achieve this for a class of Hamiltonians whose interaction strength decays with distance according to power law. Our methods include one based on a recursive block encoding and one based on an average-cost simulation, overcoming the normalization-factor barrier of these advanced quantum simulation techniques. We also realize faster Trotter steps when certain blocks of Hamiltonian coefficients have low rank. Combining with a tighter error analysis, we show that it suffices to use $\left(η^{1/3}n^{1/3}+\frac{n^{2/3}}{η^{2/3}}\right)n^{1+o(1)}$ gates to simulate uniform electron gas with $n$ spin orbitals and $η$ electrons in second quantization in real space, asymptotically improving over the best previous work. We obtain an analogous result when the external potential of nuclei is introduced under the Born-Oppenheimer approximation. We prove a circuit lower bound when the Hamiltonian coefficients take a continuum range of values, showing that generic $n$-qubit $2$-local Hamiltonians with commuting terms require at least $Ω(n^2)$ gates to evolve with accuracy $ε=Ω(1/poly(n))$ for time $t=Ω(ε)$. Our proof is based on a gate-efficient reduction from the approximate synthesis of diagonal unitaries within the Hamming weight-$2$ subspace, which may be of independent interest. Our result thus suggests the use of Hamiltonian structural properties as both necessary and sufficient to implement Trotter steps with lower gate complexity.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-16T19:00:01Z</published>
+    <arxiv:comment>69 pages, 7 figures. Tightened gate complexity analysis with no amplitude amplification prefactors. Discussed ancilla space complexity. Added master theorem analysis of the recursive low-rank algorithm. Enhanced version of the article published in PRX Quantum at https://journals.aps.org/prxquantum/abstract/10.1103/PRXQuantum.4.020323</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>PRX Quantum 4, 020323 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Guang Hao Low</name>
+    </author>
+    <author>
+      <name>Yuan Su</name>
+    </author>
+    <author>
+      <name>Yu Tong</name>
+    </author>
+    <author>
+      <name>Minh C. Tran</name>
+    </author>
+    <arxiv:doi>10.1103/PRXQuantum.4.020323</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PRXQuantum.4.020323" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.12767v3</id>
+    <title>Fault-Tolerant Quantum Simulations of Chemistry in First Quantization</title>
+    <updated>2021-10-11T19:46:48Z</updated>
+    <link href="https://arxiv.org/abs/2105.12767v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.12767v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quantum simulations of chemistry in first quantization offer important advantages over approaches in second quantization including faster convergence to the continuum limit and the opportunity for practical simulations outside the Born-Oppenheimer approximation. However, as all prior work on quantum simulation in first quantization has been limited to asymptotic analysis, it has been impossible to compare the resources required for these approaches to those for more commonly studied algorithms in second quantization. Here, we analyze and optimize the resources required to implement two first quantized quantum algorithms for chemistry from Babbush et al that realize block encodings for the qubitization and interaction picture frameworks of Low et al. The two algorithms we study enable simulation with gate complexities $\tilde{\cal O}(η^{8/3}N^{1/3}t+η^{4/3}N^{2/3}t)$ and $\tilde{\cal O}(η^{8/3} N^{1/3} t)$ where $η$ is the number of electrons, $N$ is the number of plane wave basis functions, and $t$ is the duration of time-evolution ($t$ is inverse to target precision when the goal is to estimate energies). In addition to providing the first explicit circuits and constant factors for any first quantized simulation and introducing improvements which reduce circuit complexity by about a thousandfold over naive implementations for modest sized systems, we also describe new algorithms that asymptotically achieve the same scaling in a real space representation. We assess the resources required to simulate various molecules and materials and conclude that the qubitized algorithm will often be more practical than the interaction picture algorithm. We demonstrate that our qubitized algorithm often requires much less surface code spacetime volume for simulating millions of plane waves than the best second quantized algorithms require for simulating hundreds of Gaussian orbitals.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-26T18:06:33Z</published>
+    <arxiv:comment>96 pages, 9 figures, 8 tables</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>PRX Quantum 2, 040332 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Yuan Su</name>
+    </author>
+    <author>
+      <name>Dominic W. Berry</name>
+    </author>
+    <author>
+      <name>Nathan Wiebe</name>
+    </author>
+    <author>
+      <name>Nicholas Rubin</name>
+    </author>
+    <author>
+      <name>Ryan Babbush</name>
+    </author>
+    <arxiv:doi>10.1103/PRXQuantum.2.040332</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PRXQuantum.2.040332" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.18044v2</id>
+    <title>Observation of the scaling dimension of fractional quantum Hall anyons</title>
+    <updated>2024-09-16T16:30:28Z</updated>
+    <link href="https://arxiv.org/abs/2401.18044v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.18044v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unconventional quasiparticles emerging in the fractional quantum Hall regime present the challenge of observing their exotic properties unambiguously. Although the fractional charge of quasiparticles has been demonstrated since nearly three decades, the first convincing evidence of their anyonic quantum statistics has only recently been obtained and, so far, the so-called scaling dimension that determines the quasiparticles propagation dynamics remains elusive. In particular, while the non-linearity of the tunneling quasiparticle current should reveal their scaling dimension, the measurements fail to match theory, arguably because this observable is not robust to non-universal complications. Here we expose the scaling dimension from the thermal noise to shot noise crossover, and observe an agreement with expectations. Measurements are fitted to the predicted finite temperature expression involving both the quasiparticles scaling dimension and their charge, in contrast to previous charge investigations focusing on the high bias shot noise regime. A systematic analysis, repeated on multiple constrictions and experimental conditions, consistently matches the theoretical scaling dimensions for the fractional quasiparticles emerging at filling factors 1/3, 2/5 and 2/3. This establishes a central property of fractional quantum Hall anyons, and demonstrates a powerful and complementary window into exotic quasiparticles.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-31T18:06:28Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <arxiv:journal_ref>Nature 632, 517 (2024)</arxiv:journal_ref>
+    <author>
+      <name>A. Veillon</name>
+    </author>
+    <author>
+      <name>C. Piquard</name>
+    </author>
+    <author>
+      <name>P. Glidic</name>
+    </author>
+    <author>
+      <name>Y. Sato</name>
+    </author>
+    <author>
+      <name>A. Aassime</name>
+    </author>
+    <author>
+      <name>A. Cavanna</name>
+    </author>
+    <author>
+      <name>Y. Jin</name>
+    </author>
+    <author>
+      <name>U. Gennser</name>
+    </author>
+    <author>
+      <name>A. Anthore</name>
+    </author>
+    <author>
+      <name>F. Pierre</name>
+    </author>
+    <arxiv:doi>10.1038/s41586-024-07727-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41586-024-07727-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.01545v3</id>
+    <title>Reducing the number of qubits in quantum simulations of one dimensional many-body Hamiltonians</title>
+    <updated>2024-07-10T08:35:42Z</updated>
+    <link href="https://arxiv.org/abs/2308.01545v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.01545v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the Ising and Heisenberg models using the Block Renormalization Group Method (BRGM), focusing on its behavior across different system sizes. The BRGM reduces the number of spins by a factor of 1/2 (1/3) for the Ising (Heisenberg) model, effectively preserving essential physical features of the model while using only a fraction of the spins. Through a comparative analysis, we demonstrate that as the system size increases, there is an exponential convergence between results obtained from the original and renormalized Ising Hamiltonians, provided the coupling constants are redefined accordingly. Remarkably, for a spin chain with 24 spins, all physical features, including magnetization, correlation function, and entanglement entropy, exhibit an exact correspondence with the results from the original Hamiltonian. The study of the Heisenberg model also shows this tendency, although complete convergence may appear for a size much larger than 24 spins, and is therefore beyond our computational capabilities. The success of BRGM in accurately characterizing the Ising model, even with a relatively small number of spins, underscores its robustness and utility in studying complex physical systems, and facilitates its simulation on current NISQ computers, where the available number of qubits is largely constrained.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-03T05:33:31Z</published>
+    <arxiv:comment>24 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Somayeh Mehrabankar</name>
+    </author>
+    <author>
+      <name>Miguel Ángel García-March</name>
+    </author>
+    <author>
+      <name>Carmen G. Almudéver</name>
+    </author>
+    <author>
+      <name>Armando Pérez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/0506039v2</id>
+    <title>The robustness of a many-body decoherence formula of Kay under changes in graininess and shape of the bodies</title>
+    <updated>2006-01-27T14:12:54Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/0506039v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/0506039v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In ``Decoherence of macroscopic closed systems within Newtonian quantum gravity'' (Kay B S 1998 Class. Quantum Grav. 15 L89-L98) it was argued that, given a many-body Schroedinger wave function ψ(x_1,...,x_N) for the centre-of-mass degrees of freedom of a closed system of N identical uniform-mass balls of mass M and radius R, taking account of quantum gravitational effects and then tracing over the gravitational field amounts to multiplying the position-space density matrix ρ(x_1,...,x_N; x_1',...,x_N')= ψ(x_1,...,x_N)ψ*(x_1',...,x_N') by a multiplicative factor, which, if the positions {x_1,...,x_N; x_1',...,x_N'} are all much further away from one another than R, is well-approximated by the product from 1 to N over I, J, K (I&lt;J) of ((|x_K-x_K'|/R)(|x_I'-x_J||x_I-x_J'|/|x_I-x_J||x_I'-x_J'|))^{-24M^2}. Here we show that if each uniform-mass ball is replaced by a grainy ball or more general-shaped lump of similar size consisting of a number, n, of well-spaced small balls of mass m and radius r and, in the above formula, R is replaced by r, M by m and the products are taken over all Nn positions of all the small balls, then the result is well-approximated by replacing R in the original formula by a new value R_eff. This suggests that the original formula will apply in general to physically realistic lumps -- be they macroscopic lumps of ordinary matter with the grains atomic nuclei etc. or be they atomic nuclei themselves with their own (quantum) grainy substructure -- provided R is chosen suitably. In the case of a cubical lump consisting of n=(2L+1)^3 small balls (L &gt; 0) of radius r with centres at the vertices of a cubic lattice of spacing a (assumed to be very much bigger than 2r) and side 2La we establish the bound e^{-1/3}(r/a)^{1/n}La &lt; R_eff &lt; 2\sqrt 3(r/a)^{1/n} La.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-06-06T18:35:43Z</published>
+    <arxiv:comment>Now 12 pages, no figures. LaTeX (includes iopart class/style files, uses amsthm.sty). Submitted to Class. Quantum Grav. Proof simplified and shortened (at expense of only slight weakening of theorem). Some more discussion and two further acknowledgments added</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Varqa Abyaneh</name>
+      <arxiv:affiliation>York</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Bernard S. Kay</name>
+      <arxiv:affiliation>York</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/0112086v1</id>
+    <title>Quantum lower bounds for the collision and the element distinctness problems</title>
+    <updated>2001-12-15T06:00:58Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/0112086v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/0112086v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Given a function f as an oracle, the collision problem is to find two distinct inputs i and j such that f(i)=f(j), under the promise that such inputs exist. Since the security of many fundamental cryptographic primitives depends on the hardness of finding collisions, quantum lower bounds for the collision problem would provide evidence for the existence of cryptographic primitives that are immune to quantum cryptanalysis.
+  In this paper, we prove that any quantum algorithm for finding a collision in an r-to-one function must evaluate the function Omega((n/r)^{1/3}) times, where n is the size of the domain and r|n. This improves the previous best lower bound of Omega((n/r)^{1/5}) evaluations due to Aaronson [quant-ph/0111102], and is tight up to a constant factor.
+  Our result also implies a quantum lower bound of Omega(n^{2/3}) queries to the inputs for the element distinctness problem, which is to determine whether or not the given n real numbers are distinct. The previous best lower bound is Omega(sqrt{n}} queries in the black-box model; and Omega(sqrt{n}log{n}) comparisons in the comparisons-only model, due to Høyer, Neerbek, and Shi [ICALP'01, quant-ph/0102078].</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-12-15T06:00:58Z</published>
+    <arxiv:comment>LaTex, 13 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proceedings of The 43rd Annual IEEE Symposium on Foundations of Computer Science, 513 - 519, 2002</arxiv:journal_ref>
+    <author>
+      <name>Yaoyun Shi</name>
+    </author>
+    <arxiv:doi>10.1109/SFCS.2002.1181975</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/SFCS.2002.1181975" title="doi"/>
+  </entry>
+</feed>

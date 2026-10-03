@@ -1,0 +1,497 @@
+    Faster Point Multiplication on Elliptic Curves
+            with Efficient Endomorphisms
+
+      Robert P. Gallant1 , Robert J. Lambert1 , and Scott A. Vanstone1,2
+                            1
+                            Certicom Research, Canada
+                  {rgallant,rlambert,svanstone}@certicom.com
+                         2
+                           University of Waterloo, Canada
+
+
+
+      Abstract. The fundamental operation in elliptic curve cryptographic
+      schemes is the multiplication of an elliptic curve point by an integer. This
+      paper describes a new method for accelerating this operation on classes
+      of elliptic curves that have efficiently-computable endomorphisms. One
+      advantage of the new method is that it is applicable to a larger class
+      of curves than previous such methods. For this special class of curves, a
+      speedup of up to 50% can be expected over the best general methods for
+      point multiplication.
+
+
+1    Introduction
+Let E be an elliptic curve defined over a finite field Fq . The dominant cost op-
+eration in elliptic curve cryptographic schemes is point multiplication, namely
+computing kQ where Q is an elliptic curve point and k is an integer. This op-
+eration is the additive analogue of the exponentiation operation α k in a general
+(multiplicative-written) finite group. The basic technique for exponentiation is
+the repeated square-and-multiply algorithm. Numerous methods for speeding up
+exponentiation and point multiplication have been discussed in the literature;
+for a survey, see [11, 12, 17]. These methods can be categorized as follows:
+1. Generic methods which can be applied to speed up exponentiation in any
+   finite abelian group, including:
+   (a) Comb techniques (e.g. [15]) which precompute tables which depend on
+        Q. Such techniques are applicable when the base point Q is fixed and
+        known a priori, for example in ECDSA signature generation.
+   (b) Addition chains which are useful when k is fixed, for example in RSA
+        decryption.
+   (c) Windowing techniques which are useful when the base point Q is not
+        known a priori, for example in Diffie-Hellman key agreement.
+   (d) Simultaneous multiple exponentiation techniques for computing expres-
+        sions k1 Q1 + k2 Q2 + · · · + kt Qt , for example in ECDSA signature verifi-
+        cation.
+2. Exponent recoding techniques which replace the binary representation of k
+   with a representation which has fewer non-zero terms (e.g, [10, 19]).
+3. Methods which are particular to elliptic curve point multiplication such as:
+    (a) Selection of an underlying finite field which enables faster field arith-
+        metic. For example, selection of a prime field Fp where p is a Mersenne
+        prime or a Mersenne-like prime [31], or an optimal field extension [2].
+    (b) Selection of a representation of the underlying finite field which enables
+        faster field arithmetic. For example, selection of an irreducible trinomial
+        as the reduction polynomial for binary extension fields.
+    (c) Selection of a point representation which enables faster elliptic curve
+        arithmetic [6].
+    (d) Selection of an elliptic curve with special properties, for example Koblitz
+        curves [13].
+    Koblitz curves are elliptic curves defined over F2 , and were first proposed
+for cryptographic use in [13]. The primary advantage of Koblitz curves is that
+the Frobenius endomorphism can be exploited to devise fast point multiplication
+algorithms that do not use any point doublings [30, 32]. These techniques can be
+generalized to use arbitrary endomorphisms but are generally not efficient.
+    The contribution of this paper is a new technique for speeding up point
+multiplication of elliptic curves having an efficiently-computable endomorphism.
+While the technique is not as efficient as the methods of Solinas [30, 32] for
+Koblitz curves, they are useful for speeding up point multiplication on a larger
+class of elliptic curves, for example certain curves over prime fields. Such ellip-
+tic curves over prime fields have been included in the WAP WTLS (Wireless
+Transport Layer Security) standard [33]. We believe the ideas discussed in this
+paper are new (though not difficult). In particular, we believe that the approach
+of decomposing k modulo n, and applying just one application of the endomor-
+phism is different than the methods of previous papers. The result is a technique
+which works on a wider class of curves (in particular, curves defined over prime
+fields), and works with endomorphisms whose computational cost is not neces-
+sarily cheaper than a point operation. For this class of curves, a speedup of up
+to 50% can be expected over the best general methods for point multiplication.
+    The remainder of this paper is organized as follows. §2 defines an endomor-
+phism and reviews how the Frobenius endomorphism can be used to speed up
+point multiplication on Koblitz curves. Our new work for speeding up point mul-
+tiplication on elliptic curves which have efficiently-computable endomorphisms
+is described in §3 and §4. The security of the new method is considered in §5.
+Finally, we draw our conclusions and discuss avenues for future work in §6.
+
+
+2    Endomorphisms
+Let E be an elliptic curve defined over the finite field Fq . The point at infinity is
+denoted by O. For any n ≥ 1, the group of Fqn -rational points on E is denoted
+by E(Fqn ).
+    An endomorphism of E is a rational map φ : E → E satisfying φ(O) = O
+[27]. If the rational map is defined over Fq , then the endomorphism φ is also said
+to be defined over Fq . In this case, φ is a group homomorphism of E(Fq ), and
+also of E(Fqn ) for any n ≥ 1.
+Example 1. Let E be an elliptic curve defined over Fq . For each m ∈ Z the
+multiplication by m map [m] : E → E defined by P 7→ mP is an endomorphism
+defined over Fq . A special case is the negation map defined by P 7→ −P .
+
+Example 2. Let E be an elliptic curve defined over Fq . Then the q th power map
+φ : E → E defined by (x, y) 7→ (xq , y q ) and O 7→ O is an endomorphism defined
+over Fq , called the Frobenius endomorphism. Since exponentiating to the q th
+power is a linear operation in Fqn , computation of φ(P ) is normally quite fast.
+For example, if a normal basis of Fqn over Fq is used, this computation can be
+implemented as a cyclic shift of the vector representation.
+
+Example 3 (§7.2.3 of [5]). Let p ≡ 1 (mod 4) be a prime, and consider the
+elliptic curve
+
+                                  E1 : y 2 = x3 + ax                           (1)
+
+defined over Fp . Let α ∈ Fp be an element of order 4. Then the map φ : E1 → E1
+defined by (x, y) 7→ (−x, αy) and O 7→ O is an endomorphism defined over Fp .
+If P ∈ E(Fp ) is a point of prime order n, then φ acts on hP i as a multiplication
+map [λ], i.e., φ(Q) = λQ for all Q ∈ hP i, where λ is an integer satisfying λ2 ≡ −1
+(mod n). Note that φ(Q) can be computed using only one multiplication in F p .
+
+Example 4 (§7.2.3 of [5]). Let p ≡ 1 (mod 3) be a prime, and consider the
+elliptic curve
+
+                                   E2 : y 2 = x 3 + b                          (2)
+
+defined over Fp . Let β ∈ Fp be an element of order 3. Then the map φ : E2 → E2
+defined by (x, y) 7→ (βx, y) and O 7→ O is an endomorphism defined over Fp . If
+P ∈ E(Fp ) is a point of prime order n, then φ acts on hP i as a multiplication
+map [λ], where λ is an integer satisfying λ2 + λ ≡ −1 (mod n). Note that φ(Q)
+can be computed using only one multiplication in Fp .
+
+Example 5 (§7.2.3 of [5]).√Let p > 3 be a prime such that −7 is a perfect square
+in Fp , and let ω = (1 + −7)/2, and let a = (ω − 3)/4. Consider the elliptic
+curve
+                                         3
+                          E3 : y 2 = x3 − x2 − 2x − 1                          (3)
+                                         4
+defined over Fp . Then the map φ : E3 → E3 defined by
+
+                                        x2 − ω          x2 − 2ax + ω
+                             µ                                         ¶
+                 (x, y) 7→       ω −2          , ω −3 y
+                                         x−a              (x − a)2
+
+and O 7→ O is an endomorphism defined over Fp . Computing the endomorphism
+is a little harder than doubling a point.
+Example 6 (§14B of [7]). Let p > 3 be a prime such that −2 is a perfect square
+in Fp , and consider the elliptic curve
+
+                            E4 : y 2 = 4x3 − 30x − 28                            (4)
+
+defined over Fp . Then the map φ : E4 → E4 defined by
+
+                             2x2 + 4x + 9     2x2 + 8x − 1
+                          µ                                  ¶
+                 (x, y) 7→ −              , − √            y
+                               4(x + 2)      4 −2(x + 2)2
+and O 7→ O is an endomorphism defined over Fp . Computing the endomorphism
+is a little harder than doubling a point.
+     The existing methods [13, 14, 20, 29, 32] for point multiplication which exploit
+efficiently-computable endomorphisms all use the Frobenius endomorphism. Let
+E be an elliptic curve defined over a small field Fq , and let φ be the Frobenius
+endomorphism. To compute kP , where P ∈ E(Fqn ), these methods first compute
+k0 = P k mod (φn − 1) in the ring Z[φ]. Then, one computes a φ-adic expansion
+         t
+k = i=0 ci φi , where the ci are elements of a small set, e.g., {−q/2, . . . , q/2},
+ 0
+
+and t ≈ n. Finally, kP can be efficiently computed as follows:
+                                            t
+                                            X
+                           kP = k 0 P =           ci φi (P ).                    (5)
+                                            i=0
+
+The expression (5) can be evaluated using traditional windowing techniques.
+Observe that the (slow) point doublings in traditional repeated add-and-double
+algorithms have been replaced by (fast) evaluations of the Frobenius map.
+    The methods based on Frobenius map expansions can in principle be ex-
+tended to an arbitrary endomorphism ψ. However, these techniques will no longer
+be efficient if computing ψ is more expensive than a point doubling. Further-
+more, one may not have ψ n − 1 = 0, so the ψ-adic expansion of k may be
+significantly longer than the binary expansion of k. Finally, the existing tech-
+niques do not apply when Norm(ψ) = 1 (as is the case in Examples 3 and 4)
+since these techniques require a division operation by ψ which yield a nontrivial
+remainder having norm less than Norm(ψ).
+    In the next section, we present a new method that exploits efficiently-computable
+endomorphisms such as the ones in Examples 3, 4, 5 and 6 to speed up point
+multiplication.
+
+
+3   Using Efficient Endomorphisms
+Let E be an elliptic curve defined over Fq , and let P ∈ E(Fq ) be a point of
+prime order n. Let φ be an endomorphism defined over Fq , and suppose that the
+characteristic polynomial of φ has a root λ modulo n—since the characteristic
+polynomial of an endomorphism has degree two we expect that roughly half of
+all curves will have a root modulo n. The map φ acts on hP i as a multiplication
+map [λ].
+    The methods described will be advantageous if computing φ costs less than
+computing about (log2 n)/3 point doublings. In practice, we expect the algorithm
+to be applied when the cost of φ is less than (say) 5 point doubles.
+    The problem we consider is that of computing kP for k selected uniformly at
+random from the interval [1, n−1]. The basic idea of the paper is as follows.√
+                                                                             Sup-
+pose that we can efficiently write k = k1 + k2 λ mod n, where k1 , k2 ∈ [0, d n e]
+(see §4). Then we have
+
+                                  kP = (k1 + k2 λ)P
+                                     = k1 P + k2 (λP )
+                                       = k1 P + k2 φ(P ).                                 (6)
+
+Now (6) can be computed using any of the ‘simultaneous multiple exponentia-
+tion’ type algorithms1 , the simplest of which we review below. In the following,
+(ut−1 , . . . , u1 , u0 )2 denotes the binary representation of the integer u, and w is
+the window width.
+Algorithm 1. Simultaneous multiple point multiplication
+Input: w, u = (ut−1 , . . . , u1 , u0 )2 , v = (vt−1 , . . . , v1 , v0 )2 , P, Q.
+Output: uP + vQ.
+ 1. Compute iP + jQ for all i, j ∈ [0, 2w − 1].
+ 2. Write u = (ud−1 , . . . , u1 , u0 ) and v = (v d−1 , . . . , v 1 , v 0 ) where each ui and
+    v i is a bitstring of length w, and d = dt/we.
+ 3. R ← O.
+ 4. For i from d − 1 downto 0 do
+    4.1 R ← 2w R.
+    4.2 R ← R + (ui P + v i Q).
+ 5. Return(R).
+
+
+Analysis. Since the bitlengths of k1 and k2 in (6) are half the bitlength of k,
+we might expect to obtain a significant speedup because we have eliminated a
+significant number of point doublings at the expense of a few point additions. A
+precise analysis is complicated due to the large number of point multiplication
+techniques available. Nevertheless, the following provides some indication of the
+relative benefits of our method.
+    Assume that k is a randomly selected t-bit integer. When t = 160, Algo-
+rithm 2 of [18] (an exponent recoding and sliding window algorithm) is among
+the best algorithms for computing kP . This method costs approximately 157
+point doubles and 34 point additions using windows of size 4 [18]. To compare
+this traditional method with the proposed method, we need an algorithm for
+computing k1 P + k2 Q (where in our case Q = φ(P )). The following is straight-
+forward and useful for our purposes, but we cannot find a reference for it.
+1
+    These are also known as ‘exponentiation using vector-addition chains’, ‘Shamir’s
+    trick’, or ‘multi-exponentiation’.
+    Algorithm 2 of [18] can be combined with the simultaneous multiple exponen-
+tiation technique of Algorithm 1 to give an algorithm which is among the best
+[24] for computing k1 P + k2 Q. Essentially, this combined algorithm computes
+²P and ²Q for the integers ² corresponding to allowable windows, then writes
+each of k1 and k2 in signed windowed-NAF form as in [18]. Finally a left-to-right
+algorithm is used to iteratively double a common accumulator and add in an
+²P or ²Q as appropriate. After max{log 2 k1 , log2 k2 } iterations, the accumulator
+holds the desired k1 P + k2 Q.
+    Using this algorithm in the proposed method to compute kP = k1 P +k2 (λP )
+costs approximately 79 point doubles and 38 point additions (when using win-
+dows of size 3 [18]) plus 1 evaluation of the map φ. If the cost of a point doubling
+is 8 field multiplications and the cost of a point addition is 11 field multiplica-
+tions (as is the case with Jacobian coordinates [4]), then the ratio of the running
+times of the proposed method to the traditional method is ≈ 0.66. Thus the
+new method for point multiplication is roughly 50% faster than the traditional
+method when t = 160. As the bitlength of k increases, the ratio essentially de-
+creases2 and so the relative performance of the new method gets better. For
+example, with a bitlength of t = 512, the ratio is about .62.
+
+
+Remark. If computing φ is cheaper than a point addition, then a few additions
+can be saved as follows. In the above ‘simultaneous windowed-NAF’ method
+for computing k1 P + k2 Q, we initially compute and store points ²P and ²Q for
+small values of ². If Q = φ(P ), and computing φ is cheaper than a point addition,
+then we can instead compute ²Q = ²φ(P ) = φ(²P ). For example, in the width-
+3 windowed method of [18], computing k1 P + k2 φ(P ) saves 3 additions at the
+expense of 3 additional applications of φ.
+
+Example 7. An example of an elliptic curve for which our new method is appli-
+cable is
+
+                                  E : y 2 = x3 + 3
+
+over the prime field Fp , where
+
+           p = 1461501637330902918203684832716283019655932313743
+
+is a 160-bit prime, and
+
+       #E(Fp ) = 1461501637330902918203687013445034429194588307251
+
+is prime. This curve is included in the WAP specification of the WTLS protocol
+[33].
+
+2
+    There are occasional minor bumps corresponding to window size changes.
+ 4      Decomposing k
+
+ In this section we describe an algorithm which takes as input integers n, λ and
+ k ∈R [1, n − 1], and returns integers k1 and k2 such that k ≡ k1 + k2 λ (mod n).
+ The integers k1 and k2 returned are distinguished in that they are both small
+ or, equivalently, the vector (k1 , k2 ) ∈ Z × Z has small Euclidean norm. The term
+ “small” will be made precise below.
+      Let G = Z × Z and consider the homomorphism f : G → Zn defined by
+ (i, j) 7→ (i+λj) mod n. We wish to find a short vector u ∈ G such that f (u) = k;
+ the components of u can then be used as the required k1 and k2 . Note that it is
+ easy to find a vector v ∈ G such that f (v) = k; v = (k, 0) is such a vector. The
+ problem is in finding a vector that is also short.
+      Our approach is the following. We first find linearly independent short vectors
+ v1 , v2 ∈ G such that f (v1 ) = f (v2 ) = 0. We then find a vector v in the integer
+ lattice generated by v1 and v2 that is close to (k, 0). It then follows that u =
+ (k, 0) − v is a short vector with f (u) = f ((k, 0)) − f (v) = k. Note that both
+ subproblems can be solved using lattice basis reduction algorithms. However,
+ the direct methods presented here are far less cumbersome to implement.
+
+
+ Finding v1 and v2 . The problem of finding two independent short vectors
+ v1 , v2 such that f (v1 ) = f (v2 ) = 0 can be solved using the extended Euclidean
+ algorithm. We apply the extended Euclidean algorithm to find the greatest com-
+ mon divisor of n and λ. (This gcd is 1 since n is prime.) The algorithm produces
+ a sequence of equations
+
+                            si n + ti λ = ri , for i = 0, 1, 2, . . . ,               (7)
+
+ where s0 = 1, t0 = 0, r0 = n, s1 = 0, t1 = 1, r1 = λ, and ri ≥ 0 for all i. The
+ following properties of the extended Euclidean algorithm are well-known and
+ can be easily proven by induction.
+ Lemma 1. Let si , ti , ri be the sequence of variables in (7) produced by an
+ application of the extended Euclidean algorithm to positive integers n and λ.
+
+  (i) ri > ri+1 ≥ 0 for all i ≥ 0.
+ (ii) |si | < |si+1 | for i ≥ 1.
+(iii) |ti | < |ti+1 | for i ≥ 0.
+(iv) ri−1 |ti | + ri |ti−1 | = n for all i ≥ 1.
+                                                   √
+     Let m be the greatest
+                    √        index for which rm ≥ n. Then rm |tm+1 |+rm+1 |tm | =
+ n, and |tm+1 | < n.√We take v1 = (rm+1    √ , −tm+1 ). By (7) we√ have f (v1 ) = 0.
+ Also, since |tm+1 | < n and |rm+1 | < n, we have ||v1 || ≤ 2n. We also take
+ v2 to be the shorter of (rm , −tm ) and (rm+2 , −tm+2 ). Again by (7), we have
+ f (v2 ) = 0. Heuristically one expects that v2 is also short.3 Observe that v1 and
+  3
+      Experiments with various values of λ also validate this assumption. It is impossible
+      to prove this without further restrictions; for example consider λ = n − 1.
+v2 are linearly independent since otherwise if v2 = (rm , −tm ) (say), then
+                            rm+1   −tm+1   tm+1
+                                 =       =      ;
+                             rm     −tm     tm
+but rm+1 /rm < 1 by Lemma 1(i) and |tm+1 /tm | > 1 by Lemma 1(iii).
+   Notice that since v1 and v2 only depend on n and λ (and not on k), they can
+be precomputed if n and λ are shared domain parameters.
+
+Finding v. A vector v in the integer lattice generated by v1 and v2 that is close
+to (k, 0) can be easily found using elementary linear algebra[1]. By considering
+(k, 0), v1 and v2 as vectors in Q × Q, we can write (k, 0) = β1 v1 + β2 v2 , where
+β1 , β2 ∈ Q. Then round β1 , β2 to the nearest integers: b1 = bβ1 e, b2 = bβ2 e.
+Finally, let v = b1 v1 + b2 v2 .
+     The following proves that the vector u is indeed short.
+Lemma 2. The vector u = (k, 0) − v, where v is constructed as above, has norm
+at most max(||v1 ||, ||v2 ||).
+
+Proof. We have
+
+                         u = (k, 0) − v
+                           = (β1 v1 + β2 v2 ) − (b1 v1 + b2 v2 )
+                           = (β1 − b1 )v1 + (β2 − b2 )v2 .
+
+Finally, since |β1 − b1 | ≤ 21 and |β2 − b2 | ≤ 21 , by the Triangle Inequality we have
+
+                              ||u|| ≤ 12 ||v1 || + 12 ||v2 ||
+                                   ≤ max(||v1 ||, ||v2 ||).
+
+                                                                                     t
+                                                                                     u
+
+
+5    Security Considerations
+Elliptic curves having efficiently-computable endomorphisms should be regarded
+as “special” elliptic curves. Using “special” instances of cryptographic schemes
+is sometimes done for efficiency reasons (for example the use of low encryption-
+exponent RSA, or the use of small subgroups hidden in a larger group as with
+DSA). However in any instance of a cryptographic scheme, there is always the
+chance that an attack will be forthcoming that applies to the special instance
+and significantly weakens the security. Such is the case here as well.
+    When selecting an elliptic curve E over Fq for cryptographic use, one must
+ensure that the order #E(Fq ) of the elliptic curve is divisible by a large prime
+number n (say n ≥ 2160 ) in order to prevent the Pohlig-Hellman [22] and Pol-
+lard’s rho [23, 21] attacks. In addition, one must ensure that #E(Fq ) 6= q in
+order to prevent the Semaev-Satoh-Araki-Smart attack [26, 25, 28], and that n
+does not divide q i − 1 for all 1 ≤ i ≤ 20 in order to prevent the Weil pairing [16]
+and Tate pairing attacks [8]. Given a curve satisfying these conditions, there is
+no attack known that significantly reduces the time required to compute elliptic
+curve discrete logarithms. Many such curves having efficient endomorphisms ex-
+ist and hence appear suitable for cryptographic use. One attack on the elliptic
+curve discrete logarithm problem on such curves is along the lines of [9] and [34].
+The application of such ideas does not reduce the time to compute a logarithm
+by more than a small factor.
+    The number of curves for which this technique applies seems to be reasonably
+large. For instance, one of the Examples 3, 4, 5 and 6 provide a candidate for
+most primes p.
+
+
+6    Conclusions and Further Work
+We described a new method for accelerating point multiplication on classes of
+elliptic curves that have efficiently-computable endomorphisms. The new method
+for point multiplication is roughly 50% faster than the best general methods. One
+advantage of the new method is that it is applicable to a larger class of curves
+than previous such methods. For example, the method is applicable to classes
+of curves over prime fields and, in particular, is well suited to two curves over
+prime fields included in the WAP WTLS specification.
+    One direction in which our method can be generalized is to use higher
+powers of the endomorphism. For example, one could write k ≡ k1 + k2 λ +
+k3 λ2 mod n for t/3-bit integers k1 , k2 , k3 . This could be done by first finding
+three linearly independent vectors v1 , v2 , v3 in Z × Z × Z each of length roughly
+n1/3 , and lying in the kernel of the homomorphism f : Z × Z × Z defined
+by (x, y, z) 7→ x + yλ + zλ2 mod n. Experimentally, we found that if λ satis-
+fies λ2 − T λ + N ≡ 0 mod n for a random prime n, random T (Trace) and
+random N (Norm), then the application of LLL to the lattice generated by
+{(λ2 , 0, −1), (λ, −1, 0), (0, λ, −1), (n, 0, 0), (0, n, 0), (0, 0, n)} results in 3 indepen-
+dent vectors of length about n1/3 , provided at least one of N , T has magnitude at
+least n1/3 . In this case the application of ‘simultaneous multiple exponentiation’
+type techniques yield an even better improvement over traditional algorithms,
+with the relevant ratio around 1/2.
+    We warn that generating k by simply choosing k1 , k2 , k3 first requires care:
+for example, if λ2 + λ + 1 ≡ 0 mod n (as in Example 4) then k1 + k2 λ + k3 λ2 ≡
+(k1 −k3 )+(k2 −k3 )λ mod n. Thus simply choosing k1 , k2 , k3 randomly in [0, n1/3 ]
+and setting k ≡ k1 + k2 λ + k3 λ2 mod n will result in a k having a considerable
+bias, and consequently the resulting cryptographic scheme may be susceptible to
+an attack like Bleichenbacher’s attack [3] on the DSA as specified in FIPS 186.
+
+
+Acknowledgements
+The authors would like to thank Charles Lam, Alfred Menezes, and John Proos
+for several very helpful comments and suggestions.
+References
+ 1. L. Babai, “On Lovász’ Lattice Reduction and the Nearest Lattice Point Problem”,
+    Combinatorica 6 (1986), 1-13
+ 2. D. Bailey and C. Paar, “Optimal extension fields for fast arithmetic in public-key
+    algorithms”, Advances in Cryptology – Crypto ’98, 1998, 472-485.
+ 3. D. Bleichenbacher, “On the generation of DSA one-time keys”, preprint, November
+    2000.
+ 4. D. Chudnovsky and G. Chudnovsky, “Sequences of numbers generated by addition
+    in formal groups and new primality and factoring tests”, Advances in Applied
+    Mathematics, 7 (1987), 385-434.
+ 5. H. Cohen, A Course in Computational Algebraic Number Theory, Springer-Verlag,
+    3rd printing, 1996.
+ 6. H. Cohen, A. Miyaji and T. Ono, “Efficient elliptic curve exponentiation using
+    mixed coordinates”, Advances in Cryptology–Asiacrypt ’98, 1998, 51-65.
+ 7. D. Cox, Primes of the Form x2 + ny 2 . Fermat, Class Field Theory and Complex
+    Multiplication, Wiley, 1989.
+ 8. G. Frey and H. Rück, “A remark concerning m-divisibility and the discrete log-
+    arithm in the divisor class group of curves”, Mathematics of Computation, 62
+    (1994), 865-874.
+ 9. R. Gallant, R. Lambert and S. Vanstone, “Improving the parallelized Pollard
+    lambda search on anomalous binary curves”, Mathematics of Computation, 69
+    (2000), 1699-1705.
+10. D. Gollmann, Y. Han and C. Mitchell, “Redundant integer representations and
+    fast exponentiation”, Designs, Codes and Cryptography, 7 (1996), 135-151.
+11. D. Gordon, “A survey of fast exponentiation methods”, Journal of Algorithms, 27
+    (1998), 129-146.
+12. D. Hankerson, J. Hernandez and A. Menezes, “Software implementation of elliptic
+    curve cryptography over binary fields”, Proceedings of CHES 2000, LNCS 1965
+    (2000), 1-24.
+13. N. Koblitz, “CM-curves with good cryptographic properties”, Advances in Cryp-
+    tology – Crypto ’91, 1992, 279-287.
+14. N. Koblitz, “An elliptic curve implementation of the finite field digital signature
+    algorithm”, Advances in Cryptology – Crypto ’98, 1998, 327-337.
+15. C. Lim and P. Lee, “More flexible exponentiation with precomputation”, Advances
+    in Cryptology – Crypto ’94, 1994, 95-107.
+16. A. Menezes, T. Okamoto and S. Vanstone, “Reducing elliptic curve logarithms to
+    logarithms in a finite field”, IEEE Transactions on Information Theory, 39 (1993),
+    1639-1646.
+17. A. Menezes, P. van Oorschot and S. Vanstone, Handbook of Applied Cryptography,
+    CRC Press, 1996.
+18. A. Miyaji, T. Ono and H. Cohen, “Efficient elliptic curve exponentiation”, Pro-
+    ceedings of ICICS ’97, 1997, 282-290.
+19. F. Morain and J. Olivos, “Speeding up the computations on an elliptic curve using
+    addition-subtraction chains”, Informatique Théorique et Applications, 24 (1990),
+    531-544.
+20. V. Müller, “Fast multiplication in elliptic curves over small fields of characteristic
+    two”, Journal of Cryptology, 1 (1998), 219-234.
+21. P. van Oorschot and M. Wiener, “Parallel collision search with cryptanalytic ap-
+    plications”, Journal of Cryptology, 12 (1999), 1-28.
+22. S. Pohlig and M. Hellman, “An improved algorithm for computing logarithms
+    over GF (p) and its cryptographic significance”, IEEE Transactions on Information
+    Theory, 24 (1978), 106-110.
+23. J. Pollard, “Monte Carlo methods for index computation mod p”, Mathematics of
+    Computation, 32 (1978), 918-924.
+24. J. Proos, personal communication, March 2000.
+25. T. Satoh and K. Araki, “Fermat quotients and the polynomial time discrete log
+    algorithm for anomalous elliptic curves”, Commentarii Mathematici Universitatis
+    Sancti Pauli, 47 (1998), 81-92.
+26. I. Semaev, “Evaluation of discrete logarithms in a group of p-torsion points of an
+    elliptic curve in characteristic p”, Mathematics of Computation, 67 (1998), 353-356.
+27. J. Silverman, The Arithmetic of Elliptic Curves, Springer-Verlag, 1986.
+28. N. Smart, “The discrete logarithm problem on elliptic curves of trace one”, Journal
+    of Cryptology, 12 (1999), 193-196.
+29. N. Smart, “Elliptic curve cryptosystems over small fields of odd characteristic”,
+    Journal of Cryptology, 12 (1999), 141-151.
+30. J. Solinas, “An improved algorithm for arithmetic on a family of elliptic curves”,
+    Advances in Cryptology – Crypto ’97, 1997, 357-371.
+31. J. Solinas, “Generalized Mersenne numbers”, Technical Report CORR 99-39, Dept.
+    of C&O, University of Waterloo, 1999.
+32. J. Solinas, “Efficient arithmetic on Koblitz curves”, Designs, Codes and Cryptog-
+    raphy, 19 (2000), 195-249.
+33. WAP WTLS, Wireless Application Protocol Wireless Transport Layer Security
+    Specification, Wireless Application Protocol Forum, February 1999. Drafts avail-
+    able at http://www.wapforum.org
+34. M. Wiener and R. Zuccherato, “Faster attacks on elliptic curve cryptosystems”,
+    Selected Areas in Cryptography, LNCS 1556 (1999), 190-200.
+

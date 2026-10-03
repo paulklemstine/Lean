@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6+23lRd/WD7kU/FpKty2/gFeIRE</id>
+  <title>arXiv Query: search_query=abs:"bits of p" AND abs:RSA&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T22:13:17Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22bits+of+p%22+AND+abs:RSA&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24717v2</id>
+    <title>A new attack to RSA with small private exponent and partial information</title>
+    <updated>2026-06-24T16:02:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.24717v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24717v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a new algorithm to attack RSA with small private exponent, when some partial information of $p+q$ is given.The algorithm is a very simple modification of original Wiener's attack with continued fractions, and allows to factor $n$ whenever $d&lt;n^{(1+δ)/4}$ if we know a $δ$-fraction of the most significant bits of $p+q$. The algorithm is unconditional, which is not the case in previous improvements that use Coppersmith method. As an example, ouir algorithm can be applied to break any criptosystem with modulus of $512$ bits and $d&lt;n^{0.3}$, giving an improvement in the original attack of Wiener.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T15:39:30Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+</feed>

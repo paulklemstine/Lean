@@ -1,0 +1,5 @@
+In mathematics, class number may refer to
+
+Class number (group theory), in group theory, is the number of conjugacy classes of a group
+Class number (number theory), the size of the ideal class group of a number ring
+Class number (binary quadratic forms), the number of equivalence classes of binary quadratic forms of a given discriminant

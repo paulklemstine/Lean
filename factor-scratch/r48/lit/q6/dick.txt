@@ -1,0 +1,1028 @@
+EXPLICIT BOUNDS FOR DICKMAN’S FUNCTION
+
+arXiv:2606.07785v3 [math.NT] 21 Aug 2026
+
+ANDREAS WEINGARTNER
+Abstract. Dickman’s function ρ(u) denotes the natural density of integers n whose largest prime factor does not exceed n1/u . We establish
+numerically explicit upper and lower bounds for ρ(u), resulting in estimates with a relative error of less than 0.005/u2 for all u ≥ 5. This
+allows for an approximate evaluation of ρ(u) without the need to solve
+the delay differential equation numerically.
+
+1. Introduction
+Dickman’s function ρ(u) is defined as the continuous solution to the delay
+differential equation uρ′ (u) + ρ(u − 1) = 0 with initial condition ρ(u) = 1
+for 0 ≤ u ≤ 1. It represents the natural density of integers n whose largest
+prime factor does not exceed n1/u [3].
+For u > 1, let ξ = ξ(u) be the unique positive solution of eξ = 1 + uξ and
+put ξ(1) = 0. Define
+Z s z
+e −1
+I(s) :=
+dz.
+z
+0
+De Bruijn [2] showed that ρ(u) ∼ ρ̃(u) as u → ∞, where
+ρ̃(u) :=
+
+exp{γ − uξ + I(ξ)}
+p
+2πI ′′ (ξ)
+
+and γ is Euler’s constant. Alladi [1] sharpened this to ρ(u) = ρ̃(u)(1 +
+O(1/u)). Our goal is to make the estimate entirely explicit, providing a
+convenient way to obtain approximate values of ρ(u) without the need to
+solve the delay differential equation numerically.
+Theorem 1. For u > 1 we have
+!
+
+
+1
+1
+ρ̃(u) 1 −
+< ρ(u) < ρ̃(u) 1 −
+.
+12u
+12u(1 + log1 u )
+Table 1 lists numerical examples based on Theorems 1 and 2, the first
+four of which are consistent with the values obtained by van de Lune and
+Wattel [12], who iterate the trapezoidal rule to approximate ρ(u) to at least
+five significant digits for many values of u ≤ 1000.
+We will derive Theorem 1 from Theorem 2, which involves the expression
+α(u) :=
+
+1 I (4) (ξ)
+5 (I (3) (ξ))2
+1
+−
+∼−
+,
+(2)
+(2)
+2
+3
+8 (I (ξ))
+24 (I (ξ))
+12u
+1
+
+2
+
+ANDREAS WEINGARTNER
+
+u
+5
+20
+100
+1000
+10000
+
+a: Thm. 1
+3.5...
+2.46...
+1.000...
+4.5876...
+4.8487...
+
+a: Thm. 2
+b
+3.54...
+4
+2.461...
+29
+1.000595...
+229
+4.5876682...
+3464
+4.848709620... 45867
+
+Table 1. Values of ρ(u) = a · 10−b from Theorems 1 and 2.
+where the derivatives I (k) (s) can easily be found from I ′ (s) = (es − 1)/s.
+Theorem 2. We have
+
+
+θ(u)
+ρ(u) = ρ̃(u) 1 + α(u) + 2 ,
+u
+where |θ(u)| < 0.005 for u ≥ 5, and 0 < θ(u) < 0.005 for u ≥ 9.
+Figure 1 shows the graph of ρ(u)/ρ̃(u), the bounds from Theorem 1 and
+the estimate 1 + α(u) from Theorem 2, for 1 < u ≤ 10.
+
+1.00
+
+0.98
+
+ρ(u)
+
+ρ(u)
+
+1 + α(u)
+
+0.96
+
+1-
+
+1
+12 u 1+
+
+0.94
+
+1-
+
+2
+
+4
+
+6
+
+1
+log(u)
+
+1
+12 u
+
+8
+
+10
+
+u
+
+Figure 1. Theorems 1 and 2 for 1 < u ≤ 10.
+Dickman [3] showed that ρ(u) = limx→∞ Ψ(x, x1/u )/x, where Ψ(x, y) denotes the number of positive integers up to x whose largest prime factor
+does not exceed y. Pomerance [5, (1.25)] asked if Ψ(x, y) ≥ xρ(u) holds
+for x/2 ≥ y ≥ 1, where u = (log x)/ log y. Gorodetsky [4] confirmed this
+for x sufficiently large, assuming the Riemann hypothesis and one additional
+hypothesis about the error term in the prime number theorem [4, (1.7)]. Together with Theorem 1 or Theorem 2, we obtain conditional lower bounds
+for Ψ(x, y) that are easy to evaluate numerically.
+
+EXPLICIT BOUNDS FOR DICKMAN’S FUNCTION
+
+3
+
+Hildebrand and Tenenbaum [7], Smida [10] and Xuan [14] derive asymptotic expansions for ρ(u), but without being numerically explicit.
+To compute ρ̃(u) (or log ρ̃(u) when u is large) and α(u), note that
+I(ξ) = Ei(ξ) − γ − log ξ,
+where Ei(z) is the exponential integral (ExpIntegralEi[z] in Mathematica,
+real(-incgam(0,-z)) in PARI/GP for z ∈ R+ ), and
+!
+e−1/u
+1
+− ,
+ξ = ξ(u) = −W−1 −
+u
+u
+where W−1 (z) is the lower of the two real branches, for −1/e ≤ z < 0, of the
+Lambert W function (ProductLog[-1,z] in Mathematica, lambertw(z,-1)
+in PARI/GP).
+Buchstab’s function ω(u) is the unique continuous solution, for u ≥ 1, of
+the delay differential equation (uω(u))′ = ω(u − 1), with initial condition
+ω(u) = 1/u for 1 ≤ u ≤ 2. It arises in connection with the distribution of
+integers free of small prime factors [11, Ch. III.6]. Corollary 1 shows that
+ρ̃(u) can serve as a convenient and numerically explicit upper bound for
+|ω(u) − e−γ |, although it is not of the smallest possible order of magnitude
+[6]. We obtain more accurate and numerically explicit estimates in [13].
+Corollary 1. For u ≥ 1, we have
+|ω(u) − e−γ | < ρ(u) < ρ̃(u),
+
+|ω ′ (u)| ≤ ρ(u) < ρ̃(u).
+
+Proof. The inequality ρ(u) < ρ̃(u) follows from Theorem 1. Tenenbaum [11,
+Thm. III.6.6] shows that |ω ′ (u)| ≤ ρ(u), which implies
+Z ∞
+Z ∞
+Z ∞
+−γ
+′
+|ω(u) − e | = |
+ω (t)dt| ≤
+ρ(t)dt <
+−ρ′ (t)dt = ρ(u),
+u
+
+u
+
+u
+
+where the last inequality follows from
+Z
+1
+1 t
+ρ(v)dv < ρ(t − 1) = −ρ′ (t)
+ρ(t) =
+t t−1
+t
+
+(t > 1).
+□
+
+2. Proof of Theorem 2
+We follow the proof of Tenenbaum [11, Thm. III.5.13], where Alladi’s
+result [1, (3.9)] with a relative error of O(u−1 ) is established via the saddle
+point method. To obtain a relative error of < 0.005u−2 , we keep track of all
+constant factors, divide the range of integration into one extra interval, and
+use a Taylor polynomial of order seven instead of three near the saddle point.
+For small values of u, we verify the result by calculating ρ(u) numerically
+as described in Section 4.
+We will need the following lemmas.
+
+4
+
+ANDREAS WEINGARTNER
+
+Lemma 1. For real x > 0 and natural numbers k we have
+ex − 1
+≥ I (k) (x) ≥ I (k+1) (x) (k ≥ 1),
+x
+
+
+k−1
+ex
+(k)
+1−
+(k ≥ 2),
+I (x) ≥
+x
+x
+
+
+ex
+k − 1 (k − 1)(k − 2)
+(k)
+I (x) ≤
+1−
+(k ≥ 3).
++
+x
+x
+x2
+R1
+Proof. For k ≥ 1, we have I (k) (x) = 0 hk−1 ehx dh, which implies the first
+inequality. The other two follow from applying integration by parts to this
+integral.
+□
+Lemma 2. For u ≥ 2 we have
+log(u log u) < ξ(u) < log(u log u) + 1.
+Proof. This is an easy exercise, following the same reasoning as in the proof
+of [11, Lem. III.5.11].
+□
+Lemma 3. For real δ > 0, A > 0, and 1 ≤ m < δ 2 A + 1, we have
+Z ∞
+δ m+1
+2
+2
+tm e−At /2 dt ≤ 2
+e−Aδ /2 .
+δ
+A
+−
+(m
+−
+1)
+δ
+Proof. This follows from a change of variables in the bound [9, Prop. 2.7]
+Z ∞
+xa e−x
+Γ(a, x) :=
+ta−1 e−t dt ≤
+x − (a − 1)
+x
+for real x, a with x > a − 1 ≥ 0.
+□
+Proof of Theorem 2. As in [11], we evaluate the inverse Laplace integral
+Z −ξ+i∞
+Z −ξ+i∞
+1
+1
+ρb(s)eus ds =
+eγ+I(−s)+us ds
+ρ(u) =
+2πi −ξ−i∞
+2πi −ξ−i∞
+(1)
+Z
+eγ−uξ+I(ξ) ∞ I(ξ−iτ )−I(ξ)+uiτ
+=
+e
+dτ,
+2π
+−∞
+where s = −ξ
+p + iτ .
+Let δ := 8 log(u)/u and define
+Z 1
+H(τ ) := I(ξ) − Re(I(ξ − iτ )) =
+0
+
+ehξ
+
+1 − cos(hτ )
+dh.
+h
+
+When δ ≤ |τ | ≤ 1, we have 1 − cos(hτ ) ≥ 0.45τ 2 h2 for 0 ≤ h ≤ 1, so
+Z 1
+2
+H(τ ) ≥ 0.45τ
+hehξ dh = 0.45I ′′ (ξ)τ 2
+0
+
+and the contribution to (1) is
+Z 1
+1
+1
+exp(−0.45I ′′ (ξ)δ 2 )
+< eγ−uξ+I(ξ)
+exp(−0.45I ′′ (ξ)τ 2 )dτ < eγ−uξ+I(ξ)
+,
+π
+π
+2 · 0.45I ′′ (ξ)δ
+δ
+
+EXPLICIT BOUNDS FOR DICKMAN’S FUNCTION
+
+hence
+< ρ̃(u)
+
+5
+
+exp(−0.45I ′′ (ξ)δ 2 )
+p
+=: ρ̃(u)E1 (u).
+0.45δ 2πI ′′ (ξ)
+
+Similarly, when 1 ≤ |τ | ≤ π, we have 1 − cos(hτ ) ≥ 2τ 2 h2 /π 2 , which leads
+to a contribution of
+exp(−2I ′′ (ξ)/π 2 )
+p
+< ρ̃(u)
+=: ρ̃(u)E2 (u).
+(2/π 2 ) 2πI ′′ (ξ)
+For the contribution from π ≤ |τ | ≤ 1 + uξ, we find as in [11] that
+H(τ ) ≥
+
+2
+uπ 2
+−p
+=: η(u),
+2
+2
+2(π + ξ )
+π2 + ξ2
+
+so that these segments contribute
+1
+< eγ−uξ+I(ξ) (1 + uξ − π)e−η(u) ,
+π
+hence
+p
+< ρ̃(u) 2I ′′ (ξ)/π(1 + uξ − π)e−η(u) =: ρ̃(u)E3 (u).
+When |τ | ≥ 1 + uξ and s = −ξ + iτ , we have ρb(s) = e−J(s) /s by [11,
+(5.51)], where
+Z ∞ −s−t
+1 + uξ
+eξ
+e
+dt ≤
+=
+≤ 1.
+|J(s)| :=
+s+t
+|τ |
+|τ |
+0
+Thus
+|e−J(s) − 1| ≤ |J(s)|(e − 1) ≤ (e − 1)
+
+1 + uξ
+|τ |
+
+and
+
+1 ντ,u
+1 + uξ
++
+(e − 1)
+,
+s
+s
+|τ |
+where |ντ,u | ≤ 1. Substituting this into (1) and applying integration by parts
+to the first term, we find the that contribution from |τ | ≥ 1 + uξ to (1) is
+
+
+e−uξ
+2
+e−uξ
++ (e − 1) <
+(e + 1),
+≤
+π
+u(1 + uξ)
+π
+ρb(s) =
+
+hence
+p
+< ρ̃(u)(e + 1)e−γ−I(ξ) 2I ′′ (ξ)/π =: ρ̃(u)E4 (u).
+For −δ ≤ τ ≤ δ, we use the Taylor expansion of I(ξ − iτ ) around τ = 0.
+Since
+Z 1
+(k)
+|I (ξ − iτ )| = |
+hk−1 eh(ξ−iτ ) dh| ≤ I (k) (ξ) ≤ I ′ (ξ) = u,
+0
+
+for k ≥ 1, we have
+I(ξ − iτ ) − I(ξ) + uiτ =
+
+7
+X
+I (k) (ξ)
+k=2
+
+k!
+
+(−iτ )k +
+
+I (8) (ξ) µu,τ 8
+τ ,
+8!
+
+6
+
+ANDREAS WEINGARTNER
+
+where |µτ,u | ≤ 1. Thus,
+Z δ
+Z δ
+′′
+2
+I(ξ−iτ )−I(ξ)+uiτ
+e−I (ξ)τ /2 h(u, τ )dτ,
+e
+dτ =
+(2)
+−δ
+
+−δ
+
+where
+h(u, τ ) := exp
+
+( 7
+X I (k) (ξ)
+k!
+
+k=3
+
+I (8) (ξ)µu,τ 8
+(−iτ ) +
+τ
+8!
+k
+
+)
+.
+
+Writing M for the exponent, we have
+h(u, τ ) = eM =
+
+5
+X
+Mj
+j=0
+
+j!
+
++
+
+1.1M 6 νM
+6!
+
+(Re(M ) ≤ log 1.1),
+
+where |νM | ≤ 1. Since |τ | ≤ δ and I (k+1) (ξ) ≤ I (k) (ξ), we have
+
+
+I (4) (ξ) 4 I (8) (ξ) 8 I (4) (ξ)δ 4
+δ4
+Re(M ) ≤
+τ +
+τ ≤
+1+
+,
+4!
+8!
+4!
+1680
+which implies that Re(M ) < log 1.1 for u ≥ 980.
+Let hk be M k without all the terms that contribute zero to the integral
+in (2) and write
+Ik := I (k) (ξ),
+
+ak :=
+
+Ik
+I (k) (ξ)
+= .
+k!
+k!
+
+We have
+h0 = 1,
+4
+
+h1 = a4 τ − a6 τ 6 + θ1 τ 8 R1 (τ ),
+h2 = −a23 τ 6 + 2a3 a5 τ 8 + a24 τ 8 − τ 10 S2 + θ2 τ 10 R2 (τ ),
+h3 = −3a23 a4 τ 10 + τ 12 S3 + θ3 τ 12 R3 (τ )
+h4 = a43 τ 12 − τ 14 S4 + θ4 τ 14 R4 (τ ),
+h5 = τ 16 S5 + θ5 τ 16 R5 (τ ),
+where |θi | ≤ 1 and S1 = 0, R1 (τ ) := I8 /8!,
+X Ii Ij
+X
+S2 :=
+, R2 (τ ) :=
+i!j!
+3≤i,j≤8
+3≤i,j≤8, i+j≥11
+i+j=10
+
+S3 :=
+
+Ii Ij Ik
+,
+i!j!k!
+3≤i,j,k≤8,
+X
+
+i+j+k=12
+
+τ i+j−10
+Ii Ij ,
+i!j!
+
+i+j≡0 mod 2 or max(i,j)=8
+
+R3 (τ ) :=
+
+X
+3≤i,j,k≤8, i+j+k≥13
+i+j+k≡0 mod 2 or max(i,j,k)=8
+
+τ i+j+k−12
+Ii Ij Ik ,
+i!j!k!
+
+et cetera.
+With the help of Lemma 1, we verify that I8 < I24 u−3 for u ≥ 14 =: u1 ;
+each product Ii Ij appearing in S2 or R2 satisfies Ii Ij < I25 u−3 for u ≥ 5 =:
+u2 ; each product Ii Ij Ik appearing in S3 or R3 satisfies Ii Ij Ik < I26 u−3 for
+u ≥ 3 =: u3 , et cetera, with u4 = u5 = 1. Since |τ | ≤ δ ≤ 1/4, which holds
+for u ≥ 870, we have |Rj (τ )| ≤ Rj (1/4). Let αj , βj denote the values of
+
+EXPLICIT BOUNDS FOR DICKMAN’S FUNCTION
+
+7
+
+the sums Sj and Rj (1/4), respectively, but without the products of the I’s.
+Then
+0 ≤ Sj ≤ αj I2j+3 u−3 , |Rj (τ )| ≤ βj I2j+3 u−3 .
+To exploit the alternating ± pattern in front of the Sj ’s, we define γ1+ =
++
+−
++
+γ1− = β1 = 1/8!; for 1 ≤ j ≤ 2, let γ2j
+:= β2j , γ2j
+:= α2j + β2j , γ2j+1
+:=
+−
+α2j+1 + β2j+1 , γ2j+1 := β2j+1 .
+Since Ik+1 ≤ Ik , we have
+|M | ≤
+
+8
+X
+Ik
+k=3
+
+k!
+
+|τ |k ≤
+
+I3 |τ |3
+1.065761
+3!
+
+(|τ | ≤ δ ≤ 1/4),
+
+and therefore
+|1.1M 6 | ≤
+
+u−3 I29 τ 18
+I36 τ 18
+1.612
+<
+1.612 =: u−3 I29 τ 18 γ6 ,
+(3!)6
+(3!)6
+
+as I36 < u−3 I29 for u ≥ 1. With γ6+ = γ6− = γ6 , the contribution of the Sj ’s,
+the Rj ’s and |1.1M 6 | to (2) is
+s
+Z
+6
+6
+X
+γk+ I23+k ∞ −I ′′ (ξ)τ 2 /2 6+2k
+2π X γk+ I23+k (5 + 2k)!!
+<
+e
+τ
+dτ
+=
+u3 k!
+I ′′ (ξ)
+u3 k!
+I23+k
+−∞
+k=1
+k=1
+s
+s
+6
+2π 1 X γk+ (5 + 2k)!!
+2π 5.39
+<
+,
+<
+′′
+3
+′′
+I (ξ) u
+k!
+I (ξ) u3
+k=1
+
+and, similarly, it is
+s
+>−
+
+s
+6
+2π 1 X γk− (5 + 2k)!!
+2π 4.37
+>−
+,
+′′
+3
+′′
+I (ξ) u
+k!
+I (ξ) u3
+k=1
+
+where n!! is the product of all the positive integers up to n that have the
+same parity as n.
+P
+Writing the main terms as g(τ ) := 1 + 6j=2 cj (u)τ 2j , Lemma 3 yields
+
+
+Z ∞
+6
+−I ′′ (ξ)δ 2 /2
+X
+e
+3
+′′
+2
+1 +
+e−I (ξ)τ /2 |g(τ )|dτ ≤
+|cj (u)|δ 2j  ,
+′′ (ξ)δ
+I
+2
+δ
+j=2
+
+provided I ′′ (ξ)δ 2 ≥ 33, which is the case if u ≥ 127. We find that
+6
+
+1+
+
+3X
+|cj (u)|δ 2j ≤ 7
+2
+j=2
+
+for u ≥ 380, which implies
+s
+s
+Z ∞
+′′
+2
+14e−I (ξ)δ /2
+2π
+2π
+−I ′′ (ξ)τ 2 /2
+2
+e
+|g(τ )|dτ < p
+=: E5 (u)
+.
+′′ (ξ)
+′′ (ξ)
+′′
+I
+I
+δ 2πI (ξ)
+δ
+P
+Now f (u) := u3 5k=1 Ek (u) = u3−(0.45)8+o(1) = u−0.6+o(1) has a limit of
+zero and is decreasing for u ≥ 70, while f (922) < 0.05.
+
+8
+
+ANDREAS WEINGARTNER
+
+Combining everything, we obtain
+
+ρ(u) = ρ̃(u) 1 + α(u) + β(u) + λ(u)u−3 ,
+
+(3)
+
+where |λ(u)| < 5.39 + 0.05 = 5.44 for u ≥ 980,
+α(u) :=
+
+a23 5!!
+I (4) (ξ)
+5I (3) (ξ)2
+1
+a4 3!!
+−
+=
+−
+∼−
+,
+′′
+2
+′′
+3
+′′
+2
+′′
+3
+I (ξ)
+2!I (ξ)
+8I (ξ)
+24I (ξ)
+12u
+
+a6 5!!
+(2a3 a5 + a24 )7!! 3a23 a4 9!!
+a43 11!!
+β(u) := − ′′ 3 +
+−
++
+I (ξ)
+2!I ′′ (ξ)4
+3!I ′′ (ξ)5 4!I ′′ (ξ)6
+=−
+
+I (6) (ξ)
+7I (3) (ξ)I (5) (ξ) 35I (4) (ξ)2 35I (3) (ξ)2 I (4) (ξ) 385I (3) (ξ)4
++
++
+−
++
+48I ′′ (ξ)3
+48I ′′ (ξ)4
+384I ′′ (ξ)4
+64I ′′ (ξ)5
+1152I ′′ (ξ)6
+1
+.
+∼
+288u2
+
+1
+Lemma 1 shows that u2 β(u) = 288
+(1−2/ξ+O(1/ξ 2 )), so that limu→∞ u2 β(u) =
+1
+1
+2
+2
+288 . Moreover, u β(u) is increasing and positive for u ≥ 7, so |u β(u)| < 288
+for u ≥ 7. From (3) we obtain
+
+1
+5.5
++
+.
+288
+u
+Thus, |θ(u)| < 0.005 for u ≥ 3600. For 5 ≤ u ≤ 3600, we calculate ρ(u)
+(resp. ρ(u)/ρ̃(u)) numerically as described in Section 4 and graph θ(u) :=
+(ρ(u)/ρ̃(u) − 1 − α(u))u2 , to find that |θ(u)| ≤ 0.0036 in this range.
+We have θ(u) = u2 β(u) + λ(u)/u > u2 β(u) − 5.5/u for u ≥ 980, which
+implies θ(u) > 0 for u ≥ 2250. For 9 ≤ u ≤ 2250, we verify that θ(u) > 0
+by computing ρ(u) as described in Section 4 and graphing θ(u).
+□
+|θ(u)| := |u2 (β(u) + λ(u)u−3 )| <
+
+In proving Theorem 2, we also proved Theorem 3, where the range 1 ≤
+u ≤ 980 is again established by calculating ρ(u) as in Section 4. The upper
+bound 5.44 is likely far from best possible.
+Theorem 3. Equation (3) holds with |λ(u)| < 5.44 for u ≥ 1.
+3. Proof of Theorem 1
+Lemma 4. For u ≥ 2 we have
+
+
+
+
+ξ
+1 1.75
+ξ
+1 0.5
+1− + 2
+1− + 2 .
+< α(u) < −
+−
+ξ
+ξ
+ξ
+ξ
+12eξ
+12eξ
+Proof. Let
+1 I (4) (x)
+5 (I (3) (x))2
+−
+,
+8 (I (2) (x))2 24 (I (2) (x))3
+so that α(u) = A(ξ(u)), and define κ(x) by
+
+
+x
+1 κ(x)
+A(x) = −
+1
+−
++
+.
+12ex
+x
+x2
+A(x) :=
+
+EXPLICIT BOUNDS FOR DICKMAN’S FUNCTION
+
+9
+
+Lemma 1 shows that κ(x) is bounded. A calculus exercise, aided by a computer, reveals that κ(x) is increasing on the interval (0, 2.749...), where it
+reaches its maximum of 1.746... at x = 2.749..., and decreasing on (2.749..., ∞)
+with limx→∞ κ(x) = 1/2. We have κ(1/3) = 0.511... > 0.5. The result now
+follows since ξ > 1/3 for u ≥ 2.
+□
+Lemma 5. For u ≥ 1 we have
+1
+0.02
+1
+0.02
+−
+< α(u) − 2 < α(u) + 2 < −
+.
+12u
+u
+u
+12u(1 + 1/ log u)
+Proof. For u ≥ 4, we have u2 (1 − 1.75/ξ) > (0.02)12(uξ + 1) = (0.02)12eξ ,
+by Lemma 2. Lemma 4 implies
+
+
+ξ
+1 1.75
+0.02
+−ξ
+−ξ
+−1
+0.02
+1− + 2
+− 2 >
+=
+>
+.
+α(u) − 2 > −
+ξ
+ξ
+u
+ξ
+ξ
+u
+12(uξ + 1)
+12u
+12e
+12e
+For u ≥ 1, we have u2 ≥ (0.02)24ξeξ = (0.02)24ξ(uξ + 1). Lemma 4 yields
+
+
+
+
+0.02
+ξ
+0.02
+−ξ
+−(ξ − 1)
+1 0.5
+1
+α(u) + 2 < −
+=
+.
+1− + 2 + 2 <
+1−
+u
+ξ
+ξ
+u
+ξ
+12(uξ + 1)
+12eξ
+12eξ
+We claim that
+ξ−1
+1
+−
+<−
+.
+12(uξ + 1)
+12u(1 + 1/ log u)
+Indeed, this is equivalent to ξ > 1 + (1 + 1/u) log u, which holds for u ≥ 9,
+by Lemma 2. This demonstrates the result for u ≥ 9. For 1 ≤ u ≤ 9 we
+confirm the result by graphing the four quantities in question multiplied by
+u.
+□
+Proof of Theorem 1. For u ≥ 5 the result follows from Theorem 2 and
+Lemma 5. For 1 ≤ u ≤ 5, we calculate ρ(u) as described in Section 4
+and graph the three expressions as in Figure 1.
+□
+4. Numerical calculation of ρ(u)
+In the range 1 ≤ u ≤ 50, we calculate ρ(u) with the algorithm of
+Marsaglia, Zaman and Marsaglia [8]: To approximate ρ(u) in the interval [n, n + 1], where n is an integer, we find the coefficients of the Taylor
+polynomial of order 250 centered at n + 1/2, recursively from the coefficients
+of the polynomial centered at n − 1/2.
+For larger u, we evaluate the
+p inverse Laplace integral numerically. After
+the change of variables t = τ I ′′ (ξ), equation (1) implies
+Z ∞
+n
+o
+p
+p
+1
+ρ(u)
+√ exp I(ξ − it/ I ′′ (ξ)) − I(ξ) + uit/ I ′′ (ξ) dt.
+=
+ρ̃(u)
+2π
+−∞
+The proof of Theorem 2 shows that the real part of the integrand approaches
+the standard normal density function as u grows. Numerical integration in
+Mathematica converges well for u ≥ 15.
+With this way of calculating ρ(u), our values match those in [12] to the
+accuracy they claim, namely at least five significant digits.
+
+10
+
+ANDREAS WEINGARTNER
+
+References
+[1] K. Alladi, The Turán-Kubilius inequality for integers without large prime factors, J.
+Reine Angew. Math. 335 (1982), 180–196.
+[2] N. G. de Bruijn, The asymptotic behaviour of a function occurring in the theory of
+primes, J. Indian Math. Soc. (N.S.) 15 (1951), 25–32.
+[3] K. Dickman, On the frequency of numbers containing prime factors of a certain
+relative magnitude, Ark. Mat. Astron. Fys. 22 (1930).
+[4] O. Gorodetsky, Smooth numbers and the Dickman ρ function, J. Anal. Math. 151
+(2023), no. 1, 139–169.
+[5] A. Granville, Smooth numbers: computational number theory and beyond, in Algorithmic number theory: lattices, number fields, curves and cryptography, 267–323,
+Math. Sci. Res. Inst. Publ. 44, Cambridge Univ. Press, Cambridge, 2008.
+[6] A. Hildebrand, The asymptotic behavior of the solutions of a class of differentialdifference equations, J. London Math. Soc. (2) 42 (1990), no. 1, 11–31.
+[7] A. Hildebrand and G. Tenenbaum, On a class of differential-difference equations
+arising in number theory, J. Anal. Math. 61 (1993), 145–179.
+[8] G. Marsaglia, A. Zaman and J. C. W. Marsaglia, Numerical solution of some classical
+differential-difference equations. Math. Comp. 53 (1989), no. 187, 191–201.
+[9] I. Pinelis, Exact lower and upper bounds on the incomplete gamma function, Math.
+Inequal. Appl. 23 (2020), no. 4, 1261–1278.
+[10] H. Smida, Sur les puissances de convolution de la fonction de Dickman, Acta Arith.
+59 (1991), no. 2, 123–143.
+[11] G. Tenenbaum, Introduction to Analytic and Probabilistic Number Theory, Third
+Edition, Graduate Studies in Mathematics, Vol. 163, American Mathematical Society,
+2015.
+[12] J. van de Lune and E. Wattel, On the numerical solution of a differential-difference
+equation arising in analytic number theory, Math. Comp. 23 (1969), 417–421.
+[13] A. Weingartner, Explicit bounds for Buchstab’s function, arXiv:2607.21883.
+[14] T. Z. Xuan, On the asymptotic behavior of the Dickman-de Bruijn function, Math.
+Ann. 297 (1993), no. 3, 519–533.
+Department of Mathematics, Southern Utah University, 351 West University Boulevard, Cedar City, Utah 84720, USA
+Email address: weingartner@suu.edu
+
+

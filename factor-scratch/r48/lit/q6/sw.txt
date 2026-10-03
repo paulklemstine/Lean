@@ -1,0 +1,940 @@
+           mathematics of computation
+            volume 61,number 203
+           july    1993, pages 445-462
+
+
+
+
+                                        A PRACTICAL ANALYSIS
+                            OF THE ELLIPTIC CURVE FACTORING ALGORITHM
+
+                                   ROBERT D. SILVERMANAND SAMUELS. WAGSTAFF,JR.
+                                                   Dedicated to the memory ofD. H. Lehmer
+
+
+                         Abstract. Much asymptotic analysis has been devoted to factoring algorithms.
+                         We present a practical analysis of the complexity of the elliptic curve algorithm,
+                         suggesting optimal parameter selection and run-time guidelines. The parameter
+                         selection is aided by a novel use of Bayesian statistical decision techniques as
+                         applied to random algorithms. We discuss how frequently the elliptic curve al-
+                         gorithm succeeds in practice and compare it with the quadratic sieve algorithm.
+
+
+
+                                                                 1. Introduction
+               The elliptic curve method (ECM) [8] and quadratic sieve (MPQS) [3] fac-
+            toring algorithms are the most efficient, general-purpose, factoring algorithms
+            known today. Furthermore, both ECM and MPQS have properties that make
+            them ideal for parallel computation. The quadratic sieve is a deterministic al-
+            gorithm whose run time is purely a function of the size of the number being
+            factored. Its parallel implementation was discussed in [3]. The elliptic curve
+            method is a random algorithm which finds small factors first. One implements
+            it in parallel by performing independent random trials on multiple processors
+            and quitting upon the first success.
+               In [9] Pomerance analyzed the asymptotic run time for MPQS, and Lenstra
+            [7] used his results to analyze a single-step version of ECM. We summarize
+            Lenstra's main result here. Let g be any positive real number, and let
+                                  j^lp\    — e\/logploglog/>                   K(p)      = £vA2+0(n)log/>loglogp ^
+
+            Then, with probability at least 1 -e~g , ECM will find a factor p of a larger in-
+            teger N in time gK(p)M(N), where M(N) is the time to perform multiplica-
+            tion mod A and K(p) is the number of group operations per curve. Pomerance
+            showed that the asymptotic run time for MPQS is L(A/)1+o(1). Both of these
+            asymptotic run times were heuristically derived, and depend on an unproved
+            extension of a theorem of Pomerance, Canfield, and Erdös [9, 7].
+                Lenstra noted that one wants, in practice, to add a second step to the algo-
+            rithm and that doing so can greatly shorten its run time. Montgomery [8] and
+                  Received by the editor October 29, 1990; revised June 8, 1991.
+                  1991 MathematicsSubject Classification.Primary 11A51, 11Y05;Secondary68Q25, 14H52.
+                Key words and phrases. Elliptic curves, Dickman's function, smooth groups, quadratic sieve,
+            factorization.
+
+                                                                                                              ©1993 American Mathematical Society
+                                                                                                               0025-5718/93 $1.00+ $.25 per page
+
+                                                                              445
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            446                                   R. D. SILVERMANAND S. S. WAGSTAFF, JR.
+
+            Brent [ 1] both give methods for implementing                                     a second step of the algorithm.
+           Brent further analyzed the run time and showed that a second step speeds the
+           method by a factor of logp, where p is the factor to be found, provided that
+           one uses fast methods for polynomial evaluation.
+               ECM works by randomly selecting an elliptic curve E: y2 = Ax3 + Bx +
+            1, with nonzero discriminant and with coefficients in Z/NZ, and a random
+           rational point P on the curve. If p is a prime dividing N, then the set of
+           rational points on the curve over Fp , p ^ 2, 3, forms an Abelian group (known
+           as the Mordell-Weil group) whose order lies in the interval [p - 2^/p + 1,
+           p + 2y/p + 1] [7]. One selects an integer Bx and lets M be the product of all
+           primes less than Bx raised to some suitable power. One then computes MP
+           by successive addition of points on the curve and hopes that MP will equal
+           the identity of the group, modp , but will not equal the identity of the group
+           mod N. One then finds p by taking a GCD with N. The algorithm succeeds
+           if the order of the group on the curve has all of its prime factors less than Bx .
+              The two-step version of the algorithm allows the order of the group to have
+           all of its prime factors less than Bx, along with an additional, single prime
+           factor between Bx and some limit B2 > Bx. For this reason, the study of the
+           function which measures the probability that an integer x has all but one of
+           its prime factors less than Bx and a single factor between Bx and B2 is of
+           primary importance to the analysis of the algorithm.
+              Lenstra gave, in his asymptotic analysis, the estimate B(p) = L(p)xlyi2+o(-X)
+           for the optimal selection of Bx for the one-step algorithm. Brent's analysis
+           suggests that this should be lowered by logp for the two-step version. We
+           define ^(p) and 3S(p) as K(p)/logp and B(p)/logp, respectively. Asymp-
+           totically, the factor of logp in the denominator is subsumed by the o (I) in the
+           exponents, but these definitions are useful for computational purposes. In this
+           paper we discuss how the elliptic curve method and quadratic sieve perform for
+            current real-world sized problems.                            ECM will find 10- to 15-digit factors quite
+            quickly, 20- to 25-digit factors with an effort of perhaps ten hours, and 30-
+            to 3 5-digit factors with considerable difficulty. Over the last several years the
+            combined efforts of many researchers have resulted in hundreds of thousands
+            of trials with ECM, and we have found exactly two 38-digit, one 37-digit, and
+            one 36-digit factor. In this paper we discuss several related aspects of ECM.
+            Among them are:
+                ( 1) How does one select its parameters?
+                (2) If ECM fails during one trial, how should its parameters be changed for
+                     the next?
+                (3) How does its run time vary with the size of factors found?
+                (4) How long should one use ECM before switching to the quadratic sieve?
+               In order to answer these questions, we require some background material re-
+            garding the distribution of the largest and smallest prime factors of an arbitrary
+            positive integer.
+
+                                    2. Largest            prime factor:               Dickman's function
+               Dickman's function, p(a), is the probability that an integer x —>00 has
+            its largest prime factor less than xxla. It was extensively studied in [4]. We
+            designate by p(a, ß) the probability that x has its second largest prime factor
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORING ALGORITHM                                              447
+
+
+            less than xxla and its largest prime factor less than x^a,                                             a > ß > 1. Then
+            the functional equations for p and p are [6]
+                                                    e-ct                                                i        pa— 1
+                           p(a) = l/a                       p(t)dt      and      p(a,ß)         =--/                     p(t)dt.
+                                               Ja-l                                                  Ot- P Ja-ß
+            For the elliptic curve algorithm to succeed, the order of the Mordell-Weil group
+            must be smooth up to Bx, with the exception of a single additional prime factor
+            between Bx and 2?2• Designate ¿P(Bx, B2) as the probability of success with
+            Bx and B2 as limits, where B2 > Bx. Then
+
+
+
+            One can numerically integrate p(a) by starting with the initial values p(x) = 1
+            for 0 < x < 1. One can then set up an array of values for p(a) as a varies
+            from (say) 3 to 1000, and compute their values by using Simpson's method for
+            the integration. Tables for p(a) are also given in [6]. One can then use the
+            tabulated values for p to numerically integrate p(a, ß). The functions are
+            well behaved and monotonie, and Simpson's method gives good accuracy. Our
+            program agrees with published tables to the accuracy limits of those tables.
+                                     3. Smallest                 prime factor:           Mertens's            Theorem
+               We shall need estimates for the probability that a prime factor p , of a larger
+            integer N, lies in a given interval. The probability that there is at least one
+            divisor p, with y < p < yx+e is 1 minus the probability that there is no divisor
+            in the interval. On the assumption of independence, this is approximately
+
+            (in                                                   1- n H).
+                                                                      y<p<yl+e
+
+
+            Formula (3.1) is not exact, owing to edge conditions at the interval boundaries.
+            By Mertens's Theorem [5, p. 351] we have ]lp<;tU _ l/P) ~ e~yI log* >so tnat
+            (3.1) simplifies to
+            (3.2)                E(N,y,             e) = Prob(3p withy <p < yx+Eandp|A) « —— .
+
+            This argument assumes that the probabilities for each prime in the interval are
+            independent of one another. This assumption will be correct provided that N
+            is big enough to have every prime p in the interval as a factor. Thus,
+
+                                                                      #> n p>y<p<y,+c
+
+
+            and this is approximately ey +'/ey by the Prime Number Theorem.
+               In the case where N is not large enough to guarantee independence of proba-
+            bilities, we shall need to use a standard inclusion/exclusion argument to correct
+            for the lack of independence. Assume that y = N5 , and let S? be the set of
+            primes in the interval (y, yx+e). Then there can be up to d = \l/ö\ factors in
+            5?. The probability is then
+                              _/ir              .          v~>* 1       1 v-^* 1                1      v^*        1
+             v     1             v      '       >          Z^     „    2\ ¿^            pq      V.     t-*       pqr
+                                                           pay    y        P,q€5*y*                 p,q,r€S^y^
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            448                                     R. D. SILVERMANAND S. S. WAGSTAFF,JR.
+
+           The asterisks indicate that the reciprocal of the product under each summand
+           is constrained to be less than or equal to N. The probability given in (3.3) can
+           be written more generally as
+                                                                         /                                         \
+
+            (3.4)                      E(N,y,E) = Y
+                                                  ;'=i
+                                                                 d
+
+                                                                             ^ ^ ru
+                                                                              J             Pi€S"         1=1 Vl
+
+
+
+           where the constraint given on the inner sum guarantees that the product of
+           primes in the inner product does not exceed N. This constraint will not be
+           binding for j < logA/((l + e)logy) because the product of j factors in this
+           case cannot exceed N. If we truncate the sum at this point, by the Inclu-
+           sion/Exclusion Inequality, the magnitude of the error is at most
+                                                                 1                     * 1
+                                                               hi E                   Up-'
+           where h is the smallest integer exceeding log N/(( 1 + e)logy).                                             For the uncon-
+           strained cases we have
+                                                                     1
+
+
+                                                         p,g^ i=\yi               \pieyy'
+           For the constrained cases we have
+
+
+                                                         £
+
+                                                     lL><<"
+           since clearly the constrained summand contains fewer cases than the uncon-
+           strained. A classical estimate also gives ])2p<vl/p = log logy + y\ + o(\) [5, p.
+           351], where yx is a computable constant. By using this estimate, and replacing
+           the constrained summands by their upper bounds, we can obtain an approxi-
+           mation for the probability that there is a prime factor in 5? when N is not
+           sufficiently large to guarantee independence.
+              We give an example of the calculations here. Suppose A is a 100-digit
+           integer. The probability that N has a prime factor between 105 and 1010 can
+           then be computed as follows. We clearly have d = 19 , and that the product of
+           any ten primes in the interval must be less than N. Thus, the first ten terms in
+           our sum are unconstrained. The last nine are constrained, but their contribution
+           is small, so replacing them with their upper bound will not incur much error.
+           We have
+                                        io10    .
+                                       Y       - = loglog 1010- loglog 105+ o(l) «log2.
+                                               P
+           Our estimate then becomes
+                            log2 - I log22 + i log32 - • • - + -¡L log192 « .500000000.
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORINGALGORITHM                                  449
+
+
+               Designate S(N) as the smallest prime p that divides N. To estimate
+            Prob(S(N) e S?), one can now simply compute E(N, y, e) times 1 minus
+            the probability that there is a factor less than y .
+
+                                                  4. Optimal parameter                       selection
+               Parameters under our control are the step-1 and step-2 limits, and the number
+            of curves. There are several ways to approach the problem of optimal parameter
+            selection. One way is to maximize the probability of success divided by the
+            work performed, allowing the latter to vary. This is perhaps the most natural
+            approach because it maximizes the probability of success per unit work. Another
+            is to fix the amount of work and simply maximize the probability of success.
+            We look at the latter problem first.
+            Maximizing 0°(a, ß). On the assumption that step 2 runs K times as fast
+            as step 1 (K will be implementation-dependent), the cost of running one curve
+            is Bx + (B2 - B\)/K . That is to say, if we can compute step 1 to Bx in some
+            fixed time, we can compute step 2 to KBx in the same amount of time. If we
+            use L curves, the total run time is T = L(B\ + (B2 - B\)/K). If Bx is small
+            with respect by B2, or K is large (as is usually the case), we can approximate
+            this to T« L(Bx + B2/K). We would then like to maximize the probability of
+            success with L curves. This probability is
+            (4.1)                                            l-[l-^>(Bx,B2)]L.
+            Maximizing this with T fixed is equivalent to minimizing
+                                                        [ï-âB(Bl,B2)]iT/lBl+lh/K)).
+
+            This in turn is equivalent to minimizing
+
+            (4.2)                       Q(Bx , B2) =                  +^              log(1 - &>(Bx, B2)).
+
+            The Kuhn-Tucker conditions yield
+                                                                                                      ö.:s>
+                                 T(log(l-^(Bx,B2))                                    -T OB,
+                                     (Bx+B2/K)2                          - (l-&(Bx,B2))(Bx+B2/K)'
+                                 T\og(l-^>(Bx,B2))                         _-T$£_
+                                    K(BX + B2/K)2                        ~ (1 -&(Bx,              B2))(Bx + B2/K) '
+            Solving for j^- and ||£                      gives, at the stationary points,
+                                         d¿?  (¿?(Bx,B2)-l)\og(l-&(Bx,B2))
+                                         dBx              (Bx+B2/K)
+            (4.4)
+                                         d& = (&(Bx,B2)-\)log(l-&(Bx,B2))
+                                         8B2            K(Bx+B2/K)
+            Whence
+
+            (4-5)                                                  dFx=KdF2-
+            We remark that without the simplification B2 « B2 - Bx , K would become
+            K2l(K - 1) in (4.5). That (4.5) represents a minimum is easy to see because
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            450                                   R. D. SILVERMANAND S. S. WAGSTAFF,JR.
+
+            the function is convex. The result implies that if we have selected Bx and B2
+            optimally, then if we change Bx by Ai?! , then B2 should be changed by KABx .
+            The partial derivatives in (4.4) can be directly determined from &(Bx, B2),
+            yielding
+                                 dS0 _ 3°(Bx, B2)     p(a - ß)                                  p(a - l)logp
+                                 dBx ~ Bx log(p/B2) + Bx logBx                                Bx log5, log(p/B2) '
+            (4-°)                ¿^> = logBx&(Bx, B2)                             p(a-ß)
+                                 dB2     B2log2(p/B2)                            B2log(p/B2)'
+            For simplicity of notation we set W = 1 - 3P(BX, B2) and W = log(p/B2).
+            Then, combining (4.6) with the optimality conditions given by (4.4) yields
+                        (-T)log(^)    = ¿P(Bx, B2) p(a - ß)         p(a-l)logp
+                         (Bx+B2/K) '        BxW     + BxlogBx        BxlogBxW '
+            ('}          (-^)log(^)       logBx^(Bx,B2)       p(a-ß)
+                        K(Bx + B2/K)            B2W2            B2W '
+            Solving (4.7) would yield expressions for the best values for Bx and B2, but
+            (4.7) seems analytically intractable. To determine the optimal ß, and B2, we
+            are therefore forced to resort to numerical evaluation of â°(Bx, B2).
+                To determine the optimal relationship between B\ and B2, the following
+            procedure seems reasonable. Fix the size of the prime factor for which we
+            are looking. Fix T, and allow Bx and L to vary, adjusting B2 accordingly.
+            Compute ¿P(Bx ,B2) by direct integration of Dickman's function and select
+            the set of values for L, Bx, and B2 that maximizes the probability of success.
+            Table 1 shows the results of this computation for p = 1015 and K = 100. The
+            highest probability of success occurs where L = 5 and B2 « 41i?i . Table 1
+            was recomputed for values of p ranging from 105 to 1040 and values of K
+            varying from 10 to 500. Each time, the optimal value of B2 was approximately
+            OAKBx , provided that T was big enough to yield a nonnegligible chance of
+            success. Space prohibits displaying all of the relevant data here. However,
+            the estimate B2 = OAKBx is a good general rule to use because the objective
+            function is very flat in the neighborhood of the optimum. It should give results
+            that are within a few percent of optimum.
+               The optimal value for B\ could, in theory, be derived from B(p), however
+            we would need accurate estimates for its o(l) term as a function of p , and we
+            do not have such an expression.
+               Table 2 shows what happens if T is not big enough to give a nonnegligible
+            chance of success. As p increases, S§(p), and hence T, must increase also, and
+            this cannot occur when T is constrained. This table displays, for T = 20,000,
+            the optimal computed values for Bx and B2 as p is varied. The probability
+            of success is more dependent on Bx than B2, and since T is constrained, we
+            cannot maintain B2 = OAKBx while B{ is increasing, without reducing L.
+            Once L reaches 1, however, it cannot be reduced further.
+               An intuitive explanation for this result is as follows. The success of the
+            algorithm requires that a random number near p will be smooth up to Bx
+            and have a single prime factor between Bx and B2. The probability that this
+            number is smooth up to Bx clearly depends on the size of p , but the probability
+            that it has a single prime factor between Bx and B2 will be independent of p
+            if p is sufficiently large with respect to B2 .
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORING ALGORITHM                                 451
+
+
+                  Table 1. Optimal B2/B\ relationship; p = 1015; T = 20,000; K = 100
+                                    Curves                                     B2             V(Bx,B2)        B2/Bx
+                                                           12539            758620              .0635548       60.5
+                                                           6535             352941              .0768417       54.0
+                                                           4474             223713              .0816556       50.0
+                                                           3546             148936              .0829785       42.0
+                                                           2857             117142              .0829913       41.0
+                                                           2491             100071              .0813971       40.2
+                                                           2063             81485               .0796019       39.5
+                                                           1837             71942               .0776121       39.1
+                                     9                     1628             61050               .0752463       37.5
+                                     10                    1498             54945               .0729526       36.7
+                                     11                    1356             47489               .0706545       35.0
+                                     12                    1277             43990               .0682703       34.4
+                                     13                    1189             40183               .0660136       33.8
+                                     14                    1094             35931               .0637429       32.8
+                                     15                    1010             32333               .0615120       32.0
+                                     16                    963              30203               .0593397       31.3
+                                     17                    904              28054               .0573140       31.0
+                                     18                    854              26395               .0552602       30.9
+                                     19                    813              24979               .0533285       30.7
+                                     20                    777              23646               .0515252       30.4
+
+
+                           Table 2. Optimal B2/Bx relationship for fixed T (K = 100)
+
+                                 Digits                        B                 B,            V(Bx,B2)       B2/Bx
+                                     10          32          429              19974               .915860      46.6
+                                     11          22          631              28443               .698543      45.1
+                                     12          16          880              37871               .449772      43.0
+                                     13          10          1413             60082               .265791      42.5
+                                     14          8           1778             74006               .147927      41.6
+                                     15          4           3568             146688              .082823      41.1
+                                     16          4           3578             145745              .045130      40.7
+                                     17          3           4809             190510              .024959      39.6
+                                     18          2           7271             280162              .014252      38.5
+                                     19                      14565            558007              .008191      38.3
+                                     20                      14601            554427              .004646      38.0
+                                     21                      14632            551360              .002598      37.7
+                                     22                      14792            535502              .001428      36.2
+                                     23                      15259            489356              .000768      32.1
+                                     24                      15469            468559              .000411      30.3
+                                     25                      15601            455514              .000215      29.2
+
+
+
+             Remark. We note, as a practical matter, that if one wants to perform ECM
+             with just one curve, then one should use the P - 1 algorithm instead, since it
+             is significantly faster.
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            452                                   R. D. SILVERMANAND S. S. WAGSTAFF,JR.
+
+            Maximizing ¿P(a, ß)/T.      We now examine the more interesting case of trying
+            to maximize the probability of success per unit work. Table 3 shows the results.
+            For each entry in the table a mesh was created by varying B\ and B2. We
+            then looked for the point that maximized the probability of success divided by
+            the cost per curve. The probability of success was again computed using direct
+            integration of Dickman's function p(a, ß). This table assumes that step 2 is
+            100 times as fast as step 1. Montgomery's program, the most efficient ECM
+            program known to us, is even better. It achieves AT= 170 on some machines.
+            With AT= 100 the cost per curve is B{+(B2-Bx)/100.                                                  The following columns
+            are included in the table:
+                  ( 1) D is the number of decimal digits in the factor for which we are looking.
+                  (2) Bx and B2 are the optimal step-1 and step-2 limits.
+                  (3) L is the expected number of curves to find a factor of this size. It is
+                       clearly \/&(B\, B2).
+                  (4) Inc is the incremental cost ratio, that is, the cost for this row divided
+                       by the cost for finding a factor that is 1 digit smaller.
+           The minor fluctuations in the B2/Bx column (and others) are due to the fact
+           that the response surface is extremely flat in the neighborhood of the global op-
+           timum. Furthermore, Dickman's /^-function, needed to compute p(a, ß), was
+           precalculated only at fixed points and not interpolated for the second integra-
+           tion. Changes of ±10% in Bx can result in less than a 1% change in the global
+           response surface, even though the probability of success for a single curve can
+           change significantly. Furthermore, the actual Bx- and ^-parameters are prime
+           numbers, and the entries in Table 3 are not taken as primes. For example, for
+           p = 104, B\ is given as 16 and B2 as 800. These should actually be rounded
+           to the nearest primes, yielding B\ = 17, and B2 = 797, changing the B2/B\
+           ratio substantially. Table 3 is very approximate for small p .
+                               Table 3. Optimal ECM parameter selection (K = 100)
+
+                                 ih                B2          V(Bi,B2)            Average      L     B2/B:                    Inc
+                   5         16                800                .45G             2.19                   50       52.G
+                   7         53                2G50               .22G            4.41                    50       350.5       2.48
+                   9         15G               7170               .122            8.IG                   4G        1858        2.25
+                   11        405               19440              7.10e-2         14.1                    48       8441        2.09
+                   13        9G2               42328              4.07e-2         24.G                   41        34034       1.98
+                   15        2240              103017             2.60e-2         38.4                   4G        125599      1.90
+                   17        4778              215010             l.Gle-2          62.2                  45        430918      1.84
+                   19        900-1             405180             9.39e-3          ÎOG                    45       1.389e+6    1.78
+                   21        18437             792791             6.20e-3          161                    43       4.250e+G    1.74
+                   23        34155              1.40e+G           3.8Ge-3          259                    41       1.245e+7    1.70
+                   25        6G59G              2.GGe+G           2.GGe-3          376                    40       3.50Ge+7    1.6G
+                   27        133297             5.33e+G           1.950-3          512                    40       9.546e+7    1.64
+                   29        247988            9.99e+G            1.38e-3          725                    40       2.519e+8    1.62
+                   31        374990            1.54e+7            8.20e-4          1219                   •11      6.447e+8    1.59
+                   33        G4999G            2.6Ge+7            5.59e-4          1757                   11       1.61 le+9   1.57
+                   35        1170924           4.80e+7            4.19e-4          2382                   11       3.933e+9    1.56
+                   .'(7      19G7442           8.13e+7            2.97e-4          3366                   41       9.404e+9    1.54
+                   39        327G490           1.31<-+8           2.05o-!          4878                   40       2.237e+10   1.52
+                   •11       5249GG7           2.09O+8            1.44C-4          6897                   40       5.068e+10   1.51
+
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORING ALGORITHM                         453
+
+            Remark. It is possible to select the coefficients of an elliptic curve so that the
+            group order is a priori divisible by 12, or alternatively 8, one-half the time and
+            16 one-half the time. This selection is assumed in Table 3. Clearly, if one does
+            not make this selection, then one loses approximately one extra digit and should
+            select parameters from Table 3 accordingly.
+               Lenstra's results stated in the introduction imply that the probability of suc-
+            cess divided by the cost is
+                                                                       1 -g-*
+                                                                     gK(p)M(N) ■
+            This is clearly maximized at g = 1 for any fixed N and p, so the optimal
+            probability of success is 1 - l/e . Indeed, from Table 3, the global probability
+            of success with multiple curves is
+                                                     1-(1-£»(*,,                £2))<«Wi.*»,
+            and this clearly approaches 1 - l/e as D —>oc because 3>(B\, B2) —>0 at the
+            appropriate rate. Furthermore, if one computes 1 - (1 - 3°(Bx, B2))L from
+            Table 3, one obtains very good approximations to 1 - l/e .
+               The o(l) terms in 3?(p) and 38(p) represent a class of functions of p
+            that go to zero as p goes to infinity. From Table 3, we can estimate the o(l)
+            functions for 3?(p) and 33(p). For each value of p we may find the corre-
+            sponding value for o(l) by setting 3P(p) and 3§(p) equal to the values in the
+            T and Bx columns, respectively, and then solving for o(l). Thus, we obtain
+            for Jf(p) :
+                                                                  _ [log(riogp)]2                  2
+                                                                       logp log logp
+            and for 3§(p) we obtain:
+                                                       „,1}_         logea, logg)                   i
+                                                                    Vlogp log logp                 V2
+            Table 4 (next page) gives these computed values, while Figure 1 plots them.
+            Since these are o( 1) estimates, they must drop to zero as p —►
+                                                                          oc , and the data
+            suggests that they might.
+                                             0.4-1
+
+
+                                             0.3-
+
+                                             0.2-
+
+                                             0.1-
+
+
+
+
+                                          -0.2 J
+
+                                      Figure         1. o(l) estimates for 3T(p) and 3§(p)
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+             454                                   R. D. SILVERMAN AND S. S. WAGSTAFF, JR.
+
+                                        Table 4. o(l) estimates for Jf(p)                               and
+
+                            l°gioP             ß(p)                fC(p)           loglOP           B(p)           rC(p)
+
+                                4          -.130386               .396991             23          .063736          .311264
+                                5          -.057283               .394847             24          .062588          .308229
+                                6          -.015251               .388040             25          .061436          .306850
+                                7          .011771                .385323             2G          .060284          .307257
+                                8          .031230                .379910             27          .059054          .305791
+                                9          .044596                .373503             28          .058359          .303252
+                                10         .053258                .368445             29          .056557          .298345
+                                11         .059085                .362141             30          .055008          .290877
+                                12         .062846                .356763             31          .053742          .287734
+                                13         .065517                .353562             32          .052380          .286437
+                                14         .067397                .350188             33          .051164          .284786
+                                15         .068545                .347020             34          .049909          .285186
+                                16         .068941                .340724             35          .048716          .280016
+                                17         .069027                .330794             36          .047530          .280075
+                                18         .068465                .325531             37          .046313          .278940
+                                19         .067677                .327952             38          .045135          .276070
+                                20          .066807               .320870             39          .043981          .274095
+                                21          .066059               .313776             40          .042839          .272629
+                                22          .064925               .311541
+
+
+
+                                            25
+
+
+                                            20
+
+
+                                             10
+                                     log
+                                             1(1
+
+
+
+
+                                                        ~i-1-1-1-1-1-r~
+                                                                                                              —i
+                                                         5       10       15     20      25      30      35   40
+                                                                      Decimal Digits In p
+
+                                      Figure 2. Logarithms of optimal L , 5, , and T
+                   Figure 2 plots the logarithms of L, Bx , and T from Table 3.
+                Figure 3 plots the incremental cost ratio to find a factor of one more digit.
+             It is easy to see that the incremental cost ratio is dropping slowly to 1 as p
+             increases. Indeed,
+                                                                          Jf(lOp) = 1
+                                                                  lim
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                                THE ELLIPTIC CURVE FACTORING ALGORITHM                                              455
+
+
+                                          3.0-1
+
+
+                                          2.5-           \
+
+
+                                  Inc     2.0-                    \.
+
+
+                                          1.5-                                                      ~~~-
+
+
+                                          1-0    -1-1-1-1-1-1-1-1
+                                                        5      10        15    20      25      30         35    40
+                                                                       Decimal Digits in p
+
+                                        Figure        3. Incremental cost of adding one digit
+                The function behaves approximately like 0(px^),                                            hence ECM behaves like
+            an 0(pxl$) method for p between 5 and 40 digits.
+                                      5. Changing              ECM parameters                   after          failure
+               We now discuss the problem of how to select B\ and B2 when we do not
+            know p . We assume that N is an odd, random composite integer. In practice,
+            one always starts factoring N by trial division up to some limit 1/o= log N or
+            perhaps yo = Ne for small e. To find the initial starting point for ECM, we
+            need to compute the expected size of the smallest factor of N, given that it is
+            greater than y0 , and then use that value. This can be readily computed, using
+            the methods given in §3. The probability that the smallest prime factor is in an
+            interval (y, yx+£) is the probability that there is a factor in that interval times
+            the probability that there is no factor in any smaller interval. Table 5 (next
+            page) presents the expected size of the smallest prime factor of N, for various
+            N, given that trial division to log2 N failed to find a factor. The third column
+            shows the expected value of the size of S(N), simply given that S(N) > 10.
+            This table was computed                     by partitioning           the interval            [log yo , log \Z/V] into 1000
+            pieces of equal length ô = (log \fÑ- log y0)/1000. We also estimate the average
+            size of a factor p in the interval (I0rf, I0rf+á) tobe d+l+ô/2.    Our estimate
+            for the size of E(S(N)) now becomes
+                                                    \o%s/Ñ                                          d-ô
+                               E(S(N))k Y (d+l+â/2)D(d)                                             J]         {I-D(j)),
+                                                   d=\ogy0                                    j=loglog2 N
+
+            where the product and sum are taken over increments of ô, and D(d) is the
+            probability that there is a factor in the interval.
+                Now, supposing that ECM fails, we can use the information obtained from
+            the failure, along with Bayes's theorem, to re-estimate the expected size of the
+            still unknown factor. Assuming that we run ECM and it fails, the failure will
+            give us a sample distribution. A prior can be derived from (3.2). The density
+            function for the prior is obtained by differentiating the distribution function
+            Prob(3p with y0 < p < 10* and p\N). This probability is approximately
+                                            ~(N, 3,k/log(y0) - l) « (k-log(y0))/k.
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+           456                                    r. d. silverman and s. s. wagst äff, jr.
+
+                                          Table 5. Expected size of S(N) (in digits)
+
+                                                 logio N               7o =log2 N                   To = 10
+                                                 20                    3.65                         2.28
+                                                 30                    5.15                         2.67
+                                                 40                    6.36                         2.93
+                                                 50                    7.39                         3.14
+                                                 60                    8.28                         3.30
+                                                 70                    9.07                         3.43
+                                                 80                    9.79                         3.54
+                                                 90                    10.44                        3.64
+                                                 100                   11.04                        3.72
+                                                 125                   12.35                        3.88
+                                                 150                   13.48                        3.99
+                                                 175                   14.46                        4.08
+                                                 200                   15.34                        4.15
+
+            Differentiating this with respect to k yields log(yo)/k2 as our initial prior.
+            Once we have run ECM and had it fail, we will use the sample distribution
+            derived from the failure as the prior for the next trial. Alternatively, one can
+            always use a uniform prior. In the parlance of Bayesian statistics, "the sample
+            swamps the prior." Whether one uses a uniform prior, or the posterior from
+            the last failure, makes little difference in practice.
+               Bayes's theorem states that the posterior density function is the product of the
+            prior and sample density functions, times an appropriate integration constant.
+            Thus, if g(p) is the prior, and h(p) is the sample, then T(p) is the posterior,
+            where
+                                         T(p) = kg(p)h(p)                   and k=Sg{x)lh{x)dx.
+                 An example will make this clear. Suppose (from Table 3) we chose Bx =
+            3350, B2 = 151000 and that we were looking for a 15-digit factor. We shall
+            also assume that there are no factors less then (say) nine digits based upon trial
+            division. With the given parameters, the probability of failing to find a factor
+            of D digits is given in column 2 of Table 6. This gives us a sample distribution
+            function. To get its density function, we compute its derivative numerically.
+            Those values are given in the third column of Table 6. We assume a uniform
+            prior for this calculation, so the expected value of the posterior will just be the
+            expected value of the sample. The expected value of the posterior is 15.84. We
+            then use this value to select the new ECM parameters. The actual calculations
+            were carried out to more precision than is displayed in the table.
+               The same calculation was repeated for factors of 4 to 40 digits and the results
+            are displayed in Table 7. This table gives, based upon a uniform prior, the new
+            estimated size of the factor, given that the current search has failed and that
+            the current search used the parameters from Table 3.
+            Remark. We note that the technique just described, for parameter reselection,
+            can be applied in other instances as well. It is not unique to ECM. One can use
+            the method in any random algorithm where the probability of success varies in
+            a predictable way upon the value of the input parameters.
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                            the elliptic curve factoring algorithm                            457
+
+                                              Table 6. Bayes theorem calculation
+
+                                                     D               Prob                density
+
+                                                      9          3.100C-10               1.315e-7
+                                                      10          2.629e-7               4.039e-5
+                                                      11          8.078e-5               1.891e-3
+                                                      12          3.782e-3               1.953e-2
+                                                      13          3.914e-2               7.789e-l
+                                                      14          .1595                  .1624
+                                                      15          .3639                  .2132
+                                                      16          .5860                  .1969
+                                                      17          .7578                  .1417
+                                                      18          .8694                  8.767e-2
+                                                      19          .9331                  4.906e-2
+                                                      20          .9675                  2.572e-2
+                                                      21          .9846                  1.266e-2
+                                                      22          .9929                  6.070e-3
+                                                      23          .9968                  2.837e-3
+                                                      24          .9985                  1.299e-3
+                                                      25          .9994                  5.731e-4
+                                                      26          .9997                  2.502e-4
+                                                      27          .9998                  1.075e-4
+
+
+
+
+                                     Table 7. Factor size re-estimation after failure
+
+                                                    D           New D              D         New D
+                                                     4          4.575              23         24.012
+                                                     5          5.604              24         25.031
+                                                     6          6.606              25         26.075
+                                                     7          7.632              26         27.085
+                                                     8          8.654              27         28.108
+                                                     9          9.685              28         29.135
+                                                     10         10.712             29         30.138
+                                                     11         11.725             30         31.145
+                                                     12         12.700             31         32.152
+                                                     13         13.789             32         23.173
+                                                     14         14.818             33         34.157
+                                                     15         15.847             34         35.213
+                                                     16         16.869             35         36.223
+                                                     17         17.884             36          37.242
+                                                     18         18.896             37          38.262
+                                                     19         19.932             38          39.315
+                                                     20         20.950             39          40.287
+                                                     21         21.964             40          41.302
+                                                     22         22.992
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            458                                   r. d. silverman and s. s. wagstaff, jr.
+
+                                                        6. Actual            ECM run times
+               This section presents the actual running times of Montgomery's program on
+            a SUN-3/60. On such a machine, step 2 of his program runs approximately 175
+            times as fast as step 1. That is to say, in an amount of time it takes to execute
+            step 1 to Bx, step 2 can be executed to 1752?i . Table 8 presents the amount of
+            time it takes to execute Montgomery's program to various step-1 limits for three
+            different-sized N, 50 digits, 100 digits, and 200 digits. Theoretically, it should
+            take time proportional to Bx to execute step 1 up to Bx , but Montgomery's
+            program has some internal tricks that make it faster than linear for small Bx .
+                                   Table 8. Actual ECM run times in seconds (step 1)
+
+                                                      Bx               50D           100D             200D
+                                                   100                 3              11              44
+                                                   500                 7              29              115
+                                                   1000                12             46              184
+                                                   5000                43             172             690
+                                                   10000               81             323             1293
+                                                   50000               247            989             3955
+                                                   100000              439            1754            7027
+                                                   200000              810            3241            12960
+                                                   500000              1835           7338            29353
+
+                From the times given in Table 8, we can use the parameters given by Table 3
+            to estimate how long it will take to find a factor of a given size with probability
+             1 - l/e, for several different-sized N. The data is given in Table 9. Times
+            for other values of N can be interpolated by noting that the multiplication
+            algorithm used is an 0(log2 N) algorithm, and that multiplying the size of N
+            by k changes the run time by a factor of k2. Times for other p can be
+            extrapolated by using the Inc column from Table 3.
+                                        Table        9. Probable time to find p (in seconds)
+
+                                             logioP              100-Digit A'                   200-Digit N
+                                             4                   4.8                            19.1
+                                             G                   31.8                           127
+                                             8                   168                            672
+                                             10                  503                            2012
+                                             12                  1521                           6084
+                                             14                  4650                           18600
+                                             16                  14500                          58000
+                                             18                  45000                          180000
+                                             20                  110000                         440000
+                                             22                  270000                         1.08e+6
+                                             24                  645000                         2.58e+6
+                                             26                  1.60e+6                        6.40e+6
+                                             28                  4.10e+6                        1.64e+7
+                                             30                  1.04e+7                        4.16e+7
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORING ALGORITHM                                        459
+
+                                          7. Comparison with the quadratic                                    sieve
+               ECM is a random algorithm, while MPQS [11] works like a deterministic
+            algorithm in practice. ECM succeeds more quickly when N has a small prime
+            factor, but since the factors are unknown, one would like to place an upper
+            bound on the amount of time to spend using ECM, before switching to MPQS.
+            We would also like to determine how long to run ECM in order to minimize
+            the expected time to find a factor of N, using a combination of both meth-
+            ods. Throughout this section, we shall assume that trial division to log2 N has
+            already been performed.
+               Let v(T, p) be the probability that we succeed in factoring N with ECM
+            in time T, where p is the smallest prime factor of N. We note that T will
+            depend on p. Given that we spend time T with ECM and that MPQS will
+            take time x, the expected total time is
+
+            (7.1)                     R(T ,p,x)            = v(T ,p)T + (l-v(T                       ,p))(T + x).
+
+            Since we can always factor N in time x with MPQS by itself, we want
+            R(T,p,x)   < x for all T. This yields an upper bound on the amount of
+            time to spend with ECM:
+
+            (7.2)                                                   T<v(T,p)x.
+
+               If we take x = L(N), v(T, p) = 1-e~* , and T = gJf(p)M(N),                                             inequality
+            (7.2) then becomes
+
+            (7.3,                                           r^<                      Lm
+                                                            l-e-s              .W(p)M(N)'
+
+            We have good estimates for the values of the o(l) term for L(N) based upon
+            the CPU-times presented in [3] and can therefore compute L(N) and .JF(p)
+            accurately. Alternatively, one can use values for L(N) and 3£(j>) taken from
+            actual known run times. One can therefore solve (7.3) for g numerically if one
+            assumes some value for p. The difficulty is that p is unknown. One should
+            therefore solve (7.3) for many different values of p and then average over the
+            different values of g , weighted by the probability that N has a factor near p .
+            This analysis is, of course, predicated on N having only two prime factors.
+            When it has more, the analysis becomes a great deal more complicated. The
+            MPQS algorithm will work in the same amount of time regardless of how many
+            factors are present. However, whenever ECM finds a factor, one presumably
+            divides out that factor before continuing. This in turn affects M(N) for the
+            next trial and makes the analysis a great deal more difficult. One must also
+            estimate the probability that the cofactor is prime.
+               We would also like to minimize the expected run time. A straightforward
+            minimization of (7.1) with respect to g yields
+
+                                               l0g(^(pWö)                           ^L(N)>^(p)M(N),
+            (7.4)
+                                               0                                    otherwise.
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            460                                   R. D. SILVERMANAND S. S. WAGSTAFF,JR.
+
+            In computing g, the values for Jf(p)M(N)     can be taken from Table 9. Table
+            9 displays the actual timing estimates in the case where g = 1, that is, the
+            probability of success is 1 - l/e .
+               Given an arbitrary N, ECM works best by selecting Bx and B2 small,
+            running trials, then increasing Bx and B2 and repeating if there is no success.
+            We estimate here the time to run ECM before switching to MPQS, to minimize
+            (7.1), assuming that N will be small enough to factor with MPQS:
+                   ( 1) Trial divide to p « log2 N.
+                   (2) Select logp = E(S(N\p > log2N)) from Table 5.
+                   (3) For that value of p compute g from (7.4). If g = 0, then quit. Select
+                        Bx and B2 from Table 3 and run ECM for time g3?(p)M(N).
+                   (4) If ECM fails, increase p and go to step (3).
+                   (5) If ECM succeeds and the cofactor is composite, re-estimate S(N) and
+                        go to step (3).
+                   (6) The total time spent is the sum of the times spent in (3).
+            Remark. This procedure is different from one we would use if we were employ-
+            ing only ECM. In the case described above, g is varied according to (7.4). If
+            we were using ECM only, we would always take g = 1 , since that is optimal.
+               We only execute step (3) whenever earlier attempts have failed. The total
+            expected time spent in step (3) is therefore
+
+                                  Y g^(p)MXA)[probability that earlier trials failed].
+                                   p
+            This sum runs over increasing p until g is negative. At that point it becomes
+            faster to use MPQS. We note that even though Bx and B2 are chosen for a
+            particular p, there is also a smaller chance that it will find a larger p, and a
+            larger chance that it will find a smaller p . The probability that ECM succeeds
+            on a given trial is approximately
+
+                                                                       E¿^)>
+                                                                       d
+            where l/d is the probability that there is a (d+ l)-digit factor, and n(d) is the
+            probability that ECM finds a factor of d digits with the value of g given by
+            (7.4). This latter probability can be found by direct integration of Dickman's
+            function as discussed in §§2 and 4. The probability of failure of a given trial is
+            trivially just one minus the above sum.
+            Remark. This analysis has assumed that our goal is simply to find a factor of
+            N, not to factor N completely. The latter case is extremely difficult to analyze
+            because when ECM does find a factor one must estimate the probability that
+            the cofactor is prime. This is difficult to estimate because the cofactor being
+            considered is, in some sense, no longer a "random" integer. It does not have the
+            same expected smoothness properties of some other arbitrary integer of about
+            the same size.
+               Table 10 presents the amount of time one should run ECM before switching
+            to MPQS. The values give the fraction of time one should spend with ECM,
+            relative to the time it will actually take with MPQS. This table assumes that one
+            is factoring a "random" integer whose factors up to log2 N have been removed
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+                                               THE ELLIPTIC CURVE FACTORING ALGORITHM                                               461
+
+
+                                Table 10. Time to run ECM before changing to MPQS
+
+                                                             log10 N               ECM Time
+                                                            40                     .72
+                                                            50                     .43
+                                                            60                     .16
+                                                            70                     .05
+                                                            80                    .0080
+                                                            90                    .0029
+                                                            100                   .0016
+                                                            110                   .00071
+
+
+
+            by trial division and that one switches to QS upon finding the first factor. The
+            values given in Table 10 are approximate, and are rather sensitive to the starting
+            value for E(S(N)). If one assumes that the smallest factor of N is larger than
+            (say) A0-2, then one clearly would spend more time with ECM before switching.
+            The exact, optimal length of time can be computed by the procedure given by
+            (l)-(6) above. We also remark that the values given are sensitive to the quality
+            of implementation of the two methods.
+
+                                                               Acknowledgments
+                The authors would like to thank Claudia Spiro for helpful remarks regarding
+             the estimates in §3 and Peter Montgomery for allowing us to use his ECM
+             program.
+
+
+                                                                    Bibliography
+
+                    1. Richard P. Brent, Some integer factorization algorithms using elliptic curves. Research Re-
+                       port CMA-R32-85, The Centre for Mathematical Analysis, The Australian National Uni-
+                        versity, 1985.
+                    2. J. Brillhart, D. H. Lehmer, J. L. Selfridge, B. Tuckerman, and S. S. WagstafF,Jr., Factor-
+                       izations of b" ± 1, 0 = 2,3,5,6,7,10,11,12           up to high powers, 2nd ed., Contemp.
+                       Math., vol. 22, Amer. Math. Soc, Providence, Rl, 1983.
+                    3. Tom R. Caron and Robert D. Silverman. Parallel implementation                          of the quadratic sieve, J.
+                        Supercomputing 1 (1988), 273-290.
+                    4. N. G. DeBruijn, On the number of uncancelled elements in the sieve of Eratosthenes. Indag.
+                        Math. 12(1950), 247-256.
+                    5. G. H. Hardy and E. M. Wright, An introduction to the theory of numbers, 5th ed., Oxford
+                       Univ. Press, Oxford, 1979.
+                    6. Donald E. Knuth and Luis Trabb Pardo, Analysis of a simple factorization algorithm, Theor.
+                        Comp. Sei. 3(1976), 321-348.
+                    7. H. W. Lenstra, Jr., Factoring integers with elliptic curves, Ann. of Math. (2) 126 (1987),
+                        649-673.
+                    8. Peter L. Montgomery, Speeding the Pollard and elliptic curve methods of factorization. Math.
+                        Comp. 48(1987), 243-264.
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+            462                                   R. D. SILVERMANAND S. S. WAGSTAFF,JR.
+
+                   9. Carl Pomerance, Analysis and comparison of some integer factoring algorithms, Math. Cen-
+                       trum Tracts (H. W. Lenstra, Jr. and R. Tijdeman, eds.), 1984, pp. 89-140.
+                  10. Howard Raiffa and Robert Schlaifer, Applied statistical decision theory, MIT Press, Cam-
+                       bridge, MA, 1961.
+                  11. Robert D. Silverman, The multiple polynomial quadratic sieve, Math. Comp. 48 (1987).
+                        329-340.
+
+                The MITRE Corporation,       Burlington                     Road, Bedford,            Massachusetts     01730
+                E-mail address : bs@linus.mitre.org
+
+                Department of Computer Sciences, Purdue University,                                   West Lafayette,    Indiana 47907
+                E-mail address: ssw@cs.purdue.edu
+
+
+
+
+License or copyright restrictions may apply to redistribution; see https://www.ams.org/journal-terms-of-use
+

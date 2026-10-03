@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6tFAb6iH0EHzXOld1/nMx99uwUA</id>
+  <title>arXiv Query: search_query=abs:"factorization with partially known" OR abs:"partial knowledge" AND abs:factoring&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-10-03T22:13:00Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22factorization+with+partially+known%22+OR+(abs:%22partial+knowledge%22+AND+abs:factoring)&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>15</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1206.4811v1</id>
+    <title>Maximum-entropy Monte Carlo method for the inversion of the structure factor in simple classical systems</title>
+    <updated>2012-06-21T09:01:24Z</updated>
+    <link href="https://arxiv.org/abs/1206.4811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1206.4811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a method for the evaluation of the interaction potential of an equilibrium classical system starting from the (partial) knowledge of its structure factor. The procedure is divided into two phases both of which are based on the maximum entropy principle of information theory. First we determine the maximum entropy estimate of the radial distribution function constrained by the information contained in the structure factor. Next we invert the pair function and extract the interaction potential. The method is tested on a Lennard-Jones fluid at high density and the reliability of its results with respect to the missing information in the structure factor data are discussed. Finally, it is applied to the experimental data of liquid sodium at 100$^{\circ}$C.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-06-21T09:01:24Z</published>
+    <arxiv:comment>10 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>Phys. Rev. E 84, 041130 (2011)</arxiv:journal_ref>
+    <author>
+      <name>Marco D'Alessandro</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevE.84.041130</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevE.84.041130" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.03730v2</id>
+    <title>Encoding Domain Information with Sparse Priors for Inferring Explainable Latent Variables</title>
+    <updated>2022-04-11T09:46:05Z</updated>
+    <link href="https://arxiv.org/abs/2107.03730v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.03730v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Latent variable models are powerful statistical tools that can uncover relevant variation between patients or cells, by inferring unobserved hidden states from observable high-dimensional data. A major shortcoming of current methods, however, is their inability to learn sparse and interpretable hidden states. Additionally, in settings where partial knowledge on the latent structure of the data is readily available, a statistically sound integration of prior information into current methods is challenging. To address these issues, we propose spex-LVM, a factorial latent variable model with sparse priors to encourage the inference of explainable factors driven by domain-relevant information. spex-LVM utilizes existing knowledge of curated biomedical pathways to automatically assign annotated attributes to latent factors, yielding interpretable results tailored to the corresponding domain of interest. Evaluations on simulated and real single-cell RNA-seq datasets demonstrate that our model robustly identifies relevant structure in an inherently explainable manner, distinguishes technical noise from sources of biomedical variation, and provides dataset-specific adaptations of existing pathway annotations. Implementation is available at https://github.com/MLO-lab/spexlvm.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-08T10:19:32Z</published>
+    <arxiv:comment>7 pages, 9 figures, Joint KDD 2021 Health Day and 2021 KDD Workshop on Applied Data Science for Healthcare</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Arber Qoku</name>
+    </author>
+    <author>
+      <name>Florian Buettner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.05696v3</id>
+    <title>Approval Voting and Incentives in Crowdsourcing</title>
+    <updated>2015-09-07T05:21:06Z</updated>
+    <link href="https://arxiv.org/abs/1502.05696v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.05696v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The growing need for labeled training data has made crowdsourcing an important part of machine learning. The quality of crowdsourced labels is, however, adversely affected by three factors: (1) the workers are not experts; (2) the incentives of the workers are not aligned with those of the requesters; and (3) the interface does not allow workers to convey their knowledge accurately, by forcing them to make a single choice among a set of options. In this paper, we address these issues by introducing approval voting to utilize the expertise of workers who have partial knowledge of the true answer, and coupling it with a ("strictly proper") incentive-compatible compensation mechanism. We show rigorous theoretical guarantees of optimality of our mechanism together with a simple axiomatic characterization. We also conduct preliminary empirical studies on Amazon Mechanical Turk which validate our approach.</summary>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-19T20:42:55Z</published>
+    <arxiv:primary_category term="cs.GT"/>
+    <author>
+      <name>Nihar B. Shah</name>
+    </author>
+    <author>
+      <name>Dengyong Zhou</name>
+    </author>
+    <author>
+      <name>Yuval Peres</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.05244v2</id>
+    <title>Generalized Degrees of Freedom of the Symmetric Cache-Aided MISO Broadcast Channel with Partial CSIT</title>
+    <updated>2018-12-04T16:18:31Z</updated>
+    <link href="https://arxiv.org/abs/1712.05244v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.05244v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the cache-aided MISO broadcast channel (BC) in which a multi-antenna transmitter serves $K$ single-antenna receivers, each equipped with a cache memory. The transmitter has access to partial knowledge of the channel state information. For a symmetric setting, in terms of channel strength levels, partial channel knowledge levels and cache sizes, we characterize the generalized degrees of freedom (GDoF) up to a constant multiplicative factor. The achievability scheme exploits the interplay between spatial multiplexing gains and coded-multicasting gain. On the other hand, a cut-set-based argument in conjunction with a GDoF outer bound for a parallel MISO BC under channel uncertainty are used for the converse. We further show that the characterized order-optimal GDoF is also attained in a decentralized setting, where no coordination is required for content placement in the caches.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-14T14:24:50Z</published>
+    <arxiv:comment>first revision</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Enrico Piovano</name>
+    </author>
+    <author>
+      <name>Hamdi Joudeh</name>
+    </author>
+    <author>
+      <name>Bruno Clerckx</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.04281v1</id>
+    <title>Simulation of Attacker Defender Interaction in a Noisy Security Game</title>
+    <updated>2022-12-08T14:18:44Z</updated>
+    <link href="https://arxiv.org/abs/2212.04281v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.04281v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the cybersecurity setting, defenders are often at the mercy of their detection technologies and subject to the information and experiences that individual analysts have. In order to give defenders an advantage, it is important to understand an attacker's motivation and their likely next best action. As a first step in modeling this behavior, we introduce a security game framework that simulates interplay between attackers and defenders in a noisy environment, focusing on the factors that drive decision making for attackers and defenders in the variants of the game with full knowledge and observability, knowledge of the parameters but no observability of the state (``partial knowledge''), and zero knowledge or observability (``zero knowledge''). We demonstrate the importance of making the right assumptions about attackers, given significant differences in outcomes. Furthermore, there is a measurable trade-off between false-positives and true-positives in terms of attacker outcomes, suggesting that a more false-positive prone environment may be acceptable under conditions where true-positives are also higher.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-08T14:18:44Z</published>
+    <arxiv:comment>Accepted at AAAI-23 Workshop on Artificial Intelligence and Cybersecurity (AICS)</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Erick Galinkin</name>
+    </author>
+    <author>
+      <name>Emmanouil Pountourakis</name>
+    </author>
+    <author>
+      <name>John Carter</name>
+    </author>
+    <author>
+      <name>Spiros Mancoridis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.06736v1</id>
+    <title>Two Applications of Graph Minor Reduction</title>
+    <updated>2021-08-15T13:16:57Z</updated>
+    <link href="https://arxiv.org/abs/2108.06736v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.06736v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study two applications of graph minor reduction. In the first part of the paper, we introduce a variant of the boxicity, called strong boxicity, where the rectangular representation satisfies an additional condition that each rectangle contains at least one point not present in any other rectangle. We show how the strong boxicity of a graph~\(G\) can be estimated in terms of the strong boxicity of a minor~\(H\) and the number of edit operations needed to obtain~\(H\) from~\(G.\) In the second part of the paper, we consider false data injection (attack) in a flow graph~\(G\) and quantify the subsequent effect on the state of edges of~\(G\) via the \emph{edge variation factor}~\(θ.\) We use minor reduction techniques to obtain bounds on~\(θ\) in terms of the connectivity parameters of~\(G,\) when the attacker has complete knowledge of~\(G\) and also discuss stealthy attacks with partial knowledge of the flow graph.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-15T13:16:57Z</published>
+    <arxiv:comment>Accepted for publication in Algorithms, Computing and Mathematics Conference (ACM 2021), Chennai, India</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Ghurumuruhan Ganesan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.07781v1</id>
+    <title>Minimax Off-Policy Evaluation for Multi-Armed Bandits</title>
+    <updated>2021-01-19T18:55:29Z</updated>
+    <link href="https://arxiv.org/abs/2101.07781v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.07781v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of off-policy evaluation in the multi-armed bandit model with bounded rewards, and develop minimax rate-optimal procedures under three settings. First, when the behavior policy is known, we show that the Switch estimator, a method that alternates between the plug-in and importance sampling estimators, is minimax rate-optimal for all sample sizes. Second, when the behavior policy is unknown, we analyze performance in terms of the competitive ratio, thereby revealing a fundamental gap between the settings of known and unknown behavior policies. When the behavior policy is unknown, any estimator must have mean-squared error larger -- relative to the oracle estimator equipped with the knowledge of the behavior policy -- by a multiplicative factor proportional to the support size of the target policy. Moreover, we demonstrate that the plug-in approach achieves this worst-case competitive ratio up to a logarithmic factor. Third, we initiate the study of the partial knowledge setting in which it is assumed that the minimum probability taken by the behavior policy is known. We show that the plug-in estimator is optimal for relatively large values of the minimum probability, but is sub-optimal when the minimum probability is low. In order to remedy this gap, we propose a new estimator based on approximation by Chebyshev polynomials that provably achieves the optimal estimation error. Numerical experiments on both simulated and real data corroborate our theoretical findings.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-19T18:55:29Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Cong Ma</name>
+    </author>
+    <author>
+      <name>Banghua Zhu</name>
+    </author>
+    <author>
+      <name>Jiantao Jiao</name>
+    </author>
+    <author>
+      <name>Martin J. Wainwright</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/q-bio/0407024v2</id>
+    <title>Do theoretical physicists care about the protein-folding problem?</title>
+    <updated>2004-09-24T09:52:55Z</updated>
+    <link href="https://arxiv.org/abs/q-bio/0407024v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/q-bio/0407024v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The prediction of the biologically active native conformation of a protein is one of the fundamental challenges of structural biology. This problem remains yet unsolved mainly due to three factors: the partial knowledge of the effective free energy function that governs the folding process, the enormous size of the conformational space of a protein and, finally, the relatively small differences of energy between conformations, in particular, between the native one and the ones that make up the unfolded state.
+  Herein, we recall the importance of taking into account, in a detailed manner, the many interactions involved in the protein folding problem (such as steric volume exclusion, Ramachandran forces, hydrogen bonds, weakly polar interactions, coulombic energy or hydrophobic attraction) and we propose a strategy to effectively construct a free energy function that, including the effects of the solvent, could be numerically tractable. It must be pointed out that, since the internal free energy function that is mainly described does not include the constraints of the native conformation, it could only help to reach the 'molten globule' state. We also discuss about the limits and the lacks from which suffer the simple models that we, physicists, love so much.</summary>
+    <category term="q-bio.BM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-07-15T08:45:40Z</published>
+    <arxiv:comment>27 pages, 4 figures, LaTeX file, aipproc package. To be published in the book: "Meeting on Fundamental Physics 'Alberto Galindo'", Alvarez-Estrada R. F. et al. (Ed.), Madrid: Aula Documental, 2004</arxiv:comment>
+    <arxiv:primary_category term="q-bio.BM"/>
+    <author>
+      <name>Jose Luis Alonso</name>
+    </author>
+    <author>
+      <name>Gregory A. Chass</name>
+    </author>
+    <author>
+      <name>Imre G. Csizmadia</name>
+    </author>
+    <author>
+      <name>Pablo Echenique</name>
+    </author>
+    <author>
+      <name>Alfonso Tarancon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1701.01860v1</id>
+    <title>Calibration of Quasi-Redundant Interferometers</title>
+    <updated>2017-01-07T17:39:17Z</updated>
+    <link href="https://arxiv.org/abs/1701.01860v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1701.01860v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High precison calibration is essential for a new generation of radio interferometers looking for Epoch of Reionization and Baryon Acoustic Oscillation signatures in neutral hydrogen. These arrays have so far been calibrated by redundant calibration, which usually assumes baselines intended to be identical are perfectly so. We present a new calibration scheme that relaxes the assumption of explicit redundancy by calculating the expected covariance of baselines. The technique also allows one to take advantage of partial knowledge of the sky, such as point sources with known positions but unknown fluxes. We describe a 2-level sparse matrix inverse to make the calibration tractable for 1,000-element class interferometers. We provide a reference implementation and use it to test the calibration of simulations of an array with imperfectly located antennas observing Euclidean-distributed point sources. Including position information for a handful of the brightest sources, we find the amplitude/phase reconstruction improves by a factor of $\sim$2/5 over redundant calibration for the noise levels/position errors adopted in the simulations. Inclusion of source positions also allows us to measure the overall phase gradient across the array, information which is lost in traditional redundant calibration.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-01-07T17:39:17Z</published>
+    <arxiv:comment>12 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>J. L. Sievers</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0409186v1</id>
+    <title>Robust Uncertainty Principles: Exact Signal Reconstruction from Highly Incomplete Frequency Information</title>
+    <updated>2004-09-10T18:45:22Z</updated>
+    <link href="https://arxiv.org/abs/math/0409186v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0409186v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper considers the model problem of reconstructing an object from incomplete frequency samples. Consider a discrete-time signal $f \in \C^N$ and a randomly chosen set of frequencies $Ω$ of mean size $τN$. Is it possible to reconstruct $f$ from the partial knowledge of its Fourier coefficients on the set $Ω$?
+  A typical result of this paper is as follows: for each $M &gt; 0$, suppose that $f$ obeys $$ # \{t, f(t) \neq 0 \} \le α(M) \cdot (\log N)^{-1} \cdot # Ω, $$ then with probability at least $1-O(N^{-M})$, $f$ can be reconstructed exactly as the solution to the $\ell_1$ minimization problem $$ \min_g \sum_{t = 0}^{N-1} |g(t)|, \quad \text{s.t.} \hat g(ω) = \hat f(ω) \text{for all} ω\in Ω. $$ In short, exact recovery may be obtained by solving a convex optimization problem. We give numerical values for $α$ which depends on the desired probability of success; except for the logarithmic factor, the condition on the size of the support is sharp.
+  The methodology extends to a variety of other setups and higher dimensions. For example, we show how one can reconstruct a piecewise constant (one or two-dimensional) object from incomplete frequency samples--provided that the number of jumps (discontinuities) obeys the condition above--by minimizing other convex functionals such as the total-variation of $f$.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-09-10T18:45:22Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Emmanuel Candes</name>
+    </author>
+    <author>
+      <name>Justin Romberg</name>
+    </author>
+    <author>
+      <name>Terence Tao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.08278v3</id>
+    <title>Minimax Optimal Goodness-of-Fit Testing with Kernel Stein Discrepancy</title>
+    <updated>2025-01-22T21:59:43Z</updated>
+    <link href="https://arxiv.org/abs/2404.08278v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.08278v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We explore the minimax optimality of goodness-of-fit tests on general domains using the kernelized Stein discrepancy (KSD). The KSD framework offers a flexible approach for goodness-of-fit testing, avoiding strong distributional assumptions, accommodating diverse data structures beyond Euclidean spaces, and relying only on partial knowledge of the reference distribution, while maintaining computational efficiency. Although KSD is a powerful framework for goodness-of-fit testing, only the consistency of the corresponding tests has been established so far, and their statistical optimality remains largely unexplored. In this paper, we develop a general framework and an operator-theoretic representation of the KSD, encompassing many existing KSD tests in the literature, which vary depending on the domain. Building on this representation, we propose a modified discrepancy by applying the concept of spectral regularization to the KSD framework. We establish the minimax optimality of the proposed regularized test for a wide range of the smoothness parameter $θ$ under a specific alternative space, defined over general domains, using the $χ^2$-divergence as the separation metric. In contrast, we demonstrate that the unregularized KSD test fails to achieve the minimax separation rate for the considered alternative space. Additionally, we introduce an adaptive test capable of achieving minimax optimality up to a logarithmic factor by adapting to unknown parameters. Through numerical experiments, we illustrate the superior performance of our proposed tests across various domains compared to their unregularized counterparts.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-12T07:06:12Z</published>
+    <arxiv:comment>57 pages, to appear in Bernoulli</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Omar Hagrass</name>
+    </author>
+    <author>
+      <name>Bharath Sriperumbudur</name>
+    </author>
+    <author>
+      <name>Krishnakumar Balasubramanian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0608654v1</id>
+    <title>Recovering the star formation rate in the solar neighborhood</title>
+    <updated>2006-08-30T10:12:36Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0608654v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0608654v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper develops a method for obtaining the star formation histories of a mixed, resolved population through the use of color-magnitude diagrams (CMDs). The method provides insight into the local star formation rate, analyzing the observations of the Hipparcos satellite through a comparison with synthetic CMDs computed for different histories with an updated stellar evolution library. Parallax and photometric uncertainties are included explicitly and corrected using the Bayesian Richardson-Lucy algorithm. We first describe our verification studies using artificial data sets. From this sensitivity study, the critical factors determining the success of a recovery for a known star formation rate are a partial knowledge of the IMF and the age-metallicity relation, and sample contamination by clusters and moving groups (special populations whose histories are different than that of the whole sample). Unresolved binaries are less important impediments. We highlight how these limit the method. For the real field sample, complete to Mv &lt; 3.5, we find that the solar neighborhood star formation rate has a characteristic timescale for variation of about 6 Gyr, with a maximum activity close to 3 Gyr ago. The similarity of this finding with column integrated star formation rates may indicate a global origin, possibly a collision with a satellite galaxy. We also discuss applications of this technique to general photometric surveys of other complex systems (e.g. Local Group dwarf galaxies) where the distances are well known.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-08-30T10:12:36Z</published>
+    <arxiv:comment>Accepted for publication in Astronomy and Astrophysics</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>M. Cignoni</name>
+      <arxiv:affiliation>Univ. di Pisa</arxiv:affiliation>
+      <arxiv:affiliation>INAF-OAC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>S. Degl'Innocenti</name>
+      <arxiv:affiliation>Univ. di Pisa</arxiv:affiliation>
+      <arxiv:affiliation>INFN-Pisa</arxiv:affiliation>
+    </author>
+    <author>
+      <name>P. G. Prada Moroni</name>
+      <arxiv:affiliation>Univ. di Pisa</arxiv:affiliation>
+      <arxiv:affiliation>INFN-Pisa</arxiv:affiliation>
+    </author>
+    <author>
+      <name>S. N. Shore</name>
+      <arxiv:affiliation>Univ. di Pisa</arxiv:affiliation>
+      <arxiv:affiliation>INFN-Pisa</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1051/0004-6361:20065645</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361:20065645" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.12872v2</id>
+    <title>From Grunts to Lexicons: Emergent Language from Cooperative Foraging</title>
+    <updated>2025-09-26T02:22:11Z</updated>
+    <link href="https://arxiv.org/abs/2505.12872v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.12872v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Language is a powerful communicative and cognitive tool. It enables humans to express thoughts, share intentions, and reason about complex phenomena. Despite our fluency in using and understanding language, the question of how it arises and evolves over time remains unsolved. A leading hypothesis in linguistics and anthropology posits that language evolved to meet the ecological and social demands of early human cooperation. Language did not arise in isolation, but through shared survival goals. Inspired by this view, we investigate the emergence of language in multi-agent Foraging Games. These environments are designed to reflect the cognitive and ecological constraints believed to have influenced the evolution of communication. Agents operate in a shared grid world with only partial knowledge about other agents and the environment, and must coordinate to complete games like picking up high-value targets or executing temporally ordered actions. Using end-to-end deep reinforcement learning, agents learn both actions and communication strategies from scratch. We find that agents develop communication protocols with hallmark features of natural language: arbitrariness, interchangeability, displacement, cultural transmission, and compositionality. We quantify each property and analyze how different factors, such as population size, social dynamics, and temporal dependencies, shape specific aspects of the emergent language. Our framework serves as a platform for studying how language can evolve from partial observability, temporal reasoning, and cooperative goals in embodied multi-agent settings. We will release all data, code, and models publicly.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-19T08:57:30Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Maytus Piriyajitakonkij</name>
+    </author>
+    <author>
+      <name>Rujikorn Charakorn</name>
+    </author>
+    <author>
+      <name>Weicheng Tao</name>
+    </author>
+    <author>
+      <name>Wei Pan</name>
+    </author>
+    <author>
+      <name>Mingfei Sun</name>
+    </author>
+    <author>
+      <name>Cheston Tan</name>
+    </author>
+    <author>
+      <name>Mengmi Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/q-bio/0511040v3</id>
+    <title>A complex social structure with fission-fusion properties can emerge from a simple foraging model</title>
+    <updated>2006-05-04T15:03:58Z</updated>
+    <link href="https://arxiv.org/abs/q-bio/0511040v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/q-bio/0511040v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Precisely how ecological factors influence animal social structure is far from clear. We explore this question using an agent-based model inspired by the fission-fusion society of Spider monkeys (Ateles spp). Our model introduces a realistic, complex foraging environment composed of many resource patches with size varying according to an inverse power-law frequency distribution with exponent $β$. Foragers do not interact among them and start from random initial locations. They have either a complete or partial knowledge of the environment and maximize the ratio between the size of the next visited patch and the distance traveled to it, ignoring previously visited patches. At intermediate values of $β$, when large patches are neither too scarce nor too abundant, foragers form groups (coincide at the same patch) with a similar size frequency distribution as the spider monkey's subgroups. Fission-fusion events create a network of associations that contains weak bonds among foragers that meet only rarely and strong bonds among those that repeat associations more frequently than would be expected by chance. The latter form sub-networks with the highest number of bonds and a high clustering coefficient at intermediate values of $β$. The weak bonds enable the whole social network to percolate. Some of our results are similar to those found in long-term field studies of spider monkeys and other fission-fusion species. We conclude that hypotheses about the ecological causes of fission-fusion and the origin of complex social structures should consider the heterogeneity and complexity of the environment in which social animals live.</summary>
+    <category term="q-bio.PE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.dis-nn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-11-24T22:15:28Z</published>
+    <arxiv:comment>6 figures; minor revisions</arxiv:comment>
+    <arxiv:primary_category term="q-bio.PE"/>
+    <author>
+      <name>Gabriel Ramos-Fernández</name>
+    </author>
+    <author>
+      <name>Denis Boyer</name>
+    </author>
+    <author>
+      <name>Vian P. Gómez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.06331v1</id>
+    <title>Geometric Distributional Control: Learning Progress with Partial Structural Knowledge</title>
+    <updated>2026-09-06T01:39:05Z</updated>
+    <link href="https://arxiv.org/abs/2609.06331v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.06331v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-time control often sits between two limiting regimes. Predictive optimization and model-based control are powerful when dynamics, parameters, objectives, and online planning models are specified; reinforcement learning can relax this requirement, but must infer long-horizon value signals from sequential data and interaction, making training slow, high-variance, and hard to scale in large action spaces. This middle regime is common in systems including autonomous driving, warehouse robotics, traffic control, and delivery drones: partial geometry, physics, rules, or constraints are known, yet the local direction of task progress remains uncertain. Geometric Distributional Control (GDC) is designed for this partial-knowledge setting. It factorizes control into feasibility and progress: known geometry, rules, constraints, and response maps define an executable scaffold, while progress-weighted feasible data learns the missing directional signal on that scaffold. The learned score acts as a Bellman-like local value-gradient, selecting actions that make progress without requiring global Bellman recursion, a fully specified planner, or a black-box policy that absorbs both feasibility and preference. This knowledge can be lightweight and partial, such as simple dynamics, safety filters, local maps, constraint projectors, or lower-level response maps; it need not encode full dynamics or a long-horizon objective. Offline, GDC fits a progress-tilted distribution from short known-feasible snippets with weak signed progress certificates. Online, its score is projected through the scaffold and applied in receding-horizon feedback. We prove that this score descends a data-induced soft progress value and validate GDC on structured multilevel optimization and SUMO route-progress driving, where it improves over known-only solvers and learning baselines while preserving scaffold-enforced feasibility.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-06T01:39:05Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Tong Wu</name>
+    </author>
+  </entry>
+</feed>

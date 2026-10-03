@@ -1,0 +1,1278 @@
+                                                     Volume 7 (4) 1994, pp. 337 { 365
+
+
+
+
+   A Survey of Modern Integer Factorization Algorithms
+                               Peter L. Montgomery
+                                780 Las Colindas Road
+                           San Rafael, CA 94903{2346 USA.
+                           e-mail:     pmontgom@cwi.nl
+
+
+
+
+     Every positive integer is expressible as a product of prime numbers, in a
+     unique way. Although it is easy to prove that this factorization exists, it is
+     believed very hard to factor an arbitrary integer. We survey the best known
+     algorithms for this problem, and give some factorizations found at CWI.
+
+
+1. Introduction
+An integer n > 1 is said to be a prime number (or simply prime) if the only
+divisors of n are 1 and n. There are innitely many prime numbers, the
+rst four being 2, 3, 5, and 7. If n > 1 and n is not prime, then n is said to be
+composite. The integer 1 is neither prime nor composite.
+  The Fundamental Theorem of Arithmetic states that every positive integer
+can be expressed as a nite (perhaps empty) product of prime numbers, and
+that this factorization is unique except for the ordering of the factors. Table
+1.1 has some sample factorizations.
+
+ 1990 = 2  5  199 1995 = 3  5  7  19 2000 = 24  53         2005 = 5  401
+ 1991 = 11  181 1996 = 22  499          2001 = 3  23  29 2006 = 2  17  59
+ 1992 = 23  3  83 1997 = 1997           2002 = 2  7  11  13 2007 = 32  223
+ 1993 = 1993        1998 = 2  3  37 2003 = 2003
+                                3                                2008 = 23  251
+ 1994 = 2  997 1999 = 1999               2004 = 2  3  167 2009 = 72  41
+                                                  2
+
+
+                        Table 1.1. Sample factorizations
+
+  The existence of this factorization is an easy consequence of the denition
+of prime number and the well{ordering principle. The uniqueness proof is
+
+                                         337
+only slightly harder. However this existence proof gives no clue about how
+to eciently nd the factors of a large given integer. No polynomial{time
+algorithm for solving this problem is known.1
+   Factoring large integers has fascinated mathematicians for centuries. Gauss
+wrote
+       \The problem of distinguishing prime numbers from composites,
+       and of resolving composite numbers into their prime factors, is one
+       of the most important and useful in all of arithmetic. The dignity
+       of science seems to demand that every aid to the solution of such
+       an elegant and celebrated problem be zealously cultivated."
+   Some books are devoted to tabulating the factors of numbers of special form.
+The most referenced such table is the Cunningham table ?], which lists known
+factors of bn 1 for bases b  12 and small n. Brent et al. ?] extend
+these tables through b  99. Some of these factorizations appear in ?], which
+also has some factors of an bn. Brillhart et al. 1] give factors of the
+Fibonacci numbers and related Lucas numbers. The RSA Challenge 15] is
+building a table of factorizations of partition numbers.
+   Factorization was once primarily of academic interest. It gained in prac-
+tical importance after the introduction of the RSA public{key cryptosystem
+(see x3.5). The cryptographic strength of RSA depends upon the diculty of
+factoring large numbers.
+   Let N be a large composite integer. Until the 1960's, the best algorithms for
+factoring N took time O(N  ) for some  > 0. Onep such algorithm is trial divi-
+sion, which tries to divide N by all primes up to N . This changed when Mor-
+rison and Brillhart10] introduced the continued fraction method, whose
+time 13] is
+         np                                    o          p                          
+   exp        2 + o(1) (log N log log N )1=2 = O N (2+o(1)) log log N= log N :
+   Modern algorithms for factoring N fall into two major categories. Algo-
+rithms in the rst category nd small prime factors quickly. These include
+trial division, Pollard Rho, P 1, and the elliptic curve method. Algorithms in
+the second category factor a number regardless of the sizes of its prime factors,
+but cost much more when applied to larger integers. These algorithms include
+continued fraction, quadratic sieve, and number eld sieve.
+   In practice, algorithms in both categories are important. Given a large in-
+teger with no clue about the sizes of its prime factors, one typically tries algo-
+rithms in the rst category until the cofactor (i.e., the quotient after dividing
+by known prime factors) of the original number is suciently small. Then one
+tries an algorithm in the second category if the cofactor is not itself prime. If
+   1 An algorithm is said to be polynomial{time if its worst case execution time is bounded
+by a polynomial function of the length of the input. If one wants to factor N , whose length is
+O(log N ), then an O((log N )10 ) algorithm would be polynomial{time, whereas an O(N 0 1 )  :
+
+algorithm is not.
+
+                                             338
+one is unable to nd a suciently small cofactor (or a prime cofactor) using
+methods in the rst category, the factorization remains incomplete.
+   The interpretation of \suciently small" has changed considerably as tech-
+nology has progressed. In the 1960's, John Brillhart and John Selfridge
+?, p. 87] predicted that factoring numbers over 25 digits would be hard. In
+the 1970's, Richard Guy ?, p. 82] predicted that few numbers over 80 digits
+would be factored. In 1994 the cuto is around 100{120 digits.
+   We illustrate some algorithms using N = 1098413 = 563  1951. This number
+was selected using CWI's street address.
+   Williams and Shallit 20] give a computational history of factoring (and
+primality testing) from 1750 to 1950, i.e., before the era of electronic computers.
+Richard Guy ?] gives a good survey of factorization methods known in 1975.
+Brillhart et al. ?] give a chronology of developments in factorization, both
+hardware and software, esp. the methods used by the Cunningham project.
+Robert Silverman 17] gives a more recent exposition. Several textbooks
+?, ?, ?, ?] cover factorization.
+   We review some elementary number theory. We review some fundamental
+algorithms which will be needed later.
+2. Notations
+The symbols , , and denote the sets of rational numbers, real numbers,
+              Q   R       Z
+
+and integers, respectively.
+  If x and y are integers, then x j y (read: x divides y) means that y is a
+multiple of x. That is, x j y if and only if there exists k 2 such that y = kx.
+                                                             Z
+
+  The greatest common divisor (GCD) of two integers x and y is denoted
+gcd(x y). The GCD is always positive unless x = y = 0. If gcd(x y) = 1, then
+x and y are said to be coprime: they have no common divisors except 1.
+3. Review of Elementary Number Theory
+This section reviews some elementary and analytic number theory. Proofs can
+be found in many number theory textbooks.
+3.1. Congruence classes and modular arithmetic
+Fix n > 0. Two integers x and y are said to be congruent modulo n if x ; y
+is divisible by n. This is written
+        x  y (mod n):
+For xed n, the  relation is an equivalence relation (reexive, symmetric,
+transitive). The equivalence classes are called congruence classes. A set with
+exactly one representative from each congruence class is called a complete
+residue system. There are exactly n congruence classes. The canonical
+complete residue system is f0 1 2     n ; 1g.
+   We omit the modulus n, writing simply x  y, when the modulus is clear
+from the context.
+   The  relation is preserved under addition, subtraction, and multiplication.
+If x1 , x2 , y1 , y2 , and n are integers such that
+
+                                       339
+        x1  y1 (mod n)              and       x2  y2 (mod n)
+then
+   x1 + x2  y1 + y2             (mod n)
+   x1 ; x2  y1 ; y2             (mod n)                                    (3.1)
+      x1 x2  y1 y2              (mod n):
+These are easily proved using the denition of . For example, x1 x2 ; y1 y2 =
+(x1 ; y1 )x2 + y1 (x2 ; y2 ) is a sum of two multiples of n.
+   Equation (3.1) says that it is meaningful to add, subtract or multiply two
+congruence classes, since the equivalence class of the result does not depend
+upon the selections of the representatives. The congruence classes modulo n
+form a commutative ring under these operations. This ring, denoted by =n ,  Z   Z
+
+is called integers modulo n. When n is prime, division by nonzero elements
+is possible, and this ring is a eld, often written GF(n).
+   A corollary to (3.1) is that if f is a polynomial in k variables with integer
+coecients, and if xi  yi (mod n) for 1  i  k, then
+       f (x1  x2      xk )  f (y1  y2      yk ) (mod n):
+  Occasionally we write r1  r2 where r1 and r2 are rational numbers rather
+than integers. The notation a1 =b1  a2 =b2 (mod n) means that the numera-
+tor of a1 =b1 ; a2 =b2 is divisible by n and that its denominator is coprime to n.
+That is, a1 b2  a2 b1 (mod n) and gcd(b1 b2  n) = 1.
+3.2. Properties of prime numbers
+Let p be a prime number. The following properties are stated without proof:
+     If x y 2 Z, and p j xy, then p j x or p j y. Equivalently, if xy  0
+      (mod p), then x  0 (mod p) or y  0 (mod p).
+     Unique factorization. As previously mentioned, every positive integer can
+      be written as a (perhaps empty) product of primes, and this representa-
+      tion is unique except for ordering. See Table 1.1 for some examples.
+     The polynomials (X + Y )p and X p + Y p are congruent modulo p. For
+      example, every term in
+               (X + Y )5 ; X 5 ; Y 5 = 5X 4Y + 10X 3Y 2 + 10X 2Y 3 + 5XY 4
+        is divisible by 5. This can be proved using the binomial theorem.
+    (Fermat's little theorem). If a 2 , then ap  a (mod p). In particular,
+                                                 Z
+
+     if p does not divide a, then ap;1  1 (mod p). One proof uses the last
+      property and induction on a.
+3.3. Chinese remainder theorem
+Let n1 and n2 be coprime positive integers. If r1 and r2 are arbitrary integers,
+then the two congruences
+
+                                                340
+    x  r1 (mod n1 )        and      x  r2 (mod n2 )                        (3.3)
+may be replaced by a single congruence
+    x  r (mod n1 n2 )                                              (3.4)
+where r is chosen to satisfy r  r1 (mod n1 ) and r  r2 (mod n2 ). This is
+known as the Chinese Remainder Theorem.
+  For example, the two congruences
+    x  3 (mod 13)         and      x  9 (mod 17)                           (3.5)
+are equivalent to the single congruence x  94 (mod 221). To conrm this,
+note rst that 1 = 52 ; 51 = 4  13 ; 3  17 such an equation exists since 13
+and 17 are coprime (cf. (4.1)). If (3.5) holds, then there exist integers k1 and
+k2 such that x = 13k1 + 3 = 17k2 + 9. Hence
+        x = 52x ; 51x = 52(17k2 + 9) ; 51(13k1 + 3)
+           = 884k2 ; 663k1 + 315 = 221(4k2 ; 3k1 + 1) + 94
+which shows that x  94 (mod 221). Conversely, if x  94 (mod 221), say
+x = 221k + 94, then x = 13(17k + 7) + 3 = 17(13k + 5) + 9, implying (3.5).
+   A generalization allows more than two moduli. If gcd(ni  nj ) = 1 for 1 
+i < j  k (i.e., if the integers n1      nk are pairwise coprime), and if ri 2
+                                                                                 Z
+
+for all i, then the system of congruences
+     x  ri (mod ni ) (1  i  k)
+is equivalent to a single congruence
+    x  r (mod n1 n2    nk )                                             (3.6)
+when r is suitably chosen. There are ecient ways to nd this r given the fni g
+and fri g.
+  When we know an upper bound on an integer x, then we can determine
+x uniquely if we know it modulo enough primes. More precisely, if we know
+that jxj  B , and if we choose n1 n2    nk  2B + 1, then (3.6) determines x
+uniquely.
+3.4. Smooth numbers
+An integer n is said to be smooth with respect to a bound B if no prime
+factor of n exceeds B . In Table 1.1, the numbers 1995, 2000, 2001, and 2002
+are smooth with respect to 30.
+   For xed B and x B , the number of positive integers less than x and
+smooth with respect to B is approximately xu;u , where u = ln x= ln B 13,
+p. 94].
+
+
+                                       341
+3.5. Density of prime numbers
+The Prime Number Theorem states the asymptotic density of primes. Let
+(x) denote the number of primes not exceeding the real number x. Then
+      lim (x)xln(x) = 1:
+    x!+1
+                                                                                (3.7)
+In other words, (x) is approximately x= ln(x) for large x.
+  A numerical example is x = 1000. Then (1000) = 168 whereas 1000= ln(1000)
+   144:76.
+  A more accurate approximation is x=(ln x ; 1). This predicts 169.27 primes
+below 1000.
+  Riesel ?, Chapter 1] gives some history about accurate computation of (x)
+for large x.
+4. Some Essential Algorithms
+We will assume that the reader is familiar with the following important algo-
+rithms:
+     Multiple-precision arithmetic?, x4.2]. Two integers of magnitude at
+     most N can be added, subtracted, or compared in time O(log N ), by
+     operating on one digit at a time. The classical multiplication and divi-
+     sion algorithms take time O((log N )2 ). A corollary is that addition and
+     subtraction modulo N can be done in time O(log N ), if the operands and
+     result are required to be in the interval 0 N ; 1]. Modular multiplication
+     can be done in time O((log N )2 ).
+     Modular exponentiation ?, pp. 441.].
+                                        e
+                                            If e is a nonnegative integer
+     and 0  a < N then the remainder a mod N can be computed with
+     O(log e) multiplications modulo N , and hence in time O((log N )2 log e),
+     using the binary method of exponentiation.
+     Greatest common divisor?, pp. 316.]. If n1 and n2 are positive in-
+     tegers, then their greatest common divisor can be found in O(log(min(n1 
+     n2 ))) operations on integers at most max(n1  n2 ). The extended GCD
+     algorithm also nds two integers m1  m2 such that
+        gcd(n1  n2 ) = m1 n1 + m2 n2          jm1 j  jn2 j   jm2 j  jn1 j: (4.1)
+5. RSA public{key cryptosystem
+The RSA cryptosystem (named after its inventors Rivest, Shamir, and Adle-
+man) ?] is the rst public{key system introduced, and remains the most used
+public{key cryptosystem today. The strength of this cryptosystem depends
+upon the diculty of factoring large integers.
+  A public{key cryptosystem requires each user to have his own encryption
+procedure E and private decryption procedure D. Everyone's E is known to
+
+                                          342
+all other users, like a city telephone directory. Only the user knows his D.
+These procedures must be bijections and inverses of each other: D(E (M )) =
+E (D(M )) = M for all messages M . Both D and E must be cheap to execute,
+but it must be computationally infeasible to nd D given only E .
+   RSA achieves these objectives by letting each user pick two large primes p
+and q with p 6= q. Let N = pq. Choose two exponents e d with de  1
+(mod (p ; 1)(q ; 1)). If M is an integer, then Fermat's little theorem implies
+M de  M (mod p) and M de  M (mod q) hence M de  M (mod N )
+for all M . Let the message space be the interval 0 N ; 1] (a long message
+can be split into chunks). Dene the encryption and decryption procedures by
+E (M )  M e (mod N ) and D(M )  M d (mod N ). The values of e and N
+are public, but d p q are private.
+   These satisfy all of the public{key requirements except possibly the require-
+ment that it be hard to nd D given E . If factoring is easy, then an intruder
+can nd p and q given N = pq from this the intruder can nd (p ; 1)(q ; 1)
+and hence d since he knows e. That is, it is easy to nd D given E if factoring
+is easy. The converse is unknown: nobody has proven that factoring is easy
+if one can easily nd D given E . However, the problems are believed to be
+equivalent.
+   A 1992 report ?, p. 81] recommends that any RSA public{key modulus (i.e.,
+the product N = pq) be at least 1024 bits (about 309 decimal digits) if the
+data must remain secure for 10 years, but does not make a recommendation
+for longer periods.
+6. Algorithms for finding small prime factors of large numbers
+6.1. Trial division                                                      p
+If N is composite, then at least one prime divisor of N is at most N . To
+factor N , the p trial division algorithm successively divides N by primes 2, 3, 5,
+: : : , up to b N c.
+    If p is the second largest prime factor of an integer N , then trial division
+takes O(p) steps (or O(p= ln p) steps if one does trial division only by primes
+| see x3.5).
+    Almost all factoring programs attempt trial division by the smallest primes.
+Even if N is 1000 decimal digits long, it takes only a few seconds to divide N
+by all primes up to 107.
+    Sometimes the prime divisors of N are known to have a special form. For
+example, if p j an ; 1 but p - ak ; 1 for any k where k < n and k j n, then
+p  1 (mod n). This information facilitates trial division, since it restricts
+the range of possible divisors. For such numbers, one might try trial division
+by all qualifying primes below 232 or even higher. Unless N has a special form,
+trial division is impractical for nding prime divisors above 109 .
+6.2. Pollard Rho
+In 1974 and 1975, John Pollard announced two new algorithms for nding
+small factors of large integers. Each algorithm does a sequence of polynomial
+
+                                       343
+operations (additions, subtractions, multiplications) in such a way that inter-
+mediate results are highly composite but nonzero. Suppose N is a number to
+be factored and p j N . If r is one of the intermediate results and p j r, then
+p j gcd(r N ) we hope that this GCD does not equal N itself.
+   The Pollard Rho algorithm 12] iterates a function. Let f 2 X ] be a Z
+
+univariate polynomial with integer coecients. Select x0 arbitrarily and dene
+
+    xn+1 = f (xn )      (n  0):                                                  (6.1)
+If p is prime, then the sequence fxn mod pgn0 must eventually repeat, say
+xn1  xn2 (mod p) where 0  n1 < n2 . Since f is a polynomial function,
+this and (3.2) imply xn1 +k  xn2 +k (mod p) for all k  0. That is, the
+sequence fxn mod pgn0 is eventually periodic, with period dividing n2 ; n1 .
+If n  n1 and (n2 ; n1 ) j n, then x2n  xn (mod p). This is the idea behind
+one variation of Pollard Rho: test gcd(x2n ; xn  N ) for n = 1 2    until it is
+non{trivial (success) or until n is too large (failure).
+               0 ! 1 ! 2 ! 5 ! 26 ! 114 ! 48
+                                      -         .        (mod 563)
+                                       558  53
+Figure 6.1. Pollard Rho cycle modulo 563 using f (X ) = X 2 + 1 and x0 = 0
+
+  Figure 6.1 shows the pattern modulo 563. The rst repetition is x9  x4  26
+(mod 563). Since f is a polynomial with integer coecients, the sequence has
+period 5 except for its rst few terms: xn+5  xn (mod 563) whenever n  4.
+In particular, x10  x5 (mod 563).
+  When attempting to factor N = 1098413 this way, the actual computations
+are modulo N = 563  1951, but we visualize them as being done separately
+modulo the (unknown) prime factors of N . This abstraction is justied by the
+Chinese Remainder Theorem. Figure 6.2 outlines the sequence of computations
+(all congruences are modulo 1098413).
+
+       n      x2n;1             x2n               xn         gcd(x2n ; xn  N )
+       1   x1       1 x2        2 x1                  1            1
+       2   x3       5 x4       26 x2                  2            1
+       3   x5  677 x6  458330 x3                      5            1
+       4   x7  394716 x8  722324 x4                  26            1
+       5   x9  293912 x10  671773 x5                677         563
+            Figure 6.2. Factorization of 1098413 via Pollard Rho
+  The cycle length is considerably longer modulo 1951, for which the rst
+duplicate is x55  x14  695 (mod 1951). The factor 1951 would be found
+
+                                          344
+while testing gcd(x82 ; x41  N ), but 563 is found rst, while testing gcd(x10 ;
+x5  N ).
+6.2.1. Complexity of Pollard Rho.
+By (3.2), the polynomial operations required by Pollard Rho can all be done
+modulo N , after which one checks gcd(r mod N N ) rather than gcd(r N ).
+This procedure ensures that the intermediate results do not grow too big, and
+is reected in the data shown in Figure 6.2.
+   If p is a prime dividing N , then Pollard Rho appears to take O(pp) iterations
+to nd p. Given xn;1 and x2n;2 , the n{th iteration computes
+        xn  f (xn;1 ) (mod N ) and x2n  f (f (x2n;2 )) (mod N )
+and tests gcd(x2n ; xn  N ). If f (X ) = X 2 + 1, then this is three modu-
+lar multiplications, four modular additions (subtractions p  are counted as addi-
+tions),p and one GCD operation per iteration. If p = O( N ), then the time
+is O( p(log N )2 ) = O(N 1=4 (log N )2 ) bit operations. This is asymptotically
+better than the O(p) = O(N 1=2 ) divisions needed by trial division.
+   It is possible to trade most of the GCDs with N for multiplications modulo N .
+As stated, the algorithm tests each gcd(x2n ; xn  N ). We anticipate that most
+GCDs will be trivial (otherwise we've found a factor). We can replace two
+GCD tests
+    gcd(r N )     and      gcd(s N )                                      (6.2)
+by a single test
+    gcd(rs mod N N ):                                                     (6.3).
+   The GCD in (6.3) will be non{trivial if and only if at least one GCD in (6.2)
+is non{trivial. If rs is coprime to N , then both r and s must be coprime to N 
+we trade the two GCDs in (6.2) for one modular multiplication and the one
+GCD in (6.3). Conversely, if rs shares a factor with N , then at least one GCD
+in (6.2) must be non{trivial the latter event is suciently rare that we can
+aord to test both GCDs in case they yield separate factors of N . In practice,
+one takes the product of several x2n ; xn before doing a GCD with N .
+   Brent ?] proposes testing gcd(xm ; xn  N ) whenever n is a power of 2
+and 3n=2  m < 2n instead of testing values of gcd(x2n ; xn  N ). Brent's
+variation would nd the prime 593 while testing gcd(x13 ; x8  N ) rather than
+gcd(x10 ;x5  N ), and would nd the prime 1951 while testing gcd(x105 ;x64  N )
+rather than gcd(x82 ; x41  N ). Brent's variation takes about twice as many
+iterations, but it is about 24% faster overall because each iteration applies the
+polynomial f once rather than three times. Brent and Pollard ?] used
+this to nd the 16{digit prime factor 123892 6361552897 of the 78{digit Fermat
+number 2256 + 1.
+
+
+                                         345
+6.3. P ; 1
+Soon after discovering Pollard Rho, John Pollard found another method which
+nds small prime factors. His new method, called the P ; 1 method 11], nds
+a prime factor p of N if p ; 1 is smooth. In the worst case, when (p ; 1)=2 is
+prime, the P ; 1 method can require O(p) arithmetic operations to nd p, as
+in trial division. But some prime divisors are found very quickly.
+   The P ; 1 method is based on Fermat's little theorem (x3.2). Suppose M
+is such that (p ; 1) j M . If gcd(a N ) = 1, then aM  1 (mod p), implying
+p j gcd(aM ; 1 N ). For example, if M = 420 = 22  3  5  7, then this will nd
+p if p is among
+       2 3 5 7 11 13 29 31 43 61 71 211:
+Eleven of the 25 primes below 100 are in this list. If we replace 420 by 11!
+(say), then we will also nd 17, 19, 23, 37, 41, 67, 73, 89, 97, and many larger
+primes.
+   The value of M is typically the product of small primes or prime powers. If
+M is the product of all prime powers below a bound B , then M exp(B ), so
+the binary method of exponentiation needs O(log M ) = O(B ) multiplications
+modulo N to compute aM mod N . After one GCD operation, we hope to
+discover p.
+   For example, suppose N = 1098413 and B = 30. Figure 6.3 summarizes the
+computations if we begin with x1 = a = 2, and let xq denote our intermediate
+result after processing a power of the prime q. In this example, we choose to
+check each gcd(xq ; 1 N ) rather than only the nal gcd(x29 ; 1 N ). We can
+stop early when we nd the factor 1951 of x13 ; 1.
+
+           x1 =             2
+           x2  x16
+                  1  65536 gcd(x2 ; 1 1098413) = 1
+           x3  x27
+                  2  734876 gcd(x3 ; 1 1098413) = 1
+           x5  x25
+                  3  639082 gcd(x5 ; 1 1098413) = 1
+           x7  x75  648217 gcd(x7 ; 1 1098413) = 1
+          x11  x11
+                  7  353244 gcd(x11 ; 1 1098413) = 1
+          x13  x13
+                  11  304357 gcd(x13 ; 1 1098413) = 1951
+
+     Figure 6.3. Factoring 1098413 via P ; 1 with x1 = 2 and B1 = 30
+   The factor 1951 is found since 1951 ; 1 = 2  3  52  13 is a product of prime
+powers dividing 16  27  25  7  11  13. On the other hand 563 ; 1 = 2  281 is
+not of this form. Observe that the P ; 1 method nds 1951 rst whereas trial
+division and Pollard Rho nd 563 rst. The smallest prime factor of a number
+is not always the easiest factor to nd.
+
+
+
+
+                                       346
+6.4. Step 2.
+A modication to the P ; 1 method (called Step 2) allows p ; 1 to have
+one prime divisor exceeding B , if that prime divisor is not too big ?, ?, ?].
+Specically, suppose p is a prime divisor of N and
+      p ; 1 = m  q where m j M:
+If gcd(a N ) = 1 and A  aM (mod N ), then Fermat's theorem implies
+            ;                                ;       
+        Aq  aM q = aMq = (amq )M=m = ap;1 M=m  1M=m  1 (mod p):
+That is, the prime p will divide gcd(Aq ; 1 N ).
+   If q is not too large, then we can nd p, using the output A from Step 1. The
+idea ?] is to test several gcd(An1 ; An2  N ) where n1 6= n2  this will reveal p
+if q j (n1 ; n2 ). If we wantpto test all primes q < B 0 for some B 0 , then we can
+use two tables of size O( B 0 ), one containing all values of An1 mod N and
+another all values of An2 mod N . Each entry in one table is compared to each
+entry in the other. Variations work for the P + 1 and elliptic curve methods,
+which are covered in the next two sections.
+  Example factors found by P ; 1 at CWI (with B = 30 million) are the factor
+p35 of 8568 + 1 and the factor p36 of 7181 + 1, where
+           p35 = 11246 3189495079 4641128208 4363679513
+           p36 = 296390 4308479769 5878152861 5585508917
+       p35 ; 1 = 23  7  172  11177  327881  628997  1409467  213884611
+       p36 ; 1 = 22  35  283  739  5347  7699  37589  24474559  38498773:
+These factors appear in the update to ?].
+6.5. P + 1
+The P ; 1 method nds a factor p of N if p ; 1 is suciently smooth. The
+method has found many factors, but fails miserably if p ; 1 has a very large
+factor, such as if p ; 1 = 2q for some prime q.
+   In 1982, Hugh Williams 19] published a method which works when p + 1
+(rather than p ; 1) is smooth. Williams's method, called the P + 1 method,
+operates in the nite eld GF(p2 ) having p2 elements and characteristic p.
+   Let P be an integer and assume that P 2 ; 4 is is a quadratic non{residue
+(i.e., not a square) modulo p. Denote f (X ) = X 2 ; PX + 1. This quadratic
+has two roots and ;1 over GF(p2 ), which satisfy + ;1 = P . Because
+P p  P (mod p), one root of f is p :
+       f ( p ) = 2p ; P p + 1 = ( 2 ; P + 1)p = f ( )p = 0 in GF(p2 ):
+Since f has only two roots, either p = or p = ;1 . If p = , then
+   2 GF(p), and
+                 ;                 ;             
+      P2 ; 4 =       + ;1 2 ; 4 =       ; ;1 2 :
+
+                                        347
+This is impossible since ; ;1 2 GF(p) and P 2 ; 4 is assumed to be a
+quadratic non{residue modulo p. Therefore p = ;1 , implying p+1 = 1.
+  The P ; 1 method selects a in the multiplicative group GF(p) of order
+p ; 1, and nds p if this order is smooth. The P + 1 method is structurally
+similar to P ; 1, but takes powers of 2 GF(p2 ) and succeeds if the order of
+   is smooth. One way to do the arithmetic observes that and 1 is a basis
+for GF(p2 ) over GF(p), and uses arithmetic modulo N in place of arithmetic
+modulo the (unknown) prime p. This can be improved considerably by using
+Lucas functions to manipulate values of e + ;e rather than e 19].
+  There is no known way to check beforehand whether P 2 ; 4 is a non{residue
+without knowing p. If one runs the method three times using three values for P ,
+then there is an 87.5% chance that at least one of the values for P 2 ; 4 will be
+a quadratic non{residue. When P 2 ; 4 is a quadratic residue, then 2 GF(p),
+and the P + 1 method becomes an expensive variant of the P ; 1 method.
+  One factor found by P + 1 at CWI (with B = 30 million) is the factor p37 of
+45123 + 1, where
+            p37 = 4190453 1519402086 5671558238 2315221647
+        p37 + 1 = 24  283  2423  21881  39839  1414261  2337233  132554351:
+6.6. Elliptic Curve Method
+The P 1 methods nd a factor p of N if either p 1 is suciently smooth.
+However they fail if both p ; 1 and p + 1 have large prime factors. This
+happens frequently for example, both (p ; 1)=4 and (p + 1)=6 are primes for
+p = 29 173 317 653 893. In 1985, Hendrik Lenstra, Jr. ?] overcame
+this diculty when he announced a similar method called the Elliptic Curve
+Method, abbreviated ECM.
+  An elliptic curve over a eld K of characteristic not 2 is the set of solutions
+(x y) 2 K  K to a cubic equation
+    Y 2 = X 3 + AX 2 + BX + C                                               (6.4)
+together with a special point (conceptually (1 1)) called the point at in-
+nity. There is one restriction to the coecients in (6.4): the discriminant of
+the cubic polynomial must be nonzero, i.e.,
+      ;4A3C + A2 B 2 + 18ABC ; 4B 3 ; 27C 2 6= 0:
+  The points on an elliptic curve form an abelian group E (K ) when the group
+operations are suitably dened, as illustrated in Figure 6.4. The negation of
+the point at innity is itself the negation of any other point P1 = (x1  y1 ) is
+dened to be ;P1 = (x1  ;y1 ). For addition, suppose that P1 and P2 are two
+points on the elliptic curve. If either P1 or P2 is the point at innity, then
+dene P1 + P2 to be the other point. Otherwise suppose P1 = (x1  y1 ) and
+P2 = (x2  y2 ). If x1 6= x2 , then dene P1 + P2 = ;P3 , where P3 is the point
+where the straight line through P1 and P2 re{intersects (6.4). A calculation
+gives
+
+                                       348
+                                         ; y1 
+                                 m = xy2 ;
+                                       2   x1                               (6.5)
+   P3 = (x3  y3 )    where     x3 = m2 ; A ; x1 ; x2 
+                                 y3 = y1 + m(x3 ; x1 ):
+When instead x1 = x2 , then y12 = y22 by (6.4). If y1 = ;y2, then dene
+P1 + P2 to be the point at innity. If y1 6= y2 (so that y1 = ;y2 6= 0),
+then dene P1 + P2 = ;P3 , with P3 dened as in (6.5), except that we use
+m = (3x21 + 2Ax1 + B )=2y1 (slope of tangent line at P1 = P2 ).
+   It is amazing that this + denes an associative operation. All group oper-
+ations are dened in terms of ordinary addition, subtraction, multiplication,
+division, and comparison (no square roots), and are meaningful over arbitrary
+elds where 2 6= 0. In particular, they are meaningful if K = GF(p), where p
+is an odd prime. The resulting elliptic curve group E (GF(p)) is nite Hasse
+16, p. 131] showed that its order is p + 1 ; where j j  2pp. By changing
+the constants in (6.4), we get another curve, whose order is usually dierent.
+   If N is composite, say N = pq where p and q are distinct odd primes, then
+the ring =N is not a eld, but we can use (6.4) to dene a curve and attempt
+        Z     Z
+
+to use the algebraic rules to do group operations modulo N . We will fail (i.e.,
+be unable to execute the algebraic operations) only if we attempt to divide by
+a nonzero, non{invertible number modulo N ?]. Such a denominator (called a
+zero divisor) will be divisible by p or q but not both, and will give us a factor
+of N .
+For example, suppose N = 1098413. We might choose
+       E : Y 2 = X 3 ; X + 1 and P0 = (0 1):
+It turns out that jE (GF(563))j = 560 = 24  5  7 and jE (GF(1951))j = 1948 =
+22  487. If we attempt to compute 560P0 (or any multiple thereof), then we
+will strike the identity element of the group modulo 563, but probably not
+modulo 1951. This will cause us to attempt to divide by a nonzero multiple
+of 563, and the factor 563 will be found. Indeed, if we work modulo 1098413,
+then
+                          P0 = (0 1)
+                         2P0 = (823810 411904)
+                         4P0 = (351660 356515)
+                         8P0 = (1009192 539351)
+                        16P0 = (1097285 905229)
+                        32P0 = (258049 365818)
+                        64P0 = (759179 793734)
+        80P0 = 64P0 + 16P0 = (590036 204995)
+                       160P0 = (196136 560546)
+                       320P0 = (252057 444662)
+                       640P0 = (289957 901426):
+Next we attempt to compute
+
+                                      349
+                          7                                   r   2P
+                                                          ;
+                                                          ;
+                                                      ;
+                          6                          ;
+                                                 ;
+                                             ;
+                          5              ;
+                                        ;
+                                     ;
+                          4         ;
+                               ;
+                              ;
+                        ;3
+                       ;
+                Q;
+                 r
+                   ;
+                          2
+                ;@
+               ;  @
+;2P ; Q ; r            @r P            rP + Q
+                        @
+                        A
+                          A@
+                           A @
+  ;3      ;2    ;1       0 A 1@       2       3             4
+                             A @
+ 2P + Q   r             r
+                          ;P AA @   @r ;P ; Q
+                               A
+                 r        ;2    A
+                ;Q                A
+                                   A
+                          ;3         A
+                                      A
+                                        A
+                          ;4             A
+                                          A
+                                           A
+                          ;5                 A
+                                              A
+                                                A
+                                                  A
+                          ;6                       A
+                                                          A
+                                                           AAr
+                          ;7                                   ;2P
+           2P = (0 1) + (0 1) = (4 7)
+        P + Q = (0 1) + (;1 2) = (2 1)
+       2P + Q = (4 7) + (;1 2) = (;2 ;1)
+  P + (P + Q) = (0 1) + (2 1) = (;2 ;1)
+     Figure 6.4. Group law on y2 = x3 ; 4x + 1
+
+
+                              350
+      560P0 = 640P0 ; 80P0 = (289957 901426) + (590036 ;204995):
+The x{coordinates 289957 and 590036 are distinct, but their dierence
+      590036 ; 289957 = 300079 = 13  41  563
+is not invertible modulo N = 563  1951. A GCD nds the factor 563.
+   One early number done by ECM is the 843{rd Fibonacci number F843 . Its
+algebraic cofactor has ve prime factors, namely
+        F843
+        2F281 = p12  p13  p15  p16  p63 
+where
+         p12 =      46 6269593837 p12 ; 1 = 22  3067  38006977
+                                       p12 + 1 = 2  3  41  71  281  95003
+        p13 = 257 6582465657 p13 ; 1 = 23  10957  29394251
+                                       p13 + 1 = 2  3  281  1279  1194857
+        p15 = 81830 3948755277 p15 ; 1 = 22  20457 5987188819
+                                       p15 + 1 = 2  3  53  281  757  12097213
+        p16 = 238537 7797192381 p16 ; 1 = 22  33  5  281  3191  4926407
+                                       p16 + 1 = 2  193  1579  7841  499133
+and p63 is a 63{digit prime. The P ; 1 method (with B = 20000 and a Step 2
+bound of 106 ) missed all four small factors, although the method nds many
+others with these sizes. A two{step P + 1 algorithm found p16  however, it
+missed p12 because the chosen value of P 2 ; 4 was a quadratic residue mod-
+ulo p12 . ECM found all four small prime factors easily.
+   One ECM factor found by CWI 9] is the 40{digit factor
+      1549314255 0620385697 1990677659 9544873717
+of 26126 + 1. The job was run on the CRAY C90 at SARA, using 128 curves.
+The 102{nd curve had very smooth order:
+      29  3  1069  1117  11681  14771  55171  142501  154303  4035751:
+   The largest factor found by ECM is the 43{digit factor
+      568 8864305048 6537027917 5240510704 4435136231
+of the partition number p(19997). It was found by Franz{Dieter Berger, Uni-
+versity of Saarland (Germany), in 1993.
+7. Algorithms for factoring arbitrary integers
+The next several algorithms try to factor an odd integer N by nding two
+squares X 2 and Y 2 such that
+    X 2  Y 2 (mod N )             and          gcd(XY N ) = 1:             (7.1)
+
+                                            351
+Then they test gcd(X ; Y N ), hoping for a non{trivial factor of N . Whereas
+the algorithms in x6 require time depending primarily on p to nd the smallest
+prime factor p of N , the times for the upcoming algorithms depend primarily
+on the size of N itself.
+If N has two distinct odd prime factors p1 and p2 , and if X and Y are randomly
+selected subject to (7.1) then gcd(X ; Y N ) will be non{trivial (i.e., neither 1
+nor N ) exactly 50% of the time. Indeed, choose Z such that Z  1 (mod p1 )
+and Z  ;1 (mod p2 ) this Z exists by the Chinese remainder theorem.
+Then, given X , the solutions Y of X 2  Y 2 (mod N ) are Y  X , Y  ;X ,
+Y  XZ , and Y  ;XZ . The corresponding values of gcd(X ; Y N ) are
+N , 1, p1 and p2 , respectively. Two of these four are non{trivial. If N has k
+distinct odd prime factors, then the probability of success with a single (X Y )
+pair is 1 ; 21;k .
+   These methods don't work if N is a prime power (i.e., if N doesn't have two
+distinct prime factors), but this condition is easily checked. If N = pk where
+p is prime and k  1, then N ; 1 = pk ; 1 is divisible by p ; 1. By Fermat's
+little theorem, if gcd(a N ) = 1, then
+               ;         
+      aN ;1 = ap;1 (N ;1)=(p;1)  1(N ;1)=(p;1)  1 (mod p):
+Consequently gcd(aN ;1 ; 1 N ) will be divisible by p. If instead we nd an a
+such that gcd(aN ; a N ) = 1, then n cannot be a prime power.
+7.1. Finding squares through products
+The best methods for constructing congruences of the form (7.1) start by ac-
+cumulating several congruences
+    Ai  Bi (mod N )                                                        (7.2)
+where each Ai and each Bi is either a square or a square times a smooth
+number. These congruences are also called relations. For N = 1098413, a
+sample relation is
+      1100000  1587 (mod N )
+in which all prime divisors of 1100000 = 25  55  11 and of 1587 = 3  232 are
+under 30.
+   The algorithms vary in how they nd the relations (7.2). Once suciently
+many relations are found, each algorithm attempts to nd a non{empty set S
+of indices such that both
+    Y                        Y
+          Ai       and             Bi                                        (7.3)
+    i2S                      i2S
+are squares. The product of the corresponding congruences is a congruence of
+the form (7.1).
+
+                                        352
+  We illustrate with a small example, using N = 77 = 7  11. The left side of
+Figure 7.1 lists some congruences modulo 77, in which the only prime factors
+of each side are 2, 3, 5. We deliberately suppress the congruences 81  4
+and 256  25, where both sides are squares, since either of these factors 77
+immediately.
+
+       45  ;32                       45 50 72 75 80 125 320 384
+       50  ;27           p=2          0   1 3 0 4 0 6 7
+       72  ;5            p=3          2   0 2 1 0 0 0 1
+       75  ;2            p=5          1   2 0 2 1 3 1 0
+       80  3             p = ;1       1   1 1 1 0 0 0 1
+      125  48            p=2          5   0 0 1 0 4 0 0
+      320  243           p=3          0   3 0 0 1 1 5 0
+      384  ;1            p=5          0   0 1 0 0 0 0 0
+                                     ;32 ;27 ;5 ;2 3 48 243 ;1
+      Figure 7.1. Some congruences mod 77, involving powers of 2, 3, 5
+
+  We now multiply some of these congruences so as to generate squares on
+both sides. For example, 80  320  3  243 becomes 210  52  36. Rewrite
+this as 1602  272. This congruence factors 77, since gcd(160 ; 27 77) =
+gcd(133 77) = 7.
+  We might instead have chosen to multiply 125  48 by 320  243. This gives
+26  54  24  36, which is the same as 2002  1082. Since gcd(200 ; 108 77) =
+gcd(92 77) = 1, this congruence does not yield a factorization.
+  The decision to multiply 80  3 by 320  243, or 125  48 by 320  243, is
+made by looking at the exponents of the primes in the resulting product. All
+exponents in 210  52  36 and in 26  54  24  36 are even. There are eight
+congruences in Figure 7.1 let the exponents e1 to e8 be one or zero, depending
+upon whether the corresponding congruence is included in or excluded from
+the product. The product congruence
+       45e1  50e2  72e3  75e4  80e5  125e6  320e7  384e8
+                                                                               (7.4)
+     (;32)e1  (;27)e2  (;5)e3  (;2)e4  3e5  48e6  243e7  (;1)e8
+factors into
+    2e2 +3e3 +4e5 +6e7 +7e8  32e1 +2e3 +e4 +e8  5e1 +2e2 +2e4 +e5 +3e6 +e7
+     (;1)e1 +e2 +e3 +e4 +e8  25e1 +e4 +4e6  33e2 +e5 +e6 +5e7  5e3 :
+Both sides will be squares precisely when all exponents are even. This is equiv-
+alent to requiring that all elements of the matrix{vector product
+
+
+                                             353
+  2                               3 2 e1 3
+    0  1    1   0   0   0    0 1 6e 7
+  6
+  6 0  0    0   1   0   0    0 1 77 66 e2 77
+  6
+  6 1  0    0   0   1   1    1 0 77 66 e3 77
+  6
+  6 1  1    1   1   0   0    0 1 77 66 e4 77                                   (7.5)
+  6
+  6 1  0    0   1   0   0    0 0 77 66 e5 77
+  4 0  1    0   0   1   1    1 0 5 64 e6 75
+     0 0    1   0   0   0    0 0        7
+                                         e8
+be even.
+   Equation (7.5) has the form Be  0 (mod 2), where e is the exponent
+vector and B is the 7  8 exponent matrix hidden in the right of Figure 7.1
+but reduced modulo 2. The eight column vectors must be linearly dependent
+since all are in a space of dimension at most 7. This is equivalent to saying
+that there exists a nonzero e 2 GF(2)8 such that Be = 0.
+   In this example, the fth, sixth, and seventh columns of B are all 0 0 1 0 0
+1 0]T . Any two of these sum to zero modulo 2. This corresponds to multiply-
+ing two of the three congruences 80  3, 125  48, and 320  243, as we did
+earlier.
+   Another vector in the null space of B is 1 1 0 1 0 0 1 1]T: The congru-
+ence
+       45  50  75  320  384  (;32)  (;27)  (;2)  243  (;1) (mod 77)
+becomes 1440002  6482 (mod 77), which again gives the factorization 77 =
+7  11.
+   Traditionally, one solved the system Be = 0 by a variation of Gaussian
+elimination. Recently some iterative methods 2, 3, 7, 18] have been found. The
+iterative methods are superior when the matrix is large, since they require less
+storage (matrices arising from integer factorization problems are very sparse).
+For these large, sparse, matrices, the iterative methods are also faster | if B is
+an n  n matrix, then Gaussian elimination uses O(n3 ) bit operations but the
+iterative methods take O(n) applications of the matrix B, which is time O(n2 )
+if the number of nonzero entries per column remains bounded as n grows.
+7.2. Factor base
+The set of primes appearing in the factorizations in Figure 7.1 is called the
+factor base. Often it is convenient to also include ;1 in the factor base. If we
+allow primes below B to appear, then the size of the factor base is about (B )
+(see x3.5 for estimates of (B )).
+7.3. Free relations
+In the last example, while factoring 77 with a factor base of f;1 2 3 5g, we
+could have used the four trivial congruences
+    ;1  ;1        2  2      3  3         55                             (7.6)
+
+                                         354
+in the product (7.4). For example, although 50  75 and (;27)  (;2) are not
+squares, the congruence
+      2  3  50  75  2  3  (;27)  (;2) (mod 77)
+yields 1502  182 (mod 77) and a factorization. The congruences in (7.6) are
+called free relations, because the eort required to nd the relations does not
+depend on the size of N .
+  In this example, which uses the factor base f;1 2 3 5g on both sides, we
+could dispense with the free relations and use the factorizations (including neg-
+ative exponents) of the quotients ;45=32, ;50=27,    directly. Each rational
+quotient is congruent to 1, and the resulting matrix will be smaller since each
+prime appears only once (not once per side). The Number Field Sieve (x7.8)
+uses free relations which are more complicated than those shown here, and in
+which the two factor bases are dierent, so this simplication does not work
+there.
+7.4. Continued fraction method
+The continued fraction method (abbreviated CFRAC) is no longer in contention
+as a modern factoring method, but we include it because it is similar to some
+modern methods and easier to understand. It was used to factor the seventh
+Fermat number (39 digits) in 1970 10, p. 184]:
+       2128 + 1 = 5964958 9127497217  57 0468920068 5129054721:
+   CFRACp looks for congruences X 2  r (mod N ) with small r (specically
+r = O( N )). For each congruence it nds, it attempts to factor r using the
+factor base. Where r is smooth, the congruence is saved so it can be multiplied
+by other such congruences to form squares on both sides.                p
+   If N is a perfect square, then it is easy to factor N . Otherwise Np is
+irrational. There exist innitely many rational approximations P=Q of N
+such that
+        P ; pN < 1 :
+      Q             Q2
+                                                                     p
+If P=Q is any such approximation and we choose  such that P=Q = N +=Q2,
+then
+                    p            2              p
+     P 2 ; NQ2 = Q N + =Q ; NQ2 = 2 N + 2 =Q2:
+                                              p
+Since jj < 1, this shows
+                       p that jP 2 ; NQ2j < 2 N +1=Q2. Hence all such values
+of P 2 ; NQ2 are O( N ), as desired. We know a square root of P 2 ; NQ2
+modulo N , namely P .
+            p with N = 1098413, the rst 15 continued fraction approxi-
+  As an example,
+mations to N appear in Table 7.1. Three values of P 2 ; NQ2 are
+
+
+                                       355
+                     Convergent P=Q    P 2 ; N  Q2
+                         1049=1      1988 = 22  7  71
+                         1048=1      ;109 = ;109
+                        19913=19      476 = 22  7  17
+                        80700=77     ;677 = ;677
+                       181313=173    1292 = 22  17  19
+                       262013=250    ;331 = ;331
+                      1491378=1423   1207 = 17  71
+                      1753391=1673   ;796 = ;22  199
+                      3244769=3096   1153 = 1153
+                      4998160=4769   ;493 = ;17  29
+                     18239249=17403  1084 = 22  271
+                     23237409=22172 ;911 = ;911
+                     41476658=39575   839 = 839
+                     64714067=61747 ;1228 = ;22  307
+                    106190725=101322  133 = 7  19
+                                                       p
+                   Table 7.1. Approximations to 1098413
+
+
+           199132 ; N  192 = 476 = 22  7  17
+         1813132 ; N  1732 = 1292 = 22  17  19                               (7.7)
+   1061907252 ; N  1013222 = 133 = 7  19:
+The product of the three right sides in (7.7) is a square, namely 24  72  172  192 .
+Multiply the three left sides and suppress the multiples of N to reveal
+                                          ;              
+      (19913  181313  106190725)2  22  7  17  19 2 (mod N ):
+Reduce each parenthesized argument modulo N to get 90442  90442 (mod N ).
+Unfortunately, this trivial congruence does not yield a factorization. We could
+try more, but will instead illustrate other algorithms.
+   Table 7.1 gives values of P and Q to full precision. The recurrences for P
+and Q allow one to work with P mod N and Q mod N instead of P and Q
+themselves, and can be evaluated quickly. For example, the numerator and
+denominator of the last entry in Table 7.1 are the sums of those parts of the
+two previous entries.
+   Some small primes (e.g., 3, 5, 11) are missing in Table 7.1. This is because
+they are not quadratic residues modulo N . If pj(P 2 ; NQ2) where gcd(P Q) =
+1, then N must be a quadratic residue modulo p unless p j N . Unless N is a
+perfect square, only half of the primes (asymptotically) have N as a quadratic
+residue. If B is the upper limit on the factor base, then the factor base size is
+about (B )=2 rather than (B ).
+
+
+                                         356
+7.5. Sieving
+Much of the time in CFRAC is spent factoring the residues P 2 ; NQ2, to
+test whether they are smooth. This work is done primarily by trial division,
+although one may employ the other methods in this survey too.
+   Quadratic Sieve (see x7.6) eliminates this burden. If f 2 ZX ] is a univariate
+polynomial with integer coecients, and p is a prime, then the values of x for
+which p j f (x) lie in a few arithmetic progressions. By (3.2), if k is an integer,
+f (x + kp)  f (x) (mod p). Therefore f (x + kp) will be divisible by p if and
+only if f (x) is divisible by p.
+   Suppose we want to evaluate a polynomial f at several consecutive values
+of x and check each value for smoothness. Start by building a table of values
+of f (x). For each prime p in our factor base, nd the roots of f modulo p, by
+factoring f (X ) over GF(p) ?, x4.6.2]. Then, for each x such that f (x)  0
+(mod p), replace our tabulated value of f (x) by f (x)=p. After processing all
+primes in our factor base, if any table entry is 1, then the corresponding f (x)
+was smooth.
+   This procedure can be improved considerably. One improvement tabulates
+log jf (x)j rather than f (x), and subtracts log p rather than dividing by p. The
+logarithms can be approximate, perhaps to base 2. At the end, look for small
+values in the table, not just for a value of log 1 = 0. This procedure will also
+nd some values of x for which f (x) is smooth but not squarefree (i.e., for
+which a prime power divides f (x)).
+7.6. Quadratic sieve
+Using the ideas in the last section, Quadratic Sieve 14] looks at the values
+of a quadratic polynomial at successive points. We illustrate it by a detailed
+example. Dene jfp(X )k= X 2 ; N , where N = 1098413. After sieving f (x) for
+values of x near N = 1048, we accumulate data similar to that in Figure
+7.2.
+
+The third, sixth, and seventh columns in the lower table of Figure 7.2 sum to
+zero modulo 2. Hence the product
+   f (1051)f (1119)f (1142) = (22  7  13  17)(22  7  172  19)(72  13  17  19)
+                            = 24  74  132  174  192:
+gives a square on the right. Take square roots (and recall the denition of f )
+to derive:
+      (1051  1119  1142)2  (22  72  13  172  19)2 (mod N ):
+A calculation gives 1051  1119  1142  810112 (mod N ) and 22  72  13  172 
+19  810112 (mod N ). Unfortunately the congruence 8101122  8101122
+(mod N ) does not help.
+
+
+                                        357
+                         f ( 925) = ;22  7  13  23  29
+                         f (1047) = ;22  19  29
+                         f (1051) = 22  7  13  17
+                         f (1063) = 22  73  23
+                         f (1077) = 22  7  133
+                         f (1119) = 22  7  172  19
+                         f (1142) = 72  13  17  19
+                         925 1047 1051 1063 1077 1119 1142
+                p = ;1    1 1      0     0   0    0    0
+                p=2       0 0      0     0   0    0    0
+                p=7       1 0      1     1   1    1    0
+                p = 13    1 0      1     0   1    0    1
+                p = 17    0 0      1     0   0    0    1
+                p = 19    0 1      0     0   0    1    1
+                p = 23    1 0      0     1   0    0    0
+                p = 29    1 1      0     0   0    0    0
+Figure 7.2. Smooth values of f (X ) = X 2 ; 1098413 and associated binary
+                                    matrix
+
+7.6.1. Multiple Polynomials.              p
+If we sieve the 2M values of f (x) for x ; N  M , then the largest residue is
+           p                     p
+about 2M N (assuming M  N ). Montgomery ?] found a way to stunt
+this growth as M grows. His variation is called the Multiple Polynomial
+Quadratic Sieve, or MPQS.
+   Let k = 1 if N  1 (mod 4) and k = 4 if N  3 (mod 4). Find a quadratic
+polynomial g(X ) = a2 X 2 + bX + c such that b2 ; 4a2 c = kN . For example,
+when N = 1098413 and k = 1, we might pick
+       g(X ) = 841X 2 + 293X ; 301:                                       (7.8)
+   We discuss how to choose g below. Once g is selected, we sieve to nd values
+of x for which g(x) is smooth. In this case both
+      g(;1) = 247 = 13  19 and g(1) = 833 = 72  17
+are smooth. Because
+                                                       
+     g(X ) = aX + 2ba ; b ;4a42a c  aX + 2ba
+                      2  2      2             2
+                                                (mod N )
+the square roots of 247 and 833 modulo 1098413 are ;29+293=58 = ;1389=58
+and 29+293=58 = 1975=58, respectively. These can be merged with other data
+in Figure 7.2 to produce squares on both sides. One such product
+
+                                      358
+ ;                  
+  1051  1077  1975
+                 58
+                     2
+                        f (1051)f (1077)g(1) = 24  74  134  172 (mod N )
+yields 8381992  5631082 (mod N ), which factors N .
+   The polynomial g(X ) in (7.8) can be found by rst selecting an odd prime
+value for a (here 29). We require that kN be a quadratic residue modulo a.
+Solve b20  kN (mod a) for b0 . Then solve (b0 + `a)2  kN (mod a2 ) for
+`. Set b = b0 + `a or b = b0 + `a ; a2 , whichever has the same parity as kN .
+Dene c = (b2 ; kN )=4a2. By construction, c is an integer and b2 ; 4a2c = kN .
+   When sieving over jxj  M0 , the values of a, b, c should be picked so that
+the values jg(;M0)j, jg(0)j, and jg(M0 )j are approximately equal. That is,
+the parabola should cross the x{axis twice in the interval ;M0  M0 ] and the
+three extrema should have comparable magnitudes. The solution (subject to
+b2 ; 4a2 c = kN ) is
+            p
+      a2      kN=2        b 0
+                                                 p
+                                       c ;M0 kN=8 :
+              M0
+                                                       p
+Theplargest polynomial value is about jcj, or M0 kN=8, which is at most
+M0 N=2 . To sieve 2M values of x, one can use M=M0 dierent polynomials,
+                                                                  p
+sieving 2Mp0 values per polynomial. The largest residual is O(M0 N ) rather
+than O(M N ). Details are in ?].
+   Since values from dierent polynomials can be combined, the sieving portion
+of the MPQS algorithm is easily parallelized. Each processor sieves dierent
+polynomials, and all smooth residues go to a central site. This was used for
+the RSA{129 factorization mentioned in x8.1.
+   As in CFRAC, the only primes in the factor base are those for which kN is
+a quadratic residue.
+7.7. Large Prime Variations
+The sieving procedure in x7.5 looks for values of x such that f (x) is smooth with
+respect to the factor base. The algorithm is easily modied to also nd values
+of x for which f (x) is a smooth number times a prime not much larger than the
+factor base bound, by adjusting the threshold used when inspecting logarithms
+after sieving. The extra prime in the factorization of f (x) is called a large
+prime. If one nds two values of x for which f (x) has the same large prime,
+then the corresponding congruences can be multiplied together and treated as
+a pair for the rest of the algorithm.
+   This procedure, called the large prime variation, is compatible with the
+use of multiple polynomials described in the last section. For example, both
+f (1040) = ;17  23  43 and g(0) = ;7  43 have 43 as the only prime exceeding 29.
+After doing the linear algebra phase, we decide to combine these with three
+entries in Figure 7.2 to get the product
+           g(0)f (1040)f (1051)f (1063)f (1077)
+         = (;7  43) (;17  23  43) (22  7  13  17) (22  73  23) (22  7  133)
+         = 26  76  134  172  232  432:
+
+                                        359
+This gives the congruence
+                                       
+        293  1040  1051  1063  1077 2  ;23  73  132  17  23  432 
+        58
+which simplies to 9700092  2578942 and factors N .
+   Another variation of MPQS uses two large primes instead of one this version
+is known as PPMPQS. See 6].
+7.8. Number Field Sieve
+The Number Field Sieve (NFS) ?, ?] uses ideas from algebraic number theory.
+It made newspaper headlines in 1990 when it was used to factor the 148{digit
+cofactor (2512 + 1)=2424833 of the ninth Fermat number?].
+   Suppose N is a composite integer to be factored. NFS has four main phases:
+      Polynomial selection. Select two irreducible univariate polynomials
+      f (X ) and g(X ) with \small" integer coecients for which there exists an
+      integer m such that
+             f (m)  g(m)  0 (mod N ):
+     The polynomials f and g should not have a common factor over . Often
+                                                                      Q
+
+     one polynomial is X ; m, and the other has the coecients of the base{m
+     expansion of N , for suitable m.
+     There is no known \good" way to pick these polynomials, unless our
+     original number has a special algebraic form such as the (12151 ; 1)=11
+     shown in x8.2. For the ninth Fermat number, the polynomials were chosen
+     to be X ; 2103 and X 5 ; 8, with common root m = 2103 .
+     Let denote a (complex) root of f and denote a root of g.
+     Sieving. This phase nds pairs (a b) such that gcd(a b) = 1 and such
+     that both
+          bdeg(f ) f (a=b)   and    bdeg(g) g(a=b)                         (7.9)
+     are smooth with respect to a chosen factor base.
+     The sieving phase can x b and search for values of a such that both poly-
+     nomial functions in (7.9) are smooth, using the ideas in x7.5. Although
+     we require two values be smooth (rather than one value, as in MPQS),
+     the values in (7.9) are suciently smaller that we gain overall.
+     Linear algebra. The expressions in (7.9) are the norms of the algebraic
+     numbers a ; b and a ; b , multiplied by the leading coecients of f and
+     of g, respectively. The principal ideals (a ; b ) and (a ; b ) factor into
+     products of prime ideals in the number elds ( ) and ( ), respectively.
+                                                     Q       Q
+
+     All prime ideals appearing in these factorizations have small norm (since
+     the norms are assumed to be smooth), so only a few dierent prime ideals
+
+                                      360
+     can appear in these factorizations. Use linear algebra to nd a set S of
+     indices such that the two products
+          Y                                 Y
+                ((ai ; bi ))         and          ((ai ; bi ))                       (7.10)
+          i2S                               i2S
+     are both squares of products of prime ideals.
+     Square   root. Using the set S in (7.10), try to nd algebraic numbers
+      0 2 ( ) and 0 2 ( ) such that
+          Q                      Q
+
+                        Y                                        Y
+           ( 0 )2 =           (ai ; bi )   and        ( 0 )2 =         (ai ; bi ):
+                        i2S                                      i2S
+     Couveignes's algorithm 4] works if the polynomials f and g have odd
+     degrees Montgomery's square root algorithm 8] allows arbitrary degree.
+     Let  : ( ) ! =N and  : ( ) ! =N be homomorphisms
+                  Q             Z    Z            Q         Z      Z
+
+     induced by setting  ( ) =  ( ) = m, where m is the common root of
+     f and g. The congruence
+                                                !
+                 0    ; 0 2      Y
+              ( ) =  ( ) = 
+                   2
+                                      (ai ; bi )
+               Y                 i 2S
+                            02
+                      (ai ; bi m)  ( )     (mod N )
+                i2S
+
+     has the form (7.1) the two sides will be coprime to N if none of the
+     factorizations in (7.9) share a factor with N .
+7.8.1. Example of NFS.
+The rst step in NFS is polynomial selection. If we somehow observe that
+        N = 1098413 = 1093500 + 4913 = 12  453 + 173
+then we can choose
+        f (X ) = X 3 + 12 and g(X ) = 45X ; 17:
+Both polynomials vanish modulo N when X  17=45  634639 (mod 1098413).
+After sieving and linear algebra, we construct the product
+    h(X ) = ;(X ; 6)(2X + 3)(3X ; 7)(3X + 1
+(5X ; 2)(8X ; 3)(10X + 9):                                                           (7.11)
+p3We claim that (7.11) gives squares on both sides. More precisely, with =
+   ;12 and  ( ) = 17=45,
+
+                                           361
+                                               
+        h 17 = 28  112  132  232 = 52624 2
+          45         312  54         18225
+and
+        h( ) = 7400772 + 1138236 ; 105495 2 = ( 0 )2          where
+            0 = 2694 + 213 ; 28 2
+                  5610203 :
+         ( 0 ) = 2025
+
+The factor 1951 divides the numerator of 5610203      52624 50439203
+                                            2025 ; 18225 = 18225 .
+   When selecting (7.11), we included a factor of ;1 on both sides. The con-
+gruence ;1  ;1 is a free relation, much as in x7.3. There is also one free
+relation for each prime p such that the polynomials f (X ) and g(X ) both split
+completely modulo p, but no such relations were used in (7.11).
+8. Improvements in technology
+8.1. RSA{129 factorization
+In a 1977 MIT technical memo, which Martin Gardner summarizes in his Math-
+ematical Games column5], Rivest et al. challenge the public to factor a 129{
+digit which they claim is the product of 64{digit and 65{digit factors. Rivest
+estimates that the required running time, using the best algorithms and ma-
+chines available in 1977, would be 40 quadrillion years. It took much less time
+than predicted. After an 8{month worldwide eort ?] organized by Derek
+Atkins, Michael Gra, Arjen Lenstra, and Paul Leyland, the factorization was
+completed by PPMPQS in April, 1994. This eort took an estimated 5000
+MIPS years. It found
+      RSA-129 = 114381625 7578888676 6923577997 6146612010 2182967212
+                            4236256256 1842935706 9352457338 9783059712
+                            3563958705 0589890751 4759929002 6879543541
+              = p64  p65    where
+          p64 =                              3490 5295108476 5094914784
+                            9619903898 1334177646 3849338784 3990820577
+          p65 =                             32769 1329932667 0954996198
+                            8190834461 4131776429 6799294253 9798288533:
+
+8.2. Factorizations found at CWI
+In June, 1994, researchers at CWI and in Oregon, USA achieved some record
+factorizations using the number eld sieve.
+  The rst was the 162{digit Cunningham number N162 = (12151 ; 1)=11.
+No factors were known. At Oregon State University (OSU) in USA, Peter
+Montgomery et al had sieved this number using NFS with the two polynomials
+      12X 5 ; 1 and X ; 1230:
+
+                                     362
+They used about 30 workstations at OSU over an 8{week period during spring
+and summer, 1993. The researchers gathered 8.98 million relations, but were
+unable to process the data and nd the factorization. During 1993{1994, while
+Montgomery was at CWI, the Computational Number Theory group at CWI
+completed the linear algebra and square root phases of the work. They found
+the factorization N162 = p44  p119 , where
+      N162 = 82 2196205286 5970195266 0120743076 1004273909
+                   2435707339 6551677033 9373353207 4305023580
+                   2427303275 6332005408 0668946066 9679221954
+                   5093967127 3308456244 6289606063 0268212317
+        p44 = 1653 7237851564 6889242614 0704164885 3990657743
+       p119 =       497178678 0032337881 8763399005 9600164874
+                   7659834953 9211569747 0057591532 2824191116
+                   7043200927 0168842857 3103024883 1349126419:
+The special algebraic form of N162 simplied the polynomial selection phase.
+This beat the 158{digit record, which A.K. Lenstra and Dan Bernstein had
+previously achieved using NFS.
+  The OSU team also sieved the following 105{digit cofactor of 3367 ; 1:
+       N105 =                   75870 1086707710 3419834518
+               9863846063 0208179089 1150247368 3674638356
+               7258455011 6888623834 4212966512 3030350997:
+Using the data gathered at OSU, the CWI group found N105 = p52  p54 , where
+       p52 =                                   15 1149525784
+              0070716998 8656940229 3793503992 8231350493
+       p54 =                                5019 5399738924
+              4528404247 9062790906 5410546896 2124251929:
+This time the polynomial selection phase was more complicated. The re-
+searchers used two quadratic polynomials:
+       f (X ) = 34 2910527737 X 2 + 868170 6933351946 5483641612 X
+                  +540759062 6047829713 5713953618 6424874771
+       g(X ) = 124 2060255079 X 2 ; 9130492 7318176881 6962553218 X
+                  +12 9128767300 0652336311 6822953626 7982420800:
+The resultant of these polynomials is 9N105, so they share a common root
+modulo N .
+  The N105 was the rst large number completed by NFS which did not have
+a special form. The record was broken a month later when three researchers
+completed a 116{digit cofactor of the partition number p(11887), using a fth{
+degree polynomial and a linear polynomial. The polynomial selection, sieving,
+and linear algebra phases were done by Arjen Lenstra and Bruce Dodson in
+the USA the square root phase was done by Peter Montgomery at CWI.
+
+                                     363
+   For N162 , the factor bases had all primes below 2 million (on small worksta-
+tions) or below 3.5 million (on SPARC 10's). The program allowed two large
+primes up to 100 million on each side. The (sparse) matrix was 828077  833017
+with an average of 32.3 nonzero entries per column.
+   For N105 , the factor bases contained all primes below 1:6 million and large
+primes went to 30 million. The sieving was performed in such a way that every
+relation contained at least one large prime between 20 million and 30 million,
+and could contain ve large primes. The matrix was 1284719  1294861 with
+an average of 30.1 nonzero entries per column
+   These matrices are larger than any previous matrices arising from integer fac-
+torization problems. The N105 matrix would require 200 gigabytes of memory
+to store in dense form, which is more than most sites have even on secondary
+storage. This prevented the Oregon researchers from nishing the work. The
+CWI researchers used a novel Block Lanczos algorithm 7] for the linear algebra
+phase, and completed the larger problem in 7.5 hours on a Cray C90 at the
+Academic Computing Center Amsterdam (SARA).
+9. Acknowledgements
+This work was funded by CWI Centrum voor Wiskunde en Informatica (Ams-
+terdam) and by the Stieltjes Institute for Mathematics (Leiden). The manuscript
+was revised while the author visited Bellcore (USA). Thanks to Richard Brent,
+Mary Flahive, Marije Huizing, Arjen Lenstra, and Herman te Riele for review-
+ing early drafts of this manuscript.
+References
+1. John Brillhart, Peter L. Montgomery, and Robert D. Silverman. Ta-
+   bles of Fibonacci and Lucas factorizations. Mathematics of Computation,
+   50(181):251{260 & S1{S15, January 1988.
+2. Don Coppersmith. Solving linear equations over GF(2): Block Lanczos
+   algorithm. Linear Algebra and its Applications, 192:33{60, October 1993.
+3. Don Coppersmith. Solving homogeneous linear equations over GF(2) via
+   block Wiedemann algorithm. Mathematics of Computation, 62(205):333{
+   350, January 1994.
+4. Jean-Marc Couveignes. Computing a square root for the number eld sieve.
+   In A.K. Lenstra and H.W. Lenstra, Jr., editors, The Development of the
+   Number Field Sieve, volume 1554 of Lecture Notes in Mathematics, pages
+   95{102. Springer{Verlag, Berlin, 1993.
+5. Martin Gardner. Mathematical games. A new kind of cipher that would
+   take millions of years to break. Scienti c American, 237(2):120{124, August
+   1997.
+6. A.K. Lenstra and M.S. Manasse. Factoring with two large primes. Mathe-
+   matics of Computation, 63:785{798, 1994.
+7. Peter L. Montgomery. A block Lanczos algorithm for nding dependencies
+   over GF(2). Technical report, CWI Amsterdam, 1994. To appear.
+
+                                      364
+ 8. Peter L. Montgomery. Square roots of products of algebraic numbers. In
+    Walter Gautschi, editor, Mathematics of Computation 1943{1993: a Half-
+    Century of Computational Mathematics. Proceedings of Symposia in Ap-
+    plied Mathematics, American Mathematical Society, 1994. To appear.
+ 9. Peter L. Montgomery. Vectorization of the elliptic curve method. Technical
+    report, CWI Amsterdam, 1994. To appear.
+10. Michael A. Morrison and John Brillhart. A method of factoring and the
+    factorization of F7 . Mathematics of Computation, 29(129):183{205, January
+    1975.
+11. J.M. Pollard. Theorems on factorization and primality testing. Proc. Camb.
+    Phil. Soc., 76(2):521{528, September 1974.
+12. J.M. Pollard. A Monte Carlo method for factorization. BIT, 15(3):331{334,
+    1975.
+13. Carl Pomerance. Analysis and comparison of some integer factoring al-
+    gorithms. In H.W. Lenstra, Jr. and R. Tijdeman, editors, Computational
+    Methods in Number Theory, Part I, pages 89{130. Mathematisch Centrum,
+    Amsterdam, 1982. Math. Centrum Tract 154.
+14. Carl Pomerance. The quadratic sieve factoring algorithm. In T. Beth,
+    N. Cot, and I. Ingemarsson, editors, Advances in Cryptology, Proceedings
+    of EUROCRYPT 84, volume 209 of Lecture Notes in Computer Science,
+    pages 169{182, New York, 1985. Springer{Verlag.
+15. RSA Challenge Administrator. Information about RSA Factoring Chal-
+    lenge, March 1991. Send electronic mail to challenge{info@rsa.com.
+16. Joseph H. Silverman. The Arithmetic of Elliptic Curves, volume 106 of
+    Graduate Texts in Mathematics. Springer{Verlag, New York, 1986.
+17. Robert D. Silverman. Massively distributed computing and factoring large
+    integers. 34(11):95{103, November 1991.
+18. Douglas H. Wiedemann. Solving sparse linear equations over nite elds.
+    IEEE Trans. Inform. Theory, 32(1):54{62, January 1986.
+19. H.C. Williams. A p + 1 method of factoring. Mathematics of Computation,
+    39(159):225{234, July 1982.
+20. H.C. Williams and J.O. Shallit. Factoring integers before computers. In
+    Walter Gautschi, editor, Mathematics of Computation 1943{1993: a Half-
+    Century of Computational Mathematics. Proceedings of Symposia in Ap-
+    plied Mathematics, American Mathematical Society, 1994. To appear.
+
+
+
+
+                                     365
+

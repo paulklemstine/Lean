@@ -1,0 +1,1631 @@
+Integer Factorization: Another perspective
+Gilda Rech BANSIMBA∗
+
+∗ bansimbagilda@gmail.com
+
+Regis Freguin BABINDAMANA†
+† regis.babindamana@umng.cg
+
+arXiv:2507.07055v1 [math.NT] 9 Jul 2025
+
+ABSTRACT
+Integer factorization is a fundamental problem in algorithmic number theory and computer science. This problem is considered as a
+one way or trapdoor function in cryptography, mainly in the Rivest,
+Shamir and Adleman (RSA) cryptosystem where it constitutes the
+foundation of the key exchange protocol and digital signature. To
+date, from elementary trial division to sophisticated methods like
+the General Number Field Sieve, no known algorithm can break
+the problem in polynomial time, while its proved that Shor’s algorithm could on a quantum computer. That said, these methods are
+limited in term of efficiency and their success strongly linked to
+computational resources, particularly with the shor’s algorithm using quantum circuits that entirely depends on a quantum computer.
+In this paper, we start by recalling slightly some factorization facts
+and then approach the problem under completely different angles.
+Firstly, we take the problem from the ring (Z, +, ·) to the Lebesgue
+space L 1 (𝑋 ) where 𝑋 can be Q or any given interval setting. From
+this first perspective, integer factorization becomes equivalent to
+finding the perimeter of a rectangle whose area is known. In this
+case, it is equivalent to either finding bounds of integrals or finding
+primitives for some given bounds. Secondly, we take the problem from the ring (Z, +, ·) to the ring of matrices (𝑀2 (Z), + ·) and
+show that this problem is equivalent to matrix decomposition, and
+therefore present some possible computing algorithms, particularly
+using Gröbner basis and through matrix diagonalization. Finally,
+we address the problem depending on algebraic forms of factors
+and show that this problem is equivalent to finding small roots of a
+bivariate polynomial through coppersmith’s method.
+The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new
+perspectives.
+
+1
+
+INTRODUCTION
+
+Factoring integers is one of the most important problems in cryptology and number theory. In 1801, in "Disquisitiones Arithmeticae"
+[16], Gauss identified integer factorization and the primality testing
+as the two fundamental problems of arithmetic. Indeed, he went on
+to say: "The dignity of science itself seems to require that all possible
+means should be explored to solve a so elegant and famous problem."
+(Translation of the original texts). These two main problems are at
+the heart of cryptographic protocols, to ensure the confidentiality,
+authenticity, integrity and non-repudiation of information. This is
+the case of the Diffie-Hellman Elliptic Curve (ECDH) protocol implemented in TLS, for example, where the primality of the cardinal
+of the associated group is an important security feature to avoid
+attacks like MOV; the Elliptic Curve Digital Signature (ECDSA)
+protocol, or the RSA cryptosystem, whose security essentially relies
+on integer factorization.
+Research Article (), 1–9
+.
+
+Over the 20th century, a number of factoring algorithms were
+proposed, the most important of which are the Quadratic Sieve
+(QS) proposed by Carl Pomerance [17] in 1985 and the General
+Number Field Sieve (GNFS) proposed by the same author 9 years
+later [18] in 1994, based on the Factorisation method proposed by
+Pierre de Fermat a century earlier [33], [55], in addition the Elliptic
+Curve Method (ECM) proposed by Hendrik Lenstra [40] in 1987.
+These methods have also seen significant improvements during this
+century (see [7], [62], [20], [3], [64], [6], [49]). Since the beginning
+of the 21st century, several other improvements to these methods
+have been proposed, particularly for the ECM method, both in terms
+of parametrizations and addition formulas for different coordinate
+systems ( [26], [41], [11], [14], [12], [13], [64], [59], [30]).
+In practice however, these algorithms still present feasibility
+limits for fairly large parameters. This is the case, for example, of the
+record set in 2019 by Emmanuel Thomé, Paul Zimmermann, Fabrice
+Boudot, Pierrick Gaudry, Aurore Guillevic and Nadia Heninger on a
+795-bit RSA module (RSA-240) using an optimized implementation
+of the state-of-the-art method, the number-field sieve method in the
+CADO-FS software [71] with a computation time of around 1000
+physical core-years on Intel Xeon Gold 6130 CPUs [61], or even the
+latest feat on an 829-bit RSA module (RSA-250) achieved in February
+2020 by the same authors using CADO-NFS with a computation
+time of 2,700 core-years on Intel Xeon Gold 6130 CPUs, distributed
+across the computing resources of the INRIA and CNRS laboratories
+and their partner institutions; the EXPLOR computing center of
+the Université de Laurraine in Nancy (France); the PRACE research
+infrastructure using resources at the Juelich supercomputing center
+in Germany, as well as cisco equipment at UCSD.
+All these requirements in terms of hardware resources and very
+high computing power demonstrate how important it is to explore
+new directions in order to propose new approaches that could lead
+to efficiently solving such an important problem in cryptology and
+number theory.
+In this paper we address the problem in a another direction with
+a whole new point of view. That is, primitives and integral calculus
+on one side, matrix decomposition with application of gröbner basis
+on the other side and finally polynomial small roots computation
+through coopersmith method.
+
+2
+
+BACKGROUND
+
+Factorization methods can be divided into 2 main categories: special
+purpose factorization methods and general purpose factorization
+methods.
+We hereby consider 𝑛 to be a semiprime of size 𝑏 bits, 𝑝 and 𝑞 factors
+of 𝑛 with min {𝑝, 𝑞} = 𝑝.
+
+Research Article ()
+
+2.1
+
+Special purpose factorization methods
+
+Special purpose factorization methods running time depends on
+the properties of the number to be factored, mainly its factors such
+as the smallest prime factor. Among these algorithms, we have:
+
+(1) Pollard’s rho algorithm
+The Pollard’s rho algorithm is an algorithm for integer factorization invented by John Pollard in 1975. It takes as its input
+𝑛 the integer to be factored and considers the polynomial
+𝑔 (𝑥) = 𝑥 2 -1 mod 𝑛 or more commonly 𝑔 (𝑥) = 𝑥 2 +1
+mod 𝑛 and outputs a non trivial factor of 𝑛, or it fails.
+This method has an expected running time proportional to
+the square root of the smallest prime factor ofthe composite
+√
+number being factorized, that’s to say 𝑂 𝑝 .
+(2) Fermat’s factorization Method
+The Fermat’s Factorization Method factors an odd integer 𝑛
+by expressing it as the difference of two squares:
+𝑛 = 𝑎 2 -𝑏 2 = (𝑎-𝑏) (𝑎+𝑏).
+√ 
+Its time complexity in the worse case is 𝑂 4 𝑛 .
+(3) Euler’s factorization Method
+The Euler’s Factorization Method is based on representing a
+number 𝑛 as the sum of two squares in two different ways,
+leading to its factorization. Specifically, it uses the identity
+𝑛 = 𝑎 2 +𝑏 2 = 𝑐 2 +𝑑 2 .
+√ 
+Its time complexity in the worst case is 𝑂 𝑝 .
+(4) Lenstra’s elliptic curve method
+The Elliptic Curve factorization Method (ECM) that was introduced
+by H. Lenstra
+[40] and
+
+ conjectured to be in
+√
+√
+O exp ( 2+O(1)) log 𝑝 log log 𝑝 (where 𝑝 is the smallest factor of the composite module 𝑛) is an improvement of the
+pollard 𝑝-1 method (see [45]) where the multiplicative group
+Z/𝑛Z is replaced by 𝐸(Z/𝑛Z), an elliptic curve defined over
+the residue ring Z/𝑛Z, where 𝑛 is the number to factor.
+From short Weierstrass to the use of Montgomery curves
+[62]. Since the introduction of Edwards Curve [41] and their
+use in the ECM [26] thanks to their large torsion subgroups
+by Mazur Theorem [9], Edwards Curves have replaced Montgomery curves in lattest implementation ECM-MPFQ [30]
+over the GMP-ECM [59]. Results in [3, 11–14, 20, 23, 64],
+show significant improvements not only at the scalar multiplication level with fewer number of Inversions, Multiplications and Squarings but also at parametrization level.
+An elliptic curve over a field K is an algebraic curve given
+by a non singular equation of the form
+𝑦 2 +𝑎 1𝑥𝑦+𝑎 3𝑦 = 𝑥 3 +𝑎 2𝑥 2 +𝑎 4𝑥+𝑎 6, 𝑎𝑖 ∈ K called generalized
+weierstrass equation form. In the projective space P2 (K) =
+K3 \ {(0, 0, 0)}
+through the map (𝑥, 𝑦) ↦−→ (𝑋 /𝑍, 𝑌 /𝑍 ), the
+∼
+equation becomes
+𝑌 2𝑍 +𝑎 1𝑋𝑌 𝑍 +𝑎 3𝑌𝑍 2 = 𝑋 3 +𝑎 2𝑋 2𝑍 +𝑎 4𝑋𝑍 2 +𝑎 6𝑍 3 .
+More generally, there exist isomorphisms that change the
+
+Gilda. R. Bansimba. Regis. F. Babindamana
+
+generalized form to reduced forms dependently on the characteristic of the field in which the curve is defined. For example
+
+𝑦 2 = 𝑥 3 +𝑎𝑥+𝑏 𝑖 𝑓 𝑐ℎ𝑎𝑟 (K) > 3
+
+
+
+ 𝑦 2 = 𝑥 3 +𝑎𝑥 2 +𝑏𝑥+𝑐 𝑖 𝑓 𝑐ℎ𝑎𝑟 (K) = 3
+
+𝑦 2 +𝑐𝑦 = 𝑥 3 +𝑎𝑥+𝑏 𝑖 𝑓 𝑐ℎ𝑎𝑟 (K) = 2
+
+
+
+ 𝑦 2 +𝑥𝑦 = 𝑥 3 +𝑎𝑥 2 +𝑏 𝑖 𝑓 𝑐ℎ𝑎𝑟 (K) = 2
+
+
+(1)
+
+𝐸(F𝑝 ) = {(𝑥, 𝑦) ∈ F𝑝2 : 𝑦 2 +𝑎 1𝑥𝑦+𝑎 3𝑦 = 𝑥 3 +𝑎 2𝑥 2 +𝑎 4𝑥+𝑎 6, 𝑎𝑖 ∈
+F𝑝 } ∪ {O}, has an abelian group structure with the additive
+law where O = (0 : 1 : 0) denotes the point at infinity,
+corresponding to the case 𝑍 = 0 in the projective space.
+Considering a field with characteristic 𝑝 > 3 and two points
+𝑃 = (𝑥𝑝 , 𝑦𝑝 ), 𝑄 = (𝑥𝑞 , 𝑦𝑞 ) ∈ 𝐸𝑎,𝑏 (F𝑝 ) = {(𝑥, 𝑦) ∈ F𝑝2 / 𝑦 2 =
+𝑥 3 +𝑎𝑥+𝑏, 𝑎, 𝑏 ∈ F𝑝 }, using the chord and tangent rule with
+the theorem of Bezout [29], the addition law on the curve is
+defined by
+
+2
+
+
+ 𝑥 𝑃 +𝑄 = 𝑦𝑃 −𝑦𝑄 − 𝑥 𝑃 − 𝑥𝑄
+
+𝑥
+−𝑥
+𝑃
+𝑄
+𝑖𝑓 𝑃 ≠ 𝑄 :
+ ;
+𝑦 −𝑦
+
+ 𝑦𝑃 +𝑄 = −𝑦𝑃 + 𝑥𝑃𝑃 −𝑥𝑄𝑄 𝑥 𝑃 − 𝑥 𝑃 +𝑄
+
+
+𝑖𝑓 𝑃 = 𝑄 :
+
+ 2 2
+
+
+3𝑥 +𝑎
+
+ 𝑥 𝑃 +𝑃 = 𝑥 2𝑃 = 2𝑦𝑃
+
+− 2𝑥 𝑃
+𝑃
+
+2
+
+
+ 𝑦𝑃 +𝑃 = 𝑦2𝑃 = −𝑦𝑃 + 3𝑥𝑃 +𝑎 (𝑥 𝑃 − 𝑥 2𝑃 )
+2𝑦𝑃
+
+
+𝑦 −𝑦
+
+3𝑥 2 +𝑎
+
+Setting 𝛼 = 𝑥𝑃𝑃 −𝑥𝑄𝑄 or 𝛼 = 𝑑𝑥 (𝑃) = 2𝑦𝑃 𝑃 respectively
+while adding or doubling on the curve, we clearly see that
+these computations involve not only a certain number of
+Multiplications (M) and Squarings (S), but also Inversions
+(I). Since computations are done in Z/𝑛Z with 𝑛 = 𝑝 × 𝑞,
+𝑝, 𝑞 primes, denominators 𝑥 𝑃 − 𝑥𝑄 and 2𝑦𝑃 of 𝛼 are invertible if and only if gcd(𝑥 𝑃 − 𝑥𝑄 , 𝑛) = 1 when adding, or
+gcd(2𝑦𝑃 , 𝑛) = 1 when doubling. If not equal to 1 and ≠ 𝑛
+then a proper divisor or a non-trivial factor of 𝑛 is found.
+This is the all idea of
+the isomorphism between
+ ECM, using
+
+𝐸 (Z/𝑛Z) and 𝐸 F𝑝 × 𝐸 F𝑞 .
+Given a bound 𝐵, a point 𝑃 ∈ 𝐸 (Z/𝑛Z) and a 𝐵−smooth
+scalar 𝑘, the method consists on computing 𝑘𝑃 until finding
+𝑘𝑃 = O using double and add method or NAF (see [58, 70])
+to speed-up computations, (see [11–14] for improvements,
+and parametrizations yielding fewer number of M, S, and I)
+For performances purpose, large torsion subgroup elliptic
+curves over rationals present much more advantages. Some
+families and parametrizations of curves present better performance compared to the conventional short weiestrass
+equation in characteristic greater than 3. By Mazur theorem,
+every elliptic curve has a group torsion subgroup isomorphic
+to either one of 𝐸𝑡𝑜𝑟𝑠 (Q)  Z/𝑛𝑖 Z, 𝑛𝑖 = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+or 12 or 𝐸𝑡𝑜𝑟𝑠 (Q)  Z/2Z × Z/2𝑛 𝑗 Z, 𝑛 𝑗 = 1, 2, 3 or 4. So
+curves whose points have large torsion subgroup over Q are
+preferable.
+For example over a field K, the Montgomery curve given
+by 𝑀𝐴,𝐵 : 𝐵𝑦 2 = 𝑥 3 +𝐴𝑥 2 +𝑥 where 𝐵(𝐴2 -4) ≠ 0 used in
+GMP-ECM implementation (see [59]) with the law ∀ 𝑃 =
+(𝑥𝑝 , 𝑦𝑝 ), 𝑄 = (𝑥𝑞 , 𝑦𝑞 ) ∈ {(𝑥, 𝑦) ∈ K2 / 𝐵𝑦 2 = 𝑥 3 +𝐴𝑥 2 +𝑥 },
+𝑑𝑦
+
+Integer Factorization: Another perspective
+
+
+𝑃+𝑄 =
+
+Research Article ()
+
+2
+
+𝐵 (𝑥𝑞 𝑦𝑝 -𝑥𝑝 𝑦𝑞 )
+(2𝑥𝑝 +𝑥𝑞 +𝐴)(𝑦𝑞 -𝑦𝑝 ) 𝐵(𝑦𝑞 -𝑦𝑝 )3
+,
+- (𝑥 -𝑥 ) 3 -𝑦𝑝
+𝑥𝑞 -𝑥𝑝
+𝑥𝑝 𝑥𝑞 (𝑥𝑞 -𝑥𝑝 )2
+𝑞 𝑝
+
+
+
+by D. H. Lehmer and R. E. Powers in 1931 and developped
+by Michael A. Morrison and John Brillhart in 1975.
+This method is based on Dixon’s factorization method. It
+uses convergents
+in the regular continued fraction expan√
+sion of 𝑘𝑛 for any positive
+ √ integer 𝑘. 
+h
+√ i
+It has a complexity of O 𝑒 2 log 𝑛 log log 𝑛 = L𝑛 1/2, 2 .
+
+and
+
+equivalent to the Weierstrass reduced form through the map
+′
+′
+𝐴 , 𝑦 ) where
+𝜑 : 𝑀𝐴,𝐵 −→ 𝐸𝑎,𝑏 , (𝑥, 𝑦) ↦−→ (𝑥 , 𝑦 ) = ( 𝐵𝑥 + 3𝐵
+𝐵
+2
+
+3
+
+𝑎 = 3-𝐴
+, 𝑏 = 2𝐴27𝐵-9𝐴
+3 , and more recently Edwards Curves
+3𝐵 2
+given by 𝑥 2 +𝑦 2 = 1+𝑑𝑥 2𝑦 2 with 𝑑 \ {0, 1} and generally
+twisted edwards curve given by 𝐸𝑎,𝑑 : 𝑎𝑥 2 +𝑦 2 = 1+𝑑𝑥 2𝑦 2 ,
+with 𝑎 5 ≠ 𝑎, 𝑑 \ {0, 1} used in the lattest implementation
+ECM-MPFQ (see [30]) present better performances for ECM.
+The Edward’s addition law is defined by ∀ 𝑃 = (𝑥𝑝 , 𝑦𝑝 ), 𝑄 =
+(𝑥𝑞 , 𝑦𝑞 ) ∈ {(𝑥, 𝑦) ∈ K2 : 𝑎𝑥 2 +𝑦 2 = 1+𝑑𝑥 2𝑦 2 },
+
+
+𝑃+𝑄 = 1+𝑑𝑥 𝑥1 𝑦 𝑦 (𝑥𝑝 𝑦𝑞 +𝑥𝑞𝑦𝑝 ), 1-𝑑𝑥 𝑥1 𝑦 𝑦 (𝑦𝑝 𝑦𝑞 -𝑎𝑥𝑝 𝑥𝑞 )
+𝑝 𝑞 𝑝 𝑞
+𝑝 𝑞 𝑝 𝑞
+which is equivalent
+to
+
+
+
+(4) Quadratic sieve
+The Quadratic Sieve (QS) is a factorization algorithm that
+finds factors of a composite number 𝑛 by searching for numbers 𝑥 and 𝑦 such that 𝑥 2 ≡ 𝑦 2 mod 𝑛. It uses a large set of
+smooth numbers to build a congruence
+of squares.
+
+
+√
+Its expected time complexity is 𝑂 𝑒 (1+𝑂(1)) ln 𝑛 ln ln 𝑛 .
+
+𝑃+𝑄 = 𝑎𝑥𝑝 𝑥𝑞1+𝑦𝑝 𝑦𝑞 (𝑥𝑝 𝑦𝑝 +𝑥𝑞𝑦𝑞 ), 𝑥𝑝 𝑦𝑞 1-𝑦𝑝 𝑥𝑞 (𝑥𝑝 𝑦𝑝 -𝑥𝑞𝑦𝑞 )
+(see [43]) where point doubling is not well defined and any
+Edward’s equation form is birationally equivalent to the
+Montgomery form through the isomorphism Ω : 𝐸𝑎,𝑑 −→
+′
+
+′
+
+1+𝑦
+
+1+𝑦
+
+(5) General number field sieve
+The General Number Field Sieve (GNFS) is the most efficient
+classical algorithm for factoring large integers, particularly
+those with more than 100 digits. It uses algebraic number
+fields and polynomial selection to find relations that lead to
+a factorization of the target composite number 𝑛.
+Its expected
+time complexity is
+
+  8 2/3
+i
+h
+( 3 ) +𝑂(1) (log 𝑛) 1/3 (log log 𝑛) 2/3
+𝑂 𝑒
+= 𝐿𝑛 13 , (64/9) 1/3 .
+
+2(𝑎+𝑑)
+
+𝑀𝐴,𝐵 , (𝑥, 𝑦) ↦−→ (𝑥 , 𝑦 ) = ( 1-𝑦 , 𝑥(1-𝑦) ) where 𝐴 = 𝑎-𝑑 ,
+′
+′
+′
+′
+4 and Ω −1 : 𝑀
+𝑥 𝑥 -1
+𝐵 = 𝑎-𝑑
+𝐴,𝐵 −→ 𝐸𝑎,𝑑 , (𝑥 , 𝑦 ) ↦−→ ( ′ , ′ )
+𝑦
+
+𝐴-2
+where 𝑎 = 𝐴+2
+𝐵 , 𝑑 = 𝐵 .
+
+𝑥 +1
+
+(5) Special number field sieve
+The Special Number Field Sieve (SNFS) is one of the fastest
+known algorithms for factoring large integers of a special
+form, such as numbers of the form 𝑎𝑛 ± 𝑏. It uses algebraic
+number fields and a lattice reduction algorithm to find factors efficiently.
+Itstime complexity is expected to be
+1/3
+2/3
+32
+𝑂 𝑒 (1+𝑂(1)) ( 9 log 𝑛) (log log 𝑛) .
+
+2.2
+
+Summary of some of the main factorization Methods:
+In the same setting as above, we consider 𝑛 a semiprime of size
+𝑏 bits, 𝑝 and 𝑞 its factors with min {𝑝, 𝑞} = 𝑝. We then have the
+following summary table
+Table 1: Integer factorization Methods by category
+Title
+
+Special
+purpose
+
+General
+Purpose
+
+Quantum
+
+Trial Division
+
+✗
+
+✓
+
+✗
+
+Pollard’s Rho
+
+✓
+
+✗
+
+✗
+
+Fermat’s Method
+
+✓
+
+✗
+
+✗
+
+Euler’s Method
+
+✓
+
+✗
+
+✗
+
+Lenstra’s Method
+
+✓
+
+✗
+
+✗
+
+Special Number field sieve
+
+✓
+
+✗
+
+✗
+
+Shor’s algorithm
+
+✗
+
+✓
+
+✓
+
+Dixon’s Method
+
+✗
+
+✓
+
+✗
+
+Quadratic Sieve
+
+✗
+
+✓
+
+✗
+
+General Number Field Sieve
+
+✗
+
+✓
+
+✗
+
+General purpose factorization methods
+
+This category of factorization methods has a running time entirely
+depending on the size of the integer to be factored. Among, we
+have:
+(1) Trial division
+The trial division factorization method consists on dividing
+the number 𝑛 by successive integers starting from the smallest prime (2) until the square root of 𝑛. If it is divisible by
+one of these integers, that integer isa factor
+of 𝑛.
+√ 
+Its worst case time complexity is 𝑂 𝑛 .
+(2) Dixon’s factorization method
+The Dixon’s Factorization Method is a probabilistic algorithm that finds factors of a composite number 𝑛 by searching for numbers 𝑥 and 𝑦 such that 𝑥 2 ≡ 𝑦 2 mod 𝑛. It uses a
+set of smooth numbers to find these congruences.
+In the√worst
+complexity of
+ a time
+√ case, it has
+√ 
+
+𝑂 𝑒 2 2 log 𝑛 log log 𝑛 = 𝐿𝑛 21 , 2 2 .
+(3) Continued fraction factorization method
+The continued fraction factorization method (CFRAC) is a
+general purpose integer factorization algorithm, introduced
+
+* Table of integer factorization methods by category.
+
+3
+
+Complexity
+
+√ 
+𝑛
+√ 
+𝑂 𝑝
+
+
+𝑂 𝑛 1/4
+√ 
+𝑂 𝑝
+√
+𝑂
+
+𝑂 𝑒
+
+𝑂 𝑒
+
+√
+2+𝑂(1)
+
+log 𝑝 log log 𝑝
+
+!
+
+!
+
+ 1/3
+(1+𝑂(1)) 32
+(log log 𝑛) 2/3
+9 log 𝑛
+ 
+𝑂 𝑏3
+ √√
+
+𝑂 𝑒 2 2 log 𝑛 log log 𝑛
+
+
+√
+𝑂 𝑒 (1+𝑂(1)) ln 𝑛 ln ln 𝑛
+
+©
+𝑂 ­𝑒
+«
+
+ 
+
+
+8 2/3 +𝑂(1) (log 𝑛) 1/3 (log log 𝑛) 2/3
+ª
+3
+
+CONTRIBUTIONS
+
+The most difficult case in integer factorization is to factor a semi
+prime whose factors are big primes.
+For this reason, in this section we consider the modulus 𝑛 to be a
+semiprime.
+
+®
+¬
+
+Research Article ()
+
+3.1
+
+Gilda. R. Bansimba. Regis. F. Babindamana
+
+Let’s consider the following proposition:
+
+Rectangle point of view (Rpv)
+
+First and foremost, integer factorization can be reformulated as
+follows: the factorization of a semiprime 𝑛 = 𝑝𝑞 is equivalent to
+finding a rectangle’s length and width whose area is known as 𝑛.
+Equivalently, it is to find a perimeter of a rectangle whose area is
+known.
+This is proved by the fact this case the perimeter 𝑝 = 2(𝑝 + 𝑞) and
+area 𝑛 = 𝑝𝑞.
+Then recovering 𝑝 and 𝑞 becomes equivalent to either finding
+bounds 𝑝 and 𝑞 such that
+∫ 𝑝∫ 𝑞
+𝑑𝑥 𝑑 𝑦 = 𝑛
+0
+
+0
+
+Proposition 3.3.
+Given a RSA modulus 𝑛 ⩾ 35, set 𝛾 1 (𝑥) = 6; 𝛾 2 (𝑦) = 6 and 𝛼 0 =
+𝛽 0 = ± 16 then there exists 𝛼 and 𝛽 such that
+∫ 𝛼∫ 𝛽
+± 61
+
+𝛼0
+
+𝛾 1 (𝑥)𝛾 2 (𝑦) 𝑑𝑥 𝑑 𝑦 = 𝑛
+
+.
+Proof.
+Using the Fubini-Tonelli [8] theorem,
+
+, either finding primitives 𝛾 1 (𝑥) and 𝛾 2 (𝑦) such that for given
+bounds (𝛼 0, 𝛼 1, 𝛽 0, 𝛽 1 ) ∈ Z4 , we have
+∫ 𝛼1 ∫ 𝛽1
+𝛾 1 (𝑥)𝛾 2 (𝑦) 𝑑𝑥 𝑑 𝑦 = 𝑛
+.
+
+± 61
+
+∫ 𝛼∫ 𝛽
+± 16
+
+± 61
+
+∫ 𝛼
+𝛾 1 (𝑥)𝛾 2 (𝑦) 𝑑𝑥 𝑑 𝑦 =
+
+± 16
+
+∫ 𝛽
+𝛾 1 (𝑥) 𝑑𝑥
+
+∫ 𝛼
+=
+
+𝛽0
+
+± 61
+
+± 61
+
+𝛾 2 (𝑦)𝑑 𝑦
+
+∫ 𝛽
+(6) 𝑑𝑥
+
+± 61
+
+(6)𝑑 𝑦
+
+= [6𝑥 + 𝐶 1 ] 𝛼 1 [6𝑦 + 𝐶 2 ]
+
+Lemma 3.1.
+For any prime number 𝑝 greater than 3, there exists a positive
+integer 𝑥 such that 𝑝 = 𝑦 (𝑥) is solution of the first order ordinary
+differential equation with Dirichlet condition
+
+±6
+
+= (6𝛼 ± 1) (6𝛽 ± 1)
+
+𝛽
+± 61
+
+= 𝑦 (𝛼)𝑦 (𝛽), from lemma 3.1
+= 𝑝𝑞
+
+′
+
+𝑦 = 6, with 𝑦 (0) = ±1
+
+=𝑛
+
+Proof.
+
+□
+′
+
+𝑑𝑦
+=6,
+𝑦 =
+𝑑𝑥
+then 𝑑𝑦 = 6𝑑𝑥. Thus 𝑦 = 6𝑥 + 𝑐 with 𝑐 = ±1. Hence
+the prime number 𝑝 = 𝑦 (𝑥) = 6𝑥 ± 1. From a basic observation
+from elementary number theory using properties of integers and
+modular arithmetic, any prime number can be represented as such.
+□
+∫
+
+∫
+
+Example 3.2.
+Consider the following primes:
+
+Example 3.4.
+Here we give two examples of 256 bits semiprimes.
+• 𝛼 = 31184864858157931962611989461653189383;
+𝛽 = 56155612513944961522154793570341370125
+∫ 𝛼∫ 𝛽
+− 16
+
+− 61
+
+∫ 𝛼
+𝛾 1 (𝑥)𝛾 2 (𝑦) 𝑑𝑥 𝑑 𝑦 =
+
+𝛾 2 (𝑦)𝑑 𝑦
+− 16
+− 61
+∫ 31184864858157931962611989461653189383
+
+=
+
+• the 100 bits prime:
+
+𝑝 = 570303428823043591555786898897 = 𝑦 (𝑥 ) = 6𝑥 − 1,
+
+with 𝑥 = 95050571470507265259297816483
+• the 233 bits prime:
+
+𝑝 = 6833702715893496540959299291382359232559264092523368475576074466071807 = 𝑦 (𝑥 ) =
+6𝑥 −1 with 𝑥 = 1138950452648916090159883215230393205426544015420561412596012411011968
+• the 333 bits prime:
+𝑝 = 6358337399459401417678277930704848782199223004051687909162273047126596686480950
+
+∫ 𝛽
+𝛾 1 (𝑥) 𝑑𝑥
+
+− 61
+∫ 56155612513944961522154793570341370125
+
+×
+
+− 16
+
+(6) 𝑑𝑥
+(6)𝑑 𝑦
+
+= [6𝑥 + 𝐶 1 ] 31184864858157931962611989461653189383
+1
+
+−6
+× [6𝑦 + 𝐶 2 ] 56155612513944961522154793570341370125
+− 16
+
+= (6 · 31184864858157931962611989461653189383 + 1)
+
+628594226066122559163 = 𝑦 (𝑥 ) = 6𝑥+1 with 𝑥 = 1059722899909900236279712988450808130
+
+× (6 · 56155612513944961522154793570341370125 + 1)
+
+366537167341947984860378841187766114413491771432371011020426527
+
+= 𝑦 (31184864858157931962611989461653189383)
+
+• the 1000 bits prime:
+𝑝 = 658089189840301730450496429519238792660987613697354796644846033244621236257652046
+
+× 𝑦 (56155612513944961522154793570341370125)
+
+021740484921759504122555940691871306258635428762907108947956854239712936130938554245
+
+, from lemma 3.1
+
+542843969795828244216429256228793034041405027874070693186794739605844025450561774421
+
+= 187109189148947591775671936769919136299
+
+858331525104830589953173100274244230949509794254643 = 𝑦 (𝑥 ) = 6𝑥 − 1 with 𝑥 =
+109681531640050288408416071586539798776831268949559132774141005540770206042942007670
+290080820293250687092656781978551043105904793817851491326142373285489355156425707590
+
+× 336933675083669769132928761422048220751
+= 6304338674188041713811886561148660301051
+
+473994965971374036071542704798839006900837979011782197799123267640670908426962403643
+
+9216638181159430642741072139609140549
+
+055254184138431658862183379040705158251632375774
+
+=𝑛
+
+Integer Factorization: Another perspective
+
+Research Article ()
+
+• 𝛼 = 42575376056348197982869887629770563187;
+𝛽 = 33263421842796264531163131543015665831
+∫ 𝛼∫ 𝛽
+∫ 𝛼
+∫ 𝛽
+𝛾 1 (𝑥)𝛾 2 (𝑦) 𝑑𝑥 𝑑 𝑦 =
+𝛾 1 (𝑥) 𝑑𝑥
+𝛾 2 (𝑦)𝑑 𝑦
+1
+6
+
+− 61
+
+1
+6
+
+Remark
+This theorem can be reformulated as follows:
+If a RSA modulus is a triangular number, then RSA is broken in
+at least constant time complexity and at most logarithmic time
+complexity.
+
+− 16
+
+∫ 42575376056348197982869887629770563187
+=
+
+(6) 𝑑𝑥
+
+1
+6
+
+Example 3.6.
+
+∫ 33263421842796264531163131543015665831
+
+• 𝑛 = 15, 8𝑛 + 1 = 121 is a square, then 𝑝 = |5| = 5 is a prime factor
+of 𝑛: 𝑛 = 3 × 5.
+•
+𝑛
+= 25651, 8𝑛 + 1 = 205209 is a square, then 𝑝 = |−227| = 227 is a
+42575376056348197982869887629770563187
+= [6𝑥 + 𝐶 1 ] 1
+prime factor of 𝑛: 𝑛 = 113 × 227.
+6
+• 𝑛 = 16744225501, 8𝑛 + 1 = 133953804009 is a square, then 𝑝 =
+× [6𝑦 + 𝐶 2 ] 33263421842796264531163131543015665831
+− 16
+|−182999| = 182999.
+= (6 · 42575376056348197982869887629770563187 − 1) • 𝑛 = 22008842474653, 8𝑛 + 1 = 176070739797225 is a square, then
+× (6 · 33263421842796264531163131543015665831 + 1) 𝑝 = |−6634583| = 6634583.
+• 𝑛 = 21997001338003, 8𝑛 + 1 = is a square, then 𝑝 = |6632797| =
+= 𝑦 (42575376056348197982869887629770563187)
+6632797.
+× 𝑦 (33263421842796264531163131543015665831)
+
+×
+
+(6)𝑑 𝑦
+
+− 16
+
+, from lemma 3.1
+= 255452256338089187897219325778623379121
+× 199580531056777587186978789258093994987
+= 509832969796079184022321203452975440752167
+80739063868280880006751616374466427
+=𝑛
+Additionally, in the same perspective, we have the following
+result, a new vulnerability on a RSA type modulus:
+Theorem 3.5.
+Le 𝑛 be a RSA modulus. If the diophantine equation 𝑦 2 − 23𝑛 −
+1 = 0 has any solution in 𝑦, then RSA is broken in constant time
+complexity 𝑂 (1) in best case or in logarithmic time complexity
+𝑂 (log(8𝑛 + 1)) in the worst case.
+Proof.
+Let 𝑛 = 𝑝𝑞 a semiprime with 𝑞 < 𝑝.
+𝑝
+∑︁
+Assume 𝑛 =
+𝑙 = 1 + 2 + 3 + · · · 𝑝.
+𝑙=1
+
+
+
+𝑝 +1
+𝑛+1
+or 𝑛 =
+2
+2
+in binomial coefficient representation. This represents the area of a
+𝑝+1
+rectangle whose width is 𝑝 and height is 2 .
+In other words, 𝑝 verifies the equations
+From the Gauss sum sequence, 𝑛 = 𝑆𝑝 = 𝑝
+
+𝑦 2 + 𝑦 − 2𝑛 = 0 (1)
+and
+
+
+3𝑝 + 1
+𝑥 + 𝑛 = 0 (2)
+2
+from 𝑥 2 − 𝑆𝑥 + 𝑃 = 0 result.
+Considering equation (1), this equation yields integer roots if and
+only if its discriminant 1 + 23𝑛 is a square. Equivalently, there
+exists an integer 𝑦 such that 𝑦 2 − 23𝑛 − 1 = 0. In this case 𝑝 =
+ 1/2
+|−1 ± 1 + 23𝑛
+|
+. Finally, depending on the square root compu2
+tation algorithm, its complexity is at best in 𝑂 (1) or at worst in
+𝑂 (log(8𝑛 + 1)).
+□
+𝑥2 −
+
+
+
+3.2
+
+Matrix Decomposition point of view (MDpv)
+
+Here we present another approach, consisting in considering the
+modulus 𝑛 as a matrix determinant.
+Theorem 3.7.
+Let 𝑛 = 𝑝𝑞 be a RSA modulus, then there exists a matrix decomposition 𝑁 of 𝑛 of size 2 such that 𝑁 = 𝑃𝑄 with det 𝑁 = 𝑛, det 𝑃 = 𝑝
+and det 𝑄 = 𝑞.
+
+Proof.
+Triavially, one can find non zero integers 𝑎 and 𝑏 so that applying
+Bezout’s theorem, there exists integers
+that 𝑎𝑑
+ 𝑑, 𝑐 such
+
+ − 𝑏𝑐 =
+𝑎 𝑏
+𝑥1 𝑥2
+𝑦
+𝑦2
+gcd (𝑎, 𝑏) = 𝑛. Let 𝑁 =
+,𝑃 =
+and 𝑄 = 1
+𝑐 𝑑
+𝑥3 𝑥4
+𝑦3 𝑦4
+∈ 𝑀2 (Z). 𝑛 = 𝑝𝑞 if and only if
+𝑎𝑑 − 𝑏𝑐 = (𝑥 1𝑥 4 − 𝑥 2𝑥 3 ) (𝑦1𝑦4 − 𝑦2𝑦3 ) or equivalently
+det 𝑁 = det 𝑃 ·det
+ 𝑄
+ 
+
+𝑥 1 𝑥 2 𝑦1 𝑦2
+𝑥 𝑦 +𝑥 𝑦
+𝑥 1𝑦2 +𝑥 2𝑦4
+𝑃𝑄 =
+= 1 1 2 3
+Then
+𝑥 3 𝑥 4 𝑦3 𝑦4
+𝑥 3𝑦1 +𝑥 4𝑦3 𝑥 3𝑦2 +𝑥 4𝑦4
+
+𝑥 1𝑦1 +𝑥 2𝑦3 = 𝑎
+
+
+
+ 𝑥 1𝑦2 +𝑥 2𝑦4 = 𝑏
+
+𝑥 1, 𝑥 2, 𝑥 3, 𝑥 4, 𝑦1, 𝑦2, 𝑦3, 𝑦4 satisfy
+𝑥 3𝑦1 +𝑥 4𝑦3 = 𝑐
+
+
+
+ 𝑥 3𝑦2 +𝑥 4𝑦4 = 𝑑
+
+
+(2)
+
+From this system,
+𝑎𝑦2 − 𝑏𝑦1
+𝑐𝑦4 − 𝑑𝑦3
+𝑎𝑦4 − 𝑏𝑦3
+, 𝑥2 =
+, 𝑥3 =
+, 𝑥4 =
+𝑥1 =
+𝑦1𝑦4 − 𝑦2𝑦3
+𝑦1𝑦4 − 𝑦2𝑦3
+𝑦1𝑦4 − 𝑦1𝑦4
+𝑐𝑦2 − 𝑑𝑦1
+We verify that:
+𝑦1𝑦4 − 𝑦2𝑦3
+𝑥 1𝑥 4 − 𝑥 2𝑥 3 =
+=
+
+𝑎𝑦4 − 𝑏𝑦3
+𝑑𝑦1 − 𝑐𝑦2
+𝑐𝑦4 − 𝑑𝑦3
+𝑏𝑦1 − 𝑎𝑦2
+×
+−
+×
+𝑦1𝑦4 − 𝑦2𝑦3 𝑦1𝑦4 − 𝑦2𝑦3 𝑦1𝑦4 − 𝑦2𝑦3 𝑦1𝑦4 − 𝑦2𝑦3
+(𝑎𝑦4 − 𝑏𝑦3 ) (𝑑𝑦1 − 𝑐𝑦2 ) − (𝑐𝑦4 − 𝑑𝑦3 ) (𝑏𝑦1 − 𝑎𝑦2 )
+(𝑦1𝑦4 − 𝑦2𝑦3 ) 2
+
+Research Article ()
+
+=
+=
+=
+
+Gilda. R. Bansimba. Regis. F. Babindamana
+
+(𝑏𝑐 − 𝑎𝑑) 𝑦2𝑦3 + (𝑎𝑑 − 𝑏𝑐) 𝑦1𝑦4 + (𝑎𝑐 − 𝑎𝑐) 𝑦2𝑦4 + (𝑏𝑑 − 𝑏𝑑) 𝑦1𝑦3 Let 𝐺 be the gröbner basis, we initialize 𝐺 as 𝐺 = {𝑓 , 𝑓 , 𝑓 , 𝑓 , 𝑓 }
+1 2 3 4 5
+(𝑦1𝑦4 − 𝑦2𝑦3 ) 2
+and we compute the S-polynomials as follows: for each pair of
+polynomials 𝑓𝑖 and 𝑓 𝑗 in 𝐺,
+(𝑏𝑐 − 𝑎𝑑) 𝑦2𝑦3 + (𝑎𝑑 − 𝑏𝑐) 𝑦1𝑦4
+(𝑦1𝑦4 − 𝑦2𝑦3 ) 2
+(𝑎𝑑 − 𝑏𝑐) (𝑦1𝑦4 − 𝑦2𝑦3 )
+
+(𝑦1𝑦4 − 𝑦2𝑦3 ) 2
+𝑎𝑑 − 𝑏𝑐
+=
+𝑦1𝑦4 − 𝑦2𝑦3
+𝑛
+=
+𝑦1𝑦4 − 𝑦2𝑦3
+= 𝑥 1𝑥 4 − 𝑥 2𝑥 3
+
+
+
+𝐿𝑐𝑚 𝐿𝑚(𝑓𝑖 ), 𝐿𝑚(𝑓 𝑗 )
+ 𝐿𝑐𝑚 𝐿𝑚(𝑓𝑖 ), 𝐿𝑚(𝑓 𝑗 )
+𝑆 𝑓𝑖 , 𝑓 𝑗 =
+𝑓𝑖 −
+𝑓𝑗
+𝐿𝑡 (𝑓𝑖 )
+𝐿𝑡 (𝑓 𝑗 )
+
+□
+From this, we have:
+• gcd (det 𝑃, 𝑛) | 𝑛,
+then gcd (𝑥 1𝑥 4 − 𝑥 2𝑥 3, 𝑛) | 𝑛, hence gcd (𝑥 1𝑥 4 − 𝑥 2𝑥 3, 𝑛) =
+𝑦1𝑦4 − 𝑦2𝑦3
+• gcd (det 𝑄, 𝑛) | 𝑛,
+then gcd (𝑦1𝑦4 − 𝑦2𝑦3, 𝑛) | 𝑛, hence gcd (𝑦1𝑦4 − 𝑦2𝑦3, 𝑛) =
+𝑥 1𝑥 4 − 𝑥 2𝑥 3
+Hence we have the following new system from (2).
+
+𝑥 1𝑦1 +𝑥 2𝑦3 = 𝑎
+
+
+
+ 𝑥 1𝑦2 +𝑥 2𝑦4 = 𝑏
+
+
+
+𝑥 3𝑦1 +𝑥 4𝑦3 = 𝑐
+
+
+ 𝑥 3𝑦2 +𝑥 4𝑦4 = 𝑑
+
+
+ (𝑥 1𝑥 4 − 𝑥 2𝑥 3 ) (𝑦1𝑦4 − 𝑦2𝑦3 ) = 𝑛
+
+
+(3)
+
+Which is a non linear system of 5 equations with 8 unkowns.
+System resolution
+In this subsubsection, we propose some approaches to solve this
+system.
+Gröbner Basis
+We apply gröbner basis to the resolution of this system of equations.
+We start by setting the polynomials to zero as follows:
+
+𝑥 1𝑦1 +𝑥 2𝑦3 − 𝑎 = 0
+
+
+
+
+
+ 𝑥 1𝑦2 +𝑥 2𝑦4 − 𝑏 = 0
+
+𝑥 3𝑦1 +𝑥 4𝑦3 − 𝑐 = 0
+
+
+𝑥 3𝑦2 +𝑥 4𝑦4 − 𝑑 = 0
+
+
+
+ (𝑥 1𝑥 4 − 𝑥 2𝑥 3 ) (𝑦1𝑦4 − 𝑦2𝑦3 ) − 𝑛 = 0
+
+
+(4)
+
+Since 𝑥 1, 𝑥 2, 𝑥 3, 𝑥 4, 𝑦1, 𝑦2, 𝑦3, 𝑦4 are integers, we consider the polynomial ring Z [𝑥 1, 𝑥 2, 𝑥 3, 𝑥 4, 𝑦1, 𝑦2, 𝑦3, 𝑦4 ].
+Another consideration is the lexicographic order as monomial order
+given by
+𝑥 1 > 𝑥 2 > 𝑥 3 > 𝑥 4 > 𝑦1 > 𝑦2 > 𝑦3 > 𝑦4
+and finally we consider the ideal 𝐼 generated by 𝑓1, 𝑓2, 𝑓3, 𝑓4 and
+𝑓5 as follows 𝐼 = ⟨𝑓1, 𝑓2, 𝑓3, 𝑓4, 𝑓5 ⟩ over Z [𝑥 1, 𝑥 2, 𝑥 3, 𝑥 4, 𝑦1, 𝑦2, 𝑦3, 𝑦4 ]
+where 𝑓1 = 𝑥 1𝑦1 +𝑥 2𝑦3 − 𝑎;
+𝑓2 = 𝑥 1𝑦2 +𝑥 2𝑦4 − 𝑏; 𝑓3 = 𝑥 3𝑦1 +𝑥 4𝑦3 − 𝑐;
+𝑓4 = 𝑥 3𝑦2 +𝑥 4𝑦4 − 𝑑; and 𝑓5 = (𝑥 1𝑥 4 − 𝑥 2𝑥 3 ) (𝑦1𝑦4 − 𝑦2𝑦3 ) − 𝑛.
+We then apply the Buchberger’s algorithm to generate the gröbner
+basis.
+
+where 𝐿𝑐𝑚 is the least common multiple, 𝐿𝑡 the leading term and
+𝐿𝑚 the leading monom.
+Since our ideal 𝐼 is generated by 5 polynomials, we expect
+the set 𝑆
+
+5!
+5
+= 10.
+of S-polynomials to have a cardinal of 𝐶𝑎𝑟𝑑 (𝑆) =
+=
+2
+2!3!
+Computation of S-Polynomials:
+𝐿𝑡 (𝑓1 ) = 𝐿𝑚(𝑓1 ) = 𝑥 1𝑦1 ;
+𝐿𝑡 (𝑓2 ) = 𝐿𝑚(𝑓2 ) = 𝑥 1𝑦2 ;
+𝐿𝑡 (𝑓3 ) = 𝐿𝑚(𝑓3 ) = 𝑥 3𝑦1 ;
+𝐿𝑡 (𝑓4 ) = 𝐿𝑚(𝑓4 ) = 𝑥 3𝑦2 ;
+𝐿𝑡 (𝑓5 ) = 𝐿𝑚(𝑓5 ) = 𝑥 1𝑥 4𝑦1𝑦4 .
+We get:
+𝑆 (𝑓1, 𝑓2 ) = 𝑦2 𝑓1 − 𝑦1 𝑓2 ;
+𝑆 (𝑓1, 𝑓3 ) = 𝑥 3 𝑓1 − 𝑥 1 𝑓3 ;
+𝑆 (𝑓1, 𝑓4 ) = 𝑥 3𝑦2 𝑓1 − 𝑥 1𝑦1 𝑓4 ;
+
+𝑆 (𝑓1, 𝑓5 ) = 𝑥 4𝑦4 𝑓1 − 𝑓5 ;
+
+𝑆 (𝑓2, 𝑓3 ) = 𝑥 3𝑦1 𝑓2 − 𝑥 1𝑦2 𝑓3 ;
+
+𝑆 (𝑓2, 𝑓4 ) = 𝑥 3𝑦1 𝑓2 − 𝑥 1𝑦1 𝑓4 ;
+
+𝑆 (𝑓2, 𝑓5 ) = 𝑥 4𝑦1𝑦4 𝑓2 − 𝑦2 𝑓5 ;
+
+𝑆 (𝑓3, 𝑓4 ) = 𝑦2 𝑓3 − 𝑦1 𝑓4 ;
+
+𝑆 (𝑓4, 𝑓5 ) = 𝑥 1𝑥 4𝑦1𝑦4 𝑓4 −𝑥 3𝑦2 𝑓5 ;
+𝑆 (𝑓3, 𝑓5 ) = 𝑥 1𝑥 4𝑦4 𝑓3 −𝑥 3 𝑓5 ;
+In the polynomial ring Z [𝑥 1, 𝑥 2, 𝑥 3, 𝑥 4, 𝑦1, 𝑦2, 𝑦3, 𝑦4 ], a Gröbner basis is:
+
+𝑎𝑥 3 − 𝑐𝑥 1 + 𝑥 1𝑥 4𝑦3 − 𝑥 2𝑥 3𝑦3 = 0 (1),
+𝑏𝑥 3 − 𝑑𝑥 1 + 𝑥 1𝑥 4𝑦4 − 𝑥 2𝑥 3𝑦4 = 0 (2),
+− 𝑎 + 𝑥 1𝑦1 + 𝑥 2𝑦3 = 0, −𝑏 + 𝑥 1𝑦2 + 𝑥 2𝑦4 = 0 (3),
+𝑎 2𝑥 3𝑦4 − 𝑎𝑏𝑥 3𝑦3 − 𝑎𝑐𝑥 1𝑦4 + 𝑏𝑐𝑥 1𝑦3 + 𝑛𝑥 1𝑦3 = 0 (4),
+𝑎𝑥 3𝑦4 − 𝑏𝑥 3𝑦3 − 𝑐𝑥 1𝑦4 + 𝑑𝑥 1𝑦3 = 0 (5),
+𝑎𝑦2 − 𝑏𝑦1 + 𝑥 2𝑦1𝑦4 − 𝑥 2𝑦2𝑦3 = 0 (6),
+𝑎 2𝑥 4𝑦2 − 𝑎𝑏𝑥 4𝑦1 − 𝑎𝑐𝑥 2𝑦2 + 𝑏𝑐𝑥 2𝑦1 + 𝑛𝑥 2𝑦1 = 0 (7),
+𝑎𝑥 4𝑦2 − 𝑏𝑥 4𝑦1 − 𝑐𝑥 2𝑦2 + 𝑑𝑥 2𝑦1 = 0 (8),
+𝑎 2𝑥 4𝑦4 − 𝑎𝑏𝑥 4𝑦3 − 𝑎𝑐𝑥 2𝑦4 − 𝑎𝑛 + 𝑏𝑐𝑥 2𝑦3 + 𝑛𝑥 2𝑦3 = 0 (9),
+𝑎𝑥 4𝑦4 − 𝑏𝑥 4𝑦3 − 𝑐𝑥 2𝑦4 + 𝑑𝑥 2𝑦3 − 𝑛 = 0 (10),
+− 𝑐 + 𝑥 3𝑦1 + 𝑥 4𝑦3 = 0, −𝑑 + 𝑥 3𝑦2 + 𝑥 4𝑦4 = 0 (11),
+𝑐𝑦2 − 𝑑𝑦1 + 𝑥 4𝑦1𝑦4 − 𝑥 4𝑦2𝑦3 = 0 (12),
+𝑎𝑑 − 𝑏𝑐 − 𝑛 = 0 (13)
+
+Integer Factorization: Another perspective
+
+given in term of a system of equations as
+
+
+ 𝑎𝑑 − 𝑏𝑐 − 𝑛 = 0
+
+
+
+
+
+ 𝑥 3𝑦1 + 𝑥 4𝑦3 − 𝑐 = 0
+
+
+
+
+
+
+
+
+𝑥 1𝑦1 + 𝑥 2𝑦3 − 𝑎 = 0
+(3)
+
+
+
+
+
+
+𝑥
+𝑦
++
+𝑥
+𝑦
+−
+𝑏
+=
+0
+
+
+1
+2
+2
+4
+
+ 
+
+
+ 
+ 𝑥 3𝑦2 + 𝑥 4𝑦4 − 𝑑 = 0
+
+
+
+𝑐𝑦2 − 𝑑𝑦1 + 𝑥 4𝑦1𝑦4 − 𝑥 4𝑦2𝑦3 = 0
+
+
+
+
+
+ 𝑎𝑥 3 − 𝑐𝑥 1 + 𝑥 1𝑥 4𝑦3 − 𝑥 2𝑥 3𝑦3 = 0
+
+𝑎𝑦2 − 𝑏𝑦1 + 𝑥 2𝑦1𝑦4 − 𝑥 2𝑦2𝑦3 = 0
+
+
+𝑏𝑥 3 − 𝑑𝑥 1 + 𝑥 1𝑥 4𝑦4 − 𝑥 2𝑥 3𝑦4 = 0
+
+
+
+
+𝑎𝑥 3𝑦4 − 𝑏𝑥 3𝑦3 − 𝑐𝑥 1𝑦4 + 𝑑𝑥 1𝑦3 = 0
+
+
+
+
+
+ 𝑎𝑥 4𝑦2 − 𝑏𝑥 4𝑦1 − 𝑐𝑥 2𝑦2 + 𝑑𝑥 2𝑦1 = 0
+
+
+
+𝑎𝑥 4𝑦4 − 𝑏𝑥 4𝑦3 − 𝑐𝑥 2𝑦4 + 𝑑𝑥 2𝑦3 − 𝑛 = 0
+
+
+ 𝑎 2𝑥 𝑦 − 𝑎𝑏𝑥 𝑦 − 𝑎𝑐𝑥 𝑦 + 𝑏𝑐𝑥 𝑦 + 𝑛𝑥 𝑦 = 0
+
+3 3
+1 4
+1 3
+1 3
+
+ 2 3 4
+
+
+𝑎 𝑥 4𝑦2 − 𝑎𝑏𝑥 4𝑦1 − 𝑎𝑐𝑥 2𝑦2 + 𝑏𝑐𝑥 2𝑦1 + 𝑛𝑥 2𝑦1 = 0
+
+
+ 𝑎 2𝑥 𝑦 − 𝑎𝑏𝑥 𝑦 − 𝑎𝑐𝑥 𝑦 − 𝑎𝑛 + 𝑏𝑐𝑥 𝑦 + 𝑛𝑥 𝑦 = 0
+4 4
+4 3
+2 4
+2 3
+2 3
+
+
+Research Article ()
+
+Proof.
+′
+From Lemma 3.1, there exist differential equations 𝑡 = 6 with
+′
+𝑡 (0) = ±1 and 𝑧 = 6 with 𝑧 (0) = ±1 such that 𝑛(𝑥, 𝑦) = 𝑧 (𝑥)𝑡 (𝑦).
+We then distinguish the following cases:
+
+(5)
+
+Discussion:
+A part from trying to find factors 𝑝 and 𝑞 through system resolution,
+one can for different matrix decompositions 𝑁 of 𝑛, diagonalize 𝑁
+if (𝑎 + 𝑑) 2 − 4𝑛 is a square. Indeed the characteristic polynomial in
+this case 𝑃 (𝜆) = (𝑎 − 𝜆)(𝑑 − 𝜆) − 𝑏𝑐 = 𝜆 2 − (𝑎 + 𝑑)𝜆 + 𝑛, which is
+diagonalizable over Z only if the discriminant of the characteristic
+polynomial is a square.
+Example 3.8.
+Let 𝑛 = 9829760426531292080598278473834159188865611141619845
+3609045170174910824769389 with 𝑎 = 98297604265312920805982784
+738341591889580784184957701040844308085531017447603;
+𝑏 = 9829760426531292080598278473834159189017411569821850616
+1959832718260667360288
+𝑐 = 331341255498442310683613277890542765532
+
+
+𝑎 𝑏
+𝑑 = 331341255498442310683613277890542765535 𝑁 =
+.
+𝑐 𝑑
+Considering the System 5, a solution of the system gives: 𝑥 1 =
+296665756630402560557762316364824956342;
+𝑥 2 = 296665756630402560557762316364824956343;
+𝑥 3 = 1; 𝑥 4 = 2.
+𝑦1 = 331341255498442310683613277890542765530;
+𝑦2 = 331341255498442310683613277890542765531;
+
+
+
+
+𝑥
+𝑥2
+𝑦
+𝑦2
+𝑦3 = 1; 𝑦4 = 2; Hence 𝑃 = 1
+and 𝑄 = 1
+∈ 𝑀2 (Z),
+𝑥3 𝑥4
+𝑦3 𝑦4
+𝑝 = det(𝑃) = 𝑥 1𝑥 4 −𝑥 2𝑥 3 = 29666575663040256055776231636482495
+6341 and 𝑞 = det(𝑄) = 𝑦1𝑦4 −𝑦2𝑦3 = 331341255498442310683613277
+890542765529
+
+3.3
+
+Modulus Algebraic Form Point of View
+(MAFpv)
+
+In this subsection, we present another approach that consists in
+considering different algebraic forms of the semiprime factors.
+Theorem 3.9.
+Any RSA modulus, particularly any semiprime 𝑛 can be represented
+in the ring Z[𝑥, 𝑦] as one of the following:
+
+36𝑥𝑦 − 6(𝑥 + 𝑦) + 1
+
+
+
+ 36𝑥𝑦 + 6(𝑥 + 𝑦) + 1
+
+𝑛(𝑥, 𝑦) =
+36𝑥𝑦 + 6(𝑥 − 𝑦) − 1
+
+
+
+ 36𝑥𝑦 − 6(𝑥 − 𝑦) − 1
+
+
+If 𝑡 (0) = −1 and 𝑧 (0) = −1 : 𝑡 (𝑦) = 6𝑦 − 1 and 𝑧 (𝑥) = 6𝑥 − 1. Then
+𝑛(𝑥, 𝑦) = 𝑧 (𝑥)𝑡 (𝑦) = (6𝑥 − 1)(6𝑦 − 1) = 36𝑥𝑦 − 6(𝑥 + 𝑦) + 1.
+If 𝑡 (0) = 1 and 𝑧 (0) = 1 : 𝑡 (𝑦) = 6𝑦 + 1 and 𝑧 (𝑥) = 6𝑥 + 1. Then
+𝑛(𝑥, 𝑦) = 𝑧 (𝑥)𝑡 (𝑦) = (6𝑥 + 1)(6𝑦 + 1) = 36𝑥𝑦 + 6(𝑥 + 𝑦) + 1.
+If 𝑡 (0) = −1 and 𝑧 (0) = 1 : 𝑡 (𝑦) = 6𝑦 − 1 and 𝑧 (𝑥) = 6𝑥 + 1. Then
+𝑛(𝑥, 𝑦) = 𝑧 (𝑥)𝑡 (𝑦) = (6𝑥 + 1)(6𝑦 − 1) = 36𝑥𝑦 − 6(𝑥 − 𝑦) − 1.
+If 𝑡 (0) = 1 and 𝑧 (0) = −1 : 𝑡 (𝑦) = 6𝑦 + 1 and 𝑧 (𝑥) = 6𝑥 − 1. Then
+𝑛(𝑥, 𝑦) = 𝑧 (𝑥)𝑡 (𝑦) = (6𝑥 − 1)(6𝑦 + 1) = 36𝑥𝑦 + 6(𝑥 − 𝑦) − 1.
+All these can be re-written as:
+
+36𝑥𝑦 − 6(𝑥 + 𝑦) + 1
+
+
+
+
+ 36𝑥𝑦 + 6(𝑥 + 𝑦) + 1
+
+36𝑥𝑦 + 6 |𝑥 + 𝑦| + 1
+𝑛(𝑥, 𝑦) =
+or 𝑛(𝑥, 𝑦) =
+36𝑥𝑦 + 6 |𝑥 − 𝑦| − 1
+ 36𝑥𝑦 + 6(𝑥 − 𝑦) − 1
+
+
+ 36𝑥𝑦 − 6(𝑥 − 𝑦) − 1
+
+□
+
+Remark 3.1.
+(1) The polynomials 𝑛(𝑥, 𝑦) ∈ Z[𝑥, 𝑦] as defined in the previous
+theorem have a total degree of 𝑑 = 2, ie every monomial 𝑥 𝑖 𝑦 𝑗
+satisfies 𝑖 + 𝑗 ≤ 𝑑 = 2
+(2) We consider 𝑋 ∈ Z>0 respectively 𝑌 ∈ Z>0 , the upper bounds
+for 𝑥 respectively for 𝑦 and 𝑀 a RSA type modulus greater than 𝑛.
+From this remark, we have the following theorems:
+Theorem 3.10.
+Let deg𝑥 (𝑛(𝑥, 𝑦)) , deg𝑦 (𝑛(𝑥, 𝑦)) < 𝑑 = 2;
+
+∑︁
+36𝑥𝑦 + 6 |𝑥 + 𝑦| + 1
+𝑛(𝑥, 𝑦) =
+𝑛𝑖,𝑗 𝛿𝑖 𝑗 𝑥 𝑖 𝑦 𝑗 =
+36𝑥𝑦 + 6 |𝑥 − 𝑦| − 1
+0≤𝑖,𝑗 <𝑑
+
+where 𝑛 00 = 1, 𝑛 11 = 36, 𝑛 10 = 𝑛 01 = 6 and
+
+1 if 𝑖 = 𝑗
+𝛿𝑖 𝑗 =
+0 else
+and for |𝑥 | < 𝑋 and |𝑦| < 𝑌 , define 𝑊 = max 𝑛𝑖,𝑗 𝑋 𝑖 𝑌 𝑗 .
+0≤𝑖,𝑗 ≤𝑑
+
+If 𝑋𝑌 < 𝑊 1/3 = 62/3𝑋 1/3𝑌 1/3 then we can recover solutions (𝑥, 𝑦)
+in polynomial time in log(𝑊 ) and 22 .
+Proof.
+This is a direct application of coppersmith’s theorem on bivariate
+polynomials [10].
+□
+From this first underlying theorem, the condition to recover
+solutions (𝑥, 𝑦) in polynomial time cannot be achieved in practice.
+Hence, we consider the same theorem in a residual ring Z𝑀 with
+𝑀 a RSA type modulus greater than 𝑛.
+Theorem 3.11.
+Consider the polynomial 𝑛(𝑥, 𝑦) ∈ Z[𝑥, 𝑦] as defined above. Let 𝑀
+be a RSA type modulus greater than 𝑛, 𝑋 and 𝑌 such that for all
+(𝑥, 𝑦) solutions of 𝑛(𝑥, 𝑦), |𝑥 | < 𝑋 and |𝑦| < 𝑌 . If 𝑋𝑌 < 𝑀 1/2−𝜖 for
+some 0 < 𝜖 < 1/2 then we can compute 𝑛(𝑥, 𝑦) ≡ 0 mod 𝑀 and
+find solutions of 𝑛(𝑥, 𝑦) over Z.
+
+Research Article ()
+
+Proof. As with the previous theorem, this is a direct application of coppersmith’s theorem on bivariate polynomials [10] on a
+residual ring.
+□
+
+4
+
+CONCLUSION
+
+In this paper, we have recalled some factorization methods and then
+approached the problem from completely different angles. First,
+we have considered the problem from the ring (Z, +, ·) to Lebesgue
+space L 1 (𝑋 ) where 𝑋 can be Q or any given interval setting, in
+which case, this problem is equivalent to finding the perimeter of a
+rectangle whose area is known. In this direction, it is equivalent to
+either finding bounds of integrals or finding primitives for some
+given bounds. Secondly, we have taken the problem from the ring
+(Z, +, ·) to (𝑀𝑛 (Z), + ·) and show that this problem is equivalent to
+matrix decomposition, and therefore present a computing algorithm
+through a Gröbner basis computation approach and matrix diagonalization. Finally, we have addressed the problem depending on
+algebraic forms of factors and show that this problem is equivalent
+to finding small roots of a bivariate polynomial through coppersmith’s method. The aim of this article is to present the problem
+from different angles, opening up new directions for approaching
+the problem in a different way taking advantage of measure, calculus and related theories.
+As future perspective, for the MAFpv, a future immediate work
+would be investigating geometrically and finding a possible construction rule on these hyperbolas to recover the sought solutions
+with respect to the equation coefficients and divisors of 𝑛 − 1. In
+addition, best upper bounds 𝑋 and 𝑌 , and 𝑀 should be investigated
+for better performances.
+
+5
+
+ACKNOWLEDGEMENTS
+
+The authors would like to thank the anonymous reviewers for their
+helpful comments on the paper..
+
+REFERENCES
+[1] Gilda R. Bansimba, Regis F. Babindamana, Basile G. R. Bossoto. Some Arithmetical
+properties on Hyperbola, JP Journal of Algebra, Number Theory and Applications,
+Vol. 50, no. 1, P. 45-100, 2021.
+[2] Regis F. Babindamana, Gilda R. Bansimba, Basile G. R. Bossoto, "Lattice Points
+on the Fermat Factorization Method", Journal of Mathematics, vol. 2022, Article
+ID 6360264, 18 pages, 2022. https://doi.org/10.1155/2022/6360264
+[3] A. O. L. Atkin and F. Morain. Finding suitable curves for the elliptic curve method
+of factorization. Mathematics of Computation, 60:399–405, 1993.
+[4] Abubakar, S. I., Ariffin, M. R. K. and Asbullah, M. A. (2019). A New Improved Bound
+for Short Decryption Exponent on RSA Modulus N = pq using Wiener’s Method,
+Malaysian Journal of Mathematical Sciences 13(S) April: 89–99
+[5] Agrawal M., Kayal N. and Saxena N. PRIMES in P. Ann. of Math., 160, 781–793
+(2004)
+[6] Antoine Joux, Reynald Lercier Improvements to the General Number Field Sieve
+for Descrete Logarithms in Prime Fields. A comparison with the Gaussian Integer
+Method, Mathematics of Computation, Volume 72, Number 242, Pages 953–967.
+[7] Arjen K. Lenstra and H. W. Lenstra, Jr. (ds.) The development of the number field
+sieve, Lecture Notes in Math. (1993) 1554. Springer-Verlag
+[8] Fubini, Guido (1907), "Sugli integrali multipli", Rom. Acc. L. Rend. (5), 16 (1):
+608–614, JFM 38.0343.02
+[9] Barry Mazur, Modular curves and the Eisenstein ideal, IHES Publ. Math. 47 (1977),
+33-186.
+[10] D. Coppersmith, Small Solutions to Polynomial Equations, and Low Exponent
+RSA Vulnerabilities, Journal of Cryptology, 10(4), 1997, pp. 233–260.
+[11] Bernstein D.J., Lange T. (2007) Faster Addition and Doubling on Elliptic Curves.
+In: Kurosawa K. (eds) Advances in Cryptology – ASIACRYPT 2007. ASIACRYPT
+
+Gilda. R. Bansimba. Regis. F. Babindamana
+
+2007. Lecture Notes in Computer Science, vol 4833. Springer, Berlin, Heidelberg
+[12] Bernstein, D.J., Lange, T.: Inverted Edwards coordinates. In: Boztaş, S., Lu, H.-F.
+(eds.) AAECC 2007. LNCS, vol. 4851, pp. 20–27. Springer, Heidelberg (2007)
+[13] Bernstein, D.J., Birkner, P., Joye, M., Lange, T., Peters, C.: Twisted Edwards curves.
+In: Vaudenay, S. (ed.) AFRICACRYPT 2008. LNCS, vol. 5023, pp. 389–405. Springer,
+Heidelberg (2008)
+[14] Brier, E., Joye, M.: Fast point multiplication on elliptic curves through isogenies.
+In: Fossorier, M.P.C., Hoholdt, T., Poli, A. (eds.) AAECC 2003. LNCS, vol. 2643,
+pp. 43–50. Springer, Heidelberg (2003)
+[15] Bunder, M. and Tonien, J. (2017). A New Attack on the RSA Cryptosystem Based on
+Continued Fractions, Malaysian Journal of Mathematical Sciences 11(S) August:
+45 - 57 (2017).
+[16] Carl
+Friedrich
+Gauss,
+Disquisitiones
+Arithmeticae,
+Springer,
+https://doi.org/10.1007/978-1-4939-7560-0
+[17] Carl Pomerance, The quadratic sieve factoring algorithm, Advances in Cryptology,
+Proc. EUROCRYPT ’84’, LNCS 209, pp.169-182, 1985. Springer-Verlag, Berlin
+Heidelberg 1985
+[18] Carl Pomerance The Number Field Sieve. proceedings of Symposia in Applied
+Mathematics, Volume 48, 1994
+[19] Chenglian Liu and Ziwei Ye, Estimating the Φ(𝑛) of Upper/Lower Bound in its
+RSA Cryptosystem, https://eprint.iacr.org/2012/666.pdf
+[20] Cohen, H., Miyaji, A., Ono, T.: Efficient elliptic curve exponentiation using mixed
+coordinates. In: Ohta, K., Pei, D. (eds.) ASIACRYPT 1998. LNCS, vol. 1514, pp.
+51–65. Springer, Heidelberg (1998)
+[21] Connell, Ian (1999), Elliptic Curve Handbook. Montréal, CA: McGill University.
+[22] D. Gilat, Gauss’s Lemma and the Irrationality of Roots, Revisited, Math. Mag. 85
+(2012) 114-116
+[23] D. J. Bernstein, P. Birkner, and T. Lange. Starfish on strike. In Progress in Cryptology - LATINCRYPT 2010, Proceedings, pages 61–80, 2010.
+[24] D.M. Gordon, Asurvey of fast exponentiation methods, Journal of Algorithms 27
+(1998), no. 1, 129–146.
+[25] Dale Husemöller, Elliptic Curves, second Edition, Springer-Verlag New York, Inc.
+2004
+[26] Daniel J. Bernstein, Peter BIRKNER, Tanja LANGE and Christiane. Peters, ECM
+Using Ewards curves Mathematics of Computation Vol. 82, No. 282 (APRIL 2013),
+pp. 1139-1179
+[27] De Algebra D. Johannis Pellii; & speciatim de Problematis imperfecte determinatis
+(On Algebra by Dr. John Pell and especially on an incompletely determined
+problem), pp. 234–236.
+[28] De Weger, B. (2002). Cryptanalysis of rsa with small prime difference. Applicable
+Algebra in Engineering, Communication and Computing, 13(1):17–28.
+[29] E. Bezout, "Théorie génerale des équations algébriques" , Paris (1779)
+[30] EECM: ECM using Edwards curves, software: https://eecm.cr.yp.to/mpfq.html,
+2017.
+[31] ElGamal, T. (1985). A Public Key Cryptosystem and a Signature Scheme Based on
+Discrete Logarithms. In: Blakley, G.R., Chaum, D. (eds) Advances in Cryptology.
+CRYPTO 1984. Lecture Notes in Computer Science, vol 196. Springer, Berlin,
+Heidelberg.
+[32] F. Lemmermeyer, Residue Class Rings Lecture Notes, https://www.mathi.uniheidelberg.de/ flemmermeyer/pell/bfc03.pdf
+[33] Fermat (1894), Oeuvres de Fermat, 2, p. 256
+[34] Gilda R. Bansimba, Régis F. Babindamana, Construction of a New Hyperbola Group
+Structure. International Journal of Algebra 2019 Vol. 13, 2019, no. 8, 349 - 363
+[35] Gilda R. Bansimba, Regis F. Babindamana, Basile G. R. Bossoto. Some Arithmetical
+properties on Hyperbola, JP Journal of Algebra, Number Theory and Applications,
+Vol. 50, no. 1, P. 45-100, 2021.
+[36] Gilda R. Bansimba, Basile G. R. Bossoto, "Lattice Points on the Fermat Factorization Method", Journal of Mathematics, vol. 2022, Article ID 6360264, 18 pages,
+2022. https://doi.org/10.1155/2022/6360264
+[37] Gilda R. Bansimba, Regis Freguin Babindamana, Basile Guy R. Bossoto
+A New Hyperbola based Approach to factoring Integers [math.NT],
+https://doi.org/10.48550/arXiv.2304.07474
+[38] Gilda Rech Bansimba, Regis F. Babindamana, Basile Guy R. Bossoto, A
+Continued Fraction-Hyperbola based Attack on RSA cryptosystem [cs.CR],
+https://doi.org/10.48550/arXiv.2304.03957
+[39] Gilda R. Bansimba, PytLoc: a python tool that locks and obfuscate python source files
+using a one time pad lock, Python Package Index https://pypi.org/project/pytLoc/
+[40] H. W. Lenstra, Factoring integers with elliptic curves, Annals of Mathematics. 126
+(3): 649–673
+[41] Harold M. Edwards, A Normal Form for Elliptic Curves, Bulletin of the American
+Mathematical Society, Volume 44, Number 3, July 2007, Pages 393–422
+[42] Harris, C.R., Millman, K.J., van der Walt, S.J. et al. Array programming with
+NumPy. Nature 585, 357–362 (2020) ℎ𝑡𝑡𝑝𝑠 : //𝑟𝑑𝑐𝑢.𝑏𝑒/𝑐𝑅𝑄𝐻𝑉
+[43] Huseyin Hisil, Kenneth Koon-Ho Wong, Gary Carter, Ed Dawson, Twisted Edwards curves revisited, in Asiacrypt 2008.
+[44] J. D. Hunter, "Matplotlib: A 2D Graphics Environment", Computing in Science & Engineering, vol. 9, no. 3, pp. 90-95, 2007. ℎ𝑡𝑡𝑝𝑠 :
+//𝑧𝑒𝑛𝑜𝑑𝑜.𝑜𝑟𝑔/𝑟𝑒𝑐𝑜𝑟𝑑/6513224#.𝑌 𝑡𝑄𝑀𝑚𝑆 − 𝑙2𝐼𝐴
+
+Integer Factorization: Another perspective
+
+[45] J. Pollard. Théorèmes of factorization and primality testing. Proceedings of Cambridge Philosophical Society, 76: 521-528, 1974.
+[46] Kak, Subhash (1986), "Computational aspects of the Aryabhata algorithm", Indian
+Journal of History of Science, 21 (1): 62–71.
+[47] Kendall, D.G., Osborn, H.B. Two Simple Lower Bounds for Euler’s Function, vol. 17.
+Texas Journal of Science (1965)
+[48] Kevin Ford, Florian Luca, and Carl Pomerance, The Image of Carmichael’s
+𝜆− Function.
+[49] Kleinjung, Thorsten, On polynomial selection for the general number field sieve,
+Mathematics of Computation. 75 (256): 2037–2047.
+[50] Lagrange, Joseph-Louis (1771). "Suite des réflexions sur la résolution algébrique
+des équations. Section troisieme. De la résolution des équations du cinquieme degré
+& des degrés ultérieurs". Nouveaux Mémoires de l’Académie Royale des Sciences
+et Belles-Lettres de Berlin: 138–254. ; pages 202-203.
+[51] L. E. Dickson, History of the Theory of Numbers, Vol. 2,Chelsea Publishing Co.,
+1920.
+[52] Lenstra, H.W. and Pomerance, C.: Primality testing with Gaussian periods. Technical report, http://www.math.dartmouth.edu/ carlp/aks041411.pdf (2011)
+[53] McKay, James H. (1959), "Another proof of Cauchy’s group Theorem", American
+Mathematical Monthly, 66: 119, doi:10.2307/2310010
+[54] McKee, J (1999). "Speeding Fermat’s factoring method". Mathematics of Computation (68): 1729–1737.
+[55] McKee, J (1999) Speeding Fermat’s factoring method, Mathematics of Computation
+(68): 1729–1737
+[56] N. Koblitz, Elliptic curve cryptosystems. Math. Comp. 48. (1987), p. 203–209.
+[57] Nitaj, A. (2013). Diophantine and lattice cryptanalysis of the rsa cryptosystem.
+In Artificial Intelligence, Evolutionary Computing and Metaheuristics, pages
+139–168. Springer.
+[58] Oliveira T., Aranha D.F., López J., Rodríguez-Henríquez F. (2014) Fast Point Multiplication Algorithms for Binary Elliptic Curves with and without Precomputation.
+In: Joux A., Youssef A. (eds) Selected Areas in Cryptography – SAC 2014. SAC
+2014. Lecture Notes in Computer Science, vol 8781. Springer.
+[59] P. Zimmermann et al. GMP-ECM (elliptic curve method for integer factorization).
+Software: https://gforge.inria.fr/projects/ecm/, 2012.
+[60] Paul Loomis, M.P., Polhill, J. Summing up the Euler Φ function. The College
+Mathematics Journal 39(1), 34–42 (2008)
+[61] Paul
+Zimmermann,
+Factorization
+of
+RSA-250,
+https://lists.gforge.inria.fr/pipermail/cado-nfs-discuss/2020February/001166.html
+[62] Peter L Montgomery. Speeding the Pollard and elliptic curve methods of factorization,Mathematics of computation, 48(177):243–264, 1987.
+[63] R. L. Rivest, A. Shamir, and L. Adleman, A method for obtaining digital signatures
+and public-key cryptosystems, Communications of the ACM, vol. 21, no. 2, pp.
+120–126, 1978.
+[64] Razvan Barbulescu, Joppe Bos, Cyril Bouvier, Thorsten Kleinjung, Peter Montgomery. Finding ECM-friendly curves through a study of Galois properties.
+ANTS-X 10th Algorithmic Number Theory Symposium - 2012
+[65] Richard P. Brent, Recent Progress and Prospects for Integer Factorization Algorithms, Oxford University Computing Laboratory, Wolfson Building, Parks Road,
+http://www.comlab.ox.ac.uk
+[66] S. Goldwasser, J. Killian, Primality testing using elliptic curves, Proceedings of the
+18th Annual ACM Symposium of computing, ACM, New york, 1986, pp. 316-329
+[67] S. Goldwasser, J. Killian, Primality testing using elliptic curves, Proceedings of the
+18th Annual ACM Symposium of computing, ACM, New york, 1986, pp. 316-329
+[68] S. Lang (1966), Introduction to Diophantine Approximations, Addison-Wesley Pub.
+Co.
+[69] Shapiro, H. An arithmetic function arising from the Φ function. The American
+Mathematical Monthly 50, 18–30 (1943)
+[70] Taverne, J., Faz-Hernández, A., Aranha, D.F., Rodríguez-Henríquez, F., Hankerson,
+D., López, J.: Speeding scalar multiplication over binary elliptic curves using the
+new carry-less multiplication instruction. J. Cryptogr. Eng. 1, 187–199 (2011)
+[71] The CADO-NFS Development Team. CADO-NFS, An Implementation of the Number Field Sieve Algorithm, Release 2.3.0, 2017,http://cado-nfs.gforge.inria.fr/
+[72] V. Miller, Use of elliptic curves in cryptography. Lecture Notes in Computer
+Science 85 (1985), p. 417–426.
+[73] Vagn L. H., Andreas A. On quadratic curves over finite fields, 2018,
+https://arxiv.org/pdf/1802.10486.pdf
+[74] Wiener, M. J. (1990). Cryptanalysis of short rsa secret exponents, IEEE Transactions
+on Information theory, 36(3):553–558.
+
+Research Article ()
+
+

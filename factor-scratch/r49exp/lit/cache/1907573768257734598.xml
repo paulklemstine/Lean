@@ -1,0 +1,1613 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Mp2/vodJh3a4AJXQDZhNeqCgMvI</id>
+  <title>arXiv Query: search_query=abs:"SNFS" OR abs:"special number field sieve"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:07:57Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22SNFS%22+OR+abs:%22special+number+field+sieve%22&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>101</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2605.03502v1</id>
+    <title>Identification and characterization of 15265 super-Nyquist frequencies in 1309 δ Scuti stars from Kepler photometry</title>
+    <updated>2026-05-05T08:38:04Z</updated>
+    <link href="https://arxiv.org/abs/2605.03502v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.03502v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The frequency of pressure (p) mode in $δ$~Scuti stars can exceed the Nyquist limit of \textit{Kepler} long-cadence photometry. {These 'super-Nyquist frequencies' (SNFs) are observed as 'reflected' peaks at lower frequencies, i.e., they are Nyquist aliases that pose} a threat to asteroseismic diagnostics. Their impact on $δ$~Scuti p modes has yet to be comprehensively explored. We performed a systematic survey to search for SNFs in 1,838 \textit{Kepler} $δ$~Scuti stars through a novel technique based on sliding Lomb-Scargle periodogram, identifying 15,265 confirmed SNFs in 1,309 stars, from a total of 259,883 frequencies. We observe that the total number of detected frequencies per star remains featureless across the $δ$~Scuti instability strip; however, young stars pulsate in higher frequencies and so have significantly more SNFs on average. Both the number and the rate of SNFs diminishes accordingly as $δ$~Scuti stars become more evolved, which is consistent with both observation and stellar models. Furthermore, our method detects a greater fraction of modes as SNFs at higher frequencies, rising from approximately 1\% at 20 \(μ\)Hz to 23\% at the Nyquist limit. The rate of underdetection is highest amongst low-amplitude modes. The SNF modulation patterns can be well distinguished from phase modulations induced by binarity or nonlinear mode interactions. We provide a frequency catalog for future asteroseismic studies of $δ$~Scuti stars, wherein we identify each peak as being real or an alias, enabling further investigations into regular patterns of pulsation modes, linear combination frequencies, and theoretical modeling.</summary>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-05T08:38:04Z</published>
+    <arxiv:comment>9 pages, 6 figures, 2 tables, accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.SR"/>
+    <author>
+      <name>Yanqi Mo</name>
+    </author>
+    <author>
+      <name>Weikai Zong</name>
+    </author>
+    <author>
+      <name>Xuan Wang</name>
+    </author>
+    <author>
+      <name>Simon Murphy</name>
+    </author>
+    <author>
+      <name>Zilu Yang</name>
+    </author>
+    <author>
+      <name>Jian-Ning Fu</name>
+    </author>
+    <author>
+      <name>Stephane Charpinet</name>
+    </author>
+    <author>
+      <name>Xiao-Yu Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.02874v2</id>
+    <title>A kilobit hidden SNFS discrete logarithm computation</title>
+    <updated>2017-07-18T06:49:46Z</updated>
+    <link href="https://arxiv.org/abs/1610.02874v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.02874v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We perform a special number field sieve discrete logarithm computation in a 1024-bit prime field. To our knowledge, this is the first kilobit-sized discrete logarithm computation ever reported for prime fields. This computation took a little over two months of calendar time on an academic cluster using the open-source CADO-NFS software. Our chosen prime $p$ looks random, and $p--1$ has a 160-bit prime factor, in line with recommended parameters for the Digital Signature Algorithm. However, our p has been trapdoored in such a way that the special number field sieve can be used to compute discrete logarithms in $\mathbb{F}\_p^*$ , yet detecting that p has this trapdoor seems out of reach. Twenty-five years ago, there was considerable controversy around the possibility of back-doored parameters for DSA. Our computations show that trapdoored primes are entirely feasible with current computing technology. We also describe special number field sieve discrete log computations carried out for multiple weak primes found in use in the wild. As can be expected from a trapdoor mechanism which we say is hard to detect, our research did not reveal any trapdoored prime in wide use. The only way for a user to defend against a hypothetical trapdoor of  this kind is to require verifiably random primes.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-10T12:03:40Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>Jean-S{é}bastien Coron, Jesper Buus Nielsen. Eurocrypt 2017, Apr 2017, Paris, France. Springer, 10210, 2017, Lecture Notes in Computer Science</arxiv:journal_ref>
+    <author>
+      <name>Joshua Fried</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+      <arxiv:affiliation>CIS</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1007/978-3-319-56620-7_8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-319-56620-7_8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.12481v1</id>
+    <title>Distinguishing super-Nyquist frequencies via their temporal variation in $γ$ Doradus stars from continuous photometry</title>
+    <updated>2024-11-19T13:03:16Z</updated>
+    <link href="https://arxiv.org/abs/2411.12481v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.12481v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As mixed with real pulsations, the reflection of super-Nyquist frequencies (SNFs) pose a threat to asteroseismic properties. Although SNFs have been studied in several pulsating stars, a systematic survey remains scarcely explored. Here we propose a method to identify SNFs from Kepler and TESS photometry by characterizing their periodic frequency modulations using a sliding Fourier transform. After analyzing long cadence photometry in the Kepler legacy, we have identified 304 SNFs in 56 stars from 45607 frequencies in $\sim600$ $γ$ Doradus stars, corresponding to a fraction of approximately $0.67\%$ and $9.2\%$, respectively. Most SNFs are detected in the frequency range of pressure mode over 120 $μ$Hz and the fraction of SNF detection increases as frequency up to $\sim7\%$. We barely found two potential SNFs mixed with gravity modes in two $γ$ Doradus stars. These findings indicate that SNFs have a negligible impact on the global seismic properties, such as those derived from period spacing in $γ$ Doradus stars. However, we stress that SNFs must be carefully and systematically examined by this method in other pulsating stars, particularly $δ$ Scuti and hot B subdwarf stars, to establish a solid foundation for precise asteroseismolgy of various types of pulsators.</summary>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-19T13:03:16Z</published>
+    <arxiv:comment>7 pages, 6 figures, accepted for publication in A&amp;A</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.SR"/>
+    <arxiv:journal_ref>A&amp;A 693, A63 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Xuan Wang</name>
+    </author>
+    <author>
+      <name>Weikai Zong</name>
+    </author>
+    <author>
+      <name>Xiao-Yu Ma</name>
+    </author>
+    <author>
+      <name>Stéphane Charpinet</name>
+    </author>
+    <author>
+      <name>Tao Wu</name>
+    </author>
+    <author>
+      <name>Haotian Wang</name>
+    </author>
+    <arxiv:doi>10.1051/0004-6361/202452309</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1051/0004-6361/202452309" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.04335v1</id>
+    <title>Optimizing Patient Transitions to Skilled Nursing Facilities</title>
+    <updated>2022-03-08T19:00:10Z</updated>
+    <link href="https://arxiv.org/abs/2203.04335v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.04335v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hospital inpatient care costs is the largest component of health care expenditures in the US. At the same time, the number of non-hospital rehabilitative settings, such as skilled nursing facilities (SNFs), has increased. Lower costs and increased availability have made SNFs and other non-hospital rehabilitation settings a promising care alternative to hospitalization. To maximize their benefits, transitions to SNFs require special attention, since poorly coordinated transitions can lead to worse outcomes and higher costs via unnecessary hospital readmissions. This study presents a framework to improve care transitions based on the premise that certain SNFs may provide better care for some patients. We estimate readmission rates by SNF and patient types using observational data from a tertiary teaching hospital and nearby SNFs. We then analyze and solve a stochastic model optimizing patient transfer decisions to minimize readmissions. Our model accounts for patient discharge patterns and SNF capacity availability. We provide conditions for when an easy-to-use myopic policy, which assigns discharged patients to the SNF with the lowest readmission rate that is available, is optimal. We also show when an optimal policy has a threshold-like structure. Using estimated readmission rates, we compare the performance of the myopic policy and a proposed policy that depends on the discharge process, readmission rates, and future SNF availability. We evaluate when the myopic policy may be beneficial to use and when the proposed transfer heuristic provides a better alternative. Otherwise, we contend that using a stochastic optimization model for guiding transfer decisions may help reduce readmissions.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-08T19:00:10Z</published>
+    <arxiv:comment>53 pages, 12yea figures, 13 tables</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Oguzhan Alagoz</name>
+    </author>
+    <author>
+      <name>Sebastian A. Alvarez Avendaño</name>
+    </author>
+    <author>
+      <name>John Oruongo</name>
+    </author>
+    <author>
+      <name>Gabriel Zayas-Cabán</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.07353v2</id>
+    <title>Antineutrino flux and spectrum calculation for spent nuclear fuel for the Daya Bay antineutrino experiment</title>
+    <updated>2017-05-19T09:26:34Z</updated>
+    <link href="https://arxiv.org/abs/1512.07353v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.07353v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Spent nuclear fuel (SNF) antineutrino flux is an important source of uncertainties for a reactor neutrino flux prediction. However, if one want to determine the contribution of spent fuel, many data are needed, such as the amount of spent fuel in the pool, the time after discharged from the reactor core, the burnup of each assembly, and the antineutrino spectrum of the isotopes in the spend fuel. A method to calculate the contribution of SNF is proposed in this study. In this method, reactor simulation code verified by experiment have been used to simulate the fuel depletion by taking into account more than 2000 isotopes and fission products, the quantity of SNF in each six spend fuel pool, and the antineutrino spectrum of SNF varying with time after SNF discharged from core. Results show that the contribution of SNF to the total antineutrino flux is about 0.26%~0.34%, and the shutdown impact is about 20%. The SNF spectrum would distort the softer part of antineutrino spectra, and the maximum contribution from SNF is about 3.0%, but there is 18\% difference between line evaluate method and under evaluate method. In addition, non-equilibrium effects are also discussed, and the results are compatible with theirs considering the uncertainties.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-23T04:41:23Z</published>
+    <arxiv:comment>12 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>X. B. Ma</name>
+    </author>
+    <author>
+      <name>Y. F. Zhao</name>
+    </author>
+    <author>
+      <name>Y. X. Chen</name>
+    </author>
+    <author>
+      <name>W. L. Zhong</name>
+    </author>
+    <author>
+      <name>F. P. An</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.00934v2</id>
+    <title>Structures of magnetic excitations in the spin-1/2 kagome-lattice antiferromagnets Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$</title>
+    <updated>2022-02-18T05:42:11Z</updated>
+    <link href="https://arxiv.org/abs/2112.00934v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.00934v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show the structures of magnetic excitations in spin-1/2 kagome-lattice antiferromagnets Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$ investigated by inelastic neutron scattering in wide energy and momentum ranges. For Cs$_2$Cu$_3$SnF$_{12}$, four single-magnon excitation modes were observed. Low-energy three modes are assigned to be transverse modes and the high-energy fourth mode is suggested to be an amplitude mode. It was found that the broad excitation continuum without a marked structure spreads in a wide energy range from $0.15J$ to approximately $2.5J$ in contrast to the clearly structured excitation continuum observed in the spin-1/2 triangular-lattice Heisenberg antiferromagnet. These findings strongly suggest spinon excitations as elementary excitations in Cs$_2$Cu$_3$SnF$_{12}$. In Rb$_2$Cu$_3$SnF$_{12}$, singlet-triplet excitations from the pinwheel VBS state and their ghost modes caused by the enlargement of the chemical unit cell were clearly confirmed. It was found that the excitation continuum is structured in the low-energy region approximately below $J_{\mathrm{avg}}$ and the almost structureless high-energy excitation continuum extends to approximately $2.6J_{\mathrm{avg}}$. The characteristics of the high-energy excitation continuum are common to both Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$, irrespective of their ground states. The experimental results strongly suggest that the spin liquid component remains in the ground state as quantum fluctuations in Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-02T02:14:42Z</published>
+    <arxiv:comment>15 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Phys. Rev. B 105, 064424 (2022)</arxiv:journal_ref>
+    <author>
+      <name>Mutsuki Saito</name>
+    </author>
+    <author>
+      <name>Ryunosuke Takagishi</name>
+    </author>
+    <author>
+      <name>Nobuyuki Kurita</name>
+    </author>
+    <author>
+      <name>Masari Watanabe</name>
+    </author>
+    <author>
+      <name>Hidekazu Tanaka</name>
+    </author>
+    <author>
+      <name>Ryuji Nomura</name>
+    </author>
+    <author>
+      <name>Yoshiyuki Fukumoto</name>
+    </author>
+    <author>
+      <name>Kazuhiko Ikeuchi</name>
+    </author>
+    <author>
+      <name>Ryoichi Kajimoto</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.105.064424</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.105.064424" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.04779v3</id>
+    <title>Fast Training of Sinusoidal Neural Fields via Scaling Initialization</title>
+    <updated>2026-02-03T08:50:21Z</updated>
+    <link href="https://arxiv.org/abs/2410.04779v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.04779v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural fields are an emerging paradigm that represent data as continuous functions parameterized by neural networks. Despite many advantages, neural fields often have a high training cost, which prevents a broader adoption. In this paper, we focus on a popular family of neural fields, called sinusoidal neural fields (SNFs), and study how it should be initialized to maximize the training speed. We find that the standard initialization scheme for SNFs -- designed based on the signal propagation principle -- is suboptimal. In particular, we show that by simply multiplying each weight (except for the last layer) by a constant, we can accelerate SNF training by 10$\times$. This method, coined $\textit{weight scaling}$, consistently provides a significant speedup over various data domains, allowing the SNFs to train faster than more recently proposed architectures. To understand why the weight scaling works well, we conduct extensive theoretical and empirical analyses which reveal that the weight scaling not only resolves the spectral bias quite effectively but also enjoys a well-conditioned optimization trajectory. The code is available $\href{https://github.com/effl-lab/Fast-Neural-Fields}{here}$.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-07T06:38:43Z</published>
+    <arxiv:comment>ICLR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Taesun Yeom</name>
+    </author>
+    <author>
+      <name>Sangyoon Lee</name>
+    </author>
+    <author>
+      <name>Jaeho Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16453v1</id>
+    <title>Graph Regularized Sparse $L_{2,1}$ Semi-Nonnegative Matrix Factorization for Data Reduction</title>
+    <updated>2024-10-21T19:27:11Z</updated>
+    <link href="https://arxiv.org/abs/2410.16453v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16453v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Non-negative Matrix Factorization (NMF) is an effective algorithm for multivariate data analysis, including applications to feature selection, pattern recognition, and computer vision. Its variant, Semi-Nonnegative Matrix Factorization (SNF), extends the ability of NMF to render parts-based data representations to include mixed-sign data. Graph Regularized SNF builds upon this paradigm by adding a graph regularization term to preserve the local geometrical structure of the data space. Despite their successes, SNF-related algorithms to date still suffer from instability caused by the Frobenius norm due to the effects of outliers and noise. In this paper, we present a new $L_{2,1}$ SNF algorithm that utilizes the noise-insensitive $L_{2,1}$ norm. We provide monotonic convergence analysis of the $L_{2,1}$ SNF algorithm. In addition, we conduct numerical experiments on three benchmark mixed-sign datasets as well as several randomized mixed-sign matrices to demonstrate the performance superiority of $L_{2,1}$ SNF over conventional SNF algorithms under the influence of Gaussian noise at different levels.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-21T19:27:11Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Anthony Rhodes</name>
+    </author>
+    <author>
+      <name>Bin Jiang</name>
+    </author>
+    <author>
+      <name>Jenny Jiang</name>
+    </author>
+    <arxiv:doi>10.1002/nla.2598</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1002/nla.2598" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.07800v1</id>
+    <title>The Systematic Normal Form of Lattices</title>
+    <updated>2016-04-26T19:10:52Z</updated>
+    <link href="https://arxiv.org/abs/1604.07800v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.07800v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a new canonical form of lattices called the systematic normal form (SNF). We show that for every lattice there is an efficiently computable "nearby" SNF lattice, such that for any lattice one can solve lattice problems on its "nearby" SNF lattice, and translate the solutions back efficiently to the original lattice. The SNF provides direct connections between arbitrary lattices, and various lattice related problems like the Shortest-Integer-Solution, Approximate Greatest Common Divisor. As our main application of SNF we derive a new set of worst-to-average case lattice reductions that deviate significantly from the template of Ajtai and improve upon previous reductions in terms of simplicity.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-26T19:10:52Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Lior Eldar</name>
+    </author>
+    <author>
+      <name>Peter W. Shor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.04602v1</id>
+    <title>Regularized L21-Based Semi-NonNegative Matrix Factorization</title>
+    <updated>2020-05-10T08:19:51Z</updated>
+    <link href="https://arxiv.org/abs/2005.04602v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.04602v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a general-purpose data compression algorithm, Regularized L21 Semi-NonNegative Matrix Factorization (L21 SNF). L21 SNF provides robust, parts-based compression applicable to mixed-sign data for which high fidelity, individualdata point reconstruction is paramount. We derive a rigorous proof of convergenceof our algorithm. Through experiments, we show the use-case advantages presentedby L21 SNF, including application to the compression of highly overdeterminedsystems encountered broadly across many general machine learning processes.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-10T08:19:51Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Anthony D. Rhodes</name>
+    </author>
+    <author>
+      <name>Bin Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.02446v1</id>
+    <title>System Analysis Modeling and Intermodal Transportation for Commercial Spent</title>
+    <updated>2023-06-04T19:28:37Z</updated>
+    <link href="https://arxiv.org/abs/2306.02446v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.02446v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The United States Department of Energy has long term goals to develop solutions for managing the nations spent nuclear fuel and high-level waste inventory. The Integrated Waste Management program is employing system-level engineering and analysis principles to inform potential future waste management system architectures. Managing the SNF requires the use of system-level analysis software that considers waste generation, on-site (centralized storage), transportation infrastructure, and long-term disposal. The Next Generation System Analysis Model is an agent-based model that was developed to simulate the transportation and storage of SNF and HLW. NGSAM has the capability to detail the interaction and movement of individual components and groups, such as rail cars and casks. The SNF inventory from commercial nuclear reactors is currently in temporary storage at multiple locations spread across the US. Shipping of SNF from these locations relies on one of three transportation modes: rail, heavy-haul truck, or barge. Rail is the most preferred due to the size of the canisters and casks the SNF would be shipped in. Under some scenarios, a rail route might not be available to a reactor site or improving the rail infrastructure at shutdown sites might be too cost-prohibitive for utilities to opt for a direct rail transfer. Under such scenarios, using a barge or heavy haul truck to de-inventory the site and transfer the SNF to a nearby intermodal transfer site with adequate rail infrastructure where the payload could be transferred to a rail car might prove to be an attractive option. This work presents the various intermodal transportation options to move SNF from reactor sites to rail cars. Next, the operational steps in each of these modes to move the SNF from a reactor site and transfer it to a rail car is explored. The ideology, assumptions, and future steps are presented.</summary>
+    <category term="nlin.AO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-04T19:28:37Z</published>
+    <arxiv:comment>American Nuclear Society 2022 International High-Level Radioactive Waste Management Conference (https://www.ans.org/pubs/proceedings/article-52728/)</arxiv:comment>
+    <arxiv:primary_category term="nlin.AO"/>
+    <author>
+      <name>Harish R Gadey</name>
+    </author>
+    <author>
+      <name>Mark W Nutt</name>
+    </author>
+    <author>
+      <name>Philip Jensen</name>
+    </author>
+    <author>
+      <name>Robert Howard</name>
+    </author>
+    <author>
+      <name>Robby Joseph</name>
+    </author>
+    <author>
+      <name>Lucas Vander Wal</name>
+    </author>
+    <author>
+      <name>Riley M Cumberland</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.19109v2</id>
+    <title>Stochastic normalizing flows for Effective String Theory</title>
+    <updated>2025-01-08T09:48:02Z</updated>
+    <link href="https://arxiv.org/abs/2412.19109v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.19109v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Effective String Theory (EST) is a powerful tool used to study confinement in pure gauge theories by modeling the confining flux tube connecting a static quark-anti-quark pair as a thin vibrating string. Recently, flow-based samplers have been applied as an efficient numerical method to study EST regularized on the lattice, opening the route to study observables previously inaccessible to standard analytical methods. Flow-based samplers are a class of algorithms based on Normalizing Flows (NFs), deep generative models recently proposed as a promising alternative to traditional Markov Chain Monte Carlo methods in lattice field theory calculations. By combining NF layers with out-of-equilibrium stochastic updates, we obtain Stochastic Normalizing Flows (SNFs), a scalable class of machine learning algorithms that can be explained in terms of stochastic thermodynamics. In this contribution, we outline EST and SNFs, and report some numerical results for the shape of the flux tube.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-26T07:58:09Z</published>
+    <arxiv:comment>1+ 10 pages, 2 figures, contribution for the 41st International Symposium on Lattice Field Theory (Lattice 2024), 28 July - 3 August 2024, Liverpool, UK; v2: 1+ 10 pages, 2 figures, reference added</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Michele Caselle</name>
+    </author>
+    <author>
+      <name>Elia Cellini</name>
+    </author>
+    <author>
+      <name>Alessandro Nada</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.17976v2</id>
+    <title>metasnf: Meta Clustering with Similarity Network Fusion in R</title>
+    <updated>2026-04-14T15:41:26Z</updated>
+    <link href="https://arxiv.org/abs/2410.17976v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.17976v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>metasnf is an R package that enables users to apply meta clustering, a method for efficiently searching a broad space of cluster solutions by clustering the solutions themselves, to clustering workflows based on similarity network fusion (SNF). SNF is a multi-modal data integration algorithm commonly used for biomedical subtype discovery. The package also contains functions to assist with cluster visualization, characterization, and validation. This package can help researchers identify SNF-derived cluster solutions that are guided by context-specific utility over context-agnostic measures of quality.</summary>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-23T15:39:08Z</published>
+    <arxiv:comment>66 pages, 26 figures, provisionally accepted at Journal of Statistical Software</arxiv:comment>
+    <arxiv:primary_category term="stat.CO"/>
+    <author>
+      <name>Prashanth S Velayudhan</name>
+    </author>
+    <author>
+      <name>Xiaoqiao Xu</name>
+    </author>
+    <author>
+      <name>Prajkta Kallurkar</name>
+    </author>
+    <author>
+      <name>Ana Patricia Balbon</name>
+    </author>
+    <author>
+      <name>Maria T Secara</name>
+    </author>
+    <author>
+      <name>Adam Taback</name>
+    </author>
+    <author>
+      <name>Denise Sabac</name>
+    </author>
+    <author>
+      <name>Nicholas Chan</name>
+    </author>
+    <author>
+      <name>Shihao Ma</name>
+    </author>
+    <author>
+      <name>Bo Wang</name>
+    </author>
+    <author>
+      <name>Daniel Felsky</name>
+    </author>
+    <author>
+      <name>Stephanie H Ameis</name>
+    </author>
+    <author>
+      <name>Brian Cox</name>
+    </author>
+    <author>
+      <name>Colin Hawco</name>
+    </author>
+    <author>
+      <name>Lauren Erdman</name>
+    </author>
+    <author>
+      <name>Anne L Wheeler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.12502v1</id>
+    <title>Eigenvalues, Smith normal form and determinantal ideals</title>
+    <updated>2019-10-28T08:40:22Z</updated>
+    <link href="https://arxiv.org/abs/1910.12502v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.12502v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Determinantal ideals of graphs generalize, among others, the spectrum and the Smith normal form (SNF) of integer matrices associated to graphs. In this work we investigate the relationship of the spectrum and the SNF with the determinantal ideals. We show that an eigenvalue divides the $k$-th invariant factor of its SNF if the eigenvalue belongs to a variety of the $k$-th univariate integer determinantal ideal of the matrix. This result has as a corollary a theorem of Rushanan. We also study graphs having the same determinantal ideals with at most one indeterminate; the socalled codeterminantal graphs, which generalize the concepts of cospectral and coinvariant graphs. We establish a necessary and sufficient condition for graphs to be codeterminantal on $\mathbb{R}[x]$, and we present some computational results on codeterminantal graphs up to 9 vertices. Finally, we show that complete graphs and star graphs are determined by the SNF of its distance Laplacian matrix.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-28T08:40:22Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:1401.1773 by other authors</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Aida Abiad</name>
+    </author>
+    <author>
+      <name>Carlos A. Alfaro</name>
+    </author>
+    <author>
+      <name>Kristin Heysse</name>
+    </author>
+    <author>
+      <name>Marcos C. Vargas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.3971v1</id>
+    <title>Sparse Norm Filtering</title>
+    <updated>2013-05-17T03:13:28Z</updated>
+    <link href="https://arxiv.org/abs/1305.3971v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.3971v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Optimization-based filtering smoothes an image by minimizing a fidelity function and simultaneously preserves edges by exploiting a sparse norm penalty over gradients. It has obtained promising performance in practical problems, such as detail manipulation, HDR compression and deblurring, and thus has received increasing attentions in fields of graphics, computer vision and image processing. This paper derives a new type of image filter called sparse norm filter (SNF) from optimization-based filtering. SNF has a very simple form, introduces a general class of filtering techniques, and explains several classic filters as special implementations of SNF, e.g. the averaging filter and the median filter. It has advantages of being halo free, easy to implement, and low time and memory costs (comparable to those of the bilateral filter). Thus, it is more generic than a smoothing operator and can better adapt to different tasks. We validate the proposed SNF by a wide variety of applications including edge-preserving smoothing, outlier tolerant filtering, detail manipulation, HDR compression, non-blind deconvolution, image segmentation, and colorization.</summary>
+    <category term="cs.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-17T03:13:28Z</published>
+    <arxiv:primary_category term="cs.GR"/>
+    <author>
+      <name>Chengxi Ye</name>
+    </author>
+    <author>
+      <name>Dacheng Tao</name>
+    </author>
+    <author>
+      <name>Mingli Song</name>
+    </author>
+    <author>
+      <name>David W. Jacobs</name>
+    </author>
+    <author>
+      <name>Min Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.05297v1</id>
+    <title>The degree-distance and transmission-adjacency matrices</title>
+    <updated>2022-12-10T13:27:17Z</updated>
+    <link href="https://arxiv.org/abs/2212.05297v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.05297v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $G$ be a connected graph with adjacency matrix $A(G)$. The distance matrix $D(G)$ of $G$ has rows and columns indexed by $V(G)$ with $uv$-entry equal to the distance $\mathrm{dist}(u,v)$ which is the number of edges in a shortest path between the vertices $u$ and $v$. The transmission $\mathrm{trs}(u)$ of $u$ is defined as $\sum_{v\in V(G)}\mathrm{dist}(u,v)$. Let $\mathrm{trs}(G)$ be the diagonal matrix with the transmissions of the vertices of $G$ in the diagonal, and $\mathrm{deg}(G)$ the diagonal matrix with the degrees of the vertices in the diagonal. In this paper we investigate the Smith normal form (SNF) and the spectrum of the matrices $D^{\mathrm{deg}}_+(G):=\mathrm{deg}(G)+D(G)$, $D^{\mathrm{deg}}(G):=\mathrm{deg}(G)-D(G)$, $A^{\mathrm{trs}}_+(G):=\mathrm{trs}(G)+A(G)$ and $A^{\mathrm{trs}}(G):=\mathrm{trs}(G)-A(G)$. In particular, we explore how good the spectrum and the SNF of these matrices are for determining graphs up to isomorphism. We found that the SNF of $A^{\mathrm{trs}}$ has an interesting behaviour when compared with other classical matrices. We note that the SNF of $A^{\mathrm{trs}}$ can be used to compute the structure of the sandpile group of certain graphs. We compute the SNF of $D^{\mathrm{deg}}_+$, $D^{\mathrm{deg}}$, $A^{\mathrm{trs}}_+$ and $A^{\mathrm{trs}}$ for several graph families. We prove that complete graphs are determined by the SNF of $D^{\mathrm{deg}}_+$, $D^{\mathrm{deg}}$, $A^{\mathrm{trs}}_+$ and $A^{\mathrm{trs}}$. Finally, we derive some results about the spectrum of $D^{\mathrm{deg}}$ and $A^{\mathrm{trs}}$.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-10T13:27:17Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Carlos A. Alfaro</name>
+    </author>
+    <author>
+      <name>Octavio Zapata</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1902.01023v1</id>
+    <title>Enhanced Hierarchical Music Structure Annotations via Feature Level Similarity Fusion</title>
+    <updated>2019-02-04T03:38:33Z</updated>
+    <link href="https://arxiv.org/abs/1902.01023v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1902.01023v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe a novel pipeline to automatically discover hierarchies of repeated sections in musical audio. The proposed method uses similarity network fusion (SNF) to combine different frame-level features into clean affinity matrices, which are then used as input to spectral clustering. While prior spectral clustering approaches to music structure analysis have pre-processed affinity matrices with heuristics specifically designed for this task, we show that the SNF approach directly yields segmentations which agree better with human annotators, as measured by the ``L-measure'' metric for hierarchical annotations. Furthermore, the SNF approach immediately supports arbitrarily many input features, allowing us to simultaneously discover structure encoded in timbral, harmonic, and rhythmic representations without any changes to the base algorithm.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-02-04T03:38:33Z</published>
+    <arxiv:comment>5 pages, 3 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>IEEE International Conference on Acoustics, Speech, and Signal Processing, 2019</arxiv:journal_ref>
+    <author>
+      <name>Christopher J. Tralie</name>
+    </author>
+    <author>
+      <name>Brian McFee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.14890v2</id>
+    <title>SNF-ROM: Projection-based nonlinear reduced order modeling with smooth neural fields</title>
+    <updated>2024-07-08T21:18:48Z</updated>
+    <link href="https://arxiv.org/abs/2405.14890v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.14890v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reduced order modeling lowers the computational cost of solving PDEs by learning a low-order spatial representation from data and dynamically evolving these representations using manifold projections of the governing equations. While commonly used, linear subspace reduced-order models (ROMs) are often suboptimal for problems with a slow decay of Kolmogorov $n$-width, such as advection-dominated fluid flows at high Reynolds numbers. There has been a growing interest in nonlinear ROMs that use state-of-the-art representation learning techniques to accurately capture such phenomena with fewer degrees of freedom. We propose smooth neural field ROM (SNF-ROM), a nonlinear reduced modeling framework that combines grid-free reduced representations with Galerkin projection. The SNF-ROM architecture constrains the learned ROM trajectories to a smoothly varying path, which proves beneficial in the dynamics evaluation when the reduced manifold is traversed in accordance with the governing PDEs. Furthermore, we devise robust regularization schemes to ensure the learned neural fields are smooth and differentiable. This allows us to compute physics-based dynamics of the reduced system nonintrusively with automatic differentiation and evolve the reduced system with classical time-integrators. SNF-ROM leads to fast offline training as well as enhanced accuracy and stability during the online dynamics evaluation. Numerical experiments reveal that SNF-ROM is able to accelerate the full-order computation by up to $199\times$. We demonstrate the efficacy of SNF-ROM on a range of advection-dominated linear and nonlinear PDE problems where we consistently outperform state-of-the-art ROMs.</summary>
+    <category term="physics.flu-dyn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-17T19:14:30Z</published>
+    <arxiv:primary_category term="physics.flu-dyn"/>
+    <author>
+      <name>Vedant Puri</name>
+    </author>
+    <author>
+      <name>Aviral Prakash</name>
+    </author>
+    <author>
+      <name>Levent Burak Kara</name>
+    </author>
+    <author>
+      <name>Yongjie Jessica Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0901.2791v3</id>
+    <title>Magnetic susceptibilities in a family of S=1/2 Kagome antiferromagnet</title>
+    <updated>2009-01-22T08:42:17Z</updated>
+    <link href="https://arxiv.org/abs/0901.2791v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0901.2791v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  Hexagonal antiferromagnets Cs$_2$Cu$_3$MF$_{12}$ (M = Zr, Hf and Sn) have uniform Kagome lattices of Cu$^{2+}$ with S = 1/2, whereas Rb$_2$Cu$_3$SnF$_{12}$ has a 2a by 2a enlarged cell as compared with the uniform Kagome lattice. The crystal data of Cs$_2$Cu$_3$SnF$_{12}$ synthesized first in the present work are reported. We performed magnetic susceptibility measurements on this family of Kagome antiferromagnet using single crystals. In the Cs$_2$Cu$_3$MF$_{12}$ systems, structural phase transitions were observed at $T_t = 225$ K, 172 K and 185 K for M = Zr, Hf and Sn, respectively. The magnetic susceptibilities observed for $T &gt; T_t$ are almost perfectly described using theoretical results obtained by exact diagonalization for the 24-site Kagome cluster with $J/k_B = 244$ K, 266 K and 240 K, respectively. Magnetic ordering accompanied by the weak ferromagnetic moment occurs at $T_N = 23.5$ K, 24.5 K and 20.0 K, respectively. The origins of the weak ferromagnetic moment should be ascribed to the lattice distortion that breaks the hexagonal symmetry of the exchange network for $T &lt; T_t$ and the Dzyaloshinsky-Moriya interaction. Rb$_2$Cu$_3$SnF$_{12}$ is magnetically described as a modified Kagome antiferromagnet with four types of neighboring exchange interaction. Neither structural nor magnetic phase transition was observed in Rb$_2$Cu$_3$SnF$_{12}$. Its magnetic ground state was found to be a spin singlet with a triplet gap. Using exact diagonalization for a 12-site Kagome cluster, we analyzed the magnetic susceptibility and evaluated individual exchange interactions. The causes leading to the different ground states in Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$ are discussed.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-01-19T09:28:36Z</published>
+    <arxiv:comment>12 pages, 9 figures. Submitted to Physical Review B. Errors on Fig. 7 were corrected</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <author>
+      <name>T. Ono</name>
+    </author>
+    <author>
+      <name>K. Morita</name>
+    </author>
+    <author>
+      <name>M. Yano</name>
+    </author>
+    <author>
+      <name>H. Tanaka</name>
+    </author>
+    <author>
+      <name>K. Fujii</name>
+    </author>
+    <author>
+      <name>H. Uekusa</name>
+    </author>
+    <author>
+      <name>Y. Narumi</name>
+    </author>
+    <author>
+      <name>K. Kindo</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevB.79.174407</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevB.79.174407" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1506.00160v2</id>
+    <title>The Smith Normal Form Distribution of a Random Integer Matrix</title>
+    <updated>2015-09-08T02:19:46Z</updated>
+    <link href="https://arxiv.org/abs/1506.00160v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1506.00160v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the density $μ$ of the Smith normal form (SNF) of a random integer matrix exists and equals a product of densities $μ_{p^s}$ of SNF over $\mathbb{Z}/p^s\mathbb{Z}$ with $p$ a prime and $s$ some positive integer. Our approach is to connect the SNF of a matrix with the greatest common divisors (gcds) of certain polynomials of matrix entries, and develop the theory of multi-gcd distribution of polynomial values at a random integer vector. We also derive a formula for $μ_{p^s}$ and compute the density $μ$ for several interesting types of sets. Finally, we determine the maximum and minimum of $μ_{p^s}$ and establish its monotonicity properties and limiting behaviors.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-05-30T20:00:44Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <arxiv:journal_ref>SIAM J. Discrete Math., Volume 31, Issue 3 (2017), 2247-2268</arxiv:journal_ref>
+    <author>
+      <name>Yinghui Wang</name>
+    </author>
+    <author>
+      <name>Richard P. Stanley</name>
+    </author>
+    <arxiv:doi>10.1137/16M1098140</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/16M1098140" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.07182v2</id>
+    <title>Photonuclear treatment for spent fuel radiotoxicity reduction: a case study investigation on minor actinides</title>
+    <updated>2025-06-27T15:28:14Z</updated>
+    <link href="https://arxiv.org/abs/2503.07182v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.07182v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The management of Spent Nuclear Fuel (SNF) is one of the main challenges in the decommissioning of nuclear power plants. Thermal reactors, such as Light Water Reactors (LWRs), produce significant amounts of minor actinides (MAs) such as Americium, Curium, and Neptunium, which are key contributors to the long-term radiotoxicity and decay heat in SNF. Currently, the long term widely accepted solution is the geological disposal. At the same time, advanced technologies like Partitioning and Transmutation (P\&amp;T) offer promising solutions to reduce SNF long-term radiotoxicity. While most transmutation strategies rely on neutron fluxes, in this study the adoption of photon beam to induce photonuclear reactions in SNF is investigated, without depending on neutron based systems. In particular, the study focuses on the probability of inducing transmutations and fissions on MAs, by leveraging the Giant Dipole Resonance (GDR) region of photonuclear interactions. In the investigated case study, the effect of a photon driven transmutation of minor actinides present in a spent fuel from SMR technology was evaluated. This approach offers a novel solution to the challenges of nuclear waste management which may become an alternative path in treating the radiotoxicity of minor actinides with the adoption of high enough photon fluxes.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-10T11:04:53Z</published>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <arxiv:journal_ref>Nuclear Engineering and Design, Volume 442, 2025</arxiv:journal_ref>
+    <author>
+      <name>Antonio Cammi</name>
+    </author>
+    <author>
+      <name>Lorenzo Loi</name>
+    </author>
+    <author>
+      <name>Andrea Missaglia</name>
+    </author>
+    <author>
+      <name>Ludovica Tumminelli</name>
+    </author>
+    <author>
+      <name>Francesca Giacobbo</name>
+    </author>
+    <author>
+      <name>Enrico Padovani</name>
+    </author>
+    <arxiv:doi>10.1016/j.nucengdes.2025.114204</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nucengdes.2025.114204" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.07358v2</id>
+    <title>Degeneracies Between Self-interacting Dark Matter and Supernova Feedback as cusp-core transformation mechanisms</title>
+    <updated>2022-04-06T21:06:04Z</updated>
+    <link href="https://arxiv.org/abs/2108.07358v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.07358v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a suite of 16 high-resolution hydrodynamic simulations of an isolated dwarf galaxy (gaseous and stellar disk plus a stellar bulge) within an initially cuspy dark matter (DM) halo, including self-interactions between the DM particles (SIDM); as well as stochastic star formation and subsequent supernova feedback (SNF), implemented using the stellar feedback model SMUGGLE. The simulations start from identical initial conditions and we regulate the strength of SIDM and SNF by systematically varying the SIDM momentum transfer cross section and the gas density threshold for star formation. The DM halo forms a constant density core of similar size and shape for several combinations of those two parameters. Haloes with cores that are formed due to SIDM (adiabatic cusp-core transformation) have velocity dispersion profiles which are closer to isothermal than those of haloes with cores that are formed due to SNF in simulations with bursty star formation (impulsive cusp-core transformation). Impulsive SNF can generate positive stellar age gradients and increase random motion in the gas at the centre of the galaxy. Simulated galaxies in haloes with cores that were formed adiabatically are spatially more extended, with stellar metallicity gradients that are shallower (at late times) than those of galaxies in other simulations. Such observable properties of the gas and the stars, which indicate either an adiabatic or an impulsive evolution of the gravitational potential, may be used to determine whether observed cores in DM haloes are formed through self-interactions between the DM particles or in response to impulsive SNF.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-16T22:16:48Z</published>
+    <arxiv:comment>accepted for publication in MNRAS, contains 3 appendices; main paper: 18 pages, 11 figures; appendices: 8 pages, 7 figures; for questions/comments contact jburger@ucr.edu (Jan Burger)</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Jan D. Burger</name>
+      <arxiv:affiliation>University of California Riverside, Riverside, CA, US</arxiv:affiliation>
+      <arxiv:affiliation>University of Iceland, Reykjavík, Iceland</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jesús Zavala</name>
+      <arxiv:affiliation>University of Iceland, Reykjavík, Iceland</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Laura V. Sales</name>
+      <arxiv:affiliation>University of California Riverside, Riverside, CA, US</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Vogelsberger</name>
+      <arxiv:affiliation>MIT Kavli Institute for Astrophysics and Space Research, Ronald McNair Building</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Federico Marinacci</name>
+      <arxiv:affiliation>Department of Physics and Astronomy "Augusto Righi", University of Bologna, Bologna, Italy</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Paul Torrey</name>
+      <arxiv:affiliation>Department of Astronomy, University of Florida, Bryant Space Sciences Center, Gainesville, FL, USA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1093/mnras/stac994</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/stac994" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0811.3291v1</id>
+    <title>New S=1/2 Kagome Antiferromagnets A$_2$Cu$_3$SnF$_{12}$: A=Cs and Rb</title>
+    <updated>2008-11-20T09:31:58Z</updated>
+    <link href="https://arxiv.org/abs/0811.3291v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0811.3291v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We synthesized single crystals of the new hexagonal compounds A$_2$Cu$_3$SnF$_{12}$ with A=Cs and Rb, and investigated their magnetic properties. These compounds are composed of Kagomé layers of corner-sharing CuF$_6$-octahedra. Cs$_2$Cu$_3$SnF$_{12}$ has the proper Kagomé layer at room temperature, and undergoes structural phase transition at $T_\mathrm{t}\simeq 185$ K. The temperature dependence of the magnetic susceptibility in Cs$_2$Cu$_3$SnF$_{12}$ agrees well with the result of the numerical calculation for $S=1/2$ two-dimensional Heisenberg Kagomé antiferromagnet down to $T_\mathrm{t}$ with the nearest exchange interaction $J/k_\mathrm{B}\simeq 240$ K. Although the magnetic susceptibility deviates from the calculated result below $T&lt;T_\mathrm{t}$, the rounded maxima were observed at approximately $T\simeq (1/6)J/k_\mathrm{B}$ as predicted by the theory. Cs$_2$Cu$_3$SnF$_{12}$ undergoes three-dimensional magnetic ordering at $T_\mathrm{N} = 20$ K.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-11-20T09:31:58Z</published>
+    <arxiv:comment>6 pages, 4 figures, to appear in the Proceedings of International Conference on Highly Frustrated Magnetism 2008</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <author>
+      <name>T. Ono</name>
+    </author>
+    <author>
+      <name>K. Morita</name>
+    </author>
+    <author>
+      <name>M. Yano</name>
+    </author>
+    <author>
+      <name>H. Tanaka</name>
+    </author>
+    <author>
+      <name>K. Fujii</name>
+    </author>
+    <author>
+      <name>H. Uekusa</name>
+    </author>
+    <author>
+      <name>Y. Narumi</name>
+    </author>
+    <author>
+      <name>K. Kindo</name>
+    </author>
+    <arxiv:doi>10.1088/1742-6596/145/1/012005</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1742-6596/145/1/012005" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.29656v1</id>
+    <title>A Smallest-Need-First Job Scheduling Framework with Adaptive Optimization of Idle Node Counts for Energy-Efficient HPC Systems</title>
+    <updated>2026-08-30T08:42:34Z</updated>
+    <link href="https://arxiv.org/abs/2608.29656v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.29656v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Power-state management in high-performance computing (HPC) clusters must reduce idle energy without excessive wake-up delays for rigid parallel jobs. This paper presents SNF-ICON, an event-driven controller combining smallest-need-first (SNF) gang scheduling, predictive wake timing, and adaptive warm-spare control. At each scheduler invocation, recent interarrival and completed-service samples are screened for sufficiency, exponential-like variability, low lag-one autocorrelation, and acceptable Kolmogorov-Smirnov distance. Rejected or data-sparse windows use SNF+IPM (Intelligent Power Manager), whereas accepted windows activate release prediction and an exponential next-event model. Warm-spare optimization is applied only when queue, event, and arrival-recency conditions permit, balancing estimated waiting and non-compute energy over a timeout-capped horizon. We evaluate four DAS2 trace segments and a generated Markovian workload on AOBA-derived 64-node models, plus SDSC Blue on an AOBA-derived 1152-node model. SNF-ICON is compared with SNF+IPM and First Come First Served (FCFS) + backfilling with IPM. It reduces average waiting time relative to the FCFS-based baseline in all six cases and remains close to at least one heuristic energy baseline in five. The generated workload spends substantial time in ICON mode, whereas DAS2 workloads operate mainly in fallback. Furthermore, cross-platform results show strong dependence on node-transition and power models. Thus, no single policy or parameter set works best in every case.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-30T08:42:34Z</published>
+    <arxiv:comment>18 pages, 10 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Reza Pulungan</name>
+    </author>
+    <author>
+      <name>Raka Satya Prasasta</name>
+    </author>
+    <author>
+      <name>Santana Yuda Pradata</name>
+    </author>
+    <author>
+      <name> Mursalim</name>
+    </author>
+    <author>
+      <name>Hiroyuki Takizawa</name>
+    </author>
+    <author>
+      <name>Muhammad Alfian Amrizal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.00751v1</id>
+    <title>Signal-Noise Factorization Isolates Nuisance Variation into Removable Subspaces</title>
+    <updated>2026-09-30T21:46:40Z</updated>
+    <link href="https://arxiv.org/abs/2610.00751v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.00751v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent theoretical work identified fundamental properties of representation geometry that shape inference ability of deep neural networks. These include signal-noise factorization (SNF), the ability to segregate signal from noise, and signal-signal factorization (SSF), the ability to segregate task-specific and task-irrelevant signals. Here, we built regularizers that reinforce these two properties during training. We compared networks trained with these regularizers to $L_2$-regularized baseline networks on the CIFAR-100 classification task to understand how our regularizers shape representation geometry and impact performance on a well-known computer vision baseline. Enhancing SNF via regularization improved model performance but enhancing SSF did not. Motivated by biomedical applications, we investigated how our regularizers affected performance on the BloodMNIST dataset treated with MedMNIST-C corruptions at five severity levels, and found even larger performance gains using the SNF regularizer. To understand the mechanism by which SNF-regularization produces improved performance, we analyzed the nuisance subspaces across regularization regimes, finding that the SNF-regularized models represent noise in distinct subspaces, separate from class-relevant signal. Because this geometry is explicit, the dominant corruption-induced directions can be estimated on held-out data and projected out of the representations. This manipulation led to a substantial gain in accuracy. These results show that regularizers that enforce signal-noise factorization can produce substantial improvements on computer vision tasks that contain out-of-distribution image distortions at inference time. They also highlight how shaping representations affects model performance: isolating nuisance variables from categorical ones is more important than maintaining factorized representations of categorical variables.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-30T21:46:40Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sakin Kirti</name>
+    </author>
+    <author>
+      <name>Joel Zylberberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.07700v1</id>
+    <title>SNF: Serverless Network Functions</title>
+    <updated>2019-10-17T03:56:06Z</updated>
+    <link href="https://arxiv.org/abs/1910.07700v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.07700v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is increasingly common to outsource network functions (NFs) to the cloud. However, no cloud providers offer NFs-as-a-Service (NFaaS) that allows users to run custom NFs. Our work addresses how a cloud provider can offer NFaaS. We use the emerging serverless computing paradigm as it has the right building blocks - usage-based billing, convenient event-driven programming model and automatic compute elasticity. Towards this end, we identify two core limitations of existing serverless platforms to support demanding stateful NFs - coupling of the billing and work assignment granularities, and state sharing via an external store. We develop a novel NFaaS framework, SNF, that overcomes these issues using two ideas. SNF allocates work at the granularity of flowlets observed in network traffic, whereas billing and programming occur on the basis of packets. SNF embellishes serverless platforms with ephemeral state that lasts for the duration of the flowlet and supports high performance state operations between compute units in a peer-to-peer manner. We present algorithms for work allocation and state maintenance, and demonstrate that our SNF prototype dynamically adapts compute resources for various stateful NFs based on traffic demand at very fine time scales, with minimal overheads.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-17T03:56:06Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Arjun Singhvi</name>
+    </author>
+    <author>
+      <name>Junaid Khalid</name>
+    </author>
+    <author>
+      <name>Aditya Akella</name>
+    </author>
+    <author>
+      <name>Sujata Banerjee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.07282v1</id>
+    <title>SNF: Filter Pruning via Searching the Proper Number of Filters</title>
+    <updated>2021-12-14T10:37:25Z</updated>
+    <link href="https://arxiv.org/abs/2112.07282v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.07282v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Convolutional Neural Network (CNN) has an amount of parameter redundancy, filter pruning aims to remove the redundant filters and provides the possibility for the application of CNN on terminal devices. However, previous works pay more attention to designing evaluation criteria of filter importance and then prune less important filters with a fixed pruning rate or a fixed number to reduce convolutional neural networks' redundancy. It does not consider how many filters to reserve for each layer is the most reasonable choice. From this perspective, we propose a new filter pruning method by searching the proper number of filters (SNF). SNF is dedicated to searching for the most reasonable number of reserved filters for each layer and then pruning filters with specific criteria. It can tailor the most suitable network structure at different FLOPs. Filter pruning with our method leads to the state-of-the-art (SOTA) accuracy on CIFAR-10 and achieves competitive performance on ImageNet ILSVRC-2012.SNF based on the ResNet-56 network achieves an increase of 0.14% in Top-1 accuracy at 52.94% FLOPs reduction on CIFAR-10. Pruning ResNet-110 on CIFAR-10 also improves the Top-1 accuracy of 0.03% when reducing 68.68% FLOPs. For ImageNet, we set the pruning rates as 52.10% FLOPs, and the Top-1 accuracy only has a drop of 0.74%. The codes can be available at https://github.com/pk-l/SNF.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-14T10:37:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Pengkun Liu</name>
+    </author>
+    <author>
+      <name>Yaru Yue</name>
+    </author>
+    <author>
+      <name>Yanjun Guo</name>
+    </author>
+    <author>
+      <name>Xingxiang Tao</name>
+    </author>
+    <author>
+      <name>Xiaoguang Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.10476v1</id>
+    <title>Spin-1/2 kagome-lattice antiferromagnets Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$</title>
+    <updated>2024-08-20T01:28:59Z</updated>
+    <link href="https://arxiv.org/abs/2408.10476v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.10476v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Spin-1/2 kagome-lattice Heisenberg antiferromagnet is theoretically known to have a quantum spin liquid ground state, one of the frontiers of condensed matter physics. The search for the model substances has been continued for a long time, and many candidate substances have been reported. Most of them are hydroxide minerals. Here, I review the static and dynamic properties of non-mineral kagome-lattice antiferromagnets Cs$_2$Cu$_3$SnF$_{12}$ and Rb$_2$Cu$_3$SnF$_{12}$.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-20T01:28:59Z</published>
+    <arxiv:comment>An intensive course lecture material, 24 pages, 12 figures, 1 table. arXiv admin note: text overlap with arXiv:2112.00934</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <author>
+      <name>Hidekazu Tanaka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.08391v1</id>
+    <title>Fast Uncertainty Quantification of Spent Nuclear Fuel with Neural Networks</title>
+    <updated>2023-08-16T14:23:24Z</updated>
+    <link href="https://arxiv.org/abs/2308.08391v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.08391v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The accurate calculation and uncertainty quantification of the characteristics of spent nuclear fuel (SNF) play a crucial role in ensuring the safety, efficiency, and sustainability of nuclear energy production, waste management, and nuclear safeguards. State of the art physics-based models, while reliable, are computationally intensive and time-consuming. This paper presents a surrogate modeling approach using neural networks (NN) to predict a number of SNF characteristics with reduced computational costs compared to physics-based models. An NN is trained using data generated from CASMO5 lattice calculations. The trained NN accurately predicts decay heat and nuclide concentrations of SNF, as a function of key input parameters, such as enrichment, burnup, cooling time between cycles, mean boron concentration and fuel temperature. The model is validated against physics-based decay heat simulations and measurements of different uranium oxide fuel assemblies from two different pressurized water reactors. In addition, the NN is used to perform sensitivity analysis and uncertainty quantification. The results are in very good alignment to CASMO5, while the computational costs (taking into account the costs of generating training samples) are reduced by a factor of 10 or more. Our findings demonstrate the feasibility of using NNs as surrogate models for fast characterization of SNF, providing a promising avenue for improving computational efficiency in assessing nuclear fuel behavior and associated risks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-16T14:23:24Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Arnau Albà</name>
+    </author>
+    <author>
+      <name>Andreas Adelmann</name>
+    </author>
+    <author>
+      <name>Lucas Münster</name>
+    </author>
+    <author>
+      <name>Dimitri Rochman</name>
+    </author>
+    <author>
+      <name>Romana Boiger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.09813v1</id>
+    <title>Slice-and-Forge: Making Better Use of Caches for Graph Convolutional Network Accelerators</title>
+    <updated>2023-01-24T04:43:12Z</updated>
+    <link href="https://arxiv.org/abs/2301.09813v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.09813v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graph convolutional networks (GCNs) are becoming increasingly popular as they can process a wide variety of data formats that prior deep neural networks cannot easily support. One key challenge in designing hardware accelerators for GCNs is the vast size and randomness in their data access patterns which greatly reduces the effectiveness of the limited on-chip cache. Aimed at improving the effectiveness of the cache by mitigating the irregular data accesses, prior studies often employ the vertex tiling techniques used in traditional graph processing applications. While being effective at enhancing the cache efficiency, those approaches are often sensitive to the tiling configurations where the optimal setting heavily depends on target input datasets. Furthermore, the existing solutions require manual tuning through trial-and-error or rely on sub-optimal analytical models.
+  In this paper, we propose Slice-and-Forge (SnF), an efficient hardware accelerator for GCNs which greatly improves the effectiveness of the limited on-chip cache. SnF chooses a tiling strategy named feature slicing that splits the features into vertical slices and processes them in the outermost loop of the execution. This particular choice results in a repetition of the identical computational patterns over irregular graph data over multiple rounds. Taking advantage of such repetitions, SnF dynamically tunes its tile size. Our experimental results reveal that SnF can achieve 1.73x higher performance in geomean compared to prior work on multi-engine settings, and 1.46x higher performance in geomean on small scale settings, without the need for off-line analyses.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-24T04:43:12Z</published>
+    <arxiv:comment>Published at PACT'22</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Mingi Yoo</name>
+    </author>
+    <author>
+      <name>Jaeyong Song</name>
+    </author>
+    <author>
+      <name>Hyeyoon Lee</name>
+    </author>
+    <author>
+      <name>Jounghoo Lee</name>
+    </author>
+    <author>
+      <name>Namhyung Kim</name>
+    </author>
+    <author>
+      <name>Youngsok Kim</name>
+    </author>
+    <author>
+      <name>Jinho Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1507.04087v2</id>
+    <title>Two Weak Forms of Countability Axioms in Free Topological Groups</title>
+    <updated>2016-04-18T03:37:24Z</updated>
+    <link href="https://arxiv.org/abs/1507.04087v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1507.04087v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a Tychonoff space $X$, let $F(X)$ and $A(X)$ be respectively the free topological group and the free Abelian topological group over $X$ in the sense of Markov. For every $n\in\mathbb{N}$, let $F_{n}(X)$ (resp. $A_n(X)$) denote the subspace of $F(X)$ (resp. $A(X)$) that consists of words of reduced length at most $n$ with respect to the free basis $X$. In this paper, we discuss two weak forms of countability axioms in $F(X)$ or $A(X)$, namely the $csf$-countability and $snf$-countability. We provide some characterizations of the $csf$-countability and $snf$-countability of $F(X)$ and $A(X)$ for various classes of spaces $X$. In addition, we also study the $csf$-countability and $snf$-countability of $F_n(X)$ or $A_n(X)$, for $n=2, 3, 4$. Some results of Arhangel'ski\vı in \cite{A1980} and Yamada in \cite{Y1998} are generalized. An affirmative answer to an open question posed by Li et al. in \cite{LLL} is provided.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-07-15T05:25:26Z</published>
+    <arxiv:primary_category term="math.GR"/>
+    <author>
+      <name>Fucai Lin</name>
+    </author>
+    <author>
+      <name>Chuan Liu</name>
+    </author>
+    <author>
+      <name>Jiling Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.12805v1</id>
+    <title>Cross-disciplinary Reactor-to-Repository Framework for Evaluating Spent Nuclear Fuel from Advanced Reactors</title>
+    <updated>2024-05-21T13:57:17Z</updated>
+    <link href="https://arxiv.org/abs/2405.12805v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.12805v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study presents a cross-disciplinary reactor-to-repository framework to compare different advanced reactors with respect to their spent nuclear fuel (SNF). The framework consists of (1) OpenMC for simulating neutronics, fuel depletion, and radioactive decays; (2) NWPY for computing the repository footprint for SNF disposal given the thermal constraints; and (3) PFLOTRAN for simulating radionuclide transport in the geosphere to compute the peak dose rate, which is used to quantify the repository performance and environmental impact. We first perform the meta-analysis of past comparative analyses to identify the factors led previously to inconsistent conclusions. We then demonstrate the new framework by comparing five reactor types. Significant findings are that (1) the repository footprint is neither linearly related to SNF volume nor to decay heat, due to the repository's thermal constraint, (2) fast reactors have significantly higher I-129 inventory, which is often the primarily dose contributor from repositories, and (3) the repository performance primarily depends on the waste forms. The TRISO-based reactors, in particular, have significantly higher SNF volumes, but result in smaller repository footprints and lower peak dose rates. Our analysis highlights the diversity of these reactors, each of which should be evaluated individually. The open-source framework ensures proper cross-disciplinary connections between reactor simulations and environmental assessments, as well as the transparency/traceability required for such comparative analyses. It aims to support reactor designers, repository developers and policy makers in evaluating the impact of different reactor designs, with the ultimate goal of improving the sustainability of nuclear energy systems.</summary>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-21T13:57:17Z</published>
+    <arxiv:primary_category term="physics.app-ph"/>
+    <author>
+      <name>Haruko M. Wainwright</name>
+    </author>
+    <author>
+      <name>Chloe Christiaen</name>
+    </author>
+    <author>
+      <name>Milos Atz</name>
+    </author>
+    <author>
+      <name>John Sebastian Tchakerian</name>
+    </author>
+    <author>
+      <name>Jiankai Yu</name>
+    </author>
+    <author>
+      <name>Gavin Keith Ridley</name>
+    </author>
+    <author>
+      <name>Koroush Shirvan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.5770v2</id>
+    <title>Quantum phase transition between disordered and ordered states in the spin-1/2 kagome lattice antiferromagnet (Rb$_{1-x}$Cs$_{x}$)$_2$Cu$_3$SnF$_{12}$</title>
+    <updated>2015-06-18T10:30:12Z</updated>
+    <link href="https://arxiv.org/abs/1412.5770v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.5770v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We have systematically investigated the variation of the exchange parameters and the ground state in the $S = 1/2$ kagome-lattice antiferromagnet (Rb$_{1-x}$Cs$_{x}$)$_2$Cu$_3$SnF$_{12}$, via magnetic measurements using single crystals. One of the parent compounds, Rb$_2$Cu$_3$SnF$_{12}$, which has a distorted kagome lattice accompanied by four sorts of nearest-neighbor exchange interaction, has a disordered ground state described by a pinwheel valence-bond-solid state. The other parent compound, Cs$_2$Cu$_3$SnF$_{12}$, which has a uniform kagome lattice at room temperature, has an ordered ground state with the $q$ = 0 spin structure. The analysis of magnetic susceptibilities shows that with increasing cesium concentration $x$, the exchange parameters increase with the tendency to be uniform. It was found that the ground state is disordered for $x$ &lt; 0.53 and ordered for $x$ &gt; 0.53. The pseudogap observed for $x$ &lt; 0.53 and the Néel temperature for $x$ &gt; 0.53 approach zero at $x_{\rm c}$ $\simeq$ 0.53. This is indicative of the occurrence of a quantum phase transition at $x_{\rm c}$.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-18T09:23:40Z</published>
+    <arxiv:comment>8 pages, 8 figures, to appear in Phys. Rev. B</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <author>
+      <name>Kazuya Katayama</name>
+    </author>
+    <author>
+      <name>Nobuyuki Kurita</name>
+    </author>
+    <author>
+      <name>Hidekazu Tanaka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.08939v1</id>
+    <title>Neutron Tomography of Spent Fuel Casks</title>
+    <updated>2021-10-17T22:25:36Z</updated>
+    <link href="https://arxiv.org/abs/2110.08939v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.08939v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dry casks for spent nuclear fuel (SNF) ensure the safe storage of SNF and provide radiation shielding. However, the presence of the thick casks encompassing several layers of steel and concrete makes inspection of the SNF a challenging task. Fast neutron interrogation is a viable method for the nondestructive assay of dry storage casks. In this study, we performed a Monte Carlo simulation-based study associated with a machine-learning-based image reconstruction method to verify the content of SNF dry storage casks. We studied the use of neutron transmission and back-scattered measurements to assess the potential damage to fuel assemblies or fuel pin diversion during transportation of dry casks. We used Geant4 to model a realistic HI-STAR 100 cask, MPC-68 canister and basket, and GE-14 fuel assembly irradiated by a D-T neutron generator. Several bundle diversion scenarios were simulated. The angular distribution of the neutrons scattered by the cask was used to identify the diversions inside the fuel cask. A fuel bundle with at least 75% of its pins removed can be identified with a drop in the back-scattered signature larger than 2σ compared with a fully loaded scenario. We combined an iterative reconstruction algorithm with a convolutional neural network (CNN) to obtain a cross-sectional image of the fuel inside the cask. The proposed imaging approach allows locating the position of a missing fuel bundle with at least 75% of the pins removed when performing tomographic imaging of a canister with an overall scan time of less than two hours, when using a commercial neutron generator with a source strength of 10^10 n/s in the 4π solid angle.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-17T22:25:36Z</published>
+    <arxiv:comment>18 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Zhihua Liua</name>
+    </author>
+    <author>
+      <name>Ming Fang</name>
+    </author>
+    <author>
+      <name>Jon George</name>
+    </author>
+    <author>
+      <name>Ling-Jian Meng</name>
+    </author>
+    <author>
+      <name>Angela Di Fulvio</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.15993v1</id>
+    <title>Community Detection in Multimodal Data: A Similarity Network Perspective</title>
+    <updated>2025-02-21T23:16:45Z</updated>
+    <link href="https://arxiv.org/abs/2502.15993v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.15993v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Similarity network construction is a fundamental step in many approaches to community detection in biomedical analysis. It is utilised both in the creation of network structures from non-relational data and as a processing step in clustering pipelines. The foundation of any network analysis approach hinges on the quality of the underlying network. With the rising popularity of network learning and use of network-based clustering, the importance of correctly constructing the network is vital. The underlying mechanisms of similarity network construction, particularly the implications of the choice of approach for multi-modal integration, remain poorly explored. By introducing differences in embedded cluster information and noise levels across modalities, we assess the performance of popular similarity integration techniques such as Similarity Network Fusion (SNF) and NEighborhood based Multi-Omics clustering (NEMO). Notably, SNF and NEMO fail to outperform simpler techniques such as mean similarity aggregation when incorporating modalities with inconsistently embedded clusters. We demonstrate how integration methods can be used to incorporate partial modalities - datasets where not all individuals have a full set of measurements in all modalities. SNF shows significant sensitivity to incomplete modalities while NEMO and mean aggregation are more resilient.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-21T23:16:45Z</published>
+    <arxiv:comment>21 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.SI"/>
+    <author>
+      <name>Aidan Marnane</name>
+    </author>
+    <author>
+      <name>T. Ian Simpson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.2804v1</id>
+    <title>Krypton-85 in the atmosphere</title>
+    <updated>2013-07-09T10:15:56Z</updated>
+    <link href="https://arxiv.org/abs/1307.2804v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.2804v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Measurement results are presented on 85Kr content in the atmosphere over the European part of Russia in 1971-1995 based on the analysis of the commercial krypton, which is separated from air by industrial plants. Our results are by 15 per cent lower then 85Kr activites observed over West Europe. According our prediction by 2030 85Kr content in the atmosphere over Europe will amount to 1,5-3 Bq in m3 air. Average 85Kr release to the atmosphere from regeneration of spent nuclear fuel (SNF) is estimated, some 180 TBq per a ton SNF. It is advisable to recommence monitoring of 85Kr content within Russia.</summary>
+    <category term="physics.ao-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.geo-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-09T10:15:56Z</published>
+    <arxiv:comment>17 pages, in Russian, including 3 tables, 2 figures, to be published ANRY (in Russian)</arxiv:comment>
+    <arxiv:primary_category term="physics.ao-ph"/>
+    <author>
+      <name>A. T. Korsakov</name>
+    </author>
+    <author>
+      <name>E. G. Tertyshnik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.00200v3</id>
+    <title>Scaling of Stochastic Normalizing Flows in $\mathrm{SU}(3)$ lattice gauge theory</title>
+    <updated>2025-05-05T08:01:32Z</updated>
+    <link href="https://arxiv.org/abs/2412.00200v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.00200v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Non-equilibrium Markov Chain Monte Carlo (NE-MCMC) simulations provide a well-understood framework based on Jarzynski's equality to sample from a target probability distribution. By driving a base probability distribution out of equilibrium, observables are computed without the need to thermalize. If the base distribution is characterized by mild autocorrelations, this approach provides a way to mitigate critical slowing down. Out-of-equilibrium evolutions share the same framework of flow-based approaches and they can be naturally combined into a novel architecture called Stochastic Normalizing Flows (SNFs). In this work we present the first implementation of SNFs for $\mathrm{SU}(3)$ lattice gauge theory in 4 dimensions, defined by introducing gauge-equivariant layers between out-of-equilibrium Monte Carlo updates. The core of our analysis is focused on the promising scaling properties of this architecture with the degrees of freedom of the system, which are directly inherited from NE-MCMC. Finally, we discuss how systematic improvements of this approach can realistically lead to a general and yet efficient sampling strategy at fine lattice spacings for observables affected by long autocorrelation times.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-29T19:01:05Z</published>
+    <arxiv:comment>14 pages, 12 figures. v2: 14 pages, 13 figures, added comments and improved discussion in section 5, matches published version. v3: fixed figure 7, added missing footnote</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <arxiv:journal_ref>Phys.Rev.D 111 7, 074517 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Andrea Bulgarelli</name>
+    </author>
+    <author>
+      <name>Elia Cellini</name>
+    </author>
+    <author>
+      <name>Alessandro Nada</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.111.074517</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.111.074517" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.10024v2</id>
+    <title>The nature of core formation in dark matter haloes: adiabatic or impulsive?</title>
+    <updated>2019-02-14T17:29:23Z</updated>
+    <link href="https://arxiv.org/abs/1810.10024v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.10024v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well established that the central deficit of dark matter (DM) observed in many dwarf galaxies disagrees with the cuspy DM haloes predicted in the collision-less and cold DM (CDM) model. Plausible solutions to this problem are based on an effective energy deposition into the central halo with an origin that is either based on baryonic physics (e.g. supernova-driven gas blowouts; SNF) or on new DM physics (e.g. self-interacting DM, SIDM). We argue that the fundamental difference between the two is whether the process is impulsive or adiabatic, and explore novel ways to distinguishing them by looking at the response of stellar orbits. We perform idealised simulations of tracers embedded in a $1.48\times 10^{10}{\rm M}_{\odot}$ spherical halo, and model the creation of a $\sim1$kpc DM matter core in SIDM with $σ_T/m_χ = 2\,{\rm cm}^2{\rm g}^{-1}$ and through SNF by impulsively removing a mass equivalent to $\mathcal{O}(10\%)$ of the halo's potential energy. Choosing idealised initial orbital configurations for the tracers, we find that radial actions are conserved (changed) in the SIDM (impulsive) case. The adiabaticity of the SIDM case prevents tracers from changing their orbital family during core formation whereas SNF separates tracers of initially the same family to a variety of orbits. We show that these key features remain in a cosmological halo, albeit for a few dynamical timescales. The number density and velocity dispersion profile of a Plummer sphere with $r_{1/2} = 500$ pc change only marginally under adiabatic core formation, whereas SNF causes a substantial expansion of the sphere driving it out of Jeans equilibrium. Our results point towards promising ways of differentiating adiabatic from impulsive core formation.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-23T18:00:08Z</published>
+    <arxiv:comment>Main text: 18 pages, 11 figures, appendices: 5 pages, 4 figures, accepted into MNRAS on February 9, 2019, contains new section on departures from spherical symmetry, write to jdb5@hi.is with questions</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Jan D. Burger</name>
+      <arxiv:affiliation>University of Iceland</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jesús Zavala</name>
+      <arxiv:affiliation>University of Iceland</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1093/mnras/stz496</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/mnras/stz496" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0803.0205v1</id>
+    <title>Singlet Ground State and Spin Gap in S=1/2 Kagome Antiferromagnet Rb$_2$Cu$_3$SnF$_{12}$</title>
+    <updated>2008-03-03T10:34:12Z</updated>
+    <link href="https://arxiv.org/abs/0803.0205v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0803.0205v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We investigated the crystal structure of Rb$_2$Cu$_3$SnF$_{12}$ and its magnetic properties using single crystals. This compound is composed of Kagome layers of corner-sharing CuF$_{6}$ octahedra with a 2a x 2a enlarged cell as compared with the proper Kagome layer. Rb$_2$Cu$_3$SnF$_{12}$ is magnetically described as an $S$=1/2 modified Kagome antiferromagnet with four kinds of neighboring exchange interaction. From magnetic susceptibility and high-field magnetization measurements, it was found that the ground state is a disordered singlet with the spin gap, as predicted from a recent theory. Exact diagonalization for a 12-site Kagome cluster was performed to analyze the magnetic susceptibility, and individual exchange interactions were evaluated.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-03-03T10:34:12Z</published>
+    <arxiv:comment>5 pages, 4 figures, To appear in J. Phys. Soc. Jpn. Vol. 77 No. 4</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <author>
+      <name>K. Morita</name>
+    </author>
+    <author>
+      <name>M. Yano</name>
+    </author>
+    <author>
+      <name>T. Ono</name>
+    </author>
+    <author>
+      <name>H. Tanaka</name>
+    </author>
+    <author>
+      <name>K. Fujii</name>
+    </author>
+    <author>
+      <name>H. Uekusa</name>
+    </author>
+    <author>
+      <name>Y. Narumi</name>
+    </author>
+    <author>
+      <name>K. Kindo</name>
+    </author>
+    <arxiv:doi>10.1143/JPSJ.77.043707</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1143/JPSJ.77.043707" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.07136v1</id>
+    <title>Integrate Multi-omic Data Using Affinity Network Fusion (ANF) for Cancer Patient Clustering</title>
+    <updated>2017-08-23T18:04:07Z</updated>
+    <link href="https://arxiv.org/abs/1708.07136v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.07136v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Clustering cancer patients into subgroups and identifying cancer subtypes is an important task in cancer genomics. Clustering based on comprehensive multi-omic molecular profiling can often achieve better results than those using a single data type, since each omic data type (representing one view of patients) may contain complementary information. However, it is challenging to integrate heterogeneous omic data types directly. Based on one popular method -- Similarity Network Fusion (SNF), we presented Affinity Network Fusion (ANF) in this paper, an "upgrade" of SNF with several advantages. Similar to SNF, ANF treats each omic data type as one view of patients and learns a fused affinity (transition) matrix for clustering. We applied ANF to a carefully processed harmonized cancer dataset downloaded from GDC data portals consisting of 2193 patients, and generated promising results on clustering patients into correct disease types. Our experimental results also demonstrated the power of feature selection and transformation combined with using ANF in patient clustering. Moreover, eigengap analysis suggests that the learned affinity matrices of four cancer types using our proposed framework may have successfully captured patient group structure and can be used for discovering unknown cancer subtypes.</summary>
+    <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-23T18:04:07Z</published>
+    <arxiv:comment>submitted to BIBM2017 (https://muii.missouri.edu/bibm2017/)</arxiv:comment>
+    <arxiv:primary_category term="q-bio.GN"/>
+    <author>
+      <name>Tianle Ma</name>
+    </author>
+    <author>
+      <name>Aidong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1803.08575v1</id>
+    <title>The bromodomain-containing protein Ibd1 links multiple chromatin related protein complexes to highly expressed genes in Tetrahymena thermophila</title>
+    <updated>2018-03-22T20:22:04Z</updated>
+    <link href="https://arxiv.org/abs/1803.08575v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1803.08575v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Background: The chromatin remodelers of the SWI/SNF family are critical transcriptional regulators. Recognition of lysine acetylation through a bromodomain (BRD) component is key to SWI/SNF function; in most eukaryotes, this function is attributed to SNF2/Brg1.
+  Results: Using affinity purification coupled to mass spectrometry (AP-MS) we identified members of a SWI/SNF complex (SWI/SNFTt) in Tetrahymena thermophila. SWI/SNFTt is composed of 11 proteins, Snf5Tt, Swi1Tt, Swi3Tt, Snf12Tt, Brg1Tt, two proteins with potential chromatin interacting domains and four proteins without orthologs to SWI/SNF proteins in yeast or mammals. SWI/SNFTt subunits localize exclusively to the transcriptionally active macronucleus (MAC) during growth and development, consistent with a role in transcription. While Tetrahymena Brg1 does not contain a BRD, our AP-MS results identified a BRD-containing SWI/SNFTt component, Ibd1 that associates with SWI/SNFTt during growth but not development. AP-MS analysis of epitope-tagged Ibd1 revealed it to be a subunit of several additional protein complexes, including putative SWRTt, and SAGATt complexes as well as a putative H3K4-specific histone methyl transferase complex. Recombinant Ibd1 recognizes acetyl-lysine marks on histones correlated with active transcription. Consistent with our AP-MS and histone array data suggesting a role in regulation of gene expression, ChIP-Seq analysis of Ibd1 indicated that it primarily binds near promoters and within gene bodies of highly expressed genes during growth.
+  Conclusions: Our results suggest that through recognizing specific histones marks, Ibd1 targets active chromatin regions of highly expressed genes in Tetrahymena where it subsequently might coordinate the recruitment of several chromatin remodeling complexes to regulate the transcriptional landscape of vegetatively growing Tetrahymena cells.</summary>
+    <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-03-22T20:22:04Z</published>
+    <arxiv:comment>Published on BMC Epigenetics &amp; Chromatin</arxiv:comment>
+    <arxiv:primary_category term="q-bio.GN"/>
+    <arxiv:journal_ref>Epigenetics &amp; Chromatin (2018) 11:10</arxiv:journal_ref>
+    <author>
+      <name>Alejandro Saettone</name>
+    </author>
+    <author>
+      <name>Jyoti Garg</name>
+    </author>
+    <author>
+      <name>Jean-Philippe Lambert</name>
+    </author>
+    <author>
+      <name>Syed Nabeel-Shah</name>
+    </author>
+    <author>
+      <name>Marcelo Ponce</name>
+    </author>
+    <author>
+      <name>Alyson Burtch</name>
+    </author>
+    <author>
+      <name>Cristina Thuppu Mudalige</name>
+    </author>
+    <author>
+      <name>Anne-Claude Gingras</name>
+    </author>
+    <author>
+      <name>Ronald E. Pearlman</name>
+    </author>
+    <author>
+      <name>Jeffrey Fillingham</name>
+    </author>
+    <arxiv:doi>10.1186/s13072-018-0180-6</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1186/s13072-018-0180-6" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.14427v1</id>
+    <title>A New Momentum-Integrated Muon Tomography Imaging Algorithm</title>
+    <updated>2023-04-27T16:14:37Z</updated>
+    <link href="https://arxiv.org/abs/2304.14427v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.14427v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For decades, the application of muon tomography to spent nuclear fuel (SNF) cask imaging has been theoretically evaluated and experimentally verified by many research groups around the world, including Los Alamos National Laboratory in the United States, Canadian Nuclear Laboratory in Canada, the National Institute for Nuclear Physics in Italy, and Toshiba in Japan. Although monitoring of SNF using cosmic ray muons has attracted significant attention as a promising nontraditional nondestructive radiographic technique, the wide application of muon tomography is often limited because of the natural low cosmic ray muon flux at sea level: 100 m-2min-1sr-1. Recent studies suggest measuring muon momentum in muon scattering tomography (MST) applications to address this challenge. Some techniques have been discussed; however, an imaging algorithm for momentum-coupled MST had not been developed. This paper presents a new imaging algorithm for MST which integrates muon scattering angle and momentum in a single M-value. To develop a relationship between muon momentum and scattering angle distribution, various material samples (Al, Fe, Pb, and U) were thoroughly investigated using a Monte Carlo particle transport code GEANT4 simulation. Reconstructed images of an SNF cask using the new algorithm are presented herein to demonstrate the benefit of measuring muon momentum in MST. In this analysis a missing fuel assembly (FA) was located in the dry storage cask.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-27T16:14:37Z</published>
+    <arxiv:comment>Transactions of American Nuclear Society</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>JungHyun Bae</name>
+    </author>
+    <author>
+      <name>Rose Montgomery</name>
+    </author>
+    <author>
+      <name>Stylianos Chatzidakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.07840v3</id>
+    <title>Bayesian modelling and computation utilising directed cycles in multiple network data</title>
+    <updated>2025-11-10T19:36:22Z</updated>
+    <link href="https://arxiv.org/abs/2111.07840v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.07840v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modelling multiple network data is crucial for addressing a wide range of applied research questions. However, there are many challenges, both theoretical and computational, to address. Network cycles are often of particular interest in many applications; for example in ecology a largely unexplored area has been how to incorporate network cycles within the inferential framework in an explicit way. The recently developed Spherical Network Family of models (SNF) offers a flexible formulation for modelling multiple network data that permits any type of metric. This has opened up the possibility to formulate network models that focus on network properties hitherto not possible or practical to consider. In this article we propose a novel network distance metric that measures similarities between networks with respect to their cycles, and incorporates this within the SNF model to allow inferences that explicitly capture information on cycles. These network motifs are of particular interest in ecological studies aimed at understanding competitive and hierarchical interactions. We further propose a novel computational framework to allow posterior inferences from the intractable SNF model for moderate-sized networks. Lastly, we apply the resulting methodology to a set of ecological network data studying aggressive interactions between species of fish. We show our model is able to make cogent inferences concerning the cycle behaviour amongst the species, and beyond those possible from a model that does not consider this network motif.</summary>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-15T15:30:59Z</published>
+    <arxiv:primary_category term="stat.AP"/>
+    <author>
+      <name>Anastasia Mantziou</name>
+    </author>
+    <author>
+      <name>Sally Keith</name>
+    </author>
+    <author>
+      <name>David M. P. Jacoby</name>
+    </author>
+    <author>
+      <name>Simon Lunagomez</name>
+    </author>
+    <author>
+      <name>Robin Mitra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.20847v2</id>
+    <title>Integrated representational signatures strengthen specificity in brains and models</title>
+    <updated>2026-04-03T08:07:12Z</updated>
+    <link href="https://arxiv.org/abs/2510.20847v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.20847v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The extent to which different neural or artificial neural networks (models) rely on equivalent representations to support similar tasks remains a central question in neuroscience and machine learning. Prior work has typically compared systems using a single representational similarity metric, yet each captures only one facet of representational structure. To address this, we leverage a suite of representational similarity metrics-each capturing a distinct facet of representational correspondence, such as geometry, unit-level tuning, or linear decodability-and assess brain region or model separability using multiple complementary measures. Metrics that preserve geometric or tuning structure (e.g., RSA, Soft Matching) yield stronger region-based discrimination, whereas more flexible mappings such as Linear Predictivity show weaker separation. These findings suggest that geometry and tuning encode brain-region- or model-family-specific signatures, while linearly decodable information tends to be more globally shared across regions or models. To integrate these complementary representational facets, we adapt Similarity Network Fusion (SNF), a framework originally developed for multi-omics data integration. SNF produces substantially sharper regional and model family-level separation than any single metric and yields robust composite similarity profiles. Moreover, clustering cortical regions using SNF-derived similarity scores reveals a clearer hierarchical organization that aligns closely with established anatomical and functional hierarchies of the visual cortex-surpassing the correspondence achieved by individual metrics.</summary>
+    <category term="q-bio.NC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-21T04:37:27Z</published>
+    <arxiv:primary_category term="q-bio.NC"/>
+    <author>
+      <name>Jialin Wu</name>
+    </author>
+    <author>
+      <name>Shreya Saha</name>
+    </author>
+    <author>
+      <name>Yiqing Bo</name>
+    </author>
+    <author>
+      <name>Meenakshi Khosla</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.04947v1</id>
+    <title>Monitoring Spent Nuclear Fuel in a Dry Cask Using Momentum Integrated Muon Scattering Tomography</title>
+    <updated>2022-12-06T16:01:26Z</updated>
+    <link href="https://arxiv.org/abs/2212.04947v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.04947v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nuclear materials accountability and nonproliferation are among the critical tasks to be addressed for the advancement of nuclear energy in the United States. Monitoring spent nuclear fuel is important to continue reliable stewardship of SNF storage. Cosmic ray muons have been acknowledged a promising radiographic tool for monitoring SNF due to their highly penetrative nature and high energy. Cosmic ray muons are more suitable and have been used for imaging large and dense objects. Despite their potential in various applications, the wide application of cosmic ray muons is limited by the naturally low intensity at sea level. To efficiently utilize cosmic ray muons in engineering applications, trajectory and momentum must be measured. Although various studies demonstrate that there is significant potential for measuring momentum in muon applications, it is still difficult to measure both muon scattering angle and momentum in the field. To fill this critical gap, a muon spectrometer using multilayer pressurized gas Cherenkov radiators was proposed. However, existing muon tomographic algorithms were developed assuming monoenergetic muon scattering and are not optimized for a measured polyenergetic momentum spectrum. In this work, we develop and evaluate a momentum integrated muon scattering tomography algorithm. We evaluate the algorithm on its capability to identify a missing fuel assembly from a SNF dry cask. Our results demonstrate that image resolution using MMST is significantly improved when measuring muon momentum and it can reduce monitoring time by a factor of 10 when compared to that of a conventional muon imaging technique in terms of systematically finding a missing FA.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-06T16:01:26Z</published>
+    <arxiv:comment>Transaction of American Nuclear Society</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Junghyun Bae</name>
+    </author>
+    <author>
+      <name>Stylianos Chatzidakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.22481v2</id>
+    <title>Discovery of BKT correlations in the quantum kagome compound Cs$_2$Cu$_3$SnF$_{12}$</title>
+    <updated>2026-08-18T19:47:12Z</updated>
+    <link href="https://arxiv.org/abs/2603.22481v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.22481v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the microscopic properties of the kagome compound Cs$_2$Cu$_3$SnF$_{12}$ using $^{63,65}$Cu nuclear quadrupolar resonance (NQR). Analysis of the local hyperfine fields below the Néel temperature $T_N = 20$ K indicates a spin structure consistent with $P2_1/n$ symmetry of negative vector chirality. Measurements of the spin-lattice relaxation rate $T_1 ^{-1}$ reveal signatures of a gapless ground state and two-dimensional Berezinskii-Kosterlitz-Thouless (BKT)-type correlations above $T_N$, extending over a broad temperature range of approximately 130 K in zero magnetic field. Within the same temperature range, the observed increase in the NQR linewidth is consistent with short-range chiral order recently identified by neutron scattering. Our results establish Cs$_2$Cu$_3$SnF$_{12}$ as a unique quantum kagome system exhibiting BKT behavior.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-23T18:50:03Z</published>
+    <arxiv:comment>6 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>Published in Physical Review Letters 137, 086501 (2026)</arxiv:journal_ref>
+    <author>
+      <name>M. S. Grbić</name>
+    </author>
+    <author>
+      <name>I. Jakovac</name>
+    </author>
+    <author>
+      <name>I. Kupčić</name>
+    </author>
+    <author>
+      <name>H. Tanaka</name>
+    </author>
+    <author>
+      <name>M. Horvatić</name>
+    </author>
+    <arxiv:doi>10.1103/bm42-z87g</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/bm42-z87g" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.00212v1</id>
+    <title>Graph-Based Multi-Omics Integration Improves Subtype Recovery and Survival Prediction Over Classical Integration Strategies in TCGA-BRCA</title>
+    <updated>2026-02-27T13:56:30Z</updated>
+    <link href="https://arxiv.org/abs/2603.00212v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.00212v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Background. Breast cancer comprises at least five molecular subtypes with distinct prognoses, yet PAM50 classification relies on transcriptomics alone. Whether integrating DNA methylation and copy number data improves subtype recovery and survival prediction over single-omic baselines remains an open question.
+  Methods. We applied Similarity Network Fusion (SNF) to n = 644 TCGA-BRCA patients with matched RNA-seq, 450k DNA methylation, and GISTIC2 copy number profiles. Per-modality patient similarity networks were iteratively fused (K = 20, T = 20, u = 0.5) and partitioned by spectral clustering; k = 2 was pre-specified on eigengap and silhouette criteria. SNF was benchmarked against RNA-only, CNV-only, methylation-only, and early concatenation baselines using PAM50 NMI for subtype recovery and out-of-fold concordance index (OOF C-index) from a Ridge Cox model with N = 1,000 bootstrap CIs for pairwise comparisons.
+  Results. SNF produced a stable two-cluster partition (stability ARI = 1.00, silhouette = 0.228), with NMI = 0.495 versus PAM50, exceeding RNA-only (0.428) and early concatenation (0.175). IHC receptor data confirmed cluster biology independently (ER+: 92.8% vs 15.6%; triple-negative: 1.0% vs 45.4%; both p &lt; 10^-100). SNF achieved an OOF C-index of 0.681 (95% CI 0.610-0.760), significantly outperforming CNV-only (Delta = +0.122, CI 0.020-0.211); the advantage over RNA-only (Delta = +0.049, CI -0.036-0.144) did not exclude zero.
+  Conclusion. Graph-based multi-omics fusion recovers breast cancer subtype biology more faithfully than feature concatenation and outperforms the weakest unimodal baselines in survival prediction. The improvement over RNA-seq alone is positive in direction but not yet statistically conclusive at this cohort size, pointing to the trade-off between integration complexity and the sample sizes needed to quantify its marginal benefit.</summary>
+    <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-27T13:56:30Z</published>
+    <arxiv:comment>36 pages, 14 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="q-bio.GN"/>
+    <author>
+      <name>Taha Ahmad</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.15365v1</id>
+    <title>Distinguishing graphs with two integer matrices</title>
+    <updated>2023-09-27T02:35:52Z</updated>
+    <link href="https://arxiv.org/abs/2309.15365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.15365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well known that the spectrum and the Smith normal form of a matrix can be computed in polynomial time. Thus, it is interesting to explore how good are these parameters for distinguishing graphs. This is relevant since it is related to the Graph Isomorphism Problem (GIP), which asks to determine whether two graphs are isomorphic. In this paper, we explore the computational advantages of using the spectrum and the Smith normal form of two matrices associated with a graph. By considering the SNF or the spectrum of two matrices of a graph as a single parameter, we compute the number of non-isomorphic graphs with the same parameter with up to 9 vertices, and with up to 10 vertices when the number of graphs with 9 vertices with the same parameter is less than 1000. Focusing on the best 20 combinations of matrices for graphs with 10 vertices, we notice that the number of such graphs with a mate is less than 100 in any of these 20 cases. This computational result improves on similar previous explorations. Therefore, the use of the spectrum or the SNF of two matrices at the same time shows a substantial improvement in distinguishing graphs.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-27T02:35:52Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Carlos A. Alfaro</name>
+    </author>
+    <author>
+      <name>Ralihe R. Villagrán</name>
+    </author>
+    <author>
+      <name>Octavio Zapata</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.15398v1</id>
+    <title>The use of CEvNS to monitor spent nuclear fuel</title>
+    <updated>2021-11-29T18:11:55Z</updated>
+    <link href="https://arxiv.org/abs/2111.15398v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.15398v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Increasing amounts of spent nuclear fuel are stored in dry storage casks for prolonged periods of time. To date no effective technology exists to re-verify cask contents should this become necessary. We explore the applicability of Coherent-Elastic Neutrino-Nucleus Scattering (CEvNS) to monitor the content of spent nuclear fuel (SNF) from dry storage casks. SNF produces neutrinos chiefly from $^{90}$Sr decays. We compare these results with what can be achieved via Inverse Beta Decay (IBD). We demonstrate that at low nuclear recoil energies CEvNS events rates exceed the IBD event rates by 2--3 orders of magnitude for a given detector mass. We find that a 10\,kg argon or germanium detector 3 meters from a fuel cask can detect over 100 events per year if a nuclear recoil threshold under 100 eV can be achieved.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-29T18:11:55Z</published>
+    <arxiv:comment>5 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Caroline von Raesfeld</name>
+    </author>
+    <author>
+      <name>Patrick Huber</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.105.056002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.105.056002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.15455v1</id>
+    <title>Validation and Comparison of HI-STORM Overpack Thermal-Hydraulic Model with MOOSE and NekRS</title>
+    <updated>2023-08-29T17:29:44Z</updated>
+    <link href="https://arxiv.org/abs/2308.15455v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.15455v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nuclear power is a significant source of electricity in the United States, but the average U.S. nuclear power plant is around 40 years old. Safe management of spent nuclear fuel (SNF) is a crucial aspect of the back end of the nuclear fuel cycle. SNF dry storage systems are increasingly popular as they represent an effective solution in this area, given the absence of a final disposal system. In particular, the spent fuel cask system (dry cask method) provides a feasible solution for maintaining SNF ($\sim$60 years) prior to the final disposal. The HI-STORM overpack and MPC-32 canister are the primary components of the HI-STORM 100 dry cask storage system. They remove heat from the system via natural circulation with no human intervention required. This characteristic provides passive heat removal while requiring little maintenance in dry cask storage systems. This project aims to validate and compare the capabilities of a thermal model of HI-STORM overpack developed using the Multiphysics Object-Oriented Simulation Environment (MOOSE) based on the author's previous study. MOOSE is an open-source framework developed by Idaho National Laboratory for multiscale, multiphysics simulations. This study will improve the capabilities of the thermal-hydraulic model of the HI-STORM dry cask storage system by producing high-fidelity results for the air circulation in the overpack. Large Eddy Simulations (LES) are performed using the open-source spectral element code NekRS, developed by Argonne National Laboratory (ANL), for simulating transitional and turbulent flows in complex geometries. NekRS will produce high-fidelity results for the HI-STORM overpack to assess the validity of the current thermal-hydraulic model.</summary>
+    <category term="physics.flu-dyn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-29T17:29:44Z</published>
+    <arxiv:comment>12 pages, 9 figures, Proceedings of NURETH-20 Conference</arxiv:comment>
+    <arxiv:primary_category term="physics.flu-dyn"/>
+    <author>
+      <name>Sinan Okyay</name>
+    </author>
+    <author>
+      <name>Elia Merzari</name>
+    </author>
+    <author>
+      <name>David A. Reger</name>
+    </author>
+    <author>
+      <name>Victor Coppo Leite</name>
+    </author>
+    <author>
+      <name>Guillaume Giudicelli</name>
+    </author>
+    <author>
+      <name>Peter German</name>
+    </author>
+    <author>
+      <name>Alexander Lindsay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.03960v2</id>
+    <title>SNF-PRP: A Covert Integrating Sensing and Communications Framework</title>
+    <updated>2026-06-05T16:09:19Z</updated>
+    <link href="https://arxiv.org/abs/2606.03960v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.03960v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integrated sensing and communication (ISAC) enables simultaneous sensing and data transmission but exposes a critical vulnerability: probing signals may be intercepted, revealing both the transmitted information and the act of sensing itself. Existing physical layer security approaches mitigate interception yet operate with detectable signals, leaving sensing activity observable to a passive warden. This paper introduces sub-noise-floor pseudo-random probing (SNF-PRP), a covert sensing framework for OFDM-based ISAC systems under an energy-detection adversary model. SNF-PRP establishes an $ε$-covertness guarantee via Kullback-Leibler (KL) divergence, exploits an $N_{\mathrm{sc}}$-fold spreading gain absent from prior wideband analyses, and derives in closed form the minimum integration length required to achieve a target Cramér-Rao bound (CRB). Simulations under 5G~NR n78 numerology confirm sub-0.5\,m range and sub-0.5\,m/s velocity accuracy with KL divergence $5.8\times$ below the covertness threshold, validating joint feasibility at $-12$\,dB and $-15$\,dB probing powers.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T17:49:48Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Dhrumil Bhatt</name>
+    </author>
+    <author>
+      <name>Vidushi Kumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.11778v1</id>
+    <title>A Series Expansion Study for Large Negative Quantum Renormalization of Magnon Spectra in the $S=1/2$ Kagome-Lattice Heisenberg Antiferromagnet Cs$_{2}$Cu$_{3}$SnF$_{12}$</title>
+    <updated>2023-09-21T04:55:43Z</updated>
+    <link href="https://arxiv.org/abs/2309.11778v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.11778v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The series expansion method is used to study magnon spectra of the kagome system with nearest-neighbor exchange interaction $J$ and out-of-plane Dzyaloshinskii-Moriya (DM) interaction $D^{\parallel}$, which is a minimal model for Cs$_{2}$Cu$_{3}$SnF$_{12}$. Compared to the magnon spectra by the linear spin wave (LSW) theory, we find that dispersions at high energy part suffer downward deformation, which is similar to the triangle lattice case, in addition to the reduction of the energy scale of about 40\% as pointed out in a neutron-scattering study by Ono {\it et al.} Using a reliable estimation $J=20.7$ meV in a previous study on the magnetic susceptibility of Cs$_{2}$Cu$_{3}$SnF$_{12}$, we use $D^{\parallel}$ as the fitting parameter to reproduce the experimental magnon spectra and obtain $D^{\parallel}=0.12J$. We also report that a roton-like minimum occurs at the M point and a maximum at points somewhat away from the $Γ$ point. Compression of the LSW magnon band is commonly seen in the kagome and triangular-lattice systems, which may be viewed as being pushed from above by the spinon continuum.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-21T04:55:43Z</published>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>J. Phys. Soc. Jpn. 92, 113703 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Singo Kogure</name>
+    </author>
+    <author>
+      <name>Masashi Takeda</name>
+    </author>
+    <author>
+      <name>Katsuhiro Morita</name>
+    </author>
+    <author>
+      <name>Yoshiyuki Fukumoto</name>
+    </author>
+    <author>
+      <name>Mutsuki Saito</name>
+    </author>
+    <author>
+      <name>Hidekazu Tanaka</name>
+    </author>
+    <arxiv:doi>10.7566/jpsj.92.113703</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.7566/jpsj.92.113703" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.6847v2</id>
+    <title>Another thread in the tapestry of stellar feedback: X-ray binaries</title>
+    <updated>2015-08-24T08:45:06Z</updated>
+    <link href="https://arxiv.org/abs/1203.6847v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.6847v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider X-ray binaries (XBs) as potential sources of stellar feedback. XBs observationally appear able to deposit a high fraction of their power output into their local interstellar medium, which may make them a non-negligible source of energy input. The formation rate of the most luminous XBs rises with decreasing metallicity, which should increase their significance during galaxy formation in the early universe. We also argue that stochastic effects are important to XB feedback (XBF) and may dominate the systematic changes due to metallicity in many cases. Large stochastic variation in the magnitude of XBF at low absolute star formation rates provides a natural reason for diversity in the evolution of dwarf galaxies which were initially almost identical, with several percent of such halos experiencing energy input from XBs roughly two orders of magnitude above the most likely value. These probability distributions suggest that the effect of XBF is most commonly significant for total stellar masses between ~10^7 and 10^8 Msun, which might resolve a current problem with modelling populations of such galaxies. We explain how XBs might inject energy before luminous supernovae (SNe) contribute significantly to feedback and how XBs can assist in keeping gas hot long after the last core-collapse SN has exploded. [...] XBF could be especially important to some dwarf galaxies, potentially heating gas without expelling it; the properties of XBF also match those previously derived as allowing episodic star formation. We also argue that the efficiency of SN feedback (SNF) might be reduced when XBF has had the opportunity to act first. In addition, we note that the effect of SNF is unlikely to be scale-free; galaxies smaller than ~100 pc might well experience less effective SNF. (Slightly abbreviated to fit arXiv size limit.)</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-30T16:19:18Z</published>
+    <arxiv:comment>Very belatedly updated to include a note added in proof and additional reference. The definitive version is at: mnras.oxfordjournals.org/content/423/2/1641</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <arxiv:journal_ref>MNRAS (2012) 423: 1641-1651</arxiv:journal_ref>
+    <author>
+      <name>Stephen Justham</name>
+    </author>
+    <author>
+      <name>Kevin Schawinski</name>
+    </author>
+    <arxiv:doi>10.1111/j.1365-2966.2012.20985.x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1111/j.1365-2966.2012.20985.x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.18861v2</id>
+    <title>Sampling SU(3) pure gauge theory with Stochastic Normalizing Flows</title>
+    <updated>2024-10-04T13:57:13Z</updated>
+    <link href="https://arxiv.org/abs/2409.18861v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.18861v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Non-equilibrium Monte Carlo simulations based on Jarzynski's equality are a well-understood method to compute differences in free energy and also to sample from a target probability distribution without the need to thermalize the system under study. In each evolution, the system starts from a given base distribution at equilibrium and it is gradually driven out-of-equilibrium while evolving towards the target parameters. If the target distribution suffers from long autocorrelation times, this approach represents a promising candidate to mitigate critical slowing down. Out-of-equilibrium evolutions are conceptually similar to Normalizing Flows and they can be combined into a recently-developed architecture called Stochastic Normalizing Flows (SNFs). In this contribution we first focus on the promising scaling with the volume guaranteed by the purely stochastic approach in the $\mathrm{SU}(3)$ lattice gauge theory in 4 dimensions; then, we define an SNF by introducing gauge-equivariant layers between the out-of-equilibrium Monte Carlo updates, and we analyse the improvement obtained as well as the inherited scaling with the volume. Finally, we discuss how this approach can be systematically improved and how simulations of lattice gauge theories in four dimensions for large volumes and close to criticality can be realistically achieved.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-27T15:55:22Z</published>
+    <arxiv:comment>1+8 pages, 6 figures, contribution for the 41st International Symposium on Lattice Field Theory (Lattice 2024), 28 July - 3 August 2024, Liverpool, UK; v2: 1+9 pages, 6 figures, reference added</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Andrea Bulgarelli</name>
+    </author>
+    <author>
+      <name>Elia Cellini</name>
+    </author>
+    <author>
+      <name>Alessandro Nada</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.06707v3</id>
+    <title>Stochastic Normalizing Flows</title>
+    <updated>2020-10-26T11:28:47Z</updated>
+    <link href="https://arxiv.org/abs/2002.06707v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.06707v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The sampling of probability distributions specified up to a normalization constant is an important problem in both machine learning and statistical mechanics. While classical stochastic sampling methods such as Markov Chain Monte Carlo (MCMC) or Langevin Dynamics (LD) can suffer from slow mixing times there is a growing interest in using normalizing flows in order to learn the transformation of a simple prior distribution to the given target distribution. Here we propose a generalized and combined approach to sample target densities: Stochastic Normalizing Flows (SNF) -- an arbitrary sequence of deterministic invertible functions and stochastic sampling blocks. We show that stochasticity overcomes expressivity limitations of normalizing flows resulting from the invertibility constraint, whereas trainable transformations between sampling steps improve efficiency of pure MCMC/LD along the flow. By invoking ideas from non-equilibrium statistical mechanics we derive an efficient training procedure by which both the sampler's and the flow's parameters can be optimized end-to-end, and by which we can compute exact importance weights without having to marginalize out the randomness of the stochastic blocks. We illustrate the representational power, sampling efficiency and asymptotic correctness of SNFs on several benchmarks including applications to sampling molecular systems in equilibrium.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.chem-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-16T23:29:32Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Hao Wu</name>
+    </author>
+    <author>
+      <name>Jonas Köhler</name>
+    </author>
+    <author>
+      <name>Frank Noé</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.03590v2</id>
+    <title>Physics-Informed Sylvester Normalizing Flows for Bayesian Inference in Magnetic Resonance Spectroscopy</title>
+    <updated>2026-09-16T12:47:07Z</updated>
+    <link href="https://arxiv.org/abs/2505.03590v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.03590v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Magnetic resonance spectroscopy (MRS) is a non-invasive technique to measure the metabolic composition of tissues, offering valuable insights into neurological disorders, tumor detection, and other metabolic dysfunctions. However, accurate metabolite quantification is hindered by challenges such as spectral overlap, low signal-to-noise ratio, and various artifacts. Traditional methods like linear-combination modeling are susceptible to ambiguities and commonly only provide a theoretical lower bound on estimation accuracy in the form of the Cramér-Rao bound. This work introduces a Bayesian inference framework using Sylvester normalizing flows (SNFs) to approximate posterior distributions over metabolite concentrations, enhancing quantification reliability. A physics-based decoder incorporates prior knowledge of MRS signal formation, ensuring realistic distribution representations. We validate the method on simulated 7T proton MRS data, demonstrating accurate metabolite quantification, well-calibrated uncertainties, and insights into parameter correlations and multi-modal distributions.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.QM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-06T14:50:14Z</published>
+    <arxiv:comment>Submitted to ICASSP 2027</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Julian P. Merkofer</name>
+    </author>
+    <author>
+      <name>Dennis M. J. van de Sande</name>
+    </author>
+    <author>
+      <name>Alex A. Bhogal</name>
+    </author>
+    <author>
+      <name>Ruud J. G. van Sloun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.11179v1</id>
+    <title>Progress in the Verification and Validation Efforts for START: A Spent Fuel Routing Tool</title>
+    <updated>2023-11-18T22:52:06Z</updated>
+    <link href="https://arxiv.org/abs/2311.11179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.11179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The US Department of Energys Office of Nuclear Energy is planning for an integrated waste management approach to transport, store, and eventually dispose of spent nuclear fuel and other high-level radioactive waste as part of the Integrated Waste Management program. In support of this effort, the Stakeholder Tool for Assessing Radioactive Transportation is being developed within the IWM program. This is a web-based decision support tool that can be used to analyze geospatial data related to the transportation of SNF and HLW.</summary>
+    <category term="nlin.AO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-18T22:52:06Z</published>
+    <arxiv:comment>Presented at the '2023 ANS Winter Conference and Expo'</arxiv:comment>
+    <arxiv:primary_category term="nlin.AO"/>
+    <author>
+      <name>Harish R. Gadey</name>
+    </author>
+    <author>
+      <name>Kacey D. McGee</name>
+    </author>
+    <author>
+      <name>Patrick D. Royer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.20708v1</id>
+    <title>A scalable flow-based approach to mitigate topological freezing</title>
+    <updated>2026-01-28T15:40:46Z</updated>
+    <link href="https://arxiv.org/abs/2601.20708v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.20708v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As lattice gauge theories with non-trivial topological features are driven towards the continuum limit, standard Markov Chain Monte Carlo simulations suffer for topological freezing, i.e., a dramatic growth of autocorrelations in topological observables. A widely used strategy is the adoption of Open Boundary Conditions (OBC), which restores ergodic sampling of topology but at the price of breaking translation invariance and introducing unphysical boundary artifacts. In this contribution we summarize a scalable, exact flow-based strategy to remove them by transporting configurations from a prior with a OBC defect to a fully periodic ensemble, and apply it to 4d SU(3) Yang--Mills theory. The method is based on a Stochastic Normalizing Flow (SNF) that alternates non-equilibrium Monte Carlo updates with localized, gauge-equivariant defect coupling layers implemented via masked parametric stout smearing. Training is performed by minimizing the average dissipated work, equivalent to a Kullback--Leibler divergence between forward and reverse non-equilibrium path measures, to achieve more reversible trajectories and improved efficiency. We discuss the scaling with the number of degrees of freedom affected by the defect and show that defect SNFs achieve better performances than purely stochastic non-equilibrium methods at comparable cost. Finally, we validate the approach by reproducing reference results for the topological susceptibility.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-28T15:40:46Z</published>
+    <arxiv:comment>1+9 pages, 3 figures, contribution to the 42nd International Symposium on Lattice Field Theory (Lattice 2025), 2-8 November 2025, Mumbai, India</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Claudio Bonanno</name>
+    </author>
+    <author>
+      <name>Andrea Bulgarelli</name>
+    </author>
+    <author>
+      <name>Elia Cellini</name>
+    </author>
+    <author>
+      <name>Alessandro Nada</name>
+    </author>
+    <author>
+      <name>Dario Panfalone</name>
+    </author>
+    <author>
+      <name>Davide Vadacchino</name>
+    </author>
+    <author>
+      <name>Lorenzo Verzichelli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.21213v1</id>
+    <title>Topological Relational Theory: A Simplicial-Complex View of Functional Dependencies, Lossless Decomposition, and Acyclicity</title>
+    <updated>2026-01-28T09:11:28Z</updated>
+    <link href="https://arxiv.org/abs/2602.21213v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.21213v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a topological lens on relational schema design by encoding functional dependencies (FDs) as simplices of an abstract simplicial complex. This dependency complex exposes multi-attribute interactions and enables homological invariants (Betti numbers) to diagnose cyclic dependency structure. We define Simplicial Normal Form (SNF) as homological acyclicity of the dependency complex in positive dimensions, i.e., vanishing reduced homology for all $n \ge 1$. SNF is intentionally weaker than contractibility and does not identify homology with homotopy. For decompositions, we give a topological reformulation of the classical binary lossless-join criterion: assuming dependency preservation, a decomposition is lossless exactly when the intersection attributes form a key for at least one component. Topologically, this yields a strong deformation retraction that trivializes the relevant Mayer--Vietoris boundary map. For multiway decompositions, we show how the nerve of a cover by induced subcomplexes provides a computable certificate: a 1-cycle in the nerve (detected by $H_1$) obstructs join-tree structure and aligns with cyclic join behavior in acyclic-scheme theory. Finally, we discuss an algorithmic consequence: Betti numbers of the dependency complex (or of a decomposition nerve) can be computed from boundary matrices and used as a lightweight schema diagnostic to localize "unexplained" dependency cycles, complementing standard FD-chase tests.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-28T09:11:28Z</published>
+    <arxiv:comment>8 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DB"/>
+    <author>
+      <name>Bilge Senturk</name>
+    </author>
+    <author>
+      <name>Faruk Alpay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.09274v3</id>
+    <title>Static and dynamical signatures of Dzyaloshinskii-Moriya interactions in the Heisenberg model on the kagome lattice</title>
+    <updated>2023-02-20T12:13:37Z</updated>
+    <link href="https://arxiv.org/abs/2207.09274v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.09274v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by recent experiments on Cs$_2$Cu$_3$SnF$_{12}$ and YCu$_{3}$(OH)$_{6}$Cl$_{3}$, we consider the ${S=1/2}$ Heisenberg model on the kagome lattice with nearest-neighbor super-exchange $J$ and (out-of-plane) Dzyaloshinskii-Moriya interaction $J_D$, which favors (in-plane) ${\bf Q}=(0,0)$ magnetic order. By using both variational Monte Carlo (based upon Gutzwiller-projected fermionic wave functions) and tensor-network approaches (built from infinite projected-entangled pair/simplex states), we show that the ground state develops a finite magnetization for $J_D/J \gtrsim 0.03 - 0.04$, while the gapless spin liquid remains stable for smaller values of the Dzyaloshinskii-Moriya interaction. The relatively small value of $J_D/J$ for which magnetic order sets in is particularly relevant for the interpretation of low-temperature behaviors of kagome antiferromagnets, including ZnCu$_{3}$(OH)$_{6}$Cl$_{2}$. In addition, we assess the spin dynamical structure factors and the corresponding low-energy spectrum, by using the variational Monte Carlo technique. The existence of a continuum of excitations above the magnon modes is reported within the magnetically ordered phase, similarly to what has been detected by inelastic neutron scattering on Cs$_{2}$Cu$_{3}$SnF$_{12}$.</summary>
+    <category term="cond-mat.str-el" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-19T13:37:34Z</published>
+    <arxiv:comment>15 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.str-el"/>
+    <arxiv:journal_ref>SciPost Phys. 14, 139 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Francesco Ferrari</name>
+    </author>
+    <author>
+      <name>Sen Niu</name>
+    </author>
+    <author>
+      <name>Juraj Hasik</name>
+    </author>
+    <author>
+      <name>Yasir Iqbal</name>
+    </author>
+    <author>
+      <name>Didier Poilblanc</name>
+    </author>
+    <author>
+      <name>Federico Becca</name>
+    </author>
+    <arxiv:doi>10.21468/SciPostPhys.14.6.139</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.21468/SciPostPhys.14.6.139" title="doi"/>
+  </entry>
+</feed>

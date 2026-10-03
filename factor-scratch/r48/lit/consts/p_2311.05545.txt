@@ -1,0 +1,1425 @@
+                                                    Extending Regev’s factoring algorithm
+                                                       to compute discrete logarithms
+                                                               Martin Ekerå1,2 and Joel Gärtner1,2
+                                                          1
+                                                           KTH Royal Institute of Technology, Stockholm, Sweden
+                                                      2
+                                                          Swedish NCSA, Swedish Armed Forces, Stockholm, Sweden
+arXiv:2311.05545v2 [cs.CR] 30 Jan 2024
+
+
+
+
+                                                                           January 31, 2024
+
+                                                                               Abstract
+                                                 Regev recently introduced a quantum factoring algorithm that may be
+                                              perceived as a d-dimensional variation of Shor’s factoring algorithm. In this
+                                              work, we extend Regev’s factoring algorithm to an algorithm for comput-
+                                              ing discrete logarithms in a natural way. Furthermore, we discuss natural
+                                              extensions of Regev’s factoring algorithm to order finding, and to factoring
+                                              completely via order finding. For all of these algorithms, we discuss various
+                                              practical implementation considerations, including in particular the robust-
+                                              ness of the post-processing.
+
+
+                                         1    Introduction
+                                         Regev [18] recently introduced a d-dimensional variation of Shor’s algorithm [21,22]
+                                         for factoring integers. The quantum circuit for Regev’s algorithm is asymptotically
+                                         smaller than the circuit for Shor’s original algorithm, but the reduction in circuit
+                                         size comes at the expense of using more space, and of many runs of the circuit
+                                         being required to achieve a successful factorization.
+                                             In this work, we show how Regev’s algorithm can be extended to compute
+                                         discrete logarithms in finite cyclic groups. In particular, we focus on computing
+                                         discrete logarithms in Z∗p for p a large prime, although the algorithm we present
+                                         may be generalized to other cyclic groups — and by extension to Abelian groups.
+                                         By comparison, since Regev factors composite N , he implicitly works in Z∗N .
+                                             For Regev’s algorithm and our extension thereof to reach an advantage over
+                                         Shor’s algorithms [21, 22], and the various variations thereof that are in the litera-
+                                         ture [2–8, 12, 19], there must exist a notion of small elements in the group.
+                                             More specifically, there must exist a set of small group elements such that any
+                                         composition of a subset of these elements under the group operation is also a
+                                         comparatively small element, and such that small elements are much more efficient
+                                         to compose than arbitrary elements.
+                                             A natural notion of small group elements exists for Z∗p and Z∗N , for p a large
+                                         prime and N a large composite, respectively. As such, our extension of Regev’s
+                                         algorithm can compute discrete logarithms in Z∗p with an asymptotically smaller
+                                         quantum circuit than the circuits for existing variations of Shor’s algorithm. To
+                                         the best of our current knowledge, it is however not straightforward to extend the
+                                         notion of small group elements to elliptic curve groups.
+
+
+                                                                                   1
+    Besides our extension to computing discrete logarithms, we furthermore dis-
+cuss natural extensions of Regev’s algorithm to order finding, and to factoring
+completely via order finding, in App. A.
+    For both Regev’s algorithm and our extensions, the asymptotic reduction in the
+circuit size comes at the expense of using more space, and of having to perform
+many runs of the circuit. The outputs from the runs are then jointly post-processed
+classically. A practical problem that arises in this context is that the quantum
+error correction may fail to correct all errors that arise during the course of a run,
+resulting in an erroneous output being produced.
+    For this reason, we analyze the robustness of the classical post-processing to er-
+rors. In particular, we heuristically show that it succeeds in recovering the solution
+even if a significant fraction of the runs produce random outputs.
+
+
+2     Preliminaries
+Throughout this work, we write generic Abelian groups multiplicatively, and denote
+by 1 the identity in such groups. Furthermore, we let ρs be a Gaussian function,
+defined for s > 0 as
+                                                    !
+                                                  2
+                                              ∥z∥
+                             ρs (z) = exp −π 2
+                                               s
+
+where z is some vector.
+
+2.1    Recalling Regev’s factoring algorithm
+To factor an n-bit composite N , Regev [18] defines the lattice
+                     (                       d
+                                                                )
+                                             Y
+                                           d    zi
+                 L = (z1 , . . . , zd ) ∈ Z    ai = 1 (mod N )
+                                               i=1
+
+where ai = b2i for i ∈ [1, d] ∩ Z, and where b1 , . . . , bd are some small
+                                                                          √ O(log n)-bit
+integers. In what follows, we assume b1 , . . . , bd to be the first d = ⌈ n ⌉ primes for
+simplicity, although other choices are possible, see Sect. 2.3.
+    The quantum part of Regev’s algorithm is run m ≥ d + 4 times to sample a
+set of m vectors that can be proved to be close to cosets of L∗ /Zd . A classical
+post-processing algorithm then recovers vectors in L from this set of vectors.
+    If one of the vectors thus recovered is in fact in L\L0 , where
+                    (                      d
+                                                                          )
+                                           Y
+                0                        d        zi
+               L = (z1 , . . . , zd ) ∈ Z       bi ∈ {−1, 1} (mod N ) ,
+                                          i=1
+
+the vector gives rise to a non-trivial split of N . In practice, our simulations [9]
+show that the recovered vectors often give rise to a sufficient number of distinct
+non-trivial splits so as to yield the complete factorization of N .
+    In this work, we extend Regev’s factoring algorithm to computing discrete log-
+arithms, to order finding, and to factoring completely via order-finding.
+
+
+
+
+                                           2
+2.1.1   Recalling and adapting Regev’s classical post-processing
+To start off, let us recall a claim and a lemma near verbatim from [18] as they
+form the basis for the classical post-processing in both Regev’s algorithm and in
+the extended algorithms that we introduce in this work:
+Claim 1 (Claim 5.1 from [18]). There is an efficient classical algorithm that given
+a basis of a lattice L ⊂ Rk , and some norm√bound T > 0, outputs a list of ℓ ≤ k
+vectors z1 , . . . , zℓ ∈ L of norm at most 2k/2 k T with the property that any vector
+in L of norm at most T must be an integer combination of them. In other words,
+the sublattice they generate contains all the vectors in L of norm at most T .
+   The factor 2k/2 in the above claim comes from the use of LLL [14]. It can
+be improved by the use of more powerful lattice reduction algorithms, such as
+BKZ [20], but for simplicity we follow Regev and use the above version of the claim
+based on LLL throughout this work.
+Lemma 1 (Lemma 4.4 from [18]). Let L ⊂ Zd and m ≥ d + 4. Let v1 , . . . , vm be
+uniformly chosen cosets from L∗ /Zd . For some δ > 0, let w1 , . . . , wm ∈ [0, 1)d be
+such that distRd /Zd (wi , vi ) < δ for all i ∈ [1, d] ∩ Z. For some scaling factor S > 0,
+define the d + m-dimensional lattice L′ generated by the rows of B where
+                                                                      
+                    Id×d           S · w1T         ···           T
+                                                             S · wm 
+                 B=
+                   
+                                                                    .
+                                                                    
+                     0m×d                         S · Im×m
+
+    Then, for any u ∈ L, there exists a vector u′ ∈ L′ whose first d coordinates are
+equal to u, and whose norm is at most ∥u∥ · (1 + m · S 2 · δ 2 )1/2 . Moreover, with
+probability at least 1/4 (over the choice of the vi ), any non-zero u′ ∈ L′ of norm
+∥u′ ∥ < min(S, δ −1 ) · ε/2 satisfies that its first d coordinates are a non-zero vector
+in L, where ε = (4 det L)−1/m /3.
+
+   Regev’s classical post-processing in [18] essentially follows by combining Lem-
+ma 1 and Claim 1 above, as does our classical post-processing. However, in [18],
+Regev only describes the classical post-processing as a part of the main theorem,
+and not as a separate lemma. Since we only need the post-processing part of the
+theorem, we extract this part and give the below lemma that is strongly influenced
+by Regev’s main theorem:
+
+Lemma 2 (Lemma derived from Theorem 1.1 in [18]). Let m = O(d) be an integer
+not smaller than d+4 and let T = exp(O(d)). Furthermore, let L be a d-dimensional
+                          2
+lattice with det L < 2d , and let v1 , . . . , vm be uniformly chosen cosets from L∗ /Zd .
+    Suppose that we are given a set of m vectors w1 , . . . , wm ∈ [0, 1)d such that
+distRd /Zd (wi , vi ) < δ for all i ∈ [1, m] ∩ Z, where δ = exp(−O(d)) is sufficiently
+small. Then, there is an efficient classical algorithm that, with probability at
+least 1/4 (over the choice of the vi ), recovers a basis for a sublattice of L that
+contains all vectors in L of norm at most T .
+Proof. We begin by constructing the lattice L′ in Lemma 1 with the given set of
+vectors w1 , . . . , wm and with S = δ −1 . We then have that any vector u ∈ L of
+norm at most T corresponds to a vector u′ ∈ L′ of norm ∥u′ ∥ ≤ (m + 1)1/2 T .
+
+
+
+                                              3
+    By using Claim 1 with norm bound (m + 1)1/2 T , we obtain a list of vectors
+z1′ , . . . , zℓ′ in L′ of norm at most
+
+               2(d+m)/2 · (d + m)1/2 · (m + 1)1/2 T < δ −1 (4 det L)−1/m /6
+                                                                                               2
+where the inequality holds for sufficiently small δ = exp(−O(d)) as det L < 2d .
+    From the second property of Lemma 1, we have that with probability at least 1/4,
+any vector u′ ∈ L′ of norm ∥u′ ∥ < δ −1 (4 det L)−1/m /6 satisfies that its first d co-
+ordinates are a vector u ∈ L. As such, with probability at least 1/4, the first d
+coordinates of zi′ correspond to a vector zi ∈ L for all i ∈ [1, ℓ] ∩ Z.
+    Furthermore, any u ∈ L of norm ∥u∥ ≤ T can be written as a linear combination
+of z1′ , . . . , zℓ′ . Thus, z1 , . . . , zℓ generate a sublattice of L that contains all vectors
+u ∈ L of norm ∥u∥ ≤ T , and with probability at least 1/4 the ℓ produced vectors
+can thus be used to recover a basis for this sublattice of L.                                  ■
+
+2.1.2    Recalling Regev’s quantum algorithm
+Regev’s algorithm [18] induces an approximation to the state proportional to
+                                                       d
+                                                                        +
+                                                          zi +D/2
+                  X                                    Y
+                              ρR (z) z1 , . . . , zd ,   ai       mod N
+             z∈{−D/2, ..., D/2−1}d                          i=1
+                                                                                     √
+where z = (z1 , . . . , zd ). As for R and D, Regev first  √
+                                                                picks R = 2C n for some
+                                                   ⌈log2 (2 d R)⌉
+suitable constant C > 0, and then lets D = 2                      .
+    Quantum Fourier transforms (QFTs) of size D are then applied to the first d
+control registers, after which the resulting d frequencies w1 , . . . , wd are read out
+and used to form the vector w = (w1 , . . . , wd )/D ∈ [0, 1)d .
+    The choice of C impacts the cost of the quantum circuit. Simulations         √ [9] show
+that selecting C ≈ 2 is sufficient for n = 2048 bit integers when d = ⌈ n⌉. The
+probability of successfully factoring the integer in m = d + 4 runs is then close
+to one. Ragavan and Vaikuntanathan [16, App. A] show, based on a heuristic
+assumption, that selecting C = 3 + ϵ + o(1) is sufficient asymptotically.
+    The idea in Regev’s factoring algorithm is to leverage that a1 , . . . , ad are small
+by using binary tree-based arithmetic in combination Qd         with square–and–multiply-
+based exponentiation to compute the product i = 1 azi i mod N .1
+    More specifically, a work register is first initializedQ  to 1. For j = ℓ − 1, . . . , 0 the
+                                                               d     z
+work register is then squared mod N , the product i = 1 ai i,j mod N computed
+using binary tree-basedPℓ−1  arithmetic, and the result multiplied into the work register
+mod N . Here, zi = j = 0 2j zi,j where zi,j ∈ {0, 1} and ℓ = log2 D.
+    An issue with the above approach, as identified by Ekerå and Gidney2 , is that
+the work register cannot be squared in place mod N , leading to intermediary reg-
+ister values having to be kept around until they can be uncomputed at the end of
+the computation of the product. This results in an increased space usage.
+    To circumvent this reversibility issue in Regev’s original proposal, Ragavan and
+Vaikuntanathan [16] have proposed to use Fibonacci-based exponentiation in place
+of Regev’s square–and–multiply-based exponentiation. This optimization reduces
+the space requirements — but it comes at the expense of increasing the circuit size
+and depth by constant factors.
+   1 The constant offset by D/2 is easy to account for by e.g. instead initializing the work register
+
+to a constant. In practice this offset does not matter, and therefore we do not account for it here.
+   2 See Craig Gidney’s comment on Scott Aaronson’s blog.
+
+
+
+
+                                                 4
+   Even if one accounts for the above optimization, it is currently not clear whether
+Regev’s variation of Shor’s algorithm [21, 22] is more efficient in practice than the
+various other variations that are in the literature [2–6, 8, 12, 19] in actual physical
+implementations, and for concrete problem instances of limited size — depending
+on what assumptions one makes on the quantum computer, which cost metrics one
+consider, which problem instances one consider, and so forth.
+   The same holds true for the extended algorithms that we introduce in this work.
+For further discussion on this topic, see Sect. 4.1.
+
+2.1.3    Extending Regev’s quantum algorithm
+To extend Regev’s algorithm to compute discrete logarithms and orders, we need
+to introduce at least one element that is not small into the state.
+    Throughout this work, we therefore consider a slightly extended quantum algo-
+rithm that induces an approximation to the state proportional to
+                                                   d−k        k
+                                                                            +
+              X                                    Y z +D/2 Y
+                                                          i      zd−k+i+D/2
+                          ρR (z) z1 , . . . , zd ,     gi   ·   ui
+        z∈{−D/2,...,D/2−1}d                         i=1           i=1
+
+where g1 , . . . , gd−k are d − k small group elements in some finite Abelian group G,
+and u1 , . . . , uk are k arbitrary elements in G, for k a small constant.
+     We focus primarily on the group Z∗N , for N a prime or composite, although the
+extended algorithm is generic in that it can also work in other groups.
+     For G = Z∗N , we let n be the bit length of N , where n serves as an upper
+bound on both the bit length of the order of Z∗N and on the bit length of elements
+in Z∗N . For other groups, it may be necessary or advantageous to make a distinction
+between these two bounds. For the cryptographically relevant cases in Z∗N this is
+however not the case, see Sect. 3.1 for further     √ details.
+     Furthermore, for simplicity, we let d = ⌈ n ⌉, and we let g1 , . . . , gd−k be the first
+d − k primes that when perceived as elements of Z∗N are distinct from u1 , . . . , uk .
+We require N to be coprime to the first d primes for this reason.
+     Note however that other choices of d and g1 , . . . , gd−k are possible: In particular,
+it is possible to let g1 , . . . , gd−k be any choice of small distinct primes coprime to N ,
+see Sect. 2.3 for further details.
+     The idea in our extended algorithms is to use special arithmetic for the first
+product over d − k small group elements — i.e. arithmetic that leverages that
+these elements are small, in analogy with Regev’s original algorithm — and to use
+standard arithmetic for the product over the remaining k elements.
+     Let us now summarize our analysis in the following lemma:
+Lemma 3 (Extended quantum algorithm based on [16,18]). Let k ≥ 0 be              √ an integer
+constant, let N > 0 be an n-bit integer that is coprime to the first d = ⌈ n ⌉ primes
+where d > k, and let C > 0 be a constant.
+   Furthermore, let u1 , . . . , uk ∈ Z∗N , and let g1 , . . . , gd−k ∈ Z∗N be the first d − k
+primes that when perceived as elements of Z∗N are distinct from u1 , . . . , uk .
+   Finally, as in [16, Theorem 1], let G be the gate cost of a quantum circuit that
+takes a, b, t, 0S → a, b, (t + ab) mod N, 0S for a, b, t ∈ [0, N ) ∩ Z and S the
+number of ancilla qubits required by the circuit, and let
+                    (                         d−k          k
+                                                                           )
+                                                                  zd−k+i
+                                              Y          Y
+                                           d       zi
+                 L = (z1 , . . . , zd ) ∈ Z       gi ·          ui       =1 .
+                                              i=1         i=1
+
+
+                                              5
+    Then, there is a quantum algorithm that outputs apvector w ∈√[0, 1)d that, except
+for with probability 1/poly(d), is within distance     d/2 · 2−C n of a uniformly
+                      ∗  d
+chosen coset v ∈ L /Z . The quantum circuit for this algorithm has gate cost
+O(n1/2 G + n3/2 ) and it requires
+                                                     
+                                        C
+                           Q=S+             + 8 + o(1) n
+                                      log ϕ
+qubits of space, for ϕ the golden ratio.
+Proof. In analogy with Regev [18], the quantum algorithm first induces an approx-
+imation to the state proportional to
+                                               d−k        k
+                                                                          +
+                                                             z       +D/2
+          X                                    Y z +D/2 Y
+                      ρR (z) z1 , . . . , zd ,     gi i ·   ui d−k+i        =
+   z∈{−D/2,...,D/2−1}d                              i=1                i=1
+                                                                        d−k            k
+                                                                                                        +
+                                                                                              z
+          X                                                             Y              Y
+                      ρR (z − c) z1 − D/2, . . . , zd − D/2,                  gizi ·         ui d−k+i       (1)
+     z∈{0,...,D−1}d                                                     i=1            i=1
+
+where z = (z1 , . . . , zd ) and c = (D/2, . . . , D/2).                                    √
+    As for the parameters R and D, in analogy with Regev            √
+                                                                        [18], we pick R = 2C n
+for some suitable constant C > 0, and let D = 2⌈log2 (2 d R)⌉ . QFTs of size D are
+then applied to the first d control registers z1 , . . . , zd and the resulting frequencies
+w1 , . . . , wd read out, yielding w = (w1 , . . . , wd )/D ∈ [0, 1)d . Based on the analysis
+in [18],
+√       √ exceptp  for with probability
+                               √         1/poly(d), the vector w is then within distance
+  d/( 2R) = d/2 · 2−C n of a uniformly chosen coset v ∈ L∗ /Zd .
+    To simplify the notation in what follows, we shift the first d control registers
+by D/2 since this does not affect the results measured after the QFTs have been
+applied. That is to say, instead of inducing an approximation to the state propor-
+tional to (1), we induce an approximation to the state proportional to
+                                                            d−k       k
+                                                                                  +
+                                                                           zd−k+i
+                     X                                      Y         Y
+                                                                 zi
+                               ρR (z − c) z1 , . . . , zd ,     gi ·      ui
+             z∈{0,...,D−1}d                                   i=1           i=1
+
+in a series of computational steps.
+    The first step is to approximate the state proportional to
+                              X
+                                      ρR (z − c) | z1 , . . . , zd ⟩
+                            z∈{0,...,D−1}d
+
+to within 1/poly(d) via a quantum circuit of size d(log D +poly(log d)) as explained
+in [16, 18] by referencing [17]. Note that O(d(log D + poly(log d))) = O(n).
+    To compute the first product, i.e. to take
+                        X
+                                 ρR (z − c) z1 , . . . , zd , 0A
+                      z∈{0,...,D−1}d
+                                                                      d−k
+                                                                                          +
+                           X                                          Y
+                →                      ρR (z − c) z1 , . . . , zd ,         gizi , 0A−n
+                      z∈{0,...,D−1}d                                  i=1
+
+a special quantum circuit from [16] is used, that for efficiency reasons leverages
+that the group elements g1 , . . . , gd−k are small.
+
+
+                                                    6
+    By [16, Lemma 2.2], this circuit uses O(n1/2 G + n3/2 ) gates and Q qubits of
+space3 in total when accounting both for the d control registers and the A initial
+ancilla qubits, n qubits of which are used to store the product.
+    Note that the circuit in [16, Lemma 2.2] is for the product of the squares of
+the first d primes raised to short exponents. We compute the product of a subset
+of d − k of the first d primes raised to short exponents, but these differences only
+serve to reduce the cost of the circuit.
+    To compute the second product, i.e. to take
+                                                       d−k
+                                                                   +
+                 X                                     Y
+                                                            zi A−n
+                          ρR (z − c) z1 , . . . , zd ,     gi , 0
+              z∈{0,...,D−1}d                                  i=1
+                                                              d−k            k
+                                                                                                      +
+                                                                                    z
+                    X                                         Y              Y
+          →                    ρR (z − c) z1 , . . . , zd ,         gizi ·         ui d−k+i , 0A−n
+              z∈{0,...,D−1}d                                  i=1            i=1
+
+
+a standard quantum circuit is used since u1 , . . . , uk are not necessarily small.
+    More specifically, 2k log D elements are classically pre-computed, and then mul-
+tiplied and added into the work register conditioned on the control qubits:
+    Recall that D is a power of two, write D = 2ℓ , write
+              ℓ−1                                                                          ℓ−1
+                                                                               z                  2j zd−k+i,j
+              X                                                                            Y
+ zd−k+i =           2j zd−k+i,j for zd−k+i,j ∈ {0, 1}               ⇒        ui d−k+i =          ui             ,
+              j=0                                                                          j=0
+
+                         j              j
+and pre-compute u2i and u−2   i    for all j ∈ [0, ℓ) ∩ Z and i ∈ [1, k] ∩ Z. Then
+             j
+multiply u2i into the work register conditioned on zd−k+i,j for all j ∈ [0, ℓ) ∩ Z and
+                                                                                 j
+i ∈ [1, k] ∩ Z. For p the product in the work register before multiplying in u2i , and
+                                ( j
+                                   u2i   if zd−k+i,j = 1
+                           u=
+                                    1    if zd−k+i,j = 0
+
+the procedure, when perceived to work in ZN , takes
+
+                                        z1 , . . . , zd , p, 0n , 0n , 0A−3n
+                         load u → z1 , . . . , zd , p, u, 0n , 0A−3n
+           multiply and add → z1 , . . . , zd , p, u, pu, 0A−3n
+                             swap → z1 , . . . , zd , pu, u, p, 0A−3n
+   unload u and load −u−1 → z1 , . . . , zd , pu, −u−1 , p, 0A−3n
+           multiply and add → z1 , . . . , zd , pu, −u−1 , 0n = p + pu · −u−1 , 0A−3n
+                 unload −u−1 → z1 , . . . , zd , pu, 0n , 0n , 0A−3n
+
+where the load and unload operations are conditioned on zd−k+i,j .
+   The S qubits required to perform the multiplications and additions fit into the
+A − 3n ancilla qubits. The circuit size is dominated by the 2k log D multiplications
+   3 Note that the constant C in [16] is different from our constant C: Whereas we have defined C
+
+so that R = 2Cd as in [18], the authors of [16] have instead defined C so that R = 2(C+2+o(1))d .
+This explains the difference between our expression for Q and the corresponding expression in [16].
+
+
+
+
+                                                    7
+and additions, with a cost of O(2kG log D) = O(n1/2 G) gates. The loading, un-
+loading and swap operations may be modelled as requiring O(n) gates. Hence the
+second product is on par with or less expensive than the first asymptotically.
+   Finally, as explained in [16,18], the QFTs of the first d control registers may be
+approximated in-place by a circuit of size O(d log D(log log D + log d)) = O(n log n)
+to within 1/poly(d) with the algorithm of Coppersmith [1].                          ■
+
+    By plugging concrete expression for G and S into Lemma 3 above for various
+circuits that implement the required arithmetic, we can obtain corollaries that give
+concrete circuit costs, in analogy with [16, Corollary 1.1–1.3 to Theorem 1].
+    Lemma 3 may furthermore be extended to other groups for which the group
+operation may be implemented efficiently quantumly. Note however that it is of
+course not possible to give asymptotic costs in terms of circuit size and space usage
+unless the group is explicitly specified.
+    Note furthermore that for the algorithm to be more efficient than other vari-
+ations of Shor’s algorithm the implementation needs to leverage that all but k of
+the d elements in the product are small.
+
+2.2    Notes on lattice determinants
+The post-processing in Lemma 2 requires that the lattice L has determinant less
+       2
+than 2d . In Regev’s original factoring algorithm [18], the lattice considered is
+                     (                      d
+                                                                 )
+                                            Y
+                                          d     zi
+                L = (z1 , . . . , zd ) ∈ Z     ai = 1 (mod N ) ,
+                                                i=1
+                                                                2
+and Regev shows that its determinant is less than N ≤ 2d .
+   For our extensions of Regev’s algorithm, we prove the below, more general,
+lemma to bound the determinant of lattices of this form.
+Lemma 4. Let g1 , . . . , gt be t > 0 elements of a finite Abelian group G, and let
+                             (                     t
+                                                             )
+                                                   Y
+                                                 t     zi
+                       L = (z1 , . . . , zt ) ∈ Z     gi = 1 .
+                                                      i=1
+
+   Then, the determinant of L is equal to the size of the subgroup of G that is
+generated by the elements g1 , . . . , gt .
+Proof. Let G0 be the subgroup of G that is generated by g1 , . . . , gt . For each group
+element g ∈ G0 , we define the coset Sg of Zt /L given by
+                            (                     t
+                                                          )
+                                                  Y
+                                                t    zi
+                     Sg = (z1 , . . . , zt ) ∈ Z    gi = g .
+                                                      i=1
+
+    We obviously have that these cosets are distinct, and that every z ∈ Zt belongs
+to one of these cosets. Since L is an integer lattice, the determinant of L is given by
+the number of such distinct cosets of Zt /L. Since each element of G0 corresponds to
+a unique coset Sg , the determinant of L therefore equals the size of the subgroup G0
+generated by the elements g1 , . . . , gt ∈ G.                                        ■
+
+   In particular, if the group G is of size less than 2n , the above lemma guarantees
+that, no matter the choice of elements g1√     , . . . , gt , the corresponding lattice has
+                               2
+determinant less than 2n ≤ 2d when d = ⌈ n ⌉.
+
+                                            8
+2.3     Notes on the choice of small generators
+Both Regev’s original factoring algorithm and our extended algorithms assume that
+there exist short interesting vectors in a lattice
+                            (                      d
+                                                           )
+                                                   Y
+                                                 d    zi
+                       L = (z1 , . . . , zd ) ∈ Z    gi = 1
+                                                                   i=1
+
+for some choice of generators g1 , . . . , gd ∈ G, most or all of which are small.
+    What constitutes an interesting vector differs between our algorithms and Regev’s
+algorithm, but in both cases it is sufficient that L has a short basis.4
+    In turn, whether or not L has a short basis depends on the specific choice of
+generators. To give an example of a bad choice of generators, we can let gi = g i
+for g a small generator of order r. In this case,
+                     (                           d
+                                                            )
+                                                Y
+                                            d        i·zi
+                 L = (z1 , . . . , zd ) ∈ Z        g      =1
+                                                            i=1
+                          (                                 d
+                                                                                     )
+                                                            X
+                      =       (z1 , . . . , zd ) ∈ Zd             i · zi = 0 (mod r) ,
+                                                            i=1
+
+and any basis of L would have to contain a vector z = (z1 , . . . , zd ) such that the
+sum over i · zi is equal to a non-zero multiple of r. For such z, we thus have that
+                                    d
+                                    X                       d
+                                                            X
+                          r≤              i · zi ≤ d              |zi | ≤ d3/2 ∥z∥
+                                    i=1                 i=1
+
+and hence, the basis would have to contain a vector of length ∥z∥ ≥ r/d3/2 , which
+is too large in this context for the basis to be considered short.
+    If the generators are chosen to be void of intentionally introduced relations, it
+is natural to assume L to have some properties similar to those of random lattices.
+In particular, it is natural to assume that there is a basis of L where each vector
+is not significantly longer than the shortest non-zero vector in L. By Minkowski’s
+first theorem and the fact that det L ≤ 2n , we thus expect L to have a basis where
+each basis vector has length at most exp(O(n/d)).
+    Note however that we do not prove that such a basis exists for a given choice
+of generators. Rather, we make a heuristic number theoretic assumption that such
+a basis exists, in analogy with Regev [18].
+    For G = Z∗N , for N prime or composite, a natural choice to avoid intentionally
+introduced relations is to let most of the generators g1 , . . . , gd be small distinct
+primes coprime to N . Our concrete assumption is therefore the following:
+Assumption
+      √             1. Let K be a constant, N be an n-bit integer coprime to the first
+d = O( n) primes, and g1 , . . . , gd be the first d primes perceived as elements in Z∗N .
+Then, g1 , . . . , gd span Z∗N and the lattice
+                              (                        d
+                                                               )
+                                                       Y
+                                                     d    zi
+                               (z1 , . . . , zd ) ∈ Z    gi = 1
+                                                              i=1
+
+has a basis where each basis vector has norm at most T = exp(Kn/d).
+   4 For Regev’s algorithm, a short basis for L ensures that there are short vectors in L that are
+
+not in L0 ⊊ L, for L0 as in Sect. 2.1.
+
+
+                                                        9
+    Note that we could instead make a more flexible assumption, by letting the
+generators g1 , . . . , gd be small distinct primes, but not necessarily the first d primes.
+For our algorithm to work it would then be sufficient for the assumption to hold
+with a noticeable probability over the specific choice of these generators, as we
+could re-run the algorithm with different choices of generators.
+    Furthermore, note that the above assumption predicts that the lattice has in-
+creasingly shorter bases as d grows larger. As such, choosing a larger value for d
+may be preferable in practice. This being        √   said, for simplicity we consider only the
+special choice of using the first d = ⌈ n⌉ primes as generators in this paper.
+    Finally, note that our extensions of Regev’s algorithm do not directly depend on
+the lattice in Assumption 1. Instead, they require a closely related lattice to have
+a short basis. That this is the case does however easily follow from Assumption 1,
+as detailed in the following lemma:
+                                                                                  √
+Lemma 5. Let N be an n-bit integer and g1 , . . . , gd be the first d = O( n) primes
+perceived as elements in Z∗N . Furthermore, let K be a constant, k be some small
+constant, and u1 , . . . , gk be arbitrary elements in Z∗N . Then, under Assumption 1,
+the lattice           (                                                    )
+                                                       d       k
+                                                                   zd+i
+                                                      Y       Y
+                                                 d+k       zi
+                         (z1 , . . . , zd+k ) ∈ Z        gi       ui    =1
+                                                       i=1      i=1
+                                                                          √
+has a basis where each basis vector has norm at most T =                      d + 1 · exp(Kn/d).
+Proof. Consider the lattice L given by
+                        (                                d
+                                                                      )
+                                                         Y
+                                                   d
+                              (z1 , . . . , zd ) ∈ Z           gizi = 1
+                                                         i=1
+
+that, under Assumption 1, has a basis B where each basis vector has norm at most
+exp(Kn/d). By Assumption 1 we also have that g1 , . . . , gd generate Z∗N .
+   Therefore, for any of the ui , there is a vector z = (z1 , . . . , zd ) ∈ Zd such that
+       Qd
+ui = i = 1 gizi . As the longest √vector in B is no longer than exp(Kn/d), the
+covering radius of L is at most d exp(Kn/d).√ As such, z can be written as a
+vector in L plus a vector zui of length at most d exp(Kn/d).
+   We then see that a basis for the lattice
+                  (                            d     k
+                                                                      )
+                                                        zd+i
+                                               Y     Y
+                                           d+k    zi
+                   (z1 , . . . , zd+k ) ∈ Z      gi    ui      =1
+                                                       i=1      i=1
+
+is given by                                                  
+                                      B               0d×k 
+                                                           
+                                                           
+                                      z                    
+                                      u1                   
+                                                           
+                                      .                    
+                                      .
+                                      .               −Ik 
+                                                           
+                                                           
+                                       zuk
+                                                        √
+where each basis vector has length at most                  d + 1 · exp(Kn/d).                     ■
+
+
+
+
+                                                 10
+3     Computing discrete logarithms
+In what follows, let G be a finite Abelian group, let g ∈ G be a generator of a cyclic
+group ⟨g⟩ ⊆ G of order r, and let x = g e for e ∈ (0, r) ∩ Z. Given g and x, our goal
+is then to compute the discrete logarithm e = logg x.
+    To this end, we first give a basic algorithm in Sect. 3.1 that computes the
+discrete logarithm whilst requiring pre-computation for the group. We then show
+in Sect. 3.2 how the pre-computation can be performed as a part of the algorithm.
+    Both variants work if Assumption 1 holds, but a weaker heuristic assumption
+is sufficient for the algorithm with pre-computation to work. We have heuristically
+verified that both variants work in practice by means of simulations.
+
+3.1    A basic algorithm that requires pre-computation
+Let g1 , . . . , gd−1 be small distinct elements in ⟨g⟩, such that gi = g ei where ei ∈
+(0, r) ∩ Z for √  all i ∈ [1, d) ∩ Z. In particular, for g ∈ Z∗p for p a large n-bit prime,
+and for d = ⌈ n ⌉, we take g1 , . . . , gd−1 to be the first d − 1 primes that are in ⟨g⟩
+and that when perceived as elements of ⟨g⟩ and distinct from x.
+    To find such elements efficiently, and to be able to directly call upon Lemma 3
+below, we assume in this section that ⟨g⟩ = Z∗p . Note that this assumption does not
+imply a loss of generality: Suppose that γ = g eγ generates some subgroup of Z∗p of
+order rγ , that x = γ ex = g e and that we seek ex = logγ x ∈ [0, rγ ) ∩ Z. Then, we
+may compute e = logg x and eγ = logg γ, and finally ex = e/eγ mod rγ .
+    By Lemma 3, there exists an efficient quantum algorithm that outputs ap          vector
+w ∈√[0, 1)d that, except for with probability 1/poly(d), is within distance d/2 ·
+2−C n of a uniformly chosen v ∈ L∗x /Zd , where
+                                (                         d−1
+                                                                      )
+                                                          Y
+                         Lx = (z1 , . . . , zd ) ∈ Zd xzd     gizi = 1
+                                                            i=1
+
+for C > 0 some constant. By performing m ≥ d+4 runs of this quantum algorithm,
+we obtain m such vectors w1 , . . . , wm .
+    By Lemma 2, there is an efficient classical algorithm that, with probability at
+least 1/4, recovers a basis for a sublattice Λ of Lx given the vectors w√
+                                                                        1 , . . . , wm .
+Furthermore, Λ contains all vectors in Lx of norm at most T = exp(O( n)). Let
+                       (                                  )
+                   L0x =     (z1 , . . . , zd ) ∈ Lx gcd(zd , r) ̸= 1    ⊂ Lx
+
+
+and note that L0x is a sublattice of Lx .
+    We make the heuristic assumption that there is a non-zero vector y ∈ Lx \L0x of
+norm at most T . It then follows that y ∈ Λ. By extension, it follows that at least
+one vector z ∈ S must also be in Lx \L0x , as the sublattice Λ that the vectors in S
+generate would otherwise not include y.
+    Suppose that we know ei such that gi = g ei for i ∈ [1, d) ∩ Z — e.g. because
+we have pre-computed these using Shor’s algorithm for computing discrete loga-
+rithms [7, 21, 22]. Then, given z = (z1 , . . . , zd ) ∈ Lx \L0x , we have that
+                           d−1
+                           Y
+                    xzd          gizi = g e1 z1 +...+ed−1 zd−1 +ezd = g 0 = 1,
+                          i=1
+
+
+
+                                                 11
+which implies that
+
+                     e1 z1 + . . . + ed−1 zd−1 + ezd = 0   (mod r).
+
+   Since z ∈ Lx \L0x , we have that gcd(zd , r) = 1, so zd is invertible mod r, and
+hence we can compute the discrete logarithm
+
+                e = logg x = −(e1 z1 + . . . + ed−1 zd−1 )/zd   (mod r).
+
+    We have heuristically verified that the above procedure yields a vector in Lx \L0x ,
+and that we can solve for the logarithm e, by means of simulations. For n = 2048
+bits, the simulations indicate that it suffices to take C ≈ 2, and that the success
+probability is close to one after d + 4 runs of the quantum algorithm.
+
+3.1.1   Notes on safe-prime groups and Schnorr groups
+In cryptographic applications of the discrete logarithm problem in Z∗p , either safe-
+prime groups or Schnorr groups are typically used in practice:
+    For safe-prime groups, we have that p−1 = 2rγ for rγ a prime, where γ generates
+the rγ -order subgroup. In such groups, it is easy to find small gi in ⟨γ⟩. Hence,
+it would be possible to modify the quantum algorithm in the previous section to
+work in ⟨γ⟩ instead of working in all of Z∗p for safe-prime groups.
+    This being said, the orders of ⟨γ⟩ and Z∗p differ only by a factor of two, so the
+advantage of working in ⟨γ⟩ is small. Furthermore, making the aforementioned
+modification would require us to design a special version of Lemma 3 to e.g. use
+separate bounds for the bit length of group elements and of the group order, re-
+spectively. We therefore only give the basic algorithm that works in Z∗p .
+    For Schnorr groups, we have that p − 1 = 2krγ for rγ a prime and k a large
+integer, where γ generates the rγ -order subgroup. In such groups, it is typically
+hard to find small gi that are in ⟨γ⟩. To overcome this problem, we need to work in
+a larger group, again leaving us in a similar situation to that for safe-prime groups:
+We could for instance work in the krγ -order subgroup, but this would only bring
+a small advantage compared to working in Z∗p , so we only give the basic algorithm
+that works in Z∗p .
+    In summary, the complexity of the quantum algorithm in the previous section
+depends exclusively on the bit length n of p, irrespective of whether we are in a
+Schnorr group or a safe-prime group, and in the latter case irrespective of whether
+the logarithm is short or full length. For Shor’s algorithm, when solving x = γ ex
+for ex , the complexity depends on n and the bit length of rγ when the algorithm is
+adapted as in [4,7], or on n and the bit length of ex when it is adapted as in [2,3,8].
+
+3.1.2   Notes on other options for the pre-computation
+Another way to perform the pre-computation is to use an analogous procedure to
+compute a basis of Lg , and to use it to compute e = (e1 , . . . , ed−1 ), where
+                          (                         d−1
+                                                               )
+                                                    Y
+                                              d  zd      zi
+                   Lg = (z1 , . . . , zd ) ∈ Z g        gi = 1 .
+                                                     i=1
+
+   This requires a stronger heuristic assumption to be made, on the√existence of
+a basis of Lg with all basis vectors having norm at most T = exp(O( n)). In the
+next section we integrate this pre-computation into the algorithm.
+
+
+                                           12
+3.2     Integrating the pre-computation into the algorithm
+In the algorithm in Sect. 3.1, we have to pre-compute ei ∈ (0, r) ∩ Z such that
+gi = g ei for all i ∈ [1, d) ∩ Z. To avoid this pre-computation, we can define a
+lattice Lx,g that depends on both g ∈ G of order r and x = g e for e ∈ (0, r) ∩ Z,
+alongside d − 2 small elements√g1 , . . . , gd−2 ∈ G. In particular, for g ∈ Z∗p = G for p
+a large n-bit prime and d = ⌈ n ⌉, we take g1 , . . . , gd−2 to be the first d − 2 primes
+that when perceived as elements of Z∗p are distinct from g and x.
+    By Lemma 3, there exists an efficient quantum algorithm that outputs a vec-
+p w ∈−C
+tor        [0,√1)d that, except for with probability 1/poly(d), is within distance
+   d/2 · 2     n
+                 of a uniformly chosen v ∈ L∗x,g /Zd , where
+                           (                                          d−2
+                                                                                   )
+                                                                      Y
+                  Lx,g =                            d
+                               (z1 , . . . , zd ) ∈ Z   x   zd−1 zd
+                                                                g           gizi = 1   ,
+                                                                      i=1
+
+for C > 0 some constant. By performing m ≥ d+4 runs of this quantum algorithm,
+we obtain m such vectors w1 , . . . , wm .
+    By Lemma 2, there is an efficient classical algorithm that, with probability at
+least 1/4, recovers a basis for a sublattice Λ of Lx,g given the vectors w1√    , . . . , wm .
+Furthermore, Λ contains all vectors in Lx,g of norm at most T = exp(O( n)).
+    Lemma 5 gives that, under Assumption 1, the lattice Lx,g       √ has a basis where
+each basis vector has norm at most exp(O(n/d)) = exp(O( n)) = T . Hence Λ
+is the full lattice Lx,g , and Lemma 2 recovers a basis B for this lattice. By the
+definition of Lx,g , we have that ve = (0, . . . , 0, 1, −e) ∈ Lx,g as x1 g −e = 1. Since
+we know a basis B for Lx,g , we can efficiently recover ve and by extension e.
+    Note furthermore that vr = (0, . . . , 0, r) ∈ Lx,g , and that we can efficiently
+recover vr and hence r. Hence, if r is unknown, we can recover r along with e at
+no additional quantum cost. This is useful in Sect. 3.3 below where r is needed.
+    We have heuristically verified that the above procedure yields a basis of Lx,g ,
+and that we can solve for the logarithm e and order r, by means of simulations.
+For n = 2048 bits, the simulations indicate that it suffices to take C ≈ 2, and that
+the success probability is close to 1 after d + 4 runs of the quantum algorithm.
+    We are now ready to summarize the above analysis in a theorem:
+                                                          √
+Theorem 1. Let p be an n-bit prime, and let d = ⌈ n ⌉. Let g ∈ Z∗p be of order r,
+and let x = g e for e ∈ (0, r) ∩ Z. As in [16, Theorem 1], let G be the gate cost of a
+quantum circuit that takes
+
+                         a, b, t, 0S      → a, b, (t + ab) mod p, 0S
+
+for a, b, t ∈ [0, p) ∩ Z and S the number of ancilla qubits required. Then, under
+Assumption 1, there is an efficient classical algorithm that, by calling a quantum
+circuit d+4 times, yields the logarithm e with probability at least 1/4. This quantum
+circuit has gate cost O(n1/2 G + n3/2 ), and it requires
+                                                    
+                                       C
+                              S+           + 8 + o(1) n
+                                     log ϕ
+
+qubits of space, for some constant C > 0 and ϕ the golden ratio.
+Proof. The proof follows from the above analysis, and from Lemma 3 where the
+gate and space costs of the quantum circuit are analyzed.                  ■
+
+
+                                                   13
+    The above theorem is specific to Z∗p for p prime since there is a notion of
+small group elements in such groups, and since such groups are extensively used
+in cryptography. As previously stated, the algorithm may be generalized to other
+Abelian groups, but for the algorithm to have an advantage over other algorithms
+in the literature there must exist a notion of small elements in the group.
+
+3.3    Notes on reducing the circuit size by pre-computation
+In contrast to the algorithm in Sect. 3.1, the algorithm in Sect. 3.2 does not require
+any pre-computation, and it does not require g to generate G.
+    These benefits come with the downside, however, of the quantum part of the
+algorithm having to exponentiate both x and g, where neither element is guaranteed
+to be small. In practice, these exponentiations constitutes a significant fraction of
+the cost of each run of the quantum part of the algorithm. In turn, this makes
+the algorithm in Sect. 3.2 somewhat less efficient than the algorithm in Sect. 3.1
+that only has to exponentiate x at the expense of pre-computing e1 , . . . , ed−1 with
+respect to g.
+    One way to overcome this issue is to let g ′ be a small element in G such that
+g ∈ ⟨g ′ ⟩ ⊆ G, and to first pre-compute eg = logg′ g quantumly. It then suffices to
+compute ex = logg′ x quantumly for each x, and to return e = ex /eg mod r. All
+but one of the d elements that are exponentiated in each run of the quantum part
+of the algorithm are then small as desired. Both the pre-computation of eg and the
+computation of ex for different x may be performed with the quantum algorithm in
+Sect. 3.2, whilst leveraging that g ′ is small when implementing the arithmetic so as
+to reduce the quantum cost. This results in an algorithm with similar performance
+and similar pre-computation as the one given in Sect. 3.1, but with the benefit of
+not requiring g to generate G.
+
+3.4    Notes on computing multiple logarithms simultaneously
+As is the case for Shor’s algorithm — see e.g. [13] and [11] — we note that our
+extension of Regev’s algorithm can be used to compute information on multiple
+discrete logarithms in each run by sampling vectors close to L∗x1 ,...,xk ,g /Zd , where
+                             (                                              d−k            k
+                                                                                                            )
+                                                                                                  z
+                                                                            Y              Y
+          Lx1 ,...,xk ,g =                            d
+                                 (z1 , . . . , zd ) ∈ Z        g   zd
+                                                                        ·         gizi ·         xi d−k+i = 1
+                                                                            i=1            i=1
+
+and xi = g ei for all i ∈ [1, k] ∩ Z, instead of sampling vectors close to L∗x,g /Zd .
+
+
+4     Practical considerations
+In this section, we discuss various practical considerations when implementing both
+Regev’s original algorithm and our extensions of his algorithm.
+
+4.1    Efficiency in implementations
+As stated in the introduction, the quantum circuit for Regev’s factoring algorithm,
+and for our extensions of it, is asymptotically smaller than the corresponding cir-
+cuits for Shor’s algorithms and the various variations thereof that are in the liter-
+ature — hereinafter referred to as the “existing algorithms”.
+
+
+                                                          14
+    Even so, for concrete problem instances of limited size, the quantum circuit for
+Regev’s algorithm, and for our extensions of it, may in practice be significantly
+larger than optimized circuits for the existing algorithms. This when using the
+space-saving arithmetic of Ragavan and Vaikuntanathan [16]. It all comes down to
+constants.
+    Furthermore, it is not clear that it is the circuit size, i.e. the gate count, that is
+the best metric whereby to compare quantum algorithms. Other relevant metrics
+include but are not limited to the circuit depth, space usage, or volume. It also
+matters what kind of large-scale fault-tolerant quantum computer one envisages,
+and what its architectural constraints are, and so forth.
+    The limiting factor for when a quantum algorithm can first conceivably be run
+on a future large-scale fault-tolerant quantum computer is arguably the cost of
+the circuit as it determines the cost per run. But if and when such computers
+become more commonly available, the overall cost across all runs required will also
+be important to take into account.
+
+
+4.1.1   What problem instances are of key interest?
+Arguably, the key reason for why there is a large interest in quantum algorithms
+for factoring integers and computing discrete logarithms is that such algorithms
+may be used to break currently widely deployed asymmetric cryptography.
+    Hence, the concrete efficiency of the aforementioned quantum algorithms with
+respect to cryptographically relevant problem instances is potentially much more
+interesting than their asymptotic efficiency. This is especially true when one con-
+siders the fact that asymmetric cryptography based on the integer factoring and
+discrete logarithm problems is being phased out. Hence, we are most likely not
+going to see much larger instances of these problems being used in the future, and
+so our focus should be on n in the range from say 2048 bits up to 4096 bits.
+
+
+4.1.2   Notes on the constant C
+In order to even begin to compare Regev’s algorithm and our extensions of it to
+the existing algorithms, the constant C needs to be fixed since it directly affects
+the circuit size and depth.
+    Our simulations√[9] show that selecting C ≈ 2 is sufficient for n = 2048 bit
+moduli when d = ⌈ n⌉ and m = d + 4 runs are performed. The success probability
+after m runs is then close to one. Ragavan and Vaikuntanathan [16, App. A]
+show, based on a heuristic assumption, that selecting C = 3 + ϵ + o(1) is sufficient
+asymptotically as n → ∞. This when using the LLL [14] lattice basis reduction
+algorithm. By instead using a better reduction algorithm such as BKZ [20], by
+increasing d and/or by increasing the number of runs m, it is sufficient to use a
+somewhat smaller C, as corroborated by our simulations.
+    It is also worth noting that performing m ≥ d+4 runs is not strictly necessary for
+our extended algorithms to work. We have only inherited this bound from Regev’s
+analysis. With sufficiently large C, it should be sufficient to perform significantly
+fewer runs, but using a larger C increases the circuit size and depth. Therefore, it
+is probably preferable to use a smaller C, and to run the quantum algorithm m ≥ d
+times.
+
+
+
+
+                                           15
+4.1.3   Notes on the choice of arithmetic
+Our extensions of Regev’s algorithm can be implemented both with Regev’s orig-
+inal arithmetic [18] and with the space-saving arithmetic of Ragavan and Vaikun-
+tanathan [16]. In Theorem 1, and in Theorem 3-4 in App. A, we express the cost
+in terms of using the space-saving arithmetic since it is asymptotically on par with
+Regev’s original arithmetic5 in terms of the circuit size, but uses less space.
+    It is however not clear that the space-saving arithmetic is better than Regev’s
+original arithmetic in practice for cryptographically relevant problem instances:
+    Regev’s original arithmetic yields a smaller circuit size, and a lower circuit
+depth, when accounting for constants, at the expense of using more space. If space
+is cheap, it may be quite competitive. Note also that most of the additional space
+required is not computational space, but rather space where quantum information
+can be stored until it is eventually needed for the uncomputation.
+
+4.1.4   Notes on optimizations
+There is a plethora of optimizations for the existing algorithms already in the
+literature, many of which can be combined.
+    Not all of these optimizations carry over to Regev’s algorithm, and less time has
+been spent on seeking to optimize Regev’s algorithm, further complicating the task
+of comparing the algorithms. The same holds true for the extensions of Regev’s
+algorithm introduced in this work.
+
+4.2     Handling error correction failures
+Quantum computers as currently envisaged are inherently noisy, necessitating the
+use of some form of quantum error correction to achieve a sufficient level of fault
+tolerance to run complex quantum algorithms.
+    The quantum error correction is parameterized so as to achieve a certain lower
+bound on the probability of all errors that arise during the run being corrected6 ,
+and hence of the output from the run being good. The higher the bound, the more
+costly the error correction.
+    For quantum algorithms that need only yield a single good output — such as
+Shor’s algorithms [5, 6, 21], and Ekerå–Håstad’s variations [2, 3, 8] thereof when not
+making tradeoffs — it may be advantageous on average to select a lower bound in
+the error correction at the expense of potentially having to re-run the algorithm if
+the output is bad. Indeed, this approach was used in recent cost estimates [10] for
+the aforementioned algorithms.
+    For Regev’s algorithm [18], and the extensions thereof introduced in this work,
+the situation is different however in that the post-processing is only guaranteed to
+succeed with probability at√least 1/4 if all of the m ≥ d+4 runs yield good outputs,
+where we recall that d = ⌈ n ⌉ so d grows fairly rapidly in n.
+    If the post-processing was to fail as soon as the output from a single bad run is
+included in the set of vectors fed to it, then — short of us being able to efficiently
+distinguish the vectors output by good runs from those output by bad runs — we
+would need to parameterize the error correction so that we have a sufficiently high
+probability of being able to efficiently construct a set of m vectors yielded by good
+runs. In turn, this would drive up the cost of the error correction. Possible options
+  5 When ignoring constant factors.
+  6 Under a set of assumptions, e.g. on how the errors arise and their correlation.
+
+
+
+
+                                               16
+for constructing such a set include but are not limited to exhausting subsets, or
+somehow efficiently filtering out good runs from bad runs via a distinguisher.
+     This being said, it turns out that Regev’s original post-processing is in fact
+relatively robust to errors. It continues to work even if a relatively large fraction of
+the vectors input to it are sampled from a different distribution — provided that
+it is still fed a sufficiently large number of vectors that are yielded by good runs of
+the quantum algorithm, and that the constant C is sufficiently large.
+     We evidence this by means of simulations [9], in which we test the behavior of
+Regev’s classical post-processing when a fraction of the vectors are yielded by bad
+runs, as simulated by sampling these vectors from the uniform distribution.
+     In this section, we further corroborate these simulations by providing an analysis
+of the post-processing in the setting where a fraction of the vectors fed to it are
+yielded by bad runs of the quantum algorithm.
+
+4.2.1   Analysis of the robustness of the post-processing
+Suppose that the post-processing algorithm is fed m vectors w1 , . . . , wm generated
+in m runs of the quantum algorithm. However, only d + 4 ≤ m1 ≤ m of these
+vectors are from good runs, and hence guaranteed to be at most a distance δ from
+L∗ /Zd . The remaining m2 = m−m1 vectors are from bad runs, and hence sampled
+from some other unknown distribution F. Suppose furthermore that we can not
+directly distinguish between vectors from good and bad runs, respectively.
+    The goal of the post-processing algorithm is to recover a basis for L. In what
+follows, we show, based on some assumptions on L and F, that the post-processing
+succeeds in recovering a basis for L.
+    However, even without these assumptions, it can be seen that at least some
+vectors from L can be recovered. We therefore begin by detailing why a single
+non-zero vector is recoverable, so as to provide partial motivation for why we deem
+the assumptions about L and F to be reasonable, and because it may be useful in
+the context of the algorithm in Sect. 3.1.
+
+Recovering a single vector from L As in the analysis of the original post-
+processing in Lemma 1, we consider a lattice L′′ generated by the rows of
+                                                            
+                     Id×d       S · w1T        ···          T
+                                                        S · wm 
+                                                              
+                                                              
+                      0m×d                 S · Im×m
+
+for S = δ −1 a scaling parameter.
+    An unknown subset of m2 of the coordinates in this lattice are dependent on
+the distribution F. Meanwhile, the other d + m1 coordinates form a lattice L′ that
+is of exactly the same form as the lattices considered in Lemma 1.
+    By Lemma 1, the first d coordinates of any non-zero vector in L′ shorter than
+Sε/2 is a vector in L, where ε = (4 det L)−1/m1 /3. Furthermore, for any vector
+in L′′ , if the first d coordinates are zero, the remaining coordinates are either 0,
+or a multiple of S which is larger than Sε/2. Therefore, the first d coordinates of
+any non-zero vector in L′′ that is shorter than Sε/2 is guaranteed to be a non-zero
+vector in L.
+    The lattice L′′ has determinant S m . By Minkowski’s  √    first theorem, we are
+guaranteed that it contains a vector of length at most m + d · S m/(m+d) .
+
+
+                                           17
+   Thus, if                 √
+                                m + d · S m/(m+d) < S · ε/2,
+which is true if S is sufficiently large, we are guaranteed that the first d coordinates
+of the shortest non-zero vector in L′′ is a vector in L.
+    Furthermore, for somewhat larger S, the first d coordinates of vectors that are
+significantly larger than the shortest non-zero vectors in L′′ are also guaranteed to
+be in L. It follows that we can recover vectors in L simply by using an efficient
+lattice reduction algorithm such as LLL [14].
+    Hence, even without making additional assumptions on L or F, we can guar-
+antee that at least some non-zero vector from L can be recovered efficiently.
+    This guarantee is almost sufficient for us to be able to solve the discrete loga-
+rithm problem with pre-processing: As in Sect. 3.1, consider the lattice
+                               (                        d−1
+                                                                   )
+                                                        Y
+                                                 d   zd      zi
+                  L = Lx = (z1 , . . . , zd ) ∈ Z x         gi = 1, ,
+                                                        i=1
+
+where we are given g, x and e1 , . . . , ed−1 such that gi = g ei , and are to compute e
+such that x = g e . For z = (z1 , . . . , zd ) a non-zero vector recovered from this
+lattice Lx , we have that
+                                         d−1
+                                         X
+                             0 = ezd +         ei zi (mod r)
+                                         i=1
+
+for r the order of g. It is then sufficient that zd does not share any large factors
+with r for the discrete logarithm e to be recoverable. To suppose that this is the
+case with noticeable probability for the recovered vector is indeed a very weak
+assumption, yet this assumption is sufficient to recover the discrete logarithm with
+pre-computation even if some runs are bad.
+    To show that the post-processing robustly succeeds in recovering a basis for L
+we do, however, require a stronger assumption on L and F.
+
+Recovering a basis for L As previously mentioned, to show that we are able
+to recover a basis for L, we need to make some assumptions on L and F.
+    Note that even if all m runs are good, we cannot guarantee that the post-
+processing succeeds in recovering a basis for L without making some additional
+assumption on L. In particular, Theorem 1 requires a specific lattice to have a
+short basis, and therefore needs to use Assumption 1. For the analysis in this
+section, we make use of a similar assumption so as to ensure that the short vectors
+in L′′ yield vectors that generate L, which in turn ensures that these vectors can
+be used to recover a basis for L.
+    To this end, we first note that if the first d coordinates of a vector u′′ ∈ L′′
+form a vector u ∈ L, the m1 coordinates of u′′ that correspond to good runs have
+absolute value at most ∥u∥ Sδ = ∥u∥. The remaining m2 coordinates are congruent
+to Su · wi modulo S, where wi is sampled from F. We do not have much control
+over the values of these m2 coordinates, but we can expect them to be small for at
+least some short vectors u.
+    To analyze the vectors in L′′ that are such that all coordinates are small, and
+such that the first d coordinates form a vector in L, we consider the sublattice
+
+
+
+
+                                           18
+of L′′ where the first d coordinates are exactly the vectors in L. This sublattice is
+thus generated by the rows of
+                                                                
+                      B      SB · w1T          ···           T
+                                                        SB · wm 
+                                                               
+                                                               
+                     0m×d                  S · Im×m
+
+where B is a basis for L. For a small vector u ∈ L, we have already seen that
+the size of the coordinates that correspond to good runs is limited. We therefore
+consider a related lattice Λ that do not contain the m1 coordinates that correspond
+to good runs. With F a d×m2 -dimensional matrix such that the columns are equal
+to the m2 vectors w ⃗ i that correspond to bad runs, we can see that this lattice Λ is
+generated by the rows of
+                                                    
+                                   B       SB · F 
+                                                    .                            (2)
+                                                    
+                                  0m2 ×d    S · Im 2
+
+    The first d coordinates of a short vector x ∈ Λ is a short vector u ∈ L. As such,
+x directly corresponds to a short vector in L′′ , where the remaining m1 coordinates
+not included in Λ have absolute value at most ∥u∥ ≤ ∥x∥. Thus, the full vector
+in L′′ is not longer than ∥x∥ (1 + m1 ). As such, the vectors in Λ of length at most T
+correspond to vectors in L′′ of length at most T (1 + m1 ).
+    By using Claim 1, we recover a set S of vectors in L′′ that generate all vectors
+in L′′ of length at most T (1 + m1 ). The relevant coordinates of these recovered
+vectors thus generate all vectors in Λ of length at most T .
+    Next, we show that the relevant coordinates of the vectors   √ in S only generate
+vectors in Λ. Each vector in S has length at most 2(d+m)/2 · d + m · T (1 + m1 ).
+Meanwhile, as previously noted, we are guaranteed that any vector in L′′ shorter
+than Sε/2 corresponds to a vector in L, and therefore to a vector in Λ.
+    Thus, if
+                                  √
+                        2(d+m)/2 · d + m · T (1 + m1 ) < Sε/2                      (3)
+
+the relevant coordinates of the vectors in S generate a sublattice of Λ, and we can
+thus recover a basis for this sublattice.
+    In summary, if (3) holds, we can recover vectors in L′′ that are such that the rel-
+evant coordinates generate a sublattice of Λ. Any vector x ∈ Λ such that ∥x∥ ≤ T
+is guaranteed to be in this sublattice. Furthermore, as the first d coordinates of
+any vector in Λ is a vector in L, we can easily recover a related sublattice of L
+from the recovered vectors in L′′ . Thus, in order for this process to recover a basis
+for L, it is sufficient that the vectors in Λ of length at most T are guaranteed to
+contain sufficient information about L.
+
+Required properties of Λ Proving that the vectors in Λ shorter than T are suf-
+ficient to recover a basis for L seems hard, and would presumably require significant
+assumptions to be made regarding both L and F.
+     We therefore instead choose to simply assume that this is the case for lattices Λ
+of this form with some noticeable probability p over the randomness in F. This
+
+
+                                           19
+is equivalent to assuming that Λ has a basis where all information about L is
+contained in short basis vectors.
+    To determine for which bound T it is reasonable to assume that such a basis
+exists, we note that Λ has determinant S m2 det(L). Therefore, by Minkowski’s first
+theorem we are guaranteed that Λ contains a vector of length at most
+                       p
+                         m2 + d · S m2 /(m2 +d) det(L)1/(m2 +d) .
+
+    A random lattice is expected to have a basis where each basis vector is only
+slightly longer than the shortest vector in the lattice. This leads us to make the
+following concrete assumption:
+Assumption 2. Let B be a basis for L, F > 0 be a constant and F be a d × m2 -
+dimensional matrix where each of the m2 columns are sampled from F. Then, with
+probability p the lattice Λ generated by the rows of
+                                                    
+                                   B           SB · F 
+                                                        
+                                                        
+                                  0m2 ×d        S · Im 2
+
+has a basis such that each
+                       √ basis vector with non-zero values in its first d coordinates
+is shorter than T = F m2 + d · S m2 /(m2 +d) det(L)1/(m2 +d) .
+    To further motivate this assumption, we note that if L is a nice lattice, we would
+expect it to contain many short vectors, and we would expect these short vectors to
+span the full lattice L. We furthermore expect many of these short vectors in L to
+have an inner product far from an integer with the columns of F that are sampled
+from F. These short vectors in L therefore do not correspond to short vectors
+in Λ. A small fraction of the vectors may however have an inner product close to
+an integer with each of the columns of F .
+    A potential risk is hence that the distribution F may somehow be biased so
+as to cause some specific part of L to be more likely to have an inner product
+far from an integer with vectors sampled from F, and therefore to be more likely
+to correspond to large vectors in Λ leading to only a part of the lattice L being
+recovered. If no such bias exists, it is, however, natural to assume that the short
+vectors in L that have an inner product close to an integer with each of the columns
+of F still span the full lattice L.
+    It is hence plausible that Assumption 2 holds with probability close to 1 if the
+lattice L and the distribution F are nice. In particular, if there exists a short basis
+for L, and if F is the uniform distribution, we expect Assumption 2 to hold with
+probability p close to 1, and this is also corroborated by our simulations.
+    Theorem 2 below follows from this assumption and the above analysis.
+Theorem 2 (Robust post-processing derived from Theorem 1.1 in [18]). Let L be
+                                          2
+a d-dimensional lattice with det L < 2d , and let m, m1 and √ m2 , and the vectors
+w1 , . . . , wm , be as above. Furthermore, let δ = 2−Cd · d/2 and S = δ −1 for
+constant
+                                       
+                                  5   m        m2 
+                            C>      +       1+       + o(1).
+                                  2 2d           d
+   Then, under Assumption 2, there is an efficient classical algorithm that, with
+probability at least p/4 over the choice of the wi , recovers a basis for L.
+
+
+                                           20
+Proof. The theorem follows from the above analysis, where the success probability
+bound of p/4 is obtained by combining the probability p from Assumption 2 with the
+bound of 1/4 from Lemma 1. Furthermore, the bound on C is obtained by inserting
+the values of ε and T in (3) and taking logarithms, leading to the requirement that
+                         Cdm2 + log(det L)               log(det L)
+           (d + m)/2 +                     + o(d) < Cd −            .
+                             m2 + d                          m1
+                              2
+   By using that det(L) < 2d and m1 ≥ d, this may be simplified to
+                           5   m   Cm2
+                             +   +     + o(1) < C,
+                           2 2d m2 + d
+leading to the requirement
+                                         
+                                  5   m             m2 
+                         C>         +          1+        + o(1)
+                                  2 2d              d
+and so the theorem follows.                                                        ■
+
+
+Acknowledgments
+We are grateful to Johan Håstad, Oded Regev, and the participants of the Quan-
+tum Cryptanalysis seminar at Schloss Dagstuhl, for useful comments. Martin Ekerå
+thanks Schloss Dagstuhl and the organizers of the seminar for creating an environ-
+ment where scientific progress is facilitated. Funding and support for this work was
+provided by the Swedish NCSA that is a part of the Swedish Armed Forces.
+
+
+References
+ [1] D. Coppersmith: An approximate Fourier transform useful in quantum factor-
+     ing. ArXiv quant-ph/0201067 (2002). (Also IBM Research Report RC 19642.)
+ [2] M. Ekerå and J. Håstad: Quantum algorithms for computing short discrete
+     logarithms and factoring RSA integers. In: PQCrypto 2017. Lecture Notes in
+     Computer Science (LNCS) 10346 (2017), 347–363.
+ [3] M. Ekerå: On post-processing in the quantum algorithm for computing short
+     discrete logarithms. Des. Codes Cryptogr. 88(11) (2020), 2313–2335.
+ [4] M. Ekerå: Quantum algorithms for computing general discrete logarithms and
+     orders with tradeoffs. J. Math. Cryptol. 15(1) (2021), 359–407.
+ [5] M. Ekerå: On completely factoring any integer efficiently in a single run of an
+     order-finding algorithm, Quantum Inf. Proc. 20:205 (2021), 1–14.
+ [6] M. Ekerå: On the success probability of quantum order finding. ArXiv
+     2201.07791v2 (2022).
+ [7] M. Ekerå: Revisiting Shor’s quantum algorithm for computing general discrete
+     logarithms. ArXiv 1905.09084v3 (2019–2023).
+ [8] M. Ekerå: On the success probability of the quantum algorithm for the short
+     DLP. ArXiv 2309.01754v1 (2023).
+
+                                          21
+ [9] M. Ekerå and J. Gärtner: Simulating Regev’s quantum factoring algorithm.
+     GitHub repository ekera/regevnum (2023).
+[10] C. Gidney and M. Ekerå: How to factor 2048 bit RSA integers in 8 hours using
+     20 million noisy qubits. Quantum 5, 433 (2021).
+[11] M. Hhan, T. Yamakawa and A. Yun: Quantum Complexity for Discrete Log-
+     arithms and Related Problems. ArXiv 2307.03065 (2023).
+[12] B.S. Kaliski, Jr.: A Quantum “Magic Box” for the Discrete Logarithm Prob-
+     lem. IACR ePrint 2017/745 (2017).
+[13] D. Litinski: How to compute a 256-bit elliptic curve private key with only 50
+     million Toffoli gates. ArXiv 2306.08585v1 (2023).
+
+[14] A.K. Lenstra, H.W. Lenstra and L. Lovász: Factoring polynomials with ratio-
+     nal coefficients. Math. Ann. 261 (1982), 515–534.
+[15] G.L. Miller: Riemann’s hypothesis and tests for primality. J. Comput. Syst.
+     Sci. 13(3) (1976), 300–317.
+
+[16] S. Ragavan and V. Vaikuntanathan: Optimizing Space in Regev’s Factoring
+     Algorithm. ArXiv 2310.00899v1 (2023).
+[17] O. Regev: On lattices, learning with errors, random linear codes, and cryp-
+     tography. J. ACM 56(6):34 (2009), 1–40.
+
+[18] O. Regev: An Efficient Quantum Factoring Algorithm. ArXiv 2308.06572v2
+     (2023).
+[19] J.-P. Seifert: Using Fewer Qubits in Shor’s Factorization Algorithm via Si-
+     multaneous Diophantine Approximation. In: CT-RSA 2001. Lecture Notes in
+     Computer Science (LNCS) 2020 (2001), 319–327.
+
+[20] C.-P. Schnorr and M. Euchner: Lattice basis reduction: Improved practical
+     algorithms and solving subset sum problems. Math. Program. 66(1–3) (1994),
+     181–199.
+[21] P.W. Shor: Algorithms for Quantum Computation: Discrete Logarithms and
+     Factoring. In: Proceedings of the 35th Annual Symposium on Foundations of
+     Computer Science, SFCS ’94 (1994), 124–134.
+[22] P.W. Shor: Polynomial-time algorithms for prime factorization and discrete
+     logarithms on a quantum computer, SIAM J. Comput. 26(5) (1997), 1484–
+     1509.
+
+
+A     Order finding and factoring
+Let G be a finite Abelian group and let g ∈ G. Suppose that our goal is to find the
+order r of g. Let g1 , . . . , gd−1 be d − 1 small elements in G.
+    In particular,
+           √       for G = Z∗N , for N a positive n-bit integer that is coprime to the
+first d = ⌈ n ⌉ primes, we take g1 , . . . , gd−1 to be the first d − 1 primes that when
+perceived as elements of Z∗N are distinct from g.
+
+
+
+                                          22
+   By Lemma 3, there exists an efficient quantum algorithm that outputs ap  vector
+w ∈√[0, 1)d that, except for with probability 1/poly(d), is within distance d/2 ·
+2−C n of a uniformly chosen v ∈ L∗g /Zd , where
+                            (                                       d−1
+                                                                                 )
+                                                                    Y
+                     Lg =       (z1 , . . . , zd ) ∈ Z d
+                                                           g   zd
+                                                                          gizi = 1   ,
+                                                                    i=1
+
+for C > 0 some constant. By performing m ≥ d+4 runs of this quantum algorithm,
+we obtain m such vectors w1 , . . . , wm .
+     By Lemma 2, there is an efficient classical algorithm that, with probability at
+least 1/4, recovers a basis for a sublattice Λ of Lg given the vectors w1 ,√. . . , wm .
+This sublattice Λ contains all vectors in Lg of norm at most T = exp(O( n)).
+     Under Assumption 1, there exist a basis of Lg with all basis vector having norm
+at most T . It then follows that Λ = Lg , and Lemma 2 thus recovers a basis B
+for Lg . Furthermore, vr = (0, . . . , 0, r) is in Lg , and by definition r is the least
+positive integer such that g r = 1. Therefore, vr is the shortest vector in Lg that
+is non-zero only in the last coordinate. Since we know a basis B for Lg , we can
+efficiently recover vr and by extension r.
+     We have heuristically verified that the above procedure yields a basis of Lg , and
+that we can solve for the order r, by means of simulations. For n = 2048 bits, the
+simulations indicate that it suffices to take C ≈ 2, and that the success probability
+is close to one after d + 4 runs of the quantum algorithm.
+     We are now ready to summarize the above analysis in a theorem:
+                                                                √
+Theorem 3. Let N be a positive n-bit integer and let d = ⌈ n ⌉. Let g ∈ Z∗N . As
+in [16, Theorem 1], let G be the gate cost of a quantum circuit that takes
+
+                       a, b, t, 0S     → a, b, (t + ab) mod N, 0S
+
+for a, b, t ∈ [0, N ) ∩ Z and S the number of ancilla qubits required. Then, under
+Assumption 1, there is an efficient classical algorithm that, by calling a quantum
+circuit d+4 times, yields the order r of g with probability at least 1/4. This quantum
+circuit has gate cost O(n1/2 G + n3/2 ), and it requires
+                                                    
+                                      C
+                              S+           + 8 + o(1) n
+                                    log ϕ
+
+qubits of space, for some constant C > 0 and ϕ the golden ratio.
+Proof. The proof follows from the above analysis, and from Lemma 3 where the
+gate and space costs of the quantum circuit are analyzed.
+   Note that if N is divisible by one or more of the first d primes, then these prime
+powers may be factored out before quantum order finding is performed.
+   More specifically, order finding may be performed efficiently classically with
+respect to these prime powers, after which the partial results may be efficiently
+combined classically to yield the order r of g.                                     ■
+
+
+A.1     Factoring N via order finding in Z∗N
+Let N be a positive composite integer. Suppose that we pick g uniformly at random
+from Z∗N and compute the order r of g by using the algorithm in App. A.
+
+
+                                                  23
+    Then, with very high probability — that is lower-bounded and shown to tend to
+one asymptotically in [5,6] — we can completely factor N given r via the procedure
+in [5]. This provides an alternative to Regev’s factoring algorithm, that yields the
+complete factorization of N in d + 4 runs by factoring via order finding, at the
+expense of making a stronger heuristic assumption, and at the expense of including
+one element that is not small in the product that is computed quantumly.
+
+A.2     Finding the order of an Abelian group
+Let G be a finite Abelian group. Suppose that our goal is to find the order #G of G.
+Let g1 , . . . , gd be d small elements in G. In particular,
+                                                        √       for G = Z∗N , for N a positive
+n-bit integer that is coprime to the first d = ⌈ n ⌉ primes, we take g1 , . . . , gd ∈ Z∗N
+to be the first d primes perceived as elements of Z∗N .
+    By Lemma 3, there exists an efficient quantum algorithm that outputs a vec-
+p w ∈−C
+tor            [0,√1)d that, except for with probability 1/poly(d), is within distance
+  d/2 · 2          n
+                     of a uniformly chosen v ∈ L∗ /Zd , where
+                                 (                        d
+                                                                    )
+                                                          Y
+                            L = (z1 , . . . , zd ) ∈ Zd     gizi = 1 ,
+                                                     i=1
+
+for C > 0 some constant. By performing m ≥ d+4 runs of this quantum algorithm,
+we obtain m such vectors w1 , . . . , wm . By Lemma 2, there is an efficient classical
+algorithm that, with probability at least 1/4, recovers a basis B of a sublattice Λ
+of Lg when given the vectors w1 , . . . , wm . Furthermore, √      the sublattice Λ of L
+contains all vectors in L of norm at most T = exp(O( n)).
+    Under Assumption 1 there exist a basis for L with all basis vectors having norm
+at most T . It then follows that Λ = L, and B is thus a basis for L. Given B, we
+can efficiently compute det L = | det B |. By Lemma 4 and Assumption 1, we then
+have that #Z∗N = φ(N ) = det L, where φ is Euler’s totient function.
+    We have heuristically verified that the above procedure yields a basis of L, and
+that we can solve for φ(N ), by means of simulations. For n = 2048 bits, the
+simulations indicate that it suffices to take C ≈ 2, and that the success probability
+is close to one after d + 4 runs of the quantum algorithm.
+    We are now ready to summarize the above analysis in a theorem:
+                                                                                    √
+Theorem 4. Let N be a positive n-bit integer coprime to the first d = ⌈ n ⌉
+primes, and let g1 , . . . , gd ∈ Z∗N be the first d primes perceived as elements of Z∗N .
+As in [16, Theorem 1], let G be the gate cost of a quantum circuit that takes
+
+                         a, b, t, 0S   → a, b, (t + ab) mod N, 0S
+
+for a, b, t ∈ [0, N ) ∩ Z and S the number of ancilla qubits required. Then, under
+Assumption 1, there is an efficient classical algorithm that, by calling a quantum
+circuit d + 4 times, yields φ(N ) with probability at least 1/4. This quantum circuit
+has gate cost O(n1/2 G + n3/2 ), and it requires
+                                                    
+                                      C
+                              S+          + 8 + o(1) n
+                                    log ϕ
+qubits of space, for some constant C > 0 and ϕ the golden ratio.
+Proof. The proof follows from the above analysis, and from Lemma 3 where the
+gate and space costs of the quantum circuit are analyzed.                  ■
+
+
+                                             24
+    Note that if N is divisible by one or more of the first d primes in Theorem 4
+above, then these prime powers may be factored out before calling the quantum
+algorithm. The value of φ may then be efficiently computed classically with respect
+to these prime powers, and all partial results efficiently combined classically to
+yield φ(N ). The restriction imposed in Theorem 4 that N must be coprime to the
+first d primes does hence not imply a loss of generality.
+
+A.3    Factoring N by finding φ(N ) = #Z∗N
+Given φ(N ), we may use a randomized version of Miller’s algorithm [15] to factor N
+completely as explained in [5]. This provides yet another alternative for factoring
+via order finding that yields the complete factorization of N in d + 4 runs at the
+expense of making a stronger heuristic assumption.
+    A clear advantage of this alternative compared to that in App. A.1 is that all
+elements that are exponentiated quantumly are small, bringing the quantum cost
+essentially on par with that of Regev’s factoring algorithm [18].
+    In fact, the quantum cost is slightly lower than than of Regev’s algorithm:
+Whereas Regev’s algorithm exponentiates the squares of the first d primes, the
+above algorithm exponentiates the first d primes, so the numbers that are expo-
+nentiated are slightly smaller.
+
+A.4    Notes on generalizations
+The above theorems are for algorithms specific to Z∗N since there is a notion of
+small group elements in Z∗N , and since Z∗N is extensively used in cryptography. As
+previously stated, the algorithms may be generalized to other Abelian groups, but
+for the algorithms to have an advantage over other algorithms in the literature
+there must exist a notion of small elements in the group.
+
+
+
+
+                                        25
+

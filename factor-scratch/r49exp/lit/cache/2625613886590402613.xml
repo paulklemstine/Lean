@@ -1,0 +1,385 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/B0a2JbLnFSeiFUEK5k1sQW3800I</id>
+  <title>arXiv Query: search_query=abs:"NFS" AND abs:"relations" AND abs:"distribution"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-03T22:06:23Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22NFS%22+AND+(abs:%22relations%22+AND+abs:%22distribution%22)&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>15</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2602.20480v1</id>
+    <title>VINA: Variational Invertible Neural Architectures</title>
+    <updated>2026-02-24T02:16:44Z</updated>
+    <link href="https://arxiv.org/abs/2602.20480v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.20480v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The distinctive architectural features of normalizing flows (NFs), notably bijectivity and tractable Jacobians, make them well-suited for generative modeling. Invertible neural networks (INNs) build on these principles to address supervised inverse problems, enabling direct modeling of both forward and inverse mappings. In this paper, we revisit these architectures from both theoretical and practical perspectives and address a key gap in the literature: the lack of theoretical guarantees on approximation quality under realistic assumptions, whether for posterior inference in INNs or for generative modeling with NFs.
+  We introduce a unified framework for INNs and NFs based on variational unsupervised loss functions, inspired by analogous formulations in related areas such as generative adversarial networks (GANs) and the Precision-Recall divergence for training normalizing flows. Within this framework, we derive theoretical performance guarantees, quantifying posterior accuracy for INNs and distributional accuracy for NFs, under assumptions that are weaker and more practically realistic than those used in prior work.
+  Building on these theoretical results, we conduct extensive case studies to distill general design principles and practical guidelines. We conclude by demonstrating the effectiveness of our approach on a realistic ocean-acoustic inversion problem.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-24T02:16:44Z</published>
+    <arxiv:comment>57 pages, 11 figures, 5 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Shubhanshu Shekhar</name>
+    </author>
+    <author>
+      <name>Mohammad Javad Khojasteh</name>
+    </author>
+    <author>
+      <name>Ananya Acharya</name>
+    </author>
+    <author>
+      <name>Tony Tohme</name>
+    </author>
+    <author>
+      <name>Kamal Youcef-Toumi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02345v1</id>
+    <title>Reducing normalizing flow complexity for MCMC preconditioning</title>
+    <updated>2025-11-04T08:08:00Z</updated>
+    <link href="https://arxiv.org/abs/2511.02345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Preconditioning is a key component of MCMC algorithms that improves sampling efficiency by facilitating exploration of geometrically complex target distributions through an invertible map. While linear preconditioners are often sufficient for moderately complex target distributions, recent work has explored nonlinear preconditioning with invertible neural networks as components of normalizing flows (NFs). However, empirical and theoretical studies show that overparameterized NF preconditioners can degrade sampling efficiency and fit quality. Moreover, existing NF-based approaches do not adapt their architectures to the target distribution. Related work outside of MCMC similarly finds that suitably parameterized NFs can achieve comparable or superior performance with substantially less training time or data. We propose a factorized preconditioning architecture that reduces NF complexity by combining a linear component with a conditional NF, improving adaptability to target geometry. The linear preconditioner is applied to dimensions that are approximately Gaussian, as estimated from warmup samples, while the conditional NF models more complex dimensions. Our method yields significantly better tail samples on two complex synthetic distributions and consistently better performance on a sparse logistic regression posterior across varying likelihood and prior strengths. It also achieves higher effective sample sizes on hierarchical Bayesian model posteriors with weak likelihoods and strong funnel geometries. This approach is particularly relevant for hierarchical Bayesian model analyses with limited data and could inform current theoretical and software strides in neural MCMC design.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T08:08:00Z</published>
+    <arxiv:comment>22 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>David Nabergoj</name>
+    </author>
+    <author>
+      <name>Erik Štrumbelj</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1004.3847v2</id>
+    <title>Nuclear forward scattering in particulate matter: dependence of lineshape on particle size distribution</title>
+    <updated>2010-12-14T06:05:23Z</updated>
+    <link href="https://arxiv.org/abs/1004.3847v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1004.3847v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In synchrotron Moessbauer spectroscopy, the nuclear exciton polariton manifests itself in the lineshape of the spectra of nuclear forward scattering (NFS) Fourier-transformed from time domain to frequency domain. This lineshape is generally described by the convolution of two intensity factors. One of them is Lorentzian related to free decay. We derived the expressions for the second factor related to Frenkel exciton polariton effects at propagation of synchrotron radiation in Moessbauer media. Parameters of this Frenkelian shape depend on the spatial configuration of Moessbauer media. In a layer of uniform thickness, this factor is found to be a simple hypergeometric function. Next, we consider the particles spread over a 2D surface or diluted in non-Moessbauer media to exclude an overlap of ray shadows by different particles. Deconvolving the purely polaritonic component of linewidths is suggested as a simple procedure sharpening the experimental NFS spectra in frequency domain. The lineshapes in these sharpened spectra are theoretically expressed via the parameters of the particle size distributions (PSD). Then, these parameters are determined through least-squares fitting of the line shapes.</summary>
+    <category term="cond-mat.other" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-04-22T06:59:34Z</published>
+    <arxiv:comment>13 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.other"/>
+    <author>
+      <name>A. I. Rykov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.04498v1</id>
+    <title>Generative Planning with Fast Collision Checks for High Speed Navigation</title>
+    <updated>2024-05-07T17:14:42Z</updated>
+    <link href="https://arxiv.org/abs/2405.04498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.04498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reasoning about large numbers of diverse plans to achieve high speed navigation in cluttered environments remains a challenge for robotic systems even in the case of perfect perceptual information. Often, this is tackled by methods that iteratively optimize around a prior seeded trajectory and consequently restrict to local optima. We present a novel planning method using normalizing flows (NFs) to encode expert-styled motion primitives. We also present an accelerated collision checking framework that enables rejecting samples from the prior distribution before running them through the NF model for rapid sampling of collision-free trajectories. The choice of an NF as the generator permits a flexible way to encode diverse multi-modal behavior distributions while maintaining a smooth relation to the input space which allows approximating collision checks on NF inputs rather than outputs. We show comparable performance to model predictive path integral control in random cluttered environments and improved exit rates in a cul-de-sac environment. We conclude by discussing our plans for future work to improve both safety and performance of our controller.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-07T17:14:42Z</published>
+    <arxiv:comment>Presented at Agile Robotics ICRA 2024 workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Craig Knuth</name>
+    </author>
+    <author>
+      <name>Cora Dimmig</name>
+    </author>
+    <author>
+      <name>Brian Bittner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.04216v1</id>
+    <title>Normalizing Flow to Augmented Posterior: Conditional Density Estimation with Interpretable Dimension Reduction for High Dimensional Data</title>
+    <updated>2025-07-06T02:58:52Z</updated>
+    <link href="https://arxiv.org/abs/2507.04216v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.04216v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The conditional density characterizes the distribution of a response variable $y$ given other predictor $x$, and plays a key role in many statistical tasks, including classification and outlier detection. Although there has been abundant work on the problem of Conditional Density Estimation (CDE) for a low-dimensional response in the presence of a high-dimensional predictor, little work has been done for a high-dimensional response such as images. The promising performance of normalizing flow (NF) neural networks in unconditional density estimation acts a motivating starting point. In this work, we extend NF neural networks when external $x$ is present. Specifically, they use the NF to parameterize a one-to-one transform between a high-dimensional $y$ and a latent $z$ that comprises two components \([z_P,z_N]\). The $z_P$ component is a low-dimensional subvector obtained from the posterior distribution of an elementary predictive model for $x$, such as logistic/linear regression. The $z_N$ component is a high-dimensional independent Gaussian vector, which explains the variations in $y$ not or less related to $x$. Unlike existing CDE methods, the proposed approach, coined Augmented Posterior CDE (AP-CDE), only requires a simple modification on the common normalizing flow framework, while significantly improving the interpretation of the latent component, since $z_P$ represents a supervised dimension reduction. In image analytics applications, AP-CDE shows good separation of $x$-related variations due to factors such as lighting condition and subject id, from the other random variations. Further, the experiments show that an unconditional NF neural network, based on an unsupervised model of $z$, such as Gaussian mixture, fails to generate interpretable results.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-06T02:58:52Z</published>
+    <arxiv:comment>25 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Cheng Zeng</name>
+    </author>
+    <author>
+      <name>George Michailidis</name>
+    </author>
+    <author>
+      <name>Hitoshi Iyatomi</name>
+    </author>
+    <author>
+      <name>Leo L Duan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.12672v1</id>
+    <title>Out-of-Distribution Detection of Melanoma using Normalizing Flows</title>
+    <updated>2021-03-23T16:47:19Z</updated>
+    <link href="https://arxiv.org/abs/2103.12672v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.12672v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative modelling has been a topic at the forefront of machine learning research for a substantial amount of time. With the recent success in the field of machine learning, especially in deep learning, there has been an increased interest in explainable and interpretable machine learning. The ability to model distributions and provide insight in the density estimation and exact data likelihood is an example of such a feature. Normalizing Flows (NFs), a relatively new research field of generative modelling, has received substantial attention since it is able to do exactly this at a relatively low cost whilst enabling competitive generative results. While the generative abilities of NFs are typically explored, we focus on exploring the data distribution modelling for Out-of-Distribution (OOD) detection. Using one of the state-of-the-art NF models, GLOW, we attempt to detect OOD examples in the ISIC dataset. We notice that this model under performs in conform related research. To improve the OOD detection, we explore the masking methods to inhibit co-adaptation of the coupling layers however find no substantial improvement. Furthermore, we utilize Wavelet Flow which uses wavelets that can filter particular frequency components, thus simplifying the modeling process to data-driven conditional wavelet coefficients instead of complete images. This enables us to efficiently model larger resolution images in the hopes that it would capture more relevant features for OOD. The paper that introduced Wavelet Flow mainly focuses on its ability of sampling high resolution images and did not treat OOD detection. We present the results and propose several ideas for improvement such as controlling frequency components, using different wavelets and using other state-of-the-art NF architectures.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-23T16:47:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>M. M. A. Valiuddin</name>
+    </author>
+    <author>
+      <name>C. G. A. Viviers</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.09008v1</id>
+    <title>A Flow-Based Neural Network for Time Domain Speech Enhancement</title>
+    <updated>2021-06-16T17:56:40Z</updated>
+    <link href="https://arxiv.org/abs/2106.09008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.09008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Speech enhancement involves the distinction of a target speech signal from an intrusive background. Although generative approaches using Variational Autoencoders or Generative Adversarial Networks (GANs) have increasingly been used in recent years, normalizing flow (NF) based systems are still scarse, despite their success in related fields. Thus, in this paper we propose a NF framework to directly model the enhancement process by density estimation of clean speech utterances conditioned on their noisy counterpart. The WaveGlow model from speech synthesis is adapted to enable direct enhancement of noisy utterances in time domain. In addition, we demonstrate that nonlinear input companding benefits the model performance by equalizing the distribution of input samples. Experimental evaluation on a publicly available dataset shows comparable results to current state-of-the-art GAN-based approaches, while surpassing the chosen baselines using objective evaluation metrics.</summary>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-16T17:56:40Z</published>
+    <arxiv:comment>Accepted to ICASSP 2021</arxiv:comment>
+    <arxiv:primary_category term="eess.AS"/>
+    <author>
+      <name>Martin Strauss</name>
+    </author>
+    <author>
+      <name>Bernd Edler</name>
+    </author>
+    <arxiv:doi>10.1109/ICASSP39728.2021.9413999</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ICASSP39728.2021.9413999" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-lat/0512018v1</id>
+    <title>String breaking</title>
+    <updated>2005-12-14T13:23:59Z</updated>
+    <link href="https://arxiv.org/abs/hep-lat/0512018v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-lat/0512018v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We numerically investigate the transition of the static quark-antiquark string into a static-light meson-antimeson system. Improving noise reduction techniques, we are able to resolve the signature of string breaking dynamics for Nf=2 lattice QCD at zero temperature. We discuss the lattice techniques used and present results on energy levels and mixing angle of the static two-state system. We visualize the action density distribution in the region of string breaking as a function of the static colour source-antisource separation. The results can be related to properties of quarkonium systems.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2005-12-14T13:23:59Z</published>
+    <arxiv:comment>8 pages, Talk given at the Workshop on Computational Hadron Physics, Nicosia, Cyprus, 14--17 September 2005</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <arxiv:journal_ref>Nucl.Phys.Proc.Suppl. 153 (2006) 9-16</arxiv:journal_ref>
+    <author>
+      <name>Gunnar S Bali</name>
+    </author>
+    <author>
+      <name>Thomas Dussel</name>
+    </author>
+    <author>
+      <name>Thomas Lippert</name>
+    </author>
+    <author>
+      <name>Hartmut Neff</name>
+    </author>
+    <author>
+      <name>Zdravko Prkacin</name>
+    </author>
+    <author>
+      <name>Klaus Schilling</name>
+    </author>
+    <arxiv:doi>10.1016/j.nuclphysbps.2006.01.016</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nuclphysbps.2006.01.016" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.06967v1</id>
+    <title>A Hierarchy of Normalizing Flows for Modelling the Galaxy-Halo Relationship</title>
+    <updated>2023-07-13T10:05:13Z</updated>
+    <link href="https://arxiv.org/abs/2307.06967v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.06967v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Using a large sample of galaxies taken from the Cosmology and Astrophysics with MachinE Learning Simulations (CAMELS) project, a suite of hydrodynamic simulations varying both cosmological and astrophysical parameters, we train a normalizing flow (NF) to map the probability of various galaxy and halo properties conditioned on astrophysical and cosmological parameters. By leveraging the learnt conditional relationships we can explore a wide range of interesting questions, whilst enabling simple marginalisation over nuisance parameters. We demonstrate how the model can be used as a generative model for arbitrary values of our conditional parameters; we generate halo masses and matched galaxy properties, and produce realisations of the halo mass function as well as a number of galaxy scaling relations and distribution functions. The model represents a unique and flexible approach to modelling the galaxy-halo relationship.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-13T10:05:13Z</published>
+    <arxiv:comment>8 pages, 2 figures, accepted for ICML 2023 Workshop on Machine Learning for Astrophysics</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Christopher C. Lovell</name>
+    </author>
+    <author>
+      <name>Sultan Hassan</name>
+    </author>
+    <author>
+      <name>Daniel Anglés-Alcázar</name>
+    </author>
+    <author>
+      <name>Greg Bryan</name>
+    </author>
+    <author>
+      <name>Giulio Fabbian</name>
+    </author>
+    <author>
+      <name>Shy Genel</name>
+    </author>
+    <author>
+      <name>ChangHoon Hahn</name>
+    </author>
+    <author>
+      <name>Kartheik Iyer</name>
+    </author>
+    <author>
+      <name>James Kwon</name>
+    </author>
+    <author>
+      <name>Natalí de Santi</name>
+    </author>
+    <author>
+      <name>Francisco Villaescusa-Navarro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0805.1194v1</id>
+    <title>Intersecting Solitons, Amoeba and Tropical Geometry</title>
+    <updated>2008-05-08T16:43:53Z</updated>
+    <link href="https://arxiv.org/abs/0805.1194v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0805.1194v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We study generic intersection (or web) of vortices with instantons inside, which is a 1/4 BPS state in the Higgs phase of five-dimensional N=1 supersymmetric U(Nc) gauge theory on R_t \times (C^\ast)^2 \simeq R^{2,1} \times T^2 with Nf=Nc Higgs scalars in the fundamental representation. In the case of the Abelian-Higgs model (Nf=Nc=1), the intersecting vortex sheets can be beautifully understood in a mathematical framework of amoeba and tropical geometry, and we propose a dictionary relating solitons and gauge theory to amoeba and tropical geometry. A projective shape of vortex sheets is described by the amoeba. Vortex charge density is uniformly distributed among vortex sheets, and negative contribution to instanton charge density is understood as the complex Monge-Ampere measure with respect to a plurisubharmonic function on (C^\ast)^2. The Wilson loops in T^2 are related with derivatives of the Ronkin function. The general form of the Kahler potential and the asymptotic metric of the moduli space of a vortex loop are obtained as a by-product. Our discussion works generally in non-Abelian gauge theories, which suggests a non-Abelian generalization of the amoeba and tropical geometry.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-05-08T16:43:53Z</published>
+    <arxiv:comment>39 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <arxiv:journal_ref>Phys.Rev.D78:105004,2008</arxiv:journal_ref>
+    <author>
+      <name>Toshiaki Fujimori</name>
+    </author>
+    <author>
+      <name>Muneto Nitta</name>
+    </author>
+    <author>
+      <name>Kazutoshi Ohta</name>
+    </author>
+    <author>
+      <name>Norisuke Sakai</name>
+    </author>
+    <author>
+      <name>Masahito Yamazaki</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.78.105004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.78.105004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.05180v2</id>
+    <title>An Introduction to Deep Generative Modeling</title>
+    <updated>2021-04-12T01:13:56Z</updated>
+    <link href="https://arxiv.org/abs/2103.05180v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.05180v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep generative models (DGM) are neural networks with many hidden layers trained to approximate complicated, high-dimensional probability distributions using a large number of samples. When trained successfully, we can use the DGMs to estimate the likelihood of each observation and to create new samples from the underlying distribution. Developing DGMs has become one of the most hotly researched fields in artificial intelligence in recent years. The literature on DGMs has become vast and is growing rapidly. Some advances have even reached the public sphere, for example, the recent successes in generating realistic-looking images, voices, or movies; so-called deep fakes. Despite these successes, several mathematical and practical issues limit the broader use of DGMs: given a specific dataset, it remains challenging to design and train a DGM and even more challenging to find out why a particular model is or is not effective. To help advance the theoretical understanding of DGMs, we introduce DGMs and provide a concise mathematical framework for modeling the three most popular approaches: normalizing flows (NF), variational autoencoders (VAE), and generative adversarial networks (GAN). We illustrate the advantages and disadvantages of these basic approaches using numerical experiments. Our goal is to enable and motivate the reader to contribute to this proliferating research area. Our presentation also emphasizes relations between generative modeling and optimal transport.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-09T02:19:06Z</published>
+    <arxiv:comment>25 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Lars Ruthotto</name>
+    </author>
+    <author>
+      <name>Eldad Haber</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-ph/0107295v3</id>
+    <title>BLM scale for the pion transition form factor</title>
+    <updated>2002-02-26T20:18:55Z</updated>
+    <link href="https://arxiv.org/abs/hep-ph/0107295v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-ph/0107295v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The NLO Brodsky-Lepage-Mackenzie (BLM) scale for the pion transition form factor has been determined. To achieve that, a consistent calculation up to nf-proportional NNLO contributions to both the hard-scattering amplitude and the perturbatively calculable part of the pion distribution amplitude has been performed. By combining and matching the results obtained for these two amplitudes, a proper cancellation of collinear singularities has been established and the gamma5 ambiguity problem (related to the use of the dimensional regularization method) has been resolved by using the naive-gamma5 as well as the 't Hooft-Veltman (HV) schemes. It has been demonstrated that the prediction for the pion transition form factor is independent of the factorization scale muF at every order in the strong coupling constant, making it possible to use the simplest choice muF^2=Q^2 at the intermediate steps of the calculation. Assuming the pion asymptotic distribution amplitude and working in the \bar{MS} scheme, we have found the BLM scale to be muR^2=muBLM^2 ~ Q^2/9. Based on the same distribution, the complete NLO prediction for the pion transition form factor has been calculated in the alphaV definition of the QCD coupling renormalized at muR^2=muV^2 = e^{5/3} muBLM^2 ~ Q^2/2. It is in good agreement with the presently available experimental data.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-07-30T00:50:30Z</published>
+    <arxiv:comment>35 pages, 11 figures; revised: (v2) minor changes in the text; (v3) only some typos corrected</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>Phys.Rev. D65 (2002) 053020</arxiv:journal_ref>
+    <author>
+      <name>Blazenka Melic</name>
+    </author>
+    <author>
+      <name>Bene Nizic</name>
+    </author>
+    <author>
+      <name>Kornelija Passek</name>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.65.053020</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.65.053020" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.19474v1</id>
+    <title>A Universal Law of Large Numbers for Extreme Cycles in Random Čech Complexes</title>
+    <updated>2026-09-16T22:28:50Z</updated>
+    <link href="https://arxiv.org/abs/2609.19474v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.19474v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the maximal multiplicative persistence of $k$-cycles in random Čech complexes. Let $f:\mathbb{R}^d\to\mathbb{R}$ be a probability density function, let ${P}_n$ be a Poisson process with intensity $nf$, and let $Π_{k,n}$ denote the largest death-to-birth ratio among all non-essential $k$-cycles ($1\le k \le d-1$). For the uniform distribution in the unit hypercube, it was proved in [9] that $Π_{k,n} = Θ\left( \left(\frac{\log n}{\log\log n}\right)^{1/k}\right)$. In this paper we sharpen and extend this result to a law of large numbers, for a broad class of distributions. Most significantly, we show that the limiting constant depends only on $d$ and $k$, and not on the probability density $f$. Thus the extreme value of multiplicative persistence exhibits a universality phenomenon. We show that the limiting constant is determined by the asymptotic covering density of the $k$-dimensional sphere. Our proof identifies the geometric mechanism underlying maximal cycles, a persistent isoperimetric inequality, which gives sharp bounds on the number of points needed to generate a highly persistent cycle. By combining covering-density estimates with isoperimetric inequalities, we show that this minimum is asymptotically attained by efficient coverings of a $k$-sphere. A key ingredient is a geometric measure theory argument that uses compactness to relate discrete covering counts to the volume of a limiting cycle.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-16T22:28:50Z</published>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Omer Bobrowski</name>
+    </author>
+    <author>
+      <name>Primoz Skraba</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1609.08296v3</id>
+    <title>Truncated linear statistics associated with the top eigenvalues of random matrices</title>
+    <updated>2018-05-16T09:56:12Z</updated>
+    <link href="https://arxiv.org/abs/1609.08296v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1609.08296v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a certain invariant random matrix ensemble characterised by the joint probability distribution of eigenvalues $P(λ_1,\ldots,λ_N)$, many important questions have been related to the study of linear statistics of eigenvalues $L=\sum_{i=1}^Nf(λ_i)$, where $f(λ)$ is a known function. We study here truncated linear statistics where the sum is restricted to the $N_1&lt;N$ largest eigenvalues: $\tilde{L}=\sum_{i=1}^{N_1}f(λ_i)$. Motivated by the analysis of the statistical physics of fluctuating one-dimensional interfaces, we consider the case of the Laguerre ensemble of random matrices with $f(λ)=\sqrtλ$. Using the Coulomb gas technique, we study the $N\to\infty$ limit with $N_1/N$ fixed. We show that the constraint that $\tilde{L}=\sum_{i=1}^{N_1}f(λ_i)$ is fixed drives an infinite order phase transition in the underlying Coulomb gas. This transition corresponds to a change in the density of the gas, from a density defined on two disjoint intervals to a single interval. In this latter case the density presents a logarithmic divergence inside the bulk. Assuming that $f(λ)$ is monotonous, we show that these features arise for any random matrix ensemble and truncated linear statitics, which makes the scenario described here robust and universal.</summary>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-09-27T07:47:04Z</published>
+    <arxiv:comment>LaTeX, 30 pages, 20 pdf figures. Updated version: a typo has been corrected in Eq. (3.30) and more details are provided in the Appendix</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.stat-mech"/>
+    <arxiv:journal_ref>J. Stat. Phys. 167(2), 234-259 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Aurélien Grabsch</name>
+    </author>
+    <author>
+      <name>Satya N. Majumdar</name>
+    </author>
+    <author>
+      <name>Christophe Texier</name>
+    </author>
+    <arxiv:doi>10.1007/s10955-017-1755-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10955-017-1755-5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10871v1</id>
+    <title>Membrane Charge Effects on Solute Transport in Polyamide Membranes</title>
+    <updated>2025-03-13T20:38:41Z</updated>
+    <link href="https://arxiv.org/abs/2503.10871v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10871v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Polyamide membranes, such as nanofiltration (NF) and reverse osmosis (RO) membranes, are widely used for water desalination and purification. However, the mechanisms of solute transport and solute rejection due to charge interactions remain unclear at the molecular level. Here we use molecular dynamics (MD) simulations to examine the transport of single-solute feeds through charged nanofiltration membranes with different membrane charge concentrations of COO$^{\text{-}}$ and NH$_2\!^+$ corresponding to different pH levels. Results show that Na$^+$ and Cl$^{\text{-}}$ solute ions are better rejected when the membrane has a higher concentration of negatively charged groups, corresponding to a higher pH, whereas CaCl$_2$ is well-rejected at all pH levels studied. These results are consistent with experimental findings which are performed at the same pH conditions as simulation setup. Moreover, solute transport behavior depends on the membrane functional group distribution. When COO$^{\text{-}}$ functional groups are concentrated at membrane feed surface, ion permeation into the membrane is reduced. Counter-ions tend to associate with charged functional groups while co-ions seem to pass by the charged groups more easily. In addition, steric effects play a role when ions of opposite charge cluster in pores of the membrane. This study reveals solute transport and rejection mechanisms related to membrane charge and provides insights into how membranes might be designed to achieve specific desired solute rejection.</summary>
+    <category term="cond-mat.soft" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T20:38:41Z</published>
+    <arxiv:comment>24 pages, 16 figures</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.soft"/>
+    <author>
+      <name>Suwei Liu</name>
+    </author>
+    <author>
+      <name>Zi Hao Foo</name>
+    </author>
+    <author>
+      <name>John H. Lienhard</name>
+    </author>
+    <author>
+      <name>Sinan Keten</name>
+    </author>
+    <author>
+      <name>Richard M. Lueptow</name>
+    </author>
+  </entry>
+</feed>

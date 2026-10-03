@@ -1,0 +1,1497 @@
+                          Factoring into coprimes
+                         in essentially linear time
+
+
+                                    Daniel J. Bernstein
+             Department of Mathematics, Statistics, and Computer Science (M/C 249)
+                             The University of Illinois at Chicago
+                                  Chicago, IL 60607–7045
+
+
+
+Abstract
+
+   Let S be a finite set of positive integers. A “coprime base for S” means a set P of positive integers
+such that (1) each element of P is coprime to every other element of P and (2) each element of S is a
+product of powers of elements of P. There is a natural coprime base for S. This paper introduces an
+algorithm that computes the natural coprime base for S in essentially linear time. The best previous
+result was a quadratic-time algorithm of Bach, Driscoll, and Shallit. This paper also shows how
+to factor S into elements of P in essentially linear time. The algorithms use solely multiplication,
+exact division, gcd, and equality testing, so they apply to any free commutative monoid with fast
+algorithms for those four operations; for example, given a finite set S of monic polynomials over a
+finite field, the algorithms factor S into coprimes in essentially linear time. These algorithms can be
+used as a substitute for prime factorization in many applications.
+
+Keywords: Factoring into coprimes; coprime bases; factor refinement
+
+
+
+1. Introduction
+
+   It appears to be difficult to factor most integers into primes. The point of this paper is
+that it is easy to factor integers into coprimes.
+   Given a finite set S of positive integers, I can construct a set P, with any two distinct
+elements of P coprime, and factor every element of S into elements of P, in essentially
+linear time. The best previous result was a quadratic-time algorithm by Bach, Driscoll,
+and Shallit in [2].
+   Similarly, given a finite set S of monic polynomials in one variable over a finite field,
+I can factor S into coprimes in essentially linear time. For comparison, an algorithm of
+Kaltofen and Shoup in [21] factors polynomials into primes in subquadratic random time.
+   This paper presents my algorithms and proves that they run in essentially linear time.
+Priority dates: I announced these results without proof in November 1995, and posted a
+complete draft of this paper in October 1997.
+
+
+Permanent ID of this document: f32943f0bb67a9317d4021513f9eee5a                            2004.04.04
+   Warning: The algorithms in this paper are not designed to be as fast as possible. They
+are designed to be as simple as possible, under the constraints of (1) running in essentially
+linear time and (2) using a limited set of arithmetic operations. There are many ways to
+save more time; these speedups are important but are beyond the scope of this paper.
+
+Applications. Factoring into coprimes is often an adequate substitute for factoring into
+primes. See, e.g., [13]; [4]; [20, Section 3]; [14] and [33, Section 3.1]; [16, Remark 6.8]
+and [2, page 201]; [27]; [28, Section 4.6] and [9]; [29]; [17] and [8]; [5]; [31, Theorem 5];
+and [22, page 427].
+
+Notation and terminology. General-purpose notation: {} means the empty set. When S is
+a set, #S means the cardinality of S. When S and T are sets, S − T means {x ∈ S : x ∈     / T }.
+When S is a finite set, prod S means ∏x∈S x. When a proposition appears inside brackets, it
+means 1 if the proposition is true, 0 otherwise; for example, [2 < 3] = 1.
+   Notation and terminology specific to this paper: bit is defined in Section 17; cb is defined
+in Section 7; coprime bases are defined in Section 4; λ is defined in Section 9; lg is defined
+in Section 8; ls is defined in Section 12; M-time is defined in Section 8; µ is defined in
+Section 8; ord is defined in Section 6; ppi, ppo, ppg, pple are defined in Section 11; reduce
+is defined in Section 19; split is defined in Section 15; τ is defined in Section 9.
+   “Essentially linear time” means time b1+o(1) where b is the number of input bits.
+
+Acknowledgments. The author was supported by the National Science Foundation under
+grant DMS–9600083.
+  Thanks to Igor Shparlinski and two anonymous referees for their comments.
+
+
+2. Outline of the paper
+
+  This paper is organized into four parts.
+
+Part I. Existence and uniqueness. Section 4 proves that every finite set S has a finite
+“coprime base.” The proof uses greatest common divisors and exact division (i.e., division
+where the remainder is known to be 0) to construct the coprime base.
+  Sections 6 and 7 show that there is only one coprime base that can be obtained from
+S via multiplication, exact division, and greatest common divisors: the “natural coprime
+base” for S, written cb S.
+  Bach, Driscoll, and Shallit stated their results twice, once for integers and once for
+polynomials. I have instead abstracted the algebraic properties of integers and polynomials
+that make the constructions work. The setting for the Bach-Driscoll-Shallit algorithm is a
+“Noetherian coid with cancellation,” defined in Section 3. The setting for natural coprime
+bases, and for my algorithms, is a “free coid,” defined in Section 5. Readers not interested
+in maximum generality can skip Sections 3 and 5, and instead remember the following
+facts: the set of positive integers is a free coid; the set of monic polynomials in one variable
+over a field is a free coid; every free coid is a Noetherian coid with cancellation.
+
+
+                                              2
+Part II. Two-element sets. Sections 10 through 13 give several constructions culminating
+in Algorithm 13.2, which finds the natural coprime base for any two-element set. The
+most important idea is explained in Section 9. Algorithm 13.2 takes essentially linear
+time, given essentially-linear-time subroutines for multiplication, exact division, and gcd,
+as discussed in Section 8.
+
+Part III. Finite sets. Sections 14 through 18 give several further constructions culminating
+in Algorithm 18.1, which finds the natural coprime base for any finite set in essentially
+linear time.
+
+Part IV. Factorization. To factor a set S into coprimes, first construct a coprime base P
+for S, and then factor S into elements of P. Sections 19 through 21 show how to carry out
+the factorization, given S and P, in essentially linear time.
+
+PART I. EXISTENCE AND UNIQUENESS
+
+3. Coids and maximal common divisors
+
+  A coid is a set with a commutative associative binary operation, written (a, b) 7→ ab, and
+a neutral element, written 1. Commutativity means ab = ba. Associativity means (ab)c =
+a(bc). Neutrality means 1a = a = a1.
+  The word “coid” is nonstandard. It is an abbreviation of “commutative monoid,” and an
+abbreviation of “commutative semigroup with identity”; here semigroup means a set with
+an associative binary operation, and monoid means a semigroup with a neutral element.
+“Coid,” like “monoid,” should be pronounced to rhyme with “overjoyed.”
+
+Divisibility. When a = bq for some q, a is a multiple of b; a is divisible by b; b divides
+a; b is a divisor of a. If a divides b and b divides c then a divides c.
+
+Cancellation. A coid has cancellation if q = r whenever bq = br. In other words, when
+c is a multiple of b, there is a unique q such that c = bq; this q is denoted c/b.
+
+Noetherian coids. Let S be a subset of a coid. An element of S is minimal if it is not
+divisible by any other elements of S. An element of S is maximal if it does not divide any
+other elements of S. An element of S is greatest if it is divisible by all elements of S.
+  A coid H is Noetherian if every nonempty subset of H has a minimal element.
+
+Combinatorial coids. Elements a, b of a coid are associates if a divides b and b divides
+a. A coid is combinatorial if a = b whenever a and b are associates. Observe that every
+Noetherian coid is combinatorial: if a and b are associates with a 6= b then {a, b} has no
+minimal element.
+   One can systematically replace “equal” by “associate,” replace “minimal” by “minimal
+up to associates,” etc., obtaining definitions and results that apply to non-combinatorial
+coids. I prefer to avoid unnecessary complexity: given a general coid, one can simply
+consider the combinatorial coid of classes of associates.
+
+
+                                             3
+Examples. The set of positive integers, with integer multiplication, is a Noetherian coid
+with cancellation. Equivalently: The set of nonzero ideals of Z, with ideal multiplication,
+is a Noetherian coid with cancellation.
+   Let k be a field. The set of monic polynomials in the univariate polynomial ring k[x],
+with polynomial multiplication, is a Noetherian coid with cancellation. Equivalently: The
+set of nonzero ideals of k[x] is a Noetherian coid with cancellation.
+   Generalizing both examples: The set of nonzero ideals of a Dedekind domain is a
+Noetherian coid with cancellation. Even more generally, the set of cancellable ideals of
+a Noetherian domain is a Noetherian coid with cancellation. See [8].
+
+Theorem 3.1. Let B be a nonempty subset of a Noetherian coid with cancellation. Then
+there exists a maximal common divisor of B.
+
+  Here a common divisor of B means a divisor of every element of B.
+
+Proof. Select b ∈ B. Define S = {b/d : d is a common divisor of B}. Observe that b ∈ S.
+Thus S has some minimal element, say b/g, where g is a common divisor of B. If g divides
+another common divisor d of B, then b/d divides b/g; but b/d ∈ S, so b/d = b/g by
+minimality of b/g, so d = g. Hence g is a maximal common divisor of B.
+
+Theorem 3.2. Let a, b, g be elements of a Noetherian coid with cancellation. If g is a
+maximal common divisor of {a, b} then a/g is coprime to b/g.
+
+  Here c is coprime to d if the only common divisor of {c, d} is 1. Some authors say
+“relatively prime to d” or simply “prime to d.”
+
+Proof. If d divides a/g and b/g then dg divides a and b. Certainly g divides dg, so by
+maximality g = dg, so d = 1 by cancellation.
+
+Theorem 3.3. Every element of a Noetherian coid with cancellation can be written as a
+product q1 q2 · · · qn for some n ≥ 0 and some irreducibles q1 , q2 , . . . , qn .
+
+   Here p is an irreducible if p 6= 1 and p cannot be written in the form ab with a 6= 1 and
+b 6= 1.
+
+Proof. Suppose that the coid has elements that are not products of irreducibles. Let z be a
+minimal such element.
+   Case 1: z = 1. Then z is the product of 0 irreducibles. Contradiction.
+   Case 2: z = ab for some a, b with a 6= 1 and b 6= 1. Then a divides z and a 6= z. The
+minimality of z implies that a is a product of irreducibles. Similarly, b is a product of
+irreducibles. Thus z is a product of irreducibles. Contradiction.
+   Case 3: z is irreducible. Then z is the product of 1 irreducible. Contradiction.
+
+Theorem 3.4. Let p, a be elements of a Noetherian coid with cancellation. Assume that
+p 6= 1. Then there is a unique integer m ≥ 0 such that pm divides a and pm+1 does not
+divide a.
+
+
+                                             4
+Proof. Suppose that pm+1 divides a for every m ≥ 0. Then the set {a/p, a/p2 , . . .} does not
+have a minimal element: a/pm is divisible by a/pm+1 , and a/pm 6= a/pm+1 since p 6= 1.
+Contradiction.
+  Find the smallest integer m ≥ 0 such that pm+1 does not divide a. If m = 0 then pm = 1
+so pm divides a. If m ≥ 1 then pm divides a by minimality of m.
+  Uniqueness: p0 , p1 , . . . , pm divide a, while pm+1 , pm+2 , . . . do not.
+
+
+4. Coprime bases
+
+   Let P and S be subsets of a Noetherian coid H with cancellation. The coid generated
+by P is the smallest subset of H that contains P ∪ {1} and is closed under multiplication;
+more concretely, it is the set of products of powers of elements of P. P is a base for S if S
+is contained in the coid generated by P; i.e., each element of S is a product of powers of
+elements of P.
+   P is coprime if each element of P is coprime to every other element of P. (Some authors
+instead say “P is pairwise coprime,” saving “P is coprime” for the less important concept
+that gcd P = 1. A few authors say “P is gcd-free,” as if elements of P were somehow
+immune to the gcd operation.)
+   P is a coprime base for S if P is coprime and P is a base for S.
+
+Theorem 4.1. Let H be a Noetherian coid with cancellation. Every finite subset of H has
+a finite coprime base.
+
+Proof. Suppose not. Select a finite subset S of H, without a finite coprime base, in such a
+way that prod S is minimal.
+  S cannot be coprime—otherwise it is a finite coprime base for itself. Thus there are two
+distinct elements a, b ∈ S with a not coprime to b.
+  By Theorem 3.1, there is a maximal common divisor g of {a, b}. If g = 1 then a is
+coprime to b; thus g 6= 1. Define T = (S − {a, b}) ∪ {g, a/g, b/g}. Then prod T divides
+((prod S)/ab)g(a/g)(b/g) = (prod S)/g; so prod T is a divisor of prod S different from
+prod S. The minimality of prod S implies that T has a finite coprime base, say P.
+  Now a = g(a/g) and b = g(b/g) are products of elements of T , and thus are in the
+coid generated by P. All other elements of S are elements of T , and thus are in the coid
+generated by P. Hence P is a base for S. Contradiction.
+
+
+5. Free coids and greatest common divisors
+
+   A free coid is a Noetherian coid with cancellation in which a is coprime to bc whenever
+a is coprime to both b and c.
+   Bach, Driscoll, and Shallit suggested in [2, page 216] (in different language) that free
+coids would form a “suitable abstract setting” for factoring into coprimes. The algorithms
+in [2] actually work for arbitrary Noetherian coids with cancellation, but free coids are the
+setting for most of this paper.
+
+
+                                             5
+Examples. The set of nonzero ideals in a Dedekind domain is a free coid. The point is
+that, in a Dedekind domain, the sum a + b of two ideals a and b is a maximal common
+divisor of {a, b}. Therefore, if a is coprime to both b and c, then a + b = 1 and a + c = 1,
+so a + bc = 1a + bc = (1 + b)a + bc = a + ba + bc = a + b(a + c) = a + b1 = a + b = 1 by
+elementary ideal arithmetic, so a is coprime to bc.
+  In particular, the set of positive integers is a free coid, and if k is a field then the set of
+monic polynomials in k[x] is a free coid.
+
+Theorem 5.1. Let a, b, c be elements of a free coid. If a divides bc, with a coprime to b,
+then a divides c.
+
+Proof. By Theorem 3.1, {a, c} has a maximal common divisor g. By Theorem 3.2, a/g is
+coprime to c/g. By hypothesis, a/g is coprime to b. Thus a/g is coprime to b(c/g) = bc/g.
+But a/g divides bc/g, so a/g must be 1. Thus a = g divides c.
+
+Theorem 5.2. Let x, y, z, h be elements of a free coid. If x and y divide z, and h is a maximal
+common divisor of {x, y}, then xy/h divides z.
+
+Proof. By hypothesis, x/h divides z/h = (z/y)(y/h). By Theorem 3.2, x/h and y/h are
+coprime. Thus x/h divides z/y by Theorem 5.1. Hence (x/h)y divides (z/y)y = z.
+
+Theorem 5.3. Let B be a nonempty subset of a free coid. Then there exists a greatest
+common divisor of B.
+
+  The greatest common divisor of B is denoted gcd B.
+
+Proof. By Theorem 3.1, there is a maximal common divisor g of B. I claim that every
+common divisor d of B is a divisor of g. Indeed, let h be a maximal common divisor of
+{g, d}. By Theorem 5.2, gd/h is a common divisor of B. But g is maximal, so g = gd/h,
+so d = h, so d divides g as claimed.
+
+Theorem 5.4. Let z be an element of a free coid. Let x1 , x2 , . . . , xn be divisors of z such
+that xi is coprime to x j whenever i 6= j. Then x1 x2 · · · xn divides z.
+
+Proof. Induct on n. For n = 0: 1 divides z. For n = 1: By hypothesis x1 divides z. For n ≥ 2:
+By hypothesis 1 is a maximal common divisor of {x1 , x2 }, so x1 x2 divides z by Theorem
+5.2. Define (y1 , y2 , y3 , . . . , yn−1 ) = (x1 x2 , x3 , x4 , . . . , xn ). Then y1 , y2 , . . . , yn−1 divide z, and
+yi is coprime to y j whenever i 6= j, so y1 y2 · · · yn−1 divides z by induction; i.e., x1 x2 x3 · · · xn
+divides z.
+
+Theorem 5.5. Every irreducible in a free coid is a prime.
+
+   Here p is a prime if p 6= 1 and the non-multiples of p are closed under multiplication:
+i.e., if p divides ab then p divides a or p divides b.
+
+
+                                                          6
+Proof. Let p be an irreducible in the coid. Let a, b be elements of the coid such that p
+divides ab. Define g = gcd{p, a}. Then p = (p/g)g. By definition of irreducibles, p/g = 1
+or g = 1. If p/g = 1 then g = p so p divides a as desired. If g = 1 then p is coprime to a
+so p divides b by Theorem 5.1.
+
+Theorem 5.6. Every element of a free coid can be written as a product ∏prime p pa p where
+each a p is a nonnegative integer and {p : a p 6= 0} is finite.
+
+Proof. By Theorem 3.3, every element can be written as a product q1 q2 · · · qn where each
+qi is an irreducible. By Theorem 5.5, each qi is a prime. Define a p = #{i : qi = p}; then
+q1 q2 · · · qn = ∏prime p pa p , and {p : a p 6= 0} = {q1 , q2 , . . . , qn }.
+
+
+6. The ord function
+
+  Let p be a prime in a free coid, and let a be an element of the coid. By Theorem 3.4,
+there is a unique integer m ≥ 0 such that pm divides a and pm+1 does not. This integer is
+denoted ord p m.
+
+Theorem 6.1. Let a, b, p be elements of a free coid. If p is a prime then ord p ab = ord p a +
+ord p b.
+
+Proof. Write e = ord p a and f = ord p b. Then pe divides a and p f divides b so pe+ f divides
+ab. Furthermore, p divides neither a/pe nor b/p f ; by definition of prime, p does not divide
+(a/pe )(b/p f ); so pe+ f +1 does not divide ab.
+
+Theorem 6.2. Let a, b, p be elements of a free coid. If p is a prime then ord p gcd{a, b} =
+min{ord p a, ord p b}.
+
+Proof. Write e = ord p a and f = ord p b. Without loss of generality assume e ≤ f . Then pe
+divides both a and b so pe divides gcd{a, b}. Furthermore, pe+1 does not divide a, so pe+1
+does not divide gcd{a, b}.
+
+Theorem 6.3. Let a be an element of a free coid. Then {prime p : ord p a 6= 0} is finite, and
+a = ∏prime p pord p a .
+
+  Consequently, if ord p a = ord p b for every prime p, then a = b.
+
+Proof. By Theorem 5.6, a can be written as a product ∏prime p pa p where each a p is a
+nonnegative integer and {p : a p 6= 0} is finite. If q is a prime then ordq q = 1 and ordq p = 0
+for all primes p 6= q, so ordq a = ∑prime p a p ordq p = aq . Hence {p : ord p a 6= 0} is finite
+and a = ∏prime p pord p a .
+
+Theorem 6.4. Let a, b be elements of a free coid. If min{ord p a, ord p b} = 0 for every
+prime p then a is coprime to b.
+
+
+                                              7
+Proof. If p is a prime then ord p gcd{a, b} = 0 by Theorem 6.2. Hence gcd{a, b} = 1 by
+Theorem 6.3.
+
+Theorem 6.5. Let a, b be elements of a free coid. If ord p a ≤ ord p b for every prime p then
+a divides b.
+
+Proof. If p is a prime then ord p gcd{a, b} = ord p a by Theorem 6.2. Hence gcd{a, b} = a
+by Theorem 6.3.
+
+Theorem 6.6. Let P be a coprime subset of a free coid. Define a = ∏ p∈P pa p where each
+a p is a nonnegative integer and {p : a p 6= 0} is finite. Define b = ∏ p∈P pb p where each b p
+is a nonnegative integer and {p : b p 6= 0} is finite. Then gcd{a, b} = ∏ p∈P pmin{a p ,b p } .
+
+Proof. I will show for every prime q that ordq ∏ p pmin{a p ,b p } = ordq gcd{a, b}. Hence
+∏ p∈P pmin{a p ,b p } = gcd{a, b} by Theorem 6.3.
+   If q does not divide any r ∈ P then ordq a = 0, ordq b = 0, and ordq ∏ p pmin{a p ,b p } = 0 =
+ordq gcd{a, b}. Assume from now on that q divides some r ∈ P.
+   If r0 ∈ P−{r} then gcd{r, r0 } = 1 so min{ordq r, ordq r0 } = 0 by Theorem 6.2 so ordq r0 =
+0. Thus ordq a = ar ordq r, ordq b = br ordq r, and ordq ∏ p pmin{a p ,b p } = min{ar , br } ordq r =
+     
+min ordq a, ordq b = ordq gcd{a, b}.
+
+Theorem 6.7. Let P be a coprime subset of a free coid. Define a = ∏ p∈P pa p where each
+a p is a nonnegative integer and {p : a p 6= 0} is finite. Define b = ∏ p∈P pb p where each b p
+is a nonnegative integer and {p : b p 6= 0} is finite. If a divides b then a p ≤ b p for every
+p ∈ P − {1} and b/a = ∏ p∈P−{1} pb p −a p .
+
+Proof. Select r ∈ P−{1}. Select a prime q dividing r. Then ordq r > 0, so ordq p = 0 for all
+p ∈ P − {r}. Thus ordq a = ar ordq r and ordq b = br ordq r; but ordq a ≤ ordq b, so ar ≤ br .
+Also a ∏ p∈P−{1} pb p −a p = ∏ p∈P−{1} pa p +b p −a p = b.
+
+
+7. The natural coprime base
+
+  Fix a subset S of a free coid. The closure of S is the smallest subset T of the free coid
+such that
+       • S ∪ {1} ⊆ T ;
+       • ab ∈ T if a, b ∈ T ;
+       • a ∈ T if ab, b ∈ T ; and
+       • gcd{a, b} ∈ T if a, b ∈ T .
+The natural coprime base for S, denoted cb S, is the set of minimal elements of T − {1}.
+This is, in fact, a coprime base for S; see Theorem 7.1. It is the only coprime base for S
+inside T − {1}; see Theorem 7.3.
+  There are other ways to characterize cb S. In drafts of this paper I defined cb S as the
+set of maximal quasiprimes for S; here p is a quasiprime for S if every element of S can
+
+
+                                                 8
+be written in the form upm with p coprime to u. A referee suggested defining cb S as a
+minimal subset of T that is a base for T . Bach, Driscoll, and Shallit proved in [2, Theorem
+3] that there is a maximum coprime base for S in a particular ordering of coprime bases for
+S, and that this maximum coprime base is a subset of T − {1}. Another characterization
+appears without proof in [20, Lemma 3.2]. An incorrect characterization appears without
+proof in [16, Remark 6.8].
+
+Theorem 7.1. Let S be a subset of a free coid. Then cb S is a coprime base for S.
+
+Proof. Define T as the closure of S. Define P = cb S.
+  P is coprime: Say a ∈ P is not coprime to b ∈ P. Define g = gcd{a, b}. Then g ∈ T −{1},
+and g divides a; but a is a minimal element of T − {1} by definition of P, so g = a.
+Similarly g = b. Thus a = b.
+  P is a base for T (hence for S): Suppose not. Find a minimal element z of T outside the
+coid generated by P. Then z ∈/ P. Thus z is not a minimal element of T − {1}, by definition
+of P; but z ∈ T − {1}; so z has a divisor y ∈ T − {1} with y 6= z. Also z/y ∈ T − {1} and
+z/y 6= z. The minimality of z implies that both y and z/y are in the coid generated by P;
+hence z is in the coid generated by P. Contradiction.
+
+Theorem 7.2. Let S and Q be subsets of a free coid. If Q is a coprime base for S then Q
+is a base for the closure of S.
+
+Proof. Define T 0 as the intersection of T with the coid generated by Q. Then 1 ∈ T 0 ;
+ab ∈ T 0 if a, b ∈ T 0 ; S ⊆ T 0 since Q is a base for S; a ∈ T 0 if ab, b ∈ T 0 , by Theorem 6.7;
+and gcd{a, b} ∈ T 0 if a, b ∈ T 0 , by Theorem 6.6. Thus T ⊆ T 0 ; i.e., Q is a base for T .
+
+Theorem 7.3. Let S be a subset of a free coid. Let P be a coprime base for S. Let T be the
+closure of S. If P ⊆ T − {1} then P = cb S.
+
+Proof. P is a base for T by Theorem 7.2, so P is a base for cb S, so each element of cb S
+is divisible by an element of P. Furthermore, cb S is a base for P, so each element of P is
+divisible by an element of cb S.
+   Starting from any p ∈ P, find q ∈ cb S such that q divides p, and then find p0 ∈ P such
+that p0 divides q. Then p0 divides p, so by coprimality p0 = p, so q = p, so p ∈ cb S. Hence
+P ⊆ cb S. Similarly cb S ⊆ P.
+
+Theorem 7.4. Let S be a finite subset of a free coid. Then cb S is a finite coprime base for
+S.
+
+Proof. The proof of Theorem 4.1 recursively constructs a finite coprime base Q for S using
+exact division and gcd. Thus Q ⊆ T , where T is the closure of S. Define P = Q − {1}. Then
+P is a finite coprime base for S, and P ⊆ T − {1}, so P = cb S by Theorem 7.3, so cb S is a
+finite coprime base for S.
+
+Theorem 7.5. Let S be a finite subset of a free coid H. Let z be an element of H. If every
+element of S divides z then ∏ p∈cb S p divides z.
+
+
+                                               9
+Proof. Take p ∈ cb S. If p does not divide any element of S then p is coprime to all elements
+of S, so p is coprime to all elements of the closure of S, so p is coprime to p, contradiction.
+Thus p divides z. By Theorem 5.4, ∏ p∈cb S p divides z.
+
+
+PART II. TWO-ELEMENT SETS
+
+8. Logarithms and M-time
+
+   The algorithms in this paper work for any free coid H. They are given elements of H
+(represented in some way as strings) and oracles that perform the following operations:
+       • Multiplication: compute ab ∈ H given a, b ∈ H.
+       • Exact division: compute a ∈ H given ab, b ∈ H.
+       • Greatest common divisor: compute gcd{a, b} ∈ H given a, b ∈ H.
+       • Equality testing: compute [a = b] ∈ {0, 1} given a, b ∈ H.
+The algorithms combine these four operations to perform more complicated operations.
+For example, Algorithm 10.1 computes a4 ∈ H, given a ∈ H, by first feeding a, a to the
+multiplication oracle to obtain a2 , and then feeding a2 , a2 to the multiplication oracle to
+obtain a4 . As another example, to check whether a is a divisor of b, Algorithm 19.2 checks
+whether gcd{a, b} equals a.
+
+Definition of M-time. I count the number of multiplications, divisions, and gcds in each
+algorithm, with a weight of (1 + lg ab)µ(lg ab) for each multiplication a, b 7→ ab, each
+exact division ab, b 7→ a, and each greatest common divisor a, b 7→ gcd{a, b}. The total is
+called M-time. Here µ : R → R is any nondecreasing positive function, and lg : H → R is
+any function satisfying (1) lg ab = lg a + lg b and (2) lg a ≥ 1 for every a 6= 1. Note that
+lg 1 = 0.
+   Each algorithm is accompanied by a theorem stating an upper bound, parametrized by lg
+and µ, on the M-time used by that algorithm. In particular, if µ(x) ∈ xo(1) , then the M-time
+to compute cb S is essentially linear in lg prod S by Theorem 18.2, and the M-time to factor
+S over any coprime base P for S is essentially linear in lg prod S + lg prod P by Theorem
+21.3.
+
+Why M-time is useful. These bounds on M-time imply bounds on algorithm time for
+various coids H that arise in practice.
+   In particular, if H is the set of positive integers (represented in the usual way as base-
+2 strings), then there are algorithms (for, e.g., multitape Turing machines) that perform
+multiplication, exact division, and gcd in time at most (1 + lg ab)µ(lg ab). Here lg : H → R
+is the usual logarithm base 2, and µ is a nondecreasing positive function with µ(x) ∈
+xo(1) . The time spent by my algorithms inside these subroutines for multiplication, exact
+division, and gcd is bounded by M-time for these functions lg, µ; the reader can check that
+my algorithms spend negligible time in other operations; the M-time for factoring into
+coprimes is essentially linear in the input size. Conclusion: factoring positive integers into
+coprimes takes time essentially linear in the input size.
+
+
+                                             10
+  Similarly, if H is the set of monic polynomials in one variable over a finite field, then
+there are algorithms that perform multiplication, exact division, and gcd in time at most
+(1 + lg ab)µ(lg ab). Here lg : H → R is the degree map, and µ is a nondecreasing positive
+function with µ(x) ∈ xo(1) . Conclusion: factoring monic polynomials into coprimes takes
+time essentially linear in the input size.
+  See my paper [7] for a survey of the standard essentially-linear-time algorithms for
+multiplication, exact division, and gcd.
+  Integers and polynomials support many other useful arithmetic operations: division with
+remainder, for example, and size inspection (approximation of lg). Algorithms that save
+time by using these extra operations are beyond the scope of this paper, as explained in
+Section 1. My M-time bounds are expressed in much more detail than “essentially linear
+time” solely because those details simplify the proofs; the level of detail is not meant to
+suggest that these are near-optimal bounds for near-optimal algorithms.
+
+Termination. Another consequence of the M-time bounds is that each of these algorithms
+terminates for any free coid H. Proof: Define µ(x) = 1. Define lg : H → R by setting
+lg p = 1 for each prime p in H. The M-time bounds are then upper bounds on the number
+of multiplications, divisions, and gcds in the algorithm. Every algorithm loop involves at
+least one multiplication, division, or gcd. Hence the algorithm terminates.
+   Another way to prove termination is to observe that the relevant subcoid of H (the coid
+generated by a finite coprime base for the inputs to the algorithm) is isomorphic to a
+subcoid of the set of positive integers. The algorithm terminates for positive integers, so it
+terminates for H.
+
+
+9. From CBA to DCBA
+
+   The natural coprime base for pe , p f is {pg } − {1} where g = gcd{e, f }. Thus natural
+                                       
+
+coprime bases act on exponents as greatest common divisors.
+   This section compares two algorithms to compute cb{a, b}. One algorithm, which I call
+CBA (the “coprime base algorithm”), is the quadratic-time algorithm introduced by Bach,
+Driscoll, and Shallit in [2]. The other algorithm, which I call DCBA, is the essentially-
+linear-time algorithm introduced in this paper.
+   CBA replaces (a, b) with (a/gcd{a, b}, gcd{a, b}, b/gcd{a, b}); it focuses on the left
+pair in this vector and then focuses on the right pair. In particular, it replaces (pe , p f ) with
+(pe− f , p f , 1) if e > f or (1, pe , p f −e ) if e ≤ f . The exponent pair (e, f ) has been replaced
+with (e − f , f ) or (e, f − e). Thus CBA uses Euclid’s subtractive algorithm to compute
+greatest common divisors of exponents.
+   Euclid’s subtractive algorithm is a dangerous way to compute greatest common divisors:
+the number of steps is the sum of the quotients in the continued fraction for e/ f . A much
+safer alternative is Euclid’s repeated-division algorithm, where the number of steps is at
+worst logarithmic in e + f . See generally [26, Sections 4.5.2 and 4.5.3].
+   Writing out the standard base-2 integer-division algorithm inside Euclid’s repeated-
+division algorithm produces Brent’s left-shift binary gcd algorithm, which replaces (e, f )
+with (e − 2k f , f ) for the largest possible value of k, or with ( f , e) if e < f . It will turn
+
+
+                                                 11
+out that DCBA uses Brent’s left-shift algorithm to compute greatest common divisors of
+exponents.
+  DCBA actually uses a slightly different exponent transformation, namely the function τ
+defined below, to simplify the computations.
+
+The exponent transformation. Define a function τ on pairs of nonnegative integers as
+follows:
+                                        ( f − e, e)  if e ≤ f
+                                    
+                                    
+                                        (e − f , f ) if f < e ≤ 2 f
+                                    
+                                    
+                                    
+                                    
+                                     (e − 2 f , f ) if 2 f < e ≤ 4 f
+                                    
+                          τ(e, f ) = (e − 4 f , f ) if 4 f < e ≤ 8 f
+                                    
+                                    
+                                      ..
+                                    .
+                                    
+                                    
+                                    
+                                        (e, 0)       if 0 = f < e.
+Write τn for the nth iterate of τ.
+   Define λ(a, b) as the smallest n ≥ 0 such that the second component of τn (ord p a, ord p b)
+is 0 for every prime p. Existence of λ(a, b) follows from Theorem 9.3.
+                                                                              √          √ n+1
+Theorem 9.1. Let e, f , n be nonnegative integers. If f = 0 or e +                2f <    2    then
+τn (e, f ) has second component 0.
+                                               √          √
+Proof. Induct on n. For n = 0: If e + 2 f < 2 then f < 1, so in any case f = 0, so
+τn (e,√f ) = (e,√0) as desired. For n ≥ 1: Define (e0 , f 0 ) = τ(e, f ). I will show that f 0 = 0 or
+                    n
+e0 + 2 f 0 < 2 ; hence τn (e, f ) = τn−1 (e0 , f 0 ) has second component 0 by induction.
+   Case 1: f = 0 and e = 0. Then (e0 , f 0 ) = ( f − e, e) = (0, 0) by definition of τ.
+   Case 2: f = 0 and e > 0. Then (e0 , f 0 ) = (e, 0) by definition of τ.                √ 0
+   Case   3:  f > 0   and e ≤ f . Then (e 0 , f 0 ) = ( f − e, e) by definition of τ, so  2e + 2 f 0 −
+     √              √                  √                  √       √      √   n
+e − 2 f = (1 − 2)e ≤ 0, so e0 + 2 f 0 ≤ (e + 2 f )/ 2 < 2 .
+   Case 4: f > 0 and e > f . Then 2k f < e ≤ 2k+1 f for some integer k ≥ 0. Now (e0 , f 0 ) =
+(e − 2k f , f ) by definition of τ, so
+               √ 0              √       √              √     √
+                2e + 2 f 0 − e − 2 f = ( 2 − 1)e − (2k 2 + 2 − 2) f
+                                             √              √   √
+                                     ≤ 2k+1 ( 2 − 1) f − (2k 2 + 2 − 2) f
+                                                    √
+                                     = (1 − 2k )(2 − 2) f ≤ 0,
+             √       √ n
+so again e0 + 2 f 0 < 2 .
+
+Theorem 9.2. Let a be an element of a free coid. Then ord p a ≤ lg a for every prime p.
+
+Proof. Write n = ord p a. Then a = upn for some u, and lg p ≥ 1 since p 6= 1, so lg a =
+lg u + n lg p ≥ n lg p ≥ n.
+
+Theorem 9.3. Let a, b be elements of a free coid. Let n be a nonnegative integer. If lg a +
+√         √ n+1
+  2 lg b < 2    then λ(a, b) ≤ n.
+
+
+                                                 12
+                                                                                 √
+Proof. Define e = ord p a and f = ord p b where p is a prime. By Theorem 9.2, e + 2 f ≤
+      √         √ n+1
+lg a + 2 lg b < 2 . By Theorem 9.1, τn (e, f ) has second component 0.
+
+Theorem 9.4. Let a, b be elements of a free coid. If λ(a, b) = 0 then b = 1.
+
+Proof. If p is a prime then ord p b = 0 by definition of λ. Hence b = 1.
+
+
+10. Computing powers
+                                                                           n
+Algorithm 10.1. Given (a, n), with n a nonnegative integer, to print a2 :
+     1. If n = 0: Print a and stop.
+     2. Set a ← a2 . Set n ← n − 1. Return to Step 1.
+
+Theorem 10.2. Algorithm 10.1 uses M-time at most (n + 2(2n − 1) lg a)µ(2n lg a).
+
+Proof. For n = 0, Algorithm 10.1 uses no M-time, and n + 2(2n − 1) lg a = 0.
+  For n ≥ 1, Algorithm 10.1 first computes a2 , using M-time at most (1 + 2 lg a)µ(2 lg a) ≤
+                                               n−1
+(1 + 2 lg a)µ(2n lg a). It then computes (a2 )2 , using M-time at most
+
+        (n − 1 + 2(2n−1 − 1) lg a2 )µ(2n−1 lg a2 ) = (n − 1 + 2(2n − 2) lg a)µ(2n lg a)
+
+by induction. Finally 1 + 2 lg a + n − 1 + 2(2n − 2) lg a = n + 2(2n − 1) lg a.
+
+
+11. The ppi, ppo, ppg, and pple functions
+
+  The defining properties of ppi(a, b), ppo(a, b), ppg(a, b), and pple(a, b) are that
+
+                          ord p ppi(a, b) = (ord p a)[ord p b > 0]
+                         ord p ppo(a, b) = (ord p a)[ord p b = 0]
+                         ord p ppg(a, b) = (ord p a)[ord p a > ord p b]
+                         ord p pple(a, b) = (ord p a)[ord p a ≤ ord p b]
+
+for all primes p. Existence of ppi, ppo, ppg, pple is proven constructively in Theorem 11.1
+and Theorem 11.2. Uniqueness follows from Theorem 6.3.
+  The notation ppi(a, b) stands for “powers in a of primes inside b”; ppo(a, b) is “powers
+in a of primes outside b”; ppg(a, b) is “prime powers in a greater than those in b”; and
+pple(a, b) is “prime powers in a less than or equal to those in b.” I originally used the
+notation gcd{a, b∞ } for ppi(a, b), but the shorter name ppi will be helpful later.
+  The ppg function is the subject of [30, Chapter 1, Section 19]; Stieltjes’s algorithm in
+[30] takes quadratic time on inputs (2n+1 , 2n ). The ppo function is the subject of [27];
+Lüneburg’s algorithm in [27] takes quadratic time on inputs (2n , 2).
+
+
+                                              13
+Theorem 11.1. Let a, c be elements of a free coid. Define x0 = gcd{a, c} and y0 = a/x0 .
+For n ≥ 0 define xn+1 = xn gcd{xn , yn } and yn+1 = yn / gcd{xn , yn }. (1) If n ≥ 0 and 2n ≥ lg a
+then gcd{xn , yn } = 1. (2) If gcd{xn , yn } = 1 then xn = ppi(a, c) and yn = ppo(a, c).
+
+Proof. Write e = ord p a and f = ord p c where p is a prime. Note that xn yn = a by induction
+on n, so ord p xn + ord p yn = e.
+   The point is that ord p xn = min{e, 2n f } for all n ≥ 0. Proof: ord p x0 = min{e, f }. For
+n ≥ 1, assume inductively that ord p xn−1 = min e, 2n−1 f . If e < 2n−1 f then ord p xn−1 = e
+so ord p yn−1 = 0 so ord p gcd{xn−1 , yn−1 } = min{e, 0} = 0 so ord p xn = e = min{e, 2n f }.
+     ≥ 2n−1 f then ord p xn−1 = 2n−1 f so ord p yn−1 = e − 2n−1 f so ord p gcd{xn−1 , yn−1 } =
+If e 
+min 2n−1 f , e − 2n−1 f so ord p xn = 2n−1 f + min e − 2n−1 f , 2n−1 f = min{e, 2n f }.
+   (1) If f = 0 then ord p xn = 0 = ord p xn+1 . If f > 0 then 2n f ≥ 2n ≥ lg a ≥ e by Theorem
+9.2 so ord p xn = e = ord p xn+1 . In both cases, ord p gcd{x       n } = ord p xn+1 − ord p xn = 0.
+                                                             n , yn+1
+                                                n
+   (2) By hypothesis xn = xn+1 , so min{e, 2 f } = min e, 2             f . If f = 0 then ord p xn =
+                                   n
+min{e, 0} = 0. If f > 0 then 2 f < 2       n+1             n
+                                               f so e ≤ 2 f ; thus ord p xn = e. In both cases,
+ord p xn = e[ f > 0] and ord p yn = e − ord p xn = e[ f = 0].
+
+Theorem 11.2. Let a, b be elements of a free coid. Define y0 = gcd{a, b} and x0 = a/y0 .
+For n ≥ 0 define xn+1 = xn gcd{xn , yn } and yn+1 = yn / gcd{xn , yn }. (1) If n ≥ 0 and 2n ≥ lg a
+then gcd{xn , yn } = 1. (2) If gcd{xn , yn } = 1 then xn = ppg(a, b) and yn = pple(a, b).
+
+Proof. Define c = x0 . Then x0 = gcd{a, c} and y0 = a/x0 .
+  (1) If n ≥ 0 and 2n ≥ lg a then gcd{xn , yn } = 1 by Theorem 11.1.
+  (2) If gcd{xn , yn } = 1 then xn = ppi(a, c) and yn = ppo(a, c) by Theorem 11.1. Write
+e = ord p a and f = ord p b where p is a prime. Then ord p y0 = min{e, f }, so ord p c is 0
+exactly when e ≤ f . Thus ord p xn = e[ord p c > 0] = e[e > f ] and ord p yn = e[ord p c = 0] =
+e[e ≤ f ].
+
+  The following two algorithms include n solely for expository purposes.
+
+Algorithm 11.3. Given (a, c), to print gcd{a, c}, ppi(a, c), and ppo(a, c):
+     1. Set x ← gcd{a, c}. Print x. Set y ← a/x. Set n ← 0.
+     2. (Now (x, y) = (xn , yn ) in Theorem 11.1.) Set g ← gcd{x, y}. If g = 1: print x,
+        print y, and stop.
+     3. Set x ← xg and y ← y/g. Set n ← n + 1. Return to Step 2.
+
+Algorithm 11.4. Given (a, b), to print gcd{a, b}, ppg(a, b), and pple(a, b):
+     1. Set y ← gcd{a, b}. Print y. Set x ← a/y. Set n ← 0.
+     2. (Now (x, y) = (xn , yn ) in Theorem 11.2.) Set g ← gcd{x, y}. If g = 1: print x,
+        print y, and stop.
+     3. Set x ← xg and y ← y/g. Set n ← n + 1. Return to Step 2.
+
+Theorem 11.5. Algorithm 11.3 computes gcd{a, c}, ppi(a, c), ppo(a, c) in M-time at most
+(3k + 3 + (2k + 4) lga + lg c)µ(lg ac) if k ≥ 0 and 2k ≥ lg a.
+
+
+                                                14
+Proof. By Theorem 11.1, gcd{xk , yk } = 1, so the algorithm stops when n = k if not earlier.
+It thus performs Step 2 for n ∈ {0, 1, . . . , k} at most, and Step 3 for n ∈ {0, 1, . . . , k − 1} at
+most.
+   Step 1 uses M-time at most (1 + lg ac)µ(lg ac) to compute gcd{a, c} and M-time at most
+(1 + lg a)µ(lg a) to compute a/x.
+   Each iteration of Step 2 uses M-time at most (1 + lg a)µ(lg a) since xy = xn yn = a. The
+total is at most (k + 1)(1 + lg a)µ(lg a).
+   Each iteration of Step 3 uses M-time at most (1 + lg xg)µ(lg xg) + (1 + lg y)µ(lg y) ≤
+(2 + lg xn+1 + lg yn )µ(lg a). The total for n ∈ {0, 1, 2, . . . , k − 1} telescopes to
+
+             (2k + lg xk + (k − 1) lg a + lg y0 )µ(lg a) ≤ (2k + (k + 1) lga)µ(lg a).
+
+  Add: (1 + lg ac) + (1 + lg a) + (k + 1)(1 + lg a) + (2k + (k + 1) lg a) = 3k + 3 + lg c +
+(2k + 4) lg a.
+
+Theorem 11.6. Algorithm 11.4 computes gcd{a, b}, ppg(a, b), pple(a, b) in M-time at
+most (3k + 3 + (2k + 4) lga + lg b)µ(lg ab) if k ≥ 0 and 2k ≥ lg a.
+
+Proof. Same analysis as in Theorem 11.5.
+
+
+12. The ls function
+
+  Fix a, b in a free coid. Define lsn (a, b) as (gn , hn , cn ), where
+
+                              (g0 , h0 , c0 ) = (gcd, ppg, pple)(ppi(a, b), b),
+                      (gn+1 , hn+1 , cn+1 ) = (gcd, ppg, pple)(hn , g2n ).
+
+The name ls stands for “left shift.” This function separates the primes in a and b according
+to the cases in the definition of τ in Section 9.
+
+Theorem 12.1. Let a, b be elements of a free coid. Define e = ord p a and f = ord p b where
+p is a prime. Define (gn , hn , cn ) = lsn (a, b). Then
+
+    (ord p gn , ord p hn , ord p cn ) = [0 < 2n−1 f < e] min{e, 2n f }, e[e > 2n f ], e[e ≤ 2n f ]
+                                                                                                  
+
+
+for n ≥ 1.
+
+Proof. Notice that ord p gn+1 , ord p hn+1 , and ord p cn+1 are all bounded by ord p hn ; so if
+ord p hm = 0 then ord p gn = ord p hn = ord p cn = 0 for all n > m.
+  Case 1: f = 0. Then ord p ppi(a, b) = 0 so ord p gn = ord p hn = ord p cn = 0 for all n.
+  Case 2: e ≤ f . Then ord p ppi(a, b) = e, so ord p h0 = e[e > f ] = 0, so ord p gn = ord p hn =
+ord p cn = 0 for all n ≥ 1.
+  Case 3: e > f > 0. Then ord p ppi(a, b) = e, so ord p h0 = e and ord p g0 = f . Thus
+ord p g1 = min{e, 2 f }; ord p h1 = e[e > 2 f ]; and ord p c1 = e[e ≤ 2 f ].
+
+
+                                                 15
+  Assume inductively that ord p gn = [2n−1 f < e] min{e, 2n f } and ord p hn = e[e > 2n f ]. If
+e ≤ 2n f then ord p hn = 0 so ord p gn+1 = ord p hn+1 = ord                                   n
+                                                               p cn+1 = 0 as desired. If e > 2 f
+then (ord p gn , ord p hn ) = (2n f , e) so ord p gn+1 = min e, 2n+1 f as desired; ord p hn+1 =
+                                                            
+
+e[e > 2n+1 f ] as desired; and ord p cn+1 = e[e ≤ 2n+1 f ] as desired.
+
+Theorem 12.2. Let a, b be elements of a free coid. Define (gn , hn , cn ) = lsn (a, b). If m ≥ 1
+and hm = 1 then a = c0 c1 · · · cm ppo(a, b). Furthermore, any two members of the sequence
+c0 , c1 , . . . , cm , ppo(a, b) are coprime.
+
+Proof. Write e = ord p a and f = ord p b where p is a prime. I will show that the sum of
+the numbers ord p c0 , ord p c1 , . . . , ord p cm , ord p ppo(a, b) is e, and that at most one of the
+numbers is nonzero.
+  Case 1: f = 0. Then ord p ppi(a, b) = 0 so ord p c0 = 0; ord p cn = 0 for n ≥ 1; and
+ord p ppo(a, b) = e.
+  Case 2: e ≤ f . Then ord p ppo(a, b) = 0; ord p c0 = e[e ≤ f ] = e; and ord p cn = 0 for n ≥ 1.
+  Case 3: e > f > 0. Then ord p c0 = 0; ord p cn = e[2n−1 f < e ≤ 2n f ] for n ≥ 1; and
+ord p ppo(a, b) = 0. There is exactly one value of k ≥ 1 for which 2k−1 f < e ≤ 2k f ; and
+ord p hm = 0 so e ≤ 2m f so k ≤ m.
+
+Theorem 12.3. Let a, b be elements of a free coid. Define (gn , hn , cn ) = lsn (a, b). Define
+                                         n−1                     n−1
+dn = gcd{cn , b} for n ≥ 1. Then dn2 divides cn ; λ(cn /dn2 , dn ) ≤ λ(a, b)−1 if b 6= 1; and
+c0 d1 d2 · · · dn divides b. Furthermore, if m ≥ 1 and hm = 1, then b/d1 d2 · · · dm is coprime to
+a/c0 , and λ(b/c0 d1 d2 · · · dm , c0 ) ≤ λ(a, b) − 1 if b 6= 1.
+
+Proof. Write e = ord p a and f = ord p b where p is a prime.
+   By Theorem 12.1, ord p cn = e[2n−1 f < e ≤ 2n f ], so ord p dn = f [2n−1 f < e ≤ 2n f ], so
+                                                               n−1
+2n−1 ord p dn ≤ e[2n−1 f < e ≤ 2n f ] = ord p cn . Thus dn2 divides cn .
+   Next, ord p c0 d1 d2 · · · dn = e[e ≤ f ] + f [ f < e ≤ 2n f ] ≤ f [e ≤ f ] + f [ f < e ≤ 2n f ] =
+f [e ≤ 2n f ] ≤ f . Thus c0 d1 d2 · · · dn divides b.
+   If hm = 1 then f = 0 or e ≤ 2m f , so ord p d1 d2 · · · dm = f [ f < e], so ord p (b/d1 d2 · · · dm ) =
+f [e ≤ f ]; but ord p (a/c0 ) = e[e > f ]. Thus b/d1 d2 · · · dm and a/c0 are coprime.
+   Assume from now on that b 6= 1. Write k = λ(a, b). Then τk (e, f ) = (. . . , 0) by definition
+of λ, and k ≥ 1 by Theorem 9.4.
+                                               n−1
+   If 2n−1 f < e ≤ 2n f then (ord p (cn /dn2 ), ord p dn ) = (e − 2n−1 f , f ) = τ(e, f ) so
+                                             n−1
+                      τk−1 (ord p (cn /dn2         ), ord p dn ) = τk (e, f ) = (. . . , 0).
+                           n−1                                                      n−1
+Otherwise (ord p (cn /dn2 ), ord p dn ) = (0, 0) so τk−1 (ord p (cn /dn2 ), ord p dn ) = (0, 0).
+   Finally, if hm = 1 and e ≤ f then (ord p (b/c0 d1 d2 · · · dm ), ord p c0 ) = ( f − e, e) = τ(e, f );
+if hm = 1 and e > f then (ord p (b/c0 d1 d2 · · · dm ), ord p c0 ) = (0, 0); in either case, as above,
+τk−1 (ord p (b/c0 d1 d2 · · · dm ), ord p c0 ) = (. . . , 0).
+
+Theorem 12.4. Let a, b be elements of a free coid. Define (gn , hn , cn ) = lsn (a, b). If m ≥ 1
+and 2m−1 ≥ lg a then hm = 1.
+
+
+                                                        16
+Proof. Write e = ord p a and f = ord p b where p is a prime. Then e ≤ lg a ≤ 2m−1 by
+Theorem 9.2. If f = 0 then ord p hm = 0; if f ≥ 1 then e ≤ 2m−1 f so ord p hm = 0.
+
+
+13. Computing a coprime base for a two-element set
+
+  This section introduces a fast algorithm to compute cb{a, b}.
+
+Theorem 13.1. Let a, b be elements of a free coid. Define (gn , hn , cn ) = lsn (a, b). Define
+                                                                                       n−1
+dn = gcd{cn , b} for n ≥ 1. Assume that hm = 1 with m ≥ 1. Define Pn = cb{cn /dn2 , dn }
+for 1 ≤ n ≤ m. Define Q = cb{b/c0 d1 d2 · · · dm , c0 }. Define R = cb{ppo(a, b)}. Then P =
+  Pn is a disjoint union; P ∪ Q ∪ R is a disjoint union; and P ∪ Q ∪ R = cb{a, b}.
+S
+
+
+Proof. By construction dn divides cn , so each element of Pn divides cn . Hence, by Theorem
+12.2, elements of Pn are coprime to elements of Pk for k 6= n. Natural coprime bases do not
+contain 1, so P1 , P2 , . . . , Pm are disjoint, and their union P is a coprime set.
+  Next, by Theorem 12.2 again, c1 , c2 , . . . , cm are coprime to ppo(a, b), so P is disjoint
+from R, and P ∪ R is a coprime set.
+  Next, each element of Q divides b/d1 d2 · · · dm , hence is coprime to a/c0 by Theorem
+12.3, hence is coprime to c1 c2 · · · cm ppo(a, b) by Theorem 12.2. Thus Q is disjoint from
+P ∪ R, and P ∪ Q ∪ R is a coprime set.
+  Next, the coid generated by P ∪ Q ∪ R contains b/c0 d1 d2 · · · dm (via Q), c0 (via Q), and
+                                                                     n−1
+each dn (via Pn ), so it contains b. It also contains cn /dn2            and thus cn (via Pn ), plus
+ppo(a, b) (via R), so it contains c0 c1 · · · cm ppo(a, b) = a by Theorem 12.2.
+  Finally, naturalness follows from Theorem 7.3.
+
+Algorithm 13.2. Given (a, b), to print cb{a, b}:
+     1. If b = 1: Print a if a 6= 1. Stop.
+     2. Compute (a, r) ← (ppi, ppo)(a, b) by Algorithm 11.3.
+     3. Print r if r 6= 1.
+     4. Compute (g, h, c) ← (gcd, ppg, pple)(a, b) by Algorithm 11.4.
+     5. Set c0 ← c. Set x ← c0 .
+     6. Set n ← 1.
+     7. Compute (g, h, c) ← (gcd, ppg, pple)(h, g2 ) by Algorithm 11.4.
+     8. Set d ← gcd{c, b}. (Now (g, h, c, d) = (gn , hn , cn , dn ).)
+     9. Set x ← xd. (Now x = c0 d1 d2 · · · dn .)
+                           n−1
+    10. Compute y ← d 2 by Algorithm 10.1.
+    11. Recursively apply Algorithm 13.2 to (c/y, d).
+    12. If h 6= 1: Set n ← n + 1. Return to Step 7.
+    13. Recursively apply Algorithm 13.2 to (b/x, c0 ).
+
+   Beware that, even though cb{a, b} = cb{b, a}, the M-time used by Algorithm 13.2 may
+depend on the order of inputs. The order of arguments in Algorithm 13.2’s recursive calls
+is important for the time analysis below.
+
+
+                                                17
+Theorem 13.3. Algorithm 13.2 computes cb{a, b} in M-time at most
+
+                           λ(a, b)(4m2 + 12m + 4)(lg ab)µ(3 lg ab)
+
+if m ≥ 1 and 2m−1 ≥ lg ab.
+
+Proof. If b = 1 then Algorithm 13.2 stops immediately in Step 1, using no M-time; and
+λ(a, b)(4m2 + 12m + 4)(lg ab)µ(3 lg ab) ≥ 0. So assume that b 6= 1.
+   The point is that λ(a, b) decreases at each level of recursion: λ(c/y, d) ≤ λ(a, b) − 1 in
+Step 11, and λ(b/x, c0 ) ≤ λ(a, b) − 1 in Step 13, by Theorem 12.3. So induct on λ(a, b).
+                                                                          n−1
+The product of all the inputs in Steps 11 and 13 is b ∏n≥1 (cn /dn2 ), which divides ab
+by Theorem 12.2. Hence the inputs a0 , b0 to the recursive calls satisfy ∑ lg a0 b0 ≤ lg ab; in
+particular, 2m−1 ≥ lg a0 b0 . By induction, the recursive call for a0 , b0 uses M-time at most
+(λ(a, b) − 1)(4m2 + 12m + 4)(lg a0 b0 )µ(3 lg a0 b0 ); so all the recursive calls together use M-
+time at most (λ(a, b) − 1)(4m2 + 12m + 4)(lg ab)µ(3 lg ab).
+   It therefore suffices to prove that the non-recursive work in Algorithm 13.2 takes M-time
+at most (4m2 + 12m + 4)(lg ab)µ(3 lg ab).
+   By Theorem 11.5, Step 2 uses M-time at most (3m + (2m + 2) lg a + lg b)µ(lg ab); this is
+at most ((2m + 2) lg a + (3m + 1) lg b)µ(lg ab) since 1 ≤ lg b. Similarly, by Theorem 11.6,
+Step 4 uses M-time at most ((2m + 2) lg a + (3m + 1) lg b)µ(lg ab).
+   Steps 7 through 12 are performed for n ∈ {1, 2, . . . , m} at most, since hm = 1 by Theorem
+12.4.
+   The squaring of g in Step 7 uses M-time at most (1 + 2 lg g)µ(2 lg g) per iteration. The
+total across iterations is at most (2m lg a + m lg b)µ(2 lg a) since g divides a.
+   By Theorem 11.6, the invocation of Algorithm 11.3 in Step 7 uses M-time at most
+(3m+(2m+2) lg h+lg g2 )µ(lg hg2 ) per iteration, since 2m−1 ≥ lg a ≥ lg h. The total across
+iterations is at most (m(2m + 4) lg a + 3m2 lg b)µ(3 lg a) since g and h divide a.
+   Step 8 uses M-time at most (1 + lg ab)µ(lg ab) per iteration since c divides a. The total
+across iterations is at most (m lg a + 2m lg b)µ(lg ab).
+   Step 9 uses M-time at most (1+lg b)µ(lg b) per iteration since the final value of x divides
+b. The total across iterations is at most (2m lg b)µ(lg b).
+   Step 10 uses M-time at most (n − 1 + 2(2n−1 − 1) lg d)µ(2n−1 lg d) by Theorem 10.2;
+this is at most (2 lg a + m lg b)µ(lg a) since 2n−1 lg d ≤ lg a. The total across iterations is at
+most (2m lg a + m2 lg b)µ(lg a).
+   The division in Step 11 uses M-time at most (1 + lg a)µ(lg a) per iteration since c divides
+a. The total across iterations is at most (m lg a + m lg b)µ(lg a).
+   The division in Step 13 uses M-time at most (1 + lg b)µ(lg b) ≤ (2 lg b)µ(lg b).
+   The grand total is at most µ(3 lg ab) times (2m2 + 14m + 4) lg a + (4m2 + 12m + 4) lg b ≤
+(4m2 + 12m + 4) lg a + (4m2 + 12m + 4) lg b = (4m2 + 12m + 4) lg ab as claimed.
+
+Theorem 13.4. Algorithm 13.2 computes cb{a, b} in M-time at most 8m(m2 + 3m + 1) ·
+(lg ab)µ(3 lg ab) if m ≥ 1 and 2m−1 ≥ lg ab.
+
+Proof. λ(a, b) ≤ 2m by Theorem 9.3.
+
+
+
+                                               18
+PART III. FINITE SETS
+
+14. Computing prod
+
+  The following algorithm is the standard way to compute prod S in essentially linear time.
+See [7, Section 12] for credits.
+
+Algorithm 14.1. Given a finite set S, to print prod S:
+     1. If S = {}: Print 1. Stop.
+     2. If #S = 1: Find a ∈ S. Print a. Stop.
+     3. Select T ⊆ S with #T = b#S/2c.
+     4. Compute X ← prod T by Algorithm 14.1 recursively.
+     5. Compute Y ← prod(S − T ) by Algorithm 14.1 recursively.
+     6. Print XY .
+
+Theorem 14.2. Algorithm 14.1 computes prod S in M-time at most (#S − 1 + m lg prod S) ·
+µ(lg prod S) if 2m ≥ #S ≥ 1.
+
+Proof. Induct on m.
+  Case 1: #S = 1. Algorithm 14.1 uses no M-time; and #S − 1 + m lg prod S ≥ 0.
+  Case 2: #S ≥ 2. Then m ≥ 1. Now #T = b#S/2c, so #T ≤ 2m−1 and #(S − T ) ≤ 2m−1 .
+In Steps 4 and 5, by induction, Algorithm 14.1 uses M-time at most
+
+          (#T − 1 + (m − 1) lg prod T )µ(lg prod T )
+                    + (#(S − T ) − 1 + (m − 1) lg prod(S − T ))µ(lg prod(S − T ))
+              ≤ (#S − 2 + (m − 1) lg prod S)µ(lg prod S)
+
+since lg prod T + lg prod(S − T ) = lg prod S. In Step 6, Algorithm 14.1 uses M-time at
+most (1 + lg prod S)µ(lg prod S). Add: #S − 2 + (m − 1) lg prod S + 1 + lg prod S = #S − 1 +
+m lg prod S.
+
+
+15. The split function
+
+  Define split(a, P) = {(p, ppi(a, p)) : p ∈ P} when P is coprime. This section presents a
+fast algorithm to compute split(a, P). See Sections 16 and 21 for applications.
+
+Theorem 15.1. Let b be an element of a free coid H. Let P be a finite coprime subset of
+H. Then b = ppo(b, prod P) ∏ p∈P ppi(b, p).
+
+Proof. Write x = prod P. I will show that ordq b = ordq ppo(b, x) + ∑ p∈P ordq ppi(b, p) for
+every prime q: one of the terms on the right side is ordq b while the others are all 0.
+  Case 1: q divides some p ∈ P. Then ordq x > 0 so ordq ppo(b, x) = 0, and ordq p > 0
+so ordq ppi(b, p) = ordq b. If p0 ∈ P with p0 6= p then p0 is coprime to p by hypothesis, so
+ordq p0 = 0, so ordq ppi(b, p0 ) = 0.
+
+
+                                            19
+   Case 2: q does not divide any p ∈ P. Then ordq p = 0 so ordq ppi(b, p) = 0. Also ordq x =
+0, so ordq ppo(b, x) = ordq b.
+
+Theorem 15.2. Let a be an element of a free coid H. Let P be a finite coprime subset of
+H. Define b = ppi(a, prod P). Then split(a, P) = split(b, P), and split(a, P) = {(p, b)} if
+P = {p}.
+
+Proof. Fix p ∈ P. If q is a prime then ordq b = (ordq a)[ordq prod P > 0] so ordq ppi(b, p) =
+(ordq a)[ordq prod P > 0][ordq p > 0] = (ordq a)[ordq p > 0] = ordq ppi(a, p). Therefore
+ppi(a, p) = ppi(b, p).
+  If P = {p} then prod P = p so b = ppi(a, p) so split(a, P) = {(p, b)}.
+
+Algorithm 15.3. Given (a, P) with P coprime, to print split(a, P):
+     1. If P = {}: Stop.
+     2. Compute b ← ppi(a, prod P) by Algorithm 14.1 and Algorithm 11.3.
+     3. If #P = 1: find p ∈ P, print (p, b), and stop.
+     4. Select Q ⊆ P with #Q = b#P/2c.
+     5. Print split(b, Q) by Algorithm 15.3 recursively.
+     6. Print split(b, P − Q) by Algorithm 15.3 recursively.
+
+Theorem 15.4. Write x = prod P and b = ppi(a, x). Algorithm 15.3 computes split(a, P)
+in M-time at most ((2k + 4)(lg a + 2m lg b) + (m+1)(m+2)
+                                                  2      lg x + (6k + m + 5)#P − 3k − 2) ·
+                    k             m
+µ(lg ax) if k ≥ 0, 2 ≥ lg a, and 2 ≥ #P ≥ 1.
+
+Proof. Induct on m.
+  Step 2 uses M-time at most (#P − 1 + m lg x)µ(lg x) to compute x by Theorem 14.2,
+and M-time at most (3k + 3 + (2k + 4) lga + lg x)µ(lg ax) to compute b by Theorem 11.5. I
+claim that the rest of Algorithm 15.3 uses M-time at most (2k + 4)(2m lg b) + m(m+1)
+                                                                                  2    lg x +
+(6k + m + 4)#P − 6k − 4 times µ(lg ax).
+  Case 1: #P = 1. Then Algorithm 15.3 stops in Step 3, so there is no additional M-time;
+and (2k + 4)(2m lg b) + m(m+1)
+                            2    lg x + (6k + m + 4)#P − 6k − 4 ≥ 0 since m ≥ 0.
+  Case 2: #P ≥ 2. Write y = prod Q and z = prod(P − Q). Then y is coprime to z, so
+b = ppo(b, yz) ppi(b, y) ppi(b, z) by Theorem 15.1; hence lg ppi(b, y) + lg ppi(b, z) ≤ lg b.
+By induction, Step 5 uses M-time at most
+
+                                                m(m + 1)
+     (2k + 4)(lg b + 2(m − 1) lg ppi(b, y)) +            lg y + (6k + m + 4)#Q − 3k − 2
+                                                   2
+times µ(lg by) ≤ µ(lg ax), and Step 6 uses M-time at most
+
+                                             m(m + 1)
+  (2k + 4)(lg b + 2(m − 1) lg ppi(b, z)) +            lg z + (6k + m + 4)#(P − Q) − 3k − 2
+                                                2
+times µ(lg bz) ≤ µ(lg ax), so Steps 5 and 6 together use M-time at most
+
+                                             m(m + 1)
+        (2k + 4)(2 lg b + 2(m − 1) lg b) +            lg x + (6k + m + 4)#P − 6k − 4
+                                                2
+
+
+                                               20
+times µ(lg ax) as claimed.
+
+16. Extending a coprime base
+
+  Algorithm 16.2 finds cb(P ∪ {b}) when P is coprime.
+  Bach, Driscoll, and Shallit considered this problem in [2, page 211]. They used elements
+of P = {p0 , p1 , . . .} one at a time: factor b and p0 into coprimes, all of which divide p0
+except for a divisor b1 of b; then factor b1 and p1 into coprimes, all of which divide p1
+except for a divisor b2 of b1 ; and so on. This strategy inherently takes quadratic time.
+  Algorithm 16.2 instead uses Algorithm 15.3 to quickly factor b into one part for each
+element of P and one remaining part; see Theorem 15.1. Algorithm 16.2 then handles each
+part independently.
+
+Theorem 16.1. Let b be an element of a free coid H. Let P be a finite coprime subset of H.
+Define x = prod P. For each p ∈ P define Q p = cb{p, ppi(b, p)}. Define R = cb{ppo(b, x)}.
+Then Q = Q p is a disjoint union; Q ∪ R is a disjoint union; and Q ∪ R = cb(P ∪ {b}).
+          S
+
+
+Proof. If p and p0 are distinct elements of P then p is coprime to p0 so p ppi(b, p) is
+coprime to p0 ppi(b, p0 ). Thus Q p and Q p0 are disjoint, and Q is a coprime set.
+  If p ∈ P then p divides x so both p and ppi(b, p) are coprime to ppo(b, x). Thus Q and
+R are disjoint, and Q ∪ R is a coprime set.
+  The coid generated by Q∪R contains each p ∈ P (via Q p ). It also contains each ppi(b, p)
+and ppo(b, x), hence b by Theorem 15.1.
+  Naturalness follows from Theorem 7.3.
+
+Algorithm 16.2. Given (P, b) with P coprime, to print cb(P ∪ {b}):
+     1. If P = {}: Print b if b 6= 1. Stop.
+     2. Compute x ← prod P by Algorithm 14.1.
+     3. Compute (a, r) ← (ppi, ppo)(b, x) by Algorithm 11.3.
+     4. Print r if r 6= 1.
+     5. Compute S ← split(a, P) by Algorithm 15.3.
+     6. For each (p, c) ∈ S: Apply Algorithm 13.2 to (p, c).
+
+Theorem 16.3. Write x = prod P. Algorithm 16.2 computes cb(P ∪ {b}) in M-time at most
+(8m3 + 28m2 + 18m + 4)(lg bx)µ(3 lg bx) if 1 ∈
+                                             / P, m ≥ 1, and 2m−1 ≥ lg bx.
+
+Proof. If P = {} then Algorithm 16.2 uses no M-time; and (8m3 +28m2 +18m+4) lg bx ≥
+0. So assume that #P ≥ 1. Note that #P ≤ lg x ≤ 2m−1 since 1 ∈/ P.
+   By Theorem 14.2, Step 2 takes M-time at most (#P − 1 + m lg x)µ(lg x).
+   By Theorem 11.5, Step 3 takes M-time at most (3m + (2m + 2) lg b + lg x)µ(lg bx).
+   By Theorem 15.4, Step 5 takes M-time at most µ(lg bx) times (2m + 2)(2m + 1) lgb +
+1
+2 (m + 1)(m + 2) lg x + (7m − 1)#P − 3m + 1.
+   By Theorem 13.4, the application of Algorithm 13.2 to (p, c) in Step 6 takes M-time at
+most 8m(m2 + 3m + 1)(lg cp)µ(3 lg cp). The product of c’s divides b by Theorem 15.1, so
+the sum of lg cp is at most lg bx.
+
+
+                                            21
+  Add:
+
+     #P − 1 + m lg x + 3m + (2m + 2) lgb + lg x
+               + (2m + 2)(2m + 1) lg b + 21 (m + 1)(m + 2) lg x + (7m − 1)#P − 3m + 1
+               + 8m(m2 + 3m + 1)(lg bx)
+         = (8m3 + 28m2 + 16m + 4) lg b + (8m3 + 24.5m2 + 10.5m + 2) lg x + 7m#P
+         ≤ (8m3 + 28m2 + 16m + 4) lg b + (8m3 + 24.5m2 + 17.5m + 2) lg x
+         ≤ (8m3 + 28m2 + 18m + 4) lg bx.
+
+
+
+
+17. Merging coprime bases
+
+   Algorithm 17.3 finds cb(P ∪ Q) if P is coprime and Q is coprime.
+   This algorithm combines an old idea with a new idea. The old idea is to hit P with
+one element of Q at a time. For example, cb(P ∪ {q0 , q1 , q2 , q3 }) can be computed as
+cb(cb(cb(cb(P ∪ {q0 }) ∪ {q1 }) ∪ {q2 }) ∪ {q3 }) with four applications of Algorithm 16.2.
+This is how Bach, Driscoll, and Shallit compute cb Q for arbitrary sets Q in [2, page 211];
+this idea does not need Q to be a coprime set.
+   The problem with the old idea is that it inherently takes quadratic time if #Q is large.
+The new idea is to first replace Q with a new set that has far fewer elements but has Q as
+its natural coprime base. See Theorem 17.1. The new set takes more space than Q, but the
+expansion is only logarithmic.
+   Define biti k, where i and k are nonnegative integers, as the ith bit in k’s binary expansion.
+In other words, write k as ∑i≥0 2i biti k with biti k ∈ {0, 1}.
+
+Theorem 17.1. Let q0 , q1 , . . . , qn−1 be distinct elements of a free coid, with q j coprime to
+qk for j 6= k. Let b ≥ 1 be an integer with 2b ≥ n. Define x(e, i) = prod{qk : biti k = e}. If a
+coprime set P is a base for {x(0, 0), x(0, 1), . . ., x(0, b − 1), x(1, 0), x(1, 1), . . ., x(1, b − 1)}
+then it is a base for {q0 , . . . , qn−1 }.
+
+Proof. If j, k ∈ {0, 1, . . . , n − 1} satisfy biti k = biti j for all i ∈ {0, 1, . . . , b − 1} then j = k.
+Thus
+               gcd{x(biti j, i) : 0 ≤ i < b}
+                                n                              o
+                                      [bit k=biti j]
+                     = gcd ∏k qk i                   :0≤i<b            by definition of x
+                               min{[biti k=biti j]:0≤i<b}
+                      = ∏k qk                                         by Theorem 6.6
+                               [k= j]
+                      = ∏k qk           = q j.
+Hence P is a base for q j by Theorem 7.2.
+
+Theorem 17.2. Let H be a free coid. Let P be a finite coprime subset of H. Let q0 , . . . , qn−1
+be distinct elements of H, with q j coprime to qk for j 6= k. Let b ≥ 1 be an integer with
+
+
+                                                     22
+2b ≥ n. Define x(e, i) = prod{qk : biti k = e}. Define
+
+                      S0 = P
+                                                         
+                      S1 = cb cb S0 ∪ {x(0, 0)} ∪ {x(1, 0)}
+                                                         
+                      S2 = cb cb S1 ∪ {x(0, 1)} ∪ {x(1, 1)}
+                                                         
+                      S3 = cb cb S2 ∪ {x(0, 2)} ∪ {x(1, 2)}
+                      ..
+                       .
+                                                                    
+                       Sb = cb cb Sb−1 ∪ {x(0, b − 1)} ∪ {x(1, b − 1)} .
+
+Then Sb = cb(P ∪ {q0 , q1 , . . . , qn−1 }).
+
+Proof. Sb is a base for P ∪ {x(0, 0), x(0, 1), . . ., x(0, b − 1), x(1, 0), x(1, 1), . . ., x(1, b − 1)}
+and is coprime. By Theorem 17.1, Sb is a base for P ∪ {q0 , . . . , qn−1 }. Naturalness follows
+from Theorem 7.3.
+
+Algorithm 17.3. Given (P, Q), with P coprime and Q coprime, to print cb(P ∪ Q):
+     1. Set n = #Q. Label the elements of Q as q0 , q1 , . . . , qn−1 .
+     2. Find the smallest b ≥ 1 with 2b ≥ n. Set S ← P. Set i ← 0.
+     3. (Now S = Si .) If i = b: Print S. Stop.
+     4. Compute x ← prod{qk : biti k = 0} by Algorithm 14.1.
+     5. Compute T ← cb(S ∪ {x}) by Algorithm 16.2.
+     6. Compute x ← prod{qk : biti k = 1} by Algorithm 14.1.
+     7. Compute S ← cb(T ∪ {x}) by Algorithm 16.2.
+     8. Set i ← i + 1. Return to Step 3.
+
+Theorem 17.4. Write z = (prod P)(prod Q)2 . Algorithm 17.3 computes cb(P ∪ Q) in M-
+time at most 2m(8m3 + 28m2 + 19m + 4)(lg z)µ(3 lg z) if 1 ∈
+                                                          / P, m ≥ 1, and 2m−1 ≥ lg z.
+
+Proof. Write n = #Q. Then n − 1 ≤ lg prod Q ≤ lg z ≤ 2m−1 , so n ≤ 1 + 2m−1 ≤ 2m , so
+b ≤ m in Step 2. Thus there are at most m iterations of Steps 4 through 7.
+   By Theorem 7.5, prod S and prod T divide (prod P)(prod Q); also, x divides prod Q. Thus
+Step 5 and Step 7 each use M-time at most (8m3 + 28m2 + 18m + 4)(lg z)µ(3 lg z) per
+iteration by Theorem 16.3. Step 4 and Step 6 each use M-time at most m(lg z)µ(lg z) by
+Theorem 14.2. The total is at most 2(8m3 + 28m2 + 19m + 4)(lg z)µ(3 lg z) per iteration.
+
+
+
+18. Computing a coprime base for a finite set
+
+  Algorithm 18.1 computes the natural coprime base for any finite subset of a free coid. It
+uses Algorithm 17.3 to merge coprime bases for halves of the set.
+
+Algorithm 18.1. Given S, to print cb S:
+
+
+                                                  23
+      1. If S = {}: Stop.
+      2. If #S = 1: Find a ∈ S. Print a if a 6= 1. Stop.
+      3. Select T ⊆ S with #T = b#S/2c.
+      4. Compute P ← cb T by Algorithm 18.1 recursively.
+      5. Compute Q ← cb(S − T ) by Algorithm 18.1 recursively.
+      6. Print cb(P ∪ Q) by Algorithm 17.3.
+
+Theorem 18.2. Write x = prod S. Algorithm 18.1 computes cb S in M-time at most
+
+                        4mk(8m3 + 28m2 + 19m + 4)(lg x)µ(6 lg x)
+
+if m ≥ 1, 2m−1 ≥ 2 lg x, and 2k ≥ #S ≥ 1.
+
+Proof. If #S = 1 then Algorithm 18.1 uses no M-time. Otherwise, by induction on k, Step
+4 uses M-time at most 4m(k − 1)(8m3 + 28m2 + 19m + 4)(lg prod T )µ(6 lg x), and Step 5
+uses M-time at most 4m(k − 1)(8m3 + 28m2 + 19m + 4)(lg prod(S − T ))µ(6 lg x). Step 6
+uses M-time at most 2m(8m3 + 28m2 + 19m + 4)(2 lg x)µ(6 lg x) by Theorem 17.4. Add.
+
+
+
+PART IV. FACTORIZATION
+
+19. The reduce function
+
+  Let p and a be elements of a free coid, with p 6= 1. Define reduce(p, a) = (i, a/pi ),
+where i is the largest integer such that pi divides a.
+  Algorithm 19.2 computes reduce(p, a). It is a simplified version of one of the algorithms
+that I outlined in [6, Section 22].
+
+Theorem 19.1. Let p, a be elements of a free coid, with p 6= 1. Assume that p divides a.
+Define ( j, b) = reduce(p2 , a/p). If p divides b then reduce(p, a) = (2 j +2, b/p). Otherwise
+reduce(p, a) = (2 j + 1, b).
+
+Proof. a/p = (p2 ) j b, with p2 not dividing b, by definition of ( j, b). If p divides b then
+a = p2 j+2 (b/p), with p not dividing b/p, so reduce(p, a) = (2 j + 2, b/p). Otherwise a =
+p2 j+1 b, with p not dividing b, so reduce(p, a) = (2 j + 1, b).
+
+Algorithm 19.2. Given (p, a) with p 6= 1, to print reduce(p, a):
+     1. If p does not divide a: Print (0, a) and stop.
+     2. Compute ( j, b) ← reduce(p2 , a/p) by Algorithm 19.2 recursively.
+     3. If p divides b: Print (2 j + 2, b/p) and stop.
+     4. Print (2 j + 1, b).
+
+Theorem 19.3. Write (i, c) = reduce(p, a). Algorithm 19.2 computes (i, c) in M-time at
+most (4k − 3)(1 + lg ap)µ(lg ap) if 2k > i + 1.
+
+
+                                             24
+Proof. Induct on k. Note that k ≥ 1 since 2k ≥ i + 2 ≥ 2.
+  Case 1: i = 0. Algorithm 19.2 uses M-time at most (1 + lg ap)µ(lg ap) in Step 1; it then
+stops, since p does not divide a. Also 4k − 3 ≥ 1.
+  Case 2: i > 0. Then j ≤ (i − 1)/2 in Step 2 so j + 1 ≤ (i + 1)/2 < 2k−1 . By induction,
+the recursive call in Algorithm 19.2 uses M-time at most (4k − 7)(1 + lg ap)µ(lg ap). The
+algorithm also uses M-time at most (1 + lg ap)µ(lg ap) for the divisibility test in Step 1,
+(1+lg p2 )µ(lg p2 ) for the computation of p2 in Step 2, (1+lg a)µ(lg a) for the computation
+of a/p in Step 2, (1 + lg bp)µ(lg bp) for the divisibility test in Step 3, and (1 + lg b)µ(lg b)
+for the division in Step 3, if that division happens. The total is at most µ(lg ap) times
+(4k − 3)(1 + lg ap) + 2 lg b − 2 lg a + 1; and 2 lg b − 2 lg a + 1 ≤ 2 lg(a/p) − 2 lg a + 1 =
+1 − 2 lg p < 0 since lg p ≥ 1.
+
+
+20. Factoring over a coprime base
+
+   Let a be an element of a free coid, and let P be a finite coprime set with 1 ∈
+                                                                                / P. Algorithm
+20.1 factors a as a product of powers of elements of P if possible; otherwise it proclaims
+failure. Algorithm 20.1 prints the factorization of a as a list of pairs (p, n) meaning pn
+where p ∈ P.
+   The conventional approach to this problem, as in [2, Theorem 7], is to divide a by one
+element of P at a time. This approach inherently takes quadratic time. What I do instead
+is separate a into two pieces for two halves of P, and then handle each piece recursively,
+as in Algorithm 15.3.
+
+Algorithm 20.1. Given (a, P), with P coprime and 1 ∈   / P, to print the factorization of a
+over P:
+      1. If P = {}: Proclaim failure if a 6= 1. Stop.
+      2. If #P = 1: Find p ∈ P. Compute (n, c) ← reduce(p, a) by Algorithm 19.2. If
+         c 6= 1, proclaim failure and stop. Otherwise print (p, n) and stop.
+      3. Select Q ⊆ P with #Q = b#P/2c.
+      4. Compute y ← prod Q by Algorithm 14.1.
+      5. Compute (b, c) ← (ppi, ppo)(a, y) by Algorithm 11.3.
+      6. Apply Algorithm 20.1 to (b, Q) recursively. If Algorithm 20.1 fails, proclaim
+         failure and stop.
+      7. Apply Algorithm 20.1 to (c, P − Q) recursively. If Algorithm 20.1 fails, proclaim
+         failure and stop.
+
+Theorem 20.2. Let H be a free coid. Let P be a finite coprime subset of H with 1 ∈  / P. Let
+a be an element of H. If P is a base for {a} then Algorithm 20.1 prints the factorization of
+a over P. Otherwise Algorithm 20.1 proclaims failure.
+
+Proof. Induct on #P.
+  Case 1: P = {}. Algorithm 20.1 correctly proclaims failure for a 6= 1, and correctly
+prints nothing for a = 1.
+
+
+                                              25
+  Case 2: P = {p}. If Algorithm 20.1 does not proclaim failure, then it prints (p, n); and
+a/pn = c = 1 so a = pn . Conversely, if a = pn for some n, then Algorithm 19.2 returns
+(n, 1), so Algorithm 20.1 does not proclaim failure.
+  Case 3: #P ≥ 2. Say P is a base for {a}. P is also a base for {y}, so P is a base for
+{b, c} by Theorem 7.2. If p ∈  / Q then p is coprime to y so p is coprime to b; thus Q is a
+base for {b}. Similarly P − Q is a base for {c}. By induction, Algorithm 20.1 prints the
+factorizations of b and c into elements of Q and P − Q respectively, which together form a
+factorization of a since bc = a; and Algorithm 20.1 does not proclaim failure.
+  Conversely, if Algorithm 20.1 does not proclaim failure, then P is a base for {b, c} by
+induction, hence for {a}.
+
+Theorem 20.3. Write x = prod P. Algorithm 20.1 finishes in M-time at most µ(lg ax) times
+                                               
+                                       m(m + 1)                  m
+   (4k − 3 + m(2k + 4)) lga + 4k − 3 +            lg x + 7k − 1 +    #P − 3k − 2
+                                          2                       2
+
+if 2m ≥ #P ≥ 1 and 2k > lg a + 1.
+
+Proof. Induct on m.
+  Case 1: P = {p}. The claimed bound is at least
+
+  ((4k − 3) lg a + (4k − 3) lg x + 7k − 1 − 3k − 2)µ(lgax) = (4k − 3)(1 + lg ap)µ(lg ap)
+
+since m ≥ 0. Step 2 uses M-time at most (4k − 3)(1 + lgap)µ(lg ap) by Theorem 19.3.
+  Case 2: #P ≥ 2. Then m ≥ 1, 2m−1 ≥ #Q ≥ 1, and 2m−1 ≥ #(P − Q) ≥ 1. Define y =
+prod Q and z = prod(P − Q). Also write T = 4k − 3 + (m − 1)(2k + 4) and U = 4k − 3 +
+(m − 1)m/2.
+  By Theorem 14.2, Step 4 uses M-time at most
+
+                                                   1
+                                                                             
+             (#Q − 1 + (m − 1) lg y)µ(lg y) ≤      2 #P − 1 + (m − 1) lg x       µ(lg x)
+
+since #Q ≤ 21 #P and lg y ≤ lg x.
+  By Theorem 11.5, Step 5 uses M-time at most (3k + 3 + (2k + 4)lga + lg x)µ(lg
+                                                                               ax).
+  Step 6 uses M-time at most T lg b +U lg y + 7k − 1 + 21 (m − 1) #Q − 3k − 2 µ(lg by),
+and Step 7 at most T lg c + U lg z + 7k − 1 + 21 (m − 1) #(P − Q) − 3k − 2 µ(lg cz), by
+                                                                          
+
+induction.
+  The total is at most µ(lg ax) times
+
+                1
+                                          
+                2 #P − 1 + (m − 1) lg x
+                                      + (3k + 3 + (2k + 4) lga + lg x)
+                    + T lg a +U lg x + 7k − 1 + 21 (m − 1) #P − 6k − 4 ,
+                                                                      
+
+
+which equals the claimed bound.
+
+
+
+                                              26
+21. Factoring a set over a coprime base
+
+  Let S be a finite set, and let P be a finite coprime set with 1 ∈
+                                                                  / P. Algorithm 21.2 factors
+each element a ∈ S over P if P is a base for S; otherwise it proclaims failure.
+  The conventional approach to this problem, as in [2, Theorem 7], is to separately factor
+each element of S. This approach inherently takes quadratic time. What I do instead is
+factor one number, prod S, to identify the relevant elements of P; then I split S into two
+parts to handle separately.
+
+Theorem 21.1. Let S be a finite subset of a free coid. Let P be a finite coprime base for S
+       / P. Define x = prod P, y = prod S, z = ppi(x, y), and Q = {p ∈ P : ppi(z, p) = p}.
+with 1 ∈
+Then Q is a base for S, and each element of Q divides y.
+
+Proof. Take any p ∈ P that divides some element of S. If q is a prime dividing p then q
+divides y so ordq z = ordq x so ordq ppi(z, p) = ordq x = ordq p; if q is a prime not dividing
+p then ordq ppi(z, p) = 0 = ordq p. Thus ppi(z, p) = p; i.e., p ∈ Q. Thus Q is a base for S.
+   Now write y as a product q1 q2 · · · qn where q1 , q2 , . . . , qn ∈ Q. If p ∈ P does not divide
+y, then p ∈/ {q1 , q2 , . . . , qn }, so p is coprime to q1 , q2 , . . . , qn , hence to y. Find a prime q
+dividing p; then ordq y = 0, so ordq z = 0, so ordq ppi(z, p) = 0 6= ordq p, so p ∈              / Q. Thus
+each element of Q divides y.
+
+Algorithm 21.2. Given (S, P), with P coprime and 1 ∈/ P, to print the factorization of each
+element of S over P:
+     1. If S = {}: Stop.
+     2. Compute x ← prod P by Algorithm 14.1.
+     3. Compute y ← prod S by Algorithm 14.1.
+     4. Compute z ← ppi(x, y) by Algorithm 11.3.
+     5. Compute D ← split(z, P) by Algorithm 15.3.
+     6. Compute Q ← {p ∈ P : (p, p) ∈ D}. (Now Q contains only the elements of P
+         that are relevant to S, by Theorem 21.1.)
+     7. If #S = 1: Apply Algorithm 20.1 to (y, Q), proclaiming failure if Algorithm 20.1
+         fails. Stop.
+     8. Select T ⊆ S with #T = b#S/2c.
+     9. Apply Algorithm 21.2 to (T, Q) recursively.
+    10. Apply Algorithm 21.2 to (S − T, Q) recursively.
+
+Theorem 21.3. Write x = prod P and y = prod S. Assume that P is a coprime base for S.
+Then Algorithm 21.2 finishes in M-time at most µ(lg x2 y) times
+
+                    3m + 3 + (6k + 6)(#S − 1) + (4.5m2 + 21.5m + 15) lg x
+                        + ((9k2 + 44k + 32)n + 2.5k2 + 21k − 5) lg y
+
+if 2n ≥ #S ≥ 1, 2k > lg y + 1, 2m ≥ lg x, and m ≥ 0.
+
+
+                                                   27
+Proof. Induct on n. Note that #S − 1 ≤ lg y. Similarly #P ≤ lg x since 1 ∈ / P, and #Q ≤
+lg prod Q ≤ lg y by Theorem 21.1. Write z = ppi(x, y).
+   Step 2 uses M-time at most (m + 1)(lg x)µ(lg x). This follows from Theorem 14.2 for
+#P ≥ 1. (For #P = 0, Algorithm 14.1 uses no M-time.) Similarly, Step 3 uses M-time at
+most (k + 1)(lg y)µ(lg y).
+   Step 4 uses M-time at most (3m + 3 + (2m + 4) lg x + lg y)µ(lg xy) by Theorem 11.5.
+   Step 5 uses M-time less than (4.5m2 + 18.5m + 10)(lg x)µ(lg x2 ). This follows from
+Theorem 15.4 for #P ≥ 1, since lg z ≤ lg x. (For #P = 0, Algorithm 15.3 uses no M-time.)
+   The total so far is at most (3m + 3 + (4.5m2 + 21.5m + 15) lg x + (k + 2) lg y)µ(lg x2 y),
+which is exactly (6k + 6)(#S − 1) + ((9k + 44k + 32)n + 2.5k + 20k − 7) lg y µ(lg x2 y)
+                                           2                    2
+                                                                                 
+
+below the claimed bound.
+   Case 1: #S = 1. Then Step 7 uses M-time at most (2.5k2 + 20k − 7) lg y times µ(lg x2 y).
+This follows from Theorem 20.3 for #Q ≥ 1, since 2k ≥ #Q. (For #Q = 0, Algorithm 20.1
+uses no M-time; note that 2.5k2 + 20k − 7 > 0 since k ≥ 1.)
+   Case 2: #S ≥ 2. Then Step 9 uses M-time at most µ(lg x2 y) times
+
+               3k + 3 + (6k + 6)(#T − 1) + 4.5k2 + 21.5k + 15 lg y
+                                                             
+
+                    + (9k2 + 44k + 32)(n − 1) + 2.5k2 + 21k − 5 lg prod T
+                                                               
+
+
+by induction since 2k ≥ lg prod Q. Similarly, Step 10 uses M-time at most µ(lg x2 y) times
+
+            3k + 3 + (6k + 6)(#(S − T ) − 1) + 4.5k2 + 21.5k + 15 lg y
+                                                                 
+
+                 + (9k2 + 44k + 32)(n − 1) + 2.5k2 + 21k − 5 lg prod(S − T ).
+                                                              
+
+
+Add.
+
+
+References
+
+[1] Eric Bach, James Driscoll, Jeffrey Shallit, Factor refinement, in [19] (1990), 201–211; see also
+    newer version [2]. URL: http://cr.yp.to/bib/entries.html#1990/bach-cba.
+[2] Eric Bach, James Driscoll, Jeffrey Shallit, Factor refinement, Journal of Algorithms 15 (1993),
+    199–222; see also older version [1]. ISSN 0196–6774. MR 94m:11148. URL: http://cr.
+    yp.to/bib/entries.html#1993/bach-cba.
+[3] Eric Bach, Gary Miller, Jeffrey Shallit, Sums of divisors, perfect numbers, and factoring, in
+    [15] (1984), 183–190; see also newer version [4].
+[4] Eric Bach, Gary Miller, Jeffrey Shallit, Sums of divisors, perfect numbers, and factoring, SIAM
+    Journal on Computing 15 (1986), 1143–1154; see also older version [3]. ISSN 0097–5397. MR
+    87k:11139. URL: http://cr.yp.to/bib/entries.html#1986/bach.
+[5] Daniel J. Bernstein, Fast ideal arithmetic via lazy localization, in [12] (1996), 27–34. URL:
+    http://cr.yp.to/papers.html.
+[6] Daniel J. Bernstein, Detecting perfect powers in essentially linear time, Mathematics of
+    Computation 67 (1998), 1253–1283. ISSN 0025–5718. MR 98j:11121. URL: http://cr.
+    yp.to/papers.html.
+
+
+
+                                                28
+[7] Daniel J. Bernstein, Fast multiplication and its applications, to appear in Buhler-Stevenhagen
+    Algorithmic number theory book. URL: http://cr.yp.to/papers.html#multapps.
+[8] Johannes A. Buchmann, Friedrich Eisenbrand, On factor refinement in number fields,
+    Mathematics of Computation 68 (1999), 345–350. ISSN 0025–5718. MR 99e:11155. URL:
+    http://www.ams.org/journal-getitem?pii=S0025571899010236.
+[9] Johannes A. Buchmann, Hendrik W. Lenstra, Jr., Approximating rings of integers in number
+    fields, Journal de Théorie des Nombres de Bordeaux 6 (1994), 221–260. ISSN 1246–7405. MR
+    96m:11092.
+[10] Jacques Calmet (editor), Algebraic algorithms and error-correcting codes 3, Lecture Notes in
+     Computer Science, 229, Springer-Verlag, Berlin, 1986. ISBN 0387167765.
+[11] Bob F. Caviness (editor), Proceedings of EUROCAL ’85, volume 2, Lecture Notes in Computer
+     Science, 204, Springer-Verlag, Berlin, 1985. ISBN 3–540–15984–3. MR 87a:68007.
+[12] Henri Cohen (editor), Algorithmic number theory: second international symposium, ANTS-II,
+     Talence, France, May 18–23, 1996, proceedings, Lecture Notes in Computer Science, 1122,
+     Springer-Verlag, Berlin, 1996. ISBN 3–540–61581–4. MR 97k:11001.
+[13] George E. Collins, Quantifier elimination for real closed fields by cylindrical algebraic
+     decomposition: preliminary report, SIGSAM Bulletin 8 (1974), 80–90. ISSN 0163–5825.
+[14] Jean Della Dora, Claire DiCrescenzo, Dominique Duval, About a new method for computing
+     in algebraic number fields, in [11] (1985), 289–290. URL: http://cr.yp.to/bib/
+     entries.html#1985/delladora.
+[15] Richard A. DeMillo (editor), Proceedings of the sixteenth annual ACM symposium on theory
+     of computing. Held in Washington, D.C., April 30–May 2, 1984, Association for Computing
+     Machinery, New York, 1984. ISBN 0–89791–133–4. MR 87g:68005.
+[16] Joachim von zur Gathen, Representations and parallel computations for rational functions,
+     SIAM Journal on Computing 15 (1986), 432–452. ISSN 0097–5397. MR 88f:68055. URL:
+     http://cr.yp.to/bib/entries.html#1986/vonzurgathen.
+[17] Guoqiang Ge, Recognizing units in number fields, Mathematics of Computation 63 (1994),
+     377–387. ISSN 0025–5718. MR 94i:11107. URL: http://links.jstor.org/sici?
+     sici=0025-5718(199407)63:207<377:RUINF>2.0.CO;2-8.
+[18] Patrizia Gianni (editor), Symbolic and algebraic computation: proceedings of the international
+     symposium (ISSAC ’88) held in Rome, July 4–8, 1988, Lecture Notes in Computer Science,
+     358, Springer, Berlin, 1989. ISBN 3–540–51084–2. MR 90i:00005.
+[19] David S. Johnson (editor), Proceedings of the first annual ACM-SIAM symposium on discrete
+     algorithms, January 22–24, 1990, San Francisco, California, Society for Industrial and Applied
+     Mathematics, Philadelphia, 1990. ISBN 0–89871–251–3.
+[20] Erich Kaltofen, Sparse Hensel lifting, in [11] (1985), 4–17. MR 88b:12001. URL:
+     http://cr.yp.to/bib/entries.html#1985/kaltofen.
+[21] Erich Kaltofen, Victor Shoup, Subquadratic-time factoring of polynomials over finite fields,
+     Mathematics of Computation 67 (1998), 1179–1197. ISSN 0025–5718. MR 99m:68097. URL:
+     http://www.ams.org/journal-getitem?pii=S0025571898009442.
+
+
+
+                                               29
+[22] William M. Kantor, Ákos Seress, Prime power graphs for groups of Lie type, Journal of Algebra
+     247 (2002), 370–434. MR 2003a:20026. URL: http://dx.doi.org/10.1006/jabr.
+     2001.9016.
+[23] Donald E. Knuth, The art of computer programming, volume 2: seminumerical algorithms,
+     1st edition, 1st printing, Addison-Wesley, Reading, 1969; see also newer version [24]. MR
+     44:3531.
+[24] Donald E. Knuth, The art of computer programming, volume 2: seminumerical algorithms, 1st
+     edition, 2nd printing, Addison-Wesley, Reading, 1971; see also older version [23]; see also
+     newer version [25]. MR 44:3531.
+[25] Donald E. Knuth, The art of computer programming, volume 2: seminumerical algorithms, 2nd
+     edition, Addison-Wesley, Reading, 1981; see also older version [24]; see also newer version
+     [26]. ISBN 0–201–03822–6. MR 83i:68003.
+[26] Donald E. Knuth, The art of computer programming, volume 2: seminumerical algorithms, 3rd
+     edition, Addison-Wesley, Reading, 1997; see also older version [25]. ISBN 0–201–89684–2.
+[27] Heinz Lüneburg, On a little but useful algorithm, in [10] (1986), 296–301. URL: http://cr.
+     yp.to/bib/entries.html#1986/lueneburg.
+[28] Michael Pohst, Hans Zassenhaus, Algorithmic algebraic number theory, Cambridge University
+     Press, Cambridge, 1989. ISBN 0–521–33060–2. MR 92b:11074.
+[29] Trevor J. Smedley, Detecting algebraic dependencies between unnested radicals: extended
+     abstract, in [34] (1990), 292–293. URL: http://cr.yp.to/bib/entries.html#
+     1990/smedley.
+[30] Thomas Jan Stieltjes, Sur la théorie des nombres, Annales de la Faculté des Sciences de
+     Toulouse 4 (1890), 1–103. ISSN 0240–2963.
+[31] Arne Storjohann, Computing Hermite and Smith normal forms of triangular integer matrices,
+     Linear Algebra and its Applications 282 (1998), 25–45. ISSN 0024–3795. MR 99j:65074.
+     URL: http://dx.doi.org/10.1016/S0024-3795(98)10012-5.
+[32] Jeremy T. Teitelbaum, On the computational complexity of the resolution of plane curve
+     singularities, in [18] (1989), 285–292; see also newer version [33]. MR 91g:14061. URL:
+     http://cr.yp.to/bib/entries.html#1989/teitelbaum.
+[33] Jeremy T. Teitelbaum, On the computational complexity of the resolution of plane curve
+     singularities, Mathematics of Computation 54 (1990), 797–837; see also older version [32].
+     ISSN 0025–5718. MR 91g:14061. URL: http://links.jstor.org/sici?sici=
+     0025-5718(199004)54:190<797:TCCOTR>2.0.CO;2-R.
+[34] Shunro Watanabe, Morio Nagata (editors), Proceedings of the international symposium on
+     symbolic and algebraic computation ’90, Association for Computing Machinery, New York,
+     1990. ISBN 0–201–54892–5.
+
+
+
+
+                                               30
+

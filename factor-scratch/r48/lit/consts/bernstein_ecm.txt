@@ -1,0 +1,2182 @@
+                      ECM USING EDWARDS CURVES
+
+
+DANIEL J. BERNSTEIN, PETER BIRKNER, TANJA LANGE, AND CHRISTIANE PETERS
+
+
+         Abstract. This paper introduces EECM-MPFQ, a fast implementation of the
+         elliptic-curve method of factoring integers. EECM-MPFQ uses fewer modu-
+         lar multiplications than the well-known GMP-ECM software, takes less time
+         than GMP-ECM, and finds more primes than GMP-ECM. The main improve-
+         ments above the modular-arithmetic level are as follows: (1) use Edwards
+         curves instead of Montgomery curves; (2) use extended Edwards coordinates;
+         (3) use signed-sliding-window addition-subtraction chains; (4) batch primes to
+         increase the window size; (5) choose curves with small parameters and base
+         points; (6) choose curves with large torsion.
+
+
+
+
+                                     1. Introduction
+   Factorization of integers is one of the most studied problems in algorithmic
+number theory and cryptology. One of the best general factorization methods
+available is the Elliptic-Curve Method (ECM), introduced in the 1987 paper [33]
+by Hendrik W. Lenstra, Jr. ECM plays an important role in factoring the “random”
+integers of interest to number theorists: it is not as fast as trial division and Pollard’s
+rho method for finding tiny prime factors, but it is the method of choice for finding
+medium-size prime factors. ECM also plays an important role in factoring the
+“hard” integers of interest to cryptologists: those integers are attacked by sieving
+methods, which use ECM to find medium-size prime factors of auxiliary integers.
+ECM can also be used directly to find “large” prime factors; the current record (see
+[46]) is a 241-bit factor of the 1181-bit number 21181 − 1.
+   Implementations of ECM are available in most computer-algebra packages and
+have been the subject of many papers. The state-of-the-art implementation is
+GMP-ECM, described in detail in the paper [47] by Zimmermann and Dodson.
+   We have built a new ECM implementation, “EECM-MPFQ”, that uses fewer
+modular multiplications than GMP-ECM, takes less time than GMP-ECM, and
+finds more primes than GMP-ECM. Our first prototype of EECM-MPFQ was
+“GMP-EECM”, a program that added various improvements to GMP-ECM; we
+thank Zimmermann et al. for making their software freely available!
+   In this paper we present the background and speed results for EECM-MPFQ. To
+simplify verification and reuse of our results we have published the EECM-MPFQ
+
+   2010 Mathematics Subject Classification. Primary 11Y05; Secondary 11G05.
+   Key words and phrases. Factorization, ECM, elliptic-curve method, curve selection, Edwards
+coordinates, extended Edwards coordinates.
+   Permanent ID of this document: cb39208064693232e4751ec8f3494c43. Date of this document:
+2011.10.08. This work has been supported in part by the European Commission through the ICT
+Programme under Contract ICT–2007–216676 ECRYPT-II, and in part by the National Science
+Foundation under grant ITR–0716498. This work was carried out while the fourth author was
+with Technische Universiteit Eindhoven; in part while the first author was visiting Technische
+Universiteit Eindhoven; and in part while the authors were visiting INRIA Nancy.
+                                               1
+2              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+software at http://eecm.cr.yp.to and placed it into the public domain. We are
+continuing to update http://eecm.cr.yp.to with new information about EECM:
+for example, the followup paper [11] reports a very fast parallel implementation of
+EECM using graphics cards as a computational platform.
+
+1.1. Representations of elliptic curves. Elliptic curves can be expressed in
+many forms, and elliptic-curve computations can be carried out in many ways. Two
+fast options reigned supreme for twenty years of elliptic-curve factoring, elliptic-
+curve primality proving, and (in large characteristic) elliptic-curve cryptography:
+      • Short Weierstrass curves y 2 = x3 + a4 x + a6 , with Jacobian coordinates
+         (X : Y : Z) representing (X/Z 2 , Y /Z 3 ), were the representation of choice
+         for most computations.
+      • Montgomery curves By 2 = x3 + Ax2 + x, with Montgomery coordinates
+         (X : Z) representing two points (X/Z, ± · · · ), were the representation of
+         choice for single-scalar multiplication, and in particular for stage 1 of ECM.
+The picture changed in 2007 with the advent of Edwards curves. A sequence of
+papers [13], [10], [14], [15], and [29] showed that, for cryptographic applications,
+Edwards curves involve significantly fewer multiplications than short Weierstrass
+curves in Jacobian coordinates, and — for sufficiently large scalar multiplications —
+fewer multiplications than Montgomery curves in Montgomery coordinates. Note
+that larger scalars benefit from larger windows, reducing the number of additions
+per bit for Edwards coordinates but not for Montgomery coordinates.
+
+1.2. Contributions of this paper. In this paper we analyze the impact of Ed-
+wards curves on ECM, not just in multiplication counts but also in real-world
+software speeds.
+   Section 2 discusses the group law on Edwards curves and twisted Edwards curves,
+and reviews various coordinate systems for Edwards curves. Our prototype GMP-
+EECM used twisted inverted Edwards coordinates, and EECM-MPFQ uses ex-
+tended Edwards coordinates. Section 3 analyzes points of small order on Edwards
+curves. Sections 4 and 5 discuss the use of Edwards curves inside ECM. Our an-
+nouncement of GMP-EECM in January 2008 marked the first time that Edwards
+curves had been demonstrated to achieve software speed records.
+   A large portion of this paper is devoted to explaining which curves we use in
+EECM-MPFQ. Curves having 12 or 16 torsion points over Q are guaranteed to have
+12 or 16 as divisors of their group orders modulo primes (of good reduction), im-
+proving the smoothness chance of the group orders and thus improving the success
+chance of ECM. We show how to use analogous improvements for Edwards curves;
+even better, we find new curves with large torsion group, small curve parameters,
+and small non-torsion points.
+   Section 6 explains how to construct Edwards curves having torsion group Z/12Z
+or Z/2Z × Z/8Z over Q; the symmetry of Edwards curves simplifies the construc-
+tions. Section 6 also shows that twisted Edwards curves cannot have torsion group
+Z/2Z×Z/6Z or Z/10Z over Q, and that twisted Edwards curves with torsion group
+Z/12Z or Z/2Z × Z/8Z over Q cannot have curve parameter a = −1. Section 7,
+adapting a construction of Atkin and Morain from [3] to the Edwards context, ex-
+plains how to construct an infinite family of Edwards curves having torsion group
+Z/2Z×Z/8Z and (as required for ECM) an explicit non-torsion point; and similarly
+adapts a construction of Montgomery for Z/12Z. Section 8 describes how we found
+                            ECM USING EDWARDS CURVES                                  3
+
+
+better choices of Edwards curves to use in EECM-MPFQ; each of these curves has
+torsion group Z/12Z or Z/2Z × Z/8Z, an explicit non-torsion point, and small (i.e.,
+fast) parameters.
+   Section 9 reports measurements of ECM success probabilities, demonstrating the
+importance of a large torsion group. Section 10 reports the overall effectiveness of
+EECM-MPFQ when parameters are chosen sensibly; for example, it shows that one
+curve finds 13.414% of all 30-bit primes in just 3065 modular multiplications.
+   See [9] for followup work exploring the price-performance ratio of the a = −1
+case of twisted Edwards curves in ECM.
+Acknowledgments. The authors wish to thank Paul Zimmermann for many
+detailed comments and suggestions; Igor Shparlinski for his challenging questions
+regarding ECM effectiveness and optimization, prompting the studies reported in
+Sections 9 and 10 of this paper; and the anonymous referees for their suggestions.
+
+                                2. Edwards curves
+   This section reviews twisted Edwards curves, and Edwards curves as a special
+case; the set of points on a twisted Edwards curve in affine, projective, inverted,
+extended, and completed forms; the Edwards addition law and a dual addition law,
+together turning the completed twisted Edwards curve into a group; and the speeds
+of addition and doubling in various representations.
+   For a collection of explicit formulas and operation counts for elliptic curves in
+various representations we refer to the Explicit-Formulas Database [12].
+
+2.1. Edwards curves and twisted Edwards curves. Let k be a field in which
+2 6= 0, and let a, d be distinct nonzero elements of k. The twisted Edwards curve
+E E,a,d is given by
+                            E E,a,d : ax2 + y 2 = 1 + dx2 y 2 .
+An Edwards curve is a twisted Edwards curve in which a = 1; i.e., a curve of the
+form x2 + y 2 = 1 + dx2 y 2 where d ∈ k \ {0, 1}.
+    If ad¯ = ād then the two curves E E,a,d and E E,ā,d¯ are isomorphic over k( a/ā)
+                                                                                 p
+
+            p are quadratic twists over k. An isomorphism is given by (x, y) 7→
+and therefore
+(x̄, ȳ) = ( a/āx, y). In particular, the twisted Edwards curve E E,a,d is a quadratic
+twist of the Edwards curve E E,1,d/a .
+    Five slightly different ways to build a set of points from an Edwards curve, or
+more generally a twisted Edwards   curve, have   appeared in the literature. The sim-
+plest is the set of affine points (x, y) ∈ A : ax2 + y 2 = 1 + dx2 y 2 . Four others,
+                                               2
+
+with various theoretical and computational advantages, are the projective, inverted,
+extended, and completed sets discussed below.
+
+2.2. The Edwards addition law. The Edwards addition law on E E,a,d is given
+in affine coordinates by
+                                                                            
+                                            x1 y2 + y1 x2 y1 y2 − ax1 x2
+               (x1 , y1 ), (x2 , y2 ) 7→                   ,                   .
+                                           1 + dx1 x2 y1 y2 1 − dx1 x2 y1 y2
+By inserting appropriate denominators one obtains the Edwards addition law in
+projective coordinates, inverted coordinates, extended coordinates, and completed
+coordinates.
+4               D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   The Edwards addition law is strongly unified; i.e., the same formulas can also be
+used for generic doublings. The point (0, 1) is the neutral element of the addition
+law. The negative of a point (x1 , y1 ) is (−x1 , y1 ).
+   The Edwards addition law for E E,a,d was studied by Bernstein, Birkner, Joye,
+Lange, and Peters in [8], generalizing from the case a = 1 studied by Bernstein and
+Lange in [13], generalizing from the case a = 1, d = c4 studied by Edwards in [25],
+generalizing from the case a = 1, d = −1 studied by Euler and Gauss.
+   Edwards actually used the form x2 + y 2 = c2 (1 + x2 y 2 ). Edwards showed that
+every elliptic curve over Q can be written in this normal form over an extension of
+Q. Replacing (x, y) with (cx, cy) produces the curve E E,1,c4 ; this scaling turns out
+to save time in computations. The further generalizations to E E,1,d and to E E,a,d
+allow more curves over Q to be handled at similar speeds.
+2.3. The dual addition law. Hisil, Wong, Carter, and Dawson in [29] introduced
+the addition law
+                                                                        
+                                             x1 y1 + x2 y2 x1 y1 − x2 y2
+                (x1 , y1 ), (x2 , y2 ) 7→                 ,                .
+                                            y1 y2 + ax1 x2 x1 y2 − y1 x2
+on E E,a,d . This dual addition law produces the same output as the Edwards addi-
+tion law when both are defined, but the exceptional cases are different. In particu-
+lar, the dual addition law never works for doublings: if (x1 , y1 ) = (x2 , y2 ) then the
+second output coordinate (x1 y1 − x2 y2 )/(x1 y2 − y1 x2 ) is 0/0. The dual addition
+law nevertheless has some important advantages, as discussed below.
+2.4. Projective points. The projective twisted Edwards curve is
+               (X : Y : Z) ∈ P2 : aX 2 Z 2 + Y 2 Z 2 = Z 4 + dX 2 Y 2 .
+             
+
+The projective points are the affine points (x1 , y1 ), embedded as usual into P2 by
+(x1 , y1 ) 7→ (x1 : y1 : 1), and two extra singular points at infinity, namely (0 : 1 : 0)
+and (1 : 0 : 0).
+   Fast projective addition and doubling formulas, starting from the Edwards ad-
+dition law and eliminating multiplications in various ways, were introduced for Ed-
+wards curves in [13] and were generalized to twisted Edwards curves in [8]. Adding
+a generic pair of points uses just 10M + 1S + 1A + 1D: i.e., 10 field multiplications,
+1 field squaring, 1 multiplication by a, and 1 multiplication by d. Doubling takes
+just 3M + 4S + 1A with the following formulas:
+     B    =   (X1 + Y1 )2 ; C = X12 ; D = Y12 ; E = aC; F = E + D; H = Z12 ;
+      J   = F − 2H; X3 = (B − C − D) · J; Y3 = F · (E − D); Z3 = F · J.
+These doubling formulas are used in EECM-MPFQ.
+2.5. Inverted points. The inverted twisted Edwards curve is
+               (X : Y : Z) ∈ P2 : aY 2 Z 2 + X 2 Z 2 = X 2 Y 2 + dZ 4 .
+             
+
+The inverted points are the affine points (x1 , y1 ) other than (0, ±1) and (±1, 0),
+embedded √ into P2 by (x1 , y1 ) 7→ (1/x1 : 1/y1 : 1); two extra points if d ispa square,
+namely (± d : 0 : 1); two extra points if d/a is a square, namely (0 : ± d/a : 1);
+and two singular points at infinity, namely (0 : 1 : 0) and (1 : 0 : 0). Note that a
+generic inverted point (X1 : Y1 : Z1 ) corresponds to the affine point (Z1 /X1 , Z1 /Y1 ).
+   Fast inverted addition and doubling formulas were introduced for Edwards curves
+in [14] and for twisted Edwards curves in [8]. Adding a generic pair of points costs
+                               ECM USING EDWARDS CURVES                                        5
+
+
+only 9M + 1S + 1A + 1D, saving 1M compared to projective Edwards coordinates.
+A doubling costs 3M + 4S + 1A + 1D, losing 1D compared to projective Edwards
+coordinates.
+   These formulas were used in the prototype GMP-EECM.
+2.6. Extended points. The extended twisted Edwards curve is
+          (X : Y : Z : T ) ∈ P3 : aX 2 + Y 2 = Z 2 + dT 2 and XY = ZT .
+        
+
+The extended points are the affine points (x1 , y1 ), embedded into P3 by (x1√       , y1 ) 7→
+(x1 : y1 : 1 : x1 y1 ); two extra points at infinity if d is a square, namely (0 : ±p d : 0 :
+1); and two extra points at infinity if d/a is a square, namely (1 : 0 : 0 : ± a/d).
+   Hisil, Wong, Carter, and Dawson in [29] introduced extended addition formulas
+costing only 9M + 1A:
+         A    = X1 · X2 , B = Y1 · Y2 , C = Z1 · T2 , D = T1 · Z2 ,
+         E    = D + C, F = (X1 − Y1 ) · (X2 + Y2 ) + B − A, G = B + aA,
+        H     = D − C, X3 = E · F, Y3 = G · H, Z3 = F · G, T3 = E · H.
+These formulas save 1S by switching from inverted coordinates to extended coor-
+dinates, and an extra 1D by switching from the Edwards addition law to the dual
+addition law. These formulas are used in EECM-MPFQ. Our main concern in this
+paper is with the case a = 1, where these formulas cost only 9M. Hisil et al. also
+introduced addition formulas costing only 8M for the case a = −1; but we show in
+Section 6 that the case a = −1 sacrifices torsion.
+   A doubling in extended coordinates loses 1M for computing the extended output
+coordinate T3 . However, the doubling formulas make no use of the extended input
+coordinate T1 , so if the input is not used for anything else then the operation
+producing that input can skip the computation of T1 , saving 1M.
+   Scalar multiplication can be carried out as a series of operations on an accu-
+mulator P : doublings replace P by 2P , and double-and-add operations replace P
+by 2P + Q. If P is in projective coordinates and the precomputed points Q are
+in extended coordinates then doubling costs 3M + 4S + 1A and double-and-add
+costs (3M + 4S + 1A) + (9M + 1A), with the 1M loss in doubling cancelled by
+the 1M savings in addition. This mixture of projective coordinates and extended
+coordinates was suggested in [29] and is used in EECM-MPFQ.
+2.7. Completed points. The completed twisted Edwards curve is
+   E E,a,d = ((X : Z), (Y : T )) ∈ P1 × P1 : aX 2 T 2 + Y 2 Z 2 = Z 2 T 2 + dX 2 Y 2 .
+            
+
+The completed points are the affine points (x1 , y1 ), embedded as usual into P1 ×P1
+by (x1 , y√1 ) 7→ ((x1 : 1), (y1 : 1)); two extra points at infinity if d is a square, namely
+((1 : ± d),   p(1 : 0)); and two extra points at infinity if d/a is a square, namely
+((1 : 0), (± a/d : 1)). Starting in Section 6 we freely abbreviate ((x1 : 1), (y1 : 1))
+as (x1 , y1 ).
+   The completed curve maps isomorphically to the extended curve via the Segre
+embedding ((X : Z), (Y : T )) 7→ (XT : Y Z : ZT : XY ) of P1 × P1 into P3 . It
+maps onto the projective curve via ((X : Z), (Y : T )) 7→ (XT      √ : Y Z : ZT ), but this
+map is not an isomorphism: it sends the     p   two points ((1 : ±   d), (1 : 0)) to (0 : 1 : 0),
+and sends the two points ((1 : 0), (± a/d : 1)) to (1 : 0 : 0). The completed curve
+also maps onto the inverted curve via ((X : Z), (Y : T )) 7→ (Y Z : XT : XY ), but
+6               D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+this map sends the two points ((0 : 1), (±1 : 1)) to (1 : 0 : 0), and sends the two
+points ((±1 : 1), (0 : 1)) to (0 : 1 : 0).
+   EECM-MPFQ uses the completed curve as an intermediate output of doublings
+(costing 4S + 1A) and additions (costing 5M + 1A); it then maps the completed
+point to a projective point (costing 3M) or to an extended point (costing 4M) as
+desired. One should not think that all addition formulas in the literature naturally
+factor through the completed curve: in particular, a detour through the completed
+curve would sacrifice 1M in the inverted Edwards addition law and in the projective
+dual addition law.
+
+2.8. Addition with small inputs. There are two compatible ways to choose
+“small” curves that save more time in scalar multiplication. First, choosing small
+curve parameters a, d speeds up any multiplications by those parameters inside
+addition formulas and doubling formulas. Second, choosing a small base point P1
+for scalar multiplication speeds up multiplications by the coordinates of P1 , and to
+some extent speeds up multiplications by the coordinates of [3]P1 etc.
+   Let P1 = (x1 , y1 ) be a rational point on the Edwards curve EE,1,d¯, and assume
+that x1 , y1 , d¯ have small height, i.e., small numerators and denominators. Then
+d¯ can be written in the form   √ d/a, where a is a small square and d is a small
+integer. Now the point (x1 / a, y1 ) is on the isomorphic curve E E,a,d and can be
+written with small integer coordinates on the inverted curve, the extended curve,
+etc., saving time in addition. A small inverted point (X1 : Y1 : Z1 ) replaces 4M by
+4 small multiplications, specifically 1 multiplication by each of the small integers
+X1 , Y1 , X1 + Y1 , and Z1 ; similarly, a small extended point replaces 5M by 5 small
+multiplications.
+
+2.9. The Edwards group. If a = 1 and d is not a square then, by [13, Theorem
+3.3], the affine Edwards addition law is complete: the denominators 1 + dx1 x2 y1 y2
+and 1 − dx1 x2 y1 y2 are always nonzero, and the affine points (x1 , y1 ) on the curve
+form a group.
+   However, if d is a square then the addition law is not necessarily a group law:
+there can be pairs (x1 , y1 ) and (x2 , y2 ) where 1+dx1 x2 y1 y2 = 0 or 1−dx1 x2 y1 y2 = 0.
+Even worse, there can be pairs (x1 , y1 ) and (x2 , y2 ) for which 1 + dx1 x2 y1 y2 = 0 =
+x1 y2 + y1 x2 or 1 − dx1 x2 y1 y2 = 0 = y1 y2 − ax1 x2 . Switching from affine coordinates
+to projective or inverted or extended or completed coordinates does not allow the
+Edwards addition law to add such points.
+   Fortunately, on the completed curve E E,a,d in P1 × P1 , any pair of input points
+that cannot be added by the Edwards addition law can be added by the dual
+addition law. Gluing together the two addition laws produces a group law + :
+E E,a,d × E E,a,d → E E,a,d . This is the main result of [16]: the Edwards addition
+law and the dual addition law form a complete system of addition laws for E E,a,d .
+   The following theorem summarizes the results from [16]. Section 3 uses this
+group law to characterize points of small order in E E,a,d , and subsequent sections
+of this paper use this characterization to construct Edwards curves with large Q-
+torsion groups.
+
+Theorem 2.10. Fix a field k with char(k) 6= 2. Fix distinct nonzero elements
+a, d ∈ k. Fix P1 , P2 ∈ E E,a,d (k). Write P1 as ((X1 : Z1 ), (Y1 : T1 )) and write P2 as
+                              ECM USING EDWARDS CURVES                                       7
+
+
+((X2 : Z2 ), (Y2 : T2 )). Define
+                             X3 = X1 Y2 Z2 T1 + X2 Y1 Z1 T2 ,
+                              Z3 = Z1 Z2 T1 T2 + dX1 X2 Y1 Y2 ,
+                              Y3 = Y1 Y2 Z1 Z2 − aX1 X2 T1 T2 ,
+                              T3 = Z1 Z2 T1 T2 − dX1 X2 Y1 Y2 ;
+and
+                             X30 = X1 Y1 Z2 T2 + X2 Y2 Z1 T1 ,
+                              Z30 = aX1 X2 T1 T2 + Y1 Y2 Z1 Z2 ,
+                              Y30 = X1 Y1 Z2 T2 − X2 Y2 Z1 T1 ,
+                              T30 = X1 Y2 Z2 T1 − X2 Y1 Z1 T2 .
+Then X3 Z30 = X30 Z3 and Y3 T30 = Y30 T3 . Furthermore, at least one of the following
+cases occurs:
+      • (X3 , Z3 ) 6= (0, 0) and (Y3 , T3 ) 6= (0, 0). Then P1 + P2 = ((X3 : Z3 ), (Y3 :
+        T3 )).
+      • (X30 , Z30 ) 6= (0, 0) and (Y30 , T30 ) 6= (0, 0). Then P1 + P2 = ((X30 : Z30 ), (Y30 :
+        T30 )).
+If P1 = P2 then the first case occurs.
+   A completely different way to define the same group law on E E,a,d is through
+a correspondence to the traditional chord-and-tangent elliptic-curve group law on
+an isomorphic Weierstrass curve. An explicit group isomorphism appears in [16,
+Theorems 7.1 and 7.3]. This correspondence has the disadvantage of requiring more
+case distinctions and more computations, but the advantage of making clear that
+the Edwards group is an elliptic-curve group. We use this to apply Mazur’s theorem
+starting in Section 6.
+
+                        3. Points of small order on E E,a,d
+   The complete set of addition laws from [16] (presented in the previous section)
+enables us to investigate the order of any point. In particular, it has often been
+stated that the points at infinity on an Edwards curve blow up to two points of
+order 2 and two points of order 4, e.g. in [8] in the context of exceptional points
+of the map between a twisted Edwards curve and a Montgomery curve. With the
+complete set of addition laws we can prove all statements purely in the context of
+Edwards curves.
+   This section characterizes all points of order 2, 3, and 4, and states conditions
+on the parameters of the twisted Edwards curve for such points to exist. These
+results are used later to construct curves with large Q-torsion groups. This section
+also characterizes points of order 8 relevant to later sections.
+   The following theorem gives a complete study of points of order 2 and 4 in E E,a,d .
+Theorem 3.1. Fix a field k with char(k) 6= 2. Fix distinct nonzero elements
+a, d ∈ k. The following points are in E E,a,d (k) and have the stated orders.
+   Points of order 2:
+   The point ((0 : 1), (−1 : 1)) has order 2.          p
+   If a/d is a square in k then the points ((1 : 0), (± a/d : 1)) have order 2.
+   There are no other points of order 2.
+8                D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   Points of order 4 doubling to ((0 : 1), (−1  √ : 1)):
+   If a is a square in k then the points ((1 : ± a), (0 : 1)) have order 4 and double
+to ((0 : 1), (−1 : 1)).                         √
+   If d is a square in k then the points ((1 : ± d), (1 : 0)) have order 4 and double
+to ((0 : 1), (−1 : 1)).
+   There are no other points doubling to ((0 : 1), (−1
+                                                    p : 1)).
+   Points of order 4 doubling to ((1 : 0), (± a/d : 1)): Assume that s ∈ k
+satisfies s2 = a/d.                                    p               √
+   If s and −s/a are squares in k then the points ((± −s/a : 1), (± s : 1)), where
+the signs may be chosen independently, have order 4 and double to ((1 : 0), (s : 1)).
+   There are no other points doubling to ((1 : 0), (s : 1)).
+Proof. Doublings can always be computed by X3 , Z3 , Y3 , T3 from Theorem 2.10: in
+other words, all curve points ((X : Z), (Y : T )) have (2XY ZT, Z 2 T 2 + dX 2 Y 2 ) 6=
+(0, 0) and (Y 2 Z 2 − aX 2 T 2 , Z 2 T 2 − dX 2 Y 2 ) 6= (0, 0), so
+     [2]((X : Z), (Y : T ))
+           = ((2XY ZT : Z 2 T 2 + dX 2 Y 2 ), (Y 2 Z 2 − aX 2 T 2 : Z 2 T 2 − dX 2 Y 2 )).
+In particular:
+      • [2]((0 : 1), (−1
+                       p: 1)) = ((0 : 1), (1 : 1)).
+      • [2]((1 : 0),√(± a/d : 1)) = ((0 : . . .), (−a : −d(a/d))) = ((0 : 1), (1 : 1)).
+      • [2]((1 : ±√a), (0 : 1)) = ((0 : . . .), (−a : a)) = ((0 : 1), (−1 : 1)).
+      • [2]((1 :p± d), (1 : 0)) = ((0 : . . .), (d : −d)) = ((0 : 1), (−1 : 1)).
+                                √
+      • [2]((± −s/a : 1), (± s : 1)) = ((. . . : 1 + d(−s/a)s), (s − a(−s/a) : 1 −
+        d(−s/a)s)) = ((1 : 0), (s : 1)) since d(s/a)s = s2 d/a = 1.
+To see that there is no other point of order 2 or 4, observe first that every point
+((X : Z), (Y : T )) on E E,a,d with X = 0 or Y = 0 or Z = 0 or T = 0 is either
+((0 : 1), (1 : 1)) or one of the points doubled above. The only remaining points are
+affine points ((x : 1), (y : 1)) with x 6= 0 and y 6= 0. The double of ((x : 1), (y : 1))
+is ((2xy : 1 + dx2 y 2 ), (y 2 − ax2 : 1 − dx2 y 2 )); but 2xy 6= 0, so this double cannot be
+((0 : 1), (1 : 1)), so ((x : 1), (y : 1)) cannot have order 2. For the same reason, the
+double cannot be ((0 : 1), (−1 : 1)). The only remaining case is that the double is
+((1 : 0), (s : 1)) where s2 = a/d. Then ax2 + y 2 = 1 + dx2 y 2 = 0 so ax2 = −y       √
+                                                                                        2
+                                                                                          ; and
+  2      2              2 2          2     2        2            2 2
+y − ax = s(1 − dx y ), so       p2y = y − ax = s(1 − dx y ) = 2s, so y = ± s, and
+            2
+finally ax = −s so x = ± −s/a.                                                                
+                                                                                     √
+    Later we will study Edwards curves over the rationals Q for which ((1 : ± a), (0 :
+1)) is on the curve.√In this case the only points of order 8 double to either these
+points or to ((1 : ± d), (1 : 0)).
+Theorem 3.2. Fix a field k with char(k) 6= 2. Fix distinct nonzero elements
+a, d ∈ k.                                      √
+   Points of order 8 doubling to ((1 : ± a), (0 : 1)): If r ∈ k satisfies r2 = a
+then any element of E E,a,d (k) doubling to ((1 : r), (0 : 1)) can be written as ((x8 :
+1), (rx8 : 1)) for some x8 ∈ k satisfying adx48 − 2ax28 + 1 = 0.
+   Conversely, if r, x8 ∈ k satisfy r2 = a and adx48 −2ax28 +1 = 0 then the two points
+((±x8 : 1), (±rx8 : 1)), with matching signs, have order 8 and double
+                                                                   √    to ((1 : r),
+                                                                                  √ (0 :
+1)). If also d is a square in k then the two points ((1 : ±rx8 d), (1 : ±x8 d)),
+                                  ECM USING EDWARDS CURVES                                               9
+
+
+with matching signs, have order 8, double to ((1 : r), (0 : 1)), and are different from
+((±x8 : 1), (±rx8 : 1)). There are no other points √    doubling to ((1 : r), (0 : 1)).
+   Points of order 8 doubling to ((1 : ± d), (1 : 0)): If s ∈ k satisfies s2 = d
+then any element of E E,a,d (k) doubling to ((1 : s), (1 : 0)) can be written as ((x̄8 :
+1), (1 : sx̄8 )) for some x̄8 ∈ k satisfying adx̄48 − 2dx̄28 + 1 = 0.
+   Conversely, if s, x̄8 ∈ k satisfy s2 = d and adx̄48 −2dx̄28 +1 = 0, then the two points
+((±x̄8 : 1), (1 : ±sx̄8 )), with matching signs, have order 8 and double
+                                                                      √     to ((1√: s), (1 :
+0)). If also a is a square in k then the two points ((1 : ±sx8 a), (±x8 a : 1)),
+with matching signs, have order 8, double to ((1 : s), (1 : 0)), and are different from
+((±x̄8 : 1), (1 : ±sx̄8 )). There are no other points doubling to ((1 : s), (1 : 0)).
+
+Proof. Every point with a zero coordinate has order at most 4 by Theorem 3.1, so
+any point of order 8 has the form ((x8 : 1), (y8 : 1)), with x8 6= 0 and y8 6= 0, and
+with double ((2x8 y8 : 1 + dx28 y82 ), (y82 − ax28 : 1 − dx28 y82 )).
+      Part 1: If the double is ((1 : r), (0 : 1)) then y82 − ax28 = 0 and 2x8 y8 r =
+1 + dx28 y82 = ax28 + y82 = 2ax28 = 2r2 x28 . Cancel 2x8 r to see that y8 = rx8 . Hence
+adx48 − 2ax28 + 1 = dx28 y82 − (1 + dx28 y82 ) + 1 = 0 and the original point is ((x8 :
+1), (rx8 : 1)).
+      Conversely, if r, x8 ∈ k satisfy r2 = a and adx48 − 2ax28 + 1 = 0, then the point
+((x8 : 1), (rx8 : 1)) is on the curve since ax28 + (rx8 )2 = 2ax28 = adx48 + 1 =
+1 + dx28 (rx8 )2 , and it doubles to ((2x8 rx8 : 1 + dx28 r2 x28 ), (r2 x28 − ax28 : . . .)) =
+((2x8 rx8 : 2ax28 ), (0 : . . .)) = ((1 : r), (0 : 1)).
+      The other points doubling to ((1 : r), (0 : 1)) are ((x : 1), (rx : 1)) for other x ∈ k
+satisfying adx4 −2ax2 +1 = 0. If d is not a square in k then adx4 −2ax2 +1 = adx4 −
+(adx28 + 1/x28 )x2 + 1 = (x − x8 )(x + x8 )(adx2 − 1/x28 ), with adx2 − 1/x28 irreducible,
+so the only points doubling to ((1 : r), (0 : 1)) are ((±x8√: 1), (±rx8 : 1)).              √ If d is a
+                            4         2
+square in k then adx − 2ax + 1 = (x − x8 )(x + x8 )(rx d − 1/x8 )(rx d + 1/x8 )
+so the only   √ points doubling√        to ((1 : r), (0 : 1)) are ((±x8 : 1), (±rx8 √: 1)) and
+((1 : ±rx8 d), (1 : ±x8 d)). These points are distinct: otherwise ±rx28 d = 1 so
+adx48 = 1 so 2ax28 = 2 so ax28 = 1 so y8 = 0 from the curve equation, contradiction.
+      Part 2: If the double of ((x̄8 : 1), (ȳ8 : 1)) is ((1 : s), (1 : 0)) then 1 − dx̄28 ȳ82 = 0
+and 2x̄8 ȳ8 s = 1 + dx̄28 ȳ82 = 2 so ȳ8 = 1/(sx̄8 ). Hence adx̄48 − 2dx̄28 + 1 = (ax̄28 − 2 +
+ȳ82 )dx̄28 = 0 and the original point is ((x̄8 : 1), (1 : sx̄8 )).
+      Conversely, if s, x̄8 ∈ k satisfy s2 = d and adx̄48 − 2dx̄28 + 1 = 0, then the point
+((x̄8 : 1), (1 : sx̄8 )) is on the curve since dx̄28 (ax̄28 + ȳ82 ) = dx̄28 (ax̄28 + 1/(s2 x̄28 )) =
+adx̄48 + 1 = 2dx̄28 = dx̄28 + dx̄48 /x̄28 = dx̄28 (1 + dx̄28 /(s2 x̄28 )) = dx̄28 (1 + dx̄28 ȳ82 )). The
+point doubles to ((2sx̄28 : s2 x̄28 + dx̄28 ), (1 − as2 x̄48 : s2 x̄28 − dx̄28 )) = ((1 : s), (1 − adx̄48 :
+s2 x̄28 − s2 x̄28 )) = ((1 : s), (1 : 0)).
+      The other points doubling to ((1 : s), (1 : 0)) are ((x : 1), (1 : sx)) for other x ∈ k
+satisfying adx4 −2dx2 +1 = 0. If a is not a square in k then adx4 −2dx2 +1 = adx4 −
+(adx̄28 + 1/x̄28 )x2 + 1 = (x − x̄8 )(x + x̄8 )(adx2 − 1/x̄28 ), with adx2 − 1/x̄28 irreducible,
+so the only points doubling to ((1 : s), (1 : 0)) are ((±x̄8√: 1), (1 : ±sx̄8√              )). If a is a
+                            4         2
+square in k then adx − 2dx + 1 = (x − x̄8 )(x + x̄8 )(sx a − 1/x̄8 )(sx a + 1/x̄8 )
+so the only√points doubling   √         to ((1 : s), (1 : 0)) are ((±x̄8 : 1), (1 : ±sx̄8 ))         √ and
+                                                                                                   2
+((1 : ±sx̄8 a)), (±x̄8 a : 1)). These points are distinct: otherwise ±sx̄8 a =
+1 so adx̄48 = 1 so 2dx̄28 = 2 so dx̄28 = 1 so x̄8 = 0 from the curve equation,
+contradiction.                                                                                           
+10              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+Theorem 3.3. Fix a field k with char(k) 6= 2. Fix distinct nonzero elements
+a, d ∈ k. If x3 , y3 ∈ k satisfy ax23 + y32 = 1 + dx23 y32 = −2y3 then ((x3 : 1), (y3 : 1))
+is a point of order 3 on E E,a,d (k). Conversely, all points of order 3 on E E,a,d (k)
+arise in this way.
+Proof. Doublings can always be computed by X3 , Z3 , Y3 , T3 from Theorem 2.10, as
+in the proof of Theorem 3.1.
+   Observe that ((x3 : 1), (y3 : 1)) ∈ E E,a,d (k) since ax23 + y32 = 1 + dx23 y32 . Now
+         [2]((x3 : 1), (y3 : 1)) = ((2x3 y3 : 1 + dx23 y32 ), (y32 − ax23 : 1 − dx23 y32 ))
+                                 = ((2x3 y3 : −2y3 ), (2y32 + 2y3 : 2y3 + 2))
+                                 = ((−x3 : 1), (y3 : 1))
+so ((x3 : 1), (y3 : 1)) has order dividing 3. It cannot have order 1 (since otherwise
+x3 = 0 so y32 = 1 = −2y3 ), so it has order 3.
+   Conversely, consider any point P = ((X1 : Z1 ), (Y1 : T1 )) of order 3 in E E,a,d (k).
+The equation [2]P = −P then implies (2X1 Y1 Z1 T1 : Z12 T12 +dX12 Y12 ) = (−X1 : Z1 ).
+Every point in E E,a,d with a zero coordinate has order 1, 2, or 4 by Theorem 3.1,
+so X1 , Z1 , Y1 , T1 6= 0. Define x3 = X1 /Z1 and y3 = Y1 /T1 . Then P = ((x3 : 1), (y3 :
+1)); furthermore (2x3 y3 : 1 + dx23 y32 ) = (−x3 : 1) and x3 6= 0 so −2y3 = 1 + dx23 y32 =
+ax23 + y32 .                                                                             
+
+                    4. Using Edwards curves in ECM stage 1
+   This section discusses “stage 1” of ECM. It begins by reviewing the general
+idea of stage 1 and the state-of-the-art strategies used in GMP-ECM to perform
+the elliptic-curve computations in stage 1. It then analyzes the speedups obtained
+from using Edwards curves.
+
+4.1. Overview of stage 1. Stage 1 of ECM tries to factor a positive integer n
+as follows. Choose an elliptic curve E defined over Q, and a non-torsion element
+P ∈ E(Q). Choose a rational function φ : E → Q that has a pole at the neutral
+element of E; for example choose φ as the Weierstrass x-coordinate. Choose a
+positive integer s with many small prime factors. Choose a sequence of additions,
+subtractions, multiplications, and divisions that, if carried out over Q, would com-
+pute φ([s]P ), where [s]P denotes the sth multiple of P in E(Q). Compute φ([s]P )
+modulo n by carrying out this sequence of additions, subtractions, multiplications,
+and divisions modulo n. Hope for an impossible division modulo n. An attempt
+to divide by a nonzero nonunit modulo n immediately reveals a factor of n; an
+attempt to divide by 0 modulo n is not quite as informative but usually allows a
+factor of n to be obtained without much extra work.
+    If n has a prime divisor q such that [s]P is the neutral element of E(Z/qZ) then
+the stage-1 ECM computation will involve an impossible division modulo n, usually
+revealing a factor of n. This occurs, in particular, whenever s is a multiple of the
+group size #E(Z/qZ). As E varies randomly, #E(Z/qZ) varies randomly (with
+                                                                                  √
+some subtleties in its distribution; see, e.g., [35]) in the Hasse interval [q − 2 q +
+         √
+1, q + 2 q + 1]. What makes ECM useful is that a surprisingly small s, allowing a
+surprisingly fast computation of [s]P , is a multiple of a surprisingly large fraction
+of the integers in the Hasse interval, and is a multiple of the order of P modulo q
+with (conjecturally) an even larger probability. See Section 9 for detailed statistics.
+                              ECM USING EDWARDS CURVES                                    11
+
+
+   For example, one could try to factor n as follows. Choose the curve E : y 2 =
+x3 − 2, the Weierstrass x-coordinate as φ, the point (x, y) = (3, 5), and the integer
+s = 420. Choose the following strategy to compute the x-coordinate of [420](3, 5):
+use the standard affine-coordinate doubling formulas to compute [2](3, 5), then
+[4](3, 5), then [8](3, 5); use the standard affine-coordinate addition formulas to
+compute [12](3, 5); continue similarly through [2](3, 5), [4](3, 5), [8](3, 5), [12](3, 5),
+[24](3, 5), [48](3, 5), [96](3, 5), [192](3, 5), [384](3, 5), [408](3, 5), [420](3, 5). Carry
+out these computations modulo n, hoping for a division by a nonzero nonunit mod-
+ulo n.
+   The denominator of the x-coordinate of [420](3, 5) in E(Q) has many small prime
+factors: 2, 3, 5, 7, 11, 19, 29, 31, 41, 43, 59, 67, 71, 83, 89, 109, 163, 179, 181, 211,
+223, 241, 269, 283, 383, 409, 419, 433, 523, 739, 769, 811, 839, etc. If n shares any of
+these prime factors then the computation of [420](3, 5) will encounter an impossible
+division modulo n. To verify the presence of (e.g.) the primes 769, 811, and 839 one
+can observe that [420](3, 5) is the neutral element in each of the groups E(Z/769Z),
+E(Z/811Z), E(Z/839Z); the order of (3, 5) turns out to be 7, 42, 35 respectively.
+Note that the group orders are 819, 756, and 840, none of which divide 420.
+4.2. The standard choice of s. Pollard in [40, page 527] suggested choosing s
+as “the product of all the primes pi ≤ L each to some power ci ≥ 1. There is some
+freedom in the choice of the ci but the smallest primes should certainly occur to
+some power higher than the first.”
+    Pollard’s prime bound “L” is now called B1 . One possibility is√to choose, for
+each prime π ≤ B1 , the largest power of π in the interval [1, n + 2 n + 1]. Then
+[s]P is the neutral element in E(Z/qZ) if and only if the order of P is “B1 -smooth”,
+i.e., if and only if the order has no prime divisors larger than B1 . This possibility
+is theoretically pleasing but clearly suboptimal.
+    Brent in [18, Section 5] said that “in practice we choose” the largest power
+of π in the interval [1, B1 ] “because this significantly reduces the cost of a trial
+without significantly reducing the probability of success.” In other words, s =
+lcm {1, 2, . . . , B1 }. GMP-ECM uses the same strategy; see [47, page 529].
+4.3. The standard prime-by-prime strategy. Pollard in [40, page 527] said
+that one “can choose between using the primes pi in succession or computing P
+in advance and performing a single power operation.” Pollard’s “P ” is s in the
+notation of this paper.
+    As far as we know, all ECM implementations use the first strategy, working with
+one prime at a time. Brent in [18, Section 5] wrote “Actually, E [i.e., s in the
+notation of this paper] is not computed. Instead . . . repeated operations of the
+form P := P k [i.e., [k]P in the notation of this paper], where k . . . is a prime
+power.” Montgomery in [36, page 249] wrote “It is unnecessary to compute R
+[i.e., s in the notation of this paper] explicitly.” Zimmermann and Dodson in [47,
+page 529] wrote “That big product is not computed as such” and presented the
+prime-by-prime loop used in GMP-ECM.
+4.4. The standard elliptic-curve coordinate system. Chudnovsky and Chud-
+novsky in [20, Section 4] wrote “The crucial problem becomes the choice of the
+model of an algebraic group variety, where computations mod p are the least time
+consuming.” They presented explicit formulas for computations on several different
+shapes of elliptic curves.
+12              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   Montgomery in [36, Section 10.3.1] introduced what are now called “Montgomery
+coordinates”: a point (x1 , y1 ) on the elliptic curve By 2 = x3 +Ax2 +x is represented
+as a pair (X1 : Z1 ) such that X1 /Z1 = x1 . This representation does not distinguish
+(x1 , y1 ) from (x1 , −y1 ), so it does not allow addition, but it does allow “differential
+addition,” i.e., computation of P + Q given P, Q, P − Q. In particular, Montgomery
+presented explicit formulas to compute P, [2k]P, [(2k + 1)]P from P, [k]P, [k + 1]P
+using 6M + 4S + 1C, or 5M + 4S + 1C if P is given with Z1 = 1, or 4M + 4S + 1C
+if P is a very small point such as (X1 : Z1 ) = (2 : 1). Here C stands for the cost of
+multiplication by (A+2)/4. One can find earlier formulas for the same computation
+in [20, formula (4.19)], but Montgomery’s formulas are faster.
+   As far as we know, all subsequent ECM implementations have used Montgomery
+coordinates. In particular, GMP-ECM uses Montgomery coordinates for stage 1,
+with “PRAC,” a particular differential addition chain introduced by Montgomery.
+Zimmermann and Dodson in [47, page 532, Figure 2] report a total cost of 2193683
+differential additions to multiply an elliptic-curve point by 2 · 3 · 5 · 7 · 11 · · · 999983 ≈
+21440508.1677 in Montgomery coordinates. By adding a few counters to the source
+code of GMP-ECM we observed that GMP-ECM’s stage 1, with B1 = 106 and hence
+s ≈ 21442098.6271 , used 12982280 multiplications modulo n for 2196070 elliptic-curve
+differential additions, of which only 194155 were doublings.
+
+4.5. Speedups in EECM-MPFQ. EECM-MPFQ breaks with stage-1 tradition
+in three ways:
+      • EECM-MPFQ uses Edwards curves x2 + y 2 = 1 + dx2 y 2 with extended
+        Edwards coordinates with φ = 1/x whereas GMP-ECM uses Montgomery
+        curves with Montgomery coordinates. See below for performance results.
+        Our prototype GMP-EECM used inverted twisted Edwards coordinates.
+      • EECM-MPFQ and GMP-EECM handle the prime factors π of s in batches,
+        whereas GMP-ECM handles each prime factor separately. Specifically,
+        GMP-EECM computed the product t of a batch, replaced P with [t]P ,
+        and then moved on to the next batch. EECM-MPFQ always uses a sin-
+        gle batch: it computes the entire product s and then replaces P with [s]P .
+        The large batches save time, as discussed below; the computation of s takes
+        negligible time.
+      • EECM-MPFQ uses “signed sliding fractional window” addition-subtraction
+        chains. Our prototype GMP-EECM used “signed sliding window” addition-
+        subtraction chains. These chains compute P 7→ [s]P using only 1 doubling
+        and  additions for each bit of s. Here  converges to 0 as s increases in
+        length; this is why larger batches save time. The savings are amplified
+        by the fact that an addition is somewhat more expensive than a doubling.
+        Note that these chains are not compatible with Montgomery coordinates;
+        they are shorter than any differential addition chain can be.
+EECM-MPFQ follows tradition in its choice of s. Our experiments have not found
+significant speedups from other choices of s: for example, allowing prime powers in
+the larger interval [1, B11.5 ] has negligible extra cost when B1 is large, but it also
+appears to have negligible benefit.
+   The addition-subtraction chains used in EECM-MPFQ are the chains Cm (s)
+defined in [15, Section 3]. Given B1 , EECM-MPFQ computes s, computes Cm (s)
+for various choices of the chain parameter m, and keeps the lowest-cost chain that
+                           ECM USING EDWARDS CURVES                               13
+
+
+                           #DBL   #ADD #S+#M             #S      #M        #a
+       B1        b     m
+                            b        b        b           b       b         b
+        8      10     5 0.800000 0.400000 10.100000 3.200000 6.900000 7.600000
+       12      15     3 0.933333 0.266667 9.533333 3.733333 5.800000 7.466667
+       16      20     5 0.900000 0.250000 9.000000 3.600000 5.400000 7.150000
+       24      33     3 0.939394 0.242424 9.030303 3.757576 5.272727 7.333333
+       32      48    11 0.916667 0.291667 9.229167 3.666667 5.562500 7.541667
+       48      69     7 0.956522 0.202899 8.652174 3.826087 4.826087 7.159420
+       64      90     9 0.977778 0.211111 8.844444 3.911111 4.933333 7.344444
+       96     130    15 0.969231 0.215385 8.792308 3.876923 4.915385 7.323077
+      128     184    15 0.978261 0.201087 8.706522 3.913043 4.793478 7.277174
+      192     275    29 0.985455 0.185455 8.600000 3.941818 4.658182 7.210909
+      256     363    15 0.988981 0.190083 8.658402 3.955923 4.702479 7.264463
+      384     557    27 0.991023 0.168761 8.472172 3.964093 4.508079 7.127469
+      512     743    27 0.993271 0.161507 8.418573 3.973082 4.445491 7.090175
+      768    1106    63 0.994575 0.150995 8.329114 3.978300 4.350814 7.024412
+     1024    1479    63 0.995943 0.145368 8.286004 3.983773 4.302231 6.993239
+     1536    2210 115 0.996833 0.138462 8.228054 3.987330 4.240724 6.950226
+     2048    2945 107 0.997623 0.131749 8.172156 3.990492 4.181664 6.907980
+     3072    4434 129 0.998647 0.124041 8.108029 3.994587 4.113442 6.860171
+     4096    5925 231 0.998650 0.120506 8.075949 3.994599 4.081350 6.835443
+     6144    8866 253 0.999098 0.114595 8.025603 3.996391 4.029213 6.796752
+     8192   11797 271 0.999322 0.111384 7.998135 3.997287 4.000848 6.775621
+    12288   17704 519 0.999492 0.105287 7.944306 3.997967 3.946340 6.733958
+    16384   23673 511 0.999620 0.101635 7.912263 3.998479 3.913784 6.709162
+    24576   35526 877 0.999719 0.097422 7.874965 3.998874 3.876091 6.680262
+    32768   47230 1019 0.999788 0.093966 7.844315 3.999153 3.845162 6.656490
+    49152   70828 1057 0.999859 0.090247 7.811303 3.999435 3.811868 6.630880
+    65536   94449 1847 0.999884 0.087698 7.788521 3.999534 3.788987 6.613188
+    98304 141805 2055 0.999922 0.084087 7.756278 3.999690 3.756588 6.588146
+   131072 189124 3079 0.999942 0.082057 7.738135 3.999767 3.738367 6.574052
+   196608 283651 4115 0.999958 0.078692 7.707947 3.999831 3.708117 6.550589
+   262144 378037 4639 0.999968 0.076815 7.691128 3.999873 3.691255 6.537516
+   393216 567462 8199 0.999977 0.073883 7.664799 3.999908 3.664890 6.517046
+   524288 756657 8187 0.999983 0.072121 7.648977 3.999931 3.649046 6.504745
+   786432 1134563 16383 0.999988 0.069733 7.627511 3.999951 3.627561 6.488054
+  1048576 1512566 16389 0.999991 0.067937 7.611370 3.999963 3.611407 6.475503
+
+Table 4.1. Costs of computation of sP in EECM-MPFQ. The b column is the
+number of bits in s = lcm {1, 2, . . . , B1 }. #DBL and #ADD are the number of
+doublings and additions in the chain Cm (s) selected by EECM-MPFQ. #S, #M,
+and #a are the number of field squarings, field multiplications, and field additions
+used by these elliptic-curve operations in extended Edwards coordinates. Per-curve
+setup costs and precomputation costs are included in the field-operation counts.
+
+
+
+
+it finds in a simple measure of cost. (Variations in the cost measure do not lead to
+noticeably better chains.) The total time spent on this computation is small: for
+example, under a second (on the CPU described below) for B1 = 1048576. The
+resulting chain is reused for many curves and many inputs n.
+14             D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   Table 4.1 shows the actual number of elliptic-curve doublings and additions used
+by stage 1 of EECM-MPFQ. Table 4.1 also shows the actual number of field squar-
+ings, field multiplications, and field additions used by stage 1 of EECM-MPFQ.
+Recall that each doubling uses 3M + 4S while each addition uses 9M. The table
+shows that EECM-MPFQ uses only 8.84 multiplications per bit of s for B1 = 64,
+only 8.42 multiplications per bit for B1 = 512, only 7.91 multiplications per bit for
+B1 = 16384, and only 7.61 multiplications per bit for B1 = 1048576.
+   For comparison, GMP-ECM uses approximately 9 multiplications for each bit of
+s, as illustrated by the example with B1 = 106 above. Zimmermann and Dodson
+explain in [47, Section 2]√that one cannot expect differential addition chains to use
+fewer than 6/ log2 ((1 + 5)/2) ≈ 8.64 multiplications per bit. Furthermore, only
+about one third of GMP-ECM’s multiplications are squarings, while more than half
+of EECM-MPFQ’s multiplications are squarings for B1 ≥ 16384. Even for the most
+carefully chosen curves, with extremely small parameters and extremely small base
+points, Montgomery’s formulas use at least 4M + 4S per bit.
+
+4.6. Measurements of CPU cycles. GMP-ECM relies primarily on the GMP
+integer-arithmetic library developed by Granlund et al., although for some CPUs
+it replaces portions of GMP with its own assembly-language subroutines for modu-
+lar multiplication. EECM-MPFQ also uses GMP but performs almost all modular
+arithmetic using the MPFQ library introduced by Gaudry and Thomé in [27]. The
+tests described below used GMP 4.3.1 (released May 2009), GMP-ECM 6.2.3 (re-
+leased April 2009), and MPFQ 1.0rc1 (released September 2008), all current at the
+time of testing (November 2009).
+    A 1000-curve test of EECM-MPFQ took 2.8 million cycles per curve on a single
+core of a 3.2GHz AMD Phenom II X4 (100f42) for a 240-bit n with B1 = 1024 (and
+with d1 = 1, disabling “stage 2”). For comparison, a 1000-curve test of GMP-ECM
+took 3.8 million cycles per curve on the same CPU for the same 240-bit n with the
+same B1 (and with B2 = 1).
+    The improvement in speed from GMP-ECM to EECM-MPFQ is even larger than
+what one would expect from comparing GMP-ECM’s 8512M + 4427S to EECM-
+MPFQ’s 6363M + 5892S. The obvious explanation is that MPFQ’s modular mul-
+tiplications are faster than GMP’s (and GMP-ECM’s) modular multiplications; of
+course, the credit for this speedup belongs to Gaudry and Thomé.
+    Increasing B1 to 16384 increased the EECM-MPFQ time to 40 million cycles per
+curve. There are 187307 modular multiplications per curve, specifically 92651M +
+94656S; evidently each modular multiplication took only about 220 cycles. For
+comparison, increasing B1 to 16384 increased the GMP-ECM time to 60 million
+cycles per curve for 210307 modular multiplications, specifically 138884M+71423S.
+    Increasing B1 to 65536 increased the EECM-MPFQ time to 162 million cycles per
+curve. There are 735618 modular multiplications per curve, specifically 357866M +
+377752S. For comparison, increasing B1 to 65536 increased the GMP-ECM time
+to 243 million cycles per curve for 842998 modular multiplications, specifically
+557257M + 285741S.
+
+4.7. EECM vs. HECM. Chudnovsky and Chudnovsky in [20, Section 6] proposed
+a genus-2 hyperelliptic-curve method of factoring, using “simple forms of laws of
+addition on hyperelliptic surfaces, isogenous to the product of two elliptic curves.”
+Recently, in [21], Cosset reported that streamlined genus-2 formulas by Gaudry
+                             ECM USING EDWARDS CURVES                                    15
+
+
+in [26] used only 189667 multiplications per elliptic curve (performed as 379334
+multiplications per genus-2 curve) for B1 = 16384, with the extra advantage that
+approximately 75% of the multiplications are squarings. Cosset quoted, for com-
+parison, an earlier version of this paper that had reported 195111 multiplications
+per curve for GMP-EECM for B1 = 16384.
+   A closer look shows that the formulas in [26] and [21] actually use, for each elliptic
+curve, 189667 multiplications plus approximately 189667 multiplications by small
+constants. EECM-MPFQ uses a total of only 187307 multiplications per elliptic
+curve, and the advantage grows as B1 grows. Furthermore, the elliptic curves
+used in [21] are less effective than the elliptic curves used in EECM-MPFQ, and in
+fact are less effective than the elliptic curves used in GMP-ECM, according to the
+experiments described in [21, Section 3]. HECM is worth further investigation, but
+in its current form is clearly less efficient than EECM.
+
+                   5. Using Edwards curves in ECM stage 2
+   This section discusses “stage 2” of ECM, and the benefit of switching to Edwards
+curves in stage 2.
+
+5.1. Overview of stage 2. Recall that stage 1 hopes for n to have a prime divisor
+q such that [s]P is the neutral element of E(Z/qZ).
+   Stage 2 hopes for n to have a prime divisor q such that [s]P has small prime
+order in E(Z/qZ): specifically, order ` for some prime ` between B1 and B2 . Here
+B1 is the stage-1 parameter described in the previous section, and B2 is a new
+stage-2 parameter.
+   The most obvious way to check for a small order of [s]P is a prime-by-prime
+approach, computing [`s]P modulo n for each prime `.
+   If `0 is the next prime after ` then one can move from [`s]P to [`0 s]P by adding
+a precomputed point [(`0 − `)s]P . Computing all [`s]P in this way takes about
+B2 / log B2 − B1 / log B1 elliptic-curve additions modulo n (where log without a
+subscript means the natural logarithm): there are about B2 / log B2 − B1 / log B1
+primes `, and the time for precomputation is quite small, since the differences `0 − `
+are generally quite small.
+
+5.2. Standard speedup: Baby steps and giant steps. A better way to check
+for a small order of [s]P is with the following baby-step-giant-step computation.
+Fix a parameter d1 ∈ {2, 4, 6, . . .}, preferably a product of several different tiny
+primes. Choose a rational function ψ : E → Q satisfying ψ([js]P ) = ψ([−js]P );
+for example choose ψ as the Weierstrass x-coordinate or the Edwards y-coordinate.
+Compute
+         (                                                                     )
+                         Y                    Y
+      gcd n,                                         (ψ([id1 s]P ) − ψ([js]P )) .
+               dB1 /d1 −1/2e≤i≤bB2 /d1 +1/2c    1≤j≤d1 /2
+                                               gcd {j,d1 }=1
+
+The idea here is as follows. Assume that ` is a prime between B1 and B2 not
+dividing d1 . Write ` as id1 ± j for some integers i, j with j ∈ {0, 1, . . . , d1 /2}. Then
+i is between B1 /d1 − 1/2 and B2 /d1 + 1/2, and gcd {j, d1 } = gcd {`, d1 } = 1. If
+[s]P has order ` in E(Z/qZ) then [id1 s]P = [∓js]P in E(Z/qZ) so the numerator
+of ψ([id1 s]P ) − ψ([js]P ) is divisible by q.
+16              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+    In particular, the number of i’s is balanced with the number of j’s when B2 −B1 ≈
+d1 ϕ(d1 )/2, where ϕ is Euler’s totient function. The baby steps [js]P and the
+giant steps [id1 s]P use about ϕ(d1 ) elliptic-curve additions, while the product of
+ψ([id1 s]P ) − ψ([js]P ) uses about ϕ(d1 )2 /4 multiplications modulo n.
+    For comparison, the prime-by-prime approach uses roughly d1 ϕ(d1 )/(4 log d1 )
+elliptic-curve additions. The baby-step-giant-step approach is an improvement
+whenever an elliptic-curve addition costs more than about (ϕ(d1 ) log d1 )/d1 multi-
+plications.
+    Asymptotically, (ϕ(d1 ) log d1 )/d1 reaches ∞, even when d1 is chosen as a prod-
+uct of tiny primes. However, in practice, (ϕ(d1 ) log d1 )/d1 is always below 4; for
+example, if d1 = 510510 = 2 · 3 · 5 · 7 · 11 · 13 · 17, then (ϕ(d1 ) log d1 )/d1 ≈ 2.37.
+The baby-step-giant-step approach is therefore faster than the prime-by-prime ap-
+proach.
+5.3.
+Q QStandard speedup: Fast polynomial arithmetic. If Q                 d1 is large then
+  i   j (ψ([id 1 s]P ) − ψ([js]P )) is more efficiently computed  as    i F (ψ([id1 s]P ))
+               Q
+where F = j (t − ψ([js]P )) ∈ (Z/nZ)[t]. Standard fast-arithmetic algorithms
+perform this computation in time (#{i} + #{j})1+o(1) rather than #{i}#{j}: first
+compute F via a “product tree”; then compute the values F (ψ([id1 s]P )) for all i
+via a “remainder tree” or a “scaled remainder tree”; then multiply the values. For
+details and further speedups see, e.g., [6]; [47, Section 3]; and [7, Sections 12, 18].
+5.4. Standard speedup: Higher-degree baby steps and giant steps. One
+can replace [js]P and [id1 s]P by, e.g., [j 6 s]P and [(id1 )6 s]P . The advantage of this
+change is that one finds primes ` dividing (id1 )6 ± j 6 , not just id1 ± j. If id1 and j
+were uniformly distributed modulo ` then (id1 )6 ± j 6 would be more than twice as
+likely as id1 ± j to be divisible by `. See [37, Section 5.3] for a probability analysis.
+     The only disadvantage is that there are more elliptic-curve operations. GMP-
+ECM computes [j 6 s]P for each integer j ∈ {1, 2, . . . , d1 /2} by computing the dif-
+ferences [((j + 1)6 − j 6 )s]P , the second differences [((j + 2)6 − 2(j + 1)6 + j 6 )s]P ,
+etc.; the sixth differences are constants [6!s]P , so GMP-ECM uses a total of ap-
+proximately 6(d1 /2) elliptic-curve additions. More generally, GMP-ECM computes
+[j e s]P for each integer j ∈ {1, 2, . . . , d1 /2} using approximately e(d1 /2) elliptic-
+curve additions.
+     One consequence of this generalization is that elliptic-curve operations cannot
+be a negligible part of the time taken by a properly optimized stage 2, compared
+to the time needed for computing the final product. If they were negligible then
+increasing e would find a considerable number of additional primes at negligible
+extra cost.
+     GMP-ECM actually uses De (j) instead of j e . Here De is the degree-e “Dickson
+polynomial” defined by De (t − 1/t) = te + (−1/t)e . The differences De (id1 ) ± De (j)
+have the same chance as (id1 )e ±j e to be divisible by `, but are less closely correlated
+than (id1 )e ± j e as (i, j) vary; see [37, Table 5.3.1].
+5.5. The standard elliptic-curve coordinate system. GMP-ECM does not
+use Montgomery coordinates in stage 2. Montgomery coordinates allow efficient
+differential additions, but most of the additions involved in higher-degree steps are
+not differential additions: they are sums where the differences are unknown.
+   GMP-ECM instead switches to affine coordinates (x, y). Addition in affine coor-
+dinates involves 1I + 2M + 1S. For degree-e steps there are e additions to perform
+                              ECM USING EDWARDS CURVES                                    17
+
+
+in parallel; GMP-ECM combines eI into 1I + 3(e − 1)M. GMP-ECM’s total cost
+for baby steps is therefore (d1 /2)I + (5e − 3)(d1 /2)M + e(d1 /2)S.
+
+5.6. Speedups in EECM-MPFQ. EECM-MPFQ uses higher-degree baby steps
+and giant steps, with the same Dickson polynomials De used in GMP-ECM, but
+changes the elliptic-curve computations in three ways:
+      • EECM-MPFQ skips the d1 /2 − ϕ(d1 )/2 values of j ∈ {1, 2, . . . , d1 /2} that
+        have gcd {j, d1 } > 1. It computes [De (j)s]P for the ϕ(d1 )/2 values of j that
+        have gcd {j, d1 } = 1 (and [De (id1 )s]P for consecutive integers i). GMP-
+        ECM tries to do something similar, focusing on the d1 /6 values of j in the
+        arithmetic progression (1+6Z)∩[1, d1 ]; but d1 /6 is considerably larger than
+        ϕ(d1 )/2.
+      • EECM-MPFQ delays all inversions until the elliptic-curve computations
+        are finished. It computes the desired y-coordinates in one final batched
+        division, costing 1I + (4(#{i} + #{j}) − 3)M in total for the baby steps
+        and the giant steps.
+      • EECM-MPFQ performs each intermediate elliptic-curve addition in ex-
+        tended Edwards coordinates, costing 9M. Occasionally an addition is a
+        doubling costing only 3M + 4S.
+EECM-MPFQ computes the desired multiples of [s]P as a batch using a simple
+general-purpose multi-scalar-multiplication algorithm described in [22, Section 4]
+with credit to Bos and Coster. If n1 ≥ n2 ≥ · · · then the algorithm computes the
+multiples [n1 s]P, [n2 s]P, . . . by recursively computing [(n1 − n2 )s]P, [n2 s]P, . . . and
+then adding [n2 s]P to [(n1 −n2 )s]P . Actually, the Bos–Coster algorithm recursively
+computes [(n1 mod n2 )s]P, [n2 s]P, . . . and then adds the appropriate multiple of
+[n2 s]P to [(n1 mod n2 )s]P ; but this refinement is irrelevant in the typical case that
+n1 < 2n2 .
+   Table 5.1 reports the number of multiplications used inside elliptic-curve oper-
+ations in EECM-MPFQ’s stage 2, for various choices of d1 and e. The number of
+multiplications is divided by #{i} + #{j} to produce each “cost” column. The
+final batched division costs 4 in this measure; the remaining cost is 9 times the
+per-output length of the Bos–Coster addition chain.
+   One can see from the table that the Bos–Coster addition chain has per-output
+length approximately 1 for e = 1; 1.9 for e = 2; 3.3 for e = 3; 11 for e = 6; and 22
+for e = 12. For comparison, the addition chain used in GMP-ECM has per-output
+length approximately ed1 /ϕ(d1 ): i.e., roughly 4e for the range of d1 shown in the
+table. This does not imply that GMP-ECM would benefit from switching to the
+Bos–Coster addition chain: GMP-ECM’s stage-2 time is determined not only by
+addition-chain length but also by the number of inversions that can be performed
+in parallel.
+   By default EECM-MPFQ uses MPFQ to compute the final product. However,
+the user can ask EECM-MPFQ to switch to product trees and scaled remainder
+trees, using Shoup’s NTL library for fast polynomial arithmetic; this saves time
+when #{i}+#{j} is sufficiently large. In theory, one can and should integrate these
+computations, using fast polynomial arithmetic to split the product computation
+into problems that are small enough to be handled efficiently by MPFQ; in practice,
+this approach is hampered by the difficulty of moving data between NTL and
+MPFQ.
+18              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+                                     Cost     Cost     Cost      Cost      Cost
+       d1   B1 #{j} #{i} d1 #{i}    e=1      e=2      e=3       e=6      e = 12
+       30   60    4    4     120 18.75000 38.00000 57.12500 114.50000 242.75000
+       42   84    6    6     252 16.75000 33.41667 48.33333 106.16667 214.16667
+       60 120     8    8     480 15.81250 30.56250 43.50000 104.25000 204.31250
+       90 180    12   12    1080 14.87500 26.95833 41.95833 101.20833 205.83333
+      120 240    16   16    1920 14.40625 26.56250 38.37500 98.56250 200.09375
+      150 300    20   20    3000 14.12500 24.97500 39.57500 101.02500 201.15000
+      180 360    24   24    4320 13.93750 24.47917 37.41667 100.04167 201.10417
+      210 420    24   24    5040 14.33333 25.22917 39.10417 102.29167 205.41667
+      330 660    40   40 13200 13.91250 23.60000 37.43750 102.35000 204.27500
+      390 780    48   48 18720 13.65625 22.76042 36.64583 101.61458 202.30208
+      420 840    48   48 20160 13.65625 22.66667 36.64583 102.64583 204.17708
+      510 1020   64   64 32640 13.49219 22.42969 35.79688 101.04688 202.01563
+      630 1260   72   72 45360 13.43750 22.31250 36.38889 101.57639 204.45139
+      660 1320   80   80 52800 13.45625 22.06875 35.28750 100.76250 203.02500
+      780 1560   96   96 74880 13.32813 21.63542 34.71354 100.94792 201.58854
+      840 1680   96   96 80640 13.32813 22.05729 35.41667 99.11458 203.97917
+      990 1980 120 120 118800 13.30417 21.78333 35.47083 100.45833 201.63333
+     1050 2100 120 120 126000 13.26250 21.70417 35.80833 101.13333 203.32083
+     1260 2520 144 144 181440 13.21875 21.63194 34.44444 100.85069 203.19444
+     1470 2940 168 168 246960 13.18750 21.52381 34.43452 101.63988 202.43452
+     1680 3360 192 192 322560 13.16406 21.48958 34.05208 97.09896 201.84115
+     1890 3780 216 216 408240 13.14583 21.52315 34.37963 100.83796 201.42130
+     2100 4200 240 240 504000 13.13125 21.42292 33.68542 100.58542 201.77917
+     2310 4620 240 240 554400 13.18958 21.53542 34.43542 101.74792 203.80417
+     2520 5040 288 288 725760 13.10938 21.23785 33.33160 97.80035 201.67535
+     2730 5460 288 288 786240 13.15799 21.36285 33.78299 101.20660 202.51910
+     2940 5880 336 336 987840 13.09375 21.11905 33.21280 99.97619 200.79762
+     3150 6300 360 360 1134000 13.08750 21.16528 33.37639 100.29028 201.01528
+     3360 6720 384 384 1290240 13.08203 21.12370 33.06510 96.26432 200.13932
+     3570 7140 384 384 1370880 13.11719 21.27474 33.45052 100.72917 202.09635
+     3780 7560 432 432 1632960 13.07292 21.16898 33.15856 99.90856 200.72107
+     3990 7980 432 432 1723680 13.10532 21.34606 33.53356 100.72106 201.30440
+     4200 8400 480 480 2016000 13.06563 21.17708 33.02708 97.48021 200.33333
+     4290 8580 480 480 2059200 13.09479 20.99896 33.44896 100.30208 200.83958
+     4620 9240 480 480 2217600 13.09479 21.32708 33.43021 100.70521 202.04896
+
+Table 5.1. Cost of elliptic-curve operations in stage 2 of EECM-MPFQ. Cost
+means the number of multiplications divided by #{i}+#{j}. Baby steps and giant
+steps are included. Multiplications used for inversion are included. Multiplications
+for the final product are not included.
+
+
+
+5.7. Measurements of CPU cycles. A 300-curve test of EECM-MPFQ took
+4.7 million cycles per curve on a single core of a 3.2GHz AMD Phenom II X4
+(100f42) for a 240-bit n with B1 = 1024, d1 = 630, #{i} = 72, #{j} = 72, and
+e = 1. Here B1 + d1 #{i} = 46384. For comparison, a 300-curve test of GMP-ECM
+took 10.8 million cycles per curve on the same CPU for the same 240-bit n with
+B1 = 1024, B2 = 41526, and e = 1. GMP-ECM took 11.5 million cycles per curve
+with B2 = 50646, the next B2 supported by GMP-ECM after 41526.
+                             ECM USING EDWARDS CURVES                                   19
+
+
+   Increasing e to 3 increased the EECM-MPFQ time with B1 + d1 #{i} = 46384
+to 5.4 million cycles per curve, increased the GMP-ECM time with B2 = 41526 to
+13.4 million cycles per curve, and increased the GMP-ECM time with B2 = 50646
+to 14.7 million cycles per curve.
+   Increasing d1 to 510510, #{i} to 46080, and e to 12 increased the EECM-MPFQ
+time to 34000 million cycles per curve. Here d1 #{i} = 23524300800. For com-
+parison, GMP-ECM took only 18000 million cycles per curve with e = 12 and
+B2 = 23412731170; for such large sizes GMP-ECM includes, and benefits from,
+FFT-based-polynomial-arithmetic optimizations not present in NTL and conse-
+quently not present in EECM-MPFQ.
+
+                    6. Edwards curves with large torsion
+    Mazur’s theorem [34, Theorem 2] says that the torsion group Etor (Q) of any
+elliptic curve E is isomorphic to one of 15 finite groups: specifically,
+              
+                 Z/mZ,                  m ∈ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12}, or
+   Etor (Q) ∼
+            =
+                 Z/2Z × Z/2mZ,          m ∈ {1, 2, 3, 4}.
+Any Edwards curve has a point (1, 0) of order 4. It follows that the torsion group
+of an Edwards curve is isomorphic to either Z/4Z, Z/8Z, Z/12Z, Z/2Z × Z/4Z, or
+Z/2Z × Z/8Z.
+   The most interesting cases for ECM are Z/12Z and Z/2Z × Z/8Z, since they
+force the group orders of E modulo primes p (of good reduction) to be divisible by
+12 and 16 respectively. In this section we show which conditions an Edwards curve
+x2 + y 2 = 1 + dx2 y 2 over Q must satisfy to have torsion group isomorphic to Z/12Z
+or Z/2Z × Z/8Z. We give parameterizations for both cases.
+   One could hope to force divisibility by 12 in a different way, namely by finding
+a twisted Edwards curve with Q-torsion group isomorphic to Z/2Z × Z/6Z. A
+twisted Edwards curve does not need to have a point of order 4. However, we will
+show that there are no twisted Edwards curves with Q-torsion group isomorphic
+to Z/2Z × Z/6Z. We will also show that there are no twisted Edwards curves with
+Q-torsion group isomorphic to Z/10Z.
+   Computations in extended Edwards coordinates would benefit from using twisted
+Edwards curves with a = −1. We show that such curves cannot have Q-torsion
+group isomorphic to Z/12Z or Z/2Z × Z/8Z.
+   We first present the constructions and then show the impossibility results.
+
+6.1. Torsion group Z/12Z. Theorem 6.2 states a genus-0 cover of the set of Ed-
+wards curves over Q with torsion group Z/12Z. Theorem 6.3 identifies all the
+points of finite order on such curves. Theorem 6.4 states a rational cover.
+Theorem 6.2. If y3 ∈ Q \ {−2, −1/2, 0, ±1} and x3 ∈ Q satisfy the equation
+x23 = −(y32 + 2y3 ) then the Edwards curve x2 + y 2 = 1 + dx2 y 2 over Q, where
+d = −(2y3 + 1)/(x23 y32 ), has (x3 , y3 ) as a point of order 3 and has Q-torsion group
+isomorphic to Z/12Z. Conversely, every Edwards curve over Q with a point of
+order 3 arises in this way.
+Proof. Assume that such a y3 and x3 exist. Then d is defined and not equal to 0
+or 1, and x23 + y32 = −2y3 = 1 + dx23 y32 . By Theorem 3.3, (x3 , y3 ) is a point of order
+3 on E E,1,d (Q). Since each Edwards curve has a point of order 4 the torsion group
+20              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+must contain a copy of Z/12Z. By Mazur’s theorem the torsion group cannot be
+larger.
+   Conversely, if E E,1,d (Q) has a point of order 3, then by Theorem 3.3 the point can
+be written as (x3 , y3 ) where x23 + y32 = 1 + dx23 y32 = −2y3 . Hence x23 = −(y32 + 2y3 ).
+Note that x3 6= 0, since otherwise y32 = 1 = −2y3 ; and note that y3 ∈     / {0, −2} since
+otherwise x3 = 0. Now d = −(2y3 + 1)/(x23 y32 ). Finally note that y3 ∈     / {−1/2, ±1}
+since otherwise d ∈ {0, 1}, contradicting the definition of an Edwards curve.           
+Theorem 6.3. Let x2 +y 2 = 1+dx2 y 2 be an Edwards curve over Q with Etor (Q) ∼  =
+Z/12Z and let P3 = (x3 , y3 ) be a point of order 3 on the curve.
+  The 12 torsion points on the curve and their respective orders are as follows:
+           point (0, 1) (0, −1) (±x3 , y3 ) (±1, 0) (±x3 , −y3 ) (±y3 , ±x3 )
+           order 1         2       3          4         6            12
+Proof. The points of order 6 are obtained as (±x3 , y3 ) + (0, −1), the points of order
+12 by adding (±1, 0) to the points of order 3.                                       
+Theorem 6.4. If u ∈ Q \ {0, ±1} then the Edwards curve x2 + y 2 = 1 + dx2 y 2
+over Q, where
+                  u2 − 1              (u − 1)2          (u2 + 1)3 (u2 − 4u + 1)
+           x3 =          ,   y3 = −            ,   d=
+                  u2 + 1               u2 + 1              (u − 1)6 (u + 1)2
+has (x3 , y3 ) as a point of order 3 and has Q-torsion group isomorphic to Z/12Z.
+Conversely, every Edwards curve over Q with a point of order 3 arises in this way.
+  The parameters u and 1/u give the same value of d.
+Proof. Multiply the identity (u + 1)2 + (u − 1)2 = 2(u2 + 1) by (u − 1)2 /(u2 + 1)2
+to see that x23 + y32 = −2y3 , and observe that
+                  2(u − 1)2 − (u2 + 1) (u2 + 1)2 (u2 + 1)2    −2y3 − 1
+           d=                         · 2        ·          =          .
+                          2
+                         u +1          (u − 1) 2   (u − 1)4    x23 y32
+Furthermore y3 ∈  / {−2, −1/2, 0, ±1} since u ∈ Q \ {0, ±1}. By Theorem 6.2, the
+Edwards curve x2 + y 2 = 1 + dx2 y 2 over Q has (x3 , y3 ) as a point of order 3 and
+has torsion group isomorphic to Z/12Z.
+   Conversely, assume that the Edwards curve x2 + y 2 = 1 + dx2 y 2 has a point
+of order 3. By Theorem 6.2, the curve has a point (x3 , y3 ) of order 3 for some
+y3 ∈ Q \ {−2, −1/2, 0, ±1} and x3 ∈ Q satisfying x23 = −(y32 + 2y3 ) and d =
+−(2y3 + 1)/(x23 y32 ). Note that (x3 , y3 + 1) is a point on the unit circle.
+   If x3 = ±1 then y3 + 1 = 0 so d = −(2y3 + 1)/(x23 y32 ) = 1; but Edwards
+curves have d 6= 1. Hence x3 6= ±1. Furthermore x3 6= 0 since every point with
+x-coordinate 0 has order 1 or 2.
+   Define u as the slope of the line between (1, 0) and (x3 , −(y3 + 1)); i.e., u =
+(y3 + 1)/(1 − x3 ). Substitute y3 + 1 = u(1 − x3 ) into (y3 + 1)2 = 1 − x23 to
+obtain u2 (1 − x3 )2 = 1 − x23 = (1 + x3 )(1 − x3 ), i.e., u2 (1 − x3 ) = 1 + x3 , i.e.,
+x3 = (u2 − 1)/(u2 + 1). Then u ∈         / {0, ±1} since x3 ∈  / {0, −1}. Furthermore
+y3 = u(1 − x3 ) − 1 = u(2/(u + 1)) − 1 = −(u − 1) /(u2 + 1) and as above
+                                   2                          2
+
+d = (2y3 + 1)/(x23 y32 ) = (u2 + 1)3 (u2 − 4u + 1)/((u − 1)6 (u + 1)2 ).
+   The value of d is invariant under the change u 7→ 1/u since
+                   (1 + u2 )3 (1 − 4u + u2 )   (u2 + 1)3 (u2 − 4u + 1)
+                                             =                         .
+                      (1 − u)6 (1 + u)2           (u − 1)6 (u + 1)2
+                            ECM USING EDWARDS CURVES                                   21
+
+
+                                                                                       
+   Solving the equation d(u0 ) = d(u) for u0 in terms of u over the rationals shows
+that u 7→ 1/u is the only rational transformation leaving d invariant that works
+independently of u.
+6.5. Torsion group Z/2Z × Z/8Z. Theorem 6.6 states a genus-0 cover of the set
+of Edwards curves over Q with torsion group Z/2Z × Z/8Z. Theorem 6.8 identifies
+all the affine points of finite order on such curves. Theorem 6.9 states a rational
+cover and identifies the degree of the cover.
+    There are actually two types of curves in Theorem√6.6: points of order 8 double
+to (±1, 0) on curves of the first type, or to ((1 : ± d), (1 : 0)) on curves of the
+second type. Curves of the second type are birationally equivalent to curves of the
+first type by Theorem 6.7. Subsequent theorems consider only the first type.
+Theorem 6.6. If x8 ∈ Q \ {0, ±1} and d = (2x28 − 1)/x48 is a square in Q then the
+Edwards curve x2 +y 2 = 1+dx2 y 2 over Q has (x8 , ±x8 ) as points of order 8 doubling
+to (±1, 0), and has Q-torsion group isomorphic to Z/2Z×Z/8Z. Conversely, every
+Edwards curve over Q with Q-torsion group isomorphic to Z/2Z×Z/8Z and a point
+of order 8 doubling to (±1, 0) arises in this way.
+   If x̄8 ∈ Q\{0, ±1} and d = 1/(x̄28 (2−x̄28 ))√is a square in Q then the Edwards curve
+x2√+y 2 = 1+dx2 y 2 over Q has (x̄8 , ±1/(x̄8 d)) as points of order 8 doubling to ((1 :
+± d), (1 : 0)), and has Q-torsion group isomorphic to Z/2Z × Z/8Z. Conversely,
+every Edwards curve over Q with Q-torsion
+                                        √         group isomorphic to Z/2Z × Z/8Z and
+a point of order 8 doubling to ((1 : ± d), (1 : 0)) arises in this way.
+   Every Edwards curve over Q with Q-torsion group isomorphic to Z/2Z × Z/8Z
+arises in one of these two ways.
+Proof. Any such x8 yields d 6= 0, 1, so x2 + y 2 = 1 + dx2 y 2 is an Edwards√curve.
+By Theorems 3.1 and 3.2, the curve has points (0, −1) and ((1 : 0), (1 : ± d)) of
+order 2, and points (x8 , ±x8 ) of order 8 doubling to (±1, 0). Similarly,
+                                                                    √       any such x̄8
+yields an Edwards
+              √       curve with points (0, −1) and
+                                                  √ ((1 : 0), (1 : ± d)) of order 2 and
+(x̄8 , ±1/(x̄8 d)) of order 8 doubling to ((1 : ± d), (1 : 0)).
+    In both cases the torsion group contains a copy of Z/2Z × Z/8Z. By Mazur’s
+theorem the torsion group cannot be larger.
+    Conversely, assume that x2 + y 2 = 1 + dx2 y 2 is an Edwards curve with Q-
+torsion group isomorphic to Z/2Z × Z/8Z. There are four elements of order 4 in
+Z/2Z × Z/8Z, all doubling to the same element, so there are four order-4 points on
+the curve, all doubling to the same point.
+    The points (±1, 0) have order 4 and double to (0, −1), so the other two points
+of order √4 also double to (0, −1). By Theorem 3.1, those other two points must be
+((1 : ± d), (1 : 0)), and d must be a square.                       √
+    Now any point of order 8 must double to (±1, 0) or to ((1 : ± d), (1 : 0)). In the
+first case, by Theorem 3.2, the point is (x8 , ±x8 ) for some root x8 of dx48 − 2x28 + 1;
+                                  2        4
+hence x8 ∈  / {0, ±1} and
+                        √ d = (2x8 − 1)/x8 . In the 4second 2case, by Theorem 3.2, the
+point is (x̄8 , ±1/(x̄8 d)) for some root x̄8 of dx̄8 − 2dx̄8 + 1; hence x̄8 ∈/ {0, ±1}
+                4      2
+and d = 1/(x̄8 − 2x̄8 ).                                                               
+Theorem 6.7. Let d be a square. The Edwards curves x2 + y 2 = 1 +√dx2 y 2 and
+x̄2 + ȳ 2 = 1 + (1/d)x̄2 2
+                      √ ȳ are birationally equivalent via the map x̄ = x d, ȳ = 1/y
+with inverse x = x̄/ d, y = 1/ȳ. The map fixes (0, ±1).
+22               D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+                          √
+Proof. Inserting x̄ = x d, ȳ = 1/y into x2 + y 2 = 1 + dx2 y 2 gives x̄2 /d + 1/ȳ 2 =
+1 + x̄2 /ȳ 2 which after multiplication by ȳ 2 gives x̄2 ȳ 2 /d + 1 = ȳ 2 + x̄2 . The only
+exceptional points are (±1, 0). The statement about (0, ±1) follows by direct in-
+spection.                                                                                   
+
+   In particular, each curve of the second type in Theorem 6.6 is birationally equiv-
+alent to a curve of the first type. Indeed, assume that
+            2       2
+                                                             √ x̄8 ∈ Q \2 {0, ±1} and2 that
+d = 1/(x̄8 (2 − x̄8 )) is a square in Q. Define x8 = x̄8 d. Then x8 = 1/(2 − x̄8 ), so
+(2x28 −1)/x48 = (2/(2−x̄28 )−1)(2−x̄28 )2 = x̄28 (2−x̄28 ) = 1/d, which is a square; further-
+more, x8 ∈   / {0, ±1} since 2− x̄28 6= 1 since x̄8 ∈
+                                                    / {±1}. Hence x2 +y 2 = 1+(1/d)x2 y 2
+is a curve of the first type. The curve x2 + y 2 = 1 + dx2 y 2 is birationally equivalent
+to x̄2 + ȳ 2 = 1 + (1/d)x̄2 ȳ 2 by Theorem 6.7. Consequently we can restrict attention
+to curves of the first type, i.e., curves on which the points of order 8 double to
+(±1, 0).
+Theorem 6.8. Assume that x8 ∈ Q \ {0, ±1} and that d = (2x28 − 1)/x48 is a square
+in Q. Then there are 16 points of finite order on E E,1,d over Q. The affine points
+of finite order are as follows:
+                                                         √          √ 
+         point (0, 1) (0, −1) (±1, 0) (±x8 , ±x8 ) ±1/(x8 d), ±1/(x8 d)
+         order    1       2        4          8                      8
+where the signs are taken independently.
+Proof. Theorem 3.1 (with a = 1) shows that the 4 affine points (0, 1), (0, −1),
+and (±1, 0) are on E E,1,d and √have the stated orders. It also shows that the 2
+       √ points ((1 : 0), (1 : ± d)) have order 2 and that the 2 non-affine points
+non-affine
+((1 : ± d), (1 : 0)) have order 4. Theorem 3.2 shows that the other affine points
+listed are 8 distinct points on E E,1,d and have order 8. The torsion group has
+exactly 16 elements by Theorem 6.6.                                             
+
+Theorem 6.9. If u ∈ Q \ {0, −1, −2} then the Edwards curve x2 + y 2 = 1 + dx2 y 2
+over Q, where
+                          u2 + 2u + 2           2x28 − 1
+                    x8 =              ,     d =          ,
+                             u2 − 2                x48
+has (x8 , x8 ) as a point of order 8 and has Q-torsion group isomorphic to Z/2Z ×
+Z/8Z.
+   Conversely, every Edwards curve over Q with torsion group isomorphic to Z/2Z×
+Z/8Z on which the points of order 8 double to (±1, 0) is expressible in this way.
+   The parameters u, 2/u, −2(u+1)/(u+2), −(2+u)/(1+u), −(u+2), −2/(u+2),
+−u/(u + 1), and −2(u + 1)/u give the same value of d and they are the only values
+giving this d.
+Proof. Divide the identity 2(u2 +2u+2)2 −(u2 −2)2 = (u2 +4u+2)2 by (u2 −2)2 to
+see that 2x28 −1 = (u2 +4u+2)2 /(u2 −2)2 . Hence d is a square. Furthermore x8 6= 0
+since u2 + 2u + 2 6= 0; x8 6= 1 since u 6= −2; and x8 6= −1 since u ∈   / {0, −1}. By
+Theorem 6.6, the curve E E,1,d has (x8 , x8 ) as a point of order 8, and has Q-torsion
+group isomorphic to Z/2Z × Z/8Z.
+   Conversely, assume that an Edwards curve has torsion group isomorphic to
+Z/2Z × Z/8Z and has a point of order 8 doubling to (±1, 0). By Theorem 6.6, the
+                            ECM USING EDWARDS CURVES                                   23
+
+
+curve can be expressed as E E,1,d for some x8 ∈ Q\{0, ±1} such that d = (2x28 −1)/x48
+is a square in Q; i.e., such that 2x28 − 1 is a square in Q.
+   Choose r ∈ Q such that 2x28 − 1 = r2 . Define u as the slope of the line between
+(1, −1) and (x8 , r): i.e., u = (r + 1)/(x8 − 1). Substitute r = u(x8 − 1) − 1 into
+2(x28 −1) = (r+1)(r−1) to obtain 2(x28 −1) = u(x8 −1)(u(x8 −1)−2), i.e., 2(x8 +1) =
+u(u(x8 − 1) − 2), i.e., 2x8 + 2 = u2 x8 − u2 − 2u, i.e., x8 = (u2 + 2u + 2)/(u2 − 2).
+Finally u ∈/ {0, −1} since x8 6= −1, and u 6= −2 since x8 6= 1.
+   The identity
+         (d(u) − d(v))((u + 1)2 + 1)4 ((v + 1)2 + 1)4
+               = 16(u − v)(uv − 2)((u + 2)v + 2(u + 1))(u + 2 + (u + 1)v)
+                   · (u + v + 2)((u + 2)v + 2)(u + (u + 1)v)(uv + 2(u + 1))
+immediately shows that if v is any of the listed values u, 2/u, . . . then d(v) = d(u).
+Conversely, if v is not one of those values then none of the factors u − v, uv − 2, . . .
+are 0 so d(v) 6= d(u).                                                                
+6.10. Impossibility results. The following theorem shows that the only way for
+a twisted Edwards curve to have exactly 12 torsion points is to have torsion group
+isomorphic to Z/12Z. The next two theorems consider twisted Edwards curves with
+a = −1 and show that these cannot have Q-torsion group isomorphic to Z/12Z or
+Z/2Z × Z/8Z. The last theorem shows that a twisted Edwards curve cannot have
+exactly 10 torsion points.
+Theorem 6.11. There exists no twisted Edwards curve over Q with torsion group
+isomorphic to Z/2Z × Z/6Z.
+Proof. Let a, d be distinct nonzero elements of Q. Suppose that the twisted Ed-
+wards curve E E,a,d : ax2 + y 2 = 1 + dx2 y 2 has Q-torsion group isomorphic to
+Z/2Z × Z/6Z.
+   There are three elements of order 2 in Z/2Z × Z/6Z, so there are three points
+of order 2 in E E,a,d (Q). p By Theorem 3.1pthe only possible points of order 2 are
+(0, −1) and ((1 : 0), (± a/d : 1)). Hence a/d ∈ Q.
+   There are also elements of order 3 in Z/2Z × Z/6Z. Choose a point of order
+3 in E E,a,d (Q). By Theorem 3.3 this point can be expressed as (x3 , y3 ) where
+ax23 + y32 = 1 + dx23 y32 = −2y3 .
+   Write u = 1 + y3 . Then 1 − u2 = −2y3 − y32 = ax23 . Starting from dx23 y32 =
+ax23 + y32 − 1, replace x23 by (1 − u2 )/a and replace y3 by u − 1 to see that (d/a)(1 −
+u2 )(u − 1)2 = (1 − u2p  ) + (u − 1)2 − 1 = 1 − 2u. Hence s2 = 4(1 − 2u)(1 − u2 ) where
+s = 2(1 − u2 )(u − 1) d/a ∈ Q.
+   In other words, (2u, s) is a Q-rational point (σ, τ ) on the elliptic curve τ 2 =
+σ − σ 2 − 4σ + 4. This elliptic curve has rank 0 over Q, and has exactly 7 affine
+ 3
+
+points over Q, as one can verify by typing
+      E=EllipticCurve(QQ,[0,-1,0,-4,4])
+      print E.rank()
+      print E.torsion_points()
+into the Sage computer-algebra system [43]. Specifically, (σ, τ ) must be one of
+(±2, 0), (0, ±2), (1, 0), (4, ±6). Hence u ∈ {±1, 0, 1/2, 2}. In each case (a : d) =
+((1 − u2 )(u − 1)2 : 1 − 2u) ∈ {(1 : 1), (0 : 1), (1 : 0)}, contradicting the assumption
+that a, d are distinct nonzero elements of Q.                                          
+24                D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+Theorem 6.12. There exists no twisted Edwards curve of the form ax2 + y 2 =
+1 + dx2 y 2 over Q with a = −1 and torsion group isomorphic to Z/12Z.
+Proof. Suppose that the twisted Edwards curve E E,−1,d : −x2 + y 2 = 1 + dx2 y 2 has
+Q-torsion group isomorphic to Z/12Z.
+    There is a unique element of order 2 in Z/12Z, so (0, −1) is the only point
+of order 2 on E E,−1,d (Q). Furthermore, there are elements of order 4 in Z/12Z,
+so there are points on E E,−1,d (Q) doubling to (0, −1). By Theorem
+                                                                 √         3.1 the only
+                                         √
+possibilities for such points are ((1 : ± a), (0 : 1)) or ((1 : ± d), (1 : 0)). Hence a
+or d is a square in Q; but a = −1 is not a square in Q, so d is a square in Q.
+    There are also elements of order 3 in Z/12Z. As in the proof of Theorem 6.11
+there exists u ∈ Q such that (d/a)(1 − u2 )(u − 1)2√= 1 − 2u. Here a = −1 so
+s2 = −4(1 − u2 )(1 − 2u) where s = 2(1 − u2 )(u − 1) d ∈ Q.
+    In other words, (−2u, s) is a Q-rational point on the elliptic curve τ 2 = σ 3 +
+σ 2 − 4σ − 4. This elliptic curve has rank 0 over Q, and has exactly 3 affine points
+over Q: specifically, (σ, τ ) must be one of (±2, 0), (−1, 0). Hence u ∈ {±1, 1/2}. If
+u ∈ {±1} then 0 = (d/a)(1 − u2 )(u − 1)2 = 1 − 2u 6= 0, contradiction; if u = 1/2
+then 0 = 1 − 2u = (d/a)(1 − u2 )(u − 1)2 6= 0, contradiction.                        
+Theorem 6.13. There exists no twisted Edwards curve of the form ax2 + y 2 =
+1 + dx2 y 2 over Q with a = −1 and torsion group isomorphic to Z/2Z × Z/8Z.
+Proof. Suppose that the twisted Edwards curve E E,−1,d : −x2 + y 2 = 1 + dx2 y 2 has
+Q-torsion group isomorphic to Z/2Z × Z/8Z.                                              p
+   The torsion group contains exactly        √     three elements   of  order    2,  so     a/d ∈ Q as
+in the proof of Theorem 6.11; i.e., −d ∈ Q. Consequently d is not a square in Q.
+   The torsion group also contains exactly 4 elements of order 4. These                 √ elements
+cannot double
+           √      to (0,   −1):  otherwise     they   would  have  the  form    ((1  : ±    −1), (0 : 1))
+or ((1 : ± d), (1 : 0)) by Theorem 3.1, but neitherp             −1 nor d is a square in Q. The
+elements of order 4 therefore double to ((1 : 0), (± −1/d : 1)).
+   If s2 √
+   √      = −1/d then the elements of order 4 doubling to ((1 : 0), (s : 1)) are
+(± s, ± s) by Theorem 3.1, where the ± signs are assumed             √            independently. In
+particular, if such elements are defined over Q, then ± s ∈ Q, so s is a square in
+Q, so −1/d is a fourth power in Q, say f 4 . Now (±f, ±f ) are points of order 4
+doubling to ((1 : 0), (f 2 : 1)), and there are no other points of order 4.
+   The torsion group contains a point P8 of order 8. This point doubles to (±f, ±f ).
+Assume without loss of generality that [2]P8 = (±f, f ): otherwise replace f by −f .
+Further assume without loss of generality that [2]P8 = (f, f ): otherwise replace P8
+by −P8 . Any point having a zero coordinate has order at most 4, so P8 must be
+an affine point, say (x8 , y8 ), with x8 6= 0 and y8 6= 0.
+   Now [2]P8 = (f, f ) implies (2x8 y8 )/(−x28 + y82 ) = f = (y82 + x28 )/(2 + x28 − y82 ),
+with −x28 + y82 6= 0 and 2 + x28 − y82 6= 0. In particular, (y82 + x28 )(−x28 + y82 ) =
+(2x8 y8 )(2 + x28 − y82 ), so (y82 − x28 )(x28 + y82 + 2x8 y8 ) = 4x8 y8 ; i.e., (y82 − x28 )r2 = 4x8 y8
+where r = x8 + y8 .
+   Define s = 2(y82 + x28 )/(y82 − x28 ). Then
+                             4((y82 + x28 )2 − (y82 − x28 )2 )     16y82 x28
+                 s2 − 4 =                                      =               = r4
+                                      (y82 − x28 )2              (y82 − x28 )2
+so (s + r2 )2 − 4 = 2r2 (s + r2 ); consequently ((s + r2 )/2, r(s + r2 )/2) is a rational
+point on the elliptic curve τ 2 = σ 3 − σ. This curve has rank 0 over Q and exactly 3
+                               ECM USING EDWARDS CURVES                                        25
+
+
+affine points over Q, namely (±1, 0) and (0, 0). Hence r(s + r2 ) = 0; consequently
+0 = r(s + r2 )(s − r2 ) = r(s2 − r4 ) = 4r, so r = 0, so x8 + y8 = 0, contradicting
+−x28 + y82 6= 0.                                                                 
+
+Theorem 6.14. There exists no twisted Edwards curve over Q with torsion group
+isomorphic to Z/10Z.
+Proof. Suppose that the twisted Edwards curve E E,a,d : ax2 + y 2 = 1 + dx2 y 2 has
+Q-torsion group isomorphic to Z/10Z. This means in particular that there exists
+a point P5 ∈ E E,a,d (Q) of order 5. Points at infinity have order at most 4 by
+Theorem 3.1, so P5 = (x5 , y5 ) for some x5 , y5 ∈ Q. Points with a zero coordinate
+also have order at most 4 by Theorem 3.1, so x5 6= 0 and y5 6= 0. Note also that
+y5 ∈
+   / {−1, 1} since x5 6= 0.
+   Apply the doubling formulas twice to see that the x-coordinate of [4]P5 satisfies
+       x([4]P5 ) − (−x5 ) =
+                                                            
+                                      x5 ax25 + y52 − 2y5 F
+                                                                                           ,
+          a4 x85 + 4y52 a3 x65 + (6y54 − 16y52 )a2 x45 + (4y56 − 16y54 + 16y52 )ax25 + y58
+where F = a3 x65 + (3y52 + 6y5 )a2 x45 + (3y54 + 4y53 − 4y52 − 8y5 )ax25 + y56 − 2y55 − 4y54 . The
+equation [4]P5 = −P5 implies x([4]P5 ) − (−x5 ) = 0, so x5 (ax25 + y52 − 2y5 )F = 0.
+    Case 1: ax25 +y52 = 2y5 . Then (x5 , −y5 ) is a curve point of order 3 by Theorem 3.3,
+contradicting the hypothesis that the torsion group is isomorphic to Z/10Z.
+    Case 2: F = 0. Define q = (ax25 + y52 + 2y5 )/y5 and r = q/(y5 + 1). The identity
+rq 2 − (r2 + 8)q + 16 = F/(y52 (y5 + 1)2 ) then implies rq 2 − (r2 + 8)q + 16 = 0.
+    Define U = q − r, V = q − r − 4, and W = 4 − q − r. Then (U, V, W ) 6= (0, 0, 0),
+and V 2 W − U 3 − U 2 W + U W 2 = 4(rq 2 − (r2 + 8)q + 16) = 0, so (U : V : W ) is a
+rational point on the elliptic curve τ 2 = σ 3 + σ 2 − σ. This curve has rank 0 over Q
+and exactly 6 points over Q, namely (±1, ±1), (0, 0), and (0 : 1 : 0), so (U : V : W )
+is one of those points.
+    The points (1, 1) and (−1, −1) and (0, 0) are excluded since U 6= V . The point
+(1, −1) implies (q, r) = (2, 0), contradicting r = q/(y5 + 1). The point (−1, 1)
+implies (q, r) = (4, 2), again contradicting r = q/(y5 + 1) since y5 6= 1. Finally,
+the point (0 : 1 : 0) implies (q, r) = (2, 2), again contradicting r = q/(y5 + 1) since
+y5 6= 0.                                                                                        
+
+         7. Edwards curves with large torsion and positive rank
+   Atkin and Morain in [3] found an infinite family of elliptic curves over Q with
+torsion group Z/2Z × Z/8Z and with explicit non-torsion points. Montgomery in
+[36, page 263] had earlier found an analogous family for Z/12Z. Suyama in [44] had
+earlier given an infinite sequence of Montgomery curves with explicit non-torsion
+points and with group order divisible by 12 over any prime field. GMP-ECM uses
+Suyama curves; see [47]. See [37, Section 6] for further Z/2Z × Z/8Z constructions.
+   Montgomery in [37, Section 6] selected various curves with torsion group Z/12Z,
+computed the group orders modulo primes p in the interval [104 , 105 ], and found
+that the average exponents of 2 and 3 in the group orders were close to 11/3 and 5/3
+respectively. We performed an analogous computation for primes in [106 , 2 · 106 ],
+using Edwards curves with torsion group Z/12Z constructed as in Section 6, and
+found an even closer match to 11/3 and 5/3.
+26                  D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   Most Suyama curves have Q-torsion group only Z/6Z, and have averages only
+10/3 and 5/3. However, Kruppa discovered in 2007 that the Suyama curve with
+σ = 11 has averages 11/3 and 5/3, despite having torsion group only Z/6Z; see [31,
+Section 5.2.3].
+   In this section we translate the Atkin–Morain and Montgomery constructions
+from Weierstrass curves to Edwards curves. We also translate the Suyama con-
+struction to twisted Edwards curves.
+   This section relies on the equivalence in [8] between Montgomery curves and
+twisted Edwards curves. The twisted Edwards curve E E,a,d is birationally equiv-
+alent to the Montgomery curve E M,A,B : Bv 2 = u3 + Au2 + u, where A =
+2(a + d)/(a − d) and B = 4/(a − d). The map (x, y) 7→ (u, v) = ((1 + y)/(1 − y),
+(1 + y)/((1 − y)x)) is a birational equivalence from E E,a,d to E M,A,B , with inverse
+(u, v) 7→ (x, y) = (u/v, (u − 1)/(u + 1)).
+7.1. The Atkin–Morain construction. The Atkin–Morain family is parameter-
+ized by points (s, t) on a particular elliptic curve T 2 = S 3 − 8S − 32. Atkin and
+Morain suggest computing multiples (s, t) of (12, 40), a non-torsion point on this
+curve. Beware that these points have rapidly increasing height.
+Theorem 7.2 (Atkin, Morain). Let (s, t) be a rational point on the curve T 2 =
+                                                 −1
+S 3 − 8S − 32. Define α = ((t + 25)/(s − 9) + 1) , β = 2α(4α + 1)/(8α2 − 1),
+c = (2β − 1)(β − 1)/β, and b = βc. Then the elliptic curve
+                                ((c − 1)2 − 4b) 2 b(c − 1)     b2
+                    Eα : V 2 = U 3 +           U +         U+
+                                       4              2        4
+has torsion group isomorphic to Z/2Z×Z/8Z and a point with U -coordinate −(2β −
+1)/4.
+Theorem 7.3. Let (s, t) be a rational point on the curve T 2 = S 3 − 8S − 32.
+Define α and β as in Theorem 7.2. Define d = (2(2β − 1)2 − 1)/(2β − 1)4 . Then the
+Edwards curve x2 + y 2 = 1 + dx2 y 2 has torsion group isomorphic to Z/2Z × Z/8Z
+and a point (x1 , y1 ) with x1 = (2β − 1)(4β − 3)/(6β − 5) and y1 = (2β − 1)(t2 +
+50t − 2s3 + 27s2 − 104)/((t + 3s − 2)(t + s + 16)).
+Proof. Put x8 = 2β −1. By construction x8 satisfies (2x28 −1)/x48 = d. Furthermore
+                             (8α2 − 1)2 (8α2 + 8α + 1)2
+                                d=                      ,
+                                   (8α2 + 4α + 1)4
+so d is a square. By Theorem 6.6, the Edwards curve has torsion group isomorphic
+to Z/2Z × Z/8Z. Finally, a straightforward calculation shows that x21 + y12 =
+1 + dx21 y12 .                                                                
+   The point with U -coordinate −(2β − 1)/4 in Theorem 7.2 is generically a non-
+torsion point. The V -coordinate of the point is not stated explicitly in [3]. The
+point (x1 , y1 ) in Theorem 7.3 is the corresponding point on the Edwards curve.
+7.4. The Suyama construction. The Suyama family has lower torsion but a sim-
+pler parameterization. We briefly review Suyama’s family and present an analogous
+result for twisted Edwards curves.
+Theorem 7.5 (Suyama). Let σ > 5 be an integer. Define
+                                                   (β − α)3 (3α + β)             α
+     α = σ 2 − 5,     β = 4σ,    W1 = β 3 ,   A=                     − 2,   B=      .
+                                                         4α3 β                   W1
+                             ECM USING EDWARDS CURVES                                     27
+
+
+Then the Q-torsion group of the elliptic curve E M,A,B : Bv 2 = u3 + Au2 + u has a
+subgroup isomorphic to Z/6Z.
+   Define V1 = (σ 2 − 1)(σ 2 − 25)(σ 4 − 25). Then (u1 , v1 ) = (α3 /W1 , V1 /W1 ) is a
+non-torsion point on E M,A,B .
+Theorem 7.6. Let σ > 5 be an integer. Define α, β, V1 as in Theorem 7.5. Define
+a = (β − α)3 (3α + β) and d = (β + α)3 (β − 3α). Then the Q-torsion group of the
+twisted Edwards curve ax2 + y 2 = 1 + dx2 y 2 has a subgroup isomorphic to Z/6Z,
+and (x1 , y1 ) = (αβ/(2V1 ), (α3 − β 3 )/(α3 + β 3 )) is a non-torsion point on the curve.
+Proof. Define W1 , A, B as in Theorem 7.5. Then 2(a+d)/(a−d) = A and 4/(a−d) =
+Bβ 2 /(2α2 )2 . The twisted Edwards curve ax2 + y 2 = 1 + dx2 y 2 is birationally
+equivalent to the Montgomery curve (Bβ 2 /(2α2 )2 )v 2 = u3 + Au2 + u, which in turn
+is isomorphic to the Montgomery curve Bv 2 = u3 + Au2 + u, so its Q-torsion group
+has a subgroup isomorphic to Z/6Z by Theorem 7.5.
+    Define u1 , v1 as in Theorem 7.5. Then (u1 , v1 ) is a non-torsion point on Bv 2 =
+u + Au2 + u, so (u1 , v1 (2α2 )/β) is a non-torsion point on (Bβ 2 /(2α2 )2 )v 2 = u3 +
+  3
+
+Au2 + u. Mapping this point to E E,a,d yields exactly (x1 , y1 ):
+                   u1           α3      αβ                     u1 − 1  α3 − β 3
+       x1 =         2
+                         =        2
+                                      =             and y1 =          = 3       .
+              v1 (2α )/β   V1 (2α )/β   2V1                    u1 + 1  α + β3
+Hence (x1 , y1 ) is a non-torsion point on ax2 + y 2 = 1 + dx2 y 2 .                      
+7.7. The Montgomery construction. Montgomery’s family is parameterized by
+points (s, t) on the curve T 2 = S 3 − 12S, except for the points (0, 0), Q = (−2, −4),
+R = (6, −12), −Q, and −R. Observe that this curve has rank 1, that Q is a
+non-torsion point on the curve, and that R = Q + (0, 0) is not in the cyclic group
+generated by Q, so one way to generate infinitely many suitable points on the curve
+is to compute [2]Q, [3]Q, etc. Montgomery does not state any particular generation
+mechanism but gives five examples in [36, page 263] that appear to have been
+generated as [2]R, [3]R, [4]R, [5]R, and [6]R.
+Theorem 7.8. Let (s, t) ∈  / {(0, 0), (−2, ±4), (6, ±12)} be a rational point on the
+curve T 2 = S 3 − 12S. Define
+                         −(s − 2)3 (s + 6)3 (s2 − 12s − 12)
+                        d=                                  .
+                                      1024s2 t2
+Then the Edwards curve E : x2 + y 2 = 1 + dx2 y 2 has Q-torsion group isomorphic
+to Z/12Z and has a non-torsion point (x1 , y1 ) where
+                   8t(s2 + 12)                                  −4s(s2 − 12s − 12)
+   x1 =                                       and      y1 =                           .
+          (s − 2)(s + 6)(s2 + 12s − 12)                       (s − 2)(s + 6)(s2 − 12)
+Proof. Note that the restrictions on (s, t) ensure that all denominators are nonzero
+and that d ∈/ {0, 1}.
+   Define x3 = 4t/((s − 2)(s + 6)) and y3 = −8s/((s − 2)(s + 6)). A straightforward
+calculation shows that x23 + y32 = 1 + dx23 y32 = −2y3 , so (x3 , y3 ) is a point of order
+3 on E by Theorem 3.3, so the torsion group of E has a subgroup isomorphic to
+Z/12Z. By Mazur’s theorem, the torsion group of E is isomorphic to Z/12Z.
+   Another straightforward calculation shows that x21 + y12 = 1 + dx21 y12 , so (x1 , y1 )
+is a curve point. If it were a torsion point then the ratio (x1 : y1 ) = (−2t(s2 −
+12)(s2 + 12) : s(s2 − 12s − 12)(s2 + 12s − 12)) would have to be equal to (0 : 1) or
+28              D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+(1 : 0) or (±x3 : y3 ) = (±t : 2s) or (±y3 : x3 ) = (±2t : s2 − 12) by Theorem 6.3;
+this is also avoided by the restrictions on (s, t).                              
+
+     8. Edwards curves with small parameters, large torsion, and
+                             positive rank
+   One way to save time in computations on twisted Edwards curves is to choose
+small curve parameters a and d and a small-height non-torsion base point (X1 : Y1 :
+Z1 ); see Section 2.8. Another way to save time is to construct curves with large
+Q-torsion group and positive rank; see Section 7. Unfortunately, essentially all of
+the Z/12Z and Z/2Z × Z/8Z curves constructed in Section 7 have a, d, X1 , Y1 , Z1
+of large height.
+   Our aim in this section is to combine these two time-saving techniques, finding
+twisted Edwards curves that simultaneously have small parameters a, d, a small-
+height non-torsion point (X1 : Y1 : Z1 ), and large torsion over Q.
+   Overall we found more than 100 small Edwards curves having small-height non-
+torsion points and at least 12 torsion points over Q. See http://eecm.cr.yp.to/
+goodcurves.html for the complete list. The number of d’s below height H appears
+to grow as roughly log H; for comparison,
+                                 √          the Atkin-Morain procedure discussed in
+Section 7 generates only about log H examples below height H. Of course, one
+can easily write down many more small curves if one is willing to sacrifice some
+torsion, as illustrated by the Suyama construction.
+8.1. Torsion group Z/12Z. Theorem 6.4 gives a complete parameterization of
+all Edwards curves with torsion group isomorphic to Z/12Z. Any rational point
+(u, x3 , y3 , d, x1 , y1 ) on the surface described by
+        u2 − 1           (u − 1)2       (u2 + 1)3 (u2 − 4u + 1) 2
+ x3 =          , y 3 = −          , d =                        , x1 + y12 = 1 + dx21 y12
+        u2 + 1            u2 + 1           (u − 1)6 (u + 1)2
+gives us a suitable curve for ECM if u ∈      / {0, ±1} and (x1 , y1 ) is not a torsion point.
+Theorem 6.3 lists all affine torsion points.
+    Assume without loss of generality that |u| > 1: otherwise replace u by 1/u,
+obtaining the same d. Write u as a/b for integers a, b satisfying 0 < |b| < a. Define
+e = (a2 − b2 )/x1 and f = −(a − b)2 /y1 , and assume without loss of generality that
+e, f are integers; otherwise scale a, b appropriately. The curve equation x21 +y12 = 1+
+dx21 y12 now implies, after some simplification, the (1, 1, 2, 2)-weighted-homogeneous
+equation
+                 (e2 − (a2 − b2 )2 )(f 2 − (a − b)4 ) = 16a3 b3 (a2 − ab + b2 ).
+    We found many small solutions to this equation, and thus many of the desired
+Edwards curves, as follows. We considered a range of positive integers a. For each
+a we enumerated integers b with 0 < |b| < a. For each (a, b) we enumerated all
+divisors of 16a3 b3 (a2 − ab + b2 ) and added (a2 − b2 )2 to each divisor. For each
+sum of the form e2 we added (a − b)4 to the complementary divisor, checked for a
+square, checked that the corresponding (x1 , y1 ) was a non-torsion point, etc.
+    After about a week of computation on some computers at LORIA we had found
+78 different values of d and checked that we had 78 different j-invariants. Here are
+two examples:
+        • the very small solution (a, b, e, f ) = (3, 2, 23, 7) produces the order-3 point
+          (x3 , y3 ) = (5/13, −1/13) and the non-torsion point (x1 , y1 ) = (5/23, −1/7)
+          on the Edwards curve x2 + y 2 = 1 + dx2 y 2 where d = −11 · 133 /52 ;
+                             ECM USING EDWARDS CURVES                                   29
+
+
+      • the solution (a, b, e, f ) = (15180, −7540, 265039550, 161866240) produces
+        the non-torsion point (3471616/5300791, −201640/63229) on the Edwards
+        curve x2 + y 2 = 1 + dx2 y 2 where d = 931391 · 3591053 /1400033300482 .
+
+8.2. Torsion group Z/2Z×Z/8Z. Theorem 6.9 gives a complete parameterization
+of all Edwards curves with torsion group isomorphic to Z/2Z × Z/8Z and with a
+point of order 8 doubling to (±1, 0). Any rational point (u, x8 , d, x1 , y1 ) on the
+surface described by x8 = (u2 + 2u + 2)/(u2 − 2), d = (2x28 − 1)/x48 , and x21 + y12 =
+1 + dx21 y12 gives us a suitable curve for ECM if u ∈   / {0, −1, −2} and (x1 , y1 ) is not
+a torsion point. Theorem √   6.8 lists all affine torsion points.
+    We consider only u > 2. Various transformations√of u listed in Theorem  √           6.9
+show that this does not lose any generality: if 0 < u < 2 then 2/u > 2, and 2/u
+produces the same curve; if u < −2 then −(u + 2) > 0, and −(u + 2) produces the
+same curve; if −2 < u < −1 then −2(u + 1)/(u + 2) > 0, and −2(u + 1)/(u + 2)
+produces the same curve; if −1 < u < 0 then −u/(u + 1) > 0, and −u/(u + 1)
+produces the same curve.
+    Write u = a/b, x1 = (a2 + 2ab + 2b2 )/e, and y1 = (a2 + 2ab + 2b2 )/f where
+a, b, e, f are integers. Then a, b, e, f satisfy the (1, 1, 2, 2)-weighted-homogeneous
+equation
+     (e2 − (a2 + 2ab + 2b2 )2 )(f 2 − (a2 + 2ab + 2b2 )2 ) = (4ab(a + b)(a + 2b))2 .
+   We found many small solutions to this equation, and thus many of the desired
+Edwards curves, by a procedure similar to the procedure used for Z/12Z. We
+considered a range
+                  √ of positive integers a. For each a we enumerated integers b
+between 1 and a/ 2 . For each (a, b) we enumerated all divisors of (4ab(a +
+b)(a + 2b))2 , added (a2 + 2ab + 2b2 )2 to each divisor, and searched for squares.
+   After about a week of computation on some computers at LORIA, we had found
+25 different values of d and checked that we had 25 different j-invariants. Here are
+two examples:
+      • the very small solution (a, b, e, f ) = (3, 1, 19, 33) produces the order-8 point
+        (x8 , x8 ) = (17/7, 17/7) and the non-torsion point (x1 , y1 ) = (17/19, 17/33)
+        on the Edwards curve x2 + y 2 = 1 + dx2 y 2 where d = 1612 /174 ;
+      • the solution (a, b, e, f ) = (24882, 9009, 258492663, 580153002) produces the
+        non-torsion point (x1 , y1 ) = (86866/18259, 8481/4001) on the Edwards
+        curve x2 + y 2 = 1 + dx2 y 2 where d = 56577192 /33414 .
+
+                         9. The impact of large torsion
+   This section reports various measurements of the success probability of EECM-
+MPFQ. These measurements demonstrate the importance of choosing a curve with
+a large torsion group. They also demonstrate the inaccuracy of several common
+methods of estimating the success probability of ECM.
+
+9.1. Impact of torsion for 20-bit primes. There are exactly 38635 primes be-
+tween 219 and 220 . As an experiment we fed each of these primes to EECM-MPFQ
+with B1 = 256 and d1 = 1. It turned out that the first curve configured into
+EECM-MPFQ finds 12467, i.e., 32.2687%, of these primes. This curve is the Ed-
+wards curve x2 + y 2 = 1 − (24167/25)x2 y 2 , with base point P = (5/23, −1/7); this
+curve has torsion group isomorphic to Z/12Z.
+30             D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+   We then modified EECM-MPFQ to instead start with the curve x2 + y 2 =
+1 + (25921/83521)x2 y 2 , with base point P = (13/7, 289/49), and repeated the same
+experiment. This curve has torsion group isomorphic to Z/2Z × Z/8Z; it is one
+of the curves that EECM-MPFQ normally tries, although not the first in the list.
+This curve finds 32.8433% of the primes.
+   We then made a more drastic modification to EECM-MPFQ, trying two new
+curves with smaller torsion groups. The curve x2 + y 2 = 1 + (1/36)x2 y 2 , with base
+point P = (8, 9), has torsion group only Z/2Z × Z/4Z and finds only 27.4854% of
+the primes, losing a factor 1.17 compared to the original Z/12Z curve. The curve
+x2 + y 2 = 1 + (1/3)x2 y 2 , with base point P = (2, 3), has torsion group only Z/4Z
+and finds only 23.4709% of the primes, losing a factor 1.37 compared to the original
+Z/12Z curve.
+
+
+
+9.2. Impact of torsion for 30-bit primes. As a larger experiment we replaced
+the 38635 20-bit primes by a random sample of 65536 distinct 30-bit primes and
+increased (B1 , d1 ) from (256, 1) to (1024, 1). The same four curves again had re-
+markably different performance:
+
+     • 12.1597% of the primes were found by the Z/12Z curve.
+     • 11.9751% of the primes were found by the Z/2Z × Z/8Z curve.
+     • 9.8465% of the primes were found by the Z/2Z × Z/4Z curve.
+     • 9.0073% of the primes were found by the Z/4Z curve.
+
+For comparison, GMP-ECM with a typical Suyama curve (specifically σ = 10) finds
+11.6837% of the same primes. We also tried GMP-ECM’s Pollard p − 1 option; it
+found 6.3507% of the same primes. Normally the p − 1 method is assumed to be
+a helpful first step before ECM, because it uses fewer multiplications per bit than
+an elliptic curve, but we comment that this benefit is reduced by the p − 1 curve
+(a hyperbola) having torsion group only Z/2Z.
+   Figures 9.1 and 9.2 show the results of similar measurements for the same four
+EECM curves for many prime powers B1 : specifically, every prime power B1 ≤ 500
+for the 20-bit primes, and every prime power B1 ≤ 2000 for the 30-bit primes. The
+figures show that Z/12Z (black) and Z/2Z × Z/8Z (blue) are consistently better
+than Z/2Z × Z/4Z (blue, lower) and Z/4Z (black, lower).
+   The figures also include measurements for the same GMP-ECM Suyama curve
+(red) and p − 1 (red, lower). When B1 is large, the EECM-MPFQ Z/12Z and
+Z/2Z × Z/8Z curves find significantly more primes than the GMP-ECM Suyama
+curve.
+
+
+
+9.3. Review of methods of estimating the success probability. Consider the
+fraction of primes p ∈ [L, R] found by stage 1 of ECM with a particular curve E,
+point P ∈ E(Q), and smoothness bound B1 . Assume that E is chosen to guarantee
+t as a divisor of #E(Fp ).
+   Standard practice in the literature is to estimate this fraction through the fol-
+lowing series of heuristic approximations, where hP mod pi means the subgroup of
+                                 ECM USING EDWARDS CURVES                                31
+
+
+     47%
+     46%        smooth 4
+     45%        smooth 8
+               smooth 12                                              2x812 GMP-ECM
+     44%
+     43%       smooth 16
+                   rho 4
+     42%           rho 8
+                                                                      rho 16
+     41%          rho 12
+     40%          rho 16                                              rho 12 2x4
+     39%              uu
+     38%       GMP-ECM
+     37%        GMP-P-1                                               smooth 16
+     36%         EECM 4                                                         rho 8
+               EECM 2x4                                               smooth 12
+     35%                                                              4
+     34%        EECM 12
+     33%       EECM 2x8
+     32%                                                              smooth 8
+     31%
+     30%                                                              rho 4
+     29%
+     28%
+     27%                                                              smooth 4 GMP-P-1
+     26%
+     25%
+     24%
+     23%
+     22%
+     21%
+     20%
+     19%
+     18%
+     17%                                                              uu
+     16%
+     15%
+     14%
+     13%
+     12%
+     11%
+     10%
+      9%
+      8%
+      7%
+      6%
+      5%
+      4%
+      3%
+      2%
+      1%
+      0%
+           0               100      200      300        400          500
+
+
+
+Figure 9.1. For the set of all 38635 20-bit primes: Measured stage-1 success prob-
+abilities for six curves, and nine estimates. Horizontal axis is B1 . Vertical axis is
+probability. Graphs from top to bottom on right side: (blue, bumpy) EECM-MPFQ
+with a Z/2Z × Z/8Z curve; (black, bumpy) EECM-MPFQ with a Z/12Z curve;
+(red, bumpy) GMP-ECM with a Suyama curve; (gray, smooth) the ρ approximation
+to smoothness probability for [1, 220 /16]; (green, smooth) the ρ approximation for
+[1, 220 /12]; (blue, bumpy) EECM-MPFQ with a Z/2Z×Z/4Z curve; (gray, bumpy)
+powersmoothness probability for 16Z ∩ [219 , 220 ]; (gray, smooth) the ρ approxima-
+tion for [1, 220 /8]; (green, bumpy) powersmoothness probability for 12Z ∩ [219 , 220 ];
+(black, bumpy) EECM-MPFQ with a Z/4Z curve; (gray, bumpy) powersmoothness
+probability for 8Z ∩ [219 , 220 ]; (green, smooth) the ρ approximation for [1, 220 /4];
+(green, bumpy) powersmoothness probability for 4Z∩[219 , 220 ]; (red, bumpy) GMP-
+ECM with p − 1; (orange, smooth) the u−u approximation for [1, 220 ].
+32                 D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+     19%
+                smooth 4
+                smooth 8                                             12
+     18%       smooth 12                                                  2x8
+               smooth 16
+     17%           rho 4                                             GMP-ECM
+                   rho 8
+                  rho 12                                             rho 16
+     16%          rho 16
+                      uu
+               GMP-ECM                                               rho 12 2x4
+     15%        GMP-P-1
+                 EECM 4                                              smooth 16
+               EECM 2x4                                              4
+     14%        EECM 12                                              smooth 12 rho 8
+               EECM 2x8
+     13%
+                                                                     smooth 8
+     12%
+                                                                     rho 4
+
+     11%
+                                                                     smooth 4
+                                                                                GMP-P-1
+     10%
+
+      9%
+
+      8%
+
+      7%
+                                                                     uu
+      6%
+
+      5%
+
+      4%
+
+      3%
+
+      2%
+
+      1%
+
+      0%
+           0                           1000                        2000
+
+
+
+Figure 9.2. For a sample of 65536 30-bit primes: Measured stage-1 success prob-
+abilities for six curves, and nine estimates. Horizontal axis is B1 . Vertical axis
+is probability. Graphs from top to bottom on right side: (black, bumpy) EECM-
+MPFQ with a Z/2Z × Z/8Z curve; (blue, bumpy) EECM-MPFQ with a Z/12Z
+curve; (red, bumpy) GMP-ECM with a Suyama curve; (gray, smooth) the ρ approx-
+imation to smoothness probability for [1, 230 /16]; (green, smooth) the ρ approxi-
+mation for [1, 230 /12]; (blue, bumpy) EECM-MPFQ with a Z/2Z × Z/4Z curve;
+(gray, bumpy) powersmoothness probability for 16Z ∩ [229 , 230 ]; (black, bumpy)
+EECM-MPFQ with a Z/4Z curve; (gray, smooth) the ρ approximation for [1, 230 /8];
+(green, bumpy) powersmoothness probability for 12Z ∩ [229 , 230 ]; (gray, bumpy)
+powersmoothness probability for 8Z ∩ [229 , 230 ]; (green, smooth) the ρ approxima-
+tion for [1, 230 /4]; (green, bumpy) powersmoothness probability for 4Z ∩ [229 , 230 ];
+(red, bumpy) GMP-ECM with p − 1; (orange, smooth) the u−u approximation for
+[1, 230 ].
+                              ECM USING EDWARDS CURVES                                  33
+
+
+E(Fp ) generated by P :
+
+         Pr[uniform random prime p ∈ [L, R] has B1 -powersmooth #hP mod pi]
+    ?
+    ≈ Pr[uniform random prime p ∈ [L, R] has B1 -powersmooth #E(Fp )]
+    ?                            √           √
+    ≈ Pr[uniform random ∈ tZ ∩ [( L − 1)2 , ( R + 1)2 ] is B1 -powersmooth]
+    ?
+    ≈ Pr[uniform random ∈ tZ ∩ [L, R] is B1 -powersmooth]
+    ?
+    ≈ Pr[uniform random ∈ tZ ∩ [1, R] is B1 -powersmooth]
+    ?
+    ≈ Pr[uniform random ∈ Z ∩ [1, R/t] is B1 -powersmooth]
+    ?
+    ≈ ρ(u) where B1u = R/t
+    ?
+    ≈ 1/uu .
+Here “B1 -powersmooth” means “having no prime-power divisors larger than B1 ,”
+and ρ is Dickman’s rho function introduced in [24]. Similar comments apply to stage
+2, with B1 -powersmoothness replaced by a more complicated notion of smoothness
+and with ρ replaced by a standard generalization.
+   For example, Montgomery in [37, Section 7] estimated the success chance of a
+curve with 16 torsion points over Q as the B1 -powersmoothness chance for a uniform
+random integer in [1, p/16]. Similarly, Silverman and Wagstaff in [41] estimated
+the success chance of a Suyama curve as the B1 -powersmoothness chance for a
+uniform random integer in [1, p/12], following Brent’s comment in [18, Section 9.3]
+that choosing a Suyama curve “effectively reduces p to p/12 in the analysis.” (As
+mentioned in Section 7, a typical Suyama curve has only 6 torsion points over Q, but
+a Suyama curve modulo p is guaranteed to have order in 12Z.) Brent, Montgomery,
+et al. used Dickman’s rho function to estimate the B1 -powersmoothness chance for
+a uniform random integer.
+
+9.4. Inaccuracy of the estimates. There are many reasons to question the ac-
+curacy of the above approximations:
+        • Dickman’s rho function ρ is asymptotically 1/uu in the loose sense that
+          (log ρ(u))/(−u log u) → 1 as u → ∞, but is not actually very close to 1/uu :
+          for example, ρ(2) ≈ 1.23/22 , ρ(3) ≈ 1.31/33 , and ρ(4) ≈ 1.26/44 .
+        • For each u ≥ 0, the B1 -smoothness probability for an integer in [1, B1u ]
+          converges to ρ(u) as B1 → ∞, and the same is true for B1 -powersmoothness,
+          but the convergence is actually quite slow.
+        • Multiplying an element of Z ∩ [1, R/16] by 16 never gains powersmoothness
+          but can lose powersmoothness when the original exponent of 2 was large,
+          not an uncommon event among powersmooth integers.
+        • The ratio of smoothness probabilities for (e.g.) [1, B1u ] and [(1/2)B1u , B1u ]
+          converges to 1 as B1 → ∞, but the convergence is again quite slow.
+        • Lenstra commented in [33, page 660] that an elliptic curve has even order
+          with probability approximately 2/3, not 1/2. Many subsequent reports (for
+          example, by Brent in [18, Table 3] and McKee in [35, Section 2]) have lent
+          support to the idea that elliptic-curve orders are somewhat more likely to
+          be smooth than uniform random integers.
+34             D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+       • The group order #E(Fp ) is a multiple of the point order #hP in E(Fp )i.
+         The ratio is usually small but often enough to change powersmoothness, as
+         illustrated by the s = 420 example in Section 4.1.
+The overall error is not extremely large but can easily be large enough to interfere
+with optimization.
+    Recall that the curve x2 + y 2 = 1 − (24167/25)x2 y 2 , with 12 torsion points,
+finds 32.2687% of the primes in [219 , 220 ] with B1 = 256 and d1 = 1; and that
+changing to three other curves with 16, 8, and 4 torsion points changes 32.2687%
+to 32.8433%, 27.4854%, and 23.4709% respectively. We computed several of the
+standard estimates for these four success probabilities:
+       • A uniform random element of 12Z∩[219 , 220 ] has a 23.6067% chance of being
+         256-powersmooth. Note that this probability drastically underestimates the
+         actual ECM smoothness chance. Changing 12 to 16, 8, 4 changes 23.6067%
+         to 24.8192%, 20.5777%, and 16.8006% respectively.
+       • A uniform random element of 12Z ∩ [1, 220 ] has a 30.0317% chance of being
+         256-powersmooth. Changing 12 to 16, 8, 4 changes 30.0317% to 31.3019%,
+         26.4328%, and 21.8632% respectively.
+       • A uniform random element of Z∩[1, 220 /12] has a 30.7652% chance of being
+         256-powersmooth. Changing 12 to 16, 8, 4 changes 30.7652% to 33.3694%,
+         27.3689%, and 22.2511% respectively.
+       • If u = (log(220 /12))/ log 256 then ρ(u) ≈ 28.1894%. Changing 12 to 16, 8, 4
+         changes 28.1894% to 30.6853%, 24.9832%, and 20.2442% respectively.
+       • If u = (log(220 /12))/ log 256 then u−u ≈ 22.8824%. Changing 12 to 16, 8, 4
+         changes 22.8824% to 25%, 20.1540%, and 16.1283% respectively.
+These approximations make 16 seem better than 12 by factors of 1.051, 1.042, 1.085,
+1.089, and 1.093, when in fact 16 is better than 12 by a factor of only 1.018.
+    Figure 9.1 includes, for many prime powers B1 , the B1 -powersmoothness chance
+of a uniform random element of tZ ∩ [219 , 220 ] for four values of t (green and gray
+graphs, bumpy), and ρ((log(220 /t))/ log B1 ) for four values of t (green and gray
+graphs, smooth). Figure 9.2 includes analogous results for 30-bit primes. It is clear
+that the ρ value is a poor approximation to the powersmoothness chance, and that
+the powersmoothness chance is a poor approximation to the ECM success chance.
+    One can ask whether better approximations are possible. We comment that a
+fast algorithm to compute tight bounds on smoothness probabilities appeared in
+[5], and that the same algorithm can be adapted to handle powersmoothness, local
+conditions such as more frequent divisibility by 2, etc. However, one can also ask
+whether approximations are necessary in the first place. ECM is most frequently
+used to find rather small primes (for example, inside the number-field sieve), and
+for those primes one can simply measure ECM’s performance by experiment.
+
+                           10. Choosing parameters
+   This section reports EECM-MPFQ’s overall performance at finding various sizes
+of primes, when the parameters B1 , d1 , etc. are chosen sensibly.
+
+10.1. Normalizing the success probability. Stage 1 will almost never find any
+factors of n if B1 is very small, and stage 2 will almost never find any factors of
+n if d1 and e are very small. The success probability increases as the parameters
+increase, and eventually reaches 1 (for any particular size of prime); however, the
+                           ECM USING EDWARDS CURVES                                35
+
+
+costs of stage 1 and stage 2 then become enormously large. It is generally best to
+use intermediate parameters that balance the cost of each curve against the success
+probability of the curve, and to compensate for a low success probability by trying
+several curves.
+   Montgomery in [37, Table 7.4.1] computed an “expected time” obtained by mul-
+tiplying an “expected number of curves” by an “estimated time per curve”. The
+“expected number of curves” was the reciprocal of an estimate of the success prob-
+ability per curve. The “estimated time per curve” was 5.5B1 milliseconds for stage
+1, 105d1 milliseconds for initial elliptic-curve operations in stage 2, etc. Mont-
+gomery selected the constants 5.5, 105, etc. to approximately fit timings of his
+ECM implementation on a DEC 5000.
+   We instead report actual measurements of EECM-MPFQ’s price-performance
+ratio. Specifically, we report the actual number of modular multiplications used
+by an EECM-MPFQ curve for both stage 1 and stage 2, divided by the actual
+success probability of that curve within a target set of primes. To simplify these
+reports we count S as M, we count multiplications by small numbers (such as the
+coordinates of the base point) as M, and we skip the fast-polynomial-arithmetic
+variant described in Section 5.3.
+   Our experiments actually used slightly fewer modular multiplications per prime,
+because primes found in stage 1 did not incur the costs of stage 2 (and primes
+found during the batched division in stage 2 did not incur the remaining costs of
+stage 2). This cost reduction is reported as “savings” in Table 10.1 below. An
+application that uses EECM with a similar distribution of primes within its inputs
+will see a similar savings. On the other hand, an application faced with a large pool
+of inputs, where primes of the desired size appear within relatively few inputs, will
+see smaller savings.
+   We also report, later in the section, the number of clock cycles used by EECM-
+MPFQ for both stage 1 and stage 2, again divided by success probability. The
+number of multiplications per prime found is a simpler measure than the number
+of cycles per prime found, and is an adequate measure for seeing most of this paper’s
+improvements, but it is not adequate for seeing the speedup from GMP to MPFQ.
+
+10.2. Impact of B1 and d1 for 20-bit primes. Recall from Section 9 that EECM-
+MPFQ’s first curve finds 12467 of the 38635 20-bit primes using B1 = 256 and
+d1 = 1. This experiment used a total of 65900078M + 55479860S; each successful
+prime therefore consumed 9736 modular multiplications.
+    We tried the same curve again using B1 = 37, d1 = 90, e = 1, and #{i} = #{j}.
+This time EECM-MPFQ found 1527 primes in stage 1 and an additional 14017
+primes in stage 2 (1242 during conversion to affine and 12775 at the end of stage
+2), for an overall success probability of 15544/38635 ≈ 40.2329%. The cost of
+handling a worst-case input was 734M + 212S, and if EECM-MPFQ had incurred
+this cost for every input then it would have used a total of 28358090M + 8190620S,
+i.e., just 2351 modular multiplications per successful prime. EECM-MPFQ actually
+used only 27357827M + 8172296S, saving 2.8%, because primes found in stage 1
+did not incur the costs of stage 2.
+    Figure 10.1 shows the results of similar computations for many more pairs
+(B1 , d1 ). The figure quantifies the well-known importance of stage 2: d1 = 1
+costs more than three times as many modular multiplications as the best d1 for
+20-bit primes. The figure also confirms the idea that d1 should have several small
+36             D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+
+
+     15000
+
+
+
+
+     10000
+                                            4   2    6
+     9000
+
+
+     8000                                                1
+
+
+     7000
+
+
+                                            8
+     6000                                           10
+                                                    12
+
+
+     5000
+                                           14   18
+                              146148
+                                     142
+                                  16 134
+     4000
+                              128 20 136
+                       122124 22 118 24
+                                           30
+                                     116
+                                     106
+                                  26
+                          104 28 112 94
+                 86 140144       130 92
+     3000     34 38 42 74 98   32 88 82
+          100 64 62 46 68 76  138 11036
+                           44 58 40
+                                  52
+                        56 48 108114132
+                 50 80 126
+                           54 96     150
+                     72 60 66 78 102 70
+                                 120 84
+                                     90
+
+
+
+     2000
+                  16              32                64         128           256
+
+
+
+Figure 10.1. Cost ratio for the curve x2 + y 2 = 1 − (24167/25)x2 y 2 with torsion
+group Z/12Z and base point (5/23, −1/7). The vertical axis is the number of
+modular multiplications used for both stage 1 and stage 2, times the number of
+primes in [219 , 220 ], divided by the number of primes found. The horizontal axis is
+B1 . The label inside the graph is d1 . Data points with the same d1 are connected
+by line segments.
+                           ECM USING EDWARDS CURVES                                 37
+
+
+ bits B1 d1 e R samples          Pr mults   ratio power savings      cycles
+  15   16 60 1 1     1612 65.4467% 475      725.8 0.9440 6.0743%    398383
+  16   16 60 1 1     3030 50.5941% 475      938.8 0.9369 3.7812%    519846
+  17   27 60 1 1     5709 54.6856% 632     1155.7 0.9250 4.4719%    542882
+  18   27 90 1 1    10749 53.7073% 816     1519.3 0.9231 4.2088%    655581
+  19   37 90 1 1    20390 50.4708% 946     1874.4 0.9145 4.0127%    753288
+  20   37 90 1 1    38635 40.2329% 946     2351.3 0.9092 2.7869%    940225
+  21   37 90 1 1    73586 30.9787% 946     3053.7 0.9088 1.8815%   1229364
+  22   47 120 1 1 140336 33.0086% 1292     3914.1 0.9075 2.1786%   1413109
+  23   64 120 1 1 268216 30.3744% 1491     4908.7 0.9045 1.9515%   1682287
+  24   81 210 1 1 513708 36.7985% 2276     6185.0 0.9026 2.5365%   1971371
+  25   97 210 1 1 985818 31.7403% 2427     7646.4 0.8994 2.1164%   2390659
+  26   97 210 1 1 1048576 25.4204% 2427    9547.5 0.8976 1.5147%   2973591
+  27 131 210 1 1 1048576 24.4857% 2904 11860.0 0.8959 1.4755%      3528747
+  28 131 210 1 1 1048576 19.7381% 2904 14712.7 0.8944 1.0864%      4371407
+  29 149 210 1 1 1048576 16.5716% 3065 18495.5 0.8945 0.8797%      5363333
+  30 149 210 1 1 1048576 13.1368% 3065 23331.5 0.8953 0.6386%      6769323
+  31 263 210 1 2 1048576 18.4570% 5376 29127.1 0.8953 1.0937%      7834148
+  32 263 210 1 2 1048576 15.0913% 5376 35623.1 0.8938 0.8394%      9615434
+  33 263 210 1 2 1048576 12.1644% 5376 44194.5 0.8939 0.6248% 11915678
+  34 343 330 1 1 1048576 12.3212% 6787 55084.0 0.8945 0.6643% 14534927
+  35 389 420 1 1 1048576 12.3528% 8384 67871.0 0.8944 0.6747% 17488151
+  36 433 420 1 1 1048576 10.6944% 8892 83146.3 0.8941 0.5658% 21345174
+  37 521 420 1 1 1048576 9.7486% 9909 101644.8 0.8937 0.4983% 25652386
+  38 521 420 1 1 1048576 7.9452% 9909 124717.5 0.8939 0.3825% 31436961
+  39 587 420 1 1 1048576 6.8847% 10621 154270.3 0.8948 0.3185% 38319718
+  40 587 420 1 1 1048576 5.6551% 10621 187812.8 0.8946 0.2510% 47190133
+  41 937 630 1 1 1048576 7.8935% 18236 231026.5 0.8954 0.4196% 56113371
+  42 1031 630 1 1 1048576 6.9196% 19386 280161.7 0.8953 0.3544% 67437743
+  43 1031 630 1 1 1048576 5.7678% 19386 336106.1 0.8945 0.2840% 81087478
+  44 1031 630 1 1 1048576 4.6908% 19386 413273.7 0.8957 0.2201% 99684763
+  45 1151 630 1 1 1048576 4.1508% 20833 501906.6 0.8960 0.1901% 121979006
+  46 1319 630 1 1 1048576 3.7610% 22884 608454.3 0.8964 0.1619% 144341609
+  47 1709 840 1 1 1048576 4.3684% 32129 735486.6 0.8966 0.2170% 175028834
+  48 1889 840 1 1 1048576 3.8442% 34195 889529.8 0.8970 0.1785% 211435752
+  49 2221 840 1 1 1048576 3.5111% 37877 1078765.6 0.8977 0.1548% 251473421
+  50 2521 840 2 1 1048576 3.3565% 42981 1280546.8 0.8971 0.1686% 296542182
+
+Table 10.1. Cost ratio for sample sets of b-bit primes for b ∈ {15, 16, . . . , 50}.
+“Samples” is the size of the sample set. “Pr” is the success probability, within
+the sample set, of the curve x2 + y 2 = 1 − (24167/25)x2 y 2 with base point
+(5/23, −1/7) and torsion group Z/12Z, using EECM-MPFQ parameters B1 , d1 ,
+e, and #{i}/#{j} = R. “Mults” is the number of modular multiplications used
+for both stage 1 and stage 2. “Ratio” is “mults” divided by “Pr”; i.e., the number
+of modular
+      p     multiplications per prime found. The logarithm of “ratio” is “power”
+times 2 log 2b log log 2b . “Savings” is the fraction of modular multiplications saved
+within the sample set by primes found before the end of stage 2. “Cycles” is the
+number of cycles used for both stage 1 and stage 2 on a 3.2GHz AMD Phenom II
+X4 (100f42) for n between 192 bits and 256 bits, divided by “Pr”; i.e., the number
+of cycles per prime found.
+38               D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+prime factors. Each computation used e = 1 and used EECM-MPFQ’s default ratio
+#{i}/#{j} = 1.
+
+10.3. Other sizes of primes. Table 10.1 reports the effectiveness of good choices
+of (B1 , d1 , e, #{i}/#{j}) for 15-bit primes, 16-bit primes, 17-bit primes, and so on
+through 50-bit   p primes. The “power” column shows that EECM-MPFQ uses fewer
+than exp(0.9 2 log 2b log log 2b ) modular multiplications per b-bit prime found, for
+each b ∈ {25, 26, . . . , 50}. See http://eecm.cr.yp.to for performance data for
+larger values of b.
+   The conventional wisdom — see, e.g., [18] — is that one should use Pollard’s rho
+method for primes up to about 30 bits and then switch over to ECM. We present
+ECM performance data for much smaller sizes as a basis for comparison and for
+future improvements. Our guess is that improvements in ECM have drastically
+reduced the optimal rho-to-ECM cutoff.
+
+
+                                         References
+ [1] — (no editor), SPEED: software performance enhancement for encryption and decryption,
+     2007. URL: http://www.hyperelliptic.org/SPEED. See [27].
+ [2] Michel Abdalla, Paulo S. L. M. Barreto (editors), Progress in cryptology — LATINCRYPT
+     2010, first international conference on cryptology and information security in Latin America,
+     Puebla, Mexico, August 8–11, 2010, proceedings, Lecture Notes in Computer Science, 6212,
+     Springer, 2010. See [9].
+ [3] A. O. L. Atkin, Francois Morain, Finding suitable curves for the elliptic curve method of fac-
+     torization, Mathematics of Computation 60 (1993), 399–405. ISSN 0025–5718. MR 93k:11115.
+     URL: http://www.lix.polytechnique.fr/~morain/Articles/articles.english.html. Ci-
+     tations in this document: §1.2, §7, §7.1.
+ [4] Michael A. Bennett, Bruce C. Berndt, Nigel Boston, Harold G. Diamond, Adolf J. Hildebrand,
+     Walter Philipp (editors), Number theory for the millennium. I: papers from the conference
+     held at the University of Illinois at Urbana-Champaign, Urbana, IL, May 21–26, 2000, A.
+     K. Peters, Natick, Massachusetts, 2002. ISBN 1-56881-126-8. MR 2003h:11004. See [5].
+ [5] Daniel J. Bernstein, Arbitrarily tight bounds on the distribution of smooth integers, in Number
+     Theory 2000 [4] (2002), 49–66. URL: http://cr.yp.to/papers.html#psi. Citations in this
+     document: §9.4.
+ [6] Daniel J. Bernstein, Scaled remainder trees (2004). URL: http://cr.yp.to/papers.
+     html#scaledmod. Citations in this document: §5.3.
+ [7] Daniel J. Bernstein, Fast multiplication and its applications, in Algorithmic Number The-
+     ory [19] (2008), 325–384. URL: http://cr.yp.to/papers.html#multapps. Citations in this
+     document: §5.3.
+ [8] Daniel J. Bernstein, Peter Birkner, Marc Joye, Tanja Lange, Christiane Peters, Twisted
+     Edwards curves, in Africacrypt 2008 [45] (2008), 389–405. URL: http://eprint.iacr.org/
+     2008/013. Citations in this document: §2.2, §2.4, §2.5, §3, §7.
+ [9] Daniel J. Bernstein, Peter Birkner, Tanja Lange, Starfish on strike, in Latincrypt 2010 [2]
+     (2010), 61–80. URL: http://eprint.iacr.org/2010/367. Citations in this document: §1.2.
+[10] Daniel J. Bernstein, Peter Birkner, Tanja Lange, Christiane Peters, Optimizing double-
+     base elliptic-curve single-scalar multiplication, in Indocrypt 2007 [42] (2007), 167–182. URL:
+     http://eprint.iacr.org/2007/414. Citations in this document: §1.1.
+[11] Daniel J. Bernstein, Tien-Ren Chen, Chen-Mou Cheng, Tanja Lange, Bo-Yin Yang, ECM
+     on graphics cards, in Eurocrypt 2009 [30] (2009), 483–501. URL: http://eprint.iacr.org/
+     2008/480. Citations in this document: §1.
+[12] Daniel J. Bernstein, Tanja Lange, Explicit-formulas database (2007). URL: http://
+     hyperelliptic.org/EFD. Citations in this document: §2.
+[13] Daniel J. Bernstein, Tanja Lange, Faster addition and doubling on elliptic curves, in Asi-
+     acrypt 2007 [32] (2007), 29–50. URL: http://eprint.iacr.org/2007/286. Citations in this
+     document: §1.1, §2.2, §2.4, §2.9.
+                               ECM USING EDWARDS CURVES                                       39
+
+
+[14] Daniel J. Bernstein, Tanja Lange, Inverted Edwards coordinates, in AAECC 2007 [17] (2007),
+     20–27. URL: http://eprint.iacr.org/2007/410. Citations in this document: §1.1, §2.5.
+[15] Daniel J. Bernstein, Tanja Lange, Analysis and optimization of elliptic-curve single-scalar
+     multiplication, in Fq8 [38] (2008), 1–19. URL: http://eprint.iacr.org/2007/455. Citations
+     in this document: §1.1, §4.5.
+[16] Daniel J. Bernstein, Tanja Lange, A complete set of addition laws for incomplete Edwards
+     curves, Journal of Number Theory 131 (2011), 858–872. URL: http://eprint.iacr.org/
+     2009/580. Citations in this document: §2.9, §2.9, §2.9, §3.
+[17] Serdar Boztas, Hsiao-Feng Lu (editors), Applied algebra, algebraic algorithms and error-
+     correcting codes, 17th international symposium, AAECC-17, Bangalore, India, December
+     16–20, 2007, proceedings, Lecture Notes in Computer Science, 4851, Springer, 2007. ISBN
+     978-3-540-77223-1. See [14].
+[18] Richard P. Brent, Some integer factorization algorithms using elliptic curves, Australian
+     Computer Science Communications 8 (1986), 149–163. ISSN 0157–3055. URL: http://
+     maths.anu.edu.au/~brent/pub/pub102.html. Citations in this document: §4.2, §4.3, §9.3,
+     §9.4, §10.3. See [44].
+[19] Joe Buhler, Peter Stevenhagen (editors), Algorithmic number theory: lattices, number fields,
+     curves and cryptography, Mathematical Sciences Research Institute Publications, 44, Cam-
+     bridge University Press, 2008. ISBN 978-0521808545. MR 2009h:11003. See [7].
+[20] David V. Chudnovsky, Gregory V. Chudnovsky, Sequences of numbers generated by addition
+     in formal groups and new primality and factorization tests, Advances in Applied Mathematics
+     7 (1986), 385–434. MR 88h:11094. Citations in this document: §4.4, §4.4, §4.7.
+[21] Romain Cosset, Factorization with genus 2 curves, Mathematics of Computation 79 (2010),
+     1191–1208. URL: http://arxiv.org/pdf/0905.2325. Citations in this document: §4.7, §4.7,
+     §4.7, §4.7.
+[22] Peter de Rooij, Efficient exponentiation using precomputation and vector addition chains, in
+     Eurocrypt 1994 [23] (1995), 389–399. MR 1479665. Citations in this document: §5.6.
+[23] Alfredo De Santis (editor), Advances in cryptology — EUROCRYPT ’94, workshop on the
+     theory and application of cryptographic techniques, Perugia, Italy, May 9–12, 1994, proceed-
+     ings, Lecture Notes in Computer Science, 950, Springer, Berlin, 1995. ISBN 3-540-60176-7.
+     MR 98h:94001. See [22].
+[24] Karl Dickman, On the frequency of numbers containing primes of a certain relative magni-
+     tude, Arkiv för Matematik, Astronomi och Fysik 22 (1930), 1–14. ISSN 0365–4133. Citations
+     in this document: §9.3.
+[25] Harold M. Edwards, A normal form for elliptic curves, Bulletin of the American
+     Mathematical Society 44 (2007), 393–422. URL: http://www.ams.org/bull/2007-44-03/
+     S0273-0979-07-01153-6/home.html. Citations in this document: §2.2.
+[26] Pierrick Gaudry, Fast genus 2 arithmetic based on theta functions, Journal of Mathemati-
+     cal Cryptology 1 (2007), 243–265. URL: http://www.loria.fr/~gaudry/publis/arithKsurf.
+     pdf. Citations in this document: §4.7, §4.7.
+[27] Pierrick Gaudry, Emmanuel Thomé, The mpFq library and implementing curve-based key
+     exchanges, in [1] (2007), 49–64. URL: http://www.loria.fr/~gaudry/papers.en.html. Cita-
+     tions in this document: §4.6.
+[28] Florian Hess, Sebastian Pauli, Michael E. Pohst (editors), Algorithmic number theory, pro-
+     ceedings of the 7th international symposium (ANTS-VII) held at the Technische Universität
+     Berlin, Berlin, July 23–28, 2006, Lecture Notes in Computer Science, 4076, Springer, Berlin,
+     2006. ISBN 3-540-36075-1. MR 2007h:11001. See [47].
+[29] Huseyin Hisil, Kenneth Koon-Ho Wong, Gary Carter, Ed Dawson, Twisted Edwards curves
+     revisited, in Asiacrypt 2008 [39] (2008). URL: http://eprint.iacr.org/2008/522. Citations
+     in this document: §1.1, §2.3, §2.6, §2.6.
+[30] Antoine Joux (editor), Advances in cryptology — EUROCRYPT 2009, 28th annual interna-
+     tional conference on the theory and applications of cryptographic techniques, Cologne, Ger-
+     many, April 26–30, 2009, proceedings, Lecture Notes in Computer Science, 5479, Springer,
+     2009. ISBN 978-3-642-01000-2. See [11].
+[31] Alexander Kruppa, Améliorations de la multiplication et de la factorisation d’entier, Ph.D.
+     thesis, Université Henri Poincaré Nancy I, 2010. URL: http://tel.archives-ouvertes.fr/
+     tel-00477005/en/. Citations in this document: §7.
+40               D. J. BERNSTEIN, P. BIRKNER, T. LANGE, AND C. PETERS
+
+
+[32] Kaoru Kurosawa (editor), Advances in cryptology — ASIACRYPT 2007, 13th international
+     conference on the theory and application of cryptology and information security, Kuch-
+     ing, Malaysia, December 2–6, 2007, proceedings, Lecture Notes in Computer Science, 4833,
+     Springer, 2007. ISBN 978-3-540-76899-9. See [13].
+[33] Hendrik W. Lenstra, Jr., Factoring integers with elliptic curves, Annals of Mathematics 126
+     (1987), 649–673. ISSN 0003–486X. MR 89g:11125. URL: https://openaccess.leidenuniv.
+     nl/bitstream/1887/3826/1/346_086.pdf. Citations in this document: §1, §9.4.
+[34] Barry Mazur, Rational isogenies of prime degree, Inventiones Mathematicae 44 (1978), 129–
+     162. Citations in this document: §6.
+[35] James McKee, Subtleties in the distribution of the numbers of points on elliptic curves over a
+     finite prime field, Journal of the London Mathematical Society 59 (1999), 448–460. Citations
+     in this document: §4.1, §9.4.
+[36] Peter L. Montgomery, Speeding the Pollard and elliptic curve methods of fac-
+     torization, Mathematics of Computation 48 (1987), 243–264. ISSN 0025–5718.
+     MR 88e:11130. URL: http://www.ams.org/mcom/1987-48-177/S0025-5718-1987-0866113-7/
+     S0025-5718-1987-0866113-7.pdf. Citations in this document: §4.3, §4.4, §7, §7.7. See [44].
+[37] Peter L. Montgomery, An FFT extension of the elliptic curve method of factorization, Ph.D.
+     thesis, University of California at Los Angeles, 1992. URL: ftp://ftp.cwi.nl/pub/pmontgom/
+     ucladissertation.psl.gz. Citations in this document: §5.4, §5.4, §7, §7, §9.3, §10.1.
+[38] Gary L. Mullen, Daniel Panario, Igor E. Shparlinski (editors), Finite fields and applications:
+     papers from the 8th international conference held in Melbourne, July 9–13, 2007, Contem-
+     porary Mathematics, 461, American Mathematical Society, 2008. ISBN 978-0-8218-4309-3.
+     MR 2009h:11004. See [15].
+[39] Josef Pieprzyk (editor), Advances in cryptology — ASIACRYPT 2008, 14th international
+     conference on the theory and application of cryptology and information security, Melbourne,
+     Australia, December 7–11, 2008, Lecture Notes in Computer Science, 5350, 2008. ISBN 978-
+     3-540-89254-0. See [29].
+[40] John M. Pollard, Theorems on factorization and primality testing, Proceedings of the Cam-
+     bridge Philosophical Society 76 (1974), 521–528. ISSN 0305–0041. MR 50:6992. URL: http://
+     cr.yp.to/bib/entries.html#1974/pollard. Citations in this document: §4.2, §4.3.
+[41] Robert D. Silverman, Samuel S. Wagstaff, Jr., A practical analysis of the el-
+     liptic curve factoring algorithm, Mathematics of Computation 61 (1993), 445–
+     462. URL: http://www.ams.org/journals/mcom/1993-61-203/S0025-5718-1993-1122078-7/
+     S0025-5718-1993-1122078-7.pdf. Citations in this document: §9.3.
+[42] Kannan Srinathan, Chandrasekaran Pandu Rangan, Moti Yung (editors), Progress in
+     cryptology — INDOCRYPT 2007, 8th international conference on cryptology in India, Chen-
+     nai, India, December 9–13, 2007, proceedings, Lecture Notes in Computer Science, 4859,
+     Springer, 2007. ISBN 978-3-540-77025-1. See [10].
+[43] William Stein (editor), Sage Mathematics Software (Version 3.2.3), The Sage Group, 2009.
+     URL: http://www.sagemath.org. Citations in this document: §6.10.
+[44] Hiromi Suyama, Informal preliminary report (8), cited in [18] as personal communication
+     and in [36] (1985). Citations in this document: §7.
+[45] Serge Vaudenay (editor), Progress in cryptology — AFRICACRYPT 2008, First international
+     conference on cryptology in Africa, Casablanca, Morocco, June 11-14, 2008, proceedings,
+     Lecture Notes in Computer Science, 5023, Springer, 2008. ISBN 978-3-540-68159-5. See [8].
+[46] Paul Zimmermann, 50 largest factors found by ECM. URL: http://www.loria.fr/
+     ~zimmerma/records/top50.html. Citations in this document: §1.
+[47] Paul Zimmermann, Bruce Dodson, 20 years of ECM, in ANTS VII [28] (2006), 525–542.
+     URL: http://www.loria.fr/~zimmerma/papers/40760525.pdf. Citations in this document:
+     §1, §4.2, §4.3, §4.4, §4.5, §5.3, §7.
+
+
+
+     Department of Computer Science (MC 152)
+     University of Illinois at Chicago, Chicago, IL 60607–7053, USA
+     E-mail address: djb@cr.yp.to
+
+
+     Department of Mathematics and Computer Science
+                       ECM USING EDWARDS CURVES                              41
+
+
+Technische Universiteit Eindhoven, P.O. Box 513, 5600 MB Eindhoven, Netherlands
+E-mail address: pbirkner@fastmail.fm
+
+Department of Mathematics and Computer Science
+Technische Universiteit Eindhoven, P.O. Box 513, 5600 MB Eindhoven, Netherlands
+E-mail address: tanja@hyperelliptic.org
+
+Department of Mathematics
+Technical University of Denmark, 2800 Kgs. Lyngby, Denmark
+E-mail address: c.p.peters@mat.dtu.dk
+

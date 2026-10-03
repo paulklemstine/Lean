@@ -1,0 +1,28 @@
+  [PASS] shared dickman harness calibrated
+  [PASS] pow_counted matches pow() and hand counts
+  [PASS] FbTest agrees with shared is_smooth (412 probes) and exponent vectors reconstruct exactly
+  (n=2^33, B=37, |FB|=12, u=6.24)
+  null density: rho(u)=1.182e-05  MEASURED=1.000e-04  ratio measured/rho = 8.46
+==============================================================================
+PART C -- END TO END (n~2^40, b=20, c=8, bbound=71, 4 FRESH instances, seeds 830000+)
+==============================================================================
+  'mults' counts modular multiplications to GENERATE all candidates;
+  'smops' counts FB-smoothness reductions; 'ops' is the comparable sum.
+
+  [random] factors 2/4
+      n=2^rel= 28 trials=  603853 mults= 34745789 smops=13593885 ops= 48339674 rank=20 factor=no 7.0s
+      n=2^rel= 28 trials=  879434 mults= 50712687 smops=19797476 ops= 70510163 rank=20 factor=no 10.6s
+      n=2^rel= 28 trials=  527925 mults= 30069984 smops=11885554 ops= 41955538 rank=20 factor=no 6.0s
+      n=2^rel= 28 trials=  401854 mults= 22540023 smops= 9048467 ops= 31588490 rank=20 factor=YES 4.6s
+      per SUCCESS: trials/attempt=464889 mults/attempt=26305003 smops/attempt=10467010 ops/attempt=36772014 wall=5.3s
+
+  [stride] factors 2/4
+      n=2^rel= 28 trials=  777323 mults=   777378 smops=17499250 ops= 18276628 rank=20 factor=no 2.5s
+      n=2^rel= 28 trials=  625929 mults=   625988 smops=14089626 ops= 14715614 rank=20 factor=no 1.7s
+      n=2^rel= 28 trials=  541933 mults=   541993 smops=12199115 ops= 12741108 rank=20 factor=no 1.6s
+      n=2^rel= 28 trials=  418309 mults=   418375 smops= 9415999 ops=  9834374 rank=20 factor=YES 1.1s
+      per SUCCESS: trials/attempt=480121 mults/attempt=480184 smops/attempt=10807557 ops/attempt=11287741 wall=1.3s
+
+  ==> END-TO-END SAVING on ops/attempt: 3.26x
+  ==> END-TO-END SAVING on mults only: 54.78x
+  ==> wall-clock (python, includes the linear algebra): 3.91x

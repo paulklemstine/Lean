@@ -1,0 +1,1356 @@
+                                            The average size of the 3-isogeny Selmer groups of elliptic curves
+                                                                       y 2 = x3 + k
+                                                                  Manjul Bhargava, Noam Elkies, and Ari Shnidman
+arXiv:1610.05759v1 [math.NT] 18 Oct 2016
+
+
+
+
+                                                                                       October 19, 2016
+
+                                                                                             Abstract
+                                                    The elliptic curve Ek : y 2 = x3 + k admits a natural 3-isogeny φk : Ek → E−27k . We compute
+                                                 the average size of the φk -Selmer group as k varies over the integers. Unlike previous results of
+                                                 Bhargava and Shankar on n-Selmer groups of elliptic curves, we show that this average can be
+                                                 very sensitive to congruence conditions on k; this sensitivity can be precisely controlled by the
+                                                 Tamagawa numbers of Ek and E−27k . As consequences, we prove that the average rank of the
+                                                 curves Ek , k ∈ Z, is less than 1.21 and over 23% (resp. 41%) of the curves in this family have
+                                                 rank 0 (resp. 3-Selmer rank 1).
+
+
+                                           1    Introduction
+                                           Let F be a ﬁeld of characteristic not 2 or 3, and let k ∈ F be non-zero. The elliptic curve
+                                                                                        Ek : y 2 = x3 + k                                             (1)
+                                           has j-invariant 0, and every elliptic curve E/F with j(E) = 0 is isomorphic to Ek for some k ∈ F .
+                                           The curves Ek and Ek′ are isomorphic if and only if k′ = km6 for some m ∈ F × .
+                                               Over a separable closure F̄ , each E  √k has complex multiplication by the Eisenstein integers Z[ζ3 ],
+                                           and hence admits an endomorphism −3 of degree 3. This endomorphism is not generally deﬁned
+                                           over F , but its kernel is, and consequently there is a 3-isogeny φ = φk : Ek → Ek′ for some k′ ∈ F .
+                                           By duality, there is a 3-isogeny φ̂ = φ̂k : Ek′ → Ek in the reverse direction. In fact, we may take
+                                           k′ = −27k, and then these isogenies are given explicitly as:
+                                                                                          3
+                                                                                           x + 4k y(x3 − 8k)
+                                                                                                                
+                                                                         φk : (x, y) 7→            ,              ,                             (2)
+                                                                                              x2         x3
+                                                                                          3
+                                                                                           x − 108k y(x3 + 216k)
+                                                                                                                    
+                                                                         φ̂k : (x, y) 7→             ,                 .                        (3)
+                                                                                              9x2           27x3
+                                           After identifying E36 k and Ek , we have φ̂k = φ−27k .
+                                              If F is a number ﬁeld, then the φ-Selmer group
+                                                                                   Selφ (Ek ) ⊂ H 1 (GF , Ek [φ])
+                                           associated to the isogeny φ consists of all “locally soluble” cohomology classes, i.e., those that are
+                                           locally in the image of the connecting map
+                                                                               ∂v : E−27k (Fv )−→ H 1 (GFv , Ek [φ])
+                                           for every place v of F ; here, GF = Gal(F̄ /F ).
+
+                                                                                                 1
+   In this paper, we take F = Q and study the average size of the φ-Selmer group for the elliptic
+curves Ek as k varies. Let
+
+                    103 · 229           Y           (1 − p−1 )(1 + p−1 + 53 p−2 + p−3 + 53 p−4 + p−5 )
+            r=                                                                                         .   (4)
+                 2 · 32 · 72 · 13                                       1 − p−6
+                                    p ≡ 5 (mod 6)
+
+Then we prove:
+
+Theorem 1. When the elliptic curves Ek : y 2 = x3 + k, k ∈ Z, are ordered by the absolute value
+of k, the average size of the φk -Selmer group associated to the 3-isogeny φk : Ek → E−27k is 1 + r if
+k is negative, and 1 + r/3 if k is positive.
+
+    We note that, in this theorem, we may take k to range over all integers or, if desired, only the
+sixth-power-free ones (so that we obtain each isomorphism class of elliptic curve of j-invariant 0
+exactly once). We can calculate the product in (4) eﬃciently by approximating it by a product of
+powers of the values at s = 2, 3, 4, . . . of (1 − 2−s )(1 − 3−s )ζ(s) and (1 + 2−s )L(χ, s) where χ is the
+Legendre symbol mod 3; we ﬁnd that the product’s numerical value is 1.033735512017364858 . . .,
+so r = 2.1265 . . ., making 1 + r = 3.1265 . . . and 1 + r/3 = 1.7088 . . ..
+    In fact, we are able to determine the average size of the φk -Selmer group of Ek : y 2 = x3 + k
+where k varies in any subset S of Z deﬁned by ﬁnitely many—or, in suitable cases, inﬁnitely
+many—congruence conditions. Let S ⊂ Z be any subset of integers deﬁned by sign conditions and
+congruence conditions modulo a power of each prime, such that for all suﬃciently large primes p, the
+closure Sp of S in Zp contains all elements of Zp not divisible by p2 . We call such a set acceptable.
+For example, the set of all sixth-power-free integers is acceptable. The set of all positive squarefree
+integers congruent to 1 (mod 3) is also acceptable.
+    For any isogeny φ : A → A′ of abelian varieties over Q and for any prime p ≤ ∞, deﬁne the local
+Selmer ratio of φ at p to be
+                                                  |A′ (Qp )/φ(A(Qp ))|
+                                       cp (φ) :=                                                        (5)
+                                                       |A[φ](Qp )|
+where Qp = R when p = ∞. Then the following theorem gives the average size of the φk -Selmer
+group as k varies over the integers in S:
+
+Theorem 2. Let S be any acceptable set of integers. When the elliptic curves Ek : y 2 = x3 + k,
+k ∈ S, are ordered by the absolute value of k, the average size of the φ-Selmer group associated to
+the 3-isogeny φ : Ek → E−27k is               Z
+                                                                   cp (φk )dk
+                                                      Y     k∈Sp
+                                              1+              Z                 ,                          (6)
+                                                     p≤∞                dk
+                                                                 k∈Sp
+
+where for p < ∞, Sp denotes the p-adic closure of S in Zp and dk denotes the usual additive Haar
+measure on Zp , and for p = ∞, Sp denotes the smallest interval in R containing S and dk denotes
+the usual additive measure on R.
+
+Remark 3. The factor at p = ∞ is equal to 13 , 1, or 32 , depending on whether S contains only
+positive, only negative, or both positive and negative integers, respectively.
+
+
+
+                                                             2
+Remark 4. The group H 1 (GF , Ek [φ]) parameterizes isomorphism classes of φ-coverings, i.e., maps
+f : C → E−27k of curves that become isomorphic to φ over F̄ . Therefore, we can interpret the local
+Selmer ratio cp (φ) as the number of soluble φ-coverings f over Qp , where each f is weighted by
+the inverse of the order of its automorphism group. Theorem 2 can thus be interpreted as saying
+that the expected (weighted) number of nontrivial locally soluble φ-coverings over Q is simply the
+product of the (weighted) number of soluble φ-coverings over Qp . This suggests a Selmer group
+analogue of Bhargava’s conjectures for number ﬁelds [2], which would include as a special case the
+conjecture of Bhargava and
+                         P Shankar that the average size of Seln (E) over any congruence family of
+elliptic curves over Q is d|n d.
+
+    For any given set S, the p-adic integrals in Theorem 2 can be evaluated explicitly using Propo-
+sition 28 in §4.1. In particular, when S = Z, we recover Theorem 1.
+    We note that unlike the results of [6, 7, 8, 9] for the 2-, 3-, 4-, and 5-Selmer groups, respectively,
+the average size of the φ-Selmer group in Theorem 2 can depend very much on the congruences
+deﬁning the set S. However, we show that we may partition the set of non-zero integers into a
+countable union ∪∞  m=−∞ Tm of sets Tm , where each Tm is itself the union of countably many sets
+deﬁned by congruence conditions, such that if S ⊂ Tm is an acceptable set, then the average size of
+the φ-Selmer group of Ek : y 2 = x3 + k, as k varies in S, depends only on m.
+    More precisely, we deﬁne the global Selmer ratio
+                                                     Y
+                                          c(φk ) :=      cp (φk )                                     (7)
+                                                        p
+
+to be the product of the local Selmer ratios. If φ is an ℓ-isogeny, for some prime ℓ, then the global
+Selmer ratio c(φ) is evidently a power of ℓ. The importance of the global Selmer ratio in the study
+of the Selmer groups Selφ (Ek ) is clearly seen in the following theorem.
+
+Theorem 5. For each m ∈ Z, let Tm := {k ∈ Z : c(φk ) = 3m }. Then:
+
+  (i) Z \ {0} is the disjoint union of the Tm ;
+
+ (ii) Each Tm has positive density;
+
+(iii) If k ∈ Tm , and Ek (Q) and E−27k (Q) have trivial 3-torsion, then |Selφ (Ek )| = 3m |Selφ̂ (E−27k )|;
+
+(iv) If S = Tm , or if S is any acceptable set contained in Tm , then the average size of Selφ (Ek ),
+     k ∈ S, is equal to 1 + 3m , and the average size of Selφ̂ (E−27k ), k ∈ S, is equal to 1 + 3−m .
+
+    Thus the average size of Selφ (Ek ), k ∈ S, is independent of congruence conditions if we also
+ﬁx the global Selmer ratio. The densities of the sets Tm , to three decimal places, are tabulated in
+                                                  + (respectively, T − ) of T consisting of its positive
+Table 1, along with the densities of the subsets Tm                 m        m
+(respectively, negative) elements. We will describe the sets Tm via explicit congruence conditions
+in §7.4.
+    Using Theorem 5 and the rigorous computation of the densities µ(Tm ), we may obtain bounds
+on the limsup of the average 3-ranks of the φ- and φ̂-Selmer groups. These immediately imply a
+bound on the limsup of the average 3-rank of the 3-Selmer group Sel3 (Ek ), and hence a bound on
+the limsup of the average rank of Ek (Q) as k varies in Z ordered by absolute value. We prove the
+following theorem:
+
+
+                                                    3
+                                     m    µ(Tm )      + ) µ(T − )
+                                                   µ(Tm      m
+                                    −4    .000     .000   .000
+                                    −3    .004     .004   .000
+                                    −2    .067     .063   .004
+                                    −1    .295     .231   .063
+                                     0    .399     .167   .231
+                                     1    .199     .031   .167
+                                     2    .032     .000   .031
+                                     3    .000     .000   .000
+                                     4    .000     .000   .000
+
+                                                         + , and T − for |m| ≤ 4.
+                    Table 1: Densities of the sets Tm , Tm        m
+
+
+Theorem 6. The (limsup of the) average rank of the elliptic curves Ek : y 2 = x3 + k, k ∈ Z, is less
+than 1.29.
+
+    Theorem 6 immediately implies that a positive proportion of elliptic curves Ek : y 2 = x3 + k
+must have rank 0 or 1. To produce positive proportions of curves having the individual ranks 0
+or 1, we may make use of the fact in Theorem 5(iii) that for 100% of k ∈ Tm , the 3-rank of the
+φ-Selmer group of Ek is m more than that of its φ̂-Selmer group. This means, in particular, that
+100% of curves in T0 have even 3-Selmer rank (Proposition 42(ii)). Since the average sizes of both
+the φ and φ̂-Selmer groups are equal to 2, we conclude that at least 1/2 of all curves in T0 must in
+fact have 3-Selmer rank 0. Hence we obtain the following theorem.
+
+Theorem 7. At least 19.9% of all elliptic curves Ek : y 2 = x3 + k, k ∈ Z, have rank 0.
+
+   Conditionally on the ﬁniteness of the 3-primary part of the Shafarevich–Tate group, we may
+obtain a similar result for rank 1 elliptic curves by using instead the set T1 ∪ T−1 , for which the
+3-Selmer parity is always odd.
+
+Theorem 8. Assume for all k ∈ T1 ∪ T−1 that the 3-primary part of X(Ek ) is finite. Then at least
+41.1% of all elliptic curves Ek : y 2 = x3 + k, k ∈ Z, have rank 1.
+
+    Using forthcoming results of Skinner (private communication), we may be able to deduce this
+last result unconditionally.
+    Combining Theorems 7 and 8, we obtain:
+
+Corollary 9. At least 61% of all elliptic curves Ek : y 2 = x3 + k, k ∈ Z, have rank 0 or 1.
+
+   Thus the majority of curves Ek : y 2 = x3 + k have rank 0 or 1.
+
+Remark 10. Theorems 6, 7, and 8 and Corollary 9 can be improved slightly if we combine our
+results with those in Ruth’s thesis [30], where it is shown that the average size of Sel2 (Ek ), k ∈ S,
+is at most 3. Indeed, this gives a rank bound of 4/3 on any Tm , which turns out to be a better
+bound than ours for m > 1. The improvements are small since even T2 has very small density:
+incorporating Ruth’s result, we can show that the average rank of Ek is at most 1.21, and the
+proportion of rank 0 curves is at least 23.2%.
+
+
+                                                   4
+   Finally, we note that Theorem 5 implies:
+
+Theorem 11. For each m ≥ 0, a positive proportion of elliptic curves Ek : y 2 = x3 + k, k ∈ Z,
+have 3-Selmer rank equal to m.
+
+    Indeed, the average size of Selφ̂ (Ek ) is 1 + 3−m for k ∈ Tm and, therefore, a positive proportion
+of k ∈ Tm satisfy |Selφ̂ (Ek )| = 1. By Theorem 5(iii), we then have |Selφ (Ek )| = 3m and thus
+|Sel3 (Ek )| = 3m for most of these k. Taking into account Remark 10 and Selmer parity [17] we see
+that, for even m, Theorem 11 holds not just for Sel3 (Ek ) but for X(Ek )[3] as well.
+    Our methods involve the connection between φ-Selmer groups and binary cubic forms. This
+connection was ﬁrst studied by Selmer himself [34], and later by Cassels [13]. The rational theory
+was thoroughly treated by Satgé [31], where he studied the φ-Selmer group from the point of view
+of cubic ﬁelds. Later, Liverance [24] studied these Selmer groups using the classical invariant theory
+of binary cubics.
+    The boundedness of the average size of the φ- and φ̂-Selmer groups—and thus the rank—of
+the elliptic curves Ek : y 2 = x3 + k, k ∈ Z, was ﬁrst demonstrated by Fouvry [20], who used
+Satgé’s results to reduce the boundedness of the average rank to the theorem of Davenport and
+Heilbronn [16] on the boundedness of the average size of the 3-torsion subgroups of the class groups
+of quadratic ﬁelds. Fouvry’s method thus implicitly used binary cubic forms, as Davenport and
+Heilbronn’s proof on the mean size of the 3-torsion of the class groups of quadratic ﬁelds used a
+count of integral binary cubic forms to count cubic ﬁelds of bounded discriminant, together with
+class ﬁeld theory to transform this count to one about 3-torsion elements in class groups of quadratic
+ﬁelds.
+    Recently, in [11] a more direct proof of Davenport and Heilbronn’s theorem on 3-torsion elements
+in class groups in quadratic ﬁelds was given. This proof used a count of integer-matrix binary cubic
+forms ax3 + 3bx2 y + 3cxy 2 + dy 3 (a, b, c, d ∈ Z), together with a direct correspondence between
+3-torsion ideal classes in quadratic ﬁelds and integer-matrix binary cubic forms as studied in [19, 1]
+(see Section 2 for a description of this correspondence over any Dedekind domain). This suggested
+to us that perhaps a natural discriminant-preserving map from φ-Selmer groups Selφ (Ek ) to orbits
+of integer-matrix binary cubic forms could be constructed. This construction is the key to our
+method, and is the subject of Sections 3–6.
+    With this direct map in hand, the problem of determining the average size of the φ-Selmer
+group is reduced to counting the appropriate set of integer-matrix binary cubic forms of bounded
+discriminant. For this, the counting method of Davenport [15] and a suitable adaptation of the
+sieve methods of [16] and [6] may be applied to obtain the optimal upper and lower bounds, and
+this is carried out in Section 7. This sieve renders the ﬁnal answer as a product of local densities,
+and we prove that the density at the p-adic place for a given elliptic curve Ek : y 2 = x3 + k is given
+precisely by the local Selmer ratio cp (φ) as deﬁned by (5). For k varying over an acceptable set S,
+this yields Theorem 2 (see §7.3).
+    We may evaluate the local Selmer ratios by relating them to Tamagawa numbers and using
+Tate’s algorithm (Proposition 28). Setting S = Z then yields Theorem 1, while setting S = Tm ,
+and applying a formula of Cassels [12] on the global Selmer ratio, yields Theorem 5 (see §§7.3–7.4).
+Finally, the results on average rank and on positive proportions of rank 0 and 3-Selmer rank 1
+curves, as in Theorems 6–8 and Corollary 9, are deduced in Section 8.
+    We note that the connection between binary cubic forms and Selmer groups also has an interpre-
+tation in terms of Lie groups. In the language of Vinberg theory, the representation of SL2 on binary
+
+
+                                                  5
+cubic forms arises from a Z/3Z-grading of the Lie algebra of G2 . This paper is one example of recent
+work connecting representations arising from Vinberg’s theory to Selmer groups of Jacobians of al-
+gebraic curves. In this context, we believe that our theorems above give the ﬁrst results for the exact
+and ﬁnite average size of a Selmer group associated to an isogeny that is not the multiplication-by-n
+isogeny. For results and conjectures about the latter see, e.g., [3, 37, 38, 6, 22, 25, 27, 29, 35]. A
+beautiful treatment of the connection between algebraic curves and Vinberg theory, using versal
+deformations, has been given by Thorne [37].
+    One may ask about the φ-Selmer group in families of quadratic twists Ekm3 : y 2 = x3 + km3 ,
+for ﬁxed k and m varying, as well as in families of cubic twists Ekm2 : y 2 = x3 + km2 . These are
+very sparse subsets of all curves Ek , and so our results in Theorem 2 do not apply. Nevertheless,
+in a forthcoming paper [5], it is shown that the analogue of Theorem 2 continues to hold even in
+these families of quadratic twists; in fact, the formula (6) for the average size of the φ-Selmer group
+holds more generally in any family of quadratic twists of an elliptic curve curve (not necessarily
+of j-invariant 0) having a rational 3-isogeny, leading to a proof of the boundedness of the average
+rank and a positive proportion having rank 0 also in such quadratic twist families. We note that
+the analogue of the formula in Theorem 2 holds also for the above cubic twist families [4], although
+in most such cases the product (6) does not converge and we ﬁnd that the average φ-Selmer group
+sizes for curves in these families are unbounded, except in the case where k = 1.
+    Finally, in another forthcoming work, Kriz and Li (private communication) give a very diﬀerent
+proof that a positive proportion of the curves y 2 = x3 + k have rank 0 (resp. 1); they show that
+around 10% of these curves have rank 0, and a similar proportion have rank 1. Their p-adic methods
+are completely diﬀerent from ours, and in particular, their rank 1 results are unconditional and do
+not rely on the recent work of Skinner, W. Zhang, and others on converse theorems. It will be an
+interesting future question to see if there is a way to increase the rank proportions by combining
+our method with theirs.
+
+
+2    Integer-matrix binary cubic forms over a Dedekind domain
+Let V ∗ (Z) = Sym3 Z2 be the lattice of integer-coeﬃcient binary cubic forms, i.e., forms f (u, v) =
+au3 + bv 2 y + cuv 2 + dv 3 with a, b, c, d ∈ Z. To ease notation, we write f (u, v) = [a, b, c, d]. The
+group GL2 (Z) acts naturally on V ∗ (Z) by linear change of variable, and the discriminant
+
+                           Disc(f ) = b2 c2 − 4ac3 − 4b3 d − 27a2 d2 + 18abcd
+
+is SL2 (Z)-invariant.
+    In this paper, the more fundamental object will be the dual lattice V (Z) = Sym3 Z2 consisting
+of integer-matrix binary cubic forms, i.e., forms f (u, v) = [a, 3b, 3c, d] with a, b, c, d ∈ Z. The lattice
+V (Z) has its own (reduced) discriminant
+                                                         1
+                                         disc(f ) = −       Disc(f ).
+                                                         27
+We note that the action of GL2 (F ) on the space V (F ) := V (Z) ⊗ F of binary cubic forms with
+coeﬃcients in F satisﬁes
+                                   disc(g · f ) = det(g)6 disc(f )
+for all g ∈ GL2 (F ) and f ∈ V (F ). For any ring R and d ∈ R, we write V (R)d for the set of
+f ∈ V (R) := V (Z) ⊗ R with disc(f ) = d.
+
+                                                     6
+    In this section, we classify the orbits of V (D), under the action of SL2 (D), for an arbitrary
+Dedekind domain D. We assume that D does not have characteristic 2 or 3. In later sections we
+will apply our classiﬁcation to the case where D is a ﬁeld, Zp , or Z. Our result is a generalization
+of [1, Theorem 13], and is proved in the same way.
+
+Theorem 12. Let D be a Dedekind domain of characteristic not 2 or 3, and let k ∈ D be any
+nonzero element. Let F be the fraction field of D, and let S := D[z]/(z 2 −k) and K := F [z]/(z 2 −k).
+Then there is a bijection between the orbits of SL2 (D) on V (D)4k and equivalence classes of triples
+(I, δ, s), where I is a fractional S-ideal, δ ∈ K ∗ , and s ∈ F ∗ , satisfying the relations I 3 ⊂ δS, N (I)
+is the principal fractional ideal sD in F , and N (δ) = s3 in F ∗ . Two triples (I, δ, s) and (I ′ , δ′ , s′ )
+are equivalent if there exists κ ∈ K ∗ such that I ′ = κI, δ′ = κ3 δ, and s′ = N (κ)s. Under this
+correspondence, the stabilizer in SL2 (D) of f ∈ V (D)4k is isomorphic to S(I)∗ [3]N =1 , where S(I)
+is the ring of endomorphisms of I.
+
+Remark 13. We call triples (I, δ, s) satisfying the relations above valid triples.
+
+Proof. We describe here the explicit bijection, but refer readers to [1] for the details of the proof.
+First, note that S = D + Dτ , with τ the image of x in S. Given a valid triple (I, δ, s), since
+N (I) is the principal D-ideal sD, the projective D-module I of rank 2 is free, and so we may write
+I = Dα + Dβ for some α, β ∈ I. Because I 3 ⊂ δS, we have
+
+                                           α3     =   δ(e0 + τ a)
+                                           α2 β   =   δ(e1 + τ b)
+                                                                                                          (8)
+                                           αβ 2   =   δ(e2 + τ c)
+                                            β3    =   δ(e3 + τ d),
+
+for some integers a, b, c, d, ei ∈ Z. Then corresponding to (I, δ, s) is the binary cubic form f =
+[a, 3b, 3c, d], which has discriminant disc(f ) = 4k. In more coordinate-free terms, f is the symmetric
+trilinear form
+                                      1
+                                        × : I × I × I → S/D ∼ = Dτ.                                  (9)
+                                      δ
+We obtain an SL2 (D)-orbit of symmetric trilinear forms (integer-matrix binary cubic forms) over D
+by taking the symmetric 2 × 2 × 2 matrix representation of this form with respect to any ordered
+basis hα, βi of I that gives rise to the basis element s(1 ∧ τ ) of the top exterior power of I over D.
+This normalization deals with the diﬀerence between SL2 (D)- and GL2 (D)-orbits. The stabilizer
+statement follows because elements in S(I)∗ [3]N =1 are precisely the elements of KN  ∗
+                                                                                        =1 that preserve
+the map (9).
+
+   When D is a ﬁeld, so that D = F , the previous result simpliﬁes quite a bit. Let us write
+(K ∗ /K ∗3 )N =1 to denote the kernel of the norm map K ∗ /K ∗3 → F ∗ /F ∗3 , and (ResK
+                                                                                      F µ3 )N =1 for the
+kernel of the norm map ResK   F µ 3 →  µ 3 .
+
+Corollary 14. There is a bijection between the set of SL2 (F )-orbits on V (F )4k and K ∗ /K ∗3 N =1 .
+                                                                                               
+
+Moreover, the stabilizer of any f ∈ V (F )4k in SL2 (F ) is isomorphic to (ResK
+                                                                              F µ3 )N =1 .
+
+Proof. Both statements follow from taking D = F in the previous theorem. The bijection sends
+δ ∈ (K ∗ /K ∗3 )N =1 to the orbit of binary cubic forms corresponding to the triple (K, δ, s), where s
+is any choice of cube root of N (δ).
+
+
+                                                      7
+Remark 15. Explicitly, if δ = a+bτ ∈ K ∗ , then the corresponding cubic form is f = [ak, 3bk, 3a, b].
+   Another case of interest is when D = Zp and S is the maximal order in K:
+Proposition 16. Let p be a prime and assume S = Zp [z]/(z 2 − k) is the maximal order in K =
+Qp [z]/(z 2 − k). Then the set of SL2 (Zp )-orbits on V (Zp )4k is in bijection with the unit subgroup
+(S ∗ /S ∗3 )N =1 ⊂ (K ∗ /K ∗3 )N =1 . Every rational SL2 (Qp )-orbit of discriminant 4k whose class lies in
+this unit subgroup contains a unique integral SL2 (Zp )-orbit. The stabilizer in SL2 (Qp ) of an element
+in V (Zp )4k is equal to its stabilizer in SL2 (Zp ).
+Proof. Indeed, every S-ideal I is principal in this case. From the Zp -version of Theorem 12, it
+follows that any integral orbit corresponds to a triple (S, δ, s) with δ ∈ S ∗ . The stabilizer statement
+follows because K ∗ [3]N =1 = S ∗ [3]N =1 when S is the maximal order in K.
+
+   Finally, we will need the following result on stabilizers of integer-matrix binary cubic forms over
+Z. Let G = SL2 and for any ring R and f ∈ V (R), write AutR (f ) for StabG(R) (f ).
+Proposition 17. Suppose f ∈ V (Z)4k is an integer-matrix binary cubic form of discriminant 4k.
+Then                    X                     Y              X
+            |AutQ (f )|     |AutZ (f ′ )|−1 =   |AutQp (f )|      |AutZp (fp′ )|−1 ,
+                          f ′ ∈O(f )                  p           fp′ ∈Op (f )
+
+where O(f ) is a set of representatives for the G(Z)-orbits on V (Z)4k contained in the G(Q)-orbit
+of f , and similarly Op (f ) is a set of representatives for the G(Zp )-orbits on V (Zp )4k contained in
+the G(Qp )-orbit of f .
+Proof. We follow the proof of [3, Proposition 8.9]. Let K = Q[z]/(z 2 − k), and ﬁx a representative
+δ ∈ K ∗ of the class in (K ∗ /K ∗3 )N =1 corresponding to f . Let m(δ) be the number of ideals I of
+S = Z[z]/(z 2 − k) satisfying I 3 ⊂ δS and the ideal equality N (I)3 = N (δ). Similarly, let mp (δ) be
+the number of ideals Ip of Sp := S ⊗ Zp with Ip3 ⊂ δSp and N (Ip )3 = N (δ). Note that for all but
+ﬁnitely many p, Sp is the maximal order and δ is a unit, so mp (δ) = 1 for all but ﬁnitely many p.
+   Since a lattice is determined by its local completions, and since a collection of local ideals
+produces a global ideal with the desired properties, we have
+                                                  Y
+                                           m(δ) =    mp (δ).                                      (10)
+                                                          p
+
+Let s be any cube root of N (δ). Then the triple (I, δ, s) is valid and hence corresponds to an integer-
+matrix binary cubic form fI ∈ V (Z)4k mapping to the rational orbit of δ. If s′ is another choice
+of cube root, then s′ = sζ3 and (I, δ, s) is equivalent to (I, δ, s′ ). A triple (I, α, s) is in the same
+integral orbit as (cI, α, s), for some c ∈ K × , exactly when c3 = 1 and N (c) = 1. On the other hand,
+the ideals I and cI are equal if c is a unit in the ring of endomorphisms S(I) of I. Thus, the number
+of distinct ideals giving the same integral orbit is the size of the group K ∗ [3]N =1 /S(I)∗ [3]N =1 .
+    We have K ∗ [3]N =1 ∼ = AutQ (f ) and S(I)∗ [3]N =1 ∼= AutZ (fI ) by Theorem 12. Thus, the number
+of distinct ideals associated to the integral orbit of fI is |AutQ (f )|/|AutZ (fI )|. We conclude that
+                                            X
+                                   m(δ) =          |AutQ (f )|/|AutZ (fI )|.
+                                          fI ∈O(f )
+
+The same reasoning implies an analogous formula for mp (δ), with global stabilizers replaced by local
+stabilizers. The proposition now follows from (10).
+
+                                                      8
+3     The elliptic curves Ek and orbits of binary cubic forms over a
+      field
+Let F be a ﬁeld of characteristic not 2 or 3, and let k ∈ F be non-zero. Recall that the elliptic
+curve
+                                         Ek : y 2 = x3 + k                                   (11)
+admits a 3-isogeny φ : Ek → E−27k deﬁned over F , and a dual 3-isogeny φ̂ : E−27k → Ek .
+     In this section, we describe the connection between the isogenies φ and φ̂ and binary cubic forms
+(i.e., symmetric trilinear forms) over F .
+
+3.1   Galois cohomology of the 3-isogeny kernel and field arithmetic
+Important in the study of φ- and φ̂-descents on the curves Ek and E−27k is the pair of “mirror”
+quadratic étale F -algebras
+                          K = F [z]/(z 2 − k)    and    K̂ = F [z]/(x2 + 27k).
+The following result connects the arithmetic of the elliptic curves E−27k and Ek to the arithmetic
+of K and K̂:
+Proposition 18. There is an isomorphism of group schemes
+                               E−27k [φ̂] ∼
+                                          = ker ResK µ3 → µ3 ,
+                                                            
+                                                         F
+
+and an induced isomorphism
+                                 H 1 (GF , E−27k [φ̂]) ∼
+                                                       = K ∗ /K ∗3 N =1 ,
+                                                                  
+
+where K ∗ /K ∗3 N =1 denotes the kernel of the norm N : K ∗ /K ∗3 → F ∗ /F ∗3 .
+               
+
+Proof. Duality gives a non-degenerate pairing
+                                    h , i : E−27k [φ̂] × Ek [φ] → µ3 .
+Since Ek [φ](F̄ ) becomes a trivial Galois module when restricted to GK , this induces an injective
+homomorphism of group schemes ι : E−27k [φ̂] → ResK F µ3 , given on points by
+
+                                        P 7→ (hP, Q1 i, hP, Q2 i),
+where Q1 and Q2 are the non-trivial points of Ek [φ]. The image of ι is precisely the kernel of the
+norm map ResKF µ3 → µ3 , giving the desired isomorphism.
+   From Kummer theory and the long exact sequence attached to
+                              0 → E−27k [φ̂] → ResKF µ3 → µ3 → 0,
+
+we obtain the isomorphism H 1 (GF , E−27k [φ̂]) ∼
+                                                = K ∗ /K ∗3   .
+                                                            
+                                                                N =1
+
+Remark 19. The sequence 0 → E−27k [φ̂] → E−27k → Ek → 0 induces a Kummer map
+                    ∂ : Ek (F ) → H 1 (GF , E−27k [φ̂]) ∼
+                                                        = K ∗ /K ∗3
+                                                                    
+                                                                      ,     N =1
+which can be described explicitly as follows. If (x, √  / Ek [φ](F ), then ∂((x, y)) = y − τ , where τ is
+                                                     y) ∈
+                              2
+the image of x in K = F [z]/(z − k). If P = (0, ± k) ∈ Ek [φ], then ∂(P ) = ±1/2τ . See [12, §15].
+Remark 20. Of course, the analogues of all these results hold also when φ̂ is replaced with φ and
+K is replaced with K̂; these analogues are obtained simply via the change of variable k 7→ −27k.
+
+                                                    9
+3.2   Connection to binary cubic forms
+We may now compare Corollary 14 and Proposition 18. This immediately yields the following
+canonical bijection:
+Theorem 21. There is a bijection between H 1 (GF , E−27k [φ̂]) and the SL2 (F )-orbits on V (F )4k .
+Moroever, the stabilizer in SL2 (F ) of any f ∈ V (F )4k is isomorphic to E−27k [φ̂](F ).
+
+    Let V (F )sol denote the set of binary cubic forms f (x, y) ∈ V (F ) that correspond under the
+bijection of Theorem 21 to classes in the image of the Kummer map ∂ : Ek (F ) → H 1 (GF , E−27k [φ̂])
+for some k ∈ F . If f ∈ V (F )sol , then we also say that f is soluble. We write V (F )sol
+                                                                                       D for the elements
+of V (F )sol having discriminant D.
+
+Corollary 22. There is a natural bijection between the SL2 (F )-orbits on V (F )sol4k and the elements
+of the group Ek (F )/φ̂(E−27k (F )). Under this bijection, the identity element of Ek (F )/φ̂(E−27k (F ))
+corresponds to the unique SL2 (F )-orbit of reducible binary cubic forms in V (F )sol
+                                                                                   4k , namely the orbit
+of f = [k, 0, 3, 0].
+Proof. The second part of the corollary follows from Remark 15, by taking δ = a = 1 and b = 0.
+
+   The use of the term “soluble” comes from the following fact:
+
+Proposition 23. A binary cubic form f (x, y) ∈ V (F )4k corresponds to an element δ in the image
+of ∂ : Ek (F ) → H 1 (GF , E−27k [φ̂]) ∼
+                                       = K/K ∗3 N =1 if and only if the curve Cf : z 3 = f (x, y) in P2
+has an F -rational point.
+
+Proof. Suppose f ∈ V (F )4k , and let δ ∈ K ∗ be a representative element in K/K ∗3 N =1 corre-
+                                                                                             
+
+sponding to the SL2 (F )-orbit of f under the bijection of Corollary 14.
+    If δ represents the image of a point (x, y) ∈ Ek (F ) under ∂, then, by Remarks 15 and 19, the
+form f is SL2 (F )-equivalent to [1, 3y, 3k, yk], which represents a cube (namely, 1).
+    Conversely, if there exist u, v, z ∈ F such that z 3 = f (u, v), then by scaling u and v if necessary
+we may assume that z = 1. Therefore, we have by (8) or (9) that
+
+                          (u + vτ )3 = δ(g(u, v) + f (u, v)τ ) = δ(g(u, v) + τ )                    (12)
+
+where g is a binary cubic form over F , and so g(u, v) ∈ F . Writing N (δ) = s3 , and then taking
+norms of both sides of (12), we obtain N (u + vτ )3 = s3 (g(u, v)2 − k). Thus the point (x, y) =
+(N (u + vτ )/s, g(u, v)) lies on Ek , and this point (x, y) then maps to the class of δ in K/K ∗3 N =1
+under ∂.
+
+Remark 24. Recall that a φ̂-covering is a map of curves C → Ek over F which is a twist of φ̂.
+By descent, the group H 1 (GF , E−27k [φ̂]) is in bijection with isomorphism classes of φ̂-coverings. To
+construct the φ̂-covering corresponding to δ ∈ K/K ∗3 N =1 , take any s ∈ F ∗ such that N (δ) = s3 ,
+and let f be the corresponding binary cubic form over F under the bijection of Corollary 14. Then
+we take Cf to be the curve z 3 = f (x, y) in P2 (whose Jacobian is easily computed to be Ek ), and
+the φ̂-covering map Cf → Ek corresponding to the class δ is given explicitly by
+
+                                 (u : v : z) 7→ ((u2 − kv 2 )/s, g(u, v)),
+
+where g(u, v) is the cubic polynomial in the preceding proof.
+
+                                                    10
+Remark 25. One can also construct the φ̂-covering using the invariant theory of binary cubics. If
+f = [a, 3b, 3c, d] ∈ V (F ), then the covariants of f are generated by the discriminant disc, the scaled
+Hessian
+                               1             2
+                  h(x, y) =      (fxx fyy − fxy ) = (ac − b2 )x2 + (ad − bc)xy + (bd − c2 ),        (13)
+                              36
+and the Jacobian derivative of f and h,
+
+                                                         ∂(f, h)
+                                        g(x, y) =                = fx hy − fy hx ,                                 (14)
+                                                         ∂(x, y)
+
+which is a cubic polynomial in x, y whose coeﬃcients are cubic polynomials in a, b, c, d. The cubic
+f and its covariants g, h are related by the syzygy1
+
+                                         (g/3)2 − disc(f )f 2 + 4h3 = 0.                                           (15)
+
+This gives us a degree-3 map from the genus-1 curve
+
+                                                     Cf : z 3 = f (x, y)
+
+to Ek with k = disc/4: divide both sides of (15) by 4z 6 and solve for (g/2z 3 )2 to obtain
+                                                   2                3
+                                             1 g                  h             disc(f )
+                                                         =       − 2        +            .                         (16)
+                                             6 z3                 z                4
+
+Our curve E−27k is the special case of Cf where f (x, y) = kx3 + 3xy 2 ; we then see that disc(f ) = 4k,
+and the map (z, y/x) 7→ (−h/z 2 , g/6z 3 ) to Ek recovers our formula (3) for the 3-isogeny φ̂.
+
+
+4       Soluble orbits over local fields
+When F is a local ﬁeld, we can give explicit formulas for the number of soluble SL2 (F )-orbits
+of binary cubic forms of discriminant 4k, i.e., the size of the group Ek (F )/φ̂(E−27k (F )). Since
+|E−27k [φ̂](F )| is 3 or 1 depending on whether −3k is a square in F , it is equivalent to give formulas
+for the (local) Selmer ratios
+
+                                                 |coker(E−27k (F ) → Ek (F ))|
+                                     c(φ̂k ) =                                 .
+                                                  | ker(E−27k (F ) → Ek (F ))|
+
+We do this below for the local ﬁelds Qp , R, and C, though there are similar formulas for any ﬁnite
+extension of Qp and for equicharacteristic local ﬁelds such as Fp ((t)). If F = Qp , R, or C, we use
+the notation cp (φ̂k ), with p ≤ ∞, to match with the introduction. We state the result for cp (φk ),
+the Selmer ratio of the original isogeny φk : Ek → E−27k .
+    1
+      These results are classical, at least for F = C, and they go back at least to Hilbert [23, pp.68–69]; see also
+Schur’s treatment [33, II, §8, Satz 2.24 on p. 77]. The syzygy (15) can be verified by direct computation, though it
+is easier to check it for one choice of f without repeated factors and then use the fact that SL2 (F̄) acts transitively
+on such f . For example, f = x3 − y 3 gives disc = 1, h = −xy and g = −3(x3 + y 3 ), reducing the syzygy (15) to the
+identity (x3 + y 3 )2 − (x3 − y 3 )2 = 4(xy)3 .
+
+
+
+
+                                                                 11
+4.1    Orbits over Qp
+Suppose F = Qp . We ﬁrst determine when Ek /Qp has good reduction.
+
+Lemma 26. Assume k ∈ Zp is sixth-power-free. If p > 3, then Ek /Qp has good reduction if and
+only if p ∤ k. If p = 3, then Ek /Q3 has bad reduction. If p = 2, then Ek /Q2 has good reduction if
+and only if k ≡ 16 (mod 64).
+
+Proof. This follows from Tate’s algorithm. If k ≡ 16 (mod 64), a model with good reduction at 2
+is y ′ 2 + y ′ = x′ 3 + a6 where k = 64a6 + 16 and (x, y) = (4x′ , 8y ′ + 4).
+
+    Next, we express cp (φk ) in terms of the Tamagawa numbers of Ek and E−27k (cf. [32, Lemma 3.8]).
+
+Proposition 27. If k ∈ Zp is sixth-power-free, then
+                                              (
+                                cp (E−27k )     3 if p = 3 and 27 | k; and
+                     cp (φk ) =             ×
+                                  cp (Ek )      1 otherwise,
+
+where cp (E) = |E(Qp )/E0 (Qp )| denotes the Tamagawa number of E.
+
+Proof. Let ωk and ω−27k denote Néron diﬀerentials on Ek and E−27k , respectively. Then for some
+b, b′ ∈ Q, we have ω = b · dx               ′ dX             2     3                2
+                            y and ω−27k = b · Y on Ek : y = x + k and E−27k : Y = X − 27k,
+                                                                                           3
+
+respectively. The model y 2 = x3 + k is minimal except if k ≡ 16 (mod 64), in which case the model
+given in the proof of Lemma 26 is minimal. In either case, we compute that b = b′ when 27 ∤ k and
+b′ = 3b when 27 | k. Since
+                                         3                        
+                                          x + 4k                  8k
+                                b·d                  b  ·   1 −       dx
+                                            x2                    x3
+                       
+                     ∗     dX                                                 dx
+                    φ b·         =       3          =          3          =b·    ,
+                            Y         y(x − 8k)            y(x − 8k)           y
+                                          x3                    x3
+we have φ∗ ω−27k = aωk , where a = 1 if 27 ∤ k and a = 3 if 27 | k.
+   We then compute
+                                    1                                     1
+    Z                                        Z                                             Z
+                  |ω−27k |p =              ·         |φ∗ ω−27k |p =               · |a|p ·            |ωk |p .
+     φ̂(Ek (Qp ))             |Ek [φ](Qp )| Ek (Qp )                |Ek [φ](Qp )|            Ek (Qp )
+
+Therefore,
+                                                         R
+                     |(E−27k (Qp )/φ(Ek (Qp )))|             E−27k (Qp ) |ω−27k |p        1     cp (E−27k )
+          cp (φk ) =                             =               R                   =        ·
+                            |Ek [φ](Qp )|                 |a|p Ek (Qp ) |ωk |p           |a|p     cp (Ek )
+
+as desired.
+
+   We use Tate’s algorithm [36] to compute the ratios of Tamagawa numbers in Proposition 27,
+and hence the local Selmer ratios cp (φk ). In particular, we ﬁnd that the cp (φk ) are determined by
+congruence conditions on k:
+
+
+
+
+                                                        12
+         √ 28. Let k ∈ Z be sixth-power-free, and let χK denote the quadratic character attached
+Proposition
+to K = Q( k). If p 6= 3, then
+                             (
+                               3−χK (p) if p ≡ 2 (mod 3) and vp (4k) ∈ {2, 4};
+                  cp (φk ) =
+                               1        otherwise.
+
+If p = 3, write k = 3v3 (k) k3 . Then
+                                  
+                                  
+                                   9   if v3 (k) = 5, and k3 ≡ 2 (mod 3);
+                                  
+                                  
+                                        if v3 (k) = 0, and k3 ≡ 5 or 7 (mod 9); or
+                                  
+                                  
+                                  
+                                   3
+                                           v3 (k) ∈ {1, 4}, and k3 ≡ 2 (mod 3); or
+                                  
+                                  
+                                  
+                                  
+                                           v3 (k) = 3, and k3 6≡ 2 or 4 (mod 9); or
+                                  
+                   cp (φk ) =                                                                       (17)
+                                  
+                                  
+                                          v3 (k) = 5, and k3 ≡ 1 (mod 3);
+                                  
+                                  
+                                    1
+                                        if v3 (k) = 2, and k3 ≡ 1 (mod 3);
+                                  
+                                  
+                                    3
+                                  
+                                  
+                                  
+                                  
+                                  
+                                   1   otherwise.
+    From Proposition 28, we may easily deduce explicit formulas for the number of soluble SL2 (Qp )-
+orbits on V (Qp )4k (see also Corollary 31 below). One may go further and describe the soluble classes
+as a subgroup of (K ∗ /K ∗3 )N =1 . We describe this below in the cases where p 6= 3.
+Proposition 29. If k ∈ Zp and Ek has good reduction, then the Kummer map induces an isomor-
+phism
+                           Ek (Qp )/φ̂(E−27k (Qp )) ∼
+                                                    = (S0∗ /S0∗3 )N =1 ,
+where S0 is the ring of integers of K = Qp [x]/(x2 − k).
+Proof. See [14, Lemma 4.1] or [21, Lemma 6].
+
+
+Proposition 30. Assume p 6= 3 and that Ek /Qp has bad reduction. Then the natural map
+                                j : Ek [φ](Qp ) → Ek (Qp )/φ̂(E−27k (Qp ))
+is an isomorphism.
+Proof.√ We ﬁrst
+              √ claim that Ek [3](Qp ) = Ek [φ](Qp ). Indeed, the six other 3-torsion points on Ek (Q̄p )
+are ( 3 −4k, −3k), for the six possible choices of roots in this expression. It follows from the bad
+reduction of Ek and Lemma 26 that these points are deﬁned over ramiﬁed extensions of Qp , so they
+do not lie in Ek (Qp ), proving the claim.
+    Next we show that j is injective. Indeed, if P ∈ Ek [φ](Qp ) and Q ∈ E−27k (Qp ) satisfy φ̂(Q) = P ,
+then Q ∈ E−27k [3](Qp ) = E−27k [φ̂](Qp ), where the equality follows from the above claim applied to
+E−27k . Thus, P = 0 and j is injective.
+    Finally, it suﬃces to show that |Ek (Qp )/φ̂(E−27k (Qp ))| ≤ |Ek [φ](Qp )|. Note that the group
+Ek (Qp )/3Ek (Qp ) surjects onto Ek (Qp )/φ̂(E−27k (Qp )). Since p 6= 3, an argument using the for-
+mal group [3, Lemma 12.3] shows that Ek (Qp )/3Ek (Qp ) has size |Ek [3](Qp )|, which is equal to
+|Ek [φ](Qp )|, again by our claim above. Therefore, we indeed have
+                         |Ek (Qp )/φ̂(E−27k (Qp ))| ≤ |Ek [3](Qp )| = |Ek [φ](Qp )|,
+as desired.
+
+                                                     13
+Corollary 31. If p 6= 3, then the number of soluble orbits in V (Qp ) of discriminant 4k is equal to
+                         (
+                           |E−27k [φ̂](Qp )| if Ek /Qp has good reduction,
+                           |Ek [φ](Qp )|     if Ek /Qp has bad reduction.
+
+Remark 32. At the start of the proof of Proposition 30, we noted that Ek [3] consists of the three
+points of Ek [φ] together with the six points (x, y) with x3 = −4k and y 2 = −3k. If such a point is
+rational then (k, x, y) = (−432m6 , 12m2 , 36m3 ) for some nonzero m. In this case our elliptic curve
+Ek ∼= E−432 is isomorphic with the Fermat cubic X 3 + Y 3 = Z 3 (which is also isomorphic with the
+modular curve X0 (27)), and the isogenous curve E27k ∼  = E16 is isomorphic with XY (X + Y ) = Z 3 .
+These curves have good reduction at primes other than 3; in particular, they satisfy the condition
+of Lemma 26 for good reduction at 2, with minimal models y ′ 2 + y ′ = x′ 3 − 7 and y ′ 2 + y ′ = x′ 3
+respectively.
+
+4.2    Orbits over R or C
+If F = R or C, then every binary cubic form f ∈ V (F ) is reducible, so by Corollary 22, there is
+a unique SL2 (F )-orbit of binary cubic forms of discriminant 4k. This agrees with the fact that
+Ek (F )/φ̂(E−27k (F )) is always trivial. We conclude that c∞ (φk ) = 1/3 if F = C, and if F = R, we
+have:                                              (
+                                                     1
+                                                       if k > 0;
+                                         c∞ (φk ) = 3
+                                                    1 if k < 0.
+
+5     φ-Selmer groups and locally soluble orbits over a global field
+We let F now be a global ﬁeld of characteristic not 2 or 3. If ϕ : A → A′ is an isogeny of abelian
+varieties over F , then the ϕ-Selmer group
+                                       Selϕ (A) ⊂ H 1 (GF , A[ϕ])
+is the subgroup consisting of classes that are locally in the image of the Kummer map
+                                     ∂v : A′ (Fv )−→ H 1 (GFv , A[ϕ])
+for every place v of F . Equivalently, these are the classes locally in the kernel of the map
+                                  H 1 (GFv , A[ϕ]) → H 1 (GFv , A)[ϕ],
+for every place v of F , i.e., the classes corresponding to φ-coverings having a rational point over Fv
+for every place v.
+    Now let V (F )loc. sol. ⊂ V (F ) denote the set of locally soluble binary cubic forms, i.e. those
+f (u, v) ∈ V (F ) such that the equation z 3 = f (u, v) has a non-zero solution over Fv for every place
+v of F . Then the following result follows immediately from Corollary 22.
+Theorem 33. Let k ∈ F ∗ . Then there is a bijection between the SL2 (F )-orbits on V (F )loc. sol. having
+discriminant 4k and the elements of Selφ̂ (E−27k ) corresponding to the isogeny φ̂k : E−27k → Ek .
+Under this bijection, the identity element of Selφ̂ (E−27k ) corresponds to the unique SL2 (F )-orbit of
+reducible binary cubic forms of discriminant 4k, namely the orbit of f (x, y) = kx3 +3xy 2 . Moroever,
+the stabilizer in SL2 (F ) of any f ∈ V (F )loc.
+                                            4k
+                                                 sol. is isomorphic to E
+                                                                        −27k [φ̂](F ).
+
+
+                                                   14
+6    Existence of integral orbits
+We now specialize to the case where F = Q. The main goal of this section is to prove the following
+theorem.
+Theorem 34. Let k ∈ 3Z. Then every locally soluble orbit for the action of SL2 (Q) on V (Q)4k has
+an integral representative, i.e., contains an element of V (Z)4k .
+Proof. By Theorem 12 applied to the cases D = Z and D = Zp , it suﬃces to ﬁnd a representative in
+V (Zp )4k for every soluble orbit of cubic forms f ∈ V (Qp )4k , for each prime p. Indeed, such integral
+representatives would correspond to valid triples over Zp , which together determine a valid triple
+over Z.
+    Let S = Zp [z]/(z 2 − k) and K = Qp [z]/(z 2 − k) as before, and assume for now that p 6= 3. The
+binary cubic form f ∈ V (Qp )sol                                         ∗   ∗3
+                                4k corresponds to an element δ ∈ (K /K )N =1 in the image of the
+Kummer map. Let P = (x, y) ∈ Ek (Qp ) be a rational point mapping to δ. By Remark 19, we have
+δ = y − τ , where τ is the image of z in K = Qp [z]/(z 2 − k). If x and y have negative valuation, then
+P lies in the subgroup Ek,1 (Qp ) ⊂ Ek (Qp ) isomorphic to the formal group of Ek . Since the formal
+group is pro-p and p 6= 3, it follows that there is a point Q ∈ Ek,1 (Qp ) such that 3Q = P ; hence
+P is in φ̂(E−27k (Qp )) and δ = ∂(P ) = 1. Thus, the valid triple (S, 1, 1) corresponds to an integral
+representative in the orbit of f under the bijection of Theorem 12.
+    We may thus assume that x and y are in Zp . Deﬁne I = Zp x + Zp δ ⊂ K. Then
+
+                      τ I = Zp xτ + Zp δτ = Zp (xy − xδ) + Zp (x3 − yδ) ⊂ I,
+
+and therefore I is an S-ideal. Furthermore, we have N (I) = xZp , and N (δ) = N (y−τ ) = y 2 −k = x3 .
+Finally, we note that the elements
+
+                                     δ−1 (x3 )    =    y+τ
+                                     δ−1 (x2 δ)   =    x2
+                                     δ−1 (xδ2 )   =    xy − xτ
+                                     δ−1 (δ3 )    =    y 2 + k − 2yτ,
+
+are each contained in S = Zp + Zp τ , implying that I 3 ⊂ δS. Thus (I, δ, x) is a valid triple for S in
+the sense of Theorem 12 and Remark 13, and yields the desired integral representative in V (Zp )4k .
+Remark 35. One can even characterize the integral classes in terms of solubility conditions, at least
+if p 6= 3. Speciﬁcally, if k ∈ Zp is sixth-power-free, then an SL2 (Qp )-orbit of forms f ∈ V (Qp )4k
+contains an integral form f0 ∈ V (Zp )4k if and only if f is soluble over Qur
+                                                                           p , the maximal unramiﬁed
+extension of Qp .
+    Before considering the case p = 3, we state a general lemma. For any prime p, and for any i ≥ 0,
+let Si be the order of index pi in the maximal order S0 of K = Qp [z]/(z 2 − k).
+Lemma 36. If (I, δ, s) is a valid triple for the ring Si , with i ≥ 1, then there exists an Si+1 -ideal
+J such that (J, δ, s) is a valid triple for the ring Si+1 . If p = 3, then this is true even if i = 0.
+
+Proof. This follows from the explicit bijection given in the proof of Theorem 12. If f = [a, 3b, 3c, d]
+is the binary cubic form corresponding to the valid triple (I, δ, s), then f has a root over Fp , since
+
+                               Disc(f ) = −27disc(f ) = −27 · Disc(Si )
+
+                                                      15
+is divisible by p. So via a change of variables we may assume that p | d. If αZp + βZp is the
+corresponding basis of I, then [p2 a, 3pb, 3c, d/p] is an integer-matrix binary cubic form corresponding
+to the triple (pαZp + βZp , δ, s) for the ring Si+1 . If p = 3, then Disc(f ) = −27disc(f ) is divisible
+by p, even if i = 0.
+
+    Now let p = 3 and let f ∈ V (Q3 )sol                            ∗   ∗3
+                                          4k correspond to δ ∈ (K /K )N =1 , with K and S as before. If
+                                                ∗   ∗3
+the class of δ lies in the unit subgroup (S0 /S0 )N =1 , then (S0 , δ, s) is a valid triple for the ring S0 ,
+and so by Lemma 36, there exists J such that (J, δ, s) is valid for the ring S. This triple corresponds
+to the desired f ∈ V (Z3 )4k in the orbit corresponding to δ.
+    If δ is not represented by a unit, then we must be in the case K = Q3 × Q3 , as this is the only
+étale Q3 -algebra where there exist δ’s not represented by units. Since k ∈ 3Z, we must have S = Si
+for some i ≥ 1. We may choose δ to be of the form (3π, 3u), for some uniformizer π ∈ 3Z3 and unit
+u ∈ Z∗3 . Then the triple (3S0 , δ, s) is valid for the ring S1 , so by Lemma 36, there exist valid triples
+(J, δ, s) for Si , for all i ≥ 1, and in particular for S. This gives the desired f ∈ V (Z3 )4k in the orbit
+corresponding to δ, and completes the proof of Theorem 34.
+
+
+7      The average size of Selφ (Ek )
+In this section, for acceptable subsets S ⊂ Z, we asymptotically count the number of SL2 (Q)-classes
+of locally soluble integer-matrix binary cubic forms f ∈ V (Z) of discriminant 36 4k for |k| < X,
+k ∈ S, as X → ∞. By the work of Section 6, this will then allow us to deduce Theorems 1, 2, and 5.
+
+7.1     The asymptotic number of binary cubic forms of bounded discriminant with
+        weighted congruence conditions
+Let V (R) denote the vector space of binary cubic forms over R. Let V (0) (R) denote the subset of
+elements in V (R) having positive discriminant, and V (1) (R) the subset of elements having negative
+discriminant. We use V (i) (Z) to denote V (Z) ∩ V (i) (R).
+    Now let T be any set of integral binary cubic forms that is invariant under the action of SL2 (Z).
+Let N (T ; X) denote the number of irreducible binary cubic forms contained in T , up to SL2 (Z)-
+equivalence, having absolute discriminant at most X. Then we have the following theorem counting
+SL2 (Z)-classes of integer-matrix binary cubic forms of bounded reduced discriminant, which easily
+follows from the work of Davenport [15] and Davenport–Heilbronn [16] (see [11, Theorem 19] for
+this deduction):
+
+Theorem 37. Let T be any set of integer-matrix binary cubic forms that is defined by finitely many
+congruence conditions modulo prime powers and that is invariant under the action of SL2 (Z). For
+each prime p, let µp (T ) denote the p-adic density of the p-adic closure of T in V (Zp ), where V (Zp )
+is equipped with the usual additive p-adic measure normalized so that µp (V (Zp )) = 1. Then
+
+                                 π2 Y
+    (a) N (T ∩ V (0) (Z); X) =     ·  µp (T ) · X + o(X);
+                                 12 p
+
+                                 π2 Y
+ (b) N (T ∩ V (1) (Z); X) =        ·   µp (T ) · X + o(X).
+                                 4   p
+
+
+
+
+                                                     16
+    For our particular application, we require a more general congruence version of our counting
+theorem for binary cubic forms, namely, one which not only allows appropriate inﬁnite sets of
+congruence conditions to be imposed but which also permits weighted counts of lattice points
+(where weights are also assigned by congruence conditions). More precisely, we say that a function
+φ : V (Z) → [0, 1] ⊂ R is defined by congruence conditions if, for all primes p, there exist functions
+φp : V (Zp ) → [0, 1] such that:
+
+  (1) For all f ∈ V (Z), we have φ(f ) = p φp (f ).
+                                         Q
+
+ (2) For each prime p, the function φp is locally constant outside some set Zp ⊂ V (Zp ) of measure
+     zero.
+
+Such a function φ is called acceptable if it is SL2 (Z)-invariant and, for suﬃciently large primes p,
+we have φp (f ) = 1 whenever p2 ∤ disc(f ). For such an acceptable function φ, we let Nφ (V (i) (Z); X)
+denote the number of SL2 (Z)-equivalence classes of elements in V (i) (Z) having absolute discriminant
+at most X, where the equivalence class of f ∈ V (i) (Z) is weighted by φ(f ).
+   We then have the following generalization of Theorem 37:
+
+Theorem 38. Let φ : V (Z) → [0, 1] be an acceptable function that is defined by congruence condi-
+tions via the local functions φp : V (Zp ) → [0, 1]. Then
+                                                        YZ
+                           (i)                (i)
+                     Nφ (V (Z); X) = N (V (Z); X)            φp (f ) df + o(X).              (18)
+                                                        p     f ∈VZp
+
+
+Proof. The proof is exactly as in [6, Theorem 2.21], though we use [10, Proposition 29] in place of
+the uniformity estimate [6, Theorem 2.13].
+
+7.2   Weighted counts of binary cubic forms corresponding to Selmer elements
+We wish to apply Theorem 38 to the set T of all integral binary cubic forms that lie in the correspon-
+dence of Theorems 33 and 34, with appropriately assigned weights. Namely, we need to count each
+SL2 (Z) orbit, SL2 (Z) · f , weighted by 1/n(f ), where n(f ) is equal to the number of SL2 (Z)-orbits
+inside the SL2 (Q)-equivalence class of f in V (Z). For this purpose, it suﬃces to count the number
+of SL2 (Z)-orbits of locally soluble integral binary cubic forms having bounded discriminant and no
+rational linear factor with each orbit SL2 (Z) · f weighted by 1/m(f ), where
+                                        X |AutQ (f ′ )|       X          |AutQ (f )|
+                          m(f ) :=                      =                              ;
+                                      ′
+                                          |AutZ (f ′ )|                  |AutZ (f ′ )|
+                                     f ∈O(f )               f ′ ∈O(f )
+
+here O(f ) is a set of representatives for the action of SL2 (Z) on the SL2 (Q)-equivalence class of f
+in V (Z) and AutQ (f ) (resp. AutZ (f )) denotes the stabilizer of f in SL2 (Q) (resp. SL2 (Z)). The
+reason it suﬃces to weight by 1/m(f ) instead of 1/n(f ) is that, by the proof of [10, Lemma 22], all
+but a negligible number of SL2 (Z)-orbits of integral irreducible binary cubic forms with bounded
+discriminant have trivial stabilizer in SL2 (Q); thus all but a negligible number of SL2 (Z)-equivalence
+classes of integral binary cubic forms of bounded discriminant satisfy m(f ) = n(f ). In the remainder
+of this subsection, we compute this weighted p-adic density of locally soluble integral binary cubic
+forms.
+
+
+                                                  17
+   For a prime p and a binary cubic form f ∈ V (Zp ), deﬁne mp (f ) by
+                                        X           |AutQp (f ′ )|        X           |AutQp (f )|
+                        mp (f ) :=                                 =                                 ,
+                                                    |AutZp (f ′ )|                    |AutZp (f ′ )|
+                                     f ′ ∈Op (f )                      f ′ ∈Op (f )
+
+where Op (f ) is a set of representatives for the action of SL2 (Zp ) on the SL2 (Qp )-equivalence class of
+f in V (Zp ) and AutQp (f ) (resp. AutZp (f )) denotes the stabilizer of f in SL2 (Qp ) (resp. SL2 (Zp )).
+By Proposition 17, we have the factorization
+                                                     Y
+                                            m(f ) =     mp (f ),
+                                                             p
+
+and so we have put ourselves in position to use Theorem 38.
+    Let S be an acceptable subset of Z, and for each prime p, let Sp denote the closure of S in Zp .
+Let B(S) denote the set of all locally soluble integral binary cubic forms having discriminant 36 4k
+for k ∈ S, and let Bp (S) denote the p-adic closure of B(S) in V (Zp ).
+    We now determine the p-adic density of Bp (S), where each element f ∈ Bp (S) is weighted by
+1/mp (f ), in terms of the p-adic integral over Sp of the local Selmer ratio and the volume Vol(SL2 (Zp ))
+of the group SL2 (Zp ), which is computed with respect to a ﬁxed generator ω of the rank 1 module
+of top-degree diﬀerentials of SL2 over Z, so that ω is well-determined up to sign.
+Proposition 39. There is a rational number J ∈ Q× , independent of S and p, such that
+                      1                                        |Ek (Qp )/φ̂(E−27k (Qp ))|
+           Z                                              Z
+                            df = |J |p · Vol(SL2 (Zp )) ·                                 dk.
+             Bp (S) mp (f )                                k∈S      |E−27k (Qp )[φ̂]|
+Proof. We make use of the facts that the number of SL2 (Qp )-orbits of soluble binary cubic forms
+of discriminant 4k is equal to the cardinality of E−27k (Qp )/φ̂(Ek (Qp )) (by Theorem 33), and the
+cardinality of AutQp (f ) is equal to the cardinality of Ek (Qp )[φ̂] (by Corollary 21); otherwise, the
+proof is identical to [6, Proposition 3.9].
+    We note that the rational number J also shows up in the archimedean factor of Theorem 38,
+since
+                            (i)        Vol(SL2 (Z)\SL2 (R))|J |∞
+                       N (VZ ; X) =                              X + o(X),                       (19)
+                                                   ni
+where n0 = 3 and n1 = 1; see [6, Proposition 3.11, Remark 3.14]. (In fact, it turns out that J = 3/2,
+although we shall not need this fact.)
+
+7.3   Proof of Theorems 1 and 2
+Theorem 40. Let S ⊂ Z be any acceptable subset of integers. Then when all elliptic curves
+Ek : y 2 = x3 + k, k ∈ S, are ordered by the absolute value of k, the average size of the φ̂-Selmer
+group associated to the 3-isogeny φ̂ : E−27k → Ek is
+                                             Z
+                                                  c (φ̂ )dk
+                                          Y k∈Sp p k
+                                     1+         Z           ,                                   (20)
+                                         p≤∞         dk
+                                                            k∈Sp
+
+where Sp denotes the p-adic closure of S in Zp for p < ∞, and S∞ is the smallest interval in R
+containing S.
+
+                                                            18
+Proof. Let X = 36 4Y , and G = SL2 and deﬁne Ek′ = E−27k . By the discussion in §7.2, to count the
+total number of non-identity elements in the groups Selφ̂k (E−27k ) with k < Y , it suﬃces to count
+the number of locally soluble irreducible SL2 (Z)-orbits of binary cubic forms f ∈ V (Z) having
+discriminant in the set 36 4S and also bounded by X, and where each orbit is weighed by 1/m(f ).
+This weighting function is acceptable by Proposition 16. Thus, by Theorem 38, Proposition 39,
+§4.2, and (19), the number of such weighted orbits divided by the total number of k ∈ S with k < Y
+approaches
+                                       1
+                                                                          |Ek (Qp )/φ̂(Ek′ (Qp ))|
+                             X
+                                                                  YZ
+                                   ′                                                               dk
+                             k∈S |Ek [φ̂](R)|
+                            |k|<Y
+                                              Y                   p  k∈Sp      |Ek′ [φ̂](Qp )|
+     Vol(G(Z)\G(R))|J |∞          X             |J |p Vol(G(Zp ))          YZ
+                                       1      p                                        dk
+                                   k∈S
+                                                                                               p    k∈Sp
+                                  |k|<Y
+
+
+
+                            X              1
+                                                                    |Ek (Qp )/φ̂(Ek′ (Qp ))|
+                                                           Z
+                                 ′                                                             dk
+                           k∈S |Ek [φ̂](R)|
+                          |k|<Y
+                                            Y              k∈Sp         |E ′ [φ̂](Qp )|
+                        =       X                                       Z k
+                                     1      p                                   dk
+                                   k∈S                                    k∈Sp
+                                  |k|<Y
+                                  Z
+                                             cp (φ̂k )dk
+                            Y         k∈Sp
+                        =              Z
+                            p≤∞                 dk
+                                         k∈Sp
+
+as Y → ∞. The ﬁrst equality is due Qto the product formula p≤∞ |J |p = 1, and the fact that the
+                                                            Q
+Tamagawa number Vol(G(Z)\G(R)) p Vol(G(Zp )) of G is equal to 1. This proves formula (20) of
+Theorem 40, after taking into account the identity element of each φ̂-Selmer group.
+
+Proof of Theorem 2. The formula comes from the change of variables k 7→ −27k in the result of
+Theorem 40, and the fact that φ̂k = φ−27k .
+
+Proof of Theorem 1. We use Proposition 28 to compute the p-adic integrals in Theorem 2 for
+the set S = Z. The result is that the product of the local densities at ﬁnite primes is equal to
+                     "                                                       #
+                       (1 − 2−1 )( 43 + 2−1 + 43 2−2 + 2−3 + 2−4 + 2−5 )
+              r =
+                                              1 − 2−6
+                      "                                                                      #
+                        (1 − 3−1 )( 35 + 2 · 3−1 + 23 · 3−2 + 37 · 3−3 + 2 · 3−4 + 6 · 3−5 )
+                    ·
+                                                      1 − 3−6
+                                  "                                                       #
+                          Y          (1 − p−1 )(1 + p−1 + 53 p−2 + p−3 + 53 p−4 + p−5 )
+                    ·                                                                        .
+                                                           1 − p−6
+                      p ≡ 5 (mod 6)
+
+In each Euler factor, the six-term sum records the weighted average value of cp (φ) on pi Zp − pi+1 Zp
+for i = 0, . . . , 5. Since Ekm6 ∼
+                                 = Ek , these averages cyclically repeat themselves for i ≥ 6, which
+explains the factor 1 − p−6 in the denominator.
+
+                                                               19
+7.4   Proof of Theorem 5
+Claim (i) is clear, and (ii) follows immediately from Proposition 28. Claim (iii) follows from Cassels’
+formula [14],
+                                           |E−27k (Q)[φ̂]| · |Selφ (Ek )|
+                                    c(φ) =                                .                       (21)
+                                           |Ek (Q)[φ]| · |Selφ̂ (E−27k )|
+   To prove (iv), we use Proposition 28 to express Tm as a disjoint union
+                                               [
+                                         Tm =      Tm,n ,
+                                                   n∈Z
+
+where Tm,n is the set of all k ∈ Tm for which there are exactly m + n primes p (possibly including
+p = ∞) satisfying cp (φk ) ≥ 3, with the caveat that if c3 (φk ) = 9 then p = 3 is counted twice. Each
+Tm,n can itself be expressed as a disjoint union
+                                                  [
+                                        Tm,n =         TΠ1 ,Π2 ,
+                                                 (Π1 ,Π2 )
+
+where the union is over all pairs (Π1 , Π2 ), where Π1 is a multiset of m + n primes, with each prime
+having multiplicity at most 1, except for p = 3 which may have multiplicity at most 2, and Π2 is
+a set of n primes, disjoint from Π1 . The set TΠ1 ,Π2 consists of those integers k ∈ Tm such that
+cp (φk ) ≥ 3 if and only if p ∈ Π1 (and having multiplicity 2 if and only if p = 3 and c3 (φk ) = 9), and
+such that cp (φk ) = 1/3 if and only if p ∈ Π2 .
+    Note that each set TΠ1 ,Π2 ⊂ Z is acceptable, by the explicit congruence conditions of Proposi-
+tion 28. Moreover, for each prime p, the function cp (φk ) is constant on TΠ1 ,Π2 . Thus by Theorem 2,
+for any acceptable set S ⊂ TΠ1 ,Π2 , the average size of Selφ (Ek ) for k ∈ S is
+                                      Y
+                                  1+     cp (φk ) = 1 + c(φk ) = 1 + 3m .
+                                      p
+
+Since c(φ̂) = c(φ)−1 , a similar argument shows that the average size of Selφ̂ (E−27k ) for k ∈ S is
+1 + 3−m . Note that any acceptable set S contained in Tm is necessarily contained in some TΠ1 ,Π2 ,
+so this proves Theorem 5(iv) in the case that S ⊂ Tm is an acceptable set.
+    If S = Tm , then since                  [ [
+                                      Tm =           TΠ1 ,Π2 ,
+                                               n (Π1 ,Π2 )
+
+we may write Tm as an ascending union Tm = i≥1 Si , where each Si is the union of all TΠ1 ,Π2
+                                                   S
+such that each prime p ∈ Π1 ∪ Π2 is less than the i-th prime number pi . Thus, each Si is a ﬁnite
+union of acceptable sets, and so the average size of Selφ (Ek ) for k ∈ Si is 1 + 3m . Moreover, by
+Proposition 28, the binary cubic forms f ∈ V (Z) having discriminant in the complement Tm − Si
+have discriminant divisible by p2j for some j ≥ i. By the uniformity estimate in [10, Proposition 29],
+we have k∈Tm \S;|k|<X Selφ (Ek ) is j≥i O(X/p2j ) = O(X/pi ), where the implied constant is inde-
+         P                            P
+
+pendent of i. That is, the total number of Selmer elements of Ek over all k ∈ Tm \ Si , |k| < X,
+is O(X/pi ), while the total number of Selmer elements of Ek over all |k| < X is of course ≫ X.
+Letting i tend to inﬁnity, we conclude that the average size of Selφ (Ek ) for k ∈ Tm is also equal to
+1 + 3m . The same argument shows that the average size of Selφ̂ (Ek ) for k ∈ Tm is again equal to
+1 + 3−m . This completes the proof of Theorem 5.
+
+                                                   20
+Remark    41. If S ⊂ Z is any acceptable set, then the average size of SelP φ (Ek ) for k ∈ S is equal to
+                                                                                                    −m ).
+  m∈Z µ(S ∩ Tm )(1 + 3 ) and the average size of Selφ̂ (E−27k ) is equal to
+                      m
+P
+                                                                               m∈Z µ(S ∩ Tm )(1 + 3
+Indeed, even though the sets S ∩ Tm are not in general acceptable, the sets of the form S ∩ TΠ1 ,Π2
+are, so we can argue as above.
+
+
+8      Ranks of elliptic curves
+In the previous section, we computed the average size of the φ-Selmer and φ̂-Selmer groups in any
+acceptable family of elliptic curves with j-invariant 0. In this section, we deduce an upper bound
+on the average rank of E(Q) in such families. We also deduce a lower bound on the density of
+curves Ek having rank 0 or (3-Selmer) rank 1, respectively.
+
+8.1     An upper bound on the average rank of elliptic curves with vanishing j-
+        invariant
+For any elliptic curve E/Q with j-invariant 0, we write r(E), r3 (E), rφ (E), and rφ̂ (E) for the ranks
+of the groups E(Q), Sel3 (E), Selφ (E), and Selφ̂ (E ′ ) respectively, where E ′ = E/ ker φ.
+
+Proposition 42. For φ : E → E ′ as above, we have
+    (i) r(E) ≤ r3 (E) ≤ rφ (E) + rφ̂ (E).
+
+ (ii) If c(φ) = 3m , then m ≡ r3 (E) − dimF3 E[3](Q) (mod 2).
+Proof. Claim (i) follows from the exact sequence [28, Corollary 1],
+
+                      E ′ (Q)[φ̂]                                         X(E ′ )[φ̂]
+               0→                 → Selφ (E) → Sel3 (E) → Selφ̂ (E ′ ) →              → 0.           (22)
+                     φ(E(Q)[3])                                          φ(X(E)[3])
+As φ is adjoint with respect to the Cassels–Tate pairing [14, Theorem 1.2], there is an induced
+                                                                    ′
+                                                            X(E )[φ̂]
+non-degenerate alternating pairing on the F3 -vector space φ(X(E)[3]) . The latter therefore has even
+F3 -dimension, and (ii) now follows from (21) and (22).
+
+Theorem 43. Let m ∈ Z, and suppose S ⊂ Tm is an acceptable set. Then the (limsup of the)
+average rank of Ek , for k ∈ S ordered by absolute value, is at most |m| + 3−|m| .
+Proof. First assume that m ≥ 0. Then one has the general inequality
+
+                                      2rφ (E) + 1 − 2m ≤ 3rφ (E)−m ,                                 (23)
+
+so that
+                                                   1 |Selφ (E)|
+                                      rφ (E) ≤ m −   +            .
+                                                   2      2 · 3m
+By Theorem 5, the average size of Selφ (Ek ) for k ∈ S ⊂ Tm is 1 + 3m , so we conclude that the
+limsup of the average of rφ (Ek ) is at most m + 21 3−m . Similarly, the average size of Selφ̂ (E−27k ) is
+1 + 3−m , so we conclude from the case m = 0 of inequality (23) that the limsup of the average of
+rφ̂ (Ek ) is at most 21 3−m . Combining these bounds with Proposition 42(i), the limsup of the average
+rank of Ek for k ∈ S is seen to be at most m + 3−m . For m < 0, the roles of φ and φ̂ are reversed,
+so the average rank bounds that we obtain for m and −m are the same.
+
+                                                   21
+Proof of Theorem 6. We observe that, by the explicit congruence description of Tm in §7.4, any
+k ∈ Tm (for |m| > 1) must satisfy p2j | k for some j ≥ |m| − 1, where we again use pi to denote the
+i-th prime. Hence, by the uniformity estimate [10, Proposition 29], we have that
+                         X X                      X
+                                     Selφ (Ek ) =    O(X/p2j ) = O(X/pM ),
+                         |m|>M k∈Tm                  j≥M
+                               k<X
+
+where the implied constant is independent of M . Theorem 43 therefore gives the following bound
+on the (limsup of the) average rank of the elliptic curves Ek for non-zero k ∈ Z:
+                                  M
+                                  X                                                  ∞
+                                                                                     X
+                                                             −|m|
+ lim sup avgk∈Z r(Ek ) ≤ lim            µ(Tm )(|m| + 3              ) + O(1/pM ) =          µ(Tm )(|m| + 3−|m| ),
+                          M →∞
+                                 m=−M                                                m=−∞
+
+where µ(Tm ) denotes the density of integers in the set Tm . Using Proposition 28 and the explicit
+description given in §7.4 of Tm as the disjoint union
+                                                [[
+                                         Tm =        TΠ1 ,Π2 ,
+                                                    n
+
+we can estimate the densities µ(Tm ) to arbitrary precision. One may also prove, e.g., that
+                                 X
+                                      µ(Tm )(|m| + 3−|m| ) < 0.001.
+                                  |m|>5
+
+A computation in Mathematica produces the table of densities in the introduction, and it follows
+that the average rank of Ek is less than 1.29. We can obtain a better bound on the average rank
+if we use the the work of [30]. Ruth’s main result—that the average size of the 2-Selmer group
+of Ek , k ∈ S, is 3—is stated for the set S = Z, but the proof appears to hold for any acceptable
+set S. Since the 3-Selmer—and therefore (due to the work of [17]) the 2-Selmer parity—is constant
+for 100% of Ek for k ∈ Tm by Theorems 5(iii) and 42(ii), this implies that the average rank of Ek ,
+k ∈ S, is less than 4/3 on any Tm , giving the bound:
+                              1
+                              X                           4
+             avgk∈Z r(E) ≤          µ(Tm )(|m| + 3−|m| ) + (1 − µ(S1 ∪ S0 ∪ S1 )) < 1.21.
+                                                          3
+                             m=−1
+
+
+
+
+8.2   A lower bound on the proportion of elliptic curves with vanishing j-invariant
+      having 3-Selmer rank 0 or 1
+Proof of Theorem 7. Let s0 denote the liminf of the natural density of k ∈ T0 for which rφ (Ek ) =
+0. Then by Theorem 5(iv), s0 is also the liminf of the natural density of k ∈ T0 for which rφ̂ (Ek ) = 0.
+Since the average size of |Selφ (Ek )|, k ∈ Z, is 2, we must have
+
+                                          s0 · 1 + (1 − s0 ) · 3 ≤ 2,
+
+implying s0 ≥ 1/2. It follows that a lower density of at least 1/2 of the curves Ek , k ∈ T0 , satisfy
+rφ (Ek ) = rφ̂ (Ek ) = r3 (Ek ) = 0, and thus r(Ek ) = 0. Theorem 7 follows, since the density of T0 is
+at least .399, and (1/2)(.399) > .199.
+
+                                                        22
+Proof of Theorem 8. Let s1 denote the liminf of the natural density of k ∈ T1 for which rφ (Ek ) =
+1. Then by Theorem 5(iv), s1 is also the liminf of the natural density of k ∈ T1 for which rφ̂ (Ek ) = 0.
+Since the average size of |Selφ (Ek )|, k ∈ T1 , is 4, we see that
+
+                                        s1 · 3 + (1 − s1 ) · 9 ≤ 4,
+
+implying s1 ≥ 5/6. In conjunction with the exact sequence (22), this implies that a lower density
+of at least 5/6 of the curves Ek , k ∈ T1 , satisfy rφ̂ (Ek ) = 0 and rφ (Ek ) = r3 (Ek ) = 1 (and under
+the assumption that X(Ek )[3∞ ] is ﬁnite, that r(Ek ) = 1 as well). The identical argument with
+T−1 in place of T1 shows that a lower density of at least 5/6 of the curves Ek , k ∈ T−1 , satisfy
+                                                             X(E )[φ̂]′
+rφ (Ek ) = 0 and rφ̂ (Ek ) = 1. By (22) and the fact that φ(X(E)[3])    has even rank, these curves
+also satisfy r3 (Ek ) = 1 (and again r(Ek ) = 1 under the assumption that X(E−27k )[3] is trivial).
+Theorem 8 now follows, because the density of T1 ∪ T−1 is at least .494, and (5/6)(.494) > .411.
+
+   Since .199 + .411 = .61, we conclude that at least 61% of all Ek have rank 0 or 1, which is
+Corollary 9.
+
+
+Acknowledgments
+We are grateful to Benedict Gross and Ila Varma for helpful conversations. The ﬁrst author was
+supported by a Simons Investigator Grant and NSF grant DMS-1001828. The second author was
+supported by NSF grants DMS-1100511 and DMS-1502161. The third author was partially sup-
+ported by NSF grant DMS-0943832.
+
+
+References
+ [1] M. Bhargava, Higher composition laws. I. A new view on Gauss composition, and quadratic
+     generalizations, Ann. of Math. 159 (2004), no. 1, 217–250.
+
+ [2] M. Bhargava, Mass formulae for local ﬁelds, and conjectures on the density of number ﬁelds
+     discriminants, Internat. Math. Research Notices (2007), Article ID rnm052, 20 pages.
+
+ [3] M. Bhargava and B. Gross, The average size of the 2-Selmer group of Jacobians of hyperelliptic
+     curves having a rational Weierstrass point. Automorphic representations and L-functions, 23–
+     91, Tata Inst. Fundam. Res. Stud. Math. 22, Tata Inst. Fund. Res., Mumbai, 2013.
+
+ [4] M. Bhargava, N. D. Elkies, D. Kane, and A. Shnidman, forthcoming.
+
+ [5] M. Bhargava, Z. Klagsbrun, R. Lemke Oliver, and A. Shnidman, Average sizes of Selmer groups
+     in families of quadratic twists with a 3-isogeny, preprint.
+
+ [6] M. Bhargava and A. Shankar, Binary quartic forms having bounded invariants, and the bound-
+     edness of the average rank of elliptic curves, Ann. of Math. (2) 181 (2015), no. 1, 191–242.
+
+ [7] M. Bhargava and A. Shankar, Ternary cubic forms having bounded invariants, and the existence
+     of a positive proportion of elliptic curves having rank 0, Ann. of Math. (2) 181 (2015), no. 2,
+     587–621.
+
+
+                                                    23
+ [8] M. Bhargava and A. Shankar, The average number of elements in the 4-Selmer groups of elliptic
+     curves is 7, preprint.
+
+ [9] M. Bhargava and A. Shankar, The average size of the 5-Selmer group of elliptic curves is 6,
+     and the average rank is less than 1, preprint.
+
+[10] M. Bhargava, A. Shankar, and J. Tsimerman. On the Davenport-Heilbronn theorems and second
+     order terms. Invent. Math. 193 (2013), no. 2, 439–499.
+
+[11] M. Bhargava and I. Varma, The mean number of 3-torsion elements in the class groups and
+     ideal groups of quadratic orders, Proc. Lond. Math. Soc. (3) 112 (2016), no. 2, 235–266.
+
+[12] J. W. S. Cassels, Lectures on elliptic curves, London Mathematical Society Student Texts 24,
+     Cambridge University Press, Cambridge, 1991.
+
+[13] J. W. S. Cassels, Diophantine equations with special reference to elliptic curves, J. London
+     Math. Soc. 41 1966, 193–291.
+
+[14] J. W. S. Cassels, Arithmetic on curves of genus 1, VIII: On conjectures of Birch and Swinnerton-
+     Dyer, J. Reine Angew. Math. 217 (1965), 180–199.
+
+[15] H. Davenport, On the class-number of binary cubic forms I and II, J. London Math. Soc. 26
+     (1951), 183–198.
+
+[16] H. Davenport and H. Heilbronn, On the density of discriminants of cubic ﬁelds II, Proc. Roy.
+     Soc. London Ser. A 322 (1971), no. 1551, 405–420.
+
+[17] T. Dokchitser and V. Dokchitser, On the Birch–Swinnerton-Dyer quotient modulo squares,
+     Annals of Math. 172 (2010), no.1, 567–596.
+
+[18] V. Dokchitser, Root numbers of non-abelian twists of elliptic curves (with an appendix by Tom
+     Fisher), Proc. London Math. Soc. (3) 91 (2005), no. 2, 300–324.
+
+[19] G. Eisenstein, Théorèmes sur les formes cubiques et solution dúne équation du quatriÃĺme
+     degré à quatre indéterminées, J. Reine Angew. Math. 27 (1844), 75–79.
+
+[20] É. Fouvry, Sur le comportement en moyenne du rang des courbes y 2 = x3 + k, Séminaire de
+     Théorie des Nombres, Paris, 1990-91, Progr. Math. 108, Birkhäuser Boston, MA, 1993.
+
+[21] B. Gross, J. Parson, On the local divisibility of Heegner points. Number theory, analysis and
+     geometry, 215–241, Springer, New York, 2012.
+
+[22] D. R. Heath-Brown, The size of Selmer groups for the congruent number problem, Invent.
+     Math. 111 (1993), no. 1, 171–195.
+
+[23] D. Hilbert, Theory of Algebraic Invariants (1897; trans. R. C. Laubenbacher, ed. B. Sturmfels),
+     Cambridge University Press 1993.
+
+[24] E. Liverance, Binary cubic forms with many integral points,
+     http://www.kurims.kyoto-u.ac.jp/˜kyodo/kokyuroku/contents/pdf/0998-8.pdf
+
+
+
+                                                 24
+[25] D. Kane, On the Ranks of the 2-Selmer Groups of Twists of a Given Elliptic Curve, preprint
+     (arXiv:1111.2321).
+
+[26] D. Kane, J. Thorne, On the φ-Selmer groups of the elliptic curves y 2 = x3 − Dx, Mathematical
+     Proceedings of the Cambridge Philosophical Society (2016),
+     http://dx.doi.org/10.17863/CAM.1298.
+
+[27] Z. Klagsbrun, B. Mazur, and K. Rubin, Selmer ranks of quadratic twists of elliptic curves,
+     preprint (arXiv:1111.2321v1).
+
+[28] R. Kloosterman and E. Schaefer, Selmer groups of elliptic curves that can be arbitrarily large,
+     J. Number Theory 99 (2003), no. 1, 148–163.
+
+[29] B. Poonen and E. Rains, Random maximal isotropic subspaces and Selmer groups, J. Amer.
+     Math. Soc., 25 (2012), no. 1, 245–269. arXiv: 1009.0287
+
+[30] S. Ruth, A bound on the average rank of j-invariant zero elliptic curves, Princeton Ph.D. Thesis
+     (2014).
+
+[31] P. Satgé, Groupes de Selmer et corps cubiques, J. Number Theory 23 (1986), no. 3, 294–317.
+
+[32] E. Schaefer, Class groups and Selmer groups, J. Number Theory 56 (1996), no. 1, 79–114.
+
+[33] I. Schur, Vorlesungen über Invariantentheorie, Grundlehren der mathematischen Wissen-
+     schaften 143, Springer: Berlin 1968.
+
+[34] E. Selmer, The Diophantine equation ax3 + by 3 + cz 3 = 0, Acta Math. 85 (1951), 203–362.
+
+[35] H. P. F. Swinnerton-Dyer, The eﬀect of twisting on the 2-Selmer group, Math. Proc. Cambridge
+     Philos. Soc. 145 (2008), no. 3, 513–526.
+
+[36] J. Tate, Algorithm for determining the type of a singular ﬁber in an elliptic pencil, Lecture
+     Notes in Mathematics 476 (Modular Forms in One Variable IV, Antwerp 1972; B. J. Birch and
+     W. Kuyk, eds.), 33–52.
+
+[37] J. Thorne, Vinberg’s representations and arithmetic invariant theory, Algebra Number Theory
+     7 (2013), no. 9, 2331–2368.
+
+[38] J. Thorne, E6 and the arithmetic of a family of non-hyperelliptic curves of genus 3, Forum
+     Math. Pi 3 (2015), e1, 41 pp.
+
+
+
+
+                                                 25
+

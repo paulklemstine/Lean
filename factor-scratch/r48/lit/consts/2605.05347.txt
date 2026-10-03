@@ -1,0 +1,875 @@
+                                           The true cost of factoring: Linking magic and number-theoretic complexity in Shor’s
+                                                                                algorithm
+
+                                                            Alessio Paviglianiti ,∗ Matteo Seclì , Emanuele Tirrito , and Vincenzo Savona
+                                                    Institute of Physics, École Polytechnique Fédérale de Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+                                                                       Center for Quantum Science and Engineering, Ecole Polytechnique
+                                                                         Fédérale de Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+                                                                                              (Dated: May 8, 2026)
+                                                           The execution cost of quantum algorithms is typically quantified through asymptotic gate counts
+                                                        and qubit register sizes, yet these metrics do not directly capture which genuinely quantum resources,
+                                                        and in what amount, must be created and maintained for the computation to succeed. The sys-
+                                                        tematic quantification of such information-theoretic requirements in quantum computing protocols
+                                                        remains an extremely challenging open problem, despite their direct role in establishing quantum
+                                                        advantage. To address this gap, we investigate the generation of non-stabilizerness (or magic), one
+arXiv:2605.05347v1 [quant-ph] 6 May 2026
+
+
+
+
+                                                        of the key resources, in the paradigmatic Shor’s factoring algorithm, revealing a deep connection
+                                                        between intrinsic quantum complexity and the computational hardness of the underlying number-
+                                                        theoretic problem. By developing an explicit analytic theory, we demonstrate the fundamental role
+                                                        of magic in the successful execution of the algorithm, and show that Shor’s routine maximally ex-
+                                                        ploits the quantum resource in practically relevant regimes. Our findings create a concise conceptual
+                                                        link between the classical algorithmic difficulty of a task and the non-stabilizer price to solve it on
+                                                        quantum hardware, complementing standard circuit-cost analyses with a resource-based metric that
+                                                        is naturally aligned with the real bottlenecks of fault-tolerant quantum computing.
+
+
+                                                              INTRODUCTION
+                                                                                                                       Quantum          M2 ∼ log r      Number-theoretic
+                                                                                                                      complexity                          complexity
+
+                                              Quantum devices are anticipated to revolutionize                         Magic M2                             Period r
+                                           modern technology by solving classically intractable
+                                           problems, with prospective groundbreaking applications
+                                           spanning engineering, physics, chemistry, and life sci-                M2 < M2max                                  S ∼ poly(r)
+                                           ences. The fundamental ingredient for quantum advan-                    ⇒ S=0
+                                           tage is the exploitation of quantum resources, which
+                                           are intrinsically difficult to simulate on classical ma-                                    Algorithmic
+                                                                                                                                         success
+                                           chines [1, 2]. As a consequence, understanding the essen-
+                                           tial quantum-information requirements for the successful                                    Success rate S
+                                           execution of quantum protocols is crucial for develop-
+                                           ing effective physical implementations. Despite the criti-
+                                           cal importance of these quantum resources, a systematic           Fig. 1 | Sketch representation of the main findings of this
+                                                                                                             work. Quantum complexity, quantified by magic, scales with
+                                           mapping of their generation across quantum algorithms is
+                                                                                                             the number-theoretic difficulty of determining the period r in
+                                           still lacking, as the computational cost of quantum com-          the period-finding task performed by Shor’s circuit. More-
+                                           puting is more commonly quantified through gate and               over, algorithmic success correlates with computational hard-
+                                           qubit counts. As such, the development of a resource-             ness and requires the preservation of non-stabilizerness, as
+                                           theoretic characterization of cost stands as a major open         any loss of quantum information leads to immediate failure.
+                                           frontier in quantum information theory.
+                                              Among these key resources, non-stabilizerness, or
+                                           magic [3, 4], emerges as a fundamental metric of quan-              In this work, we address the challenge of quantifying
+                                           tum complexity, quantifying the difficulty of simulating          resources in quantum protocols by investigating magic in
+                                           a state classically through the well-established stabilizer       Shor’s factoring algorithm, the paradigmatic example of
+                                           formalism [5, 6]. While the stabilizer framework is ex-           super-polynomial quantum-over-classical advantage [12–
+                                           tremely powerful for investigating many-body physics              16]. Combining numerical simulations and a specifically
+                                           and forms the pillar of quantum error correction [7, 8],          developed analytic theory, we fully characterize the be-
+                                           non-stabilizerness is a necessary ingredient to achieve           havior of non-stabilizerness throughout the quantum cir-
+                                           universal quantum computation and unlock truly quan-              cuit. Most importantly, we explore the connection be-
+                                           tum behavior [9]. From this perspective, magic not only           tween quantum complexity, number-theoretic hardness
+                                           separates easy-to-simulate states from genuinely complex          of the computational problem, and algorithmic success
+                                           ones, but also estimates how many non-stabilizer opera-           rate, revealing that these apparently distinct concepts
+                                           tions are needed to prepare them [10, 11].                        are deeply intertwined (see Fig. 1).
+                                                                                                                           2
+
+
+
+
+Fig. 2 | Quantum circuit for Shor’s factoring algorithm. Each step (cyan boxes) implements a regular sequence of gates
+followed by a measurement    of the QFT qubit. The outcomes mτ determine the rotations implemented by the phase gates
+Rk = exp iπZ/2k−1 (green unitaries). In our analysis, magic is evaluated at the positions marked by the dashed vertical
+                     
+lines, which is completely equivalent to computing it right before the projective measurements.
+
+
+   As our main result, we demonstrate a strong corre-           the problem easy to solve. In contrast, large values of
+lation between the magic generated by the circuit and           r are notoriously difficult to√extract, requiring a classi-
+the intrinsic classical difficulty of the computational task.   cal computational cost of O( r) [20]. This suggests that
+This reinforces the understanding that complex problems         r can be used as a metric of the number-theoretic com-
+inherently require more quantum resources to be solved          plexity of the task. In general, coprimes with small r
+on quantum hardware. We further consolidate this no-            are rare, and most coprimes are associated with periods
+tion by showing that any loss of non-stabilizerness di-         r ∼ O(N ) [21].
+rectly causes the failure of the algorithm, emphasizing            In this work, we consider the implementation of Shor’s
+the importance of preserving quantum information for            algorithm shown in Fig. 2 [22, 23]. The circuit real-
+its success. Additionally, our findings clarify that large-     izes a t-step semi-classical quantum Fourier transform
+scale implementations of Shor’s algorithm, which consti-        (QFT) [24], where a single QFT qubit is sequentially
+tute the regime of practical interest for applications, will    measured to output a bitstring m = (m1 , . . . , mt ) of mea-
+consistently generate near-maximal quantum complexity,          surement outcomes. The measurements are interleaved
+                                                                                                                    k
+thereby fully exploiting this resource. Our analysis high-      with controlled modular multiplications C − Ua2 , where
+lights the essential resource-based cost of practical im-       Ua |y⟩ = |a · y mod N ⟩ acts on an n-qubit register with
+plementations, as supplying non-Clifford operations via         n = ⌈log2 N ⌉. These unitaries encode the information on
+magic states represents the dominant overhead in leading        the period r. Finally, the QFT outcomes m provide an
+fault-tolerant schemes [17–19].                                 approximation of the quotient s/r, where 1 ≤ s < r is an
+                                                                unknown integer. The number of algorithm steps t di-
+                                                                rectly controls the accuracy of the QFT estimate, and
+                SHOR’S ALGORITHM                                a common safe choice to ensure sufficient precision is
+                                                                t = 2n + 1 [13].
+   Shor’s factoring algorithm is a paradigmatic proto-
+col in quantum computing, providing a striking exam-
+ple where quantum-over-classical advantage is super-
+polynomial in the size of the task. The algorithm searches           MAGIC AND QUANTUM COMPLEXITY
+for a prime factor p of an integer N . This is achieved by
+randomly choosing an integer a < N which is coprime                A key concept in quantum information theory is the
+with N , i.e., gcd(a, N ) = 1. Each coprime a defines a         definition of quantum complexity. This notion character-
+modular exponentiation function f (x) = ax mod N , that         izes the difficulty in simulating a given quantum state
+is periodic with a period r, also referred to as the order      using purely classical resources, and thus provides a cri-
+of f , defined as the smallest nonzero integer such that        terion to identify genuinely quantum behavior. While a
+f (r) = 1. Shor’s algorithm then returns an estimate of         unique and comprehensive definition of quantum com-
+an integer multiple of 1/r, from which the order r can be       plexity is missing, as quantum states can be complex
+recovered with high probability using a continued frac-         in multiple ways, measures like entanglement or non-
+tion expansion [13, 14]. If the period is even, its knowl-      Gaussianity characterize computational hardness with
+edge enables the factorization of N , solving the task with     respect to specific classes of classically treatable states.
+an overall cost of O(poly(log N )) operations.                     We focus our investigation on magic [3, 4], a mea-
+   Different coprimes a can feature modular exponenti-          sure of complexity based on the stabilizer formalism.
+ation functions with distinct periods r. If r is small, a       Stabilizer states, generated by the Clifford operations
+brute-force search allows to determine it quickly, making       {CNOT, H, S}, constitute a family that can be simulated
+                                                                                                                       3
+
+efficiently on classical computers [25] with O(poly)(L) re-    larger amount of quantum resource, eventually approach-
+sources, where L is the number of qubits and L = n + 1         ing its theoretical upper bound.
+for the case studied here. Despite their accessibility,           We apply Shor’s algorithm to the factorization of N =
+stabilizer states can exhibit quantum features like max-       18923 = 127 · 149. For this choice, n = 15 qubits are
+imal entanglement, and have been successfully applied          required to store integers modulo N , and L = 16 qubits
+to describe genuine many-body effects such as corre-           are used in total. The coprimes of N feature a total
+lation spreading [26], dynamical phase transitions [27],       of 35 distinct periods r of the modular exponentiation
+and topological order [28]. Importantly, the set of Clif-      functions. We set the number of QFT steps to t = 2n+1,
+ford gates is not universal for quantum computation.           which provides sufficient accuracy for the estimation of
+Generating arbitrary states requires non-Clifford oper-        1/r [13]. At every step, which we label by τ ∈ [1, t]
+ations, the most common choice being the T -gate T =           and can be regarded as a discrete time of the algorithm,
+diag(1, eiπ/4 ) [29]. The application of T -gates generally    magic is evaluated before the Hadamard gate preceding
+leads a state outside the stabilizer set and increases the     each measurement, as shown in Fig. 2. Since H gates
+classical cost of simulating it [9, 29]. Within this frame-    do not change the SRE, this is completely equivalent to
+work, magic provides a measure of how distant the state        computing it after the Hadamards, but this choice is more
+is from the efficiently-simulable class, and thus quantifies   convenient for the analytic calculation of magic discussed
+the amount of quantum resources needed to realize it.          below.
+   Non-stabilizerness can be quantified through the Sta-          The dynamics of the SRE exhibits a particular and
+bilizer Rényi Entropy [30] (SRE)                               detailed structure, in sharp contrast with the cases of
+                                               !               generic random circuits [40–42] or Hamiltonian evolu-
+                               X ⟨ψ| P |ψ⟩4                    tion [43–45]. As shown in Fig. 3(a), we observe three
+           M2 (|ψ⟩) = − log                      ,      (1)
+                                         2L                    key regimes with extents that strongly depend on r. In
+                             P ∈PL
+                                                               the following, we assume that the period factorizes as
+where PL = {I, X, Y, Z}⊗L is the set of L-qubit Pauli          r = 2k r̃odd , where k ≥ 0 is an integer and r̃odd is an
+strings. This measure vanishes if and only if |ψ⟩ is a         odd number. At early times, M2 features an approxi-
+stabilizer state, signaling zero complexity, and is upper      mately linear ramp, ending at a τ ∗ = ⌈log2 r̃odd ⌉. Then,
+bounded by L log 2. Moreover, evolving a state with a          the non-stabilizerness relaxes to a plateau value, whose
+Clifford unitary leaves M2 unchanged, as this operation        magnitude is also visibly correlated with the period. Fi-
+does not increase the complexity of simulation with the        nally, only if r is even, the SRE exhibits a final growth
+stabilizer formalism. Finally, the SRE behaves additively      in the last k steps. From these results, we immediately
+for product states. These properties, combined, make           notice a clear correlation between r and the amount of
+Eq. (1) a proper measure of quantum complexity from            magic generated by the algorithm. In particular, M2 ap-
+the perspective of quantum resource theory. Since its in-      proaches the average value of Haar-random states [41]
+troduction, the SRE has been applied to a wide range           for the largest values of r, signaling that the required
+of many-body systems and circuits, linking it to quan-         non-stabilizerness is close to maximal.
+tum chaos [31] and criticality [32–35]. Moreover, notable         All three time regions are captured theoretically by
+progress has been made in estimating SRE in experimen-         the analytic model we developed. Upon careful inspec-
+tal settings [36–39].                                          tion, we observe that the state at most steps of the algo-
+                                                               rithm features a highly structured superposition, where
+                                                               different computational basis states appear with uniform
+                                                               weight and pseudo-random phases as
+       EVOLUTION OF MAGIC IN SHOR’S
+               ALGORITHM                                                                 X eiθm
+                                                                                 |ψ⟩ =       √ |m⟩ .                 (2)
+                                                                                         m∈D
+                                                                                              D
+   The driving question of our investigation is to under-
+stand whether the number-theoretic complexity of order-        Here D is the set of bitstrings appearing in the superpo-
+finding, quantified by the period r itself, is linked to the   sition with non-zero amplitudes, and D = dim D. This
+quantum complexity of the states generated by Shor’s al-       key observation, derived and discussed in great detail in
+gorithm. To this purpose, we evaluate the SRE through-         the Supplemental Material, enables the analytic charac-
+out the steps of Shor’s algorithm, considering several co-     terization of magic, yielding the closed formula
+primes associated to distinct periods. Beyond numerical
+                                                                         M2 = 4 log D − log 4Λ + 6D2 − 5D .
+                                                                                                             
+simulations, we develop an analytic theory of the dynam-                                                             (3)
+ics of magic, i.e., the evolution of the SRE of the quantum              P
+state along the circuit. As our main finding, we observe a     Here Λ = m̸=n̸=p̸=q∈D δm⊕n⊕p⊕q,0 is a geometric con-
+striking correlation between magic and number-theoretic        tribution that depends on the specific elements of D,
+                                                                                                                      k
+complexity, indicating that larger values of r require a       which are the bitstrings generated by the gates C − Ua2 .
+                                                                                                                                                               4
+
+     (a)                                                                                                            (b)
+     10.0
+                Numerics
+                Theory                                                                                                   9
+      7.5
+
+
+      5.0
+M2
+
+
+
+
+                                                                                                                         6
+      2.5
+
+
+
+
+                                                                                                                    M2
+      0.0
+            0     5        10   15        20    25        30   0       5    10      15    20        25     30            3
+                                 𝜏                                                    𝜏
+                                                                                                                                           Asymptotic (even)
+                      r=3       r = 37         r = 333             r=2      r = 28        r = 148        r = 1036                          Asymptotic (odd)
+                      r=7       r = 63         r = 777             r=4      r = 36        r = 222        r = 1332                          Numerics (even)
+                      r=9       r = 111        r = 2331            r=6      r = 42        r = 252        r = 1554                          Numerics (odd)
+                      r = 21    r = 259                            r = 12   r = 74        r = 444        r = 3108        0                 Theory
+                                                                   r = 14   r = 84        r = 518        r = 4662
+                                                                                                                             10 1   10 2        10 3      10 4
+                                                                   r = 18   r = 126       r = 666        r = 9324
+                                                                                                                                      r
+
+Fig. 3 | Magic in Shor’s algorithm, using N = 18923. (a) Evolution of magic as a function of the discrete time τ , for odd (left)
+and even (right) values of the period r. For each r, a random coprime a with that r is used. The theoretical prediction (solid
+lines) is obtained from Eq. (3). The dashed line shows the average magic of Haar-random states for comparison. (b) Scaling
+of the final magic M2 (τ = t) as a function of r. The asymptotic curves are evaluated using Eq. (6). For each r, 10 different
+random choices of a are shown (if available). For all plots, numerical results are averaged over 150 random realizations of the
+algorithm.
+
+
+   Throughout the initial ramp τ ≤ τ ∗ , the number of                           The quantum complexity grows linearly with log r, until
+states D in superposition doubles at each step, explaining                       it eventually saturates for r ≫ 2L/2 . For finite system
+the linear increase of the SRE. At the start of the plateau                      size L, the SRE is not fully determined by r alone, as it
+region τ ≳ τ ∗ + 1, Eq. (2) no longer holds, and the state                       preserves a weak dependence on the choice of the coprime
+can exhibit a non-uniform superposition. Nevertheless,                           a, encoded in the geometric term Λ appearing in Eq. (3).
+for τ ≫ τ ∗ the state recovers a highly structured super-                        Nevertheless, when L ≫ 1 the bitstrings contained in the
+position: the QFT qubit disentangles from the rest of the                        superposition set D behave as if randomly distributed,
+system and becomes a stabilizer, whereas the remaining                           and Λ can be estimated from a combinatorial argument.
+n-qubit register is well-described by Eq. (2) once again,                        As the key result of our work, in this asymptotic limit
+with D = r̃odd . This fully explains the numerical ev-                           magic is only a function of the period, thus establishing
+idence of Fig. 3(a): after reaching the peak value, the                          a direct connection between the number-theoretic diffi-
+SRE relaxes to a value smaller by O(1) because the QFT                           culty of order-finding and the quantum resources needed
+qubit no longer contains any non-stabilizerness. Finally,                        to run Shor’s algorithm.
+if r is even, the last k steps feature the same behavior                            Assuming L ≫ 1, we can capture analytically the
+as the early time regime, with D doubling at each step                           asymptotic dependence of M2 on r. At small periods
+and Eq. (2) holding once again. As a consequence, M2                             r ≪ 2L/2 , the term Λ is negligible, as the size of D is
+restarts its growth, in agreement with the numerical re-                         relatively small compared to the set of all possible bit-
+sults.                                                                           strings. As a consequence,
+                                                                                                           3 the
+                                                                                                                 SRE is approximately
+   For τ = 1, we observe that M2 vanishes. Indeed, it can                        given by M2 (r) ≈ log 6r−5  r
+                                                                                                                 . In the opposite limit
+be shown exactly that when D = 2 the state is always
+a stabilizer. This is particularly relevant for the special                      of r ≫ 2L/2 , instead, the saturation value is equal to
+case of r = 2, for which the state remains a stabilizer                          M2 ≈ (L − 2 − ϵ) log 2 − 3 · 2L−ϵ−1 /r2 at leading order,
+throughout the full algorithm.                                                   where ϵ = 0 if r is even and ϵ = 1 if it is odd. We
+                                                                                 remark that the leading order L log 2 is the theoretical
+                                                                                 upper bound to the SRE, signaling maximal quantum
+              CORRELATING QUANTUM AND
+                                                                                 complexity.
+            NUMBER-THEORETIC COMPLEXITY
+
+   The magic developed by the circuit shows a strong cor-                         PERIOD OCCURRENCE AND SUCCESS RATE
+relation with the magnitude of the period r. This connec-
+tion is further highlighted in Fig. 3(b), which displays M2                        The above analysis highlights the existence of small
+evaluated at the last step τ = t for different choices of r.                     periods that exhibit modest generation of SRE. A natural
+                                                                                                                                                5
+                                                               1.0
+          10 0      N = 8611                                                    actually factoring N , as additional conditions must be
+                    N = 8881                                                    met for the latter.2
+                    N = 17869
+                    N = 18923                                  0.8                 The conditional algorithmic success rate is presented
+                    N = 36089                                                   in Fig. 4. We observe a clear correlation where S appears
+         10 −1
+                    N = 40633
+                                                                                to scale as S ∼ (r/N )α with α ≈ 1, indicating that large
+
+
+
+
+                                                                 M2/(L log 2)
+                                                               0.6              periods carry the vast majority of the overall probability.
+S/Smax
+
+
+
+
+         10   −2                                                                This behavior is mostly determined by the occurrence
+                                                                                frequency g. Combining this with our previous result on
+                                                               0.4
+                                                                                quantum complexity, we conclude that the conditional al-
+         10 −3
+                                                                                gorithmic success rate is dominated by algorithmic real-
+                                                               0.2
+                                                                                izations that produce large amounts of non-stabilizerness.
+                                                                                In the limit of L ≫ 1, we know analytically that   √ the
+                                                                                SRE approaches its maximum for r ≳ 2L/2 ∼ N . If
+         10 −4
+                                                               0.0              we assume the relation S ∼ r/N supported by the above
+                   10 −4        10 −3     10 −2   10 −1
+                                        r/N                                     analysis, this implies that the region of Fig. 4 with max-
+                                                                                imal magic extends to smaller values of r/N as N in-
+Fig. 4 | Conditional algorithmic success rate S/Smax , normal-                  creases. As a consequence, the conditional algorithmic
+ized by its maximal value, as a function of the rescaled period                 success rate of small periods becomes increasingly negligi-
+r/N . The SRE density M2 /(L log 2) is visualized through col-                  ble, in line with the understanding that large semiprimes
+ors. The main contribution to the global algorithmic success                    N cannot be factored easily by relying on lucky cases with
+rate comes from large periods, which require close-to-maximal                   very small r. This evidence implies that, as N grows, it
+magic to be simulated. We present data for six choices of
+                                                                                becomes increasingly unlikely to solve the order-finding
+products of primes N , covering the range L ∈ [15, 17]. The
+success rate is normalized by its maximum to account for dif-                   task by generating a limited amount of magic.
+ferent number of periods for different N . For each r, M2 and
+psucc are averaged over 100 different coprimes a (if available).
+psucc is further averaged over 100 independent realizations of                    ALGORITHMIC SUCCESS PROBABILITY
+the algorithm for each a. The SRE is evaluated analytically                      UNDER LOSS OF QUANTUM INFORMATION
+using Eq. (3).
+                                                                                   So far, we considered the magic produced when the al-
+question is then whether these can be used to solve the                         gorithm depth t is set to 2n + 1, which ensures sufficient
+factoring problem instead of the larger ones, which bear                        accuracy for the estimate of 1/r [13]. We now consider
+higher quantum complexity. It is known, however, that                           the case where the number of steps is reduced, addressing
+small values of r are extremely rare for N ≫ 1 [21], which                      the relevant question of whether the order-finding prob-
+implies that the generation of large magic is inevitable in                     lem can still be solved using a shorter circuit [48–50].
+practice.                                                                       Unsurprisingly, reducing t causes a loss of success proba-
+   The overall probability of successful detection of a spe-                    bility. However, we show that psucc does not drop to zero
+cific period r is determined by two factors. The algo-                          immediately for t ≲ 2n + 1, but remains finite as long
+rithm operates by picking a random a < N , which will                           as the algorithm is still able to generate sufficient magic
+be a coprime of N with high probability (otherwise, N                           for its correct functioning. This observation establishes
+is easily factored). The first factor g(r) is the                               the loss of quantum information as the key mechanism
+                                               P occurrence                     underlying the failure of the algorithm.
+frequency that a has period r, satisfying r g(r) = 1.
+Then, once a has been chosen, Shor’s algorithm has a fi-                           Our previous analysis of the SRE evolution clarifies
+nite success probability psucc of finding the period r cor-                     that magic saturates to a plateau after an initial growth.
+rectly through the continued fraction expansion.1 Com-                          From the analytic model, we know that M2 stays flat up
+bining these two factors, we introduce the conditional                          until τ = t − k. Importantly, while the previous analysis
+algorithmic success rate S = g · psucc , which quantifies                       assumed the specific value of t = 2n + 1, the same result
+the actual contribution of a given period r to the overall                      applies to arbitrary algorithmic depth. If t is increased,
+successful execution of the task. Notice that this is the                       the SRE will still exhibit the same evolution shown in
+probability of correctly finding a specific r, and not of                       Fig. 3(a), just with a longer plateau. Similarly, reducing
+                                                                                t shrinks the flat region. Crucially, if the depth t is re-
+                                                                                duced below ⌈log2 r⌉, the plateau disappears completely,
+ 1 Throughout our analysis, p
+                                 succ is evaluated using the textbook
+     application of the continued fraction algorithm. More advanced
+     postprocessing schemes have been developed [46, 47], and while
+     they can increase the success probability, we do not expect they           2 Odd periods cannot be used to factor N . In addition, finding an
+
+     change our results qualitatively.                                            even r enables the factorization only if ar/2 ̸= −1 mod N .
+                                                                                                                                                          6
+
+        0.45
+                   (a)                                  28                            Δ𝜏M   2
+                                                                                                of non-stabilizerness in Shor’s algorithm, highlighting a
+                                                                                      Δ𝜏p       direct correlation between the quantum complexity pro-
+        0.30                                                                            succ
+
+
+                                                                                                duced by the circuit and the intrinsic computational dif-
+psucc
+
+
+
+
+        0.15                                                                                    ficulty of the order-finding problem. This result elevates
+                                   Δ𝜏p      succ
+                                                        24                                      magic to a powerful diagnostic tool for general compu-
+        0.00                                                                                    tational complexity, extending its relevance well beyond
+               0         10        20              30                                           its quantum information roots. Additionally, our anal-
+                              t
+                                                                                                ysis quantitatively establishes the non-stabilizerness re-
+                   (b)                                  20                                      quirements for the execution of the algorithm, thereby
+         7.5
+                                  Δ𝜏M   2
+                                                                                                providing an essential lower bound on its cost in terms
+         5.0                                                                                    of magic resource states in practical fault-tolerant imple-
+ M2
+
+
+
+
+         2.5                                                                                    mentations [51–54].
+                                                        16
+                                                             (c)
+         0.0                                                                                       By leveraging the special superposition structure of the
+               0         10        20              30        10 1   10 2       10 3     10 4
+                              𝜏                                            r                    state, we have developed an analytic theory of magic
+                                                                                                growth in Shor’s algorithm. This enables a detailed
+Fig. 5 | Magic plateau time ∆τM2 compared to the decay                                          and comprehensive understanding of its dynamics, and
+time ∆τpsucc of the success probability, using N = 18923.                                       proves that the period r encoded in the order-finding task
+(a-b) Graphical visualization of the time intervals, using a                                    bounds and controls the production of SRE. In particu-
+random coprime x with r = 1036. (c) Agreement between the                                       lar, magic approaches its maximal value for large periods,
+time intervals. The success probability is averaged over 5000                                   which account for the vast majority of the total success
+random realizations of the algorithm. ∆τpsucc is estimated by
+                                                                                                probability of the protocol. Consequently, practical ap-
+looking for the value of t where psucc becomes zero within the
+sampling precision.                                                                             plications of the algorithm fully leverage this quantum
+                                                                                                resource, and realize states that can never be simulated
+                                                                                                on a classical computer at large system sizes.
+and the algorithm ends before magic reaches its maximal
+value shown in Fig. 3(b).                                                                          Beyond these results, our work highlights the key role
+   A natural question is then to clarify whether this loss                                      of preserving non-stabilizerness in the successful execu-
+of non-stabilizerness is related to the success rate of the                                     tion of the algorithm. We demonstrate that loss of magic
+algorithm. To investigate this, we evaluate the success                                         causes the inevitable failure of order finding. This con-
+probability psucc for t ≤ tmax = 2n + 1, and define the                                         solidates the familiar understanding that quantum com-
+∆τpsucc as the time interval for which it remains finite (see                                   plexity is a fundamental ingredient for the functioning
+Fig. 5(a)). In parallel, we introduce the magic plateau                                         of the algorithm, as it is responsible for quantum ad-
+length ∆τM2 = tmax − ⌈log r⌉, which is known from the                                           vantage. Crucially, this observation cautions against the
+theoretical analysis and is illustrated in Fig. 5(b). As                                        risks of approximating the algorithm through gate trun-
+shown in Fig. 5(c), these two time intervals are highly cor-                                    cations, which have been proposed previously in the liter-
+related, suggesting that Shor’s algorithm remains func-                                         ature [48–50]. Similarly, noise is expected to distort the
+tional as long as sufficient quantum complexity is main-                                        complexity of the state, thus deteriorating the success
+tained.                                                                                         rate by the same mechanism.
+   These results establish a connection between non-
+stabilizerness and algorithmic success, consolidating                                              Our investigation paves the way for exploring the role
+magic as a fundamental and necessary resource for the                                           of quantum magic in other quantum algorithms, which
+execution of the order-finding task. In addition, ∆τM2 ≈                                        remains a compelling open question. While this work
+∆τpsucc determines how much the algorithm can be short-                                         establishes a first link between non-stabilizerness and
+ened while still being useful. We observe that larger pe-                                       number-theoretic complexity, it will be crucial to test this
+riods require longer depths t, in agreement with the in-                                        connection across different problems, such as Grover’s
+tuitive understanding that they are harder to estimate,                                         algorithm among others. In this direction, it would
+as they are more complex from a number-theoretic per-                                           be interesting to study whether the behavior of magic
+spective.                                                                                       changes in the presence of a polynomial quantum advan-
+                                                                                                tage, rather than an exponential one as in the case of
+                                                                                                Shor. Finally, while non-stabilizerness is a necessary in-
+                                    DISCUSSION                                                  gredient to achieve genuine quantum complexity, other
+                                                                                                separate measures provide different perspectives on it.
+ The advantage of quantum algorithms over classical                                             The systematic investigation of other quantum resources
+methods naturally requires quantum resources, such as                                           is key to developing a complete picture of how quantum
+magic or entanglement. We have studied the generation                                           and number-theoretic difficulty are correlated.
+                                                                                                                            7
+
+                        METHODS                                     Numerical Simulations – The state vector along the
+                                                                 circuit shown in Fig. 2 is simulated exactly using sparse
+  Analytic model – We hereby provide an analytic                 arrays for the unitary gates. The evaluation of the SRE
+model for the SRE in Shor’s algorithm. A complete                is computationally demanding, as the cost of computing
+derivation of this result is discussed in detail in the Sup-     Eq. (1) scales as O(4L ). We rely on the stochastic sam-
+plemental Material.                                              pling approach developed in Ref. [35], which provides a
+  The calculation relies on the formalism of the fast            direct, unbiased estimate of M2 for matrix-product states
+Walsh-Hadamard transform presented in Ref. [55], and             (MPSs). In order to apply this technique, we first con-
+exploits the special superposition structure of Eq. (2).         vert the state wavefunction into an exact MPS represen-
+The SRE is given by                                              tation using standard methods [56], and we then follow
+         (                                                       the procedure described in Ref. [35]. We stress that the
+           0                                   if D = 2,         conversion to MPSs is performed without truncation of
+   M2 =                              2
+                                            
+                                                                 the bond dimension, and thus no approximation is intro-
+           4 log D − log 4Λ + 6D − 5D otherwise,
+                                                         (4)     duced. Finally, the SRE is estimated by sampling over
+where                                                            104 Pauli strings.
+                                                                   The output of Shor’s algorithm is the record of mea-
+                 2
+                   τ
+                             for τ ≤ τ ∗ ,                       surement outcomes (m1 , . . . , mt ), which contains infor-
+           D = r̃odd         for τ ∗ < τ ≤ t − k,        (5)     mation
+                                                                 Pt        on the period r. Specifically, the number x =
+                                                                          j−t−1
+                 
+                  t−τ
+                   r/2       for t − k < τ.                         j=1 2       mj is, with high probability, a t-bit estimate
+                                                                 of the fraction s/r, where s is an integer in the interval
+This result is quantitatively accurate for τ ≤ τ ∗ and           [0, r−1]. To recover r, we generate the continued fraction
+τ − τ ∗ ≫ 1. In the time regimes τ ≤ τ ∗ and τ > t − k,          expansion
+in particular, Eq. (2) models the true wavefunction ac-
+                                                                                               1
+curately. For τ − τ ∗ ≫ 1 with τ ≤ t − k, the QFT qubit                             x=                        ,           (7)
+disentangles from the other ones and is in a stabilizer                                  a1 + a + 1 1
+                                                                                                2   a3 +...
+state; hence, it does not contribute to the SRE. In this
+case, Eq. (2) still correctly models the state of the n-qubit    which provides a sequence of rational approximations of
+register, and the bitstring space dimension D in Eq. (5)         r. The algorithm searches for a valid period among the
+refers to the n-qubit superposition only. For τ ≳ τ ∗ + 1,       denominators appearing in this sequence, and is consid-
+instead, the state takes a more general form, and the an-        ered as successful if r is found. Importantly, if a submul-
+alytic model does not provide a quantitatively reliable          tiple of r instead of the actual period is found, which can
+estimate of the SRE.                                             occur if s and r share a prime factor, the search is consid-
+   The geometric term Λ is computed as follows. Let              ered to have failed. The conditional success probability
+A(x) be the number of unique distinct unordered pairs            psucc is evaluated by iterating this process over multi-
+{m, n} ⊂ D such that m P     ⊕ n = x. Straightforward com-       ple random realizations of the circuit and performing an
+binatorics leads to Λ = 4 x A(x)(A(x)−1), whose eval-            average.
+uation cost scales as O(D2 ). The set D is obtained by
+                                           t−τ
+applying the permutation unitaries Ua2          to the initial
+                   ⊗(n−1)                                                       ACKNOWLEDGMENTS
+n-qubit state |0⟩         |1⟩. Importantly, for the purpose
+                               t−τ
+of our analysis, the gates Ua2     are built from the knowl-       We acknowledge support by the Swiss National Sci-
+edge of their associated permutation matrix, and not             ence Foundation through Projects No. 200020_215172,
+from elementary reversible operations, as this does not          200021-227992, and 20QU-1_215928, and as part of
+affect the calculation of magic.                                 NCCR SPIN (grant number 225153). M.S. acknowledges
+   In the asymptotic limit of L → ∞, we can provide              funding from the Swiss Academy of Sciences (SCNAT)
+a closed-form approximation of Λ based on the assump-            through the Swiss Quantum Initiative (SQI) Grant No.
+tion that the bitstrings of D are random and uniformly           24_1111. E.T. was funded by the Swiss National Science
+distributed. This leads to                                       Foundation (SNSF) under Grant No. TMPFP2_234754.
+       (
+         D(D−1)(D−2)(D−3)
+                                  for τ ∗ < τ ≤ t − k,           E.T. acknowledges CINECA (Consorzio Interuniversi-
+                2L−1
+  Λ = D(D−1)(D−2)(D−3)                                    (6)    tario per il Calcolo Automatico) award, under the IS-
+                  2L
+                                  otherwise.
+                                                                 CRA initiative and Leonardo early access program, for
+The difference between the two cases is due to the number        the availability of high-performance computing resources
+of qubits considered in the calculation of the SRE, which        and support.
+are n = L − 1 for τ ∗ < τ ≤ t − k and L otherwise. Eq. (6)
+provides the asymptotic theoretical prediction presented
+in Fig. 3(b).
+                                                                                                                                8
+
+                                                                   21. Luca, F., Shparlinski, I. & Mexico, A. Average Multi-
+                                                                       plicative Orders of Elements Modulo n. Acta Arithmetica
+                                                                       109 (2002).
+                                                                   22. Beauregard, S. Circuit for Shor’s algorithm using 2n+3
+                                                                       qubits. Quantum Inf. Comput. 3, 175–185 (2003).
+  ∗
+    alessio.paviglianiti@epfl.ch                                   23. Mosca, M. & Ekert, A. The Hidden Subgroup Problem
+ 1. Daley, A. J., Bloch, I., Kokail, C., Flannigan, S., Pearson,       and Eigenvalue Estimation on a Quantum Computer. In
+    N., Troyer, M. & Zoller, P. Practical quantum advantage            Williams, C. P. (ed.) Quantum Computing and Quantum
+    in quantum simulation. Nature 607, 667–676 (2022).                 Communications, 174–188 (Springer Berlin Heidelberg,
+ 2. Bravyi, S., Gosset, D. & König, R. Quantum advantage               Berlin, Heidelberg, 1999).
+    with shallow circuits. Science 362, 308–311 (2018).            24. Griffiths, R. B. & Niu, C.-S. Semiclassical Fourier Trans-
+ 3. Bravyi, S. & Kitaev, A. Universal quantum computation              form for Quantum Computation. Phys. Rev. Lett. 76,
+    with ideal Clifford gates and noisy ancillas. Phys. Rev. A         3228–3231 (1996).
+    71, 022316 (2005).                                             25. Gottesman, D. The Heisenberg Representation of Quan-
+ 4. Bravyi, S. & Haah, J. Magic-state distillation with low            tum Computers (1998). arXiv:quant-ph/9807006 [quant-
+    overhead. Phys. Rev. A 86, 052329 (2012).                          ph].
+ 5. Gottesman, D. Theory of fault-tolerant quantum compu-          26. Nahum, A., Ruhman, J., Vijay, S. & Haah, J. Quantum
+    tation. Phys. Rev. A 57, 127–137 (1998).                           Entanglement Growth under Random Unitary Dynamics.
+ 6. Aaronson, S. & Gottesman, D. Improved simulation of                Phys. Rev. X 7 (2017).
+    stabilizer circuits. Phys. Rev. A 70, 052328 (2004).           27. Li, Y., Chen, X. & Fisher, M. P. A. Measurement-driven
+ 7. Knill, E. & Laflamme, R. Theory of quantum error-                  entanglement transition in hybrid quantum circuits. Phys.
+    correcting codes. Phys. Rev. A 55, 900–911 (1997).                 Rev. B 100, 134306 (2019).
+ 8. Veitch, V., Hamed Mousavian, S. A., Gottesman, D. &            28. Kitaev, A. Fault-tolerant quantum computation by
+    Emerson, J. The resource theory of stabilizer quantum              anyons. Annals of Physics 303, 2–30 (2003).
+    computation. New Journal of Physics 16, 013009 (2014).         29. Bravyi, S. & Gosset, D. Improved Classical Simulation
+ 9. Bravyi, S., Browne, D., Calpin, P., Campbell, E., Gosset,          of Quantum Circuits Dominated by Clifford Gates. Phys.
+    D. & Howard, M. Simulation of quantum circuits by low-             Rev. Lett. 116, 250501 (2016).
+    rank stabilizer decompositions. Quantum 3, 181 (2019).         30. Leone, L., Oliviero, S. F. E. & Hamma, A. Stabilizer
+10. Eastin, B. & Knill, E. Restrictions on Transversal En-             Rényi Entropy. Phys. Rev. Lett. 128 (2022).
+    coded Quantum Gate Sets. Phys. Rev. Lett. 102, 110502          31. Leone, L., Oliviero, S. F. E., Zhou, Y. & Hamma, A.
+    (2009).                                                            Quantum Chaos is Quantum. Quantum 5, 453 (2021).
+11. Capecci, C., Santra, G. C., Bottarelli, A., Tirrito, E. &      32. Haug, T. & Piroli, L. Quantifying nonstabilizerness of
+    Hauke, P. Role of Nonstabilizerness in Quantum Opti-               matrix product states. Phys. Rev. B 107 (2023).
+    mization (2025). arXiv:2505.17185 [quant-ph].                  33. Tarabunga, P. S., Tirrito, E., Chanda, T. & Dalmonte,
+12. Shor, P. W. Polynomial-Time Algorithms for Prime                   M. Many-Body Magic Via Pauli-Markov Chains—From
+    Factorization and Discrete Logarithms on a Quantum                 Criticality to Gauge Theories. PRX Quantum 4 (2023).
+    Computer. SIAM Journal on Computing 26, 1484–1509              34. Tarabunga, P. S. Critical behaviors of non-stabilizerness
+    (1997).                                                            in quantum spin chains. Quantum 8, 1413 (2024).
+13. Nielsen, M. A. & Chuang, I. L. Quantum computation             35. Lami, G. & Collura, M. Nonstabilizerness via Perfect
+    and quantum information (Cambridge University Press,               Pauli Sampling of Matrix Product States. Phys. Rev. Lett.
+    2010).                                                             131, 180401 (2023).
+14. Mermin, N. D. Quantum Computer Science: An Intro-              36. Oliviero, S. F. E., Leone, L., Hamma, A. & Lloyd, S.
+    duction (Cambridge University Press, 2007).                        Measuring magic on a quantum processor. npj Quantum
+15. Smolin, J. A., Smith, G. & Vargo, A. Oversimplifying               Information 8 (2022).
+    quantum factoring. Nature 499, 163–165 (2013).                 37. Haug, T. & Kim, M. Scalable Measures of Magic Resource
+16. Peter, C., Müller, M. & Trautmann, A. (eds.) NIC Sym-              for Quantum Computers. PRX Quantum 4, 010301
+    posium 2025 Proceedings, vol. 52 of Publication Series of          (2023).
+    the John von Neumann Institute for Computing (NIC)             38. Bluvstein, D., Evered, S. J., Geim, A. A., Li, S. H., Zhou,
+    NIC Series (Forschungszentrum Jülich GmbH Zentralbib-              H., Manovitz, T., Ebadi, S., Cain, M., Kalinowski, M.,
+    liothek, Verlag, Jülich, 2025).                                    Hangleiter, D. et al. Logical quantum processor based on
+17. Litinski, D. Magic State Distillation: Not as Costly as            reconfigurable atom arrays. Nature 626, 58–65 (2024).
+    You Think. Quantum 3, 205 (2019).                              39. Niroula, P., White, C. D., Wang, Q., Johri, S., Zhu, D.,
+18. Beverland, M. E., Kubica, A. & Svore, K. M. Cost of                Monroe, C., Noel, C. & Gullans, M. J. Phase transition
+    Universality: A Comparative Study of the Overhead of               in magic with random quantum circuits. Nature Physics
+    State Distillation and Code Switching with Color Codes.            20, 1786–1792 (2024).
+    PRX Quantum 2, 020341 (2021).                                  40. Paviglianiti, A., Lami, G., Collura, M. & Silva, A. Esti-
+19. Gidney, C., Shutty, N. & Jones, C. Magic state cultiva-            mating Nonstabilizerness Dynamics Without Simulating
+    tion: growing T states as cheap as CNOT gates (2024).              It. PRX Quantum 6, 030320 (2025).
+    arXiv:2409.17595 [quant-ph].                                   41. Turkeshi, X., Tirrito, E. & Sierant, P. Magic spreading
+20. Pollard, J. M. Monte Carlo Methods for Index Computa-              in random quantum circuits. Nature Communications 16
+    tion (mod p). Mathematics of Computation 32, 918–924               (2025).
+    (1978).                                                        42. Magni, B. & Turkeshi, X. Quantum complexity and chaos
+                                                                       in many-qudit doped clifford circuits. Quantum 9, 1956
+                                                                       (2025).
+                                                                 9
+
+43. Odavić, J., Viscardi, M. & Hamma, A. Stabilizer entropy
+    in nonintegrable quantum evolutions. Phys. Rev. B 112,
+    104301 (2025).
+44. Tirrito, E., Turkeshi, X. & Sierant, P. Anticoncentration
+    and Nonstabilizerness Spreading under Ergodic Quantum
+    Dynamics. Phys. Rev. Lett. 135, 220401 (2025).
+45. Tirrito, E., Lumia, L., Paviglianiti, A., Lami, G., Silva,
+    A., Turkeshi, X. & Collura, M. Magic phase transitions
+    in monitored gaussian fermions (2025). arXiv:2507.07179
+    [quant-ph].
+46. Ekerå, M. & Håstad, J. Quantum Algorithms for Com-
+    puting Short Discrete Logarithms and Factoring RSA In-
+    tegers. In Lange, T. & Takagi, T. (eds.) Post-Quantum
+    Cryptography, 347–363 (Springer International Publish-
+    ing, Cham, 2017).
+47. Willsch, D., Willsch, M., Jin, F., De Raedt, H. &
+    Michielsen, K. Large-Scale Simulation of Shor’s Quan-
+    tum Factoring Algorithm. Mathematics 11 (2023).
+48. Nam, Y., Su, Y. & Maslov, D. Approximate quantum
+    Fourier transform with O(n log(n)) T gates. npj Quantum
+    Information 6 (2020).
+49. Coppersmith, D. An approximate Fourier transform use-
+    ful in quantum factoring (2002). arXiv:quant-ph/0201067.
+50. Oonishi, K. & Kunihiro, N. Shor’s Algorithm Using Ef-
+    ficient Approximate Quantum Fourier Transform. IEEE
+    Transactions on Quantum Engineering 4, 1–16 (2023).
+51. Gidney, C. & Ekerå, M. How to factor 2048 bit RSA
+    integers in 8 hours using 20 million noisy qubits. Quantum
+    5, 433 (2021).
+52. Gidney, C. How to factor 2048 bit RSA integers with
+    less than a million noisy qubits (2025). arXiv:2505.15917
+    [quant-ph].
+53. Babbush, R., Zalcman, A., Gidney, C., Broughton, M.,
+    Khattar, T., Neven, H., Bergamaschi, T., Drake, J.
+    & Boneh, D. Securing Elliptic Curve Cryptocurren-
+    cies against Quantum Vulnerabilities: Resource Estimates
+    and Mitigations (2026). arXiv:2603.28846 [quant-ph].
+54. Cain, M., Xu, Q., King, R., Picard, L. R. B., Levine, H.,
+    Endres, M., Preskill, J., Huang, H.-Y. & Bluvstein, D.
+    Shor’s algorithm is possible with as few as 10,000 recon-
+    figurable atomic qubits (2026). arXiv:2603.28627 [quant-
+    ph].
+55. Huang, X., Li, H.-Z., Lee, C. H. & Zhong, J.-X. A fast
+    and exact approach for stabilizer Rényi entropy via the
+    XOR-FWHT algorithm (2026). arXiv:2512.24685 [quant-
+    ph].
+56. Schollwöck, U. The density-matrix renormalization group
+    in the age of matrix product states. Annals of Physics
+    326, 96–192 (2011).
+                                                                                                                          10
+
+                              Supplemental Material for
+“The true cost of factoring: Linking magic and number-theoretic complexity in Shor’s
+                                      algorithm”
+
+                                     STRUCTURE OF THE WAVEFUNCTION
+
+  In this Section, we analyze the superposition structure of the states generated throughout the algorithm. As we
+will see, the state can be regarded as a uniform superposition of computational basis states, each carrying a phase
+that can be considered pseudo-random. This observation enables the analytic evaluation of non-stabilizerness.
+  Short times – As presented in Fig. 2, Shor’s algorithm consists of a sequence of steps, each consisting of (i)
+                                                                                                                   t−τ
+a Hadamard gate on the QFT qubit, (ii) a controlled unitary gate that implements a permutation Π2                      (where
+τ = 1, . . . , t indicizes the steps) of computational basis states in the n-qubit register, (iii) a phase gate, (iv) another
+Hadamard gate on the QFT gate, and (v) a projective measurement. Let |ψin (τ )⟩ be the input state of step τ ,
+obtained right after the measurement of step τ − 1. The starting state of the circuit is given by |ψin (0)⟩ = |0⟩ |1⟩.
+In our analysis, magic is evaluated immediately before step (iv), and we refer to states at that stage as |ψ(τ )⟩. For
+the first values of τ , it is easily observed that each step doubles the number of computational basis states in the
+superposition, generating the sequence
+                                                      1                  t−1
+                                                                               E
+                                            |ψ(1)⟩ = √ |0⟩ |1⟩ + |1⟩ Π2 (1) ,                                           (S1a)
+                                                       2
+
+                   1                       t−1
+                                                E             t−2
+                                                                  E                     t−1 t−2
+                                                                                                E
+        |ψ(2)⟩ =      |0⟩ |1⟩ + eiπm1 |0⟩ Π2 (1) + eiφ2 |1⟩ Π2 (1) + ei(φ2 +πm1 ) |0⟩ Π2 +2 (1)                        (S1b)
+                   2
+                                                                                                       
+                                     1  X iθn                        X
+                          |ψ(τ )⟩ = τ /2      e |0⟩ |n⟩ +                             ei(θn +φτ ) |1⟩ |n⟩ ,           (S1c)
+                                   2      n∈S  τ −1             n∈Π2t−τ (S   τ −1 )
+
+
+where in the last equation Sτ −1 is a set containing 2τ −1 distinct computational basis states of the n-qubit register.
+The phases θn and φτ depend on the measurement outcomes and on the phase gates, but their exact values are not
+crucial for the purpose of our study, and can thus be effectively thought as random.
+   Let r be the period of the permutation Π, i.e., the smallest integer such that Πr = 1. Let us assume that it
+                                                                                                               j
+factorizes as r = 2k r̃odd , where k ≥ 0 and r̃odd is an odd integer. This implies that the period of Π2 is equal to
+max{r̃, 2rj }. The superposition structure shown in Eq. (S1c) holds as long as τ ≤ τ ∗ = ⌈log2 r̃odd ⌉. In detail, for τ
+                                                  t−τ
+strictly smaller than τ ∗ , the sets Sτ −1 and Π2 (Sτ −1 ) are non-overlapping, because not enough computational basis
+                                                                            t−τ
+states have been yet generated to cover a full permutation cycle of Π2 . For τ = τ ∗ , the equation is still valid, but
+the two sets overlap partially.
+                                                                                                       t−τ
+   Intermediate times – For τ > τ ∗ , Eq. (S1c) no longer applies. The sets Sτ −1 and Π2 (Sτ −1 ) appearing
+in Eq. (S1c) coincide for τ ≤ t − k, and have size r̃odd . As a consequence, the Hadamard gate placed before
+the measurements mixes the |0⟩ and |1⟩ sectors of the QFT qubit, creating           P interference and possibly making the
+superposition non-uniform. The state assumes the general form |ψ(τ )⟩ = n∈S (a0,n |0⟩ + a1,n |1⟩) |n⟩, where S no
+longer depends on τ . We refer to the window τ ∗ < τ ≤ t − k as the intermediate time regime, and we assume it in
+the following discussion.
+   Within this time window, the amplitudes of the superposition are repeatedly shuffled by the Hadamard gates, the
+phase gates, and the projective measurements applied at each step. Naively, one might expect that the result of this
+process is a Gaussian distribution for the real and imaginary parts of a0,n and a1,n , following the intuition that the
+central limit theorem might apply. However, this is not the case. Let us analyze how amplitudes are recombined
+                                                                                                            P       during
+a step of the algorithm. Let the input state of the τ -th algorithmic step be given by |ψin (τ )⟩ = |0⟩ n∈S an (τ ) |n⟩.
+Throughout gates (i)-(iii), we obtain
+                                                1 X                                   
+                                     |ψ(τ )⟩ = √       an |0⟩ + eiφτ aΠ−2(t−τ ) (n) |1⟩ |n⟩ .                           (S2)
+                                                 2 n∈S
+                                                                                                                        
+After applying the operations (iv) and (v), we have |ψin (τ + 1)⟩ = N1τ |0⟩ n∈S an (τ ) + (−1)mτ eiφτ aΠ−2(t−τ ) (n) (τ ) |n⟩,
+                                                                             P
+
+where mτ = 0, 1 is the outcome and Nτ is a normalization factor. If we introduce the array a(τ ) = (an )n∈S , the
+                                                                                                                                             11
+
+previous equation defines the evolution map
+                                        1                     (t−τ )
+                                                                      
+                            a(τ + 1) =      1 + (−1)mτ eiφτ Π−2         a(τ ) ≡ M(τ )a(τ ),                                               (S3)
+                                        Nτ
+with a slight abuse of notation on the permutation Π for the sake of brevity.
+  It is now crucial to observe that the operators M(τ ) at different times commute. This allows us to diagonalize them
+                                                                                        (t−τ )                             k
+and extract the long-time behavior. First, since we assumed τ ≤ t−k, all Π−2                   are powers of Π̃ = Π2 , which is an ir-
+                                                                              †                       2πi/r̃odd
+reducible permutation with    √ period r̃odd . We diagonalize Π̃ = U SU , where S = diag{1, e                   , . . . , e2πi(r̃odd −1)/r̃odd }
+              2πib(µ)ν/r̃odd
+and Uµ,ν = e                 / r̃odd , with b(µ) ∈ {0, . . . , r̃odd − 1}. It follows that
+                                                                r̃X
+                                                                  odd       n
+                                                       1                   Y              ∗
+                                 aµ (τ + n) = Qn                      Uµ,α     1 + eiθj,α Uν,α aν (τ ),                                   (S4)
+                                                    j=1 Nτ +j µ,α,ν=1      j=1
+
+
+where we defined θj,α = πmτ +j + φτ +j + 2t−τ −k+1 πα/r̃odd .
+  Each value of α contributes differently to Eq. (S6), and a single one will eventually dominate for large n. To see
+this, we may evaluate
+
+                                                  n
+                                                  Y                           n
+                                                                              X
+                                                              iθj,α
+                                                                      
+                                            log         1+e               =         log |2 cos(θj,α /2)| .                                (S5)
+                                                  j=1                         j=1
+
+
+The angles θj,α hold no particular structure, and can thus be regarded as pseudo-random variables. From the central
+limit theorem, for n ≫ 1 Eq. (S5) behaves as a Gaussian random variable with variance ∼ n. As a consequence, the
+typical difference
+         √         in magnitude between the contributions of different values of α in Eq. (S6) will be exponentially
+large in n, thus implying that a single ᾱ dominates the sum at long times. This allows us to approximate
+                                                               
+                                                                  r̃X
+                                                n
+                                                                                     !
+                                                         iθj,ᾱ     odd
+                                               Y   1 + e                 ∗
+                                aµ (τ + n) ≈                          Uν,ᾱ aν (τ ) Uµ,ᾱ .                  (S6)
+                                               j=1
+                                                     Nτ +j        ν=1
+
+
+Notice that the dependence on the initial amplitudes is shared equally among all values of µ. Thus,      √     accounting for
+the correct normalization, the equation simplifies drastically to aµ (τ + n) = Uµ,ᾱ = e2πib(µ)ᾱ/r̃odd / r̃odd . This implies
+that during √the intermediate time regime the amplitudes quickly converge to a uniform distribution around the circle
+of radius 1/ r̃odd .
+   From this result, it might seem as if the superposition structure is approximately the same in the early and
+intermediate time regimes of the algorithm. There is, however, a crucial difference. From Eq. (S2), we see that the
+                                                                     t−τ
+amplitudes of the QFT-qubit sector |1⟩ are given by eiφτ Π−2 a(τ ). Since a(τ ) converges to an eigenvector of the
+                                                  t−τ −k+1
+permutation, the expression simplifies to ei(φτ −2         π ᾱ/r̃odd )
+                                                                        a(τ ), thus reducing Eq. (S2) to
+
+                                                              |0⟩ + eiϕ |1⟩ X eiθn
+                                                  |ψ(τ )⟩ =        √            √       |n⟩ .                                             (S7)
+                                                                     2      n∈S
+                                                                                  r̃odd
+
+The QFT qubit disentangles completely from the others. The phases θn correspond to the entries of Uµ,ᾱ and can be
+considered effectively random.
+   We checked numerically the validity of Eq. (S7). In the process, we observed that, at sufficiently long times, the
+relative phase ϕ is not random, but becomes either 0 or π. While we have no analytic proof of this result, it is fully
+reasonable. The probability distribution of the measurement outcomes of Shor’s algorithm is highly peaked around
+some specific bitstrings, which contain information on the period r. In order for this to be possible, the probabilities
+of getting 0 and 1 during a single measurement must be strongly biased towards one of the two, in such a way to
+select only a restricted set of sequences of outcomes. This corresponds precisely to the condition ϕ ≈ 0, π.
+   Late times – At last, if the period r is even, the structure of the state changes again. During the last k steps of the
+                                 (t−τ )
+algorithm, the permutation Π2           starts again acting non-trivially on the set S, thus generating new computational
+basis states in the superposition. This immediately implies that no further interference between the |0⟩ and |1⟩ sectors
+of the QFT qubit can occur: the superposition starts doubling in size at each step, analogously to what happens in
+the early time regime. As a consequence, for τ > t − k, the state assumes the form of Eq. (S1c) once again, where
+St−k is the set S of size r̃odd of the intermediate time regime.
+                                                                                                                       12
+
+                                     ANALYTIC CALCULATION OF THE SRE
+
+   Given the knowledge of the superposition structure of the state throughout the algorithm, we can now proceed to
+evaluate the second stabilizer Renyi entropy explicitly. We use the formalism of the  Pfast Walsh-Hadamard transform
+introduced in Ref. [55]. Let us assume that the state is in the generic form |ψ⟩ = m∈D am |m⟩, where D is the set
+of bitstrings m corresponding to computational basis states with non-zero amplitudes in the superposition. For both
+the early and late time regimes, the state is given by Eq. (S1c). In the intermediate window, as argued previously, we
+have Eq. (S7), and the QFT qubit factorizes in a stabilizer state corresponding to ϕ = 0, π. As a consequence, that
+qubit can be effectively discarded for the calculation of magic, and we may just assume that |ψ⟩ is the state of the
+other n = L − 1 qubits, so that D corresponds to the set S of
+                                                            √ size D = r̃odd . Following our previous discussion, in both
+cases amplitudes are modeled in the form of am = eiθm / D, where θm are independent random angles uniformly
+distributed in [0, 2π). Normalization sets the value D = dim D.
+   In order to evaluate the SRE of Eq. (1), we parameterize Pauli strings as
+                                                                             
+                                                            L           L
+                                                                z             x
+                                                           Y           Y
+                                       P ≡ Pz,x = i−z·x      Zj j       Xj j  ,                                  (S8)
+                                                            j=1          j=1
+
+
+where α ∈ {0, 1, 2, 3}, x, z ∈ {0, 1}L . We thus have ⟨Pz,x ⟩ = i−z·x m∈D a∗m am⊕x (−1)m·z 1(m ⊕ x ∈ D), where
+                                                                     P
+we introduced the indicator function 1 that returns 1 if its Boolean argument is True, and 0 otherwise. From this
+expression, we obtain
+            1 X              X                    X
+               ⟨P ⟩4 =               δm⊕n⊕p⊕q,0       a∗m am⊕x a∗n an⊕x a∗p ap⊕x a∗q aq⊕x 1({m, n, p, q} ⊕ x ⊂ D).    (S9)
+           2L                                     x
+               P         m,n,p,q∈D
+
+  Only bitstring quadruplets satisfying m ⊕ n ⊕ p ⊕ q = 0 contribute to the sum of Eq. (S9). There are three ways
+to guarantee this condition:
+   1. All bitstrings of the quadruplet are equal. In this case, we get a contribution m∈D x (a∗m am⊕x )4 1(m⊕x ∈ D).
+                                                                                      P      P
+      For D ≫ 1, the sum can be approximated by a statistical average over the distribution of amplitudes, which
+      we denote by E[. . . ]. Since E[(a∗m am⊕x )4 ] = E[(a∗m )4 ]E[(am⊕x )4 ] = 0 for x ̸= 0, only x = 0 makes the sum
+      non-zero, yielding a final contribution 1/D3 to the Pauli sum.
+   2. The
+       P bitstrings
+                  P of the quadruplets are equal in pairs. In this case, the contribution to Eq. (S9) is equal to
+      3 m̸=n∈D x (a∗m am⊕x a∗n an⊕x )2 1({m, n} ⊕ x ⊂ D), where the factor 3 counts the number of distinct ways to
+      divide the four bitstrings in distinct pairs. As done previously, the sum can be approximated by a statistical
+      average. Both x = 0 and x = m ⊕ p produce non-zero averages, thus giving a total contribution of 6(D − 1)/D3 .
+   3. All bitstrings of the quadruplet are distinct. For each choice of the four bitstrings satisfying m ⊕ n ⊕ p ⊕ q = 0,
+      the distinct values of x that give a non-zero contribution are x = 0, x = m ⊕ n, x = m ⊕ p, and x = m ⊕ q.
+      As a consequence, the total contribution of these terms to the Pauli sum is 4Λ/D4 , where we define
+                                                       X
+                                             Λ=                δm⊕n⊕p⊕q,0 .                                         (S10)
+                                                  m̸=n̸=p̸=q∈D
+
+     Differently from the previous cases, this term is not uniquely determined by the size of D. The number Λ cannot
+     be evaluated explicitly without additional assumptions.
+  Combining these calculations, we obtain the final form
+                                     (
+                                       0                           if D = 2,
+                                M2 =                        2
+                                                                                                                    (S11)
+                                       4 log D − log 4Λ + 6D − 5D otherwise.
+
+Here, we distinguished the special case of D = 2, which behaves differently from the other values and can be proven
+to have vanishing magic. In general, we always find D = 2 for τ = 1, in which case the state is given exactly by
+Eq. (S1a): this is clearly a stabilizer state, and thus its magic is zero. In addition, we observe that D = 2 at all times
+                                                                                     j
+τ when the period of the permutation Π is exactly r = 2. In this case, since Π2 is the identity for any j > 0, it can
+be easily checked that the state remains a stabilizer throughout the full algorithm.
+                                                                                                                   13
+
+  In order to compute M2 explicitly as a function of the discrete time τ , we need to evaluate how D grows. Following
+the discussion of Sec. , if the period of the permutation Π can be factored as r = 2k r̃odd , we have
+                                                
+                                                2
+                                                  τ
+                                                          for τ ≤ τ ∗ ,
+                                            D = r̃odd     for τ ∗ < τ ≤ t − k,                                  (S12)
+                                                
+                                                 t−τ
+                                                  r/2     for t − k < τ.
+
+   Assumption of random bitstrings – The combination of Eqs. (S11) and (S12) provides a semi-analytic prediction
+for the growth of the SRE. This is not, however, a closed formula, as Λ needs to be evaluated numerically. This
+calculation is expensive, as the size of D can grow exponentially in the number of qubits. Nevertheless, Λ can be
+approximated under the reasonable assumption that the bitstrings contained in D can be regarded as random, sampled
+uniformly from the computational basis.
+   Suppose we pick the first three bitstrings m, n, and p from D. There are D(D − 1)(D − 2) ways of performing
+these choices. The probability that the specific q = m ⊕ n ⊕ p is also in the set is equal to (D − 3)/2L for early and
+late times, and to (D − 3)/2L−1 for intermediate times, because in the latter case we are not considering the QFT
+qubit. This yields
+                                  (
+                                    D(D−1)(D−2)(D−3)
+                                           2L−1
+                                                         for ⌈log2 r⌉ − k < τ ≤ t − k,
+                             Λ = D(D−1)(D−2)(D−3)                                                                (S13)
+                                            2L
+                                                         otherwise.
+
+This estimate is valid asymptotically for L → ∞ and D ≫ 1.
+

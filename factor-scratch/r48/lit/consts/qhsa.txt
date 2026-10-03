@@ -1,0 +1,1678 @@
+                                             QUANTUM HIDDEN SUBGROUP ALGORITHMS: AN
+                                                      ALGORITHMIC TOOLKIT
+
+                                                     SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+arXiv:quant-ph/0607046v1 6 Jul 2006
+
+
+
+
+                                              Abstract. One of the most promising and versatile approaches to creating
+                                              new quantum algorithms is based on the quantum hidden subgroup (QHS)
+                                              paradigm, originally suggested by Alexei Kitaev. This class of quantum al-
+                                              gorithms encompasses the Deutsch-Jozsa, Simon, Shor algorithms, and many
+                                              more.
+                                                  In this paper, our strategy for finding new quantum algorithms is to de-
+                                              compose Shor’s quantum factoring algorithm into its basic primitives, then to
+                                              generalize these primitives, and finally to show how to reassemble them into
+                                              new QHS algorithms. Taking an ”alphabetic building blocks approach,” we
+                                              use these primitives to form an ”algorithmic toolkit” for the creation of new
+                                              quantum algorithms, such as wandering Shor algorithms, continuous Shor al-
+                                              gorithms, the quantum circle algorithm, the dual Shor algorithm, a QHS al-
+                                              gorithm for Feynman integrals, free QHS algorithms, and more.
+                                                  Toward the end of this paper, we show how Grover’s algorithm is most
+                                              surprisingly “almost” a QHS algorithm, and how this result suggests the pos-
+                                              sibility of an even more complete ”algorithmic tookit” beyond the QHS algo-
+                                              rithms.
+
+
+
+
+                                                                              Contents
+                                        1. Introduction                                                          2
+                                        2. An example of Shor’s quantum factoring algorithm                      2
+                                        3. Definition of quantum hidden subgroup (QHS) algorithms                6
+                                        4. The generic QHS algorithm                                             7
+                                        5. Pushing and Lifting hidden subgroup problems (HSPs)                   8
+                                        6. Shor’s algorithm revisited                                           10
+                                        7. Wandering Shor algorithms, a.k.a., vintage Shor algorithms.          11
+                                        8. Continuous (variable) Shor algorithms                                16
+                                        9. The quantum circle and the dual Shor algorithms.                     17
+                                        10. A QHS algorithm for Feynman integrals.                              22
+                                        11. QHS algorithms on free groups                                       24
+                                        12. Generalizing Shor’s algorithm to free groups                        26
+                                        13. Is Grover’s algorithm a QHS algorithm?                              28
+                                        14. Beyond QHS algorithms: The suggestions of a meta-scheme for creating new quantum algorithms 32
+                                        15. Acknowledgement                                                     32
+                                        References                                                              33
+
+                                         Date: May 22, 2006.
+                                         2000 Mathematics Subject Classification. Primary 81P68; Secondary 68Q05, 81Q99.
+                                         Key words and phrases. Quantum algorithms, Quantum hidden subgroup algorithms, Quan-
+                                      tum computing, Quantum computation, Shor’s algorithm, Grover’s algorithm, Quantum informa-
+                                      tion, algorithms.
+                                                                                   1
+2                  SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+                                      1. Introduction
+
+   One major obstacle to the fulfillment of the promise of quantum computing is the
+current scarcity of quantum algorithms. Quantum computing researchers simply
+have not yet found enough quantum algorithms to determine whether or not future
+quantum computers will be general purpose or special purpose computing devices.
+As a result, much more research is crucially needed to determine the algorithmic
+limits of quantum computing.
+
+   One of the most promising and versatile approaches to creating new quantum
+algorithms is based on the quantum hidden subgroup (QHS) paradigm, originally
+suggested by Alexei Kitaev [20]. This class of quantum algorithms encompasses
+the Deutsch-Jozsa, Simon, Shor algorithms, and many more.
+
+   In this paper, our strategy for finding new quantum algorithms is to decompose
+Shor’s quantum factoring algorithm into its basic primitives, then to generalize
+these primitives, and finally to show how to reassemble them into new QHS algo-
+rithms. Taking an ”alphabetic building blocks approach,” we will use these primi-
+tives to form an ”algorithmic toolkit” for the creation of new quantum algorithms,
+such as wandering Shor algorithms, continuous Shor algorithms, the quantum circle
+algorithm, the dual Shor algorithm, a QHS algorithm for Feynman integrals, free
+QHS algorithms, and more.
+
+   Toward the end of this paper, we show how Grover’s algorithm is most surpris-
+ingly “almost” a QHS algorithm, and how this suggests the possibility of an even
+more complete ”algorithmic tookit” beyond the QHS algorithms.
+
+
+          2. An example of Shor’s quantum factoring algorithm
+
+   Before discussing how Shor’s algorithm can be decomposed into its primitive
+components, let’s take a quick look at an example of the execution of Shor’s fac-
+toring algorithm. As we discuss this example, we suggest that the reader, as an
+exercise, try to find the basic QHS primitives that make up this algorithm. Can
+you see them?
+
+   Shor’s quantum factoring algorithm reduces the task of factoring a positive in-
+teger N to first finding a random integer a relatively prime to N , and then next to
+determining the period P of the following function
+                                          ϕ
+                                    Z −→ Z mod N
+                                    x 7−→ ax mod N ,
+where Z denotes the additive group of integers, and where Z mod N denotes the
+integers mod N under multiplication1.
+   1A random integer a with gcd (a, N ) = 1 is found by selecting a random integer, and then
+applying the Euclidean algorithm to determine whether or not it is relatively prime to N . If not,
+then the gcd is a non-trivial factor of N , and there is no need to proceed futher. However, this
+possibility is highly unlikely if N is large.
+                                      QHS ALGORITHMS                                       3
+
+
+    Since Z is an infinite group, Shor chooses to work instead with the finite ad-
+ ditive cyclic group ZQ of order Q = 2m , where N 2 ≤ Q < 2N 2 , and with the
+ “approximating” map
+                                  ϕ
+                                  e
+                           ZQ    −→ Z mod N
+                            x    7−→ ax mod N , 0 ≤ x < Q
+    Shor begins by constructing a quantum system with two quantum registers
+                        |Left Registeri |Right Registeri ,
+ the left intended for holding the arguments x of ϕ,  e the right for holding the corre-
+ sponding values of ϕ.
+                     e This quantum system has been constructed with a unitary
+ transformation
+                              Uϕe : |xi |1i 7−→ |xi |ϕ
+                                                     e (x)i
+ implementing the “approximating” map ϕ.
+                                      e
+
+   As an example, let us use Shor’s algorithm to factor the integer N = 21, assuming
+ that a = 2 has been randomly chosen. Thus, Q = 29 = 512.
+
+    Unknown to us, the period is P = 6, and hence, Q = 6 · 85 + 2.
+
+    We proceed by executing the following steps:
+
+STEP 0 Initialize
+                                       |ψ0 i = |0i |1i
+
+
+STEP 1 Apply the inverse Fourier transform2
+                                                511
+                                             1 X −ux
+                            F −1 : |ui 7−→ √        ω |xi
+                                            512 x=0
+         to the left register, where ω = exp(2πi/512) is a primitive 512-th root of
+         unity, to obtain
+                                              511
+                                          1 X
+                                |ψ1 i = √         |xi |1i
+                                          512 x=0
+
+
+STEP 2 Apply the unitary transformation
+                              Uϕe : |xi |1i 7−→ |xi |2x mod 21i
+         to obtain
+                                            511
+                                       1 X
+                             |ψ2 i = √        |xi |2x mod 21i
+                                      512 x=0
+
+
+
+   2Actually, for this step, the original Shor algorithm uses instead the Hadamard transform,
+ which for step 1, has the same effect as the 512-point Fourier transform.
+ 4                  SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+STEP 3 Apply the Fourier transform
+                                                511
+                                             1 X xy
+                               F : |xi 7−→ √        ω |yi
+                                            512 y=0
+          to the left register to obtain
+                  511 511                        511     511
+                                                                         !
+               1 X X xy           x           1 X        X
+                                                              xy x
+      |ψ3 i =             ω |yi |2 mod 21i =         |yi     ω |2 mod 21i
+              512 x=0 y=0                    512 y=0     x=0
+
+
+                   511
+                1 X
+           =           |yi |Υ (y)i
+               512 y=0
+
+          where
+                                           511
+                                           X
+                               |Υ (y)i =         ω xy |2x mod 21i
+                                           x=0
+
+
+STEP 4 Measure the left register. Then with Probability
+                                               h Υ (y) | Υ (y) i
+                               P robϕe (y) =              2
+                                                     (512)
+          the state will “collapse” to |yi with the value measured being the integer
+          y, where 0 ≤ y < Q.
+
+     A plot of P robϕe (y) is shown in Figure 1. (See [21] and [25] for details.)
+
+
+
+
+                            Figure 1. A plot of Probϕe (y).
+                                          QHS ALGORITHMS                                5
+
+
+   The peaks in the above plot of P robϕe (y) occur at the integers
+                                 y = 0, 85, 171, 256, 341, 427.
+The probability that at least one of these six integers will occur is quite high.
+It is actually 0.78+ . Indeed, the probability distribution has been intentionally
+engineered to make the probability of these particular integers as high as possible.
+And there is a good reason for doing so.
+
+   The above six integers are those for which the corresponding rational y/Q is
+“closest” to a rational of the form d/P . By “closest” we mean that
+                                       y   d    1    1
+                                         −   <    <      .
+                                       Q P     2Q   2P 2
+In particular,
+                            0    85 171 256 341 427
+                               ,     ,     ,    ,       ,
+                           512 512 512 512 512 512
+are rationals respectively “closest” to the rationals
+                                 0 1 2 3 4 5
+                                  , , , , ,           .
+                                 6 6 6 6 6 6
+The six rational numbers 0/6, 1/6, . . . , 5/6 are ”closest” in the sense that they are
+convergents of the continued fraction expansions of 0/512, 85/512, . . . , 427/512,
+respectively. Hence, each of the six rationals 0/6, 1/6, . . . , 5/6 can be found
+using the standard continued fraction recursion formulas.
+
+  But ... , we are not searching for rationals of the form d/P . Instead, we seek
+only the denominator P = 6.
+
+   Unfortunately, the denominator P = 6 can only be obtained from the continued
+fraction recursion when the numerator and denominator of d/P are relatively prime.
+Given that the algorithm has selected one of the random integers 0, 85, . . . , 427,
+the probability that the corresponding rational d/P has relatively prime numerator
+and denominator is φ (6) /6 = 1/3, where φ (−) denotes the Euler phi (totient)
+function. So the probability of finding P = 6 is actually not 0.78+ , but is instead
+0.23−.
+
+   As it turns out, if he repeats the algorithm O (lg lg N ) times, we will obtain the
+desired period P with probability bounded below by approximately 4/π 2 . However,
+this is not the end of the story. Once we have in our possession a candidate P ′ for
+the actual period P = 6, the only way we can be sure we have the correct period
+                                    ′
+P is to test P ′ by computing 2P mod 21. If the result is 1, we are certain we
+have found the correct period P . This last part of the computation is done by the
+repeated squaring algorithm3.
+
+                                                                              ′
+   3By the repeated squaring algorithm, we mean the algorithm which computes aP mod N via
+the expression
+                                        ′  Y  j  Pj′
+                                     aP =      a2      ,
+                                                  j
+              P      ′ j
+where P ′ =                                           ′
+                  j Pj 2 is the radix 2 expansion of P .
+6                 SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+      3. Definition of quantum hidden subgroup (QHS) algorithms
+
+  Now that we have taken a quick look at Shor’s algorithm, let’s see how it can
+be decomposed into its primitive algorithmic components. We will first need to
+answer the following question:
+                 What is a quantum hidden subgroup algorithm?
+
+   But before we can answer the this question, we need to provide an answer to an
+even more fundamental question:
+
+                         What is a hidden subgroup problem?
+
+Definition 1. A map ϕ : G −→ S from a group G into a set S is said to have
+hidden subgroup structure if there exists a subgroup Kϕ of G, called a hidden
+subgroup, and an injection ιϕ : G/Kϕ −→ S, called a hidden injection, such
+that the diagram
+                                    ϕ
+                              G    −→        S
+                             νց            ր ιϕ
+                                  G/Kϕ
+is commutative4, where G/Kϕ denotes the collection of right cosets of Kϕ in G,
+and where ν : G −→ G/Kϕ is the natural surjection of G onto G/Kϕ . We refer
+to the group G as the ambient group and to the set S as the target set. If
+Kϕ is a normal subgroup of G, then Hϕ = G/Kϕ is a group, called the hidden
+quotient group, and ν : G −→ G/Kϕ is an epimorphism, called the hidden
+epimorphism. We will call the above diagram the hidden subgroup structure
+of the map ϕ : G −→ S. (See [25],[20].)
+
+
+Remark 1. The underlying intuition motivating this formal definition is as follows:
+Given a natural surjection (or epimorphism) ν : G −→ G/Kϕ , an ”archvillain with
+malice of forethought” hides the algebraic structure of ν by intentionally renaming
+all the elements of G/Kϕ , and ”maliciously tossing in for good measure” some
+extra elements to form a set S and a map ϕ : G −→ S.
+
+    The hidden subgroup problem can be stated as follows:
+
+Hidden Subgroup Problem (HSP). Let ϕ : G −→ S be a map with hidden
+subgroup structure. The problem of determining a hidden subgroup Kϕ of G is
+called a hidden subgroup problem (HSP). An algorithm solving this problem
+is called a hidden subgroup algorithm.
+
+    The corresponding quantum form of this HSP is stated as follows:
+
+Hidden Subgroup Problem (Quantum Version). Let ϕ : G −→ S be a map
+with hidden subgroup structure. Construct a quantum implementation of the map
+ϕ as follows:
+   4By saying that this diagram is commutative, we mean ϕ = ι ◦ ν. The notion generalizes in
+                                                             ϕ
+an obvious way to more complicated diagrams.
+                                          QHS ALGORITHMS                                   7
+
+
+ Let HG and HS be Hilbert spaces defined respectively by the orthonormal bases
+ {|gi : g ∈ G}and {|si : s ∈ S} and let s0 = ϕ (1), where 1 denotes the identity5 of
+ the ambient group A. Finally, let Uϕ be a unitary transformation such that
+                                   HG ⊗ HS        −→ HG ⊗ HS
+                                    |gi |s0 i     7→ |gi |ϕ(g)i
+ Determine the hidden subgroup Kϕ with bounded probability of error by making
+ as few queries as possible to the blackbox Uϕ . A quantum algorithm solving this
+ problem is called a quantum hidden subgroup (QHS) algorithm.
+
+
+                              4. The generic QHS algorithm
+
+
+     We are now in a position to construct one of the fundamental algorithmic prim-
+ itives found in Shor’s algorithm.
+
+    Let ϕ : G −→ S be a map from a group G to a set S with hidden subgroup
+ structure. We assume that all representations of G are equivalent to unitary rep-
+                    b denote a complete set of distinct irreducible unitary
+ resentations6. Let G
+ representations of G. Using multiplicative notation for G, we let 1 denote the
+ identity of G, and let s0 denote its image in S. Finally, let b
+                                                               1 denote the trivial
+ representation of G.
+                                 b becomes the dual group of characters.
+ Remark 2. If G is abelian, then G
+
+
+    The generic QHS algorithm is given below:
+
+                               Quantum Subroutine QRand(ϕ)
+
+
+Step 0. Initialization
+                                            E
+                                   |ψ0 i = b
+                                           1 |s0 i ∈ HGb ⊗ HS
+                                                         −1
+Step 1. Application of the inverse Fourier transform FG     of G to the left register
+                               1 X
+                      |ψ1 i = p         |gi |s0 i ∈ HG ⊗ HS ,
+                                |G| g∈G
+
+          where |G| denotes the cardinality of the group G.
+
+Step 2. Application of the unitary transformation Uϕ
+                               1 X
+                     |ψ2 i = p         |gi |ϕ(g)i ∈ HG ⊗ HS
+                               |G| g∈G
+
+
+
+    5We are using multiplicative notation for the group G.
+    6This is true for all finite groups as well as for a large class of infinite groups.
+ 8                SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+Step 3. Application of the Fourier transform FG of G to the left register
+                                        
+          1 X               X                        1 X                        
+ |ψ3 i =       |γ| T race    γ † (g) |γi |ϕ(g)i =       |γ| T race |γi Φ(γ † ) ∈ HGb ⊗HS ,
+         |G|                                        |G|
+              b
+            γ∈G             g∈G                             b
+                                                          γ∈G
+
+         where |γ| denotes the degree of the representation γ, where γ † denotes
+                                                                  T      T
+         the contragradient representation (i.e., γ † (g) = γ g −1 = γ (g) ), where
+                        P    |γ|
+                          |γ| P                               E      P
+                                                               †
+         T race γ † |γi =         γji (g) |γij i, and where Φ γij    =   γji (g) |ϕ (g)i.
+                           i=1 j=1                                     g∈G
+
+
+Step 4. Measurement of the left quantum register with respect to the orthonormal
+        basis           n                              o
+                                       b 1 ≤ i, j ≤ |γ| .
+                          |γij i : γ ∈ G,
+         Thus, with probability
+                                                D    E
+                                            2       †      †
+                                          |γ|    Φ γij |Φ γij
+                        P robϕ (γij ) =
+                                                   |G|2
+         the resulting measured value is the entry γij , and the quantum system
+         ”collapses” to the state
+                                            E
+                                              †
+                                  |γij i Φ γij
+                              r
+                      |ψ4 i = D    E ∈ HGb ⊗ HS
+                                         †      †
+                                  Φ γij     |Φ γij
+
+
+
+Step 5. Step 5. Output γij , and stop.
+
+
+
+         5. Pushing and Lifting hidden subgroup problems (HSPs)
+
+
+     But Shor’s algorithm consists of more than the primitive QRand.
+
+    For many (but not all) hidden subgroup problems (HSPs) ϕ : G −→ S, the cor-
+ responding generic QHS algorithm QRand either is not physically implementable
+ or is too expensive to implement physically. For example, the HSP ϕ is usually
+ not physically implementable if the ambient group is infinite (e.g., G is the infinite
+ cyclic group Z), and is too expensive to implement if the ambient group is too large
+ (e.g., G is the symmetric group S10100 ). In this case, there is a standard generic
+ way of ”tweaking” the HSP to get around this problem, which we will call pushing.
+
+
+ Definition 2. Let ϕ : G −→ S be a map from a group G to a set S. A map
+ ϕ
+ e:Ge −→ S from a group Ge to the set S is said to be a push of ϕ, written
+
+                                     ϕ
+                                     e = P ush (ϕ) ,
+                                      QHS ALGORITHMS                                           9
+
+
+provided there exists an epimorphism ν : G −→ G  e from G onto G,
+                                                               e and a transversal7
+    e −→ G of ν such that ϕ
+τ : G                          e = ϕ ◦ τ , i.e., such that the following diagram is
+commutative
+                                                ϕ
+                                      G        −→         S
+                                      ↑τ        րϕe
+                                      e
+                                      G
+
+
+
+   If the epimorphism µ and the transversal τ are chosen in an appropriate way,
+then execution of the generic QHS subroutine with input ϕ  e = P ush (ϕ) , i.e.,
+execution of
+                                        QRand (ϕ)
+                                               e ,
+
+will with high probability produce an irreducible representation γ                  e
+                                                                     e of the group G
+which is sufficiently close to an irreducible representation γ of the group G. If this
+is the case, then there is a polynomial time classical algorithm which upon input γ e
+produces the representation γ.
+
+
+  Obviously, much more can be said about pushing. But unfortunately that
+would take us far afield from the objectives of this paper. For more information
+on pushing, we refer the reader to [27].
+
+
+  It would be amiss not to mention that the above algorithmic primitive of pushing
+suggests the definition of a second primitive which we will call lifting.
+
+
+
+Definition 3. Let ϕ : G −→ S be a map from a group G to a set S.                        A map
+ϕ: G −→ S from a group G to the set S is said to be a lift of ϕ, written
+
+                                       ϕ = Lif t (ϕ) ,
+
+provided there exists an morphism η : G −→ G from G to G such that ϕ = ϕ ◦ η,
+i.e., such that the following diagram is commutative
+
+                                       G
+                                      η↓            ցϕ
+                                                     ϕ
+                                       G            −→ S
+
+
+
+
+   7Let ν : A −→ B be an epimorphism from a group A to a group B.             Then a transversal
+τ of ν is is a map τ : B −→ A such that ν ◦ τ : B −→ A is the identity map b 7−→ b. (It
+immediately follows that τ is an injection.) In othere words, a transversal τ of an epimorphism
+ν is a map which maps eacl element b of B to an element of A contained in the coset b, i.e., to a
+coset representative of b.
+10                SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+
+
+                     Figure 2. Pushing and Lifting HSPs.
+
+
+
+                         6. Shor’s algorithm revisited
+
+
+   We are now in position to describe Shor’s algorithm in terms of its primitive
+components. In particular, we are now in a position to see that Shor’s factoring
+algorithm is a classic example of a QHS algorithm created from the push of an HSP.
+
+  Let N be the integer to be factored. Let Z denote the additive group of integers,
+and Z×
+     N denote the integers mod N under multiplication.
+
+
+     Shor’s algorithm is a QHS algorithm that solves the following HSP
+                              ϕ:Z     −→    Z×
+                                             N
+                                          m
+                                m    7−→ a mod N
+with unknown hidden subgroup structure given by the following commutative dia-
+gram
+                                        ϕ
+                                 Z     −→      Z×
+                                                N
+                                νց             րι    ,
+                                      Z/P Z
+where a is an integer relatively prime to N , where P is the hidden integer period of
+the map ϕ : Z −→ Z×   N , where P Z is the additive subgroup of all integer multiples
+of P (i.e., the hidden subgroup), where ν : Z −→ Z/P Z is the natural epimorpism
+of the integers onto the quotient group Z/P Z (i.e., the hidden epimorphism), and
+where ι : Z/P Z −→ Z×  N is the hidden monomorphism.
+
+
+   An obstacle to creating a physically implementable algorithm for this HSP is
+that the domain Z of ϕ is infinite. As observed by Shor, a way to work around
+this difficulty is to push the HSP.
+                                         QHS ALGORITHMS                                          11
+
+
+   In particular, as illustrated by the following commutative diagram
+                                     ϕ
+                        Z           −→        Z×N
+                       µ ցտ τ              ր ϕ = P ush (ϕ) = ϕ ◦ τ           ,
+                                    ZQ
+a push ϕ
+       e = P ush (ϕ) is constructed by selecting the epimorphism µ : Z −→ ZQ of
+Z onto the finite cyclic group ZQ of order Q, where the integer Q is the unique
+power of 2 such that N 2 ≤ Q < 2N 2 , and then choosing the transversal8
+                                       τ : ZQ      −→ Z
+                                                               ,
+                                     m mod Q      7−→ m
+where 0 ≤ m < Q. This push ϕ
+                           e = P ush (ϕ) is called Shor’s oracle.
+
+   Shor’s algorithm consists in first executing the quantum subroutine QRand(ϕ),    e
+thereby producing a random character
+                                                  my
+                            γy/Q : m mod Q 7−→       mod 1
+                                                  Q
+of the finite cyclic group ZQ . The transversal τ used in pushing has been engineered
+in such a way as to assure that the character γy/Q is sufficiently close to a character
+                                              kd
+                                γd/P : k mod P 7−→
+                                                 mod 1
+                                               P
+of the hidden quotient group Z/P Z = ZP . In this case ”sufficiently close” means
+that
+                                 y   d       1
+                                   −     ≤       ,
+                                 Q P       2P 2
+which means that d/P is a continued fraction convergent of y/Q, and thus can be
+found found by the classical polynomial time continued fraction algorithm9.
+
+    7. Wandering Shor algorithms, a.k.a., vintage Shor algorithms.
+
+  Now let’s use the primitives described in sections 3, 4, and 5 to create other new
+QHS algorithms, called wandering Shor algorithms.
+
+   Wandering Shor algorithms are essentially QHS algorithms on free abelian fi-
+nite rank n groups A which, with each iteration, first select a random cyclic direct
+summand Z of the group A, and then apply one iteration of the standard Shor algo-
+rithm to produce a random character of the “approximating” finite group A  e = ZQ ,
+called a group probe10. Three different wandering Shor algorithms are created in
+[25]. The first two wandering Shor algorithms given in [25] are quantum algorithms
+which find the order P of a maximal cyclic subgroup of the hidden quotient group
+Hϕ . The third computes the entire hidden quotient group Hϕ .
+   8A transversal for an epimorphism α
+                                           ϕ : Z −→ ZQ is an injection τϕ : ZQ −→ Z such that
+αϕ ◦ τϕ is the identity map on ZQ , i.e., a map that takes each element of ZQ onto a coset
+representative of the element in Z .
+    9The characters γ
+                      y/Q and γd/P can in the obvious way be identified with points of in the unit
+circle in the complex plane. With this identification, we can see that this inequalty is equivalent
+to saying the the chordal distance bewteen these two rational points on the unit circle is less than
+or equan to 1/2P 2 . Hence, Shor’s algorithm is using the topology of the unit circle.
+    10By a group probe A,e we mean an epimorphic image of the ambient group A.
+12                   SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+    The first step in creating a wandering Shor algorithm is to find the right gener-
+alization one of the primitives found in Shor’s algorithm, namely, the transversal
+ι : ZQ −→ Z of Shor’s factoring algorithm. In other words, we need to construct
+the ”correct” generalization of the transversal from ZQ to a free abelian group A
+of rank n. For this reason, we have created the following definition:
+
+
+
+
+Definition 4. Let A be the free abelian group of rank n, let ν : A −→ ZQ onto the
+                                                   a. A transversal11 ι : ZQ −→ A
+cyclic group ZQ of order Q with selected generator e
+of ν is said to be a Shor transversal provided that:
+
+      1) ι (ne
+             a) = nι (e
+                      a) for all 0 ≤ n < Q
+      2) For each (free
+                   P abelian)    basis a′1 , a′2 , . . . , a′n of A, the coefficients λ′1 , λ′2 , . . . , λ′n
+               a) = j λj aj satisfy gcd (λ′1 , λ′2 , . . . , λ′n ) = 1.
+         of ι (e         ′ ′
+
+
+
+
+Remark 3. Later, when we construct a generalization of Shor transversals to free
+groups of finite rank n, we will see that the first condition simply states that a
+Shor transversal is nothing more than a 2-sided Schreier transversal. The second
+condition of the above definition simply says that ι maps the generator e a of ZQ
+onto a generator of a free direct summand Z of A. (For more details, please refer
+to section 12 of this paper.)
+
+
+
+
+Remark 4. In [25], we show how to use the extended Euclidean algorithm to con-
+struct the epimorphism ν : A −→ ZQ and the transversal ι : ZQ −→ A.
+
+
+
+
+     11Let ν : A −→ B be an epimorphism from a group A to a group B.          Then a transversal
+τ of ν is is a map τ : B −→ A such that ν ◦ τ : B −→ A is the identity map b 7−→ b. (It
+immediately follows that τ is an injection.) In othere words, a transversal τ of an epimorphism
+ν is a map which maps eacl element b of B to an element of A contained in the coset b, i.e., to a
+coset representative of b.
+                                QHS ALGORITHMS                                   13
+
+
+
+
+ Figure 3. Flowchart for the first wandering Shor algorithm (a.k.a., a
+   vintage Shor algorithm). This algorithm finds the order P of a
+      maximal cyclic subgroup of the hidden quotient group Hϕ .
+
+
+
+
+   Flow charts for the three wandering Shor algorithms created in [25] are given in
+figures 3 through 5. In [25], these were also called vintage Shor algorithms.
+14           SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+
+
+Figure 4. Flowchart for the second wandering Shor algorithm (a.k.a., a
+   vintage Shor algorithm). This algorithm finds the order P of a
+      maximal cyclic subgroup of the hidden quotient group Hϕ .
+                           QHS ALGORITHMS                           15
+
+
+
+
+Figure 5. Flowchart for the third wandering Shor algorithm, a.k.a., a
+   vintage Shor algorithm. This algorithm finds the entire hidden
+                         quotient group Hϕ .
+16              SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+   The algorithmic complexities of the above wandering Shor algorithms is given in
+[25]. For example, the first wandering Shor algorithm is of time complexity
+                                                     
+                                        3         n+1
+                           O n2 (lg N ) (lg lg N )      ,
+
+where n is the rank of the free abelian group A. This can be readily deduced from
+the abbreviated flowchart given in figure 6.
+
+
+
+
+Figure 6. Abbreviated flowchart for the first wandering Shor algorithm.
+
+
+
+                8. Continuous (variable) Shor algorithms
+
+
+   In in [27] and in [29], the algorithmic primitives found in above sections of this
+paper were used to create a class of algorithms called continuous Shor algorithms.
+By a continuous variable Shor algorithm, we mean a quantum hidden subgroup
+algorithm that finds the hidden period P of an admissible function ϕ : R −→ R
+from the reals R to itself.
+                                 QHS ALGORITHMS                                    17
+
+
+Remark 5. By an admissible function, we mean a function belonging to any suf-
+ficiently well behaved class of functions. For example, the class of functions which
+are Lebesgue integrable on every closed interval of R. There, are many other classes
+of functions that work equally as well.
+
+
+
+   Actually, the papers [27], [29] give in succession three such continuous Shor
+algorithms, each successively more general than the previous.
+
+
+   For the first algorithm, we assume that the unknown hidden period P is an
+integer. The algorithm is then constructed by using rigged Hilbert spaces[4],
+[10], linear combinations of Dirac delta functions, and a subtle extension of the
+Fourier transform found in the generic QHS subroutine QRand(ϕ), which has
+been described previously in section 4 of this paper. In Step 5 of QRand(ϕ), the
+observable
+                                   Z∞
+                                         ⌊Qy⌋
+                              A=      dy        |yi hy|
+                                           Q
+                                   −∞
+
+is measured, where Q is an integer chosen so that Q ≥ 2P 2 . It then follows that the
+output of this algorithm is a rational m/Q which is a convergent of the continued
+fraction expansion of a rational of the form n/P .
+
+
+  The above quantum algorithm is then extended to a second quantum algorithm
+that finds the hidden period P of functions ϕ : R −→ R, where the unknown period
+P is a rational.
+
+
+   Finally, the second algorithm is extended to a third algorithm which finds the
+hidden period P of functions ϕ : R −→ R, when P is an arbitrary real number. We
+point out that for the third and last algorithm to work, we must impose a very
+restrictive condition on the map ϕ : R −→ R, i.e., the condition that the map ϕ is
+continuous.
+
+
+
+
+         9. The quantum circle and the dual Shor algorithms.
+
+
+  We have shown in previous sections how the mathematical primitives of pushing
+and lifting can be used to create new quantum algorithms. In particular, we have
+described how pushing and lifting can be used to derive new HSPs from an HSP
+ϕ : G −→ S on an arbitrary group G. We now see how group duality can be
+exploited by these two primitives to create even more quantum algorithms.
+18                SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+
+
+          Figure 7. Using duality to create new QHS algorithms.
+
+   To this end, we assume that G is an abelian group. Hence, its dual group of
+characters Gb exists12. It now follows that pushing and lifting can also be used to
+derive new HSPs from an arbitrary HSP Φ : G    b −→ S ′ on the dual group G. b In
+[27], this method is used to create a number of new quantum algorithms derived
+from Shor-like HSPs ϕ : Z −→ S.
+
+   A roadmap is shown in figure 8 of the developmental steps taken to find and to
+create a new QHS algorithm on ZQ , which is (in the sense described below) dual
+to Shor’s original algorithm. We call the algorithm developed in the final step of
+figure 8 the dual Shor algorithm.
+
+
+
+
+         Figure 8. Roadmap for creating the dual Shor algorithm.
+
+   12If G is non-abelian, then its dual is not a group, but instead the representation algebra A
+over the group ring CG. The methods described in this section can also be used to create new
+quantum algorithms for HSPs Φ : A −→ S on on the representation algebra A.
+                                      QHS ALGORITHMS                                          19
+
+
+   As indicated in figure 5, our first step is to create an intermediate QHS algo-
+rithm based on a Shor-like HSP ϕ : Z −→ S from the additive group of integers Z
+to a target set S. The resulting algorithm ”lives” in the infinite dimensional space
+HZ defined by the orthonormal basis {hn| : n ∈ Z}. This is a physically unem-
+plementable quantum algorithm created as a first steping stone in our algorithmic
+development sequence. Intuitively, this algorithm can be viewed as a ”distillation”
+or a ”purification” of Shor’s original algorithm.
+
+    As a next step, duality is used to create the quantum circle algorithm.
+This is accomplished by devising a QHS algorithm for an HSP Φ : R/Z −→ S on
+the dual group R/Z of the additive group of integers Z. (By R/Z, we mean the
+additive
+ 2πiθ      group of reals mod1, which is isomorphic to the multiplicative group
+  e     : 0 ≤ θ < 1 , i.e., the unit circle in the complex plane.) Once again, this
+is probably a physcally unemplementable quantum algorithm13. But its utility
+lies in the fact that it leads to the physically implementable quantum algorithm
+created in the last and final developmental step, as indicated in figure 8. For in
+the final step, a physically implementable QHS algorithm is created by lifting the
+HSP Φ : R/Z −→ S to an HSP Φ      e : ZQ −→ S. For the obvious reason, we call the
+resulting algorithm a dual Shor algorithm.
+
+   For detailed descriptions of each of these quantum algorithms, i.e., the ”distilled”
+Shor, the quantum circle, and the dual Shor algorithms, the reader is referred to
+[27] and [29].
+
+   We give below brief descriptions of the quantum circle and the dual Shor algo-
+rithms.
+
+   For the quantum circle algorithm, we make use of the following spaces (each
+of which is used in quantum optics):
+      • The rigged Hilbert space HR/Z with orthonormal basis {|xi : x ∈ R/Z}.
+        By “orthonormal” we mean that hx|yi = δ (x − y), where “ δ” denotes the
+        DiracHdelta function. The elements of HR/Z are formal integrals of the
+        form dx f (x) |xi. (The physicist Dirac in his classic book[6] on quantum
+        mechanics refers to these integrals as infinite sums. See also [4] and [10].)
+      • The complex vector space HZ of formal sums
+                         ( ∞                              )
+                            X
+                                 an |ni : an ∈ C ∀n ∈ Z
+                               n=−∞
+
+         with orthonormal basis {|ni : n ∈ Z}. By “orthonormal” we mean that
+         hn|mi = δnm , where δnm denotes the Kronecker delta.
+
+  We can now design an algorithm which solves the following hidden subgroup
+problem:
+
+Hidden Subgroup Problem for the Circle. Let Φ : R/Z −→ C be an ad-
+missible function from the circle group R/Z to the complex numbers C with hidden
+    13There is a possibility that the quantum circle algorithm may have a physical implementation
+in terms of quantum optics.
+ 20              SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+ rational period α ∈ Q/Z, where α ∈ Q/Z denotes the rational circle, i.e., the
+ rationals mod 1.
+
+ Remark 6. By an admissible function, we mean a function belonging to any suf-
+ ficiently well behaved class of functions. For example, the class of functions which
+ are Lebesgue integrable on R/Z. There, are many other classes of functions that
+ work equally as well.
+
+
+ Proposition 1. If α = a1 /a2 (with gcd (a1 , a2 ) = 1) is a rational period of a
+ function Φ : R/Z −→ C, then 1/a2 is also a period of Φ. Hence, the minimal
+ rational period of Φ is always a reciprocal integer mod 1.
+
+    The following quantum algorithm finds the reciprocal integer period of the func-
+ tion Φ.
+
+                                    Circle-Algorithm(Φ)
+
+Step 0. Initialization
+                                    |ψ0 i = |0i |0i ∈ HZ ⊗ HC
+
+
+Step 1. Application of the inverse Fourier transform F −1 ⊗ 1
+                     Z                      Z
+                             2πi·0
+              |ψ1 i = dx e         |xi |0i = dx |xi |0i ∈ HR/Z ⊗ HC
+
+
+Step 2. Step 2. Application of the unitary transformation Uϕ : |xi |ui 7→ |xi |u + Φ(x)i
+                               Z
+                       |ψ2 i = dx |xi |Φ(x)i ∈ HR/Z ⊕ HC
+
+
+Step 3. Application of the Fourier transform F ⊗ 1
+
+                                                       m
+ Remark 7. Remark. Letting xm = x −                      , we have
+                                                       a
+                 Z                                       (m+1)/a
+                                                           Z
+                                                 a−1
+                                                 X
+                     dx e   2πinx
+                                    |Φ(x)i =                      dx e−2πinx |Φ(x)i
+                                                 m=0
+                                                         m/a
+                                                                  m
+                                          Z1/a                                     m E
+                                    a−1
+                                    X                   −2πin xm +
+                               =             dxm e                       a   Φ xm +
+                                    m=0 0
+                                                                                    a
+
+                                          a−1
+                                                                ! Z1/a
+                                          X
+                                                     −2πinm/a
+                                    =            e                    dx e−2πinx |Φ (x)i
+                                          m=0                     0
+                                                  QHS ALGORITHMS                                             21
+
+
+ where 1/a is the unknown reciprocal period. But
+                a−1
+                X                              
+                      −2πinm/a                   a                          if n = 0 mod a
+                    e          = aδn=0 mod a =
+                                                 0                          otherwise
+                   m=0
+ Hence,
+                        Z                                                             ! Z1/a
+            X                                                   X
+                                   −2πinx
+  |ψ3 i =         |ni       dx e            |Φ (x)i =                |ni δn=0 mod a         dx e−2πinx |Φ (x)i
+            n∈Z                                                n∈Z                      0
+                                                                          
+                                      !       Z1/a
+                            X                                        X
+                   =              |ℓai            dx e−2πinx |Φ (x)i = |ℓai |Ω (ℓa)i
+                            ℓ∈Z               0                                  ℓ∈Z
+
+
+
+
+Step 4. Measurement of
+                                               X
+                                     |ψ3 i =            |ℓai |Ω (ℓa)i ∈ HZ ⊗HC
+                                                  ℓ∈Z
+
+          with respect to the observable
+                                     X
+                                                              n |ni hn|
+                                                        n∈Z
+
+          to produce a random eigenvalue ℓa.
+
+ Remark 8. The above quantum circle algorithm can be extended to a quantum
+ algorithm which finds the hidden period α of a function Φ : R/Z −→ C, when α is
+ an arbitrary real number mod 1. But in creating this extended quantum algorithm,
+ a very restrictive condition must be imposed on the map Φ : R/Z −→ C, namely,
+ the condition that Φ be continuous.
+
+   We now give a brief description of the dual Shor algorithm.
+
+     The dual Shor algorithm is a QHS algorithm created by making a discrete ap-
+ proximation of the quantum circle algorithm. More specifically, it is created by
+ lifting the QHS circle algorithm for ϕ : R/Z −→ C to the finite cyclic group ZQ , as
+ illustrated in the commutative diagram given below:
+                                      ZQ
+                                     µ↓         ցϕ
+                                                 e = P ush (ϕ) = ϕ ◦ µ
+                                     R/Z       −→ S
+ Intuitively, just as in Shor’s algorithm, the circle group R/Z is ”approximated”
+ with the finite cyclic group ZQ , where the group ZQ is identified with the additive
+ group                                             
+                               0 1             Q−1
+                                 , , . . . .,         mod 1 ,
+                              Q Q                Q
+ and where the hidden subgroup ZP is identified with the additive group
+                                                   
+                               0 1             P −1
+                                  , , . . . .,        mod 1 ,
+                               P P               P
+22               SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+with P = a2 .
+
+   This is a physically implementable quantum algorithm. In a certain sense, it is
+actually faster than Shor’s algorithm. For the last step of Shor’s algorithm uses the
+standard continued fraction algorithm to determine the unknown period. On the
+other hand, the last step of the dual Shor algorithm uses the much faster Euclidean
+algorithm to compute the greatest common divisor of the integers ℓ1 a, ℓ2 a, ℓ3 a, . . .,
+thereby determining the desired reciprocal integer period 1/a. For more details,
+please refer to [27] and [29].
+
+
+                10. A QHS algorithm for Feynman integrals.
+   We now discuss a QHS algorithm based on Feynman path integrals. This
+quantum algorithm was developed at the Mathematical Sciences Research Institute
+(MSRI) in Berkeley, California when one of the authors of this paper was challenged
+with an invitation to give a talk on the relation between Feynmann path integrals
+and quantum computing at an MSRI conference on Feynman path integrals.
+
+   Until recently, both authors of this paper thought that the quantum algorithm to
+be described below was a highly speculative quantum algorithm. For the existence
+of Feynman path integrals is very difficult (if not impossible) to determine in a
+mathematically rigorous fashion. But surprisingly, Jeremy Becnel in his doctoral
+dissertation [1] actually succeeded in creating a firm mathematical foundation for
+this algorithm.
+
+   We should mention, however, that the physical implementability of this algo-
+rithm is still yet to be determined.
+
+Definition 5. Definition. Let Paths be the real vector space of all continuous
+paths x : [0, 1] −→ Rn which are L2 with respect to the inner product
+                                     Z 1
+                              x·y =      ds x(s)y(s)
+                                         0
+with scalar multiplication and vector sum defined as
+      • (λx) (s) = λx (s)
+      • (x + y) (s) = x (s) + y (s)
+
+     We wish to create a QHS algorithm for the following hidden subgroup problem:
+
+Hidden Subgroup Problem for Paths. Let ϕ : Paths −→ C be a functional
+with a hidden subspace V of Paths such that
+                              ϕ (x + v) = ϕ (x) ∀v ∈ V
+
+  Our objective is to create a QHS algorithm which solves the above problem, i.e.,
+which finds the hidden subspace V .
+
+Definition 6. Let HPaths be the rigged Hilbert space with orthonormal basis {|xi : x ∈ Paths},
+and with bracket product hx|yi = δ (x − y).
+                                              QHS ALGORITHMS                                         23
+
+
+    We will use the following observation to create the QHS algorithm:
+                          [              
+ Observation. Paths =             v + V ⊥ , where V ⊥ denotes the orthogonal com-
+                             v∈V
+ plement of the hidden vector subspace V .
+
+    The QHS algorithm for Feynman path integral is given below:
+
+
+                                                  Feynman(ϕ)
+Step 0. Initialize
+                                     |ψ0 i = |0i |0i ∈ HP aths ⊗ HC
+
+
+
+Step 1. Apply F −1 ⊗ 1
+                                     Z                                        Z
+                       |ψ1 i =            Dx e2πix·0 |xi |0i =                    Dx |xi |0i
+                                 Paths                                    Paths
+
+
+
+
+Step 2. Apply Uϕ : |xi |ui 7→ |xi |u + ϕ(x)i
+                                      Z
+                             |ψ2 i =      Dx |xi |ϕ(x)i
+                                                  Paths
+
+
+
+
+Step 3. Apply F ⊗ 1
+                                          Z            Z
+                       |ψ3 i =                   Dy            Dx e−2πix·y |yi |ϕ (x)i
+                                           Z
+                                         Paths        Paths     Z
+                                 =               Dy |yi              Dx e−2πix·y |ϕ (x)i
+                                         Paths              Paths
+
+         But
+                Z                                          Z          Z
+                       Dx e−2πix·y |ϕ (x)i =                    Dv            Dx e−2πix·y |ϕ (x)i
+               Paths                                       V        v+V ⊥
+                                                  Z         Z
+                                              =        Dv        Dx e−2πi(v+x)·y |ϕ (v + x)i
+                                                  V        V⊥
+                                                  Z                       Z
+                                                                −2πiv·y
+                                              =       Dv e                     Dx e−2πix·y |ϕ (x)i
+                                                  V                       V⊥
+
+         However,
+                                 Z                              Z
+                                              −2πiv·y
+                                     Dv e                  =        Du δ (y − u)
+                                 V                             V⊥
+ 24              SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+         So,
+                             Z               Z                   Z
+               |ψ3 i =            Dy |yi         Dv e−2πiv·y         Dx e−2πix·y |ϕ (x)i
+                         Pathsn              V                  V⊥
+                         Z                  Z                    Z
+                  =              Dy |yi          Du δ (y − u)        Dx e−2πix·y |ϕ (x)i
+                      Pathsn               V⊥                   V⊥
+                                      Z               Z
+                                  =        Du |ui          Dx e−2πix·u |ϕ (x)i
+                                      V⊥              V⊥
+                                                 Z
+                                            =         Du |ui |Ω (u)i
+                                                 V⊥
+
+
+Step 4. Measure                                   Z
+                                       |ψ3 i =        Du |ui |Ω (u)i
+                                                 V⊥
+         with respect to the observable
+                                     Z
+                                A=      Dw |wi hw|
+                                                 Paths
+
+         to produce a random element of V ⊥
+
+    The above algorithm suggests an intriguing question. Can the above QHS Feyn-
+ man integral algorithm be modified in such a way as to create a quantum algorithm
+ for the Jones polynomial? In other words, can it be modified by replacing Paths
+ with the space of gauge connections, and making suitable modifications?
+
+    This question is motivated by the fact that the integral over gauge transforma-
+ tions                              Z
+                            b
+                           ψ (K) = DA ψ (A) WK (A)
+ looks very much like a Fourier transform, where
+                                              I  
+                          WK (A) = tr P exp       A
+                                                                     K
+ denotes the Wilson loop over the knot K.
+
+
+                         11. QHS algorithms on free groups
+
+    In this and the following section of this paper, our objective is to show that a
+ free group is the the most natural domain for QHS algorithms. In retrospect, this
+ is not so surprising if one takes a discerning look at Shor’s factoring algorithm. For
+ in section 6, we have seen that Shor’s algorithm is essentially a QHS algorithm on
+ the free group Z which has been pushed onto the finite group ZQ .
+
+    In particular, let ϕ : G −→ S be a map with hidden subgroup structure from a
+ finitely generated (f.g.) group G to a set S. We assume that the hidden subgroup
+                                       QHS ALGORITHMS                                            25
+
+
+K is a normal subgroup of G of finite index. Then the objectives of this section
+are to demonstrate the following:
+
+      • Every hidden subgroup problem (HSP) ϕ : G −→ S on an arbitray f.g.
+        group G can be lifted to an HSP ϕ  e : F −→ S on a free group F of finite
+        rank.
+      • Moreover, a solution for the lifted HSP ϕ e : F −→ S is for all practical
+        purposes the same as the solution for the original HSP ϕ : G −→ S.
+
+   Thus, one need only investigate QHS algorithms for free groups of finite rank!
+
+   Before we can describe the above results, we need to review a number of defini-
+tions. We begin with the definition of a free group:
+
+Definition 7 (Universal Definition). A group F is said to be free of finite rank n
+if there exists a finite set of n generators X = {x1 , x2 , . . . , xn } such that, for every
+group G and for every map f : X −→ G of the set X into the group G, the map f
+extends to a morphism fe : F −→ G. We call the set X a free basis of the group
+F , and frequently denote the group F by F (x1 , x2 , . . . , xn ), . It follows from this
+definition that the morphism fe is unique.
+
+   The intuitive idea encapsulated by this definition is that a free group is an
+unconstrained group (very much analogous to a physical system without boundary
+conditions.) In other words, a group is free provided it has a set of generators
+such that the only relations among those generators are those required for F to be
+a group. For example,
+      • xi x−1
+            i  = 1 is an allowed relation
+      • xi xj = xj xi is not an allowed relation for i 6= j
+      • x3i = 1 is not an allowed relation
+
+  As an immediate consequence of the above definition, we have the following
+proposition:
+
+Proposition 2. Let G be an arbitrary f.g. group with finite set of n generators
+{g1 , g2 , . . . , gn }, and let F = F (x1 , x2 , . . . , xn ) be the free group of rank n with free
+basis {x1 , x2 , . . . , xn }.
+   Then by the above definition, the map xj 7−→ gj (j = 1, 2, . . . , n) induces a
+uniques epimorphism ν : F −→ G from F onto G. With this epimorphism, every
+HSP ϕ : G −→ S on the group G uniquely lifts to the HSP ϕ                    e = ϕ ◦ ν : F −→ S on
+the free group F .
+   Moreover, if K and K          e are the hidden subgroups of the HSPs ϕ and ϕ,           e respec-
+tively, the corresponding hidden quotient groups G/K and F/K of these two HSPs e
+are isomorphic. Hence, every solution of the HSP ϕ                   e : F −→ S immediately pro-
+duces a solution of the original HSP ϕ : G −→ S.
+
+   We close this section with the defintion of a group resentation, a concept that
+will be needed in the next section for generalizing Shor’s algorithm to free groups.
+26                    SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+Definition 8. Let G be a group. A group presentation
+                                    (x1 , x2 , . . . , xn : r1 , r2 , . . . , rm )
+for G is a set of free generators x1 , x2 , . . . , xn of a free group F and a set of
+words r1 , r2 , . . . , rn in F (x1 , x2 , . . . , xn ), called relators, such that the group G
+is isomorphic to the quotient group F (x1 , x2 , . . . , xn ) /Cons (r1 , r2 , . . . , rn ), where
+Cons (r1 , r2 , . . . , rn ), called the consequence of r1 , r2 , . . . , rn , is the smallest nor-
+mal subgroup of F (x1 , x2 , . . . , xn ) containing the relators r1 , r2 , . . . , rn .
+
+   The intuition captured by the above definition is that x1 , x2 , . . . , xn are the
+generators of G, and r1 = 1, r2 = 1, . . . , rn = 1 is a complete set of relations among
+these generators, i.e., every relation among the generators of G is a consequence
+of (derivable from) the relations r1 = 1, r2 = 1, . . . , rn = 1. For example,
+                                                                                               
+      • (x1 , x2 , . . . , xn :) and x1 , x2 , . . . , xn : x1 x1−1 , x52 x−5            −1 −1
+                                                                              2 , x3 x4 x4 x3    are both
+         presentations
+                            of the free group    F   (x1 , x2 , . . . , xn )
+      • x : xQ and x : xa , xb are both presentations of the cyclic group ZQ of
+         order
+               Q, where a and bare integers such that gcd (a, b) = Q.
+                                             2
+       •    x1 , x2 : x31 , x22 , (x1 x2 )       is a presentation of the symmetric group S3 on
+           three symbols.
+
+
+                12. Generalizing Shor’s algorithm to free groups
+
+   The objective of this section is to generalize Shor’s algorithm to free groups of
+finite rank14. The chief obstacle to accomplishing this goal is finding a correct
+generalization of the Shor transversal
+                                                   τ
+                                    ZQ            −→      Z
+                                  n mod Q         7−→     n ( 0 ≤ n < Q)
+Unfortunately, there appear to be few mathematical clues indicating how to go
+about making such a generalization. However, as we shall see, the generalization
+of the Shor transversal to the transversal found in the wandering Shor algorithm
+does provide a crucial clue, suggesting that a generalized Shor transversal must be
+a 2-sided Schreier transversal. (See section 7.)
+
+     We begin by formulating a constructive approach to free groups:
+
+Definition 9. Let F (x1 , x2 , . . . , xn ) be a free group with free basis x1 , x2 , . . . , xn .
+Then a word is a finite string of the symbols x1 , x1−1 , x2 , x−1                             −1
+                                                                            2 , . . . , xn , xn .      A
+                                                                                        −1        −1
+reduced word is a word in which there is no substring of the form xj xj or xj xj .
+Two words are said to be equivalent if one can be transformed into the other by
+applying a finite number of substring insertions or deletions of the form xj x−1                  j   or
+x−1
+ j  xj . We  denote an arbitrary       word   w by  w = a 1 a 2 · · · a ℓ , where   each    a j =   x±1
+                                                                                                     kj .
+
+   14We remind the reader that, in section 6, we showed that Shor’s algorithm is essentially a
+QHS algorithm on the free group Z of rank 1 constructed by a push onto the cyclic group ZQ .
+In light of this and of the results outlined in the previous section, it is a natural objective to
+generalize Shor’s algorithm to free groups of finite rank.
+                                      QHS ALGORITHMS                                            27
+
+
+The length |w| of a word w = a1 a2 · · · aℓ is number of symbols xk±1
+                                                                    j
+                                                                      that appear in
+w, i.e., |w| = ℓ.
+
+   For example, x2 x−1    −1 −1 −1 −1
+                    1 x1 x1 x5 x5 x5 x5 is a word of length 8 which is equivalent
+                        −1 −1 −1
+to the reduced word x2 x1 x5 x5 of length 4.
+
+  It easily follows that:
+
+Proposition 3. A free group F (x1 , x2 , . . . , xn ) is simply the set of reduced words
+together with the obvious definition of product, i.e., concatenation followed by full
+reduction.
+
+   We can now use this constructive approach to create a special kind of transversal
+τ : G −→ F of an epimorphism ν : F −→ G, called a 2-sided Scheier transversal[14]:
+
+Definition 10. A set W of reduced words in a free group F = F (x1 , x2 , . . . , xn )
+is said to be a 2-sided Schreier system provided
+      • The empty word 1 lies in W.
+      • w = a1 a2 · · · aℓ−1 aℓ ∈ W ⇒ wLef t = a1 a2 · · · aℓ−1 ∈ W, and
+      • w = a1 a2 · · · aℓ−1 aℓ ∈ W ⇒ wRight = a2 · · · aℓ−1 aℓ ∈ W
+Given an epimorphism ν : F −→ G of the free group F onto a group G, a 2-sided
+Schreier transversal τ : G −→ F for ν is a transversal of ν for which there exists
+a 2-sided Schreier system such that τ (G) = W. A 2-sided Schreier transversal is
+said to be minimal provided the length of each word w is less than or equal to
+the length of each reduced word in the coset wKer (ν) = Ker (ν) w, where Ker (ν)
+denotes the kernel of the epimorpism ν.
+
+   The wandering Shor algorithm found in section 7 suggests that a correct gener-
+alization of the Shor transversal n mod N 7−→ n (0 ≤ n < Q) must at least have
+the property that it is a minimal 2-sided Schreier transversal. Whatetever other
+additional properties this generalization must have is simply not clear.
+
+   In [31], we construct and investigate a number of different QHS algorithms on
+free groups that arise from the application of various additional conditions imposed
+upon the minimal 2-sided Schreier transversal requirement. In this section, we only
+give a descriptive sketch of the simplest of these algorithms, i.e., a QHS algorithm on
+free groups with only the minimal 2-sided Schreier transversal requirement imposed.
+
+   Let F = F (x1 , x2 , . . . , xn ) be the free group of finite rank n with free basis
+X = {x1 , x2 , . . . , xn }, and let ϕ : F −→ S be an HSP on the free group F . We
+assume that the hidden subgroup K is normal and of finite index in F . (Please
+note that K = Ker (ϕ) = ϕ−1 ϕ (1) .)
+
+      • Choose a finite group probe G with presentation (x1 , x2 , . . . , xn : r1 , r2 , . . . , rm )ν ,
+        where the subscript ν denotes the epimorphism ν : F −→ G induced by the
+        map xj 7−→ xj Cons (r2 , . . . , rm ).
+      • Choose a minimal 2-sided Schreier transversal τ : G −→ F of the epimor-
+        phism ν : F −→ G.
+ 28                 SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+       • Finally, construct the push
+                              ϕ
+                              e = P ush (ϕ) = ϕ ◦ τ : G −→ S
+
+
+    Our generalized Shor algorithm for the free group F consists of the following
+ steps:
+
+Step 1. Call QRand(ϕ)  e to produce a word s′j in F close to a word sj lying in
+          −1
+        ϕ ϕ (1).
+Step 2. With input s′j , use a polytime classical algorithm to determine sj . (See
+        [31].)
+Step 3. Repeat Steps 1 and 2 until enough relators sj ’s are found to produce a
+        presentation
+                           (x1 , x2 , . . . , xn : s1 , s2 , . . . , sℓ )
+          of the hidden subgroup F/K, then output the presentation (x1 , x2 , . . . , xn : s1 , s2 , . . . , sℓ ),
+          and Stop.
+
+    Obviously, much more needs to be said. For, example, we have not explained
+ how one chooses the relators rj so that G = (x1 , x2 , . . . , xn : r1 , r2 , . . . , rm ) is a
+ good group probe. Moreover, we have not explained what classical algorithm is
+ used to transform the words s′j into the relators sj . For more details, we refer the
+ reader to [31].
+
+
+                  13. Is Grover’s algorithm a QHS algorithm?
+
+
+     In this section, our objective is to factor Grover’s algorithm into the QHS prim-
+ itives developed in the previous sections of this paper. As a result, we will show
+ that Grover’s algorithm is more closely related to Shor’s algorithm than one might
+ at first expect. In particular, we will show that Grover’s algorithm is a QHS al-
+ gorithm in the sense that it solves an HSP ϕ : SN −→ S, which we will refer to as
+ the Grover HSP. However, we will then show that the standard QHS algorithm
+ for this HSP cannot possibly find a solution.
+     We begin with a question:
+
+            Does Grover’s algorithm have symmetries that we can exploit?
+
+    The problem solved by Grover’s algorithm [24], [11], [12], [13] is that of finding
+ an unknown integer label j0 in an unstructured database with items labeled by the
+ integers:
+
+                            0, 1, 2, . . . , j0 , . . . , N − 1 = 2n − 1 ,
+ given the oracle
+                                            
+                                                1 if j = j0
+                                  f (j) =
+                                                0 otherwise
+                                       QHS ALGORITHMS                                              29
+
+
+   Let H be the Hilbert space with orthonormal basis |0i , |1i , |2i , . . . , |N − 1i.
+ Grover’s oracle is essentially given by the unitary transformation
+                                      I|j0 i : H −→            H
+                                                           f (j)
+                                       |ji 7−→ (−1)                |ji
+ where I|j0 i = I − 2 |j0 i hj0 | is inversion in the hyperplane orthogonal to |ji. Let
+ W denote the Hadamard transformation on the Hilbert space H. Then Grover’s
+ algorithm is as follows:
+
+Step 0. (Initialization)
+                                                               N −1
+                                               1 X
+                               |ψi ←− W |0i = √      |ji
+                                               N j=0
+                                            k     ←− 0
+                        √
+Step 1. Loop until k ≈ π N /4
+                            |ψi ←− Q |ψi = −W I|0i W I|j0 i |ψi
+                                        k       ←− k + 1
+Step 2. Measure |ψi with respect to the standard basis
+                                   |0i , |1i , |2i , . . . , |N − 1i
+          to obtain the unknown state |j0 i with
+                                                          1
+                                         P rob ≥ 1 −
+                                                          N
+
+    But where is the hidden symmetry in Grover’s algorithm?
+
+    Let SN be the symmetric group on the symbols 0, 1, 2, . . . , N − 1. Then Grover’s
+ algorithm is invariant under the hidden subgroup Stabj0 = {g ∈ SN : g (j0 ) = j0 } ⊂
+ SN ,called the stabilizer subgroup for j0 , i.e., Grover’s algorithm is invariant un-
+ der the group action
+                             Stabj0 × H     −→      H
+                         X                  XN −1
+                            N −1
+                         g,      aj |ji  7−→        aj |g (j)i
+                                j=0                            j=0
+
+
+    Moreover, if we know the hidden subgroup Stabj0 , then we know j0 , and vice
+ versa. In other words, the problem of finding the unknown label j0 is informationally
+ the same as the problem of finding the hidden subgroup Stabj0 .
+
+    Let (ij) ∈ SN denote the permutation that interchanges integers i and j, and
+ leaves all other integers fixed. Thus, (ij)is a transposition if i 6= j, and the identity
+ permutation 1 if i = j.
+
+ Proposition 4. The set {(0j0 ) , (1j0 ) , (2j0 ) , . . . , ((N − 1) j0 )} is a complete set of
+ distinct coset representatives for the hidden subgroup Stabj0 of SN , i.e., the coset
+ space SN /Stabj0 is given by the following complete set of distinct cosets:
+    SN /Stabj0 = {(0j0 ) Stabj0 , (1j0 ) Stabj0 , (2j0 ) Stabj0 , . . . , ((N − 1) j0 ) Stabj0 }
+30                   SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+   We can now see that Grover’s algorithm is a hidden subgroup algorithm in the
+sense that it is a quantum algorithm which solves the following hidden subgroup
+problem:
+
+Grover’s Hidden Subgroup Problem. Let ϕ : SN −→ S be a map from
+the symmetric group SN to a set S = {0, 1, 2, . . . , N − 1} with hidden subgroup
+structure given by the commutative diagram
+                                   SN           −→          S
+                                  νj0 ց                    րι   ,
+                                            SN /Stabj0
+where νj0 : SN −→ SN /Stabj0 is the natural surjection of SN on to the coset space
+SN /Stabj0 , and where
+
+                             ι : SN /Stabj0 −→ S
+                                (jj0 ) Stabj0 7−→ j
+is the unknown relabeling (bijection) of the coset space SN /Stabj0 onto the set S.
+Find the hidden subgroup Stabj0 with bounded probability of error.
+
+     Now let us compare Shor’s algorithm with Grover’s.
+
+   From section 6, we know that Shor’s algorithm [21], [25], [35], [36] solves the
+hidden subgroup problem ϕ : Z −→ ZN with hidden subgroup structure
+                                       Z        −→         ZN
+                                       νց                 րι
+                                               Z/P Z
+Moreover, as stated in section 6, Shor has created his algorithm by pushing15 the
+above hidden subgroup problem ϕ : Z −→ ZN to the hidden subgroup problem
+ϕ
+e : ZQ −→ ZN (called Shor’s oracle), where the hidden subgroup structure of ϕ e is
+given by the commutative diagram
+                                    Z            −→         ZN
+                                    α ցտ τ               րϕ
+                                                          e= ϕ◦τ    ,
+                                                 ZQ
+where α is the natural epimorphism of Z onto ZQ , and where τ is Shor’s chosen
+transversal for the epimorphism α.
+
+   Surprisingly, Grover’s algorithm, viewed as an algorithm that solves the Grover
+hidden subgroup problem, is very similar to Shor’s algorithm.
+
+   Like Shor’s algorithm, Grover’s algorithm solves a hidden subgroup problem, i.e.,
+the Grover hidden subgroup problem ϕ : SN −→ S with hidden subgroup structure
+                                    SN          −→         S
+                                    νց                    րι    ,
+                                            SN /Stabj0
+where S = {0, 1, 2, . . . , N − 1} denotes the set resulting from an unknown relabeling
+(bijection)
+                                     (jj0 ) Stabj0 7−→ j
+     15See Section II.A.6 for a definition of pushing.
+                                     QHS ALGORITHMS                                           31
+
+
+of the coset space
+ SN /Stabj0 = {(0j0 ) Stabj0 , (1j0 ) Stabj0 , (2j0 ) Stabj0 , . . . , ((N − 1) j0 ) Stabj0 } .
+
+
+   Also, like Shor’s algorithm, we can think of Grover’s algorithm as one created
+by pushing the Grover hidden subgroup problem ϕ : SN −→ S to the hidden
+subgroup problem ϕ   e : SN /Stabj0 −→ S, where the pushing is defined by the
+following commutative diagram
+                     SN              −→                   S = SN /Stabj0
+                     α ցտ τ                             րϕ
+                                                         e=ϕ◦τ                    ,
+                                 SN /Stab0
+where α : SN −→ SN /Stab0 denotes the natural surjection of SN onto the coset
+space SN /Stab0 , and where τ : SN /Stab0 −→ SN denotes the transversal of α given
+by
+                             SN /Stab0 −→ SN
+                                                     .
+                             (j0) Stab0 7−→ (j0)
+
+  Again also like Shor’s algorithm, the map ϕ
+                                            e given by
+                           SN /Stab0      −→      SN /Stabj0 = S
+                             (j0) Stab0 7→ (jj0 ) Stabj0 = j
+is (if j0 6= 0) actually a disguised Grover’s oracle. For the map ϕ
+                                                                  e can easily be
+shown to simply to
+                                     
+                                       (j0)Stabj0 if j = j0
+                    ϕ
+                    e ((j0)Stab0 ) =
+                                       Stabj0       otherwise ,
+which is informationally the same as Grover’s oracle
+                                     
+                                       j if j = j0
+                             f (j) =
+                                       1 otherwise
+
+   Hence, we can conclude that Grover’s algorithm is a quantum algorithm very
+much like Shor’s algorithm, in that it is a quantum algorithm that solves the Grover
+hidden subgroup problem.
+
+   However, . . . , this appears to be where the similarity between Grover’s and Shor’s
+algorithms ends. For the standard non-abelian QHS algorithm for SN cannot find
+the hidden subgroup Stabj0 for each of following two reasons:
+     • Since the subgroups Stabj are not normal subgroups of SN , it follows from
+       the work of Hallgren et al [16], [17] that the standard non-abelian hidden
+       subgroup algorithm will find the largest normal subgroup of SN lying in
+       Stabj0 . But unfortunately, the largest normal subgroup of SN lying in
+       Stabj is the trivial subgroup of SN .
+     • The subgroups Stab0 , Stab1 , . . . , StabN −1 are mutually conjugate subgroups
+       of SN . Moreover, one can not hope to use this QHS approach to Grover’s
+       algorithm to find a faster quantum algorithm. For Zalka [40] has shown
+       that Grover’s algorithm is optimal.
+        32                SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+           The arguments given above suggest that Grover’s and Shor’s algorithms are more
+        closely related that one might at first expect. Although the standard non-abelian
+        QHS algorithm on SN can not solve the Grover hidden subgroup problem, there
+        does remain an intriguing question:
+
+        Question. Is there some modification of (or extension of ) the standard QHS al-
+        gorithm on the symmetric group SN that actually solves Grover’s hidden subgroup
+        problem?
+
+           For a more in-depth discussion of the results found in this section, we refer the
+        reader to [30].
+
+
+         14. Beyond QHS algorithms: The suggestions of a meta-scheme for
+                         creating new quantum algorithms
+
+           In this paper, we have decomposed Shor’s quantum factoring algorithm into
+        primitives, generalized these primitives, and then reassembled them into a wealth
+        of new QHS algorithms. But as the results found in the previous section suggest,
+        this list of quantum algorithmic primitives is far from complete. This is expressed
+        by the following question:
+
+             Where can we find more algorithmic primitives to create a more well rounded
+                            toolkit for quantum algorithmic development?
+
+         The previous section suggests that indeed all quantum algorithms may well be
+      hidden subgroup algorithms in the sense that they all find hidden symmetries, i.e.,
+      hidden subgroups. This is suggestive of the following meta-procedure for quantum
+      algorithm development:
+Meta-Step 1. Explicitly state the problem to be solved.
+Meta-Step 2. Rephrase the problem as a hidden symmetry problem.
+Meta-Step 3. Create a quantum algorithm to find the hidden symmetry.
+
+                           Can this meta-procedure be made more explicit?
+
+             Perhaps some reader to this paper will be able to answer this question.
+
+
+                                      15. Acknowledgement
+
+           This work is partially supported by the Defense Advanced Research Projects
+        Agency (DARPA) and Air Forche Research Laboratory, Air Force Materiel Com-
+        mand, USAF, under agreement number F30602-01-2-0522. The U.S. Government is
+        authorized to reproduce and distribute reprints for Governmental purposes notwith-
+        standing any copyright annotation thereon. This work also partially supported
+        by the Institute for Scientific Interchange (ISI), Torino, the National Institute of
+        Standards and Technology (NIST), the Mathematical Sciences Research Institute
+        (MSRI), the Isaac Newton Institute for Mathematical Sciences, and the L-O-O-P
+        fund.
+                                     QHS ALGORITHMS                                          33
+
+
+                                        References
+ [1] Becnel, Jeremy, Doctoral dissertation, (2006).
+ [2] Bernstein, Ethan, and Umesh Vazirani, Quantum Complexity Theory, SIAM Journal of
+     Computing, Vol. 26, No. 5, (1997), 1411-1473.
+ [3] Biham, Eli, Ofer Biham, David Biron, Markus Grassl, and Daniel A. Lidar, Grover’s quan-
+     tum search algorithm for an arbitrary ininitial amplitude distribution, Phys Rev
+     A 60, (1999), 2742-2745.
+ [4] Bohm, A., ”The Rigged Hilbert Space and Quantum Mechanics,” Springer-Verlag,
+     (1978).
+ [5] Cleve, Richard, Artur Ekert, Chiara Macchiavello, and Michele Mosca, Quan-
+     tum     Algorithms       Revisited,     Phil. Trans. Roy. Soc. Lond.,           A, (1997).
+     http://xxx.lanl.gov/abs/quant-ph/9708016
+ [6] Dirac, P.A.M., ”The Principles of Quantum Mechanics,” (Fourth edition), Oxford
+     Science Pubilications, (1991).
+ [7] Ekert, Artur K.and Richard Jozsa, Quantum computation and Shor’s factoring algo-
+     rithm, Rev. Mod. Phys., 68,(1996), pp 733-753.
+ [8] Ettinger, Mark, and Peter Hoyer, On Quantum Algorithms for Noncommutative Hid-
+     den Subgroups, (1998). http://xxx.lanl.gov/abs/quant-ph/9807029
+ [9] Fulton, William, and Joe Harris, “Representation Theory,” Springer-Verlag, (1991).
+[10] Gadella, M., and F. Gomez, A unified mathematical formalism for the Dirac formulation of
+     quantum mechanics, Plenum Publishing Corporation, (2002), 815-869.
+[11] Grover, Lov K., in Proc. 28th Annual ACM Symposium on the Theory of Computation, ACM
+     Press, new York, (1996), 212-219.
+[12] Grover, Lov K., Quantum mechanics helps in searching for a needle in a haystack,
+     Phys. Rev. Lett., 79(2),(1997). (http://xxx.lanl.gov/abs/quant-ph/9706033)
+[13] Grover, Lov K., A framework for fast quantum mechanical algorithms,
+     http://xxx.lanl.gov/abs/quant-ph/9711043
+[14] Hall, Marshall, “The Theory of Groups,” Macmillan Company, (1967).
+[15] Hales, Lisa R., The quantum Fourier transform and extensions of the abelian hidden subgroup
+     problem, (UC Berkeley thesis), http://xxx.lanl.gov/abs/quant-ph/0212002.
+[16] Hallgren, Sean, Alexander Russell, Amnon Ta-Shma, The Hidden subgroup problem
+     and quantum computation using group representations, Proceedings of the Thirty-
+     Second Annual ACM Symposium on Theory of Computing, Portland, Oregon, May 2000,
+     627-635.
+[17] Hallgren, Sean, Alexander Russell, Amnon Ta-Shma, The Hidden subgroup problem
+     and quantum computation using group representations, SIAM J. Comput., Vol. 32,
+     No. 4, (2003), 916-934.
+[18] Ivanyos, Gabor, Frederic Magniez, and Miklos Santha, Efficient quantum algorithms
+     for some instances of the non-Abelian hidden subgroup problem, (2001).
+     http://xxx.lanl.gov/abs/quant-ph/0102014
+[19] Jozsa, Richard, Quantum factoring, discrete logarithms and the hidden
+     subgroup problem, IEEE Computing in Science and Engineering, (to appear).
+     http://xxx.lanl.gov/abs/quant-ph/0012084
+[20] Kitaev, A., Quantum measurement and the abelian stabiliser problem, (1995),
+     quant-ph preprint archive 9511026.
+[21] Lomonaco, Samuel J., Jr., Shor’s Quantum Factoring Algorithm, AMS PSAPM/58,
+     (2002), 161-179. (http://arxiv.org/abs/quant-ph/0010034)
+[22] Lomonaco, Samuel J., Jr., (ed.), ”Quantum Computation: A Grand Mathematical
+     Challenge for theTwenty-First Century and the Millennium,” Proceedings of the
+     Symposia of Applied Mathematics, vol. 58, American Mathematical Society, Providence,
+     Rhode Island, (2002). (358 pages)
+     (http://www.ams.org/bookstore?fn=20&arg1=whatsnew&item=PSAPM-58)
+     (http://www.csee.umbc.edu/˜lomonaco/ams/Lecture Notes.html)
+[23] Lomonaco, Samuel J., Jr., and Howard E. Brandt, (eds.), ”Quantum Computation and
+     Information,” AMS Contemporary Mathematics, vol. 305, American Mathematical Society,
+     Providence, RI, (2002). (310 pages)
+     (http://www.csee.umbc.edu/∼lomonaco/ams/Special.html)
+34                  SAMUEL J. LOMONACO, JR. AND LOUIS H. KAUFFMAN
+
+
+[24] Lomonaco, Samuel J., Jr., Grover’s quantum search algorithm, AMS PSAPM/58,
+     (2002), 181-192. (http://arxiv.org/abs/quant-ph/0010040)
+[25] Lomonaco, Samuel J., Jr., and Louis H. Kauffman, Quantum Hidden Subgroup
+     Algorithms: A Mathematical Perspective, AMS CONM/ 305, (2002), 139-202.
+     (http://arxiv.org/abs/quant-ph/0201095)
+[26] Lomonaco, Samuel L., Jr., A Rosetta stone for quantum mechanics with
+     an introduction to quantum computation, AMS PSAPM/58, (2002), 3-65.
+     (http://arxiv.org/abs/quant-ph/0007045)
+[27] Lomonaco, Samuel J., Jr., and Louis H. Kauffman, Continuous quantum hidden sub-
+     group algroithms, SPIE Proceedings on Quantum Information and Computation, Vol.
+     5105, 11, (2003), 80-89. (http://arxiv.org/abs/quant-ph/0304084)
+[28] Lomonaco, Samuel J., Jr., and, Louis H. Kauffman, Quantum Hidden Subgroup Algo-
+     rithms: The Devil Is in the Details, 2004 Proceedings of SPIE Proceedings on Quantum
+     Information and Computation, (2004), 137-141. http://arxiv.org/abs/quant-ph/0403229
+[29] Lomonaco, Samuel J., Jr., and Louis H. Kauffman, A Continuous Variable Shor Algo-
+     rithm, AMS CONM/381, (2005), 97-108. (http://arxiv.org/abs/quant-ph/0210141)
+[30] Lomonaco, Samuel J., and Louis H. Kauffman, Is Grover’s algorithm a quantum hidden
+     subgroup algorithm?, (http://arxiv.org/abs/quant-ph/0603140).
+[31] Lomonaco, Samuel J., Jr., and Louis H. Kauffman, Quantum hidden subgroup algo-
+     rithms on free groups, (in preparation).
+[32] Lomonaco, Samuel J., Jr., The non-abelian Fourier transform and quantum compu-
+     tation, MSRI Streaming Video, (2000),
+     http://www.msri.org/publications/ln/msri/2000/qcomputing/lomonaco/1/index.html
+[33] Mosca, Michelle, and Artur Ekert, The Hidden Subgroup Problem and Eigenvalue
+     Estimation on a Quantum Computer, Proceedings of the 1st NASA International Con-
+     ference on Quantum Computing and Quantum Communication, Springer-Verlag, (2001).
+     (http://xxx.lanl.gov/abs/quant-ph/9903071 )
+[34] Russell, Alexander, and Amnon Ta-Shma, Normal Subgroup Reconstruction and
+     Quantum Computation Using Group Representations, STOC, (2000).
+[35] Shor, Peter W., Polynomial time algorithms for prime factorization and discrete
+     logarithms on a quantum computer, SIAM J. on Computing, 26(5) (1997), pp 1484 -
+     1509. (http://xxx.lanl.gov/abs/quant-ph/9508027)
+[36] Shor, Peter W., Introduction to quantum algorithms, AMS PSAPM/58, (2002), 143-
+     159. (http://xxx.lanl.gov/abs/quant-ph/0005003 )
+[37] Vazirani, Umesh, On the power of quantum computation, Philosophical Tranactions of
+     the Royal Society of London, Series A, 354:1759-1768, August 1998.
+[38] Vazirani, Umesh, A survey of quantum complexity theory, AMS PSAPM/58, (2002),
+     193-217.
+[39] van Dam, Wim, and Lawrence, Ip, Quantum Algorithms for Hidden Coset Problems,
+     http://www.cs.caltech.edu/˜hallgren/hcp.pdf
+[40] Zalka, Christof, Grover’s quantum searching algorithm is optimal, Phys. Rev. A, Vol.
+     60, No. 4, (1999), 2746-2751. (http://xxx.lanl.gov/abs/quant-ph/9711070)
+
+     University of Maryland Baltimore County (UMBC), Baltimore, MD 21250
+     E-mail address: Lomonaco@umbc.edu
+     URL: http://www.csee.umbc.edu/~lomonaco
+
+     Current address: University of Illinois at Chicago (UIC), Chicago, IL 60607
+     E-mail address: Kauffman@uic.edu
+     URL: http://www.math.uic.edu/~kauffman
+

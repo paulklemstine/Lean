@@ -1,0 +1,818 @@
+Research
+Research
+About
+Research
+Teaching
+Talks
+Students
+Activities
+Photos
+Contact
+Surveys
+A
+primer on the closure of algebraic complexity classes under
+factoring.
+Proceedings of the Workshop
+RTCA'23
+,
+IHP Paris,
+submitted 2025. (Invited by the editor). [
+pdf
+]
+How easy is it to describe hard polynomials?: Technical
+Perspective [Opinion]
+Communications
+of the
+ACM
+, vol.67(2), pp.100, 2024. (Invited by the editor). [
+pdf
+]
+Research in theoretical computer science. [Big trends]
+with Meena Mahajan and Madhavan Mukund
+Communications
+of the ACM
+, 62(11), 92-95, 2019. (Invited by the editor). [
+pdf
+]
+Progress on Polynomial Identity Testing-II.
+Proceedings of the Workshop celebrating Somenath Biswas' 60th
+Birthday,
+Perspectives in Computational Complexity, vol.26
+of Progress in Computer Science and Applied Logic, 131-146, 2014.
+(Invited by the editor). [
+pdf
+]
+Progress on Polynomial Identity
+Testing.
+Bulletin of the EATCS,
+no.99,
+49-79,
+October
+2009. (Invited by the editor). [
+pdf
+]
+Proceedings
+& Journals
+Matrix identities are hard: Fast blackbox PIT for noncommutative
+exponential-size constant-depth homogeneous circuits
+with Foram Lakhani
+38th ACM-SIAM Symposium on Discrete Algorithms (SODA 2027)
+.
+[
+pdf
+]
+Counting points on surfaces in polynomial time
+with Madhavan Venkatesh
+submitted
+, 2025. [
+pdf
+]
+Primes via Zeros: interactive proofs for testing primality of
+natural classes of ideals
+with Abhibhav Garg and Rafael Oliveira
+57th Annual ACM Symposium on Theory of Computing (STOC)
+,
+2025. [
+pdf
+]
+[
+talk
+]
+MQuBS: A Short, Round-Optimal Blind Signature from Multivariate
+Quadratic Assumption
+with Dipayan Das, Anindya Ganguly and Angshuman Karmakar
+submitted
+, 2025. [
+pdf
+]
+Complexity of counting points on curves, and the factor P
+1
+(T)
+of the zeta function of surfaces
+with Diptajit Roy and Madhavan Venkatesh
+submitted
+, 2024. [
+pdf
+]
+Learning the coefficients: A presentable version of border
+complexity and applications to circuit factoring
+with C.S. Bhargav and Prateek Dwivedi
+56th Annual ACM Symposium on
+Theory of Computing
+(
+STOC
+),
+pp.130-140, 2024. [
+pdf
+] [
+link
+]
+[
+video
+]
+Lower bounds for the sum of
+small-size algebraic branching programs
+with C.S. Bhargav and Prateek Dwivedi
+Theory and Applications of
+Models of Computation
+(
+TAMC
+),
+pp
+355366, 2024 (LNCS, vol.14637)
+.
+[
+pdf
+] [
+link
+]
+(
+Invited
+to the special issue of
+Theoretical Computer
+Science
+, vol.1041, 115214, 2025. [
+doi]
+)
+VDOO: A short, fast, post-quantum
+multivariate digital signature scheme
+with Anindya Ganguly and Angshuman Karmakar
+INDOCRYPT
+,
+vol.14460, pp.197-222, 2023. [
+pdf
+] (It
+supersedes an earlier proposal: [
+pdf
+])
+Improved lower bound, and proof barrier, for constant depth
+algebraic circuits
+with C.S. Bhargav
+and
+Sagnik Dutta
+47th International Symposium on
+Mathematical Foundations of Computer Science,
+MFCS
+,
+2022: 18:1-18:16. [
+pdf
+]
+[Awarded Best Student paper]
+(
+ACM Transactions on Computation Theory
+, 16(4): 23, 1-22,
+2024. [
+link
+])
+Solving polynomial systems over non-fields and applications to
+modular polynomial factoring
+with Sayak Chakrabarti
+and Ashish Dwivedi
+Journal
+of Symbolic Computation, vol.125, 102314,
+2024. [
+pdf
+]
+An effective description of the
+roots of multivariates mod
+p
+k
+and the related Igusa's local zeta function
+with Sayak Chakrabarti
+48th
+ISSAC
+,
+2023:
+135
+-144.
+[
+pdf
+]
+[
+long
+]
+[
+slides
+]
+Derandomization via symmetric polytopes: Poly-time factorization
+of certain sparse polynomials
+with Pranav
+Bisht.
+42nd IARCS Foundations of Software Technology and
+Theoretical Computer Science,
+FSTTCS
+,
+2022: 9:1-9:19. [
+pdf
+]
+(To appear in
+ACM
+Transactions on Computation Theory
+, 2025)
+Separated
+borders: Exponential-gap fanin-hierarchy theorem for
+approximative depth-3 circuits
+with Pranjal
+Dutta
+63rd
+FOCS
+,
+2022: 200-211. [
+pdf
+]
+(To appear in
+J.ACM
+,
+2026.
+[
+pdf
+]
+)
+Explicit construction of q + 1 regular local Ramanujan graphs,
+for all prime-powers q
+with Rishabh Batra and Devansh Shringi
+Comput.Complex.
+32(1): 2 (2023)
+. [
+pdf
+]
+Demystifying the border of depth-3
+algebraic circuits
+with Pranjal Dutta and Prateek Dwivedi
+62nd
+FOCS
+,
+2021: 92-103. [
+pdf
+]
+(Invited in the Special Issue on FOCS'21 of the journal
+SICOMP
+, 2021. [
+pdf
+]
+)
+Deterministic identity testing paradigms for bounded top-fanin
+depth-4 circuits
+with Pranjal Dutta and Prateek Dwivedi
+36th
+Computational Complexity Conference (
+CCC
+)
+,
+vol.200, 11:1--11:27,
+2021.
+[
+pdf
+]
+[
+full-version
+]
+(To appear in Theory of Computing, 2026)
+A Largish
+Sum-of-Squares Implies Circuit Hardness and
+Derandomization
+with
+Pranjal Dutta
+and Thomas
+Thierauf
+12th Innovations in Theoretical
+Computer Science (
+ITCS
+)
+,
+vol.185, 23:1--23:20, 2021. [
+pdf
+]
+[
+full
+]
+[
+slides-IITM
+]
+[
+talk-ITCS
+]
+(
+Journal
+of
+Comput.Complex.
+, 33:3, 2024 [
+pdf
+])
+(This supersedes earlier results archived in [
+slides-TIFR
+]
+[
+pdf-4th
+]
+[
+pdf-25th
+]
+[
+webinar
+]
+)
+Computing Igusa's local zeta
+function of univariates in deterministic polynomial-time
+with
+Ashish Dwivedi
+14th Biannual Algorithmic Number
+Theory Symposium,
+ANTS-XIV
+,
+vol.4, 197--214, 2020. [
+pdf
+]
+[
+webinar
+]
+Blackbox identity testing for sum of special ROABPs and its
+border class
+with
+Pranav Bisht
+Journal
+of Comput.Complex.
+, vol.30:8, 1-48,
+2021. [
+pdf
+]
+[
+webinar
+]
+Special-case algorithms for
+blackbox radical membership, Nullstellensatz and transcendence
+deg
+ree
+with
+Abhibhav Garg
+45th
+International Symposium on Symbolic and
+Algebraic Computation
+(
+ISSAC
+)
+,
+186--193, 2020. [
+pdf
+]
+[
+webinar
+]
+Counting basic-irreducible factors mod p
+k
+in deterministic poly-time and p
+-
+adic
+applications
+with
+Ashish Dwivedi
+and Rajat Mittal
+34th
+Computational Complexity Conference (
+CCC)
+,
+15:1--15:29,
+2019. [
+pdf
+]
+[
+slides
+]
+Efficiently factoring polynomials modulo p
+4
+with Ashish Dwivedi
+and Rajat Mittal
+44th International Symposium on Symbolic and
+Algebraic Computation (
+ISSAC)
+,
+139--146,
+2019. [
+pdf
+]
+(Journal version in
+Journal of Symbolic
+Computation
+, 104:805--823, 2021.
+[
+pdf
+]
+)
+Towards blackbox identity testing of log-variate
+circuits
+with Michael A.Forbes and Sumanta Ghosh
+45th International Colloquium on Automata, Languages, and
+Programming (ICALP)
+, 54:1--54:16, 2018. [
+full
+] [
+conf
+]
+Algebraic dependencies and PSPACE algorithms in approximative
+complexity over any field
+with Zeyu Guo and Amit Sinhababu
+33rd Computational Complexity
+Conference (CCC)
+, 10:1--10:21, 2018. [
+pdf
+]
+(
+Invited
+in the special issue of the journal
+ToC
+, vol.15(16), 1--30, 2019.
+[
+pdf
+])
+Discovering the roots: Uniform closure results for algebraic
+classes under factoring
+with Pranjal Dutta and Amit Sinhababu
+50th ACM Symposium on Theory of
+Computing (STOC)
+,
+1152--1165, 2018. [
+full
+]
+[
+conf
+]
+(Accepted in
+J.ACM
+, 69(3): 18:1-18:39 (2022) [
+pdf
+])
+Bootstrapping variables in algebraic circuits
+with
+Manindra
+Agrawal and Sumanta Ghosh
+50th ACM Symposium on Theory of
+Computing (STOC)
+,
+1166--1179, 2018. [
+full
+]
+[
+conf
+]
+(Article in
+Proceedings of the National Academy of Sciences of the USA,
+PNAS
+,
+2019. [
+pdf
+])
+Irreducibility and deterministic r-th root finding over finite
+fields
+with
+Vishwas
+Bhargava, Gbor Ivanyos and Rajat Mittal
+42nd International Symposium on
+Symbolic and Algebraic Computation (ISSAC)
+,
+37--44,
+Normal
+0
+false
+false
+false
+EN-US
+X-NONE
+X-NONE
+MicrosoftInternetExplorer4
+2017. [
+pdf
+]
+Polynomial Interpolation and Identity Testing from High Powers
+Over Finite Fields
+with
+Gbor
+Ivanyos, Marek Karpinski, Miklos Santha and Igor E. Shparlinski
+Algorithmica,
+80(2), 560-575, 2018
+.
+[
+pdf
+]
+Algebraic independence over positive characteristic: New
+criterion and applications to locally low algebraic rank circuits
+with
+Anurag
+Pandey and Amit Sinhababu
+41st
+MFCS,
+58,
+74:1-74:15, 2016. [
+pdf
+]
+(
+Journal version in
+Computational Complexity,
+27(4), 617--670, 2018. [
+pdf
+]
+)
+Identity testing for constant-width, and commutative, read-once
+oblivious ABPs
+with Rohit Gurjar and
+Arpita
+Korwar
+31st Computational
+Complexity Conference,
+29:1-29:16,
+2016. [
+pdf
+]
+(Invited in the special issue of the journal
+ToC, Volume 13 (999), 2017, pp. 121
+.
+[
+pdf
+])
+Integer factoring using small
+algebraic dependencies
+with Manindra Agrawal and
+Shubham
+Sahai
+Srivastava
+41st International Symposium on
+Mathematical Foundations of Computer Science (MFCS),
+58, 6:1-6:14, 2016. [
+pdf
+]
+Deterministic Identity Testing
+for Sum of ROABPs
+with Rohit Gurjar, Arpita Korwar and Thomas Thierauf
+30th Computational Complexity
+Conference,
+33, 323-346, 2015. [
+pdf
+]
+(Journal of
+Computational
+Complexity,
+26(4), 835-880, 2017
+. [
+pdf
+])
+Hitting-sets for ROABP and sum
+of set-multilinear circuits
+with Manindra Agrawal, Rohit Gurjar and Arpita Korwar
+SICOMP
+,
+vol.44, no.3, 669-697, 2015. [
+pdf
+]
+(Subsumes an older preprint, 2013 [
+pdf
+])
+Quasi-polynomial Hitting-set
+for Set-depth-
+D Formulas
+with Manindra Agrawal and Chandan Saha
+45th ACM Symposium on Theory of
+Computing (STOC)
+,
+pp.321-330,
+2013. [
+eccc
+] [
+conf
+]
+Deterministic Polynomial Factoring and Association Schemes
+with Manuel Arora, Gbor Ivanyos and Marek Karpinski.
+LMS J. Comput. Math.
+,
+vol.17, no.1, 123-140, 2014.
+[
+pdf]
+Algebraic Independence in
+Positive Characteristic -- A p-adic Calculus
+with Johannes Mittmann and Peter Scheiblechner.
+Trans. Amer. Math. Soc.,
+vol.366,
+no.7, 3425-3450, 2014. [
+pdf
+]
+Jacobian hits circuits: Hitting-sets, lower bounds for depth-D
+occur-k formulas & depth-3 transcendence degree-k circuits
+with Manindra Agrawal, Chandan Saha and Ramprasad Saptharishi.
+44th ACM Symposium on Theory of Computing (STOC)
+,
+pp.599-614, 2012. [
+pdf
+]
+(Invited in the special issue of the journal
+SICOMP,
+vol. 45, No. 4, pp.
+15331562, 2016. [
+pdf
+])
+Algebraic Independence and Blackbox
+Identity Testing
+with Malte Beecken and Johannes Mittmann.
+38th International Colloquium on
+Automata, Languages and Programming (ICALP)
+,
+pp.137-148, 2011. [
+pdf
+]
+[Awarded the Best Paper in Track A]
+(Invited and accepted in
+the special issue of the journal
+Information
+& Computation,
+vol.222, 2-19, 2013. [
+pdf
+])
+A Case of Depth-3 Identity Testing,
+Sparse Factorization and Duality
+with Chandan Saha and Ramprasad Saptharishi.
+Computational Complexity
+,
+vol.22, no.1, 39-69, 2013. [
+pdf
+]
+Blackbox Identity Testing for
+Bounded Top Fanin Depth-3 Circuits: the field doesn't matter
+with C. Seshadhri.
+43rd ACM Symposium on Theory of
+Computing (STOC),
+pp.431-440, 2011. [
+pdf
+]
+(Invited and accepted in the special issue of the journal
+SIAM J. Comput.,
+vol.41, no.5,
+1285-1298, 2012. [
+pdf
+])
+From Sylvester-Gallai
+Configurations to Rank Bounds: Improved Black-box Identity Test
+for Depth-3 Circuits
+with C. Seshadhri.
+51st Annual IEEE Symposium on
+Foundations of Computer Science (FOCS),
+pp.21-29
+,
+2010. [
+conf
+]
+(
+Journal of the ACM
+, vol.60, no.5, article 33,
+2013. [
+full
+])
+Deterministic Polynomial Time
+Algorithms for Matrix Completion Problems.
+with Gbor Ivanyos
+and Marek Karpinski.
+SIAM J. Comp.,
+vol.39,
+no.8, 3736-3751
+,
+2010. [
+pdf
+]
+The Power of Depth 2 Circuits over Algebras.
+with Chandan Saha and Ramprasad Saptharishi.
+29th Foundations of Software
+Technology and Theoretical Computer Science
+(
+FSTTCS),
+pp.371-382
+,
+2009. [
+pdf
+]
+An Almost Optimal Rank Bound for Depth-3 Identities
+.
+with C. Seshadhri.
+24th IEEE Conference on
+Computational Complexity (CCC),
+pp.137-148, 2009
+.
+[
+pdf
+]
+(Journal version in
+SICOMP
+,
+vol.40, no.1, 200-224, 2011. [
+pdf
+])
+Trading GRH for algebra: algorithms for factoring polynomials and
+related structures.
+with Gbor Ivanyos, Marek
+Karpinski and Lajos Rnyai.
+Math. Comp.,
+vol.81
+, 493-531, 2012
+. [
+pdf
+]
+Schemes for Deterministic
+Polynomial Factoring.
+with Gbor Ivanyos and Marek Karpinski.
+34th International Symposium on
+Symbolic and Algebraic Computation (ISSAC),
+pp.191-198
+,
+2009. [
+pdf
+]
+Diagonal Circuit Identity Testing and Lower Bounds.
+35th
+International Colloquium on Automata,
+Languages and Programming (ICALP)
+,
+LNCS 5125, pp.60-71, 2008. [
+pdf
+]
+Parameters of Integral Circulant
+Graphs and Periodic Quantum Dynamics.
+with Simone Severini and Igor E. Shparlinski.
+International Journal of Quantum
+Information,
+volume 5(3)
+,
+417-430, 2007
+.
+[
+pdf
+]
+Polynomial Identity Testing for
+Depth 3 Circuits.
+with Neeraj Kayal.
+21st IEEE Conference on
+Computational Complexity (CCC),
+pp.9-17, 2006
+.
+[
+pdf
+]
+[Awarded the Best Paper and Best Student Paper Awards]
+(Invited in the special issue of the journal
+Computational Complexity
+,
+volume 16(2), 115-138, 2007. [
+pdf
+])
+Equivalence of F-algebras and cubic forms
+.
+with Manindra Agrawal.
+23rd STACS
+, Springer LNCS
+3884, pp.115-126, 2006. [
+pdf
+]
+(full version
+[pdf]
+)
+Automorphisms of Finite Rings and
+Applications to Complexity of Problems
+.
+with Manindra Agrawal.
+22nd
+Symposium on Theoretical Aspects of Computer Science (
+STACS
+), Springer LNCS 3404,
+pp.1-17, 2005. [
+pdf
+]
+On the Ring Isomorphism &
+Automorphism Problems
+.
+with Neeraj Kayal.
+20th IEEE Conference on
+Computational Complexity (CCC)
+, pp.2-12, 2005. [
+pdf
+]
+(Invited in the special issue of the journal
+Computational Complexity
+,
+volume 15(4), 342-390, 2006. [
+pdf
+])
+PRIMES is in P
+. [
+original version
+]
+with Manindra Agrawal, Neeraj Kayal.
+Annals of Mathematics
+,
+volume 160(2), 781-793, 2004. [
+pdf
+]
+[Awarded Gdel Prize 2006 and Fulkerson Prize 2006]
+Manuscripts
+PhD Thesis.
+[
+pdf
+]
+On the centers of
+higher degree forms
+. [
+pdf
+]

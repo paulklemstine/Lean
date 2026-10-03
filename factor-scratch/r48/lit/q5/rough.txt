@@ -1,0 +1,799 @@
+On the rough order assumption in imaginary
+quadratic number fields
+Antonio Sanso
+Ethereum Foundation
+
+Abstract. In this paper, we investigate the rough order assumption
+(ROC ) introduced by Braun, Damgård, and Orlandi at CRYPTO 23,
+which posits that class groups of imaginary quadratic fields with no small
+prime factors in their order are computationally indistinguishable from
+general class groups. We present a novel attack that challenges the validity of this assumption by leveraging properties of Mordell curves over
+the rational numbers. Specifically, we demonstrate that if the rank of
+the Mordell curve E−16D is at least 2, it contradicts the rough order
+assumption. Our attack deterministically breaks the ROC assumption
+for discriminants of a special form, assuming the parity conjecture holds
+and certain conditions are met. Additionally, for both special and generic
+cases, our results suggest that the presence of nontrivial 3-torsion elements in class groups can undermine the ROC assumption. Although
+our findings are concrete for specific cases, the generic scenario relies on
+heuristic arguments related to the Birch and Swinnerton-Dyer (BSD)
+conjecture, a significant and widely believed conjecture in number theory. Attacks against 2-torsion elements in class groups are already well
+known, but our work introduces a distinct approach targeting 3-torsion
+elements. These attacks are fundamentally different in nature, and both
+have relatively straightforward countermeasures, though they do not generalize to higher torsions. While these results do not entirely invalidate
+the ROC assumption, they highlight the need for further exploration of
+its underlying assumptions, especially in the context of specific torsion
+structures within class groups.
+
+1
+
+Introduction
+
+Cryptography based on class groups of imaginary quadratic orders (IQ cryptography, IQC) is a fascinating area pioneered by Buchmann and Williams in
+their seminal work [8]. Initially, IQC did not find immediate real-world applications, leading to a period of limited exploration. However, this changed when
+Lipmaa proposed utilizing the unknown order property of class groups of imaginary quadratic fields to construct secure accumulators without a trusted setup
+[25]. Recently, the unknown order property has gained prominence as a foundation for various cryptographic primitives, including Verifiable Delay Functions
+(VDF) [34,30], cryptographic accumulators [4], vector commitments tailored for
+blockchain applications, and polynomial commitments used in zero-knowledge
+proofs [9].
+
+Alongside the primary exploration of maximal orders in cryptography, significant progress has also been made in analyzing cryptographic schemes based
+on non-maximal orders. For instance, at EUROCRYPT 2009, Castagnos and
+Laguillaumie [14] achieved a major breakthrough by presenting a polynomialtime chosen-plaintext total break of the NICE family of cryptosystems [24,28,29].
+This work not only marked a significant advancement in the field but also introduced a constructive technique that influenced subsequent research. Continuing
+their innovative contributions, Castagnos and Laguillaumie introduced a novel
+linearly homomorphic encryption scheme in CT-RSA 2015 [15], operating within
+the class group of a non-maximal order of an imaginary quadratic field. Further
+advancing this research, at ASIACRYPT 2018, Castagnos, Laguillaumie, and
+Tucker addressed practical challenges in secure inner product functional encryption modulo p, exploring schemes based on standard assumptions like DDH
+and Learning with Errors (LWE) [16]. In CRYPTO 2019, Castagnos, Catalano,
+Laguillaumie, Savasta, and Tucker focused on distributed variants of the ECDSA
+digital signature standard, introducing a method for achieving simulation-based
+security without relying on non-standard interactive assumptions [12,13]. Finally,
+in CRYPTO 2022, Abram, Damgård, Orlandi, and Scholl presented a grouptheoretic framework for secure computation tools, unifying approaches based on
+number-theoretic assumptions such as DDH, Decision Composite Residuosity
+(DCR), and Quadratic Residuosity (QR) [1].
+In this paper, we study the rough order assumption (ROC ) introduced by
+Braun, Damgård, and Orlandi [6]. This assumption has been utilized in subsequent works [5,11], which assert that class groups with no small prime factors
+in their order are hard to distinguish from general class groups.
+Our Contribution In this paper, we make the following contributions to the
+study of cryptographic schemes based on imaginary quadratic fields and the
+rough order assumption (ROC ):
+– We introduce a novel attack on the ROC assumption. Our attack deterministically invalidates the assumption for discriminants of a special form,
+provided the parity conjecture holds and certain conditions are met. Specifically, by applying Proposition 2 from [20], we demonstrate that if the Mordell
+curve E−16D has rank at least 2, it reveals the presence of nontrivial 3-torsion
+elements in the class groups, thus contradicting the ROC assumption for
+these specific discriminants. For generic cases, while our attack still suggests
+that nontrivial 3-torsion elements could undermine the ROC assumption, the
+results are based on heuristic arguments related to the Birch and SwinnertonDyer (BSD) heuristics. These heuristics, though widely believed, introduce
+some uncertainty in the generic scenario.
+– We discuss the broader implications of our findings for cryptographic schemes
+that rely on the ROC assumption. Our results highlight potential vulnerabilities and emphasize the need for re-evaluating and possibly strengthening
+cryptographic assumptions or exploring alternative approaches to maintain
+robust security guarantees.
+2
+
+Outline This paper is organized as follows. Subsection 1.1 covers essential properties and notations related to elliptic curves, imaginary quadratic orders, quadratic
+fields, and related algebraic structures. This foundational material is crucial for
+understanding the theoretical aspects of our work.
+In Subsection 1.2, we describe the framework introduced by Castagnos and
+Laguillaumie, focusing on the algorithm CLGen and its implications for cryptographic applications. We also present and define the unknown order assumption
+and the rough order assumption (ROC ).
+Following this, in Section 2, we present our attack on the rough order assumption. This Section details our attack strategy, utilizing Proposition 2 from
+[20]. We formally state and prove a theorem demonstrating how a high rank of
+the Mordell curve E−16D can break the ROC assumption.
+In Section 3, we include computational methods and strategies for determining the rank of Mordell curves, providing a bridge between theory and practical
+application. Section 4 examines the impact of our attack on papers that rely on
+the rough order assumption. This analysis provides context for our contributions
+and situates our work within the broader research landscape.
+We conclude by summarizing our findings, discussing the implications for
+cryptographic schemes based on class groups, and suggesting possible directions
+for future research.
+1.1
+
+Preliminaries
+
+In this Subsection, we discuss properties and notations related to elliptic curves
+and imaginary quadratic orders. For detailed information on elliptic curves, refer
+to [33,32]. For comprehensive details on quadratic orders, see [18].
+Elliptic curves are smooth projective algebraic curves of genus one with a
+specified point at infinity, denoted by OE . These curves can be expressed in the
+long Weierstraß form, where OE serves as the (only) point at infinity. Often, the
+curve is presented using an affine equation without explicitly mentioning OE .
+An elliptic curve is equipped with a natural group law, with OE serving as the
+identity element. The set of rational points on the curve E over a field F is
+denoted by E(F ).
+In this work, we primarily focus on elliptic curves where F is the field of
+rational numbers Q, specifically the Mordell curve Ek : y 2 = x3 + k, where k is
+an integer. This curve is a key example of an elliptic curve over Q and is central
+to our study. Additionally, we occasionally consider elliptic curves over finite
+fields Fp in the context of the Birch and Swinnerton-Dyer (BSD) conjecture [3]
+and the Mestre–Nagao heuristics [26,27].
+The rank of an elliptic curve E over Q is defined as follows. By the MordellWeil theorem, the group of rational points on E, denoted E(Q), is a finitely
+generated abelian group. Therefore, it can be written as:
+E(Q) ∼
+= Zr ⊕ T
+where:
+3
+
+– r is the rank of the elliptic curve E, which corresponds to the number of
+independent generators of the infinite part,
+– T is the torsion subgroup, consisting of points of finite order.
+Thus, the rank r represents the number of independent rational points of
+infinite order on the elliptic curve.
+Switching focus to quadratic fields, a quadratic field K is a subfield of the
+complex
+numbers C with degree 2 over Q. This field can be uniquely expressed as
+√
+Q( n), where n is a square-free integer distinct from 1 and 0. The fundamental
+discriminant ∆K is defined as n if n ≡ 1 (mod 4) and 4n otherwise.
+An order OK in K is a subset of K that forms a subring of K, containing 1,
+and serving as a free Z-module of rank 2. The ring of integers O∆K in K is the
+maximal order,
+√ which contains all other orders of K. It can be represented as
+Z + 21 (∆K + ∆K )Z. If OK is an order√in K with finite index f in O∆K , then
+OK can be expressed as Z + f 21 (∆K + ∆K )Z = Z + f O∆K . The integer f is
+known as the conductor of OK .
+The discriminant of the order OK can be written as ∆f = f 2 ∆K . When referring to a specific non-maximal order denoted as O∆f , we classify it accordingly.
+The standard representation of a O∆ -ideal, for a discriminant ∆, is
+!
+√
+−b + ∆
+Z
+a = q aZ +
+2
+where q ∈ Z, a ∈ N, and b ∈ Z such that b2 ≡ ∆ (mod 4a). An ideal is called
+primitive if q = 1. If −a < b ≤ a, this expression is uniquely defined, and we
+denote a primitive ideal by (a, b). This also corresponds to the positive definite
+binary quadratic form ax2 + bxy + cy 2 with b2 − 4ac = ∆. A form ax2 + bxy + cy 2
+is primitive if its coefficients a, b, and c are relatively prime.
+The class group of an order O, denoted cl(O), is the quotient of the group of
+fractional ideals by the subgroup of principal ideals within O. It measures the
+failure of unique factorization in the ring of integers of O. Formally, the class
+group cl(O) is defined as
+cl(O) =
+
+Ideal(O)
+,
+Principal(O)
+
+where Ideal(O) denotes the group of fractional ideals in O and Principal(O)
+denotes the subgroup of principal ideals.
+The class number hO of O is the order of its class group. It quantifies the
+number of distinct ideal classes in cl(O). Formally,
+hO = |cl(O)|,
+where | · | denotes the order of the group. The class number provides insight
+into the arithmetic properties of the order, with a larger class number indicating
+a greater failure of unique factorization.
+In general, the specific structure of cl(O) as an abelian group remains largely
+unknown. For example, even determining the order of cl(O) is already a highly
+4
+
+non-trivial problem [23]. However, a notable exception is the 2-torsion subgroup
+of cl(O); genus theory [18][I.§3] provides a very explicit description of cl(O)[2] ∼
+=
+cl(O)/cl(O)2 by introducing a set of characters χi : cl(O) → {±1}, where cl(O)2
+is recovered as the intersection of the kernels of these characters. The characters
+χi correspond to the prime factors mi of the discriminant ∆O (with the prime
+2 requiring special treatment), and they can be computed in polynomial time
+with respect to the size of mi .
+The 2-torsion subgroup cl(O)[2] is trivial if and only if ∆O = −q or ∆O =
+−4q, where q is a prime satisfying q ≡ 3 (mod 4).
+1.2
+
+The CL Framework for Unknown Order Group
+
+The framework was first introduced by Castagnos and Laguillaumie [15] and
+later refined in [16,12,13], which specifies two algorithms, CLGen and CLSolve.
+For the purposes of this paper, we are interested only in the former, so we will
+describe only this algorithm.
+CLGen, takes as input the security parameter 1λ and a prime q ≥ 2λ , and
+outputs a set of public parameters ppcl = (q, s̄, f, gq , Ĝ, F ; ρ), which describe a
+class group, where ρ is the randomness used by CLGen. In this tuple, the group
+of squares Ĝ contains a cyclic subgroup G ⊆ Ĝ, which factors as the direct
+product G = Gq × F ⊆ Ĝ, where F = hf i is the unique subgroup of order q, and
+Gq = hgq i is the subgroup of qth powers.
+The order of Gq is unknown, but it is known that an upper bound s̄ exists
+such that s̄ > |Gq |. The class group associated with Gq has odd order, and
+computing its order is believed to be difficult when |q| is large. For a discussion
+on the choice of cryptographic parameters related to such groups, see [7].
+The Cohen-Lenstra heuristics [17] suggest that for imaginary quadratic number fields:
+– approximately 97.6% of the time, the odd part of the class group is cyclic,
+– the frequency f (d) of fundamental discriminants for which the order of the
+class group is divisible by d is approximately:
+• f (3) = 44%,
+• f (5) = 24%,
+• f (7) = 16%.
+These heuristics indicate that while the class group is often cyclic, it frequently contains elements of small odd order. The challenge remains in determining how difficult it is to find such elements, if they exist. This leads to the
+formal definition of the Unknown Order Assumption (ORD):
+Definition 1 (Unknown Order Assumption). Let λ be the security parameter, q ≥ 2λ a prime, and A a PPT algorithm. The experiment generates public
+parameters
+ppcl := (q, s̄, f, gq , Ĝ, F ; ρ) ← CLGen(1λ , q; ρ)
+and runs A(ppcl ). We say that A solves the unknown order (ORD) problem if it
+outputs a group element h ∈ (Ĝ \ F ) and an integer e 6= 0 such that he = 1. We
+5
+
+define the advantage AdvORD
+(λ) as the success probability. The ORD assumption
+A
+holds if AdvORD
+(λ)
+is
+negligible
+in λ for all PPT A.
+A
+Additionally, in [6], Braun, Damgård, and Orlandi introduced the rough order
+assumption. This new security assumption states that discriminants for class
+groups with rough order are indistinguishable from those in general. Currently,
+the topic is not well-explored. Below, we present the original definition of the
+rough order assumption as introduced by Braun, Damgård, and Orlandi [6]:
+Definition 2 (Rough Order Assumption). Let λ be a security paramerough
+ter, q ≥ 2λ a prime, C ∈ N, and A be a PPT algorithm. Define DC
+to
+λ
+be the uniform distribution over the set {ρ ∈ {0, 1} | (q, s̄, f, gq , Ĝ, F ; ρ) ←
+CLGen(1λ , q; ρ) ∧ ∀ prime p < C : p - ord(Ĝ)}, We say A solves the C-rough
+order (ROC ) problem if its advantage
+h
+i
+
+
+rough
+C
+AdvRO
+(λ) := Pr 1 ← A(1λ , ρ0 ) | ρ0 ∈R {0, 1}λ − Pr 1 ← A(1λ , ρ1 ) | ρ1 ← DC
+A
+C
+is non-negligible. We say the ROC assumption holds if AdvRO
+(λ) ≤ negl(λ) for
+A
+all PPT A.
+
+The definition above posits that class groups sampled under normal conditions are indistinguishable from those sampled with a C-rough order, where a
+C-rough order is defined as having no prime factors smaller than C. Note that
+the CLGen algorithm avoids certain discriminants to circumvent attacks related
+to the 2-torsion subgroup of the class group, as cl(O)[2] is trivial if and only if
+∆O = −q or ∆O = −4q, where q is a prime such that q ≡ 3 (mod 4). By ensuring that q is not of this form, CLGen avoids potential vulnerabilities associated
+with the 2-torsion subgroup as described by genus theory.
+
+2
+
+Attack on the rough order assumption
+
+In this section, we challenge the validity of the rough order assumption and
+present an efficient attack on the corresponding computational problem. Our
+attack reduces the problem to one involving the computation or approximation
+of the rank of a Mordell curve Ek : y 2 = x3 + k over the rational numbers. The
+main tool for our attack is Proposition 2 from [20], which we reproduce below
+with the necessary adaptations.
+Proposition 1. Suppose the positive integer D is squarefree, congruent to 3
+(mod 4), and is neither a multiple of 3 nor equal to 1. Then the rank√of E−16D
+is √
+at most the sum of 1 and the 3-ranks of the class groups of Q( −D) and
+Q( 3D).
+We now present our main Theorem, which is derived specifically for this paper. The Theorem builds on the aforementioned proposition and demonstrates
+that the rough order assumption ROC can be invalidated under certain conditions.
+6
+
+Theorem 1 (informal). Let D be a positive integer that is squarefree, congruent to 3 (mod 4), and neither a multiple of 3 nor equal to 1. Suppose the rank
+of the Mordell curve E−16D : y 2 = x3 − 16D over Q is at least 2. Then this contradicts the rough order assumption ROC for some sufficiently large C, because
+the 3-torsion subgroup of E−16D (Q) cannot be trivial.
+Proof. Consider the Mordell curve E−16D : y 2 = x3 − 16D over Q. According
+to the proposition, if D is squarefree, congruent to 3 (mod 4), and is neither a
+multiple of 3 nor equal to 1, then the√
+rank of E−16D√is at most the sum of 1 and
+the 3-ranks of the class groups of Q( −D) and Q( 3D).
+Assume, for the sake of contradiction, that the rank of E−16D is√at least 2.
+This
+√ implies that the sum of the 3-ranks of the class groups of Q( −D) and
+Q( 3D) must be at least 1. In other words, at least one of these class groups
+must have a nontrivial 3-torsion element.
+√Now, by the Scholz reflection Theorem [31], the 3-rank of the class group of
+Q(√−D) is either equal to or one greater than the 3-rank of the class group of
+Q( 3D) (since D is assumed to be a negative fundamental discriminant and not
+equal to −3).
+√
+Thus, if the 3-rank
+√ of the class group of Q( 3D) is non-zero, the 3-rank of
+the class group of Q( −D) must also be non-zero, and vice versa. This implies
+that both class groups contain nontrivial 3-torsion elements.
+However, the rough order assumption ROC asserts that for a sufficiently large
+C, the class group should have no prime factors smaller than C, including 3. The
+existence of nontrivial 3-torsion elements directly contradicts this assumption.
+Therefore, if the rank of E−16D is at least 2, this would break the rough order
+assumption ROC by implying the presence of nontrivial 3-torsion in the class
+group. This contradiction invalidates the rough order assumption under these
+conditions.
+t
+u
+Finding the rank of a Mordell curve Ek with a large coefficient k = −16D
+(where D is a large integer with more than 1000 bits) is a challenging task
+[19][Section 15.5]. In the next Section, we show how to overcome this challenge
+for special discriminants and how to tackle the general case using some heuristic
+methods.
+
+3
+
+Heuristic Insights on the Rank of Elliptic Curves
+
+In addressing the challenge of determining whether a Mordell curve Ek : y 2 =
+x3 + k has rank at least 2, especially when dealing with large coefficients, we
+face significant computational obstacles. In this Subsection, we present heuristic
+insights that offer valuable evidence regarding the rank of elliptic curves. These
+insights help us navigate the difficulties associated with verifying the expected
+rank for curves with coefficients k larger than 1000 bits, which are critical for
+real-world cryptographic applications.
+We begin by identifying a family of discriminants where we have developed
+a fully working attack, enabling us to effectively assess the rank in these specific
+7
+
+cases. This approach provides a robust methodology for dealing with particular instances. We then extend our focus to the general case, applying heuristic
+methods to gain a better understanding of the curve’s rank and to potentially
+overcome some of the computational limitations inherent in this process.
+3.1
+
+Special discriminants
+
+It is well known that the rough order assumption can be compromised for discriminants with specific forms. These discriminants exhibit particular structural
+properties that make them vulnerable to certain attacks, thus providing a clear
+path to undermining the rough order assumption in these cases.
+In [2], Belabas, Kleinjung, Sanso, and Wesolowski illustrate that there are
+specific choices of discriminants for which the low order assumption [10, Definition 1] does not hold. These discriminants are associated with special forms
+defined in Theorems 1 and 2, and Corollary 1 of their paper. Breaking the low
+order assumption involves finding an element µ in a finite group G and an integer
+d < 2λ such that µ 6= 1G and µd = 1G , where 1G denotes the identity element of
+G. Since the low order assumption is a weaker condition compared to the rough
+order assumption, a violation of the low order assumption implies that the rough
+order assumption is also invalidated.
+By leveraging techniques from [22], we identify special discriminants of the
+form D = 43 z 2 ± 4, where our Theorem 1 effectively demonstrates how to break
+the rough order assumption (but not the low order assumption). We show below
+how these techniques can be applied to achieve this result. The formulae (11)
+derived in [22][Subsection 6.1] reveal a correlation between the coefficient k and
+a point P (x, y) in Ek . We report them here:
+
+
+
+
+3 2
+3
+x = z 2 + a, k = −a2
+z + a , y = z z2 + a
+4
+2
+Choosing a = ±4 yields a Mordell curve E−16D (compatible with Theorem 1)
+for discriminants of the form D = 34 z 2 ± 4.
+We can rewrite the curve as Ez : y 2 = x3 + (−12z 2 + 64), and the 3-isogenous
+curve as y 2 = x3 + (324z 2 − 1728). This construction represents a well-known
+family of elliptic curves with a generic rank of 1. As z varies, we expect the rank
+of Ez to be 1, 2, or greater than 2, with probabilities of 50%, 50%, and 0%,
+respectively. This expectation parallels the behavior of random elliptic curves,
+where the rank is typically 0, 1, or greater than 1, with the same probabilities.
+The rationale is that the rank should be even or odd with equal probability.
+We use the parity conjecture to guide the decision in Algorithm 1 on
+whether the rough order assumption (ROC ) breaks for a given discriminant of
+the form D = 43 z 2 ± 4. The parity conjecture helps us predict the parity (odd
+or even) of the rank of the corresponding elliptic curve E−16D . According to the
+parity conjecture, the algebraic rank of an elliptic curve and its analytic rank
+have the same parity, meaning both are either even or odd. By computing the
+global root number wE , we determine the parity of the rank of E−16D . If the
+8
+
+rank is predicted to be even for this family of elliptic curves, it indicates that the
+rough order assumption (ROC ) is broken, according to Theorem 1. Conversely, if
+the rank is predicted to be odd, the rough order assumption (ROC ) is more likely
+to hold. However, it is important to note that this method may miss detecting
+violations of the rough order assumption (ROC ) when the rank is odd and
+greater than 1. Nevertheless, such cases are expected to occur infrequently, as
+ranks greater than 1 are highly uncommon in practice.
+Computing the Parity for the Mordell Curve For a Mordell curve Ek :
+y 2 = x3 + k, the parity of the rank is closely related to the global root number
+wE . The global root number is the product of local root numbers at various
+primes p, including the prime at infinity, and provides an indicator of the parity
+of the analytic rank. Specifically:
+wE = (−1)analytic rank(Ek )
+If wE = −1, the analytic rank is odd, and by the parity conjecture, the
+algebraic rank is also odd. Conversely, if wE = +1, both ranks are even.
+To compute the global root number for the Mordell curve Ek , we must:
+– Compute the local root number w∞ at the infinite prime.
+– Compute the local root numbers wE,p for all primes p that divide the discriminant ∆E of the elliptic curve Ek .
+– The product of these local root numbers will give the global root number
+wE .
+For a Mordell curve Ek , the local root number at infinity w∞ is determined
+by the sign of the leading term in the equation. Since the Mordell curve Ek :
+y 2 = x3 + k has a positive cubic term x3 , the root number at infinity is always:
+w∞ = −1
+For each prime p, the local root number wE,p depends on the reduction type
+of the curve at that prime. Mordell curves of the form Ek : y 2 = x3 + k have
+bad reduction at primes dividing k and at p = 2 and p = 3, and good reduction
+otherwise. For a Mordell curve, the local root number at a prime p is computed
+as follows:
+– If p - ∆E (i.e., p does not divide the discriminant ∆E ), the curve has good
+reduction at p, and the local root number wE,p is:
+wE,p = +1
+– If p | ∆E (i.e., p divides the discriminant ∆E ), the curve has bad reduction at
+p, and we compute wE,p based on the residue of ∆E modulo p. Specifically:
+• If p = 2, the local root number wE,2 depends on the behavior of the
+curve at 2, which can be determined from the 2-adic valuation of ∆E
+and the reduction type.
+9
+
+• If p ≥ 3, the local root number wE,p is determined by the quadratic
+residue ∆E (mod p). If ∆E is a quadratic residue modulo p, then wE,p =
++1. If ∆E is not a quadratic residue modulo p, then wE,p = −1.
+Finally, the global root number wE is computed as:
+wE = w∞
+
+Y
+
+wE,p
+
+p|∆E
+
+If wE = −1, the rank is odd (and likely r = 1). If wE = +1, the rank is even
+(and likely r = 2).
+Algorithm 1: Check the rough order assumption for special discriminants of the form D = − 43 z 2 ± 4
+Input : Discriminant D = − 43 z 2 ± 4
+Output: True if ROC is invalidated, False otherwise
+Compute the Mordell curve E16D from the discriminant D;
+Compute global root number wE ;
+3 if wE == +1 then
+4
+return True
+1
+
+2
+
+5
+6
+
+else
+return False
+
+Thus, the decision in the algorithm is based on whether the computed heuristic score suggests a break in the rough order assumption ROC , guided by the
+rank parity obtained from the global root number. If the rank is even, we can
+be certain that the rough order assumption ROC does not hold, as Theorem 1
+indicates that such cases lead to deviations from the expected behavior. According to the parity conjecture, the rank of an elliptic curve is expected to be either
+even or odd with equal probability.
+Complexity of Computing the Global Root Number For a Mordell curve
+Ek : y 2 = x3 + k where k = −16D and D is a prime number, the computation of
+the global root number wE involves a few straightforward steps. The discriminant
+∆E of the curve is −110592D2 , and the prime factors are 2, 3, and D.
+Since D is a prime, the factorization of ∆E is trivial and requires constant
+time, O(1). Calculating the local root numbers wE,2 , wE,3 , and wE,D involves
+evaluating the reduction types at these primes. These computations are typically
+performed in constant time, O(1), since they involve modular arithmetic and
+standard evaluations for local root numbers. Finally, multiplying the local root
+numbers to determine the global root number wE also takes constant time, O(1).
+Therefore, the overall complexity of computing the global root number for
+Ek in this case is O(1), indicating that the computation is highly efficient and
+independent of the size of the prime D.
+10
+
+3.2
+
+General Case
+
+For the specific Mordell curve E−16D considered in this paper, its rank provides
+a lower bound on the 3-rank of the class group. While the rank of this curve
+is frequently 0 or 1, the Cohen-Lenstra heuristics [17] and numerical evidence
+indicate that the 3-rank of the associated class group can occasionally be at
+least 2, although this happens only with limited probability. Consequently, the
+lower bound derived from the rank generally does not pose a significant challenge
+to the rough order assumption, though potential exceptions cannot be entirely
+ruled out. The exact frequency of curves with rank 2 or higher is uncertain, but
+such curves do exist, and their proportion is expected to diminish as |D| < N
+increases. While finding such curves at random for large D remains difficult, it
+is not impossible, particularly with the use of heuristic methods.
+One standard approach for estimating the rank of elliptic curves is the
+Mestre–Nagao method, which is informed by the Birch and Swinnerton-Dyer
+conjecture [3]. According to this conjecture, curves that exhibit a notably large
+number of points modulo p for most primes p tend to have many rational points
+as well. The method constructs a score S(k, B) based on the number of points
+Np (Ek ) on Ek (Fp ) for all primes p ≤ B, where Ek has good reduction. This
+score helps estimate the rank of the curve by identifying rational points on Ek
+for values of k within a search range where S(k, B) exceeds a certain threshold.
+Originally proposed by Mestre [26] to find elliptic curves with high Mordell–Weil
+rank, this technique was later refined by Nagao [27] and has been useful in the
+search for curves with higher ranks.
+S(k, B) =
+
+
+
+X
+
+log
+
+p<B
+where Ek has good reduction at p
+
+Np (Ek )
+p
+
+
+,
+
+where exp(−S(k, B)) represents the partial product. According to the Birch and
+Swinnerton-Dyer conjecture, if Ek has a high rank, these partial products should
+approach zero quickly, leading to a large value for S(k, B).
+Although higher ranks (i.e., r > 1) remain rare, especially for Mordell curves,
+the parity conjecture provides a useful heuristic for predicting whether a curve
+has rank 0 or 1. However, applying the Mestre–Nagao method, particularly for
+Mordell curves with large coefficients k (e.g., greater than 1000 bits), becomes
+computationally infeasible, especially in contexts relevant to cryptographic applications. For real-world use, the method has limitations in reliably identifying
+curves with ranks r ≥ 2, and the rank 0 problem remains unsolved in number
+theory.
+In our case, excluding curves with rank 0 provides enough information to
+evaluate the rough order assumption (ROC ). By using the parity conjecture
+along with the Mestre–Nagao heuristic, it is possible to predict whether the rank
+of E−16D is even or odd. If the rank is predicted to be even, the rough order
+assumption (ROC ) may be violated, as outlined in Theorem 1. Conversely, if the
+rank is odd, the assumption is more likely to hold.
+11
+
+While the Mestre–Nagao score remains a useful heuristic tool, it should be
+applied cautiously in this context, as it is not always reliable for detecting curves
+with higher ranks. This limitation highlights the need for further refinement in
+both theoretical and practical methods for evaluating the rough order assumption (ROC ), particularly in cryptographic applications.
+
+3.3
+
+Attack Implementation
+
+We implemented the attack using SageMath to demonstrate both the correctness
+of the algorithm and its feasibility. The code for all algorithms and experiments
+is available at:
+https://anonymous.4open.science/r/rough-order-sage-CC18
+This code provides a comprehensive framework for evaluating the rank of
+Mordell curves, implementing methods for both special discriminants and the
+generic case, as described in the Subsections above. This flexibility allows for
+easy experimentation with different parameters and facilitates further research
+in this area.
+
+4
+
+Attacks on the Papers and Countermeasures
+
+This section explores vulnerabilities in papers that rely on rough order assumptions, including the original works introducing these assumptions [6,5,11], in the
+context of our attack. We analyze key weaknesses in these papers and discuss
+potential countermeasures to mitigate the risks posed by the attack.
+The primary assumption in these papers is that class group orders behave
+similarly to random integers with respect to the sizes of their prime factors.
+Specifically, this assumption implies that a significant fraction of class groups will
+have C-rough order, where C is a threshold value. The value C determines the
+minimum size of prime factors considered ”large,” meaning that prime factors
+smaller than C are considered ”small.” The parameter B represents a bound
+related to the size or complexity of the class group. If C is small relative to B,
+then it is expected that many class groups will have prime factors larger than
+C.
+However, when considering our attack on the 3-torsion, this assumption introduces vulnerabilities. Specifically, our attack exploits the presence of small
+prime factors in the class group order, with a particular focus on the 3-torsion.
+Since the assumption that class group orders are C-rough is directly undermined
+by this attack, the 3-torsion behavior in the class group structure provides an
+exploitable weakness in cryptographic protocols relying on rough order assumptions.
+12
+
+Secure Threshold Cryptography Based on Class Groups [6] Assuming the rough
+order assumption holds, the paper significantly simplifies zero-knowledge protocols and their security proofs. It enables a much cleaner design and analysis of
+zero-knowledge protocols compared to using more complex assumptions, such
+as the strong root assumption. The rough order assumption is primarily used
+in theoretical proofs, and nothing in practical implementations depends on the
+specifics of the challenger used in these proofs. For the Multi-Party Computation (MPC) protocol discussed in the paper, the required soundness property
+is met if an adversarially generated ciphertext is proven to be well-formed and
+the plaintext can be extracted from the proof. This requirement is weaker than
+full knowledge soundness, which would also necessitate extracting the ciphertext’s randomness. Thus, the assumption that class groups with rough order are
+indistinguishable from general class groups is sufficient for ensuring soundness
+in this context. However, if the rough order assumption fails—such as when a
+distinguisher with an advantage close to 1 is found—it could expose practical
+vulnerabilities. While the rough order assumption facilitates a cleaner theoretical framework, practical implementations might still be at risk if the assumption
+is not valid. This new computational assumption, though emerging and not yet
+well-studied, has already impacted future work by enabling a more straightforward design and analysis of zero-knowledge protocols. Alternative, more established assumptions, like the strong root assumption, could be used, but they
+come with increased complexity.
+An Improved Threshold Homomorphic Cryptosystem Based on Class Groups [5]
+Similar to the approach in the previous work, the authors of this paper leverage
+the rough order assumption (ROC ) to enhance the efficiency of their threshold
+homomorphic cryptosystem. By assuming ROC , they facilitate weak reconstruction in Verifiable Secret Sharing (VSS) protocols and ensure statistical security
+with Pedersen commitments. This assumption is crucial for the design and analysis of efficient Σ-style zero-knowledge proofs. Under ROC , these proofs are
+unconditionally set-membership sound, which means no malicious prover can
+prove a false statement with a probability greater than 1/C. The paper further claims that, under this assumption, the proofs are computationally sound
+even for normally sampled class groups, meaning that no malicious probabilistic
+polynomial-time (PPT) prover can prove a false statement with a probability
+greater than 1/C + negl(λ).
+Proving this computational soundness is not straightforward. The reduction
+process involves deciding if a statement is false, which typically requires knowledge of discrete logs that the reduction does not possess, making the decision
+inefficient. However, the paper addresses this challenge by showing that these
+zero-knowledge proofs can be effectively used in a broader context. Specifically,
+they suggest that in higher-level protocols, it is generally possible to determine
+efficiently if the protocol has been compromised. This implies that a reduction
+to ROC becomes feasible. The approach involves proving the security of the
+higher-level protocol in a rough-order group using the unconditional soundness
+of the zero-knowledge proofs. Then, it is argued that when a normal-order group
+13
+
+is used, the adversary’s advantage in breaking the high-level protocol is at most
+negligibly greater. This holds true since otherwise, the adversary would imply
+the existence of a distinguisher for ROC . Thus, while ROC simplifies theoretical
+considerations and provides efficiency benefits, practical implementations must
+remain cautious due to the emerging and not yet thoroughly studied nature of
+this assumption. Our work further illustrates these practical risks by demonstrating how the failure of ROC assumptions can lead to vulnerabilities, highlighting
+the need for continued scrutiny and potentially alternative assumptions in practical applications.
+Publicly Verifiable Secret Sharing over Class Groups and Applications to DKG
+and YOSO [11] Similar to the other papers, this work also relies on the rough
+order assumption (ROC ) to construct a secure Publicly Verifiable Secret Sharing (PVSS) scheme over class groups. The paper introduces a sharing proof
+ΠSh , which is a zero-knowledge proof designed to ensure correct secret sharing
+within a Distributed Key Generation (DKG) protocol. The core idea is that for
+∗
+any correct sharing, if a random polynomial
+Pn m ∈ Zq [X] is sampled, then for
+properly generated shares, the relation i=1 σi vi m∗ (αi ) = 0 must hold, where
+vi are certain values derived from Theorem 1. This property allows for constructing a verification equation using group elements pki and Bi , enabling an
+efficient zero-knowledge proof of correct secret sharing. However, a potential issue arises if a malicious prover introduces elements Hi 6= 1 into the group, which
+could manipulate the proof into passing incorrectly. To address this, the paper
+randomizes the proof by adding a multiple of q to the values wi , making the
+cancellation of malicious terms less likely unless the prover can break the rough
+order assumption. This additional step ensures robustness without significantly
+increasing communication or computational complexity. As with previous papers, if the rough order assumption fails, the security of the PVSS scheme may
+be compromised, particularly when small prime factors are present in the class
+group order. Our analysis further highlights how our attack on 3-torsion can exploit weaknesses introduced by the rough order assumption, demonstrating the
+importance of continued analysis and potential refinements to these assumptions
+in practical applications.
+Countermeasures: To defend against our 3-torsion attack, it is crucial to
+address specific vulnerabilities associated with class groups. One effective countermeasure involves avoiding discriminants of special shapes or forms that are
+known to break the rough order assumption. Specifically, discriminants of the
+form D = − 43 z 2 ± 4 are particularly susceptible to vulnerabilities, as demonstrated in Subsection 3.1. These special forms can lead to class groups with
+significant 3-torsion, thereby compromising the security of cryptographic protocols. Additionally, discriminants identified in [2], which break the low order
+assumption, are also dangerous as they can similarly undermine the rough order
+assumption and expose vulnerabilities to 3-torsion attacks. Furthermore, incorporating the Mestre-Nagao heuristic during the class group generation process,
+14
+
+such as when using the CLGen algorithm, can provide an additional layer of security. The Mestre-Nagao heuristic evaluates the potential rank of the generated
+class groups by assessing the number of rational points on corresponding elliptic
+curves. By applying this heuristic and setting a threshold to limit the heuristic score S(k, B), one can filter out class groups that are likely to exhibit high
+ranks and substantial 3-torsion. This approach helps in reducing the likelihood
+of encountering vulnerabilities and enhances the robustness of cryptographic
+protocols against attacks related to 3-torsion.
+
+5
+
+Conclusion
+
+In this paper, we have examined the rough order assumption (ROC ) and its implications for cryptographic schemes based on class groups of imaginary quadratic
+fields. Through our analysis, we demonstrated that the assumption is challenged
+when the rank of the Mordell curve E−16D is at least 2. Specifically,
+the√pres√
+ence of nontrivial 3-torsion elements in the class groups of Q( −D) and Q( 3D)
+contradicts the ROC assumption for sufficiently large C.
+Our findings indicate that the rough order assumption may not hold in scenarios where such Mordell curves have high ranks, suggesting potential vulnerabilities in cryptographic applications relying on this assumption. This result highlights the need for further investigation into alternative assumptions or
+strengthening of existing ones to ensure the robustness of cryptographic schemes
+based on class groups.
+Future work could explore practical methods for detecting and mitigating the
+effects of such attacks, as well as evaluate other assumptions that may provide
+better security guarantees in the context of imaginary quadratic fields.
+The following problems remain open:
+– Investigating whether there are other families of rank 1 elliptic curves that
+might also challenge the rough order assumption, given that our attack was
+effective in the special case of rank 1 elliptic curves associated with specific
+discriminants.
+– Advancing methods to determine whether an elliptic curve has rank 0. While
+this remains a challenging problem, progress in this area could enhance our
+understanding of elliptic curves and improve the practical application of the
+rough order assumption (ROC ).
+– Extending the method to torsion structures larger than 3-torsion. While
+our results primarily address the 3-torsion case, exploring attacks on higher
+torsion elements may provide a more comprehensive understanding of the
+rough order assumption and its cryptographic implications.
+Acknowledgments. We would like to thank Noam Elkies for his valuable contributions to Section 3, as well as Bill Allombert, Guilhem Castagnos, John
+Cremona, Ivan Damgård, Andrej Dujella, Péter Kutas, Guido Maria Lido and
+Claudio Orlandi for fruitful discussions.
+15
+
+References
+1. Abram, D., Damgård, I., Orlandi, C., Scholl, P.: An algebraic framework for silent
+preprocessing with trustless setup and active security. In: Dodis, Y., Shrimpton,
+T. (eds.) Advances in Cryptology – CRYPTO 2022. pp. 421–452. Springer Nature
+Switzerland, Cham (2022)
+2. Belabas, K., Kleinjung, T., Sanso, A., Wesolowski, B.: A note on the low order assumption in class groups of imaginary quadratic number fields. Mathematical Cryptology 3(1), 44–51 (Jul 2023), https://journals.flvc.org/mathcryptology/
+article/view/129193
+3. Birch, B., Swinnerton-Dyer, H.P.F.: Notes on elliptic curves. i. Journal für die reine
+und angewandte Mathematik 212(7), 7–25 (1963)
+4. Boneh, D., Bünz, B., Fisch, B.: Batching techniques for accumulators with applications to iops and stateless blockchains. In: Boldyreva, A., Micciancio, D. (eds.)
+Advances in Cryptology – CRYPTO 2019. pp. 561–586. Springer International
+Publishing, Cham (2019)
+5. Braun, L., Castagnos, G., Damgård, I., Laguillaumie, F., Melissaris, K., Orlandi, C., Tucker, I.: An improved threshold homomorphic cryptosystem based on
+class groups. Cryptology ePrint Archive, Paper 2024/717 (2024), https://eprint.
+iacr.org/2024/717
+6. Braun, L., Damgård, I., Orlandi, C.: Secure multiparty computation from threshold
+encryption based on class groups. In: Handschuh, H., Lysyanskaya, A. (eds.) Advances in Cryptology – CRYPTO 2023. pp. 613–645. Springer Nature Switzerland,
+Cham (2023)
+7. Buchmann, J., Hamdy, S.: A survey on IQ cryptography, pp. 1–16. De Gruyter,
+Berlin, New York (2001). https://doi.org/doi:10.1515/9783110881035.1, https://
+doi.org/10.1515/9783110881035.1
+8. Buchmann,
+J.,
+Williams,
+H.C.:
+A
+key-exchange
+system
+based
+on imaginary quadratic fields. J. Cryptology 1, 107–118 (1988).
+https://doi.org/10.1007/BF02351719
+9. Bünz, B., Fisch, B., Szepieniec, A.: Transparent snarks from dark compilers. In:
+Canteaut, A., Ishai, Y. (eds.) Advances in Cryptology – EUROCRYPT 2020. pp.
+677–706. Springer International Publishing, Cham (2020)
+10. Bünz, D.B.B., Fisch, B.: A survey of two verifiable delay functions. Cryptology
+ePrint Archive, Report 2018/712 (2018)
+11. Cascudo, I., David, B.: Publicly verifiable secret sharing over class groups and applications to dkg and yoso. In: Joye, M., Leander, G. (eds.) Advances in Cryptology
+– EUROCRYPT 2024. pp. 216–248. Springer Nature Switzerland, Cham (2024)
+12. Castagnos, G., Catalano, D., Laguillaumie, F., Savasta, F., Tucker, I.: Two-party
+ecdsa from hash proof systems and efficient instantiations. In: Boldyreva, A., Micciancio, D. (eds.) Advances in Cryptology – CRYPTO 2019. pp. 191–221. Springer
+International Publishing, Cham (2019)
+13. Castagnos, G., Catalano, D., Laguillaumie, F., Savasta, F., Tucker, I.: Bandwidthefficient threshold ec-dsa. In: Kiayias, A., Kohlweiss, M., Wallden, P., Zikas, V.
+(eds.) Public-Key Cryptography – PKC 2020. pp. 266–296. Springer International
+Publishing, Cham (2020)
+14. Castagnos, G., Laguillaumie, F.: On the security of cryptosystems with quadratic
+decryption: The nicest cryptanalysis. In: Joux, A. (ed.) Advances in Cryptology EUROCRYPT 2009. pp. 260–277. Springer Berlin Heidelberg, Berlin, Heidelberg
+(2009)
+
+16
+
+15. Castagnos, G., Laguillaumie, F.: Linearly homomorphic encryption from ddh. In:
+Nyberg, K. (ed.) Topics in Cryptology — CT-RSA 2015. pp. 487–505. Springer
+International Publishing, Cham (2015)
+16. Castagnos, G., Laguillaumie, F., Tucker, I.: Practical fully secure unrestricted inner product functional encryption modulo p. In: Peyrin, T., Galbraith, S. (eds.)
+Advances in Cryptology – ASIACRYPT 2018. pp. 733–764. Springer International
+Publishing, Cham (2018)
+17. Cohen, H., Lenstra, Jr., H.W.: Heuristics on class groups of number fields. In:
+Number theory, Noordwijkerhout 1983 (Noordwijkerhout, 1983), Lecture Notes in
+Math., vol. 1068, pp. 33–62. Springer, Berlin (1984)
+18. Cox, D.A.: Primes of the form x2 + ny 2 . A Wiley-Interscience Publication, John
+Wiley & Sons Inc., New York (1989), fermat, class field theory and complex multiplication
+19. Dujella, A., Švob, P.: Number Theory. Manualia universitatis studiorum zagrabiensis, Školska knjiga (2021), https://books.google.ch/books?id=sISFzgEACAAJ
+20. Elkies, N.D.: Rank of an elliptic curve and 3-rank of a quadratic field via the
+burgess bounds. In: Algorithmic Number Theory Symposium, ANTS-XVI. MIT,
+July 2024 (2024)
+21. Elkies, N.D., Klagsbrun, Z.: New rank records for elliptic curves having rational torsion. In: Proceedings of the Fourteenth Algorithmic Number Theory Symposium (ANTS-14) (2020), https://msp.org/obs/2020/4-1/obs-v4-n1-p15-s.
+pdf, arXiv:2003.00077
+22. Gebel, J., Pethö, A., Zimmer, H.G.: On mordell’s equation. Compositio Mathematica 110(3), 335–367 (February 1998). https://doi.org/10.1023/A:1000281602647,
+https://doi.org/10.1023/A:1000281602647
+23. Hafner, J.L., McCurley, K.S.: A rigorous subexponential algorithm for computation
+of class groups. Journal of the American Mathematical Society 2, 837–850 (1989),
+https://api.semanticscholar.org/CorpusID:51781105
+24. Hartmann, M., Paulus, S., Takagi, T.: Nice - new ideal coset encryption -. In:
+Koç, Ç.K., Paar, C. (eds.) Cryptographic Hardware and Embedded Systems. pp.
+328–339. Springer Berlin Heidelberg, Berlin, Heidelberg (1999)
+25. Lipmaa, H.: Secure accumulators from euclidean rings without trusted setup.
+In: Bao, F., Samarati, P., Zhou, J. (eds.) Applied Cryptography and Network Security - 10th International Conference, ACNS 2012, Singapore, June
+26-29, 2012. Proceedings. Lecture Notes in Computer Science, vol. 7341, pp.
+224–240. Springer (2012). https://doi.org/10.1007/978-3-642-31284-7 14, https:
+//doi.org/10.1007/978-3-642-31284-7_14
+26. Mestre, J.F.: Construction d’une courbe elliptique de rang ≥ 12. Comptes rendus
+de l’Académie des sciences. Série 1, Mathématique 295(12), 643–644 (1982)
+27. Nagao, K.I.: Examples of elliptic curves over Q with rank ≥ 17. Proceedings of the
+Japan Academy, Series A, Mathematical Sciences 68(9), 287–289 (1992)
+28. Paulus, S., Takagi, T.: A generalization of the diffie-hellman problem and related
+cryptosystems allowing fast decryption. In: The 1st International Conference on
+Information Security and Cryptology, ICSCI ’98, December 18-19, 1998, Seoul, Korea, Proceedings. pp. 211–220. Korea Institute of Information Security and Cryptology (KIISC) (1998)
+29. Paulus, S., Takagi, T.: A new public-key cryptosystem over a quadratic
+order with quadratic decryption time. J. Cryptol. 13(2), 263–272
+(2000). https://doi.org/10.1007/S001459910010, https://doi.org/10.1007/
+s001459910010
+
+17
+
+30. Pietrzak, K.: Simple verifiable delay functions. In: Innovations in Theoretical
+Computer Science (ITCS 2019). Leibniz International Proceedings in Informatics
+(LIPIcs), vol. 124, pp. 60:1–60:15. Schloss Dagstuhl–Leibniz-Zentrum fuer Informatik (2018), https://doi.org/10.4230/LIPIcs.ITCS.2019.60
+31. Scholz, A.: Über die beziehung der klassenzahlen quadratischer körper zueinander.
+Journal für die reine und angewandte Mathematik 166, 201–203 (1932), http:
+//eudml.org/doc/183472
+32. Silverman, J.H.: The arithmetic of elliptic curves, Graduate Texts in Mathematics,
+vol. 106. Springer-Verlag, New York (1992)
+33. Silverman, J.H., Tate, J.T.: Rational Points on Elliptic Curves. Springer Publishing
+Company, Incorporated, 2nd edn. (2015)
+34. Wesolowski, B.: Efficient verifiable delay functions. In: Ishai, Y., Rijmen, V. (eds.)
+Advances in Cryptology – EUROCRYPT 2019. pp. 379–407. Springer International
+Publishing, Cham (2019)
+
+18
+
+

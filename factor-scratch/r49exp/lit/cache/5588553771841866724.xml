@@ -1,0 +1,1285 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/vn9BFF1vohBNLOn63Jafyez2lXs</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"norm" AND abs:"Euclidean"&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-10-03T22:10:10Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22norm%22+AND+abs:%22Euclidean%22)&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>125</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2501.05573v2</id>
+    <title>Euclidean domains with no multiplicative norms</title>
+    <updated>2025-03-08T18:49:03Z</updated>
+    <link href="https://arxiv.org/abs/2501.05573v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.05573v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a Euclidean domain with no multiplicative Euclidean norm to a compatibly well-ordered monoid, and hence with no multiplicative Euclidean norm to $\mathbb{R}$ (under its usual order).
+  A key step in the proof is showing that the UFD property is preserved when adjoining a free factorization.</summary>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-09T20:58:18Z</published>
+    <arxiv:primary_category term="math.AC"/>
+    <author>
+      <name>Caleb J. Dastrup</name>
+    </author>
+    <author>
+      <name>Pace P. Nielsen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09830v1</id>
+    <title>A Generalization of QR Factorization To Non-Euclidean Norms</title>
+    <updated>2021-01-24T23:40:12Z</updated>
+    <link href="https://arxiv.org/abs/2101.09830v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09830v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>I propose a way to use non-Euclidean norms to formulate a QR-like factorization which can unlock interesting and potentially useful properties of non-Euclidean norms - for example the ability of $l^1$ norm to suppresss outliers or promote sparsity. A classic QR factorization of a matrix $\mathbf{A}$ computes an upper triangular matrix $\mathbf{R}$ and orthogonal matrix $\mathbf{Q}$ such that $\mathbf{A} = \mathbf{QR}$. To generalize this factorization to a non-Euclidean norm $\| \cdot \|$ I relax the orthogonality requirement for $\mathbf{Q}$ and instead require it have condition number $κ\left ( \mathbf{Q} \right ) = \| \mathbf{Q} ^{-1} \| \| \mathbf{Q} \|$ that is bounded independently of $\mathbf{A}$. I present the algorithm for computing $\mathbf{Q}$ and $\mathbf{R}$ and prove that this algorithm results in $\mathbf{Q}$ with the desired properties. I also prove that this algorithm generalizes classic QR factorization in the sense that when the norm is chosen to be Euclidean: $\| \cdot \|=\| \cdot \|_2$ then $\mathbf{Q}$ is orthogonal. Finally I present numerical results confirming mathematical results with $l^1$ and $l^{\infty}$ norms. I supply Python code for experimentation.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-24T23:40:12Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Reid Atcheson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1310.7826v1</id>
+    <title>On Grioli's minimum property and its relation to Cauchy's polar decomposition</title>
+    <updated>2013-09-30T13:12:09Z</updated>
+    <link href="https://arxiv.org/abs/1310.7826v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1310.7826v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The unitary polar factor of a matrix F is the unitary matrix Q realizing the minimum of the norm of F-Q over all unitary matrices Q. Tracing back the development on the optimality of the polar factor to its presumable roots, in this paper we present a commented translation of a note by G. Grioli from 1940 (Boll.Un.Math.Ital.2,452-455(1940)) showing the minimization property for the Frobenius norm in dimension 3; in his words:
+  "We show that for the homogeneous displacement, tangent to any finite displacement, there exists a minimum property completely analogous to a well known property valid for infinitesimal displacements."
+  Keywords: polar decomposition, optimality of the polar factor, Euclidean distance, geodesic distance, Euclidean movement</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-09-30T13:12:09Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Patrizio Neff</name>
+    </author>
+    <author>
+      <name>Johannes Lankeit</name>
+    </author>
+    <author>
+      <name>Angela Madeo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1406.3838v1</id>
+    <title>A fast 25/6-approximation for the minimum unit disk cover problem</title>
+    <updated>2014-06-15T18:32:43Z</updated>
+    <link href="https://arxiv.org/abs/1406.3838v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1406.3838v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a point set P in 2D, the problem of finding the smallest set of unit disks that cover all of P is NP-hard. We present a simple algorithm for this problem with an approximation factor of 25/6 in the Euclidean norm and 2 in the max norm, by restricting the disk centers to lie on parallel lines. The run time and space of this algorithm is O(n log n) and O(n) respectively. This algorithm extends to any Lp norm and is asymptotically faster than known alternative approximation algorithms for the same approximation factor.</summary>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-06-15T18:32:43Z</published>
+    <arxiv:comment>5 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CG"/>
+    <author>
+      <name>Paul Liu</name>
+    </author>
+    <author>
+      <name>Daniel Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.09238v1</id>
+    <title>Intrinsic Muon: Spectral Optimization on Riemannian Matrix Manifolds</title>
+    <updated>2026-05-10T00:39:13Z</updated>
+    <link href="https://arxiv.org/abs/2605.09238v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.09238v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Muon and related norm-constrained matrix optimizers have become central to large-scale learning problems. They are formulated as a linear maximization oracle (LMO) over an ambient matrix-norm ball in unconstrained Euclidean space. However, these do not generalize cleanly to manifold-valued parameters such as low-rank factorizations, orthogonality constraints, or symmetric positive definite (SPD) matrices. Naively restricting the Muon LMO to the tangent space (i) breaks quotient symmetries and (ii) couples the tangent-space constraint with an ambient norm bound, thereby obstructing closed-form solutions on various manifolds of interest. We resolve both issues with a single observation: every Riemannian metric canonically lifts a unitarily invariant Euclidean norm to an intrinsic norm on each tangent space, and the resulting intrinsic norm constrained LMO is symmetry preserving. Building on this, we introduce intrinsic Muon (iMuon), a unified framework that yields closed-form updates on the fixed-rank, SPD, Stiefel, and Grassmann manifolds for any unitarily invariant norm, including the spectral, Frobenius, and nuclear norms. We establish convergence guarantees for both deterministic and stochastic iMuon with rate constants that depend only on the manifold dimension. Notably, on the fixed-rank manifold this constant depends only on the rank, making the rate independent of factor conditioning and removing the runtime factor-rescaling required by prior work. Experiments on LoRA finetuning of LLMs, image classification, and subspace learning illustrate the efficacy of the proposed approach.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-10T00:39:13Z</published>
+    <arxiv:comment>Code: https://github.com/1bang118/manifold-intrinsic-muon</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yibang Li</name>
+    </author>
+    <author>
+      <name>Bihari Lal Pandey</name>
+    </author>
+    <author>
+      <name>Ravi Sah</name>
+    </author>
+    <author>
+      <name>Andi Han</name>
+    </author>
+    <author>
+      <name>Cyrus Mostajeran</name>
+    </author>
+    <author>
+      <name>Pratik Jawanpuria</name>
+    </author>
+    <author>
+      <name>Bamdev Mishra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.22651v3</id>
+    <title>The Dedekind-Hasse Criterion in Quaternion Algebras</title>
+    <updated>2026-08-25T16:16:15Z</updated>
+    <link href="https://arxiv.org/abs/2506.22651v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.22651v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a criterion for an integral domain to be a principal ideal domain (PID), due to Dedekind and Hasse, can also be applied in quaternion orders, and that it can be used to build a finite algorithm to determine if a given order is a principal left (or right) ideal domain. Using this algorithm, we give an alternative proof that the maximal orders of discriminant 7 and 13, which are non-Euclidean, are PIDs.
+  We also provide a completely arithmetic proof of a result of Gordon Pall that shows that, in an order that is a PID, an element of whose norm is divisible by an integer $m$ always has a left and a right divisor with norm $m$. This easily yields the existence and uniqueness (up to associates) of factorizations of a quaternion modeled on a factorization of its norm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-27T21:44:53Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Adriana Cardoso</name>
+    </author>
+    <author>
+      <name>António Machiavelo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.07657v1</id>
+    <title>Streaming and Distributed Algorithms for Robust Column Subset Selection</title>
+    <updated>2021-07-16T01:05:08Z</updated>
+    <link href="https://arxiv.org/abs/2107.07657v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.07657v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give the first single-pass streaming algorithm for Column Subset Selection with respect to the entrywise $\ell_p$-norm with $1 \leq p &lt; 2$. We study the $\ell_p$ norm loss since it is often considered more robust to noise than the standard Frobenius norm. Given an input matrix $A \in \mathbb{R}^{d \times n}$ ($n \gg d$), our algorithm achieves a multiplicative $k^{\frac{1}{p} - \frac{1}{2}}\text{poly}(\log nd)$-approximation to the error with respect to the best possible column subset of size $k$. Furthermore, the space complexity of the streaming algorithm is optimal up to a logarithmic factor. Our streaming algorithm also extends naturally to a 1-round distributed protocol with nearly optimal communication cost. A key ingredient in our algorithms is a reduction to column subset selection in the $\ell_{p,2}$-norm, which corresponds to the $p$-norm of the vector of Euclidean norms of each of the columns of $A$. This enables us to leverage strong coreset constructions for the Euclidean norm, which previously had not been applied in this context. We also give the first provable guarantees for greedy column subset selection in the $\ell_{1, 2}$ norm, which can be used as an alternative, practical subroutine in our algorithms. Finally, we show that our algorithms give significant practical advantages on real-world data analysis tasks.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-16T01:05:08Z</published>
+    <arxiv:comment>Proceedings of the 38th International Conference on Machine Learning (ICML 2021)</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Shuli Jiang</name>
+    </author>
+    <author>
+      <name>Dongyu Li</name>
+    </author>
+    <author>
+      <name>Irene Mengze Li</name>
+    </author>
+    <author>
+      <name>Arvind V. Mahankali</name>
+    </author>
+    <author>
+      <name>David P. Woodruff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.21172v1</id>
+    <title>A Unified Matrix Factorization Framework for Classical and Robust Clustering</title>
+    <updated>2025-10-24T05:51:48Z</updated>
+    <link href="https://arxiv.org/abs/2510.21172v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.21172v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents a unified matrix factorization framework for classical and robust clustering. We begin by revisiting the well-known equivalence between crisp k-means clustering and matrix factorization, following and rigorously rederiving an unpublished formulation by Bauckhage. Extending this framework, we derive an analogous matrix factorization interpretation for fuzzy c-means clustering, which to the best of our knowledge has not been previously formalized. These reformulations allow both clustering paradigms to be expressed as optimization problems over factor matrices, thereby enabling principled extensions to robust variants. To address sensitivity to outliers, we propose robust formulations for both crisp and fuzzy clustering by replacing the Frobenius norm with the l1,2-norm, which penalizes the sum of Euclidean norms across residual columns. We develop alternating minimization algorithms for the standard formulations and IRLS-based algorithms for the robust counterparts. All algorithms are theoretically proven to converge to a local minimum.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-24T05:51:48Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Angshul Majumdar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.02507v1</id>
+    <title>Factoring isometries of quadratic spaces into reflections</title>
+    <updated>2021-03-03T16:26:00Z</updated>
+    <link href="https://arxiv.org/abs/2103.02507v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.02507v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $V$ be a vector space endowed with a non-degenerate quadratic form $Q$. If the base field $\mathbb{F}$ is different from $\mathbb{F}_2$, it is known that every isometry can be written as a product of reflections. In this article, we detail the structure of the poset of all minimal length reflection factorizations of an isometry. If $\mathbb{F}$ is an ordered field, we also study factorizations into positive reflections, i.e., reflections defined by vectors of positive norm. We characterize such factorizations, under the hypothesis that the squares of $\mathbb{F}$ are dense in the positive elements (this includes Archimedean and Euclidean fields). In particular, we show that an isometry is a product of positive reflections if and only if its spinor norm is positive. As a final application, we explicitly describe the poset of all factorizations of isometries of the hyperbolic space.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-03T16:26:00Z</published>
+    <arxiv:primary_category term="math.GR"/>
+    <author>
+      <name>Jon McCammond</name>
+    </author>
+    <author>
+      <name>Giovanni Paolini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.14631v1</id>
+    <title>$k$-PCA for (non-squared) Euclidean Distances: Polynomial Time Approximation</title>
+    <updated>2025-07-19T14:00:50Z</updated>
+    <link href="https://arxiv.org/abs/2507.14631v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.14631v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given an integer $k\geq1$ and a set $P$ of $n$ points in $\REAL^d$, the classic $k$-PCA (Principle Component Analysis) approximates the affine \emph{$k$-subspace mean} of $P$, which is the $k$-dimensional affine linear subspace that minimizes its sum of squared Euclidean distances ($\ell_{2,2}$-norm) over the points of $P$, i.e., the mean of these distances. The \emph{$k$-subspace median} is the subspace that minimizes its sum of (non-squared) Euclidean distances ($\ell_{2,1}$-mixed norm), i.e., their median. The median subspace is usually more sparse and robust to noise/outliers than the mean, but also much harder to approximate since, unlike the $\ell_{z,z}$ (non-mixed) norms, it is non-convex for $k&lt;d-1$.
+  We provide the first polynomial-time deterministic algorithm whose both running time and approximation factor are not exponential in $k$. More precisely, the multiplicative approximation factor is $\sqrt{d}$, and the running time is polynomial in the size of the input. We expect that our technique would be useful for many other related problems, such as $\ell_{2,z}$ norm of distances for $z\not \in \br{1,2}$, e.g., $z=\infty$, and handling outliers/sparsity.
+  Open code and experimental results on real-world datasets are also provided.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-19T14:00:50Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Daniel Greenhut</name>
+    </author>
+    <author>
+      <name>Dan Feldman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.04809v2</id>
+    <title>Lattice (List) Decoding Near Minkowski's Inequality</title>
+    <updated>2021-09-09T18:01:20Z</updated>
+    <link href="https://arxiv.org/abs/2010.04809v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.04809v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Minkowski proved that any $n$-dimensional lattice of unit determinant has a nonzero vector of Euclidean norm at most $\sqrt{n}$; in fact, there are $2^{Ω(n)}$ such lattice vectors. Lattices whose minimum distances come close to Minkowski's bound provide excellent sphere packings and error-correcting codes in $\mathbb{R}^{n}$.
+  The focus of this work is a certain family of efficiently constructible $n$-dimensional lattices due to Barnes and Sloane, whose minimum distances are within an $O(\sqrt{\log n})$ factor of Minkowski's bound. Our primary contribution is a polynomial-time algorithm that list decodes this family to distances approaching $1/\sqrt{2}$ of the minimum distance. The main technique is to decode Reed-Solomon codes under error measured in the Euclidean norm, using the Koetter-Vardy "soft decision" variant of the Guruswami-Sudan list-decoding algorithm.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-09T21:10:40Z</published>
+    <arxiv:comment>14 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Ethan Mook</name>
+    </author>
+    <author>
+      <name>Chris Peikert</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1502.05003v4</id>
+    <title>On the spectral norm of Gaussian random matrices</title>
+    <updated>2016-02-22T20:59:39Z</updated>
+    <link href="https://arxiv.org/abs/1502.05003v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1502.05003v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $X$ be a $d\times d$ symmetric random matrix with independent but non-identically distributed Gaussian entries. It has been conjectured by Latał{a} that the spectral norm of $X$ is always of the same order as the largest Euclidean norm of its rows. A positive resolution of this conjecture would provide a sharp understanding of the probabilistic mechanisms that control the spectral norm of inhomogeneous Gaussian random matrices. This paper establishes the conjecture up to a dimensional factor of order $\sqrt{\log\log d}$. Moreover, dimension-free bounds are developed that are optimal to leading order and that establish the conjecture in special cases. The proofs of these results shed significant light on the geometry of the underlying Gaussian processes.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-02-17T19:02:13Z</published>
+    <arxiv:comment>18 pages, 1 figure; final version, to appear in Trans. Amer. Math. Soc</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>Trans. Amer. Math. Soc. 369, 8161-8178 (2017)</arxiv:journal_ref>
+    <author>
+      <name>Ramon van Handel</name>
+    </author>
+    <arxiv:doi>10.1090/tran/6922</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/tran/6922" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.04654v3</id>
+    <title>Non-Stationary Bandit Convex Optimization: An Optimal Algorithm with Two-Point Feedback</title>
+    <updated>2026-05-24T13:22:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.04654v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.04654v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies bandit convex optimization in non-stationary environments with two-point feedback, using dynamic regret as the performance measure. We propose an algorithm based on bandit mirror descent that extends naturally to non-Euclidean settings. Let $T$ be the total number of iterations and $\mathcal{P}_{T,p}$ the path variation with respect to the $\ell_p$-norm. In Euclidean space, our algorithm matches the optimal regret bound $\mathcal{O}(\sqrt{dT(1+\mathcal{P}_{T,2})})$, improving upon \citet{zhao2021bandit} by a factor of $\mathcal{O}(\sqrt{d})$. Beyond Euclidean settings, our algorithm achieves an upper bound of $\mathcal{O}(\sqrt{d\log(d)T\log(T)(1 + \mathcal{P}_{T,1})})$ on the simplex, which is nearly optimal up to log factors. For the cross-polytope, the bound reduces to $\mathcal{O}(\sqrt{d\log(d)T(1+\mathcal{P}_{T,p})})$ for some $p = 1 + 1/\log(d)$.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-06T17:18:47Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Chang He</name>
+    </author>
+    <author>
+      <name>Bo Jiang</name>
+    </author>
+    <author>
+      <name>Shuzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.05350v3</id>
+    <title>Relative Error Embeddings for the Gaussian Kernel Distance</title>
+    <updated>2026-03-22T21:47:58Z</updated>
+    <link href="https://arxiv.org/abs/1602.05350v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.05350v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A reproducing kernel can define an embedding of a data point into an infinite dimensional reproducing kernel Hilbert space (RKHS). The norm in this space describes a distance, which we call the kernel distance. The random Fourier features (of Rahimi and Recht) describe an oblivious approximate mapping into finite dimensional Euclidean space that behaves similar to the RKHS. We show in this paper that for the Gaussian kernel the Euclidean norm between these mapped to features has $(1+\varepsilon)$-relative error with respect to the kernel distance. When there are $n$ data points, we show that $O((1/\varepsilon^2) \log(n))$ dimensions of the approximate feature space are sufficient and necessary.
+  Without a bound on $n$, but when the original points lie in $\mathbb{R}^d$ and have diameter bounded by $\mathcal{M}$, then we show that $O((d/\varepsilon^2) \log(\mathcal{M}))$ dimensions are sufficient, and that this many are required, up to $\log(1/\varepsilon)$ factors.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-17T09:35:08Z</published>
+    <arxiv:comment>This version corrects Lemma 5, with a new more modern proof. There was an error in the Appendix as pointed out by Cheng etal in ArXiv:2210.00244 (ICLR 2023)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>This supersedes published version in ALT 2017</arxiv:journal_ref>
+    <author>
+      <name>Di Chen</name>
+    </author>
+    <author>
+      <name>Jeff M. Phillips</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.01451v2</id>
+    <title>Deterministic Hardness of Approximation For SVP in all Finite $\ell_p$ Norms</title>
+    <updated>2026-04-06T12:08:10Z</updated>
+    <link href="https://arxiv.org/abs/2604.01451v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.01451v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that, assuming NP $\not\subseteq$ $\cap_{δ&gt; 0}$DTIME$\left(\exp{n^δ}\right)$, the shortest vector problem for lattices of rank $n$ in any finite $\ell_p$ norm is hard to approximate within a factor of $2^{(\log n)^{1 - o(1)}}$, via a deterministic reduction. Previously, for the Euclidean case $p=2$, even hardness of the exact shortest vector problem was not known under a deterministic reduction.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-01T22:56:24Z</published>
+    <arxiv:comment>Updated acknowledgments</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Isaac M Hair</name>
+    </author>
+    <author>
+      <name>Amit Sahai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.02229v3</id>
+    <title>Sequence Pairs with Lowest Combined Autocorrelation and Crosscorrelation</title>
+    <updated>2022-03-04T22:28:20Z</updated>
+    <link href="https://arxiv.org/abs/1711.02229v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.02229v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pursley and Sarwate established a lower bound on a combined measure of autocorrelation and crosscorrelation for a pair $(f,g)$ of binary sequences (i.e., sequences with terms in $\{-1,1\}$). If $f$ is a nonzero sequence, then its autocorrelation demerit factor, $\text{ADF}(f)$, is the sum of the squared magnitudes of the aperiodic autocorrelation values over all nonzero shifts for the sequence obtained by normalizing $f$ to have unit Euclidean norm. If $(f,g)$ is a pair of nonzero sequences, then their crosscorrelation demerit factor, $\text{CDF}(f,g)$, is the sum of the squared magnitudes of the aperiodic crosscorrelation values over all shifts for the sequences obtained by normalizing both $f$ and $g$ to have unit Euclidean norm. Pursley and Sarwate showed that for binary sequences, the sum of $\text{CDF}(f,g)$ and the geometric mean of $\text{ADF}(f)$ and $\text{ADF}{(g)}$ must be at least $1$. For randomly selected pairs of long binary sequences, this quantity is typically around $2$. In this paper, we show that Pursley and Sarwate's bound is met for binary sequences precisely when $(f,g)$ is a Golay complementary pair. We also prove a generalization of this result for sequences whose terms are arbitrary complex numbers. We investigate constructions that produce infinite families of Golay complementary pairs, and compute the asymptotic values of autocorrelation and crosscorrelation demerit factors for such families.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-11-07T00:07:36Z</published>
+    <arxiv:comment>37 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Daniel J. Katz</name>
+    </author>
+    <author>
+      <name>Eli Moore</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1304.0839v1</id>
+    <title>Multiscale Hybrid Non-local Means Filtering Using Modified Similarity Measure</title>
+    <updated>2013-04-03T04:24:21Z</updated>
+    <link href="https://arxiv.org/abs/1304.0839v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1304.0839v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new multiscale implementation of non-local means filtering for image denoising is proposed. The proposed algorithm also introduces a modification of similarity measure for patch comparison. The standard Euclidean norm is replaced by weighted Euclidean norm for patch based comparison. Assuming the patch as an oriented surface, notion of normal vector patch is being associated with each patch. The inner product of these normal vector patches is then used in weighted Euclidean distance of photometric patches as the weight factor. The algorithm involves two steps: The first step is multiscale implementation of an accelerated non-local means filtering in the stationary wavelet domain to obtain a refined version of the noisy patches for later comparison. This step is inspired by a preselection phase of finding similar patches in various non-local means approaches. The next step is to apply the modified non-local means filtering to the noisy image using the reference patches obtained in the first step. These refined patches contain less noise, and consequently the computation of normal vectors and partial derivatives is more accurate. Experimental results indicate equivalent or better performance of proposed algorithm as compared to various state of the art algorithms.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-04-03T04:24:21Z</published>
+    <arxiv:comment>7 pages, 3 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zahid Hussain Shamsi</name>
+    </author>
+    <author>
+      <name>Dai-Gyoung Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.05092v1</id>
+    <title>Dropout as a Low-Rank Regularizer for Matrix Factorization</title>
+    <updated>2017-10-13T22:47:19Z</updated>
+    <link href="https://arxiv.org/abs/1710.05092v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.05092v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Regularization for matrix factorization (MF) and approximation problems has been carried out in many different ways. Due to its popularity in deep learning, dropout has been applied also for this class of problems. Despite its solid empirical performance, the theoretical properties of dropout as a regularizer remain quite elusive for this class of problems. In this paper, we present a theoretical analysis of dropout for MF, where Bernoulli random variables are used to drop columns of the factors. We demonstrate the equivalence between dropout and a fully deterministic model for MF in which the factors are regularized by the sum of the product of squared Euclidean norms of the columns. Additionally, we inspect the case of a variable sized factorization and we prove that dropout achieves the global minimum of a convex approximation problem with (squared) nuclear norm regularization. As a result, we conclude that dropout can be used as a low-rank regularizer with data dependent singular-value thresholding.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-13T22:47:19Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jacopo Cavazza</name>
+    </author>
+    <author>
+      <name>Pietro Morerio</name>
+    </author>
+    <author>
+      <name>Benjamin Haeffele</name>
+    </author>
+    <author>
+      <name>Connor Lane</name>
+    </author>
+    <author>
+      <name>Vittorio Murino</name>
+    </author>
+    <author>
+      <name>Rene Vidal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1012.2262v2</id>
+    <title>Limitations on quantum dimensionality reduction</title>
+    <updated>2011-04-26T15:01:02Z</updated>
+    <link href="https://arxiv.org/abs/1012.2262v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1012.2262v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Johnson-Lindenstrauss Lemma is a classic result which implies that any set of n real vectors can be compressed to O(log n) dimensions while only distorting pairwise Euclidean distances by a constant factor. Here we consider potential extensions of this result to the compression of quantum states. We show that, by contrast with the classical case, there does not exist any distribution over quantum channels that significantly reduces the dimension of quantum states while preserving the 2-norm distance with high probability. We discuss two tasks for which the 2-norm distance is indeed the correct figure of merit. In the case of the trace norm, we show that the dimension of low-rank mixed states can be reduced by up to a square root, but that essentially no dimensionality reduction is possible for highly mixed states.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-12-10T13:45:03Z</published>
+    <arxiv:comment>17 pages; v2: typo fixes and clarifications</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Proc. of ICALP 2011, Volume 6755/2011, pp. 86-97</arxiv:journal_ref>
+    <author>
+      <name>Aram W. Harrow</name>
+    </author>
+    <author>
+      <name>Ashley Montanaro</name>
+    </author>
+    <author>
+      <name>Anthony J. Short</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-642-22006-7_8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-642-22006-7_8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.19168v1</id>
+    <title>Bounded curvature manifolds without Euclidean isometric immersions of bounded mean curvature</title>
+    <updated>2026-09-12T11:01:33Z</updated>
+    <link href="https://arxiv.org/abs/2609.19168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.19168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For every integer $n\ge2$, we construct a smooth complete Riemannian metric $G_n$ on $\mathbb{R}^n$ with full curvature norm at most one and injectivity radius at least one for which no $C^2$ isometric immersion into a finite-dimensional Euclidean space has bounded mean curvature. In dimension two, bounded second fundamental form would give uniformly controlled finite Jacobian representations of the Laplacian of the conformal factor. We construct disjoint conformal blocks for which the curvature remains bounded while the finite Jacobian representation cost tends to infinity. Taking Euclidean products gives all higher dimensions. The result answers Yau's Problem~52 negatively under the stronger assumption of bounded full curvature.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-12T11:01:33Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <author>
+      <name>Haoxuan Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.13177v2</id>
+    <title>Block-Norm Geometries for Online Mirror Descent with Sparse Losses</title>
+    <updated>2026-09-11T14:48:40Z</updated>
+    <link href="https://arxiv.org/abs/2602.13177v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.13177v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The performance of online mirror descent depends critically on the geometry induced by its mirror map, yet standard algorithms largely rely on two canonical choices: Euclidean and entropic geometry. We show that these two geometries can both be substantially suboptimal when loss gradients are sparse. We introduce a family of randomized block-norm mirror maps that interpolates between Euclidean and entropic geometries and adapts to intermediate sparsity structure. For several standard convex sets, including $\ell_p$ balls, ellipsoids, boxes, and Minkowski sums of norm balls, we prove polynomial-in-dimension improvements in regret bounds over the better of online projected gradient descent and exponentiated gradient. We further construct explicit online convex optimization instances for which these improvements are realized: on a simple polytope, an intermediate block geometry achieves a $\text{poly}(d)$ separation in regret from both Euclidean and entropic geometries in dimension $d$, while on the probability simplex we obtain a separation of order $Ω(\sqrt{\log d}/\log\log d)$. Finally, we study geometry selection when sparsity is unknown. We show that naively alternating between mirror maps can incur linear regret, even though either mirror map alone has sublinear regret, and give a Hedge meta-algorithm that competes with the best mirror map in a finite portfolio. For random block geometries, this yields regret within an $O(\sqrt{\log\log d})$ factor of the best random uniform block norm chosen in hindsight.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-13T18:37:26Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Swati Gupta</name>
+    </author>
+    <author>
+      <name>Jai Moondra</name>
+    </author>
+    <author>
+      <name>Mohit Singh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.37503v1</id>
+    <title>Von Neumann-Jordan Constants in Banach Tensor Products</title>
+    <updated>2026-09-27T09:56:05Z</updated>
+    <link href="https://arxiv.org/abs/2609.37503v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.37503v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the von Neumann--Jordan constant of Banach tensor products equipped with the injective and projective tensor norms. We first establish lower estimates in terms of the geometric properties of the factor spaces and show that, whenever both factors are infinite-dimensional, the von Neumann--Jordan constants of both canonical tensor products attain the maximal value \(2\). For finite-dimensional factors, we obtain explicit results for classical sequence spaces and characterize the extremal case through operator-space and orthogonal-contact conditions. We further derive dimension-sensitive estimates based on Euclidean sections. Finally, we study the constant under equivalent renormings and determine its exact renorming envelope for injective and projective tensor products. As consequences, we characterize when these tensor products are superreflexive and when they are weak Hilbert spaces. These results clarify the influence of tensor norms, dimension, and renorming on the von Neumann--Jordan geometry of Banach tensor products.</summary>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-27T09:56:05Z</published>
+    <arxiv:primary_category term="math.FA"/>
+    <author>
+      <name>Wenwen Zhang</name>
+    </author>
+    <author>
+      <name>Ying Xu</name>
+    </author>
+    <author>
+      <name>Qi Liu</name>
+    </author>
+    <author>
+      <name>Yongjin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.05917v2</id>
+    <title>A Constant-Factor Approximation for Continuous Dynamic Time Warping in 2D</title>
+    <updated>2026-08-05T12:09:05Z</updated>
+    <link href="https://arxiv.org/abs/2605.05917v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.05917v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Continuous Dynamic Time Warping (CDTW) is a robust similarity measure for polygonal curves that has recently found a variety of applications. Despite its practical use, not much is known about the algorithmic complexity of computing it in 2D, especially when one requires either an exact solution or strong approximation guarantees. We fill this gap by introducing a $5$-approximation algorithm with running time $O(n^5)$ under the 1-norm.
+  This is the first constant-factor approximation for 2D CDTW with polynomial running time. We extend our algorithm to all polygonal norms on $\mathbb{R}^2$, which we subsequently use in order to achieve a $(5+\varepsilon)$-approximation with time complexity $O(n^5 / \varepsilon^{1/2})$ for CDTW in 2D under any fixed norm. The latter result in particular includes the usual Euclidean 2-norm.</summary>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-07T09:28:09Z</published>
+    <arxiv:comment>Appearing in ICALP 2026; made minor clarity and consistency improvements, mainly in sections 3.1 and 4.1</arxiv:comment>
+    <arxiv:primary_category term="cs.CG"/>
+    <author>
+      <name>Kevin Buchin</name>
+    </author>
+    <author>
+      <name>Maike Buchin</name>
+    </author>
+    <author>
+      <name>Jan Erik Swiadek</name>
+    </author>
+    <author>
+      <name>Sampson Wong</name>
+    </author>
+    <arxiv:doi>10.4230/LIPIcs.ICALP.2026.47</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4230/LIPIcs.ICALP.2026.47" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.02387v1</id>
+    <title>Approximate $\mathrm{CVP}$ in time $2^{0.802 \, n}$ -- now in any norm!</title>
+    <updated>2021-10-05T22:39:07Z</updated>
+    <link href="https://arxiv.org/abs/2110.02387v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.02387v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that a constant factor approximation of the shortest and closest lattice vector problem in any norm can be computed in time $2^{0.802\, n}$. This contrasts the corresponding $2^n$ time, (gap)-SETH based lower bounds for these problems that even apply for small constant approximation. For both problems, $\mathrm{SVP}$ and $\mathrm{CVP}$, we reduce to the case of the Euclidean norm. A key technical ingredient in that reduction is a twist of Milman's construction of an $M$-ellipsoid which approximates any symmetric convex body $K$ with an ellipsoid $\mathcal{E}$ so that $2^{\varepsilon n}$ translates of a constant scaling of $\mathcal{E}$ can cover $K$ and vice versa.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-05T22:39:07Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Thomas Rothvoss</name>
+    </author>
+    <author>
+      <name>Moritz Venzin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.32910v1</id>
+    <title>The Complexity of Convex Optimization with Mismatched Geometry</title>
+    <updated>2026-09-26T20:01:40Z</updated>
+    <link href="https://arxiv.org/abs/2609.32910v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.32910v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Optimal first-order methods on non-Euclidean domains such as the $\ell_1$ ball $B_1^n(R)=\{x\in\mathbb R^n:\|x\|_1\le R\}$ pair the prox-function with the norm in which smoothness is measured. When the gradient is $L$-Lipschitz in the Euclidean norm only, the accelerated method with a Euclidean prox-setup reduces the functional gap $f(x_N)-\min_{B_1^n(R)}f$ to $O(LR^2/N^2)$ after $N$ first-order queries (an entropic $\ell_1$ prox-setup replaces $L$ by the $\ell_1\to\ell_\infty$ constant $L_1\le L$, at the cost of a factor $\log n$ and with the same exponent). The lower bound of Guzmán and Nemirovski is of order $LR^2/N^3$, and whether the upper bound can be brought down to that order is a question of A. S. Nemirovski. We show that for this mismatched problem the minimax value of the gap is of order $LR^2/N^3$ up to logarithmic factors, for deterministic and for randomized methods alike, and already in dimension proportional to the number of queries. The upper bound is attained by a Steiner-point level method: every supporting hyperplane seen so far is kept as a level cut, and the next query is made near the Steiner point of the resulting localization polytope. The analysis rests on a single geometric fact: along nested subsets of the ball the Steiner points travel a distance that is polylogarithmic in the dimension, in contrast to $\sqrt n$ for the Euclidean ball. All queries stay feasible, and a randomized selector keeps the internal work polynomial. The same geometry yields optimal rates for nonsmooth objectives, Hölder gradients, higher-order oracles and Lipschitz monotone operators, the last with a matching deterministic lower bound. For convex quadratics, a curvature-learning method attains the optimal rate on every $\ell_p$ ball with $1\le p&lt;2$ and without logarithmic loss. Experiments confirm the predicted $N^{-3}$ behaviour on objectives that are hard for Euclidean methods.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-26T20:01:40Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Timofei Loginov</name>
+    </author>
+    <author>
+      <name>Alexander Gasnikov</name>
+    </author>
+    <author>
+      <name>Yuriy Dorn</name>
+    </author>
+    <author>
+      <name>Aleksandr Shestakov</name>
+    </author>
+    <author>
+      <name>Nazarii Tupitsa</name>
+    </author>
+    <author>
+      <name>Osman Osmanov</name>
+    </author>
+    <author>
+      <name>Darina Dvinskikh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.06441v3</id>
+    <title>Testing Positive Semi-Definiteness via Random Submatrices</title>
+    <updated>2020-09-17T19:10:23Z</updated>
+    <link href="https://arxiv.org/abs/2005.06441v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.06441v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of testing whether a matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$ with bounded entries ($\|\mathbf{A}\|_\infty \leq 1$) is positive semi-definite (PSD), or $ε$-far in Euclidean distance from the PSD cone, meaning that $\min_{\mathbf{B} \succeq 0} \|\mathbf{A} - \mathbf{B}\|_F^2 &gt; εn^2$, where $\mathbf{B} \succeq 0$ denotes that $\mathbf{B}$ is PSD. Our main algorithmic contribution is a non-adaptive tester which distinguishes between these cases using only $\tilde{O}(1/ε^4)$ queries to the entries of $\mathbf{A}$. If instead of the Euclidean norm we considered the distance in spectral norm, we obtain the "$\ell_\infty$-gap problem", where $\mathbf{A}$ is either PSD or satisfies $\min_{\mathbf{B}\succeq 0} \|\mathbf{A}- \mathbf{B}\|_2 &gt; εn$. For this related problem, we give a $\tilde{O}(1/ε^2)$ query tester, which we show is optimal up to $\log(1/ε)$ factors. Our testers randomly sample a collection of principal submatrices and check whether these submatrices are PSD. Consequentially, our algorithms achieve one-sided error: whenever they output that $\mathbf{A}$ is not PSD, they return a certificate that $\mathbf{A}$ has negative eigenvalues.
+  We complement our upper bound for PSD testing with Euclidean norm distance by giving a $\tildeΩ(1/ε^2)$ lower bound for any non-adaptive algorithm. Our lower bound construction is general, and can be used to derive lower bounds for a number of spectral testing problems. As an example of the applicability of our construction, we obtain a new $\tildeΩ(1/ε^4)$ sampling lower bound for testing the Schatten-$1$ norm with a $εn^{1.5}$ gap, extending a result of Balcan, Li, Woodruff, and Zhang [SODA'19]. In addition, it yields new sampling lower bounds for estimating the Ky-Fan Norm, and the cost of the best rank-$k$ approximation.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-13T17:30:12Z</published>
+    <arxiv:comment>Minor Edits, highlighted connection between \ell_\infty gap and spectral norm gap</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Ainesh Bakshi</name>
+    </author>
+    <author>
+      <name>Nadiia Chepurko</name>
+    </author>
+    <author>
+      <name>Rajesh Jayaram</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.22699v1</id>
+    <title>A Product Principle for Harmonic Schwarz Lemmas: Boxes, Polydiscs, and Metric Geometry</title>
+    <updated>2026-09-19T02:18:11Z</updated>
+    <link href="https://arxiv.org/abs/2609.22699v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.22699v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish an exact product principle for the Euclidean operator norm of differentials of harmonic maps. For a bounded domain \(G\subset\R^m\) and \(p\in G\), let \(M_G(p)\) denote the supremum of \(\|dF_0\|\) over harmonic maps \(F:\D\to G\) with \(F(0)=p\). For bounded domains \(G_j\subset\R^{m_j}\), we prove \[
+  M_{G_1\times\cdots\times G_N}(p_1,\ldots,p_N)^2
+  =\sum_{j=1}^N M_{G_j}(p_j)^2. \] The theorem separates the geometry of the individual factors from the Euclidean geometry of the product: the factor extremal constants combine by a sum-of-squares law, while equality is governed by a single compatibility condition, namely a common maximizing direction for the component differentials. Neither convexity nor attainment of the factor suprema is required.
+  Combining the product principle with the sharp interval and disk factor problems yields exact operator-norm estimates and all equality cases for harmonic maps into boxes and polydiscs. In both families, for every extremal map, the real differential at the origin has one-dimensional image.
+  The same factor constants also define coordinatewise metrics for which the harmonic contraction estimate is sharp when the source disk is equipped with its Poincaré metric of curvature \(-1\). For boxes, the resulting metric is complete and equals twice the restriction of the Kobayashi-Royden metric of the product of vertical strips. For polydiscs, the harmonic product metric is pointwise maximal among contracting metrics of the form \(\max_j a_j(p)|v_j|\), with \(a_j(p)&gt;0\). It is strictly smaller than twice the Kobayashi-Royden metric on every nonzero tangent vector, and its induced path metric is incomplete.</summary>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-19T02:18:11Z</published>
+    <arxiv:comment>30 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CV"/>
+    <author>
+      <name>Miljan Knežević</name>
+    </author>
+    <author>
+      <name>Miodrag Mateljević</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.03056v1</id>
+    <title>Non-Abelian Analogs of Lattice Rounding</title>
+    <updated>2015-01-13T15:54:05Z</updated>
+    <link href="https://arxiv.org/abs/1501.03056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.03056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lattice rounding in Euclidean space can be viewed as finding the nearest point in the orbit of an action by a discrete group, relative to the norm inherited from the ambient space. Using this point of view, we initiate the study of non-abelian analogs of lattice rounding involving matrix groups. In one direction, we give an algorithm for solving a normed word problem when the inputs are random products over a basis set, and give theoretical justification for its success. In another direction, we prove a general inapproximability result which essentially rules out strong approximation algorithms (i.e., whose approximation factors depend only on dimension) analogous to LLL in the general case.</summary>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-13T15:54:05Z</published>
+    <arxiv:comment>30 pages</arxiv:comment>
+    <arxiv:primary_category term="math.GR"/>
+    <author>
+      <name>Evgeni Begelfor</name>
+    </author>
+    <author>
+      <name>Stephen D. Miller</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0410096v1</id>
+    <title>The shattering dimension of sets of linear functionals</title>
+    <updated>2004-10-05T16:49:37Z</updated>
+    <link href="https://arxiv.org/abs/math/0410096v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0410096v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We evaluate the shattering dimension of various classes of linear functionals on various symmetric convex sets. The proofs here relay mostly on methods from the local theory of normed spaces and include volume estimates, factorization techniques and tail estimates of norms, viewed as random variables on Euclidean spheres. The estimates of shattering dimensions can be applied to obtain error bounds for certain classes of functions, a fact which was the original motivation of this study. Although this can probably be done in a more traditional manner, we also use the approach presented here to determine whether several classes of linear functionals satisfy the uniform law of large numbers and the uniform central limit theorem.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2004-10-05T16:49:37Z</published>
+    <arxiv:comment>Published by the Institute of Mathematical Statistics (http://www.imstat.org) in the Annals of Probability (http://www.imstat.org/aop/) at http://dx.doi.org/10.1214/009117904000000388</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>Annals of Probability 2004, Vol. 32, No. 3A, 1746-1770</arxiv:journal_ref>
+    <author>
+      <name>Shahar Mendelson</name>
+    </author>
+    <author>
+      <name>Gideon Schechtman</name>
+    </author>
+    <arxiv:doi>10.1214/009117904000000388</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1214/009117904000000388" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.15956v1</id>
+    <title>Black-Box Uniform Stability for Non-Euclidean Empirical Risk Minimization</title>
+    <updated>2024-12-20T14:50:47Z</updated>
+    <link href="https://arxiv.org/abs/2412.15956v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.15956v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study first-order algorithms that are uniformly stable for empirical risk minimization (ERM) problems that are convex and smooth with respect to $p$-norms, $p \geq 1$. We propose a black-box reduction method that, by employing properties of uniformly convex regularizers, turns an optimization algorithm for Hölder smooth convex losses into a uniformly stable learning algorithm with optimal statistical risk bounds on the excess risk, up to a constant factor depending on $p$. Achieving a black-box reduction for uniform stability was posed as an open question by (Attia and Koren, 2022), which had solved the Euclidean case $p=2$. We explore applications that leverage non-Euclidean geometry in addressing binary classification problems.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-20T14:50:47Z</published>
+    <arxiv:comment>33 pages, no figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Simon Vary</name>
+    </author>
+    <author>
+      <name>David Martínez-Rubio</name>
+    </author>
+    <author>
+      <name>Patrick Rebeschini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.16284v1</id>
+    <title>A scalar matching factor on the Birkhoff polytope characterizing permutation and uniform matrices</title>
+    <updated>2024-06-24T03:20:33Z</updated>
+    <link href="https://arxiv.org/abs/2406.16284v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.16284v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Birkhoff polytope is the set of all bistochastic matrices (also known as doubly stochastic matrices). Bistochastic matrices form a special class of stochastic matrices where each row and column sums up to one. Permutation matrices and uniform matrices are special extreme cases of bistochastic matrices. In this paper, we define a scalar quantity called the matching factor on the Birkhoff polytope. Given a bistochastic matrix, we define the matching factor by taking the product of the squares of the Euclidean norms of each row and column and show that permutation matrices and uniform matrices maximize and minimize the matching factor, respectively. We also extend this definition of scalar matching factor to a larger class of matrices and show similar maximization and minimization properties.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-24T03:20:33Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Suvadip Sana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.12823v4</id>
+    <title>Chordal-NMF with Riemannian Multiplicative Update</title>
+    <updated>2025-09-21T20:05:50Z</updated>
+    <link href="https://arxiv.org/abs/2405.12823v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.12823v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nonnegative Matrix Factorization (NMF) is the problem of approximating a given nonnegative matrix M through the product of two nonnegative low-rank matrices W and H. Traditionally NMF is tackled by optimizing a specific objective function evaluating the quality of the approximation. This assessment is often done based on the Frobenius norm (F-norm). In this work, we argue that the F-norm, as the ``point-to-point'' distance, may not always be appropriate. Viewing from the perspective of cone, NMF may not naturally align with F-norm. So, a ray-to-ray chordal distance is proposed as an alternative way of measuring the quality of the approximation. As this measure corresponds to the Euclidean distance on the sphere, it motivates the use of manifold optimization techniques. We apply Riemannian optimization technique to solve chordal-NMF by casting it on a manifold. Unlike works on Riemannian optimization that require the manifold to be smooth, the nonnegativity in chordal-NMF defines a non-differentiable manifold. We propose a Riemannian Multiplicative Update (RMU), and showcase the effectiveness of the chordal-NMF on synthetic and real-world datasets.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-21T14:26:53Z</published>
+    <arxiv:comment>25 pages, 7 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Flavia Esposito</name>
+    </author>
+    <author>
+      <name>Andersen Ang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.05751v2</id>
+    <title>An Algorithm for the Factorization of Split Quaternion Polynomials</title>
+    <updated>2021-03-09T13:55:11Z</updated>
+    <link href="https://arxiv.org/abs/2010.05751v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.05751v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an algorithm to compute all factorizations into linear factors of univariate polynomials over the split quaternions, provided such a factorization exists. Failure of the algorithm is equivalent to non-factorizability for which we present also geometric interpretations in terms of rulings on the quadric of non-invertible split quaternions. However, suitable real polynomial multiples of split quaternion polynomials can still be factorized and we describe how to find these real polynomials. Split quaternion polynomials describe rational motions in the hyperbolic plane. Factorization with linear factors corresponds to the decomposition of the rational motion into hyperbolic rotations. Since multiplication with a real polynomial does not change the motion, this decomposition is always possible. Some of our ideas can be transferred to the factorization theory of motion polynomials. These are polynomials over the dual quaternions with real norm polynomial and they describe rational motions in Euclidean kinematics. We transfer techniques developed for split quaternions to compute new factorizations of certain dual quaternion polynomials.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-12T14:45:53Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <arxiv:journal_ref>Scharler, D.F., Schröcker, HP. An Algorithm for the Factorization of Split Quaternion Polynomials. Adv. Appl. Clifford Algebras 31, 29 (2021)</arxiv:journal_ref>
+    <author>
+      <name>Daniel F. Scharler</name>
+    </author>
+    <author>
+      <name>Hans-Peter Schröcker</name>
+    </author>
+    <arxiv:doi>10.1007/s00006-021-01133-8</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00006-021-01133-8" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.13036v3</id>
+    <title>Robust Signal Detection with Quadratically Convex Orthosymmetric Constraints</title>
+    <updated>2026-02-15T17:44:35Z</updated>
+    <link href="https://arxiv.org/abs/2308.13036v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.13036v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the problem of robust signal detection in Gaussian noise under quadratically convex orthosymmetric (QCO) constraints. We consider a minimax testing framework where the signal belongs to a QCO set and is separated from zero in Euclidean norm, while an adversary is allowed to arbitrarily corrupt a fraction $ε$ of the samples. We establish the minimax separation radius between the null and alternative purely in terms of the constraint geometry, sample size, corruption rate, and noise scale. Our analysis argues that the Kolmogorov widths of the constraint set play a central role in determining the detection limits, paralleling to classic results in estimation problem. The derived lower bounds exhibit phase transitions with respect to the corruption rate and confirm that robust testing is statistically easier than robust estimation. While the information-theoretic upper bound is achieved by a computationally intractable test, we develop a polynomial-time algorithm that achieves the minimax lower bound up to logarithmic factors. Unlike prior work, our algorithm handles signals of arbitrary Euclidean length while respecting the QCO constraints. Finally, we extend these results to the robust $\ell _{p}$ norm testing for $1 \le p &lt; 2$.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-24T19:02:27Z</published>
+    <arxiv:comment>80 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Yikun Li</name>
+    </author>
+    <author>
+      <name>Matey Neykov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.00666v6</id>
+    <title>Sharp bounds for max-sliced Wasserstein distances</title>
+    <updated>2024-11-26T14:38:22Z</updated>
+    <link href="https://arxiv.org/abs/2403.00666v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.00666v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We obtain essentially matching upper and lower bounds for the expected max-sliced 1-Wasserstein distance between a probability measure on a separable Hilbert space and its empirical distribution from $n$ samples. By proving a Banach space version of this result, we also obtain an upper bound, that is sharp up to a log factor, for the expected max-sliced 2-Wasserstein distance between a symmetric probability measure $μ$ on a Euclidean space and its symmetrized empirical distribution in terms of the operator norm of the covariance matrix of $μ$ and the diameter of the support of $μ$.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-01T16:55:10Z</published>
+    <arxiv:comment>To appear in Journal of Foundations of Computational Mathematics</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>March T. Boedihardjo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.25541v1</id>
+    <title>Fast Dimensionality Reduction from $\ell_2$ to $\ell_p$</title>
+    <updated>2025-10-29T14:04:31Z</updated>
+    <link href="https://arxiv.org/abs/2510.25541v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.25541v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Johnson-Lindenstrauss (JL) lemma is a fundamental result in dimensionality reduction, ensuring that any finite set $X \subseteq \mathbb{R}^d$ can be embedded into a lower-dimensional space $\mathbb{R}^k$ while approximately preserving all pairwise Euclidean distances. In recent years, embeddings that preserve Euclidean distances when measured via the $\ell_1$ norm in the target space have received increasing attention due to their relevance in applications such as nearest neighbor search in high dimensions. A recent breakthrough by Dirksen, Mendelson, and Stollenwerk established an optimal $\ell_2 \to \ell_1$ embedding with computational complexity $O(d \log d)$. In this work, we generalize this direction and propose a simple linear embedding from $\ell_2$ to $\ell_p$ for any $p \in [1,2]$ based on a construction of Ailon and Liberty. Our method achieves a reduced runtime of $O(d \log k)$ when $k \leq d^{1/4}$, improving upon prior runtime results when the target dimension is small. Additionally, we show that for \emph{any norm} $\|\cdot\|$ in the target space, any embedding of $(\mathbb{R}^d, \|\cdot\|_2)$ into $(\mathbb{R}^k, \|\cdot\|)$ with distortion $\varepsilon$ generally requires $k = Ω\big(\varepsilon^{-2} \log(\varepsilon^2 n)/\log(1/\varepsilon)\big)$, matching the optimal bound for the $\ell_2$ case up to a logarithmic factor.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-29T14:04:31Z</published>
+    <arxiv:comment>17 pages 0 figures</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Rafael Chiclana</name>
+    </author>
+    <author>
+      <name>Mark Iwen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.15374v1</id>
+    <title>Fréchet Cumulative Covariance Net for Deep Nonlinear Sufficient Dimension Reduction with Random Objects</title>
+    <updated>2025-02-21T10:55:50Z</updated>
+    <link href="https://arxiv.org/abs/2502.15374v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.15374v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nonlinear sufficient dimension reduction\citep{libing_generalSDR}, which constructs nonlinear low-dimensional representations to summarize essential features of high-dimensional data, is an important branch of representation learning. However, most existing methods are not applicable when the response variables are complex non-Euclidean random objects, which are frequently encountered in many recent statistical applications. In this paper, we introduce a new statistical dependence measure termed Fréchet Cumulative Covariance (FCCov) and develop a novel nonlinear SDR framework based on FCCov. Our approach is not only applicable to complex non-Euclidean data, but also exhibits robustness against outliers. We further incorporate Feedforward Neural Networks (FNNs) and Convolutional Neural Networks (CNNs) to estimate nonlinear sufficient directions in the sample level. Theoretically, we prove that our method with squared Frobenius norm regularization achieves unbiasedness at the $σ$-field level. Furthermore, we establish non-asymptotic convergence rates for our estimators based on FNNs and ResNet-type CNNs, which match the minimax rate of nonparametric regression up to logarithmic factors. Intensive simulation studies verify the performance of our methods in both Euclidean and non-Euclidean settings. We apply our method to facial expression recognition datasets and the results underscore more realistic and broader applicability of our proposal.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-21T10:55:50Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Hang Yuan</name>
+    </author>
+    <author>
+      <name>Christina Dan Wang</name>
+    </author>
+    <author>
+      <name>Zhou Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1307.5001v4</id>
+    <title>On Lower Complexity Bounds for Large-Scale Smooth Convex Optimization</title>
+    <updated>2018-11-28T03:09:25Z</updated>
+    <link href="https://arxiv.org/abs/1307.5001v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1307.5001v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We derive lower bounds on the black-box oracle complexity of large-scale smooth convex minimization problems, with emphasis on minimizing smooth (with Holder continuous, with a given exponent and constant, gradient) convex functions over high-dimensional ||.||_p-balls, 1&lt;=p&lt;=\infty. Our bounds turn out to be tight (up to logarithmic in the design dimension factors), and can be viewed as a substantial extension of the existing lower complexity bounds for large-scale convex minimization covering the nonsmooth case and the 'Euclidean' smooth case (minimization of convex functions with Lipschitz continuous gradients over Euclidean balls). As a byproduct of our results, we demonstrate that the classical Conditional Gradient algorithm is near-optimal, in the sense of Information-Based Complexity Theory, when minimizing smooth convex functions over high-dimensional ||.||_\infty-balls and their matrix analogies -- spectral norm balls in the spaces of square matrices.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-07-18T16:29:21Z</published>
+    <arxiv:comment>Submitted version (minor changes)</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Cristobal Guzman</name>
+    </author>
+    <author>
+      <name>Arkadi Nemirovski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.14202v2</id>
+    <title>Understanding and Improving Hyperbolic Deep Reinforcement Learning</title>
+    <updated>2026-03-06T13:55:45Z</updated>
+    <link href="https://arxiv.org/abs/2512.14202v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.14202v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The exponential volume growth of hyperbolic geometry can embed the hierarchical relationships between states in reinforcement learning (RL) with far less distortion than Euclidean space. However, hyperbolic deep RL faces severe optimization challenges, and formal analysis of why optimization fails is lacking. We identify key factors that determine the success and failure of training hyperbolic deep RL agents. By analyzing the gradients of core operations in the Poincaré Ball and Hyperboloid models of hyperbolic geometry, we show that large-norm embeddings destabilize gradient-based training, leading to trust-region violations in proximal policy optimization (PPO). Based on these insights, we introduce Hyper++, a new hyperbolic deep RL agent that consists of three components: (1) feature regularization guaranteeing bounded norms while avoiding the curse of dimensionality from clipping; (2) a categorical value loss for stable critic training; and (3) a more optimization-friendly formulation of hyperbolic network layers. On ProcGen, we show that Hyper++ guarantees stable learning, outperforms prior hyperbolic agents, and reduces wall-clock time by approximately 30%. On Atari-5 with Double DQN, Hyper++ strongly outperforms Euclidean and hyperbolic baselines. We release our code at https://github.com/Probabilistic-and-Interactive-ML/hyper-rl.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-16T08:49:24Z</published>
+    <arxiv:comment>ICLR 2026 Camera-ready</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Timo Klein</name>
+    </author>
+    <author>
+      <name>Thomas Lang</name>
+    </author>
+    <author>
+      <name>Andrii Shkabrii</name>
+    </author>
+    <author>
+      <name>Alexander Sturm</name>
+    </author>
+    <author>
+      <name>Kevin Sidak</name>
+    </author>
+    <author>
+      <name>Lukas Miklautz</name>
+    </author>
+    <author>
+      <name>Claudia Plant</name>
+    </author>
+    <author>
+      <name>Yllka Velaj</name>
+    </author>
+    <author>
+      <name>Sebastian Tschiatschek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.12209v3</id>
+    <title>Convex Representation Learning for Generalized Invariance in Semi-Inner-Product Space</title>
+    <updated>2020-07-25T17:06:53Z</updated>
+    <link href="https://arxiv.org/abs/2004.12209v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.12209v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Invariance (defined in a general sense) has been one of the most effective priors for representation learning. Direct factorization of parametric models is feasible only for a small range of invariances, while regularization approaches, despite improved generality, lead to nonconvex optimization. In this work, we develop a convex representation learning algorithm for a variety of generalized invariances that can be modeled as semi-norms. Novel Euclidean embeddings are introduced for kernel representers in a semi-inner-product space, and approximation bounds are established. This allows invariant representations to be learned efficiently and effectively as confirmed in our experiments, along with accurate predictions.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-25T18:54:37Z</published>
+    <arxiv:comment>to appear in ICML 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yingyi Ma</name>
+    </author>
+    <author>
+      <name>Vignesh Ganapathiraman</name>
+    </author>
+    <author>
+      <name>Yaoliang Yu</name>
+    </author>
+    <author>
+      <name>Xinhua Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0908.3108v1</id>
+    <title>Nonparametric estimation by convex programming</title>
+    <updated>2009-08-21T11:59:20Z</updated>
+    <link href="https://arxiv.org/abs/0908.3108v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0908.3108v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The problem we concentrate on is as follows: given (1) a convex compact set $X$ in ${\mathbb{R}}^n$, an affine mapping $x\mapsto A(x)$, a parametric family $\{p_μ(\cdot)\}$ of probability densities and (2) $N$ i.i.d. observations of the random variable $ω$, distributed with the density $p_{A(x)}(\cdot)$ for some (unknown) $x\in X$, estimate the value $g^Tx$ of a given linear form at $x$. For several families $\{p_μ(\cdot)\}$ with no additional assumptions on $X$ and $A$, we develop computationally efficient estimation routines which are minimax optimal, within an absolute constant factor. We then apply these routines to recovering $x$ itself in the Euclidean norm.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-08-21T11:59:20Z</published>
+    <arxiv:comment>Published in at http://dx.doi.org/10.1214/08-AOS654 the Annals of Statistics (http://www.imstat.org/aos/) by the Institute of Mathematical Statistics (http://www.imstat.org)</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <arxiv:journal_ref>Annals of Statistics 2009, Vol. 37, No. 5A, 2278-2300</arxiv:journal_ref>
+    <author>
+      <name>Anatoli B. Juditsky</name>
+    </author>
+    <author>
+      <name>Arkadi S. Nemirovski</name>
+    </author>
+    <arxiv:doi>10.1214/08-AOS654</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1214/08-AOS654" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.08347v2</id>
+    <title>Private Convex Optimization in General Norms</title>
+    <updated>2022-11-10T23:04:05Z</updated>
+    <link href="https://arxiv.org/abs/2207.08347v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.08347v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a new framework for differentially private optimization of convex functions which are Lipschitz in an arbitrary norm $\|\cdot\|$. Our algorithms are based on a regularized exponential mechanism which samples from the density $\propto \exp(-k(F+μr))$ where $F$ is the empirical loss and $r$ is a regularizer which is strongly convex with respect to $\|\cdot\|$, generalizing a recent work of [Gopi, Lee, Liu '22] to non-Euclidean settings. We show that this mechanism satisfies Gaussian differential privacy and solves both DP-ERM (empirical risk minimization) and DP-SCO (stochastic convex optimization) by using localization tools from convex geometry. Our framework is the first to apply to private convex optimization in general normed spaces and directly recovers non-private SCO rates achieved by mirror descent as the privacy parameter $ε\to \infty$. As applications, for Lipschitz optimization in $\ell_p$ norms for all $p \in (1, 2)$, we obtain the first optimal privacy-utility tradeoffs; for $p = 1$, we improve tradeoffs obtained by the recent works [Asi, Feldman, Koren, Talwar '21, Bassily, Guzman, Nandi '21] by at least a logarithmic factor. Our $\ell_p$ norm and Schatten-$p$ norm optimization frameworks are complemented with polynomial-time samplers whose query complexity we explicitly bound.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-18T02:02:22Z</published>
+    <arxiv:comment>SODA 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sivakanth Gopi</name>
+    </author>
+    <author>
+      <name>Yin Tat Lee</name>
+    </author>
+    <author>
+      <name>Daogao Liu</name>
+    </author>
+    <author>
+      <name>Ruoqi Shen</name>
+    </author>
+    <author>
+      <name>Kevin Tian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.13328v2</id>
+    <title>Thinking Outside the Ball: Optimal Learning with Gradient Descent for Generalized Linear Stochastic Convex Optimization</title>
+    <updated>2022-10-30T13:16:36Z</updated>
+    <link href="https://arxiv.org/abs/2202.13328v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.13328v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider linear prediction with a convex Lipschitz loss, or more generally, stochastic convex optimization problems of generalized linear form, i.e.~where each instantaneous loss is a scalar convex function of a linear function. We show that in this setting, early stopped Gradient Descent (GD), without any explicit regularization or projection, ensures excess error at most $ε$ (compared to the best possible with unit Euclidean norm) with an optimal, up to logarithmic factors, sample complexity of $\tilde{O}(1/ε^2)$ and only $\tilde{O}(1/ε^2)$ iterations. This contrasts with general stochastic convex optimization, where $Ω(1/ε^4)$ iterations are needed Amir et al. [2021b]. The lower iteration complexity is ensured by leveraging uniform convergence rather than stability. But instead of uniform convergence in a norm ball, which we show can guarantee suboptimal learning using $Θ(1/ε^4)$ samples, we rely on uniform convergence in a distribution-dependent ball.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-27T09:41:43Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Idan Amir</name>
+    </author>
+    <author>
+      <name>Roi Livni</name>
+    </author>
+    <author>
+      <name>Nathan Srebro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1302.4527v3</id>
+    <title>Semidefinite approximation for mixed binary quadratically constrained quadratic programs</title>
+    <updated>2014-03-17T04:26:47Z</updated>
+    <link href="https://arxiv.org/abs/1302.4527v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1302.4527v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by applications in wireless communications, this paper develops semidefinite programming (SDP) relaxation techniques for some mixed binary quadratically constrained quadratic programs (MBQCQP) and analyzes their approximation performance. We consider both a minimization and a maximization model of this problem. For the minimization model, the objective is to find a minimum norm vector in $N$-dimensional real or complex Euclidean space, such that $M$ concave quadratic constraints and a cardinality constraint are satisfied with both binary and continuous variables. {\color{blue}By employing a special randomized rounding procedure, we show that the ratio between the norm of the optimal solution of the minimization model and its SDP relaxation is upper bounded by $\cO(Q^2(M-Q+1)+M^2)$ in the real case and by $\cO(M(M-Q+1))$ in the complex case.} For the maximization model, the goal is to find a maximum norm vector subject to a set of quadratic constraints and a cardinality constraint with both binary and continuous variables. We show that in this case the approximation ratio is bounded from below by $\cO(ε/\ln(M))$ for both the real and the complex cases. Moreover, this ratio is tight up to a constant factor.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-02-19T06:49:26Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Zi Xu</name>
+    </author>
+    <author>
+      <name>Mingyi Hong</name>
+    </author>
+    <author>
+      <name>Zhi-Quan Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.18789v1</id>
+    <title>Uniformly balanced $H$-factors in multicoloured complete graphs</title>
+    <updated>2026-01-26T18:55:03Z</updated>
+    <link href="https://arxiv.org/abs/2601.18789v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.18789v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A balanced colouring of a graph is one in which every colour appears the same number of times. Given a fixed graph $H$ on $r$ vertices and a balanced $k$-colouring of the complete graph $K_{nrk}$, Hollom (2025) asked the following question: can we always find an $H$-factor $F$ covering all vertices of the complete graph $K_{nrk}$ such that the inherited colouring of $F$ is almost balanced? This is known to be the case for palettes of only two colours, or when $H$ is only a single edge. We answer the above question in full, finding an $H$-factor which is at most $C_{r,k}$ edges away from being balanced, where $C_{r,k}$ depends only on $r$ and $k$. In fact, we work in the more general setting wherein our palette of colours is a subset of $\mathbb{S}^{d-1}$, and find an $H$-factor where the sum of the colours of all edges has bounded Euclidean norm.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-26T18:55:03Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Agnijo Banerjee</name>
+    </author>
+    <author>
+      <name>Lawrence Hollom</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.14480v1</id>
+    <title>Annihilating and breaking Lorentz cone entanglement</title>
+    <updated>2025-06-17T12:58:14Z</updated>
+    <link href="https://arxiv.org/abs/2506.14480v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.14480v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Linear maps between finite-dimensional ordered vector spaces with orders induced by proper cones $C_A$ and $C_B$ are called entanglement breaking if their partial application sends the maximal tensor product $K\otimes_{\max} C_A$ into the minimal tensor product $K\otimes_{\min} C_B$ for any proper cone $K$. We study the larger class of Lorentz-entanglement breaking maps where $K$ is restricted to be a Lorentz cone of any dimension, i.e., any cone over a Euclidean ball. This class of maps appeared recently in the study of asymptotic entanglement annihilation and it is dual to the linear maps factoring through Lorentz cones. Our main results establish connections between these classes of maps and operator ideals studied in the theory of Banach spaces. For operators $u:X\rightarrow Y$ between finite-dimensional normed spaces $X$ and $Y$ we consider so-called central maps which are positive with respect to the cones $C_A=C_X$ and $C_B=C_Y$. We show how to characterize when such a map factors through a Lorentz cone and when it is Lorentz-entanglement breaking by using the Hilbert-space factorization norm $γ_2$ and its dual $γ^*_2$. We also study the class of Lorentz-entanglement annihilating maps whose local application sends the Lorentzian tensor product $C_A\otimes_{L} C_A$ into the minimal tensor product $C_B\otimes_{\min} C_B$. When $C_A$ is a cone over a finite-dimensional normed space and $C_B$ is a Lorentz cone itself, the central maps of this kind can be characterized by the $2$-summing norm $π_2$. Finally, we prove interesting connections between these classes of maps for general cones, and we identify examples with particular properties, e.g., cones with an analogue of the $2$-summing property.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-17T12:58:14Z</published>
+    <arxiv:comment>27 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Francesca La Piana</name>
+    </author>
+    <author>
+      <name>Alexander Müller-Hermes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.20883v1</id>
+    <title>Guessing Efficiently for Constrained Subspace Approximation</title>
+    <updated>2025-04-29T15:56:48Z</updated>
+    <link href="https://arxiv.org/abs/2504.20883v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.20883v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we study constrained subspace approximation problem. Given a set of $n$ points $\{a_1,\ldots,a_n\}$ in $\mathbb{R}^d$, the goal of the {\em subspace approximation} problem is to find a $k$ dimensional subspace that best approximates the input points. More precisely, for a given $p\geq 1$, we aim to minimize the $p$th power of the $\ell_p$ norm of the error vector $(\|a_1-\bm{P}a_1\|,\ldots,\|a_n-\bm{P}a_n\|)$, where $\bm{P}$ denotes the projection matrix onto the subspace and the norms are Euclidean. In \emph{constrained} subspace approximation (CSA), we additionally have constraints on the projection matrix $\bm{P}$. In its most general form, we require $\bm{P}$ to belong to a given subset $\mathcal{S}$ that is described explicitly or implicitly.
+  We introduce a general framework for constrained subspace approximation. Our approach, that we term coreset-guess-solve, yields either $(1+\varepsilon)$-multiplicative or $\varepsilon$-additive approximations for a variety of constraints. We show that it provides new algorithms for partition-constrained subspace approximation with applications to {\it fair} subspace approximation, $k$-means clustering, and projected non-negative matrix factorization, among others. Specifically, while we reconstruct the best known bounds for $k$-means clustering in Euclidean spaces, we improve the known results for the remainder of the problems.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-29T15:56:48Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Aditya Bhaskara</name>
+    </author>
+    <author>
+      <name>Sepideh Mahabadi</name>
+    </author>
+    <author>
+      <name>Madhusudhan Reddy Pittu</name>
+    </author>
+    <author>
+      <name>Ali Vakilian</name>
+    </author>
+    <author>
+      <name>David P. Woodruff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05771v1</id>
+    <title>Moments of crosscorrelation demerit factors of binary sequences</title>
+    <updated>2026-09-04T23:25:37Z</updated>
+    <link href="https://arxiv.org/abs/2609.05771v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05771v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Families of sequences with low mutual aperiodic crosscorrelation assist the design of systems for multi-user asynchronous communications and multiple-input multiple-output radar. The crosscorrelation demerit factor of a pair of sequences is the sum of the squared magnitudes of their crosscorrelation values at every shift when the sequences are normalized to unit Euclidean norm, and the merit factor is the reciprocal of the demerit factor. For each positive integer $\ell$, we endow the $2^{2 \ell}$ pairs of binary sequences of length $\ell$ with uniform probability measure and study the distribution of their crosscorrelation demerit factors. Sarwate showed that the mean value is always $1$ regardless of length $\ell$. We develop a method for finding an exact formula for the $p$th central moment (for any positive integer $p$) as a function of $\ell$. Formulae for the variance and third central moment ($p=2$ and $3$) are then obtained by hand calculations, while the fourth through sixth central moments are obtained by computer-assisted calculations. Our theory also shows that all the central moments must be strictly positive for $p\geq 2$ and $\ell \geq 3$.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T23:25:37Z</published>
+    <arxiv:comment>32 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Daniel J. Katz</name>
+    </author>
+    <author>
+      <name>Harmony M. Vargas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.14305v1</id>
+    <title>One-Sided-Error Parameterized Reductions for the Minimum Distance and Shortest Vector Problems</title>
+    <updated>2026-08-14T13:43:37Z</updated>
+    <link href="https://arxiv.org/abs/2608.14305v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.14305v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is notoriously difficult to obtain deterministic reductions for the Minimum Distance Problem (MDP) and the Shortest Vector Problem (SVP). Under two-sided-error randomized reductions, Bennett, Cheraghchi, Guruswami, and Ribeiro (STOC 2023) proved parameterized hardness of approximation for these problems. We partially derandomize their reductions and present one-sided-error randomized reductions: MDP is W[1]-hard to approximate within an arbitrary constant factor under FPT many-one one-sided-error randomized reductions; For every $p \ge 1$, SVP in the $\ell_p$ norm is W[1]-hard to approximate within an arbitrary constant factor below $2^{1/p}$.
+  We demonstrate the usefulness of one-sided-error randomized reductions by showing that they can be conditionally derandomized when the target problem has an OR function. Under a standard hardness-vs-randomness assumption, namely a plausible lower-bound assumption against nondeterministic circuits, we prove a general theorem formalizing this derandomization. Here, an OR function combines several instances into one instance that preserves their disjunction. We construct such OR functions for the relevant MDP and SVP gap problems, and thereby obtain deterministic W[1]-hardness for approximating MDP over every fixed finite field within every constant factor, and for approximating SVP in $\ell_p$ norms for every fixed integer $p$ within every factor below $2^{1/p}$. Applying the same framework to Micciancio's one-sided-error randomized reduction (ToC 2012) yields, under the same circuit lower-bound assumption, deterministic polynomial-time NP-hardness of approximating Euclidean SVP within every constant factor.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T13:43:37Z</published>
+    <arxiv:comment>Full version of RANDOM 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Shuichi Hirahara</name>
+    </author>
+    <author>
+      <name>Kazuki Ogitsuka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.14566v4</id>
+    <title>Limiting Moments of Autocorrelation Demerit Factors of Binary Sequences</title>
+    <updated>2024-10-21T16:00:49Z</updated>
+    <link href="https://arxiv.org/abs/2307.14566v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.14566v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Various problems in engineering and natural science demand binary sequences that do not resemble translates of themselves, that is, the sequences must have small aperiodic autocorrelation at every nonzero shift. If $f$ is a sequence, then the demerit factor of $f$ is the sum of the squared magnitudes of the autocorrelations at all nonzero shifts for the sequence obtained by normalizing $f$ to unit Euclidean norm. The demerit factor is the reciprocal of Golay's merit factor, and low demerit factor indicates low self-similarity of a sequence under translation. We endow the $2^\ell$ binary sequences of length $\ell$ with uniform probability measure and consider the distribution of their demerit factors. Earlier works used combinatorial techniques to find exact formulas for the mean, variance, skewness, and kurtosis of the distribution as a function of $\ell$. These revealed that for $\ell \geq 4$, the $p$th central moment of this distribution is strictly positive for every $p \geq 2$. This article shows that for every $p$, the $p$th central moment is $\ell^{-2 p}$ times a quasi-polynomial function of $\ell$ with rational coefficients. It also shows that, in the limit as $\ell$ tends to infinity, the $p$th standardized moment is the same as that of the standard normal distribution.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-27T00:58:11Z</published>
+    <arxiv:comment>28 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Daniel J. Katz</name>
+    </author>
+    <author>
+      <name>Miriam E. Ramirez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.02086v2</id>
+    <title>Multi-level projection with exponential parallel speedup; Application to sparse auto-encoders neural networks</title>
+    <updated>2024-07-04T07:58:17Z</updated>
+    <link href="https://arxiv.org/abs/2405.02086v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.02086v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The $\ell_{1,\infty}$ norm is an efficient structured projection but the complexity of the best algorithm is unfortunately $\mathcal{O}\big(n m \log(n m)\big)$ for a matrix in $\mathbb{R}^{n\times m}$. In this paper, we propose a new bi-level projection method for which we show that the time complexity for the $\ell_{1,\infty}$ norm is only $\mathcal{O}\big(n m \big)$ for a matrix in $\mathbb{R}^{n\times m}$, and $\mathcal{O}\big(n + m \big)$ with full parallel power. We generalize our method to tensors and we propose a new multi-level projection, having an induced decomposition that yields a linear parallel speedup up to an exponential speedup factor, resulting in a time complexity lower-bounded by the sum of the dimensions, instead of the product of the dimensions. we provide a large base of implementation of our framework for bi-level and tri-level (matrices and tensors) for various norms and provides also the parallel implementation. Experiments show that our projection is $2$ times faster than the actual fastest Euclidean algorithms while providing same accuracy and better sparsity in neural networks applications.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-03T13:21:49Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Guillaume Perez</name>
+    </author>
+    <author>
+      <name>Michel Barlaud</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.16919v1</id>
+    <title>Complex Quaternions and Superminimal Surfaces in Four-Space</title>
+    <updated>2026-06-15T16:24:26Z</updated>
+    <link href="https://arxiv.org/abs/2606.16919v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.16919v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a quaternionic approach to conformal superminimal surfaces in Euclidean four-space. The starting point is the classical Weierstrass representation: every conformal minimal immersion $X\colon M\to\mathbb{R}^4$ is recovered as $X = c + Re\intΦdz$, where $Φ$ is a holomorphic null curve in $\mathbb{C}^4$, identified with the algebra of complex quaternions $\mathbb{H}\otimes\mathbb{C}$. The multiplicativity of the quaternionic symmetrized norm makes it natural to factor null curves as $Φ=ALB$, where $A$ and $B$ are holomorphic maps of unit symplectic norm and $L$ is a holomorphic null element. We show that on simply connected domains the null factor can always be taken constant.
+  The main result is an explicit quaternionic reformulation of the superminimality condition -- the requirement that the curvature ellipse be a circle at every point. In the fixed-null gauge $L=1+\sqrt{-1} e_1$, superminimality is equivalent to the vanishing of a product of two holomorphic functions built from the left and right Maurer--Cartan forms of $A$ and $B$. On a connected domain, this forces one of the two components of the generalized Gauss map $[Φ]\colon M\to Q^2\simeq\mathbb{CP}^1\times\mathbb{CP}^1$ to be constant, recovering in spinorial terms the classical ruling condition on the projective null quadric.
+  We further provide a first-order ODE parametrization of the superminimal $ALB$-data, analyse the residual gauge freedom, prove a fixed-gauge rigidity statement for polynomial spinorial factors, and illustrate the theory with explicit examples.</summary>
+    <category term="math.DG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-15T16:24:26Z</published>
+    <arxiv:comment>22 pages. Comments are welcome!</arxiv:comment>
+    <arxiv:primary_category term="math.DG"/>
+    <author>
+      <name>Amedeo Altavilla</name>
+    </author>
+    <author>
+      <name>Elena Giorgio</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.23582v2</id>
+    <title>$S^{\top\!}S$-SVD via Sketching and the Nearest $S^{\top\!}S$-orthogonal Matrix</title>
+    <updated>2025-11-20T14:28:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.23582v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.23582v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Sketching techniques have gained popularity in numerical linear algebra to accelerate the solution of least squares problems. The so-called $\varepsilon$-subspace embedding property of a sketching matrix $S$ has been largely used to characterize the problem residual norm, since the procedure is no longer optimal in terms of the (classical) Frobenius or Euclidean norm.
+  By building on available results on the SVD of the sketched matrix $SA$ derived by Gilbert, Park, and Wakin (Proc. of SPARS-2013), a novel decomposition of $A$, the $S^{\top\!}S$-SVD, is proposed, which \emph{holds} with high probability, and in which the left singular vectors are orthonormal with respect to a (semi-)norm defined by the sketching matrix $S$. The new decomposition is less expensive to compute than the standard SVD, while preserving the singular values with probabilistic confidence.The $S^{\top\!}S$-SVD appears to be the right tool to analyze the quality of several sketching-based techniques in the literature, for which examples are reported. For instance, it is possible to simply bound the distance from (standard) orthogonality of sketching-based orthogonal matrices in state-of-the-art randomized algorithms for QR factorizations. As an application, the classical problem of the nearest orthogonal matrix is generalized to the new $S^{\top\!}S$-orthogonality, and the $S^{\top\!}S$-SVD is used to solve it. Probabilistic bounds on the quality of the solution are also derived.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-29T15:54:28Z</published>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Davide Palitta</name>
+    </author>
+    <author>
+      <name>Valeria Simoncini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1211.1056v1</id>
+    <title>How Robust are Linear Sketches to Adaptive Inputs?</title>
+    <updated>2012-11-05T22:18:13Z</updated>
+    <link href="https://arxiv.org/abs/1211.1056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1211.1056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Linear sketches are powerful algorithmic tools that turn an n-dimensional input into a concise lower-dimensional representation via a linear transformation. Such sketches have seen a wide range of applications including norm estimation over data streams, compressed sensing, and distributed computing. In almost any realistic setting, however, a linear sketch faces the possibility that its inputs are correlated with previous evaluations of the sketch. Known techniques no longer guarantee the correctness of the output in the presence of such correlations. We therefore ask: Are linear sketches inherently non-robust to adaptively chosen inputs? We give a strong affirmative answer to this question. Specifically, we show that no linear sketch approximates the Euclidean norm of its input to within an arbitrary multiplicative approximation factor on a polynomial number of adaptively chosen inputs. The result remains true even if the dimension of the sketch is d = n - o(n) and the sketch is given unbounded computation time. Our result is based on an algorithm with running time polynomial in d that adaptively finds a distribution over inputs on which the sketch is incorrect with constant probability. Our result implies several corollaries for related problems including lp-norm estimation and compressed sensing. Notably, we resolve an open problem in compressed sensing regarding the feasibility of l2/l2-recovery guarantees in the presence of computationally bounded adversaries.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-11-05T22:18:13Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Moritz Hardt</name>
+    </author>
+    <author>
+      <name>David P. Woodruff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.13027v1</id>
+    <title>Kronecker sequences beyond the torus: nearest-neighbour distances and best returns</title>
+    <updated>2026-09-11T16:26:25Z</updated>
+    <link href="https://arxiv.org/abs/2609.13027v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.13027v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The classical three-gap theorem says that a finite Kronecker sequence on the circle has at most three gap lengths. We extend this phenomenon to nearest-neighbour distances on quotients $(V\times U)/Λ$, where $V$ is a finite-dimensional real normed space, $U$ is an arbitrary ultrametric abelian group and $Λ$ is closed. For the quotient metric induced by the maximum product metric, the uniform distance bound is controlled entirely by the real factor. Continuous real directions contained in the subgroup can be factored out; for inner-product metrics, only the real directions generated by the projected subgroup matter. For the maximum norm on $\mathbb{R}^d$ the universal mixed bound is $2^d+1$. These results unify and extend bounds of Chevallier, Haynes--Ramirez, Das--Haynes and Shulga.
+  Best-return denominators behave differently. We show that a recurrence $q_{n+M}\ge q_n+q_{n+1}$ implies at most $M+1$ nearest-neighbour distances in any abelian group with a translation-invariant metric. Shulga's recurrence extends from compact real tori to arbitrary purely real quotients, with the index determined by the rank of the discrete part of the subgroup rather than by the ambient dimension. After adding an ultrametric factor, however, this recurrence can fail, even on an adelic solenoid. Nevertheless a packing recurrence survives for arbitrary mixed quotients, and in effective Euclidean dimensions one and two the one-step loss from the purely real recurrence is sharp.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-11T16:26:25Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Evgeniy Zorin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.08328v1</id>
+    <title>Parabolic Muckenhoupt Weights on Spaces of Homogeneous Type</title>
+    <updated>2022-08-17T14:52:53Z</updated>
+    <link href="https://arxiv.org/abs/2208.08328v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.08328v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work discusses parabolic Muckenhoupt weights on spaces of homogeneous type, i.e.\ quasi-metric spaces with both a doubling measure and an additional monotone geodesic property. The main results include a characterization in terms of weighted norm inequalities for parabolic maximal operators, a reverse Hölder inequality, and a Jones-type factorization result for this class of weights. The connection between the space of parabolic bounded mean oscillation and parabolic Muckenhoupt weights is studied by applying a parabolic John--Nirenberg lemma. A Coifman--Rochberg-type characterization of the space of parabolic bounded mean oscillation in terms of parabolic maximal functions is also given. The main challenges in the parabolic theory are related to the time lag in the estimates. The results are motivated by the corresponding Euclidean theory and the regularity theory for parabolic variational problems on metric measure spaces.</summary>
+    <category term="math.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-17T14:52:53Z</published>
+    <arxiv:comment>60 pages, Submitted</arxiv:comment>
+    <arxiv:primary_category term="math.AP"/>
+    <author>
+      <name>Juha Kinnunen</name>
+    </author>
+    <author>
+      <name>Kim Myyryläinen</name>
+    </author>
+    <author>
+      <name>Dachun Yang</name>
+    </author>
+    <author>
+      <name>Chenfeng Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1004.3484v2</id>
+    <title>How close is the sample covariance matrix to the actual covariance matrix?</title>
+    <updated>2010-12-15T20:07:19Z</updated>
+    <link href="https://arxiv.org/abs/1004.3484v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1004.3484v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Given a probability distribution in R^n with general (non-white) covariance, a classical estimator of the covariance matrix is the sample covariance matrix obtained from a sample of N independent points. What is the optimal sample size N = N(n) that guarantees estimation with a fixed accuracy in the operator norm? Suppose the distribution is supported in a centered Euclidean ball of radius \sqrt{n}. We conjecture that the optimal sample size is N = O(n) for all distributions with finite fourth moment, and we prove this up to an iterated logarithmic factor. This problem is motivated by the optimal theorem of Rudelson which states that N = O(n \log n) for distributions with finite second moment, and a recent result of Adamczak, Litvak, Pajor and Tomczak-Jaegermann which guarantees that N = O(n) for sub-exponential distributions.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-04-20T15:43:41Z</published>
+    <arxiv:comment>34 pages. Typos and minor inaccuracies corrected, references updated</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>Journal of Theoretical Probability 25 (2012), 655--686</arxiv:journal_ref>
+    <author>
+      <name>Roman Vershynin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.01879v3</id>
+    <title>High curvature means low-rank: On the sectional curvature of Grassmann and Stiefel manifolds and the underlying matrix trace inequalities</title>
+    <updated>2024-04-19T12:38:48Z</updated>
+    <link href="https://arxiv.org/abs/2403.01879v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.01879v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Methods and algorithms that work with data on nonlinear manifolds are collectively summarized under the term `Riemannian computing'. In practice, curvature can be a key limiting factor for the performance of Riemannian computing methods. Yet, curvature can also be a powerful tool in the theoretical analysis of Riemannian algorithms. In this work, we investigate the sectional curvature of the Stiefel and Grassmann manifold. On the Grassmannian, tight curvature bounds are known since the late 1960ies. On the Stiefel manifold under the canonical metric, it was believed that the sectional curvature does not exceed 5/4. Under the Euclidean metric, the maximum was conjectured to be at 1. For both manifolds, the sectional curvature is given by the Frobenius norm of certain structured commutator brackets of skew-symmetric matrices. We provide refined inequalities for such terms and pay special attention to the maximizers of the curvature bounds. In this way, we prove for the Stiefel manifold that the global bounds of 5/4 (canonical metric) and 1 (Euclidean metric) hold indeed. With this addition, a complete account of the curvature bounds in all admissible dimensions is obtained. We observe that `high curvature means low-rank', more precisely, for the Stiefel and Grassmann manifolds under the canonical metric, the global curvature maximum is attained at tangent plane sections that are spanned by rank-two matrices, while the extreme curvature cases of the Euclidean Stiefel manifold occur for rank-one matrices. Numerical examples are included for illustration purposes.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-04T09:34:56Z</published>
+    <arxiv:comment>29 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Ralf Zimmermann</name>
+    </author>
+    <author>
+      <name>Jakob Stoye</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.3743v2</id>
+    <title>Euclidean distance between Haar orthogonal and gaussian matrices</title>
+    <updated>2016-11-10T13:43:26Z</updated>
+    <link href="https://arxiv.org/abs/1412.3743v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.3743v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work we study a version of the general question of how well a Haar distributed orthogonal matrix can be approximated by a random gaussian matrix. Here, we consider a gaussian random matrix $Y_n$ of order $n$ and apply to it the Gram-Schmidt orthonormalization procedure by columns to obtain a Haar distributed orthogonal matrix $U_n$. If $F_i^m$ denotes the vector formed by the first $m$-coordinates of the $i$th row of $Y_n-\sqrt{n}U_n$ and $α=\frac{m}{n}$, our main result shows that the euclidean norm of $F_i^m$ converges exponentially fast to $\sqrt{ \left(2-\frac{4}{3} \frac{(1-(1 -α)^{3/2})}α\right)m}$, up to negligible terms.
+  To show the extent of this result, we use it to study the convergence of the supremum norm $ε_n(m)=\sup_{1\leq i \leq n, 1\leq j \leq m} |y_{i,j}- \sqrt{n}u_{i,j}|$ and we find a coupling that improves by a factor $\sqrt{2}$ the recently proved best known upper bound of $ε_n(m)$. Applications of our results to Quantum Information Theory are also explained.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.FA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-11T18:05:00Z</published>
+    <arxiv:comment>v2: minor modifications to match journal version, 26 pages, 0 figures, J Theor Probab (2016)</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Carlos E. González-Guillén</name>
+    </author>
+    <author>
+      <name>Carlos Palazuelos</name>
+    </author>
+    <author>
+      <name>Ignacio Villanueva</name>
+    </author>
+    <arxiv:doi>10.1007/s10959-016-0712-6</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10959-016-0712-6" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.04712v1</id>
+    <title>Near Neighbor Search via Efficient Average Distortion Embeddings</title>
+    <updated>2021-05-10T23:49:35Z</updated>
+    <link href="https://arxiv.org/abs/2105.04712v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.04712v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A recent series of papers by Andoni, Naor, Nikolov, Razenshteyn, and Waingarten (STOC 2018, FOCS 2018) has given approximate near neighbour search (NNS) data structures for a wide class of distance metrics, including all norms. In particular, these data structures achieve approximation on the order of $p$ for $\ell_p^d$ norms with space complexity nearly linear in the dataset size $n$ and polynomial in the dimension $d$, and query time sub-linear in $n$ and polynomial in $d$. The main shortcoming is the exponential in $d$ pre-processing time required for their construction.
+  In this paper, we describe a more direct framework for constructing NNS data structures for general norms. More specifically, we show via an algorithmic reduction that an efficient NNS data structure for a given metric is implied by an efficient average distortion embedding of it into $\ell_1$ or into Euclidean space. In particular, the resulting data structures require only polynomial pre-processing time, as long as the embedding can be computed in polynomial time. As a concrete instantiation of this framework, we give an NNS data structure for $\ell_p$ with efficient pre-processing that matches the approximation factor, space and query complexity of the aforementioned data structure of Andoni et al. On the way, we resolve a question of Naor (Analysis and Geometry in Metric Spaces, 2014) and provide an explicit, efficiently computable embedding of $\ell_p$, for $p \ge 2$, into $\ell_2$ with (quadratic) average distortion on the order of $p$. We expect our approach to pave the way for constructing efficient NNS data structures for all norms.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.MG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-10T23:49:35Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Deepanshu Kush</name>
+    </author>
+    <author>
+      <name>Aleksandar Nikolov</name>
+    </author>
+    <author>
+      <name>Haohua Tang</name>
+    </author>
+  </entry>
+</feed>

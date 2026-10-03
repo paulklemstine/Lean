@@ -1,0 +1,156 @@
+Title: Brave Search
+
+URL Source: https://search.brave.com/search?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial
+
+Markdown Content:
+[![Image 2: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-light.D0nx3pfh.svg)![Image 3: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-dark.5D16vJCY.svg)![Image 4: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-small.Bdzj7Bzm.svg)](https://search.brave.com/)
+
+[![Image 5: Brave logo](https://cdn.search.brave.com/serp/v3/_app/immutable/assets/brave-logo-small.Bdzj7Bzm.svg)](https://search.brave.com/)
+
+[](https://search.brave.com/settings)
+
+*   [Ask](https://search.brave.com/ask?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [All](https://search.brave.com/search?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [Images](https://search.brave.com/images?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [News](https://search.brave.com/news?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [Videos](https://search.brave.com/videos?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [Maps](https://search.brave.com/maps/search?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+*   [Goggles](https://search.brave.com/goggles?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&source=web)
+
+[search operators](https://search.brave.com/help/operators) were not applied
+
+Too few matches were found
+
+The search context does not link **Elwyn Berlekamp**'s work on the **Berlekamp subalgebra** (a deterministic method for factoring polynomials over finite fields) directly to **superpolynomial lower bounds** against low-depth algebraic circuits. These are distinct topics in computational complexity and algebra.
+
+### Berlekamp's Algorithm and Subalgebra
+
+**Berlekamp's algorithm** (1967) is a deterministic method for factoring square-free polynomials over a finite field $\mathbb{F}_{q}$F q​.  It operates by computing a basis for the **Berlekamp subalgebra**, which consists of polynomials $g \left(\right. x \left.\right)$g(x) satisfying $g(x)^q \equiv g(x) \pmo
+
+More
+
+[![Image 6: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ![Image 7: 🌐](https://imgs.search.brave.com/YnXZv_Ywl60pvxz48yHuyN6lG1VDiVex75YAGe84YXU/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZjA5MWUxM2My/MTJkMDBkYjdmNTMy/OGZmMzVmYzdmMDc3/MWYzMDM2M2RmODU1/YjNlYjQzNDAwYjYw/YTI4NTg1OS9kbC5h/Y20ub3JnLw) ACM Digital Library dl.acm.org › doi › 10.1145 › 3734215 Superpolynomial Lower Bounds Against Low-Depth Algebraic Circuits | Journal of the ACM](https://dl.acm.org/doi/10.1145/3734215)
+
+In this article, we **prove the first superpolynomial lower bounds for algebraic circuits of constant product-depth**. Our lower bounds hold over all fields of characteristic 0 (or large enough as a function of the degree parameter).
+
+[![Image 8: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) ![Image 9: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) Wikipedia en.wikipedia.org › wiki › Berlekamp–Rabin_algorithm Berlekamp–Rabin algorithm - Wikipedia](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)
+
+June 19, 2025 -In number theory, **Berlekamp**'**s****root** finding algorithm, also called the **Berlekamp**–Rabin algorithm, is the probabilistic method of finding **roots****of****polynomials** over the field ... {\displaystyle p} elements. The method was discovered by Elwyn **Berlekamp** in 1970 as an auxiliary to the algorithm...
+
+[History](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm#History)[Statement of problem](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm#Statement_of_problem)[Algorithm](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm#Algorithm)[Correctness proof](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm#Correctness_proof)[Complexity](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm#Complexity)
+
+[![Image 10: 🌐](https://imgs.search.brave.com/8Kf_r47pqzVSrb1mKgXwnVCzF_YMKVz3nNmYUsIRTx4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGI2ZmFkZTZi/NTJmMGE3MzcxZmUw/Y2FlYTEzYWRhOTc4/NjYzOTAyMDgzNWJl/MWE3ZWFjNzgwMjM4/ZTRkN2I4Yi9oYWwu/c2NpZW5jZS8) ![Image 11: 🌐](https://imgs.search.brave.com/8Kf_r47pqzVSrb1mKgXwnVCzF_YMKVz3nNmYUsIRTx4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGI2ZmFkZTZi/NTJmMGE3MzcxZmUw/Y2FlYTEzYWRhOTc4/NjYzOTAyMDgzNWJl/MWE3ZWFjNzgwMjM4/ZTRkN2I4Yi9oYWwu/c2NpZW5jZS8) HAL hal.science › hal-03367796 › document pdf Superpolynomial Lower Bounds Against Low-Depth ...](https://hal.science/hal-03367796/document)
+
+**An Algebraic Circuit for a polynomial P is a computational model for constructing the polynomial P using only additions and multiplications**. It is a syntactic model of computation, as opposed to the Boolean Circuit model, and hence lower bounds for this model are widely expected to be easier...
+
+[![Image 12: 🌐](https://imgs.search.brave.com/TAKdc6Foz6kL2XPOmIUGQsazq19HFz8LfUowy6LR6JE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTU3ZDU5NWY5/MWJkZWNmYmVkMmE4/MWMwYTM5ZTg3YWZl/YWY4N2VmMzI5MWVl/Y2VhNjhiMjBhMGQy/YTQ1OWQ2Ni9qb2hu/a2VybC5vcmcv) ![Image 13: 🌐](https://imgs.search.brave.com/TAKdc6Foz6kL2XPOmIUGQsazq19HFz8LfUowy6LR6JE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTU3ZDU5NWY5/MWJkZWNmYmVkMmE4/MWMwYTM5ZTg3YWZl/YWY4N2VmMzI5MWVl/Y2VhNjhiMjBhMGQy/YTQ1OWQ2Ni9qb2hu/a2VybC5vcmcv) Johnkerl johnkerl.org › doc › iw2009 › berlekamp.pdf pdf The Berlekamp algorithm - John Kerl's home page](https://johnkerl.org/doc/iw2009/berlekamp.pdf)
+
+Elwyn Berlekamp’s algorithm (1967) is a powerful way to factor polynomials over Fq.
+
+[![Image 14: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) ![Image 15: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw) Wikipedia en.wikipedia.org › wiki › Berlekamp's_algorithm Berlekamp's algorithm - Wikipedia](https://en.wikipedia.org/wiki/Berlekamp%27s_algorithm)
+
+April 17, 2026 -In mathematics, particularly computational algebra, **Berlekamp**'s algorithm is a well-known method for factoring **polynomials** over finite fields (also known as Galois fields). The algorithm consists mainly of matrix reduction and **polynomial** GCD computations. It was invented by Elwyn **Berlekamp** in 1967.
+
+[Overview](https://en.wikipedia.org/wiki/Berlekamp%27s_algorithm#Overview)[Conceptual algebraic explanation](https://en.wikipedia.org/wiki/Berlekamp%27s_algorithm#Conceptual_algebraic_explanation)[Applications](https://en.wikipedia.org/wiki/Berlekamp%27s_algorithm#Applications)
+
+[![Image 16: 🌐](https://imgs.search.brave.com/VmzszfXzcSTQo66CkU6RYmTrUsR1INDngZGMIjav7Cs/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzQ3ZWJhNzNj/MDc5MTA4ZmU3NDUy/ZDI2NTNjMGJmZGIx/ZTgwMjU3OGNkMDI0/ZWIyNjI0ZTNmNWNj/YTM4Y2NmMC9tYXRo/LmJlcmtlbGV5LmVk/dS8) ![Image 17: 🌐](https://imgs.search.brave.com/VmzszfXzcSTQo66CkU6RYmTrUsR1INDngZGMIjav7Cs/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzQ3ZWJhNzNj/MDc5MTA4ZmU3NDUy/ZDI2NTNjMGJmZGIx/ZTgwMjU3OGNkMDI0/ZWIyNjI0ZTNmNWNj/YTM4Y2NmMC9tYXRo/LmJlcmtlbGV5LmVk/dS8) University of California, Berkeley math.berkeley.edu › ~berlek › research_interests › algorithms.html Elwyn Berlekamp - Algorithms](https://math.berkeley.edu/~berlek/research_interests/algorithms.html)
+
+"Factoring Polynomials over Large Finite Fields", Mathematics of Computation 24:713-735 (1972); Math. Rev. 48:1943. ... The "Berlekamp algorithm" best known to coding theorists is **a fast way to invert matrices with constant diagonals**. It works over any field, with the finite fields that occur...
+
+[![Image 18: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) ![Image 19: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) HandWiki handwiki.org › wiki › Berlekamp's_root_finding_algorithm Berlekamp's root finding algorithm - HandWiki](https://handwiki.org/wiki/Berlekamp's_root_finding_algorithm)
+
+November 22, 2020 -In number theory, Berlekamp's root finding algorithm, also called the Berlekamp–Rabin algorithm, is the probabilistic method of finding roots of polynomials over a field ℤp. The method was discovered by Elwyn Berlekamp in 1970 as an auxiliary to the algorithm for polynomial factorization over finite...
+
+[![Image 20: 🌐](https://imgs.search.brave.com/BM3igFkRx69r5aNJO7A5o86J9m0SJtZL9nkyn1ETKaM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWYyN2JhZDcx/MGIwZmFjODUxOTdk/MzQ0NWE0OTE3ZjI1/ODIwOWMxOWY1NmE1/NjdkOWNmMGZiNzVk/ZWFkMmJjMS9lbmN5/Y2xvcGVkaWEucHVi/Lw) ![Image 21: 🌐](https://imgs.search.brave.com/BM3igFkRx69r5aNJO7A5o86J9m0SJtZL9nkyn1ETKaM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWYyN2JhZDcx/MGIwZmFjODUxOTdk/MzQ0NWE0OTE3ZjI1/ODIwOWMxOWY1NmE1/NjdkOWNmMGZiNzVk/ZWFkMmJjMS9lbmN5/Y2xvcGVkaWEucHVi/Lw) Encyclopedia MDPI encyclopedia.pub › entry › 32373 Berlekamp's Root Finding Algorithm | Encyclopedia MDPI](https://encyclopedia.pub/entry/32373)
+
+November 2, 2022 -In number theory, Berlekamp's root finding algorithm, also called the Berlekamp–Rabin algorithm, is the probabilistic method of finding roots of polynomials over a field [math]\displaystyle{ \mathbb Z_p }[/math]. The method was discovered by Elwyn Berlekamp in 1970 as an auxiliary to the algorithm for polynomial factorization over finite fields.
+
+[![Image 22: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) ![Image 23: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) Weizmann eccc.weizmann.ac.il › report › 2013 › 091 › download pdf A super-polynomial lower bound for regular arithmetic formulas. Neeraj Kayal](https://eccc.weizmann.ac.il/report/2013/091/download/)
+
+June 17, 2013 -Our results. We give here a superpolynomial lower bound for regular arithmetic formulas.
+
+[![Image 24: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) ![Image 25: 🌐](https://imgs.search.brave.com/fXIXYrlH1EvaHKuvu3aZbFRyVOpKrIBjOQbEkwIr5k4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvY2Y0NzIxNzVm/OTU0ZWVhODA0ZWZi/OTE2OWFhYTJkYzc0/NmQ0Y2YxY2MzZGQw/YmI1NmYwMTg5YzRi/NGJiNTFjYy9oYW5k/d2lraS5vcmcv) HandWiki handwiki.org › wiki › Berlekamp–Rabin_algorithm Berlekamp–Rabin algorithm - HandWiki](https://handwiki.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)
+
+February 9, 2024 -In number theory, Berlekamp's root finding algorithm, also called the Berlekamp–Rabin algorithm, is the probabilistic method of finding roots of polynomials over the field $ \mathbb {F} _{p} $ with $ p $ elements. The method was discovered by Elwyn Berlekamp in 1970 as an auxiliary to the algorithm for...
+
+Find elsewhere
+
+[Google](https://search.brave.com/search?q=%22Berlekamp%20subproblem%22%20superpolynomial%20lower%20bound%20root%20of%20split%20polynomial%20!g)[Bing](https://search.brave.com/search?q=%22Berlekamp%20subproblem%22%20superpolynomial%20lower%20bound%20root%20of%20split%20polynomial%20!b)[Mojeek](https://search.brave.com/search?q=%22Berlekamp%20subproblem%22%20superpolynomial%20lower%20bound%20root%20of%20split%20polynomial%20!mojeek)
+
+[![Image 26: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) ![Image 27: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) Weizmann eccc.weizmann.ac.il › report › 2021 › 081 › revision › 1 › download pdf Superpolynomial Lower Bounds Against Low-Depth Algebraic Circuits](https://eccc.weizmann.ac.il/report/2021/081/revision/1/download/)
+
+Note that the constraint on d can be greatly relaxed if we only want a superpolynomial · lower bound. Indeed, if d1 ď d2 then the polynomial IMMn,d1 can be easily computed from
+
+[![Image 28: 🌐](https://imgs.search.brave.com/bjsOpqt9FoJMQGjTjiYaI8nHtB9yAeMp-cwLjtbGQg8/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWIyZWZjMzVi/YzgzMTFiNTg2ZWY3/YzMzODEzMzAzNDkz/ODMwNjY2YjhjOGJi/YWQ3Mzk4YmNiYTQ4/ZmE3NTM3ZS93d3cu/Y3MuY211LmVkdS8) ![Image 29: 🌐](https://imgs.search.brave.com/bjsOpqt9FoJMQGjTjiYaI8nHtB9yAeMp-cwLjtbGQg8/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWIyZWZjMzVi/YzgzMTFiNTg2ZWY3/YzMzODEzMzAzNDkz/ODMwNjY2YjhjOGJi/YWQ3Mzk4YmNiYTQ4/ZmE3NTM3ZS93d3cu/Y3MuY211LmVkdS8) Carnegie Mellon University cs.cmu.edu › ~ryanw › improved-algs-lbs2.pdf pdf Improving Exhaustive Search Implies Superpolynomial Lower Bounds Ryan Williams∗](https://www.cs.cmu.edu/~ryanw/improved-algs-lbs2.pdf)
+
+be solved in O(nc) time with a randomized algorithm. It is known that CAPP is in polynomial time if and · only if PromiseBPP = P [For01], so the problem is “complete” in some sense. We show that essentially · **any nontrivial derandomization for CAPP implies superpolynomial circuit lower bounds**.
+
+[![Image 30: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) ![Image 31: 🌐](https://imgs.search.brave.com/h52wWgaweAfrs4SVoVzIULAtfmCEVl8-l69UjzM8-Q4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzhkMWRiMzcz/ZmQyMzU1NGI0OGRm/ZjRmMDFlM2Y0N2I3/NjljZWU4M2ZlZjZi/ODc5OWRjMDZmZGM5/MzU2ZTZmNi9lY2Nj/LndlaXptYW5uLmFj/LmlsLw) Weizmann eccc.weizmann.ac.il › report › 2021 › 081 Superpolynomial Lower Bounds Against Low-Depth ...](https://eccc.weizmann.ac.il/report/2021/081/)
+
+June 15, 2021 -We show that for every depth $\Gamma$, there is an explicit polynomial which can be computed by a depth $\Gamma$ circuit of size s, but requires circuits of size $s^{\omega(1)}$ if the depth is $\Gamma-1$. Finally, we observe that our superpolynomial lower bound for constant-depth circuits implies the first deterministic sub-exponential time algorithm for solving the Polynomial Identity Testing (PIT) problem for all small depth circuits using the known connection between algebraic hardness and randomness.
+
+[![Image 32: 🌐](https://imgs.search.brave.com/Wg4wjE5SHAargkzePU3eSLmWgVz84BEZk1SjSglJK_U/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v) ![Image 33: 🌐](https://imgs.search.brave.com/Wg4wjE5SHAargkzePU3eSLmWgVz84BEZk1SjSglJK_U/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v) YouTube youtube.com › csachannel iisc Superpolynomial lower bounds against low-depth algebraic circuits - Nutan Limaye - YouTube](https://www.youtube.com/watch?v=7jRNM81wR8c)
+
+[![Image 34](https://imgs.search.brave.com/2Uotupfa-2Pu8XK0nUcn4ASsXb0IjjdtAW3ouhS6_7w/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS83/alJOTTgxd1I4Yy9t/YXhyZXNkZWZhdWx0/LmpwZz9zcXA9LW9h/eW13RW1DSUFLRU5B/RjhxdUtxUU1hOEFF/Qi1BSFVCb0FDNEFP/S0Fnd0lBQkFCR0dV/Z1dDaFlNQTg9JnJz/PUFPbjRDTEFuVS1N/NXJNYXc5ZThDLWF1/U2hjUG9tZ2V2Qmc) 01:37:40](https://www.youtube.com/watch?v=7jRNM81wR8c)
+
+Abstract: An algebraic circuit computes a polynomial using addition and multiplication operators. Understanding the power of algebraic circuits has close con...
+
+**Published:**August 1, 2021
+
+**Views:**444
+
+[![Image 35: 🌐](https://imgs.search.brave.com/4nVkNoOsoFF9VAmPrXMgXUTMwsp59E92majGoHhF7CE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTkzMDhjMjFj/ZDE0OGVhZjg2ZWQ1/NjdmMDhhMTU1MjI4/M2E1OGZkMzFjNDAy/NjM4NDQ2MjIxNjAy/MWZlMWI1Mi93d3cu/bWF0aC5pYXMuZWR1/Lw) ![Image 36: 🌐](https://imgs.search.brave.com/4nVkNoOsoFF9VAmPrXMgXUTMwsp59E92majGoHhF7CE/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZTkzMDhjMjFj/ZDE0OGVhZjg2ZWQ1/NjdmMDhhMTU1MjI4/M2E1OGZkMzFjNDAy/NjM4NDQ2MjIxNjAy/MWZlMWI1Mi93d3cu/bWF0aC5pYXMuZWR1/Lw) Ias math.ias.edu › ~avi › PUBLICATIONS › MYPAPERS › GAL › SPAN › COMBINATORICA › final.pdf pdf Superpolynomial Lower Bounds for Monotone Span ...](https://www.math.ias.edu/~avi/PUBLICATIONS/MYPAPERS/GAL/SPAN/COMBINATORICA/final.pdf)
+
+Theory of Computing, Theory of Computing 17(10), 2021, 1-88, DOI: 10.4086/toc.2021.v017a010 Proceedings of the Computational Complexity Conference (CCC) 2016, vol. 50, pp. 32:1-32:17, 2016. https://doi.org/10.4230/LIPIcs.CCC.2016.32 Electronic Colloquium on Computational Complexity (ECCC),...
+
+[![Image 37: 🌐](https://imgs.search.brave.com/ApduJmKaOEQrzOJG3GFoQA1rerKclPCjC3VtHVBrEhY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDE5YjBjYmRm/M2FiOTRjMzBmZWJk/MzA5OTY5N2IyMjUy/OGRhYmYwZTM0MTk0/MzcxODVhYWNkOTQx/MjgxMTg5MC9jYWNt/LmFjbS5vcmcv) ![Image 38: 🌐](https://imgs.search.brave.com/ApduJmKaOEQrzOJG3GFoQA1rerKclPCjC3VtHVBrEhY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDE5YjBjYmRm/M2FiOTRjMzBmZWJk/MzA5OTY5N2IyMjUy/OGRhYmYwZTM0MTk0/MzcxODVhYWNkOTQx/MjgxMTg5MC9jYWNt/LmFjbS5vcmcv) ACM cacm.acm.org › research-highlights › superpolynomial-lower-bounds-against-low-depth-algebraic-circuits Superpolynomial Lower Bounds Against Low-Depth Algebraic Circuits – Communications of the ACM](https://cacm.acm.org/research-highlights/superpolynomial-lower-bounds-against-low-depth-algebraic-circuits/)
+
+July 9, 2024 -Despite extensive work in the area, and many beautiful lower bound results against restricted models of circuits,8,15,16 even super-polynomial lower bounds against ΣΠΣ circuits have remained an open question. In this work, we show superpolynomial lower bounds against general ΣΠΣ circuits and more generally, against circuits whose depth is a constant independent of the number of variables and the degree of the underlying polynomial.
+
+[![Image 39](https://imgs.search.brave.com/NWDRT90VW5VQTjAYDAtEuJkkfwnBm0fMRNT-mg0JMZA/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9jYWNt/LmFjbS5vcmcvd3At/Y29udGVudC91cGxv/YWRzLzIwMjQvMDIv/MDExMjI0LlNodXR0/ZXIuUkgtU3VwZXJw/b2x5bm9taWFsQS5q/cGc)](https://cacm.acm.org/research-highlights/superpolynomial-lower-bounds-against-low-depth-algebraic-circuits/)
+
+[![Image 40](https://imgs.search.brave.com/NWDRT90VW5VQTjAYDAtEuJkkfwnBm0fMRNT-mg0JMZA/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9jYWNt/LmFjbS5vcmcvd3At/Y29udGVudC91cGxv/YWRzLzIwMjQvMDIv/MDExMjI0LlNodXR0/ZXIuUkgtU3VwZXJw/b2x5bm9taWFsQS5q/cGc)](https://cacm.acm.org/research-highlights/superpolynomial-lower-bounds-against-low-depth-algebraic-circuits/)
+
+[![Image 41: 🌐](https://imgs.search.brave.com/P724jgkuC7ye9lL0VgH2sFktboqN39eGEzXhnSPhRRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNTJmMzkzYWZl/MTlkNWQyMzc5MjZj/NDNiNDNkZjE1ZDc2/M2UxOWZhZmM0MGI0/YjMxNGJhOTBiYTJi/OWJjZmRlOC9wZW9w/bGUuY3MudWNoaWNh/Z28uZWR1Lw) ![Image 42: 🌐](https://imgs.search.brave.com/P724jgkuC7ye9lL0VgH2sFktboqN39eGEzXhnSPhRRY/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNTJmMzkzYWZl/MTlkNWQyMzc5MjZj/NDNiNDNkZjE1ZDc2/M2UxOWZhZmM0MGI0/YjMxNGJhOTBiYTJi/OWJjZmRlOC9wZW9w/bGUuY3MudWNoaWNh/Z28uZWR1Lw) University of Chicago people.cs.uchicago.edu › ~laci › papers › span1.pdf pdf Superpolynomial Lower Bounds for Monotone Span Programs ∗ L´aszl´o Babai †](http://people.cs.uchicago.edu/~laci/papers/span1.pdf)
+
+Theorem 3.7 (A. Weil) Let f(x) be a polynomial over GF(q) which is not
+
+[![Image 43: 🌐](https://imgs.search.brave.com/yYKWPovE0Qx2SH8B50k95Tvf0f00vXHige03xx6em-M/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMGI4ZDVkNDRi/MzU0MjljMTU4Mjk2/ZTA0NWVjNTdlOGM1/NGFiMTM4NWU5OTRl/YjNkMGUxYzZhMGY4/NWJiM2YyOC9ncm9r/aXBlZGlhLmNvbS8) ![Image 44: 🌐](https://imgs.search.brave.com/yYKWPovE0Qx2SH8B50k95Tvf0f00vXHige03xx6em-M/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMGI4ZDVkNDRi/MzU0MjljMTU4Mjk2/ZTA0NWVjNTdlOGM1/NGFiMTM4NWU5OTRl/YjNkMGUxYzZhMGY4/NWJiM2YyOC9ncm9r/aXBlZGlhLmNvbS8) Grokipedia grokipedia.com › berlekamp's algorithm Berlekamp's algorithm — Grokipedia](https://grokipedia.com/page/Berlekamp%27s_algorithm)
+
+January 14, 2026 -Berlekamp's algorithm is **a deterministic procedure developed by Elwyn Berlekamp in 1967 for factoring square-free univariate polynomials over finite fields into their irreducible factors**.[1] The algorithm assumes the input polynomial is square-free,...
+
+[![Image 45](https://imgs.search.brave.com/cJnzqMKB8CR2k2uvQYTLaZFZf72SIJmq4W8nILVMBLY/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9ncm9r/aXBlZGlhLmNvbS9h/cGkvb2c_dGl0bGU9/QmVybGVrYW1wJTI3/cythbGdvcml0aG0)](https://grokipedia.com/page/Berlekamp%27s_algorithm)
+
+[![Image 46](https://imgs.search.brave.com/cJnzqMKB8CR2k2uvQYTLaZFZf72SIJmq4W8nILVMBLY/rs:fit:200:200:1:0/g:ce/aHR0cHM6Ly9ncm9r/aXBlZGlhLmNvbS9h/cGkvb2c_dGl0bGU9/QmVybGVrYW1wJTI3/cythbGdvcml0aG0)](https://grokipedia.com/page/Berlekamp%27s_algorithm)
+
+[![Image 47: 🌐](https://imgs.search.brave.com/8Kf_r47pqzVSrb1mKgXwnVCzF_YMKVz3nNmYUsIRTx4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGI2ZmFkZTZi/NTJmMGE3MzcxZmUw/Y2FlYTEzYWRhOTc4/NjYzOTAyMDgzNWJl/MWE3ZWFjNzgwMjM4/ZTRkN2I4Yi9oYWwu/c2NpZW5jZS8) ![Image 48: 🌐](https://imgs.search.brave.com/8Kf_r47pqzVSrb1mKgXwnVCzF_YMKVz3nNmYUsIRTx4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGI2ZmFkZTZi/NTJmMGE3MzcxZmUw/Y2FlYTEzYWRhOTc4/NjYzOTAyMDgzNWJl/MWE3ZWFjNzgwMjM4/ZTRkN2I4Yi9oYWwu/c2NpZW5jZS8) HAL hal.science › hal-00626997 › document pdf Efficient Root Finding of Polynomials over Fields of ...](https://hal.science/hal-00626997/document)
+
+Root finding is the most time-consuming stage of McEliece cryptosystem decryption. The best method to find the zeroes of a polynomial for cryptographic parameters is the Berlekamp Trace Algorithm (BTA). Our idea is to mix BTA with ad-hoc methods proposed by Zinoviev.
+
+[Next](https://search.brave.com/search?q=%22Berlekamp+subproblem%22+superpolynomial+lower+bound+root+of+split+polynomial&offset=1&spellcheck=0)
+
+[Berlekamp–Rabin algorithm](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)
+
+method in number theory
+
+[![Image 49: Berlekamp–Rabin algorithm - Wikipedia](https://imgs.search.brave.com/nTT6Ek6mjxRoiEp6NJU2zGfs26Kr5y6RzU6oZwDi6pY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2E0L0Vsd3luX1Jf/QmVybGVrYW1wXzIw/MDUuanBn)](https://search.brave.com/images?q=Berlekamp%E2%80%93Rabin+algorithm&context=W3sic3JjIjoiaHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy9hL2E0L0Vsd3luX1JfQmVybGVrYW1wXzIwMDUuanBnIiwidGV4dCI6IkJlcmxla2FtcOKAk1JhYmluIGFsZ29yaXRobSAtIFdpa2lwZWRpYSIsInBhZ2VfdXJsIjoiaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQmVybGVrYW1wJUUyJTgwJTkzUmFiaW5fYWxnb3JpdGhtIn1d&sig=434880ea30841a54f15b75fee8b8a83f6e0de5bf5fdeb1387d1586c8f49189e3&nonce=404d821f29e21113fb01f8e8e443c6b8&source=infoboxImg)
+
+In number theory, Berlekamp's root finding algorithm, also called the Berlekamp–Rabin algorithm, is the probabilistic method of finding roots of polynomials over the field ... {\displaystyle p} elements. The method was discovered … [Wikipedia](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)
+
+[![Image 50: 🌐](https://imgs.search.brave.com/m6XxME4ek8DGIUcEPCqjRoDjf2e54EwL9pQzyzogLYk/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw)](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)[![Image 51: 🌐](https://imgs.search.brave.com/8vIq-V97PH8S0N-pyaeHgq_gFHOA8hXjBunynHio-Uw/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYzdkMGIyYTky/OTJjN2RjNDEyNWYx/MGQxNjAzNmZlNDk4/ZTRmNDczNjk0ZTZl/N2IxZjI0NTVkMGE3/YTBiYjEzYi93d3cu/d2lraWRhdGEub3Jn/Lw)](http://www.wikidata.org/entity/Q4291818)
+
+Data from [Wikipedia](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Rabin_algorithm)
+
+###### Resources
+
+[Brave Search Premium](https://account.brave.com/?intent=checkout&product=search)[Brave Search Help](https://search.brave.com/help)[Transparency Report](https://brave.com/transparency/)[Report a security issue](https://hackerone.com/brave)[Status](https://status.brave.app/)
+
+###### Products
+
+[Brave Browser](https://brave.com/download/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Search](https://search.brave.com/)[Brave Wallet](https://brave.com/wallet/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Talk](https://talk.brave.com/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Firewall + VPN](https://brave.com/firewall-vpn/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Playlist](https://brave.com/playlist/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave News](https://brave.com/brave-news/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Rewards](https://brave.com/brave-rewards/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Search API](https://brave.com/search/api/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)[Brave Ads](https://brave.com/brave-ads/?mtm_source=brave-search&mtm_medium=searchfooter&mtm_campaign=brave-search&mtm_content=evergreen)
+
+###### Policies
+
+[Privacy Policy](https://search.brave.com/help/privacy-policy)[Terms of Use](https://brave.com/terms-of-use/)
+
+Brave Search uses private usage metrics to estimate overall activity and performance. You can turn off this option in [Settings](https://search.brave.com/settings).[Learn more.](https://search.brave.com/help/usage-metrics)

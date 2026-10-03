@@ -1,0 +1,630 @@
+                                          Jensen-Shannon divergence as a measure of distinguishability
+                                                                    between mixed quantum states
+
+                                                              A.P. Majtey,1 P.W. Lamberti,1 and D.P. Prato2
+                                                               1
+                                                                   Facultad de Matemática, Astronomı́a y Fı́sica
+                                                                        Universidad Nacional de Córdoba
+                                                               Ciudad Universitaria, 5000 Córdoba, Argentina
+arXiv:quant-ph/0508138v3 18 Oct 2005
+
+
+
+
+                                                                                     CONICET
+                                                               2
+                                                                   Facultad de Matemática, Astronomı́a y Fı́sica
+                                                                        Universidad Nacional de Córdoba
+                                                               Ciudad Universitaria, 5000 Córdoba, Argentina
+                                                                            (Dated: November 26, 2024)
+
+                                                                                     Abstract
+                                         We discuss an alternative to relative entropy as a measure of distance between mixed quantum
+                                       states. The proposed quantity is an extension to the realm of quantum theory of the Jensen-
+                                       Shannon divergence (JSD) between probability distributions. The JSD has several interesting
+                                       properties. It arises in information theory and, unlike the Kullback-Leibler divergence, it is sym-
+                                       metric, always well defined and bounded. We show that the quantum JSD (QJSD) shares with
+                                       the relative entropy most of the physically relevant properties, in particular those required for a
+                                       “good” quantum distinguishability measure. We relate it to other known quantum distances and
+                                       we suggest possible applications in the field of the quantum information theory.
+
+                                       PACS numbers: 02.50.-r, 03.65.-w, 89.70.+c
+
+                                       Key words: Hilbert space distances, distinguishability distances, Jensen-Shannon divergence, entanglement
+
+                                       measures, fidelity.
+
+
+
+
+                                                                                         1
+I.     INTRODUCTION
+
+
+     Distance measures play a central role in quantum theory, in particular in the context of
+quantum computation and quantum information. On one side they allow us to establish
+precisely the problem of quantum state discrimination [1]; on the other they are associated
+to the definition of the degree of entanglement, just to mention two very significant subjects
+[2].
+     Several distances between quantum states have been introduced. Many of them were
+defined as distances (divergences) between probability distributions and then extended as
+distances between quantum states. This is the case of the Hellinger distance, which, for two
+(discrete or continuous) probability distributions P (x) and Q(x) reads
+                                          Xp        p
+                              H(P, Q) =    [ P (x) − Q(x)]2                                (1)
+                                          x
+
+and its quantum mechanical version is expressed as
+
+                                               √   √
+                                   H(ρkσ) = Tr( ρ − σ)2                                    (2)
+
+where ρ and σ are two density operators and Tr stands for the trace operator. Analogously
+the Kullback-Leibler divergence S(P, Q) = x P (x) log{ PQ(x)
+                                                         (x)
+                                         P
+                                                             } and the Kolmogorov distance,
+K(P, Q) = 21 x |P (x) − Q(x)| are extended to the realm of quantum mechanics. In the
+             P
+
+first case the resulting distance is known as the relative entropy [3], [4]; in the second one
+the quantum counterpart is given by [5]
+
+                                            1
+                                    K(ρkσ) = Tr|ρ − σ|.
+                                            2
+
+Alternatives to these quantum distances have been recently proposed [6],[7],[8].
+     As we mentioned previously a basic issue in quantum information theory is to distinguish
+two quantum states by quantum measurement. In a seminal paper Wootters investigated
+this problem and introduced a “distinguishability distance” between two pure states [9]. He
+defines this distance as the number of distinguishable intermediate states between the two
+states. Braunstein and Caves extended this distance to density operators for mixed states
+[10] and framed it in a general geometric formulation of quantum states space [11].
+     In a recent paper we revised the Wootters’s distinguishability distance in terms of the
+Jensen-Shannon divergence (JSD) [12]. The JSD between the probability distributions P (x)
+
+                                              2
+and Q(x) is defined by:
+
+                                       P +Q            P +Q
+                         JS(P, Q) ≡ S(P,      ) + S(Q,       )
+                                          2              2
+                                      P +Q       1         1
+                               = HS (        ) − HS (P ) − HS (Q)                     (3)
+                                         2       2         2
+                                                                P
+where S(P, Q) is the Kullback-Leibler divergence and HS (P ) = − x P (x) log P (x) is the
+Shannon entropy. This quantity was introduced by C. Rao [13] and J. Lin [14] as a sym-
+metrized version of the Kullback-Leibler divergence and has been recently applied to the
+analysis of symbolic sequences as well as to other problems of interest in statistical physics
+[15]. It originates in information theory, it is always well defined and bounded and its
+square root is a true metric for the probability distributions space (i.e., its square root is
+symmetric, null only when the probability distributions coincide and it verifies the triangle
+inequality)[16]. It has several interesting interpretations; for example in statistical inference
+theory it gives both the lower and upper bounds to Bayes’ probability error [14]. In the
+framework of information theory the JSD can be related to mutual information [15].
+   ¿From some results of harmonic analysis it is possible to show that the metric space
+      √
+(XN+ , JS), where XN+ denotes the discrete probability distributions space, can be isometri-
+cally mapped into a subset of a Hilbert space [17], [18]. This result establishes a connection
+between information theory and differential geometry, which, we think, could have interest-
+ing consequences in the realm of quantum information theory.
+   In reference [14], J. Lin proposed a generalization of Eq. (3) as a distance for several
+probability distributions. In fact, let P1 (x), ..., PN (x) be a set of probability distributions
+                                                                           P
+and let π1 , ..., πN be a collection of non-negative numbers such that i πi = 1. Then the
+JSD of the probability distributions Pi (x), i = 1...N is defined by
+                                                                  N
+                                                                  X                 N
+                                                                                    X
+                         (π1 ,...,πN )
+                    JS                   (P1 , ..., PN ) = HS (         πi Pi ) −         πi HS (Pi )   (4)
+                                                                  i=1               i=1
+
+A remarkable feature of this generalized JSD is that it is possible to assign different weights
+to the distributions Pi . This might be of importance in the study of quantum statistical
+inference problems [19].
+   In this work we extend the JSD into the context of quantum theory as a distance measure
+between mixed quantum states. We show that it shares with the relative entropy many of
+the most physically relevant properties. We also relate it to other commonly used distances
+
+                                                          3
+as well as we suggest its applicability as a good measure of entanglement and fidelity. We
+see that, when expression (4) is extended to quantum theory, it can be interpreted as the
+upper bound for quantum accessible information.
+      The structure of the paper is as follows. In the following section we review the basic
+properties of the relative entropy, mainly to guide us in our investigation of the proper-
+ties satisfied by the QJSD. In section III we introduce the QJSD and enumerate its basic
+properties. Finally we discuss possible applications of the QJSD in the field of quantum
+information theory.
+      Notation remark : We will use the following notation: D( , ) denotes a distance defined
+between probability distributions; D( k ) denotes the corresponding distance between density
+operators.
+
+
+II.     RELATIVE ENTROPY
+
+
+      Let H be the Hilbert space associated to a quantum system and let S be the set of density
+operators describing the states of the system; i.e. S is the set of self-adjoint, positive and
+trace unity operators.
+      The relative entropy of an operator ρ, with respect to an operator σ, both belonging to
+S, is given by
+                                  S(ρkσ) = Tr[ρ(log ρ − log σ)]                             (5)
+
+where log stands for logarithm in base two. S(ρkσ) is nonnegative and vanishes if and only if
+ρ = σ. It is nonsymmetric and unbounded. In particular, the relative entropy is well defined
+only when the support of σ is equal to or larger than that of ρ. Otherwise, it is defined to
+be +∞ [3]; (the support of an operator is the subspace spanned by the eigenvectors of the
+operator with non-zero eigenvalues). This is a very restrictive requirement which is violated
+in some physically relevant situations, for example when σ is a pure reference state [8].
+      Now we list the fundamental properties of the relative entropy. For the proofs and a
+detailed discussion see references [4] and [20]:
+
+      1. S is invariant under unitary transformations, that is
+
+                                      S(UρU † kUσU † ) = S(ρkσ)                             (6)
+
+
+
+                                               4
+   for any unitary operator U. This is a quite natural property to be satisfied by a
+   distance, because a unitary transformation represents a rotation in the Hilbert space
+   and the distance between two states should be invariant under a rotation of the states.
+
+2. “Generalized H-theorem”. For any complete positive, trace preserving map Φ given
+   by
+                                       X                           X
+                               Φσ =            Vi σVi† and             Vi† Vi = 1,           (7)
+                                         i                         i
+
+                                         S(ΦρkΦσ) ≤ S(ρkσ)                                   (8)
+
+   This is a very significant result because the most general way that an open quantum
+   system evolves is mathematically represented by a map of the type given by Eq. (7).
+   Technically, this kind of map is known as a CP − map. Therefore the meaning of
+   Eq. (8) is that non-unitary evolution decreases distinguishability between states. Of
+   course, an unitary evolution is a particular case of a CP − map.
+                                                   P
+   Another example of a CP − map is given by i Pi σPi with Pi being a complete set
+   of orthogonal projectors (Pi† = Pi and Pi2 = Pi ). Therefore,
+
+                                      S(Pi ρPi kPi σPi ) ≤ S(ρkσ)                            (9)
+
+
+3. S is jointly convex:
+                               X               X                   X
+                          S(       λi ρ(i) k        λi σ (i) ) ≤       λi S(ρ(i) kσ (i) )   (10)
+                               i                i                  i
+                                                                       P
+   where the λi are positive real numbers such that                     i λi = 1.
+
+
+4. Let ρAB and σ AB be two density matrices of a composite system AB (represented by
+   the Hilbert space HA ⊗ HB ). Then
+
+                                      S(ρA kσ A ) ≤ S(ρAB kσ AB )
+                                     S(ρB kσ B ) ≤ S(ρAB kσ AB )                            (11)
+
+   with ρA = T rB ρAB and ρB = T rA ρAB (here T rA and T rB represent the partial trace
+   operators). These inequalities have a very natural interpretation: to take the trace
+   over a part of a system leads to a loss of information and therefore it becomes more
+   difficult to distinguish between two states of the composite system.
+
+                                                    5
+     5. S is additive in the sense that
+
+                                S(ρ1 ⊗ ρ2 kσ1 ⊗ σ2 ) = S(ρ1 kσ1 ) + S(ρ2 kσ2 )                 (12)
+
+        with ρ1 , σ1 ǫSA and ρ2 , σ2 ǫSB .
+
+     6. The relative entropy verifies Donald’s identity [21]: Let us suppose that the density
+                                                                              P
+        operators ρi occur with probability pi , yielding an average state ρ = i pi ρi and let σ
+        be an arbitrary density operator. Then
+                                  X                        X
+                                        pi S(ρi kσ) =          pi S(ρi kρ) + S(ρkσ)            (13)
+                                    i                      i
+
+
+
+III.    AN ALTERNATIVE TO THE RELATIVE ENTROPY
+
+
+     We define the quantum Jensen-Shannon divergence (QJSD) as
+                                       1      ρ+σ          ρ+σ
+                              JS(ρkσ) = [S(ρk     ) + S(σk     )]                              (14)
+                                       2       2            2
+which can be rewritten in terms of the von Neumann entropy, HN (ρ) = −Tr(ρ log ρ), as
+                                                  ρ+σ    1        1
+                            JS(ρkσ) = HN (            ) − HN (ρ) − HN (σ)                      (15)
+                                                   2     2        2
+   If ρ and σ are density operators with complete sets of eigenvectors {|ri i} and {|si i}, such
+          P                     P
+that ρ = i ri |ri ihri | and σ = j sj |sj ihsj |, then the QJSD between ρ and σ is expressed
+as
+                            1 X                        2ri    X                        2sj
+            JS(ρkσ) = {            |htk |ri i|2 ri log( ) +       |htk |sj i|2 sj log(     )}   (16)
+                            2 k,i                      λk     k,j
+                                                                                       λk
+
+with λk = i ri |htk |rii|2 + j sj |htk |sj i|2 and {|tk i} a complete set of normalized eigenvectors
+         P                  P
+
+of ρ + σ.
+     This quantity is positive, null if and only if ρ = σ, symmetric and always well defined.
+In fact, the restriction imposed on the supports of ρ and σ for the relative entropy is lifted
+for the QJSD.
+     If ρ and σ commute they are diagonal in the same basis, that is,
+                                         X                       X
+                                    ρ=           ri |iihi| σ =        si |iihi|                (17)
+                                             i                    i
+
+with |ii an orthonormal basis. Then
+
+                                        JS(ρkσ) = JS({ri }, {si })                             (18)
+
+                                                       6
+    The QJSD is bounded. In fact, as it is known, the von Neumann entropy satisfies the
+                                P
+following inequality [1]: if ρ = i pi ρi is a mixture of quantum states ρi with pi a set of
+                                P
+positive real numbers such that i pi = 1, then
+                                X               X
+                         HN (       pi ρi ) ≤       pi HN (ρi ) + HS ({pi })
+                                i               i
+
+The equality is attained if and only if the states ρi have support on orthogonal subspaces.
+By putting p1 = p2 = 21 and ρ1 = ρ and ρ2 = σ in the inequality above we have
+
+                                        0 ≤ JS(ρkσ) ≤ 1                                (19)
+
+   Properties 1 to 4 of relative entropy are inherited by the QJSD and their validity can be
+checked directly from the representation (14). For example, property 2 for the QJSD can
+be proved as follows:
+                                  1        Φρ + Φσ            Φρ + Φσ
+                 JS(ΦρkΦσ) =        [S(Φρk          ) + S(Φσk          )]
+                                  2           2                   2
+                                  1        Φ(ρ + σ)           Φ(ρ + σ)
+                                = [S(Φρk            ) + S(Φσ|          )]
+                                  2           2                  2
+                                  1      ρ+σ            ρ+σ
+                                ≤ [S(ρk       ) + S(σk      )] = JS(ρkσ)               (20)
+                                  2        2              2
+   Additivity does not remain valid for the QJSD. However, the QJSD verifies a “restricted
+additivity”:
+                             JS(ρ1 ⊗ ρ2 kσ1 ⊗ ρ2 ) = JS(ρ1 kσ1 )                       (21)
+
+with ρ1 , σ1 ǫSA and ρ2 ǫSB . This is an important point that deserves some attention. We
+claim that (21) is enough to prove property 4 for the QJSD. To prove this, we follow the
+same steps as Nielsen and Chuang in their book where the relative entropy is studied [1]. It
+can be shown that there are unitary transformations Uj on the space corresponding to the
+                         P
+part B and numbers λj , ( j λj = 1) such that
+
+                                           I X
+                                    ρA ⊗     =   λj Uj ρAB Uj†
+                                           d   j
+
+for all density operator ρAB of the composite system AB. Here d is the dimension of the
+Hilbert space of part B and I its identity operator. Hence, from convexity, the invariance
+under unitary evolution and the restricted additivity verified by the QJSD, we have:
+                                         I      I
+                   JS(ρA kσ A ) = JS(ρA ⊗ kσ A ⊗ )
+                                         d      d
+
+                                                    7
+                                      X
+                                  ≤       λj JS(Uj ρAB Uj† kUj σ AB Uj† )
+                                      j
+                                      X
+                                  ≤       λj JS(ρAB kσ AB ) = JS(ρAB kσ AB )            (22)
+                                      j
+
+
+Of course, due to the linearity of the partial trace operator, this property can be derived
+from the analogous ones satisfied by the relative entropy.
+   The non-increasing character of the QJSD upon a CP − map has the following conse-
+quence: Let {Eα } be a set of positive - operator - valued measure (POVM), that is, a set
+                                            P
+of Hermitian operators Eα ≥ 0 that satisfy α Eα = 1. It is known that every generalized
+quantum measurement can be described by a POVM [1]. Given two operators ρ and σ
+belonging to S, we can introduce the probability distributions
+
+                                pα = Tr(ρEα ) qα = Tr(σEα )
+
+Following Vedral [20] we define
+
+                               JS1 (ρkσ) = sup JS({pα }, {qα })
+                                              {Eα }
+
+
+where the supremum is taken over all POVM’s.               Given that S(ρkσ) ≥ S1 (ρkσ) with
+S1 (ρkσ) = sup{Eα } S({pα }, {qα }), we can derive the inequality
+
+                                  JS(ρkσ) ≥ JS1 ({pα }, {qα })                          (23)
+
+Of course the map ρ → Tr(ρEα ) is a CP − map.
+   To conclude the listing of properties satisfied by the QJSD we note that starting from
+Donald’s identity, we can obtain a useful representation for the QJSD:
+
+                                                                  ρ+σ
+                        2JS(ρkσ) = S(ρkτ ) + S(σkτ ) − 2S(            kτ )              (24)
+                                                                   2
+
+where τ is an arbitrary density operator. This identity allows us to evaluate the QJSD
+between two density operators in terms of a third arbitrary one.
+   In the following discussion we investigate the relation between the QJSD and other quan-
+tum distances. In reference [12] we showed that the JSD is a good approximation to the
+Wootters distance (up to third order in their power expansion). To search for a similar re-
+lationship between the QJSD distance and that introduced by Braunstein and Caves, let us
+
+
+
+                                                8
+consider two neighboring density operators, ρ and ρ + dρ. The QJSD between them reduces
+to (up to second order in ε)
+                              "                                                 #
+                            ε2 X ωjj X
+             JS(ρkρ + dρ) =           +     (pj − pk )(log pj − log pk )|akj |2                 (25)
+                            8   j
+                                  p j
+                                        j,k
+
+
+where we have assumed that dρ ≡ εω, with ε ≪ 1. The ωjk are the matrix elements of ω
+                                             P
+in the basis that diagonalizes ρ, that is ρ = j pj |jihj|, and the eigenvectors of ρ + dρ are
+written (up to first order in ε) in the form:
+                                                X
+                                   |j (1) i =       (δkj + εajk )|ki
+                                                k
+
+                                 2(pj −pk )   4(p −p )3
+By expanding log pj − log pk =    pj +pk
+                                            − (pjj+pkk)3 + ... and after some algebra, the expression
+(25) can be rewritten as
+                                   "                               #
+                                 ε2 X ωjj     X (pj − pk )2
+                  JS(ρkρ + dρ) =           +2               |akj |2 + ϑ                         (26)
+                                 8   j
+                                       p j
+                                              j,k
+                                                  p k + p j
+
+
+with ϑ a term that involves sums of powers of (pj − pk ) of even order not lower than four.
+The two first terms coincide with the metric introduced by Braunstein and Caves as a
+generalization of the Wootters’s distance, dsDO [10]:
+
+                                                  1
+                                    JS(ρkρ + dρ) ≈ ds2DO
+                                                  8
+
+As these authors further note, the metric dsDO is related to the Bures’ metric, B(ρkσ) =
+√
+  2[(1 − Tr(ρ1/2 σρ1/2 )1/2 ]1/2 :
+                                    4B 2 (ρkρ + dρ)) ≈ ds2DO
+
+Therefore, we can conclude that for two neighboring states
+                                                    p
+                               B(ρkρ + dρ) ≈            2JS(ρkρ + dρ)                           (27)
+
+   To finish this section, we proceed to evaluate the QJSD in a particular case. Let us
+consider the density operator ρW corresponding to a Werner state, for a system of two
+1/2-spin particles [22]:
+
+                                     1−F
+               ρW = F |Ψ− ihΨ− | +       |Ψ+ ihΨ+ | + |Φ+ ihΦ+ | + |Φ− ihΦ− |
+                                                                              
+                                      3
+
+
+
+                                                    9
+with |Ψ± i= √12 (| ↑↓i ± | ↓↑i) and |Φ± i= √12 (| ↑↑i ± | ↓↓i). F is the purity of the state ρW
+with respect to the reference state σ = |Ψ− ihΨ− |. Then, in terms of the purity F , the QJSD
+between ρW and σ, results:
+
+                                    1                         1+F
+                         JS(ρW kσ) = [F log F − (1 + F ) log(     )]                       (28)
+                                    2                          2
+
+The fact that we can evaluate the JS(ρkσ) when one of its arguments is a pure state, is a
+clear advantage of the QJSD over the relative entropy, which becomes divergent in this case.
+
+
+IV.     DISCUSSION
+
+
+   In this section we suggest possible applications of the QJSD in the context of quantum
+information theory. Here we show that the proposed distance is useful to generate an entan-
+glement measure, as well as an alternative concept of fidelity. We also give an interesting
+interpretation of QJSD as the upper bound for the accessible quantum information. A more
+detailed study of each one of these proposals will be presented in a future work.
+
+
+   A.     Entanglement
+
+
+   Let H = HA ⊗HB be the Hilbert space of a quantum system consisting of two subsystems
+A and B. According to Vedral et. al. any measure of entanglement E has to satisfy the
+following (necessary) conditions [2]:
+
+      • i) E(ρ) = 0 if f ρ is separable. Let us recall that a state is separable if it can be
+                          P    (j)   (j)                             (j)          (j)
+        expressed as ρ = j λj ρ1 ⊗ ρ2 for some density operators ρ1 ǫSA and ρ2 ǫSB , and
+        P
+           j λj = 1, λj ≥ 0.
+
+
+      • ii) E(ρ) = E(UA ⊗ UB ρUA† ⊗ UB† ) for two arbitrary unitary operators UA and UB acting
+        on the corresponding Hilbert space.
+
+      • iii) E(ρ) is convex with respect to its argument:
+                                             X               X
+                                        E(       λj ρj ) ≤       λj E(ρj )
+                                             j               j
+
+
+
+
+                                                  10
+   • iv) E(ρ) decreases under generic quantum operations, that is, if {Vi } are bounded
+                                           Vj ρV †
+                           Vi Vi† = 1, ρj = λj j and λj = Tr(Vj ρVj† ), then
+                         P
+     operators such that
+                                                    X
+                                          E(ρ) ≥        λj E(ρj )
+                                                    j
+
+
+Vedral and collaborators [2] showed that an entanglement measure defined as
+
+                                       E(ρ) = inf D(ρkσ)                                  (29)
+                                               σ
+
+
+satisfies conditions i)-iv), whenever the distance D : S ⊗ S → ℜ, verifies the properties a)-b)
+listed below:
+
+   • a) D(ρkσ) ≥ 0 and D(ρkρ) = 0 for any ρ, σǫS
+
+   • b) D(ΦρkΦσ) ≤ D(ρkσ) for any CP − map, Φ.
+
+In (29) the infimum is taken over the set of separable states.
+   As we showed in the preceding section, the QJSD JS(ρkσ) satisfies these two require-
+ments. So we can introduce a new entanglement measure by
+
+                                      EJS (ρ) = inf JS(ρkσ)                               (30)
+                                                σ
+
+
+where, once again, the infimum is taken over all separable states.
+
+
+   B.   Fidelity
+
+
+   The fidelity of states ρ and σ is defined as [23],[24]
+                                             q           2
+                                                   √ √
+                                 F (ρkσ) = Tr         ρσ ρ                                (31)
+
+This quantity is symmetric, invariant under unitary transformations and bounded between
+0 and 1. For a pure state σ = |ΨihΨ|, fidelity reduces to the amplitude hΨ|ρ|Ψi.
+   The fidelity is related to the Bures’s metric by the expression
+                                              p        
+                                  2
+                                B (ρkσ) = 2 1 − F (ρkσ)                                   (32)
+
+Taking Eq. (27) into consideration we can introduce an alternative definition of fidelity (31):
+
+                                FJS (ρkσ) ≡ (1 − JS(ρkσ))2                                (33)
+
+                                              11
+¿From inequalities (19), FJS must be bounded between 0 and 1. In particular, for ρ =
+σ, FJS = 1 and FJS (ρkσ) = 0 if and only if ρ and σ have support on orthogonal subspaces.
+   The proposal (33) has another justification. As a textbook exercise it can be shown that
+the fidelity of states ρ and σ can be evaluated in terms of purifications of these states as
+
+                                      F (ρkσ) = max |hψ|ϕi|2                                (34)
+                                                      |ϕi
+
+
+where |ψi is any fixed purification of ρ, and the maximization is over all the purifications of
+σ [1]. At this point, it should be recalled that the Wootters’ distance between the two pure
+states |ψi and |ϕi is given by [9]:
+
+                                 W (|ψik|ϕi) = arccos |hψ|ϕi|
+
+Then, fidelity can be expressed in terms of the Wootters’ distance as
+
+                           F (ρkσ) = max cos2 (W (|ψik|ϕi))
+                                         |ϕi
+
+                                      = max(1 − W 2 (|ψik|ϕi)) + ...)                       (35)
+                                         |ϕi
+
+
+Now taking into account the relation between the Wootters’s distance and the JSD diver-
+gence [12]
+                                                  p
+                               W (|ψik|ϕi) ≈       2JS(|ψik|ϕi),
+
+we can approximate
+                              F (ρkσ) ≈ max (1 − JS(|ψik|ϕi))2                              (36)
+                                           |ϕi
+
+which, we think, might be taken as an interesting starting point to investigate (33) as a
+fidelity measure.
+
+
+   C.   Quantum information accessibility
+
+
+   Holevo [25] proved that, if a system is prepared in a state X chosen from one of the density
+operators ρi , (i = 1, ..., n) with probability pi , then the (mutual) information I(X : Y ) that
+can be gathered about the identity of the state X by a POVM measurement, with outcome
+Y , is bounded according to the inequality
+                                                 X                      X
+                        I(X : Y ) ≤ χ = HN (                pi ρi ) −       pi HN (ρi )     (37)
+                                                  i                     i
+
+
+                                                 12
+The quantity χ is precisely the extension of expression (4) to density operators with the
+weights πi replaced by the probabilities pi , that is, χ ≡ JS (p1 ,...pn) (ρ1 k...kρn ). This fact
+provides an interesting interpretation of the generalized QJSD.
+
+                                    AKNOWLEDGMENT
+
+We are grateful to Secretaria de Ciencia y Tecnica de la Universidad Nacional de Córdoba
+for financial assistance. This work was partially supported by Grant BIO2002-04014-C03-03
+from the Spanish Government.
+
+
+
+
+ [1] M.A. Nielsen and I. L. Chuang “Quantum Computation and Quantum Information”, Cam-
+    bridge University Press, Cambridge (2000).
+ [2] V. Vedral, M. Plenio, M.A. Rippin, and P. Knight, Phys. Rev. Lett. 78, 2275 (1997).
+ [3] G. Lindblad, Comm. Math. Phys. 33, 305 (1973).
+ [4] A. Wehrl, Rev. Mod. Phys. 50 (2), 221-260 (1978).
+ [5] C. Fuchs and J. van de Graaf, IEEE Trans. Inf. Theory, 45, 1216-1227 (1999).
+ [6] S. Luo and Q. Zhang, Phys. Rev. A, 69, 032106 (2004).
+ [7] J. Lee and M.S. Kim, Phys. Rev. Lett., 91, 087902 (2003).
+ [8] S. Abe, Phys. Rev. A, 68, 032302 (2003)
+ [9] W. Wootters, Phys. Rev D 23, 357 (1981).
+[10] S. Braunstein and C. Caves, Phys. Rev. Lett. 72 3439 (1994).
+[11] S. Braunstein and C. Caves, in “Fundamental problems in quantum theory”, Edited by D.
+    Greenberger and A. Zeilinger, Annals of the New York Academy of Sciences, 755, 786-797
+    (1995).
+[12] A. Majtey, P.W. Lamberti, M.T. Martin and A. Plastino, Eur. Phys. J. D 32, 413-419 (2005).
+[13] C. Rao, “Differential Geometry in Statistical Inference”, IMS-Lectures Notes, 10, 217 (1987).
+[14] J. Lin, IEEE Trans. Inf. Theory 37,1, 145 (1991).
+[15] I. Grosse, P. Bernaola-Galvan, P. Carpena, R. Roman Roldan, J. Oliver y H.E. Stanley, Phys.
+    Rev. E, 65 041905 (2002).
+[16] D. Endres and J. Schindelin, IEEE Trans. Inf. Theory, 49, 7, 1858 (2003).
+[17] I.J. Schoenberg, Trans. Am. Math. Soc. 44, 3 (1938).
+
+                                               13
+[18] C. Berg, J. Christensen and P. Ressel, Harmonic Analysis on Semigroups, Springer-Verlag,
+    New York (1984).
+[19] D. Brady and L. Hughston, Geometric Issues on the Foundations of Science. Eds. S.A.
+    Huggett, L. Mason, K. Tod, S.-T. Tsou and N. Woodhouse, Oxford University Press.
+[20] V. Vedral, Rev. Mod. Phys. 74, 197-234 (2002).
+[21] M.J. Donald, Math. Proc. Cam. Phil. Soc. 101, 363 (1987).
+[22] R.F. Werner, Phys. Rev. A, 40, 4277 (1989).
+[23] B. Schumacher, Phys. Rev. A, 51, 2738 (1995).
+[24] C. Bennett, G. Brassard, S. Popescu, B. Schumcher, J. Smolin and W. Wootters, Phys. Rev.
+    Lett. 76, 722-725.
+[25] A.S. Holevo, Probl. Inform. Transmission 9, 177 (1973).
+
+
+
+
+                                             14
+
