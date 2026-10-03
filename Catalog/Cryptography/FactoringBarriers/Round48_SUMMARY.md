@@ -193,6 +193,24 @@ touches it.
 
 ---
 
+## ■ ⚠️ TOOL HAZARD — PARI `ellcard` is wrong on composite moduli
+
+**Verified by me.** For `E : y² = x³ − x`, PARI/GP's `ellcard(E, N)` with `N` **composite**
+returns a plausible integer in ~0.00 s and **raises no error**. **0 of 6 composites matched
+truth**; for the three larger ones it returned exactly **`N+1`** — the naive "one point at
+infinity plus `N` affine points" count, which contains **no information about `p` and `q`**.
+On primes the same call is correct.
+
+This is the program's recurring "**green** control" failure: fast, integer-valued, silent,
+right order of magnitude. Trusting it would have produced a **fake polynomial-time factoring
+result**.
+
+> **Any library call used as ground truth must be validated in the exact regime where it will
+> be used** — not merely in a regime where it happens to work. `ellcard` was validated on primes
+> and used on composites.
+
+Full table and the CRT ground-truth recipe: `notes/T_pari_ellcard_hazard.md`.
+
 ## ■ EARNED RULES (additions)
 
 1. **Fetch, then cite.** A brief carries no citation its author did not fetch this session.
@@ -204,9 +222,11 @@ touches it.
    round had predicates that called everything smooth (mine compared exponents to B; the
    class-group agent's did likewise). It inflates every rate toward 1 and never errors.
 4. **Match on the order, not the discriminant. Match parity.** Both cost a round to discover.
-5. **Profile the hot loop before theorising why it timed out.** I misdiagnosed a timeout twice,
+5. **Validate library ground truth in the regime of use.** PARI `ellcard` is correct on primes
+   and silently returns `N+1` on composites.
+6. **Profile the hot loop before theorising why it timed out.** I misdiagnosed a timeout twice,
    and shipped a "fix" for the wrong function without measuring.
-6. **A correction is a new measurement**, subject to every error the original was. The
+7. **A correction is a new measurement**, subject to every error the original was. The
    correction tables manufacture phantoms of the kind they exist to catch.
 
 ## ■ FILES
