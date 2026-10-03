@@ -387,19 +387,39 @@ of all integers.
 Re-run with both arms bucketed to the same order bit-length `[2^29, 2^30)`, `B` set per sample
 from a fixed `u = log(order)/log(B)`, n = 267 class numbers vs 4000 EC orders:
 
-| u | class | EC | ratio | 95% CI | Fisher p |
+| u | class | EC | ratio | 95% CI (Katz) | Fisher p |
 |---|---|---|---|---|---|
-| 2.0 | 64/267 = 0.240 | 1224/4000 = 0.306 | **0.78** | [0.60, 1.01] | 0.0000 |
-| 2.5 | 22/267 = 0.082 | 564/4000 = 0.141 | **0.58** | [0.36, 0.93] | 0.0028 |
+| 1.5 | — | — | 0.841 | [0.75, 0.95] | 0.00244 |
+| 2.0 | 64/267 = 0.240 | 1224/4000 = 0.306 | **0.783** | **[0.63, 0.97]** | **0.0230** |
+| 2.5 | 22/267 = 0.082 | 564/4000 = 0.141 | **0.584** | [0.39, 0.88] | 0.00572 |
+| 3.0 | — | — | 0.495 | [0.24, 1.04] | 1.0000 |
+
+**⚠️ Corrected 2026-10-03 (adversarial audit).** The first version of this row printed
+`ratio 0.78, CI [0.60, 1.01], p = 0.0000` — a table asserting that the 95% interval **contains
+1.0** while the *p*-value says **significant**. Those cannot both be true, and a reader who
+trusts the CI concludes the opposite of one who trusts the *p*. Both printed values were wrong:
+the CI is too wide (correctly **[0.63, 0.97]**, which *excludes* 1) and `p = 0.0000` overstated
+the true **0.0230**.
+
+**The conclusion is unaffected** — significantly below 1 at `u ∈ {1.5, 2.0, 2.5}` — but the row
+was not checkable as printed. Recomputation was validated against `scipy.stats.fisher_exact` to
+1e-12 on 9/9 cases, including the nulls. The defect is inherited from
+`notes/G_adversary.md:114-117`, so it originated upstream of this paper.
 
 **The sign reverses.** E-7 recorded a ratio of 1.25; matched, it is 0.78 and 0.58. A second
 independent run gave `0/60` for the class arm at every `u`. Against an *odd-uniform* control
 arm the ratios are 0.98, 0.98, 0.82, 0.73 — **never better than parity-matched**, Fisher
 `p = 0.4951`.
 
-So the same recorded "milestone" is explained by **three independent defects**, each found by
-a different method: a self-referential baseline (E-6b), a half-bit scale offset (E-6c), and a
-parity mismatch (E-7). Any one of them suffices to void the number. The convergence of three
+So the same recorded "milestone" is explained by **three defects, each found by a different
+method**: a self-referential baseline (E-6b), a half-bit scale offset (E-6c), and a parity
+mismatch (E-7). Any one of them suffices to void the number.
+
+**⚠️ "three INDEPENDENT defects" was an overstatement (adversarial audit).** They are defects
+of three *different experiments*. For E-7 specifically, the parity defect is **redundant** rather
+than independent — the reversal is visible under parity matching, and the scale defect is a
+different experiment entirely. Any one suffices, which is the claim that matters; "independent"
+overstated the robustness. The convergence of three
 unrelated explanations on the same conclusion is the strongest evidence in this paper that
 the thread's conclusion — not merely its arithmetic — is wrong.
 
