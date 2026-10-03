@@ -165,8 +165,28 @@ was simply too short to show it.
 > claim came from testing `k = 2,3,4` and finding no variation; the variation begins at the
 > first `k` with `⌈k/2⌉ + ⌈k/3⌉ < k`, which is `k=6`.
 
-The residual open item is the extra `p=2` contribution for `k ≥ 7` (the nonzero solutions jump
-from ratio 0.5 to 1.5 between `k=6` and `k=7`). Not claimed to be understood.
+**The residual open item — CORRECTED, it is not `p=2` alone.** The corrected law is claimed
+only for `2 ≤ k ≤ 6`, and that claim is correct. Beyond it the departure persists one step
+longer than the formula predicts, for **every** prime tested, not only `p = 2`:
+
+| p | k | measured | formula's bracket | measured bracket |
+|---|---|---|---|---|
+| 2 | 6 | 2.50 | 1 ✓ | 1 |
+| 2 | 7 | 2.50 | **0** | **1** |
+| 2 | 8 | 3.50 | **1** | **2** |
+| 3 | 6 | 3.67 | 2 ✓ | 2 |
+| 3 | **7** | **3.67** | **0** | **2** |
+| 5 | 6 | 5.80 | 4 ✓ | 4 |
+
+At `k = 7` the exponent `k − ⌈k/2⌉ − ⌈k/3⌉` returns to 0, and the formula predicts the plain
+`2 − 1/p` — but the measurement does not return. So the `k = 6` departure **does not relax at
+`k = 7`**, for `p = 2` and `p = 3` alike. **Not claimed to be understood.** The earlier
+version of this paper recorded the open item as a "`p = 2` contribution"; it is a general
+`k ≥ 7` phenomenon.
+
+*(A first attempt at an analytic count of `#{(a,b) : a² ≡ b³}` — avoiding `O(p^{2k})`
+enumeration — gave ratios ~80x too large and was discarded as buggy rather than reported.
+Brute force at `3^7` is 4.8M pairs and settles it.)*
 
 ## 5. A methodological note: the bug that made the first version wrong twice
 
