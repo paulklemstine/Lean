@@ -83,15 +83,37 @@ with `ρ(u) = 0.3561` at `n ≈ 2³³`, `B = 2¹⁷`, predicting 2.81 trials/rel
 **The discriminator is the point.** A sampler that finds `B`-smooth values *faster than the
 Dickman model predicts* is not sampling the population; it is exploiting a degenerate corner.
 
-## 3. ⚠️ That discriminator is invalid in the regime that matters — corrected here
+## 3. ⚠️ That discriminator is invalid — and worse than stated here (second correction)
 
-At `n ≈ 2⁴⁰` with the factor base actually used, `u ≈ 5–8`. **Dickman `ρ(u)` is not a valid null
-there.** The exact smooth-number count `Ψ` gives a density **8.46× `ρ(u)`**.
+At `n ≈ 2⁴⁰` with the factor base actually used, `u ≈ 5–8`. **Dickman `ρ(u)` is not a valid
+null.** The exact smooth-number count `Ψ` exceeds `ρ` substantially.
 
-Every conclusion above was re-derived with exact `Ψ` rather than `ρ`, and holds. But the
-popular heuristic is wrong by nearly an order of magnitude in exactly the regime the method
-operates in, and any "speedup over predicted" measured there is measuring the null, not the
-sampler.
+**⚠️ CORRECTION 2026-10-03, second pass.** The first version gave the excess as **8.46x** and
+attributed it to the `u ≈ 5–8` regime specifically, citing `C_fixed.txt`. **That is wrong in
+both magnitude and regime.** A later direct measurement (`factor-scratch/r49exp/nfs_e2e/`) at
+**NFS operating points** gives exact `Ψ / ρ`:
+
+| u | exact Psi / rho |
+|---|---|
+| 3 | **13.9x** |
+| 5 | **1244x** |
+
+**So `rho` is worse at NFS operating points (`u ~ 3-5`) than in the `u ~ 5-8` regime quoted
+before.** The error was mine: I generalised an 8.46x figure measured in one regime and implied
+it was regime-specific when it is not.
+
+**Effect on this paper's conclusions: none.** Every rate here is against **exact `Psi`**, never
+`rho`; the verified log in `factor-scratch/r52/exp/smooth/C_fixed.txt` shows the sampler was
+validated against a measured density throughout. **The 54.78x and the optimality bound stand.**
+What changes is the framing: the Dickman discriminator is unusable across this whole family of
+regimes, not merely at the point where it was first noticed.
+
+**A note on my own error pattern.** Another agent found this by measuring the null in a
+different regime and getting a different number — the failure this program has now seen
+repeatedly: a quantity verified in one regime, quoted as if it held in another. Extended rule:
+
+> **A correction factor measured in one regime does not transfer to another, and "it was worse
+> here" is not a statement about elsewhere. Measure the constant where you will use it.**
 
 ## 4. Result — the sampler is optimal
 

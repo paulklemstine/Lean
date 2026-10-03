@@ -244,6 +244,62 @@ Until that exists, **this paper's contribution is a distributional fact about NF
 nothing more.** It is still, as far as I can tell, not in the standard references — but a fact
 without a measured payoff should be presented as a fact, not dressed as an improvement.
 
+---
+
+## 6.2 The open item is now CLOSED — with a measured number, and it is not the one withdrawn
+
+`factor-scratch/r49exp/nfs_e2e/` performed the end-to-end measurement this section asked for.
+
+**The control that makes it a result (stated first).** The pipeline carries a switch that
+disables the excess while preserving the `k = 1` law: the NULL arm replaces `a²−b³` by
+`round(|a²−b³|·e^ε)`, a locally uniform integer. Measured excess over null:
+
+| arm | excess | significance |
+|---|---|---|
+| TRUE (`a²−b³`) | **0.7200 ± 0.0024** | **303σ** |
+| NULL (locally uniform) | **−0.0000 ± 0.0024** | 0.01σ |
+
+A hard NULL-vs-NULL control returns 1.000 with the CI containing 1 at every `u`, and the
+vacuity test confirms the true arm is not 1.0. **The switch works, so the difference it makes is
+attributable to the excess.**
+
+**The measurement** (3,149,886 candidates per arm, 4 replicates, seeds in the note):
+
+| u | cost-per-relation ratio (TRUE/NULL) |
+|---|---|
+| 3.00 | **0.859** [0.851, 0.867] |
+| 3.60 | 0.726 |
+| 4.00 | **0.640** [0.623, 0.657] |
+| 5.14 | 0.361 |
+| 6.00 | 0.220 |
+
+**The gain SURVIVES sieving — the audit's "every net gain < 1" is false.** Among pre-sieve
+survivors the ratio is unchanged (1.706 vs 1.687 over all candidates at `u = 4`), and 12–16 of
+16 mod-4 and 7–9 of 9 mod-3 sub-boxes have ratio > 1. A `k = 1`-only sieve is strictly **worse**
+(0.63–0.65) — a sharp prediction from `r_p(1) = (p−α)/(p−1) < 1` that held.
+
+**The honest replacement for the withdrawn 25–38%:**
+
+> **At `u ≈ 3` — the operating point the withdrawn claim quoted — the reduction is
+> 14.1% [13.3, 15.0], not 25–38%.** The 25–38% band corresponds to `u ≈ 3.5–4.0`.
+
+**And two qualifications the paper must carry:**
+
+1. **It is not an implementable speedup.** There is no decision to take: no sub-box beats the
+   free global rate. It is a measured property of the value distribution, not an available
+   constant.
+2. **~2/5 of the gain is the trivially-divisible subspace, not the advertised `2 − 1/p`
+   effect.** About 37–40% sits at `k ≥ 6`, and 58.6% of *those* relations satisfy the
+   zero-zero configuration (`p³ | a`, `p² | b`) against 3.6% expected — **18.8× enriched**.
+   `k = 2` carries 23–53%; `k = 1` is a loss; `k = 5` is a small reproducible loss.
+
+**Correction to this paper's own §3-adjacent tooling.** Dickman `ρ` is worse at NFS operating
+points than previously recorded: exact `Ψ/ρ` is **13.9× at `u = 3` rising to 1244× at
+`u = 5`** — the earlier "8.46× at `u ∈ [5,8]`" was both too small and in the wrong regime.
+Any null at an NFS operating point must use exact `Ψ`.
+
+*Scope, declared:* measured at **one value scale**; replication at 2⁴⁸/2⁶⁰ is the open check.
+
 ## 7. Related corrections this round
 
 - **The `1.90188` GNFS constant is misattributed.** It is Coppersmith's *multiple polynomial
