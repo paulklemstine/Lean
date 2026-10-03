@@ -435,6 +435,67 @@ plausible derivation would not be.
 
 ---
 
+## ■ THE NON-EC GROUP SURVEY — no family survives, and a reconciliation that matters
+
+Every candidate group was measured at matched order bit-length **and** matched parity. **No
+family survives. The elliptic curve survives.**
+
+**And the class group is a partial smoothness survivor — in a population the E-thread never
+used.** After parity matching, `Cl(√−D)` shows **+0.0499 (+3.4σ)** over a same-bit-length null
+(26-bit orders, `n = 1152`). The unmatched gap was **+0.0966 (+6.8σ); parity removes half of it.**
+
+> ### ⚠️ The reconciliation a future round must not get wrong
+>
+> This survey measured a **general** set of negative discriminants, **96.4% even** class
+> numbers. The E-thread's family is specifically `D = −q`, `q ≡ 3 (mod 4)` prime, where **genus
+> theory forces `h` odd**. **These are different populations.**
+>
+> The **+0.0499 lives entirely in the EVEN arm.** The E-thread lives entirely in the **ODD
+> arm** — which this survey itself reports as **insufficient (`n = 43`)** and *"must not be
+> quoted"*, and which the E-6c re-run independently measured at **null (0/112 cells above
+> Dickman)**.
+>
+> **Therefore the +0.0499 does NOT revive the E-thread's lottery.** Anyone who later finds
+> "+0.0499" in this census and reconnects it to the class-group lottery has connected two
+> different populations and must not do so.
+
+**But it still fails, structurally rather than numerically.** `Cl(O_D) mod p` is trivial, so the
+walk degenerates to SQUFOF at `N^(1/4) > L[1/2]` for every `k ≥ 1` once `N > 5400`. **A family
+can win on smoothness and still lose.**
+
+That is the axis's real lesson, stated by the survey and worth keeping:
+
+> **The binding constraint is never smoothness — it is whether the group exists without the
+> factor.**
+
+**PGL(2,p)/GL(2,p)/PSL(2,p):** the smoothness *metric* is degenerate (`P = 1.0` by construction),
+but their largest prime factor is genuinely **2⁶·⁹ better than EC** (2⁹·² vs 2¹⁶·¹). They still
+need `p` to exist.
+
+**Cost to reach `p`, measured:** building an EC order is 0.26 s at 64 bits, 1.24 s at 128; a class
+number jumps **4 orders of magnitude** between `D = 40` and `D = 48` bits and is **bimodal at
+`D = 56`**. This **forced the whole comparison down to 26-bit orders** — a real limitation,
+stated.
+
+### Method notes worth keeping
+
+- **`ρ(2) = 0.3069` is a lower bound at finite scale.** Exact `Ψ` gives **0.3327 at `x = 10⁸`**,
+  converging *from above*. **The baseline must be measured, not quoted.**
+- **A recalled Dickman table is wrong.** The self-test caught that its own remembered `ρ(5)`,
+  `ρ(6)`, `ρ(7)` were incorrect; self-convergence replaced them. (Compare: `int(n**(1/3))`,
+  `pdftotext`, and now *recalled special-function values* — three ways a familiar number
+  arrives corrupted.)
+- **Five self-test catches**, including a zero-division in `irooot(0)`, PARI's `factor()`
+  returning a **2-column matrix**, an inverted fundamental-discriminant congruence, and an
+  over-strong assertion of its own (composite `B²` **is** `(B−1)`-smooth).
+- **A self-refuted explanation, reported as such:** its "`√ mod D`" account of the cost cliff is
+  **refuted by its own data** — `√ mod a prime` takes 0.02 ms while the 80-bit class number took
+  **43.9 s** — and is reported as a measurement, not a proof.
+- **Limits not papered over:** matched scale is 26 bits, not 64/96; cubic/quartic is
+  **insufficient**; the +0.050 residual is one scale, unreplicated.
+
+---
+
 ## ■ ⚠️ TOOL HAZARD — PARI `ellcard` is wrong on composite moduli
 
 **Verified by me.** For `E : y² = x³ − x`, PARI/GP's `ellcard(E, N)` with `N` **composite**
