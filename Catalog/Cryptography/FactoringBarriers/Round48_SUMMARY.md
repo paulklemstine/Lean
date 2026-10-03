@@ -381,10 +381,21 @@ independent seeds. Threshold−1 works but only at dim 52.
 wall, and its own p.8 Remark 3.2 makes the enumeration conditional. Recorded as scout-supplied,
 **not independently fetched, not used as ground truth.**
 
-**The reframe that matters more than the negative:** the scout's coverage finding —
-`all:"partial key exposure"` returns **exactly one arXiv hit in the entire database**, and it is
-unrelated — means the axis is **under-attacked, not under-broken.** The absence of a crossing
-reflects how little has been tried, not how solid the barrier is.
+**⚠️ The "under-attacked" reframe is WITHDRAWN — it was a database artifact.** The claim rested
+on `all:"partial key exposure"` returning **exactly one arXiv hit**, unrelated. That is a
+correctly-measured fact about the *wrong database*. `https://eprint.iacr.org/search?q=` **is**
+reachable and returns **36** results for the same phrase, **24** for "factoring with hints" and
+**7** for "auxiliary information factoring" — the axis is **not** empty. See
+`notes/II_eprint_scope_correction.md`. arXiv indexes almost no side-channel cryptography because
+that literature lives in TCHES/INDOCRYPT and is preprinted on IACR.
+
+What survives from that axis is the **boundary measurement itself**: the univariate threshold is
+`X = N^{1/4}`, now **proved optimal** (arXiv:1605.08065), and no tested leakage family beats it.
+
+The fifth instance of this round's standing failure mode — **measuring the wrong population.**
+Here: papers about crypto, instrument arXiv. Earlier: supply numbers measured inside a *box*
+rather than over the algorithm's population; `s = 1` assumed general for `v₂(p−1)`; `a²−b³`
+assumed uniform in `k`.
 
 **Two defects the control caught** (both would have produced false conclusions): a misaligned
 leak (`p >> unk` leaving `x0` full-width, inflating `X` by 64 bits) and a Howgrave-Graham
