@@ -181,8 +181,12 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Class-group walk as `L[1/2]` | **CLOSED (structural)** | `Cl(O_D) mod p` trivial; walk is SQUOF at `N^{1/4}` |
 | Rigorous `L[1/2]` | **ALREADY KNOWN** | Shoup Thm 15.6, unconditional since ~2009 |
 | "Structure with order computable without `p`" | **CLOSED (structural)** | `L < 8.6 ⟺ N < 5400`; 0/890 divisibility |
+| Function fields / tori / Jacobians | **CLOSED (exactly)** | `reach_p = L[1/2]`: the useful bit `(D/p)` is the factorization bit; `(D/n)` carries **zero** bits about it (102 vs 105 of 207) |
+| Towers (level-raising to hit smooth orders) | **CLOSED** | a loss, not a knob: 3.18×/5.74×/8.54× at k=2/3/4, and the degree depends on the unknown `p` |
+| NFS smoothness uniformity | **DEVIATION FOUND (positive)** | `P(p^k | a²−b³) = (2p−1)/p^k` for odd `p`, `k ≥ 2` — the heuristic is **pessimistic**. 25–38% of collection cost; no exponent change |
 | Unconditional superpolynomial lower bound | **NONE in any model** | classical *and* quantum; all such bounds are oracle bounds |
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
+| Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **CLOSED** | K-theory, Tate modules, theta, Brauer, information-theoretic — all fail one of the three requirements |
 
 **Unchanged from round 47:** NFS relation geometry, Harvey `N^{1/5}`, Umans–Wang, Lecerf
