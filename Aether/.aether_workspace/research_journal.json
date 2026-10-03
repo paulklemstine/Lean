@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0e02e0b5",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — Singmaster multiplicity thread\n\n## What the thread has established\n\nSix sorry-free files of developed theory, all verified, and depending only on the standard\nfoundational axioms",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-09-11T00:33:23",
-      "title": "Next-cycle sub-conjectures (v19c thread continuation)"
-    },
-    {
       "cycle_id": "5c4155a3",
       "domain": "Bridges",
       "key_insight": "",
@@ -499,19 +489,19 @@
       "theorem_count": 44,
       "timestamp": "2026-10-03T02:24:52",
       "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE (paper 128)\n\n## What was established (this cycle)\n\n- `ramified_contribution_negligible`: `|I_{U∪R} − I_U| ≤ (|R|/N)(3 log₂ N + 2/ln 2)`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-10-03T17:55:06",
+      "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "acd2f64e",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — edge-kernel refinement (positional profiles)\n\nThe two new files\n`Catalog/Pythagorean/EdgeKernelRefinement.lean` and\n`Catalog/Pythagorean/EdgeKernelSeparation.lean`\nestablish, wit",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-08-25T22:46:43",
-      "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
-    },
     {
       "cycle_id": "e645a8ec",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 44,
       "timestamp": "2026-10-03T02:24:52",
       "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE (paper 128)\n\n## What was established (this cycle)\n\n- `ramified_contribution_negligible`: `|I_{U∪R} − I_U| ≤ (|R|/N)(3 log₂ N + 2/ln 2)`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-10-03T17:55:06",
+      "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "MI_comm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "MI_nonneg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "61cd19b1",
-      "domain": "Pythagorean",
-      "name": "gives",
-      "quality": 0.8
-    },
     {
       "cycle_id": "61cd19b1",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "disc_eq_sq",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "uEnt_eq_lam",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "lam_nonneg",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "lam_pair",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-03T02:24:52",
+  "last_updated": "2026-10-03T17:55:06",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "523b9317",
-        "quality": 0.76,
-        "theorems": 153,
-        "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-"
-      },
-      {
         "cycle_id": "9c1e5dc4",
         "quality": 0.84,
         "theorems": 101,
@@ -3823,6 +3817,12 @@
         "quality": 0.62,
         "theorems": 73,
         "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (pap"
+      },
+      {
+        "cycle_id": "602d68e3",
+        "quality": 0.72,
+        "theorems": 24,
+        "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (p"
       }
     ],
     "Pythagorean": [

@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-03T02:24:38Z",
-  "count": 192,
+  "archived_at": "2026-10-03T17:54:52Z",
+  "count": 193,
   "directions": [
     {
       "id": "fd_3695",
@@ -7613,6 +7613,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 216
+    },
+    {
+      "id": "fd_3529",
+      "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)",
+      "description": "## FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "602d68e3",
+      "timestamp": "2026-08-22T01:10:29.772175+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-03T02:25:29.032128+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 224
     }
   ]
 }

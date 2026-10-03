@@ -3470,21 +3470,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
   },
   {
-    "consumed_by_exp_id": "602d68e3",
-    "description": "## FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3529",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T01:10:29.772175+00:00",
-    "title": "FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
-  },
-  {
     "consumed_by_exp_id": "9b17c9d6",
     "description": "## FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
     "domains": [
@@ -3904,6 +3889,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-19T23:41:54.924452+00:00",
     "title": "Deepening: FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Domain Probability has declined by 0.154 over recent cycles (recent avg=0.712 vs prior=0.866). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "auto_reset_Probability_aba48b45",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "auto_reset",
+    "status": "available",
+    "timestamp": "2026-10-03T17:55:08.152417+00:00",
+    "title": "[Reset] Fresh approach in Probability"
   },
   {
     "consumed_by_exp_id": "",
@@ -11580,6 +11579,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Study the fibre log-sum and the ramified bracket under Maslov dequantisation. The goal is a max-plus analogue of the negligibility theorem that counts only dominant fibres.\n\nReplacing log\u2082 by (1/t) log and letting t \u2192 \u221e turns the bracket |N I_{U\u222aR} \u2212 |U| I_U \u2212 |R| I_R| \u2264 2|R|(log\u2082 N + 1/ln 2) into a max-plus inequality whose defect is r times the maximal fibre-size gap.\n\nFormalise the scaled fibre log-sum and take limits using existing dequantisation lemmas.\n\nInformation-theoretic negligibility has a combinatorial skeleton that is independent of entropy.\n\nThe negligibility is an averaging phenomenon with no tropical counterpart.",
+    "domains": [
+      "Tropical",
+      "Combinatorics"
+    ],
+    "id": "fd_5124",
+    "priority_score": 0.7101428571428572,
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:51.612565+00:00",
+    "title": "Tropical Dequantisation of the Ramified Bracket"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Binary branching of the Markoff tree is caused by the degeneracy of the singular triples. Deforming the cubic surface should restore ternary branching and, for exactly one deformation parameter, allow a branching-compatible injection into the Berggren tree.\n\nThere exists k for which the Vieta tree of x^2+y^2+z^2-xyz = k is ternary, and exactly one such k admits a child-compatible injection into the Berggren tree.\n\nEnumerate integral points for small k, count children per node, and formalize the ternary instance found.\n\nThe transfer conjectured in the mission statement becomes true after deformation, giving a Berggren model for a Markoff-like surface.\n\nTernary branching is impossible for the whole family, strengthening the branching obstruction proved here.",
     "domains": [
       "Algebra",
@@ -12388,6 +12402,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:07.571787+00:00",
     "title": "Symmetry-Group Criterion for Intrinsic-to-Family Excess"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine the exact worst-case effect of r ramified sample points on a counting mutual-information channel. The proved bound has constant 3 and the extremal construction reaches constant 1. Closing the gap needs the log-sum inequality applied jointly to the three fibre defects.\n\nFor fixed r and N \u2192 \u221e, sup over disjoint U,R with |R| = r, |U \u222a R| = N and all read-outs g,k of |I_{U\u222aR}(g;k) \u2212 I_U(g;k)| equals (r/N) log\u2082 N (1 + o(1)).\n\nFormalise I(g;Z) \u2264 h(r/N) via gibbs_double, plug it into card_mul_mutInfo_union, and compare with ramified_contribution_sharp. Numerically, maximise over small configurations.\n\nThe ramified exclusion error is known exactly, and paper-128 style experiments get exact error bars.\n\nSome configuration correlates the three fibre defects adversarially, and the constant lies strictly between 1 and 3.",
+    "domains": [
+      "Combinatorics",
+      "MachineLearning"
+    ],
+    "id": "fd_5121",
+    "priority_score": 0.7085882352941177,
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:49.560730+00:00",
+    "title": "Sharp Constant for Ramified Contamination"
   },
   {
     "consumed_by_exp_id": "",
@@ -35569,6 +35598,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-03T02:24:38.093947+00:00",
     "title": "Kronecker Extension of the Conductor Law to p = 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measure the residue-to-type channel of a Galois extension on all primes up to X, ramified primes included, and show that it converges to the Galois-group channel. The error is the ramified bound plus an effective Chebotarev error.\n\n|I_X(T(Frob_p); p mod m) \u2212 I_G(\u03c3;T)| = O_K(log \u03c0(X) / \u03c0(X) + E_Cheb(X)) where E_Cheb is the total-variation Chebotarev discrepancy.\n\nCombine ramified_galois_channel with a continuity bound for the counting mutual information under total-variation perturbation, and check numerically for x\u00b2\u22123, x\u00b3\u22122 and the D5 quintic.\n\nRamified primes never need special treatment in type-channel experiments, and the exclusion convention is fully justified.\n\nSome extension has ramified primes that carry information at a rate slower than log N / N, which would expose a flaw in the counting model.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5122",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:50.219662+00:00",
+    "title": "Effective Ramified Chebotarev Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A one-sided inequality that would explain why the observed ramified increment is positive. Including ramified primes can raise the channel by at most the binary entropy of the ramified fraction plus a mixing term.\n\nFor disjoint U,R with \u03b5 = |R|/|U\u222aR|: I_{U\u222aR}(g;k) \u2212 (1\u2212\u03b5) I_U(g;k) \u2212 \u03b5 I_R(g;k) \u2264 h(\u03b5), with equality iff the marker Z is a function of g and of k separately.\n\nExhaustive search over small configurations, then a Lean proof via the joint-count Gibbs inequality.\n\nThis gives a sign law for ramified contamination that matches the always-positive experimental increments.\n\nA configuration where ramified points reduce information by more than h(\u03b5) would show that the mixing term can dominate.",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_5123",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:50.868573+00:00",
+    "title": "Binary-Entropy Ceiling on Ramified Gain"
   },
   {
     "consumed_by_exp_id": "",

@@ -4706,25 +4706,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "602d68e3",
-    "description": "## FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3529",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T01:10:29.772175+00:00",
-    "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "9b17c9d6",
     "description": "## FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
     "domain_bridges": [],
@@ -5291,6 +5272,25 @@
     "status": "available",
     "timestamp": "2026-09-19T23:41:54.924452+00:00",
     "title": "Deepening: FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on on"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Domain Probability has declined by 0.154 over recent cycles (recent avg=0.712 vs prior=0.866). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "auto_reset_Probability_aba48b45",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "auto_reset",
+    "status": "available",
+    "timestamp": "2026-10-03T17:55:08.152417+00:00",
+    "title": "[Reset] Fresh approach in Probability"
   },
   {
     "ambition_level": "extension",
@@ -15859,6 +15859,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Probability.RamifiedTypeChannel",
+      "Probability.TropicalSocialChoiceDequantisation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Study the fibre log-sum and the ramified bracket under Maslov dequantisation. The goal is a max-plus analogue of the negligibility theorem that counts only dominant fibres.\n\nReplacing log₂ by (1/t) log and letting t → ∞ turns the bracket |N I_{U∪R} − |U| I_U − |R| I_R| ≤ 2|R|(log₂ N + 1/ln 2) into a max-plus inequality whose defect is r times the maximal fibre-size gap.\n\nFormalise the scaled fibre log-sum and take limits using existing dequantisation lemmas.\n\nInformation-theoretic negligibility has a combinatorial skeleton that is independent of entropy.\n\nThe negligibility is an averaging phenomenon with no tropical counterpart.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Combinatorics"
+    ],
+    "id": "fd_5124",
+    "lineage_refs": [],
+    "priority_score": 0.7101428571428572,
+    "proof_strategy": "Write Λ as a sum of log counts, apply log-sum-exp to max-plus limits termwise, and transport lam_union_ge and lam_union_le.",
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:51.612565+00:00",
+    "title": "Tropical Dequantisation of the Ramified Bracket"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.MarkoffFreeBinary",
       "Cryptography.MarkoffTransfer.BerggrenMarkoffTransfer"
     ],
@@ -17097,6 +17120,29 @@
     "status": "available",
     "timestamp": "2026-08-22T20:41:07.571787+00:00",
     "title": "Symmetry-Group Criterion for Intrinsic-to-Family Excess"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.RamifiedTypeChannelNegligible",
+      "Shared.CyclicTypeChannelNonneg"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Determine the exact worst-case effect of r ramified sample points on a counting mutual-information channel. The proved bound has constant 3 and the extremal construction reaches constant 1. Closing the gap needs the log-sum inequality applied jointly to the three fibre defects.\n\nFor fixed r and N → ∞, sup over disjoint U,R with |R| = r, |U ∪ R| = N and all read-outs g,k of |I_{U∪R}(g;k) − I_U(g;k)| equals (r/N) log₂ N (1 + o(1)).\n\nFormalise I(g;Z) ≤ h(r/N) via gibbs_double, plug it into card_mul_mutInfo_union, and compare with ramified_contribution_sharp. Numerically, maximise over small configurations.\n\nThe ramified exclusion error is known exactly, and paper-128 style experiments get exact error bars.\n\nSome configuration correlates the three fibre defects adversarially, and the constant lies strictly between 1 and 3.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "MachineLearning"
+    ],
+    "id": "fd_5121",
+    "lineage_refs": [],
+    "priority_score": 0.7085882352941177,
+    "proof_strategy": "Rewrite the exact decomposition as N[I(g;Z) − I(g;Z|k)] + |R|(I_R − I_U), bound each mutual information with Z by h(r/N) using the log-sum inequality, and use h(ε) = ε log₂(1/ε) + O(ε).",
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:49.560730+00:00",
+    "title": "Sharp Constant for Ramified Contamination"
   },
   {
     "ambition_level": "extension",
@@ -51313,6 +51359,52 @@
     "status": "available",
     "timestamp": "2026-10-03T02:24:38.093947+00:00",
     "title": "Kronecker Extension of the Conductor Law to p = 2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.D5TypeChannelCore",
+      "Probability.RamifiedTypeChannelSharp"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Measure the residue-to-type channel of a Galois extension on all primes up to X, ramified primes included, and show that it converges to the Galois-group channel. The error is the ramified bound plus an effective Chebotarev error.\n\n|I_X(T(Frob_p); p mod m) − I_G(σ;T)| = O_K(log π(X) / π(X) + E_Cheb(X)) where E_Cheb is the total-variation Chebotarev discrepancy.\n\nCombine ramified_galois_channel with a continuity bound for the counting mutual information under total-variation perturbation, and check numerically for x²−3, x³−2 and the D5 quintic.\n\nRamified primes never need special treatment in type-channel experiments, and the exclusion convention is fully justified.\n\nSome extension has ramified primes that carry information at a rate slower than log N / N, which would expose a flaw in the counting model.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5122",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Triangle inequality: unramified empirical channel to fibre-product channel (TV-continuity of mutInfo), then fibre-product channel to Galois channel (fibreProd_mutInfo), then add ramified points (ramified_contribution_le_bound).",
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:50.219662+00:00",
+    "title": "Effective Ramified Chebotarev Channel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.RamifiedTypeChannel",
+      "Shared.CyclicTypeChannelNonneg"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A one-sided inequality that would explain why the observed ramified increment is positive. Including ramified primes can raise the channel by at most the binary entropy of the ramified fraction plus a mixing term.\n\nFor disjoint U,R with ε = |R|/|U∪R|: I_{U∪R}(g;k) − (1−ε) I_U(g;k) − ε I_R(g;k) ≤ h(ε), with equality iff the marker Z is a function of g and of k separately.\n\nExhaustive search over small configurations, then a Lean proof via the joint-count Gibbs inequality.\n\nThis gives a sign law for ramified contamination that matches the always-positive experimental increments.\n\nA configuration where ramified points reduce information by more than h(ε) would show that the mixing term can dominate.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_5123",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Express the left side as I(g;Z) − I(g;Z|k) using card_mul_mutInfo, bound I(g;Z) ≤ H(Z) = h(ε) with mutInfo_le_uEnt, and use I(g;Z|k) ≥ 0 cell-wise with mutInfo_nonneg.",
+    "research_mode": "team",
+    "source_exp_id": "602d68e3",
+    "status": "available",
+    "timestamp": "2026-10-03T17:54:50.868573+00:00",
+    "title": "Binary-Entropy Ceiling on Ramified Gain"
   },
   {
     "ambition_level": "extension",
