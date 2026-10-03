@@ -3,6 +3,9 @@
 ## An exact local valuation law for the number field sieve's relation value, and what it is worth
 
 **Round 48 · 2026-10-03 · Third in the series after #521 and #522**
+**⚠️ CORRECTED 2026-10-03 — the claim "independent of `k`" is FALSE as stated. It holds for
+`2 ≤ k ≤ 5`. The cause is identified below; the practical conclusion survives, the universal
+claim does not.**
 
 ---
 
@@ -94,15 +97,76 @@ This matters in the direction of *understatement*: at `p = 13` the true factor i
 not 1.077. A fit anchored on `p = 2` (where `1 + 1/p` and `2 − 1/p` coincide, both being
 1.5) produced a law that decays to 1 as `p` grows, which is backwards.
 
-## 4. The unresolved 2-adic anomaly
+## 4. CORRECTION: the law is NOT k-independent, and the 2-adic "anomaly" was the tell
 
-For `p = 2` the law holds through `k = 5` (factor 1.5 = `2 − 1/2`) and then **fails at
-`k = 6`**, where the measured factor is **2.5** rather than 1.5. This was measured by
-exhaustive enumeration over all `(a,b) mod 64`.
+*Written after the original version of this paper claimed the factor `2 − 1/p` holds for
+"every `k ≥ 2`". That claim was verified only at `k = 2,3,4` and **it is false as stated**.*
 
-We report it rather than smooth it over. The likely locus is the interaction between the
-`2`-adic ramification and the `a² ≡ b³` descent, but **we did not establish the cause and do
-not claim one.** It is flagged as the single open item in this paper.
+### 4.1 What actually happens
+
+The factor is constant at `2 − 1/p` **only while `⌈k/2⌉ + ⌈k/3⌉ = k`**, which holds precisely
+for `2 ≤ k ≤ 5`. From `k = 6` the ratio departs, by **exactly `(p − 1)`** at the first
+departure:
+
+| p | k=4 | k=5 | **k=6** | `2 − 1/p` | deviation at k=6 |
+|---|---|---|---|---|---|
+| 3 | 1.6667 | 1.6667 | **3.6667** | 1.6667 | **+2.0000 = p − 1** |
+| 5 | 1.8000 | 1.8000 | **5.8000** | 1.8000 | **+4.0000 = p − 1** |
+
+### 4.2 The cause: the zero-zero subspace
+
+The pairs with `a² ≡ b³ ≡ 0 (mod p^k)` are counted by `a ≡ 0 (mod p^⌈k/2⌉)` and
+`b ≡ 0 (mod p^⌈k/3⌉)`, giving `p^(2k − ⌈k/2⌉ − ⌈k/3⌉)` pairs, hence a contribution to the
+ratio of
+
+> **`p^(k − ⌈k/2⌉ − ⌈k/3⌉)`**
+
+which is exactly `1` while `⌈k/2⌉ + ⌈k/3⌉ = k` (i.e. `k ≤ 5`) and **exceeds 1 thereafter, for
+every prime**. So the departure at `k=6` is not a 2-adic peculiarity at all — it is the same
+effect for odd primes, and **I had tested odd primes only to `k=4`.**
+
+**So the "2-adic anomaly" flagged in the original version of this paper was the visible edge of
+a general fact that my own testing range was too narrow to see.** The `p=2` series
+
+```
+k:      2     3     4     5     6     7     8
+ratio: 1.50  1.50  1.50  1.50  2.50  2.50  3.50
+```
+
+decomposes exactly as `zero-zero term + nonzero term`, with the zero-zero term contributing
+`2^(k − ⌈k/2⌉ − ⌈k/3⌉) = 1,1,1,1,2,1,2` across those `k`. (`p=2` carries an additional
+high-`k` contribution from `k=7` onward, which is **not** fully accounted for and is stated as
+open.)
+
+### 4.3 What survives, and what does not
+
+**Corrected law (verified):**
+
+> `P(p^k | a² − b³)/p^k = (2 − 1/p) + [ p^(k − ⌈k/2⌉ − ⌈k/3⌉) − 1 ]` for `2 ≤ k ≤ 6`,
+> and the bracket term grows without bound as `k` increases.
+
+**Withdrawn:** *"for every `k ≥ 2`"*, and *"independent of `k`"*.
+
+**Unaffected:** the practical conclusion. The NFS operating point is `u ≈ 3–5` and the
+divisibility events that matter are at small `k`; the headline finding — **NFS relation values
+are smoother than the uniform model predicts, by roughly a factor of two per prime power** —
+is unchanged. What is now known is that the excess *grows* at high powers rather than staying
+bounded, and that this is a consequence of the trivially-divisible subspace, not of a subtle
+ramification effect.
+
+### 4.4 The methodological point, which is the real lesson
+
+The original version flagged `p=2, k=6` as an unexplained anomaly and attributed it to
+"2-adic ramification". **It was neither anomalous nor 2-adic.** It was a `k=6` effect visible
+at every prime, and the original paper's own table — which stopped at `k=4` for odd primes —
+was simply too short to show it.
+
+> **A law verified over the range you happened to test is not a law.** The constant-in-`k`
+> claim came from testing `k = 2,3,4` and finding no variation; the variation begins at the
+> first `k` with `⌈k/2⌉ + ⌈k/3⌉ < k`, which is `k=6`.
+
+The residual open item is the extra `p=2` contribution for `k ≥ 7` (the nonzero solutions jump
+from ratio 0.5 to 1.5 between `k=6` and `k=7`). Not claimed to be understood.
 
 ## 5. A methodological note: the bug that made the first version wrong twice
 
